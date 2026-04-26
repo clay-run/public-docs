@@ -1,6 +1,7 @@
 ---
 title: Lob integration overview
 source_url: https://university.clay.com/docs/lob-integration-overview
+description: Automated direct mail marketing platform
 last_synced: 2026-04-26T01:40:16.885Z
 upstream_hash: d04aee7f496ae69b7b165e84529eb667fac3be58f6ac0bcd297d358218210710
 ---

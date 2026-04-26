@@ -1,6 +1,8 @@
 ---
 title: Minerva integration
 source_url: https://university.clay.com/docs/minerva-integration
+description: Automatically acquire LinkedIn URLs using professional identifiers
+  and validate them with confidence scores.
 last_synced: 2026-04-26T01:40:22.462Z
 upstream_hash: dfbb7018b55c60552ac80a0e55936a07ee51cb0127884efac9bab1db944fd953
 ---

@@ -1,6 +1,7 @@
 ---
 title: AI in Clay
 source_url: https://university.clay.com/docs/ai-in-clay
+description: A comprehensive guide to how Clay uses AI across its features.
 last_synced: 2026-04-26T01:39:39.278Z
 upstream_hash: ab5a2532485680f80f2914a032bb5c46561638991f78f21d5ec6d399949698fa
 ---

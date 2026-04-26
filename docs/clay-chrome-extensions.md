@@ -1,6 +1,7 @@
 ---
 title: Clay Chrome extensions
 source_url: https://university.clay.com/docs/clay-chrome-extensions
+description: Extract structured data from any webpage with the Clay Chrome Extension.
 last_synced: 2026-04-26T01:39:43.902Z
 upstream_hash: 3f598ba523e0a110f86274a46dbd6b703865a56fb1e5b105bd8ae83dd5e19d1f
 ---

@@ -1,6 +1,7 @@
 ---
 title: Conditional statements
 source_url: https://university.clay.com/docs/conditional-statements
+description: Control the logic of your workflow
 last_synced: 2026-04-26T01:39:47.787Z
 upstream_hash: 1b73b1cb0146f5fd07eb60ff39516302e717c60a6842f19a1ab933b116c9b7be
 ---

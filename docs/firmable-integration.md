@@ -1,6 +1,7 @@
 ---
 title: Firmable integration
 source_url: https://university.clay.com/docs/firmable-integration
+description: Find Australian mobile phones, personal emails, and work emails.
 last_synced: 2026-04-26T01:40:00.103Z
 upstream_hash: 8522c941cf451d46c1af5b5927ab5b39ba36bf5db2e3bec688fa7c946dd8a342
 ---

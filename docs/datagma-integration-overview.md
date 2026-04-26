@@ -1,6 +1,7 @@
 ---
 title: Datagma integration
 source_url: https://university.clay.com/docs/datagma-integration-overview
+description: Enrich contacts with accurate data for seamless B2B outreach.
 last_synced: 2026-04-26T01:39:52.316Z
 upstream_hash: e04d6d55f5854afc88037bc0c123fe3b5bb3a4fec2b0468593af9a9e0d11853d
 ---

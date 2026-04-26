@@ -1,6 +1,7 @@
 ---
 title: Signalhire integration
 source_url: https://university.clay.com/docs/signalhire-integration-overview
+description: Finds contact details for recruiting and sales.
 last_synced: 2026-04-26T01:40:40.524Z
 upstream_hash: b47d269afad79f3d7acef9a5c4ecffde10364cd6d9badb0c7ef13d9c983803d7
 ---

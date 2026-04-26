@@ -1,6 +1,7 @@
 ---
 title: ActiveCampaign integration
 source_url: https://university.clay.com/docs/activecampaign-integration
+description: Create and update info in ActiveCampaign.
 last_synced: 2026-04-26T01:39:38.952Z
 upstream_hash: 7dbc1e903d0b1a28abaee39a5599d189478a30aa99268f60bb8b7cc7ecc40742
 ---

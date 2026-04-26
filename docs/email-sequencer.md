@@ -1,6 +1,7 @@
 ---
 title: Email sequencer
 source_url: https://university.clay.com/docs/email-sequencer
+description: Run outbound campaigns directly from your table.
 last_synced: 2026-04-26T01:39:54.916Z
 upstream_hash: 0c191774329a20305414c5a34f13db0fac028cb916212cf02a616294f1f19fbc
 ---

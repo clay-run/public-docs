@@ -1,6 +1,8 @@
 ---
 title: Sources
 source_url: https://university.clay.com/docs/sources
+description: Every Clay table begins with a source. Sources are the foundation
+  of how data gets into your tables.
 last_synced: 2026-04-26T01:40:43.135Z
 upstream_hash: 6bbaeded48822edcf099cd73e87cf1320a841509cb95fbe6133a6636011b5218
 ---

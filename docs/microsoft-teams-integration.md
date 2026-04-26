@@ -1,6 +1,7 @@
 ---
 title: Microsoft Teams integration
 source_url: https://university.clay.com/docs/microsoft-teams-integration
+description: Send messages to Microsoft Teams channels directly from Clay.
 last_synced: 2026-04-26T01:40:22.139Z
 upstream_hash: fe6780487730a348bdf3b817f73c4a23f739894e2b31959abf019d3bb44b8b31
 ---

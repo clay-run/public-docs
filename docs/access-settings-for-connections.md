@@ -1,6 +1,8 @@
 ---
 title: Access settings for connections
 source_url: https://university.clay.com/docs/access-settings-for-connections
+description: Determine who in the workspace is allowed to build with certain
+  connections or MCP servers.
 last_synced: 2026-04-26T01:39:38.272Z
 upstream_hash: 1f7c0974ae32110d89b689f026ff4d2331ca87453049179d3d7a89b72782be70
 ---

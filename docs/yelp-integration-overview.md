@@ -1,6 +1,7 @@
 ---
 title: Yelp integration
 source_url: https://university.clay.com/docs/yelp-integration-overview
+description: Local business discovery platform with user reviews.
 last_synced: 2026-04-26T01:40:57.488Z
 upstream_hash: 15ff01e69ac7f6ebf28b20733b088a43f06783546f8f72f18a6d48dd624a7ad8
 ---

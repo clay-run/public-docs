@@ -1,6 +1,7 @@
 ---
 title: Typeform integration
 source_url: https://university.clay.com/docs/typeform-integration-overview
+description: Interactive forms and surveys for gathering customer insights and feedback.
 last_synced: 2026-04-26T01:40:50.310Z
 upstream_hash: 5d82830f538fbfc1c5677877344ce849434f8bcd9c84289f30a944e362a7562a
 ---

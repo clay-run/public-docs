@@ -1,6 +1,7 @@
 ---
 title: MCP settings
 source_url: https://university.clay.com/docs/mcp-settings
+description: Connect your Clay workspace to AI tools.
 last_synced: 2026-04-26T01:40:20.821Z
 upstream_hash: 9b727bf5db93ea288911ceac05bfdc864e603c50b733fa7bdf0a80431fc74330
 ---

@@ -1,6 +1,7 @@
 ---
 title: Autobound integration
 source_url: https://university.clay.com/docs/autobound-integration
+description: Automates personalized email creation and insight generation
 last_synced: 2026-04-26T01:39:41.943Z
 upstream_hash: cbb5a98a53e5bf3071ad5fa7c1783a1c66a16c13f7efbb12ec139d1319d44fdc
 ---

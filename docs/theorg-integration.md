@@ -1,6 +1,7 @@
 ---
 title: The Org integration
 source_url: https://university.clay.com/docs/theorg-integration
+description: Get insights into organizational structures.
 last_synced: 2026-04-26T01:40:48.658Z
 upstream_hash: a8abaf29e953eac57b678ff2d119c24f22f9cde61243b737287c76b9d148f8f9
 ---

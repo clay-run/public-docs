@@ -1,6 +1,8 @@
 ---
 title: Actions & Data Credits
 source_url: https://university.clay.com/docs/actions-data-credits
+description: Learn about credits, the virtual currency system used for running
+  actions in Clay.
 last_synced: 2026-04-26T01:39:38.626Z
 upstream_hash: cd12f235935b9ccb524e8f8b4c5bc296d4e2cbc26ce34181c2bc90f2ff35b528
 ---

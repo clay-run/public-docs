@@ -1,6 +1,7 @@
 ---
 title: Column group templates
 source_url: https://university.clay.com/docs/column-group-templates
+description: Save columns into templates to easily reuse them.
 last_synced: 2026-04-26T01:39:46.810Z
 upstream_hash: 0312f155f849f9984205950d73efc74fb422b965f8d20db935a3e96f8b7aa658
 ---

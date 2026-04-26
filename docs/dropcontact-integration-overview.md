@@ -1,6 +1,8 @@
 ---
 title: DropContact integration overview
 source_url: https://university.clay.com/docs/dropcontact-integration-overview
+description: B2B email finder to find emails, enrich contacts, validate data,
+  and clean duplicates.
 last_synced: 2026-04-26T01:39:54.261Z
 upstream_hash: 8c3a7623a6a1fe2bfe5e66a5a8dcce5cb4b60463ea5efd0e593e2a48f9612009
 ---

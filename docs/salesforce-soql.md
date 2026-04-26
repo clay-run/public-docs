@@ -1,6 +1,8 @@
 ---
 title: Salesforce SOQL
 source_url: https://university.clay.com/docs/salesforce-soql
+description: The Salesforce SOQL source enables you to import records from
+  Salesforce by writing custom queries.
 last_synced: 2026-04-26T01:40:35.632Z
 upstream_hash: c8f21c092741d6111a8d95755a222978fedfe8960b7ef0717559be2afaaf3eca
 ---

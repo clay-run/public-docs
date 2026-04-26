@@ -1,6 +1,7 @@
 ---
 title: "Guide: Finding companies and people in Clay"
 source_url: https://university.clay.com/docs/finding-companies-and-people-in-clay
+description: Best practices to Clay's company and people search features.
 last_synced: 2026-04-26T01:39:59.452Z
 upstream_hash: 0434738786f5838ec1d412d8e232e98f13369d4a58a0223704f58c8dd7f10dd8
 ---

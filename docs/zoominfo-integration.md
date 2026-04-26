@@ -1,6 +1,8 @@
 ---
 title: ZoomInfo integration
 source_url: https://university.clay.com/docs/zoominfo-integration
+description: Get detailed insights into company structures, competitive
+  landscapes, and accurate contact details.
 last_synced: 2026-04-26T01:40:59.430Z
 upstream_hash: 5c091963f09ecd97c56728d543ba6572a93e9878c9418e18a8cf84a8c58ab1bc
 ---

@@ -1,6 +1,7 @@
 ---
 title: "[Data test] Mobile phone providers by region"
 source_url: https://university.clay.com/docs/data-test-methodology-mobile-phone-region
+description: Mobile phone providers by region
 last_synced: 2026-04-26T01:39:51.023Z
 upstream_hash: d4fb9948962bd860e7ddf7bb87056b3f13c5eb58b4233580b4ce550fd1fde272
 ---

@@ -1,6 +1,7 @@
 ---
 title: Lead scoring overview
 source_url: https://university.clay.com/docs/lead-scoring-overview
+description: Generate custom scores based on the data points that matter.
 last_synced: 2026-04-26T01:40:13.624Z
 upstream_hash: 92b4f18b63bc2eba36e821696d3883be7739913a1f9de695284fc22cb8545458
 ---

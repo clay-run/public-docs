@@ -1,6 +1,7 @@
 ---
 title: LeadIQ integration
 source_url: https://university.clay.com/docs/leadiq-integration-overview
+description: B2B sales prospecting platform.
 last_synced: 2026-04-26T01:40:14.268Z
 upstream_hash: 6e0feef0808d1986d61b56fc7f31f2bab4458595dc3d5670913aabc241857b18
 ---

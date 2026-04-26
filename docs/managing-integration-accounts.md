@@ -1,6 +1,7 @@
 ---
 title: Managing integration accounts
 source_url: https://university.clay.com/docs/managing-integration-accounts
+description: Manage your Clay-managed and personal integration accounts.
 last_synced: 2026-04-26T01:40:19.493Z
 upstream_hash: 92e717fc504a3181ed4961ed18c4f1cbc745b351fa470353ca77a4f3511d3baa
 ---

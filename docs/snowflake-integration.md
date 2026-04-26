@@ -1,6 +1,7 @@
 ---
 title: Snowflake integration
 source_url: https://university.clay.com/docs/snowflake-integration
+description: Cloud-based data platform enabling data storage, analysis, and sharing.
 last_synced: 2026-04-26T01:40:42.804Z
 upstream_hash: 1796c1a7fe6b62d2adab8e1cc14d0e1c278d1e4c0c43e058c9b9c6a332a7089b
 ---

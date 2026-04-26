@@ -1,6 +1,7 @@
 ---
 title: Roles and permissions
 source_url: https://university.clay.com/docs/roles-and-permissions
+description: Understand roles and permissions in Clay.
 last_synced: 2026-04-26T01:40:33.352Z
 upstream_hash: 4a677958cd278fc8e9aaa4b1f91222fda3146fba0d5d057f9fa702ecf90fd5cc
 ---

@@ -1,6 +1,7 @@
 ---
 title: Auto-delete in tables
 source_url: https://university.clay.com/docs/auto-delete
+description: Efficiently process and enrich large volumes of data.
 last_synced: 2026-04-26T01:39:41.622Z
 upstream_hash: fe7982619dad45bf19ff67b63bece805dfcd37d841b2ed6053e3827ef9a09387
 ---

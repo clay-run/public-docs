@@ -1,6 +1,8 @@
 ---
 title: Monitor for job changes
 source_url: https://university.clay.com/docs/job-change-signal-overview
+description: Track job change trends and leverage timely insights for proactive
+  decision-making.
 last_synced: 2026-04-26T01:40:12.599Z
 upstream_hash: ef4944d217e65c4f5d64221e66e0750292aaabd76d732fa5ba2fe02e4a2f7a27
 ---

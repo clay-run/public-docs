@@ -1,6 +1,7 @@
 ---
 title: Connect Clay to Marketo via a webhook
 source_url: https://university.clay.com/docs/marketo-and-clay-connection
+description: Connect Marketo to your Clay table.
 last_synced: 2026-04-26T01:40:20.143Z
 upstream_hash: 83e3ab72038936445467658dad7ea308b667e9af16d0adacf7c5427c86951acd
 ---

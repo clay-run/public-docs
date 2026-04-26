@@ -1,6 +1,7 @@
 ---
 title: Shopify integration
 source_url: https://university.clay.com/docs/shopify-integration-overview
+description: E-commerce platform for online stores and retail point-of-sale systems.
 last_synced: 2026-04-26T01:40:40.204Z
 upstream_hash: b963fe932cd5224ef4c2ac958b0c3971abcc7fe81c012219e5dd369331ad8255
 ---

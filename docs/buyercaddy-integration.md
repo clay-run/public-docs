@@ -1,6 +1,7 @@
 ---
 title: BuyerCaddy integration
 source_url: https://university.clay.com/docs/buyercaddy-integration
+description: Enrich company tech stacks, verify technology usage, and more!
 last_synced: 2026-04-26T01:39:42.591Z
 upstream_hash: b2d04e5bb1149247190d5aadba8241c0e0ba8c80d43c212319bcc34033e09d4b
 ---

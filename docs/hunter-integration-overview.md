@@ -1,6 +1,7 @@
 ---
 title: Hunter
 source_url: https://university.clay.com/docs/hunter-integration-overview
+description: Email outreach platform.
 last_synced: 2026-04-26T01:40:09.700Z
 upstream_hash: fe98b3bee8de066ccfce924ff294e7c5258bac003fb2edc4756afb1b47eddb61
 ---

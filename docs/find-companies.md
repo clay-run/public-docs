@@ -1,6 +1,8 @@
 ---
 title: Find Companies in Clay
 source_url: https://university.clay.com/docs/find-companies
+description: Find companies that match your specific criteria within Clay's
+  proprietary dataset.
 last_synced: 2026-04-26T01:39:58.486Z
 upstream_hash: 7b9393243aee046995c8e9efa8d82b2c48893e2def2a9c3c758b332a399f6c12
 ---

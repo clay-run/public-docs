@@ -1,6 +1,8 @@
 ---
 title: Using Clay in ChatGPT
 source_url: https://university.clay.com/docs/using-clay-in-chatgpt
+description: Find people, enrich contacts, and draft personalized outreach — all
+  within a regular ChatGPT conversation.
 last_synced: 2026-04-26T01:40:52.599Z
 upstream_hash: 0f4c6c3b41db7a5f15f28f0cf12b8e7a616a1bc3c23f44444dd1b3143e3dcd8a
 ---

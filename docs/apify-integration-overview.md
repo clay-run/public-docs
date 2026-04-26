@@ -1,6 +1,8 @@
 ---
 title: Apify integration
 source_url: https://university.clay.com/docs/apify-integration-overview
+description: Web scraping and automation platform providing data for AI and
+  custom solutions.
 last_synced: 2026-04-26T01:39:40.957Z
 upstream_hash: a0284b691ece064dc30cbbf52cc6e727225300f3514bf8bfded2004079a4729a
 ---

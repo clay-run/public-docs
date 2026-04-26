@@ -1,6 +1,7 @@
 ---
 title: Notion integration
 source_url: https://university.clay.com/docs/notion-integration
+description: Update your Notion pages and databases.
 last_synced: 2026-04-26T01:40:25.061Z
 upstream_hash: 140b09d448acf1b0076a7f6f3b107a959298d66f36e42b9839a1f0968766d3b1
 ---

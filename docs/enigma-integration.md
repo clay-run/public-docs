@@ -1,6 +1,9 @@
 ---
 title: Enigma integration
 source_url: https://university.clay.com/docs/enigma-integration
+description: Enigma is a business intelligence platform that provides accurate
+  identity, payment technographic, and financial data on U.S. businesses. With
+  this…
 last_synced: 2026-04-26T01:39:55.879Z
 upstream_hash: 6f20219ee438913db58c2d82e6c96ae821fb9e2c6a396f47468f8f5c8fd2a43b
 ---

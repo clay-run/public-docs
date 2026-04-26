@@ -1,6 +1,7 @@
 ---
 title: Crossbeam integration
 source_url: https://university.clay.com/docs/crossbeam-integration
+description: Import accounts and customize outreach based on overlap with key partners.
 last_synced: 2026-04-26T01:39:49.408Z
 upstream_hash: 1068d65642f55695318ca41af557c18a0999ff0e3e59cbe643318da89500e650
 ---

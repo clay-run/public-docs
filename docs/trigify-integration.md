@@ -1,6 +1,7 @@
 ---
 title: Trigify integration
 source_url: https://university.clay.com/docs/trigify-integration
+description: Find prospects on social media.
 last_synced: 2026-04-26T01:40:49.319Z
 upstream_hash: 525b1804e35a7d4ead6eebf05ff73552ef9d76e51ab332ba4d762963ddc13ba0
 ---

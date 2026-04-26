@@ -1,6 +1,7 @@
 ---
 title: Forager integration
 source_url: https://university.clay.com/docs/forager-integration-overview
+description: Find phone numbers and emails based on a social profile.
 last_synced: 2026-04-26T01:40:00.773Z
 upstream_hash: 15afc3f93ea8824e5f698b0e1862f5beed75e79d1c097d6a248b6ad3ebd6d4ff
 ---

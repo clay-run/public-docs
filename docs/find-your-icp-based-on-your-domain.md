@@ -1,6 +1,7 @@
 ---
 title: Find your ICP based on your domain
 source_url: https://university.clay.com/docs/find-your-icp-based-on-your-domain
+description: Use your company website to find your ICP.
 last_synced: 2026-04-26T01:39:59.124Z
 upstream_hash: 62a93b9030ed2882f7b05cb6ed9ee2351353389f8e4b3a5933f8f86e86491cf6
 ---

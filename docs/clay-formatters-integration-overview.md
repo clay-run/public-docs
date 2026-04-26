@@ -1,6 +1,7 @@
 ---
 title: Clay formatters overview
 source_url: https://university.clay.com/docs/clay-formatters-integration-overview
+description: Format your Clay table data for free.
 last_synced: 2026-04-26T01:39:44.557Z
 upstream_hash: 6215bd6e541a3137f765dbb5eb3cc0e195bfbe2109e3853ad4b3f29f85aafedc
 ---

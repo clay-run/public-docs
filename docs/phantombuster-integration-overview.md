@@ -1,6 +1,8 @@
 ---
 title: Phantombuster integration
 source_url: https://university.clay.com/docs/phantombuster-integration-overview
+description: Data extraction platform automating web scraping and data
+  collection from websites.
 last_synced: 2026-04-26T01:40:28.345Z
 upstream_hash: 63cccfb43d550473f7728a4f3b3075df53b75b32ede13d9961ca3836c049fc22
 ---

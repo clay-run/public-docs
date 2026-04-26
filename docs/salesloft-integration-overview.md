@@ -1,6 +1,7 @@
 ---
 title: Salesloft integration overview
 source_url: https://university.clay.com/docs/salesloft-integration-overview
+description: Sales engagement platform.
 last_synced: 2026-04-26T01:40:36.302Z
 upstream_hash: e03ca8241f3a59a8dcbff954fdc349a7e554ee709f09bce0f74b9b5a8a81696e
 ---

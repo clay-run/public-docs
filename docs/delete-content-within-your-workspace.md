@@ -1,6 +1,7 @@
 ---
 title: Delete content within your workspace
 source_url: https://university.clay.com/docs/delete-content-within-your-workspace
+description: Learn how to delete columns, workbooks, and tables within your workspace.
 last_synced: 2026-04-26T01:39:53.278Z
 upstream_hash: cdb07a722203efa2431bd717cdfaf28af01d6bb42ed3a10a59e67197167c3bce
 ---

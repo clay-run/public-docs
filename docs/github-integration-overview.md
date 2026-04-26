@@ -1,6 +1,7 @@
 ---
 title: GitHub integration
 source_url: https://university.clay.com/docs/github-integration-overview
+description: Software development platform.
 last_synced: 2026-04-26T01:40:02.107Z
 upstream_hash: 8fedd484277976eb3eadd6ecf62b0515fb3ae6dce7a19eb5ff38189094ee0f89
 ---

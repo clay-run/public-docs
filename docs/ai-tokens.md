@@ -1,6 +1,7 @@
 ---
 title: AI Tokens
 source_url: https://university.clay.com/docs/ai-tokens
+description: Understand AI Tokens
 last_synced: 2026-04-26T01:39:40.311Z
 upstream_hash: e76788a436ea719a65ef09ac82d75d3a9d7cede5e2ef35a9bd2947b54c6f8506
 ---

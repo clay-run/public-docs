@@ -1,6 +1,7 @@
 ---
 title: Nimbler integration overview
 source_url: https://university.clay.com/docs/nimbler-integration-overview
+description: Enrich data, find contacts, and search by job or industry.
 last_synced: 2026-04-26T01:40:24.731Z
 upstream_hash: 26c927db1c6eb34fbd66d90da925673d15409c360b5a27f1bfd34463d1b9dfe3
 ---

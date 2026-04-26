@@ -1,6 +1,8 @@
 ---
 title: Plans & billing
 source_url: https://university.clay.com/docs/plans-and-billing
+description: We'll walk through each of our pricing plans and information around
+  billing your workspace.
 last_synced: 2026-04-26T01:40:29.319Z
 upstream_hash: 2f58039bce84dc1c9e46277be3410eade99593e98b99478d607bb42a0092978e
 ---

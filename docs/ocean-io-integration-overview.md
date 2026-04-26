@@ -1,6 +1,7 @@
 ---
 title: Ocean.io integration
 source_url: https://university.clay.com/docs/ocean-io-integration-overview
+description: Find companies similar to a given company based on various criteria.
 last_synced: 2026-04-26T01:40:26.052Z
 upstream_hash: b1bdb69747c8d94edb893f965c74f69e699eb9c2643483a94d2e4462e72612e2
 ---

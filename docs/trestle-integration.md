@@ -1,6 +1,7 @@
 ---
 title: Trestle integration
 source_url: https://university.clay.com/docs/trestle-integration
+description: Verify phone numbers, email addresses, names, and addresses.
 last_synced: 2026-04-26T01:40:48.983Z
 upstream_hash: 372aa7ddbfa8b429c375a404887dc30b51ac7b73389353fd047bbf4cfa60ba30
 ---

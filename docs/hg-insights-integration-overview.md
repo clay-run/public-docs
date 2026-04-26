@@ -1,6 +1,8 @@
 ---
 title: HG Insights integration
 source_url: https://university.clay.com/docs/hg-insights-integration-overview
+description: Uncover enterprise-grade technographic and parent company data
+  while enriching foundational company data.
 last_synced: 2026-04-26T01:40:07.697Z
 upstream_hash: f22e3bd9a4a6ad553f11cdf315695bd32b522d645c915cc664889dd98f552321
 ---

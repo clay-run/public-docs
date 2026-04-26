@@ -1,6 +1,9 @@
 ---
 title: Homepage Resource Tagging
 source_url: https://university.clay.com/docs/homepage-resource-tagging
+description: Resource tags help you organize your Clay workspace by adding
+  custom labels to folders, tables, and workbooks. They make it easier to find
+  content, share…
 last_synced: 2026-04-26T01:40:08.361Z
 upstream_hash: 2683c14c3c00d34a23f443d36230cb928bdfacf7e989133a345fe7bad5e9f8ce
 ---

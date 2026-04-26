@@ -1,6 +1,8 @@
 ---
 title: Surfe integration
 source_url: https://university.clay.com/docs/surfe-integration
+description: Enrich company profiles and individual professional profiles by
+  filling in missing data.
 last_synced: 2026-04-26T01:40:45.081Z
 upstream_hash: d752b4d52017e83ef33b2aaa0d31f9259d1b3300167e97bf6d3c301403a79c55
 ---

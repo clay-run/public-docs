@@ -1,6 +1,7 @@
 ---
 title: TrustRadius integration
 source_url: https://university.clay.com/docs/trustradius-integration
+description: Identify businesses that show buying intent.
 last_synced: 2026-04-26T01:40:49.646Z
 upstream_hash: c67cbd79fad58b2faee2d13eab9f2453bc1977b5f0fa0f2512132e5b46ff8a17
 ---

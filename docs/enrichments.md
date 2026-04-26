@@ -1,6 +1,7 @@
 ---
 title: Enrichments
 source_url: https://university.clay.com/docs/enrichments
+description: Learn how to run an enrichment within Clay.
 last_synced: 2026-04-26T01:39:56.840Z
 upstream_hash: f18039c811ec06bcc928bd67fe45fec9253a88675a4f5b5475813ba887e3cdf6
 ---

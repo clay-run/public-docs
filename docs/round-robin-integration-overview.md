@@ -1,6 +1,7 @@
 ---
 title: Round-robin integration overview
 source_url: https://university.clay.com/docs/round-robin-integration-overview
+description: Route your leads in a round robin manner
 last_synced: 2026-04-26T01:40:33.683Z
 upstream_hash: b7e8b7318fd7170b858c73cdd925b709273839287886cff056377a334511cb3d
 ---

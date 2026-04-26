@@ -1,6 +1,7 @@
 ---
 title: Google PageSpeed integration overview
 source_url: https://university.clay.com/docs/google-pagespeed-integration-overview
+description: Web performance analysis tool.
 last_synced: 2026-04-26T01:40:04.112Z
 upstream_hash: 3fe9cdbc99958c5da027d56e3ddb5cd9c6d9d4b5c930a5137f2a95fbf3ba38b8
 ---

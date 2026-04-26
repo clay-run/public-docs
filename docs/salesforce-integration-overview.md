@@ -1,6 +1,7 @@
 ---
 title: Salesforce integration
 source_url: https://university.clay.com/docs/salesforce-integration-overview
+description: Cloud-based customer relationship management software.
 last_synced: 2026-04-26T01:40:35.308Z
 upstream_hash: c40cc0a861c4e1af36565daebd41ff5e3d0ce7d66f5b61350cff95e7f2f41859
 ---

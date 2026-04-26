@@ -1,6 +1,8 @@
 ---
 title: Table alerts
 source_url: https://university.clay.com/docs/table-alerts
+description: Table alerts automatically monitor your Clay tables and notify you
+  when something needs attention.
 last_synced: 2026-04-26T01:40:45.731Z
 upstream_hash: e34c36c747d3f38a0364e60e07395eb3ff5f1644adec0dbc30d00b617b43bb9e
 ---

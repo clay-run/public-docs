@@ -1,6 +1,7 @@
 ---
 title: Leadmagic integration overview
 source_url: https://university.clay.com/docs/leadmagic-integration-overview
+description: Accurate B2B data enrichment for improved prospecting and sales conversion.
 last_synced: 2026-04-26T01:40:14.609Z
 upstream_hash: 1914c4a4ccfa6866e057a15cbb56f05a284177620abaa6de9f8fbcea6a0248df
 ---

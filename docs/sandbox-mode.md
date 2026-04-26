@@ -1,6 +1,8 @@
 ---
 title: Sandbox mode
 source_url: https://university.clay.com/docs/sandbox-mode
+description: Learn about sandbox mode, a playground to safely iterate +
+  experiment with your data!
 last_synced: 2026-04-26T01:40:36.624Z
 upstream_hash: e5c19475aaf09a125a6b2a8433cfd0930851a372045bd69b874d9f346a315dc7
 ---

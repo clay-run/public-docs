@@ -1,6 +1,9 @@
 ---
 title: SureConnect integration
 source_url: https://university.clay.com/docs/sureconnect-integration-overview
+description: SureConnect identifies ‘Likely to answer’ contacts on your list,
+  helping you increase connect rates and saving you from voicemails,
+  gatekeepers, and dead…
 last_synced: 2026-04-26T01:40:44.754Z
 upstream_hash: 41a98b454873c8fd68a740137cd08a9dfddfaa7b84cc368fe5a437fc521121e2
 ---

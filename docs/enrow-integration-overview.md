@@ -1,6 +1,7 @@
 ---
 title: Enrow integration
 source_url: https://university.clay.com/docs/enrow-integration-overview
+description: Data tool for email verification and contact finding.
 last_synced: 2026-04-26T01:39:57.159Z
 upstream_hash: 9dcaeced4e75725fdbb661e70ddf3c1a343ede3001955a0b8a7f24a547322b61
 ---

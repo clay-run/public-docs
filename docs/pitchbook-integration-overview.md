@@ -1,6 +1,7 @@
 ---
 title: PitchBook integration
 source_url: https://university.clay.com/docs/pitchbook-integration-overview
+description: Enrich private and public companies with comprehensive business data.
 last_synced: 2026-04-26T01:40:28.992Z
 upstream_hash: d9f55ddcea7c9efdc42d84a2a6c59fdcd2aad9ed724642f787e923da0824a05a
 ---

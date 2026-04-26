@@ -1,6 +1,7 @@
 ---
 title: Limadata integration
 source_url: https://university.clay.com/docs/limadata-integration
+description: Find personal email addresses from professional profiles.
 last_synced: 2026-04-26T01:40:15.576Z
 upstream_hash: 581f9b362858b3ca88f844dfba35410eed33da2d5d25f016932dc4074b105b3f
 ---

@@ -1,6 +1,7 @@
 ---
 title: Scheduled sources
 source_url: https://university.clay.com/docs/scheduled-sources
+description: Automatically refresh data from sources on a set schedule.
 last_synced: 2026-04-26T01:40:37.604Z
 upstream_hash: 4af8fb86ad5705df57f260b75e8fba1f0054d737811d6762a4aa7fdc539b9a4f
 ---

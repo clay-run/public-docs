@@ -1,6 +1,8 @@
 ---
 title: EmailBison integration
 source_url: https://university.clay.com/docs/emailbison-integration
+description: Import leads into campaigns directly from Clay, ensuring accurate
+  and efficient campaign execution.
 last_synced: 2026-04-26T01:39:55.552Z
 upstream_hash: d1dbac2bff69ad48ab55e495078b3efc9b552ee81d74de9038be9b6c1fc8579d
 ---

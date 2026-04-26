@@ -1,6 +1,7 @@
 ---
 title: Email verification statuses
 source_url: https://university.clay.com/docs/email-verification-statuses
+description: Understand the different statuses an email address can have.
 last_synced: 2026-04-26T01:39:55.232Z
 upstream_hash: 555f1f404c451c404923386ee057ba8e44a88a4c70de8f2d939b628affc5a1e3
 ---

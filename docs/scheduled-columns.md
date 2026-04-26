@@ -1,6 +1,7 @@
 ---
 title: Scheduled columns
 source_url: https://university.clay.com/docs/scheduled-columns
+description: Automatically re-run your enrichments on a set schedule.
 last_synced: 2026-04-26T01:40:37.281Z
 upstream_hash: 1aa55308e2feabc86c78370ad3ab566746c677dc5abc9e45f89dc7b045ccce05
 ---

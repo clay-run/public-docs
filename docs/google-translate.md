@@ -1,6 +1,7 @@
 ---
 title: Google Translate integration
 source_url: https://university.clay.com/docs/google-translate
+description: Translate text, documents, and websites across over 100 languages
 last_synced: 2026-04-26T01:40:05.417Z
 upstream_hash: df41b2a2c07e5294c44236d1dfaef741389701cc136e817fa73ed959d6ec5c60
 ---

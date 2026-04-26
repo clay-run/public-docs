@@ -1,6 +1,7 @@
 ---
 title: Send table data
 source_url: https://university.clay.com/docs/send-table-data
+description: Send data between tables to create simple multi-table setups.
 last_synced: 2026-04-26T01:40:38.918Z
 upstream_hash: 2e0e53545ac1eb0e2a8ceb0107b47af3f1dc8e327e38d6fd2728213b1ed6a75f
 ---

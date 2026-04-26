@@ -1,6 +1,7 @@
 ---
 title: "Guide: Ways to save Clay credits"
 source_url: https://university.clay.com/docs/clay-credit-conservation
+description: Make the most out of your Clay credits.
 last_synced: 2026-04-26T01:39:44.229Z
 upstream_hash: e7b718066bd38bc7c6269799f30008606334f81736d0b4865e5eb18df0b82300
 ---

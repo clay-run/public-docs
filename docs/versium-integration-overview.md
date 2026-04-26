@@ -1,6 +1,8 @@
 ---
 title: Versium integration
 source_url: https://university.clay.com/docs/versium-integration-overview
+description: Versium provides data solutions for audience targeting and
+  omnichannel campaigns.
 last_synced: 2026-04-26T01:40:53.582Z
 upstream_hash: 5ffe95ff17b8a1ba6a9615fc371830a80a08737c9ec7c59317ca280ef8e11501
 ---

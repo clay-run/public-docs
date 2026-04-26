@@ -1,6 +1,8 @@
 ---
 title: Woodpecker integration
 source_url: https://university.clay.com/docs/woodpecker-integration
+description: Add prospects to your database and campaigns, enriching prospect
+  data with comprehensive details.
 last_synced: 2026-04-26T01:40:55.539Z
 upstream_hash: a69d0a12d442f11c969ed20b6cfe620fce5a781c23f3016b58f6c658d9d7ce4e
 ---

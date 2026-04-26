@@ -1,6 +1,8 @@
 ---
 title: Linear integration overview
 source_url: https://university.clay.com/docs/linear-integration-overview
+description: Streamlined project management software for teams focused on
+  product development workflows.
 last_synced: 2026-04-26T01:40:15.901Z
 upstream_hash: 79527c07866b07647ffccc082582d968a80c66256c40fce930c0a0d97602deda
 ---

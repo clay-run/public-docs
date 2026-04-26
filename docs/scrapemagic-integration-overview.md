@@ -1,6 +1,7 @@
 ---
 title: ScrapeMagic integration
 source_url: https://university.clay.com/docs/scrapemagic-integration-overview
+description: AI-powered data extraction from websites and documents via questions.
 last_synced: 2026-04-26T01:40:37.942Z
 upstream_hash: de64f539c61495e37b7f0526b77d3415c52ba3d8805fa6fdc331652683752ea6
 ---

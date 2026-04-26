@@ -1,6 +1,7 @@
 ---
 title: Share workbooks and tables as templates
 source_url: https://university.clay.com/docs/workbook-table-sharing-guide
+description: Share your Clay workbooks and tables.
 last_synced: 2026-04-26T01:40:56.186Z
 upstream_hash: 5213bbf2eb0b5f17e542819d7fd19d17cd353cbdb991643e5dd02ad1c50d1675
 ---

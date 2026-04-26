@@ -1,6 +1,7 @@
 ---
 title: Sumble integration
 source_url: https://university.clay.com/docs/sumble-integration
+description: Validate whether a company uses specific technologies.
 last_synced: 2026-04-26T01:40:44.109Z
 upstream_hash: 1b604eb87b271baec4a17255fcdeb98ca6a832682c61cdb607386ceb1fd8a036
 ---

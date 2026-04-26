@@ -1,6 +1,7 @@
 ---
 title: Enrichley integration overview
 source_url: https://university.clay.com/docs/enrichley-integration-overview
+description: Verify and validate risky emails to ensure accuracy and deliverability.
 last_synced: 2026-04-26T01:39:56.199Z
 upstream_hash: 251dedbe80e8bdce802187bc7e0446c9da109cb1f3018498c0e23288875676bd
 ---

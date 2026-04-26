@@ -1,6 +1,7 @@
 ---
 title: Zeliq integration
 source_url: https://university.clay.com/docs/zeliq-integration
+description: Verify phone numbers and email addresses in the EMEA region.
 last_synced: 2026-04-26T01:40:58.451Z
 upstream_hash: 314affc1289d993a8ba0ed0487b545b3d2a6d6447f7f9ba3235409ce87adabe1
 ---

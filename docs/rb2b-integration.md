@@ -1,6 +1,7 @@
 ---
 title: RB2B integration
 source_url: https://university.clay.com/docs/rb2b-integration
+description: E-commerce platform to re-engage visitors, enhance retention, and grow revenue.
 last_synced: 2026-04-26T01:40:31.273Z
 upstream_hash: 34892f31b6d2ac3c2da2b16d48dd11ddb63bb758ee6e78f916fdf113c29dfed9
 ---

@@ -1,6 +1,8 @@
 ---
 title: Sendspark integration
 source_url: https://university.clay.com/docs/sendspark-integration-overview
+description: AI-powered video creation platform boosting sales and marketing
+  outreach via personalized videos.
 last_synced: 2026-04-26T01:40:39.562Z
 upstream_hash: e31c1a1697b958c6f5d379c0525bf06381e39dd5cc52dba078aa818b8d1f0d2f
 ---

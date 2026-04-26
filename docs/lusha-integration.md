@@ -1,6 +1,8 @@
 ---
 title: Lusha integration
 source_url: https://university.clay.com/docs/lusha-integration
+description: Verify contact and company data, including work emails, phone
+  numbers, and buying signals.
 last_synced: 2026-04-26T01:40:18.523Z
 upstream_hash: 4d57e29e17e574487d524b27f5e62c320ec1dfb56f20845da248797b4d353ae6
 ---

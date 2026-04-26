@@ -1,6 +1,7 @@
 ---
 title: Outreach integration
 source_url: https://university.clay.com/docs/outreach-integration-overview
+description: AI-powered sales platform.
 last_synced: 2026-04-26T01:40:27.028Z
 upstream_hash: 0d1f6e673d3cff97157f154936c43bef311b4e51af40545f8c74555485ef76b0
 ---

@@ -1,6 +1,7 @@
 ---
 title: Clip to Clay extension
 source_url: https://university.clay.com/docs/clip-to-clay-extension
+description: Learn how to clip your web pages into a Clay table.
 last_synced: 2026-04-26T01:39:45.854Z
 upstream_hash: 408ddd809c30d587a2c584322b8b20053f66fcd3a7c09b421c74b0ca5ff1617c
 ---

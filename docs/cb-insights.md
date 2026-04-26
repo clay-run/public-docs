@@ -1,6 +1,8 @@
 ---
 title: CB Insights
 source_url: https://university.clay.com/docs/cb-insights
+description: Enrich company records with funding history, valuations, revenue
+  ranges, industry classifications, and more.
 last_synced: 2026-04-26T01:39:43.235Z
 upstream_hash: 95c4609749a9d918511c0ac68dd67692fb73f531b65a64e80d12ba0068591ac5
 ---

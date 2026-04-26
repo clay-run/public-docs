@@ -1,6 +1,7 @@
 ---
 title: Zenrows integration
 source_url: https://university.clay.com/docs/zenrows-integration-overview
+description: Extract data from websites with the Zenrows scraper.
 last_synced: 2026-04-26T01:40:58.780Z
 upstream_hash: b67a9643e22db9f692aa7f8fff672f59032a956b1ae8b8615d6eb6ba3b8d16a7
 ---

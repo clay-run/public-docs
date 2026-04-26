@@ -1,6 +1,7 @@
 ---
 title: Glassdoor integration overview
 source_url: https://university.clay.com/docs/glassdoor-integration-overview
+description: Gain insight into company data.
 last_synced: 2026-04-26T01:40:02.437Z
 upstream_hash: 243566739be802ba23920a046d3fec0473afdc7f17afcac17571bba9ccec3478
 ---

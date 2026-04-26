@@ -1,6 +1,7 @@
 ---
 title: Logical operators
 source_url: https://university.clay.com/docs/logical-operators
+description: Automate decisions with AND, OR, and NOT expressions
 last_synced: 2026-04-26T01:40:17.209Z
 upstream_hash: 617ae8ae042101df1335fb0c26bdaf7d8611459f22be23261aa39f6fab0303fa
 ---

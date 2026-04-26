@@ -1,6 +1,7 @@
 ---
 title: Enrichment recipes
 source_url: https://university.clay.com/docs/enrichment-recipes
+description: Save your enrichment sequences and combinations with recipes.
 last_synced: 2026-04-26T01:39:56.520Z
 upstream_hash: 6eaec0a08f5012eee2ce355e8660208ed37ee2fc226a60da6b273cd08a1a7c7f
 ---

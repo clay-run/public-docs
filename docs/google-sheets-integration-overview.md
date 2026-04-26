@@ -1,6 +1,7 @@
 ---
 title: Google Sheets integration
 source_url: https://university.clay.com/docs/google-sheets-integration-overview
+description: Cloud-based spreadsheet for real-time collaboration.
 last_synced: 2026-04-26T01:40:04.431Z
 upstream_hash: 0e4fa754fda65b50691a606ea1187287b72e692f52ba0c8b8888f84f6b044f90
 ---

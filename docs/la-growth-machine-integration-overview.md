@@ -1,6 +1,7 @@
 ---
 title: La Growth Machine integration overview
 source_url: https://university.clay.com/docs/la-growth-machine-integration-overview
+description: Platform for automating multichannel sales outreach.
 last_synced: 2026-04-26T01:40:12.936Z
 upstream_hash: f71b37ca7559ffff2ae73b1c7cee612506d7deedb161244d15e8d2197bd84c56
 ---

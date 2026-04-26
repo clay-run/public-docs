@@ -1,6 +1,8 @@
 ---
 title: Run progress
 source_url: https://university.clay.com/docs/run-progress
+description: Clay provides multiple ways to track and monitor run progress
+  across your tables.
 last_synced: 2026-04-26T01:40:34.656Z
 upstream_hash: 8caebb06ffc7cc70026b7782add35881f953bb7ea5e8d6a74c6cec8b2d7a6639
 ---

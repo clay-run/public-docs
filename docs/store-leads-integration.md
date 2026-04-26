@@ -1,6 +1,8 @@
 ---
 title: Store Leads integration
 source_url: https://university.clay.com/docs/store-leads-integration
+description: Ecommerce data platform for lead generation and market research
+  using powerful search filters and API access.
 last_synced: 2026-04-26T01:40:43.466Z
 upstream_hash: 736cf902c5cbb5cfb689497db2725ab8a8ec055bdd6cba07e33169688e1f0a64
 ---

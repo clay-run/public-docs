@@ -1,6 +1,7 @@
 ---
 title: Find your Clay API key
 source_url: https://university.clay.com/docs/guide-find-clay-api-key
+description: Utilize your Clay-native enrichments with your personal key.
 last_synced: 2026-04-26T01:40:06.072Z
 upstream_hash: 761c50fac23ad613f5b19d7b3c90d291e769a13c327dbb38a5babe26ed2ebed2
 ---

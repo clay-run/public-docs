@@ -1,6 +1,8 @@
 ---
 title: Table versions
 source_url: https://university.clay.com/docs/table-versions
+description: Table versioning lets you track structural changes to your Clay
+  tables over time and restore previous configurations when needed.
 last_synced: 2026-04-26T01:40:46.704Z
 upstream_hash: 09abb6a57a85c12851d9074e7152c1358b35cc6fcbe04acca14ed4b7d02ffb54
 ---

@@ -1,6 +1,7 @@
 ---
 title: Instantly integration
 source_url: https://university.clay.com/docs/instantly-integration-overview
+description: Automated sales outreach platform.
 last_synced: 2026-04-26T01:40:11.630Z
 upstream_hash: 0ff9121f195688ecc59d6f13c4d11e69b7a2e6593eca9e0fabc44f9ae7c4b6a3
 ---

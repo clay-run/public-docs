@@ -1,6 +1,7 @@
 ---
 title: Loom integration
 source_url: https://university.clay.com/docs/loom-integration
+description: Easily transcribe your Loom videos right in Clay!
 last_synced: 2026-04-26T01:40:17.866Z
 upstream_hash: 05996e04f86b5d38bd8819cc0033f0dd82afd6c990943621bb6ae42e4e58e779
 ---

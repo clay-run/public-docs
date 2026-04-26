@@ -1,6 +1,7 @@
 ---
 title: RSS feed integration
 source_url: https://university.clay.com/docs/rss-feed-integration-overview
+description: Real-time content updates delivery via RSS.
 last_synced: 2026-04-26T01:40:34.330Z
 upstream_hash: 73e899883d05cad9a28710524fe4206c5279cd260cf61344325cc2e7138ba6b9
 ---

@@ -1,6 +1,7 @@
 ---
 title: Table columns
 source_url: https://university.clay.com/docs/table-columns-overview
+description: Learn how to navigate columns in your Clay table.
 last_synced: 2026-04-26T01:40:46.052Z
 upstream_hash: dcf2f9aa5aba4556b4e5de37a7b354c8d44e668192646c6cfdb9d8b4e9128d2b
 ---

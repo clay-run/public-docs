@@ -1,6 +1,8 @@
 ---
 title: SimilarWeb integration
 source_url: https://university.clay.com/docs/similarweb-integration
+description: Utilize SimilarWeb's powerful market intelligence data and
+  competitive analysis capabilities.
 last_synced: 2026-04-26T01:40:41.170Z
 upstream_hash: c59c31cb9c137ad73d898d470c239335a3f13b814d87d72b50b191249d2079f5
 ---

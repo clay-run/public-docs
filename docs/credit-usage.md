@@ -1,6 +1,7 @@
 ---
 title: Credit usage
 source_url: https://university.clay.com/docs/credit-usage
+description: Track credit consumption across your workspace.
 last_synced: 2026-04-26T01:39:49.092Z
 upstream_hash: d554b6234917090eecbf1c6c7c3d5a74bba6b86bf7d2a8a6938802d685d741ec
 ---

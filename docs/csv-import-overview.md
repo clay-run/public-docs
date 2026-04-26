@@ -1,6 +1,7 @@
 ---
 title: How to import your CSV into Clay
 source_url: https://university.clay.com/docs/csv-import-overview
+description: Import your CSV into Clay.
 last_synced: 2026-04-26T01:39:49.725Z
 upstream_hash: c3d5be757f2812acf1091e9c96c660fd2fd7d2268a3d79d75429c43e362dd14b
 ---

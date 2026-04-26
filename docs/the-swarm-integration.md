@@ -1,6 +1,7 @@
 ---
 title: The Swarm integration
 source_url: https://university.clay.com/docs/the-swarm-integration
+description: Find intros to companies and individuals using your network.
 last_synced: 2026-04-26T01:40:47.998Z
 upstream_hash: b720cbc1bb9cace978319f1e8d7c6e5ebe33278130cb6a9d8fa363a91954c73d
 ---

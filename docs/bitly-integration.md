@@ -1,6 +1,7 @@
 ---
 title: Bitly integration
 source_url: https://university.clay.com/docs/bitly-integration
+description: Modify your Bitly links from within Clay.
 last_synced: 2026-04-26T01:39:42.272Z
 upstream_hash: 2ca16db8096abf49a3ad8b88e03cefbf827dbcec1635751ba57e279237e19618
 ---

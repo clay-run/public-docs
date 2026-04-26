@@ -1,6 +1,8 @@
 ---
 title: Buying email accounts in Clay (Beta)
 source_url: https://university.clay.com/docs/buying-email-accounts
+description: Protect your domain reputation while scaling cold outreach — buy
+  alternative domains and email accounts directly in Clay using Clay credits.
 last_synced: 2026-04-26T01:39:42.909Z
 upstream_hash: ac01c9c23113a93aeaff0514e84238e81eee5dd8c22bbd69ba2549ae36127bf9
 ---

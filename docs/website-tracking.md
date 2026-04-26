@@ -1,6 +1,8 @@
 ---
 title: Web intent
 source_url: https://university.clay.com/docs/website-tracking
+description: Collect visitor information including pages visited, time spent,
+  and traffic sources.
 last_synced: 2026-04-26T01:40:54.567Z
 upstream_hash: 28b397dda0a2866f285eb94622303ee73697a5c5e2f26f124d56ff97604c2967
 ---

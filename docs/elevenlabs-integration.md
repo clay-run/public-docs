@@ -1,6 +1,7 @@
 ---
 title: ElevenLabs integration
 source_url: https://university.clay.com/docs/elevenlabs-integration
+description: Use Text to Speech to convert text to a variety of voices.
 last_synced: 2026-04-26T01:39:54.585Z
 upstream_hash: 3809d69cf8dec14e46f87ebae3493c62688f1d6c77dbaef91b8b4c4e115a0375
 ---

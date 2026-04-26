@@ -1,6 +1,7 @@
 ---
 title: Find People in Clay
 source_url: https://university.clay.com/docs/find-people-overview
+description: Discover relevant contacts matching your criteria within Clay's database.
 last_synced: 2026-04-26T01:39:58.803Z
 upstream_hash: 38622f4eb47a29257c2c283ccf0bce72123a4902190c52961bd8a1c1e45b44d8
 ---

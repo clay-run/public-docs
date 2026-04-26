@@ -1,6 +1,7 @@
 ---
 title: Intellizence integration
 source_url: https://university.clay.com/docs/intellizence-integration
+description: Enrich your tables with company. news and funding info.
 last_synced: 2026-04-26T01:40:11.949Z
 upstream_hash: 76d723f8fd38c8b233d8b0d58561c6390878ef96946b33eefcb42b9b96cde3c4
 ---

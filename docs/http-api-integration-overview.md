@@ -1,6 +1,7 @@
 ---
 title: HTTP API
 source_url: https://university.clay.com/docs/http-api-integration-overview
+description: Facilitate seamless integration and connectivity with any APIs.
 last_synced: 2026-04-26T01:40:08.701Z
 upstream_hash: 6ba64b21be65f745d8f3f5e362d290f624e1035ea304a572b218c60328cdb185
 ---

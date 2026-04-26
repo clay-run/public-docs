@@ -1,6 +1,7 @@
 ---
 title: SerpStat integration
 source_url: https://university.clay.com/docs/serpstat-integration
+description: Aggregate data from various regions to assess online visibility and reach.
 last_synced: 2026-04-26T01:40:39.887Z
 upstream_hash: 3d2402c4942e2d4f1799ab8c41b4adeb2cdafae86a710721a7385630550e5b9e
 ---

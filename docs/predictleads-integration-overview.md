@@ -1,6 +1,8 @@
 ---
 title: PredictLeads integration
 source_url: https://university.clay.com/docs/predictleads-integration-overview
+description: Identify recent news, open jobs, and connections for targeted
+  business insights.
 last_synced: 2026-04-26T01:40:29.966Z
 upstream_hash: 82cc3e57dc2bdc26aab52e49f43fe453f3eb918931a1dd29fe7acfae9868838a
 ---

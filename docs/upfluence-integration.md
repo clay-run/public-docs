@@ -1,6 +1,8 @@
 ---
 title: Upfluence integration
 source_url: https://university.clay.com/docs/upfluence-integration
+description: Find collaboration opportunities and engagement strategies through
+  enriched influencer profiles.
 last_synced: 2026-04-26T01:40:50.960Z
 upstream_hash: 0c47e2ed1ae7efb3ebef1f535b328f2db22fcdc75b6a48dc8601c08e9f198bfc
 ---

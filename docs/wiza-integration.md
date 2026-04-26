@@ -1,6 +1,7 @@
 ---
 title: Wiza integration
 source_url: https://university.clay.com/docs/wiza-integration
+description: Streamline contact enrichment workflows
 last_synced: 2026-04-26T01:40:55.218Z
 upstream_hash: 38659dc6de86afe2eea2676129df012b616bbc857ac2e37721c4c094c98f9538
 ---

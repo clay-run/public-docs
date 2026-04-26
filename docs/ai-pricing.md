@@ -1,6 +1,8 @@
 ---
 title: How AI is priced
 source_url: https://university.clay.com/docs/ai-pricing
+description: This guide explains how each works, which models they apply to, and
+  how credits are calculated.
 last_synced: 2026-04-26T01:39:39.981Z
 upstream_hash: 7ebe8e16c1a2999794bf438260edf30b5b22077fbb031ad16a2441e29ab946dc
 ---

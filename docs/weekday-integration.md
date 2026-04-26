@@ -1,6 +1,8 @@
 ---
 title: Weekday integration
 source_url: https://university.clay.com/docs/weekday-integration
+description: Enhance lead generation efforts by providing and organizing
+  additional contact information channels
 last_synced: 2026-04-26T01:40:54.896Z
 upstream_hash: ad05825b39a4fe6cd49e06e521d129c37094c54a873c8a538a531a44f73cbe56
 ---

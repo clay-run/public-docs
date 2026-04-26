@@ -1,6 +1,9 @@
 ---
 title: Google BigQuery integration
 source_url: https://university.clay.com/docs/google-bigquery-integration
+description: Import records from BigQuery into Clay using SQL queries, and send
+  enriched data back by inserting, looking up, updating, or upserting rows in
+  your BigQuery…
 last_synced: 2026-04-26T01:40:03.104Z
 upstream_hash: c455f35299a4375d4e63f5826a51ef966f5775962999615cb2c5157ed5ef0abc
 ---

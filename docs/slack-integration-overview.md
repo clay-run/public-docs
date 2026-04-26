@@ -1,6 +1,8 @@
 ---
 title: Slack integration
 source_url: https://university.clay.com/docs/slack-integration-overview
+description: Team communication and collaboration platform boosting productivity
+  with AI and integrations.
 last_synced: 2026-04-26T01:40:41.499Z
 upstream_hash: 3f6e0fed934fc93751fb1dd26b5e1784880c9296c00f370562d2c86c5f184c69
 ---

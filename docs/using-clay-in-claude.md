@@ -1,6 +1,8 @@
 ---
 title: Using Clay in Claude
 source_url: https://university.clay.com/docs/using-clay-in-claude
+description: Find people, enrich contacts, and draft personalized outreach—all
+  within a Claude conversation
 last_synced: 2026-04-26T01:40:52.929Z
 upstream_hash: 2041fecf55afc3051d85f4a4eef2228ca1ccc8085feed22c5ed3c3d72e2c9afc
 ---

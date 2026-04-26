@@ -1,6 +1,8 @@
 ---
 title: Sendoso integration
 source_url: https://university.clay.com/docs/sendoso-integration
+description: Enable personalized gift sending with AI-powered recommendations
+  and approval workflows.
 last_synced: 2026-04-26T01:40:39.241Z
 upstream_hash: 5ea2d30a6861cf791ba2c1b0ac024aa89de72c81209decfb7b6b47d170eb1623
 ---

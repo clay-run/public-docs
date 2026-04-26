@@ -1,6 +1,7 @@
 ---
 title: Za-zu integration
 source_url: https://university.clay.com/docs/za-zu-integration
+description: Lookup and add leads to your campaign.
 last_synced: 2026-04-26T01:40:58.129Z
 upstream_hash: 0c49e756e34d2286963caa65e2e23f41930d503b71ccee61f84fd054f4b6921c
 ---

@@ -1,6 +1,8 @@
 ---
 title: User groups
 source_url: https://university.clay.com/docs/user-groups
+description: User groups let you share Clay workbooks and connected accounts
+  with multiple members at once.
 last_synced: 2026-04-26T01:40:51.931Z
 upstream_hash: e2e519cc72232ad1b3ae3115f1598114a5fa9d1cb275df7564ec487ce6943f21
 ---

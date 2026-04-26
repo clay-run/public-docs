@@ -1,6 +1,7 @@
 ---
 title: Marketo integration
 source_url: https://university.clay.com/docs/marketo-integration
+description: Create, update, and lookup Marketo objects directly from Clay.
 last_synced: 2026-04-26T01:40:20.477Z
 upstream_hash: 1067341cf0bc0b170840335ac9d8d02cf60142562e5e82b855e5df891791586d
 ---

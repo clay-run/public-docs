@@ -1,6 +1,7 @@
 ---
 title: Write to Other Table
 source_url: https://university.clay.com/docs/write-to-table-integration-overview
+description: Easily transfer data between Clay tables.
 last_synced: 2026-04-26T01:40:56.846Z
 upstream_hash: 3e0da71677616110e0df7dee75650b9b238e81e89bb270777c7886a8d4788e1e
 ---

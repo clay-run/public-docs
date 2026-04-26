@@ -1,6 +1,8 @@
 ---
 title: Clay Ads
 source_url: https://university.clay.com/docs/clay-ads
+description: Build and sync contact and account lists to LinkedIn and Meta for
+  precise ad targeting.
 last_synced: 2026-04-26T01:39:43.557Z
 upstream_hash: 06885b8c873ff50c640ce0ef5253ce195e7b3acdf5145c13e3e79cb3dc010016
 ---

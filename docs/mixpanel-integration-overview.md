@@ -1,6 +1,7 @@
 ---
 title: Mixpanel integration overview
 source_url: https://university.clay.com/docs/mixpanel-integration-overview
+description: Product analytics platform.
 last_synced: 2026-04-26T01:40:22.779Z
 upstream_hash: 41055d407b014fbd36bd8e626907ec99ada07320a0651ece4bfbfd69f664abb8
 ---

@@ -1,6 +1,7 @@
 ---
 title: HeyGen integration
 source_url: https://university.clay.com/docs/heygen-integration
+description: Generate videos with AI avatars using your scripts.
 last_synced: 2026-04-26T01:40:07.040Z
 upstream_hash: dbef77d16d81f0a1e6110baf50d4e3244fd70196510db79acd1fcc8d6dbfeb2b
 ---

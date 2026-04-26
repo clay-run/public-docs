@@ -1,6 +1,8 @@
 ---
 title: Salesforge integration
 source_url: https://university.clay.com/docs/salesforge-integration
+description: Automate enrollment into outreach sequences and synchronizing
+  contact information within workspaces
 last_synced: 2026-04-26T01:40:35.967Z
 upstream_hash: 0fde59b120d8517cbb1db9d7722725d83d7367c7eec782157d4b6230bb1d66fe
 ---

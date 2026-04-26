@@ -1,6 +1,7 @@
 ---
 title: Microsoft Dynamics 365 CRM integration overview
 source_url: https://university.clay.com/docs/microsoft-dynamics-365-crm-integration-overview
+description: Cloud-based Customer Relationship Management platform
 last_synced: 2026-04-26T01:40:21.790Z
 upstream_hash: 8632dbcee742326326775635dcaa0c0527845f551ffe3e9a3b55f76ec5b468a2
 ---

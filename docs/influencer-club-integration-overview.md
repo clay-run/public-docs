@@ -1,6 +1,7 @@
 ---
 title: Influencer club integration overview
 source_url: https://university.clay.com/docs/influencer-club-integration-overview
+description: Creator data and outreach platform.
 last_synced: 2026-04-26T01:40:10.989Z
 upstream_hash: 22cd9f51ae4aac285d2c3c5e0eb102448a7b70be3dc4093133082bd609a090a0
 ---

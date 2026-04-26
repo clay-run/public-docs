@@ -1,6 +1,7 @@
 ---
 title: HubSpot integration
 source_url: https://university.clay.com/docs/hubspot-integration-overview
+description: All-in-one CRM platform for marketing, sales, and customer service.
 last_synced: 2026-04-26T01:40:09.362Z
 upstream_hash: 59e6ef2464cbe62bf1c3eccafec2aa4eb3962fbd661770629a2ff87a6429f2e3
 ---

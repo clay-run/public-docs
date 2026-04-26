@@ -1,6 +1,7 @@
 ---
 title: Formulas
 source_url: https://university.clay.com/docs/formula-generator
+description: Generate formulas with AI to transform your data.
 last_synced: 2026-04-26T01:40:01.109Z
 upstream_hash: 30a9dfa01dd9c6fff8f8a3a0ff6805b1416bad474e318943a2d533010c6b832f
 ---

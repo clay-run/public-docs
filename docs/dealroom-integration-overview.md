@@ -1,6 +1,7 @@
 ---
 title: Dealroom.co integration
 source_url: https://university.clay.com/docs/dealroom-integration-overview
+description: Startup and tech ecosystem intelligence platform.
 last_synced: 2026-04-26T01:39:52.634Z
 upstream_hash: 0c1af7c8808bf5e5b8b5bbc1b27502baea97080d02e8487c79929477f7e6dc89
 ---

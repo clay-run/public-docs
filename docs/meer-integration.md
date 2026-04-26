@@ -1,6 +1,8 @@
 ---
 title: Meer integration
 source_url: https://university.clay.com/docs/meer-integration
+description: Screen phone numbers against national do-not-call registries before
+  initiating outbound calls.
 last_synced: 2026-04-26T01:40:21.149Z
 upstream_hash: 5ec7b57af665ad019ca2e5e5111c349b156dfe9688ec12bc86818db784c16094
 ---

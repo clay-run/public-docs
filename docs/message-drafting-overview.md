@@ -1,6 +1,7 @@
 ---
 title: Message drafting overview
 source_url: https://university.clay.com/docs/message-drafting-overview
+description: Write personalized message sequences with AI, conditionals and more.
 last_synced: 2026-04-26T01:40:21.472Z
 upstream_hash: e86e688394833f4d8c5f7b9cb59b1c306f643bc1e778edb0f6f9e0cae4d7ae11
 ---

@@ -1,6 +1,7 @@
 ---
 title: Rox integration
 source_url: https://university.clay.com/docs/rox-integration
+description: Update contacts in Rox directly from Clay
 last_synced: 2026-04-26T01:40:34.009Z
 upstream_hash: 2725ad480e85cdd070ea26678cca4f2d7a6269760492e1b9aef3c9a8adb689d8
 ---

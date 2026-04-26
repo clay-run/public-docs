@@ -1,6 +1,7 @@
 ---
 title: Credit spend limits FAQ
 source_url: https://university.clay.com/docs/credit-spend-limits-faq
+description: Answering questions about the credit spend limits feature.
 last_synced: 2026-04-26T01:39:48.764Z
 upstream_hash: 64d96124ab54a60f6c196d9dc236c18dd3fb4c2d59dcdd667555dcbb8f2bed03
 ---

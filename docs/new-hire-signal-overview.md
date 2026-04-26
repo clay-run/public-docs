@@ -1,6 +1,7 @@
 ---
 title: Monitor for new hire
 source_url: https://university.clay.com/docs/new-hire-signal-overview
+description: Track new hires signals and act on timely data.
 last_synced: 2026-04-26T01:40:24.407Z
 upstream_hash: 02bc46686cac9b5b0215db1d1d3470c9a0d87299b7c5fcfd575bde86b8b1ff15
 ---

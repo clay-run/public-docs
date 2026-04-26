@@ -1,6 +1,8 @@
 ---
 title: Zerobounce integration
 source_url: https://university.clay.com/docs/zerobounce-integration-overview
+description: Email validation and deliverability tools boost inbox placement and
+  marketing ROI.
 last_synced: 2026-04-26T01:40:59.101Z
 upstream_hash: 78222a6034eaebf540a6ce7da4714cbf7737e831104ba74c05efd669e43494d3
 ---

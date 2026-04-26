@@ -1,6 +1,7 @@
 ---
 title: Monitor for promotions
 source_url: https://university.clay.com/docs/promotion-signal-overview
+description: Monitor promotion trends and respond to actionable, real-time insights.
 last_synced: 2026-04-26T01:40:30.289Z
 upstream_hash: 356346a2106c2716e960595bbe9149ab6abd779d5d2b5ce4214cb3c899d2c2b5
 ---
