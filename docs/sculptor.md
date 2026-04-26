@@ -5,11 +5,9 @@ source_url: https://university.clay.com/docs/sculptor
 
 # Sculptor
 
-Your go-to-market co-pilot
-
 ## Overview
 
-Sculptor is Clay's **go-to-market co-pilot**. It helps teams turn high-level ideas into production-ready workflows. You can bring a challenge into the chat box and, working alongside Sculptor, deploy it as a live Clay workflow in minutes.
+Sculptor helps teams turn high-level ideas into production-ready workflows. You can bring a challenge into the chat box and, working alongside Sculptor, deploy it as a live Clay workflow in minutes.
 
 For example, you could:
 
