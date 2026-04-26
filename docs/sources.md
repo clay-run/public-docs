@@ -15,7 +15,7 @@ Every Clay table starts with a source. You can import customer data from a CSV f
 
 ## Types of sources
 
--   List builders ([Find Companies](https://www.clay.com/university/guide/find-companies), [Find People](https://www.clay.com/university/guide/find-people-overview))
+-   List builders — [Find Companies](https://www.clay.com/university/guide/find-companies) and [Find People](https://www.clay.com/university/guide/find-people-overview), plus third-party sources like OpenMart and HG Insights. All accessible from the [Find leads](https://www.clay.com/university/guide/find-leads) page in the sidebar.
 -   CRM systems ([Hubspot](https://www.clay.com/university/guide/hubspot-integration-overview), [Salesforce](https://www.clay.com/university/guide/salesforce-integration-overview))
 -   [Webhooks](https://www.clay.com/university/guide/webhook-integration-guide)
 -   [CSV files](https://www.clay.com/university/guide/csv-import-overview)
