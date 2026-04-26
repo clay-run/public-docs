@@ -35,7 +35,7 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
         -   **Industries** and **Subindustries** (include or exclude)
         -   **Revenue streams** — e.g., Subscriptions/Recurring, Professional Services, Transaction Fees, Advertising, Licensing/IP
         -   **Business types** — B2B, B2C, or Nonprofit
-    -   **Technographics** — Filter by installed technology, powered by [BuyerCaddy](https://university.clay.com/docs/buyercaddy-integration). Costs **3 credits per matching company row** — cheaper in most cases than pulling a broad list and running a technographic enrichment afterward, since you pay only for companies that already match your tech criteria.
+    -   **Technographics** — Filter by installed technology, powered by [BuyerCaddy](https://university.clay.com/docs/buyercaddy-integration). Costs **3 credits per matching company row** — cheaper in most cases than pulling a broad list and running a technographic enrichment afterward, since you pay only for companies that already match your tech criteria. Technographics data is also included when sending company rows to Audiences; the same 3-credit cost per matching row applies.
         -   **Vendors** — e.g., AWS, Salesforce, HubSpot
         -   **Products** — e.g., Amazon EC2, Salesforce Sales Cloud
         -   **Main categories** and **Parent categories**
