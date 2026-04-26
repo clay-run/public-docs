@@ -13,9 +13,16 @@ The `Find People` source helps you search for people using criteria like job tit
 
 This tool is ideal for building targeted sales prospect lists, identifying potential hires, and conducting market research.
 
-**Note:** You can get up to 500 results per cell by reducing the data you’re requesting. Click the column name and select **Edit column → Reduce Data for More Results**.
+**Note:** You can get up to 500 results per cell by reducing the data you're requesting. Click the column name and select **Edit column → Reduce Data for More Results**.
 
 ## **Creating a table with Find People**
+
+**From the Find leads page (recommended for new searches):**
+
+1.  Click **Find leads** in the left sidebar.
+2.  On the **People** tab, click the **Clay** source card.
+
+**From within a workbook:**
 
 1.  In a workbook, click `+ Add` at the bottom.
 2.  Search for `Find People`.
