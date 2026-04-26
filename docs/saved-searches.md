@@ -13,6 +13,8 @@ Saved searches let you save and reuse your filter criteria for `Find companies`,
 
 This feature is especially useful when you're building lists with similar criteria across multiple tables or workbooks, or when you want to quickly recreate a search you've run before.
 
+**Tip:** Your recent and saved searches are also surfaced in the **Past searches** section of the [Find leads](https://university.clay.com/docs/find-leads) page, where you can browse and relaunch them without opening a source modal first.
+
 ## Save a search
 
 1.  When creating a `Find companies`, `Find people`, or `Find jobs` source, configure your search filters (industry, headcount, location, job titles, etc.).
@@ -21,6 +23,14 @@ This feature is especially useful when you're building lists with similar criter
 4.  Your saved search will now be available to reuse in future tables.
 
 ## Use a saved search
+
+**From the Find leads page:**
+
+1.  Click **Find leads** in the left sidebar.
+2.  Scroll to the **Past searches** section and use the segmented control to switch between **Recents**, **Saved by you**, or **Workspace**.
+3.  Click a search to load its filters and run it as a new source.
+
+**From within a source modal:**
 
 1.  When setting up a new `Find companies`, `Find people`, or `Find jobs` source, click `Browse past searches` in the modal.
 2.  Click `Saved by you` to find your saved searches (ones you explicitly saved), `Recents` to find your last 5-10 searches, or `Workspace` to find searches saved by anyone.
