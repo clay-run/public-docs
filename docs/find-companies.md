@@ -15,6 +15,13 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
 
 ## **Creating a table with Find Companies**
 
+**From the Find leads page (recommended for new searches):**
+
+1.  Click **Find leads** in the left sidebar.
+2.  On the **Companies** tab, click the **Clay** source card.
+
+**From within a workbook:**
+
 1.  In a workbook, click `+ Add` at the bottom.
 2.  Search for `Find Companies`.
 
