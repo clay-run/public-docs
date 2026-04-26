@@ -11,6 +11,8 @@ Best practices to Clay's company and people search features.
 
 Clay's `Find Companies` and `Find People` sources give you instant access to billions of company and people profiles — all in one place. Here are the best practices we recommend to streamline your searches and surface the strongest results.
 
+**Starting point:** Use the [Find leads](https://university.clay.com/docs/find-leads) page (accessible from the left sidebar) as your entry point. It surfaces Clay's native database alongside third-party sources like OpenMart and HG Insights, and lets you pick up past searches without re-entering filters.
+
 ## Company search
 
 ### Anchor on description keywords
