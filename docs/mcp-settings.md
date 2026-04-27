@@ -27,7 +27,7 @@ The `Enable for MCP` option on Functions is available on modern Launch, Growth, 
 Functions are reusable enrichment workflows built in Clay that reps can invoke directly from ChatGPT or Claude with a single prompt. Admins build them once and enable them for MCP — reps never need to open Clay to use them.
 
 1.  Go to the `Functions` tab in your workspace and find the function you want (or click `+ New function` to create a new one.)
-2.  Click the function to open it’s settings and toggle `Enable for MCP`.
+2.  Click the function to open it's settings and toggle `Enable for MCP`.
     -   Set a name and description for the MCP app — this is what reps see when browsing available functions, so make it actionable (e.g., _"Company enrichment waterfall"_ or _"Outbound email generator"_).
 
 _For more information about functions, check out our_ [_full doc_](https://university.clay.com/docs/functions)_._
@@ -49,7 +49,7 @@ The `MCP users` table gives a live view of every rep who has connected Clay to a
 -   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, or both)
 -   **Credit limit** — the rep's current limit, either the workspace default or a per-user override
 -   **Credits used** — live usage tracked against the rep's limit
--   **Salesforce ID _(Enterprise Beta users only)_** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
+-   **Salesforce ID _(Enterprise Beta users only)_** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
 
 Use the search bar at the top of the table to find a specific rep by name or email.
 
@@ -65,6 +65,10 @@ If your workspace uses Clay Audiences, two additional workspace-level toggles ap
 -   **Allow querying all accounts** — when enabled, reps can query any account in the synced audience, not just accounts they own in Salesforce.
 
 ## FAQ
+
+### Which AI clients does Clay MCP support?
+
+Clay currently supports direct connections with **ChatGPT** and **Claude** (including Claude Code). Custom OAuth configurations — such as providing your own callback URL or generating a separate client ID and client secret — are not supported. This means routing the Clay MCP connection through a third-party MCP manager is not currently possible.
 
 ### Can admins remove a rep's access to Clay in ChatGPT or Claude?
 
