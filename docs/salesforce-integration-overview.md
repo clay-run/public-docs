@@ -210,6 +210,32 @@ When you run these actions on multiple rows in Clay, they automatically use Sale
 -   **Better performance:** Reduced overhead when working with hundreds or thousands of records
 -   **Individual error handling:** Each record in the batch is processed independently—if one fails, others can still succeed
 
+## Importing Salesforce data into Audiences
+
+Clay Audiences supports importing Salesforce Leads, Contacts, and Opportunities directly, letting you sync your CRM data alongside other sources — all deduplicated into unified records.
+
+### Leads and Contacts
+
+You can sync both Salesforce Leads and Contacts into the `People` tab of your Audiences workspace.
+
+1.  In your Audiences workspace, navigate to the `People` tab and click `Add data`.
+2.  Click `Add source` → search for `Salesforce` → select the Leads or Contacts import option.
+3.  Select an existing Salesforce connection, or click `+ Add account` to connect a new one.
+
+**Automatic Lead-to-Contact merging:** When a Salesforce Lead is converted to a Contact, Audiences automatically merges the two records into a single unified person — no manual deduplication needed.
+
+**Filtering:** Once imported, you can filter people records by sync status (to see which records are synced, pending, or have an error) and by record conversion status (to filter Leads by whether they have been converted to a Contact in Salesforce).
+
+### Opportunities
+
+You can sync Salesforce Opportunities into Audiences alongside your People and Companies data.
+
+1.  In your Audiences workspace, click `Add data`.
+2.  Click `Add source` → search for `Salesforce` → select the Opportunities import option.
+3.  Select an existing Salesforce connection, or click `+ Add account` to connect a new one.
+
+**Filtering:** Once imported, you can filter Opportunity records by any Opportunity field, including Stage, Deal Size, and Close Date.
+
 ## Best practices
 
 -   **Test before automating:** Start with auto-update disabled when using **Create** or **Update** actions. Test manually with a few rows first before enabling automation.
