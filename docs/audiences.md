@@ -10,7 +10,7 @@ upstream_hash: 179d0c9feae111ee5bff85d8a1428b47ca0754c5ef6639700f2c80852a25a96b
 
 **Note:** This feature is currently in beta for Enterprise customers.
 
-Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
+Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
 
 Use it to build dynamic segments across millions of records, run automated enrichment and signal workflows at scale, and sync results back to Salesforce without managing dozens of separate tables.
 
@@ -35,7 +35,7 @@ You can import data from:
 
 ### Importing from Salesforce
 
-**Note:** Setup must be completed separately for People, Companies, and Opportunities. Complete steps for `People` first, then repeat for `Companies`, then `Opportunities`.
+**Note:** Setup must be completed separately for People, Companies, Leads, and Opportunities. Complete steps for `People` first, then repeat for `Companies`, `Leads`, and `Opportunities`.
 
 1.  Click `Add data` → `Add Source` → select your [**Salesforce integration**](https://university.clay.com/docs/salesforce-integration-overview).
     -   If you don't see an SFDC integration listed, contact your Growth Strategist.
@@ -48,8 +48,9 @@ You can import data from:
 7.  Select `Companies` at the top and repeat steps 3–6 for accounts.
 8.  Select `Leads` at the top of the sync panel.
 9.  Enable the `Import` toggle.
-10.  Add any Lead fields you want to filter or segment by — common fields include `Lead Status`, `Lead Source`, `Title`, and `Company`.
+10.  Add any Lead fields you want to filter or segment by — common fields include `Lead Status`, `Lead Source`, `Title`, `Company`, and `IsConverted`.
      -   Lead records are automatically merged with matching Contact records into a single person record in your People audience. Data from both sources is combined, and duplicates across Salesforce Leads, Contacts, and other sources count as one person.
+     -   When a Salesforce Lead is converted, Audiences automatically handles the merge — consolidating the Lead and the resulting Contact into a single unified record.
 11.  Name the corresponding Clay fields.
 12.  Select `Opportunities` at the top of the sync panel.
 13.  Enable the `Import` toggle.
@@ -57,6 +58,8 @@ You can import data from:
      -   Opportunity data is associated with your Companies records and becomes available as a filter in your Companies audience.
 15.  Name the corresponding Clay fields.
 16.  Click `Save and Preview`, then `Confirm`.
+
+**Filtering Lead and Contact data:** After importing Leads, your People audience supports two additional filter types: **`Is Salesforce Lead`** — to show only records that originated from Salesforce Leads (as opposed to Contacts) — and **sync status** — to view records by their current sync state across all connected sources. Any Lead fields you mapped, including `IsConverted`, are also available as segment filters.
 
 ### Importing from Snowflake
 
