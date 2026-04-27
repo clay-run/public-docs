@@ -55,7 +55,7 @@ You can import data from:
 12.  Select `Opportunities` at the top of the sync panel.
 13.  Enable the `Import` toggle.
 14.  Add any Opportunity fields you want to filter or segment by — common fields include `Stage`, `Amount`, `Close Date`, and `Owner`.
-     -   Opportunity data is associated with your Companies records and becomes available as a filter in your Companies audience.
+     -   Opportunity data is associated with your Companies records and becomes available as a filter in your Companies audience. This unlocks use cases like **Closed Lost re-engagement** (filter Companies by Stage = "Closed Lost"), **ROI reporting** (segment by Amount or Close Date), and **account context for sales tools and agents** (surface deal history alongside contact records).
 15.  Name the corresponding Clay fields.
 16.  Click `Save and Preview`, then `Confirm`.
 
