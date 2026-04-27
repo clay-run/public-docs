@@ -10,7 +10,7 @@ upstream_hash: 179d0c9feae111ee5bff85d8a1428b47ca0754c5ef6639700f2c80852a25a96b
 
 **Note:** This feature is currently in beta for Enterprise customers.
 
-Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
+Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
 
 Use it to build dynamic segments across millions of records, run automated enrichment and signal workflows at scale, and sync results back to Salesforce without managing dozens of separate tables.
 
@@ -50,6 +50,7 @@ You can import data from:
 9.  Enable the `Import` toggle.
 10.  Add any Lead fields you want to filter or segment by — common fields include `Lead Status`, `Lead Source`, `Title`, and `Company`.
      -   Lead records are automatically merged with matching Contact records into a single person record in your People audience. Data from both sources is combined, and duplicates across Salesforce Leads, Contacts, and other sources count as one person.
+     -   After importing, use the **Is Salesforce Lead** filter in your segment builder to target Lead records specifically, or filter by **Lead conversion status** to distinguish unconverted Leads from those already converted to Contacts in Salesforce.
 11.  Name the corresponding Clay fields.
 12.  Select `Opportunities` at the top of the sync panel.
 13.  Enable the `Import` toggle.
@@ -203,7 +204,7 @@ Use the `Upstream to Audiences` table enrichment as a bridge. Bring your data in
 
 ### My CRM is messy. Should I clean it up before setting up Audiences?
 
-You don't need a clean CRM to get started — CRM cleanup is often the first use case Audiences enables. A common approach: sync your existing CRM, run LinkedIn enrichments to refresh contact data, use the enriched identifiers to surface duplicates, then build further enrichments from there.
+You don't need a clean CRM to get started — CRM cleanup is often the right first use case Audiences enables. A common approach: sync your existing CRM, run LinkedIn enrichments to refresh contact data, use the enriched identifiers to surface duplicates, then build further enrichments from there.
 
 ### Does Audiences update automatically?
 
