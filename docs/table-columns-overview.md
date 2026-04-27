@@ -12,7 +12,7 @@ Learn how to navigate columns in your Clay table.
 
 ## Column data types
 
-There are a data types you can specify for your column. Here’s a high level overview of each one:
+There are a data types you can specify for your column. Here's a high level overview of each one:
 
 -   **Text:** Accepts text inputs. You can use this for text fields, summaries, or descriptions
 -   **URL:** Takes in links and will open the link if you click on the cell.
@@ -20,6 +20,8 @@ There are a data types you can specify for your column. Here’s a high level ov
 -   **Select:** Select from a list of predefined tags. This is useful for categorizing your contacts and companies.
     -   You can also split into views: create a view for each Select option with one click to slice your table by things like Account Tier or Segment.
 -   **Multi-select:** Select multiple options from a list of predefined tags. Similar to Select, but allows choosing more than one tag per cell.
+    -   The input format is an array of strings. If you map an array of strings via a formula, the field will auto-populate those values as options.
+    -   When exported to destinations like Salesforce, multi-select values are output as an array of strings (e.g., `['Option A', 'Option B', 'Option C']`).
 -   **Number:** Allows numerical values to be entered, ideal for ISO time measurements, lead scores, or revenue measurements.
 -   **Date:** Accepts a date and time range.
 -   **Currency:** Express your values in currency amounts.
@@ -75,7 +77,7 @@ You can switch the data type of your column within your table. To do this:
 
 ## Create child columns from a parent column
 
-When you enrich data within Clay, your results will be presented as arrays of data, which sometimes includes nested endpoints. You can create individual child columns by mapping specific endpoints from the parent column’s enrichment.
+When you enrich data within Clay, your results will be presented as arrays of data, which sometimes includes nested endpoints. You can create individual child columns by mapping specific endpoints from the parent column's enrichment.
 
 ### Add a new child column
 
@@ -109,6 +111,17 @@ To hide a column:
 1.  Click on the header of the column you want to hide to access the dropdown menu.
 2.  Within the menu, select `Hide`.
 
+## Sort columns by data flow
+
+You can automatically reorder your table's columns by their dependency order using the **Sort by data flow** button in the columns panel.
+
+To sort columns by data flow:
+
+1.  Click the **Columns** dropdown in the upper left corner of your table to open the columns panel.
+2.  Click **Sort by data flow**.
+
+Columns are reordered so that each column's dependencies appear before it — upstream columns (those that feed data into other columns) come first. Note that grouped columns may be handled differently to preserve their grouping.
+
 ## Merge columns
 
 You can merge data from multiple columns into a new column.
@@ -120,7 +133,7 @@ You can merge data from multiple columns into a new column.
 
 ## Dedupe columns
 
-You can also dedupe your rows based a specific column’s values.
+You can also dedupe your rows based a specific column's values.
 
 To dedupe a column:
 
