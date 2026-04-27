@@ -11,7 +11,7 @@ upstream_hash: 28b397dda0a2866f285eb94622303ee73697a5c5e2f26f124d56ff97604c2967
 
 Collect visitor information including pages visited, time spent, and traffic sources.
 
-Clay’s website tracking enables teams to collect visitor information in order to understand web intent — including pages visited, time spent, and traffic sources.
+Clay's website tracking enables teams to collect visitor information in order to understand web intent — including pages visited, time spent, and traffic sources.
 
 This tracking provides insights into how visitors engage with your content and helps you identify high-intent accounts at the optimal moment.
 
@@ -100,7 +100,7 @@ URL paths are exact-match, so `/blog` and `/blog/` are different. Also, filter c
 
 Update your site's Content Security Policy to allow Clay domains:
 
-`Content-Security-Policy:   default-src 'self';   script-src 'self' <https://static.claydar.com> <https://cdn.claydar.com>;   connect-src 'self' <https://api.claydar.com>;`
+`Content-Security-Policy:   default-src 'self';   script-src 'self' <https://static.claydar.com> <https://cdn.claydar.com>;   connect-src 'self' <https://api.claydar.com>;`
 
 ### Not seeing new rows in my table
 
@@ -139,7 +139,28 @@ Other common causes: adding new pages to tracking, removing exclusions, loosenin
 
 No. The script runs in the visitor's browser and loads asynchronously, so it won't affect page performance. Website issues after installation are usually due to other simultaneous changes.
 
+### Fewer identified companies than expected
+
+If you have significant site traffic but very few identified companies, check each of the following:
+
+-   **IP identification ceiling:** IP-to-company identification typically resolves 10–30% of traffic. B2B-heavy audiences identify at a higher rate; consumer, SMB, or developer traffic is harder to resolve. At 15,000 monthly visits, a realistic range is a few hundred to a few thousand identified companies. Seeing far fewer than that usually indicates a script installation or configuration issue rather than normal behavior.
+-   **Visit threshold too high:** If your filter requires 3+ sessions before a company appears, you'll miss most visitors who come once or twice. Set the threshold to 1 to capture full volume, then segment by frequency afterward.
+-   **Time window too short:** A 3-day window captures far less than a 14- or 30-day window. Widen the window to surface more signals.
+-   **Page-level filters too narrow:** Tracking only `/pricing` or `/demo` excludes everyone who browses other parts of your site. Start with site-wide tracking and add page filters after you understand your traffic patterns.
+-   **Script not firing on all pages:** Confirm the snippet is installed globally, including on subdomains if relevant, and isn't being blocked by cookie consent tools or ad blockers. Use the `Verify installation` button and check your browser Network tab for `claydar` requests to confirm the script is loading.
+
 # FAQ
+
+### What data does each web intent row contain?
+
+Each row represents an identified company and includes two key session fields:
+
+-   **`recentSessions`** — detail of the most recent sessions for that company: pages visited, time spent on each page (engagement time), UTM parameters, and geographic location. This shows the most recent visits, not the full history of every session.
+-   **`totalSessionCountInWindow`** — the total count of all sessions from that company within your configured time window (e.g., the last 14 days). This is a number only — no session detail — but it reflects the complete visit volume.
+
+Use these two fields together: `totalSessionCountInWindow` tells you *how often* a company has visited, while `recentSessions` tells you *what they did*. For example, a company with 15 total sessions and high engaged time on your pricing page is a much stronger intent signal than one with 150 sessions and near-zero engagement time, which may indicate bot traffic.
+
+A practical approach is to set a session count threshold (such as more than 3 sessions in the window) as a trigger, then use the session detail in `recentSessions` to understand what content the company engaged with before routing to sales.
 
 ### Is visitor tracking data shown in real-time?
 
