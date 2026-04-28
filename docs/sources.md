@@ -77,6 +77,15 @@ Scheduling source runs is one of the most powerful features, as it keeps your in
 
 Even if the source preview shows the new filters, the table won't refresh until you re-run the step that generated the data. To see the updated results, either delete and re-run the step or duplicate the table with the updated source.
 
+### What happens to rows already in my table if my HubSpot list or segment changes?
+
+**Clay's source import is additive — existing rows are never automatically removed.** If you update a HubSpot list or segment so that some records are excluded by the new filters, those records stay in your Clay table. Clay does not remove rows retroactively when list membership changes.
+
+To remove records that no longer match your HubSpot list or segment, you have two options:
+
+-   **Manually delete the rows** you no longer want in the table.
+-   **Delete and re-run the source** to clear the table and reimport only the records that currently match the list.
+
 ### I am trying to add a source to an existing table, but I get an error
 
 When adding a new source to an existing table, you must have the appropriate columns set up. For example, to add a `Find company` source, you need professional social URLs or Company Domains columns.
