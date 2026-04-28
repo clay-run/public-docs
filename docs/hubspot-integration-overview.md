@@ -32,6 +32,8 @@ Use this source to import objects from HubSpot into Clay.
 -   **Include read-only properties? (Optional):** Include all HubSpot calculated fields for each contact (e.g., `hs_analytics_first_timestamp`). If not selected, only editable properties will be included (e.g., `domain`).
 -   **Exclude empty properties? (Optional):** Exclude all empty properties from the response. If not selected, all properties will be included, even those with empty values.
 
+**Note:** The source import is additive. If you later update the HubSpot list's filters so that some records are excluded, those records stay in your Clay table — Clay does not automatically remove existing rows when list membership changes. To get a fresh import that exactly matches the current list, delete and re-run the source. See [Sources FAQs](https://university.clay.com/docs/sources#faqs) for more detail.
+
 ### `Action` Create object
 
 Use this action to create an object in HubSpot.
