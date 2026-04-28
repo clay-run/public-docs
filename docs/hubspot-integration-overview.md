@@ -122,7 +122,7 @@ These permissions are requested by default but can be disabled:
 -   [`crm.objects.custom.read`](http://crm.objects.custom.read) — View custom objects.
 -   `crm.objects.custom.write` — Create, delete, or edit custom objects.
 -   [`crm.objects.deals.read`](http://crm.objects.deals.read) — View deal properties and details.
--   \[`crm.objects.deals](<http://crm.objects.deals>).write` — Create, delete, or edit deals.
+-   `crm.objects.deals.write` — Create, delete, or edit deals.
 -   [`crm.schemas.deals.read`](http://crm.schemas.deals.read) — View deal property settings.
 
 ### Optional scopes (disabled by default)
