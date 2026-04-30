@@ -77,6 +77,19 @@ Scheduling source runs is one of the most powerful features, as it keeps your in
 
 Even if the source preview shows the new filters, the table won't refresh until you re-run the step that generated the data. To see the updated results, either delete and re-run the step or duplicate the table with the updated source.
 
+### Will rows already in my table be removed if they no longer match the source filter?
+
+**No. Clay sources are additive only — they add rows (and optionally update them), but they never automatically remove rows from your table.**
+
+If you narrow a source filter — for example, by updating a HubSpot list or segment so that certain contacts or companies no longer qualify — the rows already in your Clay table will stay. They are not deleted automatically.
+
+The **Update existing rows** toggle (available when re-running a source) controls whether Clay refreshes the data in existing rows on re-run. It does not remove rows that are no longer included in the source.
+
+To remove rows that no longer match your filter, you have two options:
+
+-   **Delete them manually** — select the rows in the table and delete them.
+-   **Delete and re-run the source** — this re-imports records based on the current filter. You will need to clear any previously imported rows first if you want a clean slate.
+
 ### I am trying to add a source to an existing table, but I get an error
 
 When adding a new source to an existing table, you must have the appropriate columns set up. For example, to add a `Find company` source, you need professional social URLs or Company Domains columns.
