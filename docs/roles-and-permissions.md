@@ -91,7 +91,7 @@ To invite a new member to your workspace:
 To update a member's role:
 
 -   Go to `Settings` → `Team`.
--   Find the member’s name and use the dropdown menu next to their name to select the desired role.
+-   Find the member's name and use the dropdown menu next to their name to select the desired role.
 -   Changes are applied immediately.
 
 ### **Remove a team member**
@@ -100,7 +100,9 @@ To remove a member from your workspace:
 
 -   Go to `Settings` → `Team`.
 -   Find the member you wish to remove.
--   Click the `🗑️`  next to their name.
+-   Click the `…` (three-dot) menu next to their name.
+-   Select `Remove member`.
+-   Confirm the removal in the dialog that appears.
 
 ## Edit access levels in a workbook
 
