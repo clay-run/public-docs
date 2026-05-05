@@ -154,6 +154,7 @@ Two options:
 
 **2\. One-time top-up**
 
+-   Go to `Settings` → `Usage` and click `Add one-time data credits`.
 -   Available for emergency needs during your billing cycle.
 -   **30% premium** applies.
 -   Subject to rollover limits.
