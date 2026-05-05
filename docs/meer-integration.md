@@ -15,6 +15,20 @@ The Meer integration helps you maintain Do Not Contact (DNC) compliance by scree
 
 With this integration, you can check phone numbers against regularly updated DNC registries and receive status information to help you avoid contacting numbers on do-not-call lists.
 
+## Prerequisites: accept compliance terms
+
+Meer is a compliance-gated integration. **It will not appear in the enrichment search inside a table until a workspace admin has accepted the compliance terms in settings.** If you search for Meer in the Actions panel and see nothing, this step has not been completed yet.
+
+To enable Meer for your workspace:
+
+1.  Navigate to **Settings > Enrichments** and open the **Compliance** tab.
+2.  Find the Meer card. Read the terms, then enter your company's domain (e.g., `yourcompany.com`).
+3.  Click **Agree and activate**.
+
+Once activated, Meer will appear in the enrichment search for all members of the workspace.
+
+> **Note:** Only workspace admins can accept compliance terms. If you are not an admin, ask your workspace admin to complete this step before you can use Meer.
+
 ## Using Meer in Clay
 
 1.  While in a Clay table, click `Actions` and search for `Meer`.
