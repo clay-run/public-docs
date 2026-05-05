@@ -12,10 +12,25 @@ Generate formulas with AI to transform your data.
 
 ## Generate formula with AI
 
+The formula generator opens as a **sidebar** alongside your table, so you can see your data while building formulas.
+
 To generate a formula with AI:
 
-1.  Enter your formula instructions. Type `/` to insert a column reference.
-2.  Click `Generate formula` to create your AI formula
+1.  Add a formula column (or open an existing formula column) to open the **Formula generator** sidebar.
+2.  Describe what you want to calculate or transform. Type `/` to insert a column reference.
+3.  Click **Generate** to create your formula.
+
+A preview column appears inline in the table showing the formula output. The formula column and any referenced columns are highlighted; other columns are grayed out. To jump to a referenced column in the table, click its name under **Referenced columns** in the sidebar.
+
+## Improve formula accuracy
+
+If the formula produces incorrect output for some rows, you can provide examples to help the AI regenerate a better formula:
+
+1.  Click a preview cell that shows a wrong result.
+2.  Enter the correct value in the **Edit expected output** popover.
+3.  Click **Regenerate** to get an updated formula based on your examples.
+
+Once the results look right, click **Save column**.
 
 ## AI formula generator examples
 
