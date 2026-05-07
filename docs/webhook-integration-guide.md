@@ -15,6 +15,8 @@ Webhooks enable Clay to automatically receive data from other applications throu
 
 Your table updates instantly with new data, eliminating manual entry. This feature is particularly valuable for real-time updates, such as when adding new leads or modifying records based on external triggers.
 
+**Plan availability:** Webhooks are available on **Growth** and **Enterprise** plans.
+
 ## **Creating a table with webhook**
 
 1.  In a workbook, click `+ Add` at the bottom.
@@ -25,6 +27,6 @@ Your table updates instantly with new data, eliminating manual entry. This featu
 4.  Optionally, add authentication token. To secure your webhook, you can include an authentication token in the header of your request.
     -   Make sure to copy the token immediately, as you can only access authentication tokens once.
 
-**Note:** Webhook sources are limited to 50,000 submissions, and this limit persists even after deleting rows. Once you reach this limit, you’ll need to create a new webhook to continue receiving data.  
+**Note:** Webhook sources are limited to 50,000 submissions, and this limit persists even after deleting rows. Once you reach this limit, you'll need to create a new webhook to continue receiving data.  
 
 **Enterprise Plan:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) (also called passthrough tables) to automatically process and delete rows, allowing unlimited webhook submissions. Learn more in [table management settings](https://www.clay.com/university/guide/table-management-settings).
