@@ -44,12 +44,12 @@ Lists use zero-based indexing, where the first item is at index 0, the second at
 
 ## Take action on a list
 
-In the **Cell details** panel, hover to the right of a list to access actions:
+In the **Cell details** panel, click **Take action on list** to access the following actions:
 
--   **Filter or find keywords:** Search for specific items using formulas.
--   **Turn items into rows:** Move each item into its own row in another table.
--   **Combine items into one text field:** Join all items into one line, separated by commas.
--   **Ask AI questions:** Get answers or summaries about the list.
+-   **Filter, find keywords, and more using formula:** Search for and filter specific items using formulas.
+-   **Write each item to new row in other table:** Send each list item as its own row to another table.
+-   **Create column with items separated by commas:** Join all items into a single comma-separated text field (only available for lists of simple values).
+-   **Ask question about items with AI:** Get answers or summaries about the list using AI.
 
 ## Cell size limits
 
