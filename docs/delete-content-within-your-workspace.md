@@ -33,7 +33,7 @@ When you delete a workbook, each individual table within a workbook will be dele
 
 ## Recover deleted tables
 
-Once you delete a table, it will end up in your Archive. You can access your workspace Archive from the top navigation bar. Once you open your Archive you can:
+Once you delete a table, it will end up in your Trash. You can access Trash from the bottom left of the workspace sidebar. Once you open Trash you can:
 
 -   Delete tables permanently.
--   Recover tables. You cannot edit a table in the archive unless you restore it.
+-   Recover tables. You cannot edit a table in Trash unless you restore it.
