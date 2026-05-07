@@ -40,7 +40,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 **Data privacy**:
 
 -   Your campaign data and prospect information are processed only to generate your email content.
--   No data is retained by AI providers after processing.
 -   Data is not used to train models or shared with other Clay customers.
 -   You can optionally use your own API keys with supported providers.
 
@@ -59,7 +58,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 **Data privacy**:
 
 -   Only the specific table data you select is sent to AI models.
--   Messages are generated on-demand and data is not retained post-processing.
 -   No training occurs on your messaging or prospect data.
 -   Access is controlled by Clay's role-based permissions.
 
