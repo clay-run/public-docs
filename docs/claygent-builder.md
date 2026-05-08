@@ -10,7 +10,7 @@ upstream_hash: 3320a6f6da8bdff880352c3504f7f7efd34906353925e5937e89b42462518db2
 
 Build smarter agents faster
 
-Claygent builder is a **workspace-level tool** that lets teams design, test, and version their Claygents—the AI research agents that power Clay’s data workflows.
+Claygent builder is a **workspace-level tool** that lets teams design, test, and version their Claygents—the AI research agents that power Clay's data workflows.
 
 With Claygent builder, teams can build smarter agents faster, preview their reasoning, and update them once for every table in their workspace.
 
@@ -26,7 +26,7 @@ For example, you could create:
 2.  Select your AI model.
 3.  In the editor, draft your prompt logic using variables.
 4.  Experiment with your prompt with test cases, Click `+ Add Test Case`.
-    -   These test cases are free and help verify your prompt works as expected.
+    -   These test cases are free (up to 10 test inputs per Claygent at a time) and help verify your prompt works as expected. You can delete and add new ones to keep testing.
 5.  When satisfied, click `Save`.
     -   You can access `Version History` to compare and restore previous saved versions.
 
@@ -40,9 +40,9 @@ Claygent builder solves this by centralizing prompt management at the workspace 
 
 ### **How is** Claygent builder **different from templates?**
 
-Templates live inside individual tables, making them useful for one-off enrichments but siloed and not reusable across workspaces. Claygent, while reliable at scale, doesn’t give users direct tools for testing or version control.
+Templates live inside individual tables, making them useful for one-off enrichments but siloed and not reusable across workspaces. Claygent, while reliable at scale, doesn't give users direct tools for testing or version control.
 
-Claygent builder combines the strengths of both. It’s reusable across a workspace, version-controlled, free to test, and ensures global consistency, without the drawbacks of templates or standalone Claygent.
+Claygent builder combines the strengths of both. It's reusable across a workspace, version-controlled, free to test, and ensures global consistency, without the drawbacks of templates or standalone Claygent.
 
 ### **Who can create or edit agents?**
 
@@ -50,7 +50,7 @@ Agent access follows your workspace permissions. Editors can create and modify a
 
 ### **Does testing cost credits?**
 
-No, test cases (first 5 rows) are free. Standard runs follow your normal billing.
+No, test cases are free—you can run up to 10 test inputs per Claygent at a time. Delete and add new ones to keep testing. Standard runs follow your normal billing.
 
 ### **Can I A/B test versions?**
 
