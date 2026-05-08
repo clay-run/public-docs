@@ -42,8 +42,7 @@ Every time a source runs or re-runs, Clay walks through a short decision tree be
 -   **New row** (no matching ID in the table): Clay skips ahead to step 2.
 -   **Existing row** (matching ID already present):
     -   If **"Update existing rows"** is **off**: the row is untouched. Existing data is preserved and no action columns are triggered.
-    -   If **"Update existing rows"** is **on** and the source data **hasn't changed** (same data hash): no-op — nothing happens, no action columns triggered.
-    -   If **"Update existing rows"** is **on** and the source data **has changed**: the source column is updated, then Clay proceeds to step 2.
+    -   If **"Update existing rows"** is **on**: the source column is updated with the latest source data, then Clay proceeds to step 2.
 
 **Step 2 — Table-level auto-run**
 
