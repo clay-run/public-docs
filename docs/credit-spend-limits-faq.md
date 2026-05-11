@@ -53,7 +53,7 @@ Yes. Admins can set a workspace default limit so that every new workbook created
 
 To set a default limit:
 
-1.  Go to `Settings` → `Credit usage` → `Workbook limits` tab.
+1.  Go to `Settings` → `Usage` → `Workbook limits` tab.
 2.  Click `Manage Default Limit`.
 3.  Set your desired default credit limit.
 

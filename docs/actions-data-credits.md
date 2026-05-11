@@ -154,7 +154,7 @@ Data Credit pricing varies for AI models in [Use AI](https://www.clay.com/univer
 To see detailed Data Credit consumption across your workspace, workbooks, and tables, visit the **credit usage** dashboard:
 
 1.  Click your account name in the corner
-2.  Go to `Settings` → `Credit usage`.
+2.  Go to `Settings` → `Usage`.
 
 For a complete guide on tracking and analyzing your Data Credit spend, see [this doc](https://www.clay.com/university/guide/credit-usage).
 

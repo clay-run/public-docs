@@ -17,7 +17,7 @@ Track, analyze, and optimize your credit consumption by breaking down usage acro
 To check the credit usage in your workspace:
 
 1.  Click your account name in the corner.
-2.  Go to `Settings` and then `Credit usage` in the sidebar.
+2.  Go to `Settings` and then `Usage` in the sidebar.
 3.  Within `Workspace`, you can view folders, workbooks, and tables sorted by their usage.
 
 Sort the content by `Name` (alphabetically) or by number of `Credits used` by clicking the column titles. You can `Export` this content as a CSV.
