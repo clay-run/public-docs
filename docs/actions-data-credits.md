@@ -146,13 +146,13 @@ Each fully enriched record typically costs **6–20 Data Credits**, depending on
 
 Two options:
 
-**1\\. Upgrade your Data Credits tier** (recommended)
+**1\. Upgrade your Data Credits tier** (recommended)
 
 -   Go to `Settings` → `Plans & billing`.
 -   Select a higher Data Credits tier.
 -   No premium charged.
 
-**2\\. One-time top-up**
+**2\. One-time top-up**
 
 -   Available for emergency needs during your billing cycle.
 -   **30% premium** applies.
