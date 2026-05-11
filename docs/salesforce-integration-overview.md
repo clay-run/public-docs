@@ -100,7 +100,7 @@ Look up records in Salesforce using a SOQL query.
 
 **Inputs:**
 
--   **SOQL query:** For more information about SOQL and Salesforce, [check out their documentation](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql.htm).
+-   **SOQL query:** For more information about SOQL and Salesforce, [check out their documentation](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql.htm). Clay can also generate the SOQL query for you from a plain-language description — see [Generating queries with AI](https://university.clay.com/docs/salesforce-soql#generating-queries-with-ai).
 
 ### `Action` Create record
 
