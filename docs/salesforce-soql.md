@@ -2,7 +2,7 @@
 title: Salesforce SOQL
 source_url: https://university.clay.com/docs/salesforce-soql
 description: The Salesforce SOQL source enables you to import records from
-  Salesforce by writing custom queries.
+  Salesforce by writing custom queries or generating them with AI from a plain-language description.
 last_synced: 2026-04-26T01:40:35.632Z
 upstream_hash: c8f21c092741d6111a8d95755a222978fedfe8960b7ef0717559be2afaaf3eca
 ---
@@ -28,7 +28,7 @@ Build lists of Salesforce records using custom SOQL queries. Query across object
 
 **Inputs:**
 
--   **SOQL Query:** Your SELECT statement with explicitly listed fields (e.g., `SELECT Id, Name, Industry FROM Account WHERE Industry = 'Technology' LIMIT 100`).
+-   **SOQL Query:** Your SELECT statement with explicitly listed fields (e.g., `SELECT Id, Name, Industry FROM Account WHERE Industry = 'Technology' LIMIT 100`). Clay can also generate this query for you — see [Generating queries with AI](#generating-queries-with-ai) below.
 -   **Unique Fields (Optional):** Select which field(s) determine record uniqueness for deduplication (e.g., `Id`, `Email`).
 
 **Query requirements:**
@@ -37,7 +37,31 @@ Build lists of Salesforce records using custom SOQL queries. Query across object
 -   Fields must be explicitly named (no `SELECT *`).
 -   Maximum 50,000 records per import.
 
-**Pro tip:** Keep Salesforce's [**SOQL documentation**](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql.htm) open while building queries. You can also use AI tools like Claude or ChatGPT to help generate SOQL queries from natural language descriptions.
+**Pro tip:** Keep Salesforce's [**SOQL documentation**](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql.htm) open while building queries by hand.
+
+## Generating queries with AI
+
+> **Early access:** AI query generation is currently available to selected workspaces. Contact the Clay team to enable it for your workspace.
+
+Instead of writing SOQL by hand, you can describe the Salesforce data you want in plain language and Clay will generate the query for you. This works in both the **Import records from a Salesforce SOQL query** source and the **Lookup records via SOQL** enrichment action, and supports standard objects as well as custom objects.
+
+**How to use it:**
+
+1.  In the SOQL query input, click **Generate with AI**.
+2.  Describe the data you want — for example, "All open opportunities over $50,000 in the Technology industry, including account name and owner."
+3.  Click **Generate**. Clay will explore your Salesforce schema and write the query.
+4.  Optionally, click **Test query** to run a 1-row preview and confirm the query returns what you expect.
+5.  Review any **suggested fields** Clay surfaces — these are related fields on the same object you may also want to include.
+
+**How Clay selects the right fields:**
+
+Clay reads your org's live Salesforce schema — it does not rely on generic Salesforce knowledge and does not require any training or configuration on your part. When you describe what you want, Clay:
+
+1.  Lists all queryable objects in your Salesforce org.
+2.  Inspects the field definitions (API names, labels, types, and descriptions) of the relevant object.
+3.  Selects the field whose metadata best matches your description.
+
+If your org has several similarly named custom fields, include the field's exact label or API name in your description to help Clay select the right one (e.g., "the `Custom_Revenue__c` field").
 
 ## Best practices
 
@@ -133,3 +157,11 @@ Salesforce enforces API request limits. If you hit limits:
 1.  Reduce query frequency
 2.  Limit concurrent Salesforce operations
 3.  Contact Salesforce support to increase your API allocation
+
+### How does Clay know which custom field I want when several have similar names?
+
+Clay reads your org's live Salesforce schema at generation time, inspecting the API names, labels, types, and descriptions of fields on the object you're querying. If several custom fields have similar names, include the exact field label or API name in your description to help Clay select the correct one.
+
+### Do I need to train the AI or configure anything before using AI query generation?
+
+No training or data setup is required. The AI reads your org's schema directly each time you generate a query. AI query generation is currently an early-access feature — contact the Clay team to enable it for your workspace.
