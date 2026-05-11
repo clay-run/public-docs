@@ -2,64 +2,181 @@
 title: Claygent builder
 source_url: https://university.clay.com/docs/claygent-builder
 description: Build smarter agents faster
-last_synced: 2026-04-26T01:39:45.201Z
-upstream_hash: 3320a6f6da8bdff880352c3504f7f7efd34906353925e5937e89b42462518db2
+last_synced: 2026-05-11T17:47:40.000Z
+upstream_hash: 1e7504a610fac5ab8887ea0d3197151c865c7afeccfcccb32b71966c2851daeb
 ---
 
 # Claygent builder
 
 Build smarter agents faster
 
-Claygent builder is a **workspace-level tool** that lets teams design, test, and version their Claygents—the AI research agents that power Clay's data workflows.
+Claygent builder is the centralized hub for building, testing, and deploying Claygents — Clay's AI agents designed for judgment-based GTM work like account research, lead scoring, outbound copywriting, and persona classification.
 
-With Claygent builder, teams can build smarter agents faster, preview their reasoning, and update them once for every table in their workspace.
+With Claygent builder, you can build agents conversationally using Sculptor, test for free on your production data, add business context and documents directly to your prompts, and deploy agents across all your workflows from one place.
 
 For example, you could create:
 
--   **ICP qualification agent:** Analyzes a professional profile and scores whether someone is a fit for outreach.
--   **Cold email composition agent:** Gathers parameters (name, professional social media, website), runs web research, and drafts a tailored outreach email.
--   **Email timing agent:** Pulls Salesforce data (via MCP), scores account readiness based on activity, outputs a timing recommendation.
+-   **Lead scoring agent**: Evaluates prospects against your ICP and outputs a score (1-100) with rationale.
+-   **Outbound email agent**: Writes personalized cold emails using your ICP definition, tone guidelines, and enriched data.
+-   **Account research agent**: Summarizes what a company is doing right now, surfaces recent news, funding events, and hiring signals.
+-   **Persona classification agent**: Categorizes contacts by tier, buying role, or persona type.
 
-## Creating a new agent in Claygent builder
+## Getting to Claygent builder
 
-1.  From your Clay home, click `Claygents` → `+ Create Agent`.
-2.  Select your AI model.
-3.  In the editor, draft your prompt logic using variables.
-4.  Experiment with your prompt with test cases, Click `+ Add Test Case`.
-    -   These test cases are free (up to 10 test inputs per Claygent at a time) and help verify your prompt works as expected. You can delete and add new ones to keep testing.
-5.  When satisfied, click `Save`.
-    -   You can access `Version History` to compare and restore previous saved versions.
+Click `Agents` in the left-hand navigation bar.
+
+Three ways to start building:
+
+-   **From scratch** — blank canvas with full text editor and Sculptor available on the side.
+-   **With Sculptor** — describe what you want in plain language and Sculptor drafts the full agent for you (fastest path).
+-   **From a template** — pre-built starting points for prospecting, account scoring, contact scoring, and copywriting.
+
+### Creating a Claygent from an existing table
+
+If you've already built a Claygent prompt in a table that works well, you can save it as a reusable agent:
+
+1.  Click on your `Use AI` column name.
+2.  Select `Edit column`.
+3.  Click `Create Claygent` in the top right.
+4.  Your prompt, variables, and test cases transfer to Claygent Builder.
+5.  Now you can deploy it across other tables.
+
+This is useful when you've refined a prompt in one table and want to reuse it elsewhere without starting from scratch.
+
+## Building an agent with Sculptor
+
+Sculptor is Clay's conversational agent builder. Describe what you want your agent to do in natural language, and Sculptor generates the prompt, variables, output format, and test cases.
+
+**Example prompt for Sculptor:**
+
+_"Build an agent that scores a lead against our ICP and outputs a score from 1 to 100 with a short rationale explaining the score."_
+
+Sculptor will:
+
+1.  Define the prompt logic.
+2.  Set up variables (company name, contact title, industry, etc.).
+3.  Format the output (score plus reasoning).
+4.  Create test cases so you can see it in action.
+
+### Iterating with Sculptor
+
+You can refine your agent by telling Sculptor what to adjust:
+
+_"Adjust the scoring so company fit is weighted at 60% and persona fit at 40%. Also break out company size as its own factor."_
+
+Sculptor rewrites the prompt. Run the test again to see the difference. Every change is saved automatically in version history.
+
+## Configuring your agent
+
+### Business context
+
+Your company description, ICP, and buyer personas auto-populate from workspace settings. Your Claygent pulls from this automatically to write on-brand output.
+
+If you haven't filled yours in yet, go to `Settings`, enter your domain, and Clay will research for you.
+
+### Document uploads
+
+Attach tone guides, messaging docs, PDFs, or CSVs directly into your agent. For copywriting agents, this ensures the Claygent writes in your voice, not a generic AI voice.
+
+### Web search
+
+Enable web search when your agent needs live research (recent company news, hiring signals, etc.). Disable it when working from data already in your table to keep runs faster and more consistent.
+
+### Find contacts and jobs tool
+
+Give your Claygent access to find people and jobs data directly. This enables prospecting workflows like "find the best person who would manage growth at a company" — where the right title varies by company size.
+
+### Model selection
+
+Swap between different AI models (Claude, GPT-4o, etc.) to test output quality without touching the prompt.
+
+## Testing before you deploy
+
+**Note:** You can have up to 10 test cases at a time for free (you can delete and add new test cases to keep testing). Test runs don't cost credits.
+
+Run test cases to see your Claygent stream its reasoning live. You can:
+
+-   Import test data from existing table rows.
+-   Generate test inputs with AI.
+-   Save test cases as a reusable suite.
+-   Compare outputs across different versions.
+
+### Testing different models
+
+Compare outputs across different AI models without changing your prompt. Switch models in the configuration panel and run tests side-by-side to find the best performance for your use case.
+
+This is especially useful when you want to balance output quality against cost and speed.
+
+## Deploying your agent
+
+Once you're happy with the output:
+
+1.  Go to any table and add an AI column.
+2.  Under Claygent options, select `Saved Claygents`.
+3.  Select the agent you just built.
+4.  Variables automatically map to your table columns.
+5.  Save and run.
+
+You can also deploy directly from Claygent builder by clicking `Add to table`.
+
+## Centralized management
+
+From the Claygent builder home, you can see every table where each agent is running.
+
+When your ICP changes or you need to adjust agent logic:
+
+1.  Update the agent once in Claygent builder.
+2.  Changes propagate everywhere it's deployed.
+3.  No need to find and update each column individually.
+
+This is the difference between managing duplicate prompts across multiple tables versus having a single source of truth.
+
+## Version history
+
+Every change you make is saved automatically. You can:
+
+-   View all previous versions.
+-   See what changed between versions.
+-   Roll back to any previous version.
+
+Access version history from the Claygent builder editor.
 
 ## FAQs
 
-### **What customer problem does** Claygent builder **solve?**
+### What kinds of work are Claygents best for?
 
-Previously, prompts were locked to individual tables, forcing teams to duplicate agents across workflows, tweak each one manually, and pay for trial-and-error runs. The result was wasted effort, inconsistent results, and higher costs.
+Claygents handle judgment-based, nondeterministic work in your GTM stack — work that requires reasoning, not just lookups. Main use cases:
 
-Claygent builder solves this by centralizing prompt management at the workspace level. Teams can design and refine agents once, then deploy them everywhere.
+-   **Account and lead research** — summarize what a company is doing, recent news, hiring signals.
+-   **Lead scoring and contact scoring** — evaluate prospects against your ICP with weighted factors.
+-   **Account scoring** — same idea at the company level.
+-   **Outbound copywriting** — write personalized emails using your ICP and enriched data.
+-   **Persona classification** — categorize contacts by tier, role, or buying persona.
 
-### **How is** Claygent builder **different from templates?**
+### Who can create or edit agents?
 
-Templates live inside individual tables, making them useful for one-off enrichments but siloed and not reusable across workspaces. Claygent, while reliable at scale, doesn't give users direct tools for testing or version control.
+Agent access follows your workspace permissions. Editors can create and modify agents, while viewers can reference approved agents in tables.
 
-Claygent builder combines the strengths of both. It's reusable across a workspace, version-controlled, free to test, and ensures global consistency, without the drawbacks of templates or standalone Claygent.
+### Does testing cost credits?
 
-### **Who can create or edit agents?**
+No. You can have up to 10 test cases per Claygent at a time for free. You can delete and add new test inputs to keep testing. Once you deploy and run your agent in a table, standard runs follow your normal billing.
 
-Agent access follows your workspace permissions. Editors can create and modify agents, while viewers can reference approved agents in tables—always respecting the permissions set at the workspace level.
+### Can I test different models without changing my prompt?
 
-### **Does testing cost credits?**
+Yes. Switch models in the configuration panel and rerun tests to compare output quality across different AI models.
 
-No, test cases are free—you can run up to 10 test inputs per Claygent at a time. Delete and add new ones to keep testing. Standard runs follow your normal billing.
+### What happens if I update an agent while it's running in a table?
 
-### **Can I A/B test versions?**
+In-flight runs finish on the version that started them. New runs pick up the latest version automatically.
 
-Yes, try testing multiple versions via sample runs, compare outputs, and publish the best.
+### Can I still edit prompts directly in tables?
 
-### **What happens mid-run if an agent updates?**
+Yes, but centralizing in Claygent builder gives you version control, free testing, and the ability to update once and deploy everywhere. It's the better choice for agents you'll reuse or iterate on.
 
-In-flight runs finish on the started version. New runs pick up the latest or pinned prompt depending on your setting.
+## Tips for success
 
-### **Can I still edit prompts locally?**
+**Importing test cases**: Instead of manually creating test data, import real rows from your tables. Click `Import from table` in the test panel to pull actual data and see how your agent performs on real-world inputs.
 
-Yes, but centralizing in Claygent builder avoids drift and ensures consistency.
+**Variable mapping**: When deploying a Claygent to a new table with different column names, Builder will auto-suggest mappings. Review these carefully to ensure the correct data flows through.
+
+**Start simple**: Build your agent with a basic prompt first, test it, then layer in complexity. It's easier to debug and refine when you're working incrementally.

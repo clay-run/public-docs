@@ -3,8 +3,8 @@ title: Clay Ads
 source_url: https://university.clay.com/docs/clay-ads
 description: Build and sync contact and account lists to LinkedIn and Meta for
   precise ad targeting.
-last_synced: 2026-04-26T01:39:43.557Z
-upstream_hash: 06885b8c873ff50c640ce0ef5253ce195e7b3acdf5145c13e3e79cb3dc010016
+last_synced: 2026-05-11T17:47:40.000Z
+upstream_hash: e47cd199d3277441cc10411a0a4bafd438c5217722c2ddbbcf3ec385c89b598d
 ---
 
 # Clay Ads
@@ -60,6 +60,39 @@ To update an audience, simply modify the data in your Clay table. The audience w
 -   **Exclusion list** — An ad audience configured to prevent a group of people from seeing your ads. Common exclusion lists include existing customers, current employees, or open pipeline opportunities — helping eliminate wasted ad spend.
 -   **Hashed email** — A privacy-safe version of an email address encrypted using a one-way algorithm (SHA-256) before being sent to an ad platform. Ad platforms use hashed emails to match contacts without ever seeing the raw address. Clay's `Hashed Email for Ads` waterfall finds and hashes personal emails automatically to maximize match rates.
 -   **Audience sync** — The process of sending a Clay table's contacts or accounts to an ad platform and keeping them continuously updated. When rows are added or removed from your Clay table, the synced audience updates accordingly — no manual re-exports needed.
+
+## Meta system user token authentication
+
+For production Clay Ads workflows syncing to Meta, we recommend using a system user token instead of OAuth. System user tokens provide indefinite access and don't require manual renewal every 60 days.
+
+### Creating a system user token
+
+To create a new system user token, you first need to create an app:
+
+1.  Open your [Meta Business account](https://business.facebook.com/) and navigate to `Business Settings` > `Accounts` > `Apps`. Click `Add`.
+2.  Choose `Create a new app ID`.
+3.  Name your app.
+4.  Select the use case as `Other`.
+5.  Set the app type to `Business`.
+6.  Click `Create app`.
+7.  Ensure the app has `Ads Management Standard Access` permissions. You can find this setting in `App Review` > `Permissions and Features`.
+8.  Navigate to `Business Settings` > `Users` > `System users` and add a new system user with `Admin` access.
+9.  Use the `Add assets` button to assign both the app you created and the ad account that you want to create audiences for to the system user. Be sure to give both the app and the ad account `Full Control`, not `Partial Access`.
+10.  Once the system user is created and assets are assigned, select `Generate token`.
+     -   Choose the app you created to generate the token.
+     -   Select the expiration policy for the token (we recommend `Never expire`).
+     -   Ensure the `ads_management` permission is selected.
+     -   Click `Generate token`.
+11.  Copy the generated token immediately — Meta won't store it, so consider saving it in a secure password vault.
+12.  In Clay, when connecting your Meta account for ad syncs, select `Use system user token` as the authentication method and paste your token.
+
+### Why use a system user token?
+
+-   No manual renewal — OAuth tokens expire every 60 days and require re-authentication. System user tokens can be set to never expire.
+-   Production reliability — Avoid sync failures from expired tokens in automated workflows.
+-   Team access — System users aren't tied to individual employee accounts, so access persists even if team members leave.
+
+For more details on Meta system user setup, see [Meta's system user documentation](https://www.facebook.com/business/help/503306463479099).
 
 ## **FAQs**
 
