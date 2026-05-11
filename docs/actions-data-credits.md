@@ -146,13 +146,13 @@ Each fully enriched record typically costs **6–20 Data Credits**, depending on
 
 Two options:
 
-**1\. Upgrade your Data Credits tier** (recommended)
+**1\\. Upgrade your Data Credits tier** (recommended)
 
 -   Go to `Settings` → `Plans & billing`.
 -   Select a higher Data Credits tier.
 -   No premium charged.
 
-**2\. One-time top-up**
+**2\\. One-time top-up**
 
 -   Available for emergency needs during your billing cycle.
 -   **30% premium** applies.
@@ -170,7 +170,7 @@ Data Credit pricing varies for AI models in [Use AI](https://www.clay.com/univer
 To see detailed Data Credit consumption across your workspace, workbooks, and tables, visit the **credit usage** dashboard:
 
 1.  Click your account name in the corner
-2.  Go to `Settings` → `Credit usage`.
+2.  Go to `Settings` → `Usage`.
 
 For a complete guide on tracking and analyzing your Data Credit spend, see [this doc](https://www.clay.com/university/guide/credit-usage).
 
