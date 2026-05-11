@@ -17,7 +17,7 @@ Track, analyze, and optimize your credit consumption by breaking down usage acro
 To check the credit usage in your workspace:
 
 1.  Click your account name in the corner.
-2.  Go to `Settings` and then `Credit usage` in the sidebar.
+2.  Go to `Settings` and then `Usage` in the sidebar.
 3.  Within `Workspace`, you can view folders, workbooks, and tables sorted by their usage.
 
 Sort the content by `Name` (alphabetically) or by number of `Credits used` by clicking the column titles. You can `Export` this content as a CSV.
@@ -41,7 +41,7 @@ Filter any of the content on this page by:
 
 For deeper insights into credit spend within a specific table, you can access the table credit usage dashboard. This gives you realtime data on when and how credits were spent within that table.
 
-**Note:** Historical data for the table credit dashboard begins on November 5th, 2025. You’ll see a warning about incomplete data if your selected time range begins before this date.
+**Note:** Historical data for the table credit dashboard begins on November 5th, 2025. You'll see a warning about incomplete data if your selected time range begins before this date.
 
 **How to access the table dashboard:**
 
@@ -73,7 +73,7 @@ The table credit dashboard offers three ways to analyze your credit spend:
 
 All views allow you to download the data as a CSV for further analysis.
 
-**Note:** Historical data for the table credit dashboard begins on November 5th, 2025. You’ll see a warning about incomplete data if your selected time range begins before this date.
+**Note:** Historical data for the table credit dashboard begins on November 5th, 2025. You'll see a warning about incomplete data if your selected time range begins before this date.
 
 ## Credit usage by integration
 
