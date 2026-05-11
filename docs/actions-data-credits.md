@@ -3,8 +3,8 @@ title: Actions & Data Credits
 source_url: https://university.clay.com/docs/actions-data-credits
 description: Learn about credits, the virtual currency system used for running
   actions in Clay.
-last_synced: 2026-04-26T01:39:38.626Z
-upstream_hash: cd12f235935b9ccb524e8f8b4c5bc296d4e2cbc26ce34181c2bc90f2ff35b528
+last_synced: 2026-05-11T17:47:40.000Z
+upstream_hash: b17857b80e934bdaa0533fe6de2d25534a344571368a043d7bfbb0e41446bc87
 ---
 
 # Actions & Data Credits
@@ -141,22 +141,6 @@ Each fully enriched record typically costs **6–20 Data Credits**, depending on
 
 -   Total Data Credits consumed: **50** (just the LinkedIn enrichments)
 -   **You saved 45 Data Credits** by using your own key
-
-### How to get more Data Credits
-
-Two options:
-
-**1\. Upgrade your Data Credits tier** (recommended)
-
--   Go to `Settings` → `Plans & billing`.
--   Select a higher Data Credits tier.
--   No premium charged.
-
-**2\. One-time top-up**
-
--   Available for emergency needs during your billing cycle.
--   **30% premium** applies.
--   Subject to rollover limits.
 
 ### Data Credits for AI
 

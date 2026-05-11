@@ -3,31 +3,19 @@ title: Meer integration
 source_url: https://university.clay.com/docs/meer-integration
 description: Screen phone numbers against national do-not-call registries before
   initiating outbound calls.
-last_synced: 2026-04-26T01:40:21.149Z
-upstream_hash: 5ec7b57af665ad019ca2e5e5111c349b156dfe9688ec12bc86818db784c16094
+last_synced: 2026-05-11T17:47:40.000Z
+upstream_hash: c1d308b2097e374c17dc4644c54cf3db7941c806f6eaa84a16fa0ae537775f0c
 ---
 
 # Meer integration
 
 Screen phone numbers against national do-not-call registries before initiating outbound calls.
 
+**Important:** Before you can use the Meer integration, you must first accept the compliance terms and conditions. Visit the [Compliance page](https://app.clay.com/settings/enrichments?enrichmentTab=compliance) in your workspace settings to accept the terms. Once accepted, the Meer enrichment will appear in your actions panel.
+
 The Meer integration helps you maintain Do Not Contact (DNC) compliance by screening phone numbers against national do-not-call registries before initiating outbound calls.
 
 With this integration, you can check phone numbers against regularly updated DNC registries and receive status information to help you avoid contacting numbers on do-not-call lists.
-
-## Prerequisites: accept compliance terms
-
-Meer is a compliance-gated integration. **It will not appear in the enrichment search inside a table until a workspace admin has accepted the compliance terms in settings.** If you search for Meer in the Actions panel and see nothing, this step has not been completed yet.
-
-To enable Meer for your workspace:
-
-1.  Navigate to **Settings > Enrichments** and open the **Compliance** tab.
-2.  Find the Meer card. Read the terms, then enter your company's domain (e.g., `yourcompany.com`).
-3.  Click **Agree and activate**.
-
-Once activated, Meer will appear in the enrichment search for all members of the workspace.
-
-> **Note:** Only workspace admins can accept compliance terms. If you are not an admin, ask your workspace admin to complete this step before you can use Meer.
 
 ## Using Meer in Clay
 

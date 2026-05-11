@@ -2,8 +2,8 @@
 title: Salesforce integration
 source_url: https://university.clay.com/docs/salesforce-integration-overview
 description: Cloud-based customer relationship management software.
-last_synced: 2026-04-26T01:40:35.308Z
-upstream_hash: c40cc0a861c4e1af36565daebd41ff5e3d0ce7d66f5b61350cff95e7f2f41859
+last_synced: 2026-05-11T17:47:40.000Z
+upstream_hash: 18be175d32b04f6d949a86bcd559b304e354e86197e4d8c7699e3195781c1f84
 ---
 
 # Salesforce integration
@@ -17,7 +17,7 @@ Salesforce is a customer relationship management (CRM) platform that helps busin
 Clay supports two methods for authenticating your Salesforce account. You can choose the one that fits your organization's setup when adding a new connection or when reconnecting an existing one.
 
 -   **User Sign In** — the default method. You sign in as a Salesforce user via an OAuth browser prompt.
--   **Client Credentials** — a server-to-server method (also referred to as the Integration User flow). No browser sign-in is required; instead, you supply credentials from an external client app configured in your Salesforce org.
+-   **Client Credentials** — a server-to-server method. No browser sign-in is required; instead, you supply credentials from an external client app configured in your Salesforce org.
 
 ### User Sign In
 
@@ -27,15 +27,25 @@ Connect via OAuth as a Salesforce user.
 2.  Click `Add connection` and search for `Salesforce`.
 3.  Under `User Sign In`, complete the OAuth sign-in flow in the browser window that appears.
 
-### Client Credentials (Integration User)
+### **Client Credentials (Integration User)**
 
 Connect to Salesforce via Client Credentials for server-to-server access. No browser sign-in is required.
 
-You will need to set up an external client app in Salesforce and enable the Client Credentials flow before connecting in Clay.
+**Setting up in Salesforce**
+
+1.  In Salesforce Setup, search for `External Client App Manager` in Quick Find and select it. Create a new external client app — see [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&language=en_US&type=5) for full creation steps. Once created, click on your app and select `Edit`.
+2.  In the `Settings` tab, enable the flow at the app level:
+    -   Under `Flow Enablement`, check `Enable Client Credentials Flow`.
+3.  In the `Policies` tab, enable the flow at the org level. This is the setting most commonly missed — if it's off, the flow is blocked regardless of the Settings toggle:
+    -   Under `OAuth Flows and External Client App Enhancements`, check `Enable Client Credentials Flow`.
+    -   In the `Run As` field, enter the username of the integration user the app will authenticate as.
+4.  Click `Save`. See [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.configure_client_credentials_flow_for_external_client_apps.htm&language=en_US&type=5) for full details on configuring the Client Credentials flow.
+
+**Connecting in Clay**
 
 1.  In the home sidebar, click `Settings` → `Connections`.
 2.  Click `Add connection` and search for `Salesforce`.
-3.  Under `Client Credentials` fill in the following fields:
+3.  Under `Client Credentials`, fill in the following fields:
     -   `My Domain URL`: Your Salesforce My Domain URL (e.g. `https://mycompany.my.salesforce.com`).
     -   `Consumer key`: The consumer key from your Salesforce external client app.
     -   `Consumer secret`: The consumer secret from your Salesforce external client app.
