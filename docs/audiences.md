@@ -59,6 +59,17 @@ You can import data from:
 15.  Name the corresponding Clay fields.
 16.  Click `Save and Preview`, then `Confirm`.
 
+**Sync timing and behavior**
+
+Clay pulls data from Salesforce on two schedules:
+
+-   **Incremental sync (every 15 minutes):** Retrieves records whose `SystemModstamp` has changed since the last sync. Any modification to a Salesforce record — user edits, workflow updates, or integration changes — updates `SystemModstamp` and triggers the record to be re-synced. There is no field-level filtering; when a record is picked up, all its mapped fields are synced.
+-   **Full sync (every 7 days):** Re-reads all records from Salesforce. Catches anything the incremental sync may miss and reconciles hard-deleted records.
+
+**Formula and calculated fields:** Salesforce formula and calculated fields do not update `SystemModstamp` when they recalculate. Changes to these fields are not captured during incremental syncs — they appear in Audiences only after the next weekly full sync.
+
+**Deleted records:** Clay does not remove deleted Salesforce records from Audiences immediately. Instead, the record is marked **Deleted in source**, which you can filter on in your audience. The weekly full sync reconciles hard-deleted records. If a Salesforce record is deleted and recreated (assigning it a new Salesforce ID), it will temporarily appear as a duplicate entry until the next weekly full sync resolves it. There is no self-serve option to trigger an early full sync — contact Clay support if you need an expedited cleanup.
+
 ### Importing from Snowflake
 
 1.  Click `Add data` → `Import from Snowflake`.
@@ -185,6 +196,7 @@ Export settings control whether Clay **creates new Salesforce records** for net-
 
 Export sync behavior:
 
+-   **Export frequency:** Every 24 hours when write-back is enabled.
 -   **Export batch size:** ~10,000 records per sync.
 -   **Subsequent syncs:** Incremental — only changed records are processed.
 
