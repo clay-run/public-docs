@@ -142,6 +142,23 @@ Each fully enriched record typically costs **6–20 Data Credits**, depending on
 -   Total Data Credits consumed: **50** (just the LinkedIn enrichments)
 -   **You saved 45 Data Credits** by using your own key
 
+### How to get more Data Credits
+
+Two options:
+
+**1\. Upgrade your Data Credits tier** (recommended)
+
+-   Go to `Settings` → `Plans & billing`.
+-   Select a higher Data Credits tier.
+-   No premium charged.
+
+**2\. One-time top-up**
+
+-   Go to `Settings` → `Usage` and click `Add one-time data credits`.
+-   Available for emergency needs during your billing cycle.
+-   **30% premium** applies.
+-   Subject to rollover limits.
+
 ### Data Credits for AI
 
 Data Credit pricing varies for AI models in [Use AI](https://www.clay.com/university/guide/use-ai-integration-overview), with rates determined by which model you select. Find out more in [AI pricing](https://university.clay.com/docs/ai-pricing) doc.
