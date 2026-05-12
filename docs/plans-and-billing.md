@@ -106,7 +106,7 @@ For more details, see our guide on [actions and data credits](https://www.notion
 
 ### What if I need more actions or data credits?
 
-You can upgrade your plan tier at any time by visiting your plan settings page. You can also purchase one-off data credits at a 30% premium during your billing cycle.
+You can upgrade your plan tier at any time by visiting your plan settings page. You can also purchase one-off data credits at a 30% premium (50% on legacy plans) during your billing cycle.
 
 ### How many actions and data credits do I need?
 

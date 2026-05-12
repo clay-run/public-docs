@@ -156,7 +156,7 @@ Two options:
 
 -   Go to `Settings` → `Usage` and click `Add one-time data credits`.
 -   Available for emergency needs during your billing cycle.
--   **30% premium** applies.
+-   **30% premium** applies (on modern plans; **50% premium** on legacy plans).
 -   Subject to rollover limits.
 
 ### Data Credits for AI
@@ -234,7 +234,7 @@ For emergency Data Credit needs during your billing cycle (not available for Act
 3.  Select the amount you need (subject to rollover limits).
 4.  Confirm your purchase.
 
-**Note:** One-time top-ups have a **30% premium** and are subject to Data Credit rollover limits. For regular needs, upgrading your Data Credits tier is more cost-effective.
+**Note:** One-time top-ups have a **30% premium** on modern plans (**50% premium** on legacy plans) and are subject to Data Credit rollover limits. For regular needs, upgrading your Data Credits tier is more cost-effective.
 
 ### Downgrade or cancel your plan
 
@@ -305,7 +305,7 @@ Actions represent the platform orchestration Clay performs—ingesting, storing,
 You can either:
 
 1.  Upgrade your Data Credits tier (no premium).
-2.  Purchase a one-time top-up (30% premium).
+2.  Purchase a one-time top-up (30% premium on modern plans; 50% on legacy plans).
 
 You don't need to change your Actions tier.
 
