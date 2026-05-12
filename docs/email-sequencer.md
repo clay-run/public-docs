@@ -148,7 +148,7 @@ Our sequencer is powered by Smartlead, but everything runs on Clay credits. You 
 
 ### I updated my campaign, but the changes didn't save.
 
-Be sure to press `Save settings` after making edits. We're working on making this process smoother.
+Be sure to press `Save settings` after making edits. Note: deleting a campaign step saves immediately without requiring a manual save click—all other edits require pressing `Save settings`.
 
 ### How much does the sequencer cost?
 
@@ -161,6 +161,20 @@ Each lead can only be sequenced once per campaign. To send multiple sequences to
 ### My sender account got disconnected. What happened?
 
 Email providers like Google and Microsoft occasionally revoke access due to inactivity, security checks, or suspicious activity detection. To fix this, delete the disconnected account from your sequencer settings and re-authenticate it.
+
+### How do I add an email signature or sign-off?
+
+Email signatures are configured at the **sender account level**, not per individual email. A signature set for an account is automatically appended to every email sent from that account.
+
+To set or update a signature:
+
+1.  Open your campaign and go to `Sender setup`.
+2.  Click the three-dot menu (⋯) next to the sending account.
+3.  Select `Update sender variables`.
+4.  Enter your text in the `Signature` field.
+5.  Click `Update sender variables` to save.
+
+You can also update the `From name` (the display name recipients see in their inbox) from the same dialog. Only plaintext signatures are currently supported.
 
 ### What is email account warmup?
 
@@ -190,7 +204,15 @@ You can use our existing table integration in the campaign events table to push 
 
 ### How do unsubscribes work in the sequencer?
 
-If HTML is enabled, you can add an unsubscribe link to the email that's appended at the bottom of the message. You can also use the `Add lead to blocklist` action in the campaign events table to block them from being sequenced in the future.
+When HTML is enabled, you can turn on an unsubscribe link in `Advanced` settings. This adds a hyperlinked phrase at the bottom of every email (default text: "Not interested? Click here to unsubscribe."). You can customize this text in the `Advanced` section.
+
+**What happens when a recipient clicks unsubscribe:**
+
+-   Their email address is automatically added to your workspace's global blocklist.
+-   They are removed from all active campaigns.
+-   Future emails to that address from any campaign in your workspace are blocked.
+
+To view and manually manage your blocklist—including adding individual email addresses or domains—go to the **Campaigns** tab on your home screen and click the `Blocklist` tab. You can also block leads programmatically using the `Add email to blocklist` enrichment in the campaign events table.
 
 ### What is a cold lead? What is a warm lead?
 
