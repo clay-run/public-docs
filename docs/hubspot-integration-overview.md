@@ -136,3 +136,11 @@ These permissions are available but not requested by default:
 
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run when conditions are met. [Learn more about conditional formulas](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101).
+
+## FAQs
+
+### What happens if I update a HubSpot list or segment filter after import?
+
+Changing a HubSpot list's membership criteria (for example, tightening segment filters so certain companies are no longer included) does **not** automatically update your Clay table. Records already imported into Clay **stay in the table** — they are not removed just because they no longer match the updated list.
+
+To refresh your table to reflect the updated list, see [Why doesn't my Clay table update when I change the source filters?](https://www.clay.com/university/guide/sources#faqs) in the Sources guide.
