@@ -2,8 +2,8 @@
 title: AI in Clay
 source_url: https://university.clay.com/docs/ai-in-clay
 description: A comprehensive guide to how Clay uses AI across its features.
-last_synced: 2026-04-26T01:39:39.278Z
-upstream_hash: ab5a2532485680f80f2914a032bb5c46561638991f78f21d5ec6d399949698fa
+last_synced: 2026-05-11T17:47:40.000Z
+upstream_hash: 5b0690becf9bb4c7cd1dcd8d1ba7609f30718fa7b689bbf83a373112792b7787
 ---
 
 # AI in Clay
@@ -40,7 +40,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 **Data privacy**:
 
 -   Your campaign data and prospect information are processed only to generate your email content.
--   No data is retained by AI providers after processing.
 -   Data is not used to train models or shared with other Clay customers.
 -   You can optionally use your own API keys with supported providers.
 
@@ -59,7 +58,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 **Data privacy**:
 
 -   Only the specific table data you select is sent to AI models.
--   Messages are generated on-demand and data is not retained post-processing.
 -   No training occurs on your messaging or prospect data.
 -   Access is controlled by Clay's role-based permissions.
 
@@ -140,7 +138,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 -   Only your formula description and relevant table schema are sent to AI.
 -   Actual row data is not transmitted.
 -   Generated formulas are not used to train models.
--   Processing is instantaneous with no data retention.
 
 ### API generator
 
@@ -174,7 +171,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   Only error logs and relevant system information are sent to AI.
 -   Personal data in your tables is not included in debug requests.
--   Error analysis is done in real-time with no retention.
 -   Debug data is not used to train models.
 
 ### Find companies with natural language

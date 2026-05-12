@@ -1,21 +1,20 @@
 ---
 title: Access settings for connections
 source_url: https://university.clay.com/docs/access-settings-for-connections
-description: Determine who in the workspace is allowed to build with certain
-  connections or MCP servers.
+description: Two controls for managing connection access — restrict who can build
+  with existing connections, and require approval before anyone adds a new one.
 last_synced: 2026-04-26T01:39:38.272Z
 upstream_hash: 1f7c0974ae32110d89b689f026ff4d2331ca87453049179d3d7a89b72782be70
 ---
 
 # Access settings for connections
 
-Determine who in the workspace is allowed to build with certain connections or MCP servers.
+Workspace admins have two ways to control connection access, both managed from `Settings` → `Connections`.
 
 **Note:** This feature is for users on an Enterprise Plan.
 
-Every connected account in Clay (e.g., Salesforce, OpenAI, Snowflake) has access controls, so you can determine who in the workspace is allowed to create workflows and columns with certain connections.
-
-Admins and connected account owners can determine who in the workspace is allowed to build with certain connections or MCP servers by managing permissions in Settings. When building workflows or columns in Clay, users will only see connections they have access to. All users in the workspace can run workflows and columns that are already set up.
+1. **Build permissions** — Restrict which workspace members can use a specific connection to configure workflows and columns. Members only see connections they're allowed to use; all workspace members can still run workflows that are already set up.
+2. **Approval to add connections** — Require that members request admin approval before adding any new connection to the workspace.
 
 ## Managing connections as an admin
 
@@ -47,7 +46,7 @@ Admins will have seven days to **approve** or **deny** each request from the ema
     -   `Anyone in the workspace` — All workspace members can configure columns or workflows with this connection
     -   `Specific people and groups` — Only admins and the people or user groups you name can configure workflows or columns with this connection
 4.  If you selected `Specific people and groups`:
-    -   Search for and add individual  members or user groups who should have access
+    -   Search for and add individual  members or user groups who should have access
     -   Add [user groups](https://university.clay.com/docs/user-groups) to grant access to all members of that group
     -   To remove access, simply remove individual members or groups from the allowlist.
 5.  Click `Save` to apply the changes
@@ -102,7 +101,7 @@ Signals follow the same access rules as a single column:
 ### Functions
 
 -   When building a function, you can only leverage connections you're allowed to use
--   When **using** an existing function, any columns that leverage connections a user doesn’t have access to appear as read only. Users must swap in their own key to unlock edit functionality.
+-   When **using** an existing function, any columns that leverage connections a user doesn't have access to appear as read only. Users must swap in their own key to unlock edit functionality.
 -   To prevent others from editing your function, use view-only permissions on the function itself until a more comprehensive permissions model is available.
 
 ### Claygent

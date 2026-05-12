@@ -11,7 +11,7 @@ upstream_hash: 28b397dda0a2866f285eb94622303ee73697a5c5e2f26f124d56ff97604c2967
 
 Collect visitor information including pages visited, time spent, and traffic sources.
 
-Clay’s website tracking enables teams to collect visitor information in order to understand web intent — including pages visited, time spent, and traffic sources.
+Clay's website tracking enables teams to collect visitor information in order to understand web intent — including pages visited, time spent, and traffic sources.
 
 This tracking provides insights into how visitors engage with your content and helps you identify high-intent accounts at the optimal moment.
 
@@ -100,7 +100,7 @@ URL paths are exact-match, so `/blog` and `/blog/` are different. Also, filter c
 
 Update your site's Content Security Policy to allow Clay domains:
 
-`Content-Security-Policy:   default-src 'self';   script-src 'self' <https://static.claydar.com> <https://cdn.claydar.com>;   connect-src 'self' <https://api.claydar.com>;`
+`Content-Security-Policy:   default-src 'self';   script-src 'self' <https://static.claydar.com> <https://cdn.claydar.com>;   connect-src 'self' <https://api.claydar.com>;`
 
 ### Not seeing new rows in my table
 
@@ -153,7 +153,7 @@ Charges begin after you install the tracking snippet and Clay starts receiving e
 
 **Cost:** Each successful IP enrichment consumes 1 action plus the applicable data credits (based on the de-anonymization provider). Results are cached for 30 days to avoid repeat costs.
 
-You can view your credit spend for signals underneath the `Signals` tab of the [credit usage dashboard](https://www.clay.com/university/guide/credit-usage). To access, click on your account name → `Settings` → `Credit usage`.
+You can view your credit spend for signals underneath the `Signals` tab of the [credit usage dashboard](https://www.clay.com/university/guide/credit-usage). To access, click on your account name → `Settings` → `Usage`.
 
 ### Can I track person-level information?
 

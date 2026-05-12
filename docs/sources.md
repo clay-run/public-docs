@@ -75,7 +75,25 @@ Scheduling source runs is one of the most powerful features, as it keeps your in
 
 **Editing the source of a Clay table after it's been run won't retroactively update the results, because Clay doesn't reprocess previously generated data automatically.**
 
-Even if the source preview shows the new filters, the table won't refresh until you re-run the step that generated the data. To see the updated results, either delete and re-run the step or duplicate the table with the updated source.
+Even if the source preview shows the new filters, the table won't refresh until you explicitly re-run the source. Rows already in the table **stay** — they are not automatically removed if they no longer match the updated filters (for example, companies that were part of a HubSpot list but have since been excluded by a filter change).
+
+To control which rows are in your table after updating source filters, you have two options:
+
+-   **Remove specific rows manually:** Apply a table filter to isolate rows you no longer want, select them, and delete them. This preserves the rest of your table without re-running the source.
+-   **Reset the table to match current filters:** Delete all existing rows and re-run the source (or duplicate the table with the updated source). This clears the table and re-imports only records that match the current source filters.
+
+### Will rows already in my table be removed if they no longer match the source filter?
+
+**No. Clay sources are additive only — they add rows (and optionally update them), but they never automatically remove rows from your table.**
+
+If you narrow a source filter — for example, by updating a HubSpot list or segment so that certain contacts or companies no longer qualify — the rows already in your Clay table will stay. They are not deleted automatically.
+
+The **Update existing rows** toggle (available when re-running a source) controls whether Clay refreshes the data in existing rows on re-run. It does not remove rows that are no longer included in the source.
+
+To remove rows that no longer match your filter, you have two options:
+
+-   **Delete them manually** — select the rows in the table and delete them.
+-   **Delete and re-run the source** — this re-imports records based on the current filter. You will need to clear any previously imported rows first if you want a clean slate.
 
 ### I am trying to add a source to an existing table, but I get an error
 

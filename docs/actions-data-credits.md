@@ -3,8 +3,8 @@ title: Actions & Data Credits
 source_url: https://university.clay.com/docs/actions-data-credits
 description: Learn about credits, the virtual currency system used for running
   actions in Clay.
-last_synced: 2026-04-26T01:39:38.626Z
-upstream_hash: cd12f235935b9ccb524e8f8b4c5bc296d4e2cbc26ce34181c2bc90f2ff35b528
+last_synced: 2026-05-11T17:47:40.000Z
+upstream_hash: b17857b80e934bdaa0533fe6de2d25534a344571368a043d7bfbb0e41446bc87
 ---
 
 # Actions & Data Credits
@@ -171,7 +171,7 @@ Data Credit pricing varies for AI models in [Use AI](https://www.clay.com/univer
 To see detailed Data Credit consumption across your workspace, workbooks, and tables, visit the **credit usage** dashboard:
 
 1.  Click your account name in the corner
-2.  Go to `Settings` → `Credit usage`.
+2.  Go to `Settings` → `Usage`.
 
 For a complete guide on tracking and analyzing your Data Credit spend, see [this doc](https://www.clay.com/university/guide/credit-usage).
 

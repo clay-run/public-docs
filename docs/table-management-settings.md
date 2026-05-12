@@ -33,6 +33,29 @@ To enable or disable auto-dedupe:
 
 Auto-run automatically runs enrichments whenever rows are added or edited, keeping your table current. You can control this feature at multiple levels: table-level (master control), column-level (individual control), and through conditional logic.
 
+### How Clay decides whether a cell runs
+
+Every time a source runs or re-runs, Clay walks through a short decision tree before executing any enrichment cell. Understanding this flow helps you predict exactly which cells will fire — and which will be skipped.
+
+**Step 1 — New or existing row?**
+
+-   **New row** (no matching ID in the table): Clay skips ahead to step 2.
+-   **Existing row** (matching ID already present):
+    -   If **"Update existing rows"** is **off**: the row is untouched. Existing data is preserved and no action columns are triggered.
+    -   If **"Update existing rows"** is **on**: the source column is updated with the latest source data, then Clay proceeds to step 2.
+
+**Step 2 — Table-level auto-run**
+
+-   If the table's **Auto-run toggle is off** (shows "Manual"): the cell is marked stale and skipped. It will only run on a manual click.
+-   If the table's **Auto-run toggle is on** (shows "Auto-run"): Clay checks the **"Keep existing results"** checkbox.
+    -   **"Keep existing results" checked**: only cells that are new, empty, or errored are eligible to run. Cells with an existing successful result are preserved and skipped.
+    -   **"Keep existing results" unchecked** (default): all cells are eligible; Clay proceeds to step 3.
+
+**Step 3 — Column-level auto-run**
+
+-   If the **column's Auto-run toggle is off**: the cell is marked stale and skipped (only runs on a manual click).
+-   If the **column's Auto-run toggle is on** (default): **the cell runs**.
+
 ### Table-level auto-run (master control)
 
 Table-level auto-run acts as the master switch that controls automatic enrichment for the entire table.
