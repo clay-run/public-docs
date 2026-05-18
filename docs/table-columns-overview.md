@@ -12,7 +12,7 @@ Learn how to navigate columns in your Clay table.
 
 ## Column data types
 
-There are a data types you can specify for your column. Here’s a high level overview of each one:
+There are a data types you can specify for your column. Here's a high level overview of each one:
 
 -   **Text:** Accepts text inputs. You can use this for text fields, summaries, or descriptions
 -   **URL:** Takes in links and will open the link if you click on the cell.
@@ -75,7 +75,7 @@ You can switch the data type of your column within your table. To do this:
 
 ## Create child columns from a parent column
 
-When you enrich data within Clay, your results will be presented as arrays of data, which sometimes includes nested endpoints. You can create individual child columns by mapping specific endpoints from the parent column’s enrichment.
+When you enrich data within Clay, your results will be presented as arrays of data, which sometimes includes nested endpoints. You can create individual child columns by mapping specific endpoints from the parent column's enrichment.
 
 ### Add a new child column
 
@@ -102,12 +102,14 @@ You can identify the parent column of a child column to better understand its da
 
 ## Hiding columns
 
-You can hide a column to help simplify your table view. This is helpful when you want to hide parents columns.
+You can hide a column to help simplify your table view. This is helpful when you want to hide parent columns.
 
 To hide a column:
 
 1.  Click on the header of the column you want to hide to access the dropdown menu.
 2.  Within the menu, select `Hide`.
+
+**Important:** Hiding a column only removes it from the current view — it does **not** disable the column's auto-run setting. A hidden column with auto-run enabled will still run automatically and consume credits whenever rows are added or edited. To stop a column from running, open it in `Edit column` → `Run settings` and toggle auto-run off. To access a hidden column's settings, temporarily unhide it using the columns panel, or switch to a view where it is visible.
 
 ## Merge columns
 
@@ -120,7 +122,7 @@ You can merge data from multiple columns into a new column.
 
 ## Dedupe columns
 
-You can also dedupe your rows based a specific column’s values.
+You can also dedupe your rows based a specific column's values.
 
 To dedupe a column:
 
