@@ -2,7 +2,7 @@
 title: MCP settings
 source_url: https://university.clay.com/docs/mcp-settings
 description: Connect your Clay workspace to AI tools.
-last_synced: 2026-04-26T01:40:20.821Z
+last_synced: 2026-04-26T01:40:20.275Z
 upstream_hash: 9b727bf5db93ea288911ceac05bfdc864e603c50b733fa7bdf0a80431fc74330
 ---
 
@@ -27,7 +27,7 @@ The `Enable for MCP` option on Functions is available on modern Launch, Growth, 
 Functions are reusable enrichment workflows built in Clay that reps can invoke directly from ChatGPT or Claude with a single prompt. Admins build them once and enable them for MCP — reps never need to open Clay to use them.
 
 1.  Go to the `Functions` tab in your workspace and find the function you want (or click `+ New function` to create a new one.)
-2.  Click the function to open it’s settings and toggle `Enable for MCP`.
+2.  Click the function to open it's settings and toggle `Enable for MCP`.
     -   Set a name and description for the MCP app — this is what reps see when browsing available functions, so make it actionable (e.g., _"Company enrichment waterfall"_ or _"Outbound email generator"_).
 
 _For more information about functions, check out our_ [_full doc_](https://university.clay.com/docs/functions)_._
@@ -49,7 +49,7 @@ The `MCP users` table gives a live view of every rep who has connected Clay to a
 -   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, or both)
 -   **Credit limit** — the rep's current limit, either the workspace default or a per-user override
 -   **Credits used** — live usage tracked against the rep's limit
--   **Salesforce ID _(Enterprise Beta users only)_** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
+-   **Salesforce ID _(Enterprise Beta users only)_** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
 
 Use the search bar at the top of the table to find a specific rep by name or email.
 
@@ -85,3 +85,9 @@ MCP usage appears in the main credit usage dashboard at `Settings → Credit Usa
 ### What's the difference between the default credit limit and a per-user override?
 
 The default limit is a workspace-wide setting that applies automatically to any new rep who connects ChatGPT or Claude. A per-user override replaces the default for a specific rep. Reps showing `No limit` have neither a default nor an override applied.
+
+### Why does MCP say "Clay Audiences is not enabled for this workspace"?
+
+Clay Audiences is only available on Enterprise plans. If your workspace is on a Launch or Growth plan, this feature cannot be enabled — no workspace admin action will unlock it. To access Audiences through MCP, your workspace needs to be on an Enterprise plan. Contact your Growth Strategist or Clay support to learn more about upgrading.
+
+If your workspace is already on an Enterprise plan and you are still seeing this error, a workspace admin needs to enable Audiences in your workspace settings. Connecting a CRM, importing data, or other configuration steps will not resolve it — only enabling Audiences at the workspace level will.
