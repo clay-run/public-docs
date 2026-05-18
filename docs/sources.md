@@ -3,7 +3,7 @@ title: Sources
 source_url: https://university.clay.com/docs/sources
 description: Every Clay table begins with a source. Sources are the foundation
   of how data gets into your tables.
-last_synced: 2026-04-26T01:40:43.135Z
+last_synced: 2026-04-26T01:40:43.486Z
 upstream_hash: 6bbaeded48822edcf099cd73e87cf1320a841509cb95fbe6133a6636011b5218
 ---
 
@@ -70,6 +70,20 @@ Every Clay table starts with a source. You can import customer data from a CSV f
 Scheduling source runs is one of the most powerful features, as it keeps your information automatically up to date. To learn more, check out [scheduled sources](https://www.clay.com/university/guide/scheduled-sources).
 
 ## FAQs
+
+### Why is the Submit button greyed out when configuring the "Find local businesses using Google Maps" source?
+
+**The Submit button stays disabled until all required fields are filled in — including fields that appear dynamically after you make a selection.**
+
+When you choose a **Search Type** (either **Business types** or **Free text**), a new required field appears directly below it. Because this field loads below the visible area of the dialog, it's easy to miss.
+
+To fix this:
+
+1.  After selecting a search type, **scroll down** inside the source configuration dialog.
+2.  Fill in the required field that appeared:
+    -   If you selected **Business types**: choose at least one business type from the dropdown.
+    -   If you selected **Free text**: enter a search query (for example, "coffee shops" or "HVAC contractors").
+3.  Once all required fields are filled, the Submit button will become clickable.
 
 ### Why doesn't my Clay table update when I change the source filters?
 
