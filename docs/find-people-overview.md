@@ -14,7 +14,7 @@ The `Find People` source helps you search for people using criteria like job tit
 
 This tool is ideal for building targeted sales prospect lists, identifying potential hires, and conducting market research.
 
-**Note:** You can get up to 500 results per cell by reducing the data you’re requesting. Click the column name and select **Edit column → Reduce Data for More Results**.
+**Note:** You can get up to 500 results per cell by reducing the data you're requesting. Click the column name and select **Edit column → Reduce Data for More Results**.
 
 ## **Creating a table with Find People**
 
@@ -40,4 +40,4 @@ This tool is ideal for building targeted sales prospect lists, identifying poten
 -   **Exclude people:** Exclude up to 3 different sets of people from your search using Clay tables, CSVs, or manual lists. You can exclude up to 300,000 people total (100,000 per source). Exclusions require a LinkedIn URL.
 -   **Past experiences:** Toggle to include past experiences in your search.
 -   **Limit results:** Set a maximum number of results per search (up to 50,000 records).
--   **Limit per company:** Set the maximum number of people to return per company (up to 100).
+-   **Limit per company:** Set the maximum number of people to return per company (up to 100). Note: the preview count shown before running the search reflects the total match universe across all companies and does not account for this limit — the actual number of imported rows will be lower.
