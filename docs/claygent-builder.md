@@ -90,6 +90,8 @@ Give your Claygent access to find people and jobs data directly. This enables pr
 
 Swap between different AI models (Claude, GPT-4o, etc.) to test output quality without touching the prompt.
 
+Claygent always uses Clay's managed accounts for all AI models — there is no option to select your own Anthropic, OpenAI, or Gemini API key within the Claygent model dropdown. All Claygent runs charge Clay data credits. If you want to route a task through your own API key instead, use a **Use AI** column, which has an explicit `Account` dropdown where you can connect and select your own key.
+
 ## Testing before you deploy
 
 **Note:** You can have up to 10 test cases at a time for free (you can delete and add new test cases to keep testing). Test runs don't cost credits.
@@ -164,6 +166,10 @@ No. You can have up to 10 test cases per Claygent at a time for free. You can de
 ### Can I test different models without changing my prompt?
 
 Yes. Switch models in the configuration panel and rerun tests to compare output quality across different AI models.
+
+### Can I use my own Anthropic, OpenAI, or Gemini API key with Claygent?
+
+No. Claygent uses Clay's managed accounts for all AI models — the model dropdown selects which model to use, but all API calls go through Clay's accounts and charge Clay data credits. To use your own API key and route costs to your own provider account, use a **Use AI** column instead: that column has an `Account` dropdown where you can connect and select your own key.
 
 ### What happens if I update an agent while it's running in a table?
 
