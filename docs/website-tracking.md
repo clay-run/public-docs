@@ -60,10 +60,8 @@ Once your visitor table is populated, you can enrich those companies to find con
 
 1.  **Find the right contacts** — in your visitor table, add a **Find People** enrichment to pull relevant people at each visiting company.
 2.  **Get their email addresses** — add an email enrichment (such as the Work Email Waterfall) to retrieve verified work emails for those contacts.
-3.  **Create an email campaign** — from your enriched table, go to `Tools` → `Exports` → `Create Clay email campaign`. Map the email column and draft your message sequence.
+3.  **Create an email campaign** — from your enriched table, create a Clay email campaign (see the [Email sequencer](https://university.clay.com/docs/email-sequencer) doc for setup steps). Map the email column and draft your message sequence.
 4.  **Launch and let it run** — new visitors matching your tracking filters will flow into the table automatically, keeping your outreach loop always-on.
-
-For full campaign setup instructions, see the [Email sequencer](https://university.clay.com/docs/email-sequencer) doc.
 
 # Best practices
 
