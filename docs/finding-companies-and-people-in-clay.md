@@ -138,6 +138,18 @@ Clay uses stored snapshot data rather than live LinkedIn search, so results will
 
 If profiles still appear to be missing after switching to LinkedIn URLs, use **Claygent** to find the missing profiles via Google search, then pass those LinkedIn URLs directly into `Enrich Person`. This uses a live-scraping fallback that isn't constrained by the stored dataset.
 
+### Preview count is much higher than the number of rows actually imported
+
+The **preview count** shown before you run a search reflects the total number of matching people across all companies — it does not account for the **Limit per company** setting. Once you run the search, the per-company cap is applied and the actual row count will be substantially lower.
+
+When searching across a large company table with **Limit per company** enabled, results may only cover a portion of your companies rather than all of them. The search prioritizes returning the full per-company allotment for companies it processes first; if that fills the search's capacity before all companies are reached, the remaining companies return zero results for that run.
+
+To improve coverage across all your companies:
+
+-   **Remove the per-company limit** and use the global **Limit results** setting instead to cap the total.
+-   **Reduce your company list size** so that all companies can be processed within a single search run.
+-   **Switch to the enrichment action** (Find People at These Companies in-table) rather than the source — it processes each company row individually and returns results per company regardless of list size.
+
 ### Find People is returning people from the wrong company
 
 This almost always points to a domain-to-company mapping issue. When Clay resolves a domain to a LinkedIn company, it can occasionally surface a parent company, subsidiary, or a generic LinkedIn company page instead of the intended one. Use the company's **LinkedIn URL** as the input instead of the domain to ensure Clay maps to the exact intended entity.
