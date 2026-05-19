@@ -67,8 +67,7 @@ After generating a setup, you can easily edit your original description and rege
               "items": { "type": "string" }
             }
             ```
-            Omitting `items` causes the error: `Invalid schema for function 'returnData': In context=('properties', 'fieldName'), array schema missing items`.
-        -   **JSON must be strictly valid — no trailing commas.** Standard JSON does not allow a comma after the last property in an object or array. A stray trailing comma (e.g., `"items": { "type": "string" },` when it is the last property in that object) will cause a parse error. If you see the "array schema missing items" error but `items` is already present in your schema, check for a trailing comma — the in-app AI debugger may point to the wrong cause.
+        -   **JSON must be strictly valid — no trailing commas.** Standard JSON does not allow a comma after the last property in an object or array. A stray trailing comma (e.g., `"items": { "type": "string" },` when it is the last property in that object) will cause the error: `Your JSON Schema configuration is invalid. Please try using the "Generate from prompt" button in the column config to create a valid schema, or check your JSON Schema for formatting errors.`
         -   To skip writing schema by hand, click **Generate from prompt** to let Clay generate a valid schema from your prompt automatically.
 8.  _(Optional – Content creation, manipulation only)_ Click `Examples` and `Add examples` to show AI what responses should look like.
 
