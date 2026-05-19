@@ -4,7 +4,6 @@ source_url: https://university.clay.com/docs/bytemine-integration
 description: Enrich person data to gain deeper insights for outreach and
   relationship-building efforts
 last_synced: 2026-04-27T18:09:29.052Z
-upstream_hash: 3268cb8b68b632a4b5c6930be170a74e46d0875a201b65b21111a4f679a882e9
 ---
 
 # Bytemine integration

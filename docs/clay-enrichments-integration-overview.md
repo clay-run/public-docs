@@ -3,7 +3,6 @@ title: Clay enrichments integration overview
 source_url: https://university.clay.com/docs/clay-enrichments-integration-overview
 description: AI-powered data enrichment for improved outreach and sales automation.
 last_synced: 2026-04-27T18:09:34.799Z
-upstream_hash: 3a771ffd1a2d429670e602eece00a8c40ea22ee760ba153b414d9c787a84ec71
 ---
 
 # Clay enrichments integration overview

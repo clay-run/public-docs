@@ -3,7 +3,6 @@ title: Audiences (Beta)
 source_url: https://university.clay.com/docs/audiences
 description: "Note: This feature is currently in beta for Enterprise customers."
 last_synced: 2026-04-27T18:09:16.275Z
-upstream_hash: 179d0c9feae111ee5bff85d8a1428b47ca0754c5ef6639700f2c80852a25a96b
 ---
 
 # Audiences (Beta)

@@ -3,7 +3,6 @@ title: Waterfalls
 source_url: https://university.clay.com/docs/building-a-data-waterfall
 description: Maximize your data coverage with waterfalls.
 last_synced: 2026-04-27T18:09:26.920Z
-upstream_hash: 96b2a4dc5caf36ae7e35302e4d153075dd002385fa3131027ec5f10f29b4bbbc
 ---
 
 # Waterfalls
