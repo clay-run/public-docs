@@ -89,6 +89,26 @@ Give your Claygent access to find people and jobs data directly. This enables pr
 
 Swap between different AI models (Claude, GPT-4o, etc.) to test output quality without touching the prompt.
 
+### Output schema
+
+When you need a Claygent to return structured data — multiple typed fields instead of free text — define a **JSON Schema** in **Define column outputs** in the column settings.
+
+Two common errors when writing schema by hand:
+
+-   **Missing `items` on an array field.** Every field with `"type": "array"` must include an `"items"` object that specifies the element type. Without it, the AI provider rejects the schema and you will see: `Invalid schema for function 'returnData': In context=('properties', 'fieldName'), array schema missing items`. Fix it by adding `"items"`:
+
+    ```json
+    "keyIndicators": {
+      "type": "array",
+      "description": "Short phrases supporting ICP fit.",
+      "items": { "type": "string" }
+    }
+    ```
+
+-   **Trailing comma in the JSON.** Standard JSON does not allow a comma after the last property in an object or array. A stray trailing comma — for example `"items": { "type": "string" },` when `items` is the last property — causes a parse error displayed as: `Your JSON Schema configuration is invalid. Please try using the "Generate from prompt" button in the column config to create a valid schema, or check your JSON Schema for formatting errors.` Note: if you see the "array schema missing items" error but `items` is already present, a trailing comma elsewhere in that object is the likely cause — the in-app AI debugger may point to the wrong issue.
+
+To avoid writing schema by hand, click **Generate from prompt** to have Clay auto-generate a valid schema from your prompt.
+
 ## Testing before you deploy
 
 **Note:** You can have up to 10 test cases at a time for free (you can delete and add new test cases to keep testing). Test runs don't cost credits.
