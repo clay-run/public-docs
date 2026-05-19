@@ -143,3 +143,25 @@ These permissions are available but not requested by default:
 Changing a HubSpot list's membership criteria (for example, tightening segment filters so certain companies are no longer included) does **not** automatically update your Clay table. Records already imported into Clay **stay in the table** — they are not removed just because they no longer match the updated list.
 
 To refresh your table to reflect the updated list, see [Why doesn't my Clay table update when I change the source filters?](https://www.clay.com/university/guide/sources#faqs) in the Sources guide.
+
+### Why does "Create object" fail with a "Contact already exists" error?
+
+The **Create object** action only creates brand-new records in HubSpot. If a contact with a matching email address already exists in HubSpot, the action fails with a "Contact already exists. Existing ID: [id]" error.
+
+There is no single "create or update" action available; to handle contacts that may already be in HubSpot, use this pattern:
+
+1.  Add a **Lookup object** step to search for the contact by email address.
+2.  On your **Create object** step, add an **Only run if** condition so it only runs when the lookup returns no match (the contact is new).
+3.  Add an **Update object** step with an **Only run if** condition so it only runs when the lookup finds a match. Map the **HubSpot Object ID** input from the lookup result's `id` field.
+
+This lets you push contacts from any data source (e.g., ZoomInfo) to HubSpot whether they are new or already exist.
+
+### Why does "Create object" return a "Please enter a valid email" error?
+
+This error is returned by HubSpot when the email value provided is not a valid email address format. Common causes:
+
+-   The email field contains leading or trailing whitespace (a single space before the address is enough to trigger this).
+-   The email value is `null` or empty.
+-   The email address itself is malformed (e.g., missing `@` or domain).
+
+To debug: click into the failing cell, expand the error details, and inspect the exact value being sent to HubSpot. If the email looks correct, check your field mapping in the **Create object** step to ensure no extra whitespace is being appended.
