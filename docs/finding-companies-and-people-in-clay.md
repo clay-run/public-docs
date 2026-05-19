@@ -60,6 +60,20 @@ When running a people search against a company list, provide company **LinkedIn 
 
 Company and people search sources don't have run conditions the way enrichment actions do. If you only want to find people at companies that meet specific criteria (e.g., only public companies), the workaround is to **create a filtered view** of your company table first, then run **Find People at These Companies** from that view. The source will only pull from the rows visible in the view.
 
+### Disable auto-run on the people table when running Find People selectively
+
+When Find People is configured as an enrichment action between a company table and a people table, **both tables have independent auto-run settings**. Turning off auto-run in the company table controls whether Find People fires when company rows are added or edited — but it has **no effect** on the people table's own auto-run setting.
+
+If the people table's auto-run is still on, adding new people rows (for example, by manually triggering Find People for a subset of companies) will automatically fire all enrichments in the people table on those new rows. This can trigger runs across all companies in the table — not just the ones you selected — consuming far more credits than expected.
+
+**To prevent this when running Find People on specific companies only:**
+
+1.  Open your **people table** (not the company table).
+2.  Click the table name to access table settings.
+3.  Under **Run Settings**, toggle **Auto-run** to **OFF**.
+
+With auto-run disabled in both tables, you control exactly which companies trigger people searches and which enrichments run in the people table.
+
 ### Source vs. enrichment — when to use each
 
 The `Find People at These Companies` feature is available as both a source and an enrichment action. Here's how they differ:
