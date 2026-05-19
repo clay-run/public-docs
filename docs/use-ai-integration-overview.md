@@ -58,6 +58,18 @@ After generating a setup, you can easily edit your original description and rege
         -   In the text field, enter the field names where you want the output to appear.
         -   Use the dropdown menu to select the appropriate data type for each output field.
     -   **JSON Schema**
+        -   Paste or type a JSON Schema object to tell the AI exactly how to structure its response. The root must be `"type": "object"` with a `"properties"` map.
+        -   **Every array field must include `"items"`.** A field with `"type": "array"` must also specify `"items"` to define what type of values the array contains. For example:
+            ```json
+            "keyIndicators": {
+              "type": "array",
+              "description": "Short phrases supporting ICP fit.",
+              "items": { "type": "string" }
+            }
+            ```
+            Omitting `items` causes the error: `Invalid schema for function 'returnData': In context=('properties', 'fieldName'), array schema missing items`.
+        -   **JSON must be strictly valid — no trailing commas.** Standard JSON does not allow a comma after the last property in an object or array. A stray trailing comma (e.g., `"items": { "type": "string" },` when it is the last property in that object) will cause a parse error. If you see the "array schema missing items" error but `items` is already present in your schema, check for a trailing comma — the in-app AI debugger may point to the wrong cause.
+        -   To skip writing schema by hand, click **Generate from prompt** to let Clay generate a valid schema from your prompt automatically.
 8.  _(Optional – Content creation, manipulation only)_ Click `Examples` and `Add examples` to show AI what responses should look like.
 
 ## Generating images with Use AI
