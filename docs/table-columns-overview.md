@@ -128,6 +128,8 @@ You can merge data from multiple columns into a new column.
 3.  Write a formula, including any columns you want to add with `/`.
 4.  Click `Save settings`.
 
+**Tip:** If you plan to use a merged column for deduplication, reference source values directly from their original source columns. Avoid using an intermediate column that itself references another column — each extra link in the chain is another place where stale data can propagate and prevent the merged column from populating correctly. See the deduplication rules below for details.
+
 ## Dedupe columns
 
 You can also dedupe your rows based a specific column's values.
@@ -144,6 +146,8 @@ A few rules to keep in mind for column deduplication:
 -   Duplicates are identified based on exact string matches.
     -   Deduplication is case-sensitive, meaning `Clay` and `clay` are treated as different.
     -   Extra whitespace is considered, so `Clay (with a space)` and `Clay` are not the same.
+-   **Stale cells are treated as blank and skipped.** If any upstream column feeding a merged column is stale, the merged column itself becomes stale and its value is excluded from dedup — no duplicate will be detected for that row. Re-run any stale enrichment columns before running dedup on a merged column.
+-   **For merged columns, reference source data directly.** If your merged column references an intermediate column (Column A) that itself references the original source (Column B), and Column B goes stale, both Column A and your merged column become stale, causing dedup to miss duplicates. To avoid this, reference the original source column directly in your merged column formula instead of going through an intermediate column.
 
 ## Rename columns
 
