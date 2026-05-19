@@ -1,7 +1,7 @@
 ---
 title: Table columns
 source_url: https://university.clay.com/docs/table-columns-overview
-description: Learn how to navigate columns in your Clay table.
+description: Learn how to navigate columns in your Clay table, including column types, limits, child column mapping, and how to resolve circular dependency errors.
 last_synced: 2026-04-26T01:40:46.052Z
 upstream_hash: dcf2f9aa5aba4556b4e5de37a7b354c8d44e668192646c6cfdb9d8b4e9128d2b
 ---
@@ -12,7 +12,7 @@ Learn how to navigate columns in your Clay table.
 
 ## Column data types
 
-There are a data types you can specify for your column. Here’s a high level overview of each one:
+There are a data types you can specify for your column. Here's a high level overview of each one:
 
 -   **Text:** Accepts text inputs. You can use this for text fields, summaries, or descriptions
 -   **URL:** Takes in links and will open the link if you click on the cell.
@@ -75,7 +75,7 @@ You can switch the data type of your column within your table. To do this:
 
 ## Create child columns from a parent column
 
-When you enrich data within Clay, your results will be presented as arrays of data, which sometimes includes nested endpoints. You can create individual child columns by mapping specific endpoints from the parent column’s enrichment.
+When you enrich data within Clay, your results will be presented as arrays of data, which sometimes includes nested endpoints. You can create individual child columns by mapping specific endpoints from the parent column's enrichment.
 
 ### Add a new child column
 
@@ -92,6 +92,17 @@ To create a new column with an endpoint from an enrichment (parent column):
 1.  Click on the cell of the enrichment containing the endpoint you want to use. This will open the **Cell details** panel on the right.
 2.  Hover over the desired endpoint and click `Add as column` on the right.
 3.  Under **Map to an existing column**, click on the column you want you map this enrichment endpoint to. Note that this will overwrite the existing values within the destination column.
+
+### Circular dependency error
+
+If Clay blocks the save with a **Circular dependency error**, it means the destination column is already used as an input somewhere upstream in the same enrichment chain — directly or indirectly through another dependent column. Mapping into it would create a loop, so Clay prevents the save.
+
+**How to fix it:**
+
+-   Map the enrichment result to a **new column** instead of the existing destination.
+-   Or, open the enrichment(s) that reference the destination column as an input and remove that reference, then re-map.
+
+To visualize the full dependency chain and identify where the loop originates, open **Graph view**: click the view selector dropdown in your table toolbar and choose **Graph view**.
 
 ### Find the parent column of your child column
 
@@ -120,7 +131,7 @@ You can merge data from multiple columns into a new column.
 
 ## Dedupe columns
 
-You can also dedupe your rows based a specific column’s values.
+You can also dedupe your rows based a specific column's values.
 
 To dedupe a column:
 
