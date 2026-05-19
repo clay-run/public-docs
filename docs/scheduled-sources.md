@@ -24,7 +24,7 @@ This keeps your data current without manual updates by pulling in new informatio
     2.  Day
     3.  Week
     4.  Month
--   Toggle Update existing rows: When the source is re-run, existing rows will be updated with any new information.
+-   Toggle **Update existing rows**: When the source is re-run, any record **returned by that run** will have its existing row updated with the latest data. Records that are not returned by the source query — even if they were previously imported — will not be updated.
 
 **For any existing sources:**
 
@@ -36,7 +36,7 @@ This keeps your data current without manual updates by pulling in new informatio
     2.  Day
     3.  Week
     4.  Month
--   Toggle Update existing rows: When the source is re-run, existing rows will be updated with any new information.
+-   Toggle **Update existing rows**: When the source is re-run, any record **returned by that run** will have its existing row updated with the latest data. Records that are not returned by the source query — even if they were previously imported — will not be updated.
 
 ## Usage limits
 
