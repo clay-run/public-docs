@@ -19,7 +19,7 @@ You can access your table settings via your table settings dropdown.
 
 ## Auto-dedupe
 
-Auto-dedupe continuously monitors a specified column to detect and resolve duplicate values by retaining the oldest row and deleting the duplicates. Blank cells and cells with more than 200 characters are excluded from this process.
+Auto-dedupe continuously monitors a specified column to detect and resolve duplicate values by retaining the oldest row and deleting the duplicates. Blank cells, stale cells, and cells with more than 200 characters are excluded from this process.
 
 To enable or disable auto-dedupe:
 
