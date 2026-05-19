@@ -97,7 +97,7 @@ You can track both actions and data credits usage in the `Usage Dashboard`, whic
 
 ### Do credits roll over?
 
-**Monthly plans:** When your plan refreshes, unused data credits will roll over and accumulate. The maximum accumulation is capped at 2× your plan's monthly credit limit. For example, if your plan includes 50,000 credits per month, your maximum balance would be 100,000.
+**Monthly plans:** When your plan refreshes, unused data credits will roll over and accumulate. The maximum accumulation is capped at 2× your plan's monthly credit limit — and this cap includes the newly added renewal credits. For example, if your plan includes 50,000 credits per month, your maximum balance is 100,000. If you already have 82,000 credits when your plan renews, you will end up with 100,000 credits, not 132,000.
 
 **Annual plans:** When your plan refreshes, you can roll over up to 15% of your annual data credits in addition to the new credits you receive, provided you renew on the same or a higher-tier plan.
 
