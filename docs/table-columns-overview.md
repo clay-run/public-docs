@@ -128,7 +128,7 @@ You can merge data from multiple columns into a new column.
 3.  Write a formula, including any columns you want to add with `/`.
 4.  Click `Save settings`.
 
-**Tip:** If you plan to use a merged column for deduplication, reference source values directly from their original source columns. Avoid using an intermediate column that itself references another column — each extra link in the chain is another place where stale data can propagate and prevent the merged column from populating correctly. See the deduplication rules below for details.
+**Tip:** If you plan to use a merged column for deduplication, make sure all enrichment columns feeding it have run and are not stale. A stale upstream column causes the merged column itself to become stale, which causes auto-dedupe to skip it.
 
 ## Dedupe columns
 
@@ -146,8 +146,8 @@ A few rules to keep in mind for column deduplication:
 -   Duplicates are identified based on exact string matches.
     -   Deduplication is case-sensitive, meaning `Clay` and `clay` are treated as different.
     -   Extra whitespace is considered, so `Clay (with a space)` and `Clay` are not the same.
--   **Stale cells are treated as blank and skipped.** If any upstream column feeding a merged column is stale, the merged column itself becomes stale and its value is excluded from dedup — no duplicate will be detected for that row. Re-run any stale enrichment columns before running dedup on a merged column.
--   **For merged columns, reference source data directly.** If your merged column references an intermediate column (Column A) that itself references the original source (Column B), and Column B goes stale, both Column A and your merged column become stale, causing dedup to miss duplicates. To avoid this, reference the original source column directly in your merged column formula instead of going through an intermediate column.
+-   **Auto-dedupe skips stale cells.** If a merged column — or any enrichment column it references — is stale, the row is excluded from auto-dedupe entirely and will not be flagged as a duplicate. Re-run all stale enrichment columns and confirm the merged column has refreshed before expecting auto-dedupe to catch those rows.
+-   **Manual (one-time) column dedup skips blank cells only.** If the merged column has a previously stored value, that value is compared for duplicates even if the cell is stale. Only rows where the merged column is empty are excluded from manual dedup.
 
 ## Rename columns
 
