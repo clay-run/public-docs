@@ -200,9 +200,9 @@ Actions represent your fixed monthly capacity. Unused Actions expire at the end 
 
 ### Data Credits: Yes, with limits
 
-If you are on a **monthly plan**, unused Data Credits will roll over and accumulate in your account. The maximum accumulation is capped at **2× your plan's monthly credit limit**.
+If you are on a **monthly plan**, unused Data Credits will roll over and accumulate in your account. The maximum accumulation is capped at **2× your plan's monthly credit limit**. This cap is enforced at every renewal: when new monthly credits are added, your **total balance** (existing credits + new credits) cannot exceed 2× your monthly limit. Any credits that would push you over the cap are dropped.
 
--   For example, if your plan includes 50,000 credits per month, your maximum balance would be 100,000.
+-   For example, if your plan includes 50,000 credits per month, your maximum balance is 100,000. If you already have 82,000 credits when your plan renews, your balance becomes 100,000 — not 132,000. The 32,000 excess is dropped.
 -   If you cancel or downgrade, you can use any excess Data Credits until your current billing cycle ends. After the billing cycle ends, your balance will be reduced to the **Data Credit rollover limit** of your new plan.
 
 If you are on an **annual plan**, you are eligible for a **15% Data Credit rollover** of unused Data Credits, provided you renew on the same or a higher-tier plan.
