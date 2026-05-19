@@ -372,7 +372,7 @@ Your plan changes will be activated immediately, and any applicable charges will
 
 ### **Update your payment method and billing email**
 
-To update your billing and payment information:**
+To update your billing and payment information:
 
 1.  Click on your profile picture in the top-right corner and select `Settings`.
 2.  In the sidebar, navigate to `Plans & billing`.
