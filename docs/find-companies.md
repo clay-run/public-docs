@@ -51,3 +51,30 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
     -   Add additional enrichments like `Company Headcount Growth` or `Most Recent News`.
     -   Enable or disable auto-update and auto-dedupe.
 4.  Click `Continue`.
+
+## Lookalikes (Beta)
+
+**Note:** Lookalikes is currently in beta — contact support or your Growth Strategist to enable it for your workspace.
+
+Lookalikes analyzes a list of seed companies and automatically groups them into clusters, each representing a distinct ICP type. For each cluster, Clay returns a preview of matching lookalike companies that you can tune with per-cluster filters before importing.
+
+**How to access:**
+
+-   **Home > Find leads > Lookalikes** in the Quick start section
+-   **Find Companies page > mode dropdown > Find lookalikes**
+
+**How to use Lookalikes:**
+
+1.  Select your input source — a **Clay table** or a **Clay Audience segment**. Lookalikes supports up to **15,000 seed companies**.
+2.  Click **Preview** — Clay clusters the seed companies into ICP groups and loads a preview of lookalike results for each cluster.
+3.  **Edit individual clusters** to fine-tune results. For each cluster you can adjust:
+    -   **Industries**
+    -   **Company sizes** (employee-count ranges, e.g., 11–50, 51–200)
+    -   **Keywords** — describe what you're looking for in plain language; Clay finds matching companies even if they don't use those exact words
+    -   **Countries**
+4.  **Set exclusions** to suppress companies you already have (e.g., existing customers or current pipeline) from the results.
+5.  Import when the results look good.
+
+**Tip:** You can also ask Sculptor, Clay's AI assistant, to apply filter changes across multiple clusters at once.
+
+**Note:** Global filters (applied across all clusters simultaneously) are not yet available. Per-cluster editing is the current workflow.
