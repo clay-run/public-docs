@@ -70,3 +70,18 @@ Enrich a company using its domain to get firmographic and company data.
 **Inputs**
 
 -   **Company domain**
+
+## FAQs
+
+### A downstream column shows `ERROR_MISSING_INPUT` for rows sourced from Surfe but not for rows from other sources — why?
+
+**Cause:** Surfe returns contact fields using camelCase names — for example, `firstName` and `lastName` — while most other Clay integrations return those same fields as `first_name` and `last_name`. Clay's table UI normalizes both naming conventions to display as "First Name" and "Last Name," so the difference isn't visible at a glance. A downstream column (for example, HubSpot Lookup Contact or Enrich Contact) configured to read `first_name` will find no value in Surfe-sourced rows because the field is stored as `firstName`.
+
+**Fix:** In the downstream column's input field, use the `||` fallback operator to accept either naming convention:
+
+-   Instead of `first_name`, enter `first_name || firstName`
+-   Instead of `last_name`, enter `last_name || lastName`
+
+The `||` operator returns the first non-empty value, so the same column works whether the row came from Surfe (camelCase) or another source (snake_case).
+
+Alternatively, add an intermediate formula column that extracts and normalizes the field before passing it to the downstream enrichment.
