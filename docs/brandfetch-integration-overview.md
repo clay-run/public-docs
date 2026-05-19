@@ -3,7 +3,6 @@ title: Brandfetch integration
 source_url: https://university.clay.com/docs/brandfetch-integration-overview
 description: Access brand data for next-level B2B personalization.
 last_synced: 2026-04-27T18:09:23.800Z
-upstream_hash: bcb653e54adff38a346855b843dd8e9b362508585bf28f90a67be23712f69d3f
 ---
 
 # Brandfetch integration

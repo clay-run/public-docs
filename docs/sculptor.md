@@ -3,7 +3,6 @@ title: Sculptor
 source_url: https://university.clay.com/docs/sculptor
 description: Your go-to-market co-pilot
 last_synced: 2026-04-26T01:40:38.269Z
-upstream_hash: 3b4d9f80bc86bef6578b801f8a0a2055147d8c6eb493b8565c9bf7736e956093
 ---
 
 # Sculptor

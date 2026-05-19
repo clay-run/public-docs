@@ -3,7 +3,6 @@ title: Keyboard shortcuts
 source_url: https://university.clay.com/docs/keyboard-shortcuts
 description: Work faster in Clay with keyboard shortcuts.
 last_synced: 2026-04-27T18:10:15.366Z
-upstream_hash: e20abca1c1e41f5474da4c4400e4d2b4ebd9be09e393758126a169ca4a9b8610
 ---
 
 # Keyboard shortcuts

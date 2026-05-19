@@ -4,7 +4,6 @@ source_url: https://university.clay.com/docs/referencing-dynamic-data-from-other
 description: Reference data from other columns for AI prompting, formulas, and
   message drafting.
 last_synced: 2026-04-26T01:40:31.942Z
-upstream_hash: 7741a6ba2b2f7bb6aa88eeabf871dee79e976e01a3862ef7390165cfd4d79920
 ---
 
 # Referencing dynamic data from other columns

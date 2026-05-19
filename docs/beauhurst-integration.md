@@ -5,7 +5,6 @@ description: Beauhurst is a private company intelligence platform covering every
   private company in the UK and Germany. Within Clay, you can use Beauhurst to
   enrich…
 last_synced: 2026-04-27T18:09:21.673Z
-upstream_hash: 46ba431ca3e7c982151ae46ade2ba4002e67ba5cfb51116f2775557013b81a64
 ---
 
 # Beauhurst integration
