@@ -221,8 +221,8 @@ The typical setup process:
 
 ## **What happens when SSO is enabled**
 
--   All users whose email address is on your verified domain are required to sign in through SSO.
--   Other login methods (Google, password) are disabled for those users.
+-   All users whose email address is on your verified domain are required to sign in through SSO. The Clay login page redirects those users to your SSO provider automatically.
+-   Google OAuth sign-in is disabled for users on your domain.
 -   SSO is configured at the email domain level — if your organization uses multiple Clay workspaces, users on your domain will be routed through SSO for all of them.
 
 ## **External collaborators (non-domain email addresses)**
@@ -372,7 +372,7 @@ Your plan changes will be activated immediately, and any applicable charges will
 
 ### **Update your payment method and billing email**
 
-To update your billing and payment information:
+To update your billing and payment information:**
 
 1.  Click on your profile picture in the top-right corner and select `Settings`.
 2.  In the sidebar, navigate to `Plans & billing`.
