@@ -10,7 +10,7 @@ last_synced: 2026-04-26T01:40:51.610Z
 
 Leverage AI to process, categorize, and conduct web research for actionable insights.
 
-The **Use AI** feature in Clay allows users to automate tasks like content creation, data enrichment, and web research using GPT, Claude, or Gemini AI models.
+The **Use AI** feature in Clay allows users to automate tasks like content creation, data enrichment, and web research using GPT, Claude, Gemini, and other AI models.
 
 Here are some key capabilities of the Use AI integration:
 
@@ -76,7 +76,7 @@ After generating a setup, you can easily edit your original description and rege
 
 ## Selecting specific AI models
 
-Clay's Use AI feature leverages three powerful AI models: GPT, Claude, and Gemini.
+Clay's Use AI feature supports multiple AI providers, including GPT (OpenAI), Claude (Anthropic), Gemini (Google), and DeepSeek.
 
 To learn more about each model's capabilities and prompting best practices, refer to their official documentation:
 
@@ -92,3 +92,19 @@ While you don't need your own GPT, Claude, or Gemini API key to use the AI featu
 
 1.  Select the desired `Model` from the dropdown.
 2.  Click on the `Account` dropdown and click `+ Add account`.
+
+## Using additional or custom LLMs
+
+Use AI supports a fixed set of built-in AI providers (such as GPT, Claude, Gemini, and DeepSeek). Custom or additional LLMs — including open-source models like LLaMA, or models accessed through a proxy such as LiteLLM — cannot be added directly to the Use AI enrichment interface.
+
+**Workaround: HTTP API enrichment**
+
+To call a custom or additional LLM from Clay, use the [HTTP API enrichment](https://university.clay.com/docs/http-api-integration-overview) to send requests to any OpenAI-compatible endpoint:
+
+-   **Hosted proxy services** (e.g., LiteLLM, Azure OpenAI, AWS Bedrock): Configure the HTTP API enrichment to call the provider's OpenAI-compatible endpoint. See [LiteLLM's API documentation](https://docs.litellm.ai/docs/providers/openai_compatible) for endpoint and authentication details.
+-   **Self-hosted open-source models** (e.g., LLaMA): Host the model at a reachable HTTP endpoint, then configure the HTTP API enrichment to call it.
+
+**Limitations compared to Use AI:**
+
+-   You will not have access to Use AI's built-in features such as structured output configuration, model comparison, or web research (Claygent) mode.
+-   Each table row generates one API call to your LLM endpoint.
