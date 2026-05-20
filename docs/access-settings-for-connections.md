@@ -3,17 +3,23 @@ title: Access settings for connections
 source_url: https://university.clay.com/docs/access-settings-for-connections
 description: Two controls for managing connection access — restrict who can build
   with existing connections, and require approval before anyone adds a new one.
-last_synced: 2026-04-26T01:39:38.272Z
+last_synced: 2026-05-20T18:58:48.695Z
 ---
 
 # Access settings for connections
 
-Workspace admins have two ways to control connection access, both managed from `Settings` → `Connections`.
+Determine who in the workspace is allowed to build with certain connections or MCP servers.
 
 **Note:** This feature is for users on an Enterprise Plan.
 
-1. **Build permissions** — Restrict which workspace members can use a specific connection to configure workflows and columns. Members only see connections they're allowed to use; all workspace members can still run workflows that are already set up.
-2. **Approval to add connections** — Require that members request admin approval before adding any new connection to the workspace.
+Workspace admins can control who is allowed to add connections and build with them, preventing unauthorized tools from accessing your data.
+
+**Two levels of control:**
+
+-   **Require approval to add new connections** — Members must request admin approval before adding any new connection (e.g., Salesforce, OpenAI, MCP servers) to the workspace
+-   **Restrict who can build with existing connections** — Set permissions on each connection to control which users or groups can configure workflows and columns with it
+
+When building in Clay, users only see connections they have access to. All users can still run workflows and columns that are already set up — controls apply at configuration time, not run time.
 
 ## Managing connections as an admin
 
