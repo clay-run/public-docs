@@ -1,13 +1,13 @@
 ---
 title: Firmable integration
 source_url: https://university.clay.com/docs/firmable-integration
-description: Find Australian mobile phones, personal emails, and work emails.
+description: Find Australian mobile phones and work emails.
 last_synced: 2026-04-26T01:40:00.103Z
 ---
 
 # Firmable integration
 
-Find Australian mobile phones, personal emails, and work emails.
+Find Australian mobile phones and work emails.
 
 Firmable is an intelligence tool for lead generation and account research.
 
@@ -35,19 +35,6 @@ Retrieves an individual's phone number using the contact's social URL.
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
 
-### `Action` Find personal email (Australia)
-
-Retrieves an individual's personal email address using the contact's social URL.
-
-**Inputs**
-
--   **Social URL**
-
-**Run settings**
-
--   **Auto-update**
--   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
-
 ### `Action` Find work email (Australia)
 
 Retrieves an individual's work email address using the contact's social URL.
@@ -60,3 +47,9 @@ Retrieves an individual's work email address using the contact's social URL.
 
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
+
+## Finding personal emails for Australian contacts
+
+The **Find personal email (Australia)** action has been removed from Firmable. Firmable no longer provides personal email data via their API.
+
+To find personal emails for Australian (and global) contacts, use the **Personal Email** waterfall in Clay, which includes providers such as Forager, People Data Labs, Wiza, ContactOut, Limadata, and Mixrank — several of which have solid Australian and global coverage.
