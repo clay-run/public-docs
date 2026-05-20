@@ -51,3 +51,11 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
     -   Add additional enrichments like `Company Headcount Growth` or `Most Recent News`.
     -   Enable or disable auto-update and auto-dedupe.
 4.  Click `Continue`.
+
+## FAQs
+
+### Can I filter companies by the year they were founded?
+
+Founded year is not available as a filter when building a `Find Companies` search — you can't narrow results by founding date before importing.
+
+However, `Find Companies` automatically includes a **Founded** column in your table showing the founding year for each company. Once you've imported your results, you can filter or sort that column to focus on companies founded within a specific range — for example, filtering to companies founded after 2020 to target early-stage startups.
