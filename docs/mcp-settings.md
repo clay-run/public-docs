@@ -26,7 +26,7 @@ The `Enable for MCP` option on Functions is available on modern Launch, Growth, 
 Functions are reusable enrichment workflows built in Clay that reps can invoke directly from ChatGPT or Claude with a single prompt. Admins build them once and enable them for MCP — reps never need to open Clay to use them.
 
 1.  Go to the `Functions` tab in your workspace and find the function you want (or click `+ New function` to create a new one.)
-2.  Click the function to open it’s settings and toggle `Enable for MCP`.
+2.  Click the function to open it's settings and toggle `Enable for MCP`.
     -   Set a name and description for the MCP app — this is what reps see when browsing available functions, so make it actionable (e.g., _"Company enrichment waterfall"_ or _"Outbound email generator"_).
 
 _For more information about functions, check out our_ [_full doc_](https://university.clay.com/docs/functions)_._
@@ -48,7 +48,7 @@ The `MCP users` table gives a live view of every rep who has connected Clay to a
 -   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, or both)
 -   **Credit limit** — the rep's current limit, either the workspace default or a per-user override
 -   **Credits used** — live usage tracked against the rep's limit
--   **Salesforce ID _(Enterprise Beta users only)_** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
+-   **Salesforce ID _(Enterprise Beta users only)_** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
 
 Use the search bar at the top of the table to find a specific rep by name or email.
 
@@ -64,6 +64,18 @@ If your workspace uses Clay Audiences, two additional workspace-level toggles ap
 -   **Allow querying all accounts** — when enabled, reps can query any account in the synced audience, not just accounts they own in Salesforce.
 
 ## FAQ
+
+### What role should I assign to team members who will only use Clay through MCP?
+
+Any team member who needs to use Clay through an AI tool (Claude, ChatGPT, or xAI) must first be added to your Clay workspace. When inviting them, assign the **Sales Rep** role.
+
+The Sales Rep role is designed for MCP-only access: users can invoke functions and run enrichments from within their AI tool, but they cannot open or interact with the Clay web interface. This makes it the right choice for team members who should use Clay through AI tools only — not build workflows directly in Clay.
+
+To invite them: go to `Settings` → `Team`, click `+ Invite`, enter their email address, and select **Sales Rep** from the role dropdown.
+
+**Note:** The Sales Rep role is currently in beta — contact support to request access for your workspace.
+
+For a full breakdown of all roles, see [Roles and permissions](https://university.clay.com/docs/roles-and-permissions).
 
 ### Can admins remove a rep's access to Clay in ChatGPT or Claude?
 
