@@ -83,9 +83,9 @@ Your Actions capacity is determined by your plan tier. Plan tiers are designed s
 
 ### How to get more Actions
 
-**Upgrade your plan tier** in `Settings` → `Plans & billing`.
+**Upgrade your action capacity tier** in `Settings` → `Plans & billing`.
 
-Actions cannot be purchased as one-time top-ups because they represent fixed platform capacity tied to your plan's tier.
+Actions cannot be purchased as one-time top-ups because they represent fixed platform capacity tied to your action tier.
 
 ## Understanding Data Credits
 
@@ -310,11 +310,11 @@ You don't need to change your Actions tier.
 
 ### What happens if I run out of Actions but not Data Credits?
 
-You must upgrade to a higher plan tier. Actions cannot be topped up separately because they're tied to your plan's capacity and features.
+You must upgrade to a higher action tier. Actions cannot be topped up separately because they're tied to your action tier's capacity.
 
 ### Why can't I top up Actions?
 
-Actions represent fixed platform capacity tied to your plan tier's features and limits. To get more Actions, you must upgrade to a higher plan tier. Data Credits, however, are consumption-based and can be purchased as one-time top-ups or by upgrading your Data Credits tier.
+Actions represent fixed platform capacity tied to your action tier. To get more Actions, you must upgrade to a higher action tier. Data Credits, however, are consumption-based and can be purchased as one-time top-ups or by upgrading your Data Credits tier.
 
 ### Do unused Data Credits or Actions roll over?
 
