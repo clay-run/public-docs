@@ -13,7 +13,7 @@ Sales engagement platform.
 
 Salesloft in Clay allows you to manage accounts and people, including creating, updating, and looking up records, as well as adding people to cadences.
 
-For the Clay and Salesloft integration, here’s a breakdown of the actions available:
+For the Clay and Salesloft integration, here's a breakdown of the actions available:
 
 1.  **Create Account/Person**: Add new accounts or individuals directly to Salesloft.
 2.  **Lookup Account/Person**: Find specific accounts or people in Salesloft using existing data fields for reference.
@@ -23,17 +23,17 @@ For the Clay and Salesloft integration, here’s a breakdown of the actions avai
 
 ### Requirements for Setting Up SalesLoft
 
-To get set up with Salesloft, you’ll need to obtain an API key and have an existing Cadence if you want to send leads directly to a Cadence.
+To get set up with Salesloft, you'll need to obtain an API key and have an existing Cadence if you want to send leads directly to a Cadence.
 
 **Connect Salesloft with Clay via an API Key**
 
-To set up Salesloft within Clay, you’ll need to first obtain a Salesloft API Key. You can request for an API key within Salesloft’s [New API Key](https://developers.salesloft.com/docs/platform/external-calendars/setup-api-key/) Page.
+To set up Salesloft within Clay, you'll need to first obtain a Salesloft API Key. You can request for an API key within Salesloft's [New API Key](https://developers.salesloft.com/docs/platform/external-calendars/setup-api-key/) Page.
 
-Once you’ve obtained your API key, navigate to your enrichment panel and paste your API key when creating a new account.
+Once you've obtained your API key, navigate to your enrichment panel and paste your API key when creating a new account.
 
 **Set up Cadence within Salesloft**
 
-To add leads to a Cadence directly from Clay you will need to have an existing Cadence. This must be done directly within Salesloft. Refer to [Salesloft’s documentation](https://help.salesloft.com/s/article/Create-a-Cadence?language=en_US) if you need more help.
+To add leads to a Cadence directly from Clay you will need to have an existing Cadence. This must be done directly within Salesloft. Refer to [Salesloft's documentation](https://help.salesloft.com/s/article/Create-a-Cadence?language=en_US) if you need more help.
 
 ## Salesloft use cases
 
@@ -173,3 +173,19 @@ Specify Auto-update and Conditional run statements.
 If you are running trigger campaigns please make sure to turn Auto-update on.
 
 ![](https://cdn.prod.website-files.com/687e604972375496b891fe58/691e659fa1b8cb9cc1ee32da_672aeddc0616d6a7ef69234a_672aec9c4163926064f940bf_CleanShot%2525202024-10-31%252520at%25252002.14.57%2525402x%252520\(1\).png)
+
+## Avoiding duplicate Salesloft person records
+
+When you use both **Upsert Person** and **Add Person to Cadence** in the same Clay table, both columns can run at the same time. If Add Person to Cadence fires before Upsert Person finishes, Salesloft may create a second person record for the cadence enrollment instead of attaching to the upserted record — leaving you with two duplicate person records for the same contact.
+
+To prevent this, follow two steps:
+
+**1. Pass the Salesloft Person ID from Upsert Person into Add Person to Cadence**
+
+In the Add Person to Cadence column, set the Person input to reference the **Person ID returned by the Upsert Person action** — not the contact's email address directly. Use the `/` field picker inside Add Person to Cadence and select the Person ID output from your Upsert Person column. This ensures Add Person to Cadence always attaches to the existing upserted record rather than creating a new one.
+
+**2. Add a run condition to Add Person to Cadence**
+
+In the Add Person to Cadence column's run settings, add a conditional run so it only executes after Upsert Person has completed successfully. For example, set the condition to run only when the Upsert Person status equals `success`.
+
+This forces the two actions to run in sequence — Upsert Person first, Add Person to Cadence second — so Add to Cadence always finds and uses the upserted record.
