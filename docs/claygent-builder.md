@@ -54,7 +54,7 @@ Sculptor will:
 
 1.  Define the prompt logic.
 2.  Set up variables (company name, contact title, industry, etc.).
-3.  Format the output (score plus reasoning).
+3.  Format the output (score plus reasoning)..
 4.  Create test cases so you can see it in action.
 
 ### Iterating with Sculptor
@@ -81,6 +81,8 @@ Attach tone guides, messaging docs, PDFs, or CSVs directly into your agent. For 
 
 Enable web search when your agent needs live research (recent company news, hiring signals, etc.). Disable it when working from data already in your table to keep runs faster and more consistent.
 
+**Note:** For Clay parallel models (Argon, Neon, Helium, and similar), web search is a required component — the toggle appears greyed out because it is always active and cannot be turned off for these models. This is expected behavior, not a missing feature.
+
 ### Find contacts and jobs tool
 
 Give your Claygent access to find people and jobs data directly. This enables prospecting workflows like "find the best person who would manage growth at a company" — where the right title varies by company size.
@@ -88,14 +90,6 @@ Give your Claygent access to find people and jobs data directly. This enables pr
 ### Model selection
 
 Swap between different AI models (Claude, GPT-4o, etc.) to test output quality without touching the prompt.
-
-**Not all models support tool calling.** The Web search and Find contacts and jobs toggles require a model that supports tool calling. If you select a model that doesn't support it (such as Claygent Argon), those toggles will be greyed out and you'll see the message _"Tools are not available for the selected model."_ This is not a plan limitation — switch to a tool-calling model to enable them:
-
--   GPT-4.1 or GPT-4o (OpenAI)
--   Claude Sonnet 3.5 or Claude Sonnet 4 (Anthropic)
--   Claygent Navigator (for browser interactions)
-
-You don't need a separate OpenAI API key — Clay's managed models work out of the box on all paid plans.
 
 ### Output schema
 
@@ -204,9 +198,9 @@ Yes, but centralizing in Claygent builder gives you version control, free testin
 
 When Sculptor rewrites your prompt, it saves the new prompt text and shows a "Prompt updated by Sculptor" confirmation. It does **not** automatically re-run the test. The test output you see is from the previous run. Click **Run** (or **Run all**) in the test panel to execute the test with the updated prompt and see the new output.
 
-### The web search (or Find contacts and jobs) toggle is greyed out — why?
+### The web search toggle is greyed out — why?
 
-If you see _"Tools are not available for the selected model,"_ your current model doesn't support tool calling. Switch to a model that does: GPT-4.1, GPT-4o, Claude Sonnet 3.5, Claude Sonnet 4, or Claygent Navigator. Models like Claygent Argon don't support tool calling, so those toggles will remain disabled until you change models.
+For Clay parallel models (Argon, Neon, Helium, and similar), web search is always on and cannot be toggled off — it's a required part of how these models work. The greyed-out toggle is expected; web search is active. If you want to turn web search off, switch to a non-parallel model in the model selector.
 
 ## Tips for success
 
