@@ -105,7 +105,7 @@ For more details, see our guide on [actions and data credits](https://www.notion
 
 ### What if I need more actions or data credits?
 
-**Actions:** Actions cannot be purchased as one-time top-ups — they represent fixed platform capacity tied to your plan tier. To increase your Actions limit, you must upgrade to a higher plan tier in `Settings` → `Plans & billing`.
+**Actions:** Actions cannot be purchased as one-time top-ups — they represent fixed platform capacity tied to your action tier. To increase your Actions limit, you must upgrade to a higher action tier in `Settings` → `Plans & billing`.
 
 **Data Credits:** You have two options:
 
