@@ -175,7 +175,8 @@ Clay offers three user roles with different permission levels to help manage you
 
 -   Add, remove, or change team members' roles.
 -   Modify billing settings or purchase credits.
--   Delete connections or set a default connection in `Settings` → `Connections`.
+-   Set a connection as the default in `Settings` → `Connections` — this is a workspace admin–only action.
+-   Delete connections added by other workspace members — editors can only delete connections they personally added.
 
 ### **Viewer**
 
@@ -190,7 +191,7 @@ To invite a new member to your workspace:
 -   Go to `Settings` > `Team`.
 -   Click the `+ Invite` button in the top-right corner.
 -   Enter the email address of the person you want to invite.
--   Select the appropriate role (Editor or Admin) from the dropdown).
+-   Select the appropriate role (Editor or Admin) from the dropdown.
 -   Click `Send invite`.
 
 The invited person will receive an email to join the workspace with the specified role.
@@ -288,7 +289,10 @@ To add a new account for an integration:
 
 ## **Managing existing accounts**
 
-**Note:** Deleting a connection and setting a connection as the default are **workspace admin–only** actions. Non-admin members (Editors) will only see `Test Connection` in the `…` menu and cannot delete connections or change the default account. To perform these actions, ask a workspace admin.
+**Note:** Some connection management actions are restricted by role:
+
+-   **Set as Default** is a **workspace admin–only** action — only admins see this option in the `…` menu.
+-   **Delete** is available to the member who added the connection and to workspace admins. If you need to delete a connection that was added by someone else, ask a workspace admin.
 
 ### **View your integration accounts**
 
