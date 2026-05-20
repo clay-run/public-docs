@@ -144,6 +144,26 @@ Include action columns (enrichments, Claygents, waterfalls) — not static input
 
 Remember: every column you include becomes a required input. More columns mean more inputs users must provide when calling the function.
 
+### How do I return a single output field when two enrichment columns each cover the same data but only one runs per row?
+
+If your function uses two enrichment columns that cover the same data (e.g., two person enrichment providers where only one runs per row based on a run condition), the "Send data back" step maps column values by reference — it does not accept inline formulas to merge or transform values within the step itself.
+
+The workaround is to create a **formula column** (Merge columns) inside your function that coalesces the two enrichment columns, then use that formula column as the output:
+
+1.  Add a **Merge columns** column inside your function. Use the `||` operator to pick whichever enrichment is populated:
+
+    `{{Enrichment A}}?.person || {{Enrichment B}}?.person`
+
+2.  Give the column a clear name (e.g., `Merged Person Data`).
+
+3.  In your function's "Send data back" step, select `Merged Person Data` as the output. Your caller table receives one field instead of two.
+
+**Note:** Formula columns store their result as **text**. If you're coalescing JSON objects, the output will be a serialized string. To make this explicit, wrap with `JSON.stringify`:
+
+`JSON.stringify({{Enrichment A}}?.person || {{Enrichment B}}?.person || null)`
+
+To access the object's sub-keys downstream, parse it back with `JSON.parse({{Merged Person Data}})`.
+
 ### Can I share a function with someone outside my workspace?
 
 Yes. Enable "share as template" on the function to generate a shareable link. Anyone with the link can view the function's columns and create a table in their workspace using it.
