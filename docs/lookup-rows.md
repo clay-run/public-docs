@@ -79,7 +79,7 @@ Send Table Data **pushes** data from your current table into another table. It c
     -   `Target column` — the column to match on in that table
     -   `Filter operator` — how to compare the values (strict `Equals` or flexible `Contains`)
     -   `Row value` — the value you're looking for
-    -   `Limit (Optional)` — set max number of rows to return (useful to cut down on response size if you have large numbers of columns)
+    -   `Limit (Optional)` — set max number of rows to return per row. The maximum is **100** (hard limit — values above 100 are ignored). Defaults to 100 if left blank. Use a lower value to reduce response size when you have many columns.
 5.  Run the lookup.
 6.  Review results:
     -   Each row returns a count of matches
@@ -97,6 +97,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 -   Match on clean, normalized identifiers (domain/email domain beats company name)
 -   Remember the UI shows up to 10 matches, but the count reflects all matches found
 -   Only use `Add as column` for the few results you actually need to avoid clutter and keep tables readable
+-   **100-record cap**: Lookup multiple rows returns at most 100 records per row — this is a hard limit that cannot be changed. If your source table has more than 100 matching records, only the first 100 are returned. To work around this, split the source table into smaller segments (e.g., by category, region, or product line), create a separate lookup column per segment, and merge the results in a formula or AI prompt. Each segment lookup stays under 100 records while the AI prompt still gets the full set.
 
 ### **Using lookups in the same table**
 
