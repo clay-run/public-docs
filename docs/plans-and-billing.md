@@ -105,7 +105,12 @@ For more details, see our guide on [actions and data credits](https://www.notion
 
 ### What if I need more actions or data credits?
 
-You can upgrade your plan tier at any time by visiting your plan settings page. You can also purchase one-off data credits at a 30% premium (50% on legacy plans) during your billing cycle.
+**Actions:** Actions cannot be purchased as one-time top-ups — they represent fixed platform capacity tied to your action tier. To increase your Actions limit, you must upgrade to a higher action tier in `Settings` → `Plans & billing`.
+
+**Data Credits:** You have two options:
+
+-   **Upgrade your Data Credits tier** (recommended for ongoing needs) — no premium charged.
+-   **Purchase a one-time top-up** — available for emergency needs during your billing cycle at a 30% premium (50% on legacy plans), subject to rollover limits. Go to `Settings` → `Usage` and click `Add one-time data credits`.
 
 ### How many actions and data credits do I need?
 
