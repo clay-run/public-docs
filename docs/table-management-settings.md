@@ -17,6 +17,8 @@ You can access your table settings via your table settings dropdown.
 -   For **workbooks**: Locate the table dropdown in the bottom workbook navigation bar.
 -   For **tables**: Find the table dropdown in the left section of the top navigation bar.
 
+You can also click the `⛭` icon in the bottom-right corner of your table to open the Run Settings panel directly.
+
 ## Auto-dedupe
 
 Auto-dedupe continuously monitors a specified column to detect and resolve duplicate values by retaining the oldest row and deleting the duplicates. Blank cells, stale cells, and cells with more than 200 characters are excluded from this process.
@@ -66,11 +68,23 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
 
 **To enable or disable table-level auto-run:**
 
-1.  Click the table name to access table settings.
-2.  Under the Run Settings section, toggle the `Auto-run` mode.
+1.  Click the `⛭` icon in the bottom-right corner of your table, or click the table name and navigate to **Run Settings**.
+2.  Toggle the `Auto-run` mode.
 3.  If enabling, choose:
     -   `Continue without running` — Don't run existing cells right now.
     -   `Update cells` — Immediately run all cells that are out-of-date.
+
+**To enable "Keep existing results":**
+
+"Keep existing results" is only available when Auto-run is turned on. To enable it:
+
+1.  Click the `⛭` icon in the bottom-right corner of your table (or click the table name → **Run Settings**).
+2.  Make sure the `Auto-run` toggle is **on**.
+3.  Check the **"Keep existing results"** checkbox.
+    -   With this checked: only empty, errored, or new cells run automatically — cells with existing successful results are skipped.
+    -   With this unchecked (default): all cells are eligible to run, including ones that already have results.
+
+**Tip:** Enable "Keep existing results" before uploading new rows to an existing table if you don't want to re-run enrichments on rows that are already complete. This prevents accidental full-table re-runs and protects your credits.
 
 ### Column-level auto-run (individual control)
 
@@ -279,3 +293,5 @@ Track changes to your table, including who made them and when. View updates to s
 2.  Click the `History` → `Change log`.
 3.  Review the timeline of changes, including who made each change and when.
 4.  Click `View details` to get more information.
+
+For restoring your table to a previous configuration, see [Table versions](table-versions.md).
