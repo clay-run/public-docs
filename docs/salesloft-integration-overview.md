@@ -176,16 +176,16 @@ If you are running trigger campaigns please make sure to turn Auto-update on.
 
 ## Avoiding duplicate Salesloft person records
 
-When you use both **Upsert Person** and **Add Person to Cadence** in the same Clay table, both columns can run at the same time. If Add Person to Cadence fires before Upsert Person finishes, Salesloft may create a second person record for the cadence enrollment instead of attaching to the upserted record — leaving you with two duplicate person records for the same contact.
+When you use both **Upsert Person** and **Add Person to Cadence** in the same Clay table, both columns may run at the same time. If Add Person to Cadence fires before Upsert Person finishes, Salesloft may create a second person record for the cadence enrollment instead of attaching to the upserted record — leaving you with two duplicate person records for the same contact.
 
 To prevent this, follow two steps:
 
 **1. Pass the Salesloft Person ID from Upsert Person into Add Person to Cadence**
 
-In the Add Person to Cadence column, set the Person input to reference the **Person ID returned by the Upsert Person action** — not the contact's email address directly. Use the `/` field picker inside Add Person to Cadence and select the Person ID output from your Upsert Person column. This ensures Add Person to Cadence always attaches to the existing upserted record rather than creating a new one.
+In the Add Person to Cadence column, set the Person input to reference the **Person ID returned by the Upsert Person action** — not the contact's email address directly. Use the `/` field picker inside Add Person to Cadence and select the Person ID output from your Upsert Person column. This helps Add Person to Cadence attach to the existing upserted record rather than creating a new one.
 
 **2. Add a run condition to Add Person to Cadence**
 
 In the Add Person to Cadence column's run settings, add a conditional run so it only executes after Upsert Person has completed successfully. For example, set the condition to run only when the Upsert Person status equals `success`.
 
-This forces the two actions to run in sequence — Upsert Person first, Add Person to Cadence second — so Add to Cadence always finds and uses the upserted record.
+Sequencing the two actions this way — Upsert Person first, Add Person to Cadence second — should prevent Add to Cadence from running before the upserted record exists in Salesloft.
