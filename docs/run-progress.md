@@ -67,12 +67,12 @@ The table-level progress bar, shown at the bottom right of a table, provides a s
 
 ## Manually running unrun cells
 
-Seeing cells "left to run" in the progress bar does **not** mean those cells are actively running — it means they have not been executed yet and are waiting. Cells won't run automatically if [auto-run](table-management-settings.md) is disabled for the table or column.
+The progress tooltip shows **"X% left to run"** — this figure represents enrichment cells that have not yet completed, including cells currently in progress and cells that haven't started at all. If [auto-run](table-management-settings.md) is disabled, cells won't start automatically; you'll need to trigger them manually.
 
 To manually run the remaining cells for a specific column:
 
 1.  **Right-click** the enrichment column header.
-2.  Select **Play** → **Run empty or out-of-date rows**.
+2.  Select **Run column** → **Run [N] empty or out-of-date rows**.
 
     This triggers all cells in that column that are:
     -   **Empty** — never been run
