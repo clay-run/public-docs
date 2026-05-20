@@ -41,6 +41,18 @@ To change your account password:
     -   _Note: This option is available only if you signed in using a password and not via an authentication service such as Google or SSO._
 -   Follow the instructions in the email to securely update your password.
 
+## **Switch from Google login to email and password**
+
+Switching your login method from Google to email and password cannot be done through your account settings — it requires a support action.
+
+To request the change:
+
+-   Open the in-app chat and ask the support team to switch your login method from Google to password.
+-   Once the change is made, you will receive a password recovery email at your registered address.
+-   If you don't receive the email, visit [app.clay.com/forgot](https://app.clay.com/forgot) and enter your email address to trigger a new one.
+
+After completing the password recovery steps, you can log in with your email and password instead of Google.
+
 ## **Clay API key access**
 
 Your Clay API key enables Clay-specific integrations and external connections. To manage your API key:
