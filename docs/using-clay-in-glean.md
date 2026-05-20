@@ -2,7 +2,7 @@
 title: Using Clay in Glean
 source_url: https://university.clay.com/docs/using-clay-in-glean
 description: Find people, enrich contacts, and draft personalized outreach — all
-  within Glean Assistant. Enterprise-only.
+  within Glean Assistant. Currently in Open Beta for Enterprise plans.
 last_synced: 2026-05-20T12:00:00.000Z
 ---
 
@@ -10,7 +10,7 @@ last_synced: 2026-05-20T12:00:00.000Z
 
 Find people, enrich contacts, and draft personalized outreach — all within Glean Assistant.
 
-**Note: Clay in Glean is available on Enterprise plans only. Contact your Clay account team to confirm your plan includes MCP access.**
+**Note: Clay in Glean is currently in Open Beta for Enterprise plans. Contact your Clay account team to enroll.**
 
 Clay in Glean lets you find people, enrich contacts, and draft personalized outreach — all within Glean Assistant. Clay pulls data from a subset of its 150+ providers and AI-powered research agents directly into Glean, so you can move from research to action in seconds.
 
@@ -19,7 +19,7 @@ Clay in Glean lets you find people, enrich contacts, and draft personalized outr
 Clay in Glean requires two setup steps from admins before reps can use it:
 
 1. **Glean admin:** Connect Clay to your Glean instance through Glean's admin settings. This makes Clay available as an app in Glean Assistant. There is no MCP server URL or OAuth credential from Clay to paste — the connection is configured entirely within Glean's admin panel.
-2. **Clay admin:** Enable MCP access for your team from `Settings → MCP users` in Clay. You can also enable specific [Functions](https://university.clay.com/docs/functions) for Glean from the Functions settings page, and set per-user credit limits.
+2. **Clay admin:** Enable MCP access for your team from `Settings → MCP users` in Clay. You can also enable specific [Functions](https://university.clay.com/docs/functions) for Glean from the Functions settings page by toggling `Enable for MCP` _(currently in beta — contact your account team if the toggle isn't visible)_, and set per-user credit limits.
 
 Once both steps are complete, reps can start using Clay in Glean immediately.
 
@@ -101,7 +101,7 @@ Workspace admins can set credit limits and monitor rep usage from `Settings → 
 
 **Do I need a paid Glean plan?**
 
-Clay in Glean requires a Clay Enterprise plan. Contact your Clay account team to confirm your plan includes MCP access.
+Clay in Glean is currently in Open Beta and requires a Clay Enterprise plan. Contact your Clay account team to enroll.
 
 **How do I get set up? Where do I find the MCP server URL or API key?**
 
@@ -109,7 +109,7 @@ Clay in Glean does not use an MCP server URL or OAuth credentials that you paste
 
 1. A Glean admin connects Clay to your Glean instance through Glean's admin settings.
 2. A Clay admin enables MCP access from `Settings → MCP users` in Clay.
-3. To expose specific workflows, a Clay admin enables them from the Functions settings page and toggles `Enable for MCP`.
+3. To expose specific workflows, a Clay admin enables them from the Functions settings page and toggles `Enable for MCP` _(currently in beta — contact your account team if the toggle isn't visible)_.
 
 For your Clay API key (used for other Clay integrations, not for the Glean setup), go to your profile picture → `Settings` → `Your Profile` → `API Key`.
 
