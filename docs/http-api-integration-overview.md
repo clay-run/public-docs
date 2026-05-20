@@ -514,7 +514,7 @@ This error means the API credentials in your HTTP API action are no longer valid
 
 1.  **Generate a new token** in the external platform (e.g., your sequencer or CRM). Check that platform's settings or developer docs for where to create or rotate API keys.
 2.  **Update the token in Clay:**
-    -   **If you saved the token in a header account:** Go to `Settings → Connections`, find your HTTP API (Headers) account, and update the `Authorization` header value to `Bearer YOUR_NEW_TOKEN`. This updates every HTTP API column in your workspace that uses that account at once.
+    -   **If you saved the token in a header account:** Go to `Settings → Connections`, find your HTTP API (Headers) account, and click **Edit**. Existing header values are not shown (they're stored encrypted for security) — re-enter all your headers from scratch, including `Authorization: Bearer YOUR_NEW_TOKEN` and any other keys you had configured, then save. This updates every HTTP API column in your workspace that uses that account at once.
     -   **If you entered the token directly in the column:** Open the HTTP API column settings, go to the `Headers` section, and replace the old token value with the new one.
 3.  **Test with a single row** to confirm the new token works before re-running your full table.
 
