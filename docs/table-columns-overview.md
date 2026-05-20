@@ -112,12 +112,14 @@ You can identify the parent column of a child column to better understand its da
 
 ## Hiding columns
 
-You can hide a column to help simplify your table view. This is helpful when you want to hide parents columns.
+You can hide a column to help simplify your table view. This is helpful when you want to hide parent columns.
 
 To hide a column:
 
 1.  Click on the header of the column you want to hide to access the dropdown menu.
 2.  Within the menu, select `Hide`.
+
+**Important:** Hiding a column only removes it from the current view — it does **not** disable the column's auto-run setting. A hidden column with auto-run enabled will still run automatically and consume credits whenever rows are added or edited. To stop a column from running, open it in `Edit column` → `Run settings` and toggle auto-run off. To access a hidden column's settings, temporarily unhide it using the columns panel, or switch to a view where it is visible.
 
 ## Merge columns
 
