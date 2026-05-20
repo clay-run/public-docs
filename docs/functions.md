@@ -174,13 +174,13 @@ This is especially useful when you want to test edge cases or troubleshoot speci
 
 ### How do I make a function input optional?
 
-Each function input has a **Required to run** setting. When this is enabled for an input and no value is provided for that input on a given row, the row will not run — you'll see a "Missing required inputs" error on that cell.
+Each function input has a **Required input** setting. When this is enabled and no value is provided for that input on a given row, the row will not run — you'll see a "Missing required inputs" error on that cell.
 
 To make an input optional:
 
 1.  From your Clay homepage, click **Functions** and open the function you want to change.
 2.  Click **Edit function** in the settings panel.
-3.  In the inputs list, find the input you want to make optional and toggle off its **Required to run** setting.
+3.  In the inputs list, find the input you want to make optional and toggle off its **Required input** setting.
 4.  Click **Publish Changes** to apply.
 
 After this change, rows that don't have a value for that input will still run — they'll pass an empty value for that field instead of being skipped.
