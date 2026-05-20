@@ -61,6 +61,15 @@ You can use Snowflake as a source for a new or existing table.
 -   **Snowflake warehouse**
 -   **Role** (optional)
 
+### Scheduling imports
+
+The Import from Snowflake source supports scheduled refreshes. To configure a schedule, click the source column title → **Sources** → **Run this source** → **On a schedule**, then choose your frequency. Available options depend on your plan:
+
+-   **Hourly** (Enterprise only)
+-   **Daily**, **Weekly**, or **Monthly** (all plans)
+
+Hourly is the minimum frequency the built-in scheduler supports. If you need more frequent syncs — for example, to trigger enrichment as soon as new Snowflake data lands — use a Clay webhook instead. Point your Snowflake pipeline (or the tool that fires when data is inserted) at the Clay table's webhook URL and it will kick off enrichment on each batch immediately, without waiting for the next scheduled run. See [Webhooks in Clay](webhook-integration-guide.md) for setup details and [Scheduled sources](scheduled-sources.md) for general scheduling options.
+
 ## Enriching data with Snowflake
 
 1.  While in a Clay table, click `Add enrichment` and search for `Snowflake`.
@@ -165,7 +174,7 @@ Move the private key somewhere easy to find for the next step:
 
 After your account connects, Clay prompts you to enter a SQL query. This determines exactly which data is imported into Audiences.
 
-`SELECT    domain,      company_name,      total_sessions,      last_session_at,      trial_status,      engagement_score   FROM your_database.your_schema.your_table_or_view   `
+`SELECT    domain,      company_name,      total_sessions,      last_session_at,      trial_status,      engagement_score   FROM your_database.your_schema.your_table_or_view   `
 
 Any valid `SELECT` works — tables, views, joins, and aggregations are all supported. Two things to keep in mind:
 
