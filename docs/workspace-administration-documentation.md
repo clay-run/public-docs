@@ -3,7 +3,6 @@ title: Account and workspace settings
 source_url: https://university.clay.com/docs/workspace-administration-documentation
 description: Manage account and workspace settings, integration accounts, and billing.
 last_synced: 2026-04-26T01:40:56.525Z
-upstream_hash: 537dcfe4ee76a84566688d5cf417288ffbf7ddbf2bcbb0cc750ef95629861714
 ---
 
 # Account and workspace settings
@@ -41,6 +40,18 @@ To change your account password:
 -   Click `Change password`. A magic link will be sent to your registered email address.
     -   _Note: This option is available only if you signed in using a password and not via an authentication service such as Google or SSO._
 -   Follow the instructions in the email to securely update your password.
+
+## **Switch from Google login to email and password**
+
+Switching your login method from Google to email and password cannot be done through your account settings — it requires a support action.
+
+To request the change:
+
+-   Open the in-app chat and ask the support team to switch your login method from Google to password.
+-   Once the change is made, you will receive a password recovery email at your registered address.
+-   If you don't receive the email, visit [app.clay.com/forgot](https://app.clay.com/forgot) and enter your email address to trigger a new one.
+
+After completing the password recovery steps, you can log in with your email and password instead of Google.
 
 ## **Clay API key access**
 
@@ -201,6 +212,41 @@ To remove a member from your workspace:
 -   Click the `…` (three-dot) menu next to their name.
 -   Select `Remove member`.
 -   Confirm the removal in the dialog that appears.
+
+# **Single Sign-On (SSO)**
+
+Single Sign-On (SSO) is available to **Enterprise plan** customers and those who have purchased the SSO add-on. It lets your organization authenticate Clay users through your existing identity provider (IdP). Clay uses WorkOS to manage SSO and supports any IdP that uses SAML or OIDC protocols — including Okta, Azure AD (Entra ID), Google Workspace, and others.
+
+## **Setting up SSO**
+
+SSO setup is managed by Clay's support team — there is no self-serve configuration in the Clay UI. To get started, contact Clay support.
+
+The typical setup process:
+
+1.  Contact Clay support to initiate SSO setup.
+2.  Clay support creates your organization in WorkOS and sends a configuration link to your IT contact.
+3.  Your IT team follows the link to connect your identity provider and complete the setup.
+4.  Once your IT team confirms the WorkOS setup is complete, notify Clay support.
+5.  Clay support activates (enforces) SSO on your workspace.
+
+**Note:** The email domain used for SSO authentication is configured on Clay's side. If you receive an error during the WorkOS setup stating that your domain is not recognized or not allowed, contact Clay support — only the support team can update the allowed domain setting.
+
+## **What happens when SSO is enabled**
+
+-   All users whose email address is on your verified domain are required to sign in through SSO. The Clay login page redirects those users to your SSO provider automatically.
+-   Google OAuth sign-in is disabled for users on your domain.
+-   SSO is configured at the email domain level — if your organization uses multiple Clay workspaces, users on your domain will be routed through SSO for all of them.
+
+## **External collaborators (non-domain email addresses)**
+
+SSO only applies to users whose email address matches your verified domain. Team members with email addresses outside your domain are not affected and continue to access Clay through their regular login (Google or password).
+
+## **User provisioning**
+
+Clay does not automatically provision users through SSO. To onboard a new team member:
+
+1.  Invite them to your Clay workspace first via `Settings` > `Team` > `+ Invite`.
+2.  Have them sign in using SSO — they will be authenticated and placed into the correct workspace.
 
 # **Connections**
 

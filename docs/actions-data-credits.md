@@ -4,7 +4,6 @@ source_url: https://university.clay.com/docs/actions-data-credits
 description: Learn about credits, the virtual currency system used for running
   actions in Clay.
 last_synced: 2026-05-11T17:47:40.000Z
-upstream_hash: b17857b80e934bdaa0533fe6de2d25534a344571368a043d7bfbb0e41446bc87
 ---
 
 # Actions & Data Credits
@@ -84,9 +83,9 @@ Your Actions capacity is determined by your plan tier. Plan tiers are designed s
 
 ### How to get more Actions
 
-**Upgrade your plan tier** in `Settings` → `Plans & billing`.
+**Upgrade your action capacity tier** in `Settings` → `Plans & billing`.
 
-Actions cannot be purchased as one-time top-ups because they represent fixed platform capacity tied to your plan's tier.
+Actions cannot be purchased as one-time top-ups because they represent fixed platform capacity tied to your action tier.
 
 ## Understanding Data Credits
 
@@ -201,9 +200,9 @@ Actions represent your fixed monthly capacity. Unused Actions expire at the end 
 
 ### Data Credits: Yes, with limits
 
-If you are on a **monthly plan**, unused Data Credits will roll over and accumulate in your account. The maximum accumulation is capped at **2× your plan's monthly credit limit**.
+If you are on a **monthly plan**, unused Data Credits will roll over and accumulate in your account. The maximum accumulation is capped at **2× your plan's monthly credit limit**. This cap is enforced at every renewal: when new monthly credits are added, your **total balance** (existing credits + new credits) cannot exceed 2× your monthly limit. Any credits that would push you over the cap are dropped.
 
--   For example, if your plan includes 50,000 credits per month, your maximum balance would be 100,000.
+-   For example, if your plan includes 50,000 credits per month, your maximum balance is 100,000. If you already have 82,000 credits when your plan renews, your balance becomes 100,000 — not 132,000. The 32,000 excess is dropped.
 -   If you cancel or downgrade, you can use any excess Data Credits until your current billing cycle ends. After the billing cycle ends, your balance will be reduced to the **Data Credit rollover limit** of your new plan.
 
 If you are on an **annual plan**, you are eligible for a **15% Data Credit rollover** of unused Data Credits, provided you renew on the same or a higher-tier plan.
@@ -311,11 +310,11 @@ You don't need to change your Actions tier.
 
 ### What happens if I run out of Actions but not Data Credits?
 
-You must upgrade to a higher plan tier. Actions cannot be topped up separately because they're tied to your plan's capacity and features.
+You must upgrade to a higher action tier. Actions cannot be topped up separately because they're tied to your action tier's capacity.
 
 ### Why can't I top up Actions?
 
-Actions represent fixed platform capacity tied to your plan tier's features and limits. To get more Actions, you must upgrade to a higher plan tier. Data Credits, however, are consumption-based and can be purchased as one-time top-ups or by upgrading your Data Credits tier.
+Actions represent fixed platform capacity tied to your action tier. To get more Actions, you must upgrade to a higher action tier. Data Credits, however, are consumption-based and can be purchased as one-time top-ups or by upgrading your Data Credits tier.
 
 ### Do unused Data Credits or Actions roll over?
 

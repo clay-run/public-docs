@@ -3,7 +3,6 @@ title: Audiences (Beta)
 source_url: https://university.clay.com/docs/audiences
 description: "Note: This feature is currently in beta for Enterprise customers."
 last_synced: 2026-04-27T18:09:16.275Z
-upstream_hash: 179d0c9feae111ee5bff85d8a1428b47ca0754c5ef6639700f2c80852a25a96b
 ---
 
 # Audiences (Beta)
@@ -126,6 +125,15 @@ To create a new audience:
 2.  Click the `+` next to `My Audiences`.
 3.  Select `Criteria` and then add a `Filter` or `Filter group`.
 
+### Filter operators by field type
+
+The operators available when building a filter depend on the field's data type, shown by the icon next to the field name:
+
+-   **Text fields (T icon)** — support text-matching operators. To match multiple values at once, use **`contains any of`** and enter each value. For example, to include records where Industry is Health, Beauty, or Pets, set the filter to `Industry → contains any of → Health, Beauty, Pets`. This is more efficient than creating a separate filter for each value.
+-   **Number fields (# icon)** — support range operators: **`is greater than`**, **`is less than`**, **`is greater than or equal to`**, and **`is less than or equal to`**. For example, `Employees → is greater than → 500`.
+
+**Note:** A field that appears numeric may have been imported as text (shown by a T icon rather than #). Text fields — such as "Annual revenue range" synced from Salesforce as a string — will not show range operators. To use range filtering on a field, it must be configured as a Number type in Clay.
+
 ## Enriching and monitoring
 
 ### Adding enrichments
@@ -183,6 +191,14 @@ When you have a segment ready, you can send it to a workbook or an ad platform t
 -   **Rep-owned outbound** — scope workbooks by territory or rep so each AE works only their assigned accounts.
 -   **Additional processing** — send to a workbook to enrich, score, or filter before pushing to your destination.
 
+**Syncing to multiple ad platforms**
+
+Each audience can only be synced to one ad platform at a time — there is no option to add a second platform to an existing sync. To push the same segment to two platforms (for example, both Meta and LinkedIn):
+
+1.  Duplicate the audience by re-creating the same filters in a new audience segment.
+2.  On the duplicate, click `Send` → `Sync to ad platforms` and select the second platform.
+3.  The two audience syncs are independent — deactivating or removing a sync on one audience does not affect the other.
+
 ## Writing back to your CRM
 
 Audiences supports **bidirectional sync** with Salesforce. Enriched data and segment changes write back automatically.
@@ -221,6 +237,10 @@ You don't need a clean CRM to get started — CRM cleanup is often the first use
 ### Does Audiences update automatically?
 
 Yes. Segments update in real time as records enter or change, typically within 15 minutes. Enrichments and actions trigger automatically for new records when the autoenrich toggle is enabled. No manual runs required after initial setup.
+
+### Can I sync an audience to multiple ad platforms?
+
+Not directly — each audience supports one active ad platform sync at a time. To push the same segment to both Meta and LinkedIn, duplicate the audience and set up a separate sync on the duplicate pointing to the second platform. The two audiences and their syncs are fully independent of each other.
 
 ### What happens to a contact's ad targeting when they become a customer?
 

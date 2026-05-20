@@ -3,8 +3,7 @@ title: Table management settings
 source_url: https://university.clay.com/docs/table-management-settings
 description: Manage table settings like rename, auto-dedupe, auto-run,
   auto-delete, and table descriptions.
-last_synced: 2026-04-26T01:40:46.376Z
-upstream_hash: 91b61f42ba6de20fc97b66bb2f08fd0583dbc7d76ebd27b5618f1935e1af8d28
+last_synced: 2026-04-26T01:40:46.622Z
 ---
 
 # Table management settings
@@ -18,9 +17,11 @@ You can access your table settings via your table settings dropdown.
 -   For **workbooks**: Locate the table dropdown in the bottom workbook navigation bar.
 -   For **tables**: Find the table dropdown in the left section of the top navigation bar.
 
+You can also click the `⛭` icon in the bottom-right corner of your table to open the Run Settings panel directly.
+
 ## Auto-dedupe
 
-Auto-dedupe continuously monitors a specified column to detect and resolve duplicate values by retaining the oldest row and deleting the duplicates. Blank cells and cells with more than 200 characters are excluded from this process.
+Auto-dedupe continuously monitors a specified column to detect and resolve duplicate values by retaining the oldest row and deleting the duplicates. Blank cells, stale cells, and cells with more than 200 characters are excluded from this process.
 
 To enable or disable auto-dedupe:
 
@@ -67,11 +68,23 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
 
 **To enable or disable table-level auto-run:**
 
-1.  Click the table name to access table settings.
-2.  Under the Run Settings section, toggle the `Auto-run` mode.
+1.  Click the `⛭` icon in the bottom-right corner of your table, or click the table name and navigate to **Run Settings**.
+2.  Toggle the `Auto-run` mode.
 3.  If enabling, choose:
     -   `Continue without running` — Don't run existing cells right now.
     -   `Update cells` — Immediately run all cells that are out-of-date.
+
+**To enable "Keep existing results":**
+
+"Keep existing results" is only available when Auto-run is turned on. To enable it:
+
+1.  Click the `⛭` icon in the bottom-right corner of your table (or click the table name → **Run Settings**).
+2.  Make sure the `Auto-run` toggle is **on**.
+3.  Check the **"Keep existing results"** checkbox.
+    -   With this checked: only empty, errored, or new cells run automatically — cells with existing successful results are skipped.
+    -   With this unchecked (default): all cells are eligible to run, including ones that already have results.
+
+**Tip:** Enable "Keep existing results" before uploading new rows to an existing table if you don't want to re-run enrichments on rows that are already complete. This prevents accidental full-table re-runs and protects your credits.
 
 ### Column-level auto-run (individual control)
 
@@ -223,9 +236,9 @@ This ensures your tables remain manageable while continuously handling new data.
 
 ### How passthrough tables work
 
-When enabled, passthrough tables operate on data added via webhooks. Following is a step-by-step process of passthrough tables.
+When enabled, passthrough tables fully bypass the 50,000 record import limit for data added via **webhooks**, **send table data**, or **signal sources**. Following is a step-by-step process of passthrough tables.
 
-1.  **Data ingestion**: New rows are added to a Clay table through webhooks.
+1.  **Data ingestion**: New rows are added to a Clay table via a compatible source.
 2.  **Enrichment**: Clay runs all configured enrichments and operations on the new data.
 3.  **Review interval**: Clay reviews the table to identify rows ready for passthrough after a 60-second interval.
     -   Criteria for passthrough: Rows that meet the following conditions are selected:
@@ -238,8 +251,8 @@ When enabled, passthrough tables operate on data added via webhooks. Following i
 
 To enable or disable passthrough tables:
 
-1.  Open your table with webhooks as the source.
-    -   Ensure that the table you want to configure has webhooks set as its data source. Passthrough features only work with tables where the source is webhooks.
+1.  Open your table.
+    -   To fully bypass the 50,000 record source limit, the table source must be **webhooks**, **send table data**, or a **signal source**. A warning appears if your table includes incompatible sources. See [auto-delete documentation](https://university.clay.com/docs/auto-delete) for details on source compatibility and warnings.
 2.  Navigate to the bottom navigation panel and select `Enable auto-delete`.
 3.  Within the auto-delete settings, enable `Automatic Row Deletion`.
     -   This action activates the passthrough functionality by ensuring that rows are automatically deleted after processing and transferring.
@@ -280,3 +293,5 @@ Track changes to your table, including who made them and when. View updates to s
 2.  Click the `History` → `Change log`.
 3.  Review the timeline of changes, including who made each change and when.
 4.  Click `View details` to get more information.
+
+For restoring your table to a previous configuration, see [Table versions](table-versions.md).

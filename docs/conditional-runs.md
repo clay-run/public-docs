@@ -3,7 +3,6 @@ title: Conditional runs
 source_url: https://university.clay.com/docs/conditional-runs
 description: Add programmable logic to your Clay workflows.
 last_synced: 2026-04-26T01:39:47.459Z
-upstream_hash: 5a8e8235bc00404d0e39059d0c5c20c6b6ae07159087118cdf762af5cd1f99de
 ---
 
 # Conditional runs
@@ -24,7 +23,7 @@ Conditional runs allow you to execute specific actions or enrichments in a workf
 
 -   **Condition**: `{{lead_score}} > 80 AND {{industry}} == "SaaS"`
 
-**Write to Table**: Populate a column only if the lead’s region matches a target location.
+**Write to Table**: Populate a column only if the lead's region matches a target location.
 
 -   **Condition**: `{{region}} == "North America"`
 
@@ -46,7 +45,7 @@ Conditional runs are structured like an **if-else statement**:
 
 `} else {`
 
-`don’t run the enrichment`
+`don't run the enrichment`
 
 `}`
 
@@ -73,7 +72,7 @@ To create a conditional statement within the **Conditional formula generator**:
 
 **Step 1: Open the Conditional runs editor**
 
-Navigate to the **Run Settings** of the action you want to configure and click on “Use AI”.
+Navigate to the **Run Settings** of the action you want to configure and click on "Use AI".
 
 **Step 2: Define the conditional logic**
 
@@ -81,13 +80,33 @@ Define the logic that determines how the condition will evaluate.
 
 **Step 3: Generate the Formula**
 
-Click **“Generate formula”** to automatically translate your condition into a formula.
+Click **"Generate formula"** to automatically translate your condition into a formula.
 
 **Step 4: Verify the Output**
 
 Look at the sample outputs on the right to ensure your condition behaves as expected.
 
 Adjust your condition as needed based on the results.
+
+## Tips
+
+### Always use / to reference a column
+
+To reference a column's data in a run condition, **type `/` followed by the column name** (e.g., `/Domain`). This opens an inline picker and inserts a live reference to that column's data.
+
+**If you type a column name without the leading `/`, it is treated as a literal text string — not a column reference.** The condition will silently compare against a fixed string instead of your actual data, and the enrichment will not behave as expected. Always use `/ColumnName` syntax.
+
+**Example**: To run an enrichment only on rows that don't have a domain, set the condition to:
+
+`/Domain is empty`
+
+(where `/Domain` references the column named "Domain" in your table).
+
+### Only matching rows consume credits
+
+When a run condition is set, Clay only processes rows where the condition evaluates to **true**. Rows where the condition is not met are skipped and shown as **"Run condition not met"** — no credits are consumed for those rows.
+
+This means clicking **"Run all rows"** with a condition in place is safe: Clay will only run (and charge credits for) the rows that actually match your condition.
 
 ## See also
 

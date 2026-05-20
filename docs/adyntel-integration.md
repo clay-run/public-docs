@@ -3,7 +3,6 @@ title: Adyntel integration
 source_url: https://university.clay.com/docs/adyntel-integration
 description: Analyze ad content, campaign duration, media types, and ad counts
 last_synced: 2026-04-27T18:09:11.856Z
-upstream_hash: 13503e8eb2706f3940369f32a5863a7bb5f376038edfa6fb3540372001da6bb4
 ---
 
 # Adyntel integration

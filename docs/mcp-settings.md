@@ -2,8 +2,7 @@
 title: MCP settings
 source_url: https://university.clay.com/docs/mcp-settings
 description: Connect your Clay workspace to AI tools.
-last_synced: 2026-04-26T01:40:20.275Z
-upstream_hash: 9b727bf5db93ea288911ceac05bfdc864e603c50b733fa7bdf0a80431fc74330
+last_synced: 2026-04-26T01:40:20.821Z
 ---
 
 # MCP settings
@@ -65,6 +64,18 @@ If your workspace uses Clay Audiences, two additional workspace-level toggles ap
 -   **Allow querying all accounts** — when enabled, reps can query any account in the synced audience, not just accounts they own in Salesforce.
 
 ## FAQ
+
+### What role should I assign to team members who will only use Clay through MCP?
+
+Any team member who needs to use Clay through an AI tool (Claude, ChatGPT, or xAI) must first be added to your Clay workspace. When inviting them, assign the **Sales Rep** role.
+
+The Sales Rep role is designed for MCP-only access: users can invoke functions and run enrichments from within their AI tool, but they cannot open or interact with the Clay web interface. This makes it the right choice for team members who should use Clay through AI tools only — not build workflows directly in Clay.
+
+To invite them: go to `Settings` → `Team`, click `+ Invite`, enter their email address, and select **Sales Rep** from the role dropdown.
+
+**Note:** The Sales Rep role is currently in beta — contact support to request access for your workspace.
+
+For a full breakdown of all roles, see [Roles and permissions](https://university.clay.com/docs/roles-and-permissions).
 
 ### Can admins remove a rep's access to Clay in ChatGPT or Claude?
 

@@ -3,7 +3,6 @@ title: "Guide: Finding companies and people in Clay"
 source_url: https://university.clay.com/docs/finding-companies-and-people-in-clay
 description: Best practices to Clay's company and people search features.
 last_synced: 2026-04-26T01:39:59.452Z
-upstream_hash: 0434738786f5838ec1d412d8e232e98f13369d4a58a0223704f58c8dd7f10dd8
 ---
 
 # Guide: Finding companies and people in Clay
@@ -61,6 +60,20 @@ When running a people search against a company list, provide company **LinkedIn 
 
 Company and people search sources don't have run conditions the way enrichment actions do. If you only want to find people at companies that meet specific criteria (e.g., only public companies), the workaround is to **create a filtered view** of your company table first, then run **Find People at These Companies** from that view. The source will only pull from the rows visible in the view.
 
+### Disable auto-run on the people table when running Find People selectively
+
+When Find People is configured as an enrichment action between a company table and a people table, **both tables have independent auto-run settings**. Turning off auto-run in the company table controls whether Find People fires when company rows are added or edited — but it has **no effect** on the people table's own auto-run setting.
+
+If the people table's auto-run is still on, adding new people rows (for example, by manually triggering Find People for a subset of companies) will automatically fire all enrichments in the people table on those new rows. This can trigger runs across all companies in the table — not just the ones you selected — consuming far more credits than expected.
+
+**To prevent this when running Find People on specific companies only:**
+
+1.  Open your **people table** (not the company table).
+2.  Click the table name to access table settings.
+3.  Under **Run Settings**, toggle **Auto-run** to **OFF**.
+
+With auto-run disabled in both tables, you control exactly which companies trigger people searches and which enrichments run in the people table.
+
 ### Source vs. enrichment — when to use each
 
 The `Find People at These Companies` feature is available as both a source and an enrichment action. Here's how they differ:
@@ -108,6 +121,16 @@ You can exclude up to **150,000 companies or people** from any company or people
 
 This is the current way to suppress your existing CRM or list against new searches. In the future, Audiences will allow you to exclude an entire synced CRM instance (e.g., all of Salesforce) in one step.
 
+### Excluding records during enrichment
+
+The exclusion options above remove matched records before they enter your table. If records are already in your table and you want to skip enrichment on contacts that match a suppression list — such as existing customers, competitors, or a broker list — use **Lookup Rows combined with a run condition**:
+
+1.  Import your suppression list as a Clay table (or use an existing one in your workspace).
+2.  In your enrichment table, add a **Lookup single row in other table** action. Set `Table to search` to your suppression table and match on a stable identifier — LinkedIn URL for people, or domain for companies.
+3.  On each enrichment you want to gate, open **Run settings → Only run if** and add a condition such as `{{Suppression Lookup}} is empty`. The enrichment will only run for records not found in your suppression list.
+
+This pattern is especially useful when your suppression list changes over time (update the lookup table and the condition reflects the new list automatically), when you're pulling contacts from multiple sources and want a single suppression layer, or when you need to exclude records discovered after the initial search.
+
 ## Limitations
 
 **Geographic coverage**
@@ -137,6 +160,18 @@ Clay uses stored snapshot data rather than live LinkedIn search, so results will
 -   **Filters set too narrowly** — title, location, or seniority filters that are too specific can exclude real matches. Try broadening one filter at a time to diagnose where results drop off.
 
 If profiles still appear to be missing after switching to LinkedIn URLs, use **Claygent** to find the missing profiles via Google search, then pass those LinkedIn URLs directly into `Enrich Person`. This uses a live-scraping fallback that isn't constrained by the stored dataset.
+
+### Preview count is much higher than the number of rows actually imported
+
+The **preview count** shown before you run a search reflects the total number of matching people across all companies — it does not account for the **Limit per company** setting. Once you run the search, the per-company cap is applied and the actual row count will be substantially lower.
+
+When searching across a large company table with **Limit per company** enabled, results may only cover a portion of your companies rather than all of them. The search prioritizes returning the full per-company allotment for companies it processes first; if that fills the search's capacity before all companies are reached, the remaining companies return zero results for that run.
+
+To improve coverage across all your companies:
+
+-   **Remove the per-company limit** and use the global **Limit results** setting instead to cap the total.
+-   **Reduce your company list size** so that all companies can be processed within a single search run.
+-   **Switch to the enrichment action** (Find People at These Companies in-table) rather than the source — it processes each company row individually and returns results per company regardless of list size.
 
 ### Find People is returning people from the wrong company
 

@@ -4,7 +4,6 @@ source_url: https://university.clay.com/docs/adbeat-integration
 description: Helps with competitive analysis and lead generation by revealing
   advertising spend, successful campaigns,
 last_synced: 2026-04-27T18:09:11.502Z
-upstream_hash: a5359693b8c5faef7ba74f8e595f6728dda626f5c1d5793bc3c724e218e5b90c
 ---
 
 # Adbeat integration

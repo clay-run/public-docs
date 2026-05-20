@@ -3,7 +3,6 @@ title: Roles and permissions
 source_url: https://university.clay.com/docs/roles-and-permissions
 description: Understand roles and permissions in Clay.
 last_synced: 2026-04-26T01:40:33.352Z
-upstream_hash: 4a677958cd278fc8e9aaa4b1f91222fda3146fba0d5d057f9fa702ecf90fd5cc
 ---
 
 # Roles and permissions
@@ -61,7 +60,9 @@ Viewers can be granted Editor access to specific tables or workbooks, or added a
 2.  Under `Access permissions`, change `Edit access` to `Admin and invited collaborators only`.
 3.  Click `+ Add collaborator` and select the Viewer.
 
-## Sales rep
+## Sales rep _(Beta)_
+
+**Note:** The Sales Rep role is currently in beta — contact support to request access for your workspace.
 
 The sales rep role is designed for users who access Clay through AI tools (Claude, ChatGPT, or xAI) via the Clay MCP integration. Users with this role **cannot access the standard Clay workspace**. When they log in, they'll see a page prompting them to connect their AI tool.
 

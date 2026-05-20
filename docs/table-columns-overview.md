@@ -1,9 +1,8 @@
 ---
 title: Table columns
 source_url: https://university.clay.com/docs/table-columns-overview
-description: Learn how to navigate columns in your Clay table.
+description: Learn how to navigate columns in your Clay table, including column types, limits, child column mapping, and how to resolve circular dependency errors.
 last_synced: 2026-04-26T01:40:46.052Z
-upstream_hash: dcf2f9aa5aba4556b4e5de37a7b354c8d44e668192646c6cfdb9d8b4e9128d2b
 ---
 
 # Table columns
@@ -12,7 +11,7 @@ Learn how to navigate columns in your Clay table.
 
 ## Column data types
 
-There are a data types you can specify for your column. Here’s a high level overview of each one:
+There are a data types you can specify for your column. Here's a high level overview of each one:
 
 -   **Text:** Accepts text inputs. You can use this for text fields, summaries, or descriptions
 -   **URL:** Takes in links and will open the link if you click on the cell.
@@ -75,7 +74,7 @@ You can switch the data type of your column within your table. To do this:
 
 ## Create child columns from a parent column
 
-When you enrich data within Clay, your results will be presented as arrays of data, which sometimes includes nested endpoints. You can create individual child columns by mapping specific endpoints from the parent column’s enrichment.
+When you enrich data within Clay, your results will be presented as arrays of data, which sometimes includes nested endpoints. You can create individual child columns by mapping specific endpoints from the parent column's enrichment.
 
 ### Add a new child column
 
@@ -93,6 +92,17 @@ To create a new column with an endpoint from an enrichment (parent column):
 2.  Hover over the desired endpoint and click `Add as column` on the right.
 3.  Under **Map to an existing column**, click on the column you want you map this enrichment endpoint to. Note that this will overwrite the existing values within the destination column.
 
+### Circular dependency error
+
+If Clay blocks the save with a **Circular dependency error**, it means the destination column is already used as an input somewhere upstream in the same enrichment chain — directly or indirectly through another dependent column. Mapping into it would create a loop, so Clay prevents the save.
+
+**How to fix it:**
+
+-   Map the enrichment result to a **new column** instead of the existing destination.
+-   Or, open the enrichment(s) that reference the destination column as an input and remove that reference, then re-map.
+
+To visualize the full dependency chain and identify where the loop originates, open **Graph view**: click the view selector dropdown in your table toolbar and choose **Graph view**.
+
 ### Find the parent column of your child column
 
 You can identify the parent column of a child column to better understand its data context. Follow these steps:
@@ -102,12 +112,14 @@ You can identify the parent column of a child column to better understand its da
 
 ## Hiding columns
 
-You can hide a column to help simplify your table view. This is helpful when you want to hide parents columns.
+You can hide a column to help simplify your table view. This is helpful when you want to hide parent columns.
 
 To hide a column:
 
 1.  Click on the header of the column you want to hide to access the dropdown menu.
 2.  Within the menu, select `Hide`.
+
+**Important:** Hiding a column only removes it from the current view — it does **not** disable the column's auto-run setting. A hidden column with auto-run enabled will still run automatically and consume credits whenever rows are added or edited. To stop a column from running, open it in `Edit column` → `Run settings` and toggle auto-run off. To access a hidden column's settings, temporarily unhide it using the columns panel, or switch to a view where it is visible.
 
 ## Merge columns
 
@@ -118,9 +130,11 @@ You can merge data from multiple columns into a new column.
 3.  Write a formula, including any columns you want to add with `/`.
 4.  Click `Save settings`.
 
+**Tip:** If you plan to use a merged column for deduplication, make sure all enrichment columns feeding it have run and are not stale. A stale upstream column causes the merged column itself to become stale, which causes auto-dedupe to skip it.
+
 ## Dedupe columns
 
-You can also dedupe your rows based a specific column’s values.
+You can also dedupe your rows based a specific column's values.
 
 To dedupe a column:
 
@@ -134,6 +148,8 @@ A few rules to keep in mind for column deduplication:
 -   Duplicates are identified based on exact string matches.
     -   Deduplication is case-sensitive, meaning `Clay` and `clay` are treated as different.
     -   Extra whitespace is considered, so `Clay (with a space)` and `Clay` are not the same.
+-   **Auto-dedupe skips stale cells.** If a merged column — or any enrichment column it references — is stale, the row is excluded from auto-dedupe entirely and will not be flagged as a duplicate. Re-run all stale enrichment columns and confirm the merged column has refreshed before expecting auto-dedupe to catch those rows.
+-   **Manual (one-time) column dedup skips blank cells only.** If the merged column has a previously stored value, that value is compared for duplicates even if the cell is stale. Only rows where the merged column is empty are excluded from manual dedup.
 
 ## Rename columns
 

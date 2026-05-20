@@ -3,7 +3,6 @@ title: Send table data
 source_url: https://university.clay.com/docs/send-table-data
 description: Send data between tables to create simple multi-table setups.
 last_synced: 2026-04-26T01:40:38.918Z
-upstream_hash: 2e0e53545ac1eb0e2a8ceb0107b47af3f1dc8e327e38d6fd2728213b1ed6a75f
 ---
 
 # Send table data
@@ -11,6 +10,8 @@ upstream_hash: 2e0e53545ac1eb0e2a8ceb0107b47af3f1dc8e327e38d6fd2728213b1ed6a75f
 Send data between tables to create simple multi-table setups.
 
 Send table data in Clay lets you route records between tables, making multi-table setups simple to manage and intuitive to use.
+
+**Note:** Send Table Data replaces the deprecated [Write to Other Table](https://university.clay.com/docs/write-to-table-integration-overview) action. If you previously used Write to Other Table, use Send Table Data for all new multi-table workflows going forward.
 
 ### When to use Lookup Rows vs. Send Table Data
 
@@ -59,7 +60,7 @@ To send data from one table to another:
 -   Send nested data from the parent table. (This is useful when you want to avoid extracting basic fields from an action column's output.)
 -   Rename any field in the destination table using the destination column dropdown.
 
-**Note:** When you first send a row, it creates a new row in the destination table. For subsequent sends, it updates that same row. This applies to both regular row data and nested data. You can turn this off to always create a new row via the \`Update existing rows on re-run\` setting.
+**Note:** When you first send a row, it creates a new row in the destination table. For subsequent sends, it updates that same row. This applies to both regular row data and nested data. You can turn this off to always create a new row via the \`Update existing rows on re-run\` setting.
 
 ### Using `Send row for each item in a list`
 
