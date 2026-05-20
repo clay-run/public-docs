@@ -54,7 +54,7 @@ Sculptor will:
 
 1.  Define the prompt logic.
 2.  Set up variables (company name, contact title, industry, etc.).
-3.  Format the output (score plus reasoning)..
+3.  Format the output (score plus reasoning).
 4.  Create test cases so you can see it in action.
 
 ### Iterating with Sculptor
