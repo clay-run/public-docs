@@ -2,7 +2,7 @@
 title: Run progress
 source_url: https://university.clay.com/docs/run-progress
 description: Clay provides multiple ways to track and monitor run progress
-  across your tables.
+  across your tables, including how to manually trigger unrun enrichment cells.
 last_synced: 2026-04-26T01:40:34.656Z
 ---
 
@@ -54,7 +54,7 @@ Several icons can appear on the right side of the cell to indicate specific colu
 
 ![](https://cdn.prod.website-files.com/687e604972375496b891fe58/691e65a876bd32a9f8e8f845_68ba32156edf36d6435cbe6b_Run%2520Progress%2520UI%2520Feedback%2520\(1\).png)
 
-The table-level progress bar, shown at the bottom right of a table, provides a summary view of the entire table’s run status. It displays:
+The table-level progress bar, shown at the bottom right of a table, provides a summary view of the entire table's run status. It displays:
 
 -   The percentage of **all enrichment cells** in the table that have run.
     -   _Note: Includes non-visible rows, but not non-visible columns._
@@ -64,3 +64,23 @@ The table-level progress bar, shown at the bottom right of a table, provides a s
     -   A detailed breakdown of status percentages.
     -   Table-level auto-run and scheduled run settings.
     -   A toggle to enable/disable column-level run status data.
+
+## Manually running unrun cells
+
+Seeing cells "left to run" in the progress bar does **not** mean those cells are actively running — it means they have not been executed yet and are waiting. Cells won't run automatically if [auto-run](table-management-settings.md) is disabled for the table or column.
+
+To manually run the remaining cells for a specific column:
+
+1.  **Right-click** the enrichment column header.
+2.  Select **Play** → **Run empty or out-of-date rows**.
+
+    This triggers all cells in that column that are:
+    -   **Empty** — never been run
+    -   **Errored** — previously ran but encountered an error
+    -   **Stale** — previously ran successfully, but an input value has changed since then
+
+3.  Repeat for each enrichment column you want to run.
+
+> **Note:** There is no single button to run all columns at once — this option must be used column by column.
+
+**Alternative — enable auto-run:** Turn on `Auto-run` in your [table settings](table-management-settings.md) and choose `Update cells` to immediately queue any out-of-date cells.
