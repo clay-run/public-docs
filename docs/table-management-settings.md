@@ -3,7 +3,7 @@ title: Table management settings
 source_url: https://university.clay.com/docs/table-management-settings
 description: Manage table settings like rename, auto-dedupe, auto-run,
   auto-delete, and table descriptions.
-last_synced: 2026-04-26T01:40:46.376Z
+last_synced: 2026-04-26T01:40:46.622Z
 ---
 
 # Table management settings
@@ -222,9 +222,9 @@ This ensures your tables remain manageable while continuously handling new data.
 
 ### How passthrough tables work
 
-When enabled, passthrough tables operate on data added via webhooks. Following is a step-by-step process of passthrough tables.
+When enabled, passthrough tables fully bypass the 50,000 record import limit for data added via **webhooks**, **send table data**, or **signal sources**. Following is a step-by-step process of passthrough tables.
 
-1.  **Data ingestion**: New rows are added to a Clay table through webhooks.
+1.  **Data ingestion**: New rows are added to a Clay table via a compatible source.
 2.  **Enrichment**: Clay runs all configured enrichments and operations on the new data.
 3.  **Review interval**: Clay reviews the table to identify rows ready for passthrough after a 60-second interval.
     -   Criteria for passthrough: Rows that meet the following conditions are selected:
@@ -237,8 +237,8 @@ When enabled, passthrough tables operate on data added via webhooks. Following i
 
 To enable or disable passthrough tables:
 
-1.  Open your table with webhooks as the source.
-    -   Ensure that the table you want to configure has webhooks set as its data source. Passthrough features only work with tables where the source is webhooks.
+1.  Open your table.
+    -   To fully bypass the 50,000 record source limit, the table source must be **webhooks**, **send table data**, or a **signal source**. A warning appears if your table includes incompatible sources. See [auto-delete documentation](https://university.clay.com/docs/auto-delete) for details on source compatibility and warnings.
 2.  Navigate to the bottom navigation panel and select `Enable auto-delete`.
 3.  Within the auto-delete settings, enable `Automatic Row Deletion`.
     -   This action activates the passthrough functionality by ensuring that rows are automatically deleted after processing and transferring.
