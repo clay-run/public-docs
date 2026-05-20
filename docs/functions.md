@@ -5,7 +5,6 @@ description: Functions let you convert any enrichment sequence into a reusable
   workflow. Once created, you can use it across any table — and any updates you
   make to the…
 last_synced: 2026-04-26T01:40:01.780Z
-upstream_hash: 205144b7f03f0d30dd7bdc8f9abd33d367a63f53bbf34be1164405386b30eae3
 ---
 
 # Functions
@@ -61,7 +60,7 @@ Functions are built for workflows you'd otherwise rebuild from scratch in every 
 ## Editing a function
 
 1.  On your Clay homepage, go to `Functions` and select the function you want to edit.
-2.  Select `Edit function` in the top of the function’s settings panel.
+2.  Select `Edit function` in the top of the function's settings panel.
 3.  While your function is in edit mode, you can safely modify and test your function.
     -   You can click `Add test inputs` to:
         1.  Manually enter test data.
@@ -145,6 +144,26 @@ Include action columns (enrichments, Claygents, waterfalls) — not static input
 
 Remember: every column you include becomes a required input. More columns mean more inputs users must provide when calling the function.
 
+### How do I return a single output field when two enrichment columns each cover the same data but only one runs per row?
+
+If your function uses two enrichment columns that cover the same data (e.g., two person enrichment providers where only one runs per row based on a run condition), the "Send data back" step maps column values by reference — it does not accept inline formulas to merge or transform values within the step itself.
+
+The workaround is to create a **formula column** (Merge columns) inside your function that coalesces the two enrichment columns, then use that formula column as the output:
+
+1.  Add a **Merge columns** column inside your function. Use the `||` operator to pick whichever enrichment is populated:
+
+    `{{Enrichment A}}?.person || {{Enrichment B}}?.person`
+
+2.  Give the column a clear name (e.g., `Merged Person Data`).
+
+3.  In your function's "Send data back" step, select `Merged Person Data` as the output. Your caller table receives one field instead of two.
+
+**Note:** Formula columns store their result as **text**. If you're coalescing JSON objects, the output will be a serialized string. To make this explicit, wrap with `JSON.stringify`:
+
+`JSON.stringify({{Enrichment A}}?.person || {{Enrichment B}}?.person || null)`
+
+To access the object's sub-keys downstream, parse it back with `JSON.parse({{Merged Person Data}})`.
+
 ### Can I share a function with someone outside my workspace?
 
 Yes. Enable "share as template" on the function to generate a shareable link. Anyone with the link can view the function's columns and create a table in their workspace using it.
@@ -172,3 +191,29 @@ You can test your function changes against real-world inputs by debugging select
 5.  Review the results to validate your changes before publishing.
 
 This is especially useful when you want to test edge cases or troubleshoot specific inputs that previously failed or produced unexpected results.
+
+### How do I make a function input optional?
+
+Each function input has a **Required input** setting. When this is enabled and no value is provided for that input on a given row, the row will not run — you'll see a "Missing required inputs" error on that cell.
+
+To make an input optional:
+
+1.  From your Clay homepage, click **Functions** and open the function you want to change.
+2.  Click **Edit function** in the settings panel.
+3.  In the inputs list, find the input you want to make optional and toggle off its **Required input** setting.
+4.  Click **Publish Changes** to apply.
+
+After this change, rows that don't have a value for that input will still run — they'll pass an empty value for that field instead of being skipped.
+
+### Why do I see "please select a valid value" on a function input, and how do I fix it?
+
+This error means a column reference in your function's input mapping has become stale. The most common cause is that a column in the source table was renamed or deleted after the function was set up — Clay loses the connection to that column ID even though the input mapping still appears configured.
+
+To fix it:
+
+1.  Open the affected function column in the table where the function is called.
+2.  Click the **X** next to any input field showing the "please select a valid value" error to remove the broken mapping.
+3.  Re-select the correct source column from the dropdown.
+4.  Save the column.
+
+If you haven't renamed or deleted any columns recently, the reference may have become stale after a table update — the remap will resolve it either way.

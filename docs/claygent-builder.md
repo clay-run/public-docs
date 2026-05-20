@@ -3,7 +3,6 @@ title: Claygent builder
 source_url: https://university.clay.com/docs/claygent-builder
 description: Build smarter agents faster
 last_synced: 2026-05-11T17:47:40.000Z
-upstream_hash: 1e7504a610fac5ab8887ea0d3197151c865c7afeccfcccb32b71966c2851daeb
 ---
 
 # Claygent builder
@@ -64,7 +63,7 @@ You can refine your agent by telling Sculptor what to adjust:
 
 _"Adjust the scoring so company fit is weighted at 60% and persona fit at 40%. Also break out company size as its own factor."_
 
-Sculptor rewrites the prompt. Run the test again to see the difference. Every change is saved automatically in version history.
+Sculptor rewrites the prompt and shows a "Prompt updated by Sculptor" confirmation. This saves the new prompt text — it does **not** re-run the test automatically. Click **Run** in the test panel to see how the updated prompt performs. Every change is saved automatically in version history.
 
 ## Configuring your agent
 
@@ -178,6 +177,10 @@ In-flight runs finish on the version that started them. New runs pick up the lat
 ### Can I still edit prompts directly in tables?
 
 Yes, but centralizing in Claygent builder gives you version control, free testing, and the ability to update once and deploy everywhere. It's the better choice for agents you'll reuse or iterate on.
+
+### Sculptor updated my prompt but the output looks the same — what happened?
+
+When Sculptor rewrites your prompt, it saves the new prompt text and shows a "Prompt updated by Sculptor" confirmation. It does **not** automatically re-run the test. The test output you see is from the previous run. Click **Run** (or **Run all**) in the test panel to execute the test with the updated prompt and see the new output.
 
 ## Tips for success
 

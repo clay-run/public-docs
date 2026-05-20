@@ -4,7 +4,6 @@ source_url: https://university.clay.com/docs/plans-and-billing
 description: We'll walk through each of our pricing plans and information around
   billing your workspace.
 last_synced: 2026-04-26T01:40:29.319Z
-upstream_hash: 2f58039bce84dc1c9e46277be3410eade99593e98b99478d607bb42a0092978e
 ---
 
 # Plans & billing
@@ -98,7 +97,7 @@ You can track both actions and data credits usage in the `Usage Dashboard`, whic
 
 ### Do credits roll over?
 
-**Monthly plans:** When your plan refreshes, unused data credits will roll over and accumulate. The maximum accumulation is capped at 2× your plan's monthly credit limit. For example, if your plan includes 50,000 credits per month, your maximum balance would be 100,000.
+**Monthly plans:** When your plan refreshes, unused data credits will roll over and accumulate. The maximum accumulation is capped at 2× your plan's monthly credit limit — and this cap includes the newly added renewal credits. For example, if your plan includes 50,000 credits per month, your maximum balance is 100,000. If you already have 82,000 credits when your plan renews, you will end up with 100,000 credits, not 132,000.
 
 **Annual plans:** When your plan refreshes, you can roll over up to 15% of your annual data credits in addition to the new credits you receive, provided you renew on the same or a higher-tier plan.
 
@@ -106,7 +105,12 @@ For more details, see our guide on [actions and data credits](https://www.notion
 
 ### What if I need more actions or data credits?
 
-You can upgrade your plan tier at any time by visiting your plan settings page. You can also purchase one-off data credits at a 30% premium (50% on legacy plans) during your billing cycle.
+**Actions:** Actions cannot be purchased as one-time top-ups — they represent fixed platform capacity tied to your action tier. To increase your Actions limit, you must upgrade to a higher action tier in `Settings` → `Plans & billing`.
+
+**Data Credits:** You have two options:
+
+-   **Upgrade your Data Credits tier** (recommended for ongoing needs) — no premium charged.
+-   **Purchase a one-time top-up** — available for emergency needs during your billing cycle at a 30% premium (50% on legacy plans), subject to rollover limits. Go to `Settings` → `Usage` and click `Add one-time data credits`.
 
 ### How many actions and data credits do I need?
 

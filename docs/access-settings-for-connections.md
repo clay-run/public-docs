@@ -3,8 +3,7 @@ title: Access settings for connections
 source_url: https://university.clay.com/docs/access-settings-for-connections
 description: Two controls for managing connection access — restrict who can build
   with existing connections, and require approval before anyone adds a new one.
-last_synced: 2026-04-26T01:39:38.272Z
-upstream_hash: 1f7c0974ae32110d89b689f026ff4d2331ca87453049179d3d7a89b72782be70
+last_synced: 2026-05-20T19:20:54.410Z
 ---
 
 # Access settings for connections
@@ -136,3 +135,5 @@ When a user is deactivated, their personal credentials are disabled by default.
 **How do I set up controls for my workspace?**
 
 Enterprise customers can configure allowlists independently or with the help of their Growth Strategist.
+
+One more test paragraph.

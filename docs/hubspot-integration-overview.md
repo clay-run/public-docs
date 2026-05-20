@@ -3,7 +3,6 @@ title: HubSpot integration
 source_url: https://university.clay.com/docs/hubspot-integration-overview
 description: All-in-one CRM platform for marketing, sales, and customer service.
 last_synced: 2026-04-26T01:40:09.362Z
-upstream_hash: 59e6ef2464cbe62bf1c3eccafec2aa4eb3962fbd661770629a2ff87a6429f2e3
 ---
 
 # HubSpot integration
@@ -139,8 +138,46 @@ These permissions are available but not requested by default:
 
 ## FAQs
 
+### Why does lifecycle stage (or another dropdown field) show an internal code like `marketingqualifiedlead` instead of a readable label?
+
+This is a known limitation of HubSpot's API: it returns the internal value for enum/dropdown properties rather than the display label you see in HubSpot's UI. For example, the lifecycle stage field returns `marketingqualifiedlead` instead of "Marketing Qualified Lead." Clay passes these values through as-is.
+
+**Workaround:** Add a Formula column that maps the internal codes to readable labels. For the default HubSpot lifecycle stages, the mapping is:
+
+| Internal value | Display label |
+|---|---|
+| `subscriber` | Subscriber |
+| `lead` | Lead |
+| `marketingqualifiedlead` | Marketing Qualified Lead |
+| `salesqualifiedlead` | Sales Qualified Lead |
+| `opportunity` | Opportunity |
+| `customer` | Customer |
+| `evangelist` | Evangelist |
+| `other` | Other |
+
+For custom lifecycle stages, the internal value is a numeric ID — you can find it in your HubSpot lifecycle stage settings or by querying the HubSpot properties API.
+
+This behavior applies to all HubSpot enumeration properties (dropdowns, radio buttons), not just lifecycle stage.
+
 ### What happens if I update a HubSpot list or segment filter after import?
 
 Changing a HubSpot list's membership criteria (for example, tightening segment filters so certain companies are no longer included) does **not** automatically update your Clay table. Records already imported into Clay **stay in the table** — they are not removed just because they no longer match the updated list.
 
 To refresh your table to reflect the updated list, see [Why doesn't my Clay table update when I change the source filters?](https://www.clay.com/university/guide/sources#faqs) in the Sources guide.
+
+### Why does my HubSpot lifecycle stage column show an internal code instead of the display label?
+
+HubSpot's API returns internal codes for enumeration/dropdown fields rather than the human-readable labels shown in HubSpot. For example, a contact at the "Marketing Qualified Lead" stage will appear as `marketingqualifiedlead` in Clay. This applies to any HubSpot dropdown property, not just lifecycle stage.
+
+**Workaround:** Add a Formula column that maps the internal code to the label you want to display. The default HubSpot lifecycle stage codes are:
+
+-   `subscriber` → Subscriber
+-   `lead` → Lead
+-   `marketingqualifiedlead` → Marketing Qualified Lead
+-   `salesqualifiedlead` → Sales Qualified Lead
+-   `opportunity` → Opportunity
+-   `customer` → Customer
+-   `evangelist` → Evangelist
+-   `other` → Other
+
+If your HubSpot account uses custom lifecycle stages, find their internal codes in HubSpot under **Settings → Properties → Lifecycle Stage**.

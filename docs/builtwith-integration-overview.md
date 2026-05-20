@@ -3,7 +3,6 @@ title: BuiltWith overview
 source_url: https://university.clay.com/docs/builtwith-integration-overview
 description: Web technology intelligence for sales, marketing, and market analysis.
 last_synced: 2026-04-27T18:09:27.255Z
-upstream_hash: fe4d86c0c92a2fc62be32183526cc41e73601707ba406f5a303f153732944635
 ---
 
 # BuiltWith overview
@@ -58,4 +57,4 @@ Auto-update: BuiltWith will automatically enrich any new rows that get added to 
 
 Conditional runs: To run enrichment only under specific conditions, use formulas that trigger the column when the formula is true. See [this Clay University lesson](<https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101#:~:text=Conditional runs \(which make use,personal emails for all rows\).\)>).
 
-If needed, you can later break out entries from the list format using the **Write to Table** integration.
+If needed, you can later break out entries from the list format using [Send Table Data](https://university.clay.com/docs/send-table-data) (choose **Send row for each item in a list**).

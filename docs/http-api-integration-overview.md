@@ -3,7 +3,6 @@ title: HTTP API
 source_url: https://university.clay.com/docs/http-api-integration-overview
 description: Facilitate seamless integration and connectivity with any APIs.
 last_synced: 2026-04-26T01:40:08.701Z
-upstream_hash: 6ba64b21be65f745d8f3f5e362d290f624e1035ea304a572b218c60328cdb185
 ---
 
 # HTTP API
@@ -506,6 +505,20 @@ For complex HTTP API configurations:
 -   Simplifies replication to other tables.
 
 ## Troubleshooting
+
+### "Token has expired" or "Unauthorized" (401 error)
+
+This error means the API credentials in your HTTP API action are no longer valid. Many platforms — including sequencers, CRMs, and outreach tools — issue tokens that expire after a period of time.
+
+**How to fix:**
+
+1.  **Generate a new token** in the external platform (e.g., your sequencer or CRM). Check that platform's settings or developer docs for where to create or rotate API keys.
+2.  **Update the token in Clay:**
+    -   **If you saved the token in a header account:** Go to `Settings → Connections`, find your HTTP API (Headers) account, and click **Edit**. Existing header values are not shown (they're stored encrypted for security) — re-enter all your headers from scratch, including `Authorization: Bearer YOUR_NEW_TOKEN` and any other keys you had configured, then save. This updates every HTTP API column in your workspace that uses that account at once.
+    -   **If you entered the token directly in the column:** Open the HTTP API column settings, go to the `Headers` section, and replace the old token value with the new one.
+3.  **Test with a single row** to confirm the new token works before re-running your full table.
+
+**Tip:** Saving credentials in a header account (`Settings → Connections`) is the easiest way to manage token rotation — when a token expires, you only need to update it in one place instead of editing every column individually.
 
 ### "Body parse error" (400 error)
 

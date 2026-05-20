@@ -4,7 +4,6 @@ source_url: https://university.clay.com/docs/slack-integration-overview
 description: Team communication and collaboration platform boosting productivity
   with AI and integrations.
 last_synced: 2026-04-26T01:40:41.499Z
-upstream_hash: 3f6e0fed934fc93751fb1dd26b5e1784880c9296c00f370562d2c86c5f184c69
 ---
 
 # Slack integration
@@ -39,8 +38,10 @@ Use this action to send messages to Slack channels through a bot directly from C
 -   **Bot name (Optional):** Specify the name of the bot that will post the message.
 -   **Emoji (Optional)**
 -   **Slack channel**: Enter the name of the Slack channel where you want to post the message.
--   **Summary (Optional):** Text at the beginning of the message (e.g., "A new response has been submitted"). This field supports markdown.
+-   **Message (Optional):** The text body of the Slack notification (e.g., "A new lead has submitted a form"). Supports [Slack markdown](https://api.slack.com/reference/surfaces/formatting#basic-formatting).
 -   **Form information (Optional):** Add structured form data to the message (e.g., "First Name → Kareem"). The form will be sorted alphabetically by field name.
+
+> **Note:** Although both **Message** and **Form information** are displayed as optional in the UI, at least one of them must contain content for the action to run. Leaving both fields empty produces the error *"Missing input: You must include data for the person for this action to work."* Fill in the **Message** field with your notification text to resolve this.
 
 ### `Action` Find list of channel members
 
@@ -66,6 +67,8 @@ Use this action to retrieve a list of members from a specified Slack channel.
 
 You can add Markdown to any Slack message, either in the Slack integration itself or with the Formula feature.
 
+> **Using column data in your message:** To include values from your table (such as a contact's name or a custom headline) in the **Message** field, use the variable picker in the input field to insert column references. Typing `{{column_name}}` as literal text will not resolve to column values — it will be sent as-is. Alternatively, compose your full message in a Formula column and map that column's output to the **Message** field (steps below).
+
 1.  Click `+ Add column` in the table, then `Formula`.
 2.  Write your message (find formatting guidance below).
 3.  Go to your Slack message column and set the `Message` input to the message you created.
@@ -74,7 +77,7 @@ You can add Markdown to any Slack message, either in the Slack integration itsel
 
 **Text formatting**
 
--   **Bold:** Put asterisks  around your text.
+-   **Bold:** Put asterisks  around your text.
 -   _Italic:_ Use underscores `_` on both sides.
 -   Strikethrough: Surround text with tildes `~`.
 
@@ -89,7 +92,7 @@ You can add Markdown to any Slack message, either in the Slack integration itsel
 -   **Numbered list:** Start each line with a number and a period.Example:
     1.  First item
     2.  Second item
--   **Bulleted list:** Slack doesn’t support bullets directly, but you can use the character (`Option` + `8`) → •
+-   **Bulleted list:** Slack doesn't support bullets directly, but you can use the character (`Option` + `8`) → •
 -   Example:
 -   • Item one
 -   • Item two

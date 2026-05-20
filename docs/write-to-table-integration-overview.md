@@ -3,14 +3,17 @@ title: Write to Other Table
 source_url: https://university.clay.com/docs/write-to-table-integration-overview
 description: Easily transfer data between Clay tables.
 last_synced: 2026-04-26T01:40:56.846Z
-upstream_hash: 3e0da71677616110e0df7dee75650b9b238e81e89bb270777c7886a8d4788e1e
 ---
 
 # Write to Other Table
 
 Easily transfer data between Clay tables.
 
-**Note:** Write to Other Table is officially deprecated as of December 2025. Existing actions will continue working, but new actions will not be supported.
+**Write to Other Table is deprecated as of December 2025.** You cannot create new Write to Other Table actions — the action panel shows a deprecation notice when you try. Existing actions will continue to work. For all new multi-table workflows, use [Send Table Data](https://university.clay.com/docs/send-table-data), which replaces Write to Other Table with additional functionality including built-in upsert support and no API key required.
+
+**Migrating to Send Table Data:**
+- **List mapping** (sending each list item as its own row): use **Send row for each item in a list**
+- **Column mapping** (copying specific columns to another table): use **Send row**
 
 The **Write to Other Table** action in Clay connects data across tables, streamlining complex workflows, especially between _Company_ and _People_ tables.
 
@@ -21,7 +24,7 @@ A few example cases where you will find Write to Other Table useful:
 
 ## Setting up Write to Other Table
 
-To set up the action, you’ll need:
+To set up the action, you'll need:
 
 -   **Clay API Key:** [Your Clay API key](https://www.clay.com/university/guide/guide-find-clay-api-key) to create an integration.
 -   **Source table:** The parent table to copy data from.
@@ -75,7 +78,7 @@ Choose a destination table, ideally within your current workbook.
 
 **Step 3: Omit the list by entering /**
 
-Enter “/” to skip list selection, as you won’t be mapping a list in this step.
+Enter "/" to skip list selection, as you won't be mapping a list in this step.
 
 **Step 4: Map out columns**
 
@@ -99,7 +102,7 @@ The **Write to Other Table** action has two main constraints that you might come
 
 ## FAQ
 
-### **I received an “Invalid credentials” error, what can I do?**
+### **I received an "Invalid credentials" error, what can I do?**
 
 This error generally means your API key is incorrect or missing. To Fix:
 
@@ -107,9 +110,9 @@ This error generally means your API key is incorrect or missing. To Fix:
 2.  Add the API key to your integration account in Clay under the **Integrations** section.
 3.  Save your changes and retry the action.
 
-### **Why am I seeing the error “You cannot write to the selected table because the sequence of Write to Other Table integrations is misconfigured”?**
+### **Why am I seeing the error "You cannot write to the selected table because the sequence of Write to Other Table integrations is misconfigured"?**
 
-This error occurs when there’s invalid or conflicting data, such as:
+This error occurs when there's invalid or conflicting data, such as:
 
 -   Writing to a deleted column.
 -   Sending data to a table that references another table.
@@ -126,7 +129,7 @@ If you have data in a comma-separated list and want to send it to a new column o
 
 1.  Use **Extract Data From Values** to process the CSV data.
 2.  Add the correct column using the **Forward Slash** (/) command.
-3.  Apply a custom extraction **Regex**: `[^,"]+"?[^,"]+`
+3.  Apply a custom extraction **Regex**: `[^,"]+\"?[^,"]+`
 
 This will split the values into a list.
 

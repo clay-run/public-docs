@@ -4,7 +4,6 @@ source_url: https://university.clay.com/docs/salesforce-soql
 description: The Salesforce SOQL source enables you to import records from
   Salesforce by writing custom queries.
 last_synced: 2026-04-26T01:40:35.632Z
-upstream_hash: c8f21c092741d6111a8d95755a222978fedfe8960b7ef0717559be2afaaf3eca
 ---
 
 # Salesforce SOQL
@@ -124,7 +123,23 @@ WHERE Status__c = 'Active'
 
 ### Can I schedule SOQL queries to run automatically?
 
-Yes! Use Clay's auto-update feature to re-run your query on a schedule.
+Yes. In your source settings, set **Run this source** to **On a schedule** and choose a frequency (hourly on Enterprise, or daily/weekly/monthly on other plans). Enable **Update existing rows** to have Clay refresh the data for any record returned by each run.
+
+**Important:** Only records returned by the SOQL query during a given run are created or updated. If a record is not returned — for example, because it no longer satisfies your `WHERE` clause — it will not be updated, and the row in your Clay table will retain its previous values. See below for details.
+
+### Why aren't my existing rows being updated even though "Update existing rows" is on?
+
+The most common cause is that the record is no longer returned by your SOQL query. **"Update existing rows" only applies to records that the query actually returns during each run** — it does not re-process all rows already in your table.
+
+Think of each scheduled run as Clay asking Salesforce: "Give me all records matching `{your query}`." If Salesforce doesn't return a particular record, Clay has no way to know it needs updating.
+
+**To diagnose:** Run your query directly in Salesforce's Developer Console (Setup → Developer Console → Query Editor). If the record you expect to update does not appear there, it will not be updated in Clay.
+
+**To fix:** Rewrite your query so it returns the records you want to keep current. Common approaches:
+
+-   Remove or broaden the `WHERE` condition that may now exclude the record (e.g., if you're filtering on a field that changed value).
+-   Add a condition to catch recently modified records: `WHERE ... OR SystemModstamp >= LAST_N_DAYS:30`.
+-   If you need to track a fixed set of accounts regardless of their field values, filter on a stable identifier instead (e.g., `WHERE Id IN ('001...', '001...')`).
 
 ### Why am I getting rate limit errors?
 
