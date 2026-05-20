@@ -9,7 +9,7 @@ last_synced: 2026-04-26T01:40:20.821Z
 
 Connect your Clay workspace to AI tools.
 
-MCP (Model Context Protocol) is how Clay connects your workspace to AI tools like ChatGPT or Claude. Clay lets workspace admins set credit limits and monitor usage for team members who access Clay through ChatGPT or Claude.
+MCP (Model Context Protocol) is how Clay connects your workspace to AI tools like ChatGPT, Claude, and Glean. Clay lets workspace admins set credit limits and monitor usage for team members who access Clay through these tools.
 
 Navigate to it from the Clay homepage by clicking `MCP` in the side nav.
 
@@ -20,6 +20,8 @@ Credit controls and usage monitoring are available on all modern paid plans (Lau
 Audiences controls are available to Enterprise customers enrolled in the Audiences Open Beta.  
 
 The `Enable for MCP` option on Functions is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans.
+
+The Glean integration is available on Enterprise plans only. See [Using Clay in Glean](https://university.clay.com/docs/using-clay-in-glean) for setup steps.
 
 ## **Enabling a function for MCP**
 
@@ -45,7 +47,7 @@ There are two levels of control:
 The `MCP users` table gives a live view of every rep who has connected Clay to an external platform:
 
 -   **Name** — rep's name and email address
--   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, or both)
+-   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, or Glean)
 -   **Credit limit** — the rep's current limit, either the workspace default or a per-user override
 -   **Credits used** — live usage tracked against the rep's limit
 -   **Salesforce ID _(Enterprise Beta users only)_** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
@@ -67,7 +69,7 @@ If your workspace uses Clay Audiences, two additional workspace-level toggles ap
 
 ### What role should I assign to team members who will only use Clay through MCP?
 
-Any team member who needs to use Clay through an AI tool (Claude, ChatGPT, or xAI) must first be added to your Clay workspace. When inviting them, assign the **Sales Rep** role.
+Any team member who needs to use Clay through an AI tool (Claude, ChatGPT, Glean, or xAI) must first be added to your Clay workspace. When inviting them, assign the **Sales Rep** role.
 
 The Sales Rep role is designed for MCP-only access: users can invoke functions and run enrichments from within their AI tool, but they cannot open or interact with the Clay web interface. This makes it the right choice for team members who should use Clay through AI tools only — not build workflows directly in Clay.
 
