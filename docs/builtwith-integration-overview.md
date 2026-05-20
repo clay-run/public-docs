@@ -57,4 +57,4 @@ Auto-update: BuiltWith will automatically enrich any new rows that get added to 
 
 Conditional runs: To run enrichment only under specific conditions, use formulas that trigger the column when the formula is true. See [this Clay University lesson](<https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101#:~:text=Conditional runs \(which make use,personal emails for all rows\).\)>).
 
-If needed, you can later break out entries from the list format using the **Write to Table** integration.
+If needed, you can later break out entries from the list format using [Send Table Data](https://university.clay.com/docs/send-table-data) (choose **Send row for each item in a list**).
