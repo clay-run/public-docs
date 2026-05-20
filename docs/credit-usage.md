@@ -102,6 +102,8 @@ This estimate appears for any column run that would trigger dependent enrichment
 -   Changes to data sources
 -   Adding new rows
 
+**Variable AI pricing estimates:** A `~` prefix on a cost in the estimate (e.g., `~65/row`) means that figure is approximate. This applies to AI columns using variable pricing — Clay withholds an upfront estimate based on the 75th percentile of past runs for that model, so actual costs per row may be higher or lower depending on the complexity of each prompt and the data processed. To calibrate expected spend before running a large table, run the column on a small batch of 10–50 rows first, then check the per-row cost in the table. See [How AI is priced](/docs/ai-pricing) for full details on variable vs. fixed AI pricing.
+
 ### Expensive run warnings
 
 Clay shows a warning when you're about to initiate a run that will use a significant portion of your workspace's monthly credit allotment. Specifically:
