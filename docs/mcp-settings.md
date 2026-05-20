@@ -73,6 +73,8 @@ The Sales Rep role is designed for MCP-only access: users can invoke functions a
 
 To invite them: go to `Settings` → `Team`, click `+ Invite`, enter their email address, and select **Sales Rep** from the role dropdown.
 
+**Note:** The Sales Rep role is currently in beta — contact support to request access for your workspace.
+
 For a full breakdown of all roles, see [Roles and permissions](https://university.clay.com/docs/roles-and-permissions).
 
 ### Can admins remove a rep's access to Clay in ChatGPT or Claude?
