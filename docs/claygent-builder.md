@@ -89,6 +89,14 @@ Give your Claygent access to find people and jobs data directly. This enables pr
 
 Swap between different AI models (Claude, GPT-4o, etc.) to test output quality without touching the prompt.
 
+**Not all models support tool calling.** The Web search and Find contacts and jobs toggles require a model that supports tool calling. If you select a model that doesn't support it (such as Claygent Argon), those toggles will be greyed out and you'll see the message _"Tools are not available for the selected model."_ This is not a plan limitation — switch to a tool-calling model to enable them:
+
+-   GPT-4.1 or GPT-4o (OpenAI)
+-   Claude Sonnet 3.5 or Claude Sonnet 4 (Anthropic)
+-   Claygent Navigator (for browser interactions)
+
+You don't need a separate OpenAI API key — Clay's managed models work out of the box on all paid plans.
+
 ### Output schema
 
 When you need a Claygent to return structured data — multiple typed fields instead of free text — define a **JSON Schema** in **Define column outputs** in the column settings.
@@ -195,6 +203,10 @@ Yes, but centralizing in Claygent builder gives you version control, free testin
 ### Sculptor updated my prompt but the output looks the same — what happened?
 
 When Sculptor rewrites your prompt, it saves the new prompt text and shows a "Prompt updated by Sculptor" confirmation. It does **not** automatically re-run the test. The test output you see is from the previous run. Click **Run** (or **Run all**) in the test panel to execute the test with the updated prompt and see the new output.
+
+### The web search (or Find contacts and jobs) toggle is greyed out — why?
+
+If you see _"Tools are not available for the selected model,"_ your current model doesn't support tool calling. Switch to a model that does: GPT-4.1, GPT-4o, Claude Sonnet 3.5, Claude Sonnet 4, or Claygent Navigator. Models like Claygent Argon don't support tool calling, so those toggles will remain disabled until you change models.
 
 ## Tips for success
 
