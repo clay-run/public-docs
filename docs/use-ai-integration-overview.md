@@ -92,3 +92,19 @@ While you don't need your own GPT, Claude, or Gemini API key to use the AI featu
 
 1.  Select the desired `Model` from the dropdown.
 2.  Click on the `Account` dropdown and click `+ Add account`.
+
+## Using additional or custom LLMs
+
+Use AI supports GPT (OpenAI), Claude (Anthropic), and Gemini (Google) only. Custom or additional LLMs — including open-source models like LLaMA, or models accessed through a proxy such as LiteLLM — cannot be added directly to the Use AI enrichment interface.
+
+**Workaround: HTTP API enrichment**
+
+To call a custom or additional LLM from Clay, use the [HTTP API enrichment](https://university.clay.com/docs/http-api-integration-overview) to send requests to any OpenAI-compatible endpoint:
+
+-   **Hosted proxy services** (e.g., LiteLLM, Azure OpenAI, AWS Bedrock): Configure the HTTP API enrichment to call the provider's OpenAI-compatible endpoint. See [LiteLLM's API documentation](https://docs.litellm.ai/docs/providers/openai_compatible) for endpoint and authentication details.
+-   **Self-hosted open-source models** (e.g., LLaMA, Mistral): Host the model at a reachable HTTP endpoint, then configure the HTTP API enrichment to call it.
+
+**Limitations compared to Use AI:**
+
+-   You will not have access to Use AI's built-in features such as structured output configuration, model comparison, or web research (Claygent) mode.
+-   Each table row generates one API call to your LLM endpoint.
