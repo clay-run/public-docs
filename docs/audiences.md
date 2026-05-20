@@ -182,6 +182,14 @@ When you have a segment ready, you can send it to a workbook or an ad platform t
 -   **Rep-owned outbound** — scope workbooks by territory or rep so each AE works only their assigned accounts.
 -   **Additional processing** — send to a workbook to enrich, score, or filter before pushing to your destination.
 
+**Syncing to multiple ad platforms**
+
+Each audience can only be synced to one ad platform at a time — there is no option to add a second platform to an existing sync. To push the same segment to two platforms (for example, both Meta and LinkedIn):
+
+1.  Duplicate the audience by re-creating the same filters in a new audience segment.
+2.  On the duplicate, click `Send` → `Sync to ad platforms` and select the second platform.
+3.  The two audience syncs are independent — deactivating or removing a sync on one audience does not affect the other.
+
 ## Writing back to your CRM
 
 Audiences supports **bidirectional sync** with Salesforce. Enriched data and segment changes write back automatically.
@@ -220,6 +228,10 @@ You don't need a clean CRM to get started — CRM cleanup is often the first use
 ### Does Audiences update automatically?
 
 Yes. Segments update in real time as records enter or change, typically within 15 minutes. Enrichments and actions trigger automatically for new records when the autoenrich toggle is enabled. No manual runs required after initial setup.
+
+### Can I sync an audience to multiple ad platforms?
+
+Not directly — each audience supports one active ad platform sync at a time. To push the same segment to both Meta and LinkedIn, duplicate the audience and set up a separate sync on the duplicate pointing to the second platform. The two audiences and their syncs are fully independent of each other.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
