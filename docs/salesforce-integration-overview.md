@@ -138,6 +138,7 @@ Use this action to modify existing records in Salesforce.
 -   **Record ID:** The ID of the record to update.
 -   **Salesforce object:** The object type to look for in your Salesforce.
 -   **Ignore blank values (optional):** When enabled, blank values from Clay will be ignored.
+-   **Disable auto-assignment rules (optional):** When enabled, Salesforce will not apply lead and contact assignment rules when the record is updated. **This is on by default for new Update Record columns** — if you want Salesforce assignment rules to run when Clay updates a record, turn this setting off. Existing columns are not affected unless you edit them.
 
 ### `Action` Convert lead
 
