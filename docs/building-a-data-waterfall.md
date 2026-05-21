@@ -26,7 +26,7 @@ To run a pre-built waterfall:
 
 1.  While in a table, click `Add column` (which you will find at the far right side).
 2.  Select `Waterfall` and click the `🖊️` to next to the title to rename.
-3.  Change the `Data Type` that you’ll be working with.
+3.  Change the `Data Type` that you'll be working with.
 4.  Add actions to the waterfall and adjust other settings.
 5.  Click `Save`.
 
@@ -39,3 +39,15 @@ Waterfall templates allow you to save and reuse your waterfall configuration, ma
 3.  Select `Save template`.
 
 **Note:** Waterfall templates cannot be edited, only created and deleted.
+
+## Trial plan and provider restrictions
+
+Waterfall enrichments are available on all plans, including the Trial plan. However, some individual providers within a waterfall require a paid plan.
+
+Providers that can return phone numbers — such as PDL (People Data Labs), Bytemine, and others — require the Launch plan or higher. When a waterfall template includes one or more of these providers, Trial users see the error:
+
+> Your subscription does not allow this integration to be added.
+
+This error can appear even when your goal is to find something other than a phone number (for example, a LinkedIn URL), because the provider is phone-number gated regardless of which output you're looking for.
+
+**To work around this on a Trial plan:** open the waterfall's `Waterfall sequence` configuration and remove any providers that return phone numbers. The remaining providers will work normally. To use all providers without restriction, upgrade to a paid plan.
