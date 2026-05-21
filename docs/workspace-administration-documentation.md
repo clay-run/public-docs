@@ -215,6 +215,11 @@ To remove a member from your workspace:
 -   Select `Remove member`.
 -   Confirm the removal in the dialog that appears.
 
+**What happens when you remove a member:**
+
+-   All tables, workbooks, and groups owned by the removed member are automatically transferred to the longest-tenured admin in the workspace (the admin whose admin role was granted earliest).
+-   You cannot remove the last admin from a workspace — at least one admin must remain at all times.
+
 # **Single Sign-On (SSO)**
 
 Single Sign-On (SSO) is available to **Enterprise plan** customers and those who have purchased the SSO add-on. It lets your organization authenticate Clay users through your existing identity provider (IdP). Clay uses WorkOS to manage SSO and supports any IdP that uses SAML or OIDC protocols — including Okta, Azure AD (Entra ID), Google Workspace, and others.
