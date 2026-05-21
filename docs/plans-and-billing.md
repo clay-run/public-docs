@@ -85,7 +85,7 @@ To update your billing and payment information:
 
 Clay offers a 14-day free trial with 1,000 data credits, giving you access to webhooks, CRM integrations, email sequencers, and HTTP API capabilities.
 
-Phone number enrichments aren't available during the trial period. To access this feature, upgrade to a paid plan.
+Phone number enrichments aren't available during the trial period. To access this feature, upgrade to a paid plan. This also affects some waterfall templates: if a waterfall includes a provider that can return phone numbers (such as PDL or Bytemine), Trial users will see "Your subscription does not allow this integration to be added" even if the goal of the waterfall is something other than a phone number (for example, a LinkedIn URL). To work around this, remove the phone-number providers from the waterfall sequence. See [Waterfalls](https://university.clay.com/docs/building-a-data-waterfall) for details.
 
 If your team wants to do a trial, each team member can create their own trial account to explore Clay independently.
 
