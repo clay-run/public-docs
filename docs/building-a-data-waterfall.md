@@ -44,8 +44,6 @@ Waterfall templates allow you to save and reuse your waterfall configuration, ma
 
 To run your waterfall on a specific set of rows — for example, to test it on a small sample before running the full table — select those rows by clicking a row number and dragging (or **Shift+clicking**) to extend the selection, then right-click and choose **Run [N] rows**. This runs all enrichment and waterfall columns on only those rows.
 
-When you add a new provider to an existing waterfall, that new step will **not** automatically run on rows that already have a waterfall result. Select those rows and use **Run [N] rows** to pick up the new provider.
-
 For more manual run options, see [Run progress](run-progress.md).
 
 ## Trial plan and provider restrictions
