@@ -42,3 +42,13 @@ This tool is ideal for building targeted sales prospect lists, identifying poten
 -   **Past experiences:** Toggle to include past experiences in your search.
 -   **Limit results:** Set a maximum number of results per search (up to 50,000 records).
 -   **Limit per company:** Set the maximum number of people to return per company (up to 100). Note: the preview count shown before running the search reflects the total match universe across all companies and does not account for this limit — the actual number of imported rows will be lower.
+
+**Outputs:**
+
+Each result includes a **Structured Location** object in the cell details with geocoded, normalized fields — so you don't need additional AI columns to parse or reformat location data. These fields work with informal location names like "Greater Chicago Area."
+
+-   **City**
+-   **State**
+-   **Region**
+-   **Country**
+-   **Country Iso**
