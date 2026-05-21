@@ -73,17 +73,17 @@ moment({{Event Date}}).isAfter(moment().add(6, 'months')) ? "Yes" : ""
 
 **Keeping the comparison current automatically**
 
-Formula columns only re-evaluate when they are re-run. `moment()` will return the correct date each time the formula runs, but if your table sits idle the formula won't refresh on its own.
+Formula columns only re-evaluate when they are re-run (and the table's **Auto-run** is on). `moment()` will return the correct date each time the formula runs, but if your table sits idle the formula won't refresh on its own.
 
 To keep a date comparison up to date without manually re-running the table each day, use an HTTP API column as a daily "clock":
 
 1.  Add an **HTTP API** column (GET, no authentication needed) pointed at a free time API — for example `https://timeapi.io/api/time/current/zone?timeZone=UTC`. This column returns the current datetime whenever it runs.
-2.  Reference the HTTP API column's output in your formula. Because Clay formula columns re-evaluate whenever a referenced column changes, the formula will automatically re-run each time the HTTP API column updates. For example:
+2.  Reference the HTTP API column's output in your formula. Because Clay formula columns automatically re-evaluate whenever a referenced enrichment column changes (when Auto-run is on), the formula will re-run each time the HTTP API column updates. For example:
 
     ```javascript
     moment({{Event Date}}).isAfter(moment({{Today API.dateTime}}).add(6, 'months')) ? "Yes" : ""
     ```
 
-3.  Schedule the HTTP API column to run daily: click the **⛭** icon in the bottom right of your table → **Run Settings** → **Re-run columns on a schedule** → **Only selected columns** → select your HTTP API column → **Day** → **Save changes**. See [Scheduled columns](scheduled-columns.md) for full details.
+3.  Schedule the HTTP API column to run daily: click the **⛭** icon in the bottom right of your table → **Run Settings** → **Re-run columns on a schedule** → **Only selected columns** → select your HTTP API column → **Day** → **Save changes**. Note: only enrichment/action columns are selectable here — formula columns cannot be directly scheduled, but the formula will update automatically as a downstream effect of the HTTP API column running. See [Scheduled columns](scheduled-columns.md) for full details.
 
 Once the HTTP API column fetches a fresh date each day, any formula that references it automatically re-evaluates against the new value.
