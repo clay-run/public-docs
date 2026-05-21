@@ -10,7 +10,7 @@ last_synced: 2026-05-20T19:20:54.410Z
 
 Workspace admins have two ways to control connection access, both managed from `Settings` → `Connections`.
 
-**Note:** This feature is for users on an Enterprise Plan.
+**Note:** This feature is currently in beta for Enterprise customers.
 
 1. **Build permissions** — Restrict which workspace members can use a specific connection to configure workflows and columns. Members only see connections they're allowed to use; all workspace members can still run workflows that are already set up.
 2. **Approval to add connections** — Require that members request admin approval before adding any new connection to the workspace.
@@ -135,5 +135,3 @@ When a user is deactivated, their personal credentials are disabled by default.
 **How do I set up controls for my workspace?**
 
 Enterprise customers can configure allowlists independently or with the help of their Growth Strategist.
-
-One more test paragraph.
