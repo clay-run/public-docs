@@ -18,7 +18,7 @@ You only pay credits for the provider that finds a match, making it one of the m
 ## **Setting up the Work Email waterfall**
 
 1.  In your table, click `Add enrichment` in the top right corner.
-2.  Search for `Work Email` \u00A0and select it from the results.
+2.  Search for `Work Email`  and select it from the results.
 3.  Choose between `Quick setup` and `Full configuration`
 4.  Map your input columns and click `Save`.
 
