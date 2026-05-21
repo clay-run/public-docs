@@ -38,9 +38,9 @@ For example, you could:
 
 ## Sandbox mode
 
-When Sculptor builds new columns for your table, it automatically puts the table into [sandbox mode](https://www.clay.com/university/guide/sandbox-mode) first. This gives you a chance to review and validate the new columns before they go live—reducing unintended credit burn and giving you more control over changes.
+> **Currently in beta — available on Pro and Enterprise plans. Contact support to enable if you don't see it yet. A broader rollout is coming.**
 
-**Sandbox mode with in-table Sculptor is currently available on Pro and Enterprise plans, with a rollout to additional plans coming soon.**
+When Sculptor builds new columns for your table, it automatically puts the table into [sandbox mode](https://www.clay.com/university/guide/sandbox-mode) first. This gives you a chance to review and validate the new columns before they go live—reducing unintended credit burn and giving you more control over changes.
 
 Once Sculptor adds columns and sandbox mode is active:
 
