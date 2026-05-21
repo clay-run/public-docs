@@ -73,7 +73,11 @@ Click `+ Add` again to add a second table for your contacts/people. The same sou
 
 ### Step 3: Link contacts to their accounts
 
-Once both tables are populated, add a **Lookup Rows** action on the contacts table to pull account-level data into each contact row:
+How the link is created depends on which source you used for contacts:
+
+**If you used Find People at These Companies** (launched from your accounts table): A **Company Table Data** column is automatically added to the contacts table, linking each person back to their company row. No additional setup is required.
+
+**If you imported contacts from CSV or CRM:** Add a **Lookup Rows** action on the contacts table to pull account-level data into each contact row:
 
 1.  In your contacts table, click `+ Add column` and select `Lookup single row in other table`.
 2.  Set `Table to search` to your accounts table.
@@ -85,7 +89,7 @@ This gives you account-level attributes (company name, industry, revenue, etc.) 
 
 ### Tips for CRM imports
 
--   **Scope your source before the first sync.** When connecting Salesforce or HubSpot, apply filters (by account stage, owner, segment, list membership, etc.) before importing. This ensures you bring in only the records you plan to work with — not your entire CRM.
+-   **Scope your source before the first sync.** When connecting Salesforce or HubSpot, use a pre-filtered list view or segment (e.g., filtered by account stage, owner, or segment) as your source. This ensures you bring in only the records you plan to work with — not your entire CRM.
 -   **Sources are additive.** Once records are imported, narrowing your source filter does not remove rows already in the table. See [Will rows already in my table be removed if they no longer match the source filter?](#will-rows-already-in-my-table-be-removed-if-they-no-longer-match-the-source-filter) below.
 
 ## Modifying sources
