@@ -206,6 +206,20 @@ When Sculptor rewrites your prompt, it saves the new prompt text and shows a "Pr
 
 For Clay parallel models (Argon, Neon, Helium, and similar), web search is always on and cannot be toggled off — it's a required part of how these models work. The greyed-out toggle is expected; web search is active. If you want to turn web search off, switch to a non-parallel model in the model selector.
 
+### My Claygent columns are showing an error — what does that mean?
+
+If your Claygent columns are failing with an error like **"This action is no longer operational as a data provider. Please use another action."**, it means those columns are using an older version of the Claygent action that is no longer supported. The column settings panel may still appear editable, but the column cannot run.
+
+You need to replace each affected column with a new **Use AI** column. Here's how:
+
+1.  Open the old Claygent column and copy your prompt and any JSON output schema.
+2.  Click **Add column** in your table and select **Use AI**.
+3.  Paste your prompt into the new column.
+4.  If you had a JSON output schema, paste it into the **JSON Schema** field under outputs.
+5.  Save and rerun the column.
+
+Repeat for each affected column in your table. Once the new Use AI column is running correctly, you can delete the old Claygent column.
+
 ## Tips for success
 
 **Importing test cases**: Instead of manually creating test data, import real rows from your tables. Click `Import from table` in the test panel to pull actual data and see how your agent performs on real-world inputs.
