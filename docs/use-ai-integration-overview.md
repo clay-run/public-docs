@@ -119,3 +119,28 @@ To call a custom or additional LLM from Clay, use the [HTTP API enrichment](http
 
 -   You will not have access to Use AI's built-in features such as structured output configuration, model comparison, or web research (Claygent) mode.
 -   Each table row generates one API call to your LLM endpoint.
+
+## Troubleshooting
+
+### AI column stops working after editing with Sculptor
+
+If you used Sculptor to adjust an AI column and the column now shows an error or stops producing results, something in the prompt was likely broken during the Sculptor edit. Here's what to check:
+
+-   **A `{{column}}` variable pointing to a deleted or renamed column.** If Sculptor reorganized your prompt, or you renamed a column after setting up the AI column, any variable referencing the old column name will fail. Affected rows will show **"Missing input"** and be skipped. Open the column settings directly (click the column name → **Edit column**), review each variable reference in the prompt, and confirm every `{{column}}` maps to an existing column in your table.
+-   **A backtick or template literal accidentally added.** Sculptor can introduce backtick characters (`` ` ``) around values in prompts. This causes a formula parse error before the column runs. Check your prompt text for stray backticks and remove them.
+-   **A malformed JSON output schema.** If your column uses a structured JSON output schema and Sculptor rewrote it, the schema may now be invalid — for example, an array field missing `items`, or a trailing comma. The column will show its own schema-specific error message. Click **Generate from prompt** in the column settings to regenerate a valid schema.
+
+**Tip:** When troubleshooting, make changes directly in the column settings panel rather than through Sculptor. Test on a single row before running the full table.
+
+### AI column returning fabricated email addresses
+
+If an AI column was set up to "find" or "search for" email addresses and is returning results that look real but bounce — or include unexpected domains like `@linkedin.com`, `@gmail.com`, or an unrecognizable company domain — the column is generating (hallucinating) those addresses rather than retrieving real ones.
+
+**AI columns in content creation mode generate output from the model's training data. They do not search the live web or query email-provider databases.** When asked to find an email address, the model produces a plausible-looking result that may not correspond to a real, deliverable address.
+
+For reliable email finding, use a dedicated email finder instead:
+
+-   The **[Work Email waterfall](https://university.clay.com/docs/work-email-waterfall)** queries multiple verified providers in sequence and stops as soon as one returns a valid match — this is the recommended approach for most use cases.
+-   Individual providers such as Findymail, LeadMagic, Hunter, Dropcontact, and Datagma are also available as standalone enrichments under **Add enrichment**.
+
+**Note:** The **web research** mode in Use AI can scrape specific website URLs you provide as inputs, but it is not designed for email discovery. For finding work email addresses, dedicated enrichment providers are the reliable choice.
