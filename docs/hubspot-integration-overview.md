@@ -57,6 +57,7 @@ Use this action to update an object in HubSpot.
 
 -   **Object type:** The type of HubSpot object to update.
 -   **HubSpot Object ID:** The unique identifier of the object to update.
+-   **Ignore blank values (Optional):** When enabled (default), blank values from Clay will be ignored in HubSpot — existing HubSpot values are left unchanged. When disabled, blank values from Clay will overwrite existing HubSpot field values.
 
 ### `Action` Create association
 
@@ -181,3 +182,11 @@ HubSpot's API returns internal codes for enumeration/dropdown fields rather than
 -   `other` → Other
 
 If your HubSpot account uses custom lifecycle stages, find their internal codes in HubSpot under **Settings → Properties → Lifecycle Stage**.
+
+### Why isn't my HubSpot Update Object populating a property that already exists in HubSpot?
+
+If a property exists in HubSpot but doesn't get updated when you run the Update Object action, two things are worth checking:
+
+**Blank values are silently skipped.** The **Ignore blank values** setting is enabled by default. When enabled, any property field that is empty or null in your Clay table is not sent to HubSpot — the existing HubSpot value remains unchanged with no error shown. If the column you are mapping has no value for a given row, the update for that property is skipped. To override this, open the column settings and disable **Ignore blank values** — but note that doing so will overwrite existing HubSpot data with blank values from Clay.
+
+**A different HubSpot account is selected.** If multiple HubSpot accounts are connected to your workspace (for example, if teammates each added their own HubSpot connection), the Update Object action may be authenticating against a different instance than the one you intend to update. Open the column settings and confirm the HubSpot account shown is the correct one. You can verify by running a **Lookup object** action on the same record — if the property appears updated there, the write reached the right account.

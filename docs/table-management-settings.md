@@ -74,6 +74,8 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
     -   `Continue without running` — Don't run existing cells right now.
     -   `Update cells` — Immediately run all cells that are out-of-date.
 
+**Note:** Rows added while auto-run was disabled are **not** automatically queued when you re-enable auto-run. Choosing `Continue without running` leaves those rows unrun — they will not trigger on the next source sync. To process them, either choose `Update cells` when re-enabling, or manually trigger the column (right-click the column header → **Run column** → **Run N empty or out-of-date rows**).
+
 **To enable "Keep existing results":**
 
 "Keep existing results" is only available when Auto-run is turned on. To enable it:
@@ -284,6 +286,7 @@ Track changes to your table, including who made them and when. View updates to s
 **Retention:** Change log retention varies by plan:
 
 -   Free / Trial: Not enabled
+-   Starter, Explorer, Pro (legacy paid plans): 30 days
 -   Launch / Growth: 30 days
 -   Enterprise: 180 days
 

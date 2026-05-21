@@ -35,7 +35,7 @@ When setting up key-pair authentication, you'll need to provide:
 -   **Database** (optional): The name of the database to connect to in Snowflake. If not specified, you'll be prompted to enter it when setting up a Snowflake enrichment.
 -   **Schema** (optional): The schema to connect to in Snowflake. If not specified, you'll be prompted to enter it when setting up a Snowflake enrichment.
 -   **Warehouse** (optional): The warehouse to use for queries in Snowflake. If not specified, you'll be prompted to enter it when setting up a Snowflake enrichment.
--   **Use static IP** (optional): Enable this to ensure that the action runs from the same IP address, which can be useful for allow-listing.
+-   **Use static IP** (optional, Enterprise plans): Enable this to route enrichments through Clay's fixed IP addresses, which you can allowlist in your Snowflake network policy: `52.7.81.233`, `18.209.121.250`, `35.170.109.137`, `54.86.28.41`.
 
 ### Setting up username and password authentication
 
@@ -165,7 +165,7 @@ Move the private key somewhere easy to find for the next step:
 
 After your account connects, Clay prompts you to enter a SQL query. This determines exactly which data is imported into Audiences.
 
-`SELECT    domain,      company_name,      total_sessions,      last_session_at,      trial_status,      engagement_score   FROM your_database.your_schema.your_table_or_view   `
+`SELECT    domain,      company_name,      total_sessions,      last_session_at,      trial_status,      engagement_score   FROM your_database.your_schema.your_table_or_view   `
 
 Any valid `SELECT` works — tables, views, joins, and aggregations are all supported. Two things to keep in mind:
 

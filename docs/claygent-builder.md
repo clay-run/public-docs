@@ -95,7 +95,7 @@ Swap between different AI models (Claude, GPT-4o, etc.) to test output quality w
 
 When you need a Claygent to return structured data — multiple typed fields instead of free text — define a **JSON Schema** in **Define column outputs** in the column settings.
 
-Two common errors when writing schema by hand:
+Common errors when writing schema by hand:
 
 -   **Missing `items` on an array field.** Every field with `"type": "array"` must include an `"items"` object that specifies the element type. Without it, the AI provider rejects the schema and you will see: `Invalid schema for function 'returnData': In context=('properties', 'fieldName'), array schema missing items`. Fix it by adding `"items"`:
 
@@ -108,6 +108,10 @@ Two common errors when writing schema by hand:
     ```
 
 -   **Trailing comma in the JSON.** Standard JSON does not allow a comma after the last property in an object or array. A stray trailing comma — for example `"items": { "type": "string" },` when `items` is the last property — causes a parse error displayed as: `Your JSON Schema configuration is invalid. Please try using the "Generate from prompt" button in the column config to create a valid schema, or check your JSON Schema for formatting errors.` Note: if you see the "array schema missing items" error but `items` is already present, a trailing comma elsewhere in that object is the likely cause — the in-app AI debugger may point to the wrong issue.
+
+-   **Numeric enum with integer type (Grok models).** Grok models have stricter structured output requirements than other providers. Combining `"type": "integer"` with a numeric `"enum"` array — for example `"enum": [1000, 500, 100]` — causes a `Bad Request` (400) error that surfaces as `Error: Bad Request` on every row. Other providers (Claude, GPT-4o, Gemini) accept this combination without error. Two fixes:
+    -   **Remove the enum**: delete the `"enum"` array and keep only `"type": "integer"`, letting the model return any integer.
+    -   **Switch to strings**: change `"type"` to `"string"` and quote the enum values (`"1000"`, `"500"`, `"100"`).
 
 To avoid writing schema by hand, click **Generate from prompt** to have Clay auto-generate a valid schema from your prompt.
 
@@ -201,6 +205,20 @@ When Sculptor rewrites your prompt, it saves the new prompt text and shows a "Pr
 ### The web search toggle is greyed out — why?
 
 For Clay parallel models (Argon, Neon, Helium, and similar), web search is always on and cannot be toggled off — it's a required part of how these models work. The greyed-out toggle is expected; web search is active. If you want to turn web search off, switch to a non-parallel model in the model selector.
+
+### My Claygent columns are showing an error — what does that mean?
+
+If your Claygent columns are failing with an error like **"This action is no longer operational as a data provider. Please use another action."**, it means those columns are using an older version of the Claygent action that is no longer supported. The column settings panel may still appear editable, but the column cannot run.
+
+You need to replace each affected column with a new **Use AI** column. Here's how:
+
+1.  Open the old Claygent column and copy your prompt and any JSON output schema.
+2.  Click **Add column** in your table and select **Use AI**.
+3.  Paste your prompt into the new column.
+4.  If you had a JSON output schema, paste it into the **JSON Schema** field under outputs.
+5.  Save and rerun the column.
+
+Repeat for each affected column in your table. Once the new Use AI column is running correctly, you can delete the old Claygent column.
 
 ## Tips for success
 

@@ -21,7 +21,7 @@ Custom Signals let you monitor data sources for specific changes on a regular sc
 
 1.  To create a custom signal:
     -   **In a workbook**: Click `+ Add` → `Custom signal`.
-    -   **In a table**: Click `Actions` → `Import` → `Custom signal`.
+    -   **In a table**: Click `Tools` → `Import` → `Custom signal`.
 2.  Select a source to monitor.
     -   Next to each source, you'll see the estimated cost per result.
 3.  Configure your source.
@@ -50,10 +50,10 @@ You may occasionally need to monitor changes in an enrichment. Below is a step-b
 
 ### Table 1: Setting up an enrichment
 
-1.  Start with a list of companies (Create a new table or in an existing table, click `Actions` → `Import`)
+1.  Start with a list of companies (Create a new table or in an existing table, click `Tools` → `Import`)
 2.  If you don't already have one, create the enrichment you want to turn into a signal.
 3.  Set up a [scheduled run](https://www.clay.com/university/guide/scheduled-columns) for your enrichment by clicking the `⚙️` → enable `Re-run columns on a schedule`.
-4.  Under `Actions` → click `Send table data` and include the enrichment in the columns that are sent. Send this data to a new table that we'll call "Run history".
+4.  Under `Tools` → click `Send table data` and include the enrichment in the columns that are sent. Send this data to a new table that we'll call "Run history".
     -   Make sure the **company name** or **company domain** is part of the data sent to the new table, as these will be essential in the upcoming steps.
 5.  Toggle off `Update existing rows on re-run` to create new rows for each recurring run.
 
@@ -72,7 +72,7 @@ You may occasionally need to monitor changes in an enrichment. Below is a step-b
 4.  Click `Actions` → `Use AI`. Generate a prompt that references the output from the `Lookup Multiple Rows in Other Table` and identifies the difference between the two most recent runs, using `Created At`.  
     -   This prompt will provide two outputs: any new information returned from the 2nd run that wasn't in the 1st run, and a True/False boolean indicating if there is any new information.**‍**
     -   **Note:** If your data is structured or numerical, you can use a formula to detect changes. However, if there's significant variability between outputs, you'll likely want to use an AI action to holistically determine the difference between runs.
-5.  Take the result from `Use AI` and write it to a fourth table (the "Signal" table), using `Actions` → `Send table data`.  
+5.  Take the result from `Use AI` and write it to a fourth table (the "Signal" table), using `Tools` → `Send table data`.  
     -   You can do this using run conditions.  
         -   For a numerical output, the run condition should be if the change is not 0.  
 

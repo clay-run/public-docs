@@ -92,6 +92,20 @@ You can permanently delete your Clay account through your account settings. Befo
 
 Workspace settings give you control over key aspects of your workspace, such as its name, profile picture, and billing email. These settings ensure your workspace is easily identifiable and that billing communications reach the correct contact. Below are the steps for updating key workspace details.
 
+## **Switching between workspaces**
+
+Your Clay account can be associated with more than one workspace — for example, if you explored Clay during a free trial and later upgraded or joined a team's workspace. Each workspace has its own tables, credits, and billing.
+
+To switch between workspaces:
+
+-   Click your **profile picture or name in the top-right corner** of the Clay navigation bar.
+-   In the dropdown that appears, look for the **Workspaces** section.
+-   Click the workspace you want to open.
+
+**If your tables seem to have disappeared** — for example, after upgrading your plan or returning to Clay after some time — check the workspace switcher first. Your data is not deleted; it's in the workspace where you originally created it.
+
+**Note:** When you upgrade a plan, the upgrade applies to the specific workspace you are currently in. If you upgrade while viewing a different workspace than the one where you created your tables, those tables remain in the original workspace. Use the workspace switcher to navigate between them.
+
 ## **Workspace picture**
 
 To update your workspace picture:
@@ -190,7 +204,7 @@ To invite a new member to your workspace:
 
 -   Go to `Settings` > `Team`.
 -   Click the `+ Invite` button in the top-right corner.
--   Enter the email address of the person you want to invite.
+-   Enter the email address of the person you want to invite, then press **Enter** (or type a comma) to confirm it. You can add multiple addresses this way.
 -   Select the appropriate role (Editor or Admin) from the dropdown.
 -   Click `Send invite`.
 

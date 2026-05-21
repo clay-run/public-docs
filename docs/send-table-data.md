@@ -70,6 +70,22 @@ This is useful for **flattening lists**. For example, if you find multiple peopl
 
 You can also select additional data to send along with the flattened list, just like with `Send row`.
 
+**Tip: Use "Take action on list" to set this up automatically**
+
+The easiest way to configure `Send row for each item in a list` is to use the **Take action on list** shortcut from the cell details panel:
+
+1.  Click on a cell in the column whose list you want to flatten (for example, a "Find Contacts at Company" result cell).
+2.  In the Cell details panel, hover over the list section (e.g., "People") to reveal the **Take action on list** button.
+3.  Select **Write each item to new row in other table**.
+
+This opens the Send Table Data configuration with the correct list field already pre-populated — so you don't need to manually identify which field to use as the list source.
+
+**Selecting the right list field manually**
+
+When configuring the list field by hand, select the **list itself** (e.g., `People`), not an indexed element from within that list (e.g., `People.0`, which is just the first person). Selecting a single indexed element instead of the whole array is a common source of confusion: the configuration will show a **"Please add a valid list."** error because an indexed element isn't recognized as a list.
+
+If your table has no rows with data yet, Clay skips this validation and accepts the formula as-is. In that case, run a few rows first so the enrichment column has real output, then re-open the Send Table Data configuration to confirm the list field is valid before running the full table.
+
 ## Advanced settings
 
 **Update existing rows on re-run**

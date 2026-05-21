@@ -1,7 +1,7 @@
 ---
 title: "Guide: Finding companies and people in Clay"
 source_url: https://university.clay.com/docs/finding-companies-and-people-in-clay
-description: Best practices to Clay's company and people search features.
+description: Best practices to Clay's company and people search features, including valid LinkedIn URL formats for the company identifier and troubleshooting common errors.
 last_synced: 2026-04-26T01:39:59.452Z
 ---
 
@@ -36,7 +36,7 @@ If you need results that meet _either_ of two different filter combinations, set
 
 ### Choose your starting point
 
-**Recommended:** If you have a company list, use Find People at These Companies (Actions → Find People at These Companies) rather than a standalone people search. This scopes results to your specific companies and keeps contacts linked to their accounts — rather than returning an unanchored list you'd need to join manually.
+**Recommended:** If you have a company list, use Find People at These Companies (Tools → Find People at These Companies) rather than a standalone people search. This scopes results to your specific companies and keeps contacts linked to their accounts — rather than returning an unanchored list you'd need to join manually.
 
 If you don't have a company list, use **People search as a source** — a standalone search by title or other criteria that returns a new table.
 
@@ -54,7 +54,14 @@ Always pair this with a **Job title keywords to exclude** list to filter out com
 
 ### Use LinkedIn URLs, not domains, as company identifiers
 
-When running a people search against a company list, provide company **LinkedIn URLs** rather than domains wherever possible. Clay resolves domains by running them through a company lookup, which can occasionally surface the wrong company — especially for subsidiaries. LinkedIn URLs map directly to the intended profile.
+When running a people search against a company list, provide a **company or school LinkedIn URL** rather than a domain wherever possible. Clay resolves domains by running them through a company lookup, which can occasionally surface the wrong company — especially for subsidiaries. LinkedIn URLs map directly to the intended profile.
+
+The company identifier field accepts these LinkedIn URL formats:
+
+-   **Company page**: `https://www.linkedin.com/company/<slug>` (e.g., `https://www.linkedin.com/company/clay-run`)
+-   **School page**: `https://www.linkedin.com/school/<slug>` (e.g., `https://www.linkedin.com/school/westlake-christian-academy`)
+
+**Important:** Person profile URLs (`https://www.linkedin.com/in/<name>`) are not valid as company identifiers. Passing a person LinkedIn URL produces a confusing "Invalid companies provided" error even though the URL is real and correctly formatted — the field only accepts company or school page URLs, not individual profiles. See the [troubleshooting section](#getting-invalid-companies-provided-error-despite-having-a-valid-linkedin-url) below if you hit this error.
 
 ### Run conditional people searches with table views
 
@@ -176,6 +183,19 @@ To improve coverage across all your companies:
 ### Find People is returning people from the wrong company
 
 This almost always points to a domain-to-company mapping issue. When Clay resolves a domain to a LinkedIn company, it can occasionally surface a parent company, subsidiary, or a generic LinkedIn company page instead of the intended one. Use the company's **LinkedIn URL** as the input instead of the domain to ensure Clay maps to the exact intended entity.
+
+### Getting "Invalid companies provided" error despite having a valid LinkedIn URL
+
+If you see the error **"Invalid companies provided: please make sure you are using LinkedIn URLs or Company Domains"** but your column already contains LinkedIn URLs, check the URL format. This error occurs when the LinkedIn URL is a **person profile URL** (`linkedin.com/in/<name>`) rather than a company or school page URL — even though the URL itself is valid LinkedIn syntax, the action only accepts company-type identifiers.
+
+Valid inputs for the company identifier field:
+
+-   **Company page URL**: `https://www.linkedin.com/company/<slug>`
+-   **School page URL**: `https://www.linkedin.com/school/<slug>`
+-   **Company domain**: e.g., `example.com`
+-   **Sales Navigator company URL or company ID**
+
+To fix this, replace the person profile URLs in your column with the corresponding company LinkedIn URLs. You can use the **Find Company** or **Enrich Company** enrichments to retrieve a company URL from a company name or domain, then pass that URL into **Find Contacts at Company**.
 
 ## FAQs
 
