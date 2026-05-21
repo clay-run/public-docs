@@ -1,7 +1,7 @@
 ---
 title: Find People in Clay
 source_url: https://university.clay.com/docs/find-people-overview
-description: Discover relevant contacts matching your criteria within Clay's database.
+description: Discover relevant contacts matching your criteria within Clay's database, then enrich results with work email and mobile phone waterfalls.
 last_synced: 2026-04-26T01:39:58.803Z
 ---
 
@@ -42,3 +42,20 @@ This tool is ideal for building targeted sales prospect lists, identifying poten
 -   **Past experiences:** Toggle to include past experiences in your search.
 -   **Limit results:** Set a maximum number of results per search (up to 50,000 records).
 -   **Limit per company:** Set the maximum number of people to return per company (up to 100). Note: the preview count shown before running the search reflects the total match universe across all companies and does not account for this limit — the actual number of imported rows will be lower.
+
+## Getting phone numbers and emails from your results
+
+Once Find People returns a list of contacts, you can enrich each row with contact information using Clay's pre-built waterfall enrichments — the same type of contact lookup available in dedicated tools like Lusha.
+
+**Work email:** Click `Add enrichment` → search for `Work Email` → select it under **Waterfalls**. The waterfall cascades through multiple email providers in sequence and stops as soon as a valid result is found. Most providers refund credits when no result is returned.
+
+**Mobile phone number:** Click `Add enrichment` → search for `Mobile Phone` → select the waterfall matching your target region under **Waterfalls**:
+
+-   **Mobile Phone (US and Canada)**
+-   **Mobile Phone (EMEA)**
+-   **Mobile Phone (APAC)**
+-   **Mobile Phone (Global)**
+
+Most providers refund credits when no result is returned. **Note:** Mobile phone enrichments require a Launch plan or higher. See [Waterfalls](https://university.clay.com/docs/building-a-data-waterfall) for details on plan requirements.
+
+Clay's [templates library](https://www.clay.com/templates) includes prebuilt tables that combine Find People with phone and email enrichment as a ready-made starting point.
