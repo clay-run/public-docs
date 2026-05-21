@@ -122,13 +122,13 @@ To call a custom or additional LLM from Clay, use the [HTTP API enrichment](http
 
 ## Troubleshooting
 
-### "Integration failed to run" error after editing with Sculptor
+### AI column stops working after editing with Sculptor
 
-If you used Sculptor to adjust an AI column and the column now shows **"The integration failed to run — Error. Please retry or contact Clay support."**, something in the prompt was likely broken during the Sculptor edit. Common causes:
+If you used Sculptor to adjust an AI column and the column now shows an error or stops producing results, something in the prompt was likely broken during the Sculptor edit. Here's what to check:
 
--   **A `{{column}}` variable now points to a deleted or renamed column.** If Sculptor reorganized your prompt, or you renamed a column after setting up the AI column, any variable referencing the old column name will fail at run time. Open the column settings directly (click the column name → **Edit column**), review each variable reference in the prompt, and confirm every `{{column}}` maps to an existing column in your table.
--   **A backtick or template literal was accidentally added.** Sculptor can introduce backtick characters (`` ` ``) around values in prompts. These prevent the `{{column}}` variable resolver from matching the reference, leaving it unresolved and breaking the run. Check your prompt text for stray backticks and remove them.
--   **The JSON output format is malformed.** If your column uses a structured JSON output schema and Sculptor rewrote it, the schema may now be invalid. Click **Generate from prompt** in the column settings to regenerate a valid schema, or check for common JSON errors (missing `items` on array fields, trailing commas).
+-   **A `{{column}}` variable pointing to a deleted or renamed column.** If Sculptor reorganized your prompt, or you renamed a column after setting up the AI column, any variable referencing the old column name will fail. Affected rows will show **"Missing input"** and be skipped. Open the column settings directly (click the column name → **Edit column**), review each variable reference in the prompt, and confirm every `{{column}}` maps to an existing column in your table.
+-   **A backtick or template literal accidentally added.** Sculptor can introduce backtick characters (`` ` ``) around values in prompts. This causes a formula parse error before the column runs. Check your prompt text for stray backticks and remove them.
+-   **A malformed JSON output schema.** If your column uses a structured JSON output schema and Sculptor rewrote it, the schema may now be invalid — for example, an array field missing `items`, or a trailing comma. The column will show its own schema-specific error message. Click **Generate from prompt** in the column settings to regenerate a valid schema.
 
 **Tip:** When troubleshooting, make changes directly in the column settings panel rather than through Sculptor. Test on a single row before running the full table.
 
