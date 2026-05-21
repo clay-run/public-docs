@@ -155,6 +155,20 @@ Use this action to find existing records in Salesforce.
 -   **Salesforce object:** The object type to look for in your Salesforce.
 -   **Exact match? (optional):** When enabled, finds exact matches across all search fields.
 
+**How matching works**
+
+The **Exact match?** toggle controls how Clay queries Salesforce:
+
+-   **Exact match ON:** Clay uses an equality filter (`field = 'value'`). Only records whose field value matches your Clay value exactly are returned.
+-   **Exact match OFF (default):** Clay uses a contains filter (`field LIKE '%value%'`). Salesforce returns records where the field value **contains** your Clay value as a substring. This is **not** fuzzy matching — there is no tolerance for typos or partial words.
+
+**Important asymmetry with contains matching:** The search term is always your Clay value, and it must be a substring of the Salesforce field value. This means:
+
+-   If your Clay table has `"Servier Pharmaceuticals"` and Salesforce only has `"Servier"`, **no match is returned** — `"Servier"` does not contain `"Servier Pharmaceuticals"`.
+-   If your Clay table has `"Servier"` and Salesforce has `"Servier Pharmaceuticals"`, **a match is returned** — `"Servier Pharmaceuticals"` does contain `"Servier"`.
+
+**Tip:** Name-only matching can be unreliable when names differ in length or format between Clay and Salesforce. For more reliable matching, use unique identifiers like website domain or LinkedIn URL alongside (or instead of) name. If you need multiple fields to match, use the **Lookup records via SOQL** action for full control over the query.
+
 ### `Action` Upsert object
 
 Use this action to create a new record or update an existing one.
