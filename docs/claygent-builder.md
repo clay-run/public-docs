@@ -81,6 +81,8 @@ Attach tone guides, messaging docs, PDFs, or CSVs directly into your agent. For 
 
 Enable web search when your agent needs live research (recent company news, hiring signals, etc.). Disable it when working from data already in your table to keep runs faster and more consistent.
 
+**Note:** For Clay parallel models (Argon, Neon, Helium, and similar), web search is a required component — the toggle appears greyed out because it is always active and cannot be turned off for these models. This is expected behavior, not a missing feature.
+
 ### Find contacts and jobs tool
 
 Give your Claygent access to find people and jobs data directly. This enables prospecting workflows like "find the best person who would manage growth at a company" — where the right title varies by company size.
@@ -195,6 +197,10 @@ Yes, but centralizing in Claygent builder gives you version control, free testin
 ### Sculptor updated my prompt but the output looks the same — what happened?
 
 When Sculptor rewrites your prompt, it saves the new prompt text and shows a "Prompt updated by Sculptor" confirmation. It does **not** automatically re-run the test. The test output you see is from the previous run. Click **Run** (or **Run all**) in the test panel to execute the test with the updated prompt and see the new output.
+
+### The web search toggle is greyed out — why?
+
+For Clay parallel models (Argon, Neon, Helium, and similar), web search is always on and cannot be toggled off — it's a required part of how these models work. The greyed-out toggle is expected; web search is active. If you want to turn web search off, switch to a non-parallel model in the model selector.
 
 ## Tips for success
 
