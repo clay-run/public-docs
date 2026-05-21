@@ -604,3 +604,32 @@ When copying from API documentation, paste your code into a plain text editor fi
 ### Can I use HTTP API with pagination?
 
 Currently, HTTP API as source does not support pagination. The import will retrieve only the data from a single API response. Pagination support may be added based on customer demand.
+
+### Can I paste a cURL request directly into Clay?
+
+There is no "paste cURL" button, but you can replicate any cURL request by manually mapping its components to the HTTP API configuration fields.
+
+Given a cURL command like:
+
+```bash
+curl -X POST "https://api.example.com/contacts" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"email": "jane@example.com", "company": "Acme"}'
+```
+
+Map each part as follows:
+
+| cURL component | Where it goes in Clay |
+|---|---|
+| `-X POST` (or `-X GET`, etc.) | **Method** dropdown |
+| The URL (`https://api.example.com/contacts`) | **Endpoint URL** field |
+| `-H "Authorization: Bearer ..."` | **Headers** (key: `Authorization`, value: `Bearer YOUR_TOKEN`) |
+| `-H "Content-Type: application/json"` | **Headers** (key: `Content-Type`, value: `application/json`) |
+| `-d '{...}'` / `--data '{...}'` | **Body** field — replace static values with Clay column references (e.g. `"/Email Column"`) |
+| `?key=value` query params in the URL | **Query string parameters** section |
+
+**Decide which Clay feature to use:**
+
+-   **Pulling records in as rows** (e.g. fetching a list from an API to start a table): use **HTTP API as source** (Actions → View all sources → Import data from an HTTP API).
+-   **Calling an API once per row** (e.g. enriching existing records): use the **HTTP API enrichment column** (Add enrichment → HTTP API).
