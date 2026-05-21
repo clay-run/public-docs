@@ -36,7 +36,7 @@ If you need results that meet _either_ of two different filter combinations, set
 
 ### Choose your starting point
 
-**Recommended:** If you have a company list, use Find People at These Companies (Actions → Find People at These Companies) rather than a standalone people search. This scopes results to your specific companies and keeps contacts linked to their accounts — rather than returning an unanchored list you'd need to join manually.
+**Recommended:** If you have a company list, use Find People at These Companies (Tools → Find People at These Companies) rather than a standalone people search. This scopes results to your specific companies and keeps contacts linked to their accounts — rather than returning an unanchored list you'd need to join manually.
 
 If you don't have a company list, use **People search as a source** — a standalone search by title or other criteria that returns a new table.
 
@@ -87,7 +87,7 @@ The `Find People at These Companies` feature is available as both a source and a
 **As an enrichment action (saves to existing table):**
 
 -   Returns 10 people per row by default, with full profile data.
--   `Reduce data for more results` mode returns up to 500 people per row, but only name and LinkedIn URL — you'll need to run `Enrich Person` afterward to get full profiles.
+-   `Reduce data for more results` mode returns up to 500 people per row, but only name and profile URL — you'll need to run `Enrich Person` afterward to get full profiles.
 -   Best when you need to rank contacts first or run a more targeted search per company.
 
 ### Use dynamic location filtering with in-table actions
@@ -98,7 +98,7 @@ For example, if you have a "Headquarters Location" column in your company table,
 
 ### Verify current employment before using results
 
-People search data reflects snapshot data, which can lag behind real-time LinkedIn changes. After running `Enrich Person`, use this formula to confirm the person is still employed at the expected company:
+People search data reflects snapshot data, which can lag behind real-time changes. After running `Enrich Person`, use this formula to confirm the person is still employed at the expected company:
 
 `{{Enrich person}}?.current_experience?.some(e => (e?.company_domain || "").toLowerCase() === ({{Company Domain}} || "").toLowerCase()) || false   `
 
@@ -153,13 +153,13 @@ This pattern is especially useful when your suppression list changes over time (
 
 ### Find People returns fewer results than expected
 
-Clay uses stored snapshot data rather than live LinkedIn search, so results will never be a perfect mirror of what LinkedIn shows on a company's people page. Common causes:
+Clay uses stored snapshot data rather than live search, so results will never be a perfect mirror of what appears on a company's people page. Common causes:
 
--   **Private or restricted profiles** — Clay can only surface profiles that are accessible in the stored dataset. Profiles set to private on LinkedIn are excluded.
--   **Domain-to-company mapping issues** — when you provide a domain instead of a LinkedIn URL, Clay resolves it through a company lookup that can occasionally return the wrong entity, especially for subsidiaries, rebranded companies, or companies with stale LinkedIn slugs. Switch to the **LinkedIn company URL** as your input to bypass this lookup entirely.
+-   **Private or restricted profiles** — Clay can only surface profiles that are accessible in the stored dataset. Profiles set to private are excluded.
+-   **Domain-to-company mapping issues** — when you provide a domain instead of a profile URL, Clay resolves it through a company lookup that can occasionally return the wrong entity, especially for subsidiaries, rebranded companies, or companies with stale slugs. Switch to the **company profile URL** as your input to bypass this lookup entirely.
 -   **Filters set too narrowly** — title, location, or seniority filters that are too specific can exclude real matches. Try broadening one filter at a time to diagnose where results drop off.
 
-If profiles still appear to be missing after switching to LinkedIn URLs, use **Claygent** to find the missing profiles via Google search, then pass those LinkedIn URLs directly into `Enrich Person`. This uses a live-scraping fallback that isn't constrained by the stored dataset.
+If profiles still appear to be missing after switching to profile URLs, use **Claygent** to find the missing profiles via Google search, then pass those profile URLs directly into `Enrich Person`. This uses a live-scraping fallback that isn't constrained by the stored dataset.
 
 ### Preview count is much higher than the number of rows actually imported
 
@@ -175,7 +175,7 @@ To improve coverage across all your companies:
 
 ### Find People is returning people from the wrong company
 
-This almost always points to a domain-to-company mapping issue. When Clay resolves a domain to a LinkedIn company, it can occasionally surface a parent company, subsidiary, or a generic LinkedIn company page instead of the intended one. Use the company's **LinkedIn URL** as the input instead of the domain to ensure Clay maps to the exact intended entity.
+This almost always points to a domain-to-company mapping issue. When Clay resolves a domain to a company profile, it can occasionally surface a parent company, subsidiary, or a generic company page instead of the intended one. Use the company's **profile URL** as the input instead of the domain to ensure Clay maps to the exact intended entity.
 
 ## FAQs
 
@@ -187,7 +187,7 @@ Clay's company and people search relies on snapshot data that may lag behind rea
 
 First, check that you're filtering on **Job title keywords** (not just function or seniority). If you're using **Is similar to** mode, you may get some fuzzy matches — filter those out with a formula or AI after the fact.
 
-### Why isn't someone I found on LinkedIn showing in Clay?
+### Why isn't someone I found showing in Clay?
 
 Your search filters may be too specific. Try broadening your criteria incrementally. The profile may also not yet be in the dataset.
 
@@ -201,4 +201,4 @@ Company and people search sources don't support run conditions. The workaround i
 
 ### What's the difference between the people search source and the enrichment action?
 
-The source returns results in a new table and maxes out at 50,000 records. The enrichment action saves results to your existing table, returns 10 people by default with full profile data, and supports a **Reduce data for more results** option that returns up to 500 people (name and LinkedIn URL only). Use the action when you need to rank or filter contacts before saving them, or when you need more than 50,000 total records across multiple searches.
+The source returns results in a new table and maxes out at 50,000 records. The enrichment action saves results to your existing table, returns 10 people by default with full profile data, and supports a **Reduce data for more results** option that returns up to 500 people (name and profile URL only). Use the action when you need to rank or filter contacts before saving them, or when you need more than 50,000 total records across multiple searches.
