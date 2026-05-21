@@ -61,6 +61,19 @@ This error appears during the OAuth flow and is most commonly caused by one of t
 -   **SSO enforcement:** If SSO is enforced, the OAuth approval screen may be blocked. Try a non-SSO user, or create a non-SSO service account.
 -   **Missing permission:** The user's profile may lack `Approve uninstalled connected apps`. Ask a Salesforce admin to grant it, or connect with a System Administrator account.
 
+### IP allowlisting
+
+If your Salesforce org restricts connections by IP address, you can enable **Use static IP?** when adding or editing your Salesforce connection in Clay. This option is available on **Enterprise plans** and routes all Clay requests through a fixed set of IP addresses.
+
+When enabled, Clay routes requests through one of these IP addresses, which you can allowlist in Salesforce under `Setup` → `Network Access` → `New`:
+
+-   `52.7.81.233`
+-   `18.209.121.250`
+-   `35.170.109.137`
+-   `54.86.28.41`
+
+For full instructions on setting up a restricted Salesforce user with field-level security and IP allowlisting, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
+
 ## Creating a table with Salesforce
 
 1.  In a workbook, click `+ Add` at the bottom.
