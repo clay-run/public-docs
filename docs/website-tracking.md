@@ -79,6 +79,27 @@ These filters help narrow your results to visitors who spend more time on site a
 
 **Use Waterfall instead of Best Match:** `Waterfall` stops after the first provider match, while `Best Match` tests all providers and can cost 5-10 times more. Remember that IPs are cached for 30 days to avoid repeat costs.
 
+### Writing website visits to Salesforce
+
+If you want to persist website session data in Salesforce, the recommended approach is to create a **custom child object** in Salesforce rather than storing a JSON blob directly on the Account record.
+
+**Why a child object instead of a field on Account:**
+
+Storing the full session JSON in a single field on the Account can get hard to manage quickly — especially if the same account visits multiple times. Depending on how the write-back is configured, you risk overwriting the previous value and losing historical session data. A separate record per visit keeps the full history intact and makes Salesforce reporting much easier.
+
+**Recommended Salesforce setup:**
+
+1.  Create a custom object in Salesforce (e.g., `Web_Session__c`).
+2.  Add a **Lookup** field on the custom object pointing to the Account.
+3.  Add a **Long Text Area** field (e.g., `Raw_JSON__c`) for the full session JSON.
+4.  Add dedicated fields for the values your team wants to report on — such as session date, pages visited, referrer, and duration.
+
+**Writing from Clay:**
+
+In your website visitor tracking table, add a Salesforce **Create Record** action targeting your custom object. Map each session's fields to the corresponding Salesforce fields. Each row in your Clay table becomes a new record in Salesforce linked to the matching Account.
+
+This use case — creating a new per-session record in a custom Salesforce object — requires a Clay table with the Salesforce **Create Record** action. Audiences' Salesforce sync updates fields on existing standard object records (Contacts, Accounts, Leads, Opportunities) and does not create new records in custom objects.
+
 # Troubleshooting
 
 ### Verification says "Tracking script not found"
