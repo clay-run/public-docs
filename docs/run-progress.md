@@ -96,5 +96,3 @@ To run enrichment or waterfall columns on a targeted subset of rows — for exam
 This triggers all enrichment and waterfall columns on those rows only, leaving other rows unaffected.
 
 **To run a single column on specific rows only**, select the cells in that column for your target rows, then right-click → **Run [N] cells**.
-
-> **Note:** When you add a new provider to an existing waterfall (or add any new enrichment column to a table that already has data), the new step will not automatically run on rows that already have existing data. Select those rows manually and use **Run [N] rows** or **Run [N] cells** to populate them.
