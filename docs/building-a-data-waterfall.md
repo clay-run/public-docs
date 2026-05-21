@@ -40,6 +40,12 @@ Waterfall templates allow you to save and reuse your waterfall configuration, ma
 
 **Note:** Waterfall templates cannot be edited, only created and deleted.
 
+## Running a waterfall on specific rows
+
+To run your waterfall on a specific set of rows — for example, to test it on a small sample before running the full table — select those rows by clicking a row number and dragging (or **Shift+clicking**) to extend the selection, then right-click and choose **Run [N] rows**. This runs all enrichment and waterfall columns on only those rows.
+
+For more manual run options, see [Run progress](run-progress.md).
+
 ## Trial plan and provider restrictions
 
 Waterfall enrichments are available on all plans, including the Trial plan. However, some individual providers within a waterfall require a paid plan.
