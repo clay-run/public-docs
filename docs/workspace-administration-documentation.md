@@ -190,7 +190,7 @@ To invite a new member to your workspace:
 
 -   Go to `Settings` > `Team`.
 -   Click the `+ Invite` button in the top-right corner.
--   Enter the email address of the person you want to invite, then press **Enter** (or Tab) to confirm it. You can add multiple addresses this way.
+-   Enter the email address of the person you want to invite, then press **Enter** (or type a comma) to confirm it. You can add multiple addresses this way.
 -   Select the appropriate role (Editor or Admin) from the dropdown.
 -   Click `Send invite`.
 
