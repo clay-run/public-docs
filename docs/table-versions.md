@@ -21,7 +21,7 @@ Table versions capture your table's **structure and configuration**, including:
 -   Active filters and sorts
 -   Table-level run settings
 
-**Note:** Cell value data is not versioned. Table Versioning preserves your table’s structure and configuration—not the actual data within rows. If row-level data is overwritten or deleted, it cannot be recovered through versioning.
+**Note:** Cell value data is not versioned. Table Versioning preserves your table's structure and configuration—not the actual data within rows. If row-level data is overwritten or deleted, it cannot be recovered through versioning.
 
 ## Viewing your version history
 
@@ -79,7 +79,8 @@ Clay also creates versions automatically — a snapshot is taken after approxima
 | Plan | Version history |
 | --- | --- |
 | Free / Trial | Not enabled |
-| Growth / Launch | 30 days |
+| Starter, Explorer, Pro (legacy paid plans) | 30 days |
+| Launch, Growth | 30 days |
 | Enterprise | 180 days |
 
 ## Troubleshooting
@@ -90,7 +91,7 @@ Table Versioning restores **structure and configuration**, not cell-level data. 
 
 ### I can't find a version from a specific date
 
-Version history is retained based on your plan (30 days for Launch/Growth, 180 days for Enterprise). Versions outside your retention window are no longer available. If you're on a Free or Trial plan, version history is not enabled.
+Version history is retained based on your plan (30 days for Launch/Growth and legacy Starter/Explorer/Pro plans, 180 days for Enterprise). Versions outside your retention window are no longer available. If you're on a Free or Trial plan, version history is not enabled.
 
 ### Restoring a version removed columns I still needed
 

@@ -284,6 +284,7 @@ Track changes to your table, including who made them and when. View updates to s
 **Retention:** Change log retention varies by plan:
 
 -   Free / Trial: Not enabled
+-   Starter, Explorer, Pro (legacy paid plans): 30 days
 -   Launch / Growth: 30 days
 -   Enterprise: 180 days
 
