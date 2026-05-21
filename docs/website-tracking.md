@@ -98,7 +98,7 @@ Storing the full session JSON in a single field on the Account can get hard to m
 
 In your website visitor tracking table, add a Salesforce **Create Record** action targeting your custom object. Map each session's fields to the corresponding Salesforce fields. Each row in your Clay table becomes a new record in Salesforce linked to the matching Account.
 
-This use case — creating a new per-session record in a custom Salesforce object — requires a Clay table with the Salesforce **Create Record** action. Audiences' Salesforce sync updates fields on existing standard object records (Contacts, Accounts, Leads, Opportunities) and does not create new records in custom objects.
+This use case — creating a new per-session record in a custom Salesforce object — requires a Clay table with the Salesforce **Create Record** action. Audiences' Salesforce Export Sync is designed for syncing enriched fields and segment membership on to existing Contact and Account records, not for creating new records in custom objects.
 
 # Troubleshooting
 
