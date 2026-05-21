@@ -9,7 +9,7 @@ last_synced: 2026-04-26T01:40:38.269Z
 
 Your go-to-market co-pilot
 
-Sculptor is Clay’s **go-to-market co-pilot**. It helps teams turn high-level ideas into production-ready workflows. You can bring a challenge into the chat box and, working alongside Sculptor, deploy it as a live Clay workflow in minutes.
+Sculptor is Clay's **go-to-market co-pilot**. It helps teams turn high-level ideas into production-ready workflows. You can bring a challenge into the chat box and, working alongside Sculptor, deploy it as a live Clay workflow in minutes.
 
 For example, you could:
 
@@ -22,7 +22,7 @@ For example, you could:
 1.  **Launch Sculptor.** You can do this in two ways:
     -   From the **homepage** of [app.clay.com](http://app.clay.com/) using the large open text box.
     -   From **within any table** using the `Chat with Sculptor` button.
-2.  **State your problem clearly.** Enter the type of table you want Sculptor to create (e.g., “I want to source a TAM for franchisors in Canada”).
+2.  **State your problem clearly.** Enter the type of table you want Sculptor to create (e.g., "I want to source a TAM for franchisors in Canada").
     -   Adding details such as geography, industry, or company size helps Sculptor generate better results.
 3.  **Iterate and review.** Sculptor will propose a workflow with integrations, enrichments, and conditions.
     -   You can reply directly in the chat to adjust or refine the table instantly.
@@ -35,6 +35,20 @@ For example, you could:
 -   **Provide context.** Sculptor performs best when you include details, examples, and framing.
 -   **Check your work.** All results are inspectable—review and validate before scaling.
 -   **Use Sculptor as a strategist.** Treat it like a partner to help shorten your learning curve, navigate complex systems faster, and accelerate iteration.
+
+## Sandbox mode
+
+> **Currently in beta — available on Pro and Enterprise plans. Contact support to enable if you don't see it yet. A broader rollout is coming.**
+
+When Sculptor builds new columns for your table, it automatically puts the table into [sandbox mode](https://www.clay.com/university/guide/sandbox-mode) first. This gives you a chance to review and validate the new columns before they go live—reducing unintended credit burn and giving you more control over changes.
+
+Once Sculptor adds columns and sandbox mode is active:
+
+1. Review the proposed columns in sandbox mode using a small set of test rows.
+2. Click `Review changes` to see a summary of all structural column updates.
+3. When ready, click `Publish and run` to apply the changes to your full table, or `Publish and don't Run` to sync the configuration without immediately running all rows.
+
+For more on how sandbox mode works, see [Sandbox mode](https://www.clay.com/university/guide/sandbox-mode).
 
 ## Analyst mode
 
@@ -55,7 +69,7 @@ Analyst mode lets you query any Clay table using natural language to uncover tre
 
 | Use case | Notes and caveats |
 | --- | --- |
-| List building | Sculptor’s primary use case. It can handle most of the setup for you—start from the homepage input to create a CPJ search, enrich the list in a table, then move from a company table to a people table. Sculptor can also help draft outreach emails to those prospects. |
+| List building | Sculptor's primary use case. It can handle most of the setup for you—start from the homepage input to create a CPJ search, enrich the list in a table, then move from a company table to a people table. Sculptor can also help draft outreach emails to those prospects. |
 | Data enrichment | Once your table is set up, Sculptor excels at recommending the right enrichments and generating Claygent prompts tailored to your workflow. |
 | Building co-pilot | A great first pass before turning to GTME, EGS, or Support. Sculptor can troubleshoot errors, analyze patterns in your data, and even conduct research directly within your table. |
 
