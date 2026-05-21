@@ -1,8 +1,9 @@
 ---
 title: Formulas
 source_url: https://university.clay.com/docs/formula-generator
-description: Generate formulas with AI to transform your data.
-last_synced: 2026-04-26T01:40:01.109Z
+description: Generate formulas with AI to transform your data. Includes how to
+  use today's date in a formula and keep date comparisons current automatically.
+last_synced: 2026-04-26T01:40:01.780Z
 ---
 
 # Formulas
@@ -61,3 +62,28 @@ Clay formulas are powered by **Clayscript**, a JavaScript-based language that ev
 Yes! When editing a formula, you'll see the option to `Save and don't run enrichments`.
 
 Clicking this prevents your formula from running on any enrichment columns that would cost credits. These columns will appear greyed out to indicate they're out of date.
+
+### **How do I use today's date in a formula?**
+
+Use `moment()` with no arguments to get the current date and time at the moment the formula evaluates. For example, to return `"Yes"` if an event date is more than 6 months in the future from today:
+
+```javascript
+moment({{Event Date}}).isAfter(moment().add(6, 'months')) ? "Yes" : ""
+```
+
+**Keeping the comparison current automatically**
+
+Formula columns only re-evaluate when they are re-run. `moment()` will return the correct date each time the formula runs, but if your table sits idle the formula won't refresh on its own.
+
+To keep a date comparison up to date without manually re-running the table each day, use an HTTP API column as a daily "clock":
+
+1.  Add an **HTTP API** column (GET, no authentication needed) pointed at a free time API — for example `https://timeapi.io/api/time/current/zone?timeZone=UTC`. This column returns the current datetime whenever it runs.
+2.  Reference the HTTP API column's output in your formula. Because Clay formula columns re-evaluate whenever a referenced column changes, the formula will automatically re-run each time the HTTP API column updates. For example:
+
+    ```javascript
+    moment({{Event Date}}).isAfter(moment({{Today API.dateTime}}).add(6, 'months')) ? "Yes" : ""
+    ```
+
+3.  Schedule the HTTP API column to run daily: click the **⛭** icon in the bottom right of your table → **Run Settings** → **Re-run columns on a schedule** → **Only selected columns** → select your HTTP API column → **Day** → **Save changes**. See [Scheduled columns](scheduled-columns.md) for full details.
+
+Once the HTTP API column fetches a fresh date each day, any formula that references it automatically re-evaluates against the new value.
