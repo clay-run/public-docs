@@ -52,6 +52,46 @@ Every Clay table starts with a source. You can import customer data from a CSV f
 3.  Select and map columns from your CSV to the Clay table.
 4.  Click `Add to table`.
 
+## Importing accounts and contacts together
+
+The recommended setup for working with both companies and people in Clay is two linked tables in the same workbook — one for accounts/companies and one for contacts/people.
+
+### Step 1: Create your accounts table
+
+1.  In a new workbook, click `+ Add` at the bottom to create your first table.
+2.  Add your company/account data using one of these sources:
+    -   **CSV:** Select `Import from CSV` and upload your accounts file.
+    -   **Salesforce or HubSpot (live sync):** Search for `Salesforce` or `HubSpot`, select the accounts/companies object, and configure the connection.
+
+### Step 2: Create your contacts table
+
+Click `+ Add` again to add a second table for your contacts/people. The same source options apply:
+
+-   **CSV:** Select `Import from CSV` and upload your contacts file.
+-   **Salesforce or HubSpot:** Select the contacts/people object from your CRM.
+-   **Find People:** Use the `Find People` source to search Clay's database for contacts matching your criteria.
+
+### Step 3: Link contacts to their accounts
+
+How the link is created depends on which source you used for contacts:
+
+**If you used Find People at These Companies** (launched from your accounts table): A **Company Table Data** column is automatically added to the contacts table, linking each person back to their company row. No additional setup is required.
+
+**If you imported contacts from CSV or CRM:** Add a **Lookup Rows** action on the contacts table to pull account-level data into each contact row:
+
+1.  In your contacts table, click `+ Add column` and select `Lookup single row in other table`.
+2.  Set `Table to search` to your accounts table.
+3.  Set `Target column` to your match key in the accounts table (typically **company domain** or **Account ID**).
+4.  Set `Row value` to the corresponding column in your contacts table.
+5.  Run the lookup.
+
+This gives you account-level attributes (company name, industry, revenue, etc.) directly on each contact row. For more details on configuring lookups, see [Lookup Rows](https://university.clay.com/docs/lookup-rows).
+
+### Tips for CRM imports
+
+-   **Scope your source before the first sync.** When connecting Salesforce or HubSpot, use a pre-filtered list view or segment (e.g., filtered by account stage, owner, or segment) as your source. This ensures you bring in only the records you plan to work with — not your entire CRM.
+-   **Sources are additive.** Once records are imported, narrowing your source filter does not remove rows already in the table. See [Will rows already in my table be removed if they no longer match the source filter?](#will-rows-already-in-my-table-be-removed-if-they-no-longer-match-the-source-filter) below.
+
 ## Modifying sources
 
 1.  In a table, click the source column title.
