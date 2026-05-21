@@ -115,3 +115,24 @@ You can add Markdown to any Slack message, either in the Slack integration itsel
 
 -   Wrap the emoji name in colons.
 -   Example: `:tada:` → 🎉
+
+## Troubleshooting
+
+### New channels not appearing in the channel picker
+
+Clay fetches your Slack channel list live each time you open the **Slack channel** dropdown, so newly created channels should appear automatically. If they still don't show up:
+
+1. **Check whether the channel is public or private.**
+   - **Public channels** are listed automatically as soon as they exist in your Slack workspace.
+   - **Private channels** only appear if the Clay integration bot has been explicitly invited to them. Open the private channel in Slack, go to its member settings, and invite the Clay bot — then reopen the channel dropdown in Clay.
+
+2. **Reconnect your Slack integration** to get a fresh OAuth token. This resolves cases where the token has become stale or lost permissions:
+   - Go to **Settings → Connections** in Clay.
+   - Find **Slack** in your connections list.
+   - Click the **...** menu next to your Slack account and select **Edit**.
+   - Re-authenticate your Slack account.
+
+3. **Verify that your Slack connection has the required OAuth scopes.** If you re-authenticate and are prompted for permissions, make sure you grant:
+   - `channels:read` — lists public channels
+   - `groups:read` — lists private channels the bot has been invited to
+   - `chat:write` — sends messages as the Clay bot
