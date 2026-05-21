@@ -91,6 +91,7 @@ Clay pulls data from Salesforce on two schedules:
 2.  Narrow your search using parameters like `Job title` and `Experience`.
 3.  Click `Continue` → `Save to People/Companies`.
     -   Note: This sends your search results to a draft version—it won't combine them with your existing Audience data.
+    -   If the draft shows a banner that says **"X records from this search are already in the All People list,"** those records are already excluded from the merge. Clicking **All people** in step 5 will only add net-new contacts — the existing records are not duplicated.
 4.  In your draft, click `Enrich` to bulk enrich and refine your data, keeping only high-quality leads.
 5.  When your search data looks good, click `All people` to merge.
 
@@ -109,7 +110,7 @@ Records saved from tables are automatically deduplicated and merged with your ex
 Clay matches records using LinkedIn URL and email to:
 
 -   **Cross-source deduplication** — merge the same person from multiple sources.
--   **Whitespace detection** — exclude CRM records when importing from CPJ/People Search.
+-   **Whitespace detection** — when importing from a Find People or Find Companies search, records that already exist in All People are automatically excluded from the merge. The draft shows a banner with the count of excluded records ("X records from this search are already in the All People list"), and clicking **All people** adds only the net-new contacts.
 
 Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs — org duplicates carry over as-is. Native within-source deduplication is coming.
 
