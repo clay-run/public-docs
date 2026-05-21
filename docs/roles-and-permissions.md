@@ -2,7 +2,7 @@
 title: Roles and permissions
 source_url: https://university.clay.com/docs/roles-and-permissions
 description: Understand roles and permissions in Clay.
-last_synced: 2026-04-26T01:40:33.352Z
+last_synced: 2026-04-26T01:40:33.452Z
 ---
 
 # Roles and permissions
@@ -83,7 +83,7 @@ The sales rep role is designed for users who access Clay through AI tools (Claud
 To invite a new member to your workspace:
 
 -   Go to `Settings` → `Team`.
--   Click the `+ Invite` button, enter the email address of the person you want to invite, then press **Enter** (or Tab) to confirm it. You can add multiple addresses this way.
+-   Click the `+ Invite` button, enter the email address of the person you want to invite, then press **Enter** (or type a comma) to confirm it. You can add multiple addresses this way.
 -   Select the appropriate role from the dropdown and click `Send invite`.
 -   The invited person will receive an email to join the workspace with the specified role.
 
