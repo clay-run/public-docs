@@ -10,7 +10,13 @@ last_synced: 2026-05-11T17:47:40.000Z
 
 Screen phone numbers against national do-not-call registries before initiating outbound calls.
 
-**Important:** Before you can use the Meer integration, you must first accept the compliance terms and conditions. Visit the [Compliance page](https://app.clay.com/settings/enrichments?enrichmentTab=compliance) in your workspace settings to accept the terms. Once accepted, the Meer enrichment will appear in your actions panel.
+**Important:** Before you can use the Meer integration, you must first accept the compliance terms and conditions. To access the Compliance page:
+
+1. Click your workspace name or the **Settings** icon
+2. Navigate to **Settings → Enrichments**
+3. Select the **Compliance** tab
+
+Once you accept the terms, the Meer enrichment will appear in your actions panel.
 
 The Meer integration helps you maintain Do Not Contact (DNC) compliance by screening phone numbers against national do-not-call registries before initiating outbound calls.
 
