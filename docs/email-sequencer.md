@@ -36,7 +36,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 3.  In the `Setup` tab, you can set:
     -   `Lead email address`: We automatically detect email address columns, but confirm this before proceeding.
     -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links.
-4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead replies (excluding out-of-office replies, which we detect and work around).
+4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead sends a real reply. Out-of-office (OOO) auto-replies are detected via AI — the sequence pauses and automatically resumes once Clay determines the lead is back (based on the return date in the OOO, if provided).
     -   Toggle `Preview` mode to see real data from your source table in the message template
     -   Within each message, use `/` to access features such as:
         -   `Clean variable`: Reference synced lead data with safe fallbacks and optional formatting.
@@ -242,3 +242,14 @@ Smartlead assigns leads into one of the following categories:
 7.  Wrong Person
 8.  Uncategorizable by Ai
 9.  Sender Originated Bounce
+
+### What happens when a lead replies with an out-of-office message?
+
+Out-of-office (OOO) auto-replies do not permanently stop the sequence. Instead, Clay detects them via AI and:
+
+-   **Pauses** the sequence when an OOO reply is detected.
+-   **Automatically resumes** sending on the lead's stated return date, if one is included in the OOO message.
+
+A real (non-OOO) reply from the lead permanently stops the sequence.
+
+To stop the sequence whenever an OOO is received — for example, to handle OOO leads manually — add a condition to your campaign events table automation that filters by `reply_category_name` equal to `Out Of Office` (or by `reply_category` equal to `6`). Then use the **Pause lead in campaign** enrichment to halt sending for that lead.
