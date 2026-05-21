@@ -98,6 +98,8 @@ For full instructions on setting up a restricted Salesforce user with field-leve
 -   **Uniqueness fields:**
     -   Since Salesforce reports lack unique identifiers, select specific fields to identify each row. This prevents duplicate records from appearing when the report updates.
         -   **Important:** If you don't select any fields, Clay will use the entire row content as the unique identifier. This can result in many duplicate entries in your Clay table.
+        -   **How deduplication works:** When the report re-syncs, Clay compares each incoming record against your chosen uniqueness field(s). If a record with a matching key already exists in the table, Clay **updates that existing row** with the latest data — it does not create a new row. Only records with no matching key get inserted as new rows.
+        -   **Preserving run history / audit logs:** Because re-synced records overwrite the same row, the previous enrichment results and run state are replaced. If you need to keep a history of every sync event, the recommended pattern is to keep your source table deduped on a stable identifier (e.g., `Account.Id`), then add a **Send Table Data** action after your enrichment columns to push a snapshot — including a timestamp column — to a separate history table. This keeps your main table clean while building a full audit trail in the history table. See [Send table data](send-table-data.md) for setup details.
 
 ## Enriching data with Salesforce
 
