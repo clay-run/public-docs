@@ -18,7 +18,7 @@ You only pay credits for the provider that finds a match, making it one of the m
 ## **Setting up the Work Email waterfall**
 
 1.  In your table, click `Add enrichment` in the top right corner.
-2.  Search for `Work Email`  and select it from the results.
+2.  Search for `Work Email`  and select it from the results.
 3.  Choose between `Quick setup` and `Full configuration`
 4.  Map your input columns and click `Save`.
 
@@ -94,6 +94,14 @@ If the inferred email fails validation, the waterfall moves on to the next provi
 ### When should I adjust the Threshold for duplicate results?
 
 Consider setting it to `2` when you're using `Conservative` validation and noticing that multiple providers are all returning the same email that keeps failing. Left at `0`, the waterfall will continue through every provider, spending credits on a result it's already decided to reject.
+
+### Why does an email appear in a provider column but not in the final output?
+
+An email reaches the final output column only after the waterfall's validation step confirms it as valid. To avoid paying for validation twice, the waterfall skips re-validation for any email address that was already found and validated (as invalid) by an earlier provider step. If Provider 3 finds the same email address that Provider 1 already returned and confirmed as invalid, the validation column for Provider 3 will show **run conditions not met** and that email will not be written to the final output column.
+
+This is expected behavior. The waterfall continues searching because a later provider might still return a different, valid email address.
+
+If you need to use an email that a later provider found despite an earlier invalid result, you can manually paste it into your output column, or create a formula column that pulls directly from the individual provider result columns.
 
 ### Can I use both Infer Email and a validation strategy together?
 
