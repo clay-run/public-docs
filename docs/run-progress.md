@@ -2,8 +2,9 @@
 title: Run progress
 source_url: https://university.clay.com/docs/run-progress
 description: Clay provides multiple ways to track and monitor run progress
-  across your tables, including how to manually trigger unrun enrichment cells.
-last_synced: 2026-04-26T01:40:34.656Z
+  across your tables, including how to manually trigger unrun enrichment cells
+  or run enrichments on a specific subset of rows.
+last_synced: 2026-04-26T01:40:34.620Z
 ---
 
 # Run progress
@@ -84,3 +85,16 @@ To manually run the remaining cells for a specific column:
 > **Note:** There is no single button to run all columns at once — this option must be used column by column.
 
 **Alternative — enable auto-run:** Turn on `Auto-run` in your [table settings](table-management-settings.md) and choose `Update cells` to immediately queue any out-of-date cells.
+
+## Running enrichments on specific rows
+
+To run enrichment or waterfall columns on a targeted subset of rows — for example, to test a configuration on a small sample or re-run rows that returned unexpected results:
+
+1.  **Select the rows** you want to run: click a row number to select it, then drag or **Shift+click** to extend the selection across a range.
+2.  **Right-click** anywhere on the selected rows and choose **Run [N] rows**.
+
+This triggers all enrichment and waterfall columns on those rows only, leaving other rows unaffected.
+
+**To run a single column on specific rows only**, select the cells in that column for your target rows, then right-click → **Run [N] cells**.
+
+> **Note:** When you add a new provider to an existing waterfall (or add any new enrichment column to a table that already has data), the new step will not automatically run on rows that already have existing data. Select those rows manually and use **Run [N] rows** or **Run [N] cells** to populate them.
