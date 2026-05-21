@@ -108,11 +108,34 @@ For full instructions on setting up a restricted Salesforce user with field-leve
 
 ### `Action` Lookup records via SOQL
 
-Look up records in Salesforce using a SOQL query.
+Look up records in Salesforce using a custom SOQL query. Use this when the standard **Lookup record** action returns too many matches or when you need to filter on multiple fields at once (e.g., website AND country code).
 
 **Inputs:**
 
--   **SOQL query:** For more information about SOQL and Salesforce, [check out their documentation](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql.htm).
+-   **SOQL query:** A `SELECT` statement with explicitly listed fields. For SOQL syntax reference, see [Salesforce's documentation](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql.htm).
+
+**Referencing Clay columns in your query**
+
+To insert a Clay table column value into the query, type `/` anywhere in the query field and select a column from the menu that appears. Do **not** type `{{column_name}}` directly — that syntax is not evaluated in the SOQL query editor and will cause the query to return no results.
+
+For example, to match on a Company Domain column and a Country Code column:
+
+```sql
+SELECT Id, Name, Website
+FROM Account
+WHERE Website LIKE '%/Company Domain%'
+AND BillingCountryCode = '/Country Code Column'
+LIMIT 1
+```
+
+*(Here `/Company Domain` and `/Country Code Column` represent Clay columns inserted via the `/` picker — they are replaced with each row's values at run time.)*
+
+**Tips**
+
+-   **Always include `LIMIT`.** If your query matches many Salesforce records (for example, a global brand with regional accounts sharing the same domain), the total response can exceed the 200 kB cell size limit, which produces a "Cell data size exceeds limit (200 kB)" error. Adding `LIMIT 1` or a small number keeps the response size manageable.
+-   **Use `LIKE` for website and domain fields.** Salesforce often stores URLs with inconsistent prefixes (`www.example.com`, `https://example.com`, `example.com`). The `LIKE` operator with `%` wildcards matches all formats: `WHERE Website LIKE '%/Company Domain%'`.
+-   **Handle missing values with an `OR NULL` fallback.** If the extra filter field is not consistently populated in Salesforce, a strict `AND` will drop valid records. Add a null check so rows with a blank field are still returned: `AND (BillingCountryCode = '/Country Code Column' OR BillingCountryCode = null)`.
+-   **Use a waterfall for optional tiebreakers.** To use an extra field as a preference rather than a hard filter, create two SOQL columns — one matching on website + country code, one on website only — and use a Formula column to return the first non-empty result.
 
 ### `Action` Create record
 
