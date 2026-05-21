@@ -47,7 +47,7 @@ This tool is ideal for building targeted sales prospect lists, identifying poten
 
 Once Find People returns a list of contacts, you can enrich each row with contact information using Clay's pre-built waterfall enrichments — the same type of contact lookup available in dedicated tools like Lusha.
 
-**Work email:** Click `Add enrichment` → search for `Work Email` → select it under **Waterfalls**. The waterfall cascades through multiple email providers in sequence and stops as soon as a valid result is found. Credits are only charged when an email is successfully returned.
+**Work email:** Click `Add enrichment` → search for `Work Email` → select it under **Waterfalls**. The waterfall cascades through multiple email providers in sequence and stops as soon as a valid result is found. Most providers refund credits when no result is returned.
 
 **Mobile phone number:** Click `Add enrichment` → search for `Mobile Phone` → select the waterfall matching your target region under **Waterfalls**:
 
@@ -56,6 +56,6 @@ Once Find People returns a list of contacts, you can enrich each row with contac
 -   **Mobile Phone (APAC)**
 -   **Mobile Phone (Global)**
 
-Credits are only charged when a number is found.
+Most providers refund credits when no result is returned. **Note:** Mobile phone enrichments require a Launch plan or higher. See [Waterfalls](https://university.clay.com/docs/building-a-data-waterfall) for details on plan requirements.
 
-Both waterfalls are pay-per-result, so rows where no contact information is found do not consume credits. Clay's [templates library](https://www.clay.com/templates) includes prebuilt tables that combine Find People with phone and email enrichment as a ready-made starting point.
+Clay's [templates library](https://www.clay.com/templates) includes prebuilt tables that combine Find People with phone and email enrichment as a ready-made starting point.
