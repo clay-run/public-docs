@@ -284,7 +284,7 @@ An **integration account** is a configured connection between your workspace and
 
 ## **Add a new integration account**
 
-To add a new account for an integration:\
+To add a new account for an integration:
 
 -   Navigate to `Settings` > `Connections`.
 -   Click `+ Add connection` in the top-right corner.
