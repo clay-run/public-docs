@@ -38,6 +38,8 @@ To upgrade your Clay workspace plan:
 
 Your new plan will activate immediately, and any applicable charges will be applied.
 
+**How upgrade billing works:** Plan upgrades are **not prorated** — you pay the full price of the new tier immediately, not a partial amount for remaining days in your current cycle. In return, you receive the **full** Actions and Data Credits for your new plan right away. Unused Actions from your previous plan are not carried over (Actions reset each billing cycle and do not roll over). Your existing unused Data Credits are preserved when you upgrade.
+
 ### Launch plan
 
 -   **Best for:** Teams enriching less than 1,000 records per month
@@ -102,6 +104,14 @@ You can track both actions and data credits usage in the `Usage Dashboard`, whic
 **Annual plans:** When your plan refreshes, you can roll over up to 15% of your annual data credits in addition to the new credits you receive, provided you renew on the same or a higher-tier plan.
 
 For more details, see our guide on [actions and data credits](https://www.notion.so/Actions-and-data-credits-2a77e66eb01480b798f2ddca99d45e80?pvs=21).
+
+### Is upgrading my plan prorated?
+
+No. Plan upgrades are not prorated. When you upgrade to a higher tier, you are charged the full price for the new plan immediately — not a partial amount for remaining days in your current billing cycle. In return, you receive the **full** Actions and Data Credits for your new tier right away, not just the incremental difference over your current plan.
+
+Unused Actions from your previous plan are not refunded or carried over (Actions reset each billing cycle and do not roll over). Your existing unused Data Credits are preserved when you upgrade.
+
+If you're unsure whether you need a higher tier, check your current usage in `Settings` → `Usage` to see how many Actions and Data Credits you've consumed this billing cycle before committing to an upgrade.
 
 ### What if I need more actions or data credits?
 
