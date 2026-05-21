@@ -105,6 +105,11 @@ To remove a member from your workspace:
 -   Select `Remove member`.
 -   Confirm the removal in the dialog that appears.
 
+**What happens when you remove a member:**
+
+-   All tables, workbooks, and groups owned by the removed member are automatically transferred to the longest-tenured admin in the workspace (the admin whose admin role was granted earliest).
+-   You cannot remove the last admin from a workspace — at least one admin must remain at all times.
+
 ## Edit access levels in a workbook
 
 Workspace admins can edit access levels for specific workbooks. This helps prevent accidental changes to important tables.
