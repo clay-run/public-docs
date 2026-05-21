@@ -74,19 +74,17 @@ You can also select additional data to send along with the flattened list, just 
 
 The easiest way to configure `Send row for each item in a list` is to use the **Take action on list** shortcut from the cell details panel:
 
-1.  Click on a cell in the column whose list you want to flatten (for example, a "Find Contacts at Company" result).
-2.  In the Cell details panel, hover over the list section (e.g., "People") and click **Take action on list**.
+1.  Click on a cell in the column whose list you want to flatten (for example, a "Find Contacts at Company" result cell).
+2.  In the Cell details panel, hover over the list section (e.g., "People") to reveal the **Take action on list** button.
 3.  Select **Write each item to new row in other table**.
 
-This opens the Send Table Data configuration with the correct list field already selected, so you don't need to manually identify which field to use as the list source.
+This opens the Send Table Data configuration with the correct list field already pre-populated — so you don't need to manually identify which field to use as the list source.
 
 **Selecting the right list field manually**
 
-When configuring the list field by hand, make sure to select the **list itself** (e.g., `People`), not an indexed element from that list (e.g., `People.0`, which refers to only the first person). Selecting a single indexed element instead of the full array is a common source of confusion — the configuration will not recognize it as a list, and the item count will display as ∅ 0.
+When configuring the list field by hand, select the **list itself** (e.g., `People`), not an indexed element from within that list (e.g., `People.0`, which is just the first person). Selecting a single indexed element instead of the whole array is a common source of confusion: the configuration will show a **"Please add a valid list."** error because an indexed element isn't recognized as a list.
 
-**What the ∅ 0 item count means**
-
-The item count shown during Send Table Data configuration is a real-time preview of the data in the current row — not the count of items that will be processed when the step runs. If the enrichment column hasn't run yet, or if the selected field isn't recognized as a valid list, the count shows ∅ 0. Once the column has run on a row with real data, the preview will update to show the actual number of items in the list.
+If your table has no rows with data yet, Clay skips this validation and accepts the formula as-is. In that case, run a few rows first so the enrichment column has real output, then re-open the Send Table Data configuration to confirm the list field is valid before running the full table.
 
 ## Advanced settings
 
