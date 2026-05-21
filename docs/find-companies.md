@@ -52,6 +52,17 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
     -   Enable or disable auto-update and auto-dedupe.
 4.  Click `Continue`.
 
+**Outputs:**
+
+Each result includes one or more **Structured Location** entries in the cell details with geocoded, normalized fields — so you don't need additional AI columns to parse or reformat location data. These fields work with informal location names like "Greater Chicago Area." Use **Is Headquarters** to identify the company's primary location when multiple entries are returned.
+
+-   **City**
+-   **State**
+-   **Region**
+-   **Country Iso**
+-   **Postal Code**
+-   **Is Headquarters**
+
 ## FAQs
 
 ### Can I filter companies by the year they were founded?
