@@ -36,7 +36,7 @@ If you need results that meet _either_ of two different filter combinations, set
 
 ### Choose your starting point
 
-**Recommended:** If you have a company list, use Find People at These Companies (Actions → Find People at These Companies) rather than a standalone people search. This scopes results to your specific companies and keeps contacts linked to their accounts — rather than returning an unanchored list you'd need to join manually.
+**Recommended:** If you have a company list, use Find People at These Companies (Tools → Find People at These Companies) rather than a standalone people search. This scopes results to your specific companies and keeps contacts linked to their accounts — rather than returning an unanchored list you'd need to join manually.
 
 If you don't have a company list, use **People search as a source** — a standalone search by title or other criteria that returns a new table.
 

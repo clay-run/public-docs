@@ -19,8 +19,9 @@ To run a pre-built waterfall:
 2.  Configure your `Waterfall sequence`. You can reorder, add. or delete your waterfall data providers.
     -   To skip a step in the waterfall, click the toggle switch next to a specific provider.
 3.  Enter the required data inputs, such as email addresses or social profile URLs, to set up the enrichment waterfall.
-4.  Optionally, choose to output the name of the successful provider and hide the provider columns for a cleaner table view.
-5.  Configure Run settings, including enabling auto-update or setting conditions for when the waterfall should run.
+4.  In the **Waterfall output** dropdown, select which sub-field to display in the waterfall's merged column (for example, `people > 0 > title`). You can only pick one field at a time — but all individual provider columns are still added to your table with their full data regardless of which field you select. You can access any field from a provider column by clicking into a row or referencing it in a formula.
+5.  Optionally, choose to output the name of the successful provider and hide the provider columns for a cleaner table view.
+6.  Configure Run settings, including enabling auto-update or setting conditions for when the waterfall should run.
 
 ## Creating a waterfall
 
