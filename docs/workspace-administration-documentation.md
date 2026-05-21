@@ -57,6 +57,15 @@ After completing the password recovery steps, you can log in with your email and
 
 If you regularly use multiple Google accounts in the same browser, using email and password directly is the most reliable approach. Alternatively, you can use a separate browser profile signed into only the correct Google account.
 
+**If you already signed in with the wrong Google account**
+
+If clicking `Continue with Google` used an unintended account (for example, your personal Gmail), Clay automatically creates a new workspace for that email address. You will be taken into an onboarding flow for the new workspace — there is no skip or exit button, and the onboarding screen does not show the regular Clay navigation bar or workspace switcher.
+
+To get back to your correct workspace:
+
+-   **Navigate directly to your existing workspace:** Type `https://app.clay.com/workspaces/<your-workspace-id>` in the address bar. This loads your real workspace without going through the onboarding flow for the unwanted one.
+-   **Contact Clay support:** Use the in-app chat to ask support to stop the onboarding flow or delete the unwanted workspace. The support team can do this on your behalf even if you cannot reach that workspace's settings yourself.
+
 ## **Clay API key access**
 
 Your Clay API key enables Clay-specific integrations and external connections. To manage your API key:
