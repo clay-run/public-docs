@@ -43,6 +43,8 @@ Use conditional logic to control when an enrichment runs. The enrichment only ex
 
 Delay when an enrichment runs after its conditions are met. This is useful when you need to wait for external systems to process data before continuing your workflow.
 
+**Note:** Delay run is only available on enrichment columns (such as Find People, Find Companies, AI columns, waterfall steps, and action columns like "Send data back"). Formula columns run locally without making external calls and do not have this option.
+
 `Run immediately`
 
 -   Runs the action as soon as run conditions are met.
