@@ -412,6 +412,10 @@ Clay offers three plans. For a full comparison of features and pricing, visit ou
 -   **Actions and data credits:** Custom
 -   **Benefits:** Volume discounts on data credits, dedicated Growth Strategist, managed onboarding, data warehouse integrations, bulk enrichment, SSO, RBAC, and more
 
+### **Workspace row limit**
+
+All workspaces have a global row limit of **10 million rows** across all tables. This cap counts rows in every table in your workspace, regardless of plan. If you reach this limit, you may see the error **"Your Subscription Does Not Allow Any More Records."** Permanently deleting unused tables and rows will reduce your workspace row count.
+
 ## **Managing your plan**
 
 To upgrade or downgrade your Clay workspace plan:
@@ -442,6 +446,8 @@ Clay offers a 14-day free trial with 1,000 data credits, giving you access to ke
 **Note:** Phone number enrichments are not available during the trial period. To access this feature, upgrade to a paid plan.
 
 If your team wants to do a trial, each team member can create their own trial account to explore Clay independently.
+
+Trial tables can hold up to **1,000 rows each**. The table view also displays only the first **50 rows** — rows beyond that are blurred in the UI until you upgrade to a paid plan.
 
 # **Referrals**
 
