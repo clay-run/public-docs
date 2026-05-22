@@ -17,15 +17,15 @@ Clay credits are valuable resources that help you save both time by automating m
 
 **How does this save credits?**
 
-Auto-update allows Clay to enrich any new rows added to your table automatically. While this can be helpful when your table is set up for a fully automated workflow, it can also result in unnecessary credit usage if rows are added by mistake or before you’re ready.
+Auto-update allows Clay to enrich any new rows added to your table automatically. While this can be helpful when your table is set up for a fully automated workflow, it can also result in unnecessary credit usage if rows are added by mistake or before you're ready.
 
-The best practice here is to **turn off auto-update** while building your table. Once your setup is finalized, you can turn it back on when you’re ready to launch and start enriching new entries.
+The best practice here is to **turn off auto-update** while building your table. Once your setup is finalized, you can turn it back on when you're ready to launch and start enriching new entries.
 
 **How do you implement this?**
 
 To turn off auto-update for a column, go to **Run Settings** and toggle off the Auto-Update button.
 
-You can also “turn off” an entire table from auto-updating by clicking the three little dots next to your table name, then click on “Auto-Update Columns”.
+You can also "turn off" an entire table from auto-updating by clicking the three little dots next to your table name, then click on "Auto-Update Columns".
 
 ## Leveraging your API Keys
 
@@ -37,10 +37,10 @@ If you are on a paid plan and have credits with other data providers, Clay allow
 
 You can access adding your API key two ways:
 
-1.  Profile picture  > Settings > Navigation Bar
+1.  Profile picture  > Settings > Navigation Bar
 2.  Go to your profile picture in the top right corner, navigate to Settings, and head over to the Connections section. From there, you can add your API keys to the Clay panel.
 3.  Enrichment Panel > Account > Add Account
-4.  When setting up an enrichment that accepts an API key, you can add an account linked to your API key. By default, Clay’s API key will be selected, but if you want to use your own, simply switch to your account by selecting **Add Account**.
+4.  When setting up an enrichment that accepts an API key, you can add an account linked to your API key. By default, Clay's API key will be selected, but if you want to use your own, simply switch to your account by selecting **Add Account**.
 
 Some common API keys you can swap out:
 
@@ -68,7 +68,7 @@ Here is an example of a way to use AI formulas to filter out leads
 
 **How does this save credits?**
 
-When using a new integration, it’s best to start by testing a small sample—about 10 rows—before running the entire column. This allows you to identify and fix any errors in advance (ex. import errors, column filter error)
+When using a new integration, it's best to start by testing a small sample—about 10 rows—before running the entire column. This allows you to identify and fix any errors in advance (ex. import errors, column filter error)
 
 For AI enrichments, prompts may need several iterations to get right, so testing and refining your prompts before running the full enrichment will help ensure better results.
 
@@ -89,8 +89,8 @@ There are two ways to implement conditional runs:
 **Method #1: Conditional Runs**
 
 1.  Go to the **Run Settings** of any enrichment column.
-2.  In the **“Only run if”** box, add your conditional formula to specify when the enrichment should run.
-3.  **Tip:** Use the **“Use AI”** button to input plain language instructions, making it easier to define your conditions without needing complex formulas.
+2.  In the **"Only run if"** box, add your conditional formula to specify when the enrichment should run.
+3.  **Tip:** Use the **"Use AI"** button to input plain language instructions, making it easier to define your conditions without needing complex formulas.
 
 **Method #2: Filter Existing Rows**
 
@@ -100,10 +100,48 @@ Filtered views only enriches the rows you're viewing so this can be used as a wa
 
 ## Look up existing data to avoid duplicate enrichments
 
-If you’ve already enriched contacts in another table or your CRM, you can use **Lookup** columns to pull that existing data, saving credits by avoiding duplicate enrichments. Before running a new enrichment, check if the data already exists in your CRM or another Clay table. If it does, use a Lookup column to pull the data into your current table.
+If you've already enriched contacts in another table or your CRM, you can use **Lookup** columns to pull that existing data, saving credits by avoiding duplicate enrichments. Before running a new enrichment, check if the data already exists in your CRM or another Clay table. If it does, use a Lookup column to pull the data into your current table.
 
 **How do you implement this?**
 
 1) Pull Data from Your CRM  
 
 2) Leverage Data from Other Tables
+
+## Limit People source search results
+
+**How does this save credits?**
+
+When using Find People as a source, broad searches can return thousands of results—each becoming a row that triggers downstream enrichments. Importing more contacts than you need is one of the most common sources of unintended credit spend.
+
+**How do you implement this?**
+
+In your Find People column settings, use **Limit results** to cap the total number of contacts imported per search. Use **Limit per company** to set a maximum number of people per employer—especially important when your search covers large parent companies or investment portfolio companies that could expand results far beyond your intent. Add company-level filters such as company size or industry to narrow the match universe before rows are created.
+
+See [Find People in Clay](find-people-overview.md) for the full list of filter and limit options.
+
+## Use Sandbox Mode to test table changes safely
+
+**How does this save credits?**
+
+[Sandbox mode](sandbox-mode.md) lets you build and test table configurations—formulas, enrichments, waterfalls—on a small subset of rows without running them on your full table. Changes only go live when you explicitly publish them, so you can catch configuration mistakes and refine your setup before spending credits at scale.
+
+**How do you implement this?**
+
+Click the `Sandbox mode` button in the table toolbar. Clay duplicates the top 10 rows of your table into an isolated sandbox (expandable to 50 rows). Make and test your changes there; when ready, click **Review changes** and then **Publish** to apply the configuration to your full table.
+
+**Note:** Sandbox mode is available on Pro and Enterprise plans.
+
+## Audit and manage scheduled column runs
+
+**How does this save credits?**
+
+Scheduled columns automatically re-run enrichments on a daily, weekly, or monthly cadence—including full-table re-runs if **All columns** is selected. Columns set up for a past project and then forgotten continue consuming credits on every cycle.
+
+**How do you implement this?**
+
+Click the `⛭` icon in the bottom right of your table, go to **Run Settings**, and open the **Re-run columns on a schedule** section. Review which columns are included and disable the schedule for any you no longer need to auto-refresh. To reduce scope without fully disabling the schedule, switch from **All columns** to **Only selected columns** and select only the columns that genuinely require recurring updates.
+
+See [Scheduled columns](scheduled-columns.md) for setup details.
+
+**Note:** Scheduled column runs are available on paid plans.
