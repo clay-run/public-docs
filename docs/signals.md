@@ -63,3 +63,14 @@ Signals require a connected data source to run against — either a source table
 No. Signals monitor changes at companies or contacts already in your data source (new hires joining, contacts getting promoted, contacts changing jobs, etc.). They are not a way to search for job postings from scratch.
 
 To search for open job postings by location, job title, or other criteria, use the **Find Jobs** source when creating a new table. You can also [schedule it to run on a recurring basis](https://www.clay.com/university/guide/scheduled-sources) (daily, weekly, etc.) so your table stays up to date with the latest postings.
+### Why did my signal use far more credits than I expected?
+
+The credit rate shown in a signal's settings covers only the **signal monitoring** itself — checking your tracked contacts or companies for new matches. It does not include any enrichment columns in your results table.
+
+When a signal fires and adds new matching rows to your table, every enrichment column with **auto-update** enabled runs automatically on those new rows. For example, if you have an AI enrichment column that costs 500 credits per row and the signal adds 60 new matches, that enrichment alone consumes 30,000 credits on top of the signal monitoring fee.
+
+To avoid unexpected charges:
+
+-   Check the per-row cost of each enrichment column in your results table before activating a signal.
+-   Turn off auto-update on columns you don't want to fire automatically: open the column → `Run settings` → toggle off `Auto-update`.
+-   To see the full per-column credit breakdown after a signal fires, click `History` in the lower right corner of your results table and select `Usage history`.

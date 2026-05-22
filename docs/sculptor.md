@@ -38,7 +38,7 @@ For example, you could:
 
 ## Sandbox mode
 
-> **Currently in beta — available on Pro and Enterprise plans. Contact support to enable if you don't see it yet. A broader rollout is coming.**
+> **Available on Pro and Enterprise plans. A broader rollout to additional plans is coming.**
 
 When Sculptor builds new columns for your table, it automatically puts the table into [sandbox mode](https://www.clay.com/university/guide/sandbox-mode) first. This gives you a chance to review and validate the new columns before they go live—reducing unintended credit burn and giving you more control over changes.
 

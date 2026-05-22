@@ -62,7 +62,7 @@ Features that use an Action:
 **Features that don't use an Action:**
 
 -   Sourcing lists of accounts or contacts (e.g., Find People returns 100 contacts).
--   CRM imports (bringing data into Clay from your CRM).
+-   CRM imports and lookup operations (reading data from your CRM into Clay, including **Lookup Record** actions like `Salesforce > Lookup Record`).
 -   Data warehouse imports (bringing data into Clay from your warehouse).
 -   Webhook imports.
 -   Clay formulas and filters.
@@ -145,13 +145,13 @@ Each fully enriched record typically costs **6–20 Data Credits**, depending on
 
 Two options:
 
-**1\. Upgrade your Data Credits tier** (recommended)
+**1\\. Upgrade your Data Credits tier** (recommended)
 
 -   Go to `Settings` → `Plans & billing`.
 -   Select a higher Data Credits tier.
 -   No premium charged.
 
-**2\. One-time top-up**
+**2\\. One-time top-up**
 
 -   Go to `Settings` → `Usage` and click `Add one-time data credits`.
 -   Available for emergency needs during your billing cycle.
@@ -374,3 +374,9 @@ Data Credits expire when your trial ends or when a free workspace refreshes at t
 ### Does CSV export consume an Action?
 
 No. Exporting data to CSV does not consume an Action or any Data Credits. CSV export is a simple data download operation and does not count as platform usage or GTM execution.
+
+### Does Salesforce Lookup Record consume an Action credit?
+
+No. **Lookup Record** operations — such as `Salesforce > Lookup Record` — read data from your CRM into Clay and are treated as CRM imports. They do not consume Action credits. This holds even when the lookup returns **No Records Found**.
+
+Only CRM **write** operations consume Actions: Create Record, Update Record, Upsert Object, and other actions that push data from Clay to your CRM.
