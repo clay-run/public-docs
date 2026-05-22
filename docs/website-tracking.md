@@ -14,6 +14,8 @@ Clay's website tracking enables teams to collect visitor information in order to
 
 This tracking provides insights into how visitors engage with your content and helps you identify high-intent accounts at the optimal moment.
 
+**Plan availability:** Web intent is available on Trial, Pro, Growth, and Enterprise plans.
+
 ## Using website tracking in Clay
 
 ### **Creating the connection**
@@ -106,7 +108,7 @@ Update your site's Content Security Policy to allow Clay domains:
 Common causes:
 
 -   The connection is disabled or was just enabled (allow 30 minutes for data to appear).
--   The snippet isn't installed on the relevant pages.
+-   The snippet isn't installed on the relevant pages.\
 -   Connection-level or table-level filters are too restrictive.
 -   Your site hasn't had enough live traffic yet.
 
