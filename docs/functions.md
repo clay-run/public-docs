@@ -164,6 +164,20 @@ The workaround is to create a **formula column** (Merge columns) inside your fun
 
 To access the object's sub-keys downstream, parse it back with `JSON.parse({{Merged Person Data}})`.
 
+### Why aren't the enriched fields from my function visible in Send Data Back?
+
+The Send Data Back column picker only shows fields that have been explicitly added as columns in the function table. Enrichment result fields — including fields from nested functions — don't appear automatically.
+
+To expose them:
+
+1.  Run the function at least once so it returns data. Use **Add test inputs** in the function editor if no real inputs have been sent yet.
+2.  Open a result row in the function table to view its cell details.
+3.  Hover over the enrichment fields you want to send back and click **Add as column** next to each one.
+4.  Those columns now appear in the Send Data Back column picker — select them as outputs.
+5.  On the next run, the calling table will receive those fields.
+
+This applies to nested functions too: if your function calls another function, the inner function's enrichment fields won't be selectable in Send Data Back until you've added them as columns using the steps above.
+
 ### Can I share a function with someone outside my workspace?
 
 Yes. Enable "share as template" on the function to generate a shareable link. Anyone with the link can view the function's columns and create a table in their workspace using it.
