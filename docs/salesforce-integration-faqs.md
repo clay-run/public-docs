@@ -51,7 +51,13 @@ For guidance on setting up an integration user with the right object access, see
 
 No. By default, Clay prevents duplicate records. However, you can allow duplicates by enabling the "Duplicate Rule Override" in the Create Record enrichment.
 
-To avoid creating duplicates from your Clay table, first look up an object to check if it exists, then create it only if it doesn't.
+To avoid creating duplicates from your Clay table, first look up an object to check if it exists, then create it only if it doesn't. Here's how to set that up:
+
+1.  Add a **Lookup record** (or **Lookup records via SOQL**) column to find the existing record in Salesforce using a unique identifier such as email address or record ID.
+2.  Add a **Create record** column for the object you want to create.
+3.  In the **Create record** column settings, open **Run settings** and add a conditional run. Set the condition to check that the ID field returned by your lookup column is empty. Clay will only run Create record on rows where no existing match was found — rows that don't meet the condition are skipped and consume no credits.
+
+For full details on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
 
 [Learn more about Salesforce's duplicate rules here.](https://help.salesforce.com/s/articleView?id=sales.duplicate_rules_map_of_reference.htm&type=5)
 
