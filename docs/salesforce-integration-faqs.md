@@ -105,7 +105,8 @@ A connected app only appears after a successful OAuth authorization. If it's mis
 
 -   The user's profile lacks the "Approve uninstalled connected apps" permission (required when the app isn't pre-installed).
 -   Org policies block uninstalled connected apps entirely (via App Access Control).
--   SSO or login flows prevent the OAuth approval prompt.\n-   IP restrictions, login-hour restrictions, or Transaction Security Policies block the OAuth request.
+-   SSO or login flows prevent the OAuth approval prompt.
+-   IP restrictions, login-hour restrictions, or Transaction Security Policies block the OAuth request.
 
 **How to fix:**
 
