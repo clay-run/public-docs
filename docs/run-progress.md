@@ -115,3 +115,25 @@ If cells remain Queued for an extended period, common causes include:
 2.  **Hard refresh the page** — Press `Ctrl+Shift+R` (Windows/Linux) or `Cmd+Shift+R` (Mac) to reload and clear any stale browser state.
 3.  **Force-run the column** — Right-click the column header and select **Run column** → **Force run all [N] rows**. This re-queues and processes every row in the column regardless of its current status.
 4.  **Check your API quotas** — If the column calls an external API (OpenAI, Google, etc.), verify you haven't exhausted a quota in that provider's dashboard.
+
+## Troubleshooting: table appears stopped at a partial percentage with no credits consumed
+
+If your table completes at a partial percentage — for example, 20–40% — and no credits are being consumed, enrichment cells have likely failed with `ERROR_MISSING_INPUT`. This error means a required input field is blank for those rows.
+
+**`ERROR_MISSING_INPUT` cells are counted as Failed (🔴)** in the progress bar — the table has already processed those cells, just without a result. Clay does not charge credits for these cells, because the enrichment aborts before calling the external data provider.
+
+**Most common cause: source data not yet populated**
+
+This frequently happens when using a template or pre-built workflow where enrichment columns depend on data that hasn't been sourced yet. A typical pattern:
+
+-   Your table includes person-enrichment columns — email finder, LinkedIn profile lookup, personalized message generator — that require inputs such as a LinkedIn URL, first name, or work email.
+-   You've run a **Find Companies** source but haven't yet run **Find People** to populate person records in the table.
+-   With no person data available, every person-enrichment column immediately fails with `ERROR_MISSING_INPUT`.
+
+**How to resolve it:**
+
+1.  Click the failing enrichment column header and check which input fields it requires (for example, "LinkedIn URL" or "First Name").
+2.  Make sure the upstream column or source providing that data — typically a **Find People** run — has completed first.
+3.  Once the required input data is in place, right-click the enrichment column header → **Run column** → **Run [N] empty or out-of-date rows** to re-process those cells.
+
+> **Tip:** Clay's [Sculptor](sculptor.md) can analyze your table structure and identify what's missing. Click **Chat with Sculptor** in the top-right corner of your table.
