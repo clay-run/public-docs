@@ -13,6 +13,8 @@ Databricks is a unified data and analytics platform for managing, transforming, 
 
 With this integration, you can connect to your Databricks workspace and perform SQL operations — such as importing, inserting, updating, upserting, or looking up rows — all directly from your Clay table.
 
+> **Note:** The Databricks integration is currently available to Enterprise plan customers enrolled in the beta. Contact your account team or [support](https://www.clay.com/support) to request access.
+
 ## Connecting to Databricks
 
 Clay supports two methods for authenticating your Databricks account. You can choose the one that fits your organization's setup when adding a new connection or when reconnecting an existing one.
@@ -51,6 +53,14 @@ Connect to Databricks using a Personal Access Token.
     -   If you haven't already connected your Databricks account, click `+ Add account` and go through authentication.
 
 ## Using the Databricks integration
+
+### Pushing enrichment data to Databricks
+
+To push enriched records from a Clay table into your Databricks instance, use one of the write actions below.
+
+-   **Upsert row** (recommended for most export workflows) — updates an existing record if a match is found on the unique key column, or inserts a new row if no match exists. This is the safest default for pushing data out of Clay because it handles both new and existing records without creating duplicates.
+-   **Insert row** — inserts a new row. Use this when you are certain the record does not already exist in your Databricks table.
+-   **Update row** — updates rows matching a SQL WHERE clause. Use this when you only want to modify records that already exist.
 
 ### `Source` Import from Databricks
 
@@ -97,7 +107,7 @@ Use this action to update existing rows in a Databricks table.
 
 ### `Action` Upsert row
 
-Use this action to insert or update a row in a Databricks table using a unique identifier.
+Use this action to insert or update a row in a Databricks table using a unique identifier. If a record matching the unique key column already exists, it will be updated; if no match is found, a new row will be inserted.
 
 **Inputs**
 
