@@ -105,6 +105,8 @@ While you don't need your own GPT, Claude, or Gemini API key to use the AI featu
 1.  Select the desired `Model` from the dropdown.
 2.  Click on the `Account` dropdown and click `+ Add account`.
 
+**Note:** Connecting your own OpenAI API key does not enable OpenAI's Batch API. Clay sends all AI column requests in real-time using the standard API — regardless of which account is connected. You will not get OpenAI's batch pricing (50% discount) or the extended processing window (up to 24 hours). If you need to process a large volume of data at batch pricing, the workaround is to export your data from Clay, run it through the OpenAI Batch API externally, then re-import the results.
+
 ## Using additional or custom LLMs
 
 Use AI supports a fixed set of built-in AI providers (such as GPT, Claude, Gemini, and DeepSeek). Custom or additional LLMs — including open-source models like LLaMA, or models accessed through a proxy such as LiteLLM — cannot be added directly to the Use AI enrichment interface.
