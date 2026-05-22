@@ -138,6 +138,27 @@ LIMIT 1
 -   **Use `LIKE` for website and domain fields.** Salesforce often stores URLs with inconsistent prefixes (`www.example.com`, `https://example.com`, `example.com`). The `LIKE` operator with `%` wildcards matches all formats: `WHERE Website LIKE '%/Company Domain%'`.
 -   **Handle missing values with an `OR NULL` fallback.** If the extra filter field is not consistently populated in Salesforce, a strict `AND` will drop valid records. Add a null check so rows with a blank field are still returned: `AND (BillingCountryCode = '/Country Code Column' OR BillingCountryCode = null)`.
 -   **Use a waterfall for optional tiebreakers.** To use an extra field as a preference rather than a hard filter, create two SOQL columns — one matching on website + country code, one on website only — and use a Formula column to return the first non-empty result.
+-   **Filter contacts by title or seniority.** Use multiple `LIKE` conditions joined with `OR` to match title keywords across an account's contacts. For example, to return Director-level and above contacts for each row's Account ID:
+
+    ```sql
+    SELECT Id, FirstName, LastName, Email, Title
+    FROM Contact
+    WHERE AccountId = '/Account ID Column'
+    AND (
+      Title LIKE '%Director%'
+      OR Title LIKE '%VP%'
+      OR Title LIKE '%Vice President%'
+      OR Title LIKE '%Chief%'
+      OR Title LIKE '%President%'
+    )
+    LIMIT 5
+    ```
+
+    *(Here `/Account ID Column` represents a Clay column inserted via the `/` picker — replace it with the column holding each row's Salesforce Account ID.)*
+
+    To prioritize certain titles (e.g., specific-department contacts first, then senior leaders as a fallback), use two separate SOQL lookup columns and combine results with a Formula column.
+
+-   **String values in `WHERE` clauses require single quotes.** Any literal string, ID, or text value must be wrapped in single quotes: `WHERE AccountId = '001d000001kBRtVAAW'`. Omitting the quotes (e.g., `WHERE AccountId = 001d000001kBRtVAAW`) is the most common cause of SOQL "invalid input" errors on this action.
 
 ### `Action` Create record
 
