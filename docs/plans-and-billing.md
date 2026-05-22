@@ -129,3 +129,15 @@ If you're unsure whether you need a higher tier, check your current usage in `Se
 -   **Enterprise plan:** Suitable for enriching 10,000+ records per month
 
 Each fully enriched record typically costs 6-20 data credits (including company and person profile, email, phone number, and custom AI enrichments). The more private API keys you use, the fewer data credits you'll spend per record.
+
+### Is there a discount for annual plans?
+
+Yes — annual plans include a **10% discount** compared to the equivalent monthly rate. This applies across all plan tiers (Launch, Growth, and Enterprise). Monthly plans do not offer additional discounts, and custom discount rates are not available.
+
+To switch from monthly to annual billing:
+
+1.  Click your profile picture in the top-right corner and select `Settings`.
+2.  In the left sidebar, navigate to `Plans & billing`, then click `Switch plan`.
+3.  Select the annual billing option for your current plan tier and confirm your selection.
+
+For a full pricing comparison, visit the [Clay pricing page](https://www.clay.com/pricing).
