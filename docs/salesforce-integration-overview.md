@@ -177,6 +177,16 @@ Use this action to create a new record or update an existing one.
 
 _Note: In order for upsert to work, you need to have an_ [_external ID_](https://help.salesforce.com/s/articleView?id=000385174&language=en_US&type=1) _on the object._
 
+**External ID value requirements**
+
+Salesforce processes the upsert by placing the external ID value directly in the REST API URL path. Values containing URL-special characters — most commonly forward slashes (`/`) — will cause the upsert to fail with **"Upsert Failed"** and no additional error details.
+
+**Characters to avoid:** `/`, `#`, `?`, `&`, `%`, `+`, and spaces.
+
+**Common example:** A value like `linkedin.com/company/acme-corp` contains forward slashes that Salesforce interprets as URL path separators, causing the upsert to fail.
+
+**Recommended format:** Use only alphanumeric characters, hyphens (`-`), and underscores (`_`). Apply the same sanitized format to the corresponding field in Salesforce so records still match — for example, use `acme-corp` instead of `linkedin.com/company/acme-corp`.
+
 **Inputs:**
 
 -   **Salesforce object:** The object type to look for in your Salesforce.
