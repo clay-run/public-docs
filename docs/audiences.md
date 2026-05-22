@@ -194,11 +194,9 @@ When you have a segment ready, you can send it to a workbook or an ad platform t
 
 **Syncing to multiple ad platforms**
 
-Each audience can only be synced to one ad platform at a time — there is no option to add a second platform to an existing sync. To push the same segment to two platforms (for example, both Meta and LinkedIn):
+You can sync the same audience to more than one ad platform. After setting up an initial sync, an **Expand your reach** section appears in the sync settings listing platforms you haven't connected yet. Click **Add** next to a platform to add it to the existing sync — it will sync on the same schedule as your other platforms. Each platform's sync can be managed and deactivated independently.
 
-1.  Duplicate the audience by re-creating the same filters in a new audience segment.
-2.  On the duplicate, click `Send` → `Sync to ad platforms` and select the second platform.
-3.  The two audience syncs are independent — deactivating or removing a sync on one audience does not affect the other.
+Available platforms depend on your plan: LinkedIn is available on all supported plans; Meta and Google Ads availability may vary by account. If you don't see a platform you expect, contact support.
 
 ## Writing back to your CRM
 
@@ -241,7 +239,7 @@ Yes. Segments update in real time as records enter or change, typically within 1
 
 ### Can I sync an audience to multiple ad platforms?
 
-Not directly — each audience supports one active ad platform sync at a time. To push the same segment to both Meta and LinkedIn, duplicate the audience and set up a separate sync on the duplicate pointing to the second platform. The two audiences and their syncs are fully independent of each other.
+Yes. After setting up an initial sync, an **Expand your reach** section appears in the sync settings listing platforms you haven't connected yet. Click **Add** next to a platform to add it to the same audience — it will sync on the same schedule. Each platform's sync can be managed and deactivated independently. Available platforms depend on your plan; contact support if you don't see a platform you expect.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
