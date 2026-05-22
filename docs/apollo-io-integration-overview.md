@@ -297,4 +297,33 @@ Returns confirmation of whether the contact's status was successfully updated, i
 -   **Auto-update**
 -   **Only run if**: The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.notion.so/source-S3-bucket-1417e66eb01481cc8a4cc485b14af577?pvs=21))
 
+## Troubleshooting
+
+### Placeholder email addresses: `email_not_unlocked@domain.com`
+
+When retrieving contacts via **Find People from Apollo**, the email field may contain `email_not_unlocked@domain.com` instead of a real address. Apollo only provides verified email addresses for contacts that have been unlocked using Apollo credits. If a contact hasn't been unlocked, Apollo returns this placeholder.
+
+To resolve:
+
+-   Use Apollo credits to unlock the contact in your Apollo account.
+-   Use the **Enrich Person** action, which retrieves verified email addresses when sufficient identifying information is supplied.
+
+### Insufficient credits
+
+If an Apollo enrichment step fails with a credits error, your Apollo account may not have enough lead credits to complete the action. This can happen even on paid Apollo plans, since the number of credits available depends on your specific subscription tier.
+
+To resolve:
+
+1.  Check your Apollo subscription to confirm it includes enough lead credits for the action. If not, upgrade through Apollo's settings.
+2.  If you recently used credits, there may be a brief delay before the count refreshes — re-run the step to check whether credits have been restored.
+
+### Null results in enrichment
+
+The **Enrich Person** action requires both a person identifier and a company identifier to match successfully. Without a company identifier, fields like email, job title, and company details may return null.
+
+To resolve, provide at least one company identifier alongside the person's name:
+
+-   **Company Domain** (preferred)
+-   Company Name
+
 ## ‍
