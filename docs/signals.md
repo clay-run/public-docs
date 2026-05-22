@@ -40,7 +40,7 @@ To start a signal, you'll **need a table with** companies or contacts you want t
 ### Edit an existing Signal
 
 1.  Click on the column title with the Signal.
-    -   It’ll have a `📡` icon and usually be called `Event`.
+    -   It'll have a `📡` icon and usually be called `Event`.
 2.  Click `Edit column`.
 3.  Modify any settings as needed and click `Save changes`.
 
@@ -53,3 +53,13 @@ Currently, signals can only be adjusted by frequency, not set to run at specific
 ### What plans are Signals available on?
 
 Most Signals are available on any paid plan. The [LinkedIn social listening Signal](https://www.clay.com/university/guide/monitor-for-linkedin-brand-mentions) is only available to Pro and Enterprise customers.
+
+### Why is my Signal returning 0 results?
+
+Signals require a connected source table containing the companies or contacts you want to monitor. Without a linked table — or if the linked table is empty or has been deleted — the Signal has nothing to check against and will return 0 results. Confirm that your Signal is connected to an active Clay table with valid company identifiers (domain or LinkedIn URL) or contact LinkedIn URLs.
+
+### I want to find job postings by location or title — is that a Signal?
+
+No. Signals monitor changes at companies already in your table (new hires joining, contacts getting promoted, contacts changing jobs, etc.). They are not a way to search for job postings from scratch.
+
+To find open job postings by location, job title, or other criteria without a pre-existing company list, use the **Find Jobs** source when creating a new table. You can also [schedule it to run on a recurring basis](https://www.clay.com/university/guide/scheduled-sources) (daily, weekly, etc.) so your table stays up to date with the latest postings.
