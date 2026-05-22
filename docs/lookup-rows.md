@@ -122,3 +122,26 @@ You can also use `Lookup multiple rows` within the same table to find duplicates
 -   Use a clean, consistent match key (domain is usually more reliable than company name)
 -   Remember a self-lookup will usually match the row to itself—account for that when interpreting counts (e.g., "other matches" vs "total matches")
 -   Use the lookup result as a gate to control downstream actions (enrich/send/route only when criteria are met)
+
+## Troubleshooting
+
+### The table-selection dropdown doesn't appear
+
+If clicking into the `Table to search` field doesn't open a dropdown of available tables:
+
+1.  Clear any existing content from the `Table to search` field.
+2.  Click back into the field.
+
+The dropdown list of available tables should now appear.
+
+### Expected columns are missing from the lookup configuration
+
+If not all columns appear as options when configuring a lookup between two tables, the lookup may be pointing to the wrong source table:
+
+1.  Verify that `Table to search` is set to the correct source table — a misconfigured source table will show a different column set.
+2.  Update `Table to search` to reference the intended table.
+3.  Save the configuration without running it, then run a single row to confirm the expected columns appear and the lookup returns the correct value.
+
+### Referencing a checkbox value from another Clay table
+
+If you're trying to pull a checkbox value from another Clay table into your current table, use a **Lookup single row** or **Lookup multiple rows** action — not a Salesforce lookup. Once the lookup is configured correctly, re-run it to bring in the latest checkbox values from the source table.
