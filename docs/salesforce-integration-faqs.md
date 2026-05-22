@@ -131,3 +131,13 @@ In `Setup` → `Manage Connected Apps` → `Clay`:
 
 -   Set `IP Relaxation` to "Relax IP Restrictions" (Clay's integration calls originate from cloud IPs that may change).
 -   Set `Permitted Users` to "All users may self-authorize" unless your org requires admin approval.
+
+## Why did the owner on my Salesforce record change when Clay updated a field?
+
+If a Lead, Contact, or Account owner changes unexpectedly after Clay updates a field (for example, filling in a phone number), Salesforce assignment rules are likely the cause.
+
+Assignment rules in Salesforce fire on every record save — not just when a record is created. When Clay updates a record, Salesforce treats it as a save and re-runs any active assignment rules, which can re-assign the owner.
+
+**To prevent this**, open the settings for your **Update Record** column and enable the **Disable auto-assignment rules** option. This tells Salesforce to skip assignment rules when Clay saves the record.
+
+**Note:** If your Update Record column was created before this option was added, the toggle may be off. Check your column settings if you are seeing unexpected owner changes after Clay updates a record.
