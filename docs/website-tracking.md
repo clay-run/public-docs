@@ -158,6 +158,16 @@ You can view your credit spend for signals underneath the `Signals` tab of the [
 
 Clay's visitor tracking identifies unique accounts visiting your website, not individuals. Once an account is identified, you can use enrichments to find specific profiles of relevant people you may want to target at those companies.
 
+### How do I send emails to my website visitors?
+
+Because Clay's visitor tracking identifies companies, not specific individuals, reaching out requires a few additional steps:
+
+1.  In your Web Intent table, use the **Find People** enrichment to search for relevant contacts — such as decision-makers or the roles you're targeting — at each identified company.
+2.  Add a **work email waterfall** column to find verified email addresses for those contacts.
+3.  Add a sequencer column (Smartlead, Instantly, Outreach, or a similar tool) and set its run condition to fire when the email column is populated. This automatically enrolls new contacts into your email sequence.
+
+This lets you reach real people at high-intent companies, even though Clay's tracking cannot identify the specific individual who visited your site.
+
 ### How many site visitors can Clay support?
 
 Clay can support hundreds of thousands of daily visitors for even the largest enterprise customers.
