@@ -127,3 +127,4 @@ Repeat this process for each field you want to extract into its own column.
     -   If you want to receive data in the table you're also sending data from, use one of these other actions:
         -   `Lookup Multiple Rows in Other Table`
         -   `Lookup Single Row in Other Table`
+-   **"Invalid send table data inputs" error:** This error means the column referenced as the list source had no data for that row — the value was missing entirely rather than being an empty list. This typically happens when a lookup column found no results for that row. **Fix:** Add a [run condition](https://university.clay.com/docs/conditional-runs) to the Send Table Data column so it only runs when the source column has data. Rows where the lookup returned nothing will then be skipped cleanly instead of erroring.
