@@ -88,6 +88,7 @@ The `Find People at These Companies` feature is available as both a source and a
 **As a source (returns a new table):**
 
 -   Returns all results in a separate table.
+-   When re-run, searches across all companies in the linked table — including any newly added ones. New people are appended and deduplicated against rows already in the table.
 -   Maxes out at 50,000 records total — once that limit is hit, the source stops returning new records even if new companies are added.
 -   Best when you don't need to rank or further filter contacts before saving them.
 
@@ -222,3 +223,13 @@ Company and people search sources don't support run conditions. The workaround i
 ### What's the difference between the people search source and the enrichment action?
 
 The source returns results in a new table and maxes out at 50,000 records. The enrichment action saves results to your existing table, returns 10 people by default with full profile data, and supports a **Reduce data for more results** option that returns up to 500 people (name and LinkedIn URL only). Use the action when you need to rank or filter contacts before saving them, or when you need more than 50,000 total records across multiple searches.
+
+### I added new companies to my company table — how do I get them through my Find People searches?
+
+**If using Find People as a source (a separate people table):**
+Re-running the source is all that's needed. It searches across all companies in the linked table — including any you just added — and appends new people while deduplicating against rows already in the table. To re-run: click the source column header in the people table and select **Run**.
+
+If you want to run on *only* the newly added companies (skipping the full company list), create a **filtered view** of your company table showing just the new rows. To reuse your existing filter criteria without rebuilding them, open the Find People source column (right-click → **Edit column**), click **Save search** at the top of the filter panel to save your current filters, then use that saved search when setting up a new **Find People at These Companies** search on the filtered view. See [Saved searches](saved-searches.md) for full details.
+
+**If using Find People as an enrichment action (runs within the company table, per row):**
+New company rows trigger Find People automatically when auto-run is enabled — no extra steps needed. See [Disable auto-run on the people table](#disable-auto-run-on-the-people-table-when-running-find-people-selectively) for caveats about downstream enrichment costs when new rows are added.
