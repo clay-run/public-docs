@@ -81,11 +81,8 @@ You can permanently delete your Clay account through your account settings. Befo
 
 **Requirements:**
 
--   You must be a **member** (not admin) in all your workspaces, OR
--   You must be an **admin** in a workspace where at least one other admin exists, OR
+-   You must be a **member** (not admin) of all your workspaces, OR
 -   You must be the **only member** in your workspace
-
-If you are the sole admin of a workspace with other members or pending invites, you must transfer admin rights to another member, remove remaining members, or cancel pending invites before deleting your account.
 
 **To delete your account:**
 
@@ -101,7 +98,6 @@ If you are the sole admin of a workspace with other members or pending invites, 
 -   Your account email is updated to a deleted variant.
 -   For any workspaces affected by your account deletion, workspace admins will receive email notifications.
 -   Your private app account and Stripe customer information are deleted to prevent unexpected charges.
--   You will receive an email confirmation once your account has been deleted.
 
 **Important:** Account deletion is permanent and cannot be undone. While your data is marked for deletion and critical billing/authentication records are removed immediately, full data removal from our database may take additional time.
 
@@ -259,6 +255,13 @@ If a former employee owns tables or workbooks in your workspace, there is no sep
 
 Single Sign-On (SSO) is available to **Enterprise plan** customers and those who have purchased the SSO add-on. It lets your organization authenticate Clay users through your existing identity provider (IdP). Clay uses WorkOS to manage SSO and supports any IdP that uses SAML or OIDC protocols — including Okta, Azure AD (Entra ID), Google Workspace, and others.
 
+## **Plan availability and pricing**
+
+-   **Enterprise plans:** SSO is included at no additional cost.
+-   **Add-on (annual plans only):** SSO is available as a paid add-on for $6,000/year for workspaces on an annual billing commitment. Monthly plans are not eligible for the SSO add-on.
+
+To purchase the SSO add-on, contact Clay support or your account manager.
+
 ## **Setting up SSO**
 
 SSO setup is managed by Clay's support team — there is no self-serve configuration in the Clay UI. To get started, contact Clay support.
@@ -285,10 +288,9 @@ SSO only applies to users whose email address matches your verified domain. Team
 
 ## **User provisioning**
 
-Clay does not automatically provision users through SSO. To onboard a new team member:
+When SSO is enabled for your domain, Clay automatically creates an account for any user on that domain who signs in through your identity provider — no per-user invitation is required. Users are provisioned on their first successful SSO login.
 
-1.  Invite them to your Clay workspace first via `Settings` > `Team` > `+ Invite`.
-2.  Have them sign in using SSO — they will be authenticated and placed into the correct workspace.
+**Note:** SCIM user provisioning is not supported. Users are created on first login, not synced from your identity provider's directory.
 
 # **Connections**
 
