@@ -31,7 +31,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 1.  Start in a table that contains the lead emails you want to contact.
     -   If you haven't done this yet, click `Tools` → `Import` to add emails from a third party or CSV.
 2.  Click `Tools` → `Exports` → `Create Clay email campaign`
-    -   The `Sync leads to campaign` column automatically pushes 10 rows from your parent table into the campaign to draft with
+    -   The `Sync leads to campaign` column automatically pushes 10 rows from your parent table into the campaign to draft with. After you launch the campaign, run this column to push all remaining rows — click the run button in the column header to trigger it.
     -   Tip: You can customize the sync data column to only send leads with an email address using `Only run if`.
 3.  In the `Setup` tab, you can set:
     -   `Lead email address`: We automatically detect email address columns, but confirm this before proceeding.
@@ -144,6 +144,10 @@ Key practices to follow:
 ### What if I already have a Smartlead account? Can I use my API key?
 
 Our sequencer is powered by Smartlead, but everything runs on Clay credits. You don't need a Smartlead account, and you can't use an existing Smartlead API key with the sequencer. If you have a key, you can still use it with our in-table enrichments.
+
+### Why does my campaign only show 10 leads after launching?
+
+When a campaign is created, the `Sync leads to campaign` column pushes 10 rows so you can preview and configure your messages. After launching, the rest of your source table is not pushed automatically. To add all remaining rows, run the `Sync leads to campaign` column manually — click the run button in the column header.
 
 ### I updated my campaign, but the changes didn't save.
 
