@@ -100,11 +100,11 @@ This triggers all enrichment and waterfall columns on those rows only, leaving o
 
 ## Troubleshooting cells stuck in Queued status
 
-Cells show a **Queued** status when they are waiting to be processed. This is normal when running large tables — Clay works through rows in batches, so later rows wait while earlier batches complete. In most cases the queue resolves automatically.
+Cells show a **Queued** status when they are waiting to be processed. This is normal when running large tables — Clay processes many rows concurrently, but rows still queue when the system is handling prior requests or when an external API is rate-limiting responses. In most cases the queue resolves automatically.
 
 If cells remain Queued for an extended period, common causes include:
 
--   **Batch processing in progress** — Clay processes rows in batches; later rows in the queue wait while earlier rows complete. No action needed in most cases; the queue will clear on its own.
+-   **High concurrency in progress** — Clay runs many rows at once; if a large number are queued simultaneously, later rows wait while earlier ones complete. The queue will clear on its own.
 -   **External API rate limits** — Integrations such as OpenAI or HubSpot enforce per-minute request limits. Clay respects these automatically; the queue resumes once the rate-limit window resets.
 -   **API quota exhausted** — If you've hit a quota ceiling (e.g., OpenAI, Google), new runs are blocked until the quota resets or is increased in the provider's dashboard.
 -   **Auto-run settings** — If auto-run is enabled and triggering repeated re-runs, rows may accumulate in the queue unexpectedly. See [Table management settings](table-management-settings.md) for how to adjust auto-run and scheduled run behavior.
@@ -113,5 +113,5 @@ If cells remain Queued for an extended period, common causes include:
 
 1.  **Wait a few minutes** — Active processing usually clears the backlog without intervention.
 2.  **Hard refresh the page** — Press `Ctrl+Shift+R` (Windows/Linux) or `Cmd+Shift+R` (Mac) to reload and clear any stale browser state.
-3.  **Manually re-trigger the column** — Right-click the column header and select **Run column** → **Run [N] empty or out-of-date rows**. See [Manually running unrun cells](#manually-running-unrun-cells) above for full steps.
+3.  **Force-run the column** — Right-click the column header and select **Run column** → **Force run all [N] rows**. This re-queues and processes every row in the column regardless of its current status.
 4.  **Check your API quotas** — If the column calls an external API (OpenAI, Google, etc.), verify you haven't exhausted a quota in that provider's dashboard.
