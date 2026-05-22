@@ -53,7 +53,7 @@ _"Build an agent that scores a lead against our ICP and outputs a score from 1 t
 Sculptor will:
 
 1.  Define the prompt logic.
-2.  Set up variables (company name, contact title, industry, etc.).
+2.  Set up variables (company name, contact title, industry, etc.).\
 3.  Format the output (score plus reasoning).
 4.  Create test cases so you can see it in action.
 
@@ -144,6 +144,17 @@ Once you're happy with the output:
 
 You can also deploy directly from Claygent builder by clicking `Add to table`.
 
+### Using your own API key
+
+Deployed Claygent columns use Clay's managed account by default, which charges data credits. Selecting an AI provider model (like Claude or GPT-4o) in the Claygent builder picks the model — it does not configure which API key is billed. To use your own linked API key in a table column:
+
+1.  Click the Claygent column header and select **Edit column**.
+2.  In the **Quick set-up** tab, click the account dropdown under **API key**.
+3.  Select your linked account.
+4.  Click **Save**.
+
+Runs using your own key are billed directly by the AI provider and do not consume Clay data credits.
+
 ## Centralized management
 
 From the Claygent builder home, you can see every table where each agent is running.
@@ -197,6 +208,12 @@ In-flight runs finish on the version that started them. New runs pick up the lat
 ### Can I still edit prompts directly in tables?
 
 Yes, but centralizing in Claygent builder gives you version control, free testing, and the ability to update once and deploy everywhere. It's the better choice for agents you'll reuse or iterate on.
+
+### Can I use my own API key with a Claygent?
+
+Yes, when a Claygent is deployed as a table column. By default, deployed columns use Clay's managed account and charge data credits. To switch to your own linked key: open the column settings → **Quick set-up** tab → click the **API key** dropdown → select your linked account → save. Runs using your own key are billed directly by the AI provider — no Clay data credits are charged.
+
+Note: Choosing a model in the Claygent builder (Claude, GPT-4o, etc.) selects the AI provider, not the billing account. API key selection is configured separately in each table column.
 
 ### Sculptor updated my prompt but the output looks the same — what happened?
 
