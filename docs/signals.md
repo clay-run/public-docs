@@ -17,7 +17,6 @@ Signals are automated tracking systems that notify you of important changes rela
 -   [New hires](https://www.clay.com/university/guide/new-hire-signal-overview): Keep track of new hires at target companies within the last three months, enabling you to engage during the crucial decision-making window.
 -   [Promotions](https://www.clay.com/university/guide/promotion-signal-overview): Monitor when contacts receive promotions within their current company, allowing you to engage during high-intent decision-making periods.
 -   [Job changes](https://www.clay.com/university/guide/job-change-signal-overview): Track when your contacts move to new companies, helping you leverage existing relationships for new opportunities or prepare for shifts in account engagement.
--   [LinkedIn brand mentions](https://www.clay.com/university/guide/monitor-for-linkedin-brand-mentions): Track company mentions, identify partnerships, address feedback, find testimonials, and measure campaign impact.
 -   [News & fundraising](https://www.clay.com/university/guide/monitor-for-news-fundraising): Alert you to significant events at monitored companies, helping you spot timely engagement opportunities.
 
 Looking to monitor a specific enrichment? [Learn how to create Custom Signals.](https://www.clay.com/university/guide/custom-signals)
@@ -52,7 +51,7 @@ Currently, signals can only be adjusted by frequency, not set to run at specific
 
 ### What plans are Signals available on?
 
-Most Signals are available on any paid plan. The [LinkedIn social listening Signal](https://www.clay.com/university/guide/monitor-for-linkedin-brand-mentions) is only available to Pro and Enterprise customers.
+Most Signals are available on any paid plan.
 
 ### Why is my Signal returning 0 results?
 
