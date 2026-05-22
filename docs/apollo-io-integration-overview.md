@@ -236,7 +236,7 @@ Updates an existing contact's information in [Apollo.io](http://Apollo.io).
 -   Direct Phone (Optional): Primary phone number for contact
 -   Mobile Phone (Optional): Mobile phone number of contact
 -   Present Raw Address (Optional): Personal location for contact (city, US state, country)
--   Contact Stage ID (Optional): Current stage of contact in stage process
+-   Contact Stage ID (Optional): Current stage of contact in sales process
 -   Custom Fields (Optional): Custom fields defined in Apollo account settings
 
 **Output:**
