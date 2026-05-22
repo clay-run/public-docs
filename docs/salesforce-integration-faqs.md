@@ -83,7 +83,7 @@ This error typically occurs when:
 
 A connected app only appears after a successful OAuth authorization. If it's missing, one of these is typically true:
 
--   The user's profile lacks the "Approve uninstalled connected apps\" permission (required when the app isn't pre-installed).
+-   The user's profile lacks the "Approve uninstalled connected apps" permission (required when the app isn't pre-installed).
 -   Org policies block uninstalled connected apps entirely (via App Access Control).
 -   SSO or login flows prevent the OAuth approval prompt.
 -   IP restrictions, login-hour restrictions, or Transaction Security Policies block the OAuth request.
@@ -91,7 +91,7 @@ A connected app only appears after a successful OAuth authorization. If it's mis
 **How to fix:**
 
 1.  Add "Approve uninstalled connected apps" to the user's profile or permission set.
-2.  Try authorizing with a System Administrator user first—this lifts the "uninstalled\" status and populates Connected Apps OAuth Usage.
+2.  Try authorizing with a System Administrator user first—this lifts the "uninstalled" status and populates Connected Apps OAuth Usage.
 3.  Once it appears, configure Connected App Policies (e.g., Permitted Users, IP Relaxation, Profile Assignments).
 
 ## What callback URL does Clay use for Salesforce?
