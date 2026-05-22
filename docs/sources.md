@@ -3,7 +3,7 @@ title: Sources
 source_url: https://university.clay.com/docs/sources
 description: Every Clay table begins with a source. Sources are the foundation
   of how data gets into your tables.
-last_synced: 2026-04-26T01:40:43.918Z
+last_synced: 2026-04-26T01:40:43.486Z
 ---
 
 # Sources
