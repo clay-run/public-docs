@@ -104,7 +104,7 @@ A connected app only appears after a successful OAuth authorization. If it's mis
 
 **How to fix:**
 
-1.  Add "Approve uninstalled connected apps\" to the user's profile or permission set.
+1.  Add "Approve uninstalled connected apps" to the user's profile or permission set.
 2.  Try authorizing with a System Administrator user first—this lifts the "uninstalled" status and populates Connected Apps OAuth Usage.
 3.  Once it appears, configure Connected App Policies (e.g., Permitted Users, IP Relaxation, Profile Assignments).
 
