@@ -40,7 +40,7 @@ To start a signal, you'll **need a table with** companies or contacts you want t
 ### Edit an existing Signal
 
 1.  Click on the column title with the Signal.
-    -   It’ll have a `📡` icon and usually be called `Event`.
+    -   It'll have a `📡` icon and usually be called `Event`.
 2.  Click `Edit column`.
 3.  Modify any settings as needed and click `Save changes`.
 
@@ -53,3 +53,15 @@ Currently, signals can only be adjusted by frequency, not set to run at specific
 ### What plans are Signals available on?
 
 Most Signals are available on any paid plan. The [LinkedIn social listening Signal](https://www.clay.com/university/guide/monitor-for-linkedin-brand-mentions) is only available to Pro and Enterprise customers.
+
+### Why did my signal use far more credits than I expected?
+
+The credit rate shown in a signal's settings covers only the **signal monitoring** itself — checking your tracked contacts or companies for new matches. It does not include any enrichment columns in your results table.
+
+When a signal fires and adds new matching rows to your table, every enrichment column with **auto-update** enabled runs automatically on those new rows. For example, if you have an AI enrichment column that costs 500 credits per row and the signal adds 60 new matches, that enrichment alone consumes 30,000 credits on top of the signal monitoring fee.
+
+To avoid unexpected charges:
+
+-   Check the per-row cost of each enrichment column in your results table before activating a signal.
+-   Turn off auto-update on columns you don't want to fire automatically: open the column → `Run settings` → toggle off `Auto-update`.
+-   To see the full per-column credit breakdown after a signal fires, click `History` in the lower right corner of your results table and select `Usage history`.
