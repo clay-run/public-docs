@@ -81,8 +81,11 @@ You can permanently delete your Clay account through your account settings. Befo
 
 **Requirements:**
 
--   You must be a **member** (not admin) of all your workspaces, OR
+-   You must be a **member** (not admin) in all your workspaces, OR
+-   You must be an **admin** in a workspace where at least one other admin exists, OR
 -   You must be the **only member** in your workspace
+
+If you are the sole admin of a workspace with other members, you must transfer admin rights to another member or remove remaining members before deleting your account.
 
 **To delete your account:**
 
