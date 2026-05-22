@@ -14,6 +14,8 @@ Clay's website tracking enables teams to collect visitor information in order to
 
 This tracking provides insights into how visitors engage with your content and helps you identify high-intent accounts at the optimal moment.
 
+**Plan availability:** Web intent is available on Trial, Pro, Growth, and Enterprise plans.
+
 ## Using website tracking in Clay
 
 ### **Creating the connection**
@@ -106,7 +108,7 @@ Update your site's Content Security Policy to allow Clay domains:
 Common causes:
 
 -   The connection is disabled or was just enabled (allow 30 minutes for data to appear).
--   The snippet isn't installed on the relevant pages.
+-   The snippet isn't installed on the relevant pages.\
 -   Connection-level or table-level filters are too restrictive.
 -   Your site hasn't had enough live traffic yet.
 
@@ -157,6 +159,16 @@ You can view your credit spend for signals underneath the `Signals` tab of the [
 ### Can I track person-level information?
 
 Clay's visitor tracking identifies unique accounts visiting your website, not individuals. Once an account is identified, you can use enrichments to find specific profiles of relevant people you may want to target at those companies.
+
+### How do I send emails to my website visitors?
+
+Because Clay's visitor tracking identifies companies, not specific individuals, reaching out requires a few additional steps:
+
+1.  In your Web Intent table, use the **Find People** enrichment to search for relevant contacts — such as decision-makers or the roles you're targeting — at each identified company.
+2.  Add a **work email waterfall** column to find verified email addresses for those contacts.
+3.  Add a sequencer column (Smartlead, Instantly, Outreach, or a similar tool) and set its run condition to fire when the email column is populated. This automatically enrolls new contacts into your email sequence.
+
+This lets you reach real people at high-intent companies, even though Clay's tracking cannot identify the specific individual who visited your site.
 
 ### How many site visitors can Clay support?
 
