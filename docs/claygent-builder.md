@@ -198,6 +198,12 @@ In-flight runs finish on the version that started them. New runs pick up the lat
 
 Yes, but centralizing in Claygent builder gives you version control, free testing, and the ability to update once and deploy everywhere. It's the better choice for agents you'll reuse or iterate on.
 
+### Can I clone or duplicate a Claygent?
+
+There's no one-click clone option. The most reliable method works for everyone: open the Claygent you want to duplicate, copy the prompt text, create a new agent in Claygent builder, paste the prompt in, and re-map any column references.
+
+If your workspace has the **Save as template** feature enabled (currently in limited rollout — contact support if you don't see it), you can also save an existing Claygent as a template. Click the `...` menu in the Claygent editor and select `Save as template`. When creating a new Claygent, click `use a saved template` on the home page to load it and adjust from there.
+
 ### Sculptor updated my prompt but the output looks the same — what happened?
 
 When Sculptor rewrites your prompt, it saves the new prompt text and shows a "Prompt updated by Sculptor" confirmation. It does **not** automatically re-run the test. The test output you see is from the previous run. Click **Run** (or **Run all**) in the test panel to execute the test with the updated prompt and see the new output.
