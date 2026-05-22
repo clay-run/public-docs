@@ -47,7 +47,7 @@ For deeper insights into credit spend within a specific table, you can access th
 _From a table:_
 
 -   Click the `Credit usage` button within the Credits popover and select `Table credit usage`.
--   Click the `Table History` button in the lower right corner of your table.
+-   Click the `History` button in the lower right corner of your table and select `Usage history`.
 
 _From the workspace credit dashboard:_
 
