@@ -39,7 +39,7 @@ Not all source types support fully bypassing the 50,000 record import limit. Onl
 
 -   **Webhooks**
 -   **Send table data**
--   **Signal sources** (e.g., web intent, job posts, LinkedIn mentions, and other signal-based sources)
+-   **Signal sources** (e.g., web intent, job posts, news & fundraising, and other signal-based sources)
 
 All other source types — such as CRM integrations, Snowflake, and database connections — will continue accumulating toward the 50,000 limit even when auto-delete is enabled. Auto-delete will still delete rows from the table for those sources, but the underlying source record count is not cleared.
 
