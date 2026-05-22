@@ -99,6 +99,14 @@ Guess the domain of a company based on their company name.
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
 
+## How HG Insights detects technologies
+
+HG Insights uses a broader set of signals than tools that rely solely on website scanning. Instead of crawling public-facing frontend code, HG Insights mines signals from job postings, resumes, white papers, cloud data, SDK fingerprints, server events, and historical install data. This means HG Insights can surface backend and internally-deployed technologies that aren't visible in a company's public website source.
+
+By contrast, tools like [BuiltWith](https://university.clay.com/docs/builtwith-integration-overview) detect technology by scanning a website's public source code, which works well for client-side tools (e.g., marketing pixels, JavaScript libraries) but may miss technologies deployed behind the login wall or on the server side.
+
+To verify a technology detected by HG Insights, you can search the company's website (e.g., privacy policy or terms of service pages) for the technology name, or use a targeted query like `site:[DOMAIN] "[TECHNOLOGY_NAME]"`.
+
 ## Troubleshooting
 
 ### Fewer companies returned than expected
