@@ -197,14 +197,6 @@ Valid inputs for the company identifier field:
 
 To fix this, replace the person profile URLs in your column with the corresponding company LinkedIn URLs. You can use the **Find Company** or **Enrich Company** enrichments to retrieve a company URL from a company name or domain, then pass that URL into **Find Contacts at Company**.
 
-### "Failed to fetch profile data" error
-
-If Find People shows **"We couldn't load results — Failed to fetch profile data. Please contact support."**, the cause is a missing person-level (demographic) filter. Find People requires at least one person-level filter to run — such as **Job title**, **Location**, **Seniority**, or **Job function**. Without one, the search cannot execute regardless of any company-level filters you've set.
-
-**To resolve:** Open your Find People search settings and add at least one person-level filter (for example, set a **Country** under Location, or enter a keyword under **Job title**), then re-run the search.
-
-If the error persists after adding a demographic filter, it may be a temporary service disruption. Credits are automatically refunded for failed searches.
-
 ## FAQs
 
 ### Why is this person showing up despite having moved companies?
