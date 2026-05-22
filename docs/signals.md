@@ -3,7 +3,7 @@ title: Signals in Clay
 source_url: https://university.clay.com/docs/signals
 description: Learn about Signals, a way to monitor changes to your contacts like
   promotions, job changes, or new hires.
-last_synced: 2026-04-26T01:40:40.844Z
+last_synced: 2026-04-26T01:40:40.229Z
 ---
 
 # Signals in Clay
@@ -74,3 +74,17 @@ To avoid unexpected charges:
 -   Check the per-row cost of each enrichment column in your results table before activating a signal.
 -   Turn off auto-update on columns you don't want to fire automatically: open the column → `Run settings` → toggle off `Auto-update`.
 -   To see the full per-column credit breakdown after a signal fires, click `History` in the lower right corner of your results table and select `Usage history`.
+
+### Does pausing or deleting a results table stop the signal from running?
+
+No. Signals operate independently of the tables they populate. Pausing a results table, deleting rows from it, or deleting the table itself does not stop the signal from running on its scheduled cadence or consuming credits.
+
+Credits for signal monitoring are charged based on the number of contacts or rows **checked** — not the number of matching results returned. A signal checking 5,000 contacts consumes credits for all 5,000 checks, even if no matches are found that run.
+
+To stop a signal from consuming credits, you must pause or disable it directly from the signal's column settings — not by pausing the table it populates:
+
+1.  Click the signal column header (the `📡` icon, usually named `Event`).
+2.  Click `Edit column`.
+3.  Disable or pause the signal, then save.
+
+You can review all active signals and their individual credit spend in the `Signals` tab of the [credit usage dashboard](/docs/credit-usage) (`Settings` → `Usage`).
