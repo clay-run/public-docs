@@ -220,6 +220,12 @@ You need to replace each affected column with a new **Use AI** column. Here's ho
 
 Repeat for each affected column in your table. Once the new Use AI column is running correctly, you can delete the old Claygent column.
 
+### My object inputs show "Success" in the test panel instead of their actual content — is that normal?
+
+Yes, this is expected. When a Claygent variable is connected to an object value — such as a JSON enrichment payload or a structured data column — the test panel input preview shows **"✅ Success"** rather than rendering the full object contents. This is a known display limitation; your agent receives and processes the complete object data correctly.
+
+To inspect exactly what data was passed to your agent, deploy your Claygent to a table, run it, then click the cell to open the **cell details panel** and examine the full input and output values there.
+
 ## Tips for success
 
 **Importing test cases**: Instead of manually creating test data, import real rows from your tables. Click `Import from table` in the test panel to pull actual data and see how your agent performs on real-world inputs.
