@@ -85,7 +85,7 @@ You can permanently delete your Clay account through your account settings. Befo
 -   You must be an **admin** in a workspace where at least one other admin exists, OR
 -   You must be the **only member** in your workspace
 
-If you are the sole admin of a workspace with other members, you must transfer admin rights to another member or remove remaining members before deleting your account.
+If you are the sole admin of a workspace with other members or pending invites, you must transfer admin rights to another member, remove remaining members, or cancel pending invites before deleting your account.
 
 **To delete your account:**
 
@@ -101,6 +101,7 @@ If you are the sole admin of a workspace with other members, you must transfer a
 -   Your account email is updated to a deleted variant.
 -   For any workspaces affected by your account deletion, workspace admins will receive email notifications.
 -   Your private app account and Stripe customer information are deleted to prevent unexpected charges.
+-   You will receive an email confirmation once your account has been deleted.
 
 **Important:** Account deletion is permanent and cannot be undone. While your data is marked for deletion and critical billing/authentication records are removed immediately, full data removal from our database may take additional time.
 
