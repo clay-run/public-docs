@@ -12,7 +12,7 @@ Uncover enterprise-grade technographic and parent company data while enriching f
 
 The HG Insights integration brings enterprise-grade technology intelligence data points, enabling teams to access proprietary data such as:
 
--   **Technology Intelligence:** In-depth details about a company’s tech stack that typically is hard to find.
+-   **Technology Intelligence:** In-depth details about a company's tech stack that typically is hard to find.
 -   **Firmographic Data:** Insights into company size, revenue, and more.
 -   **Corporate Hierarchy Data Points:** Accurate mapping of parent-child relationships within target companies.
 
@@ -34,7 +34,7 @@ Build lists of companies based on what technology they use, including "back of h
 -   **Product attributes**
 -   **Products**
 -   **Max products per company**
--   **Max companies**
+-   **Max companies:** Limits the number of companies returned. Defaults to **100** if not specified — increase this value if you need to capture more target accounts.
 -   **Revenue**
 -   **Employee count**
 -   **Allowed industries (HG Insights):** Filter companies by their HG Insights-defined industry.
@@ -98,3 +98,9 @@ Guess the domain of a company based on their company name.
 
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
+
+## Troubleshooting
+
+### Fewer companies returned than expected
+
+The `Source Companies by product usage` action returns up to **100 companies by default**. If your target accounts aren't all appearing, increase the **Max companies** input to capture more results. Keep in mind that a higher limit will consume more enrichment credits.
