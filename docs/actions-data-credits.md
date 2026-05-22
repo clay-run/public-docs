@@ -58,7 +58,6 @@ Features that use an Action:
 -   Data warehouse exports and syncs.
 -   HTTP API calls.
 -   Ads audience exports (e.g., LinkedIn, Facebook).
--   Sending data to another Clay table (**Send Table Data**).
 
 **Features that don't use an Action:**
 
@@ -380,8 +379,4 @@ No. Exporting data to CSV does not consume an Action or any Data Credits. CSV ex
 
 No. **Lookup Record** operations — such as `Salesforce > Lookup Record` — read data from your CRM into Clay and are treated as CRM imports. They do not consume Action credits. This holds even when the lookup returns **No Records Found**.
 
-CRM **write** operations consume Actions: Create Record, Update Record, Upsert Object, and other actions that push data from Clay to your CRM. Routing data to another Clay table using **Send Table Data** also consumes 1 Action per record.
-
-### Does Send Table Data consume an Action credit?
-
-Yes. **Send Table Data** routes records from one Clay table to another and consumes 1 Action per record sent.
+Only CRM **write** operations consume Actions: Create Record, Update Record, Upsert Object, and other actions that push data from Clay to your CRM.
