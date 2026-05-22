@@ -91,6 +91,8 @@ Phone number enrichments aren't available during the trial period. To access thi
 
 If your team wants to do a trial, each team member can create their own trial account to explore Clay independently.
 
+Trial tables can hold up to **1,000 rows each**. The table view also displays only the first **50 rows** — rows beyond that are blurred in the UI until you upgrade to a paid plan.
+
 ## FAQs
 
 ### How do I track my actions and data credits usage?
