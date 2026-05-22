@@ -91,6 +91,16 @@ Phone number enrichments aren't available during the trial period. To access thi
 
 If your team wants to do a trial, each team member can create their own trial account to explore Clay independently.
 
+### Refunds
+
+Refund eligibility depends on your plan type and Data Credit usage since your last purchase:
+
+-   **Annual plans:** Refunds are not available for annual plans. You retain access to your credits and features for the remainder of the contract period.
+-   **Accidental upgrades:** If you upgraded unintentionally and have not used any Data Credits since the upgrade, you may request a refund. Your account will revert to the free plan, and your Data Credit balance will be capped at 200 credits.
+-   **Partial refunds:** If you have used some Data Credits after upgrading, a partial refund may be issued proportional to your remaining unused Data Credits. This is evaluated case by case.
+
+To request a refund, contact [Clay support](https://www.clay.com/contact). Processing time depends on your payment provider.
+
 ## FAQs
 
 ### How do I track my actions and data credits usage?
