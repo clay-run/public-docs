@@ -222,6 +222,18 @@ For POST and PUT requests, specify the data to send in the request body.
 -   ✅ Dynamic column references for numbers don't: `"count": /Score Column`
 -   ⚠️ Exception: Numbers with trailing zeros (e.g., `0004`) need quotation marks
 
+**⚠️ Column references must be inserted as chips, not typed as text**
+
+In Clay's body editor, column values appear as **colored chips** (dynamic tokens), not plain text strings. To insert a column chip:
+
+1.  Click inside the body editor where you want the reference.
+2.  Type `/` to open the column picker.
+3.  Select the column name — it inserts as a colored pill.
+
+If you type `/Column Name` as literal text without using the picker, Clay sends the string `/Column Name` to your API — **not** the column's actual value. For example, typing `/contact_status` sends `"/contact_status"` to the receiving server instead of the real value (e.g., `"ready"`). This is the most common cause of unexpected literal strings appearing in API payloads.
+
+**Number chips and type precision**: A chip wrapped in quotes (e.g., `"count": "/Score Column"`) sends the value as a string — your server receives `"3"`, not `3`. Remove the surrounding quotes if your backend requires a native number type.
+
 **Example body configuration:**
 
 ```javascript
