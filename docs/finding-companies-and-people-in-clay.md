@@ -114,6 +114,14 @@ This runs as a formula (no credit cost) and returns `true` if a matching current
 
 **Note:** This check requires running Enrich Person first. In most workflows you'll be running Enrich Person anyway — the formula adds no additional cost on top of that.
 
+**One Enrich Person call returns the full experience history.** You do not need multiple Enrich Person columns to check multiple experience items. A single call returns the complete experience array, and `current_experience` is a pre-filtered list of every currently-active role. If a contact holds multiple simultaneous positions — for example, a CEO who is also a board member or investor at other companies — every active role appears in `current_experience`, and `.some()` checks across all of them automatically.
+
+**Matching by company name instead of domain.** If you have a company name from a CRM (such as HubSpot) but not a domain, use this formula variant to return a "Yes" / "No" former-employee flag:
+
+`{{Enrich person}}?.current_experience?.some(e => (e?.company || "").toLowerCase().includes(({{Company Name}} || "").toLowerCase())) ? "No" : "Yes"`
+
+This returns `"No"` if any currently-active role's company name includes your CRM company name, and `"Yes"` (former employee) otherwise. You can also pass the full experience array and your company name into a **Use AI** column with a prompt like: *"Given this experience array, return only 'Yes' or 'No'. Return 'No' if any role marked as currently active matches the company name. Otherwise return 'Yes'."*
+
 ## Excluding companies and people
 
 You can exclude up to **150,000 companies or people** from any company or people search by adding up to **three exclusion sources**. Each exclusion source can be one of:
