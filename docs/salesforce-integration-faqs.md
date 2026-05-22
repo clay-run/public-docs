@@ -55,7 +55,7 @@ To avoid creating duplicates from your Clay table, first look up an object to ch
 
 1.  Add a **Lookup record** (or **Lookup records via SOQL**) column to find the existing record in Salesforce using a unique identifier such as email address or record ID.
 2.  Add a **Create record** column for the object you want to create.
-3.  In the **Create record** column settings, open **Run settings** and add a conditional run. Reference the ID field returned by your lookup column and check that it is empty — for example, `/Contact ID is empty` (where `/Contact ID` references the ID field from your Lookup record column). Clay will only run Create record on rows where no existing match was found.
+3.  In the **Create record** column settings, open **Run settings** and add a conditional run. Set the condition to check that the ID field returned by your lookup column is empty. Clay will only run Create record on rows where no existing match was found — rows that don't meet the condition are skipped and consume no credits.
 
 For full details on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
 
