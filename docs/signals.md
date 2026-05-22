@@ -56,10 +56,10 @@ Most Signals are available on any paid plan. The [LinkedIn social listening Sign
 
 ### Why is my Signal returning 0 results?
 
-Signals require a connected source table containing the companies or contacts you want to monitor. Without a linked table — or if the linked table is empty or has been deleted — the Signal has nothing to check against and will return 0 results. Confirm that your Signal is connected to an active Clay table with valid company identifiers (domain or LinkedIn URL) or contact LinkedIn URLs.
+Signals require a connected data source to run against — either a source table containing the companies or contacts you want to monitor, or an audience segment. Without a linked source table or audience segment (or if the linked table is empty or has been deleted), the Signal has nothing to check and will return 0 results. Confirm that your Signal is connected to an active Clay table with valid company identifiers (domain or LinkedIn URL) or contact LinkedIn URLs, or to a populated audience segment.
 
 ### I want to find job postings by location or title — is that a Signal?
 
-No. Signals monitor changes at companies already in your table (new hires joining, contacts getting promoted, contacts changing jobs, etc.). They are not a way to search for job postings from scratch.
+No. Signals monitor changes at companies or contacts already in your data source (new hires joining, contacts getting promoted, contacts changing jobs, etc.). They are not a way to search for job postings from scratch.
 
-To find open job postings by location, job title, or other criteria without a pre-existing company list, use the **Find Jobs** source when creating a new table. You can also [schedule it to run on a recurring basis](https://www.clay.com/university/guide/scheduled-sources) (daily, weekly, etc.) so your table stays up to date with the latest postings.
+To search for open job postings by location, job title, or other criteria, use the **Find Jobs** source when creating a new table. You can also [schedule it to run on a recurring basis](https://www.clay.com/university/guide/scheduled-sources) (daily, weekly, etc.) so your table stays up to date with the latest postings.
