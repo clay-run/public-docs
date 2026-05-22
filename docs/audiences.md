@@ -246,3 +246,14 @@ Not directly — each audience supports one active ad platform sync at a time. T
 ### What happens to a contact's ad targeting when they become a customer?
 
 If your segment has an exclusion condition (e.g., Account Type ≠ "Customer"), the contact is automatically **removed** from the synced ad audience as soon as that condition is met. See [Clay Ads](https://university.clay.com/docs/clay-ads) for platform-specific guidance.
+
+### Will my Salesforce Account ID appear on web visitor records?
+
+Yes — this is expected behavior. When a web intent visitor's company domain matches the domain of a Salesforce Account you have synced into Audiences, Clay merges the two into a single entity using normalized domain matching. Salesforce Account data — including the Account ID — becomes available on that unified company record automatically.
+
+For this to work, you need both:
+
+-   Salesforce Accounts synced into Audiences with website domain fields mapped.
+-   Web intent configured as a signal in your Audiences workspace.
+
+**If visitors arrived before your Salesforce sync was connected:** Web intent records added to Audiences before you connected Salesforce may not automatically merge with existing SFDC records. To resolve this, use the **deterministic record matching** option in your Salesforce import settings and select domain as the match key. This matching applies to records coming in after the setting is enabled — it does not retroactively deduplicate records already in Audiences.
