@@ -53,7 +53,7 @@ _"Build an agent that scores a lead against our ICP and outputs a score from 1 t
 Sculptor will:
 
 1.  Define the prompt logic.
-2.  Set up variables (company name, contact title, industry, etc.).\
+2.  Set up variables (company name, contact title, industry, etc.).
 3.  Format the output (score plus reasoning).
 4.  Create test cases so you can see it in action.
 
@@ -146,7 +146,9 @@ You can also deploy directly from Claygent builder by clicking `Add to table`.
 
 ### Using your own API key
 
-Deployed Claygent columns use Clay's managed account by default, which charges data credits. Selecting an AI provider model (like Claude or GPT-4o) in the Claygent builder picks the model — it does not configure which API key is billed. To use your own linked API key in a table column:
+When a Claygent column uses a third-party model — Claude, GPT-4o, Gemini, Mistral, Grok, or similar — the column defaults to Clay's managed account, which charges data credits. Clay parallel models (Argon, Neon, Helium) always run on Clay's infrastructure and show no account selector.
+
+Selecting a model in the Claygent builder picks the AI provider — it does not configure which billing account is used. To use your own linked API key in a table column (available on Starter+ plans):
 
 1.  Click the Claygent column header and select **Edit column**.
 2.  In the **Quick set-up** tab, click the account dropdown under **API key**.
@@ -211,9 +213,9 @@ Yes, but centralizing in Claygent builder gives you version control, free testin
 
 ### Can I use my own API key with a Claygent?
 
-Yes, when a Claygent is deployed as a table column. By default, deployed columns use Clay's managed account and charge data credits. To switch to your own linked key: open the column settings → **Quick set-up** tab → click the **API key** dropdown → select your linked account → save. Runs using your own key are billed directly by the AI provider — no Clay data credits are charged.
+Yes, when the Claygent column uses a third-party model (Claude, GPT-4o, Gemini, and others) and your workspace is on a Starter+ plan. By default those columns use Clay's managed account and charge data credits. To switch: open the column's **Quick set-up** → click the **API key** dropdown → select your linked account → save. Runs using your own key are billed directly by the provider — no Clay data credits are charged.
 
-Note: Choosing a model in the Claygent builder (Claude, GPT-4o, etc.) selects the AI provider, not the billing account. API key selection is configured separately in each table column.
+Note: Clay parallel models (Argon, Neon, Helium) have no API key selector and always run on Clay's infrastructure. Selecting a model in the builder sets the AI provider, not the billing account; key selection is configured separately in each table column.
 
 ### Sculptor updated my prompt but the output looks the same — what happened?
 
