@@ -2,8 +2,9 @@
 title: Run progress
 source_url: https://university.clay.com/docs/run-progress
 description: Clay provides multiple ways to track and monitor run progress
-  across your tables, including how to manually trigger unrun enrichment cells
-  or run enrichments on a specific subset of rows.
+  across your tables, including how to manually trigger unrun enrichment cells,
+  run enrichments on a specific subset of rows, and troubleshoot cells stuck in
+  Queued status.
 last_synced: 2026-04-26T01:40:34.620Z
 ---
 
@@ -96,3 +97,21 @@ To run enrichment or waterfall columns on a targeted subset of rows — for exam
 This triggers all enrichment and waterfall columns on those rows only, leaving other rows unaffected.
 
 **To run a single column on specific rows only**, select the cells in that column for your target rows, then right-click → **Run [N] cells**.
+
+## Troubleshooting cells stuck in Queued status
+
+Cells show a **Queued** status when they are waiting to be processed. This is normal when running large tables — Clay works through rows in batches, so later rows wait while earlier batches complete. In most cases the queue resolves automatically.
+
+If cells remain Queued for an extended period, common causes include:
+
+-   **Batch processing in progress** — Clay processes rows in batches; later rows in the queue wait while earlier rows complete. No action needed in most cases; the queue will clear on its own.
+-   **External API rate limits** — Integrations such as OpenAI or HubSpot enforce per-minute request limits. Clay respects these automatically; the queue resumes once the rate-limit window resets.
+-   **API quota exhausted** — If you've hit a quota ceiling (e.g., OpenAI, Google), new runs are blocked until the quota resets or is increased in the provider's dashboard.
+-   **Auto-run settings** — If auto-run is enabled and triggering repeated re-runs, rows may accumulate in the queue unexpectedly. See [Table management settings](table-management-settings.md) for how to adjust auto-run and scheduled run behavior.
+
+**To unblock a stuck queue:**
+
+1.  **Wait a few minutes** — Active processing usually clears the backlog without intervention.
+2.  **Hard refresh the page** — Press `Ctrl+Shift+R` (Windows/Linux) or `Cmd+Shift+R` (Mac) to reload and clear any stale browser state.
+3.  **Manually re-trigger the column** — Right-click the column header and select **Run column** → **Run [N] empty or out-of-date rows**. See [Manually running unrun cells](#manually-running-unrun-cells) above for full steps.
+4.  **Check your API quotas** — If the column calls an external API (OpenAI, Google, etc.), verify you haven't exhausted a quota in that provider's dashboard.
