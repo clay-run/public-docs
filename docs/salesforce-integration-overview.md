@@ -94,7 +94,7 @@ For full instructions on setting up a restricted Salesforce user with field-leve
 **Inputs:**
 
 -   **Report to run:** The report to run in your Salesforce instance.
-    -   Only tabular and matrix reports are supported. Salesforce limits reports to a maximum of 2,000 records.
+    -   Only tabular and matrix reports are supported. Salesforce limits reports to a maximum of 2,000 records. If you need to import more than 2,000 records, use the [Salesforce SOQL source](salesforce-soql.md) instead — SOQL queries bypass this cap and support up to 50,000 records per import.
 -   **Uniqueness fields:**
     -   Since Salesforce reports lack unique identifiers, select specific fields to identify each row. This prevents duplicate records from appearing when the report updates.
         -   **Important:** If you don't select any fields, Clay will use the entire row content as the unique identifier. This can result in many duplicate entries in your Clay table.

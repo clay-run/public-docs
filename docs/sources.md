@@ -168,7 +168,7 @@ Clay tables have a **50,000-row limit** across all plans. This applies to all so
 
 **Source-specific limits:**
 
--   **Salesforce Reports**: 2,000 records (API restriction)
+-   **Salesforce Reports**: 2,000 records (API restriction) — to import more than 2,000 records, use the [Salesforce SOQL source](salesforce-soql.md) instead (supports up to 50,000 records)
 -   **Salesforce List Views**: 50,000 records
 -   **All other sources**: 50,000 records
 
