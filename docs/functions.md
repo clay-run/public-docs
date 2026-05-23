@@ -116,7 +116,7 @@ Column templates are saved configurations for a single column that you apply man
 
 No, functions don't currently have a version history in the function editor itself.
 
-However, if you accidentally delete a function column from a table, you can recover it using that table's History feature. Open **History** in the bottom-right corner of the table, find a configuration version from before the deletion, and restore it — this brings back the column and its function configuration. For step-by-step instructions, see [Table versions](https://university.clay.com/docs/table-versions).
+However, if you accidentally delete a function column from a table, you can recover it using that table's History feature. Open **History** in the bottom-right corner of the table (the table where the function column was used, not from inside the function editor), find a configuration version from before the deletion, and restore it — this brings back the column and its function configuration. For step-by-step instructions, see [Table versions](https://university.clay.com/docs/table-versions).
 
 ### What is the main use case for functions?
 
@@ -220,10 +220,15 @@ To fix it:
 
 If you haven't renamed or deleted any columns recently, the reference may have become stale after a table update — the remap will resolve it either way.
 
-### My function instance shows "No outputs configured" or "View main function" shows a Page Not Found error
+### My function instance shows "No outputs configured"
 
-This typically means the function column was accidentally deleted from the source table, which can clear its output configuration or break the link to the underlying function table.
+This means the function's **Send data back** step has no outputs defined. The Send data back step controls which values inside the function get returned to the calling table when the function runs — if it's empty, the function runs but produces no data in your table.
 
-To recover: open the source table's **History** (bottom-right corner), find a configuration version from before the deletion, and restore it — this brings back the column and its function configuration. See [Table versions](https://university.clay.com/docs/table-versions) for detailed steps.
+To configure outputs:
 
-If version history isn't available (History is not enabled on Free and Trial plans; paid plans retain 30 or 180 days), you'll need to recreate the function from scratch.
+1.  Go to your Clay homepage and click **Functions**.
+2.  Find your function and click **Edit function**.
+3.  In the function editor, open the **Send data back** column and add the columns you want to return as outputs.
+4.  Click **Publish Changes** to apply.
+
+If you accidentally deleted the function column from a table, use that table's **History** (bottom-right corner) to restore a version from before the deletion rather than reconfiguring from scratch — this brings back the column with its original output configuration. Note: use History from the table where the function column was used, not from inside the function editor. See [Table versions](https://university.clay.com/docs/table-versions) for steps.
