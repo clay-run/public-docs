@@ -32,7 +32,7 @@ Connect to Salesforce via Client Credentials for server-to-server access. No bro
 
 **Setting up in Salesforce**
 
-1.  In Salesforce Setup, search for `External Client App Manager` in Quick Find and select it. Create a new external client app — see [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_extended_client_app.htm&language=en_US&type=5) for full creation steps. Once created, click on your app and select `Edit`.
+1.  In Salesforce Setup, search for `External Client App Manager` in Quick Find and select it. Create a new external client app — see [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&language=en_US&type=5) for full creation steps. Once created, click on your app and select `Edit`.
 2.  In the `Settings` tab, enable the flow at the app level:
     -   Under `Flow Enablement`, check `Enable Client Credentials Flow`.
 3.  In the `Policies` tab, enable the flow at the org level. This is the setting most commonly missed — if it's off, the flow is blocked regardless of the Settings toggle:
@@ -243,7 +243,7 @@ Salesforce Picklist Options: `Technology`, `Healthcare`, `Finance`
 
 -   For unrestricted picklists: If you send a value not in the list, Salesforce creates an "inactive" picklist value
 -   For restricted picklists: Invalid values will cause an error
--   Always verify the exact API name in Salesforce Setup
+-   Always verify the exact API name in Salesforce field settings
 
 ### Multi-select picklist
 
