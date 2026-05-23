@@ -114,7 +114,9 @@ Column templates are saved configurations for a single column that you apply man
 
 ### Is there version history for functions?
 
-No, functions don't currently have a version history.
+No, functions don't currently have a version history in the function editor itself.
+
+However, if you accidentally delete a function column from a table, you can recover it using that table's History feature. Open **History** in the bottom-right corner of the table, find a configuration version from before the deletion, and restore it — this brings back the column and its function configuration. For step-by-step instructions, see [Table versions](https://university.clay.com/docs/table-versions).
 
 ### What is the main use case for functions?
 
@@ -217,3 +219,11 @@ To fix it:
 4.  Save the column.
 
 If you haven't renamed or deleted any columns recently, the reference may have become stale after a table update — the remap will resolve it either way.
+
+### My function instance shows "No outputs configured" or "View main function" shows a Page Not Found error
+
+This typically means the function column was accidentally deleted from the source table, which can clear its output configuration or break the link to the underlying function table.
+
+To recover: open the source table's **History** (bottom-right corner), find a configuration version from before the deletion, and restore it — this brings back the column and its function configuration. See [Table versions](https://university.clay.com/docs/table-versions) for detailed steps.
+
+If version history isn't available (History is not enabled on Free and Trial plans; paid plans retain 30 or 180 days), you'll need to recreate the function from scratch.
