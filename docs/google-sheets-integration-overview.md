@@ -11,6 +11,20 @@ Cloud-based spreadsheet for real-time collaboration.
 
 Google Sheets in Clay enables seamless integration between your Clay tables and Google Sheets, allowing you to easily sync and manage data across both platforms.
 
+## Using Google Sheets as a source
+
+You can use a Google Sheet as the source for a Clay table, importing your spreadsheet rows directly into Clay.
+
+When you import from Google Sheets, all columns from your spreadsheet are stored together inside a single **Google Sheets Row** column in Clay. Your Clay table will show only three columns by default — **Google Sheets Row**, **Created At**, and **Updated At** — regardless of how many columns your spreadsheet contains.
+
+**To see all your spreadsheet columns:**
+
+1.  Click any row in your table to open the row details panel.
+2.  Switch to the **Values** tab.
+3.  Expand the **Google Sheets Row** entry to see all the individual fields from your spreadsheet.
+
+**To reference a specific spreadsheet column in Clay** (e.g., in an enrichment, formula, or AI prompt), use the `/column name` syntax — for example, `/First Name` or `/Email`. You don't need to add every spreadsheet column to your table as a separate Clay column to use the data.
+
 ## **Enriching data with Google Sheets**
 
 1.  While in a Clay table, click `Actions` and search for `Google Sheets`.
