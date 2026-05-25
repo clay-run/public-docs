@@ -52,3 +52,11 @@ Each result includes a **Structured Location** object in the cell details with g
 -   **Region**
 -   **Country**
 -   **Country Iso**
+
+## Enriching your results
+
+After importing Find People results, use Clay's enrichments to add contact information such as work email and mobile phone numbers.
+
+**Work email:** In your table, click `Add enrichment` and select `Work Email`. This pre-built waterfall searches multiple email providers in sequence and charges credits only when a match is found. For full setup details, see [Work Email waterfall](work-email-waterfall.md).
+
+**Mobile phone:** To find mobile phone numbers, click `Add enrichment`, search for `Phone number`, and select the waterfall option under **Waterfalls**. The phone number waterfall cascades through multiple providers in sequence, charging credits only when one succeeds — giving better coverage and a lower per-row cost than the standalone `Mobile Phone` tool. For provider recommendations by region, see [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md).
