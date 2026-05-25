@@ -57,6 +57,8 @@ Every time a source runs or re-runs, Clay walks through a short decision tree be
 -   If the **column's Auto-run toggle is off**: the cell is marked stale and skipped (only runs on a manual click).
 -   If the **column's Auto-run toggle is on** (default): **the cell runs**.
 
+**Note — auto-run and existing rows:** The decision tree above fires when a source event occurs (a new row arrives, or a scheduled source syncs). Auto-run does **not** proactively re-run enrichments on rows that were already in your table. Existing rows only run automatically when a scheduled source sync updates them — and only if **"Update existing rows"** is enabled on the source column (Step 1 above). To run enrichments on existing rows manually, right-click the column header → **Run column** → **Run N empty or out-of-date rows**, or choose **Update cells** when enabling auto-run.
+
 ### Table-level auto-run (master control)
 
 Table-level auto-run acts as the master switch that controls automatic enrichment for the entire table.
