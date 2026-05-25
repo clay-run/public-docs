@@ -141,6 +141,14 @@ Think of each scheduled run as Clay asking Salesforce: "Give me all records matc
 -   Add a condition to catch recently modified records: `WHERE ... OR SystemModstamp >= LAST_N_DAYS:30`.
 -   If you need to track a fixed set of accounts regardless of their field values, filter on a stable identifier instead (e.g., `WHERE Id IN ('001...', '001...')`).
 
+### Why does my source show a higher record count than the number of rows in my table?
+
+The Salesforce SOQL source tracks a **cumulative count** of every record it has ever imported — not just the rows currently visible in your table. This count is used to prevent re-importing the same records on subsequent scheduled runs.
+
+Even if rows are deleted from your table (including via auto-delete), or if records no longer satisfy your SOQL query's `WHERE` clause, those records are still counted in the source total. For example, if the first weekly run imports 5,000 records and the second run imports 5,000 new records, the source count will show 10,000 — even if only 5,000 rows are currently in the table.
+
+This also means that **auto-delete is not compatible with the Salesforce SOQL source for bypassing the 50,000-record limit**. Auto-delete will still remove rows from the table, but the source count will keep growing toward 50,000 with each import run. Once the source reaches that limit, it will stop importing new data and you will need to delete and re-create the source to continue. See [Auto-delete in tables](https://university.clay.com/docs/auto-delete) for details on source compatibility.
+
 ### Why am I getting rate limit errors?
 
 Salesforce enforces API request limits. If you hit limits:
