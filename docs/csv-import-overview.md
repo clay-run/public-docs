@@ -25,3 +25,14 @@ Within Clay you can import CSV as a source to an existing or new table.
 5.  Choose how to handle the imported rows:
     -   `Save and run rows in this CSV` — imports the rows and immediately runs any enrichments on them.
     -   `Save and don't run` — imports the rows without triggering any enrichments.
+
+## Next steps after importing
+
+Once your data is in Clay, you can enrich rows to pull in additional information.
+
+**If you imported a list of companies and want to find contacts and their email addresses:**
+
+1.  In your table, click **Tools** and select **Find People at These Companies** to search for people at each company by job title, seniority, or other criteria. Each match is returned as a separate contact row.
+2.  On the resulting contacts table, add a **Work Email** waterfall (**Add enrichment → Work Email**) to find and validate a work email address for each contact.
+
+Importing a company list does not automatically add contact rows or email addresses — you need to run these two steps explicitly. For full setup instructions, see [Finding companies and people in Clay](finding-companies-and-people-in-clay.md) and [Work Email waterfall](work-email-waterfall.md).
