@@ -52,3 +52,29 @@ Each result includes a **Structured Location** object in the cell details with g
 -   **Region**
 -   **Country**
 -   **Country Iso**
+
+## Find People from External Search
+
+If you want to import people from a Sales Navigator People Search URL rather than searching Clay's built-in database, use the **Find People from External Search** source. This is a separate source from the regular Find People search.
+
+### How to set it up
+
+1.  In Sales Navigator, build your People search using the desired filters. Run the search — do **not** save it as a list or load it from your search history.
+2.  Copy the People Search URL from your browser's address bar.
+3.  In Clay, click **+ Add** at the bottom of a workbook.
+4.  In the source search bar, type **External** and select **Find People from External Search**.
+5.  Paste your Sales Navigator People Search URL into the provided field.
+6.  Optionally set a result limit, then click **Save**.
+
+### URL requirements
+
+The URL must be a **live Sales Navigator People Search** — not a saved search, a recent search, or a saved lead list. URLs that contain `savedSearchId`, `recentSearchId`, or `/sales/lists/people` will be rejected with the error **"You must include a valid People Search URL."**
+
+To get a valid URL: run a fresh search in Sales Navigator (do not load from recent searches or saved searches), then copy the URL directly from the address bar.
+
+### Limits and credits
+
+-   Up to **2,500 results** per source
+-   **1 Clay credit** per person returned
+
+The results count toward your table's 50,000-row limit.
