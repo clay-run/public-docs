@@ -22,6 +22,8 @@ You only pay credits for the provider that finds a match, making it one of the m
 3.  Choose between `Quick setup` and `Full configuration`
 4.  Map your input columns and click `Save`.
 
+**Note:** Most providers need at minimum a **full name** and **company domain** for each row — make sure those fields are populated in your table before running. Providing a LinkedIn URL or company name as additional inputs gives more providers enough data to run.
+
 The Work Email waterfall includes two advanced settings — `Infer Email` and `Validation` — that work together to give you more control over credit efficiency and result quality.
 
 `Infer Email` attempts a free email guess before calling any paid provider, while `Validation` settings let you define what counts as a valid result and when the waterfall should stop searching. Both are available in `Full configuration` mode.
