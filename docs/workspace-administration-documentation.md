@@ -109,6 +109,14 @@ If you are the sole admin of a workspace with other members or pending invites, 
 
 Workspace settings give you control over key aspects of your workspace, such as its name, profile picture, and billing email. These settings ensure your workspace is easily identifiable and that billing communications reach the correct contact. Below are the steps for updating key workspace details.
 
+## **Creating a new workspace**
+
+Creating an additional workspace is not available through in-app settings for most accounts. To create a new workspace, sign up using a **different email address** at [app.clay.com](https://app.clay.com) — this starts a new workspace where you are the admin from day one.
+
+You do not need to leave any workspaces you're already a member of. Your existing workspace memberships stay intact, and each workspace is independent with its own tables, credits, and billing.
+
+**Note for agencies and users managing multiple client workspaces:** Some accounts have access to an **"Add workspace"** option directly in the workspace switcher. If you need to create multiple workspaces under the same account, contact Clay support to check whether this can be enabled for you.
+
 ## **Switching between workspaces**
 
 Your Clay account can be associated with more than one workspace — for example, if you explored Clay during a free trial and later upgraded or joined a team's workspace. Each workspace has its own tables, credits, and billing.
@@ -182,7 +190,7 @@ Clay offers three user roles with different permission levels to help manage you
 
 ### **Admin**
 
-**Admins** have full control over the workspace and can manage both resources and team membership.
+**Admins** have full control over the workspace and can manage both control over the workspace and can manage both resources and team membership.
 
 **Capabilities:**
 
