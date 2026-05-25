@@ -49,15 +49,18 @@ Every time a source runs or re-runs, Clay walks through a short decision tree be
 
 -   If the table's **Auto-run toggle is off** (shows "Manual"): the cell is marked stale and skipped. It will only run on a manual click.
 -   If the table's **Auto-run toggle is on** (shows "Auto-run"): Clay checks the **"Keep existing results"** checkbox.
-    -   **"Keep existing results" checked**: only cells that are new, empty, or errored are eligible to run. Cells with an existing successful result are preserved and skipped.
-    -   **"Keep existing results" unchecked** (default): all cells are eligible; Clay proceeds to step 3.
+    -   **"Keep existing results" checked** (default for new tables): only cells that are new, empty, or errored are eligible to run. Cells with an existing successful result are preserved and skipped — even if their inputs have changed.
+    -   **"Keep existing results" unchecked**: all cells are eligible; Clay proceeds to step 3.
 
 **Step 3 — Column-level auto-run**
 
 -   If the **column's Auto-run toggle is off**: the cell is marked stale and skipped (only runs on a manual click).
 -   If the **column's Auto-run toggle is on** (default): **the cell runs**.
 
-**Note — auto-run and existing rows:** The decision tree above fires when a source event occurs (a new row arrives, or a scheduled source syncs). Auto-run does **not** proactively re-run enrichments on rows that were already in your table. Existing rows only run automatically when a scheduled source sync updates them — and only if **"Update existing rows"** is enabled on the source column (Step 1 above). To run enrichments on existing rows manually, right-click the column header → **Run column** → **Run N empty or out-of-date rows**, or choose **Update cells** when enabling auto-run.
+**Note — auto-run and existing rows:** Whether existing rows re-run automatically depends on the **"Keep existing results"** setting:
+
+-   **"Keep existing results" on (default for new tables):** Auto-run only fires for cells that have not successfully run yet — new rows, empty cells, and errored cells. Cells with existing successful results are marked stale when inputs change but are **not** automatically re-run. To re-run them, manually trigger the column (right-click column header → **Run column** → **Run N empty or out-of-date rows**).
+-   **"Keep existing results" off (some older tables):** Auto-run fires for all cells when their inputs change, including cells that already have results.
 
 ### Table-level auto-run (master control)
 
@@ -80,15 +83,15 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
 
 **To enable "Keep existing results":**
 
-"Keep existing results" is only available when Auto-run is turned on. To enable it:
+"Keep existing results" is only available when Auto-run is turned on. New tables have this enabled by default. To check or change the setting:
 
 1.  Click the `⛭` icon in the bottom-right corner of your table (or click the table name → **Run Settings**).
 2.  Make sure the `Auto-run` toggle is **on**.
-3.  Check the **"Keep existing results"** checkbox.
-    -   With this checked: only empty, errored, or new cells run automatically — cells with existing successful results are skipped.
-    -   With this unchecked (default): all cells are eligible to run, including ones that already have results.
+3.  Toggle the **"Keep existing results"** checkbox:
+    -   **Checked (default for new tables):** only empty, errored, or new cells run automatically — cells with existing successful results are skipped, even if inputs have changed.
+    -   **Unchecked:** all cells are eligible to run, including ones that already have results.
 
-**Tip:** Enable "Keep existing results" before uploading new rows to an existing table if you don't want to re-run enrichments on rows that are already complete. This prevents accidental full-table re-runs and protects your credits.
+**Tip:** New tables have "Keep existing results" on by default. If you're working with an older table and want to protect existing results, verify this option is enabled before uploading new rows alongside already-enriched data — otherwise auto-run may re-run completed rows and consume additional credits.
 
 ### Column-level auto-run (individual control)
 
