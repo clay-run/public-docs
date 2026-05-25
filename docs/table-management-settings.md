@@ -199,6 +199,29 @@ To duplicate your table:
 1.  Click on the title of the table on the top left.
 2.  Select `Duplicate table`.
 
+## Manage table views
+
+Table views let you save different ways to look at your table — with different filters, column visibility, and sorting. Click the current view name in the table toolbar (e.g., **Default view**) to open the view dropdown.
+
+### Built-in views
+
+Every table includes these pre-built views:
+
+-   **All rows** — Shows all rows in the table.
+-   **Errored rows** — Shows only rows with at least one enrichment error.
+-   **Non enrichment columns** — Shows only non-enrichment columns.
+-   **Fully enriched rows** — Shows only rows where all enrichment columns have completed successfully.
+-   **Graph view** — Displays the column dependency graph for the table.
+
+### View actions
+
+At the bottom of the view dropdown, you can manage any view:
+
+-   **Rename view** — Rename the current view.
+-   **Edit description** — Add or update a description for the view.
+-   **Duplicate view** — Create a copy of the current view.
+-   **Delete view** — Permanently delete the current view. (Not available for the Default view.)
+
 ## View table graph
 
 View Graph helps you visualize the enrichments and their relationships in your table. It enables you to explore data connections and edit directly within the graph.
