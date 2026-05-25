@@ -192,6 +192,8 @@ When you have a segment ready, you can send it to a workbook or an ad platform t
 -   **Rep-owned outbound** — scope workbooks by territory or rep so each AE works only their assigned accounts.
 -   **Additional processing** — send to a workbook to enrich, score, or filter before pushing to your destination.
 
+_Note: If your audience shows an "Ad Syncs exclude all non-US, CPJ sourced contacts" banner, Clay is applying geographic exclusion filters at export time for GDPR compliance. See [Clay Ads](https://university.clay.com/docs/clay-ads) for details on which contacts are excluded._
+
 **Syncing to multiple ad platforms**
 
 Each audience can only be synced to one ad platform at a time — there is no option to add a second platform to an existing sync. To push the same segment to two platforms (for example, both Meta and LinkedIn):
