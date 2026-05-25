@@ -183,6 +183,7 @@ Sculptor understands common API patterns and can guide you through authenticatio
 -   **Review before running**: Verify the AI-generated configuration makes sense.
 -   **Test first**: Run on a single row before processing your entire table.
 -   **Save as template**: After successful setup, save your configuration for future use.
+-   **Throttle request speed if needed**: If the target API enforces rate limits (e.g. Apollo, HubSpot), switch to the **Configure** tab and scroll to the **Custom rate limit** section to limit how many requests per time window Clay sends. See Step 7 in the manual configuration section below for details.
 
 ## Option B: Manual configuration
 
@@ -307,18 +308,23 @@ data.user.email
 
 **Benefits:** Faster processing, cleaner data, easier to work with.
 
-### Step 7: Rate limiting
+### Step 7: Custom rate limit
 
-Control how many API requests you can send within a given time frame. Check your API documentation for rate limits.
+Throttle how many requests Clay sends to the API within a given time window. This is a **column-level** setting — it applies uniformly to every row the column processes. Open the column settings and scroll to the **Custom rate limit** collapsible section on the **Configure** tab.
 
-**Example configuration:**
+**Fields:**
+
+-   **Request Limit** — the maximum number of requests allowed in the time window.
+-   **Duration (in ms)** — the length of the time window in milliseconds (1 to 900,000 ms, i.e. up to 15 minutes).
+
+**Constraint:** The rate limit must average at least 1 request per second — for example, `Request Limit: 1, Duration: 1000 ms` is the slowest setting allowed.
+
+**Example — 100 requests per minute:**
 
 ```javascript
-Request limit: 10
-Duration (ms): 1000
+Request Limit: 100
+Duration (ms): 60000
 ```
-
-**This means:** 10 requests per second
 
 ### Step 8: Remove empty fields from request
 
@@ -471,14 +477,14 @@ Before running on your entire table:
 -   Use Clay's built-in authentication features.
 -   Store credentials securely.
 
-### ✓ Configure rate limits
+### ✓ Set a custom rate limit
 
-If the API documentation specifies limits, configure them in your enrichment.
+If the API documentation specifies rate limits, configure the **Custom rate limit** setting on the **Configure** tab of your HTTP API column. This is a column-level setting — it applies uniformly to all rows. The rate limit must average at least 1 request per second, and the duration can be up to 900,000 ms (15 minutes).
 
 **Example:** 100 requests per minute
 
 ```javascript
-Request limit: 100
+Request Limit: 100
 Duration: 60000 ms
 ```
 
