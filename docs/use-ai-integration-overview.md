@@ -46,8 +46,10 @@ After generating a setup, you can easily edit your original description and rege
 1.  While in a Clay table, click `Add column` and click `Use AI`.
 2.  Switch to the `Configure` tab.
 3.  Select the `Use case`. Choose either web research or content creation.
-    1.  **Web research:** Scrape and analyze websites.
-    2.  **Content creation, manipulation:** Create and manipulate data in your table.
+    1.  **Web research:** Scrape and analyze websites. Provide a website URL in your prompt and Use AI will fetch the page content for the model to analyze.
+    2.  **Content creation, manipulation:** Create and manipulate data in your table. **This mode does not access the web** — if your prompt references a website URL, the model will not visit it; it only processes data that is already in your table columns.
+
+    **Note:** If you want to analyze website content using a Content creation column, first use the **Scrape Website** enrichment to pull the page text into a table column, then reference that column in your AI prompt. For more complex web research — visiting multiple pages, following links, or multi-step browsing — a **Claygent** agent column (accessible via **Add column → [AI section]**) is the most reliable option; it has web browsing built in and works with any AI model.
 4.  Select a `Model` from the dropdown.
     1.  Click `Compare models` to get more detailed information about each model.
 5.  Write a `Prompt`.
