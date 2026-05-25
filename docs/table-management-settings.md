@@ -88,6 +88,16 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
 
 **Tip:** Enable "Keep existing results" before uploading new rows to an existing table if you don't want to re-run enrichments on rows that are already complete. This prevents accidental full-table re-runs and protects your credits.
 
+**Understanding the out-of-date indicator**
+
+When "Keep existing results" is enabled and a cell's upstream inputs change, Clay marks that cell with an out-of-date clock indicator instead of automatically re-running it. This is intentional: the indicator tells you the cell *could* be out of date while leaving the re-run decision up to you — protecting your existing results and preventing unexpected credit spend. The cell's current value is still usable downstream; other columns can reference it normally.
+
+**Note:** Changing "Keep existing results" only affects future auto-run behavior — it does **not** retroactively re-run cells already showing the out-of-date indicator. To refresh currently stale cells after updating this setting:
+
+-   **Disable "Keep existing results"** (uncheck it): a prompt appears offering to immediately re-run all currently stale cells in one click.
+-   **Run from the column header**: right-click the enrichment column header → **Run column** → **Run [N] empty or out-of-date rows**.
+-   **Re-trigger auto-run**: toggle Auto-run off, then back on, and choose **Update cells** to queue all currently stale cells.
+
 ### Column-level auto-run (individual control)
 
 Column-level auto-run controls whether a specific enrichment runs automatically. This setting only works when table-level auto-run is enabled.
