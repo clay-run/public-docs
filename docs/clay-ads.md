@@ -112,6 +112,14 @@ Each record exported or synced consumes 1 action. Data credits apply for any enr
 
 The 50,000 row limit applies to ad audiences exported from tables. For larger audiences, create multiple tables and attach multiple audiences to your campaigns in the ad platform.
 
+### **What does the "Ad Syncs exclude all non-US, CPJ sourced contacts" banner mean?**
+
+This notice appears on an audience when an ad sync exclusion filter is active for your workspace. When active, Clay automatically excludes contacts with a confirmed non-US country from LinkedIn and Meta syncs at export time. This applies to all contacts in the segment — including those imported from your CRM or data warehouse — not only contacts sourced through Clay's people search. Contacts where no country value is set are not affected.
+
+For Google Ads syncs, contacts sourced through Clay's people search (CPJ) are also excluded regardless of their country.
+
+The exclusion happens at sync time only and does not change your underlying audience data. These filters exist for GDPR compliance with how contact data can be used in paid advertising exports.
+
 ### **How long does it take for audiences to be created?**
 
 After sending your audience to LinkedIn or Meta, it will be created within **48 hours** (typically 1-2 days). Plan accordingly when launching time-sensitive campaigns.
