@@ -190,7 +190,7 @@ Clay offers three user roles with different permission levels to help manage you
 
 ### **Admin**
 
-**Admins** have full control over the workspace and can manage both control over the workspace and can manage both resources and team membership.
+**Admins** have full control over the workspace and can manage both resources and team membership.
 
 **Capabilities:**
 
