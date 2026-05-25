@@ -81,6 +81,18 @@ The `Validation` section in `Full configuration` controls how the waterfall eval
 
 ## FAQs
 
+### How do I find an email for a specific contact?
+
+Make sure the contact's row has the required input data (full name and company domain at minimum). Then select the Work Email cell on that row, right-click, and choose **Run 1 cell**. The waterfall checks providers in sequence and stops as soon as one returns a valid email. For more ways to run enrichments on a subset of rows, see [Run progress](run-progress.md).
+
+### What does it mean if no email is found?
+
+If the cell shows no result, click into it to see which providers were tried and what each returned. Common reasons no email surfaces:
+
+-   The row is missing required input data. Check that the contact's full name and company domain are populated.
+-   None of the providers in your waterfall have email data for this person. You can edit the waterfall sequence to add more providers.
+-   The providers ran but returned results that failed validation. Try a less strict validation strategy, or check the individual provider columns (enable them in waterfall settings) to see what was returned.
+
 ### Which email pattern should I use?
 
 The best pattern depends on the companies in your dataset. `first.last@domain.com` is the default because it's the most common format across industries. For more specific datasets, test a small sample (~10 rows) with different patterns to find what performs best before running at scale.
