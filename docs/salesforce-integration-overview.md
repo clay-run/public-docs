@@ -269,6 +269,29 @@ Clay Value: `Technology;Healthcare;Finance`
 | Values not updating | Wrong delimiter used | Use semicolons (;), not commas |
 | Field not accepting value | Using display label instead of API name | Verify API name in Salesforce Setup |
 
+### Writing AI-generated values to restricted picklist fields
+
+If you are using an AI column (Claygent or Use AI) to generate values that are then written to a Salesforce restricted picklist via **Update Record**, you may see "bad picklist value" errors even when the output appears correct. AI columns produce free text — a trailing space, different capitalization, or an invisible encoding character is enough for Salesforce to reject the value.
+
+**Fix: use a Select output field to constrain the AI to your exact picklist values**
+
+1.  In your AI column settings, under **Output format**, choose **Fields**.
+2.  For the output field that maps to your Salesforce picklist, click the type selector and choose **Select**.
+3.  Click **+ Add option** and enter each allowed value exactly as it appears in Salesforce (API name, case, and spacing must match).
+4.  The AI will only return one of the defined options, ensuring a character-for-character match every time.
+
+Alternatively, if you are using **JSON Schema** output mode, add an `"enum"` array to the field definition with the exact allowed values:
+
+```json
+"industry": {
+  "type": "string",
+  "description": "Industry classification",
+  "enum": ["Technology", "Healthcare", "Finance"]
+}
+```
+
+Both approaches prevent the AI from producing free-text output that won't match a valid Salesforce restricted picklist option.
+
 ## Batch processing
 
 The `Create record`, `Update record`, and `Upsert object` actions support batch mode, which processes multiple records simultaneously for improved performance with large datasets. Batch mode is automatically enabled when running these actions across multiple rows in your Clay table. No additional configuration is required.
