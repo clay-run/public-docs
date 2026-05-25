@@ -122,6 +122,21 @@ This runs as a formula (no credit cost) and returns `true` if a matching current
 
 This returns `"No"` if any currently-active role's company name includes your CRM company name, and `"Yes"` (former employee) otherwise. You can also pass the full experience array and your company name into a **Use AI** column with a prompt like: *"Given this experience array, return only 'Yes' or 'No'. Return 'No' if any role marked as currently active matches the company name. Otherwise return 'Yes'."*
 
+### Identify the primary role when a contact holds multiple concurrent positions
+
+When someone lists multiple active jobs on LinkedIn — for example, a CEO who is also an Advisor at several companies — Enrich Person surfaces the **top-listed** LinkedIn position as the default `current_job_title` and `current_company`. That may not be the person's primary full-time role.
+
+Clay does not automatically detect which concurrent role is the "main" job. To identify the actual primary role, use a **Use AI** column:
+
+1.  Run `Enrich Person` to pull the full experience data.
+2.  Add a **Use AI** column (in **Content creation, manipulation** mode).
+3.  Reference `{{Enrich person}}?.current_experience` in the prompt and ask the AI to pick the primary role. For example: *"Given the following work experience, identify this person's primary current job. Deprioritize roles like Advisor, Board Member, or Consultant in favor of full-time positions."*
+4.  To get the job title and company in **separate table columns** rather than a single paragraph, define two output fields in the AI column:
+    -   `primary_title` (Text) — the person's primary job title
+    -   `primary_company` (Text) — the company for that role
+
+Using the **Generate tab** (describe what you want in plain English) is the fastest way to configure this — Clay will set up the prompt and output fields automatically.
+
 ## Excluding companies and people
 
 You can exclude up to **150,000 companies or people** from any company or people search by adding up to **three exclusion sources**. Each exclusion source can be one of:
@@ -141,7 +156,7 @@ This is the current way to suppress your existing CRM or list against new search
 
 The exclusion options above remove matched records before they enter your table. If records are already in your table and you want to skip enrichment on contacts that match a suppression list — such as existing customers, competitors, or a broker list — use **Lookup Rows combined with a run condition**:
 
-1.  Import your suppression list as a Clay table (or use an existing one in your workspace).
+1.  Import your suppression list as a Clay table (or use an existing one in your workspace)
 2.  In your enrichment table, add a **Lookup single row in other table** action. Set `Table to search` to your suppression table and match on a stable identifier — LinkedIn URL for people, or domain for companies.
 3.  On each enrichment you want to gate, open **Run settings → Only run if** and add a condition such as `{{Suppression Lookup}} is empty`. The enrichment will only run for records not found in your suppression list.
 
