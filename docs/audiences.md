@@ -158,6 +158,16 @@ Two Clay enrichments let you move data between a Clay table and your Audience di
     -   `Upsert Audiences Record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. Use it to commit data from unsupported integrations (e.g., HubSpot), qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table.
     -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls.
 
+**Accessing company data from People records in a workbook:**
+
+When you send a People audience segment to a workbook, person records include a `related_ids` section alongside their `fields`. Company information is **not** a flat field on person records — companies are a separate entity in Audiences, linked by Audiences ID. The `Company` field in person `fields` will be null even when the person is visually associated with a company in the Audiences UI.
+
+To supply company details (domain, name) as inputs for an enrichment waterfall:
+
+1.  In your workbook, navigate the **Audiences Record** data for the person row to `records > 0 > related_ids > account_ids > 0` — this is the Audiences ID of the person's first linked company.
+2.  Add a **Lookup in Audiences** enrichment. Set the entity type to **Companies** and filter by **Audiences ID**. Map the value from step 1 as the ID to filter on.
+3.  From the lookup result, access `records > 0 > fields` to find company fields such as domain and name, and map them as inputs to your enrichment waterfall.
+
 ### Signals
 
 Signals monitor your audience for key changes and write results permanently to each matching record so you can segment on them.
