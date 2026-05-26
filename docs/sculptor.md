@@ -44,7 +44,7 @@ When Sculptor builds new columns for your table, it automatically puts the table
 
 Once Sculptor adds columns and sandbox mode is active:
 
-1. Review the proposed columns in sandbox mode using a small set of test rows.
+1. Review the proposed columns in sandbox mode using a small set of test rows. The **All data** tab shows a **View-only** indicator while sandbox is active — this is expected and means your production table is protected while you test.
 2. Click `Review changes` — visible in the tab bar above your table, to the right of the "Test data" / "All data" switcher — to see a summary of all structural column updates.
 3. When ready, click `Publish and run` to apply the changes to your full table, or `Publish and don't Run` to sync the configuration without immediately running all rows.
 
