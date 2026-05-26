@@ -17,6 +17,19 @@ Clay uses two separate metrics to track your usage: **Actions** and **Data Credi
 
 This separation gives you transparency and control—you know exactly what you're paying for.
 
+## Why two meters instead of one?
+
+If you're coming from Clay's pre-March 2026 pricing, Actions may look like a new charge. They're not — here's the context.
+
+When Clay launched, most of its value was delivered through data purchases, so a single Credits meter made sense. As Clay evolved into a full orchestration layer — enriching records at scale, running AI research, routing contacts to sequencers, syncing to your CRM — that orchestration work had real costs. Previously, those costs were bundled into the price per credit, invisible to users and inconsistently priced across accounts.
+
+The new model makes both costs explicit:
+
+-   **Actions** = the orchestration Clay performs on your behalf (always existed; now priced at a few tenths of a penny each, consistently across all users)
+-   **Data Credits** = data purchased from the marketplace (now 50% cheaper on 70+ enrichments compared to legacy pricing)
+
+For most users, data is significantly cheaper on modern plans, so credits go further. The Action charge is the platform fee that was previously baked into the higher per-credit rate. To see whether switching from a legacy plan to a modern plan makes sense for your usage, check your personalized recommendation in **Settings → Billing → Plan Selector**.
+
 ## Quick comparison
 
 |  | Actions | Data credits |
