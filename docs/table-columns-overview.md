@@ -146,7 +146,9 @@ You can merge data from multiple columns into a new column.
 
 ## Dedupe columns
 
-You can also dedupe your rows based a specific column's values.
+You can dedupe your rows based on a specific column's values.
+
+**Note:** Column deduplication removes duplicate **rows** from the table. If you want to deduplicate items within a list stored inside a single cell (for example, an array of domains), use the **Normalize and Deduplicate a List** enrichment instead — see [Clay formatters overview](https://university.clay.com/docs/clay-formatters-integration-overview) for details.
 
 To dedupe a column:
 
