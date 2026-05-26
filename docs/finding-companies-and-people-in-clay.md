@@ -249,9 +249,21 @@ First, check that you're filtering on **Job title keywords** (not just function 
 
 Your search filters may be too specific. Try broadening your criteria incrementally. The profile may also not yet be in the dataset.
 
+### Why does Find Contacts at Company return "No Profile Found"?
+
+Two main causes:
+
+-   **Privacy or access restrictions** — some LinkedIn profiles are not accessible in the stored dataset due to privacy settings. Profiles set to private on LinkedIn are excluded from what providers can index, so a company may show people on LinkedIn when you're logged in but return no results in Clay.
+-   **Stale provider data** — Find Contacts at Company draws from a bulk-refreshed index. If a company's employees haven't been re-indexed recently, the current state of the LinkedIn company page may not yet be reflected. See [How often is company and people data updated?](#how-often-is-company-and-people-data-updated) for details on update cadences.
+
 ### How often is company and people data updated?
 
-High-importance profiles (frequently accessed records, decision-makers, active companies) are updated much more frequently. The full universe of long-tail profiles is updated regularly, though high-importance profiles refresh more frequently.
+The answer depends on which feature you're using:
+
+-   **Enrich Person / Enrich Company** — data is fetched close to real-time each time you run the enrichment, pulling the provider's latest available data at the moment of the run.
+-   **Find People / Find Companies / Find Contacts at Company (CPJ sourcing)** — these features draw from a pre-indexed dataset that providers refresh through bulk record processing. Results can show some deviation from what you see live on LinkedIn, because the index reflects the provider's most recent batch update rather than an immediate lookup. Data freshness has improved significantly over time, so deviation is rarely a problem in practice.
+
+Across both, high-importance profiles (frequently accessed records, decision-makers, active companies) refresh more often than long-tail profiles.
 
 ### Can I run a people search only on companies that meet certain criteria?
 
