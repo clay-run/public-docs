@@ -58,7 +58,7 @@ When you start sandbox mode, the top 10 rows from your existing table will be du
 
 ### Viewing changes
 
-Click `Review changes` to view a list of all _structural_ column updates to your sandbox (compared to your regular table).
+Click `Review changes` — visible in the tab bar above your table, to the right of the "Test data" / "All data" switcher — to view a list of all _structural_ column updates to your sandbox (compared to your regular table).
 
 **This includes:**
 
