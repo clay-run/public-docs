@@ -105,6 +105,16 @@ You can also send contacts from any existing Clay table directly to your Audienc
 
 Records saved from tables are automatically deduplicated and merged with your existing audience data.
 
+### Disconnecting a data source
+
+To remove a Salesforce or Snowflake connection from Audiences:
+
+1.  Click `Add data` to open the data sources panel, find the source card, and click its ⋮ (three-dot) menu → **Settings** to open the source's settings page.
+2.  In the settings page, click the ⋮ menu next to the connection name in the top right corner.
+3.  Select **Disconnect** and confirm.
+
+Disconnecting stops future syncs from that source. Records already imported from that source remain in Audiences — they are not automatically removed. Contact Clay support if you need previously imported records wiped before reconnecting.
+
 ### Entity resolution and deduplication
 
 Clay matches records using LinkedIn URL and email to:
@@ -115,6 +125,8 @@ Clay matches records using LinkedIn URL and email to:
 Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs — org duplicates carry over as-is. Native within-source deduplication is coming.
 
 Records need a high-confidence identifier to match. Auto-enrichment adds `LinkedIn URL` and `CPJ ID` at no cost to improve matching.
+
+**Import record matching (optional):** Each source's import settings include an **Import record matching** option that lets you designate a specific alias field — email, LinkedIn URL, or domain — as the explicit match key for cross-source deduplication. This is useful when your data has a consistent identifier you want Clay to use when merging records from two sources. To configure it, open the source's settings, navigate to the relevant object tab (e.g., People or Contacts), and click **Set up** next to **Import record matching**.
 
 ## Creating an audience
 
@@ -256,4 +268,4 @@ For this to work, you need both:
 -   Salesforce Accounts synced into Audiences with website domain fields mapped.
 -   Web intent configured as a signal in your Audiences workspace.
 
-**If visitors arrived before your Salesforce sync was connected:** Web intent records added to Audiences before you connected Salesforce may not automatically merge with existing SFDC records. To resolve this, use the **deterministic record matching** option in your Salesforce import settings and select domain as the match key. This matching applies to records coming in after the setting is enabled — it does not retroactively deduplicate records already in Audiences.
+**If visitors arrived before your Salesforce sync was connected:** Web intent records added to Audiences before you connected Salesforce may not automatically merge with existing SFDC records. To resolve this, use the **Import record matching** option in your Salesforce import settings and select domain as the match key. This matching applies to records coming in after the setting is enabled — it does not retroactively deduplicate records already in Audiences.
