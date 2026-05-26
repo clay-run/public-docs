@@ -90,7 +90,7 @@ Use this action to find a HubSpot owner by ID or email address.
 
 **Inputs**
 
--   **Owner Owner ID (Optional):** The HubSpot owner ID to search for. If both ID and email are provided, the email will be validated against the owner found by ID.
+-   **Owner ID (Optional):** The HubSpot owner ID to search for. If both ID and email are provided, the email will be validated against the owner found by ID.
 -   **Email (Optional):** The email address to search for. If both ID and email are provided, the email will be validated against the owner found by ID.
 
 ## OAuth scopes
