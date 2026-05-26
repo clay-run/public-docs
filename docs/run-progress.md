@@ -67,6 +67,14 @@ The table-level progress bar, shown at the bottom right of a table, provides a s
     -   Table-level auto-run and scheduled run settings.
     -   A toggle to enable/disable column-level run status data.
 
+## Stopping a run
+
+To stop a running table, click the **Stop** button in the run summary panel at the bottom-right of the table.
+
+**Important: clicking Stop does not immediately cancel enrichments that are already in progress.** When you click Stop, Clay cancels all queued cells that haven't been dispatched yet — but any enrichment calls already sent to an external data provider will run to completion and **will still consume credits**. You may see a short delay between clicking Stop and the table fully halting while these in-flight calls finish.
+
+To prevent unintended credit usage before it starts, turn off [auto-run](table-management-settings.md) before importing large batches of rows. This prevents enrichments from triggering automatically on new data.
+
 ## Manually running unrun cells
 
 The progress tooltip shows **"X% left to run"** — this figure represents enrichment cells that have not yet completed, including cells currently in progress and cells that haven't started at all. If [auto-run](table-management-settings.md) is disabled, cells won't start automatically; you'll need to trigger them manually.
