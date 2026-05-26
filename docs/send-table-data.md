@@ -127,3 +127,4 @@ Repeat this process for each field you want to extract into its own column.
     -   If you want to receive data in the table you're also sending data from, use one of these other actions:
         -   `Lookup Multiple Rows in Other Table`
         -   `Lookup Single Row in Other Table`
+-   **"Invalid destination ID" error**: If a Send Table Data column fails with `Invalid destination ID`, the source or import in the destination table was likely deleted or recreated after the column was originally set up. Clay stores the source ID when the column is first created; if that source no longer exists, all runs will fail — even though the column settings panel shows the destination table name and column mappings and looks correctly configured. To fix it, **delete the failing Send Table Data column and create a new one** pointing to the correct destination table and source. There is currently no visual indicator in the column when this link has broken.
