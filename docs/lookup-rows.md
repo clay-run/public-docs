@@ -68,6 +68,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 -   For readability, when a result is found you can promote returned fields into their own columns (select a returned value → `Create column for it`)
 -   Match on stable, unique identifiers (e.g., a URL is often better than a company name)
 -   Clean and normalize both sides of the match key (trim, lowercase, consistent formatting)
+-   **Ensure the target column type matches your lookup value**: If the `Target column` in the reference table is **Number** type but your `Row value` contains non-numeric text (such as an ID with letters, a dash, a blank, or "N/A"), the lookup may return unexpected results or show a type mismatch error. To fix this, change the target column to **Text** type in the reference table.
 -   Use single row lookup instead of multiple row lookup when you only need one result — it's faster
 -   If an expected field isn't visible in the result panel, the matched row in the source table likely has an empty value for that field — the panel only shows fields that have a value for the specific matched row. To add that column anyway, find a row whose matched source record has the field populated, open that lookup cell, and click **Add as column**.
 
@@ -97,6 +98,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 **Best practices**
 
 -   Match on clean, normalized identifiers (domain/email domain beats company name)
+-   **Ensure the target column type matches your lookup value**: A **Number**-type target column cannot match non-numeric text — matching a Number-type column against text values (IDs with letters, dashes, blanks, or "N/A") may return unexpected results or show a type mismatch error. Change the target column to **Text** type when your lookup values are text identifiers.
 -   Remember the UI shows up to 10 matches, but the count reflects all matches found
 -   Only use `Add as column` for the few results you actually need to avoid clutter and keep tables readable
 -   **100-record cap**: Lookup multiple rows returns at most 100 records per row — this is a hard limit that cannot be changed. If your source table has more than 100 matching records, only the first 100 are returned. To work around this, split the source table into smaller segments (e.g., by category, region, or product line), create a separate lookup column per segment, and merge the results in a formula or AI prompt. Each segment lookup stays under 100 records while the AI prompt still gets the full set.
