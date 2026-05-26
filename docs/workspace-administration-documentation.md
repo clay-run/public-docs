@@ -285,8 +285,10 @@ The typical setup process:
 ## **What happens when SSO is enabled**
 
 -   All users whose email address is on your verified domain are required to sign in through SSO. The Clay login page redirects those users to your SSO provider automatically.
--   Google OAuth sign-in is disabled for users on your domain.
+-   Google OAuth sign-in is disabled for users on your domain. Clicking the **Sign in with Google** button on the login page will return an error (`Google OAuth is disabled for this account`) — this button uses Google OAuth, which is a separate authentication path from SSO.
 -   SSO is configured at the email domain level — if your organization uses multiple Clay workspaces, users on your domain will be routed through SSO for all of them.
+
+**How SSO users should sign in:** On the Clay login page, type your **email address** into the email field and click **Continue** — do **not** click the `Sign in with Google` button. Entering your email triggers domain detection, which redirects you to your SSO provider automatically.
 
 ## **External collaborators (non-domain email addresses)**
 
@@ -311,7 +313,7 @@ An **integration account** is a configured connection between your workspace and
 
 -   `Account / Key Name`: A user-defined name to identify the account, such as "Marketing HubSpot Account" or "Development Anthropic Key." This helps distinguish it from other accounts in the same service.
 -   `Account Credentials`: The authentication details (e.g., API keys or OAuth tokens) required to connect securely to the external service. Credentials can be tested or updated if they become invalid.
--   `Default Status`: An optional setting that makes the account the default choice for its service, streamlining its use in workflows.
+-   `Default Status`: An optional setting that makes the account the default choice for its service, streamlining its use in rozpočtu.
 
 ## **Types of accounts**
 
