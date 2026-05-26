@@ -174,7 +174,7 @@ Clay tables have a **50,000-row limit** across all plans. This applies to all so
 
 **What happens when you hit the limit?**
 
-For standard source imports (CSV, CRM, list builders), Clay stops importing silently when the limit is reached — no error is displayed. For **send table data** actions targeting a full table, an `"Error: Record limit reached"` message appears in the source table's action column.
+For standard source imports (CSV, CRM, list builders), Clay stops importing silently when the limit is reached — no error is displayed. For **send table data** actions targeting a full table, a `"Record limit reached"` message appears in the source table's action column.
 
 **Solutions for large datasets:**
 
