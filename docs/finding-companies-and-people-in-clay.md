@@ -36,7 +36,10 @@ If you need results that meet _either_ of two different filter combinations, set
 
 ### Choose your starting point
 
-**Recommended:** If you have a company list, use Find People at These Companies (Tools → Find People at These Companies) rather than a standalone people search. This scopes results to your specific companies and keeps contacts linked to their accounts — rather than returning an unanchored list you'd need to join manually.
+**If you have a company list**, you have two options depending on how you want to store the results:
+
+-   **Find People at These Companies** (Tools → Find People at These Companies) — creates a separate people table with one row per contact, linked back to the company. Best when you want to run enrichments on each contact individually (work email, phone, etc.) or need to rank/filter contacts before saving.
+-   **Find Contacts at Company** (add as a column in your company table) — stores contacts as a list within each company row. Best when you want contacts to stay in your company table, or when you're adding companies one at a time and don't want a single search to re-run across all rows. Use **Send Table Data** afterward to push individual contacts to another table if needed.
 
 If you don't have a company list, use **People search as a source** — a standalone search by title or other criteria that returns a new table.
 
@@ -83,20 +86,28 @@ With auto-run disabled in both tables, you control exactly which companies trigg
 
 ### Source vs. enrichment — when to use each
 
-The `Find People at These Companies` feature is available as both a source and an enrichment action. Here's how they differ:
+Clay gives you three ways to get contacts from a company list. Here's how they differ:
 
-**As a source (returns a new table):**
+**Find People at These Companies — as a source (returns a new table):**
 
--   Returns all results in a separate table.
+-   Returns all results in a separate people table with one row per contact.
 -   When re-run, searches across all companies in the linked table — including any newly added ones. New people are appended and deduplicated against rows already in the table.
 -   Maxes out at 50,000 records total — once that limit is hit, the source stops returning new records even if new companies are added.
 -   Best when you don't need to rank or further filter contacts before saving them.
 
-**As an enrichment action (saves to existing table):**
+**Find People at These Companies — as an enrichment action (saves to existing table):**
 
 -   Returns 10 people per row by default, with full profile data.
 -   `Reduce data for more results` mode returns up to 500 people per row, but only name and LinkedIn URL — you'll need to run `Enrich Person` afterward to get full profiles.
 -   Best when you need to rank contacts first or run a more targeted search per company.
+
+**Find Contacts at Company — as a column enrichment (list stored in cell):**
+
+-   Add as a column directly in your company table. Each row independently runs a people search and stores the matching contacts as a list within the cell.
+-   Unlike Find People at These Companies, results are not written as rows to a separate people table — they stay in your company table as cell data. Use **Send Table Data** to push individual contacts to another table if needed.
+-   Processes each company row independently — adding a new company row does not re-trigger the enrichment on other rows.
+-   Costs **0.5 credits per row** on current pricing plans (1 credit per row on legacy plans).
+-   Best when you want contacts to stay associated with their parent company row, or when you're processing companies incrementally and only want to find contacts for specific rows.
 
 ### Use dynamic location filtering with in-table actions
 
