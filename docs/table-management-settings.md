@@ -66,6 +66,8 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
 -   When **disabled**: You must manually click cells to trigger enrichments.
 -   **Default setting**: Enabled by default — Clay is designed to automatically enrich data as soon as it arrives.
 
+**Note:** There is no workspace-wide setting to disable auto-run across all tables at once. Auto-run must be configured individually for each table.
+
 **To enable or disable table-level auto-run:**
 
 1.  Click the `⛭` icon in the bottom-right corner of your table, or click the table name and navigate to **Run Settings**.
