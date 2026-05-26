@@ -174,10 +174,16 @@ Clay tables have a **50,000-row limit** across all plans. This applies to all so
 
 **What happens when you hit the limit?**
 
-Clay imports records up to the limit and stops automatically. No error message is displayed.
+For standard source imports (CSV, CRM, list builders), Clay stops importing silently when the limit is reached — no error is displayed. For **send table data** actions targeting a full table, a `"Record limit reached"` message appears in the source table's action column.
 
 **Solutions for large datasets:**
 
 -   Split your data using filters or date ranges into multiple tables
 -   Use [auto-delete](https://university.clay.com/docs/table-management-settings#auto-delete-passthrough-tables) (Enterprise plan) for unlimited rows
 -   Use [bulk enrichment](https://www.clay.com/university/guide/bulk-enrichment) (Enterprise plan) to process millions of records
+
+### Does manually deleting rows free up space toward the 50,000-row limit?
+
+**No.** Manually deleting rows removes them from the table view but does not decrement the underlying source record count. Tables and their data sources are separate entities — the source tracks its own total independently. This means a table can show far fewer than 50,000 visible rows while the source has already accumulated 50,000 records, causing a "Record limit reached" error even when the table appears mostly empty.
+
+To free up source capacity, enable **auto-delete**. For compatible source types (webhooks, send table data, and signal sources), auto-delete removes rows from both the table and the source, keeping the source record count in check. See [auto-delete](auto-delete.md) for setup instructions and source compatibility details.
