@@ -90,7 +90,7 @@ Use this action to find a HubSpot owner by ID or email address.
 
 **Inputs**
 
--   **Owner ID (Optional):** The HubSpot owner ID to search for. If both ID and email are provided, the email will be validated against the owner found by ID.
+-   **Owner Owner ID (Optional):** The HubSpot owner ID to search for. If both ID and email are provided, the email will be validated against the owner found by ID.
 -   **Email (Optional):** The email address to search for. If both ID and email are provided, the email will be validated against the owner found by ID.
 
 ## OAuth scopes
@@ -190,3 +190,24 @@ If a property exists in HubSpot but doesn't get updated when you run the Update 
 **Blank values are silently skipped.** The **Ignore blank values** setting is enabled by default. When enabled, any property field that is empty or null in your Clay table is not sent to HubSpot — the existing HubSpot value remains unchanged with no error shown. If the column you are mapping has no value for a given row, the update for that property is skipped. To override this, open the column settings and disable **Ignore blank values** — but note that doing so will overwrite existing HubSpot data with blank values from Clay.
 
 **A different HubSpot account is selected.** If multiple HubSpot accounts are connected to your workspace (for example, if teammates each added their own HubSpot connection), the Update Object action may be authenticating against a different instance than the one you intend to update. Open the column settings and confirm the HubSpot account shown is the correct one. You can verify by running a **Lookup object** action on the same record — if the property appears updated there, the write reached the right account.
+
+### Why does my Lookup Object return no results, but my Create Object still fails with "contact already exists"?
+
+This almost always means the **Lookup Object** and **Create Object** columns are searching and writing to **different email fields**. HubSpot has two separate email properties:
+
+-   **Email** (`email`) — the primary contact email address.
+-   **Work email** (`work_email`) — a separate secondary property for professional email.
+
+If your Lookup Object filters by "Work email" but your Create Object maps data to the standard "Email" property (or vice versa), the lookup will return no results while the create still fails with a duplicate error — the same address already exists under the other field.
+
+**Fix:** Open both column settings and confirm they reference the **same email property**. If your contacts in HubSpot are stored under "Email," update your Lookup Object to filter by "Email" rather than "Work email."
+
+**Setting up a create-or-update (upsert) workflow**
+
+To handle both new and existing contacts without hitting duplicate errors:
+
+1.  Add a **Lookup object** column. Configure it to search by the same identifier (e.g., email address) and the same field you write to when creating contacts.
+2.  Add a **Create object** column. In **Run settings**, open **Only run if** and add a condition that the ID field returned by your Lookup column is empty — this ensures Create only runs for rows where no existing contact was found.
+3.  *(Optional)* Add an **Update object** column for existing contacts. Set an **Only run if** condition to check that the Lookup column returned a result, and map the returned contact ID to the **HubSpot Object ID** input.
+
+For full details on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
