@@ -56,7 +56,7 @@ Use this action to update an object in HubSpot.
 **Inputs**
 
 -   **Object type:** The type of HubSpot object to update.
--   **HubSpot Object ID:** The unique identifier of the object to update.
+-   **HubSpot Object ID:** The unique identifier of the object to update. The column you map here must be a **Text**, **URL**, or **Email** type — **Number**-type columns will not appear in the picker. If your Record ID column was imported from a CSV and is typed as Number, change its type to Text first: click the column header, hover over the current type, and select **Text**.
 -   **Ignore blank values (Optional):** When enabled (default), blank values from Clay will be ignored in HubSpot — existing HubSpot values are left unchanged. When disabled, blank values from Clay will overwrite existing HubSpot field values.
 
 ### `Action` Create association
@@ -190,3 +190,17 @@ If a property exists in HubSpot but doesn't get updated when you run the Update 
 **Blank values are silently skipped.** The **Ignore blank values** setting is enabled by default. When enabled, any property field that is empty or null in your Clay table is not sent to HubSpot — the existing HubSpot value remains unchanged with no error shown. If the column you are mapping has no value for a given row, the update for that property is skipped. To override this, open the column settings and disable **Ignore blank values** — but note that doing so will overwrite existing HubSpot data with blank values from Clay.
 
 **A different HubSpot account is selected.** If multiple HubSpot accounts are connected to your workspace (for example, if teammates each added their own HubSpot connection), the Update Object action may be authenticating against a different instance than the one you intend to update. Open the column settings and confirm the HubSpot account shown is the correct one. You can verify by running a **Lookup object** action on the same record — if the property appears updated there, the write reached the right account.
+
+### Why is my Record ID column missing from the HubSpot Object ID picker?
+
+If a column containing HubSpot Record IDs does not appear as an option when configuring **HubSpot Object ID**, the column is likely typed as **Number**.
+
+The HubSpot Object ID field only accepts **Text**, **URL**, or **Email**-type columns. HubSpot Record IDs look like plain numbers (e.g., `49130750166`), but they must be stored as text for the picker to show them. When you import a CSV that was exported from HubSpot, Clay automatically assigns Number type to numeric-looking values — so a Record ID column imported via CSV will be invisible in the Object ID picker and the action will show **Required inputs missing**.
+
+**Fix:** Change the column type from Number to Text:
+
+1.  Click the Record ID column header.
+2.  Hover over **Number** in the column menu to reveal the **Change column type** submenu.
+3.  Select **Text**.
+
+The column will now appear as a selectable option in the HubSpot Object ID field.
