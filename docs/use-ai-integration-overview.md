@@ -127,6 +127,23 @@ To call a custom or additional LLM from Clay, use the [HTTP API enrichment](http
 
 ## Troubleshooting
 
+### Cells showing "Some inputs missing"
+
+When a cell shows **"Some inputs missing"**, one or more column references in your prompt are marked as required but the underlying column is blank for that row. The cell will not run for affected rows.
+
+There are two ways to resolve this:
+
+-   **Fill in the missing data.** Ensure that the columns referenced in your prompt have values for the rows you want to run.
+-   **Make the inputs optional.** Open the column settings (click the column name → **Edit column**), scroll to the prompt section, and toggle off the **Required to run** switch next to each column reference that should be optional. When a reference is optional, the cell will still run even if that column is blank — the empty field is simply omitted from the prompt for that row.
+
+### Cells showing "Budget Credit Limit Reached"
+
+For AI columns using variable-priced models (such as GPT-4.1, Claude Sonnet, or Gemini 2.5 Pro) with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. This sets the maximum number of Clay credits that can be spent on a single row. If the estimated cost of running a row exceeds this limit, the cell shows **"Budget Credit Limit Reached"** and does not complete. Clicking the cell reveals the full message with the estimated cost and your current budget.
+
+To fix this, open the column settings and increase the **Clay Credit Budget** value. Consider the length of your prompt and system prompt when choosing a limit, as longer prompts cost more credits per row.
+
+**Note:** This setting only applies to expensive variable-priced models when using Clay's managed account. Users who connect their own API key are billed directly by the AI provider and this cap does not apply.
+
 ### AI column stops working after editing with Sculptor
 
 If you used Sculptor to adjust an AI column and the column now shows an error or stops producing results, something in the prompt was likely broken during the Sculptor edit. Here's what to check:
