@@ -127,3 +127,4 @@ Repeat this process for each field you want to extract into its own column.
     -   If you want to receive data in the table you're also sending data from, use one of these other actions:
         -   `Lookup Multiple Rows in Other Table`
         -   `Lookup Single Row in Other Table`
+-   **"✅ Sent" means Clay dispatched the data — not that it has appeared at the destination yet.** The `Sent At` timestamp and `Number Of Rows Sent` shown in the cell details confirm that Clay successfully placed those rows into the destination table's incoming source. The destination table still needs to process those rows before they become visible. To verify data is arriving, open the destination table and check its [column progress bar](https://university.clay.com/docs/run-progress-ui).

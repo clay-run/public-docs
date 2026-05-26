@@ -102,12 +102,21 @@ If you are the sole admin of a workspace with other members or pending invites, 
 -   For any workspaces affected by your account deletion, workspace admins will receive email notifications.
 -   Your private app account and Stripe customer information are deleted to prevent unexpected charges.
 -   You will receive an email confirmation once your account has been deleted.
+-   **If you want to sign up again with the same email address, you must wait 7 days after deletion.** If you need to re-register sooner, contact Clay support via the in-app chat to request an early clearance.
 
 **Important:** Account deletion is permanent and cannot be undone. While your data is marked for deletion and critical billing/authentication records are removed immediately, full data removal from our database may take additional time.
 
 # **Workspace settings**
 
 Workspace settings give you control over key aspects of your workspace, such as its name, profile picture, and billing email. These settings ensure your workspace is easily identifiable and that billing communications reach the correct contact. Below are the steps for updating key workspace details.
+
+## **Creating a new workspace**
+
+Creating an additional workspace is not available through in-app settings for most accounts. To create a new workspace, sign up using a **different email address** at [app.clay.com](https://app.clay.com) — this starts a new workspace where you are the admin from day one.
+
+You do not need to leave any workspaces you're already a member of. Your existing workspace memberships stay intact, and each workspace is independent with its own tables, credits, and billing.
+
+**Note for agencies and users managing multiple client workspaces:** Some accounts have access to an **"Add workspace"** option directly in the workspace switcher. If you need to create multiple workspaces under the same account, contact Clay support to check whether this can be enabled for you.
 
 ## **Switching between workspaces**
 

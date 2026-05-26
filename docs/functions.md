@@ -168,7 +168,7 @@ To access the object's sub-keys downstream, parse it back with `JSON.parse({{Mer
 
 Yes. Enable "share as template" on the function to generate a shareable link. Anyone with the link can view the function's columns and create a table in their workspace using it.
 
-### Can a function be enabled for MCP tools like ChatGPT or Claude?
+### Can a function be enabled for MCP tools like ChatGPT, Claude, or Glean?
 
 Yes. In the function editor panel there is an option to enable the function for MCP, which makes it accessible via connected AI tools.
 

@@ -9,7 +9,9 @@ last_synced: 2026-04-26T01:40:20.821Z
 
 Connect your Clay workspace to AI tools.
 
-MCP (Model Context Protocol) is how Clay connects your workspace to AI tools like ChatGPT or Claude. Clay lets workspace admins set credit limits and monitor usage for team members who access Clay through ChatGPT or Claude.
+MCP (Model Context Protocol) is how Clay connects your workspace to AI tools like ChatGPT, Claude, and Glean. Clay lets workspace admins set credit limits and monitor usage for team members who access Clay through these platforms.
+
+Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory — not a generic server URL you configure manually.
 
 Navigate to it from the Clay homepage by clicking `MCP` in the side nav.
 
@@ -21,9 +23,11 @@ Audiences controls are available to Enterprise customers enrolled in the Audienc
 
 The `Enable for MCP` option on Functions is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans.
 
+Glean integration is available on Enterprise plans only.
+
 ## **Enabling a function for MCP**
 
-Functions are reusable enrichment workflows built in Clay that reps can invoke directly from ChatGPT or Claude with a single prompt. Admins build them once and enable them for MCP — reps never need to open Clay to use them.
+Functions are reusable enrichment workflows built in Clay that reps can invoke directly from ChatGPT, Claude, or Glean with a single prompt. Admins build them once and enable them for MCP — reps never need to open Clay to use them.
 
 1.  Go to the `Functions` tab in your workspace and find the function you want (or click `+ New function` to create a new one.)
 2.  Click the function to open it's settings and toggle `Enable for MCP`.
@@ -33,11 +37,11 @@ _For more information about functions, check out our_ [_full doc_](https://unive
 
 ## Setting credit limits
 
-Credit limits cap how many Clay credits a rep can spend through ChatGPT or Claude in a given month. Credit spend resets on the 1st of each month at midnight UTC.
+Credit limits cap how many Clay credits a rep can spend through ChatGPT, Claude, or Glean in a given month. Credit spend resets on the 1st of each month at midnight UTC.
 
 There are two levels of control:
 
--   **Default credit limit** — applies automatically to all new MCP users when they first connect ChatGPT or Claude. Click `Set default limit` to configure. Reps without an individual override inherit this limit.
+-   **Default credit limit** — applies automatically to all new MCP users when they first connect ChatGPT, Claude, or Glean. Click `Set default limit` to configure. Reps without an individual override inherit this limit.
 -   **Per-user override** — find the rep in the user table and click the pencil icon next to their `Credit limit` to set an individual amount. Their current usage tracks against this limit in real time (e.g., `0 / 1,000`). Reps showing `No limit` have no cap applied.
 
 ## Monitoring usage
@@ -45,7 +49,7 @@ There are two levels of control:
 The `MCP users` table gives a live view of every rep who has connected Clay to an external platform:
 
 -   **Name** — rep's name and email address
--   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, or both)
+-   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, Glean, or a combination)
 -   **Credit limit** — the rep's current limit, either the workspace default or a per-user override
 -   **Credits used** — live usage tracked against the rep's limit
 -   **Salesforce ID _(Enterprise Beta users only)_** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
@@ -65,9 +69,19 @@ If your workspace uses Clay Audiences, two additional workspace-level toggles ap
 
 ## FAQ
 
+### Does Clay provide an MCP server URL I can paste into any AI tool?
+
+No. Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory. Connect through:
+
+-   **Claude:** [claude.com/connectors/clay](https://claude.com/connectors/clay)
+-   **ChatGPT:** Type `@Clay` (browser) or `/Clay` (desktop) in a prompt
+-   **Glean:** Your Glean admin connects Clay through Glean's MCP Apps directory (Enterprise plans only)
+
+There is no generic Clay MCP server URL to enter manually. The "Add MCP server" configuration screen in tools like Glean is for custom third-party servers — Clay's integration connects through Glean's built-in app directory, not that form.
+
 ### What role should I assign to team members who will only use Clay through MCP?
 
-Any team member who needs to use Clay through an AI tool (Claude, ChatGPT, or xAI) must first be added to your Clay workspace. When inviting them, assign the **Sales Rep** role.
+Any team member who needs to use Clay through an AI tool (Claude, ChatGPT, Glean, or xAI) must first be added to your Clay workspace. When inviting them, assign the **Sales Rep** role.
 
 The Sales Rep role is designed for MCP-only access: users can invoke functions and run enrichments from within their AI tool, but they cannot open or interact with the Clay web interface. This makes it the right choice for team members who should use Clay through AI tools only — not build workflows directly in Clay.
 
@@ -87,7 +101,7 @@ Credit spend resets on the 1st of each month at midnight UTC.
 
 ### What happens when a rep hits their credit limit?
 
-Further actions through ChatGPT or Claude are hard-blocked until the monthly reset — the rep won't be able to run enrichments or invoke Functions. Admins can increase the per-user limit at any time from the `MCP users` table to restore access immediately.
+Further actions through ChatGPT, Claude, or Glean are hard-blocked until the monthly reset — the rep won't be able to run enrichments or invoke Functions. Admins can increase the per-user limit at any time from the `MCP users` table to restore access immediately.
 
 ### Where else can I see MCP credit usage?
 
@@ -95,4 +109,4 @@ MCP usage appears in the main credit usage dashboard at `Settings → Credit Usa
 
 ### What's the difference between the default credit limit and a per-user override?
 
-The default limit is a workspace-wide setting that applies automatically to any new rep who connects ChatGPT or Claude. A per-user override replaces the default for a specific rep. Reps showing `No limit` have neither a default nor an override applied.
+The default limit is a workspace-wide setting that applies automatically to any new rep who connects ChatGPT, Claude, or Glean. A per-user override replaces the default for a specific rep. Reps showing `No limit` have neither a default nor an override applied.
