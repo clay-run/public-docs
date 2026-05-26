@@ -69,6 +69,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 -   Match on stable, unique identifiers (e.g., a URL is often better than a company name)
 -   Clean and normalize both sides of the match key (trim, lowercase, consistent formatting)
 -   Use single row lookup instead of multiple row lookup when you only need one result — it's faster
+-   If an expected field isn't visible in the result panel, the matched row in the source table likely has an empty value for that field — the panel only shows fields that have a value for the specific matched row. To add that column anyway, find a row whose matched source record has the field populated, open that lookup cell, and click **Add as column**.
 
 ### **Using `Lookup multiple rows in other table`**
 
