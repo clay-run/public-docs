@@ -37,9 +37,9 @@ This tool is ideal for building targeted sales prospect lists, identifying poten
 -   **Certifications:** Search for specific certifications (e.g., AWS, Google Cloud).
 -   **Languages:** Filter by specific languages spoken.
 -   **Education:** Search for specific school names.
--   **Companies:** Find people at specific companies using an existing Clay table or a custom list.
+-   **Companies:** Find people at specific companies using an existing Clay table or a custom list. By default, this matches people who **currently** work at those companies.
 -   **Exclude people:** Exclude up to 3 different sets of people from your search using Clay tables, CSVs, or manual lists. You can exclude up to 300,000 people total (100,000 per source). Exclusions require a LinkedIn URL.
--   **Past experiences:** Toggle to include past experiences in your search.
+-   **Past experiences:** Enable the **Include past experiences** toggle to extend your company, job title, and experience description keyword filters to also match against a person's past roles — not just their current one.
 -   **Limit results:** Set a maximum number of results per search (up to 50,000 records).
 -   **Limit per company:** Set the maximum number of people to return per company (up to 100). Note: the preview count shown before running the search reflects the total match universe across all companies and does not account for this limit — the actual number of imported rows will be lower.
 

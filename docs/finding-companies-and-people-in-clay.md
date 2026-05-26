@@ -122,6 +122,21 @@ This runs as a formula (no credit cost) and returns `true` if a matching current
 
 This returns `"No"` if any currently-active role's company name includes your CRM company name, and `"Yes"` (former employee) otherwise. You can also pass the full experience array and your company name into a **Use AI** column with a prompt like: *"Given this experience array, return only 'Yes' or 'No'. Return 'No' if any role marked as currently active matches the company name. Otherwise return 'Yes'."*
 
+### Find people who previously worked at a specific company
+
+The **Companies** filter targets people who **currently** work at the companies you specify. Enabling the main **Include past experiences** toggle alongside a Companies filter extends that filter to past roles too — returning both current and former employees of those companies, which is not useful if you want alumni who are now elsewhere.
+
+To find current employees at your target companies who **also previously worked at a specific company** (for example, Airtable alumni now working at competitor companies), use **Find People at These Companies** as an action column with the dedicated **Exp. Description Incl. Past Experiences** toggle:
+
+1.  From your companies table, add **Find People at These Companies** as an action column.
+2.  Under **Experience**, add the former employer's name (e.g., `Airtable`) as an **Experience description keyword**.
+3.  Enable the **Exp. Description Incl. Past Experiences** toggle. This applies the keyword match against past experience descriptions specifically, while the Companies filter continues targeting only current employees at your target companies.
+4.  Leave the main **Include past experiences** toggle OFF — turning it on would also extend the Companies filter to past roles, pulling in people who formerly worked at your target companies rather than people who are currently there.
+
+This returns people who currently work at your target companies and have the former employer's name in their past experience descriptions.
+
+**Precision caveat:** Keyword matching checks anywhere the name appears in experience descriptions, so it can pick up adjacent mentions — for example, someone who managed an Airtable integration at a vendor but never worked there directly. For higher precision, run `Enrich Person` after pulling results and verify the former employer appears in the structured past experience array.
+
 ## Excluding companies and people
 
 You can exclude up to **150,000 companies or people** from any company or people search by adding up to **three exclusion sources**. Each exclusion source can be one of:
