@@ -235,6 +235,24 @@ Valid inputs for the company identifier field:
 
 To fix this, replace the person profile URLs in your column with the corresponding company LinkedIn URLs. You can use the **Find Company** or **Enrich Company** enrichments to retrieve a company URL from a company name or domain, then pass that URL into **Find Contacts at Company**.
 
+### Getting "Invalid input: Invalid person identifier" from Enrich person
+
+If cells in your **Enrich person** column show this error, the value in the **Professional URL** field cannot be parsed as a valid LinkedIn profile URL, Sales Navigator URL, or LinkedIn user ID.
+
+**Valid inputs for the Professional URL field:**
+
+-   LinkedIn profile URL: `https://www.linkedin.com/in/<slug>` (e.g., `https://www.linkedin.com/in/satya-nadella`)
+-   Sales Navigator profile URL: `https://www.linkedin.com/sales/people/<id>`
+-   LinkedIn numeric user ID (e.g., `12345678`)
+
+**Common cause — wrong column mapped to Professional URL:**
+
+This most often happens when a column containing emails, names, company names, or other non-LinkedIn data is accidentally mapped to the **Professional URL** field in the column mapping panel. Open the **Enrich person** column, expand the column mapping, and confirm that the Professional URL field is either left empty or points to a column that contains actual LinkedIn URLs.
+
+**If you only have email addresses:** Leave the **Professional URL** field empty and map only the **Email** field. The action accepts either input. Email-only lookups do not produce this error — if no matching profile exists for the email, the cell shows **"No profile found"** rather than an error.
+
+After correcting the mapping, right-click the column header → **Run column** → **Run [N] empty or out-of-date rows** to re-run the affected cells.
+
 ## FAQs
 
 ### Why is this person showing up despite having moved companies?
