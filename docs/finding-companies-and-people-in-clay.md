@@ -122,6 +122,20 @@ This runs as a formula (no credit cost) and returns `true` if a matching current
 
 This returns `"No"` if any currently-active role's company name includes your CRM company name, and `"Yes"` (former employee) otherwise. You can also pass the full experience array and your company name into a **Use AI** column with a prompt like: *"Given this experience array, return only 'Yes' or 'No'. Return 'No' if any role marked as currently active matches the company name. Otherwise return 'Yes'."*
 
+### Identify the primary role when a contact holds multiple concurrent positions
+
+When someone lists multiple active jobs on LinkedIn — for example, a CEO who is also an Advisor at several companies — Enrich Person surfaces the **top-listed** LinkedIn position as the default `current_job_title` and `current_company`. That may not be the person's primary full-time role.
+
+Clay does not automatically detect which concurrent role is the "main" job. To identify the actual primary role, use a **Use AI** column:
+
+1.  Run `Enrich Person` to pull the full experience data.
+2.  Add a **Use AI** column (in **Content creation, manipulation** mode).
+3.  Reference `{{Enrich person}}?.current_experience` in the prompt and ask the AI to pick the primary role. For example: *"Given the following work experience, identify this person's primary current job. Deprioritize roles like Advisor, Board Member, or Consultant in favor of full-time positions."*
+4.  To get the job title and company in **separate table columns** rather than a single paragraph, define two output fields in the AI column:
+    -   `primary_title` (Text) — the person's primary job title
+    -   `primary_company` (Text) — the company for that role
+
+Using the **Generate tab** (describe what you want in plain English) is the fastest way to configure this — Clay will set up the prompt and output fields automatically.
 ### Find people who previously worked at a specific company
 
 The **Companies** filter targets people who **currently** work at the companies you specify. Enabling the main **Include past experiences** toggle alongside a Companies filter extends that filter to past roles too — returning both current and former employees of those companies, which is not useful if you want alumni who are now elsewhere.
