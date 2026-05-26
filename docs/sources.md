@@ -62,6 +62,15 @@ To download your table data as a CSV:
 
 **Why can't I see Export?** The most common cause is having one or more rows checked. The toolbar shows different options depending on row selection state: when no rows are selected, you see table-level functions such as Export and Import; when rows are selected, the same button shows bulk row operations instead. Uncheck all rows to restore access to Export.
 
+**Long text or AI column data appears truncated in the export.** If a column stores enrichment or AI-generated output as nested structured data — such as the output of a Use AI, Claygent, or enrichment integration column — the CSV export may show only a short preview ending in "..." rather than the full text value.
+
+To export the complete text, extract the specific field into a dedicated column first:
+
+1.  In your table, click `+ Add column` and add a new column.
+2.  Map it to the specific sub-field from the enrichment output (for example, the personalized message text from a Use AI column).
+3.  Run the new column to populate it with the full text values.
+4.  Export the table — the new column will contain the untruncated text in the CSV download.
+
 ## Importing accounts and contacts together
 
 The recommended setup for working with both companies and people in Clay is two linked tables in the same workbook — one for accounts/companies and one for contacts/people.
