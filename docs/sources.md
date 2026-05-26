@@ -152,7 +152,7 @@ Even if the source preview shows the new filters, the table won't refresh until 
 To control which rows are in your table after updating source filters, you have two options:
 
 -   **Remove specific rows manually:** Apply a table filter to isolate rows you no longer want, select them, and delete them. This preserves the rest of your table without re-running the source.
--   **Reset the table to match current filters:** Delete all existing rows and re-run the source (or duplicate the table with the updated source). This clears the table and re-imports only records that match the current source filters.
+-   **Reset the table to match current filters:** Delete all existing rows and re-run the source (or duplicate the table with the updated source). This clears the table and re-imports only records that match the current source filters. **For CRM and database sources (Salesforce, HubSpot, Snowflake):** deleting rows and re-running the same source will not re-add the deleted records — the source permanently tracks every record it has already imported. Duplicate the table (or delete and re-add the source) to get a fresh import history. See [I deleted rows from my table and re-ran the source, but they didn't reappear](#i-deleted-rows-from-my-table-and-re-ran-the-source-but-they-didnt-reappear) for more.
 
 ### Will rows already in my table be removed if they no longer match the source filter?
 
@@ -165,7 +165,19 @@ The **Update existing rows** toggle (available when re-running a source) control
 To remove rows that no longer match your filter, you have two options:
 
 -   **Delete them manually** — select the rows in the table and delete them.
--   **Delete and re-run the source** — this re-imports records based on the current filter. You will need to clear any previously imported rows first if you want a clean slate.
+-   **Delete and re-run the source** — this re-imports records based on the current filter. You will need to clear any previously imported rows first if you want a clean slate. **For CRM and database sources (Salesforce, HubSpot, Snowflake):** the source tracks previously imported records and will not re-add deleted rows even after re-running. Duplicate the table (or delete and re-add the source) instead.
+
+### I deleted rows from my table and re-ran the source, but they didn't reappear
+
+**For Salesforce, HubSpot, Snowflake, and other CRM or database sources, re-running the same source after deleting rows will not restore those records.** Clay's import source tracks every record it has ever introduced to the table — including rows you've since deleted. When the source runs again, it recognizes and skips any record it has already seen, preventing both duplicate imports and unintentional revival of deleted rows.
+
+The **"Rows Added"** count in Source history reflects records returned by your upstream query, not necessarily new rows added to the visible table. If those records were previously imported by the same source, they are recognized and skipped — the count may still increase while no new rows appear in the table.
+
+**To restore deleted records or get a fresh import:**
+
+Duplicate the table (or delete and re-add the source). A new source definition starts with a clean record history, allowing the same records to be imported again. Before doing this, enable [auto-dedupe](table-management-settings.md) on a unique identifier column to avoid creating duplicates of rows still present in your table.
+
+**Note:** This tracking behavior applies to CRM and database sources only (Salesforce, HubSpot, Snowflake, and similar). List builder sources such as Find People and Find Companies do not track records this way — deleting rows and re-running will re-import matching records, subject to your table's auto-dedupe settings.
 
 ### I am trying to add a source to an existing table, but I get an error
 
