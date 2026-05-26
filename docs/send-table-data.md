@@ -86,6 +86,10 @@ When configuring the list field by hand, select the **list itself** (e.g., `Peop
 
 If your table has no rows with data yet, Clay skips this validation and accepts the formula as-is. In that case, run a few rows first so the enrichment column has real output, then re-open the Send Table Data configuration to confirm the list field is valid before running the full table.
 
+**Next step: extract fields as columns in the destination table**
+
+After each list item arrives as a new row in the destination table, its fields are stored inside the source cell — they won't automatically appear as separate columns. To surface individual fields like Title, Company, Start Date, or Is Current, you need to extract them. Enable **Auto-extract new columns** (see [Advanced settings](#advanced-settings)) when configuring Send Table Data to create those columns automatically, or follow the steps under [Mapping table data in the destination table](#mapping-table-data-in-the-destination-table).
+
 ## Advanced settings
 
 **Update existing rows on re-run**
