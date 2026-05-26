@@ -205,6 +205,17 @@ Often errors in the app are transient. We're calling Smartlead APIs under the ho
 
 You can use our existing table integration in the campaign events table to push updates into HubSpot.
 
+### Can I remove a lead from an active campaign?
+
+**Before launching:** Yes — while the campaign is still in draft mode, select one or more leads in the Leads view and click **Remove leads from campaign** in the toolbar, or use the three-dot (⋯) menu on an individual lead row and choose **Remove from campaign**.
+
+**After launching:** No — once a campaign is active, leads cannot be removed through the Leads view. The closest alternative is to **pause** the lead, which stops any further emails from being sent to them:
+
+-   **Individual lead:** Hover over the lead row, click the three-dot (⋯) menu, and select **Pause lead**.
+-   **Multiple leads:** Select the checkboxes next to the leads you want to pause, then click **Pause leads** in the toolbar.
+
+A paused lead remains in your campaign and can be resumed at any time. If you want to prevent the email address from appearing in future campaigns, add it to your blocklist using the `Add email to blocklist` enrichment in the campaign events table.
+
 ### How do unsubscribes work in the sequencer?
 
 When HTML is enabled, you can turn on an unsubscribe link in `Advanced` settings. This adds a hyperlinked phrase at the bottom of every email (default text: "Not interested? Click here to unsubscribe."). You can customize this text in the `Advanced` section.
