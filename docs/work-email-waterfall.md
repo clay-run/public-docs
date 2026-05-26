@@ -22,6 +22,8 @@ You only pay credits for the provider that finds a match, making it one of the m
 3.  Choose between `Quick setup` and `Full configuration`
 4.  Map your input columns and click `Save`.
 
+**Note:** Most providers need at minimum a **full name** and **company domain** for each row — make sure those fields are populated in your table before running. Providing a LinkedIn URL or company name as additional inputs gives more providers enough data to run.
+
 The Work Email waterfall includes two advanced settings — `Infer Email` and `Validation` — that work together to give you more control over credit efficiency and result quality.
 
 `Infer Email` attempts a free email guess before calling any paid provider, while `Validation` settings let you define what counts as a valid result and when the waterfall should stop searching. Both are available in `Full configuration` mode.
@@ -78,6 +80,18 @@ The `Validation` section in `Full configuration` controls how the waterfall eval
 **Tip:** The `Threshold for duplicate results` setting is especially useful when paired with the `Conservative` strategy — if a catch-all email keeps failing conservative validation across providers, the threshold prevents the waterfall from continuing to spend credits on the same result.
 
 ## FAQs
+
+### How do I find an email for a specific contact?
+
+Make sure the contact's row has the required input data (full name and company domain at minimum). Then select the Work Email cell on that row, right-click, and choose **Run 1 cell**. The waterfall checks providers in sequence and stops as soon as one returns a valid email. For more ways to run enrichments on a subset of rows, see [Run progress](run-progress.md).
+
+### What does it mean if no email is found?
+
+If the cell shows no result, click into it to see which providers were tried and what each returned. Common reasons no email surfaces:
+
+-   The row is missing required input data. Check that the contact's full name and company domain are populated.
+-   None of the providers in your waterfall have email data for this person. You can edit the waterfall sequence to add more providers.
+-   The providers ran but returned results that failed validation. Try a less strict validation strategy, or check the individual provider columns (enable them in waterfall settings) to see what was returned.
 
 ### Which email pattern should I use?
 
