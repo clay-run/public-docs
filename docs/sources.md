@@ -171,7 +171,7 @@ To remove rows that no longer match your filter, you have two options:
 
 **For Salesforce, HubSpot, Snowflake, and other CRM or database sources, re-running the same source after deleting rows will not restore those records.** Clay's import source tracks every record it has ever introduced to the table — including rows you've since deleted. When the source runs again, it recognizes and skips any record it has already seen, preventing both duplicate imports and unintentional revival of deleted rows.
 
-The **"Rows Added"** count in Source history reflects records returned by your upstream query, not necessarily new rows added to the visible table. If those records were previously imported by the same source, they are recognized and skipped — the count may still increase while no new rows appear in the table.
+When dedup blocks all records on a re-run, that run's **Rows Added** count in Source history shows **0** — not the number of records in your upstream source. The higher counts visible elsewhere in Source history are from earlier runs when those records were first imported. Your table can appear empty while Source history shows non-zero counts from past imports: the records were added in an earlier run and then deleted from the table, but the source still has them logged.
 
 **To restore deleted records or get a fresh import:**
 
