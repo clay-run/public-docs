@@ -102,6 +102,7 @@ If you are the sole admin of a workspace with other members or pending invites, 
 -   For any workspaces affected by your account deletion, workspace admins will receive email notifications.
 -   Your private app account and Stripe customer information are deleted to prevent unexpected charges.
 -   You will receive an email confirmation once your account has been deleted.
+-   **If you want to sign up again with the same email address, you must wait 7 days after deletion.** If you need to re-register sooner, contact Clay support via the in-app chat to request an early clearance.
 
 **Important:** Account deletion is permanent and cannot be undone. While your data is marked for deletion and critical billing/authentication records are removed immediately, full data removal from our database may take additional time.
 
