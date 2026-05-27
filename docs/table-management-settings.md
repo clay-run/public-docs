@@ -96,6 +96,8 @@ The out-of-date clock indicator on a cell means the cell is stale — it has an 
 
 A cell also shows as out of date when its inputs have changed since it last ran — for example, if an upstream column with auto-run enabled re-ran and updated its values, or if the column's own configuration was modified (such as editing a prompt). In these cases the indicator is informational: the existing value is still valid and usable downstream. In many cases re-running would produce the same result, so only trigger a re-run if you specifically need fresh output.
 
+If a cell **keeps** showing as out of date even after you re-run it, an upstream column with auto-run enabled is likely the cause. Each time that upstream column auto-runs and produces new output, any column referencing it is immediately marked out of date again — creating a continuous cycle. To break this cycle, disable auto-run on the upstream column: click the column header → **Edit column** → toggle off **Auto-run** under **Run settings** → **Save**. Once the upstream column stops re-running automatically, the downstream cell will hold its result.
+
 **Note:** Changing "Keep existing results" does **not** automatically re-run cells already showing the out-of-date indicator — the new setting only applies to future auto-run triggers. To refresh currently stale cells:
 
 -   **Disable "Keep existing results"** (uncheck it): a prompt appears asking whether you'd like to update out-of-date cells — click **Update cells** to immediately queue all stale cells.
