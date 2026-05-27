@@ -107,14 +107,39 @@ Records saved from tables are automatically deduplicated and merged with your ex
 
 ### Entity resolution and deduplication
 
-Clay matches records using LinkedIn URL and email to:
+Clay automatically identifies and merges duplicate records when the same person or company appears across multiple sources (for example, Salesforce and Snowflake).
 
--   **Cross-source deduplication** — merge the same person from multiple sources.
+**For people**, Clay checks identifiers in this priority order:
+
+-   Email address
+-   LinkedIn profile URL
+-   Phone number
+-   External source record ID (for example, a Salesforce Contact ID)
+
+**For companies**, Clay checks:
+
+-   Website or email domain
+-   LinkedIn company URL
+-   External source record ID (for example, a Salesforce Account ID)
+-   Company name (exact match, then fuzzy)
+
 -   **Whitespace detection** — when importing from a Find People or Find Companies search, records that already exist in All People are automatically excluded from the merge. The draft shows a banner with the count of excluded records ("X records from this search are already in the All People list"), and clicking **All people** adds only the net-new contacts.
 
 Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs — org duplicates carry over as-is. Native within-source deduplication is coming.
 
 Records need a high-confidence identifier to match. Auto-enrichment adds `LinkedIn URL` and `CPJ ID` at no cost to improve matching.
+
+### Removing a data source
+
+To disconnect a Salesforce, HubSpot, or Gong source from Audiences:
+
+1.  Open the source's settings page. From the **Add data** panel, click the three-dot menu next to the source and select **Settings**.
+2.  On the settings page, click the three-dot menu (⋮) next to the account name in the **Sync with Audiences** card.
+3.  Select **Disconnect**.
+
+To disconnect a Snowflake import, follow the same steps but select **Disconnect import** instead.
+
+**After disconnecting:** All records that were imported from this source remain in your Audiences, but their sync status is set to **unsynced**. Sync stops immediately. This action is permanent — to reconnect, set up the source again from scratch.
 
 ## Creating an audience
 
