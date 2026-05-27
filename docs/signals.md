@@ -62,6 +62,13 @@ Signals require a connected data source to run against — either a source table
 No. Signals monitor changes at companies or contacts already in your data source (new hires joining, contacts getting promoted, contacts changing jobs, etc.). They are not a way to search for job postings from scratch.
 
 To search for open job postings by location, job title, or other criteria, use the **Find Jobs** source when creating a new table. You can also [schedule it to run on a recurring basis](https://www.clay.com/university/guide/scheduled-sources) (daily, weekly, etc.) so your table stays up to date with the latest postings.
+
+### Why do I see the same company name appear multiple times in my Find Jobs results?
+
+This is expected behavior. **Find Jobs returns one row per job posting**, not one row per company. If a company has three open roles matching your criteria, it will appear as three separate rows — one for each posting. Each row represents a distinct job, and you can see the specific job title and URL in the cell details.
+
+To cap how many postings are returned per company, open the **Limit results** section in the Find Jobs settings and set a **Limit per company** value (maximum: 100). Setting this to 1, for example, returns only the most recent matching posting per company, which keeps each company to a single row and makes it easier to treat the table as a company list.
+
 ### Why did my signal use far more credits than I expected?
 
 The credit rate shown in a signal's settings covers only the **signal monitoring** itself — checking your tracked contacts or companies for new matches. It does not include any enrichment columns in your results table.
