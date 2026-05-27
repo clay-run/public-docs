@@ -93,6 +93,8 @@ Connect any external MCP (Model Context Protocol) server to your Claygent as a t
 
 **Note:** Custom MCP server connections are available on Enterprise plans. Self-serve customers can request access by contacting support to join the beta.
 
+**Model requirement:** Custom MCP tools require a non-Clay model with your own private API key — Clay's shared parallel models (Neon, Argon, Helium, and similar) do not support tool calling and will show "Tools are not available for the selected model." To use custom MCP, select a Claude or GPT model in the model picker and connect your own Anthropic or OpenAI API key via the account dropdown.
+
 To add a custom MCP server from Claygent builder:
 
 1.  Open your Claygent and go to the **Configuration** panel.
@@ -235,6 +237,18 @@ For Clay parallel models (Argon, Neon, Helium, and similar), web search is alway
 Yes. Custom MCP servers work in both standalone Claygents (built in Claygent builder) and in table-embedded AI columns. In Claygent builder, open your agent's **Configuration** panel, scroll to the **Tools** section, and click **Add custom MCP server**. You'll be prompted to name the connection, provide the server URL, and optionally add an API key for authenticated endpoints.
 
 This feature is available on Enterprise plans; self-serve customers can contact support to request beta access.
+
+### Why does my Claygent show "Tools are not available for the selected model"?
+
+This message appears when you have a Clay parallel model (Neon, Argon, Helium, or similar) selected. These models don't support tool calling — including custom MCP servers, the "Find contacts and jobs" tool, and other tool-based features.
+
+To use tools with your Claygent:
+
+1.  Open the **Configuration** panel and click the model picker.
+2.  Select a Claude or GPT model.
+3.  Click the **Account** dropdown and connect your own Anthropic or OpenAI API key.
+
+Once you're on a supported model with a private API key, the tools in the **Tools** section will become active.
 
 ### My Claygent columns are showing an error — what does that mean?
 
