@@ -133,7 +133,7 @@ The operators available when building a filter depend on the field's data type, 
 -   **Text fields (T icon)** — support text-matching operators. To match multiple values at once, use **`contains any of`** and enter each value. For example, to include records where Industry is Health, Beauty, or Pets, set the filter to `Industry → contains any of → Health, Beauty, Pets`. This is more efficient than creating a separate filter for each value.
 -   **Number fields (# icon)** — support range operators: **`is greater than`**, **`is less than`**, **`is greater than or equal to`**, and **`is less than or equal to`**. For example, `Employees → is greater than → 500`.
 
-**Note:** A field that appears numeric may have been imported as text (shown by a T icon rather than #). Text fields — such as "Annual revenue range" synced from Salesforce as a string — will not show range operators. To use range filtering on a field, it must be configured as a Number type in Clay.
+**Note:** A field that appears numeric may have been imported as text (shown by a T icon rather than #). Text fields — such as "Annual revenue range" synced from Salesforce as a string — will not show range operators. To use range filtering on a field, contact Clay support to have the field's type changed to Number (#). Range operators will then appear when you add a filter on that field.
 
 ## Enriching and monitoring
 
