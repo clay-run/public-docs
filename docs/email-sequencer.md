@@ -11,6 +11,8 @@ Run outbound campaigns directly from your table.
 
 Clay's email sequencer lets you run outbound email campaigns directly from your tables. This guide covers setup, campaign configuration, sending behavior, analytics, and troubleshooting tips.
 
+**Currently in beta.** If you don't see the `Campaigns` section in your Clay workspace, contact support to request access.
+
 ## Connecting Google Workspace via OAuth
 
 **Note:** This setup requires Google Workspace admin access and only needs to be done once per domain. Changes can take up to 24 hours to apply.
@@ -39,8 +41,8 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead replies (excluding out-of-office replies, which we detect and work around).
     -   Toggle `Preview` mode to see real data from your source table in the message template
     -   Within each message, use `/` to access features such as:
-        -   `Clean variable`: Reference synced lead data with safe fallbacks and optional formatting.
-        -   `Sender variable`: Reference identifying information from the sending account
+        -   `Clean variable`: Reference synced lead data with safe fallbacks and optional formatting — use this to personalize emails with recipient-specific information like the lead's name or company (e.g., type `/` then select `first_name` to open with `Hi [first name],`).
+        -   `Sender variable`: Reference identifying information from the sending account (e.g., your name, title, or company).
         -   `AI snippet`: Generate copy automatically using lead data.
         -   `Spintax variable`: Choose a random value from a list
         -   `Rows from [Table]`: Directly reference synced data (Clean variables are recommended to handle empty values safely).
@@ -256,3 +258,22 @@ Smartlead assigns leads into one of the following categories:
 7.  Wrong Person
 8.  Uncategorizable by Ai
 9.  Sender Originated Bounce
+
+### Why is my open tracking showing zero or very few opens?
+
+Open tracking works by embedding a tiny invisible image (a tracking pixel) in the HTML of your email. When a recipient opens the email, their mail client loads the image, which registers as an open. However, many email clients (including Gmail, Apple Mail, and Outlook), corporate firewalls, and spam filters now block or pre-load these images to protect user privacy — which means opens may go undetected even when recipients are actively reading your emails.
+
+This is an industry-wide limitation that affects every email platform, not just Clay. It's common to see replies come through with zero recorded opens: the recipient opened and read the email, but their client blocked the tracking image.
+
+To give open tracking the best chance of working:
+
+-   Make sure `Enable HTML` is turned on in the campaign's `Setup` tab — open tracking requires HTML mode.
+-   Confirm `Track email opens` is enabled in `Advanced settings` → `Email tracking`.
+
+Even with both settings correctly configured, open rates will often undercount actual engagement. **Reply rate is a more reliable measure of campaign performance**, since replies are not affected by image-blocking.
+
+### How do I personalize emails with the recipient's name or other lead data?
+
+Inside each email in your message sequence, type `/` to open the variable menu, then select `Clean variable`. This lets you insert any column from your source table directly into the email body — for example, selecting `first_name` will populate each email with that lead's actual first name when the campaign sends.
+
+**Sender variable** (also in the `/` menu) inserts information about the *sending account* (your name, title, company, etc.) — not the recipient. Use `Clean variable` when you want to reference lead-specific data like names, company names, or any other field synced from your table.
