@@ -11,6 +11,8 @@ Run outbound campaigns directly from your table.
 
 Clay's email sequencer lets you run outbound email campaigns directly from your tables. This guide covers setup, campaign configuration, sending behavior, analytics, and troubleshooting tips.
 
+**Currently in beta.** If you don't see the `Campaigns` section in your Clay workspace, contact support to request access.
+
 ## Connecting Google Workspace via OAuth
 
 **Note:** This setup requires Google Workspace admin access and only needs to be done once per domain. Changes can take up to 24 hours to apply.
