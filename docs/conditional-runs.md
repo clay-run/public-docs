@@ -114,9 +114,9 @@ This means clicking **"Run all rows"** with a condition in place is safe: Clay w
 
 ### "Run condition not met" cells appear empty to downstream columns
 
-When a run condition is not met, Clay skips the enrichment and stores **no output** for that row — the cell value is empty. Any downstream columns that reference this cell (formula columns, waterfall columns, CRM push columns, etc.) will see an empty value for those rows.
+When a run condition is not met, Clay skips the enrichment and stores **no output** for that row — the cell value is empty. Any downstream columns that reference this cell (formula columns, waterfall columns, CRM push columns, etc.) will receive an empty value for those rows.
 
-**This is why rows with "Run condition not met" status may not appear in a downstream output column.** If your final or merge column depends on data from a conditionally-gated enrichment, rows where the condition wasn't met won't contribute any data to that downstream column.
+**This is why downstream columns that depend on this data will show empty results for those rows.** The row itself still appears in any downstream column, but the value fed into it from the skipped enrichment is empty — so any formula, waterfall step, or output that requires this data will produce no result for that row.
 
 **Note:** If a row previously ran and produced output, that output is preserved when the condition is not met on a subsequent run — the run condition only gates new executions and does not clear existing cell data.
 
