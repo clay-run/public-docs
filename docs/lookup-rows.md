@@ -120,6 +120,7 @@ You can also use `Lookup multiple rows` within the same table to find duplicates
 -   Detect duplicates or repeat submissions (e.g., multiple form fills from the same company)
 -   Count related records inside one table (e.g., "how many people share this domain?")
 -   Prevent duplicate enrichment (e.g., only enrich a company the first time it appears; skip repeats)
+-   Consolidate paired or related rows (e.g., pull a duplicate account's ID or attributes into the master record row) — run a self-lookup on the shared group key (such as a duplicate set number or shared parent ID) to find all rows in the group, then use `Add as column` or a formula column to extract the specific fields you need from the matched rows
 
 **Best practices**
 
