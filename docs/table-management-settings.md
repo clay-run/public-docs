@@ -96,7 +96,11 @@ The out-of-date clock indicator on a cell means the cell is stale — it has an 
 
 A cell also shows as out of date when its inputs have changed since it last ran — for example, if an upstream column with auto-run enabled re-ran and updated its values, or if the column's own configuration was modified (such as editing a prompt). In these cases the indicator is informational: the existing value is still valid and usable downstream. In many cases re-running would produce the same result, so only trigger a re-run if you specifically need fresh output.
 
-If a cell **keeps** showing as out of date even after you re-run it, an upstream column with auto-run enabled is likely the cause. Each time that upstream column auto-runs and produces new output, any column referencing it is immediately marked out of date again — creating a continuous cycle. To break this cycle, disable auto-run on the upstream column: click the column header → **Edit column** → toggle off **Auto-run** under **Run settings** → **Save**. Once the upstream column stops re-running automatically, the downstream cell will hold its result.
+If a cell **keeps** showing as out of date even after you re-run it, check whether an upstream column has auto-run enabled. Each time that upstream column runs and updates its output, Clay marks any column referencing it as out of date again — even one you just re-ran. To resolve this:
+
+-   **Disable auto-run on the downstream column** — the column will only run when you trigger it manually. This is the most targeted fix and leaves the upstream column untouched.
+-   **Disable auto-run on the upstream column** — stops the cascade at its source, but means the upstream column also switches to manual-only mode.
+-   **Enable "Keep existing results"** at the table level — cells with existing results are no longer automatically re-run, so the stale indicator appears but no credits are consumed re-running the column on every upstream change.
 
 **Note:** Changing "Keep existing results" does **not** automatically re-run cells already showing the out-of-date indicator — the new setting only applies to future auto-run triggers. To refresh currently stale cells:
 
