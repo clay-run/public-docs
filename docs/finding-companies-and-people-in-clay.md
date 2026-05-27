@@ -276,7 +276,11 @@ First, check that you're filtering on **Job title keywords** (not just function 
 
 ### Why isn't someone I found on LinkedIn showing in Clay?
 
-Your search filters may be too specific. Try broadening your criteria incrementally. The profile may also not yet be in the dataset.
+Your search filters may be too specific — try broadening your criteria incrementally. But if other people at the same company appear in results and a specific person is still missing even with all filters removed, it's a **coverage gap**: Find People draws from a single provider's pre-indexed dataset, and no single index has complete coverage of every LinkedIn profile. A person visible on LinkedIn may simply not be in that provider's snapshot.
+
+**To improve coverage for a specific person:** Use the **Find People at Company waterfall** instead of a plain Find People search. Click **Add enrichment**, search for **Find People at Company**, and select the waterfall option. It runs the lookup sequentially across multiple data providers — someone absent from one provider's index often shows up via another. The waterfall stops as soon as any provider returns a result, so you only pay for the steps that find data.
+
+If the person still doesn't appear after running the waterfall, use **Claygent** to search for their LinkedIn profile via Google, then pass the URL directly into `Enrich Person` for a live lookup.
 
 ### Why does Find Contacts at Company return "No Profile Found"?
 
