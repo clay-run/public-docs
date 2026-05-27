@@ -63,6 +63,27 @@ Use this action to retrieve a list of members from a specified Slack channel.
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
 
+## Permissions & security
+
+When you connect Slack to Clay, Clay requests the following OAuth permissions from your Slack workspace:
+
+**Required scopes** — always requested when connecting:
+
+-   `channels:read` — View the list of public channels and their basic info (name, topic, member count).
+-   `groups:read` — View basic info about private channels the Clay bot has been invited to.
+-   `chat:write` — Send messages as the Clay bot.
+
+**Optional scopes** — enabled by default, but you can decline them at the OAuth authorization screen:
+
+-   `chat:write.customize` — Post messages with a custom bot name and profile picture. Used by the **Bot name** and **Emoji** inputs on the Send message action.
+-   `chat:write.public` — Send messages to public channels the Clay bot has not explicitly joined.
+-   `users:read` — Look up Slack users by their user ID.
+-   `users:read.email` — Look up Slack users by email address. Required by the **Find Slack user by email** action.
+
+Clay does **not** request access to message history, direct messages, file uploads, or workspace administration settings. Clay does not store or harvest Slack data for its own purposes — these scopes are used solely to execute the actions you configure in your tables.
+
+For full security documentation — including SOC 2 Type II reports, data handling practices, and breach notification policies — visit [trust.clay.com](https://trust.clay.com/).
+
 ## Using Markdown with Slack messages
 
 You can add Markdown to any Slack message, either in the Slack integration itself or with the Formula feature.
