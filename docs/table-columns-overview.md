@@ -133,6 +133,14 @@ To hide a column:
 
 **Important:** Hiding a column only removes it from the current view — it does **not** disable the column's auto-run setting. A hidden column with auto-run enabled will still run automatically and consume credits whenever rows are added or edited. To stop a column from running, open it in `Edit column` → `Run settings` and toggle auto-run off. To access a hidden column's settings, temporarily unhide it using the columns panel, or switch to a view where it is visible.
 
+### Unhide a column
+
+When a column is hidden, it disappears from the table entirely — there is no header to click on. To bring it back, use the columns panel:
+
+1.  Click the **columns button** in the table toolbar (shown as "N/N columns", for example **12/38 columns**).
+2.  In the panel that opens, find the column you want to restore. Hidden columns display a closed-eye icon next to their name.
+3.  Click the eye icon next to the column to make it visible again.
+
 ## Merge columns
 
 You can merge data from multiple columns into a new column.
