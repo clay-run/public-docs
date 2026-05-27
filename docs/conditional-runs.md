@@ -31,6 +31,10 @@ Conditional runs allow you to execute specific actions or enrichments in a workf
 
 -   **Condition**: `{{assigned_rep}} == "Kareem"`
 
+**Send a Slack message or other action only for new rows**: Run an action only once per row — skip rows where it already completed.
+
+-   **Condition**: `/My Action Column is empty`
+
 ## How do they work?
 
 Conditional runs are built on **Conditional statements** and evaluate a condition as true or false to determine whether to execute or skip an action.
@@ -107,6 +111,16 @@ To reference a column's data in a run condition, **type `/` followed by the colu
 When a run condition is set, Clay only processes rows where the condition evaluates to **true**. Rows where the condition is not met are skipped and shown as **"Run condition not met"** — no credits are consumed for those rows.
 
 This means clicking **"Run all rows"** with a condition in place is safe: Clay will only run (and charge credits for) the rows that actually match your condition.
+
+### Running an action only once per row (new rows only)
+
+Clay has no built-in "is new row" flag. To prevent an action column — such as sending a Slack message, writing to a CRM, or sending an email — from firing again on rows it already processed, use the column's own previous output as the guard condition:
+
+`/My Action Column is empty`
+
+On the first run (no result yet), the condition is true and the action fires. On subsequent re-runs of the same row, the existing result makes the condition false and the column is skipped.
+
+**If your table also uses scheduled re-runs**: Uncheck the action column from the scheduled re-run list (Table Settings → Run Settings → Re-run columns on a schedule). This prevents the action from repeating for every existing row on each scheduled cycle. Auto-run still fires the column for genuinely new rows. See [Scheduled columns](scheduled-columns.md).
 
 ## See also
 
