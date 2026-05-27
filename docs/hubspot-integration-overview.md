@@ -196,3 +196,20 @@ If a property exists in HubSpot but doesn't get updated when you run the Update 
 The **HubSpot Object ID** field does not auto-populate — it will always be blank when you first configure the Update object action. Unlike some other fields in Clay, no column is suggested automatically, so the action cannot run until you map a column manually.
 
 **Fix:** Click the HubSpot Object ID field, type `/` to open the column picker, and select the column that contains your HubSpot Record IDs. Any column type — including Number — can be selected.
+
+### Why does the Sequence dropdown show "No options found" in the "Enroll a contact in a sequence" action?
+
+The `automation.sequences.read` scope is **disabled by default** when connecting HubSpot. Without it, Clay cannot retrieve your sequence list, so the Sequence field shows "No options found" even if you have sequences in HubSpot and have access to them.
+
+**Fix:** A workspace admin needs to reconnect the HubSpot account with the required scopes enabled:
+
+1.  Go to `Settings` → `Connected accounts`.
+2.  Find the HubSpot account and click the `[...]` button → **Reconnect**.
+3.  In the scopes selection, enable:
+    -   `automation.sequences.read` — required to populate the Sequence dropdown.
+    -   `automation.sequences.enrollments.write` — required to enroll contacts in a sequence.
+4.  Complete the OAuth flow.
+
+After reconnecting, the Sequence dropdown will populate with your HubSpot sequences.
+
+**Workaround (without reconnecting):** Switch the Sequence field from **Dropdown** mode to **Text with tokens** mode and enter the sequence ID manually. You can find a sequence's ID in HubSpot under **Automation → Sequences** — it appears in the URL when you open a sequence.
