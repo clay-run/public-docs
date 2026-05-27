@@ -226,6 +226,14 @@ Yes, this is expected. When a Claygent variable is connected to an object value 
 
 To inspect exactly what data was passed to your agent, deploy your Claygent to a table, run it, then click the cell to open the **cell details panel** and examine the full input and output values there.
 
+### Can Claygent detect tracking pixels or marketing technologies on a website?
+
+Yes, with an important limitation. Claygent performs web research by reading a website's page source — it is not a programmatic scraper. When prompting Claygent to look for tracking pixels or marketing technologies, write the prompt as a web research instruction (for example: *"Visit this company's website and look for tracking pixel tags such as the Facebook Pixel or Google Tag Manager in the page source"*) rather than as a script that follows `<script src>` links or controls network requests. The latter instructions do not translate to how Claygent works.
+
+**JavaScript-rendered pixels**: Many modern tracking pixels (Facebook Pixel, Google Tag Manager, TikTok Pixel, etc.) are injected dynamically by JavaScript after the initial page load. Claygent reads the static HTML source, so pixels that only appear after JavaScript execution may not be detected. For most marketing sites where pixel tags are included in the static HTML, Claygent works well — but if a site loads its pixel tags entirely via client-side JavaScript, Claygent may miss them.
+
+**Alternative**: The **BuiltWith** integration (**Find Technology Stack** action) can confirm whether a particular technology is present on a site, but it does not return specific pixel IDs or tracking codes.
+
 ## Tips for success
 
 **Importing test cases**: Instead of manually creating test data, import real rows from your tables. Click `Import from table` in the test panel to pull actual data and see how your agent performs on real-world inputs.
