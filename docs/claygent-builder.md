@@ -87,6 +87,30 @@ Enable web search when your agent needs live research (recent company news, hiri
 
 Give your Claygent access to find people and jobs data directly. This enables prospecting workflows like "find the best person who would manage growth at a company" — where the right title varies by company size.
 
+### Custom MCP server
+
+Connect any external MCP (Model Context Protocol) server to your Claygent as a tool. This lets your agent interact with services like Salesforce, HubSpot, Gmail, or Google Calendar, and gives you access to thousands of connectors through catalogs like [Smithery](https://smithery.ai/) and [Pipedream](https://mcp.pipedream.com/).
+
+**Note:** Custom MCP server connections are available on Enterprise plans. Self-serve customers can request access by contacting support to join the beta.
+
+To add a custom MCP server from Claygent builder:
+
+1.  Open your Claygent and go to the **Configuration** panel.
+2.  Scroll to the **Tools** section and click **Add custom MCP server**.
+3.  Give the connection a name.
+4.  Enter the MCP server URL.
+5.  Enter an API key if the server requires one (open endpoints don't need a key).
+6.  Click **Save**.
+
+You can also add MCP server connections workspace-wide from `Settings` → `Connections` → `+ Add connection` → `Custom MCP Server`. Connections added there appear automatically in your Claygent's MCP connections list.
+
+**Tips for using custom MCP servers:**
+
+-   **Be specific in your prompt.** Tell the Claygent exactly which service to access and what to do — for example, _"Use the Salesforce tool to add \{Company Name\} as a lead in my workspace."_
+-   **Limit to 2–3 servers per run.** Enabling too many MCP servers at once can confuse the agent and produce inconsistent results.
+-   **Chain servers for multi-step workflows.** For example: add a lead in Salesforce, research their background online, then draft a summary doc in Notion.
+-   **OAuth is not currently supported.** Use API key authentication or open (unauthenticated) endpoints.
+
 ### Model selection
 
 Swap between different AI models (Claude, GPT-4o, etc.) to test output quality without touching the prompt.
@@ -205,6 +229,12 @@ When Sculptor rewrites your prompt, it saves the new prompt text and shows a "Pr
 ### The web search toggle is greyed out — why?
 
 For Clay parallel models (Argon, Neon, Helium, and similar), web search is always on and cannot be toggled off — it's a required part of how these models work. The greyed-out toggle is expected; web search is active. If you want to turn web search off, switch to a non-parallel model in the model selector.
+
+### Can I connect a custom MCP server to a standalone Claygent (created outside a table)?
+
+Yes. Custom MCP servers work in both standalone Claygents (built in Claygent builder) and in table-embedded AI columns. In Claygent builder, open your agent's **Configuration** panel, scroll to the **Tools** section, and click **Add custom MCP server**. You'll be prompted to name the connection, provide the server URL, and optionally add an API key for authenticated endpoints.
+
+This feature is available on Enterprise plans; self-serve customers can contact support to request beta access.
 
 ### My Claygent columns are showing an error — what does that mean?
 
