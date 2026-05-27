@@ -31,9 +31,9 @@ Conditional runs allow you to execute specific actions or enrichments in a workf
 
 -   **Condition**: `{{assigned_rep}} == "Kareem"`
 
-**Send a Slack message or other action only for new rows**: Run an action only once per row — skip rows where it already completed.
+**Send a Slack message or other action only for new rows**: Run an action only once per row by gating it on an upstream column that only has a value after the row has been processed.
 
--   **Condition**: `/My Action Column is empty`
+-   **Condition**: `/Upstream Column is not empty`
 
 ## How do they work?
 
@@ -114,13 +114,15 @@ This means clicking **"Run all rows"** with a condition in place is safe: Clay w
 
 ### Running an action only once per row (new rows only)
 
-Clay has no built-in "is new row" flag. To prevent an action column — such as sending a Slack message, writing to a CRM, or sending an email — from firing again on rows it already processed, use the column's own previous output as the guard condition:
+Clay has no built-in "is new row" flag. To prevent an action column — such as sending a Slack message, writing to a CRM, or sending an email — from re-firing on rows it already processed, gate it on a **separate upstream column** that only has a value after the row was first processed:
 
-`/My Action Column is empty`
+`/My Upstream Column is not empty`
 
-On the first run (no result yet), the condition is true and the action fires. On subsequent re-runs of the same row, the existing result makes the condition false and the column is skipped.
+On new rows, the upstream column hasn't run yet, so the condition is false and the action waits. Once the upstream column runs and produces a value, the condition is true and the action fires.
 
-**If your table also uses scheduled re-runs**: Uncheck the action column from the scheduled re-run list (Table Settings → Run Settings → Re-run columns on a schedule). This prevents the action from repeating for every existing row on each scheduled cycle. Auto-run still fires the column for genuinely new rows. See [Scheduled columns](scheduled-columns.md).
+**Important**: You cannot use a column's own previous output as its own run condition — Clay detects this as a circular dependency and will reject the configuration. The guard must be a different column.
+
+**Simpler alternative for scheduled re-run tables**: If the root cause is that your action column is included in a scheduled re-run, the easiest fix is to uncheck it from the scheduled re-run list (Table Settings → Run Settings → Re-run columns on a schedule). Table-level Auto-run still fires the column for genuinely new rows. See [Scheduled columns](scheduled-columns.md).
 
 ## See also
 
