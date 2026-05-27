@@ -116,6 +116,42 @@ You can add Markdown to any Slack message, either in the Slack integration itsel
 -   Wrap the emoji name in colons.
 -   Example: `:tada:` → 🎉
 
+## Security and permissions
+
+When you connect Slack to Clay, Clay requests a minimal set of OAuth permissions from your Slack workspace. These are scoped to what the integration actually needs — Clay does not request permissions to read message history, send direct messages, or access files.
+
+### Required scopes
+
+These permissions are always requested and are required for Clay's Slack actions to function:
+
+| Scope | What it allows |
+|---|---|
+| `channels:read` | View the list of public channels in your workspace |
+| `groups:read` | View private channels the Clay bot has been invited to |
+| `chat:write` | Send messages as the Clay bot |
+
+### Optional scopes (enabled by default)
+
+These permissions are requested by default but can be disabled during the connection flow if your security policy requires it:
+
+| Scope | What it allows | Needed for |
+|---|---|---|
+| `chat:write.customize` | Set a custom display name and avatar per message | **Bot name** and **Emoji** inputs on Send message |
+| `chat:write.public` | Send to public channels without the bot being a member first | Posting to channels the Clay bot hasn't joined |
+| `users:read` | View basic profile information about workspace members | Find Slack user by email, Find list of channel members |
+| `users:read.email` | View email addresses of workspace members | Find Slack user by email |
+
+### What Clay cannot access
+
+Clay's Slack connection does **not** include permissions to:
+
+-   **Read message history** — no access to past messages in channels, group messages, or direct messages
+-   **Send or read direct messages** — no DM access to individual users
+-   **Read or upload files** — no file or attachment access
+-   **Administer your workspace** — no admin-level or workspace-management permissions
+
+Clay uses these permissions only to execute the workflows you configure. Clay does not harvest or store Slack data for its own purposes. For a comprehensive overview of Clay's security practices, see the [Clay Trust Center](https://trust.clay.com/).
+
 ## Troubleshooting
 
 ### New channels not appearing in the channel picker
