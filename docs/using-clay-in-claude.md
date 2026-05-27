@@ -50,7 +50,7 @@ Use Clay to gather deep intelligence on target companies—tech stack, funding, 
 **Example prompts:**
 
 -   `What are [Company]'s top go-to-market priorities this year? Any recent executive changes or expansion signals?`
--   `Show me recent public posts from sales or product leaders at [Company] that mention automation or AI automation.`
+-   `Show me recent public posts from sales or product leaders at [Company] that mention automation or AI adoption.`
 -   `What new markets has [Company] expanded into recently? How has headcount changed over the last year? What tools power their partner GTM motion?`
 
 ### Draft personalized outbound
