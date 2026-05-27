@@ -54,7 +54,7 @@ You can import data from:
 12.  Select `Opportunities` at the top of the sync panel.
 13.  Enable the `Import` toggle.
 14.  Add any Opportunity fields you want to filter or segment by — common fields include `Stage`, `Amount`, `Close Date`, and `Owner`.
-     -   Opportunity data is associated with your Companies records and becomes available as a filter in your Companies audience.
+     -   Opportunity data is associated with your Companies records and becomes available as a filter in any Companies audience.
 15.  Name the corresponding Clay fields.
 16.  Click `Save and Preview`, then `Confirm`.
 
@@ -152,10 +152,11 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
 
 **Using Audiences from a Clay table:**
 
-Two Clay enrichments let you move data between a Clay table and your Audience directly.
+Three Clay enrichments let you move data between a Clay table and your Audience directly.
 
 -   In any Clay table, click `Add enrichment` and search for:
     -   `Upsert Audiences Record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. Use it to commit data from unsupported integrations (e.g., HubSpot), qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table.
+    -   `Update Audiences Record` writes data from a table row to one or more fields on an existing Audience record. Unlike `Upsert Audiences Record`, it does not create a new record if no match is found. Both actions write only to fields that already exist in your Audience — to create a new custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
     -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls.
 
 ### Signals
@@ -229,7 +230,19 @@ Use Audiences by default for anything you want to reuse, segment on, or build au
 
 ### What if my integration isn't supported yet?
 
-Use the `Upstream to Audiences` table enrichment as a bridge. Bring your data into a Clay table from any source, then use Upstream to push those records permanently into your audience. This works for any source Audiences doesn't yet natively support.
+Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data into a Clay table from any source, then use `Upsert Audiences Record` to push those records permanently into your audience. This works for any source Audiences doesn't yet natively support.
+
+### How do I create a custom Audience field that isn't tied to Salesforce?
+
+The `+ Add field` option is available in the `Update Audiences Record` column mapping inside a bulk enrichment table:
+
+1.  Navigate to a segment and click `Enrich` → `Add bulk enrich`.
+2.  In the bulk enrich table, click the `Update Audiences Record` column header to open the Configure panel.
+3.  In the `Column mapping` dropdown, click `+ Add field`, name the new field, and save.
+
+Once created, the field is immediately available as a filter in any segment and as a target for `Update Audiences Record` or `Upsert Audiences Record` from any Clay table.
+
+**Note:** There is no option to add new fields directly from the Audience screen — you must go through the `Update Audiences Record` column mapping in a bulk enrichment table.
 
 ### My CRM is messy. Should I clean it up before setting up Audiences?
 
