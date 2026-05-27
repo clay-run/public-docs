@@ -93,7 +93,7 @@ Connect any external MCP (Model Context Protocol) server to your Claygent as a t
 
 **Note:** Custom MCP server connections are available on Enterprise plans. Self-serve customers can request access by contacting support to join the beta.
 
-**Model requirement:** Custom MCP tools require a non-Clay model with your own private API key — Clay's shared parallel models (Neon, Argon, Helium, and similar) do not support tool calling and will show "Tools are not available for the selected model." To use custom MCP, select a Claude or GPT model in the model picker and connect your own Anthropic or OpenAI API key via the account dropdown.
+**Model requirement:** Custom MCP tools require a non-Clay model with your own private API key — Clay's shared parallel models (Neon, Argon, Helium, and similar) do not support tool calling and will show "Tools are not available for the selected model." To use custom MCP, select a Claude Sonnet/Opus 4 series or GPT-5 series model in the model picker and connect your own Anthropic, OpenAI, or Gemini API key via the account dropdown.
 
 To add a custom MCP server from Claygent builder:
 
@@ -245,8 +245,8 @@ This message appears when you have a Clay parallel model (Neon, Argon, Helium, o
 To use tools with your Claygent:
 
 1.  Open the **Configuration** panel and click the model picker.
-2.  Select a Claude or GPT model.
-3.  Click the **Account** dropdown and connect your own Anthropic or OpenAI API key.
+2.  Select a Claude Sonnet/Opus 4 series or GPT-5 series model.
+3.  Click the **Account** dropdown and connect your own Anthropic, OpenAI, or Gemini API key.
 
 Once you're on a supported model with a private API key, the tools in the **Tools** section will become active.
 
