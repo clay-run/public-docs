@@ -61,6 +61,30 @@ For full details on writing run conditions, see [Conditional runs](https://unive
 
 [Learn more about Salesforce's duplicate rules here.](https://help.salesforce.com/s/articleView?id=sales.duplicate_rules_map_of_reference.htm&type=5)
 
+## How do I add contacts to a Salesforce campaign and update the status of existing campaign members?
+
+A Campaign Member in Salesforce represents the relationship between a contact (or lead) and a campaign. Because contacts might already be members of the campaign, you need a conditional workflow that handles both cases — adding new members and updating the status of existing ones.
+
+**Recommended workflow:**
+
+1.  **Lookup records via SOQL** — Check whether the contact is already a campaign member. Using SOQL lets you filter on both `ContactId` and `CampaignId` at once:
+
+    ```sql
+    SELECT Id, Status FROM CampaignMember WHERE ContactId = '/Contact ID' AND CampaignId = '/Campaign ID' LIMIT 1
+    ```
+
+    Replace `/Contact ID` and `/Campaign ID` with your Clay columns, inserted using the `/` picker in the query editor. This returns the Campaign Member's `Id` and current `Status` if they are already in the campaign, or nothing if they are not.
+
+2.  **Create record (conditional)** — If the lookup returns no result, the contact is not yet in the campaign. Add a **Create record** column, set the Salesforce object to `CampaignMember`, and supply `ContactId`, `CampaignId`, and the initial `Status`. In **Run settings**, add a conditional run that fires only when the ID field from your SOQL lookup is empty.
+
+3.  **Update record (conditional)** — If the lookup returns a result, the contact is already in the campaign and needs their status changed. Add an **Update record** column, set the Salesforce object to `CampaignMember`, set **Record ID** to the `Id` from your SOQL lookup column, and supply the new `Status` value. In **Run settings**, add a conditional run that fires only when the ID field from your SOQL lookup is **not** empty.
+
+This three-step pattern ensures new contacts are added to the campaign and existing members have their status updated — without creating duplicate Campaign Member records.
+
+**Note:** The valid `Status` values for Campaign Members are configured per campaign in Salesforce. Check your Salesforce org's Campaign Member Status settings to confirm the exact values before writing them from Clay.
+
+For details on writing conditional runs, see [Conditional runs](https://university.clay.com/docs/conditional-runs). For SOQL tips and syntax, see the [Lookup records via SOQL](https://university.clay.com/docs/salesforce-integration-overview) action in the Salesforce integration overview.
+
 ## What are the default sync settings for CRM integrations?
 
 By default, Clay syncs Salesforce imports every 24 hours. When new records or updates occur, this triggers action runs that enrich and export the updated fields.
