@@ -19,7 +19,7 @@ In Clay, you can share tables and workbooks via a public link or specific emails
 
 Note that when sharing as a template, only the table structure and one row of sample data are shared. If you need to share your table data, you can export the table as a CSV file.
 
-**Table limit:** By default, only workbooks with 10 or fewer tables can be shared as templates. If your workbook exceeds this limit, contact Clay support to have the limit raised for your workspace.
+**Table limit:** By default, workbooks with more than 10 tables cannot be duplicated or shared as templates. If your workbook exceeds this limit, contact Clay support to have the limit raised for your workspace.
 
 ## Move a workbook to a different workspace
 
