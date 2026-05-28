@@ -76,13 +76,13 @@ For full instructions on setting up a restricted Salesforce user with field-leve
 
 ### Testing your connection
 
-To verify that a Salesforce connection is valid and see which Salesforce user the connection is associated with:
+To verify that a Salesforce connection is valid and see which Salesforce user it is associated with:
 
 1.  Navigate to `Settings` → `Connections`.
 2.  Select your Salesforce connection.
 3.  Click the `…` menu next to the account and select `Test Connection`.
 
-The test result shows the Salesforce user the connection token is assigned to. This makes it easy to confirm that Clay will make Salesforce API calls as the correct user, and is especially helpful when debugging permission or data-access issues.
+The test result shows the email address of the Salesforce user the connection token is assigned to. This makes it easy to confirm that Clay's Salesforce API calls will run as the correct user — especially useful when debugging permission or data-access issues.
 
 ## Creating a table with Salesforce
 
