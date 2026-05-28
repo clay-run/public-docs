@@ -326,4 +326,22 @@ To resolve, provide at least one company identifier alongside the person's name:
 -   **Company Domain** (preferred)
 -   Company Name
 
+### Hitting Apollo's API rate limits with large row sets
+
+Apollo enforces API rate limits that can cause cells to error when Clay processes a large list quickly. The available workaround depends on which column type you're using.
+
+**Enrich Person and Enrich Company columns — use the Custom rate limit setting:**
+
+1.  Open the column settings.
+2.  Scroll to the **Custom rate limit** section.
+3.  Set **Request Limit** (the maximum number of API calls allowed in the time window) and **Duration (in ms)** (the length of the window in milliseconds). For example: `Request Limit: 100, Duration: 60000` caps requests to 100 per minute.
+
+**Action columns (Add Contact to Sequence, Find or Create Contact, and others) — run rows in manual batches:**
+
+Action columns do not have a built-in rate limit control. To stay below Apollo's per-minute cap:
+
+1.  Select a subset of rows (~150–200) by clicking the first row number and Shift-clicking the last.
+2.  Right-click the selection and choose **Run [N] rows**.
+3.  Wait approximately 60 seconds, then repeat for the next batch.
+
 ## ‍
