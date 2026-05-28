@@ -155,6 +155,8 @@ Common errors when writing schema by hand:
     -   **Remove the enum**: delete the `"enum"` array and keep only `"type": "integer"`, letting the model return any integer.
     -   **Switch to strings**: change `"type"` to `"string"` and quote the enum values (`"1000"`, `"500"`, `"100"`).
 
+-   **Field named `confidence` overrides Clay's built-in confidence indicator.** Clay automatically adds a `confidence` field to your output schema with enum values `low`, `medium`, `high`, and `very high` — but only when your schema does not already define one. This field drives the red/yellow/green color indicator on each response cell. If you define your own field named `confidence` (for example, as a numeric score), Clay skips injecting its own, and your custom field's values are used for the color indicator instead. Because values like `0.98` don't match the expected text enum, the normalizer defaults to `low` and every cell shows red. To fix it, rename your custom field — for example, to `confidence_score` — and rerun the column. Clay will then inject its own `confidence` field and the color indicator will work correctly.
+
 To avoid writing schema by hand, click **Generate from prompt** to have Clay auto-generate a valid schema from your prompt.
 
 ## Testing before you deploy
@@ -291,6 +293,14 @@ Repeat for each affected column in your table. Once the new Use AI column is run
 Yes, this is expected. When a Claygent variable is connected to an object value — such as a JSON enrichment payload or a structured data column — the test panel input preview shows **"✅ Success"** rather than rendering the full object contents. This is a known display limitation; your agent receives and processes the complete object data correctly.
 
 To inspect exactly what data was passed to your agent, deploy your Claygent to a table, run it, then click the cell to open the **cell details panel** and examine the full input and output values there.
+
+### Why are my Claygent cells highlighted red even though my confidence value is high?
+
+Clay uses a built-in `confidence` field — with text values `low`, `medium`, `high`, and `very high` — to drive the red/yellow/green color indicator on each response cell. Clay automatically adds this field to your output schema, but only when your schema does not already define a field named `confidence`.
+
+If your JSON output schema includes a field named `confidence` with non-matching values (for example, a numeric score like `0.98` or a boolean), Clay uses that field for the color indicator. Because the value doesn't match the expected text enum, every cell shows red regardless of how accurate the response is. The output itself is still correct — the red is purely cosmetic.
+
+To fix it, open your column's output schema and rename the field — for example, from `confidence` to `confidence_score`. Clay will then automatically add its own `confidence` field with the correct enum values, and the color indicator will work as expected.
 
 ### Can Claygent detect tracking pixels or marketing technologies on a website?
 
