@@ -107,7 +107,7 @@ Special sequencer enrichments available in the table include:
 
 You can view and manage all campaigns from the `Campaigns` tab on your home screen. This view summarizes every campaign in your workspace and shows you the workbook it belongs to.
 
-In the Campaigns homepage, you can access the `Global inbox` which centralizes replies across all campaigns, giving you one place to review and manage every response. `Global analytics` shows you how all of your campaigns are performing.
+In the Campaigns homepage, you can access the `Global inbox` which centralizes replies across all campaigns, giving you one place to review and manage every response. `Global analytics` shows you how all of your campaigns are performing; the bottom of the page includes a per-inbox breakdown of bounce rates, which you can use to spot inboxes where deliverability may be declining. For deeper domain health monitoring (sender reputation, DNS authentication), external tools such as [SenderScore](https://senderscore.org/), [MX Toolbox](https://mxtoolbox.com/), or [Google Postmaster Tools](https://postmaster.google.com/) are recommended.
 
 Check out the `Email accounts` tab to manage your fleet of sender accounts and `Global blocklist` to add or remove entries.
 
