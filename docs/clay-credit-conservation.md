@@ -13,19 +13,34 @@ Make the most out of your Clay credits.
 
 Clay credits are valuable resources that help you save both time by automating manual work and money on go-to-market resources. By optimizing how you use credits, you can ensure your workflows remain efficient while delivering the results you need growth. This guide outlines a few best practices to help you get the most out of your credits.
 
-## Pause enrichments for new entries by turning off auto-update
+## Pause enrichments for new entries by turning off auto-run
 
 **How does this save credits?**
 
-Auto-update allows Clay to enrich any new rows added to your table automatically. While this can be helpful when your table is set up for a fully automated workflow, it can also result in unnecessary credit usage if rows are added by mistake or before you're ready.
+By default, auto-run is **on** for every new table — Clay automatically enriches each row as soon as it arrives. While this is useful for production workflows, it can consume credits faster than expected when you're still building or testing: add a large batch of rows before your setup is finalized and all enrichments fire immediately.
 
-The best practice here is to **turn off auto-update** while building your table. Once your setup is finalized, you can turn it back on when you're ready to launch and start enriching new entries.
+The best practice is to **turn off table-level auto-run while building your table**. Once your setup is finalized and tested, turn it back on when you're ready to process your full list.
 
 **How do you implement this?**
 
-To turn off auto-update for a column, go to **Run Settings** and toggle off the Auto-Update button.
+To disable auto-run for the entire table (the master switch):
 
-You can also "turn off" an entire table from auto-updating by clicking the three little dots next to your table name, then click on "Auto-Update Columns".
+1.  Click the `⛭` icon in the bottom-right corner of your table to open Run Settings.
+2.  Toggle **Auto-run** off. The toggle shows **"Manual"** when disabled.
+
+With table-level auto-run off, no columns will run automatically when rows are added — regardless of individual column settings. You can still trigger enrichments manually by clicking individual cells.
+
+**Recommended testing workflow:**
+
+1.  Turn table-level auto-run **OFF** before adding any rows.
+2.  Add a small sample (5–10 rows).
+3.  Manually click individual cells to test enrichments.
+4.  Refine your configuration until results look right.
+5.  Turn auto-run back **ON** when you're ready to process the full list.
+
+To turn off auto-run for a single column instead of the whole table, click the column name → **Edit column** → toggle **Auto-run** off under **Run settings** → **Save**.
+
+See [Table management settings](table-management-settings.md) for full details on table-level and column-level auto-run controls.
 
 ## Leveraging your API Keys
 
