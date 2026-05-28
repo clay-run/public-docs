@@ -83,7 +83,7 @@ There is no generic Clay MCP server URL to enter manually. The "Add MCP server" 
 
 Any team member who needs to use Clay through an AI tool (Claude, ChatGPT, Glean, or xAI) must first be added to your Clay workspace. When inviting them, assign the **Sales Rep** role.
 
-The Sales Rep role is designed for MCP-only access: users can invoke functions and run enrichments from within their AI tool, but they cannot open or interact with the Clay web interface. This makes it the right choice for team members who should use Clay through AI tools only — not build workflows directly in Clay.
+The Sales Rep role restricts access to the main Clay workspace: users can invoke functions and run enrichments from within their AI tool, but they cannot open or interact with the Clay interface (tables, workbooks, etc.). This makes it the right choice for team members who should use Clay through AI tools only — not build workflows directly in Clay.
 
 To invite them: go to `Settings` → `Team`, click `+ Invite`, enter their email address, and select **Sales Rep** from the role dropdown.
 
