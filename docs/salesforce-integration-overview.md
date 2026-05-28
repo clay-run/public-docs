@@ -61,17 +61,15 @@ This error appears during the OAuth flow and is most commonly caused by one of t
 -   **SSO enforcement:** If SSO is enforced, the OAuth approval screen may be blocked. Try a non-SSO user, or create a non-SSO service account.
 -   **Missing permission:** The user's profile may lack `Approve uninstalled connected apps`. Ask a Salesforce admin to grant it, or connect with a System Administrator account.
 
-### Verifying the connected Salesforce user
+### Testing your connection
 
-When you test a Salesforce connection in Clay, the test result shows which Salesforce user the connection token is assigned to. This helps you confirm that Clay's API calls will run as the intended user — useful when you have multiple Salesforce connections in your workspace or when troubleshooting unexpected data access issues.
+To verify a Salesforce connection is working — and to confirm which Salesforce user it is authenticated as:
 
-**To check the connected user:**
+1.  Navigate to `Settings` → `Connections` and select `Salesforce`.
+2.  Click the `…` menu next to the connection you want to test.
+3.  Select `Test Connection`.
 
-1.  Navigate to `Settings` → `Connections`.
-2.  Select `Salesforce` to view your connections.
-3.  Click the `…` menu next to the connection you want to inspect and select `Test Connection`.
-
-The test result includes the Salesforce user email address associated with the token.
+Clay will confirm the connection is valid and display the Salesforce user (by email) that the connection token is attributed to. Because all data access in Clay is scoped to the permissions of that authenticated user, seeing which user is in the seat makes it easy to debug access issues — for example, if objects or fields are missing, you can immediately check whether the displayed user has the right permissions in Salesforce.
 
 ### IP allowlisting
 
