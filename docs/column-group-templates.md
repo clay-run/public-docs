@@ -48,10 +48,8 @@ To update the columns in a template, you need to recreate it:
 
 ## Column references when applying templates
 
-When you apply a column group template, Clay maps column references from the template to columns in your destination table. For inputs you configure in the **Configure** panel, you control the mapping explicitly. References embedded in column configurations — such as run condition formulas or merge column inputs — are mapped automatically by matching column names.
+Column group templates store column references as internal field IDs. When you apply a template to a new table, the **Configure** panel shows the template's declared inputs — map each one to the correct column in your destination table before clicking **Save**.
 
-**To minimize remapping after applying a template**, make sure your destination table has columns with the same names (including exact spelling and capitalization) as those referenced in the template before you apply it.
+Any reference not declared as a template input retains its original field ID from the source table. Because that field ID doesn't exist in the new table, the affected column displays the reference as **(Deleted column)**.
 
-**If a column input resolves to the wrong column** (for example, a merge column's fallback source appears incorrect), open the column's settings and manually update the input to the correct column.
-
-**If a run condition shows "(Deleted column)"**, the condition's formula is still working correctly — this is a display issue with the condition text. To fix the display, click the **(Deleted column)** chip in the run condition and reselect the correct column from the dropdown.
+**If a column formula or run condition shows "(Deleted column)"**, click the **(Deleted column)** chip and reselect the correct column from the dropdown to remap it.
