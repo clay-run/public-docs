@@ -51,7 +51,7 @@ This tracking provides insights into how visitors engage with your content and h
     -   Configure your table filters using page paths, session time, referrer, or UTM tags to show only relevant visitor data.
     -   For advanced filtering, create filter groups and adjust visit frequency parameters to refine results.
 
-Website visitor data appears in your table grouped by company domain. Since we only display completed visitor sessions, data may be delayed up to 30 minutes after user activity.
+Website visitor data appears in your table grouped by company domain. Since we only display completed visitor sessions, data is delivered approximately 15 minutes after the visitor's last page view.
 
 # Best practices
 
@@ -128,7 +128,7 @@ Update your site's Content Security Policy to allow Clay domains:
 
 Common causes:
 
--   The connection is disabled or was just enabled (allow 30 minutes for data to appear).
+-   The connection is disabled or was just enabled (allow up to 15 minutes after visitors leave your site for data to appear).
 -   The snippet isn't installed on the relevant pages.\
 -   Connection-level or table-level filters are too restrictive.
 -   Your site hasn't had enough live traffic yet.
@@ -165,7 +165,15 @@ No. The script runs in the visitor's browser and loads asynchronously, so it won
 
 ### Is visitor tracking data shown in real-time?
 
-No, visitor event data can be delayed up to 30 minutes. This allows the full visitor session to be completed first.
+No. Clay waits for a visitor's session to finish before processing and delivering the data. Sessions are finalized once the visitor has been inactive for about 15 minutes, so data typically appears in your table approximately 15 minutes after their last page view.
+
+This means **same-session personalization is not supported** — if a visitor hits your website right now and you immediately query your Clay table, that session's data won't be there yet. The information only becomes available after the session ends and the finalization window passes.
+
+**What Web Intent is well-suited for:**
+
+-   **Post-session outreach:** Once a completed visit appears in your table, trigger enrichment and sequencer steps to reach contacts at the identified company.
+-   **Return visitor workflows:** If a company has visited before, their data is already in your table. You can query the Clay table via the API for accounts identified in past sessions.
+-   **Account-level personalization for known accounts:** Use a prior visit's data (already stored) to personalize future sessions for returning companies.
 
 ### When will I start getting charged?
 
