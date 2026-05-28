@@ -113,7 +113,23 @@ You can also add MCP server connections workspace-wide from `Settings` → `Conn
 
 ### Model selection
 
-Swap between different AI models (Claude, GPT-4o, etc.) to test output quality without touching the prompt.
+Swap between different AI models in the configuration panel to test output quality without touching your prompt.
+
+Clay's parallel models differ in power and cost:
+
+-   **clay-argon** — Strongest model for deep research and complex multi-step analysis.
+-   **clay-neon** — Good balance of capability and speed for moderately complex tasks.
+-   **clay-helium** — Fastest and most cost-effective among Clay parallel models.
+
+**For classification and categorization tasks** (assigning a contact or record to a fixed list of labels using data already in your table), lighter models such as **clay-helium**, **GPT-4o mini**, or **Claude Haiku** work better than Argon. Argon is designed for deep research and complex reasoning — on a simple "pick one label from this list" task, it tends to return multi-sentence explanations and reasoning traces rather than a clean single-value response. Lighter models follow concise output instructions more reliably and cost less per run.
+
+To get a clean single-value response (for example, "Sales" rather than "This contact is best categorized as Sales because their title indicates..."):
+
+1.  Switch the model to **clay-helium**, **GPT-4o mini**, or **Claude Haiku**.
+2.  Define a JSON output schema (see **Output schema** below) with a single `string` field for the category name.
+3.  Add one or two examples in your prompt showing the expected output format — for example: _"Example output: Sales"_. The **Sculptor** tool can generate these automatically.
+
+**Note:** Switching to a non-parallel model (GPT-4o mini, Claude Haiku, etc.) also disables mandatory web search, which keeps runs faster and more consistent when classifying from data already in your table.
 
 ### Output schema
 
