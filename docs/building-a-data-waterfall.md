@@ -55,6 +55,17 @@ If two providers in a waterfall both return the same email address, and the firs
 
 Because the waterfall can't predict what any given provider will return, all providers in the sequence still run normally. Only the validation step is skipped when the returned value is already known to be invalid.
 
+## Waterfall results and data quality
+
+Waterfall enrichments return the first result found from a provider in your sequence — there is no built-in confidence score or confidence level on the output. For enrichments like company employee count, revenue, or company description, providers return a value when they find one; there is no high/medium/low rating attached to the result.
+
+This is different from AI columns (such as Use AI or Claygent), where you can define structured output fields — including a confidence score — as part of your column setup.
+
+**To improve data reliability with waterfalls:**
+
+-   **Cross-validate across providers.** Run the same enrichment from two or three providers in separate columns, then use a formula or AI column to flag rows where results are consistent across sources. Matching results across providers indicate higher data confidence.
+-   **Track which provider returned the result.** When configuring your waterfall output, enable the option to output the name of the successful provider. This lets you filter or score rows based on which data source you trust most.
+
 ## Trial plan and provider restrictions
 
 Waterfall enrichments are available on all plans, including the Trial plan. However, some individual providers within a waterfall require a paid plan.
