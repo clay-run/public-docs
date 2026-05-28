@@ -55,6 +55,7 @@ You can import data from:
 13.  Enable the `Import` toggle.
 14.  Add any Opportunity fields you want to filter or segment by — common fields include `Stage`, `Amount`, `Close Date`, and `Owner`.
      -   Opportunity data is associated with your Companies records and becomes available as a filter in your Companies audience.
+     -   Opportunity fields are also available as filters in your People audience. When filtering People by deal attributes, only contacts **directly linked to the deal via OpportunityContactRole** in Salesforce are included — not all contacts at the account that owns the deal. See [Why does filtering my People audience by deal attributes return fewer contacts than expected?](#why-does-filtering-my-people-audience-by-deal-attributes-return-fewer-contacts-than-expected) for the recommended workaround.
 15.  Name the corresponding Clay fields.
 16.  Click `Save and Preview`, then `Confirm`.
 
@@ -270,3 +271,18 @@ For this to work, you need both:
 -   Web intent configured as a signal in your Audiences workspace.
 
 **If visitors arrived before your Salesforce sync was connected:** Web intent records added to Audiences before you connected Salesforce may not automatically merge with existing SFDC records. To resolve this, use the **deterministic record matching** option in your Salesforce import settings and select domain as the match key. This matching applies to records coming in after the setting is enabled — it does not retroactively deduplicate records already in Audiences.
+
+### Why does filtering my People audience by deal attributes return fewer contacts than expected?
+
+When you filter a People audience by opportunity or deal attributes (for example, Stage, Amount, or a custom deal field), Clay only includes contacts that are **directly linked to the matching deal via OpportunityContactRole** in Salesforce — not all contacts at the account that owns the deal.
+
+This means the filter answers "find me everyone who is a contact role on these specific deals," not "find me everyone at companies that have these deals." If your Salesforce org doesn't link contacts to opportunities via OpportunityContactRole, or only a subset of contacts are linked, the resulting People audience will be smaller than you might expect.
+
+**To pull all contacts at accounts with matching deals:**
+
+1.  Build a **Companies** audience filtered by your deal criteria (for example, Stage, Amount, or deal name).
+2.  From your Companies audience, click **Send → Add to workbook** to export the matched accounts.
+3.  In the workbook, write a flag value to a custom Salesforce field on those accounts (for example, a text field set to `"target-campaign-q2"`).
+4.  In your **People** audience, add a filter on **Account → [your flag field] equals your flag value**.
+
+This pulls every contact tied to those accounts, regardless of their OpportunityContactRole status.
