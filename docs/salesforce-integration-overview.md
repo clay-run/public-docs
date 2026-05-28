@@ -74,6 +74,16 @@ When enabled, Clay routes requests through one of these IP addresses, which you 
 
 For full instructions on setting up a restricted Salesforce user with field-level security and IP allowlisting, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
 
+### Testing your connection
+
+To verify that a Salesforce connection is valid and see which Salesforce user the connection is associated with:
+
+1.  Navigate to `Settings` → `Connections`.
+2.  Select your Salesforce connection.
+3.  Click the `…` menu next to the account and select `Test Connection`.
+
+The test result shows the Salesforce user the connection token is assigned to. This makes it easy to confirm that Clay will make Salesforce API calls as the correct user, and is especially helpful when debugging permission or data-access issues.
+
 ## Creating a table with Salesforce
 
 1.  In a workbook, click `+ Add` at the bottom.
