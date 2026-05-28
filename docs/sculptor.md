@@ -91,6 +91,26 @@ While Sculptor is powerful, there are a few things to keep in mind:
 -   **Feature gaps** — Signals tables aren't currently supported.
 -   **Data boundaries apply** — Only processes data you provide or data from supported sources and enrichments.
 
+## Troubleshooting
+
+### Suggested column card doesn't appear
+
+When Sculptor proposes a new column but the suggestion card isn't visible, it typically means Sculptor described the action without fully completing it. A few things to try:
+
+-   **Use direct "build" language.** Prompt Sculptor with something like `"Build me an AI column"` or `"Build this suggestion from scratch."` More explicit instructions help Sculptor follow through on the action.
+-   **Give the column a unique name.** Asking Sculptor to name the column something slightly different (for example, adding `-v2`) can force it to create the column fresh rather than getting stuck on the previous attempt.
+-   **Start a new Sculptor conversation.** If the current chat isn't making progress, start a fresh conversation and restate your goal. You can launch a new Sculptor session from the homepage at [app.clay.com](http://app.clay.com/). This clears accumulated conversation context and usually resolves the issue.
+
+### Sculptor is slow to respond or times out
+
+Sculptor can be slower to respond during long conversations or when working on complex tables. If you're experiencing delays or frequent timeouts:
+
+-   **Start a fresh Sculptor conversation.** Long chat threads build up context over time and can slow responses. Starting over from the homepage or a new `Chat with Sculptor` session is the most reliable fix.
+-   **Keep prompts shorter and more focused.** Ask for one thing at a time rather than large multi-step requests — this reduces processing time and tends to produce more accurate results.
+-   **Try a different browser or incognito mode.** This rules out local caching or browser extension issues.
+
+If Sculptor is consistently slow regardless of conversation length, this is a known performance area the team is actively improving.
+
 ## FAQs
 
 ### **When should I use Sculptor instead of building manually?**
