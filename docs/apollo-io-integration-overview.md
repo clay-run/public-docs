@@ -204,7 +204,7 @@ Finds a contact in [Apollo.io](http://Apollo.io) or creates a new one if it does
 -   Direct Phone (Optional): Primary phone number for contact
 -   Mobile Phone (Optional): Mobile phone number of contact
 -   Present Raw Address (Optional): Personal location for contact (city, US state, country)
--   Contact Stage ID (Optional): Custom fields defined in Apollo account settings
+-   Contact Stage ID (Optional): Current stage of contact in sales process
 -   Custom Fields (Optional): Custom fields defined in Apollo account settings
 
 **Output:**
