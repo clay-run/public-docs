@@ -235,6 +235,15 @@ If you type `/Column Name` as literal text without using the picker, Clay sends 
 
 **Number chips and type precision**: A chip wrapped in quotes (e.g., `"count": "/Score Column"`) sends the value as a string — your server receives `"3"`, not `3`. Remove the surrounding quotes if your backend requires a native number type.
 
+**Token mode vs. formula mode**
+
+The Body editor has two modes, toggled via the ⚙️ gear icon in the top-right corner of the editor:
+
+-   **Token mode** (default): Write your JSON structure directly and use `/` to insert column values as colored chip references. Best for most use cases.
+-   **Formula mode**: Write any Clay formula expression (e.g., `Concatenate(...)`, `If(...)`) that returns a valid JSON string. Clay evaluates the formula before sending the request. Switch to this mode when you need logic that can't be expressed with chip references alone.
+
+**⚠️ Warning:** Typing formula syntax in token mode without switching to formula mode treats it as literal JSON text — causing a "Failed to parse body input" error at runtime.
+
 **Example body configuration:**
 
 ```javascript
@@ -569,6 +578,12 @@ Ensure keys are separated by commas. Watch for extra spaces, colons, and bracket
 **4\. Verify correct API key**
 
 Some providers have multiple API keys for different endpoints. Example: Apollo has separate keys for different APIs.
+
+**5\. Formula expression entered in token mode**
+
+If you used a Clay formula (e.g., `Concatenate()`, `If()`) to build the JSON body and the editor is in its default **token mode**, Clay treats the formula syntax as literal JSON — causing a parse error.
+
+**Fix:** Click the ⚙️ gear icon in the Body editor and select **Formula**. This switches to a full Clay formula editor where your expression is evaluated before the request is sent. Alternatively, remove the formula and rewrite the body in token mode using `/` to insert column values as chip references — for example, `{"email": "/Lead's Email", "score": /Lead Score}`.
 
 ### Hidden characters in API documentation
 
