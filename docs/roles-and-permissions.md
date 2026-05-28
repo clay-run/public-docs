@@ -76,6 +76,8 @@ The sales rep role is designed for users who access Clay through AI tools (Claud
 -   Access tables, workbooks, or any other part of the standard Clay interface
 -   Create or edit workflows directly in Clay
 
+**If you were assigned the Sales Rep role but need access to the standard Clay workspace**, contact your workspace admin and ask them to change your role. Admins can update roles at `Settings` → `Team`.
+
 **Note:** Currently, we do not support table-level view restriction. Members can view all tables/workbooks once invited to a workspace.
 
 ## Add workspace members
