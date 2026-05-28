@@ -61,6 +61,16 @@ This error appears during the OAuth flow and is most commonly caused by one of t
 -   **SSO enforcement:** If SSO is enforced, the OAuth approval screen may be blocked. Try a non-SSO user, or create a non-SSO service account.
 -   **Missing permission:** The user's profile may lack `Approve uninstalled connected apps`. Ask a Salesforce admin to grant it, or connect with a System Administrator account.
 
+### Testing your connection
+
+To verify a Salesforce connection is working — and to confirm which Salesforce user it is authenticated as:
+
+1.  Navigate to `Settings` → `Connections` and select `Salesforce`.
+2.  Click the `…` menu next to the connection you want to test.
+3.  Select `Test Connection`.
+
+Clay will confirm the connection is valid and display the Salesforce user (by email) that the connection token is attributed to. Because all data access in Clay is scoped to the permissions of that authenticated user, seeing which user is in the seat makes it easy to debug access issues — for example, if objects or fields are missing, you can immediately check whether the displayed user has the right permissions in Salesforce.
+
 ### IP allowlisting
 
 If your Salesforce org restricts connections by IP address, you can enable **Use static IP?** when adding or editing your Salesforce connection in Clay. This option is available on **Enterprise plans** and routes all Clay requests through a fixed set of IP addresses.
