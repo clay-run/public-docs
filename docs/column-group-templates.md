@@ -45,3 +45,13 @@ To update the columns in a template, you need to recreate it:
 3.  Select the updated columns by holding `⌘` (Mac) or `ctrl` (Windows) and clicking each column title.
 4.  `Right-click` on one of the selected titles and select `Save as template`.
 5.  Enter a name and click `Create template`.
+
+## Column references when applying templates
+
+When you apply a column group template, Clay maps column references from the template to columns in your destination table. For inputs you configure in the **Configure** panel, you control the mapping explicitly. References embedded in column configurations — such as run condition formulas or merge column inputs — are mapped automatically by matching column names.
+
+**To minimize remapping after applying a template**, make sure your destination table has columns with the same names (including exact spelling and capitalization) as those referenced in the template before you apply it.
+
+**If a column input resolves to the wrong column** (for example, a merge column's fallback source appears incorrect), open the column's settings and manually update the input to the correct column.
+
+**If a run condition shows "(Deleted column)"**, the condition's formula is still working correctly — this is a display issue with the condition text. To fix the display, click the **(Deleted column)** chip in the run condition and reselect the correct column from the dropdown.
