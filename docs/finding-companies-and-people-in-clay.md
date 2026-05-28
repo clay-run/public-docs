@@ -229,6 +229,18 @@ To improve coverage across all your companies:
 -   **Reduce your company list size** so that all companies can be processed within a single search run.
 -   **Switch to the enrichment action** (Find People at These Companies in-table) rather than the source — it processes each company row individually and returns results per company regardless of list size.
 
+### Find People source stops mid-run or shows a search error
+
+If your Find People source stops importing rows partway through — or shows the error **"Find people search failed. Contact Clay support for help"** — the source may have gotten stuck mid-run, particularly during large searches (several thousand results or more). This is a transient state, not a configuration problem.
+
+**To rerun the source yourself:**
+
+1.  Right-click the source column header in your table.
+2.  Select **Edit column**.
+3.  In the source configuration panel, click **Run now**.
+
+This re-triggers the search and imports the remaining rows. No support request is needed.
+
 ### Find People is returning people from the wrong company
 
 This almost always points to a domain-to-company mapping issue. When Clay resolves a domain to a LinkedIn company, it can occasionally surface a parent company, subsidiary, or a generic LinkedIn company page instead of the intended one. Use the company's **LinkedIn URL** as the input instead of the domain to ensure Clay maps to the exact intended entity.
