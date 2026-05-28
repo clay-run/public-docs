@@ -87,6 +87,10 @@ The Sales Rep role is designed for MCP-only access: users can invoke functions a
 
 To invite them: go to `Settings` → `Team`, click `+ Invite`, enter their email address, and select **Sales Rep** from the role dropdown.
 
+**Important:** Team members must accept their workspace invite email *before* connecting Clay to Claude, ChatGPT, or Glean. If a rep goes through the Clay MCP connection flow before accepting the invite, they'll be routed into a new personal workspace instead of your team workspace — and they won't appear in your `MCP users` table or be eligible for credit allocation.
+
+If this happens: have the rep disconnect Clay in their AI tool (remove and re-add the connector), then during re-authorization select your team workspace instead of "Personal Workspace." If invite links have expired, remove the user from `Settings → Team` and resend the invite before they reconnect.
+
 **Note:** The Sales Rep role is currently in beta — contact support to request access for your workspace.
 
 For a full breakdown of all roles, see [Roles and permissions](https://university.clay.com/docs/roles-and-permissions).
