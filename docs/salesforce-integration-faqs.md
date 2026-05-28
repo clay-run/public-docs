@@ -33,6 +33,20 @@ The Salesforce connection is tied to the OAuth user who sets it up:
 
 For sensitive fields, you can create a permission set to restrict the OAuth user's access.
 
+## How do I know which Salesforce user my connection is authenticated as?
+
+When you test a Salesforce connection in Clay, the result shows you the Salesforce user email address the connection token is assigned to. This lets you confirm that the correct user's credentials are in use before running enrichments or syncs.
+
+**To check:**
+
+1.  Navigate to `Settings` → `Connections`.
+2.  Find your Salesforce connection.
+3.  Click the `…` menu next to the connection and select `Test Connection`.
+
+After the test runs, you'll see a confirmation message that includes: *"The SFDC user associated with this connection is [email]."*
+
+This is useful for debugging access issues — for example, if a Salesforce object or field isn't available in Clay, checking which user the connection is authenticated as helps you verify whether the right Salesforce user's permissions are in effect.
+
 ## Why is a Salesforce object (such as Account) not appearing in Clay?
 
 The objects available in Clay are determined entirely by the permissions of the Salesforce user whose credentials were used to authenticate the integration. Clay queries Salesforce's API for the full list of accessible objects — it does not maintain its own allowlist or blocklist. If an object like Account is missing from the dropdown, it means the connected Salesforce user does not have access to it in Salesforce.
