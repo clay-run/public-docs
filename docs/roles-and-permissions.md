@@ -68,13 +68,16 @@ The sales rep role is designed for users who access Clay through AI tools (Claud
 
 **Sales reps can:**
 
--   Use Clay's data enrichment and functions through their connected AI tool
--   Run Clay-powered lookups and workflows from within Claude, ChatGPT, or xAI
+-   Look up company and contact information on demand through their AI tool
+-   Call Functions built centrally by Ops teams (for example, "find LinkedIn from email" or "generate outbound messages")
+-   Run Ops-built workflows directly from their AI chat interface
 
 **They cannot:**
 
 -   Access tables, workbooks, or any other part of the standard Clay interface
 -   Create or edit workflows directly in Clay
+
+Admins control which Functions reps can access (via the Functions settings page) and can set per-user credit budgets. See [MCP settings](https://university.clay.com/docs/mcp-settings) for details.
 
 **Note:** Currently, we do not support table-level view restriction. Members can view all tables/workbooks once invited to a workspace.
 
