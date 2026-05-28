@@ -25,7 +25,7 @@ The best practice is to **turn off table-level auto-run while building your tabl
 
 To disable auto-run for the entire table (the master switch):
 
-1.  Click the `⛭` icon in the bottom-right corner of your table, or click the table name and navigate to **Run Settings**.
+1.  Click the `⛭` icon in the bottom-right corner of your table to open Run Settings.
 2.  Toggle **Auto-run** off. The toggle shows **"Manual"** when disabled.
 
 With table-level auto-run off, no columns will run automatically when rows are added — regardless of individual column settings. You can still trigger enrichments manually by clicking individual cells.
