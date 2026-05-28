@@ -68,10 +68,13 @@ For a complete example using Zapier, see [Send Clay data to Zapier](https://www.
 
 ### Why does my webhook source show a higher row count than my table?
 
-The webhook source node in the workbook view shows the **total number of payloads successfully ingested** (those that received a `200 OK` response) since the source was created. This count only ever increases — it does not decrease when you delete rows from the table.
+The webhook source node in the workbook view shows the **total number of records stored by the source** since it was created. This count increases with every accepted payload and does not decrease when you delete rows from the table.
 
 The table node shows the **current number of rows** in your table.
 
-So if your source displays more rows than your table (for example, 162 vs. 92), the difference represents rows that were ingested at some point but have since been deleted from the table. Those deletions reduce the table count but leave the source count unchanged.
+So if your source displays more rows than your table (for example, 162 vs. 92), the difference is typically caused by one or both of the following:
 
-**Note:** Records that Clay rejected with a `429` rate limit error were never ingested and do not appear in either count. See the [Limits](#limits) section above for guidance on keeping requests within the 10/second throughput limit to avoid dropped records.
+-   **Deleted rows.** Rows that were ingested at some point but later deleted from the table are still counted by the source. Deleting a row from the table does not reduce the source count.
+-   **Table filters.** If a filter is active on your table, only the rows matching that filter are shown in the table count. The source count always reflects all stored records, regardless of any filters.
+
+**Note:** Records that Clay rejected with a `429` rate limit error were never stored and do not appear in either count. See the [Limits](#limits) section above for guidance on keeping requests within the 10/second throughput limit to avoid dropped records.
