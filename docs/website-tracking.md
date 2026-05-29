@@ -151,6 +151,17 @@ Traffic from bots, VPNs, cloud infrastructure, or ISP-owned IPs can appear as co
 
 IP de-anonymization can sometimes return a secondary or infrastructure domain instead of the primary marketing domain. If needed, use Clay enrichments by company name instead of domain to improve data quality.
 
+### Enrich Company returns "Company Not Found" for some web intent companies
+
+Web intent identifies visitors at the company level by de-anonymizing IP addresses, which produces a company domain. When you run **Enrich Company** using that domain as the identifier, some companies — particularly niche, small, or regional businesses — may not have data coverage in the provider's dataset. This is expected behavior, not an error.
+
+**To improve match rates:**
+
+-   **Switch to a LinkedIn URL as the identifier.** Enrich Company accepts a company LinkedIn URL, domain, Sales Navigator URL, or Sales Navigator Company ID — a LinkedIn URL gives higher accuracy than a domain alone. If your web intent table doesn't include a LinkedIn URL column, add an enrichment step to look one up first, then re-run Enrich Company with that URL.
+-   **Use a waterfall of company enrichment providers.** Instead of running a single Enrich Company action, create a custom waterfall column (**Add column → Waterfall**) and add multiple company enrichment providers in sequence. The waterfall stops after the first provider returns a result, so you only pay for the steps that run before a match is found. See [Waterfalls](building-a-data-waterfall.md) for setup details.
+
+Note: Some very niche or newly formed businesses may have no coverage across any provider — in that case, "Company Not Found" is the final outcome regardless of which approach you use.
+
 ### Credit spend higher than expected
 
 The most common cause is using `Best Match` instead of `Waterfall` for de-anonymization. `Waterfall` stops after the first match, while `Best Match` tests all providers and can cost 5-10 times more. Remember that IPs are cached for 30 days to avoid repeat costs.
