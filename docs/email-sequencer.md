@@ -38,7 +38,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 3.  In the `Setup` tab, you can set:
     -   `Lead email address`: We automatically detect email address columns, but confirm this before proceeding.
     -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links.
-4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead replies (excluding out-of-office replies, which we detect and work around).
+4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead sends a real reply. Out-of-office (OOO) auto-replies are detected via AI — the sequence pauses and automatically resumes once Clay determines the lead is back (based on the return date in the OOO, if provided).
     -   Toggle `Preview` mode to see real data from your source table in the message template
     -   Within each message, use `/` to access features such as:
         -   `Clean variable`: Reference synced lead data with safe fallbacks and optional formatting — use this to personalize emails with recipient-specific information like the lead's name or company (e.g., type `/` then select `first_name` to open with `Hi [first name],`).
@@ -287,21 +287,13 @@ Smartlead assigns leads into one of the following categories:
 8.  Uncategorizable by Ai
 9.  Sender Originated Bounce
 
-### Why is my open tracking showing zero or very few opens?
+### What happens when a lead replies with an out-of-office message?
 
-Open tracking works by embedding a tiny invisible image (a tracking pixel) in the HTML of your email. When a recipient opens the email, their mail client loads the image, which registers as an open. However, many email clients (including Gmail, Apple Mail, and Outlook), corporate firewalls, and spam filters now block or pre-load these images to protect user privacy — which means opens may go undetected even when recipients are actively reading your emails.
+Out-of-office (OOO) auto-replies do not permanently stop the sequence. Instead, Clay detects them via AI and:
 
-This is an industry-wide limitation that affects every email platform, not just Clay. It's common to see replies come through with zero recorded opens: the recipient opened and read the email, but their client blocked the tracking image.
+-   **Pauses** the sequence when an OOO reply is detected.
+-   **Automatically resumes** sending on the lead's stated return date, if one is included in the OOO message.
 
-To give open tracking the best chance of working:
+A real (non-OOO) reply from the lead permanently stops the sequence.
 
--   Make sure `Enable HTML` is turned on in the campaign's `Setup` tab — open tracking requires HTML mode.
--   Confirm `Track email opens` is enabled in `Advanced settings` → `Email tracking`.
-
-Even with both settings correctly configured, open rates will often undercount actual engagement. **Reply rate is a more reliable measure of campaign performance**, since replies are not affected by image-blocking.
-
-### How do I personalize emails with the recipient's name or other lead data?
-
-Inside each email in your message sequence, type `/` to open the variable menu, then select `Clean variable`. This lets you insert any column from your source table directly into the email body — for example, selecting `first_name` will populate each email with that lead's actual first name when the campaign sends.
-
-**Sender variable** (also in the `/` menu) inserts information about the *sending account* (your name, title, company, etc.) — not the recipient. Use `Clean variable` when you want to reference lead-specific data like names, company names, or any other field synced from your table.
+To stop the sequence whenever an OOO is received — for example, to handle OOO leads manually — add a condition to your campaign events table automation that filters by `reply_category_name` equal to `Out Of Office` (or by `reply_category` equal to `6`). Then use the **Pause lead in campaign** enrichment to halt sending for that lead.
