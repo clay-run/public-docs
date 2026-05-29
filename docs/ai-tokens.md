@@ -3,7 +3,6 @@ title: AI Tokens
 source_url: https://university.clay.com/docs/ai-tokens
 description: Understand AI Tokens
 last_synced: 2026-04-26T01:39:40.311Z
-upstream_hash: e76788a436ea719a65ef09ac82d75d3a9d7cede5e2ef35a9bd2947b54c6f8506
 ---
 
 # AI Tokens
@@ -19,7 +18,7 @@ Think of tokens as small chunks, each typically representing 3-4 characters. A 1
 When working with AI models, you'll encounter two types:
 
 -   **Input tokens**: The prompts you send to the AI.
--   **Output tokens**: The AI’s generated response.
+-   **Output tokens**: The AI's generated response.
 
 **Note:** In Clay, you can control usage by setting a maximum output length in your model configuration.
 
@@ -37,8 +36,8 @@ When working with AI models, you'll encounter two types:
 
 ### ClayGent Web Research
 
--   **OpenAI**: Requires **Tier 2 or higher** (≥450,000 TPM)
--   **Anthropic**: Requires **Tier 4 or higher** (≥400,000 TPM)
+-   **OpenAI**: Requires **Tier 2 or higher** (≥390,000 TPM)
+-   **Anthropic**: Requires **Tier 4 or higher** (≥390,000 TPM)
 -   **Gemini**:
     -   Requires **Tier 2**, but only works with the **Gemini 2.0 Flash model**
     -   **Gemini 1.5 models** may require additional access through **Vertex AI** or custom tiers
@@ -102,3 +101,9 @@ Each option has different benefits and considerations in terms of cost, convenie
 -   You manage your own API billing directly with the provider
 
 **Note:** When using a personal API key, price breakdowns won't appear in the Clay UI. You'll need to monitor your usage and upgrade tiers manually.
+
+**If you hit Gemini API rate limits with a personal API key:** The Gemini API enforces rate limits on calls from Clay independently of Google AI Studio — AI Studio may show available capacity while API calls are still throttled. To resolve rate limit errors:
+
+-   **Switch to Clay credits** — Clay automatically manages Gemini rate limits, tier access, and scaling on your behalf (see "Clay credits" above).
+-   **Upgrade your Google Cloud API tier** — higher tiers provide increased rate limits. See [Gemini rate limits](https://ai.google.dev/gemini-api/docs/rate-limits) for tier details.
+-   **Monitor your current consumption** — use the [Gemini API usage dashboard](https://cloud.google.com/gemini/docs/monitor-gemini) to review rate limits and identify caps or reset windows.

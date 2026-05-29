@@ -146,9 +146,23 @@ Key practices to follow:
 
 Our sequencer is powered by Smartlead, but everything runs on Clay credits. You don't need a Smartlead account, and you can't use an existing Smartlead API key with the sequencer. If you have a key, you can still use it with our in-table enrichments.
 
+### Why does my campaign only show 10 leads after launching?
+
+When a campaign is created, the `Sync leads to campaign` column pushes 10 rows so you can preview and configure your messages. After launching, the rest of your source table is not pushed automatically. To add all remaining rows, run the `Sync leads to campaign` column manually — click the run button in the column header.
+
+### My "Sync leads to campaign" column is showing a warning. What does it mean?
+
+This usually means the Clay table that the column points to was deleted. Hover over the warning icon to confirm — the error reads *"Destination table was deleted. Please either restore that table from the trash, or create a new Send table data column."*
+
+To fix it, open `Trash` from the bottom-left of your workspace sidebar, find the deleted table, and click `Restore`. The column will reconnect once the table is back.
+
+If the table was permanently deleted from Trash and can't be recovered, create a new campaign: click `Tools` → `Exports` → `Create Clay email campaign` in your source table.
+
+Deleting a campaign through the column header's settings (the **Delete campaign** option) is permanent — it removes the campaign from the sending platform and all associated columns with no recovery option.
+
 ### I updated my campaign, but the changes didn't save.
 
-Be sure to press `Save settings` after making edits. We're working on making this process smoother.
+Be sure to press `Save settings` after making edits. Note: deleting a campaign step saves immediately without requiring a manual save click—all other edits require pressing `Save settings`.
 
 ### How much does the sequencer cost?
 
@@ -161,6 +175,20 @@ Each lead can only be sequenced once per campaign. To send multiple sequences to
 ### My sender account got disconnected. What happened?
 
 Email providers like Google and Microsoft occasionally revoke access due to inactivity, security checks, or suspicious activity detection. To fix this, delete the disconnected account from your sequencer settings and re-authenticate it.
+
+### How do I add an email signature or sign-off?
+
+Email signatures are configured at the **sender account level**, not per individual email. A signature set for an account is automatically appended to every email sent from that account.
+
+To set or update a signature:
+
+1.  Open your campaign and go to `Sender setup`.
+2.  Click the three-dot menu (⋯) next to the sending account.
+3.  Select `Update sender variables`.
+4.  Enter your text in the `Signature` field.
+5.  Click `Update sender variables` to save.
+
+You can also update the `From name` (the display name recipients see in their inbox) from the same dialog. Only plaintext signatures are currently supported.
 
 ### What is email account warmup?
 
@@ -184,13 +212,43 @@ No, only business accounts (Google Workspace, Microsoft Outlook) are supported f
 
 Often errors in the app are transient. We're calling Smartlead APIs under the hood, and sometimes the request has an issue—usually you can retry the operation and it will succeed (especially if it says a 502 error code). If you keep running into an error, contact support.
 
-### How do I sync campaign data to HubSpot?
+### How do I write campaign event data back to my CRM (HubSpot or Salesforce)?
 
-You can use our existing table integration in the campaign events table to push updates into HubSpot.
+Because the campaign events table is a standard Clay table, you can add CRM enrichment columns directly to it to log activity back to HubSpot, Salesforce, or any other connected CRM. There is no separate native sync — you configure it column by column using Clay's standard CRM actions. Here are best practices for a clean, reliable write-back:
+
+1.  **Filter by event type before writing.** Not every event needs to hit your CRM. Add an `Only run if` condition to your CRM action column to trigger write-backs only on meaningful events (e.g., replies or bounces) — this keeps your CRM clean and avoids noise from every send.
+
+2.  **Look up the contact first.** Before creating or updating a record, use a `Lookup record` action (by email) to find the existing CRM contact. This prevents duplicates and ensures the activity is logged to the right record. For Salesforce contact or lead records, `Upsert object` can find and update in a single step (requires an external ID field on the Salesforce object).
+
+3.  **Map your key fields.** Recommended mappings from the events table to your CRM:
+    -   `Event Type` → Activity Type / Task Subject
+    -   `Event Timestamp` → Activity Date
+    -   `Campaign Name` → Campaign / Custom Field
+    -   `Reply Body` → Notes / Description
+
+4.  **Use Create record (not Update) when logging activity events.** Each event should become its own activity entry in your CRM — this preserves the full engagement history. Updating a single record would overwrite prior events.
+
+5.  **Account for reply delays.** Reply events can appear in the campaign events table with a [15–30 minute delay](#campaign-events-table), so avoid automations that depend on real-time reply data.
+
+6.  **Enable Auto-run for ongoing campaigns.** Turn on `Auto-run` on your CRM action column so new events continuously trigger write-backs as the campaign runs — otherwise, the column only processes rows that are manually triggered.
+
+7.  **Test before scaling.** Turn off `Auto-run` and manually run 5–10 rows first to validate your field mappings before enabling full automation.
 
 ### How do unsubscribes work in the sequencer?
 
-If HTML is enabled, you can add an unsubscribe link to the email that's appended at the bottom of the message. You can also use the `Add lead to blocklist` action in the campaign events table to block them from being sequenced in the future.
+When HTML is enabled, you can turn on an unsubscribe link in `Advanced` settings. This adds a hyperlinked phrase at the bottom of every email (default text: "Not interested? Click here to unsubscribe."). You can customize this text in the `Advanced` section.
+
+**What happens when a recipient clicks unsubscribe:**
+
+-   Their email address is automatically added to your workspace's global blocklist.
+-   They are removed from all active campaigns.
+-   Future emails to that address from any campaign in your workspace are blocked.
+
+To view and manually manage your blocklist—including adding individual email addresses or domains—go to the **Campaigns** tab on your home screen and click the `Blocklist` tab. You can also block leads programmatically using the `Add email to blocklist` enrichment in the campaign events table.
+
+**What about leads who reply asking not to be contacted?**
+
+If a lead *replies* to your email — rather than clicking an HTML unsubscribe link — their response is categorized by Smartlead (e.g., as `Do Not Contact` or `Not Interested`), but they are **not** automatically added to the blocklist. The `Add email to blocklist` column in the campaign events table is a button by default: you can click it manually for a specific row, or automate it by setting an `Only run if` condition on the column. To trigger the blocklist action for reply-based opt-outs, set the condition to run when `Event type` equals `LEAD_CATEGORY_UPDATED` — this event fires whenever Smartlead categorizes a lead's reply. See [How are replies categorized in the Campaign Events table?](#how-are-replies-categorized-in-the-campaign-events-table) for the full list of reply categories.
 
 ### What is a cold lead? What is a warm lead?
 
@@ -203,6 +261,12 @@ These are disclosed when you add your account via OAuth. We request: full Gmail 
 ### How do I authorize Clay's app in the Google Admin panel?
 
 Follow the instructions in the modal and have your Google Workspace admin set our Clay sequencer app to `Trusted`. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the Clay sequencer.
+
+### I followed the admin setup steps but still see "Access blocked: clay.com has not completed the Google verification process." What should I do?
+
+This error is expected — Clay's sequencer uses automated warmup sends, which prevents the app from passing Google's standard verification process. Admin approval in your Google Workspace Admin panel is the intended workaround; Clay's app will not become Google-verified.
+
+If the error persists more than 24 hours after your admin marked the app as `Trusted`, confirm that they approved the app for the exact domain of the email account you're connecting (e.g., for `ryan@company.com`, the admin must approve for `company.com` specifically — not a different domain they manage). If it's still blocked after verifying the domain, contact support.
 
 ### What exact Microsoft permissions does sequencer require?
 

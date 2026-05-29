@@ -3,7 +3,6 @@ title: Monitor for new hire
 source_url: https://university.clay.com/docs/new-hire-signal-overview
 description: Track new hires signals and act on timely data.
 last_synced: 2026-04-26T01:40:24.407Z
-upstream_hash: 02bc46686cac9b5b0215db1d1d3470c9a0d87299b7c5fcfd575bde86b8b1ff15
 ---
 
 # Monitor for new hire
@@ -33,3 +32,23 @@ To set up new hires Signals in your table:
 7.  Click `Save and run X rows` to finish.
 
 **Need regular data updates instead of specific change monitoring through Signals?** Check out [scheduled columns](https://www.clay.com/university/guide/scheduled-columns) and [scheduled sources](https://www.clay.com/university/guide/scheduled-sources).
+
+## People Filters
+
+The **People Filters** section controls which new hires get added to your table. Clay only adds a new row when a hire matches all of your active filters.
+
+### Job title match mode
+
+The **Job title** filter lets you specify job title keywords and how they're matched against a hire's title. Use the dropdown next to the field to select a match mode:
+
+-   **Is similar to** _(default)_ — uses AI-powered expansion to find synonyms and equivalent role names. For example, "CEO" also matches "Chief Executive Officer." Best for broad coverage with minimal setup.
+-   **Contains** — returns hires whose title contains your keyword phrase as a whole-word match. "Engineer" matches "Software Engineer" and "Senior Engineer" but not "Engineering Manager" or "Engineering Tech." More precise than "is similar to."
+-   **Is exactly** — returns only hires whose title exactly matches one of your keywords. Use this only when you need very precise title filtering.
+
+> **Getting zero results despite a valid search?** If your Signal returns no results but a LinkedIn Sales Navigator search for the same companies and titles returns results, check your Job title match mode. Setting it to **Is exactly** means only hires whose title is an exact, character-for-character match will be included. Switch to **Contains** or the default **Is similar to** for broader matching similar to how Sales Navigator works.
+
+### Job titles to exclude
+
+The **Job titles to exclude** field removes hires whose title contains any of your listed keywords as a whole word. For example, adding "Analyst" will exclude "Data Analyst", "Financial Analyst", and "Business Analyst" — any title where "Analyst" appears as a complete word.
+
+Note that the match is word-level, not character-level: adding "Engineer" will exclude "Software Engineer" and "Senior Engineer", but will **not** exclude "Engineering Manager" or "Engineering Tech" (because "engineering" is a different word from "engineer"). To exclude titles containing "engineering", add "engineering" as a separate keyword.

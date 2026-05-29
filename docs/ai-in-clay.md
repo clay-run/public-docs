@@ -2,8 +2,7 @@
 title: AI in Clay
 source_url: https://university.clay.com/docs/ai-in-clay
 description: A comprehensive guide to how Clay uses AI across its features.
-last_synced: 2026-04-26T01:39:39.278Z
-upstream_hash: ab5a2532485680f80f2914a032bb5c46561638991f78f21d5ec6d399949698fa
+last_synced: 2026-05-11T17:47:40.000Z
 ---
 
 # AI in Clay
@@ -40,7 +39,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 **Data privacy**:
 
 -   Your campaign data and prospect information are processed only to generate your email content.
--   No data is retained by AI providers after processing.
 -   Data is not used to train models or shared with other Clay customers.
 -   You can optionally use your own API keys with supported providers.
 
@@ -59,7 +57,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 **Data privacy**:
 
 -   Only the specific table data you select is sent to AI models.
--   Messages are generated on-demand and data is not retained post-processing.
 -   No training occurs on your messaging or prospect data.
 -   Access is controlled by Clay's role-based permissions.
 
@@ -140,7 +137,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 -   Only your formula description and relevant table schema are sent to AI.
 -   Actual row data is not transmitted.
 -   Generated formulas are not used to train models.
--   Processing is instantaneous with no data retention.
 
 ### API generator
 
@@ -174,7 +170,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   Only error logs and relevant system information are sent to AI.
 -   Personal data in your tables is not included in debug requests.
--   Error analysis is done in real-time with no retention.
 -   Debug data is not used to train models.
 
 ### Find companies with natural language
@@ -257,7 +252,7 @@ Clay provides access to a wide range of AI models from multiple providers. Below
 | Provider | Models |
 | --- | --- |
 | Clay | HeliumNeonArgonXenonRadonClay ConductorClay Navigator |
-| OpenAI | GPT 4o, 4.1, 4o MiniGPT 4.1 Mini, 4.1 NanoGPT 5, 5.1, 5 Mini, 5 Nanoo1, o1 Pro, o1 Minio3, o3 Mini, o3 Deep Researcho4 MiniDALL·E 3 (Standard, HD)GPT Image 1 (Low, Medium, High) |
+| OpenAI | GPT 4o, 4.1, 4o MiniGPT 4.1 Mini, 4.1 NanoGPT 5.1, 5.4, 5.4 Mini, 5.4 Nano, 5.5, 5 Mini, 5 Nanoo1, o1 Pro, o1 Minio3, o3 Mini, o3 Deep Researcho4 MiniDALL·E 3 (Standard, HD)GPT Image 1 (Low, Medium, High) |
 | Anthropic | Claude 3 HaikuClaude 3.5 HaikuClaude 3.7 SonnetClaude 4 SonnetClaude 4 OpusClaude 4.5 SonnetClaude 4.5 HaikuClaude 4.5 OpusClaude 4.6 Opus |
 | Gemini | 2.0 Flash, Flash Lite2.5 Flash, Flash Lite2.5 Pro, 3 ProImagen 3.0, 3.0 Fast |
 | xAI | Grok 4Grok 4.1 Fast Reasoning |

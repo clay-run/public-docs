@@ -4,7 +4,6 @@ source_url: https://university.clay.com/docs/zoominfo-integration
 description: Get detailed insights into company structures, competitive
   landscapes, and accurate contact details.
 last_synced: 2026-04-26T01:40:59.430Z
-upstream_hash: 5c091963f09ecd97c56728d543ba6572a93e9878c9418e18a8cf84a8c58ab1bc
 ---
 
 # ZoomInfo integration
@@ -57,6 +56,13 @@ This is usually due to one of the following:
 
 -   The email or password is incorrect
 -   Your ZoomInfo account doesn't have API access enabled
+-   Your account has API access but lacks permissions for specific endpoints required by Clay
 -   You're using SSO (Single Sign-On), which isn't supported for API
 
-To fix this, please reach out to ZoomInfo support to confirm that your account has API access and to get it unblocked.
+To troubleshoot:
+
+1.  **Verify your credentials** — Check that the email and password you entered are correct.
+2.  **Check API access** — Contact ZoomInfo support to confirm your account has API access enabled and is provisioned for the required API endpoints.
+3.  **Refresh the connection in Clay** — Go to **Settings → Connections**, delete the existing ZoomInfo connection, then re-add it and re-authenticate.
+
+If issues persist, reach out to ZoomInfo support to resolve any remaining account restrictions.

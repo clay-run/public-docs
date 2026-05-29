@@ -3,7 +3,6 @@ title: HTTP API
 source_url: https://university.clay.com/docs/http-api-integration-overview
 description: Facilitate seamless integration and connectivity with any APIs.
 last_synced: 2026-04-26T01:40:08.701Z
-upstream_hash: 6ba64b21be65f745d8f3f5e362d290f624e1035ea304a572b218c60328cdb185
 ---
 
 # HTTP API
@@ -184,6 +183,7 @@ Sculptor understands common API patterns and can guide you through authenticatio
 -   **Review before running**: Verify the AI-generated configuration makes sense.
 -   **Test first**: Run on a single row before processing your entire table.
 -   **Save as template**: After successful setup, save your configuration for future use.
+-   **Throttle request speed if needed**: If the target API enforces rate limits (e.g. Apollo, HubSpot), switch to the **Configure** tab and scroll to the **Custom rate limit** section to limit how many requests per time window Clay sends. See Step 7 in the manual configuration section below for details.
 
 ## Option B: Manual configuration
 
@@ -222,6 +222,27 @@ For POST and PUT requests, specify the data to send in the request body.
 -   ✅ Dynamic column references for strings need quotes: `"email": "/Email Column"`
 -   ✅ Dynamic column references for numbers don't: `"count": /Score Column`
 -   ⚠️ Exception: Numbers with trailing zeros (e.g., `0004`) need quotation marks
+
+**⚠️ Column references must be inserted as chips, not typed as text**
+
+In Clay's body editor, column values appear as **colored chips** (dynamic tokens), not plain text strings. To insert a column chip:
+
+1.  Click inside the body editor where you want the reference.
+2.  Type `/` to open the column picker.
+3.  Select the column name — it inserts as a colored pill.
+
+If you type `/Column Name` as literal text without using the picker, Clay sends the string `/Column Name` to your API — **not** the column's actual value. For example, typing `/contact_status` sends `"/contact_status"` to the receiving server instead of the real value (e.g., `"ready"`). This is the most common cause of unexpected literal strings appearing in API payloads.
+
+**Number chips and type precision**: A chip wrapped in quotes (e.g., `"count": "/Score Column"`) sends the value as a string — your server receives `"3"`, not `3`. Remove the surrounding quotes if your backend requires a native number type.
+
+**Token mode vs. formula mode**
+
+The Body editor has two modes, toggled via the ⚙️ gear icon in the top-right corner of the editor:
+
+-   **Token mode** (default): Write your JSON structure directly and use `/` to insert column values as colored chip references. Best for most use cases.
+-   **Formula mode**: Write any Clay formula expression (e.g., `Concatenate(...)`, `If(...)`) that returns a valid JSON string. Clay evaluates the formula before sending the request. Switch to this mode when you need logic that can't be expressed with chip references alone.
+
+**⚠️ Warning:** Typing formula syntax in token mode without switching to formula mode treats it as literal JSON text — causing a "Failed to parse body input" error at runtime.
 
 **Example body configuration:**
 
@@ -296,18 +317,23 @@ data.user.email
 
 **Benefits:** Faster processing, cleaner data, easier to work with.
 
-### Step 7: Rate limiting
+### Step 7: Custom rate limit
 
-Control how many API requests you can send within a given time frame. Check your API documentation for rate limits.
+Throttle how many requests Clay sends to the API within a given time window. This is a **column-level** setting — it applies uniformly to every row the column processes. Open the column settings and scroll to the **Custom rate limit** collapsible section on the **Configure** tab.
 
-**Example configuration:**
+**Fields:**
+
+-   **Request Limit** — the maximum number of requests allowed in the time window.
+-   **Duration (in ms)** — the length of the time window in milliseconds (1 to 900,000 ms, i.e. up to 15 minutes).
+
+**Constraint:** The rate limit must average at least 1 request per second — for example, `Request Limit: 1, Duration: 1000 ms` is the slowest setting allowed.
+
+**Example — 100 requests per minute:**
 
 ```javascript
-Request limit: 10
-Duration (ms): 1000
+Request Limit: 100
+Duration (ms): 60000
 ```
-
-**This means:** 10 requests per second
 
 ### Step 8: Remove empty fields from request
 
@@ -460,14 +486,14 @@ Before running on your entire table:
 -   Use Clay's built-in authentication features.
 -   Store credentials securely.
 
-### ✓ Configure rate limits
+### ✓ Set a custom rate limit
 
-If the API documentation specifies limits, configure them in your enrichment.
+If the API documentation specifies rate limits, configure the **Custom rate limit** setting on the **Configure** tab of your HTTP API column. This is a column-level setting — it applies uniformly to all rows. The rate limit must average at least 1 request per second, and the duration can be up to 900,000 ms (15 minutes).
 
 **Example:** 100 requests per minute
 
 ```javascript
-Request limit: 100
+Request Limit: 100
 Duration: 60000 ms
 ```
 
@@ -507,6 +533,20 @@ For complex HTTP API configurations:
 
 ## Troubleshooting
 
+### "Token has expired" or "Unauthorized" (401 error)
+
+This error means the API credentials in your HTTP API action are no longer valid. Many platforms — including sequencers, CRMs, and outreach tools — issue tokens that expire after a period of time.
+
+**How to fix:**
+
+1.  **Generate a new token** in the external platform (e.g., your sequencer or CRM). Check that platform's settings or developer docs for where to create or rotate API keys.
+2.  **Update the token in Clay:**
+    -   **If you saved the token in a header account:** Go to `Settings → Connections`, find your HTTP API (Headers) account, and click **Edit**. Existing header values are not shown (they're stored encrypted for security) — re-enter all your headers from scratch, including `Authorization: Bearer YOUR_NEW_TOKEN` and any other keys you had configured, then save. This updates every HTTP API column in your workspace that uses that account at once.
+    -   **If you entered the token directly in the column:** Open the HTTP API column settings, go to the `Headers` section, and replace the old token value with the new one.
+3.  **Test with a single row** to confirm the new token works before re-running your full table.
+
+**Tip:** Saving credentials in a header account (`Settings → Connections`) is the easiest way to manage token rotation — when a token expires, you only need to update it in one place instead of editing every column individually.
+
 ### "Body parse error" (400 error)
 
 This error indicates a formatting issue in your JSON body.
@@ -538,6 +578,12 @@ Ensure keys are separated by commas. Watch for extra spaces, colons, and bracket
 **4\. Verify correct API key**
 
 Some providers have multiple API keys for different endpoints. Example: Apollo has separate keys for different APIs.
+
+**5\. Formula expression entered in token mode**
+
+If you used a Clay formula (e.g., `Concatenate()`, `If()`) to build the JSON body and the editor is in its default **token mode**, Clay treats the formula syntax as literal JSON — causing a parse error.
+
+**Fix:** Click the ⚙️ gear icon in the Body editor and select **Formula**. This switches to a full Clay formula editor where your expression is evaluated before the request is sent. Alternatively, remove the formula and rewrite the body in token mode using `/` to insert column values as chip references — for example, `{"email": "/Lead's Email", "score": /Lead Score}`.
 
 ### Hidden characters in API documentation
 
@@ -591,3 +637,32 @@ When copying from API documentation, paste your code into a plain text editor fi
 ### Can I use HTTP API with pagination?
 
 Currently, HTTP API as source does not support pagination. The import will retrieve only the data from a single API response. Pagination support may be added based on customer demand.
+
+### Can I paste a cURL request directly into Clay?
+
+There is no "paste cURL" button, but you can replicate any cURL request by manually mapping its components to the HTTP API configuration fields.
+
+Given a cURL command like:
+
+```bash
+curl -X POST "https://api.example.com/contacts" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"email": "jane@example.com", "company": "Acme"}'
+```
+
+Map each part as follows:
+
+| cURL component | Where it goes in Clay |
+|---|---|
+| `-X POST` (or `-X GET`, etc.) | **Method** dropdown |
+| The URL (`https://api.example.com/contacts`) | **Endpoint URL** field |
+| `-H "Authorization: Bearer ..."` | **Headers** (key: `Authorization`, value: `Bearer YOUR_TOKEN`) |
+| `-H "Content-Type: application/json"` | **Headers** (key: `Content-Type`, value: `application/json`) |
+| `-d '{...}'` / `--data '{...}'` | **Body** field — replace static values with Clay column references (e.g. `"/Email Column"`) |
+| `?key=value` query params in the URL | **Query string parameters** section |
+
+**Decide which Clay feature to use:**
+
+-   **Pulling records in as rows** (e.g. fetching a list from an API to start a table): use **HTTP API as source** (Actions → View all sources → Import data from an HTTP API).
+-   **Calling an API once per row** (e.g. enriching existing records): use the **HTTP API enrichment column** (Add enrichment → HTTP API).

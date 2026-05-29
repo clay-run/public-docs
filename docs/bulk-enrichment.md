@@ -4,7 +4,6 @@ source_url: https://university.clay.com/docs/bulk-enrichment
 description: Enrich millions of rows quickly, securely, and at scale. No row
   limits, no slowdown.
 last_synced: 2026-04-27T18:09:27.586Z
-upstream_hash: 85ced5e9b3b33801cc3cc02219f8d58a400adaa1f821746b1b9271988d479f7a
 ---
 
 # Bulk enrichment
@@ -45,6 +44,29 @@ In the bulk enrichment settings, you can adjust several options:
 -   `Test data`: Add rows to test your enrichments before running the full source.
 -   `Export data`: Set up your export destination.
     -   This could be Salesforce, Google Sheets, Snowflake, etc.
--   `Deletion criteria`: Single column or conditional rules.
-    -   You can also `Archive deleted rows` for up to 30 days, meaning they will remain indexed and searchable.
--   `Run starting point`: Decide whether to clear rows already in the test table and rerun them.
+-   `Deletion criteria`: Choose when a row is considered complete and automatically deleted. This setting is required — leaving it unconfigured shows an **Incomplete configuration** error that prevents the run from starting.
+    -   **Single column** — Deletes the row once a selected column has run, or if any conditional rules determine the column doesn't need to run. After selecting this option, use the **Select field** dropdown to pick the specific column that signals a row is complete and ready to be deleted or archived. Typically this is your export action column — for example, the column that adds a row to Google Sheets.
+    -   **Conditional rules** — Combine multiple rules or columns to trigger deletion.
+    -   `Archive deleted rows` — When enabled, deleted rows are stored for up to 30 days and can be downloaded as a CSV. This toggle is off by default.
+-   `Run starting point`: Choose how to handle rows already in the table when the run begins.
+    -   **Continue where you left off** — Finishes enriching rows already in the table, then continues with the rest of the source.
+    -   **Start from the beginning** — Clears rows already in the table and reruns everything from the source. Note: restarting will cost credits again for previously enriched rows.
+
+## Run Setup settings (Audiences)
+
+When a bulk enrichment is attached to an [Audiences](https://university.clay.com/docs/audiences) segment (available in beta for Enterprise customers), clicking the enrichment card opens a **Run Setup** panel with additional settings for ongoing enrichment behavior.
+
+### Auto-enrich new records
+
+The **Auto-enrich new records** toggle determines whether records that newly qualify for the segment are enriched automatically after the initial run.
+
+-   **On** — any record that enters the segment after the initial run is automatically enriched in the background, typically within 15 minutes of joining the segment. This includes records that newly qualify because you updated your audience filters.
+-   **Off** — only records present at the time of the initial run are enriched. Records that join the segment later are not enriched automatically.
+
+**To change this setting while a run is active:** click **Pause** first. The toggle is locked while the enrichment is running and can only be changed when the enrichment is paused or not yet started.
+
+### Recurring enrichments
+
+**Recurring enrichments** re-enrich all records in the segment on a schedule, keeping enriched fields up to date over time (for example, refreshing job titles or company data monthly).
+
+To set a schedule, click **Recurring enrichments** in the Run Setup panel and select your desired frequency.

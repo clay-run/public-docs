@@ -3,7 +3,6 @@ title: Roles and permissions
 source_url: https://university.clay.com/docs/roles-and-permissions
 description: Understand roles and permissions in Clay.
 last_synced: 2026-04-26T01:40:33.352Z
-upstream_hash: 4a677958cd278fc8e9aaa4b1f91222fda3146fba0d5d057f9fa702ecf90fd5cc
 ---
 
 # Roles and permissions
@@ -61,19 +60,26 @@ Viewers can be granted Editor access to specific tables or workbooks, or added a
 2.  Under `Access permissions`, change `Edit access` to `Admin and invited collaborators only`.
 3.  Click `+ Add collaborator` and select the Viewer.
 
-## Sales rep
+## Sales rep _(Beta)_
 
-The sales rep role is designed for users who access Clay through AI tools (Claude, ChatGPT, or xAI) via the Clay MCP integration. Users with this role **cannot access the standard Clay workspace**. When they log in, they'll see a page prompting them to connect their AI tool.
+**Note:** The Sales Rep role is currently in beta — contact support to request access for your workspace.
+
+The sales rep role is designed for team members who need to set up email accounts for the Clay Sequencer and/or access Clay through AI tools (Claude, ChatGPT, or xAI) via the Clay MCP integration. Users with this role **cannot access the standard Clay workspace** — they have no access to tables, workbooks, or other workspace resources.
 
 **Sales reps can:**
 
--   Use Clay's data enrichment and functions through their connected AI tool
--   Run Clay-powered lookups and workflows from within Claude, ChatGPT, or xAI
+-   Set up and manage their own email accounts for use in the Clay Sequencer
+-   Look up company and contact information on demand through their AI tool
+-   Call Functions built centrally by Ops teams (for example, "find LinkedIn from email" or "generate outbound messages")
+-   Run Ops-built workflows directly from their AI chat interface
 
 **They cannot:**
 
 -   Access tables, workbooks, or any other part of the standard Clay interface
 -   Create or edit workflows directly in Clay
+
+Admins control which Functions reps can access (via the Functions settings page) and can set per-user credit budgets. See [MCP settings](https://university.clay.com/docs/mcp-settings) for details.
+**If you were assigned the Sales Rep role but need access to the standard Clay workspace**, contact your workspace admin and ask them to change your role. Admins can update roles at `Settings` → `Team`.
 
 **Note:** Currently, we do not support table-level view restriction. Members can view all tables/workbooks once invited to a workspace.
 
@@ -82,7 +88,7 @@ The sales rep role is designed for users who access Clay through AI tools (Claud
 To invite a new member to your workspace:
 
 -   Go to `Settings` → `Team`.
--   Click the `+ Invite` button and enter the email address of the person you want to invite.
+-   Click the `+ Invite` button, enter the email address of the person you want to invite, then press **Enter** (or type a comma) to confirm it. You can add multiple addresses this way.
 -   Select the appropriate role from the dropdown and click `Send invite`.
 -   The invited person will receive an email to join the workspace with the specified role.
 
@@ -104,7 +110,14 @@ To remove a member from your workspace:
 -   Select `Remove member`.
 -   Confirm the removal in the dialog that appears.
 
-## Edit access levels in a workbook
+**What happens when you remove a member:**
+
+-   All tables, workbooks, and groups owned by the removed member are automatically transferred to the longest-tenured admin in the workspace (the admin whose admin role was granted earliest).
+-   You cannot remove the last admin from a workspace — at least one admin must remain at all times.
+
+## Edit access levels in a workbook _(Enterprise only)_
+
+**Note:** Workbook-level access restriction is available on Enterprise plan workspaces only. Non-Enterprise workspaces do not have the `Edit Access` settings shown below.
 
 Workspace admins can edit access levels for specific workbooks. This helps prevent accidental changes to important tables.
 

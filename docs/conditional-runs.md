@@ -3,7 +3,6 @@ title: Conditional runs
 source_url: https://university.clay.com/docs/conditional-runs
 description: Add programmable logic to your Clay workflows.
 last_synced: 2026-04-26T01:39:47.459Z
-upstream_hash: 5a8e8235bc00404d0e39059d0c5c20c6b6ae07159087118cdf762af5cd1f99de
 ---
 
 # Conditional runs
@@ -24,13 +23,17 @@ Conditional runs allow you to execute specific actions or enrichments in a workf
 
 -   **Condition**: `{{lead_score}} > 80 AND {{industry}} == "SaaS"`
 
-**Write to Table**: Populate a column only if the lead’s region matches a target location.
+**Write to Table**: Populate a column only if the lead's region matches a target location.
 
 -   **Condition**: `{{region}} == "North America"`
 
 **Round-Robin Assignments**: Create a column for each rep and use a conditional run for actions based on assignments.
 
 -   **Condition**: `{{assigned_rep}} == "Kareem"`
+
+**Send a Slack message or other action only for new rows**: Run an action only once per row by gating it on an upstream column that only has a value after the row has been processed.
+
+-   **Condition**: `/Upstream Column is not empty`
 
 ## How do they work?
 
@@ -46,7 +49,7 @@ Conditional runs are structured like an **if-else statement**:
 
 `} else {`
 
-`don’t run the enrichment`
+`don't run the enrichment`
 
 `}`
 
@@ -73,7 +76,7 @@ To create a conditional statement within the **Conditional formula generator**:
 
 **Step 1: Open the Conditional runs editor**
 
-Navigate to the **Run Settings** of the action you want to configure and click on “Use AI”.
+Navigate to the **Run Settings** of the action you want to configure and click on "Use AI".
 
 **Step 2: Define the conditional logic**
 
@@ -81,13 +84,53 @@ Define the logic that determines how the condition will evaluate.
 
 **Step 3: Generate the Formula**
 
-Click **“Generate formula”** to automatically translate your condition into a formula.
+Click **"Generate formula"** to automatically translate your condition into a formula.
 
 **Step 4: Verify the Output**
 
 Look at the sample outputs on the right to ensure your condition behaves as expected.
 
 Adjust your condition as needed based on the results.
+
+## Tips
+
+### Always use / to reference a column
+
+To reference a column's data in a run condition, **type `/` followed by the column name** (e.g., `/Domain`). This opens an inline picker and inserts a live reference to that column's data.
+
+**If you type a column name without the leading `/`, it is treated as a literal text string — not a column reference.** The condition will silently compare against a fixed string instead of your actual data, and the enrichment will not behave as expected. Always use `/ColumnName` syntax.
+
+**Example**: To run an enrichment only on rows that don't have a domain, set the condition to:
+
+`/Domain is empty`
+
+(where `/Domain` references the column named "Domain" in your table).
+
+### Only matching rows consume credits
+
+When a run condition is set, Clay only processes rows where the condition evaluates to **true**. Rows where the condition is not met are skipped and shown as **"Run condition not met"** — no credits are consumed for those rows.
+
+This means clicking **"Run all rows"** with a condition in place is safe: Clay will only run (and charge credits for) the rows that actually match your condition.
+
+### "Run condition not met" cells appear empty to downstream columns
+
+When a run condition is not met, Clay skips the enrichment and stores **no output** for that row — the cell value is empty. Any downstream columns that reference this cell (formula columns, waterfall columns, CRM push columns, etc.) will receive an empty value for those rows.
+
+**This is why downstream columns that depend on this data will show empty results for those rows.** The row itself still appears in any downstream column, but the value fed into it from the skipped enrichment is empty — so any formula, waterfall step, or output that requires this data will produce no result for that row.
+
+**Note:** If a row previously ran and produced output, that output is preserved when the condition is not met on a subsequent run — the run condition only gates new executions and does not clear existing cell data.
+
+### Running an action only once per row (new rows only)
+
+Clay has no built-in "is new row" flag. To prevent an action column — such as sending a Slack message, writing to a CRM, or sending an email — from re-firing on rows it already processed, gate it on a **separate upstream column** that only has a value after the row was first processed:
+
+`/My Upstream Column is not empty`
+
+On new rows, the upstream column hasn't run yet, so the condition is false and the action waits. Once the upstream column runs and produces a value, the condition is true and the action fires.
+
+**Important**: You cannot use a column's own previous output as its own run condition — Clay detects this as a circular dependency and will reject the configuration. The guard must be a different column.
+
+**Simpler alternative for scheduled re-run tables**: If the root cause is that your action column is included in a scheduled re-run, the easiest fix is to uncheck it from the scheduled re-run list (Table Settings → Run Settings → Re-run columns on a schedule). Table-level Auto-run still fires the column for genuinely new rows. See [Scheduled columns](scheduled-columns.md).
 
 ## See also
 

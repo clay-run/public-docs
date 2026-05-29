@@ -3,8 +3,7 @@ title: Clay Ads
 source_url: https://university.clay.com/docs/clay-ads
 description: Build and sync contact and account lists to LinkedIn and Meta for
   precise ad targeting.
-last_synced: 2026-04-26T01:39:43.557Z
-upstream_hash: 06885b8c873ff50c640ce0ef5253ce195e7b3acdf5145c13e3e79cb3dc010016
+last_synced: 2026-05-11T17:47:40.000Z
 ---
 
 # Clay Ads
@@ -31,9 +30,11 @@ _Note: Personal email addresses significantly improve match rates when syncing t
     -   Note: Contact search through Clay (CPJ) is currently restricted to US-only contacts for compliance reasons
 2.  **Choose your connected account** on LinkedIn or Meta and prepare your data before mapping:
     -   LinkedIn has character limits for certain fields. If needed, add a formula column to shorten longer job titles for better match rates.
+    -   **Note:** Ad Sync tables support a more limited set of column types and formula functions than regular Clay tables. For complex transformations (such as domain normalization), prepare the data upstream in a regular table first, then use that table or a Clay Audience as the source for your Ad Sync.
 3.  **Map columns** for the selected platform and click `Continue`. Not every field is required, but these combinations are critical for match rates:
     -   **For contacts:** Hashed email + first name/last name (required for optimal matching)
     -   **For accounts:** Company name + company website (required for optimal matching)
+    -   **Note:** When syncing a LinkedIn **Account list**, a **Company URL** field is also available in the mapping step and can improve match rates. This field does not appear for Contact list audiences — LinkedIn does not support company URL matching for contacts.
 4.  **Review your audience insights and quality summary**.
     -   Check your estimated match rate and audience size before syncing.
     -   Make adjustments to your table if needed (for example, narrowing down to specific job titles or industries) and re-run your export.
@@ -61,6 +62,39 @@ To update an audience, simply modify the data in your Clay table. The audience w
 -   **Hashed email** — A privacy-safe version of an email address encrypted using a one-way algorithm (SHA-256) before being sent to an ad platform. Ad platforms use hashed emails to match contacts without ever seeing the raw address. Clay's `Hashed Email for Ads` waterfall finds and hashes personal emails automatically to maximize match rates.
 -   **Audience sync** — The process of sending a Clay table's contacts or accounts to an ad platform and keeping them continuously updated. When rows are added or removed from your Clay table, the synced audience updates accordingly — no manual re-exports needed.
 
+## Meta system user token authentication
+
+For production Clay Ads workflows syncing to Meta, we recommend using a system user token instead of OAuth. System user tokens provide indefinite access and don't require manual renewal every 60 days.
+
+### Creating a system user token
+
+To create a new system user token, you first need to create an app:
+
+1.  Open your [Meta Business account](https://business.facebook.com/) and navigate to `Business Settings` > `Accounts` > `Apps`. Click `Add`.
+2.  Choose `Create a new app ID`.
+3.  Name your app.
+4.  Select the use case as `Other`.
+5.  Set the app type to `Business`.
+6.  Click `Create app`.
+7.  Ensure the app has `Ads Management Standard Access` permissions. You can find this setting in `App Review` > `Permissions and Features`.
+8.  Navigate to `Business Settings` > `Users` > `System users` and add a new system user with `Admin` access.
+9.  Use the `Add assets` button to assign both the app you created and the ad account that you want to create audiences for to the system user. Be sure to give both the app and the ad account `Full Control`, not `Partial Access`.
+10.  Once the system user is created and assets are assigned, select `Generate token`.
+     -   Choose the app you created to generate the token.
+     -   Select the expiration policy for the token (we recommend `Never expire`).
+     -   Ensure the `ads_management` permission is selected.
+     -   Click `Generate token`.
+11.  Copy the generated token immediately — Meta won't store it, so consider saving it in a secure password vault.
+12.  In Clay, when connecting your Meta account for ad syncs, select `Use system user token` as the authentication method and paste your token.
+
+### Why use a system user token?
+
+-   No manual renewal — OAuth tokens expire every 60 days and require re-authentication. System user tokens can be set to never expire.
+-   Production reliability — Avoid sync failures from expired tokens in automated workflows.
+-   Team access — System users aren't tied to individual employee accounts, so access persists even if team members leave.
+
+For more details on Meta system user setup, see [Meta's system user documentation](https://www.facebook.com/business/help/503306463479099).
+
 ## **FAQs**
 
 ### **What platforms are supported?**
@@ -79,6 +113,10 @@ Each record exported or synced consumes 1 action. Data credits apply for any enr
 ### **What are the limitations?**
 
 The 50,000 row limit applies to ad audiences exported from tables. For larger audiences, create multiple tables and attach multiple audiences to your campaigns in the ad platform.
+
+### **Can I edit the field mapping after setting up an Ad Sync?**
+
+No. Field mapping is configured when you create the Ad Sync and cannot be changed afterward. Deactivating an Ad Sync places it in read-only history — it does not unlock the mapping for editing. To use a different field mapping, deactivate the current sync and create a new Ad Sync with your updated configuration.
 
 ### **How long does it take for audiences to be created?**
 

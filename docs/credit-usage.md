@@ -17,7 +17,7 @@ Track, analyze, and optimize your credit consumption by breaking down usage acro
 To check the credit usage in your workspace:
 
 1.  Click your account name in the corner.
-2.  Go to `Settings` and then `Credit usage` in the sidebar.
+2.  Go to `Settings` and then `Usage` in the sidebar.
 3.  Within `Workspace`, you can view folders, workbooks, and tables sorted by their usage.
 
 Sort the content by `Name` (alphabetically) or by number of `Credits used` by clicking the column titles. You can `Export` this content as a CSV.
@@ -48,7 +48,7 @@ For deeper insights into credit spend within a specific table, you can access th
 _From a table:_
 
 -   Click the `Credit usage` button within the Credits popover and select `Table credit usage`.
--   Click the `Table History` button in the lower right corner of your table.
+-   Click the `History` button in the lower right corner of your table and select `Usage history`.
 
 _From the workspace credit dashboard:_
 
@@ -103,6 +103,8 @@ This estimate appears for any column run that would trigger dependent enrichment
 -   Changes to data sources
 -   Adding new rows
 
+**Variable AI pricing estimates:** A `~` prefix on a cost in the estimate (e.g., `~65/row`) means that figure is approximate. This applies to AI columns using variable pricing — actual costs per row may be higher or lower depending on the complexity of each prompt and the data processed. To calibrate expected spend before running a large table, run the column on a small batch of 10–50 rows first, then check the per-row cost in the table. See [How AI is priced](/docs/ai-pricing) for full details on variable vs. fixed AI pricing.
+
 ### Expensive run warnings
 
 Clay shows a warning when you're about to initiate a run that will use a significant portion of your workspace's monthly credit allotment. Specifically:
@@ -122,5 +124,23 @@ When you import data to existing tables (via Copy Paste from URLs, adding a sour
 -   Gives you the option to toggle auto-run off for the table before importing
 
 This prevents unexpected credit usage when you add new data to tables with existing enrichment workflows.
+
+## Troubleshooting unexpected credit usage
+
+### Credits consumed while auto-run is off
+
+If table-level auto-run is disabled but credits are still being consumed, the most likely causes are manual or team-triggered actions:
+
+-   **Manual column runs** — any Editor on the workspace can right-click a column header and choose **Run column**, which bypasses the auto-run toggle and immediately dispatches enrichments.
+-   **Scheduled columns** — a column may have a recurring schedule that runs independently of the table's auto-run setting. Open **Run Settings → Re-run columns on a schedule** to review which columns are scheduled and disable any you no longer need. See [Ways to save Clay credits](clay-credit-conservation.md) for guidance on auditing scheduled runs.
+-   **Hidden columns with auto-run enabled** — columns that are hidden from view still run if their individual auto-run toggle is on. Open the columns panel to check for hidden columns and disable auto-run for any you don't need actively running. See [Table columns overview](table-columns-overview.md) for details.
+
+To identify what triggered a specific run, use the **Run view** in the [table credit usage dashboard](#understanding-table-specific-credit-usage). Each entry shows whether the run was manual, automated, or scheduled, along with a timestamp.
+
+### Credits consumed after clicking Stop or Cancel
+
+Clicking **Stop** on a running table or canceling a column run does not immediately halt all enrichments. Clay cancels cells that are still queued (not yet dispatched), but any requests already sent to an external data provider will run to completion and consume credits. You may see a brief delay before the table fully halts while these in-progress calls finish.
+
+To avoid unexpected spend before it starts, disable [auto-run](table-management-settings.md) before importing large batches of rows. See [Stopping a run](run-progress.md) for full details on stop and cancel behavior.
 
 **Learn more:** For related information, check out our [credit limit FAQs doc](http://university.clay.com/docs/credit-spend-limits-faq).

@@ -2,9 +2,10 @@
 title: Run progress
 source_url: https://university.clay.com/docs/run-progress
 description: Clay provides multiple ways to track and monitor run progress
-  across your tables.
-last_synced: 2026-04-26T01:40:34.656Z
-upstream_hash: 8caebb06ffc7cc70026b7782add35881f953bb7ea5e8d6a74c6cec8b2d7a6639
+  across your tables, including how to manually trigger unrun enrichment cells,
+  run enrichments on a specific subset of rows, and troubleshoot cells stuck in
+  Queued status.
+last_synced: 2026-04-26T01:40:34.620Z
 ---
 
 # Run progress
@@ -55,7 +56,7 @@ Several icons can appear on the right side of the cell to indicate specific colu
 
 ![](https://cdn.prod.website-files.com/687e604972375496b891fe58/691e65a876bd32a9f8e8f845_68ba32156edf36d6435cbe6b_Run%2520Progress%2520UI%2520Feedback%2520\(1\).png)
 
-The table-level progress bar, shown at the bottom right of a table, provides a summary view of the entire table’s run status. It displays:
+The table-level progress bar, shown at the bottom right of a table, provides a summary view of the entire table's run status. It displays:
 
 -   The percentage of **all enrichment cells** in the table that have run.
     -   _Note: Includes non-visible rows, but not non-visible columns._
@@ -65,3 +66,82 @@ The table-level progress bar, shown at the bottom right of a table, provides a s
     -   A detailed breakdown of status percentages.
     -   Table-level auto-run and scheduled run settings.
     -   A toggle to enable/disable column-level run status data.
+
+## Stopping a run
+
+To stop a running table, click the **Stop** button in the run summary panel at the bottom-right of the table.
+
+**Important: clicking Stop does not immediately cancel enrichments that are already in progress.** When you click Stop, Clay cancels all queued cells that haven't been dispatched yet — but any enrichment calls already sent to an external data provider will run to completion and **will still consume credits**. You may see a short delay between clicking Stop and the table fully halting while these in-flight calls finish.
+
+To prevent unintended credit usage before it starts, turn off [auto-run](table-management-settings.md) before importing large batches of rows. This prevents enrichments from triggering automatically on new data.
+
+## Manually running unrun cells
+
+The progress tooltip shows **"X% left to run"** — this figure represents enrichment cells that have not yet completed, including cells currently in progress and cells that haven't started at all. If [auto-run](table-management-settings.md) is disabled, cells won't start automatically; you'll need to trigger them manually.
+
+To manually run the remaining cells for a specific column:
+
+1.  **Right-click** the enrichment column header.
+2.  Select **Run column** → **Run [N] empty or out-of-date rows**.
+
+    This triggers all cells in that column that are:
+    -   **Empty** — never been run
+    -   **Errored** — previously ran but encountered an error
+    -   **Stale** — previously ran successfully, but an input value has changed since then
+
+3.  Repeat for each enrichment column you want to run.
+
+> **Note:** There is no single button to run all columns at once — this option must be used column by column.
+
+**Alternative — enable auto-run:** Turn on `Auto-run` in your [table settings](table-management-settings.md) and choose `Update cells` to immediately queue any out-of-date cells.
+
+## Running enrichments on specific rows
+
+To run enrichment or waterfall columns on a targeted subset of rows — for example, to test a configuration on a small sample or re-run rows that returned unexpected results:
+
+1.  **Select the rows** you want to run: click a row number to select it, then drag or **Shift+click** to extend the selection across a range.
+2.  **Right-click** anywhere on the selected rows and choose **Run [N] rows**.
+
+This triggers all enrichment and waterfall columns on those rows only, leaving other rows unaffected.
+
+**To run a single column on specific rows only**, select the cells in that column for your target rows, then right-click → **Run [N] cells**.
+
+## Troubleshooting cells stuck in Queued status
+
+Cells show a **Queued** status when they are waiting to be processed. This is normal when running large tables — Clay processes many rows concurrently, but rows still queue when the system is handling prior requests or when an external API is rate-limiting responses. In most cases the queue resolves automatically.
+
+If cells remain Queued for an extended period, common causes include:
+
+-   **High concurrency in progress** — Clay runs many rows at once; if a large number are queued simultaneously, later rows wait while earlier ones complete. The queue will clear on its own.
+-   **External API rate limits** — Integrations such as OpenAI or HubSpot enforce per-minute request limits. Clay respects these automatically; the queue resumes once the rate-limit window resets.
+-   **API quota exhausted** — If you've hit a quota ceiling (e.g., OpenAI, Google), new runs are blocked until the quota resets or is increased in the provider's dashboard.
+-   **Auto-run settings** — If auto-run is enabled and triggering repeated re-runs, rows may accumulate in the queue unexpectedly. See [Table management settings](table-management-settings.md) for how to adjust auto-run and scheduled run behavior.
+
+**To unblock a stuck queue:**
+
+1.  **Wait a few minutes** — Active processing usually clears the backlog without intervention.
+2.  **Hard refresh the page** — Press `Ctrl+Shift+R` (Windows/Linux) or `Cmd+Shift+R` (Mac) to reload and clear any stale browser state.
+3.  **Force-run the column** — Right-click the column header and select **Run column** → **Force run all [N] rows**. This re-queues and processes every row in the column regardless of its current status.
+4.  **Check your API quotas** — If the column calls an external API (OpenAI, Google, etc.), verify you haven't exhausted a quota in that provider's dashboard.
+
+## Troubleshooting: table appears stopped at a partial percentage with no credits consumed
+
+If your table completes at a partial percentage — for example, 20–40% — and no credits are being consumed, enrichment cells have likely failed with `ERROR_MISSING_INPUT`. This error means a required input field is blank for those rows.
+
+**`ERROR_MISSING_INPUT` cells are counted as Failed (🔴)** in the progress bar — the table has already processed those cells, just without a result. Clay does not charge credits for these cells, because the enrichment aborts before calling the external data provider.
+
+**Most common cause: source data not yet populated**
+
+This frequently happens when using a template or pre-built workflow where enrichment columns depend on data that hasn't been sourced yet. A typical pattern:
+
+-   Your table includes person-enrichment columns — email finder, LinkedIn profile lookup, personalized message generator — that require inputs such as a LinkedIn URL, first name, or work email.
+-   You've run a **Find Companies** source but haven't yet run **Find People** to populate person records in the table.
+-   With no person data available, every person-enrichment column immediately fails with `ERROR_MISSING_INPUT`.
+
+**How to resolve it:**
+
+1.  Click the failing enrichment column header and check which input fields it requires (for example, "LinkedIn URL" or "First Name").
+2.  Make sure the upstream column or source providing that data — typically a **Find People** run — has completed first.
+3.  Once the required input data is in place, right-click the enrichment column header → **Run column** → **Run [N] empty or out-of-date rows** to re-process those cells.
+
+> **Tip:** Clay's [Sculptor](sculptor.md) can analyze your table structure and identify what's missing. Click **Chat with Sculptor** in the top-right corner of your table.

@@ -5,7 +5,6 @@ description: Find and validate work emails faster — the Work Email waterfall
   cascades across multiple providers in sequence, stopping as soon as a valid
   result is found.
 last_synced: 2026-04-26T01:40:55.862Z
-upstream_hash: ff14ab13b199adda600aaff776334bff62196b289ff02f26626417f59c488351
 ---
 
 # Work Email waterfall
@@ -19,9 +18,11 @@ You only pay credits for the provider that finds a match, making it one of the m
 ## **Setting up the Work Email waterfall**
 
 1.  In your table, click `Add enrichment` in the top right corner.
-2.  Search for `Work Email`  and select it from the results.
+2.  Search for `Work Email`  and select it from the results.
 3.  Choose between `Quick setup` and `Full configuration`
 4.  Map your input columns and click `Save`.
+
+**Note:** Most providers need at minimum a **full name** and **company domain** for each row — make sure those fields are populated in your table before running. Providing a LinkedIn URL or company name as additional inputs gives more providers enough data to run.
 
 The Work Email waterfall includes two advanced settings — `Infer Email` and `Validation` — that work together to give you more control over credit efficiency and result quality.
 
@@ -80,6 +81,19 @@ The `Validation` section in `Full configuration` controls how the waterfall eval
 
 ## FAQs
 
+### How do I find an email for a specific contact?
+
+Make sure the contact's row has the required input data (full name and company domain at minimum). Then select the Work Email cell on that row, right-click, and choose **Run 1 cell**. The waterfall checks providers in sequence and stops as soon as one returns a valid email. For more ways to run enrichments on a subset of rows, see [Run progress](run-progress.md).
+
+### What does it mean if no email is found?
+
+If the cell shows no result, click into it to see which providers were tried and what each returned. Common reasons no email surfaces:
+
+-   The row is missing required input data. Check that the contact's full name and company domain are populated.
+-   None of the providers in your waterfall have email data for this person. You can edit the waterfall sequence to add more providers.
+-   The providers ran but returned results that failed validation. Try a less strict validation strategy, or check the individual provider columns (enable them in waterfall settings) to see what was returned.
+-   Your workspace ran out of credits mid-waterfall. When credit limits are hit, remaining providers in the sequence don't execute — click into the cell to see how far the waterfall got before stopping. See [Actions and data credits](actions-data-credits.md) to add more credits.
+
 ### Which email pattern should I use?
 
 The best pattern depends on the companies in your dataset. `first.last@domain.com` is the default because it's the most common format across industries. For more specific datasets, test a small sample (~10 rows) with different patterns to find what performs best before running at scale.
@@ -88,6 +102,10 @@ The best pattern depends on the companies in your dataset. `first.last@domain.co
 
 No. `Infer Email` is completely free. The validation step _does_ cost Clay credits, but it is cheaper than running the waterfall without it.
 
+### How much does the Work Email waterfall cost per email?
+
+You only pay for the provider step that successfully finds an email — providers that run and return nothing are not charged. Total credit cost per matched email depends on which provider in the sequence finds a result first: if the first provider succeeds, you pay that provider's cost; if the waterfall tries two or three providers before finding a valid email, you pay for each attempt. Credit costs vary by provider and your plan tier. To reduce per-email spend, enable `Infer Email` — it adds a free first step that can skip paid providers entirely when the naming pattern matches.
+
 ### What happens if Infer Email guesses the wrong email?
 
 If the inferred email fails validation, the waterfall moves on to the next provider as normal. No credits are charged for the failed `Infer Email` step.
@@ -95,6 +113,14 @@ If the inferred email fails validation, the waterfall moves on to the next provi
 ### When should I adjust the Threshold for duplicate results?
 
 Consider setting it to `2` when you're using `Conservative` validation and noticing that multiple providers are all returning the same email that keeps failing. Left at `0`, the waterfall will continue through every provider, spending credits on a result it's already decided to reject.
+
+### Why does an email appear in a provider column but not in the final output?
+
+An email reaches the final output column only after the waterfall's validation step confirms it as valid. To avoid paying for validation twice, the waterfall skips re-validation for any email address that was already found and validated (as invalid) by an earlier provider step. If Provider 3 finds the same email address that Provider 1 already returned and confirmed as invalid, the validation column for Provider 3 will show **run conditions not met** and that email will not be written to the final output column.
+
+This is expected behavior. The waterfall continues searching because a later provider might still return a different, valid email address.
+
+If you need to use an email that a later provider found despite an earlier invalid result, you can manually paste it into your output column, or create a formula column that pulls directly from the individual provider result columns.
 
 ### Can I use both Infer Email and a validation strategy together?
 

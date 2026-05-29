@@ -3,7 +3,6 @@ title: Credit spend limits FAQ
 source_url: https://university.clay.com/docs/credit-spend-limits-faq
 description: Answering questions about the credit spend limits feature.
 last_synced: 2026-04-26T01:39:48.764Z
-upstream_hash: 64d96124ab54a60f6c196d9dc236c18dd3fb4c2d59dcdd667555dcbb8f2bed03
 ---
 
 # Credit spend limits FAQ
@@ -53,7 +52,7 @@ Yes. Admins can set a workspace default limit so that every new workbook created
 
 To set a default limit:
 
-1.  Go to `Settings` → `Credit usage` → `Workbook limits` tab.
+1.  Go to `Settings` → `Usage` → `Workbook limits` tab.
 2.  Click `Manage Default Limit`.
 3.  Set your desired default credit limit.
 
@@ -104,7 +103,12 @@ If a workbook originally had a 200-credit limit with 100 credits spent, and an A
 
 **What happens if a source is running when the limit is hit?**
 
-The process will stop, similar to how Clay handles other credit exhaustion scenarios. Future enhancements may include options to pause and resume later.
+It depends on whether the source itself consumes credits:
+
+-   **Credit-consuming sources** (e.g., list builders like Find People or Find Companies): the source stops running and will not resume until the limit is increased or credits are replenished.
+-   **Standard webhook sources**: data ingestion continues uninterrupted — incoming rows still appear in your table even when the limit is reached. Only the downstream enrichment columns that consume credits will stop processing those rows.
+
+So if you use a webhook to bring data into Clay (for example, from RB2B or another integration), new rows will keep flowing in even after the credit limit is hit. The enrichment steps on those rows won't run until credits are available again.
 
 ## Notifications and communication
 

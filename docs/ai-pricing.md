@@ -4,7 +4,6 @@ source_url: https://university.clay.com/docs/ai-pricing
 description: This guide explains how each works, which models they apply to, and
   how credits are calculated.
 last_synced: 2026-04-26T01:39:39.981Z
-upstream_hash: 7ebe8e16c1a2999794bf438260edf30b5b22077fbb031ad16a2441e29ab946dc
 ---
 
 # How AI is priced
@@ -85,7 +84,7 @@ You can always use your own API keys instead of Clay data credits. That said, ma
 
 **How do I know if a model uses fixed or variable pricing?**
 
-The product displays the pricing type when you select a model. Fixed-price models show a flat credit cost (e.g., `3/row`), while variable-price models show an estimate (e.g., ~2) with a note that the final charge depends on actual usage.
+The product displays the pricing type when you select a model. Fixed-price models show a flat credit cost (e.g., `3/row`). Variable-price models display `/ model` instead of a fixed number, with a tooltip indicating that credits vary per run. In the pre-run cost estimate and during active runs, a `~` prefix on the cost (e.g., `~2/row`) indicates an approximate amount — the actual charge is calculated after each row completes and may be higher or lower.
 
 **Will I always know what a task will cost before I run it?**
 

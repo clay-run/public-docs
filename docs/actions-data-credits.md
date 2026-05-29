@@ -3,8 +3,7 @@ title: Actions & Data Credits
 source_url: https://university.clay.com/docs/actions-data-credits
 description: Learn about credits, the virtual currency system used for running
   actions in Clay.
-last_synced: 2026-04-26T01:39:38.626Z
-upstream_hash: cd12f235935b9ccb524e8f8b4c5bc296d4e2cbc26ce34181c2bc90f2ff35b528
+last_synced: 2026-05-11T17:47:40.000Z
 ---
 
 # Actions & Data Credits
@@ -63,7 +62,7 @@ Features that use an Action:
 **Features that don't use an Action:**
 
 -   Sourcing lists of accounts or contacts (e.g., Find People returns 100 contacts).
--   CRM imports (bringing data into Clay from your CRM).
+-   CRM imports and lookup operations (reading data from your CRM into Clay, including **Lookup Record** actions like `Salesforce > Lookup Record`).
 -   Data warehouse imports (bringing data into Clay from your warehouse).
 -   Webhook imports.
 -   Clay formulas and filters.
@@ -84,9 +83,9 @@ Your Actions capacity is determined by your plan tier. Plan tiers are designed s
 
 ### How to get more Actions
 
-**Upgrade your plan tier** in `Settings` → `Plans & billing`.
+**Upgrade your action capacity tier** in `Settings` → `Plans & billing`.
 
-Actions cannot be purchased as one-time top-ups because they represent fixed platform capacity tied to your plan's tier.
+Actions cannot be purchased as one-time top-ups because they represent fixed platform capacity tied to your action tier.
 
 ## Understanding Data Credits
 
@@ -146,16 +145,17 @@ Each fully enriched record typically costs **6–20 Data Credits**, depending on
 
 Two options:
 
-**1\. Upgrade your Data Credits tier** (recommended)
+**1\\. Upgrade your Data Credits tier** (recommended)
 
 -   Go to `Settings` → `Plans & billing`.
 -   Select a higher Data Credits tier.
 -   No premium charged.
 
-**2\. One-time top-up**
+**2\\. One-time top-up**
 
+-   Go to `Settings` → `Usage` and click `Add one-time data credits`.
 -   Available for emergency needs during your billing cycle.
--   **30% premium** applies.
+-   **30% premium** applies (on modern plans; **50% premium** on legacy plans).
 -   Subject to rollover limits.
 
 ### Data Credits for AI
@@ -170,7 +170,7 @@ Data Credit pricing varies for AI models in [Use AI](https://www.clay.com/univer
 To see detailed Data Credit consumption across your workspace, workbooks, and tables, visit the **credit usage** dashboard:
 
 1.  Click your account name in the corner
-2.  Go to `Settings` → `Credit usage`.
+2.  Go to `Settings` → `Usage`.
 
 For a complete guide on tracking and analyzing your Data Credit spend, see [this doc](https://www.clay.com/university/guide/credit-usage).
 
@@ -200,9 +200,9 @@ Actions represent your fixed monthly capacity. Unused Actions expire at the end 
 
 ### Data Credits: Yes, with limits
 
-If you are on a **monthly plan**, unused Data Credits will roll over and accumulate in your account. The maximum accumulation is capped at **2× your plan's monthly credit limit**.
+If you are on a **monthly plan**, unused Data Credits will roll over and accumulate in your account. The maximum accumulation is capped at **2× your plan's monthly credit limit**. This cap is enforced at every renewal: when new monthly credits are added, your **total balance** (existing credits + new credits) cannot exceed 2× your monthly limit. Any credits that would push you over the cap are dropped.
 
--   For example, if your plan includes 50,000 credits per month, your maximum balance would be 100,000.
+-   For example, if your plan includes 50,000 credits per month, your maximum balance is 100,000. If you already have 82,000 credits when your plan renews, your balance becomes 100,000 — not 132,000. The 32,000 excess is dropped.
 -   If you cancel or downgrade, you can use any excess Data Credits until your current billing cycle ends. After the billing cycle ends, your balance will be reduced to the **Data Credit rollover limit** of your new plan.
 
 If you are on an **annual plan**, you are eligible for a **15% Data Credit rollover** of unused Data Credits, provided you renew on the same or a higher-tier plan.
@@ -233,7 +233,7 @@ For emergency Data Credit needs during your billing cycle (not available for Act
 3.  Select the amount you need (subject to rollover limits).
 4.  Confirm your purchase.
 
-**Note:** One-time top-ups have a **30% premium** and are subject to Data Credit rollover limits. For regular needs, upgrading your Data Credits tier is more cost-effective.
+**Note:** One-time top-ups have a **30% premium** on modern plans (**50% premium** on legacy plans) and are subject to Data Credit rollover limits. For regular needs, upgrading your Data Credits tier is more cost-effective.
 
 ### Downgrade or cancel your plan
 
@@ -304,17 +304,17 @@ Actions represent the platform orchestration Clay performs—ingesting, storing,
 You can either:
 
 1.  Upgrade your Data Credits tier (no premium).
-2.  Purchase a one-time top-up (30% premium).
+2.  Purchase a one-time top-up (30% premium on modern plans; 50% on legacy plans).
 
 You don't need to change your Actions tier.
 
 ### What happens if I run out of Actions but not Data Credits?
 
-You must upgrade to a higher plan tier. Actions cannot be topped up separately because they're tied to your plan's capacity and features.
+You must upgrade to a higher action tier. Actions cannot be topped up separately because they're tied to your action tier's capacity.
 
 ### Why can't I top up Actions?
 
-Actions represent fixed platform capacity tied to your plan tier's features and limits. To get more Actions, you must upgrade to a higher plan tier. Data Credits, however, are consumption-based and can be purchased as one-time top-ups or by upgrading your Data Credits tier.
+Actions represent fixed platform capacity tied to your action tier. To get more Actions, you must upgrade to a higher action tier. Data Credits, however, are consumption-based and can be purchased as one-time top-ups or by upgrading your Data Credits tier.
 
 ### Do unused Data Credits or Actions roll over?
 
@@ -322,9 +322,11 @@ Actions reset each billing cycle and don't roll over, since they reflect the pla
 
 Data Credits work more like a currency and do roll over. On Launch and Growth plans, unused credits can accumulate up to 2x your monthly credit amount (e.g., a 10,000 credit plan can bank up to 20,000 total). Enterprise customers can roll over up to 15% of their prior year's purchased credits, provided they renew at an equal or higher commitment.
 
-### How do I estimate costs before running an enrichment?
+### How do I estimate what my workflow will cost?
 
-The enrichment panel shows costs before you run:
+**Before purchasing a plan:** Use the [Clay Pricing Calculator](https://www.clay.com/credits-calculator) to scope out how many Actions and Data Credits your workflow is likely to consume.
+
+**Once you have an account:** The enrichment panel shows costs before you run:
 
 -   Actions: Always 1 per result.
 -   Data Credits: Displayed next to each enrichment option.
@@ -374,3 +376,9 @@ Data Credits expire when your trial ends or when a free workspace refreshes at t
 ### Does CSV export consume an Action?
 
 No. Exporting data to CSV does not consume an Action or any Data Credits. CSV export is a simple data download operation and does not count as platform usage or GTM execution.
+
+### Does Salesforce Lookup Record consume an Action credit?
+
+No. **Lookup Record** operations — such as `Salesforce > Lookup Record` — read data from your CRM into Clay and are treated as CRM imports. They do not consume Action credits. This holds even when the lookup returns **No Records Found**.
+
+Only CRM **write** operations consume Actions: Create Record, Update Record, Upsert Object, and other actions that push data from Clay to your CRM.

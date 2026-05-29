@@ -3,7 +3,6 @@ title: Send table data
 source_url: https://university.clay.com/docs/send-table-data
 description: Send data between tables to create simple multi-table setups.
 last_synced: 2026-04-26T01:40:38.918Z
-upstream_hash: 2e0e53545ac1eb0e2a8ceb0107b47af3f1dc8e327e38d6fd2728213b1ed6a75f
 ---
 
 # Send table data
@@ -11,6 +10,8 @@ upstream_hash: 2e0e53545ac1eb0e2a8ceb0107b47af3f1dc8e327e38d6fd2728213b1ed6a75f
 Send data between tables to create simple multi-table setups.
 
 Send table data in Clay lets you route records between tables, making multi-table setups simple to manage and intuitive to use.
+
+**Note:** Send Table Data replaces the deprecated [Write to Other Table](https://university.clay.com/docs/write-to-table-integration-overview) action. If you previously used Write to Other Table, use Send Table Data for all new multi-table workflows going forward.
 
 ### When to use Lookup Rows vs. Send Table Data
 
@@ -59,7 +60,7 @@ To send data from one table to another:
 -   Send nested data from the parent table. (This is useful when you want to avoid extracting basic fields from an action column's output.)
 -   Rename any field in the destination table using the destination column dropdown.
 
-**Note:** When you first send a row, it creates a new row in the destination table. For subsequent sends, it updates that same row. This applies to both regular row data and nested data. You can turn this off to always create a new row via the \`Update existing rows on re-run\` setting.
+**Note:** When you first send a row, it creates a new row in the destination table. For subsequent sends, it updates that same row. This applies to both regular row data and nested data. You can turn this off to always create a new row via the \`Update existing rows on re-run\` setting.
 
 ### Using `Send row for each item in a list`
 
@@ -67,7 +68,29 @@ Each cell can hold a list of items—like a list of people found at a company. T
 
 This is useful for **flattening lists**. For example, if you find multiple people at a company, you can send each person as a separate row in the destination table. **This method always creates a new row for each item.**
 
+**Note:** This method sends a maximum of **20 items per row** per run. If the list has more than 20 items, only the first 20 will be sent—there is no setting to increase this limit. For workflows that need to process more than 20 items per row, use [Lookup Multiple Rows](https://university.clay.com/docs/lookup-rows) to query the destination table directly instead.
+
 You can also select additional data to send along with the flattened list, just like with `Send row`.
+
+**Tip: Use "Take action on list" to set this up automatically**
+
+The easiest way to configure `Send row for each item in a list` is to use the **Take action on list** shortcut from the cell details panel:
+
+1.  Click on a cell in the column whose list you want to flatten (for example, a "Find Contacts at Company" result cell).
+2.  In the Cell details panel, hover over the list section (e.g., "People") to reveal the **Take action on list** button.
+3.  Select **Write each item to new row in other table**.
+
+This opens the Send Table Data configuration with the correct list field already pre-populated — so you don't need to manually identify which field to use as the list source.
+
+**Selecting the right list field manually**
+
+The list input shows a **"Type / to insert column"** placeholder when no column has been selected. Click in the field, type `/`, and pick the column that holds your array data (for example, `Job Openings` or `Contacts`). **If you save without selecting a column, the column will run but fail at runtime with `Invalid send table data inputs … "listData" … "Required"`** — meaning Clay has no list to iterate over.
+
+When configuring the list field by hand, select the **list itself** (e.g., `People`), not an indexed element from within that list (e.g., `People.0`, which is just the first person). Selecting a single indexed element instead of the whole array is a common source of confusion: the configuration will show a **"Please add a valid list."** error because an indexed element isn't recognized as a list.
+
+**If the column holds a stringified JSON array** — for example, a text value that looks like `[{"name": "Alice"}, {"name": "Bob"}]`, common when data arrives from an HTTP API call or webhook — Clay won't recognize it as a native list and will show the same **"Please add a valid list."** error. To fix this, click the **gear icon** on the right side of the list input to switch to formula mode, then enter `JSON.parse(/YourColumn)`, replacing `YourColumn` with the name of your column (use `/` to reference it). This converts the text string into a native array that Clay can iterate over.
+
+If your table has no rows with data yet, Clay skips this validation and accepts the formula as-is. In that case, run a few rows first so the enrichment column has real output, then re-open the Send Table Data configuration to confirm the list field is valid before running the full table.
 
 ## Advanced settings
 
@@ -110,3 +133,4 @@ Repeat this process for each field you want to extract into its own column.
     -   If you want to receive data in the table you're also sending data from, use one of these other actions:
         -   `Lookup Multiple Rows in Other Table`
         -   `Lookup Single Row in Other Table`
+-   **"✅ Sent" means Clay dispatched the data — not that it has appeared at the destination yet.** The `Sent At` timestamp and `Number Of Rows Sent` shown in the cell details confirm that Clay successfully placed those rows into the destination table's incoming source. The destination table still needs to process those rows before they become visible. To verify data is arriving, open the destination table and check its [column progress bar](https://university.clay.com/docs/run-progress-ui).

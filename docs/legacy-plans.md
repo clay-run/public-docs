@@ -3,7 +3,6 @@ title: Legacy plans
 source_url: https://university.clay.com/docs/legacy-plans
 description: Comparing legacy plans to our new plans
 last_synced: 2026-04-26T01:40:14.933Z
-upstream_hash: 0fb7ef3365c04aab3414784d2c424ff6c5585ced5a58441bcf348ccf25922d07
 ---
 
 # Legacy plans
@@ -12,7 +11,7 @@ Comparing legacy plans to our new plans
 
 In March 2026, Clay introduced a new pricing model to give you more flexibility and value. The new model uses two simple usage meters: **Actions** (measures platform usage of enrichments and GTM execution) and **Data credits** (for accessing data from our marketplace).
 
-**What this means for you:** If you’re on and choose to stay on your legacy plan, you'll keep your familiar pricing and all the features you have today. However, you won't have access to new features and integrations that we build going forward.
+**What this means for you:** If you're on and choose to stay on your legacy plan, you'll keep your familiar pricing and all the features you have today. However, you won't have access to new features and integrations that we build going forward.
 
 ## **Key differences between legacy and modern plans**
 
@@ -44,6 +43,10 @@ In March 2026, Clay introduced a new pricing model to give you more flexibility 
 | Priority Support | ❌ Legacy Pro does not qualify | ✅ Growth+ (priority queue), Enterprise (dedicated Slack) |
 
 ## **FAQs**
+
+**Can I subscribe to or rejoin a legacy plan if I'm not currently on one?**
+
+No. Legacy plan subscriptions are closed to new and returning subscribers as of April 10, 2026. If you are not currently on an active legacy plan — including customers who previously cancelled their legacy subscription — the legacy plan option is no longer available in the billing UI. To subscribe to Clay, choose from the [current plans](https://www.clay.com/pricing).
 
 **How long will legacy plans be supported?**
 

@@ -4,7 +4,6 @@ source_url: https://university.clay.com/docs/theirstack-integration
 description: Access current job openings and monitor hiring trends efficiently
   using company domains.
 last_synced: 2026-04-26T01:40:48.326Z
-upstream_hash: 17ee2f3e81a1fef230f1d54dffc9c698a0ee017dfd14453f13f8fcd287be9743
 ---
 
 # TheirStack integration

@@ -4,7 +4,6 @@ source_url: https://university.clay.com/docs/find-companies
 description: Find companies that match your specific criteria within Clay's
   proprietary dataset.
 last_synced: 2026-04-26T01:39:58.486Z
-upstream_hash: 7b9393243aee046995c8e9efa8d82b2c48893e2def2a9c3c758b332a399f6c12
 ---
 
 # Find Companies in Clay
@@ -52,3 +51,22 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
     -   Add additional enrichments like `Company Headcount Growth` or `Most Recent News`.
     -   Enable or disable auto-update and auto-dedupe.
 4.  Click `Continue`.
+
+**Outputs:**
+
+Each result includes one or more **Structured Location** entries in the cell details with geocoded, normalized fields — so you don't need additional AI columns to parse or reformat location data. These fields work with informal location names like "Greater Chicago Area." Use **Is Headquarters** to identify the company's primary location when multiple entries are returned.
+
+-   **City**
+-   **State**
+-   **Region**
+-   **Country Iso**
+-   **Postal Code**
+-   **Is Headquarters**
+
+## FAQs
+
+### Can I filter companies by the year they were founded?
+
+Founded year is not available as a filter when building a `Find Companies` search — you can't narrow results by founding date before importing.
+
+However, `Find Companies` automatically includes a **Founded** column in your table showing the founding year for each company. Once you've imported your results, you can filter or sort that column to focus on companies founded within a specific range — for example, filtering to companies founded after 2020 to target early-stage startups.

@@ -3,7 +3,6 @@ title: Smartlead integration
 source_url: https://university.clay.com/docs/smartlead-integration-overview
 description: Cold email automation boosting deliverability and sales outreach.
 last_synced: 2026-04-26T01:40:42.145Z
-upstream_hash: 375294f05e4b473c5b06894d964df65012cc6699d250328d87aa94ae2db5d8e6
 ---
 
 # Smartlead integration
@@ -48,6 +47,12 @@ Adds a new lead to an existing Smartlead campaign.
 **Outputs:**
 
 This action confirms whether the lead was successfully added but does not return additional output fields.
+
+**Batching**
+
+This action supports batch mode, which can be enabled via the **Run in batches** toggle in the column's **Batching** settings. When enabled, Clay groups leads that share the same Campaign ID and uploads up to 100 at a time in a single API request instead of one per row — improving throughput for high-volume campaigns and preventing the action from getting stuck in a queued state. You can adjust the **Number of rows per batch** between 1 and 100 (default: 100).
+
+Batching boosts performance but may affect downstream tools connected to Smartlead that aren't prepared for high update volumes. Test your workflows after enabling this setting.
 
 ### `Action` Lookup lead in campaign
 
@@ -101,7 +106,7 @@ Updates the details of an existing lead in a Smartlead campaign.
 -   `Lead ID`: The ID of the lead to update. Typically sourced from the output of a `Lookup lead in campaign` action.
 -   `Email Address (optional)`: The lead's email address.
 -   `First Name (optional)`: The lead's first name.
--   `Last Name (optional)`: The lead's last name.
+-   `Last Name (optional)`: The last name of the lead.
 -   `Phone Number (optional)`: The lead's phone number.
 -   `Website (optional)`: The lead's personal website.
 -   `Personal LinkedIn URL (optional)`: The URL of the lead's LinkedIn profile.

@@ -3,7 +3,6 @@ title: Google Slides integration
 source_url: https://university.clay.com/docs/google-slides-integration
 description: Create customized presentations at scale using your table data.
 last_synced: 2026-04-26T01:40:05.093Z
-upstream_hash: 3e74a287138a9214818ad28e18e8ab0fff893a63e9d586be3d0b715bd66994a4
 ---
 
 # Google Slides integration
@@ -32,7 +31,7 @@ Each presentation is saved as a new file in your Google Drive, dynamically fille
     -   If you haven't connected Google Slides yet, click `+ Add account` and complete the authentication process.
     -   When adding your account, select your template presentation and click `Select files and folders` that Clay can access.
 
- **Tip:** Make sure to grant Clay access to both the template file and the folder where you want new presentations saved.
+ **Tip:** Make sure to grant Clay access to both the template file and the folder where you want new presentations saved.
 
 ### **Create your template**
 
@@ -45,7 +44,7 @@ In Google Slides, create a presentation to use as your template. Add variables a
 -   `{{custom_pitch}}` → Personalized pitch text
 -   `{{company_logo-image}}` → Company logo (see image support below)
 
-Variables can be placed in text boxes, headers, bullet points, or anywhere text appears in your slides.
+Variables can be placed in text boxes, tables, shapes, headers, bullet points, or anywhere text appears in your slides.
 
 ### **Configure the enrichment**
 

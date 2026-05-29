@@ -4,7 +4,6 @@ source_url: https://university.clay.com/docs/plans-and-billing
 description: We'll walk through each of our pricing plans and information around
   billing your workspace.
 last_synced: 2026-04-26T01:40:29.319Z
-upstream_hash: 2f58039bce84dc1c9e46277be3410eade99593e98b99478d607bb42a0092978e
 ---
 
 # Plans & billing
@@ -38,6 +37,8 @@ To upgrade your Clay workspace plan:
 4.  Confirm your selection by clicking `Review change → Continue to payment`.
 
 Your new plan will activate immediately, and any applicable charges will be applied.
+
+**How upgrade billing works:** Plan upgrades are **not prorated** — you pay the full price of the new tier immediately, not a partial amount for remaining days in your current cycle. In return, you receive the **full** Actions and Data Credits for your new plan right away. Unused Actions from your previous plan are not carried over (Actions reset each billing cycle and do not roll over). Your existing unused Data Credits are preserved when you upgrade.
 
 ### Launch plan
 
@@ -86,9 +87,11 @@ To update your billing and payment information:
 
 Clay offers a 14-day free trial with 1,000 data credits, giving you access to webhooks, CRM integrations, email sequencers, and HTTP API capabilities.
 
-Phone number enrichments aren't available during the trial period. To access this feature, upgrade to a paid plan.
+Phone number enrichments aren't available during the trial period. To access this feature, upgrade to a paid plan. This also affects some waterfall templates: if a waterfall includes a provider that can return phone numbers (such as PDL or Bytemine), Trial users will see "Your subscription does not allow this integration to be added" even if the goal of the waterfall is something other than a phone number (for example, a LinkedIn URL). To work around this, remove the phone-number providers from the waterfall sequence. See [Waterfalls](https://university.clay.com/docs/building-a-data-waterfall) for details.
 
 If your team wants to do a trial, each team member can create their own trial account to explore Clay independently.
+
+Trial tables can hold up to **1,000 rows each**. The table view also displays only the first **50 rows** — rows beyond that are blurred in the UI until you upgrade to a paid plan.
 
 ## FAQs
 
@@ -98,15 +101,28 @@ You can track both actions and data credits usage in the `Usage Dashboard`, whic
 
 ### Do credits roll over?
 
-**Monthly plans:** When your plan refreshes, unused data credits will roll over and accumulate. The maximum accumulation is capped at 2× your plan's monthly credit limit. For example, if your plan includes 50,000 credits per month, your maximum balance would be 100,000.
+**Monthly plans:** When your plan refreshes, unused data credits will roll over and accumulate. The maximum accumulation is capped at 2× your plan's monthly credit limit — and this cap includes the newly added renewal credits. For example, if your plan includes 50,000 credits per month, your maximum balance is 100,000. If you already have 82,000 credits when your plan renews, you will end up with 100,000 credits, not 132,000.
 
 **Annual plans:** When your plan refreshes, you can roll over up to 15% of your annual data credits in addition to the new credits you receive, provided you renew on the same or a higher-tier plan.
 
 For more details, see our guide on [actions and data credits](https://www.notion.so/Actions-and-data-credits-2a77e66eb01480b798f2ddca99d45e80?pvs=21).
 
+### Is upgrading my plan prorated?
+
+No. Plan upgrades are not prorated. When you upgrade to a higher tier, you are charged the full price for the new plan immediately — not a partial amount for remaining days in your current billing cycle. In return, you receive the **full** Actions and Data Credits for your new tier right away, not just the incremental difference over your current plan.
+
+Unused Actions from your previous plan are not refunded or carried over (Actions reset each billing cycle and do not roll over). Your existing unused Data Credits are preserved when you upgrade.
+
+If you're unsure whether you need a higher tier, check your current usage in `Settings` → `Usage` to see how many Actions and Data Credits you've consumed this billing cycle before committing to an upgrade.
+
 ### What if I need more actions or data credits?
 
-You can upgrade your plan tier at any time by visiting your plan settings page. You can also purchase one-off data credits at a 30% premium during your billing cycle.
+**Actions:** Actions cannot be purchased as one-time top-ups — they represent fixed platform capacity tied to your action tier. To increase your Actions limit, you must upgrade to a higher action tier in `Settings` → `Plans & billing`.
+
+**Data Credits:** You have two options:
+
+-   **Upgrade your Data Credits tier** (recommended for ongoing needs) — no premium charged.
+-   **Purchase a one-time top-up** — available for emergency needs during your billing cycle at a 30% premium (50% on legacy plans), subject to rollover limits. Go to `Settings` → `Usage` and click `Add one-time data credits`.
 
 ### How many actions and data credits do I need?
 
@@ -115,3 +131,12 @@ You can upgrade your plan tier at any time by visiting your plan settings page. 
 -   **Enterprise plan:** Suitable for enriching 10,000+ records per month
 
 Each fully enriched record typically costs 6-20 data credits (including company and person profile, email, phone number, and custom AI enrichments). The more private API keys you use, the fewer data credits you'll spend per record.
+
+### How long does a refund take?
+
+Payment refunds take up to **10 business days** to appear in your account after Clay initiates them. If 10 business days have passed and the refund still hasn't appeared:
+
+1.  Confirm the funds haven't already been credited to your account.
+2.  Contact [Clay support](https://app.clay.com) and share any available transaction details — an Acquirer Reference Number (ARN) is especially helpful for tracing the payment.
+
+Clay Data Credit refunds (for enrichment actions that return no data) are applied to your account balance immediately after processing.

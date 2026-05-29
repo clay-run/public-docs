@@ -3,15 +3,14 @@ title: Table alerts
 source_url: https://university.clay.com/docs/table-alerts
 description: Table alerts automatically monitor your Clay tables and notify you
   when something needs attention.
-last_synced: 2026-04-26T01:40:45.731Z
-upstream_hash: e34c36c747d3f38a0364e60e07395eb3ff5f1644adec0dbc30d00b617b43bb9e
+last_synced: 2026-05-11T17:47:40.000Z
 ---
 
 # Table alerts
 
 Table alerts automatically monitor your Clay tables and notify you when something needs attention.
 
-**Note:** This a beta feature for Enterprise Plans only. Reach out to your growth strategist if you’re interested in learning more.
+**Note:** Table Alerts is available for all Enterprise users.
 
 Table alerts automatically monitor your Clay tables and notify you when something needs attention — whether error rates spike in a column, a table grows beyond an expected size, or a table stops receiving new data. Stay on top of data quality issues and workflow health without having to check your tables manually.
 
@@ -25,6 +24,12 @@ Table alerts are configured per table and are **opt-in** — you must explicitly
 4.  Toggle on `Enable alerts` to turn on alerts for this table.
 5.  Under `Alert Rules`, enable and configure each alert type individually:
     -   `Column failure rate` — alerts when a column's error rate exceeds a threshold. Default: **75%**.
+        -   **Muting columns:** You can selectively choose which columns trigger alerts. By default, all columns are enabled for alerting. To mute specific columns:
+            -   **Right-click** on a column header and select `Mute Alerts for Column`.
+            -   Click the **three dots menu** on a column and select the muting option.
+            -   Use the **Column Selector** (similar to Schedule Runs UI) to enable/disable columns in bulk. This is the recommended approach for focusing alerts on critical downstream columns only.
+        -   When you add a new column to your table, it's automatically enabled for alerting by default.
+        -   **Use case:** This is useful for non-critical upstream columns where errors are expected or acceptable. For example, if you only care about alerts for a critical downstream column like a Google Search enrichment, you can mute all other columns and enable alerting only for your critical column.
     -   `Row count limit` — alerts when your table's row count exceeds a threshold. Default: **45,000 rows**.
     -   `Data inactivity` — alerts when a table with a signal, scheduled signal, or scheduled run has received no new data for a configured period. Default: **1 day**.
 6.  Click `Save`.
@@ -37,17 +42,29 @@ Table alerts are configured per table and are **opt-in** — you must explicitly
 
 Once alerts are enabled and thresholds are configured, alerts will fire automatically when conditions are met.
 
-1.  Look for the **⚠️ warning icon with a number** in the **bottom-right corner** of your table.
+1.  Look for the **⚠️ warning icon with a number** in the **bottom-right corner** of your table. The number represents the count of unresolved grouped alerts (not individual alert logs).
 2.  Click the icon to open the `Table alerts` panel.
 3.  Review the feed of all triggered alerts for that table.
 
-Each alert shows:
+**Grouped alerts:** Alerts of the same type and column are automatically grouped together in the feed to reduce clutter. Each grouped alert shows:
 
 -   `Column name` — which column exceeded the error threshold (for column failure rate alerts).
+-   `Unresolved logs count` — how many times this same error has triggered (e.g., "12 unresolved logs").
+-   `Latest timestamp` — when the most recent alert fired.
 -   `Threshold` — the value that was exceeded (e.g., "10% error rate threshold").
--   `Error cause` — the reason for failure (e.g., "missing inputs").
--   `Row count status` — whether your table has exceeded the row limit (for row count limit alerts).
--   `Inactivity duration` — how long the table has gone without new data (for data inactivity alerts).
+-   `Error cause` — the most recent error that occurred (e.g., "invalid API key").
+
+**Viewing grouped alert details:**
+
+Click any grouped alert to open a details panel showing:
+
+-   **Latest error message** — displays the most recent threshold and error that triggered.
+-   **Most recent errors** — shows the errors that occurred in the latest alert.
+-   **Historical log** — a clickable list of all previous alerts for this column/type, including:
+    -   Timestamp when each alert triggered
+    -   Threshold at that time
+    -   Error causes that occurred
+    -   Resolve state of each log
 
 Click any alert to automatically scroll to and highlight the relevant column in your table for faster investigation.
 
@@ -55,8 +72,9 @@ Click any alert to automatically scroll to and highlight the relevant column in 
 
 From the `Table alerts` panel, you can:
 
--   `Mark as resolved` — resolves an individual alert and updates the icon count in the bottom-right corner.
--   `Mark all resolved` — clears all alerts at once.
+-   `Mark as resolved` — resolves an individual grouped alert and updates the icon count in the bottom-right corner. Resolved alerts are grayed out visually.
+-   `Mark all resolved` — clears all grouped alerts at once.
+-   `Mark as unresolved` — **only unmarks the most recent alert** within a grouped alert. Historical logs remain resolved because only the latest alert is relevant for addressing the current issue.
 -   `Hide resolved alerts` — toggles the view to show only active, unresolved alerts.
 
 ### **Checking current thresholds**
@@ -71,7 +89,11 @@ By default, alerts appear inside the `Table alerts` panel. You can also receive 
 
 1.  Open the `Table alerts` panel.
 2.  Click the **🔔 bell icon** in the panel header to subscribe.
-3.  You'll receive an email to your Clay account-associated email address every time a new alert triggers for that table.
+3.  Choose your notification frequency:
+    -   **Immediately** (default) — receive an email every time a new alert triggers
+    -   **Daily digest** — receive a single email per day with all alerts from that table
+    -   **Weekly digest** — receive a weekly summary of all alerts
+4.  You'll receive emails to your Clay account-associated email address based on your selected frequency.
 
 ### **Slack notifications**
 
@@ -80,6 +102,10 @@ By default, alerts appear inside the `Table alerts` panel. You can also receive 
 3.  Return to the `Table alerts` panel.
 4.  Click `Connect Channel`.
 5.  Select the Slack channel where you want to receive alerts.
+6.  Choose your notification frequency:
+    -   **Immediately** (default) — alerts sent to Slack as they trigger
+    -   **Daily digest** — a single message per day with all alerts
+    -   **Weekly digest** — a weekly summary of all alerts
 
 ## **FAQs**
 
@@ -97,7 +123,7 @@ The data inactivity alert fires when a table that has recurring data activity �
 
 ### **How often can the same alert fire?**
 
-Alerts of the same type are rate-limited to once every 30 minutes per table, so you won't receive repeated notifications in quick succession for the same condition.
+Alerts of the same type are rate-limited to once every 24 hours per table, so you won't receive repeated notifications in quick succession for the same condition.
 
 ### **Can I subscribe a teammate to email alerts instead of myself?**
 

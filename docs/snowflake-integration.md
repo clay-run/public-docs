@@ -3,7 +3,6 @@ title: Snowflake integration
 source_url: https://university.clay.com/docs/snowflake-integration
 description: Cloud-based data platform enabling data storage, analysis, and sharing.
 last_synced: 2026-04-26T01:40:42.804Z
-upstream_hash: 1796c1a7fe6b62d2adab8e1cc14d0e1c278d1e4c0c43e058c9b9c6a332a7089b
 ---
 
 # Snowflake integration
@@ -36,7 +35,7 @@ When setting up key-pair authentication, you'll need to provide:
 -   **Database** (optional): The name of the database to connect to in Snowflake. If not specified, you'll be prompted to enter it when setting up a Snowflake enrichment.
 -   **Schema** (optional): The schema to connect to in Snowflake. If not specified, you'll be prompted to enter it when setting up a Snowflake enrichment.
 -   **Warehouse** (optional): The warehouse to use for queries in Snowflake. If not specified, you'll be prompted to enter it when setting up a Snowflake enrichment.
--   **Use static IP** (optional): Enable this to ensure that the action runs from the same IP address, which can be useful for allow-listing.
+-   **Use static IP** (optional, Enterprise plans): Enable this to route enrichments through Clay's fixed IP addresses, which you can allowlist in your Snowflake network policy: `52.7.81.233`, `18.209.121.250`, `35.170.109.137`, `54.86.28.41`.
 
 ### Setting up username and password authentication
 
@@ -61,6 +60,15 @@ You can use Snowflake as a source for a new or existing table.
 -   **Table name**
 -   **Snowflake warehouse**
 -   **Role** (optional)
+
+### Scheduling imports
+
+The Import from Snowflake source supports scheduled refreshes. To configure a schedule, click the source column title → **Sources** → **Run this source** → **On a schedule**, then choose your frequency. Available options depend on your plan:
+
+-   **Hourly** (Enterprise only)
+-   **Daily**, **Weekly**, or **Monthly** (all plans)
+
+Daily is the fastest schedule available on non-Enterprise plans; Enterprise customers can run imports as often as once per hour. If you need more frequent syncs than that — for example, to trigger enrichment as soon as new Snowflake data lands — use a Clay webhook instead. Point your Snowflake pipeline (or the tool that fires when data is inserted) at the Clay table's webhook URL and it will kick off enrichment on each batch immediately, without waiting for the next scheduled run. See [Webhooks in Clay](webhook-integration-guide.md) for setup details and [Scheduled sources](scheduled-sources.md) for general scheduling options.
 
 ## Enriching data with Snowflake
 
@@ -166,7 +174,7 @@ Move the private key somewhere easy to find for the next step:
 
 After your account connects, Clay prompts you to enter a SQL query. This determines exactly which data is imported into Audiences.
 
-`SELECT    domain,      company_name,      total_sessions,      last_session_at,      trial_status,      engagement_score   FROM your_database.your_schema.your_table_or_view   `
+`SELECT    domain,      company_name,      total_sessions,      last_session_at,      trial_status,      engagement_score   FROM your_database.your_schema.your_table_or_view   `
 
 Any valid `SELECT` works — tables, views, joins, and aggregations are all supported. Two things to keep in mind:
 

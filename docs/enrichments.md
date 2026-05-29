@@ -3,7 +3,6 @@ title: Enrichments
 source_url: https://university.clay.com/docs/enrichments
 description: Learn how to run an enrichment within Clay.
 last_synced: 2026-04-26T01:39:56.840Z
-upstream_hash: f18039c811ec06bcc928bd67fe45fec9253a88675a4f5b5475813ba887e3cdf6
 ---
 
 # Enrichments
@@ -39,6 +38,13 @@ Use conditional logic to control when an enrichment runs. The enrichment only ex
 1.  Enter a formula in the `Only run if` field.
 2.  The enrichment runs when the formula evaluates to `true`.
 3.  Click `Use AI` to generate conditional formulas automatically.
+
+### Saving configuration changes
+
+When you click **Save** after editing an enrichment column, a dropdown lets you choose how the change takes effect:
+
+-   **Save and don't run** — Saves your updated settings without re-running existing rows. If [auto-run](table-management-settings.md) is enabled, new rows added after saving will still trigger this enrichment automatically; historical rows remain unchanged until you manually trigger a run.
+-   **Save and run _N_ rows** — Saves your settings and immediately queues all rows in the table for a run using the updated configuration.
 
 ## Delay run
 

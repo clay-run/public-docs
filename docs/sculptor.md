@@ -3,14 +3,13 @@ title: Sculptor
 source_url: https://university.clay.com/docs/sculptor
 description: Your go-to-market co-pilot
 last_synced: 2026-04-26T01:40:38.269Z
-upstream_hash: 3b4d9f80bc86bef6578b801f8a0a2055147d8c6eb493b8565c9bf7736e956093
 ---
 
 # Sculptor
 
 Your go-to-market co-pilot
 
-Sculptor is Clay’s **go-to-market co-pilot**. It helps teams turn high-level ideas into production-ready workflows. You can bring a challenge into the chat box and, working alongside Sculptor, deploy it as a live Clay workflow in minutes.
+Sculptor is Clay's **go-to-market co-pilot**. It helps teams turn high-level ideas into production-ready workflows. You can bring a challenge into the chat box and, working alongside Sculptor, deploy it as a live Clay workflow in minutes.
 
 For example, you could:
 
@@ -23,7 +22,7 @@ For example, you could:
 1.  **Launch Sculptor.** You can do this in two ways:
     -   From the **homepage** of [app.clay.com](http://app.clay.com/) using the large open text box.
     -   From **within any table** using the `Chat with Sculptor` button.
-2.  **State your problem clearly.** Enter the type of table you want Sculptor to create (e.g., “I want to source a TAM for franchisors in Canada”).
+2.  **State your problem clearly.** Enter the type of table you want Sculptor to create (e.g., "I want to source a TAM for franchisors in Canada").
     -   Adding details such as geography, industry, or company size helps Sculptor generate better results.
 3.  **Iterate and review.** Sculptor will propose a workflow with integrations, enrichments, and conditions.
     -   You can reply directly in the chat to adjust or refine the table instantly.
@@ -36,6 +35,20 @@ For example, you could:
 -   **Provide context.** Sculptor performs best when you include details, examples, and framing.
 -   **Check your work.** All results are inspectable—review and validate before scaling.
 -   **Use Sculptor as a strategist.** Treat it like a partner to help shorten your learning curve, navigate complex systems faster, and accelerate iteration.
+
+## Sandbox mode
+
+> **Available on Pro and Enterprise plans. A broader rollout to additional plans is coming.**
+
+When Sculptor builds new columns for your table, it automatically puts the table into [sandbox mode](https://www.clay.com/university/guide/sandbox-mode) first. This gives you a chance to review and validate the new columns before they go live—reducing unintended credit burn and giving you more control over changes.
+
+Once Sculptor adds columns and sandbox mode is active:
+
+1. Review the proposed columns in sandbox mode using a small set of test rows. The **All data** tab shows a **View-only** indicator while sandbox is active — this is expected and means your production table is protected while you test.
+2. Click `Review changes` — visible in the tab bar above your table, to the right of the "Test data" / "All data" switcher — to see a summary of all structural column updates.
+3. When ready, click `Publish and run` to apply the changes to your full table, or `Publish and don't Run` to sync the configuration without immediately running all rows.
+
+For more on how sandbox mode works, see [Sandbox mode](https://www.clay.com/university/guide/sandbox-mode).
 
 ## Analyst mode
 
@@ -56,7 +69,7 @@ Analyst mode lets you query any Clay table using natural language to uncover tre
 
 | Use case | Notes and caveats |
 | --- | --- |
-| List building | Sculptor’s primary use case. It can handle most of the setup for you—start from the homepage input to create a CPJ search, enrich the list in a table, then move from a company table to a people table. Sculptor can also help draft outreach emails to those prospects. |
+| List building | Sculptor's primary use case. It can handle most of the setup for you—start from the homepage input to create a CPJ search, enrich the list in a table, then move from a company table to a people table. Sculptor can also help draft outreach emails to those prospects. |
 | Data enrichment | Once your table is set up, Sculptor excels at recommending the right enrichments and generating Claygent prompts tailored to your workflow. |
 | Building co-pilot | A great first pass before turning to GTME, EGS, or Support. Sculptor can troubleshoot errors, analyze patterns in your data, and even conduct research directly within your table. |
 
@@ -77,6 +90,27 @@ While Sculptor is powerful, there are a few things to keep in mind:
 -   **No write capabilities yet** — You can create new tables, but can't modify existing ones.
 -   **Feature gaps** — Signals tables aren't currently supported.
 -   **Data boundaries apply** — Only processes data you provide or data from supported sources and enrichments.
+
+## Troubleshooting
+
+### Suggested column card doesn't appear
+
+When Sculptor proposes a new column but the suggestion card isn't visible, it typically means Sculptor described the action without fully completing it. Sculptor has built-in detection for this situation — the most reliable fix is to **ask Sculptor where the suggestion is** (for example: _"Where is the column you just suggested?"_ or _"I don't see the suggestion card"_). Sculptor will detect that the suggestion is missing and automatically attempt to complete it.
+
+If that doesn't resolve it, a few additional things to try:
+
+-   **Give the column a unique name.** Ask Sculptor to name the column something slightly different (for example, adding `-v2`) to force it to create the column fresh rather than getting stuck on the previous attempt.
+-   **Start a new Sculptor conversation.** If the current chat isn't making progress, start a fresh conversation and restate your goal. You can launch a new Sculptor session from the homepage at [app.clay.com](http://app.clay.com/).
+
+### Sculptor is slow to respond or times out
+
+Sculptor includes your table's schema and field configuration with every message it sends. As your conversation grows, all prior messages are included in each new request — so longer threads mean slower responses. If you're experiencing delays or frequent timeouts:
+
+-   **Start a fresh Sculptor conversation.** This is the most reliable fix. Long chat threads accumulate history that adds to processing time. Starting over from the homepage or a new `Chat with Sculptor` session clears the accumulated context.
+-   **Keep prompts shorter and more focused.** Ask for one thing at a time rather than large multi-step requests — this reduces processing time and tends to produce more accurate results.
+-   **Try a different browser or incognito mode.** This rules out local caching or browser extension issues.
+
+If Sculptor is consistently slow regardless of conversation length, this is a known performance area the team is actively improving.
 
 ## FAQs
 

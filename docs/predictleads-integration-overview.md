@@ -4,7 +4,6 @@ source_url: https://university.clay.com/docs/predictleads-integration-overview
 description: Identify recent news, open jobs, and connections for targeted
   business insights.
 last_synced: 2026-04-26T01:40:29.966Z
-upstream_hash: 82cc3e57dc2bdc26aab52e49f43fe453f3eb918931a1dd29fe7acfae9868838a
 ---
 
 # PredictLeads integration
@@ -46,8 +45,14 @@ Retrieve active job listings from a company, providing insights into hiring tren
 **Inputs**
 
 -   **Domain:** Company domain to find job openings.
--   **Departments** **(Optional):** Filter by department.
--   **Days Since Posted (Optional):** Specify the age of job postings.
+-   **Departments (Optional):** Filter by department (e.g. Sales, Engineering, Support).
+-   **Filter for Job Title (Optional):** Filter for specific words or phrases in job titles, separated by commas (e.g. "engineer, marketing, accountant"). Does not accept AND/OR logic. Works best when combined with a **Departments** filter.
+-   **Filter for Job Description (Optional):** Filter for specific words or phrases in job descriptions, separated by commas (e.g. "Salesforce, HubSpot"). Does not accept AND/OR logic. Works best when combined with a **Departments** filter.
+-   **Days Since Posted (Optional):** Filter for jobs posted within the last X days.
+-   **Only jobs tied to a location? (Optional):** When enabled, returns only jobs tied to a specific geographical area.
+-   **Include Subdomains? (Optional):** When enabled, includes results from subdomains of the company domain.
+
+**Output limit:** This action returns up to 10 matching jobs per run. When more matches exist, the **More Matches Than We Can Display** output field is set to `true` and **Total Count of Active Jobs** shows the full count from the provider. The table cell preview shows "10+ matching jobs" in this case. To work with all matching jobs, hover over the **Jobs** field in the cell details panel and click **Take action on list → Write each item to new row in other table**.
 
 ### `Action` Find Technology Stack
 

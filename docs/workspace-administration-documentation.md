@@ -3,7 +3,6 @@ title: Account and workspace settings
 source_url: https://university.clay.com/docs/workspace-administration-documentation
 description: Manage account and workspace settings, integration accounts, and billing.
 last_synced: 2026-04-26T01:40:56.525Z
-upstream_hash: 537dcfe4ee76a84566688d5cf417288ffbf7ddbf2bcbb0cc750ef95629861714
 ---
 
 # Account and workspace settings
@@ -42,6 +41,31 @@ To change your account password:
     -   _Note: This option is available only if you signed in using a password and not via an authentication service such as Google or SSO._
 -   Follow the instructions in the email to securely update your password.
 
+## **Switch from Google login to email and password**
+
+Switching your login method from Google to email and password cannot be done through your account settings — it requires a support action.
+
+To request the change:
+
+-   Open the in-app chat and ask the support team to switch your login method from Google to password.
+-   Once the change is made, you will receive a password recovery email at your registered address.
+-   If you don't receive the email, visit [app.clay.com/forgot](https://app.clay.com/forgot) and enter your email address to trigger a new one.
+
+After completing the password recovery steps, you can log in with your email and password instead of Google.
+
+**Important:** Once switched, sign in using the **email and password fields** on the Clay login page — do **not** click `Continue with Google`. The `Continue with Google` button authenticates using whichever Google account is currently active in your browser. If you are signed into a different Google account (for example, a personal Gmail), clicking that button will sign you into that account's Clay workspace instead of yours, or may create a new Clay account.
+
+If you regularly use multiple Google accounts in the same browser, using email and password directly is the most reliable approach. Alternatively, you can use a separate browser profile signed into only the correct Google account.
+
+**If you already signed in with the wrong Google account**
+
+If clicking `Continue with Google` used an unintended account (for example, your personal Gmail), Clay automatically creates a new workspace for that email address. You will be taken into an onboarding flow for the new workspace — there is no skip or exit button, and the onboarding screen does not show the regular Clay navigation bar or workspace switcher.
+
+To get back to your correct workspace:
+
+-   **Navigate directly to your existing workspace:** Type `https://app.clay.com/workspaces/<your-workspace-id>` in the address bar. This loads your real workspace without going through the onboarding flow for the unwanted one.
+-   **Contact Clay support:** Use the in-app chat to ask support to stop the onboarding flow or delete the unwanted workspace. The support team can do this on your behalf even if you cannot reach that workspace's settings yourself.
+
 ## **Clay API key access**
 
 Your Clay API key enables Clay-specific integrations and external connections. To manage your API key:
@@ -57,8 +81,11 @@ You can permanently delete your Clay account through your account settings. Befo
 
 **Requirements:**
 
--   You must be a **member** (not admin) of all your workspaces, OR
+-   You must be a **member** (not admin) in all your workspaces, OR
+-   You must be an **admin** in a workspace where at least one other admin exists, OR
 -   You must be the **only member** in your workspace
+
+If you are the sole admin of a workspace with other members or pending invites, you must transfer admin rights to another member, remove remaining members, or cancel pending invites before deleting your account.
 
 **To delete your account:**
 
@@ -74,12 +101,36 @@ You can permanently delete your Clay account through your account settings. Befo
 -   Your account email is updated to a deleted variant.
 -   For any workspaces affected by your account deletion, workspace admins will receive email notifications.
 -   Your private app account and Stripe customer information are deleted to prevent unexpected charges.
+-   You will receive an email confirmation once your account has been deleted.
+-   **If you want to sign up again with the same email address, you must wait 7 days after deletion.** If you need to re-register sooner, contact Clay support via the in-app chat to request an early clearance.
 
 **Important:** Account deletion is permanent and cannot be undone. While your data is marked for deletion and critical billing/authentication records are removed immediately, full data removal from our database may take additional time.
 
 # **Workspace settings**
 
 Workspace settings give you control over key aspects of your workspace, such as its name, profile picture, and billing email. These settings ensure your workspace is easily identifiable and that billing communications reach the correct contact. Below are the steps for updating key workspace details.
+
+## **Creating a new workspace**
+
+Creating an additional workspace is not available through in-app settings for most accounts. To create a new workspace, sign up using a **different email address** at [app.clay.com](https://app.clay.com) — this starts a new workspace where you are the admin from day one.
+
+You do not need to leave any workspaces you're already a member of. Your existing workspace memberships stay intact, and each workspace is independent with its own tables, credits, and billing.
+
+**Note for agencies and users managing multiple client workspaces:** Some accounts have access to an **"Add workspace"** option directly in the workspace switcher. If you need to create multiple workspaces under the same account, contact Clay support to check whether this can be enabled for you.
+
+## **Switching between workspaces**
+
+Your Clay account can be associated with more than one workspace — for example, if you explored Clay during a free trial and later upgraded or joined a team's workspace. Each workspace has its own tables, credits, and billing.
+
+To switch between workspaces:
+
+-   Click your **profile picture or name in the top-right corner** of the Clay navigation bar.
+-   In the dropdown that appears, look for the **Workspaces** section.
+-   Click the workspace you want to open.
+
+**If your tables seem to have disappeared** — for example, after upgrading your plan or returning to Clay after some time — check the workspace switcher first. Your data is not deleted; it's in the workspace where you originally created it.
+
+**Note:** When you upgrade a plan, the upgrade applies to the specific workspace you are currently in. If you upgrade while viewing a different workspace than the one where you created your tables, those tables remain in the original workspace. Use the workspace switcher to navigate between them.
 
 ## **Workspace picture**
 
@@ -164,6 +215,8 @@ Clay offers three user roles with different permission levels to help manage you
 
 -   Add, remove, or change team members' roles.
 -   Modify billing settings or purchase credits.
+-   Set a connection as the default in `Settings` → `Connections` — this is a workspace admin–only action.
+-   Delete connections added by other workspace members — editors can only delete connections they personally added.
 
 ### **Viewer**
 
@@ -177,7 +230,7 @@ To invite a new member to your workspace:
 
 -   Go to `Settings` > `Team`.
 -   Click the `+ Invite` button in the top-right corner.
--   Enter the email address of the person you want to invite.
+-   Enter the email address of the person you want to invite, then press **Enter** (or type a comma) to confirm it. You can add multiple addresses this way.
 -   Select the appropriate role (Editor or Admin) from the dropdown.
 -   Click `Send invite`.
 
@@ -201,6 +254,52 @@ To remove a member from your workspace:
 -   Click the `…` (three-dot) menu next to their name.
 -   Select `Remove member`.
 -   Confirm the removal in the dialog that appears.
+
+**What happens when you remove a member:**
+
+-   All tables, workbooks, and groups owned by the removed member are automatically transferred to the longest-tenured admin in the workspace (the admin whose admin role was granted earliest).
+-   You cannot remove the last admin from a workspace — at least one admin must remain at all times.
+
+**Transferring ownership when a team member leaves**
+
+If a former employee owns tables or workbooks in your workspace, there is no separate "transfer ownership" UI in Clay — removing the former member from the workspace is how you do it. All tables, workbooks, and groups they owned will automatically reassign to the longest-tenured admin (the workspace admin whose admin role was assigned earliest).
+
+# **Single Sign-On (SSO)**
+
+Single Sign-On (SSO) is available to **Enterprise plan** customers and those who have purchased the SSO add-on. It lets your organization authenticate Clay users through your existing identity provider (IdP). Clay uses WorkOS to manage SSO and supports any IdP that uses SAML or OIDC protocols — including Okta, Azure AD (Entra ID), Google Workspace, and others.
+
+## **Setting up SSO**
+
+SSO setup is managed by Clay's support team — there is no self-serve configuration in the Clay UI. To get started, contact Clay support.
+
+The typical setup process:
+
+1.  Contact Clay support to initiate SSO setup.
+2.  Clay support creates your organization in WorkOS and sends a configuration link to your IT contact.
+3.  Your IT team follows the link to connect your identity provider and complete the setup.
+4.  Once your IT team confirms the WorkOS setup is complete, notify Clay support.
+5.  Clay support activates (enforces) SSO on your workspace.
+
+**Note:** The email domain used for SSO authentication is configured on Clay's side. If you receive an error during the WorkOS setup stating that your domain is not recognized or not allowed, contact Clay support — only the support team can update the allowed domain setting.
+
+## **What happens when SSO is enabled**
+
+-   All users whose email address is on your verified domain are required to sign in through SSO. The Clay login page redirects those users to your SSO provider automatically.
+-   Google OAuth sign-in is disabled for users on your domain. Clicking the **Sign in with Google** button on the login page will return an error (`Google OAuth is disabled for this account`) — this button uses Google OAuth, which is a separate authentication path from SSO.
+-   SSO is configured at the email domain level — if your organization uses multiple Clay workspaces, users on your domain will be routed through SSO for all of them.
+
+**How SSO users should sign in:** On the Clay login page, type your **email address** into the email field and click **Continue** — do **not** click the `Sign in with Google` button. Entering your email triggers domain detection, which redirects you to your SSO provider automatically.
+
+## **External collaborators (non-domain email addresses)**
+
+SSO only applies to users whose email address matches your verified domain. Team members with email addresses outside your domain are not affected and continue to access Clay through their regular login (Google or password).
+
+## **User provisioning**
+
+Clay does not add users to your workspace automatically through SSO — there is no SCIM or domain-join provisioning for workspace membership. If an uninvited user with your email domain signs in via SSO, they will authenticate successfully and a Clay account will be created for them, but they will not be added to your enterprise workspace. To onboard a new team member:
+
+1.  Invite them to your Clay workspace first via `Settings` > `Team` > `+ Invite`.
+2.  Have them sign in using SSO — they will be authenticated and placed into the correct workspace.
 
 # **Connections**
 
@@ -240,6 +339,11 @@ To add a new account for an integration:
 -   Once completed, the account will appear under the corresponding service in the `Connections` list.
 
 ## **Managing existing accounts**
+
+**Note:** Some connection management actions are restricted by role:
+
+-   **Set as Default** is a **workspace admin–only** action — only admins see this option in the `…` menu.
+-   **Delete** is available to the member who added the connection and to workspace admins. If you need to delete a connection that was added by someone else, ask a workspace admin.
 
 ### **View your integration accounts**
 
@@ -323,6 +427,10 @@ Clay offers three plans. For a full comparison of features and pricing, visit ou
 -   **Actions and data credits:** Custom
 -   **Benefits:** Volume discounts on data credits, dedicated Growth Strategist, managed onboarding, data warehouse integrations, bulk enrichment, SSO, RBAC, and more
 
+### **Workspace row limit**
+
+All workspaces have a global row limit of **10 million rows** across all tables. This cap counts rows in every table in your workspace, regardless of plan. If you reach this limit, you may see the error **"Your Subscription Does Not Allow Any More Records."** Permanently deleting unused tables and rows will reduce your workspace row count.
+
 ## **Managing your plan**
 
 To upgrade or downgrade your Clay workspace plan:
@@ -354,9 +462,11 @@ Clay offers a 14-day free trial with 1,000 data credits, giving you access to ke
 
 If your team wants to do a trial, each team member can create their own trial account to explore Clay independently.
 
+Trial tables can hold up to **1,000 rows each**. The table view also displays only the first **50 rows** — rows beyond that are blurred in the UI until you upgrade to a paid plan.
+
 # **Referrals**
 
-Clay's referral program allows you to invite others to join and earn rewards. When someone signs up using your referral link and activates a **paying workspace**, both of you will earn **3,000 Clay credits**. Referral credits are not subject to the usual rollover rules — they stay in your account until you use them.
+Clay's referral program allows you to invite others to join and earn rewards. When someone signs up using your referral link and activates a **paying workspace**, both of you will earn **3,000 Clay credits**. These credits are not added immediately — they are typically applied around **30 days after the referred user upgrades to a paid plan**. Referral credits are not subject to the usual rollover rules — they stay in your account until you use them.
 
 To access and share your referral link:
 
@@ -366,3 +476,5 @@ To access and share your referral link:
 4.  Share the link with friends, colleagues, or teams who might benefit from using Clay.
 
 You can monitor your referral activity, including the number of leads, converted users, and credits earned, directly in the Referrals section.
+
+**Note:** The Referrals section in Settings shows your activity as a referrer — the people you've invited and credits you've earned. If you signed up using someone else's referral link, your 3,000 bonus credits will appear in your account balance once the referral is confirmed; there is no separate tracker in Settings for your status as a referee.
