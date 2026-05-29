@@ -80,25 +80,40 @@ For full details on writing run conditions, see [Conditional runs](https://unive
 
 [Learn more about Salesforce's duplicate rules here.](https://help.salesforce.com/s/articleView?id=sales.duplicate_rules_map_of_reference.htm&type=5)
 
-## How do I add contacts to a Salesforce campaign and update the status of existing campaign members?
+## How do I add leads or contacts to a Salesforce campaign and update the status of existing campaign members?
 
-A Campaign Member in Salesforce represents the relationship between a contact (or lead) and a campaign. Because contacts might already be members of the campaign, you need a conditional workflow that handles both cases — adding new members and updating the status of existing ones.
+A Campaign Member in Salesforce represents the relationship between a lead or contact and a campaign. Each Campaign Member record is tied to either a `LeadId` or a `ContactId` — not both at once. Because leads or contacts might already be members of the campaign, you need a conditional workflow that handles both cases — adding new members and updating the status of existing ones.
 
 **Recommended workflow:**
 
-1.  **Lookup records via SOQL** — Check whether the contact is already a campaign member. Using SOQL lets you filter on both `ContactId` and `CampaignId` at once:
+1.  **Lookup records via SOQL** — Check whether the lead or contact is already a campaign member. Using SOQL lets you filter on both the person ID and `CampaignId` at once.
 
+    *For contacts:*
     ```sql
     SELECT Id, Status FROM CampaignMember WHERE ContactId = '/Contact ID' AND CampaignId = '/Campaign ID' LIMIT 1
     ```
 
-    Replace `/Contact ID` and `/Campaign ID` with your Clay columns, inserted using the `/` picker in the query editor. This returns the Campaign Member's `Id` and current `Status` if they are already in the campaign, or nothing if they are not.
+    *For leads:*
+    ```sql
+    SELECT Id, Status FROM CampaignMember WHERE LeadId = '/Lead ID' AND CampaignId = '/Campaign ID' LIMIT 1
+    ```
 
-2.  **Create record (conditional)** — If the lookup returns no result, the contact is not yet in the campaign. Add a **Create record** column, set the Salesforce object to `CampaignMember`, and supply `ContactId`, `CampaignId`, and the initial `Status`. In **Run settings**, add a conditional run that fires only when the ID field from your SOQL lookup is empty.
+    *If your table contains a mix of leads and contacts, create a formula column (call it something like "Person ID") that returns the Contact ID when populated and falls back to the Lead ID otherwise. Then use an OR query to handle both in a single lookup:*
+    ```sql
+    SELECT Id, CampaignId, LeadId, ContactId, Status
+    FROM CampaignMember
+    WHERE CampaignId = '/Campaign ID'
+    AND (LeadId = '/Person ID' OR ContactId = '/Person ID')
+    LIMIT 1
+    ```
 
-3.  **Update record (conditional)** — If the lookup returns a result, the contact is already in the campaign and needs their status changed. Add an **Update record** column, set the Salesforce object to `CampaignMember`, set **Record ID** to the `Id` from your SOQL lookup column, and supply the new `Status` value. In **Run settings**, add a conditional run that fires only when the ID field from your SOQL lookup is **not** empty.
+    Replace the `/Column Name` placeholders with your Clay columns using the `/` picker in the query editor. This returns the Campaign Member's `Id` and current `Status` if they are already in the campaign, or nothing if they are not.
 
-This three-step pattern ensures new contacts are added to the campaign and existing members have their status updated — without creating duplicate Campaign Member records.
+2.  **Create record (conditional)** — If the lookup returns no result, the person is not yet in the campaign. Add a **Create record** column, set the Salesforce object to `CampaignMember`, and supply `ContactId` (or `LeadId`), `CampaignId`, and the initial `Status`. In **Run settings**, add a conditional run that fires only when the ID field from your SOQL lookup is empty.
+
+3.  **Update record (conditional)** — If the lookup returns a result, the person is already in the campaign and needs their status changed. Add an **Update record** column, set the Salesforce object to `CampaignMember`, set **Record ID** to the `Id` from your SOQL lookup column, and supply the new `Status` value. In **Run settings**, add a conditional run that fires only when the ID field from your SOQL lookup is **not** empty.
+
+This three-step pattern ensures new leads and contacts are added to the campaign and existing members have their status updated — without creating duplicate Campaign Member records.
 
 **Note:** The valid `Status` values for Campaign Members are configured per campaign in Salesforce. Check your Salesforce org's Campaign Member Status settings to confirm the exact values before writing them from Clay.
 
