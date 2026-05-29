@@ -63,6 +63,21 @@ No. Signals monitor changes at companies or contacts already in your data source
 
 To search for open job postings by location, job title, or other criteria, use the **Find Jobs** source when creating a new table. You can also [schedule it to run on a recurring basis](https://www.clay.com/university/guide/scheduled-sources) (daily, weekly, etc.) so your table stays up to date with the latest postings.
 
+### How do I check for job openings at each company in my table?
+
+If you have a table of company domains or names and want to pull active job openings for each one, use the **Find Active Job Openings** enrichment column — not a Signal.
+
+**To set this up:**
+
+1.  In your company table, click `Add enrichment` and search for `Find Active Job Openings`.
+2.  Map your company domain to the input field. You can optionally filter by job title keywords, location, or days since posted.
+3.  Enable **Auto-run** on the table (click the ⛭ icon → **Run Settings**) so the enrichment fires automatically whenever you add a new company row.
+4.  To keep job openings refreshed over time, open Table Settings (⛭) → **Run Settings** → toggle on **Re-run columns on a schedule** → select the Find Active Job Openings column → set the frequency to Daily (or as often as you need fresh results).
+
+This gives you both behaviors: new companies you add are enriched automatically, and existing companies are re-checked for new job openings on each scheduled cycle.
+
+**Tip:** The same pattern works for finding people — use the **Find People at Company** enrichment with your company domain to return contacts at each account, then combine auto-run and scheduled re-runs to keep results current.
+
 ### Which enrichment should I use to filter job openings by a specific country or city?
 
 Use **Find Active Job Openings**, not the PredictLeads **Find open jobs** enrichment, when you need to scope results to a particular country or city.
