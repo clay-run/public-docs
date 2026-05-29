@@ -2,7 +2,8 @@
 title: Email sequencer
 source_url: https://university.clay.com/docs/email-sequencer
 description: Run outbound campaigns directly from your table.
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-05-04T00:00:00.000Z
+upstream_hash: 3d3db81ae3036812b3d4dc0b56f1ae7fff367acb652370008e4fdffc6f91fa96
 ---
 
 # Email sequencer
@@ -29,9 +30,9 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 ## Create a new email campaign
 
 1.  Start in a table that contains the lead emails you want to contact.
-    -   If you haven't done this yet, click `Tools` → `Import` to add emails from a third party or CSV.
+    -   If you haven't done this yet, click `Actions` → `Import` to add emails from a third party or CSV.
 2.  Click `Tools` → `Exports` → `Create Clay email campaign`
-    -   The `Sync leads to campaign` column automatically pushes 10 rows from your parent table into the campaign to draft with. After you launch the campaign, run this column to push all remaining rows — click the run button in the column header to trigger it.
+    -   The `Sync leads to campaign` column automatically pushes 10 rows from your parent table into the campaign to draft with
     -   Tip: You can customize the sync data column to only send leads with an email address using `Only run if`.
 3.  In the `Setup` tab, you can set:
     -   `Lead email address`: We automatically detect email address columns, but confirm this before proceeding.
@@ -99,7 +100,7 @@ Special sequencer enrichments available in the table include:
 
 -   `Reply to lead`: Automate responses to any email reply event using a pre-built HTML template, AI-generated snippet, or booking link.
 -   `Pause lead in campaign`: This can be called from any Clay table to pause a lead on an incoming event (e.g. event signup, or if the recipient filled in a form).
--   `Add email to blocklist`: Prevent unsubscribed or removed leads from being added to future campaigns. This column starts as a manual button — click it per row, or set an `Only run if` condition to automate it based on `Event type`.
+-   `Add email to blocklist`: Automatically prevent unsubscribed or removed leads from being added to future campaigns.
 
 ## Managing campaigns
 
@@ -148,6 +149,16 @@ Our sequencer is powered by Smartlead, but everything runs on Clay credits. You 
 ### Why does my campaign only show 10 leads after launching?
 
 When a campaign is created, the `Sync leads to campaign` column pushes 10 rows so you can preview and configure your messages. After launching, the rest of your source table is not pushed automatically. To add all remaining rows, run the `Sync leads to campaign` column manually — click the run button in the column header.
+
+### My "Sync leads to campaign" column is showing a warning. What does it mean?
+
+This usually means the Clay table that the column points to was deleted. Hover over the warning icon to confirm — the error reads *"Destination table was deleted. Please either restore that table from the trash, or create a new Send table data column."*
+
+To fix it, open `Trash` from the bottom-left of your workspace sidebar, find the deleted table, and click `Restore`. The column will reconnect once the table is back.
+
+If the table was permanently deleted from Trash and can't be recovered, create a new campaign: click `Tools` → `Exports` → `Create Clay email campaign` in your source table.
+
+Deleting a campaign through the column header's settings (the **Delete campaign** option) is permanent — it removes the campaign from the sending platform and all associated columns with no recovery option.
 
 ### I updated my campaign, but the changes didn't save.
 
@@ -201,9 +212,27 @@ No, only business accounts (Google Workspace, Microsoft Outlook) are supported f
 
 Often errors in the app are transient. We're calling Smartlead APIs under the hood, and sometimes the request has an issue—usually you can retry the operation and it will succeed (especially if it says a 502 error code). If you keep running into an error, contact support.
 
-### How do I sync campaign data to HubSpot?
+### How do I write campaign event data back to my CRM (HubSpot or Salesforce)?
 
-You can use our existing table integration in the campaign events table to push updates into HubSpot.
+Because the campaign events table is a standard Clay table, you can add CRM enrichment columns directly to it to log activity back to HubSpot, Salesforce, or any other connected CRM. There is no separate native sync — you configure it column by column using Clay's standard CRM actions. Here are best practices for a clean, reliable write-back:
+
+1.  **Filter by event type before writing.** Not every event needs to hit your CRM. Add an `Only run if` condition to your CRM action column to trigger write-backs only on meaningful events (e.g., replies or bounces) — this keeps your CRM clean and avoids noise from every send.
+
+2.  **Look up the contact first.** Before creating or updating a record, use a `Lookup record` action (by email) to find the existing CRM contact. This prevents duplicates and ensures the activity is logged to the right record. For Salesforce contact or lead records, `Upsert object` can find and update in a single step (requires an external ID field on the Salesforce object).
+
+3.  **Map your key fields.** Recommended mappings from the events table to your CRM:
+    -   `Event Type` → Activity Type / Task Subject
+    -   `Event Timestamp` → Activity Date
+    -   `Campaign Name` → Campaign / Custom Field
+    -   `Reply Body` → Notes / Description
+
+4.  **Use Create record (not Update) when logging activity events.** Each event should become its own activity entry in your CRM — this preserves the full engagement history. Updating a single record would overwrite prior events.
+
+5.  **Account for reply delays.** Reply events can appear in the campaign events table with a [15–30 minute delay](#campaign-events-table), so avoid automations that depend on real-time reply data.
+
+6.  **Enable Auto-run for ongoing campaigns.** Turn on `Auto-run` on your CRM action column so new events continuously trigger write-backs as the campaign runs — otherwise, the column only processes rows that are manually triggered.
+
+7.  **Test before scaling.** Turn off `Auto-run` and manually run 5–10 rows first to validate your field mappings before enabling full automation.
 
 ### How do unsubscribes work in the sequencer?
 
@@ -232,6 +261,12 @@ These are disclosed when you add your account via OAuth. We request: full Gmail 
 ### How do I authorize Clay's app in the Google Admin panel?
 
 Follow the instructions in the modal and have your Google Workspace admin set our Clay sequencer app to `Trusted`. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the Clay sequencer.
+
+### I followed the admin setup steps but still see "Access blocked: clay.com has not completed the Google verification process." What should I do?
+
+This error is expected — Clay's sequencer uses automated warmup sends, which prevents the app from passing Google's standard verification process. Admin approval in your Google Workspace Admin panel is the intended workaround; Clay's app will not become Google-verified.
+
+If the error persists more than 24 hours after your admin marked the app as `Trusted`, confirm that they approved the app for the exact domain of the email account you're connecting (e.g., for `ryan@company.com`, the admin must approve for `company.com` specifically — not a different domain they manage). If it's still blocked after verifying the domain, contact support.
 
 ### What exact Microsoft permissions does sequencer require?
 

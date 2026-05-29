@@ -56,7 +56,7 @@ Use this action to update an object in HubSpot.
 **Inputs**
 
 -   **Object type:** The type of HubSpot object to update.
--   **HubSpot Object ID:** The unique identifier of the object to update.
+-   **HubSpot Object ID:** The unique identifier of the object to update. This field does not auto-populate — you must manually select the column containing your HubSpot Record IDs. Click the field and type `/` to open the column picker, then select the appropriate column.
 -   **Ignore blank values (Optional):** When enabled (default), blank values from Clay will be ignored in HubSpot — existing HubSpot values are left unchanged. When disabled, blank values from Clay will overwrite existing HubSpot field values.
 
 ### `Action` Create association

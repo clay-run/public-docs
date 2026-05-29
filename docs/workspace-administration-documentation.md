@@ -285,8 +285,10 @@ The typical setup process:
 ## **What happens when SSO is enabled**
 
 -   All users whose email address is on your verified domain are required to sign in through SSO. The Clay login page redirects those users to your SSO provider automatically.
--   Google OAuth sign-in is disabled for users on your domain.
+-   Google OAuth sign-in is disabled for users on your domain. Clicking the **Sign in with Google** button on the login page will return an error (`Google OAuth is disabled for this account`) — this button uses Google OAuth, which is a separate authentication path from SSO.
 -   SSO is configured at the email domain level — if your organization uses multiple Clay workspaces, users on your domain will be routed through SSO for all of them.
+
+**How SSO users should sign in:** On the Clay login page, type your **email address** into the email field and click **Continue** — do **not** click the `Sign in with Google` button. Entering your email triggers domain detection, which redirects you to your SSO provider automatically.
 
 ## **External collaborators (non-domain email addresses)**
 
@@ -294,7 +296,7 @@ SSO only applies to users whose email address matches your verified domain. Team
 
 ## **User provisioning**
 
-Clay does not automatically provision users through SSO. To onboard a new team member:
+Clay does not add users to your workspace automatically through SSO — there is no SCIM or domain-join provisioning for workspace membership. If an uninvited user with your email domain signs in via SSO, they will authenticate successfully and a Clay account will be created for them, but they will not be added to your enterprise workspace. To onboard a new team member:
 
 1.  Invite them to your Clay workspace first via `Settings` > `Team` > `+ Invite`.
 2.  Have them sign in using SSO — they will be authenticated and placed into the correct workspace.

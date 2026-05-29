@@ -2,7 +2,8 @@
 title: Formulas
 source_url: https://university.clay.com/docs/formula-generator
 description: Generate formulas with AI to transform your data. Includes how to
-  use today's date in a formula and keep date comparisons current automatically.
+  use today's date in a formula, pull error messages from action columns with
+  getCellErrorMessagePreview(), and keep date comparisons current automatically.
 last_synced: 2026-04-26T01:40:01.780Z
 ---
 
@@ -54,6 +55,7 @@ Clay formulas are powered by **Clayscript**, a JavaScript-based language that ev
 -   **Moment.js**: Use [Moment.js](https://momentjs.com) with `moment` for powerful date and time operations.
 -   **Excel and Google Sheets functions**: Clay supports hundreds of familiar spreadsheet functions like `VLOOKUP`, `IF`, `SUM`, `CONCATENATE`, and many more through the [FormulaJS](https://formulajs.info) library.
 -   **Column references**: When you reference a column like {{Email}}, Clay automatically passes the value from that column into your expression.
+-   **Clay utilities**: A set of Clay-specific helper functions under the `Clay.*` namespace for reading cell metadata — for example, `Clay.getCellErrorMessagePreview()` and `Clay.getCellStatus()`.
 
 ### FAQs
 
@@ -84,6 +86,25 @@ To keep a date comparison up to date without manually re-running the table each 
     moment({{Event Date}}).isAfter(moment({{Today API.dateTime}}).add(6, 'months')) ? "Yes" : ""
     ```
 
-3.  Schedule the HTTP API column to run daily: click the **⛭** icon in the bottom right of your table → **Run Settings** → **Re-run columns on a schedule** → **Only selected columns** → select your HTTP API column → **Day** → **Save changes**. Note: only enrichment/action columns are selectable here — formula columns cannot be directly scheduled, but the formula will update automatically as a downstream effect of the HTTP API column running. See [Scheduled columns](scheduled-columns.md) for full details.
+3.  Schedule the HTTP API column to run daily: click the **⛭** icon in the top toolbar → **Run Settings** → **Re-run columns on a schedule** → **Only selected columns** → select your HTTP API column → **Day** → **Save changes**. Note: only enrichment/action columns are selectable here — formula columns cannot be directly scheduled, but the formula will update automatically as a downstream effect of the HTTP API column running. See [Scheduled columns](scheduled-columns.md) for full details.
 
 Once the HTTP API column fetches a fresh date each day, any formula that references it automatically re-evaluates against the new value.
+
+### **How do I pull an error message from an action column into another column?**
+
+Use `Clay.getCellErrorMessagePreview()` in a formula column to capture the error text from any action (enrichment) cell that failed:
+
+```javascript
+Clay.getCellErrorMessagePreview({{Column Name}})
+```
+
+This returns up to **300 characters** of the error message — the same text shown when you hover over a failed cell. Messages longer than 300 characters are truncated at 297 characters and end with `"..."`.
+
+A few important notes:
+
+-   **The formula preview sidebar will show nothing** — this is expected. `Clay.*` functions are evaluated on the backend and cannot run in the preview. Save the column and the values will populate.
+-   **Only works for action (enrichment) columns that have errored.** Returns empty for formula columns, non-errored cells, and cells that have never run.
+-   **Only captures errors from cells run on or after April 28, 2026.** Errors from before that date return empty.
+-   **Error message text is not guaranteed to be stable** across Clay releases. If you need to branch on error *type* (not message text), use `Clay.getCellStatus()` instead for more reliable conditional logic.
+
+There is no `getCellErrorMessage()` function — the full un-truncated error message is not available in formulas. The 300-character preview is the only error message content accessible via formula.

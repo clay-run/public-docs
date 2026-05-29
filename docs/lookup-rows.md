@@ -97,7 +97,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 
 **Best practices**
 
--   Match on clean, normalized identifiers (domain/email domain beats company name)
+-   **Match on domain, not company name**: Company names vary across tables (e.g., "Zoom" vs "Zoom Video Communications"), so using company name as the match key often returns unexpectedly low counts — sometimes just 1 match per company even when many records exist. Use a company domain (e.g., `zoom.us`) as your match key on both sides for accurate, reliable counts.
 -   **Ensure the target column type matches your lookup value**: A **Number**-type target column cannot match non-numeric text — matching a Number-type column against text values (IDs with letters, dashes, blanks, or "N/A") may return unexpected results or show a type mismatch error. Change the target column to **Text** type when your lookup values are text identifiers.
 -   Remember the UI shows up to 10 matches, but the count reflects all matches found
 -   Only use `Add as column` for the few results you actually need to avoid clutter and keep tables readable
@@ -120,6 +120,7 @@ You can also use `Lookup multiple rows` within the same table to find duplicates
 -   Detect duplicates or repeat submissions (e.g., multiple form fills from the same company)
 -   Count related records inside one table (e.g., "how many people share this domain?")
 -   Prevent duplicate enrichment (e.g., only enrich a company the first time it appears; skip repeats)
+-   Consolidate paired or related rows (e.g., pull a duplicate account's ID or attributes into the master record row) — run a self-lookup on the shared group key (such as a duplicate set number or shared parent ID) to find all rows in the group, then use `Add as column` or a formula column to extract the specific fields you need from the matched rows
 
 **Best practices**
 
