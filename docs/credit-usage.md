@@ -84,6 +84,16 @@ The credit usage dashboard is organized into tabs, each covering a different sli
 -   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT, Claude, or Glean, broken down by user. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
 -   **API** — shows programmatic spend generated through Clay's API and Exportly, broken down by user. Like MCP, unattributable spend appears as `Unattributed`.
 
+### Reconciling your credit balance
+
+A few things to know when comparing numbers across the dashboard:
+
+**Each tab shows that channel's spend only.** The Workbooks, Integrations, Signals, MCP, and API tabs do not overlap — each one tracks a separate slice of your workspace activity. To calculate your total workspace credit consumption, sum the top-level totals across all tabs.
+
+**The header popup reflects your remaining balance against your plan's credit allocation.** When you see "X / Y credits available," Y is the credit amount from your current plan (for example, 1.8M for an annual Pro plan) and X is your remaining balance. The implied consumed figure (Y − X) shows how many of your *plan credits* have been spent.
+
+**Extra credits create a gap between the header math and your tab totals.** If your workspace has received credits beyond the plan subscription — for example, referral rewards, admin-added goodwill credits, or courtesy top-ups — those credits are added directly to your balance. When those extra credits are spent on enrichments, the usage appears in the relevant tabs (e.g., Workbooks). However, the plan-based header math (Y − remaining) does not account for those bonus credits, so it will understate actual total consumption. The difference between your tab totals and the header math is typically equal to the extra credits your workspace received and spent.
+
 ## Credit estimates before running
 
 Clay provides transparent cost estimates before you run enrichments or actions in your tables. This helps you understand and manage your credit usage.
