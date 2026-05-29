@@ -41,7 +41,7 @@ The **People Filters** section controls which new hires get added to your table.
 
 The **Job title** filter lets you specify job title keywords and how they're matched against a hire's title. Use the dropdown next to the field to select a match mode:
 
--   **Is similar to** _(default)_ — fuzzy matching that finds synonyms and common variations. "VP of Sales" also returns "Head of Sales." Best for broad coverage with minimal setup.
+-   **Is similar to** _(default)_ — uses AI-powered expansion to find synonyms and equivalent role names. For example, "CEO" also matches "Chief Executive Officer." Best for broad coverage with minimal setup.
 -   **Contains** — returns hires whose title contains your keyword phrase as a whole-word match. "Engineer" matches "Software Engineer" and "Senior Engineer" but not "Engineering Manager" or "Engineering Tech." More precise than "is similar to."
 -   **Is exactly** — returns only hires whose title exactly matches one of your keywords. Use this only when you need very precise title filtering.
 
