@@ -60,3 +60,16 @@ After importing Find People results, use Clay's enrichments to add contact infor
 **Work email:** In your table, click `Add enrichment` and select `Work Email`. This pre-built waterfall searches multiple email providers in sequence. For full setup details, including how credits are charged across providers, see [Work Email waterfall](work-email-waterfall.md).
 
 **Mobile phone:** To find mobile phone numbers, click `Add enrichment`, search for `Phone number`, and select the waterfall option under **Waterfalls**. The phone number waterfall cascades through multiple providers in sequence — providers that return no result are skipped at no credit cost, so you only pay when a provider finds a number. For provider recommendations by region, see [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md).
+
+## Importing from a Sales Navigator search URL
+
+If you have a saved Sales Navigator search and want to pull those results into Clay, use the **Find people from external search** source — not the standard Find People source described above.
+
+1.  In a workbook, click `+ Add` at the bottom.
+2.  Search for `external search`.
+3.  Select **Find people from external search**.
+4.  Paste your Sales Navigator people search URL (e.g., `https://www.linkedin.com/sales/search/people/...`).
+5.  Optionally set a **Max Count** (default and maximum is 2,500 — this is a Sales Navigator limit).
+6.  Click **Import to new table**.
+
+**Note:** This source requires a Sales Navigator **people search URL** (`https://www.linkedin.com/sales/search/people/...`), not a saved lead list URL (`linkedin.com/sales/lists/people`) or a saved search URL (those containing `savedSearchId`). If you have a saved Sales Navigator lead list, recreate the equivalent filters as a fresh people search on Sales Navigator and copy that URL instead. Each imported result costs 1 Clay credit.

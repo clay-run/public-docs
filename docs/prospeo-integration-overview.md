@@ -13,11 +13,12 @@ Find work emails and enrich person details using name, domain, or LinkedIn.
 
 [Prospeo](https://www.clay.com/integrations/data-provider/prospeo) in Clay allows you to find work email addresses and enrich person details using a person's name, company domain, or LinkedIn URL.
 
-There are three actions you can perform with [Prospeo](https://www.clay.com/integrations/data-provider/prospeo):
+Clay's Prospeo integration includes the following actions:
 
 -   Find Work Email
 -   Find Email Addresses Associated with a Domain
 -   Find Work Email and Enrich Person from LinkedIn URL
+-   Find people at company
 
 We'll cover how to connect Clay to Prospeo, then we'll go over each action that is available with Prospeo.
 
@@ -76,7 +77,7 @@ You can use either the Clay-managed Prospeo account or bring your own key.
 If you use the Clay-managed Prospeo account you will be charged at 2 credits per enriched cell.
 
 **Step 2: Select Required and Optional Setup Inputs**  
-To find the email addresses associated with a given domain using Prospeo’s email database, you will need to provide the domain and email type which you want to receive (generic, professional). Even though these are marked as optional, it’s best advised to enter both fields.
+To find the email addresses associated with a given domain using Prospeo's email database, you will need to provide the domain and email type which you want to receive (generic, professional). Even though these are marked as optional, it's best advised to enter both fields.
 
 **Step 3 (Optional): Select Auto-update**  
 By default, Prospeo will auto-update the integration every 24 hours. Make sure to toggle this step off if you do not want to auto-update. However if you do so, you might run into stale data problems.
@@ -100,3 +101,27 @@ By default, Prospeo will auto-update the integration every 24 hours. Make sure t
 
 **Step 4 (Optional): Select Conditional Run Criteria**  
 If you want to only run this enrichment under set circumstances, you are able to input formulas where the column runs only if the formula is true. Learn more about conditional runs in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101#:~:text=Conditional%20runs%20\(which%20make%20use,personal%20emails%20for%20all%20rows\).)
+
+## `Action` Find people at company
+
+The **Find people at company** action lets you search for contacts at a specific company by domain, with optional filters for job title, seniority, and department.
+
+**Note:** A maximum of 25 contacts are returned per run — this is a cap set by the Prospeo API, not a Clay limitation. If you need more contacts per company, use **Find People at These Companies** (under Tools or as a source) instead. It uses Clay's own search index and supports configurable limits up to 100 contacts per company.
+
+**Step 1: Choose the Prospeo account you want to use**  
+You can use either the Clay-managed Prospeo account or bring your own key.  
+You will be charged **0.3 credits per person found**.
+
+**Step 2: Select Required and Optional Setup Inputs**
+
+Required:
+
+-   **Company domain:** The domain of the company to search (e.g., `clay.com`).
+
+Optional:
+
+-   **Company name:** The name of the company, used to narrow results alongside the domain.
+-   **Job titles to include:** Only return people whose job title matches one of these values. Enter all variations you need (e.g., both "VP of Sales" and "Vice President of Sales").
+-   **Job titles to exclude:** Exclude people whose job title matches one of these values.
+-   **Seniorities:** Filter by seniority level (e.g., Director, VP, C-Level).
+-   **Departments:** Filter by department (e.g., Sales, Engineering, Marketing).
