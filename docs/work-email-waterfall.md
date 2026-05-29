@@ -22,6 +22,8 @@ You only pay credits for the provider that finds a match, making it one of the m
 3.  Choose between `Quick setup` and `Full configuration`
 4.  Map your input columns and click `Save`.
 
+**Note:** Most providers need at minimum a **full name** and **company domain** for each row — make sure those fields are populated in your table before running. Providing a LinkedIn URL or company name as additional inputs gives more providers enough data to run.
+
 The Work Email waterfall includes two advanced settings — `Infer Email` and `Validation` — that work together to give you more control over credit efficiency and result quality.
 
 `Infer Email` attempts a free email guess before calling any paid provider, while `Validation` settings let you define what counts as a valid result and when the waterfall should stop searching. Both are available in `Full configuration` mode.
@@ -79,6 +81,19 @@ The `Validation` section in `Full configuration` controls how the waterfall eval
 
 ## FAQs
 
+### How do I find an email for a specific contact?
+
+Make sure the contact's row has the required input data (full name and company domain at minimum). Then select the Work Email cell on that row, right-click, and choose **Run 1 cell**. The waterfall checks providers in sequence and stops as soon as one returns a valid email. For more ways to run enrichments on a subset of rows, see [Run progress](run-progress.md).
+
+### What does it mean if no email is found?
+
+If the cell shows no result, click into it to see which providers were tried and what each returned. Common reasons no email surfaces:
+
+-   The row is missing required input data. Check that the contact's full name and company domain are populated.
+-   None of the providers in your waterfall have email data for this person. You can edit the waterfall sequence to add more providers.
+-   The providers ran but returned results that failed validation. Try a less strict validation strategy, or check the individual provider columns (enable them in waterfall settings) to see what was returned.
+-   Your workspace ran out of credits mid-waterfall. When credit limits are hit, remaining providers in the sequence don't execute — click into the cell to see how far the waterfall got before stopping. See [Actions and data credits](actions-data-credits.md) to add more credits.
+
 ### Which email pattern should I use?
 
 The best pattern depends on the companies in your dataset. `first.last@domain.com` is the default because it's the most common format across industries. For more specific datasets, test a small sample (~10 rows) with different patterns to find what performs best before running at scale.
@@ -86,6 +101,10 @@ The best pattern depends on the companies in your dataset. `first.last@domain.co
 ### Does Infer Email cost credits?
 
 No. `Infer Email` is completely free. The validation step _does_ cost Clay credits, but it is cheaper than running the waterfall without it.
+
+### How much does the Work Email waterfall cost per email?
+
+You only pay for the provider step that successfully finds an email — providers that run and return nothing are not charged. Total credit cost per matched email depends on which provider in the sequence finds a result first: if the first provider succeeds, you pay that provider's cost; if the waterfall tries two or three providers before finding a valid email, you pay for each attempt. Credit costs vary by provider and your plan tier. To reduce per-email spend, enable `Infer Email` — it adds a free first step that can skip paid providers entirely when the naming pattern matches.
 
 ### What happens if Infer Email guesses the wrong email?
 

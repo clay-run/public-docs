@@ -43,7 +43,7 @@ To normalize:
 
 **Step 1:** Input the company name you want to normalize
 
-**(Optional) Step 2:** Enable the ‘Normalize Case’ option to automatically transform company names into Title Case (Ex. ‘SALESFORCE’ to ‘Salesforce’)
+**(Optional) Step 2:** Enable the 'Normalize Case' option to automatically transform company names into Title Case (Ex. 'SALESFORCE' to 'Salesforce')
 
 **Step 3:** Configure run settings.
 
@@ -61,7 +61,7 @@ To normalize:
 
 **Step 1:** Input the phone number you want to normalize
 
-**Step 2 (Optional):** Enter a country code to include in the formatted phone number. If no country code is provided or included in the input number, it will default to “US.”
+**Step 2 (Optional):** Enter a country code to include in the formatted phone number. If no country code is provided or included in the input number, it will default to "US."
 
 **Step 3:** Configure run settings.
 
@@ -86,3 +86,25 @@ By default, new rows within your Clay table will automatically be formatted. Lea
 To run enrichment only under specific conditions, use formulas that trigger the column when the formula is true. Learn more about AI formulas in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101).
 
 **Step 3:** Run your enrichment to remove extra whitespace from text.
+
+### `Action` Normalize and Deduplicate a List
+
+Remove duplicate values from a list of items within a single cell, with automatic normalization applied before comparison.
+
+**Note:** This enrichment operates on the contents of a single cell — for example, an array of domains or email addresses stored in one row. It does **not** compare values across rows. To remove duplicate rows from your table based on a column's values, use the [column-level Dedupe option](https://university.clay.com/docs/table-columns-overview) instead.
+
+Normalization trims leading/trailing whitespace and converts all string values to lowercase before checking for duplicates, so `Dyson.com` and `dyson.com` are treated as the same value.
+
+To normalize and deduplicate a list:
+
+**Step 1:** Input the list of values you want to normalize and deduplicate. This can be an array or a comma-separated string (for example, a multi-value cell).
+
+**(Optional) Step 2:** Enable **Remove empty values** to strip blank entries before returning the list. This setting is on by default.
+
+**Step 3:** Configure run settings.
+
+By default, new rows within your Clay table will automatically run this enrichment. Learn more about auto-update in [this brief guide](https://docs.clay.com/en/articles/9642165-auto-update-and-auto-dedupe-table).
+
+To run enrichment only under specific conditions, use formulas that trigger the column when the formula is true. Learn more about AI formulas in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101).
+
+**Step 4:** Run your enrichment. The output includes a **Deduped List Object** (the unique values as an array) and a **Deduped String** (the unique values joined with commas).

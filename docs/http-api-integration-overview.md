@@ -183,6 +183,7 @@ Sculptor understands common API patterns and can guide you through authenticatio
 -   **Review before running**: Verify the AI-generated configuration makes sense.
 -   **Test first**: Run on a single row before processing your entire table.
 -   **Save as template**: After successful setup, save your configuration for future use.
+-   **Throttle request speed if needed**: If the target API enforces rate limits (e.g. Apollo, HubSpot), switch to the **Configure** tab and scroll to the **Custom rate limit** section to limit how many requests per time window Clay sends. See Step 7 in the manual configuration section below for details.
 
 ## Option B: Manual configuration
 
@@ -233,6 +234,15 @@ In Clay's body editor, column values appear as **colored chips** (dynamic tokens
 If you type `/Column Name` as literal text without using the picker, Clay sends the string `/Column Name` to your API — **not** the column's actual value. For example, typing `/contact_status` sends `"/contact_status"` to the receiving server instead of the real value (e.g., `"ready"`). This is the most common cause of unexpected literal strings appearing in API payloads.
 
 **Number chips and type precision**: A chip wrapped in quotes (e.g., `"count": "/Score Column"`) sends the value as a string — your server receives `"3"`, not `3`. Remove the surrounding quotes if your backend requires a native number type.
+
+**Token mode vs. formula mode**
+
+The Body editor has two modes, toggled via the ⚙️ gear icon in the top-right corner of the editor:
+
+-   **Token mode** (default): Write your JSON structure directly and use `/` to insert column values as colored chip references. Best for most use cases.
+-   **Formula mode**: Write any Clay formula expression (e.g., `Concatenate(...)`, `If(...)`) that returns a valid JSON string. Clay evaluates the formula before sending the request. Switch to this mode when you need logic that can't be expressed with chip references alone.
+
+**⚠️ Warning:** Typing formula syntax in token mode without switching to formula mode treats it as literal JSON text — causing a "Failed to parse body input" error at runtime.
 
 **Example body configuration:**
 
@@ -307,18 +317,23 @@ data.user.email
 
 **Benefits:** Faster processing, cleaner data, easier to work with.
 
-### Step 7: Rate limiting
+### Step 7: Custom rate limit
 
-Control how many API requests you can send within a given time frame. Check your API documentation for rate limits.
+Throttle how many requests Clay sends to the API within a given time window. This is a **column-level** setting — it applies uniformly to every row the column processes. Open the column settings and scroll to the **Custom rate limit** collapsible section on the **Configure** tab.
 
-**Example configuration:**
+**Fields:**
+
+-   **Request Limit** — the maximum number of requests allowed in the time window.
+-   **Duration (in ms)** — the length of the time window in milliseconds (1 to 900,000 ms, i.e. up to 15 minutes).
+
+**Constraint:** The rate limit must average at least 1 request per second — for example, `Request Limit: 1, Duration: 1000 ms` is the slowest setting allowed.
+
+**Example — 100 requests per minute:**
 
 ```javascript
-Request limit: 10
-Duration (ms): 1000
+Request Limit: 100
+Duration (ms): 60000
 ```
-
-**This means:** 10 requests per second
 
 ### Step 8: Remove empty fields from request
 
@@ -471,14 +486,14 @@ Before running on your entire table:
 -   Use Clay's built-in authentication features.
 -   Store credentials securely.
 
-### ✓ Configure rate limits
+### ✓ Set a custom rate limit
 
-If the API documentation specifies limits, configure them in your enrichment.
+If the API documentation specifies rate limits, configure the **Custom rate limit** setting on the **Configure** tab of your HTTP API column. This is a column-level setting — it applies uniformly to all rows. The rate limit must average at least 1 request per second, and the duration can be up to 900,000 ms (15 minutes).
 
 **Example:** 100 requests per minute
 
 ```javascript
-Request limit: 100
+Request Limit: 100
 Duration: 60000 ms
 ```
 
@@ -563,6 +578,12 @@ Ensure keys are separated by commas. Watch for extra spaces, colons, and bracket
 **4\. Verify correct API key**
 
 Some providers have multiple API keys for different endpoints. Example: Apollo has separate keys for different APIs.
+
+**5\. Formula expression entered in token mode**
+
+If you used a Clay formula (e.g., `Concatenate()`, `If()`) to build the JSON body and the editor is in its default **token mode**, Clay treats the formula syntax as literal JSON — causing a parse error.
+
+**Fix:** Click the ⚙️ gear icon in the Body editor and select **Formula**. This switches to a full Clay formula editor where your expression is evaluated before the request is sent. Alternatively, remove the formula and rewrite the body in token mode using `/` to insert column values as chip references — for example, `{"email": "/Lead's Email", "score": /Lead Score}`.
 
 ### Hidden characters in API documentation
 

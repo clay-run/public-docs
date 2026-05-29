@@ -127,6 +127,15 @@ Yes. In your source settings, set **Run this source** to **On a schedule** and c
 
 **Important:** Only records returned by the SOQL query during a given run are created or updated. If a record is not returned — for example, because it no longer satisfies your `WHERE` clause — it will not be updated, and the row in your Clay table will retain its previous values. See below for details.
 
+### If I update my SOQL query to add new fields, will existing rows get those fields?
+
+Not by default. When you update your SOQL query to add fields to the SELECT clause, Clay will only bring in net-new records — accounts not already matched by your unique ID. Existing rows won't be updated with the new field data.
+
+To populate the new field on existing rows, you have two options:
+
+-   **Enable "Update existing rows"** in your source settings. When this toggle is on, the next source run re-imports all records returned by the query — including existing rows — and populates them with the latest field data. Find this toggle in the source column settings or the schedule configuration.
+-   **Add a Salesforce Lookup record enrichment column** targeting the specific field you want. This fetches only that field for each existing row without re-running the full import, giving you more surgical control over which rows get updated.
+
 ### Why aren't my existing rows being updated even though "Update existing rows" is on?
 
 The most common cause is that the record is no longer returned by your SOQL query. **"Update existing rows" only applies to records that the query actually returns during each run** — it does not re-process all rows already in your table.

@@ -81,8 +81,11 @@ You can permanently delete your Clay account through your account settings. Befo
 
 **Requirements:**
 
--   You must be a **member** (not admin) of all your workspaces, OR
+-   You must be a **member** (not admin) in all your workspaces, OR
+-   You must be an **admin** in a workspace where at least one other admin exists, OR
 -   You must be the **only member** in your workspace
+
+If you are the sole admin of a workspace with other members or pending invites, you must transfer admin rights to another member, remove remaining members, or cancel pending invites before deleting your account.
 
 **To delete your account:**
 
@@ -98,12 +101,22 @@ You can permanently delete your Clay account through your account settings. Befo
 -   Your account email is updated to a deleted variant.
 -   For any workspaces affected by your account deletion, workspace admins will receive email notifications.
 -   Your private app account and Stripe customer information are deleted to prevent unexpected charges.
+-   You will receive an email confirmation once your account has been deleted.
+-   **If you want to sign up again with the same email address, you must wait 7 days after deletion.** If you need to re-register sooner, contact Clay support via the in-app chat to request an early clearance.
 
 **Important:** Account deletion is permanent and cannot be undone. While your data is marked for deletion and critical billing/authentication records are removed immediately, full data removal from our database may take additional time.
 
 # **Workspace settings**
 
 Workspace settings give you control over key aspects of your workspace, such as its name, profile picture, and billing email. These settings ensure your workspace is easily identifiable and that billing communications reach the correct contact. Below are the steps for updating key workspace details.
+
+## **Creating a new workspace**
+
+Creating an additional workspace is not available through in-app settings for most accounts. To create a new workspace, sign up using a **different email address** at [app.clay.com](https://app.clay.com) — this starts a new workspace where you are the admin from day one.
+
+You do not need to leave any workspaces you're already a member of. Your existing workspace memberships stay intact, and each workspace is independent with its own tables, credits, and billing.
+
+**Note for agencies and users managing multiple client workspaces:** Some accounts have access to an **"Add workspace"** option directly in the workspace switcher. If you need to create multiple workspaces under the same account, contact Clay support to check whether this can be enabled for you.
 
 ## **Switching between workspaces**
 
@@ -272,8 +285,10 @@ The typical setup process:
 ## **What happens when SSO is enabled**
 
 -   All users whose email address is on your verified domain are required to sign in through SSO. The Clay login page redirects those users to your SSO provider automatically.
--   Google OAuth sign-in is disabled for users on your domain.
+-   Google OAuth sign-in is disabled for users on your domain. Clicking the **Sign in with Google** button on the login page will return an error (`Google OAuth is disabled for this account`) — this button uses Google OAuth, which is a separate authentication path from SSO.
 -   SSO is configured at the email domain level — if your organization uses multiple Clay workspaces, users on your domain will be routed through SSO for all of them.
+
+**How SSO users should sign in:** On the Clay login page, type your **email address** into the email field and click **Continue** — do **not** click the `Sign in with Google` button. Entering your email triggers domain detection, which redirects you to your SSO provider automatically.
 
 ## **External collaborators (non-domain email addresses)**
 
@@ -281,7 +296,7 @@ SSO only applies to users whose email address matches your verified domain. Team
 
 ## **User provisioning**
 
-Clay does not automatically provision users through SSO. To onboard a new team member:
+Clay does not add users to your workspace automatically through SSO — there is no SCIM or domain-join provisioning for workspace membership. If an uninvited user with your email domain signs in via SSO, they will authenticate successfully and a Clay account will be created for them, but they will not be added to your enterprise workspace. To onboard a new team member:
 
 1.  Invite them to your Clay workspace first via `Settings` > `Team` > `+ Invite`.
 2.  Have them sign in using SSO — they will be authenticated and placed into the correct workspace.
@@ -412,6 +427,10 @@ Clay offers three plans. For a full comparison of features and pricing, visit ou
 -   **Actions and data credits:** Custom
 -   **Benefits:** Volume discounts on data credits, dedicated Growth Strategist, managed onboarding, data warehouse integrations, bulk enrichment, SSO, RBAC, and more
 
+### **Workspace row limit**
+
+All workspaces have a global row limit of **10 million rows** across all tables. This cap counts rows in every table in your workspace, regardless of plan. If you reach this limit, you may see the error **"Your Subscription Does Not Allow Any More Records."** Permanently deleting unused tables and rows will reduce your workspace row count.
+
 ## **Managing your plan**
 
 To upgrade or downgrade your Clay workspace plan:
@@ -442,6 +461,8 @@ Clay offers a 14-day free trial with 1,000 data credits, giving you access to ke
 **Note:** Phone number enrichments are not available during the trial period. To access this feature, upgrade to a paid plan.
 
 If your team wants to do a trial, each team member can create their own trial account to explore Clay independently.
+
+Trial tables can hold up to **1,000 rows each**. The table view also displays only the first **50 rows** — rows beyond that are blurred in the UI until you upgrade to a paid plan.
 
 # **Referrals**
 

@@ -36,7 +36,7 @@ The platform automatically updates LinkedIn connections every week, ensuring you
     -   If you have your own account, click `+ Add account` and complete authentication. Otherwise, use the Clay provided key
         -   When using the Clay key, network mapping will be based on the company domain you provide.
 
-**Note:** When connecting to a company domain that no Clay user has previously connected to, it may take a few hours to establish the connection. During this time, you may see an “awaiting callback” status.
+**Note:** When connecting to a company domain that no Clay user has previously connected to, it may take a few hours to establish the connection. During this time, you may see an "awaiting callback" status.
 
 ### `Action` Find warm intros to person
 
@@ -62,6 +62,18 @@ Use this action to identify and score relationships between your company and a t
 
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
+
+## Expanding connectors into individual rows
+
+Each Swarm enrichment result returns a `Relationships` array. Within each relationship, a `Connections` list holds every person in your network who can facilitate an introduction — each with their name, LinkedIn URL, current company, title, and connection strength score. Up to 10 connections per relationship are returned.
+
+A single target person (or company contact) will often have **multiple connectors** in this list. To give each connector their own row so you can enrich or reach out to them individually, use **Send row for each item in a list** in [Send Table Data](https://university.clay.com/docs/send-table-data):
+
+1.  Click on the Swarm result cell to open the Cell details panel.
+2.  Hover over the **Connections** section and click **Take action on list → Write each item to new row in other table**.
+3.  Choose your destination table and select which connector fields to send (for example, `Connector Name`, `Connector LinkedIn URL`, `Connector Current Company Name`).
+
+**Common mistake:** If you manually configure Send Table Data and choose a sub-field like `Connector Name - Connections - Relationships`, only one connector is sent per row because that path points to a single indexed item, not the full list. Always select the **Connections** array as the list source to flatten all connectors into separate rows.
 
 ## Best practices
 

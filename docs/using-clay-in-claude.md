@@ -16,6 +16,7 @@ The Clay connector in Claude lets you find people, enrich contacts, and draft pe
 
 1.  Go to the [Claude Connectors page](https://claude.com/connectors/clay) to connect Clay to your account. _Note: If you're on a Claude Enterprise plan, an admin must add the Clay connector before you can use it._
     -   If you have an existing Clay account, you'll connect immediately. If you're new to Clay, an account will be created for you during setup.
+    -   If your admin has invited you to a team workspace, accept the invite email first before connecting here — connecting before accepting the invite will create a personal workspace instead of routing you into the team workspace.
     -   You'll receive 500 free Clay credits when you connect for the first time.
 2.  In any Claude conversation, ask Claude to find people or companies—the Clay connector will activate automatically.
 3.  Ask Claude to find people, research accounts, or enrich contacts using natural language. For example:
@@ -56,7 +57,7 @@ Use Clay to gather deep intelligence on target companies—tech stack, funding, 
 
 After gathering context on companies and contacts, use Clay to draft personalized emails. Clay uses the research and enrichment data you've collected to create relevant, context-driven outreach that resonates with your prospects.
 
-**Note:** Clay uses the research and enrichment data you’ve collected to create relevant, context-driven outreach. Email copy goes beyond surface-level personalization by pulling in concrete details like product initiatives, hiring focus, public commentary, and leadership changes.
+**Note:** Clay uses the research and enrichment data you've collected to create relevant, context-driven outreach. Email copy goes beyond surface-level personalization by pulling in concrete details like product initiatives, hiring focus, public commentary, and leadership changes.
 
 **Example prompts:**
 
@@ -141,7 +142,7 @@ Yes. Ask _"What functions do you have?"_ or _"What workflows has RevOps built fo
 
 **Does Clay work with Claude Code?**
 
-Yes. Once you connect Clay via Claude’s connector system at `claude.com/connectors/clay`, it will also work in Claude Code.
+Yes. Once you connect Clay via Claude's connector system at `claude.com/connectors/clay`, it will also work in Claude Code.
 
 **When I run an action in Claude, does it count as a Clay action?**
 

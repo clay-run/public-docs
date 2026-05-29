@@ -13,6 +13,8 @@ Efficiently process and enrich large volumes of data.
 
 Auto-delete is a powerful feature designed to help you process and enrich large volumes of data efficiently. It allows you to bypass the standard row limit by automatically processing incoming data, enriching it, and then forwarding it to a designated destination before deleting the original entries from the table. This ensures your tables remain manageable while continuously handling new data.
 
+**Tip:** You can receive advance warning before your table reaches the row limit by enabling the **Row count limit** alert in [Table alerts](table-alerts.md). The default threshold is 45,000 rows, and notifications can be delivered via email or Slack. Table alerts are opt-in and configured per table — no notification is sent automatically when a table hits the 50,000-row limit.
+
 **Note that auto-delete does not apply to CSVs, including bulk uploads at high volumes.**
 
 ## **Enable auto-delete**
@@ -39,10 +41,10 @@ Not all source types support fully bypassing the 50,000 record import limit. Onl
 
 -   **Webhooks**
 -   **Send table data**
--   **Signal sources** (e.g., web intent, job posts, LinkedIn mentions, and other signal-based sources)
+-   **Signal sources** (e.g., web intent, job posts, news & fundraising, and other signal-based sources)
 
 All other source types — such as CRM integrations, Snowflake, and database connections — will continue accumulating toward the 50,000 limit even when auto-delete is enabled. Auto-delete will still delete rows from the table for those sources, but the underlying source record count is not cleared.
 
 **Configuration warning:** When enabling auto-delete on a table that includes incompatible sources, Clay displays a warning: "This feature only works for webhook, send table data, and signal sources. All other source types will stop importing after 50,000 records, even with auto-delete enabled."
 
-**Incompatible source banner:** If auto-delete is already enabled and your table has one or more incompatible sources, a warning banner appears on the table: "Auto-delete is on with a source that isn't compatible." The banner lists each incompatible source with its accumulated record count (e.g., 12,000 / 50,000) so you can monitor how close each source is to its limit.
+**Incompatible source banner:** If auto-delete is already enabled and your table has one or more incompatible sources, a warning banner appears on the table. The banner title reads "Auto-delete is on with a source that isn't compatible." when exactly one incompatible source is present, or "Auto-delete is on with sources that aren't compatible." when multiple incompatible sources are present. The banner highlights the source closest to the limit with a description like: "[source name] has processed 12,000 of 50,000 records maximum." A details view lists all incompatible sources with their counts in the compact format `12,000 / 50,000`. For tables with incompatible sources, you will need to manually delete rows to stay within the 50,000-record limit — auto-delete cannot prevent the source from hitting the cap for these source types.

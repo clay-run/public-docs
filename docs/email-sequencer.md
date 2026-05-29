@@ -11,6 +11,8 @@ Run outbound campaigns directly from your table.
 
 Clay's email sequencer lets you run outbound email campaigns directly from your tables. This guide covers setup, campaign configuration, sending behavior, analytics, and troubleshooting tips.
 
+**Currently in beta.** If you don't see the `Campaigns` section in your Clay workspace, contact support to request access.
+
 ## Connecting Google Workspace via OAuth
 
 **Note:** This setup requires Google Workspace admin access and only needs to be done once per domain. Changes can take up to 24 hours to apply.
@@ -36,11 +38,11 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 3.  In the `Setup` tab, you can set:
     -   `Lead email address`: We automatically detect email address columns, but confirm this before proceeding.
     -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links.
-4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead replies (excluding out-of-office replies, which we detect and work around).
+4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead sends a real reply. Out-of-office (OOO) auto-replies are detected via AI — the sequence pauses and automatically resumes once Clay determines the lead is back (based on the return date in the OOO, if provided).
     -   Toggle `Preview` mode to see real data from your source table in the message template
     -   Within each message, use `/` to access features such as:
-        -   `Clean variable`: Reference synced lead data with safe fallbacks and optional formatting.
-        -   `Sender variable`: Reference identifying information from the sending account
+        -   `Clean variable`: Reference synced lead data with safe fallbacks and optional formatting — use this to personalize emails with recipient-specific information like the lead's name or company (e.g., type `/` then select `first_name` to open with `Hi [first name],`).
+        -   `Sender variable`: Reference identifying information from the sending account (e.g., your name, title, or company).
         -   `AI snippet`: Generate copy automatically using lead data.
         -   `Spintax variable`: Choose a random value from a list
         -   `Rows from [Table]`: Directly reference synced data (Clean variables are recommended to handle empty values safely).
@@ -105,7 +107,7 @@ Special sequencer enrichments available in the table include:
 
 You can view and manage all campaigns from the `Campaigns` tab on your home screen. This view summarizes every campaign in your workspace and shows you the workbook it belongs to.
 
-In the Campaigns homepage, you can access the `Global inbox` which centralizes replies across all campaigns, giving you one place to review and manage every response. `Global analytics` shows you how all of your campaigns are performing.
+In the Campaigns homepage, you can access the `Global inbox` which centralizes replies across all campaigns, giving you one place to review and manage every response. `Global analytics` shows you how all of your campaigns are performing; the bottom of the page includes a per-inbox breakdown of bounce rates, which you can use to spot inboxes where deliverability may be declining. For deeper domain health monitoring (sender reputation, DNS authentication), external tools such as [SenderScore](https://senderscore.org/), [MX Toolbox](https://mxtoolbox.com/), or [Google Postmaster Tools](https://postmaster.google.com/) are recommended.
 
 Check out the `Email accounts` tab to manage your fleet of sender accounts and `Global blocklist` to add or remove entries.
 
@@ -148,6 +150,16 @@ Our sequencer is powered by Smartlead, but everything runs on Clay credits. You 
 ### Why does my campaign only show 10 leads after launching?
 
 When a campaign is created, the `Sync leads to campaign` column pushes 10 rows so you can preview and configure your messages. After launching, the rest of your source table is not pushed automatically. To add all remaining rows, run the `Sync leads to campaign` column manually — click the run button in the column header.
+
+### My "Sync leads to campaign" column is showing a warning. What does it mean?
+
+This usually means the Clay table that the column points to was deleted. Hover over the warning icon to confirm — the error reads *"Destination table was deleted. Please either restore that table from the trash, or create a new Send table data column."*
+
+To fix it, open `Trash` from the bottom-left of your workspace sidebar, find the deleted table, and click `Restore`. The column will reconnect once the table is back.
+
+If the table was permanently deleted from Trash and can't be recovered, create a new campaign: click `Tools` → `Exports` → `Create Clay email campaign` in your source table.
+
+Deleting a campaign through the column header's settings (the **Delete campaign** option) is permanent — it removes the campaign from the sending platform and all associated columns with no recovery option.
 
 ### I updated my campaign, but the changes didn't save.
 
@@ -201,9 +213,27 @@ No, only business accounts (Google Workspace, Microsoft Outlook) are supported f
 
 Often errors in the app are transient. We're calling Smartlead APIs under the hood, and sometimes the request has an issue—usually you can retry the operation and it will succeed (especially if it says a 502 error code). If you keep running into an error, contact support.
 
-### How do I sync campaign data to HubSpot?
+### How do I write campaign event data back to my CRM (HubSpot or Salesforce)?
 
-You can use our existing table integration in the campaign events table to push updates into HubSpot.
+Because the campaign events table is a standard Clay table, you can add CRM enrichment columns directly to it to log activity back to HubSpot, Salesforce, or any other connected CRM. There is no separate native sync — you configure it column by column using Clay's standard CRM actions. Here are best practices for a clean, reliable write-back:
+
+1.  **Filter by event type before writing.** Not every event needs to hit your CRM. Add an `Only run if` condition to your CRM action column to trigger write-backs only on meaningful events (e.g., replies or bounces) — this keeps your CRM clean and avoids noise from every send.
+
+2.  **Look up the contact first.** Before creating or updating a record, use a `Lookup record` action (by email) to find the existing CRM contact. This prevents duplicates and ensures the activity is logged to the right record. For Salesforce contact or lead records, `Upsert object` can find and update in a single step (requires an external ID field on the Salesforce object).
+
+3.  **Map your key fields.** Recommended mappings from the events table to your CRM:
+    -   `Event Type` → Activity Type / Task Subject
+    -   `Event Timestamp` → Activity Date
+    -   `Campaign Name` → Campaign / Custom Field
+    -   `Reply Body` → Notes / Description
+
+4.  **Use Create record (not Update) when logging activity events.** Each event should become its own activity entry in your CRM — this preserves the full engagement history. Updating a single record would overwrite prior events.
+
+5.  **Account for reply delays.** Reply events can appear in the campaign events table with a [15–30 minute delay](#campaign-events-table), so avoid automations that depend on real-time reply data.
+
+6.  **Enable Auto-run for ongoing campaigns.** Turn on `Auto-run` on your CRM action column so new events continuously trigger write-backs as the campaign runs — otherwise, the column only processes rows that are manually triggered.
+
+7.  **Test before scaling.** Turn off `Auto-run` and manually run 5–10 rows first to validate your field mappings before enabling full automation.
 
 ### How do unsubscribes work in the sequencer?
 
@@ -233,6 +263,12 @@ These are disclosed when you add your account via OAuth. We request: full Gmail 
 
 Follow the instructions in the modal and have your Google Workspace admin set our Clay sequencer app to `Trusted`. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the Clay sequencer.
 
+### I followed the admin setup steps but still see "Access blocked: clay.com has not completed the Google verification process." What should I do?
+
+This error is expected — Clay's sequencer uses automated warmup sends, which prevents the app from passing Google's standard verification process. Admin approval in your Google Workspace Admin panel is the intended workaround; Clay's app will not become Google-verified.
+
+If the error persists more than 24 hours after your admin marked the app as `Trusted`, confirm that they approved the app for the exact domain of the email account you're connecting (e.g., for `ryan@company.com`, the admin must approve for `company.com` specifically — not a different domain they manage). If it's still blocked after verifying the domain, contact support.
+
 ### What exact Microsoft permissions does sequencer require?
 
 These are disclosed when you add your account via OAuth. We request: offline\_access, openid, email, profile, Mail.Send, Mail.Send.Shared, Mail.ReadWrite, Mail.ReadWrite.Shared, [User.Read](http://User.Read), MailboxSettings.ReadWrite.
@@ -250,3 +286,14 @@ Smartlead assigns leads into one of the following categories:
 7.  Wrong Person
 8.  Uncategorizable by Ai
 9.  Sender Originated Bounce
+
+### What happens when a lead replies with an out-of-office message?
+
+Out-of-office (OOO) auto-replies do not permanently stop the sequence. Instead, Clay detects them via AI and:
+
+-   **Pauses** the sequence when an OOO reply is detected.
+-   **Automatically resumes** sending on the lead's stated return date, if one is included in the OOO message.
+
+A real (non-OOO) reply from the lead permanently stops the sequence.
+
+To stop the sequence whenever an OOO is received — for example, to handle OOO leads manually — add a condition to your campaign events table automation that filters by `reply_category_name` equal to `Out Of Office` (or by `reply_category` equal to `6`). Then use the **Pause lead in campaign** enrichment to halt sending for that lead.

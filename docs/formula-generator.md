@@ -86,7 +86,7 @@ To keep a date comparison up to date without manually re-running the table each 
     moment({{Event Date}}).isAfter(moment({{Today API.dateTime}}).add(6, 'months')) ? "Yes" : ""
     ```
 
-3.  Schedule the HTTP API column to run daily: click the **⛭** icon in the bottom right of your table → **Run Settings** → **Re-run columns on a schedule** → **Only selected columns** → select your HTTP API column → **Day** → **Save changes**. Note: only enrichment/action columns are selectable here — formula columns cannot be directly scheduled, but the formula will update automatically as a downstream effect of the HTTP API column running. See [Scheduled columns](scheduled-columns.md) for full details.
+3.  Schedule the HTTP API column to run daily: click the **⛭** icon in the top toolbar → **Run Settings** → **Re-run columns on a schedule** → **Only selected columns** → select your HTTP API column → **Day** → **Save changes**. Note: only enrichment/action columns are selectable here — formula columns cannot be directly scheduled, but the formula will update automatically as a downstream effect of the HTTP API column running. See [Scheduled columns](scheduled-columns.md) for full details.
 
 Once the HTTP API column fetches a fresh date each day, any formula that references it automatically re-evaluates against the new value.
 

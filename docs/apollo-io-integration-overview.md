@@ -297,4 +297,51 @@ Returns confirmation of whether the contact's status was successfully updated, i
 -   **Auto-update**
 -   **Only run if**: The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.notion.so/source-S3-bucket-1417e66eb01481cc8a4cc485b14af577?pvs=21))
 
+## Troubleshooting
+
+### Placeholder email addresses: `email_not_unlocked@domain.com`
+
+When retrieving contacts via **Find People from Apollo**, the email field may contain `email_not_unlocked@domain.com` instead of a real address. Apollo only provides verified email addresses for contacts that have been unlocked using Apollo credits. If a contact hasn't been unlocked, Apollo returns this placeholder.
+
+To resolve:
+
+-   Use Apollo credits to unlock the contact in your Apollo account.
+-   Use the **Enrich Person** action, which retrieves verified email addresses when sufficient identifying information is supplied.
+
+### Insufficient credits
+
+If an Apollo enrichment step fails with a credits error, your Apollo account may not have enough lead credits to complete the action. This can happen even on paid Apollo plans, since the number of credits available depends on your specific subscription tier.
+
+To resolve:
+
+1.  Check your Apollo subscription to confirm it includes enough lead credits for the action. If not, upgrade through Apollo's settings.
+2.  If you recently used credits, there may be a brief delay before the count refreshes — re-run the step to check whether credits have been restored.
+
+### Null results in enrichment
+
+The **Enrich Person** action requires both a person identifier and a company identifier to match successfully. Without a company identifier, fields like email, job title, and company details may return null.
+
+To resolve, provide at least one company identifier alongside the person's name:
+
+-   **Company Domain** (preferred)
+-   Company Name
+
+### Hitting Apollo's API rate limits with large row sets
+
+Apollo enforces API rate limits that can cause cells to error when Clay processes a large list quickly. The available workaround depends on which column type you're using.
+
+**Enrich Person and Enrich Company columns — use the Custom rate limit setting:**
+
+1.  Open the column settings.
+2.  Scroll to the **Custom rate limit** section.
+3.  Set **Request Limit** (the maximum number of API calls allowed in the time window) and **Duration (in ms)** (the length of the window in milliseconds). For example: `Request Limit: 100, Duration: 60000` caps requests to 100 per minute.
+
+**Action columns (Add Contact to Sequence, Find or Create Contact, and others) — run rows in manual batches:**
+
+Action columns do not have a built-in rate limit control. To stay below Apollo's per-minute cap:
+
+1.  Select a subset of rows (~150–200) by clicking the first row number and Shift-clicking the last.
+2.  Right-click the selection and choose **Run [N] rows**.
+3.  Wait approximately 60 seconds, then repeat for the next batch.
+
 ## ‍
