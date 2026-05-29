@@ -322,6 +322,10 @@ Actions reset each billing cycle and don't roll over, since they reflect the pla
 
 Data Credits work more like a currency and do roll over. On Launch and Growth plans, unused credits can accumulate up to 2x your monthly credit amount (e.g., a 10,000 credit plan can bank up to 20,000 total). Enterprise customers can roll over up to 15% of their prior year's purchased credits, provided they renew at an equal or higher commitment.
 
+### Do Find People and Find Companies searches consume credits?
+
+No. Find People and Find Companies use Clay's internal database as their source. The base search consumes **0 Actions and 0 Data Credits** on all plans. Credits only come into play when you run downstream enrichments on the contacts or companies returned—for example, finding emails, phone numbers, or LinkedIn data for the results.
+
 ### How do I estimate costs before running an enrichment?
 
 The enrichment panel shows costs before you run:
