@@ -92,7 +92,7 @@ Clay gives you three ways to get contacts from a company list. Here's how they d
 
 -   Returns all results in a separate people table with one row per contact.
 -   When re-run, searches across all companies in the linked table — including any newly added ones. New people are appended and deduplicated against rows already in the table.
--   Maxes out at 50,000 records total — once that limit is hit, the source stops returning new records even if new companies are added.
+-   Subject to a per-source cumulative limit that varies by billing plan — once that limit is hit, the source stops returning new records even if new companies are added. See [the troubleshooting section](#your-source-has-exceeded-your-plans-limit-error-on-find-companies-or-find-people) for details.
 -   Best when you don't need to rank or further filter contacts before saving them.
 
 **Find People at These Companies — as an enrichment action (saves to existing table):**
@@ -266,6 +266,21 @@ This most often happens when a column containing emails, names, company names, o
 
 After correcting the mapping, right-click the column header → **Run column** → **Run [N] empty or out-of-date rows** to re-run the affected cells.
 
+### "Your source has exceeded your plan's limit" error on Find Companies or Find People
+
+If you see **"Your source has exceeded your plan's limit of [N], so future runs will not add new records. Consider creating a new source or moving onto a higher tier plan"**, the source has reached a per-source cumulative record limit enforced by your billing plan.
+
+**The limit is cumulative across all runs of the same source** — not per search. Each time the source imports records, the count accumulates. Once the limit is hit, the source stops adding new records regardless of how many times you re-run it.
+
+The limit varies by plan tier and is shown in the error message itself (for example, 25,000 on Explorer-tier plans, 50,000 on Pro plans and above).
+
+**To continue importing beyond the limit:**
+
+-   **Create a new source.** Add a new Find Companies or Find People source with the same (or adjusted) filters. The new source starts with a fresh record count. Use the **Exclude companies** or **Exclude people** filter to avoid re-importing records already in your table.
+-   **Upgrade your plan** to access a higher per-source limit.
+
+**Note:** this limit is separate from the 50,000-row table limit. A source can hit its plan-based record limit even when the table shows fewer visible rows — the source tracks every record it has ever introduced, including rows you've since deleted from the table.
+
 ## FAQs
 
 ### Why is this person showing up despite having moved companies?
@@ -302,7 +317,7 @@ Company and people search sources don't support run conditions. The workaround i
 
 ### What's the difference between the people search source and the enrichment action?
 
-The source returns results in a new table and maxes out at 50,000 records. The enrichment action saves results to your existing table, returns 10 people by default with full profile data, and supports a **Reduce data for more results** option that returns up to 500 people (name and LinkedIn URL only). Use the action when you need to rank or filter contacts before saving them, or when you need more than 50,000 total records across multiple searches.
+The source returns results in a new table and is subject to a per-source cumulative limit that varies by billing plan (see [the troubleshooting section](#your-source-has-exceeded-your-plans-limit-error-on-find-companies-or-find-people) if you hit that limit). The enrichment action saves results to your existing table, returns 10 people by default with full profile data, and supports a **Reduce data for more results** option that returns up to 500 people (name and LinkedIn URL only). Use the action when you need to rank or filter contacts before saving them, or when you need more records than a single source allows.
 
 ### I added new companies to my company table — how do I get them through my Find People searches?
 
