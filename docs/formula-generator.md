@@ -110,3 +110,9 @@ To work with list data in a formula:
 -   **Extract a property from each item**: Use `.map()` — for example, `{{Column}}?.map(item => item.name).join(', ')` extracts the `name` field from each item and joins them as a comma-separated string.
 
 If you're unsure what structure a column's data has, click any cell in that column to open the **Cell details** panel — this shows the raw output and lets you inspect the exact shape before writing your formula.
+
+### **How do I reference the current row's position number in a formula?**
+
+Clay formulas do not have a built-in function that returns a row's position in the table. Although the Excel-compatible `ROW()` function is available through the FormulaJS library, it behaves like its spreadsheet equivalent — it expects a matrix or range argument and returns `null` when called with no arguments in Clay's row-by-row context. `ROWNUMBER()` is also not a valid Clay formula function.
+
+If your workflow requires row-position logic — for example, assigning batch numbers so that rows 1–70 belong to Batch 1, rows 71–140 to Batch 2, and so on — add a dedicated **Number** column and manually populate it with the sequential values you need, then reference that column in your formula (e.g. `{{Batch Number}}`).
