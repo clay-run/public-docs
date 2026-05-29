@@ -15,13 +15,14 @@ This keeps your data current without manual updates (e.g., keeping enrichment da
 
 ## Scheduling column runs
 
-1.  While in a table, click the `⛭` icon in the bottom right.
+1.  While in a table, click the `⛭` icon in the top toolbar.
 2.  Under `Run Settings`, select Re-run columns `on a schedule`.
 3.  Choose the frequency to run:
     1.  Hour (Enterprise only)
     2.  Day
     3.  Week
     4.  Month
+    5.  Custom — set a specific day of the week, time of day, and timezone (e.g., every Sunday at 6:00 AM Eastern Time).
 4.  Decide whether you want to run `All columns` (the whole table) or `Only selected columns`.
 
 ## Action columns and scheduled re-runs

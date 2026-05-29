@@ -63,6 +63,28 @@ No. Signals monitor changes at companies or contacts already in your data source
 
 To search for open job postings by location, job title, or other criteria, use the **Find Jobs** source when creating a new table. You can also [schedule it to run on a recurring basis](https://www.clay.com/university/guide/scheduled-sources) (daily, weekly, etc.) so your table stays up to date with the latest postings.
 
+### How do I check for job openings at each company in my table?
+
+If you have a table of company domains or names and want to pull active job openings for each one, use the **Find Active Job Openings** enrichment column — not a Signal.
+
+**To set this up:**
+
+1.  In your company table, click `Add enrichment` and search for `Find Active Job Openings`.
+2.  Map your company domain to the input field. You can optionally filter by job title keywords, location, or days since posted.
+3.  Enable **Auto-run** on the table (click the ⛭ icon → **Run Settings**) so the enrichment fires automatically whenever you add a new company row.
+4.  To keep job openings refreshed over time, open Table Settings (⛭) → **Run Settings** → toggle on **Re-run columns on a schedule** → select the Find Active Job Openings column → set the frequency to Daily (or as often as you need fresh results).
+
+This gives you both behaviors: new companies you add are enriched automatically, and existing companies are re-checked for new job openings on each scheduled cycle.
+
+**Tip:** The same pattern works for finding people — use the **Find People at Company** enrichment with your company domain to return contacts at each account, then combine auto-run and scheduled re-runs to keep results current.
+
+### Which enrichment should I use to filter job openings by a specific country or city?
+
+Use **Find Active Job Openings**, not the PredictLeads **Find open jobs** enrichment, when you need to scope results to a particular country or city.
+
+-   **Find Active Job Openings** has a `Locations` field that accepts comma-separated countries or cities (e.g., `Germany` or `Berlin, United States`).
+-   The PredictLeads **Find open jobs** enrichment only has an `Only jobs tied to a location?` toggle, which excludes jobs with no location tag but cannot filter to a specific place.
+
 ### Why do I see the same company name appear multiple times in my Find Jobs results?
 
 This is expected behavior. **Find Jobs returns one row per job posting**, not one row per company. If a company has three open roles matching your criteria, it will appear as three separate rows — one for each posting. Each row represents a distinct job, and you can see the specific job title and URL in the cell details.
@@ -80,3 +102,17 @@ To avoid unexpected charges:
 -   Check the per-row cost of each enrichment column in your results table before activating a signal.
 -   Turn off auto-update on columns you don't want to fire automatically: open the column → `Run settings` → toggle off `Auto-update`.
 -   To see the full per-column credit breakdown after a signal fires, click `History` in the lower right corner of your results table and select `Usage history`.
+
+### Does pausing or deleting a results table stop the signal from running?
+
+No. Signals operate independently of the tables they populate. Pausing a results table, deleting rows from it, or deleting the table itself does not stop the signal from running on its scheduled cadence or consuming credits.
+
+Credits for signal monitoring are charged based on the number of contacts or rows **checked** — not the number of matching results returned. A signal checking 5,000 contacts consumes credits for all 5,000 checks, even if no matches are found that run.
+
+To stop a signal from consuming credits, you must pause or disable it directly from the signal's column settings — not by pausing the table it populates:
+
+1.  Click the signal column header (the `📡` icon, usually named `Event`).
+2.  Click `Edit column`.
+3.  Disable or pause the signal, then save.
+
+You can review all active signals and their individual credit spend in the `Signals` tab of the [credit usage dashboard](/docs/credit-usage) (`Settings` → `Usage`).

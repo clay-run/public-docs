@@ -2,7 +2,7 @@
 title: Web intent
 source_url: https://university.clay.com/docs/website-tracking
 description: Collect visitor information including pages visited, time spent,
-  and traffic sources.
+  and traffic sources. Includes workflow for sending emails to identified visitors.
 last_synced: 2026-04-26T01:40:54.567Z
 ---
 
@@ -52,6 +52,17 @@ This tracking provides insights into how visitors engage with your content and h
     -   For advanced filtering, create filter groups and adjust visit frequency parameters to refine results.
 
 Website visitor data appears in your table grouped by company domain. Since we only display completed visitor sessions, data may be delayed up to 30 minutes after user activity.
+
+## Sending emails to identified website visitors
+
+Once your visitor table is populated, you can enrich those companies to find contact emails and send outbound emails directly from Clay.
+
+**Workflow:**
+
+1.  **Find the right contacts** — in your visitor table, add a **Find People** enrichment to pull relevant people at each visiting company.
+2.  **Get their email addresses** — add an email enrichment (such as the Work Email Waterfall) to retrieve verified work emails for those contacts.
+3.  **Create an email campaign** — from your enriched table, create a Clay email campaign (see the [Email sequencer](https://university.clay.com/docs/email-sequencer) doc for setup steps). Map the email column and draft your message sequence.
+4.  **Launch and let it run** — new visitors matching your tracking filters will flow into the table automatically, keeping your outreach loop always-on.
 
 # Best practices
 
@@ -151,6 +162,17 @@ Traffic from bots, VPNs, cloud infrastructure, or ISP-owned IPs can appear as co
 
 IP de-anonymization can sometimes return a secondary or infrastructure domain instead of the primary marketing domain. If needed, use Clay enrichments by company name instead of domain to improve data quality.
 
+### Enrich Company returns "Company Not Found" for some web intent companies
+
+Web intent identifies visitors at the company level by de-anonymizing IP addresses, which produces a company domain. When you run **Enrich Company** using that domain as the identifier, some companies — particularly niche, small, or regional businesses — may not have data coverage in the provider's dataset. This is expected behavior, not an error.
+
+**To improve match rates:**
+
+-   **Switch to a LinkedIn URL as the identifier.** Enrich Company accepts a company LinkedIn URL, domain, Sales Navigator URL, or Sales Navigator Company ID — a LinkedIn URL gives higher accuracy than a domain alone. If your web intent table doesn't include a LinkedIn URL column, add an enrichment step to look one up first, then re-run Enrich Company with that URL.
+-   **Use a waterfall of company enrichment providers.** Instead of running a single Enrich Company action, create a custom waterfall column (**Add column → Waterfall**) and add multiple company enrichment providers in sequence. The waterfall stops after the first provider returns a result, so you only pay for the steps that run before a match is found. See [Waterfalls](building-a-data-waterfall.md) for setup details.
+
+Note: Some very niche or newly formed businesses may have no coverage across any provider — in that case, "Company Not Found" is the final outcome regardless of which approach you use.
+
 ### Credit spend higher than expected
 
 The most common cause is using `Best Match` instead of `Waterfall` for de-anonymization. `Waterfall` stops after the first match, while `Best Match` tests all providers and can cost 5-10 times more. Remember that IPs are cached for 30 days to avoid repeat costs.
@@ -165,7 +187,15 @@ No. The script runs in the visitor's browser and loads asynchronously, so it won
 
 ### Is visitor tracking data shown in real-time?
 
-No, visitor event data can be delayed up to 30 minutes. This allows the full visitor session to be completed first.
+No. Clay waits for a visitor's session to finish before processing and delivering the data. Sessions are finalized after a period of inactivity, so data can be delayed up to 30 minutes after a visitor's last page view.
+
+This means **same-session personalization is not supported** — if a visitor hits your website and you immediately query your Clay table, that session's data won't be there yet. The information only becomes available after the session ends and the pipeline has processed it.
+
+**What Web Intent is well-suited for:**
+
+-   **Post-session outreach:** Once a completed visit appears in your table, trigger enrichment and sequencer steps to reach relevant contacts at the identified company.
+-   **Return visitor workflows:** If a company has visited before, their data is already in your table. You can use the [Clay API](https://docs.clay.com) to query that table for accounts identified in past sessions and act on it.
+-   **Account-level personalization for known accounts:** Use a prior session's data (already stored in your table) to personalize future visits for returning companies.
 
 ### When will I start getting charged?
 
@@ -179,7 +209,7 @@ You can view your credit spend for signals underneath the `Signals` tab of the [
 
 ### Can I track person-level information?
 
-Clay's visitor tracking identifies unique accounts visiting your website, not individuals. Once an account is identified, you can use enrichments to find specific profiles of relevant people you may want to target at those companies.
+Clay's visitor tracking identifies unique accounts visiting your website, not individuals. Once an account is identified, you can use enrichments (like **Find People** and the Work Email Waterfall) to find specific people at those companies and get their email addresses. To send emails to those contacts, see [Sending emails to identified website visitors](#sending-emails-to-identified-website-visitors) above.
 
 ### How do I send emails to my website visitors?
 
