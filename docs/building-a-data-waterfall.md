@@ -67,12 +67,13 @@ Because the waterfall can't predict what any given provider will return, all pro
 
 ## Viewing per-provider results
 
-After a waterfall runs, there are two ways to see which provider found a result:
+After a waterfall runs, click the **»** arrow on the waterfall column header to expand the column group and reveal each provider's individual sub-column. Each sub-column shows that provider's result for every row:
 
--   **Per-row trace:** Click into any waterfall cell to see the step-by-step trace for that row — which providers ran, what each returned, and whether the result passed validation. Providers that were skipped because an earlier step already found a result show **Run condition not met**.
--   **Aggregate hit rates:** Each provider column header shows a percentage — the fraction of rows that provider successfully returned a result for. If the individual provider columns are hidden (grouped under the main waterfall column), click the expand arrow on the waterfall column header to reveal them.
+-   A sub-column that found a result displays the value it returned.
+-   A sub-column that was skipped because an earlier provider already found a result shows **Run condition not met**.
+-   Click into any individual provider sub-column cell to open that provider's details panel for that specific row.
 
-To add a column per row showing the winning provider's name, enable **Output name of successful provider?** in the waterfall's output settings.
+To add a dedicated column per row showing the winning provider's name, enable **Output name of successful provider?** in the waterfall's output settings.
 
 ## Waterfall results and data quality
 
