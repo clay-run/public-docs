@@ -25,6 +25,8 @@ Auto-dedupe continuously monitors a specified column to detect and resolve dupli
 
 **Note:** Auto-dedupe only works with **Text**, **Email**, and **URL** column types. If the selected column uses a different data type (such as Number), auto-dedupe is automatically disabled. Convert the column to **Text** type first to use it for deduplication.
 
+**Note:** The auto-dedupe toggle cannot be changed while the table is running. Stop the run first by clicking the **Stop** button in the run summary panel at the bottom-right of the table. If the toggle remains greyed out after the table has stopped, try a hard refresh (`Cmd+Shift+R` on Mac, `Ctrl+Shift+R` on Windows/Linux) to clear stale browser state.
+
 To enable or disable auto-dedupe:
 
 1.  Open your table settings dropdown.
@@ -71,6 +73,8 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
 **Note:** There is no workspace-wide setting to disable auto-run across all tables at once. Auto-run must be configured individually for each table.
 
 **To enable or disable table-level auto-run:**
+
+**Note:** The Auto-run toggle cannot be changed while the table is actively running. Stop the run first by clicking the **Stop** button in the run summary panel at the bottom-right. If the toggle remains greyed out after stopping, try a hard refresh (`Cmd+Shift+R` on Mac, `Ctrl+Shift+R` on Windows/Linux) to clear stale browser state.
 
 1.  Click the `⛭` icon in the top toolbar, or click the table name and navigate to **Run Settings**.
 2.  Toggle the `Auto-run` mode.
