@@ -92,7 +92,7 @@ Clay gives you three ways to get contacts from a company list. Here's how they d
 
 -   Returns all results in a separate people table with one row per contact.
 -   When re-run, searches across all companies in the linked table — including any newly added ones. New people are appended and deduplicated against rows already in the table.
--   Maxes out at 50,000 records total — once that limit is hit, the source stops returning new records even if new companies are added.
+-   Subject to a per-source cumulative limit that varies by billing plan — once that limit is hit, the source stops returning new records even if new companies are added. See [the troubleshooting section](#your-source-has-exceeded-your-plans-limit-error-on-find-companies-or-find-people) for details.
 -   Best when you don't need to rank or further filter contacts before saving them.
 
 **Find People at These Companies — as an enrichment action (saves to existing table):**
@@ -105,6 +105,8 @@ Clay gives you three ways to get contacts from a company list. Here's how they d
 
 -   Add as a column directly in your company table. Each row independently runs a people search and stores the matching contacts as a list within the cell.
 -   Unlike Find People at These Companies, results are not written as rows to a separate people table — they stay in your company table as cell data. Use **Send Table Data** to push individual contacts to another table if needed.
+-   Returns **10 contacts per row by default**, with full profile data.
+-   `Reduce data for more results` mode returns up to **500 contacts per row**, but only name and LinkedIn URL — run `Enrich Person` on each row afterward to get full profiles.
 -   Processes each company row independently — adding a new company row does not re-trigger the enrichment on other rows.
 -   Costs **0.5 credits per row** on current pricing plans (1 credit per row on legacy plans).
 -   Best when you want contacts to stay associated with their parent company row, or when you're processing companies incrementally and only want to find contacts for specific rows.
@@ -231,7 +233,22 @@ To improve coverage across all your companies:
 
 ### Find People is returning people from the wrong company
 
-This almost always points to a domain-to-company mapping issue. When Clay resolves a domain to a LinkedIn company, it can occasionally surface a parent company, subsidiary, or a generic LinkedIn company page instead of the intended one. Use the company's **LinkedIn URL** as the input instead of the domain to ensure Clay maps to the exact intended entity.
+When Clay resolves a domain to a company, it expands the search to include all company records associated with that domain — parent companies, subsidiaries, acquired entities, and other organizations that share URL elements with the target. This means a search for contacts at a specific company can also return contacts who work at related but distinct entities. This is expected behavior: the contacts are real employees at real companies; they just work at an associated organization rather than the exact one you targeted.
+
+**Reduce future spillover:** Switch to the company's **LinkedIn URL** as the input instead of a domain. LinkedIn URLs map directly to the intended company profile and bypass the domain-expansion lookup. See [Use LinkedIn URLs, not domains, as company identifiers](#use-linkedin-urls-not-domains-as-company-identifiers) above.
+
+**Flag contacts from unrelated companies in your existing results:** Add a formula column that compares the contact's company domain against the source organization's domain using only the core domain name — strip the protocol (`http`/`https`), `www`, and TLD suffixes (`.com`, `.co`, `.pt`, etc.) from both before comparing. Rows where the stripped values don't match are contacts from a related but distinct entity. Set this column as a **run condition** on downstream enrichments to gate processing to matched contacts only.
+
+### "Company Table Data" shows "Missing Input" in the people table
+
+After running Find People from a company list, some rows in the resulting people table may show **Missing Input** in the **Company Table Data** column. This happens when a person's current employer uses a different domain than the company you searched — for example, searching on `broadcom.com` returns someone whose current employer resolves to `vmware.com`. Because the domains don't match, Clay can't link that person back to the original company row, leaving the company record ID blank.
+
+This mismatch most commonly occurs with subsidiaries, acquired companies, and organizations that operate under multiple domains.
+
+**To fix this:**
+
+-   **Switch to LinkedIn company URLs as your company identifier** (recommended). When you provide a LinkedIn company URL instead of a domain, Clay uses the LinkedIn company slug for matching — which handles subsidiary and acquisition relationships more reliably. See [Use LinkedIn URLs, not domains, as company identifiers](#use-linkedin-urls-not-domains-as-company-identifiers).
+-   **Add a Lookup Rows fallback.** In your people table, add a **Lookup single row in other table** column. Set `Table to search` to your original companies table and match on `domain`. For rows where the person's current company domain is populated, this retrieves company fields directly — even when the automatic Company Table Data link is broken. See [Lookup Rows](lookup-rows.md).
 
 ### Getting "Invalid companies provided" error despite having a valid LinkedIn URL
 
@@ -264,6 +281,21 @@ This most often happens when a column containing emails, names, company names, o
 
 After correcting the mapping, right-click the column header → **Run column** → **Run [N] empty or out-of-date rows** to re-run the affected cells.
 
+### "Your source has exceeded your plan's limit" error on Find Companies or Find People
+
+If you see **"Your source has exceeded your plan's limit of [N], so future runs will not add new records. Consider creating a new source or moving onto a higher tier plan"**, the source has reached a per-source cumulative record limit enforced by your billing plan.
+
+**The limit is cumulative across all runs of the same source** — not per search. Each time the source imports records, the count accumulates. Once the limit is hit, the source stops adding new records regardless of how many times you re-run it.
+
+The limit varies by plan tier and is shown in the error message itself (for example, 25,000 on Explorer-tier plans, 50,000 on Pro plans and above).
+
+**To continue importing beyond the limit:**
+
+-   **Create a new source.** Add a new Find Companies or Find People source with the same (or adjusted) filters. The new source starts with a fresh record count. Use the **Exclude companies** or **Exclude people** filter to avoid re-importing records already in your table.
+-   **Upgrade your plan** to access a higher per-source limit.
+
+**Note:** this limit is separate from the 50,000-row table limit. A source can hit its plan-based record limit even when the table shows fewer visible rows — the source tracks every record it has ever introduced, including rows you've since deleted from the table.
+
 ## FAQs
 
 ### Why is this person showing up despite having moved companies?
@@ -277,6 +309,8 @@ First, check that you're filtering on **Job title keywords** (not just function 
 ### Why isn't someone I found on LinkedIn showing in Clay?
 
 Your search filters may be too specific. Try broadening your criteria incrementally. The profile may also not yet be in the dataset.
+
+**Tip for job title filters:** Someone with a compound title — for example, "MD, Head of Mortgages" — may not appear when you search for "Head of Mortgages." Multi-word title phrases that include stop words like "of" can produce unexpected phrase-matching results. Using a shorter, single-word keyword such as "Mortgages" avoids this and catches a wider range of title variations, including "Head of Mortgages," "MD, Head of Mortgages," and "Mortgages Director."
 
 ### Why does Find Contacts at Company return "No Profile Found"?
 
@@ -300,7 +334,7 @@ Company and people search sources don't support run conditions. The workaround i
 
 ### What's the difference between the people search source and the enrichment action?
 
-The source returns results in a new table and maxes out at 50,000 records. The enrichment action saves results to your existing table, returns 10 people by default with full profile data, and supports a **Reduce data for more results** option that returns up to 500 people (name and LinkedIn URL only). Use the action when you need to rank or filter contacts before saving them, or when you need more than 50,000 total records across multiple searches.
+The source returns results in a new table and is subject to a per-source cumulative limit that varies by billing plan (see [the troubleshooting section](#your-source-has-exceeded-your-plans-limit-error-on-find-companies-or-find-people) if you hit that limit). The enrichment action saves results to your existing table, returns 10 people by default with full profile data, and supports a **Reduce data for more results** option that returns up to 500 people (name and LinkedIn URL only). Use the action when you need to rank or filter contacts before saving them, or when you need more records than a single source allows.
 
 ### I added new companies to my company table — how do I get them through my Find People searches?
 

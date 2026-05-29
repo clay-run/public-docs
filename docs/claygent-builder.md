@@ -87,9 +87,51 @@ Enable web search when your agent needs live research (recent company news, hiri
 
 Give your Claygent access to find people and jobs data directly. This enables prospecting workflows like "find the best person who would manage growth at a company" — where the right title varies by company size.
 
+### Custom MCP server
+
+Connect any external MCP (Model Context Protocol) server to your Claygent as a tool. This lets your agent interact with services like Salesforce, HubSpot, Gmail, or Google Calendar, and gives you access to thousands of connectors through catalogs like [Smithery](https://smithery.ai/) and [Pipedream](https://mcp.pipedream.com/).
+
+**Note:** Custom MCP server connections are available on Enterprise plans. Self-serve customers can request access by contacting support to join the beta.
+
+**Model requirement:** Custom MCP tools require a non-Clay model with your own private API key — Clay's shared parallel models (Neon, Argon, Helium, and similar) do not support tool calling and will show "Tools are not available for the selected model." To use custom MCP, select a Claude Sonnet/Opus 4 series or GPT-5 series model in the model picker and connect your own Anthropic, OpenAI, or Gemini API key via the account dropdown.
+
+To add a custom MCP server from Claygent builder:
+
+1.  Open your Claygent and go to the **Configuration** panel.
+2.  Scroll to the **Tools** section and click **Add custom MCP server**.
+3.  Give the connection a name.
+4.  Enter the MCP server URL.
+5.  Enter an API key if the server requires one (open endpoints don't need a key).
+6.  Click **Save**.
+
+You can also add MCP server connections workspace-wide from `Settings` → `Connections` → `+ Add connection` → `Custom MCP Server`. Connections added there appear automatically in your Claygent's MCP connections list.
+
+**Tips for using custom MCP servers:**
+
+-   **Be specific in your prompt.** Tell the Claygent exactly which service to access and what to do — for example, _"Use the Salesforce tool to add \{Company Name\} as a lead in my workspace."_
+-   **Limit to 2–3 servers per run.** Enabling too many MCP servers at once can confuse the agent and produce inconsistent results.
+-   **Chain servers for multi-step workflows.** For example: add a lead in Salesforce, research their background online, then draft a summary doc in Notion.
+-   **OAuth is not currently supported.** Use API key authentication or open (unauthenticated) endpoints.
+
 ### Model selection
 
-Swap between different AI models (Claude, GPT-4o, etc.) to test output quality without touching the prompt.
+Swap between different AI models in the configuration panel to test output quality without touching your prompt.
+
+Clay's parallel models differ in power and cost:
+
+-   **clay-argon** — Strongest model for deep research and complex multi-step analysis.
+-   **clay-neon** — Good balance of capability and speed for moderately complex tasks.
+-   **clay-helium** — Fastest and most cost-effective among Clay parallel models.
+
+**For classification and categorization tasks** (assigning a contact or record to a fixed list of labels using data already in your table), lighter models such as **clay-helium**, **GPT-4o mini**, or **Claude Haiku** work better than Argon. Argon is designed for deep research and complex reasoning — on a simple "pick one label from this list" task, it tends to return multi-sentence explanations and reasoning traces rather than a clean single-value response. Lighter models follow concise output instructions more reliably and cost less per run.
+
+To get a clean single-value response (for example, "Sales" rather than "This contact is best categorized as Sales because their title indicates..."):
+
+1.  Switch the model to **clay-helium**, **GPT-4o mini**, or **Claude Haiku**.
+2.  Define a JSON output schema (see **Output schema** below) with a single `string` field for the category name.
+3.  Add one or two examples in your prompt showing the expected output format — for example: _"Example output: Sales"_. The **Sculptor** tool can generate these automatically.
+
+**Note:** Switching to a non-parallel model (GPT-4o mini, Claude Haiku, etc.) also disables mandatory web search, which keeps runs faster and more consistent when classifying from data already in your table.
 
 ### Output schema
 
@@ -112,6 +154,8 @@ Common errors when writing schema by hand:
 -   **Numeric enum with integer type (Grok models).** Grok models have stricter structured output requirements than other providers. Combining `"type": "integer"` with a numeric `"enum"` array — for example `"enum": [1000, 500, 100]` — causes a `Bad Request` (400) error that surfaces as `Error: Bad Request` on every row. Other providers (Claude, GPT-4o, Gemini) accept this combination without error. Two fixes:
     -   **Remove the enum**: delete the `"enum"` array and keep only `"type": "integer"`, letting the model return any integer.
     -   **Switch to strings**: change `"type"` to `"string"` and quote the enum values (`"1000"`, `"500"`, `"100"`).
+
+-   **Field named `confidence` overrides Clay's built-in confidence indicator.** Clay automatically adds a `confidence` field to your output schema with enum values `low`, `medium`, `high`, and `very high` — but only when your schema does not already define one. This field drives the red/yellow/green color indicator on each response cell. If you define your own field named `confidence` (for example, as a numeric score), Clay skips injecting its own, and your custom field's values are used for the color indicator instead. Because values like `0.98` don't match the expected text enum, the normalizer defaults to `low` and every cell shows red. To fix it, rename your custom field — for example, to `confidence_score` — and rerun the column. Clay will then inject its own `confidence` field and the color indicator will work correctly.
 
 To avoid writing schema by hand, click **Generate from prompt** to have Clay auto-generate a valid schema from your prompt.
 
@@ -186,6 +230,14 @@ Agent access follows your workspace permissions. Editors can create and modify a
 
 No. You can have up to 10 test cases per Claygent at a time for free. You can delete and add new test inputs to keep testing. Once you deploy and run your agent in a table, standard runs follow your normal billing.
 
+### How much does it cost to run a Claygent in production?
+
+Credit cost depends on the AI model you select. Claygent defaults to **Argon** for web research — Clay's model for open-ended web lookups — which costs **3 credits per row**. Switching to **Helium** (1 credit per row) is a cost-effective alternative for simpler web research tasks. For a full model pricing reference, see [How AI is priced](ai-pricing.md).
+
+When using a third-party model (such as Gemini Flash, GPT models, or Claude) for Claygent web research, pricing is **variable**: the column shows a `~` prefix on the credit estimate (for example, `~1/row`) to indicate an approximation. Clay withholds the estimated amount upfront, then calculates the actual cost after each row completes based on tokens consumed — the final charge may be higher or lower than the estimate, and for complex multi-step tasks can run significantly higher. Before running a large table with a variable-priced model, test on 10–50 rows first to understand your actual per-row cost.
+
+If your goal is to find people associated with companies at scale — rather than open-ended web research — **Find People** is significantly more cost-effective: the **Find Contacts at Company** action costs 0.5 credits per row on current plans, versus 3 credits per row for Argon-based Claygent. Use Claygent when you need judgment-based research (summarizing company news, scoring leads, writing personalized outreach). Use Find People when you need structured contact lookups at scale.
+
 ### Can I test different models without changing my prompt?
 
 Yes. Switch models in the configuration panel and rerun tests to compare output quality across different AI models.
@@ -206,6 +258,24 @@ When Sculptor rewrites your prompt, it saves the new prompt text and shows a "Pr
 
 For Clay parallel models (Argon, Neon, Helium, and similar), web search is always on and cannot be toggled off — it's a required part of how these models work. The greyed-out toggle is expected; web search is active. If you want to turn web search off, switch to a non-parallel model in the model selector.
 
+### Can I connect a custom MCP server to a standalone Claygent (created outside a table)?
+
+Yes. Custom MCP servers work in both standalone Claygents (built in Claygent builder) and in table-embedded AI columns. In Claygent builder, open your agent's **Configuration** panel, scroll to the **Tools** section, and click **Add custom MCP server**. You'll be prompted to name the connection, provide the server URL, and optionally add an API key for authenticated endpoints.
+
+This feature is available on Enterprise plans; self-serve customers can contact support to request beta access.
+
+### Why does my Claygent show "Tools are not available for the selected model"?
+
+This message appears when you have a Clay parallel model (Neon, Argon, Helium, or similar) selected. These models don't support tool calling — including custom MCP servers, the "Find contacts and jobs" tool, and other tool-based features.
+
+To use tools with your Claygent:
+
+1.  Open the **Configuration** panel and click the model picker.
+2.  Select a Claude Sonnet/Opus 4 series or GPT-5 series model.
+3.  Click the **Account** dropdown and connect your own Anthropic, OpenAI, or Gemini API key.
+
+Once you're on a supported model with a private API key, the tools in the **Tools** section will become active.
+
 ### My Claygent columns are showing an error — what does that mean?
 
 If your Claygent columns are failing with an error like **"This action is no longer operational as a data provider. Please use another action."**, it means those columns are using an older version of the Claygent action that is no longer supported. The column settings panel may still appear editable, but the column cannot run.
@@ -225,6 +295,22 @@ Repeat for each affected column in your table. Once the new Use AI column is run
 Yes, this is expected. When a Claygent variable is connected to an object value — such as a JSON enrichment payload or a structured data column — the test panel input preview shows **"✅ Success"** rather than rendering the full object contents. This is a known display limitation; your agent receives and processes the complete object data correctly.
 
 To inspect exactly what data was passed to your agent, deploy your Claygent to a table, run it, then click the cell to open the **cell details panel** and examine the full input and output values there.
+
+### Why are my Claygent cells highlighted red even though my confidence value is high?
+
+Clay uses a built-in `confidence` field — with text values `low`, `medium`, `high`, and `very high` — to drive the red/yellow/green color indicator on each response cell. Clay automatically adds this field to your output schema, but only when your schema does not already define a field named `confidence`.
+
+If your JSON output schema includes a field named `confidence` with non-matching values (for example, a numeric score like `0.98` or a boolean), Clay uses that field for the color indicator. Because the value doesn't match the expected text enum, every cell shows red regardless of how accurate the response is. The output itself is still correct — the red is purely cosmetic.
+
+To fix it, open your column's output schema and rename the field — for example, from `confidence` to `confidence_score`. Clay will then automatically add its own `confidence` field with the correct enum values, and the color indicator will work as expected.
+
+### Can Claygent detect tracking pixels or marketing technologies on a website?
+
+Yes, with an important limitation. Claygent fetches page content using third-party scraping services and analyzes the HTML and text — it does not trace JavaScript execution events, intercept network requests, or follow `<script src>` links the way a browser developer tool would. When prompting Claygent to look for tracking pixels or marketing technologies, write the prompt to analyze page content (for example: *"Look at this company's website and check whether the page HTML contains tracking pixel tags such as the Facebook Pixel or Google Tag Manager"*) rather than instructions that assume DevTools-style network monitoring.
+
+**JavaScript-rendered pixels**: Claygent has a JavaScript rendering fallback, but it only activates when a page returns essentially empty static HTML. Most marketing websites return non-empty HTML even when some content is JavaScript-loaded — meaning the JS rendering path typically does not trigger. Pixel tags that are injected dynamically by JavaScript after page load (common for Facebook Pixel, Google Tag Manager, TikTok Pixel, etc.) are likely to be missed on typical marketing sites. There is no single-step solution in Clay for detecting JS-rendered pixels.
+
+**Alternative**: The **BuiltWith** integration (**Find Technology Stack** action) can confirm whether a particular technology is present on a site, but it does not return specific pixel IDs or tracking codes.
 
 ## Tips for success
 
