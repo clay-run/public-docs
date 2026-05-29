@@ -117,3 +117,9 @@ To automatically import data for multiple companies or URLs without overwriting 
 1. Use the native Apify integration to run the actor and retrieve results.
 2. Schedule updates to run automatically.
 3. Use **Write to other table** or **Send table data** to push results to a separate table so each run is saved independently.
+
+### Rows running slowly or stuck in Queued — concurrency limit
+
+Clay's native **Run Apify Actor** integration enforces a fixed limit of **4 concurrent requests**, regardless of your Apify plan. This limit applies to all workspaces and cannot be raised on a per-workspace basis — it is set to match the concurrency cap on Apify's lowest plan.
+
+If rows are sitting in **Queued** status and you are on a higher-tier Apify plan, you can bypass this cap by calling Apify's API through an **HTTP API column** instead of the native integration. The HTTP API column does not apply this fixed limit, so Clay will dispatch requests at the rate your Apify plan supports. See the [HTTP API](http-api-integration-overview.md) guide for setup instructions.
