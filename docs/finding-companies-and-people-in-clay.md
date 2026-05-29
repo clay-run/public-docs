@@ -105,6 +105,8 @@ Clay gives you three ways to get contacts from a company list. Here's how they d
 
 -   Add as a column directly in your company table. Each row independently runs a people search and stores the matching contacts as a list within the cell.
 -   Unlike Find People at These Companies, results are not written as rows to a separate people table — they stay in your company table as cell data. Use **Send Table Data** to push individual contacts to another table if needed.
+-   Returns **10 contacts per row by default**, with full profile data.
+-   `Reduce data for more results` mode returns up to **500 contacts per row**, but only name and LinkedIn URL — run `Enrich Person` on each row afterward to get full profiles.
 -   Processes each company row independently — adding a new company row does not re-trigger the enrichment on other rows.
 -   Costs **0.5 credits per row** on current pricing plans (1 credit per row on legacy plans).
 -   Best when you want contacts to stay associated with their parent company row, or when you're processing companies incrementally and only want to find contacts for specific rows.
