@@ -26,6 +26,8 @@ Connect via OAuth as a Salesforce user.
 2.  Click `Add connection` and search for `Salesforce`.
 3.  Under `User Sign In`, complete the OAuth sign-in flow in the browser window that appears.
 
+**Tip:** Clay authenticates as whichever Salesforce user is active in the browser during the OAuth flow. If you need to connect as a specific user — for example, a shared integration or service account rather than your personal Salesforce account — sign in to Salesforce as that user before starting the Clay flow. Opening an incognito or private-browser window lets you do this without signing out of your own Salesforce session. For dedicated integration accounts, the **Client Credentials** method below is often a better fit — it requires no browser sign-in and works with Salesforce Integration licenses.
+
 ### **Client Credentials (Integration User)**
 
 Connect to Salesforce via Client Credentials for server-to-server access. No browser sign-in is required.
