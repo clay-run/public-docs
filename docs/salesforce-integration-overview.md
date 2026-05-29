@@ -199,14 +199,6 @@ The **Exact match?** toggle controls how Clay queries Salesforce:
 
 **Note:** Each "field to search for" input accepts one search value at a time. If you add multiple values to a single search field, Clay concatenates them into one string rather than treating them as separate options — for example, adding both `"Acme Corp"` and `"Acme"` to the same "Account Name to search for" field causes Clay to search for `"Acme CorpAcme"` instead of either name. To search across multiple possible values for the same field, use two separate **Lookup record** columns, each with one value.
 
-**Note on converted leads:** When looking up Lead records, Salesforce retains converted leads (records where `IsConverted = true`) as regular records — they are not deleted, just marked converted and linked to the associated contact and account. The Lookup record action returns these converted leads if they match your search criteria. When you click the CRM link for a converted lead in Clay, Salesforce automatically redirects to the associated contact record, which can make it appear as though a contact was returned instead of a lead. To restrict results to unconverted leads only, use the **Lookup records via SOQL** action and add `IsConverted = false` to the WHERE clause:
-
-```sql
-SELECT FIELDS(ALL) FROM Lead WHERE Email = '/Email Column' AND IsConverted = false LIMIT 5
-```
-
-**Note: blank search values are silently dropped.** When a row's value for one of your Object Fields is blank or empty, Clay omits that field from the search query entirely. If your lookup has multiple Object Fields and only some of them are blank, the query runs using only the fields that still have values — which can produce unexpected results. For example, if you configure Campaign ID and Lead ID as Object Fields and a row's Lead ID is blank, Clay searches only on Campaign ID and can return up to 5 campaign members for that campaign rather than the specific one tied to that row. If all Object Fields are blank for a row, the action fails with a missing-input error. To prevent unintended lookups on rows with missing values, add a **conditional run** on the lookup column to skip rows where the key search field is empty.
-
 ### `Action` Upsert object
 
 Use this action to create a new record or update an existing one.
