@@ -38,12 +38,12 @@ To change your account password:
 -   Visit your `Settings` and head to the `Account` section.
 -   Open the `Security` tab under `Your profile`.
 -   Click `Change password`. A magic link will be sent to your registered email address.
-    -   _Note: This option is available only if you signed in using a password and not via an authentication service such as Google or SSO._
+    -   _Note: This option is available only if you signed in using a password and not via an authentication service such as Google or SSO. If you signed up with Google and want to create a password, see [Switch from Google login to email and password](#switch-from-google-login-to-email-and-password) below._
 -   Follow the instructions in the email to securely update your password.
 
 ## **Switch from Google login to email and password**
 
-Switching your login method from Google to email and password cannot be done through your account settings — it requires a support action.
+If you signed up with Google and want to create a password so you can log in with your email and password instead, this cannot be done through your account settings — it requires a support action.
 
 To request the change:
 
