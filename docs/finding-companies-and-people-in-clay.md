@@ -310,6 +310,8 @@ First, check that you're filtering on **Job title keywords** (not just function 
 
 Your search filters may be too specific. Try broadening your criteria incrementally. The profile may also not yet be in the dataset.
 
+**Tip for job title filters:** Someone with a compound title — for example, "MD, Head of Mortgages" — may not appear when you search for "Head of Mortgages." Multi-word title phrases that include stop words like "of" can produce unexpected phrase-matching results. Using a shorter, single-word keyword such as "Mortgages" avoids this and catches a wider range of title variations, including "Head of Mortgages," "MD, Head of Mortgages," and "Mortgages Director."
+
 ### Why does Find Contacts at Company return "No Profile Found"?
 
 Two main causes:
