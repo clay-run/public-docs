@@ -82,7 +82,7 @@ Use this action to retrieve associations between two objects in HubSpot.
 -   **From object ID:** The unique identifier of the object you want to look up associations for.
 -   **Remove blank values from results (Optional):** Exclude empty properties from the response.
 -   **Include read-only properties (Optional):** Include calculated fields in the response.
--   **Limit (Optional):** Maximum number of objects to return. Defaults to 20.
+-   **Limit (Optional):** Maximum number of associated objects to return. Defaults to 20; the maximum is also 20. Even if an object has more than 20 associations in HubSpot, this action returns at most 20 per run.
 
 ### `Action` Find owner
 
