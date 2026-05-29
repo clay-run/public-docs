@@ -112,7 +112,9 @@ To remove a member from your workspace:
 -   All tables, workbooks, and groups owned by the removed member are automatically transferred to the longest-tenured admin in the workspace (the admin whose admin role was granted earliest).
 -   You cannot remove the last admin from a workspace — at least one admin must remain at all times.
 
-## Edit access levels in a workbook
+## Edit access levels in a workbook _(Enterprise only)_
+
+**Note:** Workbook-level access restriction is available on Enterprise plan workspaces only. Non-Enterprise workspaces do not have the `Edit Access` settings shown below.
 
 Workspace admins can edit access levels for specific workbooks. This helps prevent accidental changes to important tables.
 
