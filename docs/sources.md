@@ -191,11 +191,12 @@ Clay tables have a **50,000-row limit** across all plans. This applies to all so
 
 -   **Salesforce Reports**: 2,000 records (API restriction) — to import more than 2,000 records, use the [Salesforce SOQL source](salesforce-soql.md) instead (supports up to 50,000 records)
 -   **Salesforce List Views**: 50,000 records
+-   **Find Companies and Find People sources**: subject to a per-source cumulative limit that varies by billing plan (for example, 25,000 records on Explorer-tier plans, 50,000 on Pro plans and above). Unlike other source types, these display an explicit error message when the limit is reached — see [Finding companies and people in Clay](finding-companies-and-people-in-clay.md) for the workaround.
 -   **All other sources**: 50,000 records
 
 **What happens when you hit the limit?**
 
-For standard source imports (CSV, CRM, list builders), Clay stops importing silently when the limit is reached — no error is displayed. For **send table data** actions targeting a full table, a `"Record limit reached"` message appears in the source table's action column.
+For standard source imports (CSV, CRM, list builders), Clay stops importing silently when the limit is reached — no error is displayed. **Find Companies and Find People sources** are an exception: they surface an explicit error — "Your source has exceeded your plan's limit of [N], so future runs will not add new records" — rather than failing silently. For **send table data** actions targeting a full table, a `"Record limit reached"` message appears in the source table's action column.
 
 **Solutions for large datasets:**
 
