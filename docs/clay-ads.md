@@ -114,9 +114,9 @@ Each record exported or synced consumes 1 action. Data credits apply for any enr
 
 The 50,000 row limit applies to ad audiences exported from tables. For larger audiences, create multiple tables and attach multiple audiences to your campaigns in the ad platform.
 
-### **Can I edit the field mapping after setting up an Ad Sync?**
+### **Can I update the field mapping on an existing Ad Sync?**
 
-No. Field mapping is configured when you create the Ad Sync and cannot be changed afterward. Deactivating an Ad Sync places it in read-only history — it does not unlock the mapping for editing. To use a different field mapping, deactivate the current sync and create a new Ad Sync with your updated configuration.
+Yes. On an active Ad Sync, navigate back to the **Map** step using the stage tabs at the top of the panel to update your field mapping and re-export to your ad platform. Note that deactivating an Ad Sync makes it read-only — the Map step is no longer accessible on a deactivated sync, and you would need to create a new Ad Sync to use a different mapping.
 
 ### **How long does it take for audiences to be created?**
 
