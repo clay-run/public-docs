@@ -238,6 +238,8 @@ Map any Clay data or segment membership to Salesforce fields. Examples:
 
 Export settings control whether Clay **creates new Salesforce records** for net-new contacts or **only updates existing ones**.
 
+The **`Create new Salesforce records`** toggle is in your Salesforce source settings under the export section. It is **off by default** — when off, Clay only updates Salesforce records that already have a matching entry in your Audience. Turn it on to allow Clay to create new Contacts or Leads in Salesforce for Audience records that don't yet exist in SFDC. This toggle is admin-only.
+
 Export sync behavior:
 
 -   **Export frequency:** Every 24 hours when write-back is enabled.
@@ -296,6 +298,20 @@ For this to work, you need both:
 -   Web intent configured as a signal in your Audiences workspace.
 
 **If visitors arrived before your Salesforce sync was connected:** Web intent records added to Audiences before you connected Salesforce may not automatically merge with existing SFDC records. To resolve this, use the **deterministic record matching** option in your Salesforce import settings and select domain as the match key. This matching applies to records coming in after the setting is enabled — it does not retroactively deduplicate records already in Audiences.
+
+### How do I create new Salesforce contacts or leads from an Audience enrichment?
+
+New Salesforce records are not created automatically when you run a bulk enrichment. Record creation is not driven by a Create Contact or Create Lead action inside the enrichment table — it is controlled by the **`Create new Salesforce records`** toggle in your Audiences Salesforce export settings.
+
+To push net-new contacts to Salesforce:
+
+1.  Open your Audiences workspace and go to your Salesforce source settings.
+2.  Under the export section, enable the **`Create new Salesforce records`** toggle. (Admin access required — the toggle is off by default.)
+3.  Confirm your field mappings and save.
+
+Once the toggle is on, Clay will create new Contacts or Leads in Salesforce for any Audience record that doesn't already have a matching SFDC record.
+
+To track which contacts in Salesforce came from a specific Audience enrichment, create a custom Audience text field (for example, an "Audience Source" field set to a label like `"Q2-enrichment"`), and map it to a Salesforce field (a custom field, campaign tag, or lead status) in your export settings. You can then filter on that value directly in Salesforce.
 
 ### Why does filtering my People audience by deal attributes return fewer contacts than expected?
 
