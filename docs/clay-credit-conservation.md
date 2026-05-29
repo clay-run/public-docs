@@ -25,7 +25,7 @@ The best practice is to **turn off table-level auto-run while building your tabl
 
 To disable auto-run for the entire table (the master switch):
 
-1.  Click the `⛭` icon in the bottom-right corner of your table to open Run Settings.
+1.  Click the `⛭` icon in the top toolbar to open Run Settings.
 2.  Toggle **Auto-run** off. The toggle shows **"Manual"** when disabled.
 
 With table-level auto-run off, no columns will run automatically when rows are added — regardless of individual column settings. You can still trigger enrichments manually by clicking individual cells.
@@ -169,7 +169,7 @@ Scheduled columns automatically re-run enrichments on a daily, weekly, or monthl
 
 **How do you implement this?**
 
-Click the `⛭` icon in the bottom right of your table, go to **Run Settings**, and open the **Re-run columns on a schedule** section. Review which columns are included and disable the schedule for any you no longer need to auto-refresh. To reduce scope without fully disabling the schedule, switch from **All columns** to **Only selected columns** and select only the columns that genuinely require recurring updates.
+Click the `⛭` icon in the top toolbar, go to **Run Settings**, and open the **Re-run columns on a schedule** section. Review which columns are included and disable the schedule for any you no longer need to auto-refresh. To reduce scope without fully disabling the schedule, switch from **All columns** to **Only selected columns** and select only the columns that genuinely require recurring updates.
 
 See [Scheduled columns](scheduled-columns.md) for setup details.
 
