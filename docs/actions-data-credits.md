@@ -312,6 +312,10 @@ You don't need to change your Actions tier.
 
 You must upgrade to a higher action tier. Actions cannot be topped up separately because they're tied to your action tier's capacity.
 
+### What if I accidentally ran enrichments and consumed more credits than intended?
+
+Contact Clay's support team. In cases of accidental credit usage—particularly for new users—the support team may provide a one-time courtesy credit. To help process your request, include a link to the affected table and the approximate time and date of the accidental expenditure. There is no self-service mechanism for courtesy credits; these are handled case-by-case by the support team.
+
 ### Why can't I top up Actions?
 
 Actions represent fixed platform capacity tied to your action tier. To get more Actions, you must upgrade to a higher action tier. Data Credits, however, are consumption-based and can be purchased as one-time top-ups or by upgrading your Data Credits tier.
@@ -347,14 +351,14 @@ Common causes:
 -   `Auto-Update` enabled: Automatic refreshes trigger enrichments.
 -   **AI columns:** Every row processed incurs a cost.
 -   **Duplicate enrichments:** Re-running columns triggers new usage.
--   **Modified enrichment column configurations:** Editing a column's configuration marks existing results as out-of-date. Without [Keep existing results](table-management-settings.md) enabled, any subsequent run (manual or via auto-run) will re-process all rows—including previously enriched ones—consuming additional credits.
+-   **Modified enrichment column configurations:** Editing a column's configuration marks existing results as out-of-date. Without [Keep existing results](table-management-settings.md) enabled, auto-run and the `Run all rows` action will re-process all rows—including previously enriched ones—consuming additional credits. Note: the `Run rows that haven't been processed` action safely skips previously enriched rows even when a column's configuration has changed.
 
 **Prevention tips:**
 
 -   Turn off `Auto-Update` when not needed.
 -   Pause AI columns that aren't providing value.
 -   Check table settings before re-running enrichments.
--   After modifying an enrichment column's configuration, enable [Keep existing results](table-management-settings.md) to avoid re-running previously enriched rows.
+-   After modifying an enrichment column's configuration, enable [Keep existing results](table-management-settings.md) to prevent auto-run from reprocessing previously enriched rows.
 
 ### What happens when I downgrade my plan?
 
