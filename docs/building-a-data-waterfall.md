@@ -65,6 +65,16 @@ If two providers in a waterfall both return the same email address, and the firs
 
 Because the waterfall can't predict what any given provider will return, all providers in the sequence still run normally. Only the validation step is skipped when the returned value is already known to be invalid.
 
+## Viewing per-provider results
+
+After a waterfall runs, click the **»** arrow on the waterfall column header to expand the column group and reveal each provider's individual sub-column. Each sub-column shows that provider's result for every row:
+
+-   A sub-column that found a result displays the value it returned.
+-   A sub-column that was skipped because an earlier provider already found a result shows **Run condition not met**.
+-   Click into any individual provider sub-column cell to open that provider's details panel for that specific row.
+
+To add a dedicated column per row showing the winning provider's name, enable **Output name of successful provider?** in the waterfall's output settings.
+
 ## Waterfall results and data quality
 
 Waterfall enrichments return the first result found from a provider in your sequence — there is no built-in confidence score or confidence level on the output. For enrichments like company employee count, revenue, or company description, providers return a value when they find one; there is no high/medium/low rating attached to the result.
