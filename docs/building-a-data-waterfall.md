@@ -87,3 +87,25 @@ Providers that can return phone numbers — such as PDL (People Data Labs), Byte
 This error can appear even when your goal is to find something other than a phone number (for example, a LinkedIn URL), because the provider is phone-number gated regardless of which output you're looking for.
 
 **To work around this on a Trial plan:** open the waterfall's `Waterfall sequence` configuration and remove any providers that return phone numbers. The remaining providers will work normally. To use all providers without restriction, upgrade to a paid plan.
+
+## Company Domain waterfall
+
+The **Company Domain** waterfall finds a company's website domain from its name by cascading across three providers in sequence — stopping as soon as one returns a result.
+
+Provider order: **Clearbit → Google → HG Insights**
+
+### Setting up the Company Domain waterfall
+
+1.  In your table, click `Add enrichment` in the top right corner.
+2.  Search for `Find company domain` and select the **Company Domain** waterfall.
+3.  Map the column containing company names as the input.
+4.  Click `Save`.
+
+**Input required:** Company name  
+**Output:** Company domain (e.g., `clay.com`)
+
+### Credit usage
+
+Each provider step that runs costs 1 credit. The waterfall stops at the first provider that returns a domain, so you pay only for the steps that run before a result is found. Best case (Clearbit finds a match): 1 credit. Worst case (no provider finds a domain): 3 credits.
+
+**Tip:** To avoid running the waterfall on rows that already have a domain, add an **Only run if** condition — for example, `Domain is empty` — in the waterfall's run settings.
