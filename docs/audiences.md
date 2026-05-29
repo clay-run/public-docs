@@ -108,39 +108,38 @@ Records saved from tables are automatically deduplicated and merged with your ex
 
 ### Entity resolution and deduplication
 
-Clay automatically identifies and merges duplicate records when the same person or company appears across multiple sources (for example, Salesforce and Snowflake).
+Audiences uses two systems to prevent duplicate records:
 
-**For people**, Clay checks identifiers in this priority order:
+**Entity Resolution (automatic)**
 
--   Email address
--   LinkedIn profile URL
--   Phone number
--   External source record ID (for example, a Salesforce Contact ID)
+Entity Resolution runs continuously in the background. It matches records by identifier strength:
 
-**For companies**, Clay checks:
+-   **For People:** LinkedIn URL → Email → Probabilistic matching (name + company + location + role)
+-   **For Companies:** LinkedIn URL → Domain → Probabilistic matching (name + location + industry)
 
--   Website or email domain
--   LinkedIn company URL
--   External source record ID (for example, a Salesforce Account ID)
--   Company name (exact match, then fuzzy)
-
--   **Whitespace detection** — when importing from a Find People or Find Companies search, records that already exist in All People are automatically excluded from the merge. The draft shows a banner with the count of excluded records ("X records from this search are already in the All People list"), and clicking **All people** adds only the net-new contacts.
-
-Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs — org duplicates carry over as-is. Native within-source deduplication is coming.
+When a match is found, records merge into a single unified record in Audiences. **Deduplication happens in Clay only** — Audiences does not merge or alter records in your connected Salesforce org.
 
 Records need a high-confidence identifier to match. Auto-enrichment adds `LinkedIn URL` and `CPJ ID` at no cost to improve matching.
 
-### Removing a data source
+**Import record matching (beta)**
 
-To disconnect a Salesforce, HubSpot, or Gong source from Audiences:
+When importing from Salesforce or Snowflake, you can configure **Import record matching** to deduplicate records at ingestion time. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
 
-1.  Open the source's settings page. From the **Add data** panel, click the three-dot menu next to the source and select **Settings**.
-2.  On the settings page, click the three-dot menu (⋮) next to the account name in the **Sync with Audiences** card.
-3.  Select **Disconnect**.
+To configure:
 
-To disconnect a Snowflake import, follow the same steps but select **Disconnect import** instead.
+1. In your import settings, click **Import record matching**.
+2. Choose an **alias field** — typically `Domain` for Companies or `Email` for People (additional options include LinkedIn URL, phone number, and others).
+3. Map the alias field to the corresponding field in each source.
+4. When a new record arrives, Audiences checks whether the alias value already exists. If it does, the new data is merged with the existing record instead of creating a duplicate.
 
-**After disconnecting:** All records that were imported from this source remain in your Audiences, but their sync status is set to **unsynced**. Sync stops immediately. This action is permanent — to reconnect, set up the source again from scratch.
+You can configure one alias field per entity type (one for People, one for Companies). This setting applies to records imported *after* it is enabled — it does not retroactively merge records already in Audiences.
+
+**Other deduplication behaviors**
+
+-   **Cross-source deduplication** — merge the same person from multiple sources.
+-   **Whitespace detection** — when importing from a Find People or Find Companies search, records that already exist in All People are automatically excluded from the merge. The draft shows a banner with the count of excluded records ("X records from this search are already in the All People list"), and clicking **All people** adds only the net-new contacts.
+
+Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs — org duplicates carry over as-is.
 
 ## Creating an audience
 
@@ -297,7 +296,7 @@ For this to work, you need both:
 -   Salesforce Accounts synced into Audiences with website domain fields mapped.
 -   Web intent configured as a signal in your Audiences workspace.
 
-**If visitors arrived before your Salesforce sync was connected:** Web intent records added to Audiences before you connected Salesforce may not automatically merge with existing SFDC records. To resolve this, use the **deterministic record matching** option in your Salesforce import settings and select domain as the match key. This matching applies to records coming in after the setting is enabled — it does not retroactively deduplicate records already in Audiences.
+**If visitors arrived before your Salesforce sync was connected:** Web intent records added to Audiences before you connected Salesforce may not automatically merge with existing SFDC records. To resolve this, use the **Import record matching** option in your Salesforce import settings and select domain as the match key (this feature is currently in beta — contact your Growth Strategist to enable it). This matching applies to records coming in after the setting is enabled — it does not retroactively merge records already in Audiences.
 
 ### How do I create new Salesforce contacts or leads from an Audience enrichment?
 
