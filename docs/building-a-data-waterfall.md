@@ -51,16 +51,11 @@ For more manual run options, see [Run progress](run-progress.md).
 
 By default, auto-run is **on** for every table — waterfall columns (such as a work email waterfall) fire automatically on every new row as it arrives. If rows are added to your table before your waterfall setup is finalized, all steps in the waterfall trigger immediately and consume credits.
 
-**While building or testing a waterfall, turn off table-level auto-run:**
-
-1.  Click the `⛭` icon in the bottom-right corner of your table, or click the table name → **Run Settings**.
-2.  Toggle **Auto-run** off. The toggle shows **"Manual"** when disabled.
-3.  Add rows and test your waterfall configuration manually by clicking individual cells.
-4.  Turn auto-run back **on** when your setup is ready for production.
+**Best practice while building or testing:** Turn off table-level auto-run before adding rows. This prevents the waterfall from firing until your configuration is ready. See [Table management settings](table-management-settings.md) for how to enable and disable auto-run at the table level and per column.
 
 **To prevent a waterfall from re-running on rows that already have a result**, add an **"Only run if"** condition to the waterfall column — for example, `Email is empty`. Clay skips the waterfall for any row where the output field is already populated, preventing duplicate enrichment and unnecessary credit spend.
 
-See [Table management settings](table-management-settings.md) for full auto-run controls, and [Ways to save Clay credits](clay-credit-conservation.md) for additional credit conservation tips.
+For more ways to control credit usage, see [Ways to save Clay credits](clay-credit-conservation.md).
 
 ## How waterfall validation works
 
