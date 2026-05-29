@@ -133,16 +133,6 @@ Yes, you can test enrichments by connecting your sandbox test environment.
 
 Go to `Settings` → `Connections` → `Salesforce Test Env` to set it up.
 
-## How can I tell which Salesforce user my connection is authenticated as?
-
-When you test a connection, Clay displays the Salesforce user (by email) that the connection token is attributed to. To check:
-
-1.  Navigate to `Settings` → `Connections` and select `Salesforce`.
-2.  Click the `…` menu next to the connection you want to test.
-3.  Select `Test Connection`.
-
-Clay will confirm the connection is valid and show the authenticated user's email. This is especially useful for debugging access issues — if objects or fields are missing in Clay, you can immediately check whether the displayed user has the right permissions in Salesforce. For full details, see [Testing your connection](https://university.clay.com/docs/salesforce-integration-overview) in the Salesforce integration overview.
-
 ## Can I reverse my Salesforce enrichment?
 
 No, once you update or create an object in Salesforce from Clay, you cannot undo these actions.

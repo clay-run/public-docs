@@ -52,10 +52,6 @@ Connect to Salesforce via Client Credentials for server-to-server access. No bro
     -   `Consumer secret`: The consumer secret from your Salesforce external client app.
 4.  Click `Authenticate` to save the connection.
 
-### Testing a connection
-
-After adding a Salesforce connection, you can verify it from `Settings` → `Connections`. Click **Test** on any Salesforce connection to confirm it is active. The test result displays the Salesforce user attributed to that connection token — so you can confirm which account Clay will use when making API calls. This is especially helpful for debugging permission issues and for verifying that an integration user is configured correctly.
-
 ### **Troubleshooting**
 
 -   **`OAUTH_APPROVAL_ERROR_GENERIC` when connecting via User Sign In**
