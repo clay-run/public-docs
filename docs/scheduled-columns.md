@@ -22,6 +22,7 @@ This keeps your data current without manual updates (e.g., keeping enrichment da
     2.  Day
     3.  Week
     4.  Month
+    5.  Custom — set a specific day of the week, time of day, and timezone (e.g., every Sunday at 6:00 AM Eastern Time).
 4.  Decide whether you want to run `All columns` (the whole table) or `Only selected columns`.
 
 ## Action columns and scheduled re-runs
