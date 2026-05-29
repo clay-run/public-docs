@@ -23,6 +23,8 @@ You can also click the `⛭` icon in the bottom-right corner of your table to op
 
 Auto-dedupe continuously monitors a specified column to detect and resolve duplicate values by retaining the oldest row and deleting the duplicates. Blank cells, stale cells, and cells with more than 200 characters are excluded from this process.
 
+**Note:** Auto-dedupe only works with **Text**, **Email**, and **URL** column types. If the selected column uses a different data type (such as Number), auto-dedupe is automatically disabled. Convert the column to **Text** type first to use it for deduplication.
+
 To enable or disable auto-dedupe:
 
 1.  Open your table settings dropdown.
