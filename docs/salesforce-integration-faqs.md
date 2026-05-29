@@ -46,6 +46,12 @@ To check which user is associated with a connection:
 
 The result displays the SFDC user's email address. If you see the wrong user, reconnect using the correct Salesforce account.
 
+## How do I change or delete the default Salesforce connection?
+
+**Changing the default:** Setting a connection as default is a **workspace admin–only** action — non-admin workspace members do not see the **Set as default** option in the `…` menu. To update the default, ask a workspace admin to change it in `Settings` → `Connections`, or have an admin update your user role. For details on connection management permissions, see [Workspace administration](https://university.clay.com/docs/workspace-administration-documentation).
+
+**Deleting the default connection:** You can delete a connection that is currently set as default. When you do, Clay automatically reassigns the default to the next available Salesforce connection. If no other connection exists, the default is cleared. Note that deleting any connection requires you to be either the person who originally added it or a workspace admin — you cannot delete a connection added by someone else unless you are an admin.
+
 ## Why is a Salesforce object (such as Account) not appearing in Clay?
 
 The objects available in Clay are determined entirely by the permissions of the Salesforce user whose credentials were used to authenticate the integration. Clay queries Salesforce's API for the full list of accessible objects — it does not maintain its own allowlist or blocklist. If an object like Account is missing from the dropdown, it means the connected Salesforce user does not have access to it in Salesforce.
@@ -74,25 +80,40 @@ For full details on writing run conditions, see [Conditional runs](https://unive
 
 [Learn more about Salesforce's duplicate rules here.](https://help.salesforce.com/s/articleView?id=sales.duplicate_rules_map_of_reference.htm&type=5)
 
-## How do I add contacts to a Salesforce campaign and update the status of existing campaign members?
+## How do I add leads or contacts to a Salesforce campaign and update the status of existing campaign members?
 
-A Campaign Member in Salesforce represents the relationship between a contact (or lead) and a campaign. Because contacts might already be members of the campaign, you need a conditional workflow that handles both cases — adding new members and updating the status of existing ones.
+A Campaign Member in Salesforce represents the relationship between a lead or contact and a campaign. Each Campaign Member record is tied to either a `LeadId` or a `ContactId` — not both at once. Because leads or contacts might already be members of the campaign, you need a conditional workflow that handles both cases — adding new members and updating the status of existing ones.
 
 **Recommended workflow:**
 
-1.  **Lookup records via SOQL** — Check whether the contact is already a campaign member. Using SOQL lets you filter on both `ContactId` and `CampaignId` at once:
+1.  **Lookup records via SOQL** — Check whether the lead or contact is already a campaign member. Using SOQL lets you filter on both the person ID and `CampaignId` at once.
 
+    *For contacts:*
     ```sql
     SELECT Id, Status FROM CampaignMember WHERE ContactId = '/Contact ID' AND CampaignId = '/Campaign ID' LIMIT 1
     ```
 
-    Replace `/Contact ID` and `/Campaign ID` with your Clay columns, inserted using the `/` picker in the query editor. This returns the Campaign Member's `Id` and current `Status` if they are already in the campaign, or nothing if they are not.
+    *For leads:*
+    ```sql
+    SELECT Id, Status FROM CampaignMember WHERE LeadId = '/Lead ID' AND CampaignId = '/Campaign ID' LIMIT 1
+    ```
 
-2.  **Create record (conditional)** — If the lookup returns no result, the contact is not yet in the campaign. Add a **Create record** column, set the Salesforce object to `CampaignMember`, and supply `ContactId`, `CampaignId`, and the initial `Status`. In **Run settings**, add a conditional run that fires only when the ID field from your SOQL lookup is empty.
+    *If your table contains a mix of leads and contacts, create a formula column (call it something like "Person ID") that returns the Contact ID when populated and falls back to the Lead ID otherwise. Then use an OR query to handle both in a single lookup:*
+    ```sql
+    SELECT Id, CampaignId, LeadId, ContactId, Status
+    FROM CampaignMember
+    WHERE CampaignId = '/Campaign ID'
+    AND (LeadId = '/Person ID' OR ContactId = '/Person ID')
+    LIMIT 1
+    ```
 
-3.  **Update record (conditional)** — If the lookup returns a result, the contact is already in the campaign and needs their status changed. Add an **Update record** column, set the Salesforce object to `CampaignMember`, set **Record ID** to the `Id` from your SOQL lookup column, and supply the new `Status` value. In **Run settings**, add a conditional run that fires only when the ID field from your SOQL lookup is **not** empty.
+    Replace the `/Column Name` placeholders with your Clay columns using the `/` picker in the query editor. This returns the Campaign Member's `Id` and current `Status` if they are already in the campaign, or nothing if they are not.
 
-This three-step pattern ensures new contacts are added to the campaign and existing members have their status updated — without creating duplicate Campaign Member records.
+2.  **Create record (conditional)** — If the lookup returns no result, the person is not yet in the campaign. Add a **Create record** column, set the Salesforce object to `CampaignMember`, and supply `ContactId` (or `LeadId`), `CampaignId`, and the initial `Status`. In **Run settings**, add a conditional run that fires only when the ID field from your SOQL lookup is empty.
+
+3.  **Update record (conditional)** — If the lookup returns a result, the person is already in the campaign and needs their status changed. Add an **Update record** column, set the Salesforce object to `CampaignMember`, set **Record ID** to the `Id` from your SOQL lookup column, and supply the new `Status` value. In **Run settings**, add a conditional run that fires only when the ID field from your SOQL lookup is **not** empty.
+
+This three-step pattern ensures new leads and contacts are added to the campaign and existing members have their status updated — without creating duplicate Campaign Member records.
 
 **Note:** The valid `Status` values for Campaign Members are configured per campaign in Salesforce. Check your Salesforce org's Campaign Member Status settings to confirm the exact values before writing them from Clay.
 
@@ -111,16 +132,6 @@ To modify this setting, click your table name in the top bar. From the dropdown 
 Yes, you can test enrichments by connecting your sandbox test environment.
 
 Go to `Settings` → `Connections` → `Salesforce Test Env` to set it up.
-
-## How can I tell which Salesforce user my connection is authenticated as?
-
-When you test a connection, Clay displays the Salesforce user (by email) that the connection token is attributed to. To check:
-
-1.  Navigate to `Settings` → `Connections` and select `Salesforce`.
-2.  Click the `…` menu next to the connection you want to test.
-3.  Select `Test Connection`.
-
-Clay will confirm the connection is valid and show the authenticated user's email. This is especially useful for debugging access issues — if objects or fields are missing in Clay, you can immediately check whether the displayed user has the right permissions in Salesforce. For full details, see [Testing your connection](https://university.clay.com/docs/salesforce-integration-overview) in the Salesforce integration overview.
 
 ## Can I reverse my Salesforce enrichment?
 
@@ -208,3 +219,31 @@ Assignment rules in Salesforce fire on every record save — not just when a rec
 **To prevent this**, open the settings for your **Update Record** column and enable the **Disable auto-assignment rules** option. This tells Salesforce to skip assignment rules when Clay saves the record.
 
 **Note:** If your Update Record column was created before this option was added, the toggle may be off. Check your column settings if you are seeing unexpected owner changes after Clay updates a record.
+
+## How do I connect to Salesforce as a specific user (such as an integration user) using User Sign In?
+
+When you connect via **User Sign In**, Clay opens an OAuth popup that authenticates using whatever Salesforce session is active in your browser at that moment. If you are already signed in to Salesforce as your personal account, Clay will connect as you — not as the intended integration user.
+
+To connect as a specific Salesforce user:
+
+1.  Open an incognito or private browser window (this gives you a fresh session with no existing Salesforce login).
+2.  Log into Salesforce as the user you want Clay to connect as (for example, a dedicated service account).
+3.  From that same window, open Clay and go to `Settings` → `Connections`.
+4.  Click `Add connection` (or `Reconnect` on an existing Salesforce connection) and complete the OAuth sign-in flow. Clay will authenticate as whoever is logged into Salesforce in that window.
+5.  Optionally, rename the connection (for example, "SFDC Integration User") so it is easy to identify later.
+
+Make sure the connecting user has **API Enabled** and the correct object and field permissions for everything you plan to read or write in Clay. For guidance on setting up a service account with the right access, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
+
+**Note:** If your Salesforce org uses an Integration User license or API-only license, the User Sign In OAuth flow may not work. Use [Client Credentials](https://university.clay.com/docs/salesforce-integration-overview) instead — that method connects server-to-server without a browser login.
+
+## Why can't I set a Salesforce connection as the default, or change which connection is the default?
+
+Setting or changing the default Salesforce connection is restricted to **workspace admins**. Non-admin members do not see the **Set as default** option in the connection menu.
+
+If you need to change the default connection, ask a workspace admin to:
+
+1.  Go to `Settings` → `Connections` and select `Salesforce`.
+2.  Find the connection you want to make the default.
+3.  Click the `…` menu next to it and select `Set as default`.
+
+To change your own role to admin, ask an existing workspace admin to update it in `Settings` → `Team`.

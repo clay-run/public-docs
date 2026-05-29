@@ -233,7 +233,22 @@ To improve coverage across all your companies:
 
 ### Find People is returning people from the wrong company
 
-This almost always points to a domain-to-company mapping issue. When Clay resolves a domain to a LinkedIn company, it can occasionally surface a parent company, subsidiary, or a generic LinkedIn company page instead of the intended one. Use the company's **LinkedIn URL** as the input instead of the domain to ensure Clay maps to the exact intended entity.
+When Clay resolves a domain to a company, it expands the search to include all company records associated with that domain — parent companies, subsidiaries, acquired entities, and other organizations that share URL elements with the target. This means a search for contacts at a specific company can also return contacts who work at related but distinct entities. This is expected behavior: the contacts are real employees at real companies; they just work at an associated organization rather than the exact one you targeted.
+
+**Reduce future spillover:** Switch to the company's **LinkedIn URL** as the input instead of a domain. LinkedIn URLs map directly to the intended company profile and bypass the domain-expansion lookup. See [Use LinkedIn URLs, not domains, as company identifiers](#use-linkedin-urls-not-domains-as-company-identifiers) above.
+
+**Flag contacts from unrelated companies in your existing results:** Add a formula column that compares the contact's company domain against the source organization's domain using only the core domain name — strip the protocol (`http`/`https`), `www`, and TLD suffixes (`.com`, `.co`, `.pt`, etc.) from both before comparing. Rows where the stripped values don't match are contacts from a related but distinct entity. Set this column as a **run condition** on downstream enrichments to gate processing to matched contacts only.
+
+### "Company Table Data" shows "Missing Input" in the people table
+
+After running Find People from a company list, some rows in the resulting people table may show **Missing Input** in the **Company Table Data** column. This happens when a person's current employer uses a different domain than the company you searched — for example, searching on `broadcom.com` returns someone whose current employer resolves to `vmware.com`. Because the domains don't match, Clay can't link that person back to the original company row, leaving the company record ID blank.
+
+This mismatch most commonly occurs with subsidiaries, acquired companies, and organizations that operate under multiple domains.
+
+**To fix this:**
+
+-   **Switch to LinkedIn company URLs as your company identifier** (recommended). When you provide a LinkedIn company URL instead of a domain, Clay uses the LinkedIn company slug for matching — which handles subsidiary and acquisition relationships more reliably. See [Use LinkedIn URLs, not domains, as company identifiers](#use-linkedin-urls-not-domains-as-company-identifiers).
+-   **Add a Lookup Rows fallback.** In your people table, add a **Lookup single row in other table** column. Set `Table to search` to your original companies table and match on `domain`. For rows where the person's current company domain is populated, this retrieves company fields directly — even when the automatic Company Table Data link is broken. See [Lookup Rows](lookup-rows.md).
 
 ### Getting "Invalid companies provided" error despite having a valid LinkedIn URL
 
@@ -294,6 +309,8 @@ First, check that you're filtering on **Job title keywords** (not just function 
 ### Why isn't someone I found on LinkedIn showing in Clay?
 
 Your search filters may be too specific. Try broadening your criteria incrementally. The profile may also not yet be in the dataset.
+
+**Tip for job title filters:** Someone with a compound title — for example, "MD, Head of Mortgages" — may not appear when you search for "Head of Mortgages." Multi-word title phrases that include stop words like "of" can produce unexpected phrase-matching results. Using a shorter, single-word keyword such as "Mortgages" avoids this and catches a wider range of title variations, including "Head of Mortgages," "MD, Head of Mortgages," and "Mortgages Director."
 
 ### Why does Find Contacts at Company return "No Profile Found"?
 

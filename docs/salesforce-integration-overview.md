@@ -26,6 +26,8 @@ Connect via OAuth as a Salesforce user.
 2.  Click `Add connection` and search for `Salesforce`.
 3.  Under `User Sign In`, complete the OAuth sign-in flow in the browser window that appears.
 
+**Tip:** Clay authenticates as whichever Salesforce user is active in the browser during the OAuth flow. If you need to connect as a specific user — for example, a shared integration or service account rather than your personal Salesforce account — sign in to Salesforce as that user before starting the Clay flow. Opening an incognito or private-browser window lets you do this without signing out of your own Salesforce session. For dedicated integration accounts, the **Client Credentials** method below is often a better fit — it requires no browser sign-in and works with Salesforce Integration licenses.
+
 ### **Client Credentials (Integration User)**
 
 Connect to Salesforce via Client Credentials for server-to-server access. No browser sign-in is required.
@@ -49,10 +51,6 @@ Connect to Salesforce via Client Credentials for server-to-server access. No bro
     -   `Consumer key`: The consumer key from your Salesforce external client app.
     -   `Consumer secret`: The consumer secret from your Salesforce external client app.
 4.  Click `Authenticate` to save the connection.
-
-### Testing a connection
-
-After adding a Salesforce connection, you can verify it from `Settings` → `Connections`. Click **Test** on any Salesforce connection to confirm it is active. The test result displays the Salesforce user attributed to that connection token — so you can confirm which account Clay will use when making API calls. This is especially helpful for debugging permission issues and for verifying that an integration user is configured correctly.
 
 ### **Troubleshooting**
 
@@ -102,6 +100,15 @@ For full instructions on setting up a restricted Salesforce user with field-leve
 -   **Salesforce object:** The type of object to look for in Salesforce.
 -   **List view:** The view to sync into Clay.
     -   Views that are not SOQL-compatible (those that cannot be generated from a SOQL query) have a 2,000-record limit.
+
+**Related (cross-object) fields are not imported**
+
+Salesforce list views can display fields from related objects — for example, a Contact list view can include `Account Name`, which is stored on the Account object. Clay's list view import only pulls **direct fields** on the selected object; related fields are not imported even if they appear as columns in your Salesforce list view.
+
+To get a related field into Clay, use one of these approaches:
+
+1.  **Add a Lookup record column in Clay (fastest).** Use the **Lookup record** enrichment to query the related object using an ID field that _is_ imported. For example, a Contact import includes `AccountId` — use that to look up the Account record and pull `Name` (or any other Account field you need).
+2.  **Create a formula field in Salesforce.** Add a formula text field on the object that copies the related value (for example, a formula field on Contact with the expression `Account.Name`). Once added to the list view in Salesforce, Clay imports it as a direct field. This is useful when you need the value available in multiple Clay tables without a per-row lookup step.
 
 ### `Source` Import records from a Salesforce report
 
@@ -163,6 +170,10 @@ Use this action to create a new record in Salesforce.
 -   **Salesforce object:** The object type to look for in your Salesforce.
 -   **Duplicate rule override:** When enabled and you have a [duplicate rule](https://help.salesforce.com/s/articleView?id=sf.duplicate_rules_map_of_reference.htm&type=5), Clay will bypass the rule and create a new record, even if it duplicates an existing one.
 
+**Tip: Adding contacts or leads to a Salesforce Campaign**
+
+Clay does not have a dedicated "Add to Campaign" action. To add a contact or lead to a Salesforce Campaign, use **Create Record**, select **Campaign Member** as the Salesforce object, and map both the **ContactId** (or **LeadId**) and **CampaignId** fields. If the record is already a campaign member, Salesforce returns a `DUPLICATE_VALUE` error — you can guard against this by first running a **Lookup record** action with "Campaign Member" as the object to check whether the association already exists.
+
 ### `Action` Lookup record
 
 Use this action to find existing records in Salesforce.
@@ -193,6 +204,8 @@ The **Exact match?** toggle controls how Clay queries Salesforce:
 ```sql
 SELECT FIELDS(ALL) FROM Lead WHERE Email = '/Email Column' AND IsConverted = false LIMIT 5
 ```
+
+**Note: blank search values are silently dropped.** When a row's value for one of your Object Fields is blank or empty, Clay omits that field from the search query entirely. If your lookup has multiple Object Fields and only some of them are blank, the query runs using only the fields that still have values — which can produce unexpected results. For example, if you configure Campaign ID and Lead ID as Object Fields and a row's Lead ID is blank, Clay searches only on Campaign ID and can return up to 5 campaign members for that campaign rather than the specific one tied to that row. If all Object Fields are blank for a row, the action fails with a missing-input error. To prevent unintended lookups on rows with missing values, add a **conditional run** on the lookup column to skip rows where the key search field is empty.
 
 ### `Action` Upsert object
 

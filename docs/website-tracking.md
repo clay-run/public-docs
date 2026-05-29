@@ -2,7 +2,7 @@
 title: Web intent
 source_url: https://university.clay.com/docs/website-tracking
 description: Collect visitor information including pages visited, time spent,
-  and traffic sources.
+  and traffic sources. Includes workflow for sending emails to identified visitors.
 last_synced: 2026-04-26T01:40:54.567Z
 ---
 
@@ -52,6 +52,17 @@ This tracking provides insights into how visitors engage with your content and h
     -   For advanced filtering, create filter groups and adjust visit frequency parameters to refine results.
 
 Website visitor data appears in your table grouped by company domain. Since we only display completed visitor sessions, data may be delayed up to 30 minutes after user activity.
+
+## Sending emails to identified website visitors
+
+Once your visitor table is populated, you can enrich those companies to find contact emails and send outbound emails directly from Clay.
+
+**Workflow:**
+
+1.  **Find the right contacts** — in your visitor table, add a **Find People** enrichment to pull relevant people at each visiting company.
+2.  **Get their email addresses** — add an email enrichment (such as the Work Email Waterfall) to retrieve verified work emails for those contacts.
+3.  **Create an email campaign** — from your enriched table, create a Clay email campaign (see the [Email sequencer](https://university.clay.com/docs/email-sequencer) doc for setup steps). Map the email column and draft your message sequence.
+4.  **Launch and let it run** — new visitors matching your tracking filters will flow into the table automatically, keeping your outreach loop always-on.
 
 # Best practices
 
@@ -198,7 +209,7 @@ You can view your credit spend for signals underneath the `Signals` tab of the [
 
 ### Can I track person-level information?
 
-Clay's visitor tracking identifies unique accounts visiting your website, not individuals. Once an account is identified, you can use enrichments to find specific profiles of relevant people you may want to target at those companies.
+Clay's visitor tracking identifies unique accounts visiting your website, not individuals. Once an account is identified, you can use enrichments (like **Find People** and the Work Email Waterfall) to find specific people at those companies and get their email addresses. To send emails to those contacts, see [Sending emails to identified website visitors](#sending-emails-to-identified-website-visitors) above.
 
 ### How do I send emails to my website visitors?
 
