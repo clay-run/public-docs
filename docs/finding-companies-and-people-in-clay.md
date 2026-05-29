@@ -233,7 +233,11 @@ To improve coverage across all your companies:
 
 ### Find People is returning people from the wrong company
 
-This almost always points to a domain-to-company mapping issue. When Clay resolves a domain to a LinkedIn company, it can occasionally surface a parent company, subsidiary, or a generic LinkedIn company page instead of the intended one. Use the company's **LinkedIn URL** as the input instead of the domain to ensure Clay maps to the exact intended entity.
+When Clay resolves a domain to a company, it expands the search to include all company records associated with that domain — parent companies, subsidiaries, acquired entities, and other organizations that share URL elements with the target. This means a search for contacts at a specific company can also return contacts who work at related but distinct entities. This is expected behavior: the contacts are real employees at real companies; they just work at an associated organization rather than the exact one you targeted.
+
+**Reduce future spillover:** Switch to the company's **LinkedIn URL** as the input instead of a domain. LinkedIn URLs map directly to the intended company profile and bypass the domain-expansion lookup. See [Use LinkedIn URLs, not domains, as company identifiers](#use-linkedin-urls-not-domains-as-company-identifiers) above.
+
+**Flag contacts from unrelated companies in your existing results:** Add a formula column that compares the contact's company domain against the source organization's domain using only the core domain name — strip the protocol (`http`/`https`), `www`, and TLD suffixes (`.com`, `.co`, `.pt`, etc.) from both before comparing. Rows where the stripped values don't match are contacts from a related but distinct entity. Set this column as a **run condition** on downstream enrichments to gate processing to matched contacts only.
 
 ### "Company Table Data" shows "Missing Input" in the people table
 
