@@ -65,18 +65,18 @@ To search for open job postings by location, job title, or other criteria, use t
 
 ### How do I check for job openings at each company in my table?
 
-If you have a table of company domains or names and want to pull active job openings for each one, use the **Find Active Job Openings** enrichment column — not a Signal.
+If you have a table of companies and want to pull active job openings for each one, use the **Find Active Job Openings** enrichment column — not a Signal.
 
 **To set this up:**
 
 1.  In your company table, click `Add enrichment` and search for `Find Active Job Openings`.
-2.  Map your company domain to the input field. You can optionally filter by job title keywords, location, or days since posted.
+2.  Map your company LinkedIn URL or company domain to the input field (also accepts a Sales Navigator URL or Sales Navigator Company ID — LinkedIn URL gives the highest accuracy). You can optionally filter by job title keywords or location.
 3.  Enable **Auto-run** on the table (click the ⛭ icon → **Run Settings**) so the enrichment fires automatically whenever you add a new company row.
 4.  To keep job openings refreshed over time, open Table Settings (⛭) → **Run Settings** → toggle on **Re-run columns on a schedule** → select the Find Active Job Openings column → set the frequency to Daily (or as often as you need fresh results).
 
 This gives you both behaviors: new companies you add are enriched automatically, and existing companies are re-checked for new job openings on each scheduled cycle.
 
-**Tip:** The same pattern works for finding people — use the **Find People at Company** enrichment with your company domain to return contacts at each account, then combine auto-run and scheduled re-runs to keep results current.
+**Tip:** The same pattern works for finding people — use the **Find People at Company** enrichment with your company LinkedIn URL or domain to return contacts at each account, then combine auto-run and scheduled re-runs to keep results current.
 
 ### Which enrichment should I use to filter job openings by a specific country or city?
 
