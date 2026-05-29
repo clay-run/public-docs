@@ -11,7 +11,7 @@ Understand AI Tokens
 
 # Understanding AI Tokens
 
-In the world of Large Language Models (LLMs), **tokens** are the fundamental building blocks for processing and generating text.
+In the world of Large Language Models (LLMs), **tokens** are the fundamental building blocks for processing and understanding text.
 
 Think of tokens as small chunks, each typically representing 3-4 characters. A 100-word passage generally breaks down into approximately **125–135 tokens**.
 
