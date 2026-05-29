@@ -89,7 +89,7 @@ No. Functions do not add their own credit or action cost. Credits are consumed b
 
 No. As of General Availability, functions support unlimited rows via passthrough. Functions also include a 10x speedup and fair sharding for parallel execution, so large workloads are distributed efficiently instead of queuing. Prior to GA, Functions had a 50,000-row limit.
 
-**Note:** The function's **history view** displays only the most recent **1,000 rows** at a time. All rows are still fully processed and their results returned to the calling table — the 1,000-row limit applies to what's visible in the live view only, not to what is processed.
+**Note:** Function tables automatically retain only the most recent **1,000 rows** by default — older rows are permanently deleted after their results have been sent back to the calling table. This retention limit applies on all plans. Workspace admins can adjust the number of rows retained via the auto-delete settings on the function table.
 
 ### What's the difference between an input and a column in a function?
 
@@ -190,13 +190,27 @@ The workaround is to create a **formula column** (Merge columns) inside your fun
 
 To access the object's sub-keys downstream, parse it back with `JSON.parse({{Merged Person Data}})`.
 
+### Why aren't the enriched fields from my function visible in Send Data Back?
+
+The Send Data Back column picker only shows fields that have been explicitly added as columns in the function table. Enrichment result fields — including fields from nested functions — don't appear automatically.
+
+To expose them:
+
+1.  Run the function at least once so it returns data. Use **Add test inputs** in the function editor if no real inputs have been sent yet.
+2.  Open a result row in the function table to view its cell details.
+3.  Hover over the enrichment fields you want to send back and click **Add as column** next to each one.
+4.  Those columns now appear in the Send Data Back column picker — select them as outputs.
+5.  On the next run, the calling table will receive those fields.
+
+This applies to nested functions too: if your function calls another function, the inner function's enrichment fields won't be selectable in Send Data Back until you've added them as columns using the steps above.
+
 ### What does "Awaiting Callback" mean on a function column?
 
 When you call a function from a table, that column shows **Awaiting Callback** while the calling table waits for the function to finish processing and return results. The status resolves once the function's **"Send data back"** column runs successfully and sends results back.
 
-If the **"Send data back"** column has a **run condition** that is not met for a particular row, the function will not return data for that row — and the calling table's cell will remain stuck in **"Awaiting Callback" indefinitely**. The status will not fail or time out on its own; it stays waiting for a callback that will never arrive. Downstream columns in the calling table that depend on the function output will also not run for those rows.
+If the **"Send data back"** column has a **run condition** that is not met for a particular row, the function will not return data for that row. The calling table's cell will remain in **"Awaiting Callback"** until a 24-hour timeout expires, at which point it resolves to an error state. Downstream columns in the calling table that depend on the function output will not run until the cell resolves.
 
-**To handle rows that should not send data back:**
+**To prevent downstream columns from waiting:**
 
 -   Add a **run condition** on downstream columns in the calling table so they only run once the function column has returned a value (e.g., only run if `{{Function Column}}` is not empty).
 -   Use `Clay.getCellStatus({{field_name}})` in a formula column to check the function column's status, then use that formula as a run condition on dependent columns.
