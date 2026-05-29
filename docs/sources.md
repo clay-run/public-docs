@@ -21,6 +21,8 @@ Every Clay table starts with a source. You can import customer data from a CSV f
 -   [Webhooks](https://www.clay.com/university/guide/webhook-integration-guide)
 -   [CSV files](https://www.clay.com/university/guide/csv-import-overview)
 
+**Importing from Sales Navigator:** To pull results directly from a Sales Navigator people search URL (up to 2,500 results per import), use the **Find people from external search** source — search for `external search` in the + Add picker, not the standard Find People source. See [Find People in Clay](https://www.clay.com/university/guide/find-people-overview) for step-by-step instructions and URL requirements.
+
 ## Adding sources to table
 
 **Add to a new table:**
