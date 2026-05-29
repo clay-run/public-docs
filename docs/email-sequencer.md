@@ -151,6 +151,16 @@ Our sequencer is powered by Smartlead, but everything runs on Clay credits. You 
 
 When a campaign is created, the `Sync leads to campaign` column pushes 10 rows so you can preview and configure your messages. After launching, the rest of your source table is not pushed automatically. To add all remaining rows, run the `Sync leads to campaign` column manually — click the run button in the column header.
 
+### My "Sync leads to campaign" column is showing a warning. What does it mean?
+
+This usually means the Clay table that the column points to was deleted. Hover over the warning icon to confirm — the error reads *"Destination table was deleted. Please either restore that table from the trash, or create a new Send table data column."*
+
+To fix it, open `Trash` from the bottom-left of your workspace sidebar, find the deleted table, and click `Restore`. The column will reconnect once the table is back.
+
+If the table was permanently deleted from Trash and can't be recovered, create a new campaign: click `Tools` → `Exports` → `Create Clay email campaign` in your source table.
+
+Deleting a campaign through the column header's settings (the **Delete campaign** option) is permanent — it removes the campaign from the sending platform and all associated columns with no recovery option.
+
 ### I updated my campaign, but the changes didn't save.
 
 Be sure to press `Save settings` after making edits. Note: deleting a campaign step saves immediately without requiring a manual save click—all other edits require pressing `Save settings`.
