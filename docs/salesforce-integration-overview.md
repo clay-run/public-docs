@@ -105,6 +105,15 @@ For full instructions on setting up a restricted Salesforce user with field-leve
 -   **List view:** The view to sync into Clay.
     -   Views that are not SOQL-compatible (those that cannot be generated from a SOQL query) have a 2,000-record limit.
 
+**Related (cross-object) fields are not imported**
+
+Salesforce list views can display fields from related objects — for example, a Contact list view can include `Account Name`, which is stored on the Account object. Clay's list view import only pulls **direct fields** on the selected object; related fields are not imported even if they appear as columns in your Salesforce list view.
+
+To get a related field into Clay, use one of these approaches:
+
+1.  **Add a Lookup record column in Clay (fastest).** Use the **Lookup record** enrichment to query the related object using an ID field that _is_ imported. For example, a Contact import includes `AccountId` — use that to look up the Account record and pull `Name` (or any other Account field you need).
+2.  **Create a formula field in Salesforce.** Add a formula text field on the object that copies the related value (for example, a formula field on Contact with the expression `Account.Name`). Once added to the list view in Salesforce, Clay imports it as a direct field. This is useful when you need the value available in multiple Clay tables without a per-row lookup step.
+
 ### `Source` Import records from a Salesforce report
 
 **Inputs:**
