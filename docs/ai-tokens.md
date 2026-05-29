@@ -18,7 +18,7 @@ Think of tokens as small chunks, each typically representing 3-4 characters. A 1
 When working with AI models, you'll encounter two types:
 
 -   **Input tokens**: The prompts you send to the AI.
--   **Output tokens**: The AI\u2019s generated response.
+-   **Output tokens**: The AI's generated response.
 
 **Note:** In Clay, you can control usage by setting a maximum output length in your model configuration.
 
