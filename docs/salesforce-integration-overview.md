@@ -52,6 +52,10 @@ Connect to Salesforce via Client Credentials for server-to-server access. No bro
     -   `Consumer secret`: The consumer secret from your Salesforce external client app.
 4.  Click `Authenticate` to save the connection.
 
+### Testing a connection
+
+After adding a Salesforce connection, you can verify it from `Settings` → `Connections`. Click **Test** on any Salesforce connection to confirm it is active. The test result displays the Salesforce user attributed to that connection token — so you can confirm which account Clay will use when making API calls. This is especially helpful for debugging permission issues and for verifying that an integration user is configured correctly.
+
 ### **Troubleshooting**
 
 -   **`OAUTH_APPROVAL_ERROR_GENERIC` when connecting via User Sign In**
@@ -198,6 +202,12 @@ The **Exact match?** toggle controls how Clay queries Salesforce:
 **Tip:** Name-only matching can be unreliable when names differ in length or format between Clay and Salesforce. For more reliable matching, use unique identifiers like website domain or LinkedIn URL alongside (or instead of) name. If you need multiple fields to match, use the **Lookup records via SOQL** action for full control over the query.
 
 **Note:** Each "field to search for" input accepts one search value at a time. If you add multiple values to a single search field, Clay concatenates them into one string rather than treating them as separate options — for example, adding both `"Acme Corp"` and `"Acme"` to the same "Account Name to search for" field causes Clay to search for `"Acme CorpAcme"` instead of either name. To search across multiple possible values for the same field, use two separate **Lookup record** columns, each with one value.
+
+**Note on converted leads:** When looking up Lead records, Salesforce retains converted leads (records where `IsConverted = true`) as regular records — they are not deleted, just marked converted and linked to the associated contact and account. The Lookup record action returns these converted leads if they match your search criteria. When you click the CRM link for a converted lead in Clay, Salesforce automatically redirects to the associated contact record, which can make it appear as though a contact was returned instead of a lead. To restrict results to unconverted leads only, use the **Lookup records via SOQL** action and add `IsConverted = false` to the WHERE clause:
+
+```sql
+SELECT FIELDS(ALL) FROM Lead WHERE Email = '/Email Column' AND IsConverted = false LIMIT 5
+```
 
 ### `Action` Upsert object
 
