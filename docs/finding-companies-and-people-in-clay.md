@@ -235,6 +235,17 @@ To improve coverage across all your companies:
 
 This almost always points to a domain-to-company mapping issue. When Clay resolves a domain to a LinkedIn company, it can occasionally surface a parent company, subsidiary, or a generic LinkedIn company page instead of the intended one. Use the company's **LinkedIn URL** as the input instead of the domain to ensure Clay maps to the exact intended entity.
 
+### "Company Table Data" shows "Missing Input" in the people table
+
+After running Find People from a company list, some rows in the resulting people table may show **Missing Input** in the **Company Table Data** column. This happens when a person's current employer uses a different domain than the company you searched — for example, searching on `broadcom.com` returns someone whose current employer resolves to `vmware.com`. Because the domains don't match, Clay can't link that person back to the original company row, leaving the company record ID blank.
+
+This mismatch most commonly occurs with subsidiaries, acquired companies, and organizations that operate under multiple domains.
+
+**To fix this:**
+
+-   **Switch to LinkedIn company URLs as your company identifier** (recommended). When you provide a LinkedIn company URL instead of a domain, Clay uses the LinkedIn company slug for matching — which handles subsidiary and acquisition relationships more reliably. See [Use LinkedIn URLs, not domains, as company identifiers](#use-linkedin-urls-not-domains-as-company-identifiers).
+-   **Add a Lookup Rows fallback.** In your people table, add a **Lookup single row in other table** column. Set `Table to search` to your original companies table and match on `domain`. For rows where the person's current company domain is populated, this retrieves company fields directly — even when the automatic Company Table Data link is broken. See [Lookup Rows](lookup-rows.md).
+
 ### Getting "Invalid companies provided" error despite having a valid LinkedIn URL
 
 If you see the error **"Invalid companies provided: please make sure you are using LinkedIn URLs or Company Domains"** but your column already contains LinkedIn URLs, check the URL format. This error occurs when the LinkedIn URL is a **person profile URL** (`linkedin.com/in/<name>`) rather than a company or school page URL — even though the URL itself is valid LinkedIn syntax, the action only accepts company-type identifiers.
