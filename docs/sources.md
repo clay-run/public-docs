@@ -183,6 +183,24 @@ Duplicate the table (or delete and re-add the source). A new source definition s
 
 When adding a new source to an existing table, you must have the appropriate columns set up. For example, to add a `Find company` source, you need professional social URLs or Company Domains columns.
 
+### I see "Limit of 20 sources for source field reached" when adding a source
+
+**Each Clay table supports a maximum of 20 sources.** If you try to add a 21st source, Clay shows the error: *"Limit of 20 sources for source field reached. Please create another table to add more sources."*
+
+This limit applies to all source types — CRM imports, Find People/Companies searches, CSV files, webhooks, and other tables feeding rows in via Send Table Data.
+
+**To continue your workflow with a new source:**
+
+1. **Save your current table as a template** to preserve its column structure and enrichment setup.
+2. **Create a new table from the template.**
+3. **Add your new source to the new table.**
+
+Alternatively, if you no longer need one of the existing sources, you can delete it to free up a slot:
+
+1. Click the source column title in the table.
+2. Click **Sources** → the source name.
+3. Click **Delete source.**
+
 ### **What are the row limits for Clay tables and sources?**
 
 Clay tables have a **50,000-row limit** across all plans. This applies to all sources including CSV files, CRM systems, list builders, webhooks, and signals.
