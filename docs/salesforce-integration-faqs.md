@@ -208,3 +208,31 @@ Assignment rules in Salesforce fire on every record save — not just when a rec
 **To prevent this**, open the settings for your **Update Record** column and enable the **Disable auto-assignment rules** option. This tells Salesforce to skip assignment rules when Clay saves the record.
 
 **Note:** If your Update Record column was created before this option was added, the toggle may be off. Check your column settings if you are seeing unexpected owner changes after Clay updates a record.
+
+## How do I connect to Salesforce as a specific user (such as an integration user) using User Sign In?
+
+When you connect via **User Sign In**, Clay opens an OAuth popup that authenticates using whatever Salesforce session is active in your browser at that moment. If you are already signed in to Salesforce as your personal account, Clay will connect as you — not as the intended integration user.
+
+To connect as a specific Salesforce user:
+
+1.  Open an incognito or private browser window (this gives you a fresh session with no existing Salesforce login).
+2.  Log into Salesforce as the user you want Clay to connect as (for example, a dedicated service account).
+3.  From that same window, open Clay and go to `Settings` → `Connections`.
+4.  Click `Add connection` (or `Reconnect` on an existing Salesforce connection) and complete the OAuth sign-in flow. Clay will authenticate as whoever is logged into Salesforce in that window.
+5.  Optionally, rename the connection (for example, "SFDC Integration User") so it is easy to identify later.
+
+Make sure the connecting user has **API Enabled** and the correct object and field permissions for everything you plan to read or write in Clay. For guidance on setting up a service account with the right access, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
+
+**Note:** If your Salesforce org uses an Integration User license or API-only license, the User Sign In OAuth flow may not work. Use [Client Credentials](https://university.clay.com/docs/salesforce-integration-overview) instead — that method connects server-to-server without a browser login.
+
+## Why can't I set a Salesforce connection as the default, or change which connection is the default?
+
+Setting or changing the default Salesforce connection is restricted to **workspace admins**. Non-admin members do not see the **Set as default** option in the connection menu.
+
+If you need to change the default connection, ask a workspace admin to:
+
+1.  Go to `Settings` → `Connections` and select `Salesforce`.
+2.  Find the connection you want to make the default.
+3.  Click the `…` menu next to it and select `Set as default`.
+
+To change your own role to admin, ask an existing workspace admin to update it in `Settings` → `Team`.
