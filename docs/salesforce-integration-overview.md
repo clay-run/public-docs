@@ -194,6 +194,8 @@ The **Exact match?** toggle controls how Clay queries Salesforce:
 SELECT FIELDS(ALL) FROM Lead WHERE Email = '/Email Column' AND IsConverted = false LIMIT 5
 ```
 
+**Note: blank search values are silently dropped.** When a row's value for one of your Object Fields is blank or empty, Clay omits that field from the search query entirely. If your lookup has multiple Object Fields and only some of them are blank, the query runs using only the fields that still have values — which can produce unexpected results. For example, if you configure Campaign ID and Lead ID as Object Fields and a row's Lead ID is blank, Clay searches only on Campaign ID and can return up to 5 campaign members for that campaign rather than the specific one tied to that row. If all Object Fields are blank for a row, the action fails with a missing-input error. To prevent unintended lookups on rows with missing values, add a **conditional run** on the lookup column to skip rows where the key search field is empty.
+
 ### `Action` Upsert object
 
 Use this action to create a new record or update an existing one.
