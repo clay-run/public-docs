@@ -165,7 +165,15 @@ No. The script runs in the visitor's browser and loads asynchronously, so it won
 
 ### Is visitor tracking data shown in real-time?
 
-No, visitor event data can be delayed up to 30 minutes. This allows the full visitor session to be completed first.
+No. Clay waits for a visitor's session to finish before processing and delivering the data. Sessions are finalized after a period of inactivity, so data can be delayed up to 30 minutes after a visitor's last page view.
+
+This means **same-session personalization is not supported** — if a visitor hits your website and you immediately query your Clay table, that session's data won't be there yet. The information only becomes available after the session ends and the pipeline has processed it.
+
+**What Web Intent is well-suited for:**
+
+-   **Post-session outreach:** Once a completed visit appears in your table, trigger enrichment and sequencer steps to reach relevant contacts at the identified company.
+-   **Return visitor workflows:** If a company has visited before, their data is already in your table. You can use the [Clay API](https://docs.clay.com) to query that table for accounts identified in past sessions and act on it.
+-   **Account-level personalization for known accounts:** Use a prior session's data (already stored in your table) to personalize future visits for returning companies.
 
 ### When will I start getting charged?
 
