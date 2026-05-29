@@ -63,6 +63,13 @@ No. Signals monitor changes at companies or contacts already in your data source
 
 To search for open job postings by location, job title, or other criteria, use the **Find Jobs** source when creating a new table. You can also [schedule it to run on a recurring basis](https://www.clay.com/university/guide/scheduled-sources) (daily, weekly, etc.) so your table stays up to date with the latest postings.
 
+### Which enrichment should I use to filter job openings by a specific country or city?
+
+Use **Find Active Job Openings**, not the PredictLeads **Find open jobs** enrichment, when you need to scope results to a particular country or city.
+
+-   **Find Active Job Openings** has a `Locations` field that accepts comma-separated countries or cities (e.g., `Germany` or `Berlin, United States`).
+-   The PredictLeads **Find open jobs** enrichment only has an `Only jobs tied to a location?` toggle, which excludes jobs with no location tag but cannot filter to a specific place.
+
 ### Why do I see the same company name appear multiple times in my Find Jobs results?
 
 This is expected behavior. **Find Jobs returns one row per job posting**, not one row per company. If a company has three open roles matching your criteria, it will appear as three separate rows — one for each posting. Each row represents a distinct job, and you can see the specific job title and URL in the cell details.
