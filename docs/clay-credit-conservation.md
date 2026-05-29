@@ -67,6 +67,20 @@ Some common API keys you can swap out:
 
 You can add your own API keys when you select the account your enrichment runs on (Paid Feature)
 
+## Choose cost-effective AI models for Use AI and Claygent columns
+
+**How does this save credits?**
+
+When you add a **Use AI** or **Claygent** column, the model you select directly sets the credit cost per row. Clay's default recommendation is **Argon** (3 credits/row for Claygent tasks), which excels at deep research and complex analysis. For simpler tasks — such as formatting, basic classification, or straightforward lookups — switching to a lower-cost model can dramatically reduce per-row spend without sacrificing quality for those use cases.
+
+**How do you implement this?**
+
+When configuring an AI column, open the **Model** dropdown in the column settings and select a more cost-effective option. For example, **GPT 4.1 Nano** costs 0.1 credits/row for content generation (Use AI) and 0.5 credits/row for web research (Claygent) — compared to **Neon** at 2 credits/row and **Argon** at 3 credits/row for Claygent tasks.
+
+As a general rule: match the model to the task complexity. Reserve higher-credit models like Argon for multi-step research tasks where quality matters most; use lower-cost models like GPT 4.1 Nano for high-volume, simpler tasks where efficiency is the priority.
+
+See [How AI is priced](ai-pricing.md) for the full model pricing comparison.
+
 ## Qualify leads before enriching
 
 **How does this help conserve credits?**
