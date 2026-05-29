@@ -347,12 +347,14 @@ Common causes:
 -   `Auto-Update` enabled: Automatic refreshes trigger enrichments.
 -   **AI columns:** Every row processed incurs a cost.
 -   **Duplicate enrichments:** Re-running columns triggers new usage.
+-   **Modified enrichment column configurations:** Editing a column's configuration marks existing results as out-of-date. Without [Keep existing results](table-management-settings.md) enabled, any subsequent run (manual or via auto-run) will re-process all rows—including previously enriched ones—consuming additional credits.
 
 **Prevention tips:**
 
 -   Turn off `Auto-Update` when not needed.
 -   Pause AI columns that aren't providing value.
 -   Check table settings before re-running enrichments.
+-   After modifying an enrichment column's configuration, enable [Keep existing results](table-management-settings.md) to avoid re-running previously enriched rows.
 
 ### What happens when I downgrade my plan?
 
