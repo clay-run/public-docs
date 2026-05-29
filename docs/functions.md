@@ -161,6 +161,17 @@ Every function includes a built-in **"Send data back"** column — the final ste
 
 If a column's data is not appearing in the calling table, check whether that column is selected here — it may exist in the function but be unchecked in this list.
 
+### Why doesn't my function output appear in the formula column's `/` field picker?
+
+When you type `/` in a formula column to reference another column, Clay scans the first **100 rows** of the table to determine which column outputs are available. If your function column has no populated results in those first 100 rows — for example, because the function has only run on rows further down the table — its outputs won't appear in the picker even if they're correctly configured.
+
+**To fix this:**
+
+1.  Confirm the output is selected in your function's **"Choose output data to send"** checklist (see the FAQ above). If the column isn't checked there, no data will return regardless.
+2.  Run the function on at least a few rows so that output values are populated.
+3.  If those populated rows fall past row 100 in the table, sort the table by any populated column (for example, a domain or name column) to bring rows with function results to the top.
+4.  Re-open the formula column and type `/` — the function outputs should now be discoverable.
+
 ### Why aren't fields from a row input available in the "Choose output data to send" checklist?
 
 When you configure a function input as a **"Rows from..."** input (passing an entire row), that row is stored as a source field inside the function. Source fields are excluded from the **"Choose output data to send"** checklist — only the function's top-level data columns (enrichment results, formula columns, and other data columns) appear there.
