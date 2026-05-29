@@ -18,6 +18,8 @@ To inspect cell details:
 1.  Locate the cell you want to inspect.
 2.  Click on the cell to open the cell details panel.
 
+If you re-run a cell while the cell details panel is open, the output automatically refreshes to show the latest data — no need to close and reopen the panel or reload the page.
+
 ## Search within a cell
 
 Quickly find specific data within a cell's outputs using the search feature.

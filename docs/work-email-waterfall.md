@@ -92,6 +92,7 @@ If the cell shows no result, click into it to see which providers were tried and
 -   The row is missing required input data. Check that the contact's full name and company domain are populated.
 -   None of the providers in your waterfall have email data for this person. You can edit the waterfall sequence to add more providers.
 -   The providers ran but returned results that failed validation. Try a less strict validation strategy, or check the individual provider columns (enable them in waterfall settings) to see what was returned.
+-   Your workspace ran out of credits mid-waterfall. When credit limits are hit, remaining providers in the sequence don't execute — click into the cell to see how far the waterfall got before stopping. See [Actions and data credits](actions-data-credits.md) to add more credits.
 
 ### Which email pattern should I use?
 
@@ -100,6 +101,10 @@ The best pattern depends on the companies in your dataset. `first.last@domain.co
 ### Does Infer Email cost credits?
 
 No. `Infer Email` is completely free. The validation step _does_ cost Clay credits, but it is cheaper than running the waterfall without it.
+
+### How much does the Work Email waterfall cost per email?
+
+You only pay for the provider step that successfully finds an email — providers that run and return nothing are not charged. Total credit cost per matched email depends on which provider in the sequence finds a result first: if the first provider succeeds, you pay that provider's cost; if the waterfall tries two or three providers before finding a valid email, you pay for each attempt. Credit costs vary by provider and your plan tier. To reduce per-email spend, enable `Infer Email` — it adds a free first step that can skip paid providers entirely when the naming pattern matches.
 
 ### What happens if Infer Email guesses the wrong email?
 
