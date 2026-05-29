@@ -322,9 +322,11 @@ Actions reset each billing cycle and don't roll over, since they reflect the pla
 
 Data Credits work more like a currency and do roll over. On Launch and Growth plans, unused credits can accumulate up to 2x your monthly credit amount (e.g., a 10,000 credit plan can bank up to 20,000 total). Enterprise customers can roll over up to 15% of their prior year's purchased credits, provided they renew at an equal or higher commitment.
 
-### How do I estimate costs before running an enrichment?
+### How do I estimate what my workflow will cost?
 
-The enrichment panel shows costs before you run:
+**Before purchasing a plan:** Use the [Clay Pricing Calculator](https://www.clay.com/credits-calculator) to scope out how many Actions and Data Credits your workflow is likely to consume.
+
+**Once you have an account:** The enrichment panel shows costs before you run:
 
 -   Actions: Always 1 per result.
 -   Data Credits: Displayed next to each enrichment option.

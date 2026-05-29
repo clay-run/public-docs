@@ -55,6 +55,7 @@ You can import data from:
 13.  Enable the `Import` toggle.
 14.  Add any Opportunity fields you want to filter or segment by — common fields include `Stage`, `Amount`, `Close Date`, and `Owner`.
      -   Opportunity data is associated with your Companies records and becomes available as a filter in your Companies audience.
+     -   Opportunity fields are also available as filters in your People audience. When filtering People by deal attributes, only contacts **directly linked to the deal via OpportunityContactRole** in Salesforce are included — not all contacts at the account that owns the deal. See [Why does filtering my People audience by deal attributes return fewer contacts than expected?](#why-does-filtering-my-people-audience-by-deal-attributes-return-fewer-contacts-than-expected) for the recommended workaround.
 15.  Name the corresponding Clay fields.
 16.  Click `Save and Preview`, then `Confirm`.
 
@@ -107,14 +108,39 @@ Records saved from tables are automatically deduplicated and merged with your ex
 
 ### Entity resolution and deduplication
 
-Clay matches records using LinkedIn URL and email to:
+Clay automatically identifies and merges duplicate records when the same person or company appears across multiple sources (for example, Salesforce and Snowflake).
 
--   **Cross-source deduplication** — merge the same person from multiple sources.
+**For people**, Clay checks identifiers in this priority order:
+
+-   Email address
+-   LinkedIn profile URL
+-   Phone number
+-   External source record ID (for example, a Salesforce Contact ID)
+
+**For companies**, Clay checks:
+
+-   Website or email domain
+-   LinkedIn company URL
+-   External source record ID (for example, a Salesforce Account ID)
+-   Company name (exact match, then fuzzy)
+
 -   **Whitespace detection** — when importing from a Find People or Find Companies search, records that already exist in All People are automatically excluded from the merge. The draft shows a banner with the count of excluded records ("X records from this search are already in the All People list"), and clicking **All people** adds only the net-new contacts.
 
 Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs — org duplicates carry over as-is. Native within-source deduplication is coming.
 
 Records need a high-confidence identifier to match. Auto-enrichment adds `LinkedIn URL` and `CPJ ID` at no cost to improve matching.
+
+### Removing a data source
+
+To disconnect a Salesforce, HubSpot, or Gong source from Audiences:
+
+1.  Open the source's settings page. From the **Add data** panel, click the three-dot menu next to the source and select **Settings**.
+2.  On the settings page, click the three-dot menu (⋮) next to the account name in the **Sync with Audiences** card.
+3.  Select **Disconnect**.
+
+To disconnect a Snowflake import, follow the same steps but select **Disconnect import** instead.
+
+**After disconnecting:** All records that were imported from this source remain in your Audiences, but their sync status is set to **unsynced**. Sync stops immediately. This action is permanent — to reconnect, set up the source again from scratch.
 
 ## Creating an audience
 
@@ -156,7 +182,7 @@ Three Clay enrichments let you move data between a Clay table and your Audience 
 
 -   In any Clay table, click `Add enrichment` and search for:
     -   `Upsert Audiences Record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. Use it to commit data from unsupported integrations (e.g., HubSpot), qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table.
-    -   `Update Audiences Record` writes data from a table row to one or more fields on an existing Audience record. Unlike `Upsert Audiences Record`, it does not create a new record if no match is found. Both actions write only to fields that already exist in your Audience — to create a new custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
+    -   `Update Audiences Record` writes data from a table row to one or more fields on an existing Audience record. Unlike `Upsert Audiences Record`, it does not create a new record if no match is found. Both actions write only to fields that already exist in your Audience — to create a new custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce or Snowflake?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce-or-snowflake) below.
     -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls.
 
 ### Signals
@@ -212,6 +238,8 @@ Map any Clay data or segment membership to Salesforce fields. Examples:
 
 Export settings control whether Clay **creates new Salesforce records** for net-new contacts or **only updates existing ones**.
 
+The **`Create new Salesforce records`** toggle is in your Salesforce source settings under the export section. It is **off by default** — when off, Clay only updates Salesforce records that already have a matching entry in your Audience. Turn it on to allow Clay to create new Contacts or Leads in Salesforce for Audience records that don't yet exist in SFDC. This toggle is admin-only.
+
 Export sync behavior:
 
 -   **Export frequency:** Every 24 hours when write-back is enabled.
@@ -232,7 +260,7 @@ Use Audiences by default for anything you want to reuse, segment on, or build au
 
 Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data into a Clay table from any source, then use `Upsert Audiences Record` to push those records permanently into your audience. This works for any source Audiences doesn't yet natively support.
 
-### How do I create a custom Audience field that isn't tied to Salesforce?
+### How do I create a custom Audience field that isn't tied to Salesforce or Snowflake?
 
 The `+ Add field` option is available in the `Update Audiences Record` column mapping inside a bulk enrichment table:
 
@@ -270,3 +298,32 @@ For this to work, you need both:
 -   Web intent configured as a signal in your Audiences workspace.
 
 **If visitors arrived before your Salesforce sync was connected:** Web intent records added to Audiences before you connected Salesforce may not automatically merge with existing SFDC records. To resolve this, use the **deterministic record matching** option in your Salesforce import settings and select domain as the match key. This matching applies to records coming in after the setting is enabled — it does not retroactively deduplicate records already in Audiences.
+
+### How do I create new Salesforce contacts or leads from an Audience enrichment?
+
+New Salesforce records are not created automatically when you run a bulk enrichment. Record creation is not driven by a Create Contact or Create Lead action inside the enrichment table — it is controlled by the **`Create new Salesforce records`** toggle in your Audiences Salesforce export settings.
+
+To push net-new contacts to Salesforce:
+
+1.  Open your Audiences workspace and go to your Salesforce source settings.
+2.  Under the export section, enable the **`Create new Salesforce records`** toggle. (Admin access required — the toggle is off by default.)
+3.  Confirm your field mappings and save.
+
+Once the toggle is on, Clay will create new Contacts or Leads in Salesforce for any Audience record that doesn't already have a matching SFDC record.
+
+To track which contacts in Salesforce came from a specific Audience enrichment, create a custom Audience text field (for example, an "Audience Source" field set to a label like `"Q2-enrichment"`), and map it to a Salesforce field (a custom field, campaign tag, or lead status) in your export settings. You can then filter on that value directly in Salesforce.
+
+### Why does filtering my People audience by deal attributes return fewer contacts than expected?
+
+When you filter a People audience by opportunity or deal attributes (for example, Stage, Amount, or a custom deal field), Clay only includes contacts that are **directly linked to the matching deal via OpportunityContactRole** in Salesforce — not all contacts at the account that owns the deal.
+
+This means the filter answers "find me everyone who is a contact role on these specific deals," not "find me everyone at companies that have these deals." If your Salesforce org doesn't link contacts to opportunities via OpportunityContactRole, or only a subset of contacts are linked, the resulting People audience will be smaller than you might expect.
+
+**To pull all contacts at accounts with matching deals:**
+
+1.  Build a **Companies** audience filtered by your deal criteria (for example, Stage, Amount, or deal name).
+2.  From your Companies audience, click **Send → Add to workbook** to export the matched accounts.
+3.  In the workbook, write a flag value to a custom Salesforce field on those accounts (for example, a text field set to `"target-campaign-q2"`).
+4.  In your **People** audience, add a filter on **Account → [your flag field] equals your flag value**.
+
+This pulls every contact tied to those accounts, regardless of their OpportunityContactRole status.

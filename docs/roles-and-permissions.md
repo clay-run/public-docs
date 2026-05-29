@@ -79,6 +79,7 @@ The sales rep role is designed for team members who need to set up email account
 -   Create or edit workflows directly in Clay
 
 Admins control which Functions reps can access (via the Functions settings page) and can set per-user credit budgets. See [MCP settings](https://university.clay.com/docs/mcp-settings) for details.
+**If you were assigned the Sales Rep role but need access to the standard Clay workspace**, contact your workspace admin and ask them to change your role. Admins can update roles at `Settings` → `Team`.
 
 **Note:** Currently, we do not support table-level view restriction. Members can view all tables/workbooks once invited to a workspace.
 
@@ -114,7 +115,9 @@ To remove a member from your workspace:
 -   All tables, workbooks, and groups owned by the removed member are automatically transferred to the longest-tenured admin in the workspace (the admin whose admin role was granted earliest).
 -   You cannot remove the last admin from a workspace — at least one admin must remain at all times.
 
-## Edit access levels in a workbook
+## Edit access levels in a workbook _(Enterprise only)_
+
+**Note:** Workbook-level access restriction is available on Enterprise plan workspaces only. Non-Enterprise workspaces do not have the `Edit Access` settings shown below.
 
 Workspace admins can edit access levels for specific workbooks. This helps prevent accidental changes to important tables.
 

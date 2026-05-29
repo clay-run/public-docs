@@ -17,11 +17,15 @@ You can access your table settings via your table settings dropdown.
 -   For **workbooks**: Locate the table dropdown in the bottom workbook navigation bar.
 -   For **tables**: Find the table dropdown in the left section of the top navigation bar.
 
-You can also click the `⛭` icon in the bottom-right corner of your table to open the Run Settings panel directly.
+You can also click the `⛭` icon in the top toolbar to open the Run Settings panel directly.
 
 ## Auto-dedupe
 
 Auto-dedupe continuously monitors a specified column to detect and resolve duplicate values by retaining the oldest row and deleting the duplicates. Blank cells, stale cells, and cells with more than 200 characters are excluded from this process.
+
+**Note:** Auto-dedupe only works with **Text**, **Email**, and **URL** column types. If the selected column uses a different data type (such as Number), auto-dedupe is automatically disabled. Convert the column to **Text** type first to use it for deduplication.
+
+**Note:** The auto-dedupe toggle cannot be changed while the table is running. Stop the run first by clicking the **Stop** button in the run summary panel at the bottom-right of the table. If the toggle remains greyed out after the table has stopped, try a hard refresh (`Cmd+Shift+R` on Mac, `Ctrl+Shift+R` on Windows/Linux) to clear stale browser state.
 
 To enable or disable auto-dedupe:
 
@@ -70,7 +74,9 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
 
 **To enable or disable table-level auto-run:**
 
-1.  Click the `⛭` icon in the bottom-right corner of your table, or click the table name and navigate to **Run Settings**.
+**Note:** The Auto-run toggle cannot be changed while the table is actively running. Stop the run first by clicking the **Stop** button in the run summary panel at the bottom-right. If the toggle remains greyed out after stopping, try a hard refresh (`Cmd+Shift+R` on Mac, `Ctrl+Shift+R` on Windows/Linux) to clear stale browser state.
+
+1.  Click the `⛭` icon in the top toolbar, or click the table name and navigate to **Run Settings**.
 2.  Toggle the `Auto-run` mode.
 3.  If enabling, choose:
     -   `Continue without running` — Don't run existing cells right now.
@@ -82,7 +88,7 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
 
 "Keep existing results" is only available when Auto-run is turned on. To enable it:
 
-1.  Click the `⛭` icon in the bottom-right corner of your table (or click the table name → **Run Settings**).
+1.  Click the `⛭` icon in the top toolbar (or click the table name → **Run Settings**).
 2.  Make sure the `Auto-run` toggle is **on**.
 3.  Check the **"Keep existing results"** checkbox.
     -   With this checked: only empty, errored, or new cells run automatically — cells with existing successful results are skipped.
