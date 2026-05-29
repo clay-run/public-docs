@@ -213,3 +213,23 @@ The `automation.sequences.read` scope is **disabled by default** when connecting
 After reconnecting, the Sequence dropdown will populate with your HubSpot sequences.
 
 **Workaround (without reconnecting):** Switch the Sequence field from **Dropdown** mode to **Text with tokens** mode and enter the sequence ID manually. You can find a sequence's ID in HubSpot under **Automation → Sequences** — it appears in the URL when you open a sequence.
+
+### Why am I getting an `INVALID_DATE` error when writing to a HubSpot Date property?
+
+HubSpot's Date Picker properties require values to be a Unix timestamp in **milliseconds at exactly midnight UTC** (00:00:00 UTC). Any timestamp with a time component is rejected with an error like:
+
+```
+Property values were not valid: [{"isValid":false,"message":"1641038400000 is at 12:0:0.0 UTC, not midnight!","error":"INVALID_DATE",...}]
+```
+
+Clay's **Update object** action passes date values to HubSpot exactly as provided — it does not strip the time component or normalize to midnight automatically.
+
+**Fix:** Add a Formula column that converts the date to midnight UTC in milliseconds, then map that formula column to your HubSpot Date property:
+
+```javascript
+moment.utc({{Your Date Column}}).startOf('day').valueOf()
+```
+
+Replace `{{Your Date Column}}` with the column that holds the date you want to write (for example, the `updatedAt` field from your HubSpot import). This returns the millisecond Unix timestamp HubSpot expects.
+
+**Avoid using the built-in Updated At column as the date source if it drives a run condition.** Clay's **Updated At** column records when a row was last modified. If an enrichment's run condition depends on **Updated At** and that enrichment writes back to HubSpot (which modifies the row), the row update refreshes **Updated At** — triggering the enrichment to run again in an infinite loop. Reference a specific data column (such as the date field from your import) instead.
