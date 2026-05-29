@@ -65,6 +65,15 @@ If two providers in a waterfall both return the same email address, and the firs
 
 Because the waterfall can't predict what any given provider will return, all providers in the sequence still run normally. Only the validation step is skipped when the returned value is already known to be invalid.
 
+## Viewing per-provider results
+
+After a waterfall runs, there are two ways to see which provider found a result:
+
+-   **Per-row trace:** Click into any waterfall cell to see the step-by-step trace for that row — which providers ran, what each returned, and whether the result passed validation. Providers that were skipped because an earlier step already found a result show **Run condition not met**.
+-   **Aggregate hit rates:** Each provider column header shows a percentage — the fraction of rows that provider successfully returned a result for. If the individual provider columns are hidden (grouped under the main waterfall column), click the expand arrow on the waterfall column header to reveal them.
+
+To add a column per row showing the winning provider's name, enable **Output name of successful provider?** in the waterfall's output settings.
+
 ## Waterfall results and data quality
 
 Waterfall enrichments return the first result found from a provider in your sequence — there is no built-in confidence score or confidence level on the output. For enrichments like company employee count, revenue, or company description, providers return a value when they find one; there is no high/medium/low rating attached to the result.
