@@ -92,6 +92,7 @@ If the cell shows no result, click into it to see which providers were tried and
 -   The row is missing required input data. Check that the contact's full name and company domain are populated.
 -   None of the providers in your waterfall have email data for this person. You can edit the waterfall sequence to add more providers.
 -   The providers ran but returned results that failed validation. Try a less strict validation strategy, or check the individual provider columns (enable them in waterfall settings) to see what was returned.
+-   Your workspace ran out of credits mid-waterfall. When credit limits are hit, remaining providers in the sequence don't execute — click into the cell to see how far the waterfall got before stopping. See [Actions and data credits](actions-data-credits.md) to add more credits.
 
 ### Which email pattern should I use?
 
