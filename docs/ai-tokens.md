@@ -18,7 +18,7 @@ Think of tokens as small chunks, each typically representing 3-4 characters. A 1
 When working with AI models, you'll encounter two types:
 
 -   **Input tokens**: The prompts you send to the AI.
--   **Output tokens**: The AI’s generated response.
+-   **Output tokens**: The AI's generated response.
 
 **Note:** In Clay, you can control usage by setting a maximum output length in your model configuration.
 
@@ -36,8 +36,8 @@ When working with AI models, you'll encounter two types:
 
 ### ClayGent Web Research
 
--   **OpenAI**: Requires **Tier 2 or higher** (≥450,000 TPM)
--   **Anthropic**: Requires **Tier 4 or higher** (≥400,000 TPM)
+-   **OpenAI**: Requires **Tier 2 or higher** (≥390,000 TPM)
+-   **Anthropic**: Requires **Tier 4 or higher** (≥390,000 TPM)
 -   **Gemini**:
     -   Requires **Tier 2**, but only works with the **Gemini 2.0 Flash model**
     -   **Gemini 1.5 models** may require additional access through **Vertex AI** or custom tiers
