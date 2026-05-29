@@ -84,6 +84,35 @@ To keep a date comparison up to date without manually re-running the table each 
     moment({{Event Date}}).isAfter(moment({{Today API.dateTime}}).add(6, 'months')) ? "Yes" : ""
     ```
 
-3.  Schedule the HTTP API column to run daily: click the **⛭** icon in the bottom right of your table → **Run Settings** → **Re-run columns on a schedule** → **Only selected columns** → select your HTTP API column → **Day** → **Save changes**. Note: only enrichment/action columns are selectable here — formula columns cannot be directly scheduled, but the formula will update automatically as a downstream effect of the HTTP API column running. See [Scheduled columns](scheduled-columns.md) for full details.
+3.  Schedule the HTTP API column to run daily: click the **⛭** icon in the top toolbar → **Run Settings** → **Re-run columns on a schedule** → **Only selected columns** → select your HTTP API column → **Day** → **Save changes**. Note: only enrichment/action columns are selectable here — formula columns cannot be directly scheduled, but the formula will update automatically as a downstream effect of the HTTP API column running. See [Scheduled columns](scheduled-columns.md) for full details.
 
 Once the HTTP API column fetches a fresh date each day, any formula that references it automatically re-evaluates against the new value.
+
+### **Why does my formula column show stale or greyed-out output even though upstream columns have data?**
+
+When an upstream enrichment column reruns and updates its output, Clay marks any formula referencing it as out of date — even if you just ran the formula. This is expected behavior: the stale indicator means the formula hasn't re-evaluated against the latest data yet.
+
+To refresh the formula output:
+
+-   **With Auto-run on**: The formula re-evaluates automatically as soon as the upstream column finishes. If it hasn't updated, verify that the formula column's own Auto-run toggle is also enabled.
+-   **With Auto-run off**: Right-click the formula column header → **Run column** → **Run N empty or out-of-date rows** to manually trigger a recalculation.
+
+If the formula keeps showing as stale in a loop, an upstream column may have Auto-run enabled and be continuously refreshing its output, which re-marks the formula as out of date each time. See [Table management settings](table-management-settings.md) for strategies to break the cascade (such as disabling Auto-run on the upstream column or enabling "Keep existing results" at the table level).
+
+### **My formula references a column that returns a list — how do I access individual values?**
+
+Enrichment columns often return list-valued data (arrays of results). Standard string operations on a list won't work as expected because the value is an array, not a plain string.
+
+To work with list data in a formula:
+
+-   **Access the first item**: Use zero-based indexing — `{{Column}}?.[0]` returns the first item in the list, `{{Column}}?.[1]` returns the second, and so on.
+-   **Convert the full list to a string**: Use `JSON.stringify({{Column}})` to get a JSON-formatted string representation. Avoid using `.toString()` on complex objects — it returns `[object Object]` instead of the actual data.
+-   **Extract a property from each item**: Use `.map()` — for example, `{{Column}}?.map(item => item.name).join(', ')` extracts the `name` field from each item and joins them as a comma-separated string.
+
+If you're unsure what structure a column's data has, click any cell in that column to open the **Cell details** panel — this shows the raw output and lets you inspect the exact shape before writing your formula.
+
+### **How do I reference the current row's position number in a formula?**
+
+Clay formulas do not have a built-in function that returns a row's position in the table. Although the Excel-compatible `ROW()` function is available through the FormulaJS library, it behaves like its spreadsheet equivalent — it expects a matrix or range argument and returns `null` when called with no arguments in Clay's row-by-row context. `ROWNUMBER()` is also not a valid Clay formula function.
+
+If your workflow requires row-position logic — for example, assigning batch numbers so that rows 1–70 belong to Batch 1, rows 71–140 to Batch 2, and so on — add a dedicated **Number** column and manually populate it with the sequential values you need, then reference that column in your formula (e.g. `{{Batch Number}}`).

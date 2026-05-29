@@ -38,14 +38,14 @@ For example, you could:
 
 ## Sandbox mode
 
-> **Currently in beta — available on Pro and Enterprise plans. Contact support to enable if you don't see it yet. A broader rollout is coming.**
+> **Available on Pro and Enterprise plans. A broader rollout to additional plans is coming.**
 
 When Sculptor builds new columns for your table, it automatically puts the table into [sandbox mode](https://www.clay.com/university/guide/sandbox-mode) first. This gives you a chance to review and validate the new columns before they go live—reducing unintended credit burn and giving you more control over changes.
 
 Once Sculptor adds columns and sandbox mode is active:
 
-1. Review the proposed columns in sandbox mode using a small set of test rows.
-2. Click `Review changes` to see a summary of all structural column updates.
+1. Review the proposed columns in sandbox mode using a small set of test rows. The **All data** tab shows a **View-only** indicator while sandbox is active — this is expected and means your production table is protected while you test.
+2. Click `Review changes` — visible in the tab bar above your table, to the right of the "Test data" / "All data" switcher — to see a summary of all structural column updates.
 3. When ready, click `Publish and run` to apply the changes to your full table, or `Publish and don't Run` to sync the configuration without immediately running all rows.
 
 For more on how sandbox mode works, see [Sandbox mode](https://www.clay.com/university/guide/sandbox-mode).
@@ -90,6 +90,27 @@ While Sculptor is powerful, there are a few things to keep in mind:
 -   **No write capabilities yet** — You can create new tables, but can't modify existing ones.
 -   **Feature gaps** — Signals tables aren't currently supported.
 -   **Data boundaries apply** — Only processes data you provide or data from supported sources and enrichments.
+
+## Troubleshooting
+
+### Suggested column card doesn't appear
+
+When Sculptor proposes a new column but the suggestion card isn't visible, it typically means Sculptor described the action without fully completing it. Sculptor has built-in detection for this situation — the most reliable fix is to **ask Sculptor where the suggestion is** (for example: _"Where is the column you just suggested?"_ or _"I don't see the suggestion card"_). Sculptor will detect that the suggestion is missing and automatically attempt to complete it.
+
+If that doesn't resolve it, a few additional things to try:
+
+-   **Give the column a unique name.** Ask Sculptor to name the column something slightly different (for example, adding `-v2`) to force it to create the column fresh rather than getting stuck on the previous attempt.
+-   **Start a new Sculptor conversation.** If the current chat isn't making progress, start a fresh conversation and restate your goal. You can launch a new Sculptor session from the homepage at [app.clay.com](http://app.clay.com/).
+
+### Sculptor is slow to respond or times out
+
+Sculptor includes your table's schema and field configuration with every message it sends. As your conversation grows, all prior messages are included in each new request — so longer threads mean slower responses. If you're experiencing delays or frequent timeouts:
+
+-   **Start a fresh Sculptor conversation.** This is the most reliable fix. Long chat threads accumulate history that adds to processing time. Starting over from the homepage or a new `Chat with Sculptor` session clears the accumulated context.
+-   **Keep prompts shorter and more focused.** Ask for one thing at a time rather than large multi-step requests — this reduces processing time and tends to produce more accurate results.
+-   **Try a different browser or incognito mode.** This rules out local caching or browser extension issues.
+
+If Sculptor is consistently slow regardless of conversation length, this is a known performance area the team is actively improving.
 
 ## FAQs
 

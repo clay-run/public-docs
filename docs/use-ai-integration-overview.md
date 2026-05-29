@@ -46,12 +46,15 @@ After generating a setup, you can easily edit your original description and rege
 1.  While in a Clay table, click `Add column` and click `Use AI`.
 2.  Switch to the `Configure` tab.
 3.  Select the `Use case`. Choose either web research or content creation.
-    1.  **Web research:** Scrape and analyze websites.
-    2.  **Content creation, manipulation:** Create and manipulate data in your table.
+    1.  **Web research:** Scrape and analyze websites. Provide a website URL in your prompt and Use AI will fetch the page content for the model to analyze.
+    2.  **Content creation, manipulation:** Create and manipulate data in your table. **This mode does not access the web** — if your prompt references a website URL, the model will not visit it; it only processes data that is already in your table columns.
+
+    **Note:** If you want to analyze website content using a Content creation column, first use the **Scrape Website** enrichment to pull the page text into a table column, then reference that column in your AI prompt. For more complex web research — visiting multiple pages, following links, or multi-step browsing — a **Claygent** agent column (accessible via **Add column → [AI section]**) is the most reliable option; it has web browsing built in and works with any AI model.
 4.  Select a `Model` from the dropdown.
     1.  Click `Compare models` to get more detailed information about each model.
 5.  Write a `Prompt`.
     -   For guidance on writing effective prompts, see our doc on [writing prompts](https://www.clay.com/university/guide/ai-metaprompter-guide).
+    -   **Tip:** You can mix static text and column references in the same prompt. Use `{{Column Name}}` syntax only for values that differ from row to row — like a LinkedIn URL or job title that's unique per person. Criteria that stay the same for every row — like a specific industry, keyword, or criterion you're screening for — can be typed directly in the prompt. For example, to check whether each person has ever worked in consulting, write: *"Based on {{Profile URL}}, has this person ever worked in consulting? Return Yes or No."* No "consulting" column needed.
 6.  _(Optional – Content creation, manipulation only)_ Provide context for task.
 7.  Add and define outputs.
     -   **Fields**
@@ -68,6 +71,7 @@ After generating a setup, you can easily edit your original description and rege
             }
             ```
         -   **JSON must be strictly valid — no trailing commas.** Standard JSON does not allow a comma after the last property in an object or array. A stray trailing comma (e.g., `"items": { "type": "string" },` when it is the last property in that object) will cause the error: `Your JSON Schema configuration is invalid. Please try using the "Generate from prompt" button in the column config to create a valid schema, or check your JSON Schema for formatting errors.`
+        -   **Keywords such as `minimum`, `maximum`, `minLength`, `maxLength`, `pattern`, `minItems`, `maxItems`, and `uniqueItems` are not supported and will prevent the column from running.** Remove them from your schema if present. To document a constraint, add it to the field's `"description"` instead — for example, `"description": "Confidence score from 0 to 1"` rather than `"minimum": 0, "maximum": 1`.
         -   To skip writing schema by hand, click **Generate from prompt** to let Clay generate a valid schema from your prompt automatically.
 8.  _(Optional – Content creation, manipulation only)_ Click `Examples` and `Add examples` to show AI what responses should look like.
 
@@ -104,6 +108,8 @@ While you don't need your own GPT, Claude, or Gemini API key to use the AI featu
 1.  Select the desired `Model` from the dropdown.
 2.  Click on the `Account` dropdown and click `+ Add account`.
 
+**Note:** Connecting your own OpenAI API key does not enable OpenAI's Batch API. Clay sends all AI column requests in real-time using the standard API — regardless of which account is connected. You will not get OpenAI's batch pricing (50% discount) or the extended processing window (up to 24 hours). If you need to process a large volume of data at batch pricing, the workaround is to export your data from Clay, run it through the OpenAI Batch API externally, then re-import the results.
+
 ## Using additional or custom LLMs
 
 Use AI supports a fixed set of built-in AI providers (such as GPT, Claude, Gemini, and DeepSeek). Custom or additional LLMs — including open-source models like LLaMA, or models accessed through a proxy such as LiteLLM — cannot be added directly to the Use AI enrichment interface.
@@ -121,6 +127,23 @@ To call a custom or additional LLM from Clay, use the [HTTP API enrichment](http
 -   Each table row generates one API call to your LLM endpoint.
 
 ## Troubleshooting
+
+### Cells showing "Some inputs missing"
+
+When a cell shows **"Some inputs missing"**, one or more column references in your prompt are marked as required but the underlying column is blank for that row. The cell will not run for affected rows.
+
+There are two ways to resolve this:
+
+-   **Fill in the missing data.** Ensure that the columns referenced in your prompt have values for the rows you want to run.
+-   **Make the inputs optional.** Open the column settings (click the column name → **Edit column**), scroll to the prompt section, and toggle off the **Required to run** switch next to each column reference that should be optional. When a reference is optional, the cell will still run even if that column is blank — the empty field is simply omitted from the prompt for that row.
+
+### Cells showing "Budget Credit Limit Reached"
+
+For AI columns using variable-priced models (such as GPT-4.1, Claude Sonnet, or Gemini 2.5 Pro) with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. This sets the maximum number of Clay credits that can be spent on a single row. If the estimated cost of running a row exceeds this limit, the cell shows **"Budget Credit Limit Reached"** and does not complete. Clicking the cell reveals the full message with the estimated cost and your current budget.
+
+To fix this, open the column settings and increase the **Clay Credit Budget** value. Consider the length of your prompt and system prompt when choosing a limit, as longer prompts cost more credits per row.
+
+**Note:** This setting only applies to expensive variable-priced models when using Clay's managed account. Users who connect their own API key are billed directly by the AI provider and this cap does not apply.
 
 ### AI column stops working after editing with Sculptor
 

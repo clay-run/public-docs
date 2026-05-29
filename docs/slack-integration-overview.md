@@ -63,6 +63,27 @@ Use this action to retrieve a list of members from a specified Slack channel.
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
 
+## Permissions & security
+
+When you connect Slack to Clay, Clay requests the following OAuth permissions from your Slack workspace:
+
+**Required scopes** — always requested when connecting:
+
+-   `channels:read` — View the list of public channels and their basic info (name, topic, member count).
+-   `groups:read` — View basic info about private channels the Clay bot has been invited to.
+-   `chat:write` — Send messages as the Clay bot.
+
+**Optional scopes** — enabled by default, but you can decline them at the OAuth authorization screen:
+
+-   `chat:write.customize` — Post messages with a custom bot name and profile picture. Used by the **Bot name** and **Emoji** inputs on the Send message action.
+-   `chat:write.public` — Send messages to public channels the Clay bot has not explicitly joined.
+-   `users:read` — Look up Slack users by their user ID.
+-   `users:read.email` — Look up Slack users by email address. Required by the **Find Slack user by email** action.
+
+Clay does **not** request access to message history, direct messages, file uploads, or workspace administration settings. Clay does not store or harvest Slack data for its own purposes — these scopes are used solely to execute the actions you configure in your tables.
+
+For full security documentation — including SOC 2 Type II reports, data handling practices, and breach notification policies — visit [trust.clay.com](https://trust.clay.com/).
+
 ## Using Markdown with Slack messages
 
 You can add Markdown to any Slack message, either in the Slack integration itself or with the Formula feature.
@@ -115,6 +136,42 @@ You can add Markdown to any Slack message, either in the Slack integration itsel
 
 -   Wrap the emoji name in colons.
 -   Example: `:tada:` → 🎉
+
+## Security and permissions
+
+When you connect Slack to Clay, Clay requests a minimal set of OAuth permissions from your Slack workspace. These are scoped to what the integration actually needs — Clay does not request permissions to read message history, send direct messages, or access files.
+
+### Required scopes
+
+These permissions are always requested and are required for Clay's Slack actions to function:
+
+| Scope | What it allows |
+|---|---|
+| `channels:read` | View the list of public channels in your workspace |
+| `groups:read` | View private channels the Clay bot has been invited to |
+| `chat:write` | Send messages as the Clay bot |
+
+### Optional scopes (enabled by default)
+
+These permissions are requested by default but can be disabled during the connection flow if your security policy requires it:
+
+| Scope | What it allows | Needed for |
+|---|---|---|
+| `chat:write.customize` | Set a custom display name and avatar per message | **Bot name** and **Emoji** inputs on Send message |
+| `chat:write.public` | Send to public channels without the bot being a member first | Posting to channels the Clay bot hasn't joined |
+| `users:read` | View basic profile information about workspace members | Find Slack user by email, Find list of channel members |
+| `users:read.email` | View email addresses of workspace members | Find Slack user by email |
+
+### What Clay cannot access
+
+Clay's Slack connection does **not** include permissions to:
+
+-   **Read message history** — no access to past messages in channels, group messages, or direct messages
+-   **Send or read direct messages** — no DM access to individual users
+-   **Read or upload files** — no file or attachment access
+-   **Administer your workspace** — no admin-level or workspace-management permissions
+
+Clay uses these permissions only to execute the workflows you configure. Clay does not harvest or store Slack data for its own purposes. For a comprehensive overview of Clay's security practices, see the [Clay Trust Center](https://trust.clay.com/).
 
 ## Troubleshooting
 

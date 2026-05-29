@@ -56,7 +56,7 @@ Use this action to update an object in HubSpot.
 **Inputs**
 
 -   **Object type:** The type of HubSpot object to update.
--   **HubSpot Object ID:** The unique identifier of the object to update.
+-   **HubSpot Object ID:** The unique identifier of the object to update. This field does not auto-populate — you must manually select the column containing your HubSpot Record IDs. Click the field and type `/` to open the column picker, then select the appropriate column.
 -   **Ignore blank values (Optional):** When enabled (default), blank values from Clay will be ignored in HubSpot — existing HubSpot values are left unchanged. When disabled, blank values from Clay will overwrite existing HubSpot field values.
 
 ### `Action` Create association
@@ -190,3 +190,46 @@ If a property exists in HubSpot but doesn't get updated when you run the Update 
 **Blank values are silently skipped.** The **Ignore blank values** setting is enabled by default. When enabled, any property field that is empty or null in your Clay table is not sent to HubSpot — the existing HubSpot value remains unchanged with no error shown. If the column you are mapping has no value for a given row, the update for that property is skipped. To override this, open the column settings and disable **Ignore blank values** — but note that doing so will overwrite existing HubSpot data with blank values from Clay.
 
 **A different HubSpot account is selected.** If multiple HubSpot accounts are connected to your workspace (for example, if teammates each added their own HubSpot connection), the Update Object action may be authenticating against a different instance than the one you intend to update. Open the column settings and confirm the HubSpot account shown is the correct one. You can verify by running a **Lookup object** action on the same record — if the property appears updated there, the write reached the right account.
+
+### Why does the HubSpot Object ID field show "Required inputs missing"?
+
+The **HubSpot Object ID** field does not auto-populate — it will always be blank when you first configure the Update object action. Unlike some other fields in Clay, no column is suggested automatically, so the action cannot run until you map a column manually.
+
+**Fix:** Click the HubSpot Object ID field, type `/` to open the column picker, and select the column that contains your HubSpot Record IDs. Any column type — including Number — can be selected.
+
+### Why does the Sequence dropdown show "No options found" in the "Enroll a contact in a sequence" action?
+
+The `automation.sequences.read` scope is **disabled by default** when connecting HubSpot. Without it, Clay cannot retrieve your sequence list, so the Sequence field shows "No options found" even if you have sequences in HubSpot and have access to them.
+
+**Fix:** A workspace admin needs to reconnect the HubSpot account with the required scopes enabled:
+
+1.  Go to `Settings` → `Connected accounts`.
+2.  Find the HubSpot account and click the `[...]` button → **Reconnect**.
+3.  In the scopes selection, enable:
+    -   `automation.sequences.read` — required to populate the Sequence dropdown.
+    -   `automation.sequences.enrollments.write` — required to enroll contacts in a sequence.
+4.  Complete the OAuth flow.
+
+After reconnecting, the Sequence dropdown will populate with your HubSpot sequences.
+
+**Workaround (without reconnecting):** Switch the Sequence field from **Dropdown** mode to **Text with tokens** mode and enter the sequence ID manually. You can find a sequence's ID in HubSpot under **Automation → Sequences** — it appears in the URL when you open a sequence.
+
+### Why am I getting an `INVALID_DATE` error when writing to a HubSpot Date property?
+
+HubSpot's Date Picker properties require values to be a Unix timestamp in **milliseconds at exactly midnight UTC** (00:00:00 UTC). Any timestamp with a time component is rejected with an error like:
+
+```
+Property values were not valid: [{"isValid":false,"message":"1641038400000 is at 12:0:0.0 UTC, not midnight!","error":"INVALID_DATE",...}]
+```
+
+Clay's **Update object** action passes date values to HubSpot exactly as provided — it does not strip the time component or normalize to midnight automatically.
+
+**Fix:** Add a Formula column that converts the date to midnight UTC in milliseconds, then map that formula column to your HubSpot Date property:
+
+```javascript
+moment.utc({{Your Date Column}}).startOf('day').valueOf()
+```
+
+Replace `{{Your Date Column}}` with the column that holds the date you want to write (for example, the `updatedAt` field from your HubSpot import). This returns the millisecond Unix timestamp HubSpot expects.
+
+**Avoid using the built-in Updated At column as the date source if it drives a run condition.** Clay's **Updated At** column records when a row was last modified. If an enrichment's run condition depends on **Updated At** and that enrichment writes back to HubSpot (which modifies the row), the row update refreshes **Updated At** — triggering the enrichment to run again in an infinite loop. Reference a specific data column (such as the date field from your import) instead.

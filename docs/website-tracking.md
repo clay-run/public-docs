@@ -2,7 +2,7 @@
 title: Web intent
 source_url: https://university.clay.com/docs/website-tracking
 description: Collect visitor information including pages visited, time spent,
-  and traffic sources.
+  and traffic sources. Includes workflow for sending emails to identified visitors.
 last_synced: 2026-04-26T01:40:54.567Z
 ---
 
@@ -13,6 +13,8 @@ Collect visitor information including pages visited, time spent, and traffic sou
 Clay's website tracking enables teams to collect visitor information in order to understand web intent — including pages visited, time spent, and traffic sources.
 
 This tracking provides insights into how visitors engage with your content and helps you identify high-intent accounts at the optimal moment.
+
+**Plan availability:** Web intent is available on Trial, Pro, Growth, and Enterprise plans.
 
 ## Using website tracking in Clay
 
@@ -51,6 +53,17 @@ This tracking provides insights into how visitors engage with your content and h
 
 Website visitor data appears in your table grouped by company domain. Since we only display completed visitor sessions, data may be delayed up to 30 minutes after user activity.
 
+## Sending emails to identified website visitors
+
+Once your visitor table is populated, you can enrich those companies to find contact emails and send outbound emails directly from Clay.
+
+**Workflow:**
+
+1.  **Find the right contacts** — in your visitor table, add a **Find People** enrichment to pull relevant people at each visiting company.
+2.  **Get their email addresses** — add an email enrichment (such as the Work Email Waterfall) to retrieve verified work emails for those contacts.
+3.  **Create an email campaign** — from your enriched table, create a Clay email campaign (see the [Email sequencer](https://university.clay.com/docs/email-sequencer) doc for setup steps). Map the email column and draft your message sequence.
+4.  **Launch and let it run** — new visitors matching your tracking filters will flow into the table automatically, keeping your outreach loop always-on.
+
 # Best practices
 
 ### Snippet placement
@@ -79,6 +92,27 @@ These filters help narrow your results to visitors who spend more time on site a
 
 **Use Waterfall instead of Best Match:** `Waterfall` stops after the first provider match, while `Best Match` tests all providers and can cost 5-10 times more. Remember that IPs are cached for 30 days to avoid repeat costs.
 
+### Writing website visits to Salesforce
+
+If you want to persist website session data in Salesforce, the recommended approach is to create a **custom child object** in Salesforce rather than storing a JSON blob directly on the Account record.
+
+**Why a child object instead of a field on Account:**
+
+Storing the full session JSON in a single field on the Account can get hard to manage quickly — especially if the same account visits multiple times. Depending on how the write-back is configured, you risk overwriting the previous value and losing historical session data. A separate record per visit keeps the full history intact and makes Salesforce reporting much easier.
+
+**Recommended Salesforce setup:**
+
+1.  Create a custom object in Salesforce (e.g., `Web_Session__c`).
+2.  Add a **Lookup** field on the custom object pointing to the Account.
+3.  Add a **Long Text Area** field (e.g., `Raw_JSON__c`) for the full session JSON.
+4.  Add dedicated fields for the values your team wants to report on — such as session date, pages visited, referrer, and duration.
+
+**Writing from Clay:**
+
+In your website visitor tracking table, add a Salesforce **Create Record** action targeting your custom object. Map each session's fields to the corresponding Salesforce fields. Each row in your Clay table becomes a new record in Salesforce linked to the matching Account.
+
+This use case — creating a new per-session record in a custom Salesforce object — requires a Clay table with the Salesforce **Create Record** action. Audiences' Salesforce Export Sync is designed for syncing enriched fields and segment membership on to existing Contact and Account records, not for creating new records in custom objects.
+
 # Troubleshooting
 
 ### Verification says "Tracking script not found"
@@ -106,7 +140,7 @@ Update your site's Content Security Policy to allow Clay domains:
 Common causes:
 
 -   The connection is disabled or was just enabled (allow 30 minutes for data to appear).
--   The snippet isn't installed on the relevant pages.
+-   The snippet isn't installed on the relevant pages.\
 -   Connection-level or table-level filters are too restrictive.
 -   Your site hasn't had enough live traffic yet.
 
@@ -128,6 +162,17 @@ Traffic from bots, VPNs, cloud infrastructure, or ISP-owned IPs can appear as co
 
 IP de-anonymization can sometimes return a secondary or infrastructure domain instead of the primary marketing domain. If needed, use Clay enrichments by company name instead of domain to improve data quality.
 
+### Enrich Company returns "Company Not Found" for some web intent companies
+
+Web intent identifies visitors at the company level by de-anonymizing IP addresses, which produces a company domain. When you run **Enrich Company** using that domain as the identifier, some companies — particularly niche, small, or regional businesses — may not have data coverage in the provider's dataset. This is expected behavior, not an error.
+
+**To improve match rates:**
+
+-   **Switch to a LinkedIn URL as the identifier.** Enrich Company accepts a company LinkedIn URL, domain, Sales Navigator URL, or Sales Navigator Company ID — a LinkedIn URL gives higher accuracy than a domain alone. If your web intent table doesn't include a LinkedIn URL column, add an enrichment step to look one up first, then re-run Enrich Company with that URL.
+-   **Use a waterfall of company enrichment providers.** Instead of running a single Enrich Company action, create a custom waterfall column (**Add column → Waterfall**) and add multiple company enrichment providers in sequence. The waterfall stops after the first provider returns a result, so you only pay for the steps that run before a match is found. See [Waterfalls](building-a-data-waterfall.md) for setup details.
+
+Note: Some very niche or newly formed businesses may have no coverage across any provider — in that case, "Company Not Found" is the final outcome regardless of which approach you use.
+
 ### Credit spend higher than expected
 
 The most common cause is using `Best Match` instead of `Waterfall` for de-anonymization. `Waterfall` stops after the first match, while `Best Match` tests all providers and can cost 5-10 times more. Remember that IPs are cached for 30 days to avoid repeat costs.
@@ -142,7 +187,15 @@ No. The script runs in the visitor's browser and loads asynchronously, so it won
 
 ### Is visitor tracking data shown in real-time?
 
-No, visitor event data can be delayed up to 30 minutes. This allows the full visitor session to be completed first.
+No. Clay waits for a visitor's session to finish before processing and delivering the data. Sessions are finalized after a period of inactivity, so data can be delayed up to 30 minutes after a visitor's last page view.
+
+This means **same-session personalization is not supported** — if a visitor hits your website and you immediately query your Clay table, that session's data won't be there yet. The information only becomes available after the session ends and the pipeline has processed it.
+
+**What Web Intent is well-suited for:**
+
+-   **Post-session outreach:** Once a completed visit appears in your table, trigger enrichment and sequencer steps to reach relevant contacts at the identified company.
+-   **Return visitor workflows:** If a company has visited before, their data is already in your table. You can use the [Clay API](https://docs.clay.com) to query that table for accounts identified in past sessions and act on it.
+-   **Account-level personalization for known accounts:** Use a prior session's data (already stored in your table) to personalize future visits for returning companies.
 
 ### When will I start getting charged?
 
@@ -156,7 +209,17 @@ You can view your credit spend for signals underneath the `Signals` tab of the [
 
 ### Can I track person-level information?
 
-Clay's visitor tracking identifies unique accounts visiting your website, not individuals. Once an account is identified, you can use enrichments to find specific profiles of relevant people you may want to target at those companies.
+Clay's visitor tracking identifies unique accounts visiting your website, not individuals. Once an account is identified, you can use enrichments (like **Find People** and the Work Email Waterfall) to find specific people at those companies and get their email addresses. To send emails to those contacts, see [Sending emails to identified website visitors](#sending-emails-to-identified-website-visitors) above.
+
+### How do I send emails to my website visitors?
+
+Because Clay's visitor tracking identifies companies, not specific individuals, reaching out requires a few additional steps:
+
+1.  In your Web Intent table, use the **Find People** enrichment to search for relevant contacts — such as decision-makers or the roles you're targeting — at each identified company.
+2.  Add a **work email waterfall** column to find verified email addresses for those contacts.
+3.  Add a sequencer column (Smartlead, Instantly, Outreach, or a similar tool) and set its run condition to fire when the email column is populated. This automatically enrolls new contacts into your email sequence.
+
+This lets you reach real people at high-intent companies, even though Clay's tracking cannot identify the specific individual who visited your site.
 
 ### How many site visitors can Clay support?
 

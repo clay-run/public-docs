@@ -91,6 +91,8 @@ Phone number enrichments aren't available during the trial period. To access thi
 
 If your team wants to do a trial, each team member can create their own trial account to explore Clay independently.
 
+Trial tables can hold up to **1,000 rows each**. The table view also displays only the first **50 rows** — rows beyond that are blurred in the UI until you upgrade to a paid plan.
+
 ## FAQs
 
 ### How do I track my actions and data credits usage?
@@ -129,3 +131,12 @@ If you're unsure whether you need a higher tier, check your current usage in `Se
 -   **Enterprise plan:** Suitable for enriching 10,000+ records per month
 
 Each fully enriched record typically costs 6-20 data credits (including company and person profile, email, phone number, and custom AI enrichments). The more private API keys you use, the fewer data credits you'll spend per record.
+
+### How long does a refund take?
+
+Payment refunds take up to **10 business days** to appear in your account after Clay initiates them. If 10 business days have passed and the refund still hasn't appeared:
+
+1.  Confirm the funds haven't already been credited to your account.
+2.  Contact [Clay support](https://app.clay.com) and share any available transaction details — an Acquirer Reference Number (ARN) is especially helpful for tracing the payment.
+
+Clay Data Credit refunds (for enrichment actions that return no data) are applied to your account balance immediately after processing.

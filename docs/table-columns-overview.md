@@ -72,6 +72,18 @@ You can switch the data type of your column within your table. To do this:
 -   Tables using phone or email waterfalls can have this limit raised to a maximum of **60** (for that table only).
 -   Note: Enterprise Plans may have custom column limits.
 
+### "Cannot create new computable field due to table size limit"
+
+If you see the error **"Table cannot create new computable field due to table size limit"** when adding a new column or enrichment step, your table has reached the **40 enrichment column limit**. Despite the phrase "table size," this error is about column count — not row count or data volume. It can appear even on a table that has very few or no rows.
+
+Enrichment (action) columns include any column that runs an integration, waterfall, AI enrichment, lookup, or other data action. Your table can hold up to 40 of these before new ones are blocked.
+
+**To resolve this:**
+
+-   **Delete unused enrichment columns.** Click the column header dropdown → `Delete column` for any enrichment columns you no longer need. Hidden enrichment columns still count toward the limit, so open the columns panel to check for any hidden ones.
+-   **Consolidate with Functions.** [Functions](https://university.clay.com/docs/functions) run multiple enrichment steps in a background mini-table and return a single column to your main table — collapsing 20–50 enrichment columns into one. This is the most effective way to stay within the limit while keeping your workflows intact.
+-   **Request a higher limit.** Tables using email or phone waterfalls can have the enrichment column limit raised to 60. Contact support if you need a higher limit for your use case.
+
 ## Create child columns from a parent column
 
 When you enrich data within Clay, your results will be presented as arrays of data, which sometimes includes nested endpoints. You can create individual child columns by mapping specific endpoints from the parent column's enrichment.
@@ -121,6 +133,14 @@ To hide a column:
 
 **Important:** Hiding a column only removes it from the current view — it does **not** disable the column's auto-run setting. A hidden column with auto-run enabled will still run automatically and consume credits whenever rows are added or edited. To stop a column from running, open it in `Edit column` → `Run settings` and toggle auto-run off. To access a hidden column's settings, temporarily unhide it using the columns panel, or switch to a view where it is visible.
 
+### Unhide a column
+
+When a column is hidden, it disappears from the table entirely — there is no header to click on. To bring it back, use the columns panel:
+
+1.  Click the **columns button** in the table toolbar (shown as "N/N columns", for example **12/38 columns**).
+2.  In the panel that opens, find the column you want to restore. Hidden columns display a closed-eye icon next to their name.
+3.  Click the eye icon next to the column to make it visible again.
+
 ## Merge columns
 
 You can merge data from multiple columns into a new column.
@@ -134,7 +154,9 @@ You can merge data from multiple columns into a new column.
 
 ## Dedupe columns
 
-You can also dedupe your rows based a specific column's values.
+You can dedupe your rows based on a specific column's values.
+
+**Note:** Column deduplication removes duplicate **rows** from the table. If you want to deduplicate items within a list stored inside a single cell (for example, an array of domains), use the **Normalize and Deduplicate a List** enrichment instead — see [Clay formatters overview](https://university.clay.com/docs/clay-formatters-integration-overview) for details.
 
 To dedupe a column:
 

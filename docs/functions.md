@@ -144,6 +144,30 @@ Include action columns (enrichments, Claygents, waterfalls) — not static input
 
 Remember: every column you include becomes a required input. More columns mean more inputs users must provide when calling the function.
 
+### How do I configure which columns are returned from my function to the calling table?
+
+Every function includes a built-in **"Send data back"** column — the final step that controls what data is returned to the table calling the function. Opening that column's settings reveals a **Configure** section with a **"Choose output data to send"** checklist. Only columns that are checked will be sent back to the calling table; unchecked columns are not returned, even if they contain data.
+
+**To access and configure this setting:**
+
+1.  Open the function in edit mode (from your Clay homepage → **Functions**, or click the function column in your table and select **Edit function**).
+2.  In the function editor, locate the **"Send data back"** column — the last column in the function.
+3.  Click its column header to open the settings panel.
+4.  Under **Configure → Choose output data to send**, you'll see a checklist labeled **"Selected columns (N of M)"** listing the function's columns.
+5.  Check each column whose values you want returned to the calling table.
+6.  Click **Publish Changes** to apply.
+
+If a column's data is not appearing in the calling table, check whether that column is selected here — it may exist in the function but be unchecked in this list.
+
+### Why aren't fields from a row input available in the "Choose output data to send" checklist?
+
+When you configure a function input as a **"Rows from..."** input (passing an entire row), that row is stored as a source field inside the function. Source fields are excluded from the **"Choose output data to send"** checklist — only the function's top-level data columns (enrichment results, formula columns, and other data columns) appear there.
+
+To return a value that comes in through a row input as function output:
+
+-   **Create a formula column inside the function** that extracts the specific value you need from the row input. That formula column will appear in the "Choose output data to send" checklist as a selectable output.
+-   **Or, map individual column values as inputs instead of passing the whole row.** In the function's input configuration, map each specific value you need as a separate named input — those values are then directly accessible in the function's columns and can be selected as outputs.
+
 ### How do I return a single output field when two enrichment columns each cover the same data but only one runs per row?
 
 If your function uses two enrichment columns that cover the same data (e.g., two person enrichment providers where only one runs per row based on a run condition), the "Send data back" step maps column values by reference — it does not accept inline formulas to merge or transform values within the step itself.
@@ -164,11 +188,25 @@ The workaround is to create a **formula column** (Merge columns) inside your fun
 
 To access the object's sub-keys downstream, parse it back with `JSON.parse({{Merged Person Data}})`.
 
+### Why aren't the enriched fields from my function visible in Send Data Back?
+
+The Send Data Back column picker only shows fields that have been explicitly added as columns in the function table. Enrichment result fields — including fields from nested functions — don't appear automatically.
+
+To expose them:
+
+1.  Run the function at least once so it returns data. Use **Add test inputs** in the function editor if no real inputs have been sent yet.
+2.  Open a result row in the function table to view its cell details.
+3.  Hover over the enrichment fields you want to send back and click **Add as column** next to each one.
+4.  Those columns now appear in the Send Data Back column picker — select them as outputs.
+5.  On the next run, the calling table will receive those fields.
+
+This applies to nested functions too: if your function calls another function, the inner function's enrichment fields won't be selectable in Send Data Back until you've added them as columns using the steps above.
+
 ### Can I share a function with someone outside my workspace?
 
 Yes. Enable "share as template" on the function to generate a shareable link. Anyone with the link can view the function's columns and create a table in their workspace using it.
 
-### Can a function be enabled for MCP tools like ChatGPT or Claude?
+### Can a function be enabled for MCP tools like ChatGPT, Claude, or Glean?
 
 Yes. In the function editor panel there is an option to enable the function for MCP, which makes it accessible via connected AI tools.
 

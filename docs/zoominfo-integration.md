@@ -56,6 +56,13 @@ This is usually due to one of the following:
 
 -   The email or password is incorrect
 -   Your ZoomInfo account doesn't have API access enabled
+-   Your account has API access but lacks permissions for specific endpoints required by Clay
 -   You're using SSO (Single Sign-On), which isn't supported for API
 
-To fix this, please reach out to ZoomInfo support to confirm that your account has API access and to get it unblocked.
+To troubleshoot:
+
+1.  **Verify your credentials** — Check that the email and password you entered are correct.
+2.  **Check API access** — Contact ZoomInfo support to confirm your account has API access enabled and is provisioned for the required API endpoints.
+3.  **Refresh the connection in Clay** — Go to **Settings → Connections**, delete the existing ZoomInfo connection, then re-add it and re-authenticate.
+
+If issues persist, reach out to ZoomInfo support to resolve any remaining account restrictions.

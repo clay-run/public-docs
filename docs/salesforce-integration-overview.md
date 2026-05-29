@@ -26,6 +26,8 @@ Connect via OAuth as a Salesforce user.
 2.  Click `Add connection` and search for `Salesforce`.
 3.  Under `User Sign In`, complete the OAuth sign-in flow in the browser window that appears.
 
+**Tip:** Clay authenticates as whichever Salesforce user is active in the browser during the OAuth flow. If you need to connect as a specific user — for example, a shared integration or service account rather than your personal Salesforce account — sign in to Salesforce as that user before starting the Clay flow. Opening an incognito or private-browser window lets you do this without signing out of your own Salesforce session. For dedicated integration accounts, the **Client Credentials** method below is often a better fit — it requires no browser sign-in and works with Salesforce Integration licenses.
+
 ### **Client Credentials (Integration User)**
 
 Connect to Salesforce via Client Credentials for server-to-server access. No browser sign-in is required.
@@ -61,6 +63,16 @@ This error appears during the OAuth flow and is most commonly caused by one of t
 -   **SSO enforcement:** If SSO is enforced, the OAuth approval screen may be blocked. Try a non-SSO user, or create a non-SSO service account.
 -   **Missing permission:** The user's profile may lack `Approve uninstalled connected apps`. Ask a Salesforce admin to grant it, or connect with a System Administrator account.
 
+### Testing your connection
+
+To verify a Salesforce connection is working — and to confirm which Salesforce user it is authenticated as:
+
+1.  Navigate to `Settings` → `Connections` and select `Salesforce`.
+2.  Click the `…` menu next to the connection you want to test.
+3.  Select `Test Connection`.
+
+Clay will confirm the connection is valid and display the Salesforce user (by email) that the connection token is attributed to. Because all data access in Clay is scoped to the permissions of that authenticated user, seeing which user is in the seat makes it easy to debug access issues — for example, if objects or fields are missing, you can immediately check whether the displayed user has the right permissions in Salesforce.
+
 ### IP allowlisting
 
 If your Salesforce org restricts connections by IP address, you can enable **Use static IP?** when adding or editing your Salesforce connection in Clay. This option is available on **Enterprise plans** and routes all Clay requests through a fixed set of IP addresses.
@@ -89,16 +101,26 @@ For full instructions on setting up a restricted Salesforce user with field-leve
 -   **List view:** The view to sync into Clay.
     -   Views that are not SOQL-compatible (those that cannot be generated from a SOQL query) have a 2,000-record limit.
 
+**Related (cross-object) fields are not imported**
+
+Salesforce list views can display fields from related objects — for example, a Contact list view can include `Account Name`, which is stored on the Account object. Clay's list view import only pulls **direct fields** on the selected object; related fields are not imported even if they appear as columns in your Salesforce list view.
+
+To get a related field into Clay, use one of these approaches:
+
+1.  **Add a Lookup record column in Clay (fastest).** Use the **Lookup record** enrichment to query the related object using an ID field that _is_ imported. For example, a Contact import includes `AccountId` — use that to look up the Account record and pull `Name` (or any other Account field you need).
+2.  **Create a formula field in Salesforce.** Add a formula text field on the object that copies the related value (for example, a formula field on Contact with the expression `Account.Name`). Once added to the list view in Salesforce, Clay imports it as a direct field. This is useful when you need the value available in multiple Clay tables without a per-row lookup step.
+
 ### `Source` Import records from a Salesforce report
 
 **Inputs:**
 
 -   **Report to run:** The report to run in your Salesforce instance.
-    -   Only tabular and matrix reports are supported. Salesforce limits reports to a maximum of 2,000 records.
+    -   Only tabular and matrix reports are supported. Salesforce limits reports to a maximum of 2,000 records. If you need to import more than 2,000 records, use the [Salesforce SOQL source](salesforce-soql.md) instead — SOQL queries bypass this cap and support up to 50,000 records per import.
 -   **Uniqueness fields:**
     -   Since Salesforce reports lack unique identifiers, select specific fields to identify each row. This prevents duplicate records from appearing when the report updates.
         -   **Important:** If you don't select any fields, Clay will use the entire row content as the unique identifier. This can result in many duplicate entries in your Clay table.
         -   **How deduplication works:** When the report re-syncs, Clay compares each incoming record against your chosen uniqueness field(s). If a record with a matching key already exists in the table, Clay **updates that existing row** with the latest data — it does not create a new row. Only records with no matching key get inserted as new rows.
+        -   **Records no longer in the report are not removed:** When the report re-syncs, any records previously imported into your Clay table that no longer appear in the new report run **stay in your table** — they are not deleted automatically. Clay sources are additive only. If you need accounts to be removed from Clay when they fall off the report — for example, to keep a list that reflects accounts qualifying in and out of a segment each day — use [Clay Audiences](audiences.md) instead. With Audiences you connect Salesforce directly and define your criteria as a segment filter; records are added when they match and removed automatically when they no longer qualify.
         -   **Preserving run history / audit logs:** Because re-synced records overwrite the same row, the previous enrichment results and run state are replaced. If you need to keep a history of every sync event, the recommended pattern is to keep your source table deduped on a stable identifier (e.g., `Account.Id`), then add a **Send Table Data** action after your enrichment columns to push a snapshot — including a timestamp column — to a separate history table. This keeps your main table clean while building a full audit trail in the history table. See [Send table data](send-table-data.md) for setup details.
 
 ## Enriching data with Salesforce
@@ -148,6 +170,10 @@ Use this action to create a new record in Salesforce.
 -   **Salesforce object:** The object type to look for in your Salesforce.
 -   **Duplicate rule override:** When enabled and you have a [duplicate rule](https://help.salesforce.com/s/articleView?id=sf.duplicate_rules_map_of_reference.htm&type=5), Clay will bypass the rule and create a new record, even if it duplicates an existing one.
 
+**Tip: Adding contacts or leads to a Salesforce Campaign**
+
+Clay does not have a dedicated "Add to Campaign" action. To add a contact or lead to a Salesforce Campaign, use **Create Record**, select **Campaign Member** as the Salesforce object, and map both the **ContactId** (or **LeadId**) and **CampaignId** fields. If the record is already a campaign member, Salesforce returns a `DUPLICATE_VALUE` error — you can guard against this by first running a **Lookup record** action with "Campaign Member" as the object to check whether the association already exists.
+
 ### `Action` Lookup record
 
 Use this action to find existing records in Salesforce.
@@ -171,11 +197,31 @@ The **Exact match?** toggle controls how Clay queries Salesforce:
 
 **Tip:** Name-only matching can be unreliable when names differ in length or format between Clay and Salesforce. For more reliable matching, use unique identifiers like website domain or LinkedIn URL alongside (or instead of) name. If you need multiple fields to match, use the **Lookup records via SOQL** action for full control over the query.
 
+**Note:** Each "field to search for" input accepts one search value at a time. If you add multiple values to a single search field, Clay concatenates them into one string rather than treating them as separate options — for example, adding both `"Acme Corp"` and `"Acme"` to the same "Account Name to search for" field causes Clay to search for `"Acme CorpAcme"` instead of either name. To search across multiple possible values for the same field, use two separate **Lookup record** columns, each with one value.
+
+**Note on converted leads:** When looking up Lead records, Salesforce retains converted leads (records where `IsConverted = true`) as regular records — they are not deleted, just marked converted and linked to the associated contact and account. The Lookup record action returns these converted leads if they match your search criteria. When you click the CRM link for a converted lead in Clay, Salesforce automatically redirects to the associated contact record, which can make it appear as though a contact was returned instead of a lead. To restrict results to unconverted leads only, use the **Lookup records via SOQL** action and add `IsConverted = false` to the WHERE clause:
+
+```sql
+SELECT FIELDS(ALL) FROM Lead WHERE Email = '/Email Column' AND IsConverted = false LIMIT 5
+```
+
+**Note: blank search values are silently dropped.** When a row's value for one of your Object Fields is blank or empty, Clay omits that field from the search query entirely. If your lookup has multiple Object Fields and only some of them are blank, the query runs using only the fields that still have values — which can produce unexpected results. For example, if you configure Campaign ID and Lead ID as Object Fields and a row's Lead ID is blank, Clay searches only on Campaign ID and can return up to 5 campaign members for that campaign rather than the specific one tied to that row. If all Object Fields are blank for a row, the action fails with a missing-input error. To prevent unintended lookups on rows with missing values, add a **conditional run** on the lookup column to skip rows where the key search field is empty.
+
 ### `Action` Upsert object
 
 Use this action to create a new record or update an existing one.
 
 _Note: In order for upsert to work, you need to have an_ [_external ID_](https://help.salesforce.com/s/articleView?id=000385174&language=en_US&type=1) _on the object._
+
+**External ID value requirements**
+
+Salesforce processes the upsert by placing the external ID value directly in the REST API URL path. Values containing URL-special characters — most commonly forward slashes (`/`) — will cause the upsert to fail with **"Upsert Failed"** and no additional error details.
+
+**Characters to avoid:** `/`, `#`, `?`, `&`, `%`, `+`, and spaces.
+
+**Common example:** A value like `linkedin.com/company/acme-corp` contains forward slashes that Salesforce interprets as URL path separators, causing the upsert to fail.
+
+**Recommended format:** Use only alphanumeric characters, hyphens (`-`), and underscores (`_`). Apply the same sanitized format to the corresponding field in Salesforce so records still match — for example, use `acme-corp` instead of `linkedin.com/company/acme-corp`.
 
 **Inputs:**
 
@@ -258,6 +304,29 @@ Clay Value: `Technology;Healthcare;Finance`
 | Bad value for restricted picklist | Text doesn't match picklist | Check exact spelling & case in Salesforce |
 | Values not updating | Wrong delimiter used | Use semicolons (;), not commas |
 | Field not accepting value | Using display label instead of API name | Verify API name in Salesforce Setup |
+
+### Writing AI-generated values to restricted picklist fields
+
+If you are using an AI column (Claygent or Use AI) to generate values that are then written to a Salesforce restricted picklist via **Update Record**, you may see "bad picklist value" errors even when the output appears correct. AI columns produce free text — a trailing space, different capitalization, or an invisible encoding character is enough for Salesforce to reject the value.
+
+**Fix: use a Select output field to constrain the AI to your exact picklist values**
+
+1.  In your AI column settings, under **Output format**, choose **Fields**.
+2.  For the output field that maps to your Salesforce picklist, click the type selector and choose **Select**.
+3.  Click **+ Add option** and enter each allowed value exactly as it appears in Salesforce (API name, case, and spacing must match).
+4.  The AI will only return one of the defined options, ensuring a character-for-character match every time.
+
+Alternatively, if you are using **JSON Schema** output mode, add an `"enum"` array to the field definition with the exact allowed values:
+
+```json
+"industry": {
+  "type": "string",
+  "description": "Industry classification",
+  "enum": ["Technology", "Healthcare", "Finance"]
+}
+```
+
+Both approaches prevent the AI from producing free-text output that won't match a valid Salesforce restricted picklist option.
 
 ## Batch processing
 

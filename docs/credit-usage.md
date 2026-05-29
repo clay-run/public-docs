@@ -47,7 +47,7 @@ For deeper insights into credit spend within a specific table, you can access th
 _From a table:_
 
 -   Click the `Credit usage` button within the Credits popover and select `Table credit usage`.
--   Click the `Table History` button in the lower right corner of your table.
+-   Click the `History` button in the lower right corner of your table and select `Usage history`.
 
 _From the workspace credit dashboard:_
 
@@ -81,8 +81,18 @@ The credit usage dashboard is organized into tabs, each covering a different sli
 -   **Workbooks** — shows credit spend broken down by folder, workbook, and table. Click the dropdown next to any folder or workbook to drill into its contents. Sort by `Name` or `Credits used`. Click `Export` to download a CSV for offline analysis.
 -   **Integrations** — shows credit spend grouped by integration across your entire workspace, so you can quickly see which data providers are consuming the most credits. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
 -   **Signals** — shows credit spend broken down by individual signal. A totals row (`All Signals`) appears at the top, followed by a per-signal breakdown of `Credits used` and `Actions used`.
--   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
+-   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT, Claude, or Glean, broken down by user. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
 -   **API** — shows programmatic spend generated through Clay's API and Exportly, broken down by user. Like MCP, unattributable spend appears as `Unattributed`.
+
+### Reconciling your credit balance
+
+A few things to know when comparing numbers across the dashboard:
+
+**Each tab shows that channel's spend only.** The Workbooks, Integrations, Signals, MCP, and API tabs do not overlap — each one tracks a separate slice of your workspace activity. To calculate your total workspace credit consumption, sum the top-level totals across all tabs.
+
+**The header popup reflects your remaining balance against your plan's credit allocation.** When you see "X / Y credits available," Y is the credit amount from your current plan (for example, 1.8M for an annual Pro plan) and X is your remaining balance. The implied consumed figure (Y − X) shows how many of your *plan credits* have been spent.
+
+**Extra credits create a gap between the header math and your tab totals.** If your workspace has received credits beyond the plan subscription — for example, referral rewards, admin-added goodwill credits, or courtesy top-ups — those credits are added directly to your balance. When those extra credits are spent on enrichments, the usage appears in the relevant tabs (e.g., Workbooks). However, the plan-based header math (Y − remaining) does not account for those bonus credits, so it will understate actual total consumption. The difference between your tab totals and the header math is typically equal to the extra credits your workspace received and spent.
 
 ## Credit estimates before running
 
@@ -123,5 +133,23 @@ When you import data to existing tables (via Copy Paste from URLs, adding a sour
 -   Gives you the option to toggle auto-run off for the table before importing
 
 This prevents unexpected credit usage when you add new data to tables with existing enrichment workflows.
+
+## Troubleshooting unexpected credit usage
+
+### Credits consumed while auto-run is off
+
+If table-level auto-run is disabled but credits are still being consumed, the most likely causes are manual or team-triggered actions:
+
+-   **Manual column runs** — any Editor on the workspace can right-click a column header and choose **Run column**, which bypasses the auto-run toggle and immediately dispatches enrichments.
+-   **Scheduled columns** — a column may have a recurring schedule that runs independently of the table's auto-run setting. Open **Run Settings → Re-run columns on a schedule** to review which columns are scheduled and disable any you no longer need. See [Ways to save Clay credits](clay-credit-conservation.md) for guidance on auditing scheduled runs.
+-   **Hidden columns with auto-run enabled** — columns that are hidden from view still run if their individual auto-run toggle is on. Open the columns panel to check for hidden columns and disable auto-run for any you don't need actively running. See [Table columns overview](table-columns-overview.md) for details.
+
+To identify what triggered a specific run, use the **Run view** in the [table credit usage dashboard](#understanding-table-specific-credit-usage). Each entry shows whether the run was manual, automated, or scheduled, along with a timestamp.
+
+### Credits consumed after clicking Stop or Cancel
+
+Clicking **Stop** on a running table or canceling a column run does not immediately halt all enrichments. Clay cancels cells that are still queued (not yet dispatched), but any requests already sent to an external data provider will run to completion and consume credits. You may see a brief delay before the table fully halts while these in-progress calls finish.
+
+To avoid unexpected spend before it starts, disable [auto-run](table-management-settings.md) before importing large batches of rows. See [Stopping a run](run-progress.md) for full details on stop and cancel behavior.
 
 **Learn more:** For related information, check out our [credit limit FAQs doc](http://university.clay.com/docs/credit-spend-limits-faq).
