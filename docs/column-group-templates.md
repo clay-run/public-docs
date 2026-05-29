@@ -45,11 +45,3 @@ To update the columns in a template, you need to recreate it:
 3.  Select the updated columns by holding `⌘` (Mac) or `ctrl` (Windows) and clicking each column title.
 4.  `Right-click` on one of the selected titles and select `Save as template`.
 5.  Enter a name and click `Create template`.
-
-## Column references when applying templates
-
-Column group templates store column references as internal field IDs. When you apply a template to a new table, the **Configure** panel shows the template's declared inputs — map each one to the correct column in your destination table before clicking **Save**.
-
-Any reference not declared as a template input retains its original field ID from the source table. Because that field ID doesn't exist in the new table, the affected column displays the reference as **(Deleted column)**.
-
-**If a column formula or run condition shows "(Deleted column)"**, click the **(Deleted column)** chip and reselect the correct column from the dropdown to remap it.
