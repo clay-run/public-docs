@@ -15,10 +15,10 @@ In the world of Large Language Models (LLMs), **tokens** are the fundamental bui
 
 Think of tokens as small chunks, each typically representing 3-4 characters. A 100-word passage generally breaks down into approximately **125–135 tokens**.
 
-When working with AI models, you'll encounter two types:
+When working with AI models, you’ll encounter two types:
 
 -   **Input tokens**: The prompts you send to the AI.
--   **Output tokens**: The AI's generated response.
+-   **Output tokens**: The AI’s generated response.
 
 **Note:** In Clay, you can control usage by setting a maximum output length in your model configuration.
 
@@ -44,9 +44,9 @@ When working with AI models, you'll encounter two types:
 
 ## Upgrade API tier
 
-If you need higher token limits or access to advanced features, you'll need to upgrade your API tier with your chosen provider.
+If you need higher token limits or access to advanced features, you’ll need to upgrade your API tier with your chosen provider.
 
-Here's how to find more information on upgrading, with each major provider.
+Here’s how to find more information on upgrading, with each major provider.
 
 -   [OpenAI](https://platform.openai.com/docs/guides/rate-limits/usage-tiers#usage-tiers)
 -   [Anthropic](https://docs.anthropic.com/en/api/rate-limits)
@@ -62,14 +62,15 @@ Each platform provides tools to track your usage:
 
 ## AI pricing in Clay
 
-When using AI features in Clay, you'll consume both **Actions** and **Data Credits**:
+When using AI features in Clay, you’ll consume both **Actions** and **Data Credits**:
 
 -   **Actions**: Each AI enrichment consumes 1 Action (platform orchestration work)
 -   **Data Credits**: Cost varies by model—Clay offers both fixed and variable AI pricing
 
 Clay uses two pricing structures for AI models:
 
--   **Fixed pricing**: A flat number of data credits per task (applies to most models, including Clay's own models like Neon, Helium, and Argon)
+-   **Fixed pricing**: A flat number of data credits per task (applies to most models, including Clay’s own models like Neon, Helium, and Argon)
+-   **Fixed pricing**: A flat number of data credits per task (applies to most models, including Clay’s own models like Neon, Helium, and Argon)
 -   **Variable pricing**: Data credits based on actual token usage plus a 20% premium (applies to advanced reasoning models used for sophisticated web research)
 
 You can control AI spending by:
@@ -83,9 +84,9 @@ To learn more about how AI is priced in Clay, see our guide on [how AI is priced
 
 ## Clay credits vs. personal API keys
 
-When you're using Clay's AI tools, you have two options for managing your API access: using [Clay credits](https://www.clay.com/university/guide/credits) or connecting your own personal API keys.
+When you’re using Clay’s AI tools, you have two options for managing your API access: using [Clay credits](https://www.clay.com/university/guide/credits) or connecting your own personal API keys.
 
-Each option has different benefits and considerations in terms of cost, convenience, and management requirements. Let's explore these options:
+Each option has different benefits and considerations in terms of cost, convenience, and management requirements. Let’s explore these options:
 
 ### Clay credits
 
@@ -100,4 +101,4 @@ Each option has different benefits and considerations in terms of cost, convenie
 -   Requires **meeting provider-specific tier requirements**
 -   You manage your own API billing directly with the provider
 
-**Note:** When using a personal API key, price breakdowns won't appear in the Clay UI. You'll need to monitor your usage and upgrade tiers manually.
+**Note:** When using a personal API key, price breakdowns won’t appear in the Clay UI. You’ll need to monitor your usage and upgrade tiers manually.
