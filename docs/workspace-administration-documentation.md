@@ -296,7 +296,7 @@ SSO only applies to users whose email address matches your verified domain. Team
 
 ## **User provisioning**
 
-Clay does not automatically provision users through SSO. To onboard a new team member:
+Clay does not add users to your workspace automatically through SSO — there is no SCIM or domain-join provisioning for workspace membership. If an uninvited user with your email domain signs in via SSO, they will authenticate successfully and a Clay account will be created for them, but they will not be added to your enterprise workspace. To onboard a new team member:
 
 1.  Invite them to your Clay workspace first via `Settings` > `Team` > `+ Invite`.
 2.  Have them sign in using SSO — they will be authenticated and placed into the correct workspace.

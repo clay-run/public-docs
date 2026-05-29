@@ -30,9 +30,11 @@ _Note: Personal email addresses significantly improve match rates when syncing t
     -   Note: Contact search through Clay (CPJ) is currently restricted to US-only contacts for compliance reasons
 2.  **Choose your connected account** on LinkedIn or Meta and prepare your data before mapping:
     -   LinkedIn has character limits for certain fields. If needed, add a formula column to shorten longer job titles for better match rates.
+    -   **Note:** Ad Sync tables support a more limited set of column types and formula functions than regular Clay tables. For complex transformations (such as domain normalization), prepare the data upstream in a regular table first, then use that table or a Clay Audience as the source for your Ad Sync.
 3.  **Map columns** for the selected platform and click `Continue`. Not every field is required, but these combinations are critical for match rates:
     -   **For contacts:** Hashed email + first name/last name (required for optimal matching)
     -   **For accounts:** Company name + company website (required for optimal matching)
+    -   **Note:** When syncing a LinkedIn **Account list**, a **Company URL** field is also available in the mapping step and can improve match rates. This field does not appear for Contact list audiences — LinkedIn does not support company URL matching for contacts.
 4.  **Review your audience insights and quality summary**.
     -   Check your estimated match rate and audience size before syncing.
     -   Make adjustments to your table if needed (for example, narrowing down to specific job titles or industries) and re-run your export.
@@ -111,6 +113,10 @@ Each record exported or synced consumes 1 action. Data credits apply for any enr
 ### **What are the limitations?**
 
 The 50,000 row limit applies to ad audiences exported from tables. For larger audiences, create multiple tables and attach multiple audiences to your campaigns in the ad platform.
+
+### **Can I edit the field mapping after setting up an Ad Sync?**
+
+No. Field mapping is configured when you create the Ad Sync and cannot be changed afterward. Deactivating an Ad Sync places it in read-only history — it does not unlock the mapping for editing. To use a different field mapping, deactivate the current sync and create a new Ad Sync with your updated configuration.
 
 ### **How long does it take for audiences to be created?**
 

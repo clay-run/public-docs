@@ -44,9 +44,13 @@ In the bulk enrichment settings, you can adjust several options:
 -   `Test data`: Add rows to test your enrichments before running the full source.
 -   `Export data`: Set up your export destination.
     -   This could be Salesforce, Google Sheets, Snowflake, etc.
--   `Deletion criteria`: Single column or conditional rules.
-    -   You can also `Archive deleted rows` for up to 30 days, meaning they will remain indexed and searchable.
--   `Run starting point`: Decide whether to clear rows already in the test table and rerun them.
+-   `Deletion criteria`: Choose when a row is considered complete and automatically deleted. This setting is required — leaving it unconfigured shows an **Incomplete configuration** error that prevents the run from starting.
+    -   **Single column** — Deletes the row once a selected column has run, or if any conditional rules determine the column doesn't need to run. After selecting this option, use the **Select field** dropdown to pick the specific column that signals a row is complete and ready to be deleted or archived. Typically this is your export action column — for example, the column that adds a row to Google Sheets.
+    -   **Conditional rules** — Combine multiple rules or columns to trigger deletion.
+    -   `Archive deleted rows` — When enabled, deleted rows are stored for up to 30 days and can be downloaded as a CSV. This toggle is off by default.
+-   `Run starting point`: Choose how to handle rows already in the table when the run begins.
+    -   **Continue where you left off** — Finishes enriching rows already in the table, then continues with the rest of the source.
+    -   **Start from the beginning** — Clears rows already in the table and reruns everything from the source. Note: restarting will cost credits again for previously enriched rows.
 
 ## Run Setup settings (Audiences)
 
