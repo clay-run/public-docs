@@ -157,7 +157,7 @@ Three Clay enrichments let you move data between a Clay table and your Audience 
 
 -   In any Clay table, click `Add enrichment` and search for:
     -   `Upsert Audiences Record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. Use it to commit data from unsupported integrations (e.g., HubSpot), qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table.
-    -   `Update Audiences Record` writes data from a table row to one or more fields on an existing Audience record. Unlike `Upsert Audiences Record`, it does not create a new record if no match is found. Both actions write only to fields that already exist in your Audience — to create a new custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
+    -   `Update Audiences Record` writes data from a table row to one or more fields on an existing Audience record. Unlike `Upsert Audiences Record`, it does not create a new record if no match is found. Both actions write only to fields that already exist in your Audience — to create a new custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce or Snowflake?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce-or-snowflake) below.
     -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls.
 
 ### Signals
@@ -233,7 +233,7 @@ Use Audiences by default for anything you want to reuse, segment on, or build au
 
 Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data into a Clay table from any source, then use `Upsert Audiences Record` to push those records permanently into your audience. This works for any source Audiences doesn't yet natively support.
 
-### How do I create a custom Audience field that isn't tied to Salesforce?
+### How do I create a custom Audience field that isn't tied to Salesforce or Snowflake?
 
 The `+ Add field` option is available in the `Update Audiences Record` column mapping inside a bulk enrichment table:
 
