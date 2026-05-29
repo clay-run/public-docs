@@ -174,6 +174,10 @@ Use this action to create a new record in Salesforce.
 -   **Salesforce object:** The object type to look for in your Salesforce.
 -   **Duplicate rule override:** When enabled and you have a [duplicate rule](https://help.salesforce.com/s/articleView?id=sf.duplicate_rules_map_of_reference.htm&type=5), Clay will bypass the rule and create a new record, even if it duplicates an existing one.
 
+**Tip: Adding contacts or leads to a Salesforce Campaign**
+
+Clay does not have a dedicated "Add to Campaign" action. To add a contact or lead to a Salesforce Campaign, use **Create Record**, select **Campaign Member** as the Salesforce object, and map both the **ContactId** (or **LeadId**) and **CampaignId** fields. If the record is already a campaign member, Salesforce returns a `DUPLICATE_VALUE` error — you can guard against this by first running a **Lookup record** action with "Campaign Member" as the object to check whether the association already exists.
+
 ### `Action` Lookup record
 
 Use this action to find existing records in Salesforce.
