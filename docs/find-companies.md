@@ -70,3 +70,19 @@ Each result includes one or more **Structured Location** entries in the cell det
 Founded year is not available as a filter when building a `Find Companies` search — you can't narrow results by founding date before importing.
 
 However, `Find Companies` automatically includes a **Founded** column in your table showing the founding year for each company. Once you've imported your results, you can filter or sort that column to focus on companies founded within a specific range — for example, filtering to companies founded after 2020 to target early-stage startups.
+
+### Does importing from Find Companies cost credits?
+
+**No, unless you use technographics filters.** Importing companies using standard filters — industry, size, location, revenue, company type, AI filters — consumes no Actions and no Data Credits.
+
+If you enable **technographics filters**, each company row that matches your criteria costs **3 Data Credits**.
+
+Any enrichments you add to the table afterward (e.g., finding emails, enriching headcount) consume their own Actions and Data Credits as usual — only the import itself is free.
+
+### Why does my table show fewer rows than the preview count?
+
+**The import may still be in progress.** Find Companies imports process asynchronously — rows are added in batches. If you check right after clicking Import, the row count will be lower than the final total. Wait a minute and refresh to see the complete count.
+
+If the count still doesn't match after the import finishes, the **preview count** (e.g., "Showing 50 of 39,869 results") is an estimate from the search index, not an exact figure. The actual import can return a slightly different total due to index timing between when the count was retrieved and when the rows were fetched — this is normal.
+
+Also check your **Limit results** setting: the import won't exceed whatever limit you've configured (default 10,000).
