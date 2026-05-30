@@ -3,8 +3,8 @@ title: Run progress
 source_url: https://university.clay.com/docs/run-progress
 description: Clay provides multiple ways to track and monitor run progress
   across your tables, including how to manually trigger unrun enrichment cells,
-  run enrichments on a specific subset of rows, and troubleshoot cells stuck in
-  Queued status.
+  run enrichments on a specific subset of rows, troubleshoot cells stuck in
+  Queued status, and diagnose enrichments that aren't triggering automatically.
 last_synced: 2026-04-26T01:40:34.620Z
 ---
 
@@ -145,3 +145,21 @@ This frequently happens when using a template or pre-built workflow where enrich
 3.  Once the required input data is in place, right-click the enrichment column header → **Run column** → **Run [N] empty or out-of-date rows** to re-process those cells.
 
 > **Tip:** Clay's [Sculptor](sculptor.md) can analyze your table structure and identify what's missing. Click **Chat with Sculptor** in the top-right corner of your table.
+
+## Troubleshooting: enrichments not triggering automatically despite auto-run being enabled
+
+If your enrichment columns are configured with auto-run enabled but cells still show as out-of-date and nothing runs automatically, check whether the **table itself** is in Manual mode.
+
+**The table-level Auto-run setting is the master switch.** When the table is in Manual mode, the top navigation bar displays a **Manual** badge — and no column in that table will run automatically, regardless of how individual column auto-run settings are configured.
+
+To re-enable automatic enrichment:
+
+1.  Click the `⛭` icon in the top toolbar (or click the table name → **Run Settings**).
+2.  Toggle **Auto-run** on.
+3.  Choose:
+    -   **Update cells** — immediately queue all out-of-date cells to run.
+    -   **Continue without running** — leave existing stale cells as-is and only auto-run future changes.
+
+After enabling table-level auto-run, column-level settings take effect: columns with auto-run on will trigger automatically; columns with auto-run off will still require a manual trigger.
+
+For the full auto-run decision tree and advanced options (conditional runs, "Keep existing results"), see [Table management settings](table-management-settings.md).

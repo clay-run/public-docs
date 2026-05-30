@@ -2,7 +2,8 @@
 title: Formulas
 source_url: https://university.clay.com/docs/formula-generator
 description: Generate formulas with AI to transform your data. Includes how to
-  use today's date in a formula and keep date comparisons current automatically.
+  use today's date in a formula, pull error messages from action columns with
+  getCellErrorMessagePreview(), and keep date comparisons current automatically.
 last_synced: 2026-04-26T01:40:01.780Z
 ---
 
@@ -54,6 +55,7 @@ Clay formulas are powered by **Clayscript**, a JavaScript-based language that ev
 -   **Moment.js**: Use [Moment.js](https://momentjs.com) with `moment` for powerful date and time operations.
 -   **Excel and Google Sheets functions**: Clay supports hundreds of familiar spreadsheet functions like `VLOOKUP`, `IF`, `SUM`, `CONCATENATE`, and many more through the [FormulaJS](https://formulajs.info) library.
 -   **Column references**: When you reference a column like {{Email}}, Clay automatically passes the value from that column into your expression.
+-   **Clay utilities**: A set of Clay-specific helper functions under the `Clay.*` namespace for reading cell metadata — for example, `Clay.getCellErrorMessagePreview()` and `Clay.getCellStatus()`.
 
 ### FAQs
 
@@ -88,31 +90,21 @@ To keep a date comparison up to date without manually re-running the table each 
 
 Once the HTTP API column fetches a fresh date each day, any formula that references it automatically re-evaluates against the new value.
 
-### **Why does my formula column show stale or greyed-out output even though upstream columns have data?**
+### **How do I pull an error message from an action column into another column?**
 
-When an upstream enrichment column reruns and updates its output, Clay marks any formula referencing it as out of date — even if you just ran the formula. This is expected behavior: the stale indicator means the formula hasn't re-evaluated against the latest data yet.
+Use `Clay.getCellErrorMessagePreview()` in a formula column to capture the error text from any action (enrichment) cell that failed:
 
-To refresh the formula output:
+```javascript
+Clay.getCellErrorMessagePreview({{Column Name}})
+```
 
--   **With Auto-run on**: The formula re-evaluates automatically as soon as the upstream column finishes. If it hasn't updated, verify that the formula column's own Auto-run toggle is also enabled.
--   **With Auto-run off**: Right-click the formula column header → **Run column** → **Run N empty or out-of-date rows** to manually trigger a recalculation.
+This returns up to **300 characters** of the error message — the same text shown when you hover over a failed cell. Messages longer than 300 characters are truncated at 297 characters and end with `"..."`.
 
-If the formula keeps showing as stale in a loop, an upstream column may have Auto-run enabled and be continuously refreshing its output, which re-marks the formula as out of date each time. See [Table management settings](table-management-settings.md) for strategies to break the cascade (such as disabling Auto-run on the upstream column or enabling "Keep existing results" at the table level).
+A few important notes:
 
-### **My formula references a column that returns a list — how do I access individual values?**
+-   **The formula preview sidebar will show nothing** — this is expected. `Clay.*` functions are evaluated on the backend and cannot run in the preview. Save the column and the values will populate.
+-   **Only works for action (enrichment) columns that have errored.** Returns empty for formula columns, non-errored cells, and cells that have never run.
+-   **Only captures errors from cells run on or after April 28, 2026.** Errors from before that date return empty.
+-   **Error message text is not guaranteed to be stable** across Clay releases. If you need to branch on error *type* (not message text), use `Clay.getCellStatus()` instead for more reliable conditional logic.
 
-Enrichment columns often return list-valued data (arrays of results). Standard string operations on a list won't work as expected because the value is an array, not a plain string.
-
-To work with list data in a formula:
-
--   **Access the first item**: Use zero-based indexing — `{{Column}}?.[0]` returns the first item in the list, `{{Column}}?.[1]` returns the second, and so on.
--   **Convert the full list to a string**: Use `JSON.stringify({{Column}})` to get a JSON-formatted string representation. Avoid using `.toString()` on complex objects — it returns `[object Object]` instead of the actual data.
--   **Extract a property from each item**: Use `.map()` — for example, `{{Column}}?.map(item => item.name).join(', ')` extracts the `name` field from each item and joins them as a comma-separated string.
-
-If you're unsure what structure a column's data has, click any cell in that column to open the **Cell details** panel — this shows the raw output and lets you inspect the exact shape before writing your formula.
-
-### **How do I reference the current row's position number in a formula?**
-
-Clay formulas do not have a built-in function that returns a row's position in the table. Although the Excel-compatible `ROW()` function is available through the FormulaJS library, it behaves like its spreadsheet equivalent — it expects a matrix or range argument and returns `null` when called with no arguments in Clay's row-by-row context. `ROWNUMBER()` is also not a valid Clay formula function.
-
-If your workflow requires row-position logic — for example, assigning batch numbers so that rows 1–70 belong to Batch 1, rows 71–140 to Batch 2, and so on — add a dedicated **Number** column and manually populate it with the sequential values you need, then reference that column in your formula (e.g. `{{Batch Number}}`).
+There is no `getCellErrorMessage()` function — the full un-truncated error message is not available in formulas. The 300-character preview is the only error message content accessible via formula.

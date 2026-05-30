@@ -38,12 +38,12 @@ To change your account password:
 -   Visit your `Settings` and head to the `Account` section.
 -   Open the `Security` tab under `Your profile`.
 -   Click `Change password`. A magic link will be sent to your registered email address.
-    -   _Note: This option is available only if you signed in using a password and not via an authentication service such as Google or SSO._
+    -   _Note: This option is available only if you signed in using a password and not via an authentication service such as Google or SSO. If you signed up with Google and want to create a password, see [Switch from Google login to email and password](#switch-from-google-login-to-email-and-password) below._
 -   Follow the instructions in the email to securely update your password.
 
 ## **Switch from Google login to email and password**
 
-Switching your login method from Google to email and password cannot be done through your account settings — it requires a support action.
+If you signed up with Google and want to create a password so you can log in with your email and password instead, this cannot be done through your account settings — it requires a support action.
 
 To request the change:
 
@@ -287,6 +287,7 @@ The typical setup process:
 -   All users whose email address is on your verified domain are required to sign in through SSO. The Clay login page redirects those users to your SSO provider automatically.
 -   Google OAuth sign-in is disabled for users on your domain. Clicking the **Sign in with Google** button on the login page will return an error (`Google OAuth is disabled for this account`) — this button uses Google OAuth, which is a separate authentication path from SSO.
 -   SSO is configured at the email domain level — if your organization uses multiple Clay workspaces, users on your domain will be routed through SSO for all of them.
+-   Clay only supports login initiated from the Clay login page — signing in directly from your IdP dashboard (for example, clicking the Clay tile in your Okta launcher) is not supported and will return an `Unable to login` error.
 
 **How SSO users should sign in:** On the Clay login page, type your **email address** into the email field and click **Continue** — do **not** click the `Sign in with Google` button. Entering your email triggers domain detection, which redirects you to your SSO provider automatically.
 

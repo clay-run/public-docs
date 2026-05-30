@@ -89,6 +89,8 @@ No. Functions do not add their own credit or action cost. Credits are consumed b
 
 No. As of General Availability, functions support unlimited rows via passthrough. Functions also include a 10x speedup and fair sharding for parallel execution, so large workloads are distributed efficiently instead of queuing. Prior to GA, Functions had a 50,000-row limit.
 
+**Note:** The function's **history view** displays only the most recent **1,000 rows** at a time. All rows are still fully processed and their results returned to the calling table — the 1,000-row limit applies to what's visible in the live view only, not to what is processed.
+
 ### What's the difference between an input and a column in a function?
 
 Inputs are the values that change from table to table — typically identifiers like a company domain, a person's full name, or a LinkedIn URL. You define them when saving the function, and map them when calling the function from a different table. Columns that aren't marked as inputs are fixed enrichment logic that runs the same way every time.
@@ -159,6 +161,17 @@ Every function includes a built-in **"Send data back"** column — the final ste
 
 If a column's data is not appearing in the calling table, check whether that column is selected here — it may exist in the function but be unchecked in this list.
 
+### Why doesn't my function output appear in the formula column's `/` field picker?
+
+When you type `/` in a formula column to reference another column, Clay scans the first **100 rows** of the table to determine which column outputs are available. If your function column has no populated results in those first 100 rows — for example, because the function has only run on rows further down the table — its outputs won't appear in the picker even if they're correctly configured.
+
+**To fix this:**
+
+1.  Confirm the output is selected in your function's **"Choose output data to send"** checklist (see the FAQ above). If the column isn't checked there, no data will return regardless.
+2.  Run the function on at least a few rows so that output values are populated.
+3.  If those populated rows fall past row 100 in the table, sort the table by any populated column (for example, a domain or name column) to bring rows with function results to the top.
+4.  Re-open the formula column and type `/` — the function outputs should now be discoverable.
+
 ### Why aren't fields from a row input available in the "Choose output data to send" checklist?
 
 When you configure a function input as a **"Rows from..."** input (passing an entire row), that row is stored as a source field inside the function. Source fields are excluded from the **"Choose output data to send"** checklist — only the function's top-level data columns (enrichment results, formula columns, and other data columns) appear there.
@@ -187,6 +200,17 @@ The workaround is to create a **formula column** (Merge columns) inside your fun
 `JSON.stringify({{Enrichment A}}?.person || {{Enrichment B}}?.person || null)`
 
 To access the object's sub-keys downstream, parse it back with `JSON.parse({{Merged Person Data}})`.
+
+### What does "Awaiting Callback" mean on a function column?
+
+When you call a function from a table, that column shows **Awaiting Callback** while the calling table waits for the function to finish processing and return results. The status resolves once the function's **"Send data back"** column runs successfully and sends results back.
+
+If the **"Send data back"** column has a **run condition** that is not met for a particular row, the function will not return data for that row — and the calling table's cell will remain stuck in **"Awaiting Callback" indefinitely**. The status will not fail or time out on its own; it stays waiting for a callback that will never arrive. Downstream columns in the calling table that depend on the function output will also not run for those rows.
+
+**To handle rows that should not send data back:**
+
+-   Add a **run condition** on downstream columns in the calling table so they only run once the function column has returned a value (e.g., only run if `{{Function Column}}` is not empty).
+-   Use `Clay.getCellStatus({{field_name}})` in a formula column to check the function column's status, then use that formula as a run condition on dependent columns.
 
 ### Can I share a function with someone outside my workspace?
 

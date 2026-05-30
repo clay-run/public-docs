@@ -64,18 +64,21 @@ Viewers can be granted Editor access to specific tables or workbooks, or added a
 
 **Note:** The Sales Rep role is currently in beta — contact support to request access for your workspace.
 
-The sales rep role is designed for users who access Clay through AI tools (Claude, ChatGPT, or xAI) via the Clay MCP integration. Users with this role **cannot access the standard Clay workspace**. When they log in, they'll see a page prompting them to connect their AI tool.
+The sales rep role is designed for team members who need to set up email accounts for the Clay Sequencer and/or access Clay through AI tools (Claude, ChatGPT, or xAI) via the Clay MCP integration. Users with this role **cannot access the standard Clay workspace** — they have no access to tables, workbooks, or other workspace resources.
 
 **Sales reps can:**
 
--   Use Clay's data enrichment and functions through their connected AI tool
--   Run Clay-powered lookups and workflows from within Claude, ChatGPT, or xAI
+-   Set up and manage their own email accounts for use in the Clay Sequencer
+-   Look up company and contact information on demand through their AI tool
+-   Call Functions built centrally by Ops teams (for example, "find LinkedIn from email" or "generate outbound messages")
+-   Run Ops-built workflows directly from their AI chat interface
 
 **They cannot:**
 
 -   Access tables, workbooks, or any other part of the standard Clay interface
 -   Create or edit workflows directly in Clay
 
+Admins control which Functions reps can access (via the Functions settings page) and can set per-user credit budgets. See [MCP settings](https://university.clay.com/docs/mcp-settings) for details.
 **If you were assigned the Sales Rep role but need access to the standard Clay workspace**, contact your workspace admin and ask them to change your role. Admins can update roles at `Settings` → `Team`.
 
 **Note:** Currently, we do not support table-level view restriction. Members can view all tables/workbooks once invited to a workspace.

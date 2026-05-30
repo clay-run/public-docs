@@ -54,8 +54,7 @@ You can import data from:
 12.  Select `Opportunities` at the top of the sync panel.
 13.  Enable the `Import` toggle.
 14.  Add any Opportunity fields you want to filter or segment by — common fields include `Stage`, `Amount`, `Close Date`, and `Owner`.
-     -   Opportunity data is associated with your Companies records and becomes available as a filter in your Companies audience.
-     -   Opportunity fields are also available as filters in your People audience. When filtering People by deal attributes, only contacts **directly linked to the deal via OpportunityContactRole** in Salesforce are included — not all contacts at the account that owns the deal. See [Why does filtering my People audience by deal attributes return fewer contacts than expected?](#why-does-filtering-my-people-audience-by-deal-attributes-return-fewer-contacts-than-expected) for the recommended workaround.
+     -   Opportunity data is associated with your Companies records and becomes available as a filter in any Companies audience.
 15.  Name the corresponding Clay fields.
 16.  Click `Save and Preview`, then `Confirm`.
 
@@ -108,14 +107,38 @@ Records saved from tables are automatically deduplicated and merged with your ex
 
 ### Entity resolution and deduplication
 
-Clay matches records using LinkedIn URL and email to:
+Audiences uses two systems to prevent duplicate records:
+
+**Entity Resolution (automatic)**
+
+Entity Resolution runs continuously in the background. It matches records by identifier strength:
+
+-   **For People:** LinkedIn URL → Email → Probabilistic matching (name + company + location + role)
+-   **For Companies:** LinkedIn URL → Domain → Probabilistic matching (name + location + industry)
+
+When a match is found, records merge into a single unified record in Audiences. **Deduplication happens in Clay only** — Audiences does not merge or alter records in your connected Salesforce org.
+
+Records need a high-confidence identifier to match. Auto-enrichment adds `LinkedIn URL` and `CPJ ID` at no cost to improve matching.
+
+**Import record matching (beta)**
+
+When importing from Salesforce or Snowflake, you can configure **Import record matching** to deduplicate records at ingestion time. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
+
+To configure:
+
+1. In your import settings, click **Import record matching**.
+2. Choose an **alias field** — typically `Domain` for Companies or `Email` for People (additional options include LinkedIn URL, phone number, and others).
+3. Map the alias field to the corresponding field in each source.
+4. When a new record arrives, Audiences checks whether the alias value already exists. If it does, the new data is merged with the existing record instead of creating a duplicate.
+
+You can configure one alias field per entity type (one for People, one for Companies). This setting applies to records imported *after* it is enabled — it does not retroactively merge records already in Audiences.
+
+**Other deduplication behaviors**
 
 -   **Cross-source deduplication** — merge the same person from multiple sources.
 -   **Whitespace detection** — when importing from a Find People or Find Companies search, records that already exist in All People are automatically excluded from the merge. The draft shows a banner with the count of excluded records ("X records from this search are already in the All People list"), and clicking **All people** adds only the net-new contacts.
 
-Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs — org duplicates carry over as-is. Native within-source deduplication is coming.
-
-Records need a high-confidence identifier to match. Auto-enrichment adds `LinkedIn URL` and `CPJ ID` at no cost to improve matching.
+Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs — org duplicates carry over as-is.
 
 ## Creating an audience
 
@@ -157,7 +180,7 @@ Three Clay enrichments let you move data between a Clay table and your Audience 
 
 -   In any Clay table, click `Add enrichment` and search for:
     -   `Upsert Audiences Record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. Use it to commit data from unsupported integrations (e.g., HubSpot), qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table.
-    -   `Update Audiences Record` writes data from a table row to one or more fields on an existing Audience record. Unlike `Upsert Audiences Record`, it does not create a new record if no match is found. Both actions write only to fields that already exist in your Audience — to create a new custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce or Snowflake?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce-or-snowflake) below.
+    -   `Update Audiences Record` writes data from a table row to one or more fields on an existing Audience record. Unlike `Upsert Audiences Record`, it does not create a new record if no match is found. Both actions write only to fields that already exist in your Audience — to create a new custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
     -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls.
 
 ### Signals
@@ -213,6 +236,8 @@ Map any Clay data or segment membership to Salesforce fields. Examples:
 
 Export settings control whether Clay **creates new Salesforce records** for net-new contacts or **only updates existing ones**.
 
+The **`Create new Salesforce records`** toggle is in your Salesforce source settings under the export section. It is **off by default** — when off, Clay only updates Salesforce records that already have a matching entry in your Audience. Turn it on to allow Clay to create new Contacts or Leads in Salesforce for Audience records that don't yet exist in SFDC. This toggle is admin-only.
+
 Export sync behavior:
 
 -   **Export frequency:** Every 24 hours when write-back is enabled.
@@ -233,7 +258,7 @@ Use Audiences by default for anything you want to reuse, segment on, or build au
 
 Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data into a Clay table from any source, then use `Upsert Audiences Record` to push those records permanently into your audience. This works for any source Audiences doesn't yet natively support.
 
-### How do I create a custom Audience field that isn't tied to Salesforce or Snowflake?
+### How do I create a custom Audience field that isn't tied to Salesforce?
 
 The `+ Add field` option is available in the `Update Audiences Record` column mapping inside a bulk enrichment table:
 
@@ -270,7 +295,21 @@ For this to work, you need both:
 -   Salesforce Accounts synced into Audiences with website domain fields mapped.
 -   Web intent configured as a signal in your Audiences workspace.
 
-**If visitors arrived before your Salesforce sync was connected:** Web intent records added to Audiences before you connected Salesforce may not automatically merge with existing SFDC records. To resolve this, use the **deterministic record matching** option in your Salesforce import settings and select domain as the match key. This matching applies to records coming in after the setting is enabled — it does not retroactively deduplicate records already in Audiences.
+**If visitors arrived before your Salesforce sync was connected:** Web intent records added to Audiences before you connected Salesforce may not automatically merge with existing SFDC records. To resolve this, use the **Import record matching** option in your Salesforce import settings and select domain as the match key (this feature is currently in beta — contact your Growth Strategist to enable it). This matching applies to records coming in after the setting is enabled — it does not retroactively merge records already in Audiences.
+
+### How do I create new Salesforce contacts or leads from an Audience enrichment?
+
+New Salesforce records are not created automatically when you run a bulk enrichment. Record creation is not driven by a Create Contact or Create Lead action inside the enrichment table — it is controlled by the **`Create new Salesforce records`** toggle in your Audiences Salesforce export settings.
+
+To push net-new contacts to Salesforce:
+
+1.  Open your Audiences workspace and go to your Salesforce source settings.
+2.  Under the export section, enable the **`Create new Salesforce records`** toggle. (Admin access required — the toggle is off by default.)
+3.  Confirm your field mappings and save.
+
+Once the toggle is on, Clay will create new Contacts or Leads in Salesforce for any Audience record that doesn't already have a matching SFDC record.
+
+To track which contacts in Salesforce came from a specific Audience enrichment, create a custom Audience text field (for example, an "Audience Source" field set to a label like `"Q2-enrichment"`), and map it to a Salesforce field (a custom field, campaign tag, or lead status) in your export settings. You can then filter on that value directly in Salesforce.
 
 ### Why does filtering my People audience by deal attributes return fewer contacts than expected?
 

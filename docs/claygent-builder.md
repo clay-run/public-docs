@@ -234,9 +234,7 @@ No. You can have up to 10 test cases per Claygent at a time for free. You can de
 
 Credit cost depends on the AI model you select. Claygent defaults to **Argon** for web research — Clay's model for open-ended web lookups — which costs **3 credits per row**. Switching to **Helium** (1 credit per row) is a cost-effective alternative for simpler web research tasks. For a full model pricing reference, see [How AI is priced](ai-pricing.md).
 
-When using a third-party model (such as Gemini Flash, GPT models, or Claude) for Claygent web research, pricing is **variable**: the column shows a `~` prefix on the credit estimate (for example, `~1/row`) to indicate an approximation. Clay withholds the estimated amount upfront, then calculates the actual cost after each row completes based on tokens consumed — the final charge may be higher or lower than the estimate, and for complex multi-step tasks can run significantly higher. Before running a large table with a variable-priced model, test on 10–50 rows first to understand your actual per-row cost.
-
-If your goal is to find people associated with companies at scale — rather than open-ended web research — **Find People** is significantly more cost-effective: the **Find Contacts at Company** action costs 0.5 credits per row on current plans, versus 3 credits per row for Argon-based Claygent. Use Claygent when you need judgment-based research (summarizing company news, scoring leads, writing personalized outreach). Use Find People when you need structured contact lookups at scale.
+If your goal is to find people associated with companies at scale — rather than open-ended web research — **Find People** is significantly more cost-effective: the **Find Contacts at Company** action costs 0.5 credits per row on current pricing plans (1 credit per row on legacy plans), versus 3 credits per row for Argon-based Claygent. Use Claygent when you need judgment-based research (summarizing company news, scoring leads, writing personalized outreach). Use Find People when you need structured contact lookups at scale.
 
 ### Can I test different models without changing my prompt?
 
@@ -276,19 +274,19 @@ To use tools with your Claygent:
 
 Once you're on a supported model with a private API key, the tools in the **Tools** section will become active.
 
-### My Claygent columns are showing an error — what does that mean?
+### My Claygent columns are showing an error or returning blank results — what does that mean?
 
-If your Claygent columns are failing with an error like **"This action is no longer operational as a data provider. Please use another action."**, it means those columns are using an older version of the Claygent action that is no longer supported. The column settings panel may still appear editable, but the column cannot run.
+If your Claygent columns are failing with an error like **"This action is no longer operational as a data provider. Please use another action."** — or are running and consuming credits but returning blank, empty cells — it means those columns are using an older version of the Claygent action that is no longer supported. The column settings panel may still appear editable, but the column cannot produce results.
 
 You need to replace each affected column with a new **Use AI** column. Here's how:
 
 1.  Open the old Claygent column and copy your prompt and any JSON output schema.
 2.  Click **Add column** in your table and select **Use AI**.
 3.  Paste your prompt into the new column.
-4.  If you had a JSON output schema, paste it into the **JSON Schema** field under outputs.
+4.  If you had a JSON output schema, paste it into the **JSON Schema** field under outputs. **Tip:** Keep the same output field names as the original column to minimize changes needed in any downstream formula columns that reference those fields.
 5.  Save and rerun the column.
 
-Repeat for each affected column in your table. Once the new Use AI column is running correctly, you can delete the old Claygent column.
+Repeat for each affected column in your table. After recreating, update any downstream formula columns that reference the old column's outputs to point to the new column instead. Once everything is running correctly, delete the old Claygent column.
 
 ### My object inputs show "Success" in the test panel instead of their actual content — is that normal?
 
