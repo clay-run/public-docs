@@ -178,7 +178,7 @@ For a complete guide on tracking and analyzing your Data Credit spend, see [this
 
 _This feature is for users on the Enterprise Plan._
 
-Admins can set **Data Credit spend limits** for individual workbooks to control and monitor Data Credit usage at the workbook level.
+Admins can set **Data Credit spend limits** for individual workbooks to control and monitor Data Credit usage at the workbook level. Admins can also set a **workspace default limit** — a credit cap that every new workbook automatically inherits upon creation — from `Settings` → `Usage` → `Workbook limits` tab.
 
 **How to enable workbook credit limits:**
 
@@ -189,6 +189,8 @@ Admins can set **Data Credit spend limits** for individual workbooks to control 
 Once enabled, all Actions run within that workbook will contribute to the workbook's Data Credit spend. When the limit is reached, you'll see an error message preventing further Actions from running.
 
 **Note:** Only workspace admins can modify workbook Data Credit limits. Editors and Viewers cannot manage Data Credit limits, even if they have editing access to the workbook.
+
+For complete documentation on credit spend limits—including default workspace limits, notifications, and behavior when limits are reached—see the [Credit spend limits FAQ](https://university.clay.com/docs/credit-spend-limits-faq).
 
 ## Rollover Data Credits
 
