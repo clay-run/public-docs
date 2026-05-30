@@ -30,7 +30,7 @@ _Note: Personal email addresses significantly improve match rates when syncing t
     -   Note: Contact search through Clay (CPJ) is currently restricted to US-only contacts for compliance reasons
 2.  **Choose your connected account** on LinkedIn or Meta and prepare your data before mapping:
     -   LinkedIn has character limits for certain fields. If needed, add a formula column to shorten longer job titles for better match rates.
-    -   **Note:** Ad Sync tables support a more limited set of column types and formula functions than regular Clay tables. For complex transformations (such as domain normalization), prepare the data upstream in a regular table first, then use that table or a Clay Audience as the source for your Ad Sync.
+    -   **Note:** Ad Sync tables have a more limited selection of enrichment providers and actions than regular Clay tables. For complex transformations (such as domain normalization), prepare the data upstream in a regular table first, then use that table or a Clay Audience as the source for your Ad Sync.
 3.  **Map columns** for the selected platform and click `Continue`. Not every field is required, but these combinations are critical for match rates:
     -   **For contacts:** Hashed email + first name/last name (required for optimal matching)
     -   **For accounts:** Company name + company website (required for optimal matching)
