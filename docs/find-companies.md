@@ -83,6 +83,6 @@ Any enrichments you add to the table afterward (e.g., finding emails, enriching 
 
 **The import may still be in progress.** Find Companies imports process asynchronously — rows are added in batches. If you check right after clicking Import, the row count will be lower than the final total. Wait a minute and refresh to see the complete count.
 
-If the count still doesn't match after the import finishes, the **preview count** (e.g., "Showing 50 of 39,869 results") is an estimate from the search index, not an exact figure. The actual import can return a slightly different total due to index timing between when the count was retrieved and when the rows were fetched — this is normal.
+If the count still doesn't match after the import finishes, the **preview count** (e.g., "Showing 50 of ~39,869 results") is an approximate figure — the `~` tilde prefix in the UI indicates the total is estimated using a fast approximate count, not an exact query. The actual import can return a slightly different total, and this is normal.
 
 Also check your **Limit results** setting: the import won't exceed whatever limit you've configured (default 10,000).
