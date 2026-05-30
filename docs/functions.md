@@ -212,6 +212,17 @@ If the **"Send data back"** column has a **run condition** that is not met for a
 -   Add a **run condition** on downstream columns in the calling table so they only run once the function column has returned a value (e.g., only run if `{{Function Column}}` is not empty).
 -   Use `Clay.getCellStatus({{field_name}})` in a formula column to check the function column's status, then use that formula as a run condition on dependent columns.
 
+### What does "Awaiting Callback" mean on a function column?
+
+When you call a function from a table, that column shows **Awaiting Callback** while the calling table waits for the function to finish processing and return results. The status resolves once the function's **"Send data back"** column runs successfully and sends results back.
+
+If the **"Send data back"** column has a **run condition** that is not met for a particular row, the function will not return data for that row. The calling table's cell will remain in **"Awaiting Callback"** until a 24-hour timeout expires, at which point it resolves to an error state. Downstream columns in the calling table that depend on the function output will not run until the cell resolves.
+
+**To prevent downstream columns from waiting:**
+
+-   Add a **run condition** on downstream columns in the calling table so they only run once the function column has returned a value (e.g., only run if `{{Function Column}}` is not empty).
+-   Use `Clay.getCellStatus({{field_name}})` in a formula column to check the function column's status, then use that formula as a run condition on dependent columns.
+
 ### Can I share a function with someone outside my workspace?
 
 Yes. Enable "share as template" on the function to generate a shareable link. Anyone with the link can view the function's columns and create a table in their workspace using it.
