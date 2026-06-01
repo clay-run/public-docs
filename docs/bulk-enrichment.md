@@ -57,19 +57,22 @@ In the bulk enrichment settings, you can adjust several options:
 Bulk enrichment tables include two built-in tabs at the top of the view to help you track run progress:
 
 -   **Queued rows** — rows that are waiting to be processed or are currently running.
--   **Errored rows** — rows where an action column did not complete its run.
+-   **Errored rows** — rows where the action column tied to your deletion criterion did not complete successfully.
 
-### Why rows appear in Errored rows
+### Understanding Run Stopped
 
-A row moves into the **Errored rows** tab when the action column used as your deletion criterion ends in an error state — including the **Run Stopped** status.
+**Run Stopped** appears on a cell when the run was manually paused or stopped before that action had a chance to execute for that row. Because the action never ran, the row stays in the Queued rows or Errored rows tab (depending on your deletion criteria configuration) rather than completing normally.
 
-**Run Stopped** appears on a cell when the run was manually paused or stopped before that action had a chance to execute. Because the action never completed, the row is counted as errored. This is why you may see rows in Errored rows where other enrichment columns show successful results: those columns ran fine, but the final action (for example, **Update Audiences Record**) did not finish before the run was halted.
+-   **Single column** deletion criterion — rows with Run Stopped on the configured column appear in the **Errored rows** tab.
+-   **Conditional rules** deletion criterion — rows with Run Stopped appear in the **Queued rows** tab.
 
-### How to re-run errored rows
+This is why you may see rows in these tabs where some enrichment columns show successful results while one column shows **Run Stopped**: the upstream columns ran fine, but the final action (for example, **Update Audiences Record**) did not finish before the run was halted.
 
-1.  Click the **Errored rows** tab at the top of the bulk enrichment table.
-2.  Scroll right to find the column showing **Run Stopped** or another error status.
-3.  Right-click that column's header → **Run column** → **Run [N] empty or out-of-date rows** to retry the incomplete rows.
+### How to re-run
+
+Check both the **Queued rows** and **Errored rows** tabs for rows with **Run Stopped**. To retry:
+
+1.  Right-click the column header showing **Run Stopped** → **Run column** → **Run [N] empty or out-of-date rows**.
 
 For more options on re-running specific rows or cells, see [Run progress](run-progress.md).
 
