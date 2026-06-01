@@ -21,7 +21,10 @@ Within Clay you can import CSV as a source to an existing or new table.
     -   `Add to current table` — appends the CSV rows to your existing table.
     -   `Create new table` — creates a new table populated with your CSV data.
     -   `Replace current table` — overwrites the current table's rows with the CSV data.
-4.  Match your CSV columns to the correct Clay table fields.
+
+    > **Note:** None of these options update existing rows. `Add to current table` always appends each CSV row as a new row — it does not match records by a column value or update rows that already exist in your table. If you need to add a column's values to rows that are already in Clay (for example, a "Keep/Remove" status matched on LinkedIn URL), see [Adding a new column to existing rows](#adding-a-new-column-to-existing-rows) below.
+
+4.  Map your CSV columns to the correct Clay table fields.
 5.  Choose how to handle the imported rows:
     -   `Save and run rows in this CSV` — imports the rows and immediately runs any enrichments on them.
     -   `Save and don't run` — imports the rows without triggering any enrichments.
@@ -48,3 +51,15 @@ When you import a CSV that already contains some fields — such as email addres
 -   **The same pattern applies to any field:** to enrich a column only where the current value is blank, set the run condition to `/ColumnName is empty`. Rows where the condition is not met show **"Run condition not met"** and consume no credits — even when you click **Run all rows**.
 
 For a full reference on run condition syntax, see [Conditional runs](conditional-runs.md).
+
+**If you want to add a new column's values to existing rows using a shared identifier:**
+
+CSV import cannot update rows that already exist in Clay — there is no upsert mode. If you have a spreadsheet with new column values you want to bring into your existing Clay table (for example, a "Keep/Remove" status column matched on LinkedIn Profile URL), use the **Google Sheets integration** instead:
+
+1.  Upload your spreadsheet to Google Sheets.
+2.  In your Clay table, click **Add enrichment** and search for **Google Sheets**.
+3.  Select the **Lookup, add, or update row** action.
+4.  Set the matching column (e.g., LinkedIn Profile URL) so Clay knows which Google Sheet row corresponds to each Clay row.
+5.  Map the column you want to populate (e.g., "Keep/Remove") as an output.
+
+Each existing Clay row fetches the matching value from your Google Sheet without creating duplicates or new rows.
