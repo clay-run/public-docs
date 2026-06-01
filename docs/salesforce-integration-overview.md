@@ -101,14 +101,17 @@ For full instructions on setting up a restricted Salesforce user with field-leve
 -   **List view:** The view to sync into Clay.
     -   Views that are not SOQL-compatible (those that cannot be generated from a SOQL query) have a 2,000-record limit.
 
-**Related (cross-object) fields are not imported**
+**Fields not in your Salesforce list view**
 
-Salesforce list views can display fields from related objects — for example, a Contact list view can include `Account Name`, which is stored on the Account object. Clay's list view import only pulls **direct fields** on the selected object; related fields are not imported even if they appear as columns in your Salesforce list view.
+Clay imports exactly the fields that are columns in your selected Salesforce list view. Any field not included in that list view will not appear in your Clay table, even if the data exists in Salesforce. Two types of fields commonly go missing this way:
 
-To get a related field into Clay, use one of these approaches:
+-   **Custom or optional direct fields** — fields stored on the object itself (for example, a custom LinkedIn URL field on a Contact) that weren't added as a column to your Salesforce list view.
+-   **Related (cross-object) fields** — fields stored on a related object (for example, `Account Name` shown in a Contact list view, which is actually stored on the Account object). These are never imported even if they appear as columns in the list view.
 
-1.  **Add a Lookup record column in Clay (fastest).** Use the **Lookup record** enrichment to query the related object using an ID field that _is_ imported. For example, a Contact import includes `AccountId` — use that to look up the Account record and pull `Name` (or any other Account field you need).
-2.  **Create a formula field in Salesforce.** Add a formula text field on the object that copies the related value (for example, a formula field on Contact with the expression `Account.Name`). Once added to the list view in Salesforce, Clay imports it as a direct field. This is useful when you need the value available in multiple Clay tables without a per-row lookup step.
+To get a missing field into Clay, use one of these approaches:
+
+1.  **Add a Lookup record column in Clay (fastest).** Use the **Lookup record** enrichment to fetch the full record by its Salesforce Object ID (which is always imported). This returns **all** fields on the object — including any custom fields — regardless of what was in your list view. For cross-object fields, use the related object's ID (e.g., `AccountId` on Contact) to look up the related record and pull any field from it.
+2.  **Add the field to your Salesforce list view.** In Salesforce, edit the list view to include the missing column, then re-run the source in Clay to pick it up. For cross-object fields, first create a formula text field on the object that copies the related value (for example, a formula field on Contact with the expression `Account.Name`). Once added to the list view in Salesforce, Clay imports it as a direct field. This is useful when you need the value available in multiple Clay tables without a per-row lookup step.
 
 ### `Source` Import records from a Salesforce report
 
@@ -198,6 +201,8 @@ The **Exact match?** toggle controls how Clay queries Salesforce:
 **Tip:** Name-only matching can be unreliable when names differ in length or format between Clay and Salesforce. For more reliable matching, use unique identifiers like website domain or LinkedIn URL alongside (or instead of) name. If you need multiple fields to match, use the **Lookup records via SOQL** action for full control over the query.
 
 **Note:** Each "field to search for" input accepts one search value at a time. If you add multiple values to a single search field, Clay concatenates them into one string rather than treating them as separate options — for example, adding both `"Acme Corp"` and `"Acme"` to the same "Account Name to search for" field causes Clay to search for `"Acme CorpAcme"` instead of either name. To search across multiple possible values for the same field, use two separate **Lookup record** columns, each with one value.
+
+**Tip:** When using a Lookup Record column to supplement a Salesforce list view source import, make sure both use the **same Salesforce account**. If they use different accounts, the lookup queries a different Salesforce org and returns `No records found` even when the record exists.
 
 ### `Action` Upsert object
 
