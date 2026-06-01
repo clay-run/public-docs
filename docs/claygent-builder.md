@@ -274,6 +274,15 @@ To use tools with your Claygent:
 
 Once you're on a supported model with a private API key, the tools in the **Tools** section will become active.
 
+### Why is my Claygent column showing "Some inputs missing"?
+
+When a Claygent cell shows **"Some inputs missing"**, one or more inputs in the **#INPUTS#** section of your column are marked as required but the referenced column is blank for that row. The cell will not run for affected rows.
+
+There are two ways to resolve this:
+
+-   **Fill in the missing data.** Ensure the referenced column has a value for every row you want to run.
+-   **Make the input optional.** Click the column name → **Edit column**, scroll to the **#INPUTS#** section, and toggle off the **Required to run** switch next to each input that doesn't always have data. When an input is optional, the cell will still run for rows where that field is blank — the empty value is simply omitted from the prompt for that row.
+
 ### My Claygent columns are showing an error or returning blank results — what does that mean?
 
 If your Claygent columns are failing with an error like **"This action is no longer operational as a data provider. Please use another action."** — or are running and consuming credits but returning blank, empty cells — it means those columns are using an older version of the Claygent action that is no longer supported. The column settings panel may still appear editable, but the column cannot produce results.
