@@ -131,9 +131,16 @@ URL paths are exact-match, so `/blog` and `/blog/` are different. Also, filter c
 
 ### Content Security Policy blocking the script
 
-Update your site's Content Security Policy to allow Clay domains:
+If you see a CORS error in your browser's Network tab for a request to `static.claydar.com` (for example, `init.v1.js` failing with a CORS error), your site's Content Security Policy (CSP) is blocking the Web Intent script.
 
-`Content-Security-Policy:   default-src 'self';   script-src 'self' <https://static.claydar.com> <https://cdn.claydar.com>;   connect-src 'self' <https://api.claydar.com>;`
+Update your site's CSP to allowlist the following Clay domains:
+
+```
+Content-Security-Policy:
+  default-src 'self';
+  script-src 'self' https://static.claydar.com https://cdn.claydar.com;
+  connect-src 'self' https://api.claydar.com;
+```
 
 ### Not seeing new rows in my table
 
