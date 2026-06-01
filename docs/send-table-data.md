@@ -110,7 +110,7 @@ For existing columns in the destination table, updates the formula to reference 
 
 When you send data to a destination table, it appears in the leftmost column as **"rows from: \[source table name\]"**. The data is stored within this cell and needs to be extracted into individual columns to use it in your workflow.
 
-**Tip:** You can automatically extract all fields to new columns by enabling the `Auto-extract new columns` setting when configuring Send table data. This creates a column for each field in the destination table.
+**Tip:** `Auto-extract new columns` is **on by default** and automatically creates a new column for each sent field — but only for fields that don't already have a matching column in the destination table. If your destination table already has columns with plain-text (non-formula) data, those columns won't be updated automatically. Use **Add to column** below to map those fields manually, or enable `Auto-map existing columns` in the advanced settings.
 
 To manually map data from the source column to columns in the destination table:
 
@@ -133,4 +133,4 @@ Repeat this process for each field you want to extract into its own column.
     -   If you want to receive data in the table you're also sending data from, use one of these other actions:
         -   `Lookup Multiple Rows in Other Table`
         -   `Lookup Single Row in Other Table`
--   **"✅ Sent" means Clay dispatched the data — not that it has appeared at the destination yet.** The `Sent At` timestamp and `Number Of Rows Sent` shown in the cell details confirm that Clay successfully placed those rows into the destination table's incoming source. The destination table still needs to process those rows before they become visible. To verify data is arriving, open the destination table and check its [column progress bar](https://university.clay.com/docs/run-progress-ui).
+-   **"✅ Sent" means Clay dispatched the data — not that individual columns in the destination table have been populated.** The `Sent At` timestamp and `Number Of Rows Sent` confirm that Clay placed those rows into the **"rows from: [source table]"** column in the destination table. For fields that don't yet have a matching column, `Auto-extract new columns` (on by default) creates them automatically. However, if the destination table already has columns with plain-text data — for example, rows filled in manually or imported from a CSV — those existing columns won't be updated automatically. In that case, open the destination table, click the source cell, and use **Add to column** to map each field. See [Mapping table data in the destination table](#mapping-table-data-in-the-destination-table) above.
