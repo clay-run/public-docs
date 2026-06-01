@@ -59,6 +59,18 @@ When listing inputs in the INPUTS section, don't just name the column — descri
 
 The format `Description of what this is: {{Column Reference}}` consistently outperforms bare column references in the INPUTS section.
 
+## Generating varied, personalized content
+
+If AI-generated messages across your table look too similar to each other, the fix is usually in the prompt structure — not the data.
+
+**Use guidelines instead of strict templates.** Providing many full email examples in your prompt anchors the model to those examples' structure and phrasing. It copies the format rather than personalizing for each lead. Instead, describe the *style and voice* you want in plain language: `"conversational, direct, no fluff, 3 sentences max"`. This gives the model room to personalize based on each row's unique data.
+
+**Keep examples to 1–2 at most.** If you want to illustrate tone, include one or two short examples — enough to convey the voice, not so many that the model treats them as rigid templates. You can add examples in the **Configure** tab → **Examples** section of a Use AI column.
+
+**Feed in more lead-specific data.** Varied output comes from varied input. The more distinct data per row — job title, a recent LinkedIn post, a specific company news item, an identified pain point — the more each generated message will differ. If every row has the same inputs, the outputs will converge regardless of the prompt.
+
+**Split the message across multiple AI columns.** Rather than generating an entire email in one prompt, use separate AI columns for each section: one for the opening line, one for the value proposition, one for the call to action. Each focused prompt produces sharper, more targeted results. Combine the outputs into a final column using a formula, which costs 0 credits.
+
 ## Using the AI help tool
 
 1.  While configuring the "Use AI" enrichment, click `Generate with prompt`**.**
