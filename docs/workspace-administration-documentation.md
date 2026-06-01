@@ -268,6 +268,8 @@ If a former employee owns tables or workbooks in your workspace, there is no sep
 
 Single Sign-On (SSO) is available to **Enterprise plan** customers and those who have purchased the SSO add-on. It lets your organization authenticate Clay users through your existing identity provider (IdP). Clay uses WorkOS to manage SSO and supports any IdP that uses SAML or OIDC protocols — including Okta, Azure AD (Entra ID), Google Workspace, and others.
 
+**Note:** Clay offers two login methods to all users: Google Auth and email and password. There is no workspace-level admin setting to restrict sign-in to one method only — for example, it is not possible to force Google-only login or disable the email and password option without Enterprise SSO. If your organization needs to centrally control and enforce authentication for your email domain, Enterprise SSO (described below) is the way to do this.
+
 ## **Setting up SSO**
 
 SSO setup is managed by Clay's support team — there is no self-serve configuration in the Clay UI. To get started, contact Clay support.
