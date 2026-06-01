@@ -39,7 +39,7 @@ A cell output schema describes how data is structured in an enrichment output. I
 
 ## Lists
 
-A list is an array of items grouped together in a single cell within an enrichment.
+A list is an array of items grouped together in a single cell. Lists most often appear as outputs from enrichment (action) columns — for example, a "Find Contacts at Company" enrichment returning multiple people. They can also be produced by a formula column that returns an array (e.g., `[{{Col1}}, {{Col2}}, {{Col3}}]`).
 
 Lists use zero-based indexing, where the first item is at index 0, the second at index 1, and so on. For example, in a skills list, "Solution Selling" is at index 0, "Cloud Computing" is at index 1, and "Virtualization" is at index 2.
 
