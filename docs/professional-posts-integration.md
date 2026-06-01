@@ -83,7 +83,7 @@ Retrieve the top shares of a specific LinkedIn post.
 -   **Post URL:** The URL of the LinkedIn post.
 -   **Max shares** *(optional)*: Maximum number of results to return.
 
-> **Note:** Share data is only available for activity-type posts (URLs containing `urn:li:activity:`). UGC posts (URLs containing `urn:li:ugcPost:`) do not return share data.
+> **Note:** Shares can only be retrieved for activity-type posts (URLs containing `urn:li:activity:`). UGC posts (URLs containing `urn:li:ugcPost:`) do not support share retrieval.
 
 ## Additional enrichments
 
@@ -103,7 +103,7 @@ Search and discover LinkedIn posts based on keywords and filters. Use this as a 
 
 Get comments, reactions, or shares for a list of professional posts in bulk. Use this as a source when you have a list of post URLs and want to retrieve all their interactions at once.
 
-> **Note:** As with the action variant, share data is only available for activity-type posts, not UGC posts.
+> **Note:** As with the action above, shares can only be retrieved for activity-type posts, not UGC posts.
 
 ## Getting posts for specific people in your people table
 
@@ -132,14 +132,6 @@ Once you've retrieved posts or engagement data, you can use Clay's built-in tool
 -   Use **formulas** to evaluate timestamps and filter activity within a specific timeframe (e.g., the last 30 days).
 -   Use **Claygent** to classify post content by type or topic (e.g., identifying video posts or product announcements).
 -   Use the **[PhantomBuster integration](phantombuster-integration-overview.md)** for advanced LinkedIn scraping scenarios not covered by native enrichments. Set up a LinkedIn phantom (such as the LinkedIn Activity Extractor) inside PhantomBuster, then use Clay's PhantomBuster "Pull Data" action to bring results into your table.
-
-## Privacy limitations
-
-LinkedIn's privacy policies restrict what data can be accessed:
-
--   **Inbox replies cannot be tracked.** Retrieving LinkedIn message replies requires direct account access, which Clay does not support.
--   **Company follower lists are not available.** It is not possible to retrieve a list of users who follow a specific company on LinkedIn. (Follower *counts* may be available through profile enrichments, but not the list of who follows.)
--   **Incomplete engagement data.** Some posts may return no comments or reactions despite having visible engagement on LinkedIn. This is due to LinkedIn's per-user and per-post privacy settings, which vary across accounts.
 
 ## Common questions
 
