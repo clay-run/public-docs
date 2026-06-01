@@ -71,7 +71,9 @@ To verify a Salesforce connection is working — and to confirm which Salesforce
 2.  Click the `…` menu next to the connection you want to test.
 3.  Select `Test Connection`.
 
-Clay will confirm the connection is valid and display the Salesforce user (by email) that the connection token is attributed to. Because all data access in Clay is scoped to the permissions of that authenticated user, seeing which user is in the seat makes it easy to debug access issues — for example, if objects or fields are missing, you can immediately check whether the displayed user has the right permissions in Salesforce.
+Clay will confirm the connection is valid and display the Salesforce user (by email) and the Salesforce org the connection is attributed to. Because all data access in Clay is scoped to the permissions of that authenticated user, seeing which user is in the seat makes it easy to debug access issues — for example, if objects or fields are missing, you can immediately check whether the displayed user has the right permissions in Salesforce.
+
+After testing a connection, Clay saves the result and shows the connected user and Salesforce org directly in the connections list — so you can see at a glance which account each connection belongs to without re-testing each time.
 
 ### IP allowlisting
 
