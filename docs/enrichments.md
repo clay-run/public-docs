@@ -1,7 +1,7 @@
 ---
 title: Enrichments
 source_url: https://university.clay.com/docs/enrichments
-description: Learn how to run an enrichment within Clay.
+description: Learn how to run enrichments in Clay, including run settings, delay options, and custom rate limits.
 last_synced: 2026-04-26T01:39:56.840Z
 ---
 
@@ -66,6 +66,21 @@ To configure a delay:
 1.  Select `Run after delay`.
 2.  Enter the number of seconds to wait (up to 600 seconds/10 minutes).
 3.  Use a formula to set different delays per row.
+
+**Need a delay longer than 10 minutes?** Chain multiple enrichment columns — each set to `Run after delay` (up to 600 seconds) — and use [conditional runs](conditional-runs.md) to gate each step on the previous column completing. For example, six chained delay columns each set to 600 seconds creates a 60-minute total delay.
+
+## Custom rate limit
+
+Limit how many requests Clay sends to an external service within a given time window. This is useful when you need to stay within an API provider's rate limits while running enrichments at scale.
+
+When supported by an enrichment, a **Custom rate limit** collapsible section appears at the bottom of the enrichment settings panel.
+
+-   **Request limit** — The maximum number of requests to send within the time window.
+-   **Duration (in ms)** — The length of the time window in milliseconds (between 1 and 900,000 ms / up to 15 minutes).
+
+The request limit and duration together must average at least 1 request per second (for example, 60 requests per 60,000 ms is valid; 1 request per 2,000 ms is also valid).
+
+**Note:** Custom rate limit is not available for Clay's built-in AI enrichments (Use AI, Claygent, etc.). It only appears for enrichments that support custom rate limiting, such as HTTP API and Apollo OAuth enrichments.
 
 ## Troubleshooting
 
