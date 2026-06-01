@@ -66,7 +66,7 @@ Optionally, you are also able to include catch-all emails.
 By default, Prospeo will auto-update the integration every 24 hours. Make sure to toggle this step off if you do not want to auto-update. However if you do so, you might run into stale data problems.
 
 **Step 4 (Optional): Select Conditional Run Criteria**  
-If you want to only run this enrichment under set circumstances, you are able to input formulas where the column runs only if the formula is true. Learn more about conditional runs in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101#:~:text=Conditional%20runs%20\(which%20make%20use,personal%20emails%20for%20all%20rows\).).
+If you want to only run this enrichment under set circumstances, you are able to input formulas where the column runs only if the formula is true. Learn more about conditional runs in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101#:~:text=Conditional%20runs%20\\(which%20make%20use,personal%20emails%20for%20all%20rows\\).).
 
 ## `Action` Find Email Addresses Associated with a Domain
 
@@ -83,7 +83,7 @@ To find the email addresses associated with a given domain using Prospeo's email
 By default, Prospeo will auto-update the integration every 24 hours. Make sure to toggle this step off if you do not want to auto-update. However if you do so, you might run into stale data problems.
 
 **Step 4 (Optional): Select Conditional Run Criteria**  
-If you want to only run this enrichment under set circumstances, you are able to input formulas where the column runs only if the formula is true. Learn more about conditional runs in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101#:~:text=Conditional%20runs%20\(which%20make%20use,personal%20emails%20for%20all%20rows\).).
+If you want to only run this enrichment under set circumstances, you are able to input formulas where the column runs only if the formula is true. Learn more about conditional runs in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101#:~:text=Conditional%20runs%20\\(which%20make%20use,personal%20emails%20for%20all%20rows\\).).
 
 ## `Action` Find Work Email and Enrich Person from LinkedIn URL
 
@@ -100,13 +100,16 @@ Please input the **Linkedin URL** of your contact to find their work email and e
 By default, Prospeo will auto-update the integration every 24 hours. Make sure to toggle this step off if you do not want to auto-update. However if you do so, you might run into stale data problems.
 
 **Step 4 (Optional): Select Conditional Run Criteria**  
-If you want to only run this enrichment under set circumstances, you are able to input formulas where the column runs only if the formula is true. Learn more about conditional runs in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101#:~:text=Conditional%20runs%20\(which%20make%20use,personal%20emails%20for%20all%20rows\).)
+If you want to only run this enrichment under set circumstances, you are able to input formulas where the column runs only if the formula is true. Learn more about conditional runs in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101#:~:text=Conditional%20runs%20\\(which%20make%20use,personal%20emails%20for%20all%20rows\\).)
 
 ## `Action` Find people at company
 
 The **Find people at company** action lets you search for contacts at a specific company by domain, with optional filters for job title, seniority, and department.
 
-**Note:** A maximum of 25 contacts are returned per run — this is a cap set by the Prospeo API, not a Clay limitation. If you need more contacts per company, use **Find People at These Companies** (under Tools or as a source) instead. It uses Clay's own search index and supports configurable limits up to 100 contacts per company.
+**Note:** A maximum of 25 contacts are returned per run — this is a cap set by the Prospeo API, not a Clay limitation. There is no configurable limit field on this action, so you cannot restrict results to fewer than 25. If you need to control the number of people returned per company:
+
+- **Fewer than 25**: use Clay's native **Find People** source instead — it includes **Limit per company** (up to 100) and **Limit results** fields. You can run Prospeo enrichments afterward to find emails.
+- **More than 25**: use **Find People at These Companies** (under Tools or as a source). It uses Clay's own search index and supports configurable limits up to 100 contacts per company.
 
 **Step 1: Choose the Prospeo account you want to use**  
 You can use either the Clay-managed Prospeo account or bring your own key.  
