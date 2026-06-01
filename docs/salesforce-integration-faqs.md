@@ -129,9 +129,15 @@ To modify this setting, click your table name in the top bar. From the dropdown 
 
 ## Is there a way I can test Salesforce enrichments?
 
-Yes, you can test enrichments by connecting your sandbox test environment.
+Yes. Connect Clay to your Salesforce sandbox org and use that connection when configuring enrichments or sources. This lets you test your Clay workflows with non-production data before running them against your live Salesforce instance.
 
-Go to `Settings` → `Connections` → `Salesforce Test Env` to set it up.
+To connect to a Salesforce sandbox:
+
+1.  Go to `Settings` → `Connections`.
+2.  Click `Add connection` and search for `Salesforce`.
+3.  Under `User Sign In`, click `Sign in with Salesforce sandbox` and complete the OAuth sign-in flow.
+
+Once connected, select your sandbox connection when adding any Salesforce enrichment or source in your Clay tables.
 
 ## Can I reverse my Salesforce enrichment?
 
