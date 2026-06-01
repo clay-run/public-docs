@@ -218,12 +218,27 @@ For tables with scheduled source imports, the `Update existing rows` toggle cont
 
 ## Duplicate table
 
-**Note:** Duplicating a table will only copy the sources. You cannot duplicate all of the data within a table.
+When you duplicate a table, Clay copies the table structure and run settings — but **does not copy enriched data**. The duplicate starts empty; you'll need to manually trigger enrichments and source imports to populate it.
 
-To duplicate your table:
+**What is copied:**
+-   Column headers and their configuration (enrichment settings, formulas, conditional run logic)
+-   Run settings, including the **Auto-run** toggle and "Keep existing results" setting
+-   Scheduling configuration (if the table has a scheduled source import)
+
+**What is not copied:**
+-   Enriched data — enrichment columns start empty in the duplicate
+-   Source import history — the duplicate starts with a fresh record count
+
+**Auto-run carries over:** Because run settings are preserved, if Auto-run was enabled in the original table, the duplicate will also have Auto-run enabled. To create a copy that starts in manual mode (useful for demos or templates), turn off Auto-run in the original table **before** duplicating — or turn it off in the duplicate immediately after creating it. See [Auto-run](#auto-run) for how to toggle this setting.
+
+**Connected sources (Salesforce, SOQL queries, and similar):** If a table has a Salesforce report, SOQL query, or other import source configured, duplicating copies the source configuration but does **not** automatically start the import. You will need to manually trigger the source in the duplicated table when you're ready to populate it with data.
+
+To duplicate a table:
 
 1.  Click on the title of the table on the top left.
 2.  Select `Duplicate table`.
+
+**Duplicating a workbook:** To duplicate an entire workbook, open the workbook, click the workbook name in the top toolbar, and select `Duplicate`. Each table in the workbook is duplicated with the same behavior described above — structure and run settings are copied, enriched data is not, and connected sources don't automatically start importing. Note that workbooks with more than 10 tables cannot be duplicated by default; contact Clay support to raise this limit.
 
 ## View table graph
 
@@ -301,7 +316,7 @@ To edit your table description:
 
 ## View table history
 
-Track changes to your table, including who made them and when. View updates to settings, columns, and enrichments with AI-generated summaries.
+Track changes to your table, including who made them and when. View updates to settings, column additions, updates, and deletions with AI-generated summaries.
 
 **What you can track:**
 
