@@ -163,7 +163,7 @@ Every function includes a built-in **"Send data back"** column — the final ste
 1.  Open the function in edit mode (from your Clay homepage → **Functions**, or click the function column in your table and select **Edit function**).
 2.  In the function editor, locate the **"Send data back"** column — the last column in the function.
 3.  Click its column header to open the settings panel.
-4.  Under **Configure → Choose output data to send**, you'll see a checklist labeled **"Selected columns (N of M)\"** listing the function's columns.
+4.  Under **Configure → Choose output data to send**, you'll see a checklist labeled **"Selected columns (N of M)"** listing the function's columns.
 5.  Check each column whose values you want returned to the calling table.
 6.  Click **Publish Changes** to apply.
 
