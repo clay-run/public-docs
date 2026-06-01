@@ -66,7 +66,7 @@ Optionally, you are also able to include catch-all emails.
 By default, Prospeo will auto-update the integration every 24 hours. Make sure to toggle this step off if you do not want to auto-update. However if you do so, you might run into stale data problems.
 
 **Step 4 (Optional): Select Conditional Run Criteria**  
-If you want to only run this enrichment under set circumstances, you are able to input formulas where the column runs only if the formula is true. Learn more about conditional runs in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101#:~:text=Conditional%20runs%20\\(which%20make%20use,personal%20emails%20for%20all%20rows\\).).
+If you want to only run this enrichment under set circumstances, you are able to input formulas where the column runs only if the formula is true. Learn more about conditional runs in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101#:~:text=Conditional%20runs%20\(which%20make%20use,personal%20emails%20for%20all%20rows\).).
 
 ## `Action` Find Email Addresses Associated with a Domain
 
@@ -83,7 +83,7 @@ To find the email addresses associated with a given domain using Prospeo's email
 By default, Prospeo will auto-update the integration every 24 hours. Make sure to toggle this step off if you do not want to auto-update. However if you do so, you might run into stale data problems.
 
 **Step 4 (Optional): Select Conditional Run Criteria**  
-If you want to only run this enrichment under set circumstances, you are able to input formulas where the column runs only if the formula is true. Learn more about conditional runs in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101#:~:text=Conditional%20runs%20\\(which%20make%20use,personal%20emails%20for%20all%20rows\\).).
+If you want to only run this enrichment under set circumstances, you are able to input formulas where the column runs only if the formula is true. Learn more about conditional runs in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101#:~:text=Conditional%20runs%20\(which%20make%20use,personal%20emails%20for%20all%20rows\).).
 
 ## `Action` Find Work Email and Enrich Person from LinkedIn URL
 
@@ -100,7 +100,7 @@ Please input the **Linkedin URL** of your contact to find their work email and e
 By default, Prospeo will auto-update the integration every 24 hours. Make sure to toggle this step off if you do not want to auto-update. However if you do so, you might run into stale data problems.
 
 **Step 4 (Optional): Select Conditional Run Criteria**  
-If you want to only run this enrichment under set circumstances, you are able to input formulas where the column runs only if the formula is true. Learn more about conditional runs in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101#:~:text=Conditional%20runs%20\\(which%20make%20use,personal%20emails%20for%20all%20rows\\).)
+If you want to only run this enrichment under set circumstances, you are able to input formulas where the column runs only if the formula is true. Learn more about conditional runs in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101#:~:text=Conditional%20runs%20\(which%20make%20use,personal%20emails%20for%20all%20rows\).)
 
 ## `Action` Find people at company
 
