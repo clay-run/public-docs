@@ -54,12 +54,11 @@ For a full reference on run condition syntax, see [Conditional runs](conditional
 
 **If you want to add a new column's values to existing rows using a shared identifier:**
 
-CSV import cannot update rows that already exist in Clay — there is no upsert mode. If you have a spreadsheet with new column values you want to bring into your existing Clay table (for example, a "Keep/Remove" status column matched on LinkedIn Profile URL), use the **Google Sheets integration** instead:
+CSV import cannot update rows that already exist in Clay — there is no upsert mode. If you have a spreadsheet with new column values to bring into your existing Clay table (for example, a "Keep/Remove" status column matched on LinkedIn Profile URL), use this two-step approach instead:
 
-1.  Upload your spreadsheet to Google Sheets.
-2.  In your Clay table, click **Add enrichment** and search for **Google Sheets**.
-3.  Select the **Lookup, add, or update row** action.
-4.  Set the matching column (e.g., LinkedIn Profile URL) so Clay knows which Google Sheet row corresponds to each Clay row.
-5.  Map the column you want to populate (e.g., "Keep/Remove") as an output.
+1.  Import the enriched CSV as a **new** Clay table (choose `Create new table` at step 3 above).
+2.  In your original table, click **Add enrichment** and search for **Lookup Single Row in Other Table**.
+3.  Set the matching column (e.g., LinkedIn Profile URL) so Clay finds the right row in the new table.
+4.  Map the column you want to populate (e.g., "Keep/Remove") as an output.
 
-Each existing Clay row fetches the matching value from your Google Sheet without creating duplicates or new rows.
+Each existing Clay row fetches the matching value from the new table without creating duplicates.
