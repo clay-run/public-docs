@@ -19,7 +19,7 @@ This doc answers common questions about connecting and troubleshooting the Sales
 To connect Clay to Salesforce, your Clay user needs:
 
 1.  Access Identity Information (profile, email, address, phone)
-2.  Manage Data via APIs
+2.  Manage User Data via APIs
 3.  Perform Requests Anytime (refresh\_token, offline\_access)
 
 An OAuth user must set up the initial connection. After that, any user in your Clay workspace can use the integration.
