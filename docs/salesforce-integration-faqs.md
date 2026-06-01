@@ -35,16 +35,16 @@ For sensitive fields, you can create a permission set to restrict the OAuth user
 
 ## How do I verify which Salesforce user is associated with my connection?
 
-When you test a Salesforce connection in Clay, the result includes the email address of the SFDC user the connection token is assigned to. This makes it easy to confirm which Salesforce account Clay is using for API calls — useful when debugging access issues or when multiple connections exist in your workspace.
+Once you've tested a Salesforce connection, Clay saves the result and displays the connected SFDC user and Salesforce org directly in the connections list — so you can see which account each connection belongs to at a glance without re-testing.
 
-To check which user is associated with a connection:
+To populate the connections list display (or to re-verify a connection):
 
 1.  In the home sidebar, click `Settings` → `Connections`.
 2.  Select `Salesforce`.
 3.  Find the connection you want to verify and click the `…` menu next to it.
 4.  Select `Test Connection`.
 
-The result displays the SFDC user's email address. If you see the wrong user, reconnect using the correct Salesforce account.
+The test confirms the connection is valid and shows the SFDC user's email address and the Salesforce org it is attributed to. Clay saves this information to the connection, and it appears in the connections list going forward. If you see the wrong user, reconnect using the correct Salesforce account.
 
 ## How do I change or delete the default Salesforce connection?
 
