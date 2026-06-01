@@ -28,7 +28,7 @@ People Data Labs is great for finding email and phone number contacts, but it's 
 
 For better coverage on email data, we recommend using [Clay's waterfall enrichments](https://www.clay.com/waterfall-enrichment), which will let you search sequentially across multiple data providers. Learn more on how to use Clay waterfalls with this [Clay University lesson](https://www.clay.com/university/lesson/enrich-people-waterfalls-clay-101).
 
-With that in mind, let’s dive into using People Data Labs within Clay!
+With that in mind, let's dive into using People Data Labs within Clay!
 
 ## **Connecting with Clay with People Data Labs**
 
@@ -38,7 +38,7 @@ By default, People Data Labs enrichments will use the Clay-managed People Data L
 
 Simply pull up any People Data Labs enrichment within Clay to use the Clay-managed People Data Labs account.
 
-For more information on how many credits you’ll be charged for each action, check out the list below.
+For more information on how many credits you'll be charged for each action, check out the list below.
 
 ### **Option 2: Add your own People Data Labs API key**
 
@@ -56,10 +56,19 @@ Retrieve enriched company data such as industry, revenue, employee count, and mo
 
 **Setup Inputs**
 
--   **Company Domain**: The company’s primary domain, e.g., [google.com](http://google.com).
+-   **Company Domain**: The company's primary domain, e.g., [google.com](http://google.com).
 -   **Company Social Profile** (Optional): Social URL for the company, e.g., LinkedIn profile.
--   **Company Stock Ticker** (Optional): Stock ticker symbol like “GOOGL.”
+-   **Company Stock Ticker** (Optional): Stock ticker symbol like "GOOGL."
 -   **Minimum Likelihood Score** (Optional): Set a likelihood score threshold to refine data accuracy.
+
+**Understanding `size` vs. `employee_count`**
+
+When enriching a company, you may notice that the `size` field and `employee_count` field return different values for the same company. This is expected — they measure headcount differently:
+
+-   **`size`**: A self-reported range (e.g., "51-200") that the company selected on LinkedIn or Facebook. This value is static and may lag behind actual headcount, especially if the company hasn't updated their social profile in some time.
+-   **`employee_count`**: PDL's calculated headcount, built bottom-up from their underlying person dataset. This is generally more accurate and up-to-date than the self-reported `size` range.
+
+For the most accurate current headcount, use `employee_count`. The `size` field preserves the raw self-reported range as set by the company on their social profile. See [PDL's employee count documentation](https://docs.peopledatalabs.com/docs/employee-count-fields) for more detail.
 
 ### `Action` Enrich Person
 
@@ -67,18 +76,18 @@ Use this action to retrieve comprehensive personal data such as social profiles,
 
 **Setup Inputs**
 
--   **Person’s Name**: Provide the full name of the individual.
--   **Company Name**: Specify the company name associated with the person. Must be used with Person’s Name.
+-   **Person's Name**: Provide the full name of the individual.
+-   **Company Name**: Specify the company name associated with the person. Must be used with Person's Name.
 -   **Social Media Profile URL** (Optional): Enter the LinkedIn, Twitter, or Facebook URL for the person to narrow down results.
 
 ### `Action` Find Personal Email
 
-Retrieve a person’s personal email by searching with available identifiers.
+Retrieve a person's personal email by searching with available identifiers.
 
 **Setup Inputs**
 
--   **Person’s Name**: The individual’s full name. Used in combination with Company Name.
--   **Company Name**: The company associated with the individual. Must be used with Person’s Name.
+-   **Person's Name**: The individual's full name. Used in combination with Company Name.
+-   **Company Name**: The company associated with the individual. Must be used with Person's Name.
 -   **Social Media Profile URL** (Optional): Provide a LinkedIn, Twitter, or other social profile URL to improve accuracy.
 
 ### `Action` Get Employee Count by Criteria
@@ -89,6 +98,6 @@ Retrieve the employee count for a company based on role or geographic location c
 
 -   **Company Domain**: The domain URL of the company (e.g., [google.com](http://google.com)).
 -   **Company Social Profile** (Optional): LinkedIn or other social media URL of the company.
--   **Company Stock Ticker** (Optional): Stock ticker symbol, such as “GOOGL.”
+-   **Company Stock Ticker** (Optional): Stock ticker symbol, such as "GOOGL."
 -   **Role Filter** (Optional): Specify the job roles to filter the employee count.
 -   **Country Filter** (Optional): Filter results by country for location-specific data.
