@@ -71,7 +71,7 @@ A single target person (or company contact) will often have **multiple connector
 
 1.  Click on the Swarm result cell to open the Cell details panel.
 2.  Hover over the **Connections** section and click **Take action on list → Write each item to new row in other table**.
-3.  Choose your destination table and select which connector fields to send (for example, `Connector Name`, `Connector LinkedIn URL`, `Connector Current Company Name`).
+3.  Choose your destination table and select which connector fields to send (for example, `Connector Name`, `Connector LinkedIn URL`, `Connector Current Company Name`). You can also select columns from the parent row — such as the target person's name, LinkedIn URL, or current company — to include alongside each connector. This means every row in the destination table can contain both who you are trying to reach and who in your network can make the introduction.
 
 **Common mistake:** If you manually configure Send Table Data and choose a sub-field like `Connector Name - Connections - Relationships`, only one connector is sent per row because that path points to a single indexed item, not the full list. Always select the **Connections** array as the list source to flatten all connectors into separate rows.
 
