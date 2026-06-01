@@ -52,6 +52,27 @@ In the bulk enrichment settings, you can adjust several options:
     -   **Continue where you left off** — Finishes enriching rows already in the table, then continues with the rest of the source.
     -   **Start from the beginning** — Clears rows already in the table and reruns everything from the source. Note: restarting will cost credits again for previously enriched rows.
 
+## Queued rows and Errored rows
+
+Bulk enrichment tables include two built-in tabs at the top of the view to help you track run progress:
+
+-   **Queued rows** — rows that are waiting to be processed or are currently running.
+-   **Errored rows** — rows where an action column did not complete its run.
+
+### Why rows appear in Errored rows
+
+A row moves into the **Errored rows** tab when the action column used as your deletion criterion ends in an error state — including the **Run Stopped** status.
+
+**Run Stopped** appears on a cell when the run was manually paused or stopped before that action had a chance to execute. Because the action never completed, the row is counted as errored. This is why you may see rows in Errored rows where other enrichment columns show successful results: those columns ran fine, but the final action (for example, **Update Audiences Record**) did not finish before the run was halted.
+
+### How to re-run errored rows
+
+1.  Click the **Errored rows** tab at the top of the bulk enrichment table.
+2.  Scroll right to find the column showing **Run Stopped** or another error status.
+3.  Right-click that column's header → **Run column** → **Run [N] empty or out-of-date rows** to retry the incomplete rows.
+
+For more options on re-running specific rows or cells, see [Run progress](run-progress.md).
+
 ## Run Setup settings (Audiences)
 
 When a bulk enrichment is attached to an [Audiences](https://university.clay.com/docs/audiences) segment (available in beta for Enterprise customers), clicking the enrichment card opens a **Run Setup** panel with additional settings for ongoing enrichment behavior.
