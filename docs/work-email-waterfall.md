@@ -94,6 +94,14 @@ If the cell shows no result, click into it to see which providers were tried and
 -   The providers ran but returned results that failed validation. Try a less strict validation strategy, or check the individual provider columns (enable them in waterfall settings) to see what was returned.
 -   Your workspace ran out of credits mid-waterfall. When credit limits are hit, remaining providers in the sequence don't execute — click into the cell to see how far the waterfall got before stopping. See [Actions and data credits](actions-data-credits.md) to add more credits.
 
+### What if I only have a LinkedIn profile URL and no name or company domain?
+
+Most providers in the waterfall require at minimum a **full name** and **company domain** — a LinkedIn profile URL alone is not enough for them to run. If those fields are missing from your table rows, most providers will skip or error on that row.
+
+The recommended fix: add a LinkedIn enrichment action to your table to extract the person's full name and current company domain from their profile, then map those columns into the Work Email waterfall inputs. With name and domain populated, all providers in the sequence can run and your overall hit rate improves.
+
+A LinkedIn profile URL can still be useful as an additional mapped input — some providers can use it alongside or instead of name and domain — but for full coverage across all waterfall providers, populating full name and company domain first is the reliable path.
+
 ### Which email pattern should I use?
 
 The best pattern depends on the companies in your dataset. `first.last@domain.com` is the default because it's the most common format across industries. For more specific datasets, test a small sample (~10 rows) with different patterns to find what performs best before running at scale.
