@@ -39,7 +39,7 @@ Connect to Salesforce via Client Credentials for server-to-server access. No bro
     -   Under `Flow Enablement`, check `Enable Client Credentials Flow`.
 3.  In the `Policies` tab, enable the flow at the org level. This is the setting most commonly missed — if it's off, the flow is blocked regardless of the Settings toggle:
     -   Under `OAuth Flows and External Client App Enhancements`, check `Enable Client Credentials Flow`.
-    -   In the `Run As` field, enter the username of the integration user the app will authenticate as.
+    -   In the `Run As` field, enter the username of the integration user the app will appreciate as.
 4.  Click `Save`. See [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.configure_client_credentials_flow_for_external_client_apps.htm&language=en_US&type=5) for full details on configuring the Client Credentials flow.
 
 **Connecting in Clay**
@@ -172,6 +172,8 @@ Use this action to create a new record in Salesforce.
 
 **Map fields**
 
+**Note:** This updated field mapping experience is currently rolling out — if you don't see a **Map fields** section in your action panel, contact [support@clay.com](mailto:support@clay.com) to enable it.
+
 After selecting a Salesforce Object, the **Map fields** section lets you specify which fields to set on the new record. The section starts empty — add only the fields you need.
 
 -   **+ Add field**: Opens a searchable list of all available fields for the selected Salesforce object. Select a field to add it, then map it to a column or value from your Clay table. Repeat for each field you want to set.
@@ -240,6 +242,8 @@ Use this action to modify existing records in Salesforce.
 -   **Disable auto-assignment rules (optional):** When enabled, Salesforce will not apply lead and contact assignment rules when the record is updated. Enable this setting if you do not want your Salesforce assignment rules to fire when Clay updates a record.
 
 **Map fields**
+
+**Note:** This updated field mapping experience is currently rolling out — if you don't see a **Map fields** section in your action panel, contact [support@clay.com](mailto:support@clay.com) to enable it.
 
 After selecting a Salesforce Object, the **Map fields** section lets you specify which fields to update. The section starts empty — add only the fields you need to change.
 
