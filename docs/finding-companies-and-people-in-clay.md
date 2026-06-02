@@ -350,3 +350,11 @@ If you want to run on *only* the newly added companies (skipping the full compan
 
 **If using Find People as an enrichment action (runs within the company table, per row):**
 New company rows trigger Find People automatically when auto-run is enabled — no extra steps needed. See [Disable auto-run on the people table](#disable-auto-run-on-the-people-table-when-running-find-people-selectively) for caveats about downstream enrichment costs when new rows are added.
+
+### Why does my downstream company table have fewer rows than my original company list?
+
+When you run a people search across a company list and route results to a downstream company table — for example, using **Send Table Data** from a people table, de-duplicated by company domain — that destination table only contains companies where at least one person was found. Companies where the people search returned no results never generate a row in the people table, so nothing flows downstream for them.
+
+For example: if your original company list has 3,818 companies and people were found at 2,694 of them, your downstream company table shows 2,694 rows. The remaining 1,124 companies had no contacts found — this is expected behavior, not missing data. The downstream table is a filtered view of only the companies you can reach.
+
+To identify which companies had no people found, add a **Lookup Rows** column to your original company table (searching your people table, matched on company domain) and filter for rows where the count is zero.
