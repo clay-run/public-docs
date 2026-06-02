@@ -204,7 +204,7 @@ Clay offers three user roles with different permission levels to help manage you
 
 -   Manage all workspace settings and resources.
 -   Invite and remove team members.
--   Assign and update user roles.\
+-   Assign and update user roles.
 -   Access billing and workspace configuration.
 
 ### **Editor**
