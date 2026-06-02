@@ -33,6 +33,15 @@ The Salesforce connection is tied to the OAuth user who sets it up:
 
 For sensitive fields, you can create a permission set to restrict the OAuth user's access.
 
+## What Salesforce license type is required to connect Clay?
+
+The license requirement depends on which connection method you use:
+
+-   **User Sign In (OAuth):** Requires a **full Salesforce user license**. Salesforce Integration User licenses and API-only licenses cannot complete the browser-based OAuth approval flow that User Sign In requires. Attempting to connect with one of these license types results in an `OAUTH_APPROVAL_ERROR_GENERIC` error.
+-   **Client Credentials:** Works with **Salesforce Integration User licenses and API-only licenses**. Because Client Credentials connects server-to-server without a browser login, it is not subject to the same OAuth flow restriction.
+
+If your org uses a dedicated integration or service account with an API-only or Integration User license, use the **Client Credentials** method. For setup instructions, see [Connecting to Salesforce](https://university.clay.com/docs/salesforce-integration-overview).
+
 ## How do I verify which Salesforce user is associated with my connection?
 
 Once you've tested a Salesforce connection, Clay saves the result and displays the connected SFDC user and Salesforce org directly in the connections list — so you can see which account each connection belongs to at a glance without re-testing.
