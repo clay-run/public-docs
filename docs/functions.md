@@ -205,18 +205,13 @@ To access the object's sub-keys downstream, parse it back with `JSON.parse({{Mer
 
 When you call a function from a table, that column shows **Awaiting Callback** while the calling table waits for the function to finish processing and return results. The status resolves once the function's **"Send data back"** column runs successfully and sends results back.
 
-If the **"Send data back"** column has a **run condition** that is not met for a particular row, the function will not return data for that row — and the calling table's cell will remain stuck in **"Awaiting Callback" indefinitely**. The status will not fail or time out on its own; it stays waiting for a callback that will never arrive. Downstream columns in the calling table that depend on the function output will also not run for those rows.
-
-**To handle rows that should not send data back:**
-
--   Add a **run condition** on downstream columns in the calling table so they only run once the function column has returned a value (e.g., only run if `{{Function Column}}` is not empty).
--   Use `Clay.getCellStatus({{field_name}})` in a formula column to check the function column's status, then use that formula as a run condition on dependent columns.
-
-### What does "Awaiting Callback" mean on a function column?
-
-When you call a function from a table, that column shows **Awaiting Callback** while the calling table waits for the function to finish processing and return results. The status resolves once the function's **"Send data back"** column runs successfully and sends results back.
-
 If the **"Send data back"** column has a **run condition** that is not met for a particular row, the function will not return data for that row. The calling table's cell will remain in **"Awaiting Callback"** until a 24-hour timeout expires, at which point it resolves to an error state. Downstream columns in the calling table that depend on the function output will not run until the cell resolves.
+
+**To re-run rows stuck in Awaiting Callback:**
+
+Go back to the origin table and re-run the function column for those rows. Each row's pass through a function is a one-way trip — you cannot re-trigger processing from within the function itself. Re-running the function cell in the origin table dispatches a fresh invocation that runs on the latest function configuration.
+
+There is no per-row force-stop for cells in Awaiting Callback. To halt all processing immediately, you can pause the entire function — but this stops all rows, not just the stuck ones. Paused rows will resume when you unpause.
 
 **To prevent downstream columns from waiting:**
 
