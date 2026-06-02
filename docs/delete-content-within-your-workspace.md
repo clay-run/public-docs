@@ -13,8 +13,9 @@ Learn how to delete columns, workbooks, and tables within your workspace.
 
 To delete a column:
 
--   Click on the the column you want to delete within your table.
--   Select `Delete` from the dropdown menu and confirm your changes.
+1. Click the column header to open the dropdown menu.
+2. Scroll to the bottom of the menu and select `Delete`.
+3. In the confirmation dialog, click **Delete column** to confirm. If the column has downstream dependencies — such as enrichments or formula columns that reference it — they will be listed in the dialog so you can review before deleting.
 
 ## Delete tables and workbooks
 
