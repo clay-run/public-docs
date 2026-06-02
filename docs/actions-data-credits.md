@@ -209,6 +209,13 @@ If you are on a **monthly plan**, unused Data Credits will roll over and accumul
 
 If you are on an **annual plan**, you are eligible for a **15% Data Credit rollover** of unused Data Credits, provided you renew on the same or a higher-tier plan.
 
+If you are on a **semiannual or quarterly plan**, your Data Credits are issued once per billing period — all at once at the start of each period, not spread out monthly. For example, a semiannual plan with 3,000,000 credits per period delivers the full 3,000,000 credits at the start of each 6-month period.
+
+Rollover for semiannual and quarterly plans also differs from monthly plans:
+
+-   **Within your billing year:** All unused Data Credits carry over in full at each billing period boundary (e.g., the 6-month mark on a semiannual plan). No rollover cap is applied until your billing year ends.
+-   **At your billing year end:** Up to 15% of your annualized credit amount rolls over. Your annualized amount equals your credits per period multiplied by the number of periods per year (e.g., for a semiannual plan with 3,000,000 credits per period: 3,000,000 × 2 = 6,000,000 annualized; 15% = 900,000 credits roll over at year end).
+
 _Note: Your rollover and renewal happen on the same day and at the same time you originally subscribed (this timestamp is now shown in your billing details). Processing may take a few hours after that timestamp, so there can be a delay before you see Data Credits updated._
 
 ## Managing your plan and credits
@@ -322,7 +329,7 @@ Actions represent fixed platform capacity tied to your action tier. To get more 
 
 Actions reset each billing cycle and don't roll over, since they reflect the platform capacity your plan includes. Each plan includes enough Actions to cover 90% of customer usage, and if you need more, you can increase your Action tier.
 
-Data Credits work more like a currency and do roll over. On Launch and Growth plans, unused credits can accumulate up to 2x your monthly credit amount (e.g., a 10,000 credit plan can bank up to 20,000 total). Enterprise customers can roll over up to 15% of their prior year's purchased credits, provided they renew at an equal or higher commitment.
+Data Credits work more like a currency and do roll over. On Launch and Growth plans, unused credits can accumulate up to 2x your monthly credit amount (e.g., a 10,000 credit plan can bank up to 20,000 total). Enterprise customers can roll over up to 15% of their prior year's purchased credits, provided they renew at an equal or higher commitment. On semiannual and quarterly plans, credits are issued once per billing period (not monthly); unused credits carry over in full between periods within the same billing year, and up to 15% of the annualized credit amount rolls over at billing year end.
 
 ### How do I estimate what my workflow will cost?
 
