@@ -42,6 +42,8 @@ For example, you could:
 
 When Sculptor builds new columns for your table, it automatically puts the table into [sandbox mode](https://www.clay.com/university/guide/sandbox-mode) first. This gives you a chance to review and validate the new columns before they go live—reducing unintended credit burn and giving you more control over changes.
 
+> **Important:** To save Sculptor's proposed columns to your live table, use the **Review changes** button — do _not_ click **Exit Sandbox**. Clicking **Exit Sandbox** will discard all of Sculptor's proposed changes without publishing them.
+
 Once Sculptor adds columns and sandbox mode is active:
 
 1. Review the proposed columns in sandbox mode using a small set of test rows. The **All data** tab shows a **View-only** indicator while sandbox is active — this is expected and means your production table is protected while you test.
