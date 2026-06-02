@@ -9,7 +9,7 @@ last_synced: 2026-04-26T01:39:41.295Z
 
 # Attio integration
 
-Pull your Attio records directly into a table as a source and push enriched data back by creating, updating, or upserting records across any Attio object. Common workflows include:
+Pull your Attio records directly into a table as a source and push enriched data back by creating, updating, or upserting records across any Attio object.
 
 Attio is a modern, data-driven CRM built for high-growth teams. Within Clay, you can pull your Attio records directly into a table as a source and push enriched data back by creating, updating, or upserting records across any Attio object. Common workflows include:
 
