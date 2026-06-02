@@ -94,6 +94,7 @@ Clay gives you three ways to get contacts from a company list. Here's how they d
 -   When re-run, searches across all companies in the linked table — including any newly added ones. New people are appended and deduplicated against rows already in the table.
 -   Subject to a per-source cumulative limit that varies by billing plan — once that limit is hit, the source stops returning new records even if new companies are added. See [the troubleshooting section](#your-source-has-exceeded-your-plans-limit-error-on-find-companies-or-find-people) for details.
 -   Best when you don't need to rank or further filter contacts before saving them.
+-   **Update People Table column:** When this source is created from a company table, Clay automatically adds an **Update People Table** column to the company table. That column is the link between the two tables — when it runs, it triggers a full re-run of the Find People search across all companies currently in the table, including any newly added ones. It does not run incrementally for only new rows; it re-runs the full search. With **Enable Automatic People Search Updates** toggled on, the column fires automatically when new company rows enter the table; turn it off to trigger refreshes manually.
 
 **Find People at These Companies — as an enrichment action (saves to existing table):**
 
@@ -342,6 +343,8 @@ The source returns results in a new table and is subject to a per-source cumulat
 
 **If using Find People as a source (a separate people table):**
 Re-running the source is all that's needed. It searches across all companies in the linked table — including any you just added — and appends new people while deduplicating against rows already in the table. To re-run: click the source column header in the people table and select **Run**.
+
+**If your company table has an Update People Table column:** That column is the mechanism that triggers Find People refreshes. Despite the UI warning ("does NOT perform incremental Find People searches for new companies"), the column *does* include newly added companies in the refresh — it re-runs the entire Find People search across all companies currently in the table and appends new contacts to the people table. The warning means the refresh runs the full search rather than an isolated search for just the new rows. With **Enable Automatic People Search Updates** toggled on, the column runs automatically when new company rows are added. If you prefer to trigger it manually, turn that toggle off and run the column on demand.
 
 If you want to run on *only* the newly added companies (skipping the full company list), create a **filtered view** of your company table showing just the new rows. To reuse your existing filter criteria without rebuilding them, open the Find People source column (right-click → **Edit column**), click **Save search** at the top of the filter panel to save your current filters, then use that saved search when setting up a new **Find People at These Companies** search on the filtered view. See [Saved searches](saved-searches.md) for full details.
 
