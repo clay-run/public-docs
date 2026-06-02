@@ -56,9 +56,11 @@ When you start sandbox mode, the top 10 rows from your existing table will be du
 
 ## Publishing sandbox changes
 
+> **Important:** To publish your sandbox changes, use the **Review changes** button described below — do _not_ click **Exit Sandbox** first. Clicking **Exit Sandbox** will discard all unpublished changes without giving you a publish option.
+
 ### Viewing changes
 
-Click `Review changes` — visible in the tab bar above your table, to the right of the "Test data" / "All data" switcher — to view a list of all _structural_ column updates to your sandbox (compared to your regular table).
+Click `Review changes` — visible in the tab bar above your table, to the right of the "Test data" / "All data" switcher — to view a list of all _structural_ column updates to your sandbox (compared to your regular table). If `Review changes` appears greyed out, it means no structural column changes have been detected yet (for example, you ran enrichments on sandbox rows but haven't added, updated, or deleted any column configurations).
 
 **This includes:**
 
