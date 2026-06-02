@@ -204,7 +204,7 @@ Clay offers three user roles with different permission levels to help manage you
 
 -   Manage all workspace settings and resources.
 -   Invite and remove team members.
--   Assign and update user roles.
+-   Assign and update user roles.\
 -   Access billing and workspace configuration.
 
 ### **Editor**
@@ -338,7 +338,7 @@ An **integration account** is a configured connection between your workspace and
 
 ## **Add a new integration account**
 
-To add a new account for an integration:\
+To add a new account for an integration:
 
 -   Navigate to `Settings` > `Connections`.
 -   Click `+ Add connection` in the top-right corner.
