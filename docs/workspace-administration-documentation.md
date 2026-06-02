@@ -33,12 +33,13 @@ To update your account name:
 
 ## **Change your password**
 
+_If you sign in with Google, the **Change password** option will not appear on your Security tab — it is only visible for email + password accounts. See [Switch from Google login to email and password](#switch-from-google-login-to-email-and-password) below instead._
+
 To change your account password:
 
 -   Visit your `Settings` and head to the `Account` section.
 -   Open the `Security` tab under `Your profile`.
 -   Click `Change password`. A magic link will be sent to your registered email address.
-    -   _Note: This option is available only if you signed in using a password and not via an authentication service such as Google or SSO. If you signed up with Google and want to create a password, see [Switch from Google login to email and password](#switch-from-google-login-to-email-and-password) below._
 -   Follow the instructions in the email to securely update your password.
 
 ## **Switch from Google login to email and password**
