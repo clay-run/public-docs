@@ -266,7 +266,7 @@ Follow the instructions in the modal and have your Google Workspace admin set ou
 
 This error is expected — Clay's sequencer uses automated warmup sends, which prevents the app from passing Google's standard verification process. Admin approval in your Google Workspace Admin panel is the intended workaround; Clay's app will not become Google-verified.
 
-If the error persists more than 24 hours after your admin marked the app as `Trusted`, confirm that they approved the app for the exact domain of the email account you're connecting (e.g., for `ryan@company.com`, the admin must approve for `company.com` specifically — not a different domain they manage). If it's still blocked after verifying the domain, contact support.
+If the error persists more than 24 hours after your admin marked the app as `Trusted`, confirm that they approved the app for the exact domain of the email account you're connecting (e.g., for `ryan@company.com`, the admin must approve for `company.com` specifically — not a different domain they manage). If you're connecting accounts from multiple domains, each domain requires its own separate Trusted configuration — having one domain approved does not automatically cover the others. Your admin can verify which org units are currently configured by going to Google Admin → Security → API Controls → App Access Control and checking the Clay Sequencer app's org unit count. If it's still blocked after verifying the domain, contact support.
 
 ### What exact Microsoft permissions does sequencer require?
 
