@@ -118,7 +118,7 @@ A Campaign Member in Salesforce represents the relationship between a lead or co
 
     Replace the `/Column Name` placeholders with your Clay columns using the `/` picker in the query editor. This returns the Campaign Member's `Id` and current `Status` if they are already in the campaign, or nothing if they are not.
 
-2.  **Create record (conditional)** — If the lookup returns no result, the person is not yet in the campaign. Add a **Create record** column, set the Salesforce object to `CampaignMember`, and supply `ContactId` (or `LeadId`), `CampaignId`, and the initial `Status`. In **Run settings**, add a conditional run that fires only when the ID field from your SOQL lookup column is empty.
+2.  **Create record (conditional)** — If the lookup returns no result, the person is not yet in the campaign. Add a **Create record** column, set the Salesforce object to `CampaignMember`, and supply `ContactId` (or `LeadId`), `CampaignId`, and the initial `Status`. In **Run settings**, add a conditional run that fires only when the ID field from your SOQL lookup is empty.
 
 3.  **Update record (conditional)** — If the lookup returns a result, the person is already in the campaign and needs their status changed. Add an **Update record** column, set the Salesforce object to `CampaignMember`, set **Record ID** to the `Id` from your SOQL lookup column, and supply the new `Status` value. In **Run settings**, add a conditional run that fires only when the ID field from your SOQL lookup is **not** empty.
 
