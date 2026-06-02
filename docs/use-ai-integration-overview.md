@@ -167,3 +167,19 @@ For reliable email finding, use a dedicated email finder instead:
 -   Individual providers such as Findymail, LeadMagic, Hunter, Dropcontact, and Datagma are also available as standalone enrichments under **Add enrichment**.
 
 **Note:** The **web research** mode in Use AI can scrape specific website URLs you provide as inputs, but it is not designed for email discovery. For finding work email addresses, dedicated enrichment providers are the reliable choice.
+
+### Cells showing "Cell data size exceeds limit" when using Scrape Website output
+
+If your AI column shows a **"Cell data size exceeds limit"** error after referencing a **Body Text** column extracted from a Scrape Website enrichment, the problem is a mismatch between data size and cell type. When the Scrape Website enrichment runs, it stores its full output in the enrichment column itself (200 kB capacity). If you extract the Body Text into a separate standalone column, that extracted column is a basic text field with an 8 kB limit — and a typical webpage's body text far exceeds this.
+
+**Fix: reference the Scrape Website enrichment column directly instead of the extracted Body Text column.**
+
+1.  In your AI column prompt, type `/` to open the reference picker.
+2.  Select **Scrape Website** (the enrichment column itself) and navigate into it to choose only the specific properties your prompt needs — such as the page title, meta description, or other targeted fields.
+3.  Avoid selecting the full Body Text if the page is large; pick the targeted properties instead.
+
+Pulling properties directly from the enrichment column gives you access to the full 200 kB capacity and lets you pass only the fields you need, keeping the input small.
+
+**Alternatively**, configure the Scrape Website enrichment to return less data. Open the enrichment column settings and deselect output fields you don't need (for example, uncheck **Body Text** if your prompt only requires the title and description).
+
+**Skipping rows where scraped data is missing:** If you want the AI column to skip rows where the Scrape Website column returned no data, add a run condition. Open the AI column's **Run Settings**, click **Add run condition**, and set it to `/Scrape Website is not empty`. See [Conditional runs](conditional-runs.md) for full details.
