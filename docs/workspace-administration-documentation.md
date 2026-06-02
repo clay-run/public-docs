@@ -66,6 +66,12 @@ To get back to your correct workspace:
 -   **Navigate directly to your existing workspace:** Type `https://app.clay.com/workspaces/<your-workspace-id>` in the address bar. This loads your real workspace without going through the onboarding flow for the unwanted one.
 -   **Contact Clay support:** Use the in-app chat to ask support to stop the onboarding flow or delete the unwanted workspace. The support team can do this on your behalf even if you cannot reach that workspace's settings yourself.
 
+## **Using a corporate identity provider (Entra ID, Okta, etc.)**
+
+Individual Clay accounts support two login methods only: **Sign in with Google** (Google OAuth) or **email and password**. Microsoft Entra ID (Azure AD), Okta, and other corporate identity providers are not available as individual login options.
+
+If your company wants all Clay users to authenticate through a corporate IdP, a workspace admin must contact Clay support to set up workspace-wide SSO. See [Single Sign-On (SSO)](#single-sign-on-sso) for details on eligibility (Enterprise plan or SSO add-on) and the setup process.
+
 ## **Clay API key access**
 
 Your Clay API key enables Clay-specific integrations and external connections. To manage your API key:
