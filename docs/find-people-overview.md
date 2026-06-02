@@ -31,7 +31,10 @@ This tool is ideal for building targeted sales prospect lists, identifying poten
     -   **Job title must contain exact:** Each result must contain at least one of your search terms, ignoring capitalization and special characters. Synonyms and similar titles are excluded. For example, "Founder/CEO" matches "ceo", but "Frontend Engineer" does not match "Software Developer."
     -   **Job title must match exactly:** Each result must match at least one search term exactly, including capitalization. Special characters are not allowed. For example, neither "Founder/CEO" nor "ceo" will match "CEO."
     -   **Exact phrase matching:** Wrap multi-word terms in quotes to search for exact phrases. For example, "Google Cloud" finds profiles with that specific expertise. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are removed.
--   **Experience:** Filter by current role duration, past position dates, and keywords in experience descriptions.
+-   **Experience:** Filter by current role duration, number of positions held, and keywords in experience descriptions. The Experience section contains three sub-filters:
+    -   **Months in current role:** Set a minimum and/or maximum number of months a person has been in their current position.
+    -   **Number of experiences:** Set a minimum and/or maximum count of separate job entries listed on a person's LinkedIn profile. **This counts individual roles, not total years of career experience.** For example, setting Max = 2 returns people with two or fewer job entries, which is a useful proxy for early-career candidates. There is no direct "total years of experience" filter in Clay — to approximate one, combine this filter with a cap on **Months in current role**, or import results first and use a **Use AI** column to analyze each person's full work history against your criteria.
+    -   **Experience description keywords:** Return only people whose experience descriptions include specific keywords (e.g., "construction", "machine learning").
 -   **Location:** Include or exclude specific regions, countries, or cities.
 -   **Profile:** Filter by names, connection count, or follower count ranges.
 -   **Certifications:** Search for specific certifications (e.g., AWS, Google Cloud).
