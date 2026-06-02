@@ -149,6 +149,13 @@ Please check with your Salesforce admin before making any changes to your Salesf
 
 No, one of Clay's benefits is that you can update any object and any field in Salesforce.
 
+## Can I use a Salesforce API-only or Integration User license with Clay?
+
+It depends on which connection method you use.
+
+-   **User Sign In (OAuth):** No. API-only and Integration User licenses cannot complete the browser-based OAuth flow. Attempting to connect with one of these licenses via User Sign In produces an `OAUTH_APPROVAL_ERROR_GENERIC` error.
+-   **Client Credentials:** Yes. Client Credentials connects server-to-server without a browser login and is compatible with API-only and Integration User licenses. See the [Salesforce integration](https://university.clay.com/docs/salesforce-integration-overview) doc for setup instructions.
+
 ## Why am I seeing an "OAUTH\_APPROVAL\_ERROR\_GENERIC" error when connecting Salesforce?
 
 This error typically occurs when:
@@ -159,7 +166,7 @@ This error typically occurs when:
 
 **How to fix:**
 
-1.  Use a full Salesforce user license (not Integration User) with a profile or permission set that includes API Enabled and Connected App Access.
+1.  **API-only or Integration User license:** Switch to [Client Credentials](https://university.clay.com/docs/salesforce-integration-overview) — it works with these license types and requires no browser login. If you must use User Sign In, switch to a full Salesforce user license (not Integration User) with a profile or permission set that includes API Enabled and Connected App Access.
 2.  If your org enforces SSO, temporarily allow direct username/password login for this user, or create a non-SSO service account for authorization.
 3.  In `Setup` → `Connected Apps OAuth Usage`, verify the Clay app is listed and not blocked. If your org uses App Access Control, pre-install or whitelist the app first.
 
