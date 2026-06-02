@@ -244,6 +244,14 @@ The Body editor has two modes, toggled via the ⚙️ gear icon in the top-right
 
 **⚠️ Warning:** Typing formula syntax in token mode without switching to formula mode treats it as literal JSON text — causing a "Failed to parse body input" error at runtime.
 
+**How chip tokens handle complex values**
+
+In token mode, every column chip inserted via the `/` picker is automatically JSON-serialized before the request is sent — strings, numbers, objects, and arrays all serialize correctly, including columns that return nested objects.
+
+**⚠️ Important:** This auto-serialization only applies to direct chip tokens, not to formula expressions. If you use formula mode with an expression that accesses a sub-property of an object column — for example, `{{My Column}}?.["Key Name"]` where "Key Name" is itself a nested object — that intermediate JavaScript value is **not** auto-serialized. Your API will receive the string `[object Object]` instead of the actual data.
+
+**Fix:** Extract the sub-property into its own formula column first, then reference that column as a chip in the HTTP body via the `/` picker. Chip tokens are always auto-serialized, even when the column value is a complex object or array.
+
 **Example body configuration:**
 
 ```javascript
@@ -584,6 +592,23 @@ Some providers have multiple API keys for different endpoints. Example: Apollo h
 If you used a Clay formula (e.g., `Concatenate()`, `If()`) to build the JSON body and the editor is in its default **token mode**, Clay treats the formula syntax as literal JSON — causing a parse error.
 
 **Fix:** Click the ⚙️ gear icon in the Body editor and select **Formula**. This switches to a full Clay formula editor where your expression is evaluated before the request is sent. Alternatively, remove the formula and rewrite the body in token mode using `/` to insert column values as chip references — for example, `{"email": "/Lead's Email", "score": /Lead Score}`.
+
+### Column value appears as `[object Object]` in the request body
+
+The API receives the literal string `[object Object]` instead of JSON data.
+
+**Why this happens:** In token mode, every column chip inserted via the `/` picker is automatically JSON-serialized before the request is sent. In formula mode, expressions that access sub-properties of object columns — such as `{{Column}}?.["Key Name"]` where "Key Name" is itself a nested object — are **not** auto-serialized. When Clay coerces that JavaScript object to a string, it produces `[object Object]`.
+
+This most commonly surfaces when:
+-   You're pulling values out of a complex enrichment result (e.g. function inputs, AI output objects) using `?.["Key"]` inside a formula expression.
+-   You're using `_.join()` or string concatenation in formula mode where one of the values is a nested object.
+
+**Fix:**
+
+1.  Create an **intermediate formula column** that extracts the value you need — e.g. `{{Enrichment Column}}?.["Key Name"]`.
+2.  In your HTTP body (token mode), insert that formula column as a **chip** via the `/` picker.
+
+The chip token is automatically serialized, even when the column value is a complex object or array.
 
 ### Hidden characters in API documentation
 
