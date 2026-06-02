@@ -9,7 +9,7 @@ last_synced: 2026-04-26T01:39:41.295Z
 
 # Attio integration
 
-Pull your Attio records directly into a table as a source and push enriched data back by creating, updating, or upserting records across any Attio object.
+Pull your Attio records directly into a table as a source and push enriched data back by creating, updating, or upserting records across any Attio object. Common workflows include:
 
 Attio is a modern, data-driven CRM built for high-growth teams. Within Clay, you can pull your Attio records directly into a table as a source and push enriched data back by creating, updating, or upserting records across any Attio object. Common workflows include:
 
@@ -45,6 +45,7 @@ Imports records from a specific Attio list into your Clay table.
 **Inputs:**
 
 -   `List`: The Attio list to import records from. Populated dynamically from your connected account.
+-   `View (optional)`: A saved view in Attio to filter which list entries are returned. Populated dynamically from the selected list. If provided, takes precedence over the custom `Filter` query. If neither are provided, all entries are returned.
 -   `Filter (optional)`: A JSON filter query to narrow which records are imported from the list. See [Attio's filtering and sorting docs](https://docs.attio.com/rest-api/guides/filtering-and-sorting) for syntax.
 -   `Sort (optional)`: A JSON sort query to order the imported records. See [Attio's filtering and sorting docs](https://docs.attio.com/rest-api/guides/filtering-and-sorting) for syntax.
 -   `Limit (optional)`: The maximum number of records to import. The maximum is 50,000 records.
