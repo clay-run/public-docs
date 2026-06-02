@@ -170,6 +170,15 @@ Use this action to create a new record in Salesforce.
 -   **Salesforce object:** The object type to look for in your Salesforce.
 -   **Duplicate rule override:** When enabled and you have a [duplicate rule](https://help.salesforce.com/s/articleView?id=sf.duplicate_rules_map_of_reference.htm&type=5), Clay will bypass the rule and create a new record, even if it duplicates an existing one.
 
+**Map fields**
+
+After selecting a Salesforce Object, the **Map fields** section lets you specify which fields to set on the new record. The section starts empty — add only the fields you need.
+
+-   **+ Add field**: Opens a searchable list of all available fields for the selected Salesforce object. Select a field to add it, then map it to a column or value from your Clay table. Repeat for each field you want to set.
+-   **Refresh**: Reloads the field list from Salesforce. Use this if you've recently added or modified fields in your Salesforce org and they're not appearing in the picker.
+
+Fields not added here are left blank on the new record.
+
 **Tip: Adding contacts or leads to a Salesforce Campaign**
 
 Clay does not have a dedicated "Add to Campaign" action. To add a contact or lead to a Salesforce Campaign, use **Create Record**, select **Campaign Member** as the Salesforce object, and map both the **ContactId** (or **LeadId**) and **CampaignId** fields. If the record is already a campaign member, Salesforce returns a `DUPLICATE_VALUE` error — you can guard against this by first running a **Lookup record** action with "Campaign Member" as the object to check whether the association already exists.
@@ -229,6 +238,15 @@ Use this action to modify existing records in Salesforce.
 -   **Salesforce object:** The object type to look for in your Salesforce.
 -   **Ignore blank values (optional):** When enabled, blank values from Clay will be ignored.
 -   **Disable auto-assignment rules (optional):** When enabled, Salesforce will not apply lead and contact assignment rules when the record is updated. Enable this setting if you do not want your Salesforce assignment rules to fire when Clay updates a record.
+
+**Map fields**
+
+After selecting a Salesforce Object, the **Map fields** section lets you specify which fields to update. The section starts empty — add only the fields you need to change.
+
+-   **+ Add field**: Opens a searchable list of all updateable fields for the selected Salesforce object. Select a field to add it, then map it to a column or value from your Clay table. Repeat for each field you want to update.
+-   **Refresh**: Reloads the field list from Salesforce. Use this if you've recently added or modified fields in your Salesforce org and they're not appearing in the picker.
+
+Fields not added here are left unchanged in Salesforce.
 
 ### `Action` Convert lead
 
