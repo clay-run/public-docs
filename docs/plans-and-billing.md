@@ -105,6 +105,8 @@ You can track both actions and data credits usage in the `Usage Dashboard`, whic
 
 **Annual plans:** When your plan refreshes, you can roll over up to 15% of your annual data credits in addition to the new credits you receive, provided you renew on the same or a higher-tier plan.
 
+**Semiannual and quarterly plans:** Data Credits are issued once per billing period — all at once at the start of each period (every 6 months or every 3 months), not spread monthly. All unused credits carry over in full at each billing period boundary within the same billing year. At your billing year end, up to 15% of your annualized credit amount (credits per period × number of periods per year) rolls over, provided you renew on the same or higher-tier plan.
+
 For more details, see our guide on [actions and data credits](https://www.notion.so/Actions-and-data-credits-2a77e66eb01480b798f2ddca99d45e80?pvs=21).
 
 ### Is upgrading my plan prorated?
