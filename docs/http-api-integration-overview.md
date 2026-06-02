@@ -288,7 +288,7 @@ Headers provide authentication and specify data formats. Add them as key-value p
 **API key in header:**
 
 -   Key: X-API-Key
--   Value: YOUR\_API\_ KEY\_HERE
+-   Value: YOUR\_API\_KEY\_HERE
 
 **Content type (automatically set in Clay):**
 
