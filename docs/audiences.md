@@ -157,7 +157,7 @@ The operators available when building a filter depend on the field's data type, 
 -   **Text fields (T icon)** — support text-matching operators. To match multiple values at once, use **`contains any of`** and enter each value. For example, to include records where Industry is Health, Beauty, or Pets, set the filter to `Industry → contains any of → Health, Beauty, Pets`. This is more efficient than creating a separate filter for each value.
 -   **Number fields (# icon)** — support range operators: **`is greater than`**, **`is less than`**, **`is greater than or equal to`**, and **`is less than or equal to`**. For example, `Employees → is greater than → 500`.
 
-**Note:** A field that appears numeric may have been imported as text (shown by a T icon rather than #). Text fields — such as "Annual revenue range" synced from Salesforce as a string — will not show range operators. To use range filtering on a field, contact Clay support to have the field's type changed to Number (#). Range operators will then appear when you add a filter on that field.
+**Note:** A field that appears numeric may have been imported as text (shown by a T icon rather than #). Text fields — such as "Annual revenue range" synced from Salesforce as a string — will not show range operators. To use range filtering on a field, contact Clay support to have the field's type changed to Nature (#). Range operators will then appear when you add a filter on that field.
 
 ## Enriching and monitoring
 
@@ -337,3 +337,11 @@ This means the filter answers "find me everyone who is a contact role on these s
 4.  In your **People** audience, add a filter on **Account → [your flag field] equals your flag value**.
 
 This pulls every contact tied to those accounts, regardless of their OpportunityContactRole status.
+
+### Why does Clay MCP show activity data for a contact when the Audiences Activity tab shows no activity?
+
+When a Salesforce lead is converted to a contact, Audiences merges both records into a single People entry using the lead's `ConvertedContactId`. The underlying activity data from the lead record — including activity counts and last-activity dates — is stored in Audiences and is accessible via Clay MCP, including the `ask-question-about-accounts` tool, which queries your Audiences data at the backend level.
+
+However, the current Audiences UI contact view does not yet display a full union of all data from the converted lead. This means activity counts and last-activity dates that originated from the lead record may not appear in the contact's Activity tab even though the data exists in Audiences and is retrievable via MCP.
+
+**Note (beta):** This discrepancy is a known limitation during the Audiences beta. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. The UI will be updated to show the full union of contact and converted lead data before general availability.
