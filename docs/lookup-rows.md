@@ -102,6 +102,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 -   Remember the UI shows up to 10 matches, but the count reflects all matches found
 -   Only use `Add as column` for the few results you actually need to avoid clutter and keep tables readable
 -   **100-record cap**: Lookup multiple rows returns at most 100 records per row — this is a hard limit that cannot be changed. If your source table has more than 100 matching records, only the first 100 are returned. To work around this, split the source table into smaller segments (e.g., by category, region, or product line), create a separate lookup column per segment, and merge the results in a formula or AI prompt. Each segment lookup stays under 100 records while the AI prompt still gets the full set.
+-   Use the lookup result as a gate to control downstream actions (enrich/send/route only when criteria are met) — for a step-by-step example using a run condition, see [Conditional runs](conditional-runs.md).
 
 ### **Using lookups in the same table**
 
