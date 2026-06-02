@@ -39,7 +39,7 @@ Connect to Salesforce via Client Credentials for server-to-server access. No bro
     -   Under `Flow Enablement`, check `Enable Client Credentials Flow`.
 3.  In the `Policies` tab, enable the flow at the org level. This is the setting most commonly missed — if it's off, the flow is blocked regardless of the Settings toggle:
     -   Under `OAuth Flows and External Client App Enhancements`, check `Enable Client Credentials Flow`.
-    -   In the `Run As` field, enter the username of the integration user the app will appreciate as.
+    -   In the `Run As` field, enter the username of the integration user the app will authenticate as.
 4.  Click `Save`. See [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.configure_client_credentials_flow_for_external_client_apps.htm&language=en_US&type=5) for full details on configuring the Client Credentials flow.
 
 **Connecting in Clay**
