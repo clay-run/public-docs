@@ -128,3 +128,13 @@ You can also use `Lookup multiple rows` within the same table to find duplicates
 -   Use a clean, consistent match key (domain is usually more reliable than company name)
 -   Remember a self-lookup will usually match the row to itself—account for that when interpreting counts (e.g., "other matches" vs "total matches")
 -   Use the lookup result as a gate to control downstream actions (enrich/send/route only when criteria are met)
+
+### Troubleshooting
+
+**Tables not appearing in the "Table to search" dropdown**
+
+If the table you want to look up isn't showing in the dropdown when setting up a lookup column:
+
+-   Confirm the target table is in the **same workspace** you're working from — lookup actions only search tables within your current workspace.
+-   Try a **hard refresh** (**Cmd/Ctrl + Shift + R**) and reopen the column settings to reload the table list.
+-   If you recently created the target table, wait a few seconds and refresh again — newly created tables may take a moment to appear in the list.
