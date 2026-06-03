@@ -1,16 +1,16 @@
 ---
 title: Clay Ads
 source_url: https://university.clay.com/docs/clay-ads
-description: Build and sync contact and account lists to LinkedIn and Meta for
+description: Build and sync contact and account lists to LinkedIn, Meta, and Google Ads for
   precise ad targeting.
 last_synced: 2026-05-11T17:47:40.000Z
 ---
 
 # Clay Ads
 
-Build and sync contact and account lists to LinkedIn and Meta for precise ad targeting.
+Build and sync contact and account lists to LinkedIn, Meta, and Google Ads for precise ad targeting.
 
-Build and sync contact and account lists to LinkedIn and Meta for precise ad targeting. Import your target accounts and contacts into Clay, enrich them with personal emails for better match rates, then sync to ad platforms for campaigns and exclusions.
+Build and sync contact and account lists to LinkedIn, Meta, and Google Ads for precise ad targeting. Import your target accounts and contacts into Clay, enrich them with personal emails for better match rates, then sync to ad platforms for campaigns and exclusions.
 
 **Key use cases:**
 
@@ -27,7 +27,7 @@ _Note: Personal email addresses significantly improve match rates when syncing t
 1.  **To start, go to `Ads`** from the Clay homepage. Then click `New Ad Sync` and select a source type:
     -   **Best practice:** Sync lists from your CRM (Salesforce, HubSpot) or data warehouse for compliance
     -   Also available: CSV upload
-    -   Note: Contact search through Clay (CPJ) is currently restricted to US-only contacts for compliance reasons
+    -   Note: When using Clay's company/people search (CPJ) as a source, data source restrictions apply by platform — only US-origin contacts are eligible for LinkedIn and Meta; CPJ data cannot be used at all for Google Ads. For Google Ads syncs, use your CRM or data warehouse as the source.
 2.  **Choose your connected account** on LinkedIn or Meta and prepare your data before mapping:
     -   LinkedIn has character limits for certain fields. If needed, add a formula column to shorten longer job titles for better match rates.
     -   **Note:** Ad Sync tables have a more limited selection of enrichment providers and actions than regular Clay tables. For complex transformations (such as domain normalization), prepare the data upstream in a regular table first, then use that table or a Clay Audience as the source for your Ad Sync.
@@ -99,7 +99,26 @@ For more details on Meta system user setup, see [Meta's system user documentatio
 
 ### **What platforms are supported?**
 
-Clay currently supports syncing ad audiences to LinkedIn and Meta. Support for Google Ads is coming soon.
+Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, and **Google Ads**.
+
+Note that data source restrictions apply depending on the platform — see [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) below for details.
+
+### **Why are some contacts excluded when I set up an ad sync?**
+
+When you create an ad sync, you may see an **Ad sync segment filters** panel showing a breakdown of your audience segment size, excluded contacts, and syncable contacts. Some contacts are automatically filtered out based on the platform you're syncing to and where their data originally came from.
+
+**What "US Origin" means:** A contact is classified as US-origin when their country value is the United States. This classification applies specifically to contacts sourced from Clay's company and people search (CPJ data).
+
+**Why contacts get excluded:**
+
+-   **LinkedIn and Meta:** Contacts sourced from Clay's company/people search (CPJ) are restricted to US-origin contacts only. Non-US CPJ contacts are automatically filtered out.
+-   **Google Ads:** Contacts sourced from Clay's company/people search (CPJ) or any other third-party data source are excluded entirely, regardless of country. Only contacts sourced from your own CRM (Salesforce, HubSpot) or data warehouse are eligible for Google Ads syncs.
+
+These restrictions exist for compliance reasons, as third-party sourced contact data is subject to usage limitations under each ad platform's terms of service.
+
+**Why the filters are locked:** The filters remain applied to your segment for as long as an ad sync is active. This prevents credits from being spent enriching contacts that would be excluded from the sync anyway.
+
+**Note:** CPJ filtering during ad syncs is currently available for Enterprise workspaces. Contact Clay support if you'd like this enabled for your workspace.
 
 ### **Is this feature available on all plans?**
 
