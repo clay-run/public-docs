@@ -211,3 +211,16 @@ To handle both new and existing contacts without hitting duplicate errors:
 3.  *(Optional)* Add an **Update object** column for existing contacts. Set an **Only run if** condition to check that the Lookup column returned a result, and map the returned contact ID to the **HubSpot Object ID** input.
 
 For full details on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
+
+### Why do I get an `INVALID_OWNER_ID` error when setting `hubspot_owner_id`?
+
+HubSpot uses two separate identifiers for each user who can own a contact:
+
+-   **Owner ID** — the value used for the `hubspot_owner_id` contact property. This is the `id` field returned by HubSpot's Owners API (`/crm/v3/owners`).
+-   **User ID** — HubSpot's internal account ID for the same person, which appears in contexts like HubSpot's Settings → Users & Teams.
+
+These two values are sometimes identical and sometimes different. Passing a user ID where an owner ID is expected returns an `INVALID_OWNER_ID` error, even though the ID appears valid in HubSpot.
+
+**Fix:** Use Clay's **Find owner** action to look up the owner by email address. The `id` field in the returned result is the correct owner ID to pass as `hubspot_owner_id` in an Update Object action.
+
+Also, keep the column storing the owner ID as a **Text** type in Clay, not a **Number** type. HubSpot's API expects owner IDs as strings — passing a numeric value can cause type-mismatch errors.
