@@ -224,3 +224,13 @@ These two values are sometimes identical and sometimes different. Passing a user
 **Fix:** Use Clay's **Find owner** action to look up the owner by email address. The `id` field in the returned result is the correct owner ID to pass as `hubspot_owner_id` in an Update Object action.
 
 Also, keep the column storing the owner ID as a **Text** type in Clay, not a **Number** type. HubSpot's API expects owner IDs as strings — passing a numeric value can cause type-mismatch errors.
+
+### Why does my HubSpot column still show "Missing authentication" after I reconnect my account?
+
+Reconnecting your HubSpot account in Settings refreshes the stored credential, but it does not automatically re-run cells that already failed with an authentication error. Those cells remain in their error state until explicitly triggered again.
+
+**To fix it:**
+
+1. Confirm the reconnect succeeded: go to **Settings → Integrations → HubSpot** and verify the connection shows **Success**.
+2. Return to your table and manually re-run the affected column (click the run icon on the column header, or use **Run all** from the table toolbar).
+3. If re-running the existing column still returns "Missing authentication," create a new column with the same HubSpot action and configuration. The new column will pick up the refreshed credential and run successfully.
