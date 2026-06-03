@@ -13,6 +13,8 @@ The Lookup Rows feature allows you to search and retrieve data from other tables
 
 Whether you need a single row or multiple matching records, these lookup actions provide flexible options to enhance your data management and create more dynamic, interconnected workflows.
 
+**Cost:** Lookup Rows does not consume Actions or Data Credits — these lookups read data that already exists in your Clay workspace with no external data fetching involved.
+
 ### When to use Lookup Rows vs. Send Table Data
 
 Both Lookup Rows and Send Table Data move information between tables, but they work in opposite directions and serve different purposes.
