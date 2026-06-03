@@ -154,6 +154,20 @@ Include action columns (enrichments, Claygents, waterfalls) — not static input
 
 Remember: every column you include becomes a required input. More columns mean more inputs users must provide when calling the function.
 
+### How do I save a waterfall as a function, and why do I see "Function inputs must be unique"?
+
+**Saving a waterfall as a function:**
+
+The correct method is to right-click the **final waterfall output (merge) column** — the combined result column at the end of the waterfall group — and choose **Save as function** from the column dropdown. Individual waterfall step columns (the per-provider sub-columns) do not expose "Save as function" by design. Only the merge column does.
+
+Selecting just the merge column captures the full waterfall sequence — every provider step, run condition, and validation step — and packages it into the function. You do not need to include the individual step columns separately.
+
+**"Function inputs must be unique" error:**
+
+This error means two or more inputs in the "Save as function" dialog share the same name. Clay auto-generates a unique name for each input when you open the dialog, but if you manually rename an input to match another already in the list, the validation fails.
+
+To fix it: review the input names in the dialog, make sure each one is unique, and then click **Create**.
+
 ### How do I configure which columns are returned from my function to the calling table?
 
 Every function includes a built-in **"Send data back"** column — the final step that controls what data is returned to the table calling the function. Opening that column's settings reveals a **Configure** section with a **"Choose output data to send"** checklist. Only columns that are checked will be sent back to the calling table; unchecked columns are not returned, even if they contain data.
