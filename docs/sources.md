@@ -94,7 +94,7 @@ Click `+ Add` again to add a second table for your contacts/people. The same sou
 
 How the link is created depends on which source you used for contacts:
 
-**If you used Find People at These Companies** (launched from your accounts table): A **Company Table Data** column is automatically added to the contacts table, linking each person back to their company row. No additional setup is required.
+**If you used Find People at These Companies** (launched from your accounts table): A **Company Table Data** column is automatically added to the contacts table, linking each person back to their company row. No additional setup is required to establish this link. **Note:** Company Table Data retrieves basic column types only (text, number, formula, etc.) — enrichment columns are not included. To access company enrichment data in the contacts table, add a **Lookup single row in other table** column instead (see [Lookup Rows](lookup-rows.md)).
 
 **If you imported contacts from CSV or CRM:** Add a **Lookup Rows** action on the contacts table to pull account-level data into each contact row:
 

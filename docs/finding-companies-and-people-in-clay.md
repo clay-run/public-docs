@@ -251,6 +251,22 @@ This mismatch most commonly occurs with subsidiaries, acquired companies, and or
 -   **Switch to LinkedIn company URLs as your company identifier** (recommended). When you provide a LinkedIn company URL instead of a domain, Clay uses the LinkedIn company slug for matching — which handles subsidiary and acquisition relationships more reliably. See [Use LinkedIn URLs, not domains, as company identifiers](#use-linkedin-urls-not-domains-as-company-identifiers).
 -   **Add a Lookup Rows fallback.** In your people table, add a **Lookup single row in other table** column. Set `Table to search` to your original companies table and match on `domain`. For rows where the person's current company domain is populated, this retrieves company fields directly — even when the automatic Company Table Data link is broken. See [Lookup Rows](lookup-rows.md).
 
+### Company Table Data doesn't include company enrichment data
+
+The **Company Table Data** column retrieves basic field types from the linked company row — text, number, date, URL, and formula columns. **Enrichment columns (action-type columns such as Clearbit Company, Apollo, Enrich Company, or any other Clay integration enrichment) are not included** in what Company Table Data returns.
+
+If you enriched your company table and want that data accessible in your people table, use **Lookup single row in other table** instead:
+
+1.  In your people table, add a **Lookup single row in other table** column.
+2.  Set `Table to search` to your company table.
+3.  Set `Target column` to the company domain column in the company table.
+4.  Set `Row value` to the person's company domain column.
+5.  Run the lookup.
+
+Lookup Rows returns the full company row including enrichment column outputs. To promote a specific enrichment value into a dedicated column, click into a populated cell and select a field → **Create column for it**. See [Lookup Rows](lookup-rows.md) for setup details.
+
+**Alternatively**, extract specific enrichment values into **formula columns** in your company table first (for example, a column with formula `{{Clearbit Enrichment}}?.revenue`). Formula columns are included in Company Table Data, so those extracted values will flow through to the people table when Company Table Data runs.
+
 ### Getting "Invalid companies provided" error despite having a valid LinkedIn URL
 
 If you see the error **"Invalid companies provided: please make sure you are using LinkedIn URLs or Company Domains"** but your column already contains LinkedIn URLs, check the URL format. This error occurs when the LinkedIn URL is a **person profile URL** (`linkedin.com/in/<name>`) rather than a company or school page URL — even though the URL itself is valid LinkedIn syntax, the action only accepts company-type identifiers.
@@ -260,7 +276,7 @@ Valid inputs for the company identifier field:
 -   **Company page URL**: `https://www.linkedin.com/company/<slug>`
 -   **School page URL**: `https://www.linkedin.com/school/<slug>`
 -   **Company domain**: e.g., `example.com`
--   **Sales Navigator company URL or company ID**
+-   **Sales Navigator company URL or company ID`
 
 To fix this, replace the person profile URLs in your column with the corresponding company LinkedIn URLs. You can use the **Find Company** or **Enrich Company** enrichments to retrieve a company URL from a company name or domain, then pass that URL into **Find Contacts at Company**.
 
