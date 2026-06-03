@@ -33,6 +33,28 @@ The Salesforce connection is tied to the OAuth user who sets it up:
 
 For sensitive fields, you can create a permission set to restrict the OAuth user's access.
 
+## What controls are available at the connector level versus inside individual tables?
+
+When you connect Salesforce to Clay, access control works at two levels:
+
+**Connector level (Salesforce controls this)**
+
+The Salesforce user you authenticated with determines everything Clay can read or write. Clay's Salesforce actions — lookup, create, update, upsert — are all restricted to whatever that user is permitted to do in Salesforce. If the user cannot read the Opportunity object in Salesforce, Clay cannot read it either. If the user has write access to `Account.Website`, every Clay table using that connection can update that field.
+
+Permissions are managed entirely on the Salesforce side, through that user's profile, permission sets, field-level security, org-wide defaults, sharing rules, and role hierarchy.
+
+**Table (workbook) level (Clay controls this)**
+
+Inside a Clay table, you configure which actions to run (such as Lookup Record, Create Record, Update Record) and which fields to read or write for each action. Field update behavior is set per table, not at the connection level. These table-level settings determine what the table _attempts_ to do — the connected Salesforce user's permissions are still the final gate on what actually succeeds.
+
+**There is no table-level permission isolation in Clay**
+
+You cannot restrict individual tables to specific Salesforce objects or fields. For example, there is no setting that says "only table A can update the Website field on accounts" or "only tables B and C are allowed to read contacts and opportunities." All Clay tables that use the same connection share the same Salesforce access as the connected user.
+
+If you need different tables to have different levels of access — for example, one table that can only read and another that can write — create separate Salesforce connections authenticated as different Salesforce users, each with the appropriate Salesforce permissions. Then select the correct connection when setting up each table's actions.
+
+For guidance on creating a Salesforce integration user with scoped access, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
+
 ## What Salesforce license type is required to connect Clay?
 
 The license requirement depends on which connection method you use:
