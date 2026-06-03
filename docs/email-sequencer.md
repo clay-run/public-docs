@@ -40,7 +40,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead replies (excluding out-of-office replies, which we detect and work around).
     -   Toggle `Preview` mode to see real data from your source table in the message template
     -   Within each message, use `/` to access features such as:
-        -   `Clean variable`: Reference synced lead data with safe fallbacks and optional formatting.
+        -   `Clean variable`: Reference synced lead data with safe fallbacks and optional formatting. When configuring a Clean variable, the **Fallback** field ("Simple text to display if variable is empty") is required — the variable will not save if left blank.
         -   `Sender variable`: Reference identifying information from the sending account
         -   `AI snippet`: Generate copy automatically using lead data.
         -   `Spintax variable`: Choose a random value from a list
@@ -163,6 +163,8 @@ Deleting a campaign through the column header's settings (the **Delete campaign*
 ### I updated my campaign, but the changes didn't save.
 
 Be sure to press `Save settings` after making edits. Note: deleting a campaign step saves immediately without requiring a manual save click—all other edits require pressing `Save settings`.
+
+If you added or edited a **Clean variable** and it is not appearing in your message, check that the **Fallback** field ("Simple text to display if variable is empty") is filled in — this field is required, and the variable will not save if left blank.
 
 ### How much does the sequencer cost?
 
