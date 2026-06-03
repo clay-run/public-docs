@@ -41,17 +41,19 @@ For Enterprise customers, Clay offers a limited but fast API for accessing its p
 
 **Auth:** Pass your Clay API key in the `Authorization` header. You can find your key under Settings → Account → Your profile → API key.
 
+**Access:** This endpoint is not automatically active — it must be enabled per workspace. Contact your Growth Strategist or [Clay's team](https://www.clay.com/contact-form) to request access.
+
 The API supports two enrichment types:
 
--   **Person lookup** (`enrichmentType: "enrich-person"`) — submit a known email address or LinkedIn URL to get back basic profile details.
--   **Company lookup** (`enrichmentType: "enrich-company"`) — submit a company domain to get back basic company info.
+-   **Person lookup** — submit a LinkedIn URL, or a full name paired with a company domain, to get back basic profile details. *Currently in beta — contact support to enable.*
+-   **Company lookup** — submit a company domain to get back basic company info.
 
 **Important:** This API is designed for point lookups on identifiers you already have — it does not support searching by keyword, job title, location, industry, or other criteria. Endpoints like `/v3/contacts/search` do not exist and will return a 404 error.
 
 **Limitations:**
 
 -   It doesn't include deep enrichment like emails, phone numbers, or revenue data.
--   Available to Enterprise plan customers only — requests from non-Enterprise workspaces return a 403 error.
+-   Requires manual enablement per workspace — workspaces without access return a 403 error.
 
 **If you want to discover and filter people by criteria** (job title, company, location, industry): use Clay's [Find People](find-people-overview.md) source directly in the platform instead. Find People supports rich filters — job title, organizational level, company attributes, location, and more — and you can sync results to Google Sheets or any other destination via Clay's native integrations.
 
