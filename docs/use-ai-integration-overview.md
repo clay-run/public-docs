@@ -145,6 +145,17 @@ To fix this, open the column settings and increase the **Clay Credit Budget** va
 
 **Note:** This setting only applies to expensive variable-priced models when using Clay's managed account. Users who connect their own API key are billed directly by the AI provider and this cap does not apply.
 
+### Cells showing "API key is missing"
+
+If your AI column cells show an **"API key is missing"** error, the column is configured to use a model that requires your own API key, but no key has been connected for that model.
+
+There are two ways to resolve this:
+
+-   **Switch to a Clay-managed account (recommended).** Open the column settings, find the **Account** dropdown, and select the default Clay-managed account. This uses Clay's shared credits and does not require your own API key.
+-   **Connect your own API key.** If you prefer to use a specific provider (OpenAI, Anthropic, or Google Gemini), open the column settings, click the **Account** dropdown, click **+ Add account**, and follow the prompts to add your key.
+
+**Note:** If you updated the model using Sculptor and the error persists, the change may not have saved correctly. Open the column settings directly (click the column name → **Edit column**) and confirm the **Model** and **Account** fields reflect what you expect, then re-save and re-run.
+
 ### AI column stops working after editing with Sculptor
 
 If you used Sculptor to adjust an AI column and the column now shows an error or stops producing results, something in the prompt was likely broken during the Sculptor edit. Here's what to check:
