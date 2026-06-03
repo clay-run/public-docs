@@ -24,6 +24,7 @@ Sandbox mode is a special table mode that lets you safely build, test, and publi
 2.  After a few seconds, a new sandbox will be set up with sample rows, ready for you to make changes.
     -   **To discard changes and start a fresh copy of the sandbox:** Click `⚙️` → `Reset sandbox`.
     -   **To turn off sandbox mode:** Click `Exit sandbox` in the toolbar. This will return you to your normal table and discard all unpublished changes in your sandbox.
+    -   **If you close your browser tab or navigate away:** Your sandbox is saved automatically — no changes are discarded. When you return to the table, Clay redirects you back to your sandbox where you left off.
 
 **Note:** During sandbox mode, your regular table becomes read-only and cannot be updated directly — the **All data** tab shows a **View-only** indicator while sandbox is active. You can switch between your sandbox and the read-only production table using the tabs menu. All recurring sources ([webhooks](https://www.clay.com/university/guide/webhook-integration-guide), [signals](https://www.clay.com/university/guide/signals), etc.) and [scheduled runs](https://www.clay.com/university/guide/scheduled-columns) will still run while sandbox mode is active.
 
