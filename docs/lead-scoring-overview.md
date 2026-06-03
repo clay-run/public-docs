@@ -11,7 +11,7 @@ Generate custom scores based on the data points that matter.
 
 ## Lead scoring overview
 
-Lead scoring is a method to prioritize leads based on various attributes like employee count, job titles, and online behavior to identify the leads most likely to become customers.
+Lead scoring is a method to prioritize leads based on various attributes like employee count, job titles, and online behavior to identify the leads most likely to convert to customers.
 
 ## Types of lead scoring
 
@@ -35,9 +35,45 @@ Ensure you have the following to successfully lead score within Clay:
 -   Lead scoring criteria
 -   CRM fields for score syncing
 
+## Setting up lead scoring with Score Row in Clay
+
+**Score Row in Clay** is a built-in enrichment that scores each row based on up to 15 criteria you define — no formula required. Each criterion compares a column value against a set of keywords and assigns a numerical score. The enrichment outputs a total **Score** and a **Score Reasons** list explaining which criteria matched.
+
+### **Step 1: Add the Score Row enrichment**
+
+In your table, click **+ Enrichment**, search for **Score Row in Clay**, and add it.
+
+### **Step 2: Set the number of criteria**
+
+In the **# of Scoring Criteria** field, enter how many criteria you want to use (up to 15).
+
+### **Step 3: Configure each criterion**
+
+For each criterion, fill in four fields:
+
+-   **Values to Score** — Map this to the column whose value you want to evaluate. If this field is empty or the column has no value for a row, that criterion contributes 0 to the score for that row.
+-   **Comparison Type** — Choose how to compare the value:
+    -   **Equals (Text, Number, Boolean)** — exact match
+    -   **Contains (Text)** — substring match
+    -   **Between (Number)** — checks whether the value falls within a numeric range
+-   **Keywords** — The values or ranges to match against, comma-separated. For **Between (Number)**, each keyword must use the format `min - max` (e.g., `5 - 10` or `100 - 500`). If the format does not match, that keyword is skipped and contributes 0 to the score.
+-   **Scores** — A comma-separated list of numeric point values, one per keyword. The number of keywords and scores must match exactly, or the enrichment will return an error.
+
+### **Step 4: Review the output**
+
+Each row receives a **Score** (the sum of all matching criteria) and a **Score Reasons** list that shows which criteria matched and how many points each contributed.
+
+### Troubleshooting: why criteria don't contribute to the score
+
+A criterion silently contributes 0 points when:
+
+-   The **Values to Score** field is empty or not mapped to a column for that row.
+-   The column value is not a number and the comparison type is **Between (Number)**.
+-   The **Keywords** for a **Between (Number)** criterion are not in `min - max` format — for example, `5–10` (em dash), `5 to 10`, or a single number like `10` will all be skipped. Use a standard hyphen with spaces: `5 - 10`.
+
 ## Setting up lead scoring with custom formulas
 
-Follow these steps to create a lead scoring system for your leads.
+Follow these steps to create a lead scoring system using a formula column.
 
 ### **Step 1: Add a formula column**
 
@@ -51,7 +87,7 @@ Use the **Formula Generator** to create a formula that matches your scoring crit
 
 -   **For Number-Based Scoring:** Use formulas to calculate a total score by adding points for attributes like company size, role, or revenue.
 -   **For Grade-Based Scoring:** Use conditional rules to assign letter grades based on combinations of criteria.
--   **For Fit Criteria:** Use binary rules to label leads as “Yes” or “No” depending on whether they meet your defined requirements.
+-   **For Fit Criteria:** Use binary rules to label leads as "Yes" or "No" depending on whether they meet your defined requirements.
 
 ### **Step 3: Verify and save**
 
