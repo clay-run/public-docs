@@ -121,6 +121,15 @@ Notifications are sent to:
 
 Notifications will be delivered via both email and in-product UI across various surfaces.
 
+**Can I see which budgets are at or near their limit when selecting one?**
+
+Yes. The budget selector dropdown — shown when creating a workbook or table, or when reassigning a resource's budget — displays a status badge next to each budget that is at or approaching its cap:
+
+-   Red **Limit reached** — the budget's current balance is at or below zero.
+-   Orange **Less than 10% remaining** — more than 90% of the credit limit has been used.
+
+Budgets with healthy balances show no badge.
+
 **Is there an automated alert for my workspace's monthly Data Credit balance?**
 
 No. The notifications above are for workbook-level credit spend limits only — they fire when a specific workbook reaches its configured cap. There is currently no automated alert when your workspace's overall monthly Data Credit allotment is running low or is exhausted.
