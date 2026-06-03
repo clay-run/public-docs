@@ -78,3 +78,29 @@ So if your source displays more rows than your table (for example, 162 vs. 92), 
 -   **Table filters.** If a filter is active on your table, only the rows matching that filter are shown in the table count. The source count always reflects all stored records, regardless of any filters.
 
 **Note:** Records that Clay rejected with a `429` rate limit error were never stored and do not appear in either count. See the [Limits](#limits) section above for guidance on keeping requests within the 10/second throughput limit to avoid dropped records.
+
+### Why aren't any rows arriving in my webhook table?
+
+If your webhook isn't creating rows — even on a brand-new webhook that has never received a submission — check these common causes:
+
+1. **Missing `Content-Type: application/json` header** — Clay requires this header on every request. Without it, Clay rejects the request with a `400 Bad Request` error and no row is created. Make sure every request includes:
+
+   ```
+   -H "Content-Type: application/json"
+   ```
+
+2. **Incorrect URL** — Confirm you copied the full webhook endpoint URL from the **Monitor webhook** section in your table source settings (not a partial URL or the cURL command itself).
+
+3. **Missing or wrong authentication token** — If you added an auth token when creating the webhook, it must be included in every request as a header. The token is only displayed once at creation — if you didn't copy it, you'll need to delete and recreate the webhook to generate a new one.
+
+4. **Submission limit reached** — See the [Limits](#limits) section. Once a webhook source hits 50,000 submissions, Clay returns a `403` error and stops creating rows. This limit counts all submissions since the webhook was created, even deleted rows.
+
+**Quick isolation test:** To confirm whether the issue is in your request or on Clay's side, try the simplest possible payload:
+
+```
+curl -X POST YOUR_CLAY_WEBHOOK_URL \
+  -H "Content-Type: application/json" \
+  -d '{"test": "hello"}'
+```
+
+If a row appears in your table, the issue is in your original request's formatting, headers, or auth token. If no row appears on a brand-new webhook, contact support.
