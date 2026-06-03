@@ -26,7 +26,9 @@ Functions are built for workflows you'd otherwise rebuild from scratch in every 
 **Create from existing workflow:**
 
 1.  Open any Clay table with the enrichment sequence you want to make reusable.
-2.  Select multiple columns (Hold `Cmd` on Mac or `Ctrl` on Windows) and click each column header you want to include in the function.
+2.  Select the columns to include in the function:
+    -   **Individual selection:** Hold `Cmd` on Mac or `Ctrl` on Windows and click each column header you want to include.
+    -   **Range selection (recommended for waterfall sequences):** Click the first column header, then hold `Shift` and click the last column header to select the full contiguous range. For waterfall enrichments, selecting the full range ensures only the entry-point inputs appear in the function dialog — not every internal provider or validation step.
 3.  **With your columns highlighted**, right click on a column and select `Save as function`.
 4.  In the dialog that appears:
     -   **Confirm function name/description** — We've auto-filled these fields using AI given the selected workflow. Please audit this to make sure there is a descriptive name/description that you can use to find this function later.
