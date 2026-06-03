@@ -138,3 +138,9 @@ If the table you want to look up isn't showing in the dropdown when setting up a
 -   Confirm the target table is in the **same workspace** you're working from — lookup actions only search tables within your current workspace.
 -   Try a **hard refresh** (**Cmd/Ctrl + Shift + R**) and reopen the column settings to reload the table list.
 -   If you recently created the target table, wait a few seconds and refresh again — newly created tables may take a moment to appear in the list.
+
+**Lookup column returns an authentication or "unauthorized" error**
+
+If an existing lookup column that was working before now returns an error like `{"type":"Unauthorized","message":"You must be logged in"}` or the "Table to search" field becomes non-configurable:
+
+-   Open the column settings, make no changes, and click **Save**. Lookup columns created before mid-2024 may carry a stale authentication reference from an earlier version of the action; re-saving the column clears it. No other changes are needed — lookup actions no longer require a separate authentication credential.
