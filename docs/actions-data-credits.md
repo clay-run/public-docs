@@ -70,6 +70,7 @@ Features that use an Action:
 -   Using formulas for scoring and normalization.
 -   Sculptor.
 -   Creating audiences (only the export counts).
+-   Cross-table lookups (Lookup single row and Lookup multiple rows in other tables).
 
 ### How many Actions do I need?
 
@@ -384,3 +385,7 @@ No. Exporting data to CSV does not consume an Action or any Data Credits. CSV ex
 No. **Lookup Record** operations — such as `Salesforce > Lookup Record` — read data from your CRM into Clay and are treated as CRM imports. They do not consume Action credits. This holds even when the lookup returns **No Records Found**.
 
 Only CRM **write** operations consume Actions: Create Record, Update Record, Upsert Object, and other actions that push data from Clay to your CRM.
+
+### Does Lookup Rows (cross-table lookup) consume credits?
+
+No. **Lookup single row** and **Lookup multiple rows** in another Clay table do not consume Actions or Data Credits. These lookups only read data that already exists in your Clay workspace — no external data is fetched — so they're free to use on any plan.
