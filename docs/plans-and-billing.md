@@ -56,7 +56,7 @@ Your new plan will activate immediately, and any applicable charges will be appl
 -   **Data credits:** 6,000 to 100,000 per month
 -   **Monthly pricing:** Starting at $495/month (includes 6,000 credits and 40,000 actions)
 -   **Table limit:** 50,000 rows per table
--   **Features:** CRM integrations, HTTP API, web intent signals, advanced automation, audiences
+-   **Features:** Webhooks, CRM integrations, HTTP API, web intent signals, advanced automation, audiences
 
 ### Enterprise plan
 
