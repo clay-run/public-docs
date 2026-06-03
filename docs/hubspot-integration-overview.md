@@ -224,3 +224,14 @@ These two values are sometimes identical and sometimes different. Passing a user
 **Fix:** Use Clay's **Find owner** action to look up the owner by email address. The `id` field in the returned result is the correct owner ID to pass as `hubspot_owner_id` in an Update Object action.
 
 Also, keep the column storing the owner ID as a **Text** type in Clay, not a **Number** type. HubSpot's API expects owner IDs as strings — passing a numeric value can cause type-mismatch errors.
+
+### Why does my HubSpot column still show "Missing authentication" after I reconnect my account?
+
+Each HubSpot column stores a reference to the specific connection it was configured with at creation time. If you **delete** your HubSpot connection and **add a brand-new one**, the new connection gets a new internal ID — but your existing columns still reference the old (now deleted) connection ID. The columns continue to show "Missing authentication" even though the new connection shows **Success** in Settings.
+
+**To avoid this in the future:** When troubleshooting HubSpot authentication, use the **Reconnect** option on your *existing* connection instead of deleting it and adding a new one. In **Settings → Integrations → HubSpot**, click the `···` menu next to your connection and choose **Re-authenticate** or **Update connection**. This refreshes the credential while keeping the same connection ID that your existing columns already reference.
+
+**To fix columns that are already broken:**
+
+1. Open each affected column's settings and change the **Account** dropdown to select the new connection. This updates the column to use the new connection ID.
+2. If re-selecting the account in the existing column doesn't resolve the error, create a new column with the same HubSpot action and configuration. New columns automatically pick up the currently active connection and will run successfully.
