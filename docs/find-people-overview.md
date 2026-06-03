@@ -1,7 +1,7 @@
 ---
 title: Find People in Clay
 source_url: https://university.clay.com/docs/find-people-overview
-description: Discover relevant contacts matching your criteria within Clay's database, then enrich results with work email and mobile phone waterfalls.
+description: Discover relevant contacts and LinkedIn posts using Clay's Find People and Find professional posts sources, then enrich results with work email and mobile phone waterfalls.
 last_synced: 2026-04-26T01:39:58.803Z
 ---
 
@@ -76,3 +76,27 @@ If you have a saved Sales Navigator search and want to pull those results into C
 6.  Click **Import to new table**.
 
 **Note:** This source requires a Sales Navigator **people search URL** (`https://www.linkedin.com/sales/search/people/...`), not a saved lead list URL (`linkedin.com/sales/lists/people`) or a saved search URL (those containing `savedSearchId`). If you have a saved Sales Navigator lead list, recreate the equivalent filters as a fresh people search on Sales Navigator and copy that URL instead. Each imported result costs 1 Clay credit.
+
+## Finding LinkedIn posts by keyword
+
+To find LinkedIn posts containing a specific keyword or hashtag, use the **Find professional posts** source — a separate source from Find People that returns posts rather than people profiles.
+
+**To create a table with Find professional posts:**
+
+1.  In a workbook, click `+ Add` at the bottom.
+2.  Search for `Find professional posts` and select it.
+
+**Inputs:**
+
+-   **Keyword:** A single keyword or hashtag to search for in post content (e.g., `#cvpr2026` or `GTM`). Only one keyword is supported — comma-separated lists are not valid.
+-   **Companies filter (optional):** Limit results to posts that mention companies, were posted by companies, or were posted by employees of specific companies.
+-   **People filter (optional):** Limit results to posts that mention or were posted by specific individuals.
+-   **Sort by:** `Most recent` (default) or `Top match`.
+-   **Time frame:** `Last 24 hours` or `Last week` (default).
+-   **Max number of results:** Default is 100; maximum is 1,000.
+
+**Outputs:**
+
+Each row includes the post URL, post text, author name, author LinkedIn URL, author title, reaction counts, comment count, and share count.
+
+**To enrich post authors:** After importing results, add an **Enrich Person** column and map it to the author LinkedIn URL. This returns full contact data — work email, company, and more — for each post author.
