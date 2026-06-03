@@ -284,7 +284,7 @@ The typical setup process:
 1.  Contact Clay support to initiate SSO setup.
 2.  Clay support creates your organization in WorkOS and sends a configuration link to your IT contact.
 3.  Your IT team follows the link to connect your identity provider and complete the setup.
-4.  Once your IT team confirms the WorkOS setup is complete, notify Clay support.
+4.  Once your IT team confirms the WorkOS setup is complete, notify Clay support. **Note:** If you test by clicking the Clay tile in your IdP dashboard at this point, you may see `{"type":"BadRequest","message":"Unable to login","details":null}` — this is expected and means SSO activation is still pending on Clay's side.
 5.  Clay support activates (enforces) SSO on your workspace.
 
 **Note:** The email domain used for SSO authentication is configured on Clay's side. If you receive an error during the WorkOS setup stating that your domain is not recognized or not allowed, contact Clay support — only the support team can update the allowed domain setting.
@@ -294,7 +294,7 @@ The typical setup process:
 -   All users whose email address is on your verified domain are required to sign in through SSO. The Clay login page redirects those users to your SSO provider automatically.
 -   Google OAuth sign-in is disabled for users on your domain. Clicking the **Sign in with Google** button on the login page will return an error (`Google OAuth is disabled for this account`) — this button uses Google OAuth, which is a separate authentication path from SSO.
 -   SSO is configured at the email domain level — if your organization uses multiple Clay workspaces, users on your domain will be routed through SSO for all of them.
--   Clay only supports login initiated from the Clay login page — signing in directly from your IdP dashboard (for example, clicking the Clay tile in your Okta launcher) is not supported and will return an `Unable to login` error.
+-   Once SSO is activated, users can sign in from either the Clay login page or directly from your IdP dashboard (for example, clicking the Clay tile in your Okta launcher). If clicking the IdP tile returns `{"type":"BadRequest","message":"Unable to login","details":null}`, SSO has likely not yet been activated on Clay's side — contact Clay support to complete activation.
 
 **How SSO users should sign in:** On the Clay login page, type your **email address** into the email field and click **Continue** — do **not** click the `Sign in with Google` button. Entering your email triggers domain detection, which redirects you to your SSO provider automatically.
 
