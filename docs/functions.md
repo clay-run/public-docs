@@ -134,7 +134,15 @@ Yes. All workspace functions are available to use in your tables — no special 
 
 **Editing** enters a sandbox mode where you can make changes while the function continues running live. Your edits only take effect when you publish them.
 
-**Pausing** stops the function entirely — rows that reach a paused function will wait without processing. Use pause when you need to stop execution immediately (e.g., to update an API key or fix an error).
+**Pausing** prevents the function from accepting new rows into its processing queue. Rows already queued or in progress before you paused will still run to completion. Click **Resume** from the function's ellipsis (⋯) menu to re-enable the function. Use Pause when you need to gate new work without disrupting rows already in flight — for example, while updating an API key or fixing a configuration error.
+
+### What is the difference between pausing a function and stopping a function?
+
+**Pause** prevents new rows from entering the function's processing queue. Rows already queued or actively running will continue to completion. Click **Resume** from the function's ellipsis (⋯) menu when you're ready to accept new rows again.
+
+**Stop** attempts to cancel both actively running rows and rows already waiting in the queue. Allow a few minutes for the cancellation to fully take effect.
+
+Use **Pause** when you want to temporarily suspend new work (for example, while fixing a configuration error) without discarding rows already in flight. Use **Stop** when you need to halt all processing — rows that were queued will be cancelled and would need to be re-triggered manually.
 
 ### If I edit a function while it's live, will rows that already ran show as stale?
 
