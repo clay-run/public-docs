@@ -188,6 +188,26 @@ Four Clay actions let you move data between a Clay table and your Audience direc
     -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls. By default, signal data is returned for the past **30 days** and the action returns a maximum of **5 signal results** per record — adjust the lookback period in the column settings to retrieve older signals, or use `Get Audiences Activity` when you need more than 5 results.
     -   `Get Audiences Activity` retrieves specific signal activity for an Audiences record. Use it when you need more than 5 signal results or want to query a longer time window than `Lookup in Audiences` provides by default.
 
+### Reviewing enrichment results
+
+After a bulk enrichment runs, there are two ways to see which records were successfully enriched:
+
+**View enrichment status and row-level results**
+
+Click `Enrich` in the top-right toolbar to open the enrichments sidebar. The **Bulk enrichments** tab lists all your enrichments grouped as **Active** and **Inactive**. Each card shows a completion count — for example, "1,234 / 5,000 completed." Completed enrichments appear in the **Inactive** section.
+
+If you're viewing a specific segment, use the dropdown at the top of the list to toggle between enrichments on this segment and enrichments across all audiences.
+
+To inspect row-level results, click `⋮` on any enrichment card and select **Open bulk enrichment**. This opens the underlying bulk enrichment table where you can see each row's output and status.
+
+**Filter the audience by the enriched field**
+
+Since enrichment results write permanently back to All People, you can filter any segment to see only records that received data:
+
+1.  Add a filter to your audience.
+2.  Select the enriched field (for example, `Phone` or `LinkedIn URL`).
+3.  Set the operator to **`is not empty`** to show only records where the enrichment returned a value.
+
 ### Signals
 
 Signals monitor your audience for key changes and write results permanently to each matching record so you can segment on them.
