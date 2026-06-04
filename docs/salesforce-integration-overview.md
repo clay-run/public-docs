@@ -77,9 +77,7 @@ After testing a connection, Clay saves the result and shows the connected user a
 
 ### IP allowlisting
 
-If your Salesforce org restricts connections by IP address, you can enable **Use static IP?** when adding or editing your Salesforce connection in Clay. This option is available on **Enterprise plans** and routes all Clay requests through a fixed set of IP addresses.
-
-When enabled, Clay routes requests through one of these IP addresses, which you can allowlist in Salesforce under `Setup` → `Network Access` → `New`:
+On **Enterprise plans**, all Salesforce connections in Clay automatically route through Clay's static IP addresses — no toggle or configuration is needed. You can allowlist these IPs in Salesforce under `Setup` → `Network Access` → `New`:
 
 -   `52.7.81.233`
 -   `18.209.121.250`
