@@ -132,6 +132,30 @@ On new rows, the upstream column hasn't run yet, so the condition is false and t
 
 **Simpler alternative for scheduled re-run tables**: If the root cause is that your action column is included in a scheduled re-run, the easiest fix is to uncheck it from the scheduled re-run list (Table Settings → Run Settings → Re-run columns on a schedule). Table-level Auto-run still fires the column for genuinely new rows. See [Scheduled columns](scheduled-columns.md).
 
+### Gating a run on data from another table
+
+Run conditions can only reference columns in the **current row** — there is no formula syntax that directly queries another table from inside a run condition.
+
+**Workaround**: Add a **Lookup Multiple Rows in Other Table** enrichment column to your current table first. That column queries the other table and stores a match count in the current row. You can then reference it in your run condition like any other column.
+
+**Example**: You have a companies table and a people table. You want an enrichment to run only for companies that have at least one matching person in the people table.
+
+1. In your companies table, add a **Lookup Multiple Rows in Other Table** enrichment column:
+   - `Table to search` → your people table
+   - `Target column` → the column to match on in the people table (e.g., `Company Domain`)
+   - `Filter operator` → `Equals`
+   - `Row value` → the matching column in your companies table (e.g., your `Domain` column)
+2. Run the lookup column to populate results.
+3. On the enrichment you want to gate, open **Run settings → Only run if** and set:
+
+   `/People Lookup is not empty`
+
+   (using `/` followed by the name you gave the lookup column)
+
+The enrichment will now only fire for rows where the lookup returned at least one match.
+
+**See also**: [Lookup Rows](lookup-rows.md) — full reference for single-row and multiple-row lookup patterns, including using lookups as suppression gates.
+
 ## See also
 
 [Conditional statements](https://www.clay.com/university/guide/conditional-statements)

@@ -90,6 +90,7 @@ Make sure the contact's row has the required input data (full name and company d
 If the cell shows no result, click into it to see which providers were tried and what each returned. Common reasons no email surfaces:
 
 -   The row is missing required input data. Check that the contact's full name and company domain are populated.
+-   **An upstream column that provides required inputs was skipped due to a run condition.** If a column that feeds data into your email waterfall — such as a company domain lookup, company match, or people search — is showing **"Run condition not met"**, that cell is empty. The email waterfall then sees blank inputs and shows **"Missing input"** for those rows. Open the settings for the upstream column and review its **Only run if** condition — if the condition is preventing rows it should be processing from running, adjust it so the required data gets populated first. See [Conditional runs](conditional-runs.md) for how run conditions work and how skipped cells affect downstream columns.
 -   None of the providers in your waterfall have email data for this person. You can edit the waterfall sequence to add more providers.
 -   The providers ran but returned results that failed validation. Try a less strict validation strategy, or check the individual provider columns (enable them in waterfall settings) to see what was returned.
 -   Your workspace ran out of credits mid-waterfall. When credit limits are hit, remaining providers in the sequence don't execute — click into the cell to see how far the waterfall got before stopping. See [Actions and data credits](actions-data-credits.md) to add more credits.
@@ -116,9 +117,16 @@ Consider setting it to `2` when you're using `Conservative` validation and notic
 
 ### Why does an email appear in a provider column but not in the final output?
 
-An email reaches the final output column only after the waterfall's validation step confirms it as valid. To avoid paying for validation twice, the waterfall skips re-validation for any email address that was already found and validated (as invalid) by an earlier provider step. If Provider 3 finds the same email address that Provider 1 already returned and confirmed as invalid, the validation column for Provider 3 will show **run conditions not met** and that email will not be written to the final output column.
+The most common cause is validation: when `Require validation success?` is enabled, an email only reaches the final output column if the validation provider confirms it as valid. If validation marks the email as invalid, the final output column stays blank — even though a provider did find an email. The waterfall continues running remaining providers in case a later one returns a different, valid email address.
 
-This is expected behavior. The waterfall continues searching because a later provider might still return a different, valid email address.
+To confirm this is what happened: in the waterfall's `Full configuration`, turn off `Hide provider columns?` and re-run. The individual validation columns will show you what each provider returned and whether the email passed or failed validation.
+
+**If validation is rejecting emails you want to keep:**
+
+-   Switch to a less strict `Validation strategy` — for example, `Balanced` or `Aggressive` instead of `Conservative`.
+-   Remove the validation provider entirely — any email found will then flow directly to the final output column without being checked.
+
+**A related sub-case — same email found by multiple providers:** To avoid paying for validation twice, the waterfall skips re-validation for any email address that was already found and validated (as invalid) by an earlier provider step. If Provider 3 finds the same email address that Provider 1 already returned and confirmed as invalid, the validation column for Provider 3 will show **run conditions not met** and that email will not be written to the final output column. This is expected behavior — the waterfall continues searching because a later provider might still return a different, valid email.
 
 If you need to use an email that a later provider found despite an earlier invalid result, you can manually paste it into your output column, or create a formula column that pulls directly from the individual provider result columns.
 

@@ -24,7 +24,7 @@ Connect via OAuth as a Salesforce user.
 
 1.  In the home sidebar, click `Settings` → `Connections`.
 2.  Click `Add connection` and search for `Salesforce`.
-3.  Under `User Sign In`, complete the OAuth sign-in flow in the browser window that appears.
+3.  Under `User Sign In`, choose which environment to connect — click `Sign in with Salesforce` to connect your **production** org, or click `Sign in with Salesforce sandbox` to connect a **sandbox** org — then complete the OAuth sign-in flow in the browser window that opens.
 
 **Tip:** Clay authenticates as whichever Salesforce user is active in the browser during the OAuth flow. If you need to connect as a specific user — for example, a shared integration or service account rather than your personal Salesforce account — sign in to Salesforce as that user before starting the Clay flow. Opening an incognito or private-browser window lets you do this without signing out of your own Salesforce session. For dedicated integration accounts, the **Client Credentials** method below is often a better fit — it requires no browser sign-in and works with Salesforce Integration licenses.
 
@@ -71,7 +71,9 @@ To verify a Salesforce connection is working — and to confirm which Salesforce
 2.  Click the `…` menu next to the connection you want to test.
 3.  Select `Test Connection`.
 
-Clay will confirm the connection is valid and display the Salesforce user (by email) that the connection token is attributed to. Because all data access in Clay is scoped to the permissions of that authenticated user, seeing which user is in the seat makes it easy to debug access issues — for example, if objects or fields are missing, you can immediately check whether the displayed user has the right permissions in Salesforce.
+Clay will confirm the connection is valid and display the Salesforce user (by email) and the Salesforce org the connection is attributed to. Because all data access in Clay is scoped to the permissions of that authenticated user, seeing which user is in the seat makes it easy to debug access issues — for example, if objects or fields are missing, you can immediately check whether the displayed user has the right permissions in Salesforce.
+
+After testing a connection, Clay saves the result and shows the connected user and Salesforce org directly in the connections list — so you can see at a glance which account each connection belongs to without re-testing each time.
 
 ### IP allowlisting
 
@@ -101,14 +103,17 @@ For full instructions on setting up a restricted Salesforce user with field-leve
 -   **List view:** The view to sync into Clay.
     -   Views that are not SOQL-compatible (those that cannot be generated from a SOQL query) have a 2,000-record limit.
 
-**Related (cross-object) fields are not imported**
+**Fields not in your Salesforce list view**
 
-Salesforce list views can display fields from related objects — for example, a Contact list view can include `Account Name`, which is stored on the Account object. Clay's list view import only pulls **direct fields** on the selected object; related fields are not imported even if they appear as columns in your Salesforce list view.
+Clay imports exactly the fields that are columns in your selected Salesforce list view. Any field not included in that list view will not appear in your Clay table, even if the data exists in Salesforce. Two types of fields commonly go missing this way:
 
-To get a related field into Clay, use one of these approaches:
+-   **Custom or optional direct fields** — fields stored on the object itself (for example, a custom LinkedIn URL field on a Contact) that weren't added as a column to your Salesforce list view.
+-   **Related (cross-object) fields** — fields stored on a related object (for example, `Account Name` shown in a Contact list view, which is actually stored on the Account object). These are never imported even if they appear as columns in the list view.
 
-1.  **Add a Lookup record column in Clay (fastest).** Use the **Lookup record** enrichment to query the related object using an ID field that _is_ imported. For example, a Contact import includes `AccountId` — use that to look up the Account record and pull `Name` (or any other Account field you need).
-2.  **Create a formula field in Salesforce.** Add a formula text field on the object that copies the related value (for example, a formula field on Contact with the expression `Account.Name`). Once added to the list view in Salesforce, Clay imports it as a direct field. This is useful when you need the value available in multiple Clay tables without a per-row lookup step.
+To get a missing field into Clay, use one of these approaches:
+
+1.  **Add a Lookup record column in Clay (fastest).** Use the **Lookup record** enrichment to fetch the full record by its Salesforce Object ID (which is always imported). This returns **all** fields on the object — including any custom fields — regardless of what was in your list view. For cross-object fields, use the related object's ID (e.g., `AccountId` on Contact) to look up the related record and pull any field from it.
+2.  **Add the field to your Salesforce list view.** In Salesforce, edit the list view to include the missing column, then re-run the source in Clay to pick it up. For cross-object fields, first create a formula text field on the object that copies the related value (for example, a formula field on Contact with the expression `Account.Name`). Once added to the list view in Salesforce, Clay imports it as a direct field. This is useful when you need the value available in multiple Clay tables without a per-row lookup step.
 
 ### `Source` Import records from a Salesforce report
 
@@ -170,6 +175,15 @@ Use this action to create a new record in Salesforce.
 -   **Salesforce object:** The object type to look for in your Salesforce.
 -   **Duplicate rule override:** When enabled and you have a [duplicate rule](https://help.salesforce.com/s/articleView?id=sf.duplicate_rules_map_of_reference.htm&type=5), Clay will bypass the rule and create a new record, even if it duplicates an existing one.
 
+**Map fields**
+
+After selecting a Salesforce Object, the **Map fields** section lets you specify which fields to set on the new record. The section starts empty — add only the fields you need.
+
+-   **+ Add field**: Opens a searchable list of all available fields for the selected Salesforce object. Select a field to add it, then map it to a column or value from your Clay table. Repeat for each field you want to set.
+-   **Refresh**: Reloads the field list from Salesforce. Use this if you've recently added or modified fields in your Salesforce org and they're not appearing in the picker.
+
+Fields not added here are left blank on the new record.
+
 **Tip: Adding contacts or leads to a Salesforce Campaign**
 
 Clay does not have a dedicated "Add to Campaign" action. To add a contact or lead to a Salesforce Campaign, use **Create Record**, select **Campaign Member** as the Salesforce object, and map both the **ContactId** (or **LeadId**) and **CampaignId** fields. If the record is already a campaign member, Salesforce returns a `DUPLICATE_VALUE` error — you can guard against this by first running a **Lookup record** action with "Campaign Member" as the object to check whether the association already exists.
@@ -198,6 +212,8 @@ The **Exact match?** toggle controls how Clay queries Salesforce:
 **Tip:** Name-only matching can be unreliable when names differ in length or format between Clay and Salesforce. For more reliable matching, use unique identifiers like website domain or LinkedIn URL alongside (or instead of) name. If you need multiple fields to match, use the **Lookup records via SOQL** action for full control over the query.
 
 **Note:** Each "field to search for" input accepts one search value at a time. If you add multiple values to a single search field, Clay concatenates them into one string rather than treating them as separate options — for example, adding both `"Acme Corp"` and `"Acme"` to the same "Account Name to search for" field causes Clay to search for `"Acme CorpAcme"` instead of either name. To search across multiple possible values for the same field, use two separate **Lookup record** columns, each with one value.
+
+**Tip:** When using a Lookup Record column to supplement a Salesforce list view source import, make sure both use the **same Salesforce account**. If they use different accounts, the lookup queries a different Salesforce org and returns `No records found` even when the record exists.
 
 ### `Action` Upsert object
 
@@ -229,6 +245,15 @@ Use this action to modify existing records in Salesforce.
 -   **Salesforce object:** The object type to look for in your Salesforce.
 -   **Ignore blank values (optional):** When enabled, blank values from Clay will be ignored.
 -   **Disable auto-assignment rules (optional):** When enabled, Salesforce will not apply lead and contact assignment rules when the record is updated. Enable this setting if you do not want your Salesforce assignment rules to fire when Clay updates a record.
+
+**Map fields**
+
+After selecting a Salesforce Object, the **Map fields** section lets you specify which fields to update. The section starts empty — add only the fields you need to change.
+
+-   **+ Add field**: Opens a searchable list of all updateable fields for the selected Salesforce object. Select a field to add it, then map it to a column or value from your Clay table. Repeat for each field you want to update.
+-   **Refresh**: Reloads the field list from Salesforce. Use this if you've recently added or modified fields in your Salesforce org and they're not appearing in the picker.
+
+Fields not added here are left unchanged in Salesforce.
 
 ### `Action` Convert lead
 

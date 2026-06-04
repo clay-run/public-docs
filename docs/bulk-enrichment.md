@@ -52,6 +52,30 @@ In the bulk enrichment settings, you can adjust several options:
     -   **Continue where you left off** — Finishes enriching rows already in the table, then continues with the rest of the source.
     -   **Start from the beginning** — Clears rows already in the table and reruns everything from the source. Note: restarting will cost credits again for previously enriched rows.
 
+## Queued rows and Errored rows
+
+Bulk enrichment tables include two built-in tabs at the top of the view to help you track run progress:
+
+-   **Queued rows** — rows that are waiting to be processed or are currently running.
+-   **Errored rows** — rows where the action column tied to your deletion criterion did not complete successfully.
+
+### Understanding Run Stopped
+
+**Run Stopped** appears on a cell when the run was manually paused or stopped before that action had a chance to execute for that row. Because the action never ran, the row stays in the Queued rows or Errored rows tab (depending on your deletion criteria configuration) rather than completing normally.
+
+-   **Single column** deletion criterion — rows with Run Stopped on the configured column appear in the **Errored rows** tab.
+-   **Conditional rules** deletion criterion — rows with Run Stopped appear in the **Queued rows** tab.
+
+This is why you may see rows in these tabs where some enrichment columns show successful results while one column shows **Run Stopped**: the upstream columns ran fine, but the final action (for example, **Update Audiences Record**) did not finish before the run was halted.
+
+### How to re-run
+
+Check both the **Queued rows** and **Errored rows** tabs for rows with **Run Stopped**. To retry:
+
+1.  Right-click the column header showing **Run Stopped** → **Run column** → **Run [N] empty or out-of-date rows**.
+
+For more options on re-running specific rows or cells, see [Run progress](run-progress.md).
+
 ## Run Setup settings (Audiences)
 
 When a bulk enrichment is attached to an [Audiences](https://university.clay.com/docs/audiences) segment (available in beta for Enterprise customers), clicking the enrichment card opens a **Run Setup** panel with additional settings for ongoing enrichment behavior.

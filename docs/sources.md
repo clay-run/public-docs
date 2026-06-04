@@ -94,7 +94,7 @@ Click `+ Add` again to add a second table for your contacts/people. The same sou
 
 How the link is created depends on which source you used for contacts:
 
-**If you used Find People at These Companies** (launched from your accounts table): A **Company Table Data** column is automatically added to the contacts table, linking each person back to their company row. No additional setup is required.
+**If you used Find People at These Companies** (launched from your accounts table): A **Company Table Data** column is automatically added to the contacts table, linking each person back to their company row. No additional setup is required to establish this link. **Note:** Company Table Data retrieves basic column types only (text, number, formula, etc.) — enrichment columns are not included. To access company enrichment data in the contacts table, add a **Lookup single row in other table** column instead (see [Lookup Rows](lookup-rows.md)).
 
 **If you imported contacts from CSV or CRM:** Add a **Lookup Rows** action on the contacts table to pull account-level data into each contact row:
 
@@ -208,7 +208,7 @@ Clay tables have a **50,000-row limit** across all plans. This applies to all so
 **Source-specific limits:**
 
 -   **Salesforce Reports**: 2,000 records (API restriction) — to import more than 2,000 records, use the [Salesforce SOQL source](salesforce-soql.md) instead (supports up to 50,000 records)
--   **Salesforce List Views**: 50,000 records
+-   **Salesforce List Views**: Up to 50,000 records for SOQL-compatible views; 2,000 records for views that are not SOQL-compatible — to import more than 2,000 records from a non-SOQL-compatible view, use the [Salesforce SOQL source](salesforce-soql.md) instead
 -   **Find Companies and Find People sources**: subject to a per-source cumulative limit that varies by billing plan (for example, 100 records on free workspaces, 25,000 on Explorer-tier plans, 50,000 on Pro plans and above). Unlike other source types, these display an explicit error message when the limit is reached — see [Finding companies and people in Clay](finding-companies-and-people-in-clay.md) for the workaround.
 -   **All other sources**: 50,000 records
 
