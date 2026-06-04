@@ -555,9 +555,14 @@ This error means the API credentials in your HTTP API action are no longer valid
 
 **Tip:** Saving credentials in a header account (`Settings → Connections`) is the easiest way to manage token rotation — when a token expires, you only need to update it in one place instead of editing every column individually.
 
-### "Body parse error" (400 error)
+### "Body parse error" or in-editor JSON syntax error
 
-This error indicates a formatting issue in your JSON body.
+This error indicates a formatting issue in your JSON body. It can appear in two forms:
+
+-   **Inline (before running):** A red message below the body editor — for example, *"Expected ',' or '}' after property value in JSON at position X (line Y column Z)"*. This appears as you type and means your JSON has a syntax problem: a stray character, missing comma, unclosed quote, or unexpected text placed after a column chip.
+-   **After running:** A 400 response with "Body parse error" returned by the server.
+
+Both have the same root cause — malformed JSON — and the same fixes.
 
 **Common fixes:**
 
