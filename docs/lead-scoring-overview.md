@@ -56,7 +56,7 @@ For each criterion, fill in four fields:
     -   **Equals (Text, Number, Boolean)** — exact match
     -   **Contains (Text)** — substring match
     -   **Between (Number)** — checks whether the value falls within a numeric range
--   **Keywords** — The values or ranges to match against, comma-separated. For **Between (Number)**, each keyword must use the format `min - max` (e.g., `5 - 10` or `100 - 500`). If the format does not match, that keyword is skipped and contributes 0 to the score.
+-   **Keywords** — The values or ranges to match against, comma-separated. For **Between (Number)**, each keyword must use the format `min - max` with the smaller number first (e.g., `5 - 10` or `100 - 500`). If the format does not match, or if the numbers are in reverse order (e.g., `10 - 5`), that keyword is skipped and contributes 0 to the score.
 -   **Scores** — A comma-separated list of numeric point values, one per keyword. The number of keywords and scores must match exactly, or the enrichment will return an error.
 
 ### **Step 4: Review the output**
@@ -69,7 +69,7 @@ A criterion silently contributes 0 points when:
 
 -   The **Values to Score** field is empty or not mapped to a column for that row.
 -   The column value is not a number and the comparison type is **Between (Number)**.
--   The **Keywords** for a **Between (Number)** criterion are not in `min - max` format — for example, `5–10` (em dash), `5 to 10`, or a single number like `10` will all be skipped. Use a standard hyphen with spaces: `5 - 10`.
+-   The **Keywords** for a **Between (Number)** criterion are not in the correct `min - max` format, or have the numbers in reverse order — for example, `5–10` (em dash), `5 to 10`, a single number like `10`, or a reversed range like `10 - 5` (max before min) will all be skipped. Always put the smaller number first: `5 - 10`, not `10 - 5`.
 
 ## Setting up lead scoring with custom formulas
 
