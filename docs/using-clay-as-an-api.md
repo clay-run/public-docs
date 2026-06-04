@@ -49,6 +49,8 @@ This works if you absolutely need an endpoint, but be aware: Clay's enrichment m
 
 For Enterprise customers, Clay offers a limited but fast API for accessing its proprietary People and Company data. You can send an email or LinkedIn URL to get back basic person details, or a domain to get company info.
 
+**Note:** This API is currently in beta. Access is not automatic, even on Enterprise plans — it is enabled per workspace on request. Contact your GTM engineer or [our team](https://www.clay.com/contact-form) to have it enabled for your workspace.
+
 -   It's useful for lightweight lookups and lead enrichment.
 -   It doesn't include deep enrichment like emails, phone numbers, or revenue data.
 -   **It returns enriched data to the caller — it does not write to Salesforce or any other CRM automatically.** Your system is responsible for taking the response and updating the CRM record. If you want Clay to handle the Salesforce write-back for you, use the webhook workflow described above instead.
