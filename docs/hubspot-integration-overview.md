@@ -192,6 +192,18 @@ If a property exists in HubSpot but doesn't get updated when you run the Update 
 
 **A different HubSpot account is selected.** If multiple HubSpot accounts are connected to your workspace (for example, if teammates each added their own HubSpot connection), the Update Object action may be authenticating against a different instance than the one you intend to update. Open the column settings and confirm the HubSpot account shown is the correct one. You can verify by running a **Lookup object** action on the same record — if the property appears updated there, the write reached the right account.
 
+### Why does my HubSpot Update Object show "Required inputs missing" after I deleted a column?
+
+If the column that was previously mapped to the **HubSpot Object ID** field has been deleted from the table, the field retains a stale reference to that removed column. The action sees this as a missing required input and will not run.
+
+**To reconnect:**
+
+1.  Open the Update object column's settings.
+2.  Click the **HubSpot Object ID** field — the broken reference will appear in the input.
+3.  Clear the existing value, then type `/` to open the column picker and select the column that contains your HubSpot Record IDs.
+
+**Tip:** The most reliable source for the HubSpot Object ID is the `hs_object_id` value returned by a HubSpot **Import source** or **Lookup object** action on the same table. If you are using a plain text column of IDs (for example, values imported from a CSV), the column type does not matter — but the values must exactly match the HubSpot Object IDs of the records you want to update.
+
 ### How do I create a contact-to-company association in HubSpot from Clay?
 
 Use the **Lookup object** and **Create association** actions together in your contacts table — you don't need Send table data for this workflow.
