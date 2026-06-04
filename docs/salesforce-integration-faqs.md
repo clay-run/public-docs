@@ -97,6 +97,24 @@ Once your Salesforce admin grants the necessary permissions, the updated access 
 
 For guidance on setting up an integration user with the right object access, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
 
+## Why is a Salesforce field not appearing in the Lookup Record field picker?
+
+If a specific field is visible in Salesforce but missing from Clay's Lookup Record dropdown, the most common reason is the field's **data type**. Clay populates the Lookup Record field picker by calling Salesforce's `describeSObject` API and filtering to fields that are both string-typed (text, picklist, email, URL, etc.) and marked as **filterable** by Salesforce — meaning they can be used in a SOQL `WHERE` clause.
+
+Fields that Salesforce marks as non-filterable — most notably **Long Text Area**, **Rich Text Area**, and **Encrypted Text** fields — do not appear in the Lookup Record dropdown. This is a Salesforce restriction: these field types cannot be used as filter criteria in queries, so Clay cannot use them to look up records.
+
+**Permissions are not the issue** if the field is visible to your Salesforce users but still absent from the Clay dropdown. Field-type filtering is applied on top of access checks.
+
+**Workaround**
+
+To use a Long Text Area (or other non-filterable) field as a lookup key in Clay, store a copy of the value in a filterable field type:
+
+1.  In Salesforce, create a new **Text** field on the same object.
+2.  Populate the new Text field with the same value using a Salesforce Flow or a formula field.
+3.  In Clay, use the new Text field as your Lookup Record match field.
+
+Once the value is in a filterable Text field, it will appear in the Clay Lookup Record dropdown and can be used as a match key.
+
 ## Will Clay create duplicate records in Salesforce?
 
 No. By default, Clay prevents duplicate records. However, you can allow duplicates by enabling the "Duplicate Rule Override" in the Create Record enrichment.
