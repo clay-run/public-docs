@@ -2,7 +2,7 @@
 title: Creating a restricted Salesforce user
 source_url: https://university.clay.com/docs/creating-a-restricted-salesforce-user
 description: Create a restricted user with limited field-level access.
-last_synced: 2026-04-26T01:39:48.438Z
+last_synced: 2026-04-26T01:39:48.000Z
 ---
 
 # Creating a restricted Salesforce user
@@ -100,14 +100,12 @@ The user you authenticate with Clay can now:
 
 ## **Static IP addresses for allowlisting**
 
-To restrict Salesforce access to Clay's servers by IP address, enable **Use static IP?** in your Clay connection settings (available on **Enterprise plans**). When enabled, all Clay requests come from one of these fixed IP addresses:
+On **Enterprise plans**, Salesforce connections in Clay automatically route through Clay's static IP addresses — no configuration needed. To allowlist these IPs in Salesforce, go to `Setup` → `Network Access` → `New` and enter each address:
 
 -   `52.7.81.233`
 -   `18.209.121.250`
 -   `35.170.109.137`
 -   `54.86.28.41`
-
-To allowlist these in Salesforce, go to `Setup` → `Network Access` → `New` and enter each IP address.
 
 ## **FAQs**
 
