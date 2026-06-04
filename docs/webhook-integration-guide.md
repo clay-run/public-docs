@@ -43,7 +43,7 @@ Your table updates instantly with new data, eliminating manual entry. This featu
 
 **Submission limit:** Each webhook source accepts up to 50,000 submissions. Rows submitted count toward this limit even if you delete them from the table. Once you reach this limit, Clay returns a `403` error and you'll need to create a new webhook to continue receiving data.
 
-**Enterprise Plan:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) (also called passthrough tables) to automatically process and delete rows, allowing unlimited webhook submissions. Learn more in [table management settings](https://www.clay.com/university/guide/table-management-settings).
+**Enterprise Plan:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) (also called passthrough tables) to automatically process and delete rows — bypassing the 50,000-submission cap entirely. With auto-delete enabled, your webhook continues accepting submissions indefinitely. You do not need to create a new webhook when you reach 50,000 submissions. Learn more in [table management settings](https://www.clay.com/university/guide/table-management-settings).
 
 ## Request body format
 
@@ -106,7 +106,7 @@ If your webhook isn't creating rows — even on a brand-new webhook that has nev
 
 3. **Missing or wrong authentication token** — If you added an auth token when creating the webhook, it must be included in every request as a header. The token is only displayed once at creation — if you didn't copy it, you'll need to delete and recreate the webhook to generate a new one.
 
-4. **Submission limit reached** — See the [Limits](#limits) section. Once a webhook source hits 50,000 submissions, Clay returns a `403` error and stops creating rows. This limit counts all submissions since the webhook was created, even deleted rows.
+4. **Submission limit reached** — See the [Limits](#limits) section. Once a webhook source hits 50,000 submissions, Clay returns a `403` error and stops creating rows. This limit counts all submissions since the webhook was created, even deleted rows. **Enterprise Plan exception:** If you have [auto-delete](https://www.clay.com/university/guide/auto-delete) enabled, the 50,000-submission cap does not apply — your webhook continues accepting data indefinitely without needing rotation.
 
 **Quick isolation test:** To confirm whether the issue is in your request or on Clay's side, try the simplest possible payload:
 
