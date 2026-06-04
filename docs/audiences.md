@@ -243,7 +243,7 @@ The **`Create new Salesforce records`** toggle is in your Salesforce source sett
 
 Export sync behavior:
 
--   **Export frequency:** Every 24 hours when write-back is enabled.
+-   **Export frequency:** Once every 24 hours. Clay assigns each workspace a stable export time automatically — the schedule is not user-configurable.
 -   **Export batch size:** ~10,000 records per sync.
 -   **Subsequent syncs:** Incremental — only changed records are processed.
 
@@ -370,3 +370,15 @@ Three things to check:
 -   **The signal falls outside the default lookback window.** `Lookup in Audiences` returns signal data for the past 30 days by default. If the signal event is older than 30 days, open the column settings and increase the lookback period.
 -   **The 5-result cap was reached.** `Lookup in Audiences` returns a maximum of 5 signal results per record. If a company has more active signals than that, some may not appear. Use `Get Audiences Activity` to retrieve a larger set of signal data.
 -   **The signal hasn't fired for that record yet.** Signal results are written asynchronously and may not appear immediately after a signal run completes. If a signal should be recent but is still missing, open the signal's column header → `Edit column` and re-run the signal to refresh the data for that record.
+
+### What happens when I archive a record in Audiences?
+
+Archiving a record is a **soft delete** — the record is not permanently removed from your Audiences workspace. When you archive a record:
+
+-   It is **excluded from all audience segments and workflows** — it will not appear in segment filter results or trigger enrichment automations.
+-   It can be viewed in the **Archived** section in the left sidebar.
+-   It can be **restored at any time** from the Archived section.
+
+**Note on lookup timing:** After archiving a record, there is a brief processing delay before the change is reflected in `Lookup in Audiences` results. Running a lookup immediately after archiving may still return the archived record — lookups typically update within a short time as changes propagate.
+
+To exclude Salesforce-deleted records from your audience lookups, filter on **Sync status → Deleted in source** to identify them, then archive the records you no longer want matched against.
