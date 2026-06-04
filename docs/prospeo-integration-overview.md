@@ -108,7 +108,10 @@ If you want to only run this enrichment under set circumstances, you are able to
 
 The **Find people at company** action lets you search for contacts at a specific company by domain, with optional filters for job title, seniority, and department.
 
-**Note:** A maximum of 25 contacts are returned per run — this is a cap set by the Prospeo API, not a Clay limitation. If you need more contacts per company, use **Find People at These Companies** (under Tools or as a source) instead. It uses Clay's own search index and supports configurable limits up to 100 contacts per company.
+**Note:** A maximum of 25 contacts are returned per run — this is a cap set by the Prospeo API, not a Clay limitation. There is no configurable limit field on this action, so you cannot restrict results to fewer than 25. If you need to control the number of people returned per company:
+
+- **Fewer than 25**: use Clay's native **Find People** source instead — it includes **Limit per company** (up to 100) and **Limit results** fields. You can run Prospeo enrichments afterward to find emails.
+- **More than 25**: use **Find People at These Companies** (under Tools or as a source). It uses Clay's own search index and supports configurable limits up to 100 contacts per company.
 
 **Step 1: Choose the Prospeo account you want to use**  
 You can use either the Clay-managed Prospeo account or bring your own key.  
