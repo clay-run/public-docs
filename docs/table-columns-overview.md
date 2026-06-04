@@ -76,6 +76,8 @@ You can switch the data type of your column within your table. To do this:
 
 If you see the error **"Table cannot create new computable field due to table size limit"** — whether you're adding a new enrichment column, connecting a new data source, or saving a workflow as a Function ("Replace columns with function") — your table has reached the **40 enrichment column limit**. Despite the phrase "table size," this error is about column count — not row count or data volume. It can appear even on a table that has very few or no rows.
 
+If your table's enrichment limit was previously raised (for example, to 60 for a phone or email waterfall table) and you hit that higher cap, the in-product error instead reads **"This table has reached the [N] enrichment columns limit"** — where [N] is your table's current limit. The cause and resolutions are identical.
+
 Enrichment (action) columns include any column that runs an integration, waterfall, AI enrichment, lookup, or other data action. Your table can hold up to 40 of these before new ones are blocked. This cap is enforced independently from your workspace's total column limit — even if your workspace has a custom total column limit (such as 99 instead of the default 100), the enrichment column limit remains at 40 unless it was separately raised.
 
 **To resolve this:**
