@@ -89,7 +89,7 @@ Use webhooks to send data from Marketo to Clay for real-time lead enrichment. Th
     -   `Response format`: JSON
     -   `Payload template`: Use the JSON template below, customizing fields as needed.
 
-`{  "id": "{{lead.Id}}",    "first_name": "{{lead.FirstName}}",    "last_name": "{{lead.LastName}}",    "email": "{{lead.EmailAddress}}",    "title": "{{lead.JobTitle}}",    "company": "{{lead.CompanyName}}",    "industry": "{{lead.Industry}}",    "country_code": "{{lead.Country}}"   }`
+`{  \u00a0"id": "{{lead.Id}}",    \u00a0"first_name": "{{lead.FirstName}}",    \u00a0"last_name": "{{lead.LastName}}",    \u00a0"email": "{{lead.EmailAddress}}",    \u00a0"title": "{{lead.JobTitle}}",    \u00a0"company": "{{lead.CompanyName}}",    \u00a0"industry": "{{lead.Industry}}",    \u00a0"country_code": "{{lead.Country}}"   }`
 
 ## Troubleshooting
 
