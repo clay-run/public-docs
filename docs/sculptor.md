@@ -31,13 +31,13 @@ For example, you could:
 
 ## Chat history
 
-Sculptor saves your conversations automatically so you can pick up where you left off. The **chat history** button (clock icon) in the Sculptor panel lets you browse and continue any previous Sculptor conversation.
+Sculptor saves your conversation history so you can view and continue previous sessions. Click the **chat history** button (clock icon) in the Sculptor panel to browse past conversations.
 
-Chat history is available on all three Sculptor surfaces — Table Sculptor, Search/Onboarding, and Claygent Builder. Conversations are scoped to the context you're currently in:
+History is scoped to the surface you're currently working in:
 
--   **Table Sculptor** — only shows conversations that started on the table you're currently viewing.
--   **Claygent Builder** — only shows conversations for the Claygent you're currently editing.
--   **Search/Onboarding** — shows your previous search-related Sculptor conversations.
+-   **Table Sculptor** — only shows conversations from the table you are currently viewing.
+-   **Claygent Builder** — only shows conversations for the Claygent you are currently viewing.
+-   **Search / Onboarding** — only shows conversations from search and onboarding sessions.
 
 ## Best practices
 
