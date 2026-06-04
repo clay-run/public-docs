@@ -150,6 +150,18 @@ Our sequencer is powered by Smartlead, but everything runs on Clay credits. You 
 
 When a campaign is created, the `Sync leads to campaign` column pushes 10 rows so you can preview and configure your messages. After launching, the rest of your source table is not pushed automatically. To add all remaining rows, open your source table (the table where you created the campaign — not the campaign events table) and run the `Sync leads to campaign` column manually — click the run button in the column header.
 
+### Why did my campaign stop sending before reaching all my leads?
+
+The daily send limit is set at the **email account level**, not per campaign. If you have multiple active campaigns using the same email account, they all share that account's daily sending budget.
+
+**Example:** If your email account has a limit of 20 emails per day and you're running two campaigns from the same account, those 20 sends are distributed across both campaigns — not 20 per campaign. Once the account's daily limit is reached, sending pauses for that account until the next sending window.
+
+To increase your total daily sending capacity:
+-   **Add more email accounts** — each additional account has its own independent daily budget. With two accounts you can send up to twice as many emails per day.
+-   **Increase the send limit** on an existing account — open the campaign's `Sender setup`, click the three-dot (⋯) menu next to the account, and select `Update send limit`.
+
+Keep in mind that sending high volumes of cold email from a single inbox puts your domain at risk. Starting near the default (20 emails/day) and scaling by adding accounts rather than increasing individual limits is safer for deliverability.
+
 ### My "Sync leads to campaign" column is showing a warning. What does it mean?
 
 This usually means the Clay table that the column points to was deleted. Hover over the warning icon to confirm — the error reads *"Destination table was deleted. Please either restore that table from the trash, or create a new Send table data column."*
