@@ -2,7 +2,7 @@
 title: Databricks integration
 source_url: https://university.clay.com/docs/databricks-integration
 description: Import, insert, update, upsert or look up rows in Databricks.
-last_synced: 2026-04-26T01:39:51.990Z
+last_synced: 2026-04-26T01:39:51.000Z
 ---
 
 # Databricks integration
@@ -30,11 +30,12 @@ Connect to Databricks using OAuth M2M with a Service Principal for secure, serve
 2.  Click `Add connection` and search for `Databricks`.
 3.  Under `Service Principal`, fill in the following fields:
     -   `Name your connection`: A descriptive name for this connection.
-    -   `Use static IP?`: Optional. Use a static IP when connecting to ensure that enrichments are run from a static list of IP addresses, which can be useful for allow-listing.
     -   `Workspace URL`: Your Databricks workspace URL (e.g. `https://adb-1234567890123456.7.azuredatabricks.net/`).
     -   `Client ID`: The client ID from your Databricks Service Principal.
     -   `Client secret`: The client secret from your Databricks Service Principal.
 4.  Click `Authenticate` to save the connection.
+
+Databricks connections automatically route through Clay's static IP addresses — no additional configuration is required. Contact [Clay support](https://www.clay.com/support) for the IP allowlist.
 
 ### Personal Access Token
 
