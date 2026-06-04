@@ -75,7 +75,7 @@ If you have a saved Sales Navigator search and want to pull those results into C
 5.  Optionally set a **Max Count** (default and maximum is 2,500 — this is a Sales Navigator limit).
 6.  Click **Import to new table**.
 
-**Note:** This source requires a Sales Navigator **people search URL** (`https://www.linkedin.com/sales/search/people/...`), not a saved lead list URL (`linkedin.com/sales/lists/people`) or a URL containing `savedSearchId` or `recentSearchId`. These parameters reference saved or recent searches that are private to your account — Clay cannot resolve them on your behalf. If your URL contains either parameter, open Sales Navigator, reconstruct your search filters manually without loading a saved or recent search, and copy the new URL. Each imported result costs 1 Clay credit.
+**Note:** This source requires a Sales Navigator **people search URL** (`https://www.linkedin.com/sales/search/people/...`), not a saved lead list URL (`linkedin.com/sales/lists/people`) or a URL that references a saved or recent search. URLs containing `savedSearchId` or `recentSearchId` will be rejected. URLs containing `recentSearchParam` may also fail — LinkedIn adds this parameter automatically when you open a saved or recent search, and it references search history private to your account. To avoid issues: open Sales Navigator, start a **brand new People Search from scratch**, apply your filters manually without clicking any saved or recent search, and copy the URL immediately. Each imported result costs 1 Clay credit.
 
 ## Finding LinkedIn posts by keyword
 
