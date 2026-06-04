@@ -29,6 +29,16 @@ For example, you could:
 4.  **Add enrichments.** Click `Continue` to include any recommended enrichments Sculptor suggests for your table.
 5.  **Finalize your table.** Your table is created automatically. You can exit the chat at any time, and return later by clicking `Chat with Sculptor` to make further updates. To browse and resume any of your previous Sculptor conversations, click the **chat history** button (clock icon) in the Sculptor panel.
 
+## Chat history
+
+Sculptor saves your conversation history so you can view and continue previous sessions. Click the **chat history** button (clock icon) in the Sculptor panel to browse past conversations.
+
+History is scoped to the surface you're currently working in:
+
+-   **Table Sculptor** — only shows conversations from the table you are currently viewing.
+-   **Claygent Builder** — only shows conversations for the Claygent you are currently viewing.
+-   **Search / Onboarding** — only shows conversations from search and onboarding sessions.
+
 ## Best practices
 
 -   **Go step by step.** Sculptor does best when handling a problem one element at at ime.
