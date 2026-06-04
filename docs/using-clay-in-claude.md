@@ -108,6 +108,12 @@ If you need additional data points or more advanced workflows, access the full C
 
 Company search is not currently supported. However, you can research companies by asking Clay questions about target accounts—tech stack, funding, hiring trends, leadership changes, and more. Clay surfaces information that's otherwise hard to find: org charts, job changes, funding history, social context, and tech stack signals.
 
+**Can I query my Audiences data or run analytical queries like "group by seller"?**
+
+If your workspace has Clay Audiences enabled (currently in beta for Enterprise customers), you can use natural language to filter and look up accounts — for example, "Show me my open-pipeline accounts in the northeast" or "Tell me about [Account]." Results are scoped to accounts you own in Salesforce by default; your admin can allow access to all accounts from [MCP settings](https://university.clay.com/docs/mcp-settings).
+
+The integration is designed for targeted, individual account research — not bulk data exports or analytical operations. SQL-style queries such as grouping accounts by owner or aggregating pipeline by territory are not supported. For complex analysis across your full Audiences dataset, use the Clay platform directly at [app.clay.com](http://app.clay.com).
+
 **How many credits do I get?**
 
 All users receive 500 credits when connecting to Clay in Claude for the first time. If you reach your limit, you can continue searching for people without enrichments, or upgrade to a paid plan for full functionality.

@@ -27,7 +27,7 @@ For example, you could:
 3.  **Iterate and review.** Sculptor will propose a workflow with integrations, enrichments, and conditions.
     -   You can reply directly in the chat to adjust or refine the table instantly.
 4.  **Add enrichments.** Click `Continue` to include any recommended enrichments Sculptor suggests for your table.
-5.  **Finalize your table.** Your table is created automatically. You can exit the chat at any time, and return later by clicking `Chat with Sculptor` to make further updates.
+5.  **Finalize your table.** Your table is created automatically. You can exit the chat at any time, and return later by clicking `Chat with Sculptor` to make further updates. To browse and resume any of your previous Sculptor conversations, click the **chat history** button (clock icon) in the Sculptor panel.
 
 ## Best practices
 
@@ -41,6 +41,8 @@ For example, you could:
 > **Available on Pro and Enterprise plans. A broader rollout to additional plans is coming.**
 
 When Sculptor builds new columns for your table, it automatically puts the table into [sandbox mode](https://www.clay.com/university/guide/sandbox-mode) first. This gives you a chance to review and validate the new columns before they go live—reducing unintended credit burn and giving you more control over changes.
+
+> **Important:** To save Sculptor's proposed columns to your live table, use the **Review changes** button — do _not_ click **Exit Sandbox**. Clicking **Exit Sandbox** will discard all of Sculptor's proposed changes without publishing them.
 
 Once Sculptor adds columns and sandbox mode is active:
 
@@ -83,6 +85,7 @@ Analyst mode lets you query any Clay table using natural language to uncover tre
 
 While Sculptor is powerful, there are a few things to keep in mind:
 
+-   **Weekly conversation limits apply** — Each workspace is limited to **20 in-table Sculptor conversations per week** and **50 homepage conversations per week**, on a rolling 7-day window. A "conversation" is an entire chat thread — every back-and-forth message within a single session counts as one conversation. If you hit the limit, you'll see a message like "You've reached the maximum number of conversations this week for your workspace." Contact support to have your workspace limit increased.
 -   **Supported sources are limited** — Sculptor can only generate sources using companies, people, jobs, Google Maps, CSV imports, or web search. If you want to use a different source, you'll need to manually create it before using Sculptor.
 -   **No direct CRM integration (yet)** — Connections must be set up manually for now.
 -   **Cross-table operations are limited** — Advanced linking and workflows are still in development.
@@ -111,6 +114,14 @@ Sculptor includes your table's schema and field configuration with every message
 -   **Try a different browser or incognito mode.** This rules out local caching or browser extension issues.
 
 If Sculptor is consistently slow regardless of conversation length, this is a known performance area the team is actively improving.
+
+### "You've reached the maximum number of conversations this week"
+
+This error means your workspace has hit its weekly Sculptor conversation limit. Workspaces are limited to **20 in-table conversations per week** (launched from within a table) and **50 homepage conversations per week** (launched from the [app.clay.com](http://app.clay.com/) homepage), on a rolling 7-day window.
+
+A "conversation" is a full chat thread — multiple back-and-forth messages within one session count as a single conversation. The limit resets automatically after 7 days.
+
+If you hit the limit and need it increased, contact support.
 
 ## FAQs
 

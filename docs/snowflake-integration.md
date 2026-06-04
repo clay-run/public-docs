@@ -20,6 +20,8 @@ When connecting your Snowflake account to Clay, you can choose between two authe
 -   **Key-pair authentication** (recommended): Uses a private key for secure authentication. This is the preferred method for enterprise teams. See [Snowflake's key-pair authentication documentation](https://docs.snowflake.com/en/user-guide/key-pair-auth) for a guide to generating and configuring keys.
 -   **Username and password**: Traditional authentication method. Note that Snowflake is deprecating this method in favor of key-pair authentication.
 
+**Important:** These two authentication methods create separate, incompatible connection types in Clay. Columns and sources built with the password-based Snowflake connection cannot be switched to use the Snowflake Key-Pair connection — they must be recreated. The password-based connection is legacy in Clay: existing columns using it will continue to run, but new Snowflake columns can only be created with the Key-Pair connection. If your existing Snowflake columns start returning authentication errors after switching to Key-Pair, recreate those columns and select the Snowflake Key-Pair account.
+
 ### Setting up key-pair authentication
 
 Key-pair authentication requires an RSA key-pair. If you haven't already generated your keys, refer to [Snowflake's key-pair authentication documentation](https://docs.snowflake.com/en/user-guide/key-pair-auth) for detailed instructions.

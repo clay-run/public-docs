@@ -61,14 +61,21 @@ Retrieve enriched company data such as industry, revenue, employee count, and mo
 -   **Company Stock Ticker** (Optional): Stock ticker symbol like "GOOGL."
 -   **Minimum Likelihood Score** (Optional): Set a likelihood score threshold to refine data accuracy.
 
-**Understanding `size` vs. `employee_count`**
+**Parent and subsidiary company data**
 
-When enriching a company, you may notice that the `size` field and `employee_count` field return different values for the same company. This is expected — they measure headcount differently:
+The Enrich Company result includes an **Affiliated Entities** array. Each entry in this array contains:
 
--   **`size`**: A self-reported range (e.g., "51-200") that the company selected on LinkedIn or Facebook. This value is static and may lag behind actual headcount, especially if the company hasn't updated their social profile in some time.
--   **`employee_count`**: PDL's calculated headcount, built bottom-up from their underlying person dataset. This is generally more accurate and up-to-date than the self-reported `size` range.
+-   **Affiliated ID**: The PDL ID of the affiliated company.
+-   **Display Name**: The company name (e.g., "Alphabet Inc.").
+-   **Employee Count**: The number of employees at the affiliated company.
+-   **Relationship**: The type of relationship — `ultimate_parent` or `immediate_parent`.
 
-For the most accurate current headcount, use `employee_count`. The `size` field preserves the raw self-reported range as set by the company on their social profile. See [PDL's employee count documentation](https://docs.peopledatalabs.com/docs/employee-count-fields) for more detail.
+To enrich a company's ultimate parent with normalized details (name, website, industry, etc.), use a two-step approach:
+
+1. Add a formula column that filters the **Affiliated Entities** array where **Relationship** equals `ultimate_parent` and extracts the **Display Name**.
+2. Use that parent company name as the input for a second **Enrich Company** column — or a **Find Company Domain** enrichment — to retrieve the full normalized profile.
+
+This means you don't need to do a separate lookup using a raw PDL parent ID. The parent company's display name is already available in the Affiliated Entities output from your initial enrichment.
 
 ### `Action` Enrich Person
 

@@ -50,6 +50,8 @@ To add your own API key for any Prospeo enrichment, you can do so when you're se
 
 Below is an example of where to click within the enrichment panel to add your API key. For more instructions on how to find your Prospeo API key, [follow these instructions](https://datagmaapi.readme.io/reference/getting-started-with-your-api) within Prospeo's documentation.
 
+**Note:** When you use your own Prospeo API key, each lookup is billed directly against your Prospeo account credits — not Clay Data Credits. The results are saved in Clay only. Clay does not write data back to your Prospeo account, so the leads and emails found will not appear in your Prospeo dashboard or contact lists. If you look up the same contact directly in Prospeo later, that will be treated as a new lookup and charged against your Prospeo credits.
+
 ## `Action` Find Work Email
 
 The **Find Work Email** action lets you find the work email of a contact using a person's name and company domain.
@@ -106,7 +108,10 @@ If you want to only run this enrichment under set circumstances, you are able to
 
 The **Find people at company** action lets you search for contacts at a specific company by domain, with optional filters for job title, seniority, and department.
 
-**Note:** A maximum of 25 contacts are returned per run — this is a cap set by the Prospeo API, not a Clay limitation. If you need more contacts per company, use **Find People at These Companies** (under Tools or as a source) instead. It uses Clay's own search index and supports configurable limits up to 100 contacts per company.
+**Note:** A maximum of 25 contacts are returned per run — this is a cap set by the Prospeo API, not a Clay limitation. There is no configurable limit field on this action, so you cannot restrict results to fewer than 25. If you need to control the number of people returned per company:
+
+- **Fewer than 25**: use Clay's native **Find People** source instead — it includes **Limit per company** (up to 100) and **Limit results** fields. You can run Prospeo enrichments afterward to find emails.
+- **More than 25**: use **Find People at These Companies** (under Tools or as a source). It uses Clay's own search index and supports configurable limits up to 100 contacts per company.
 
 **Step 1: Choose the Prospeo account you want to use**  
 You can use either the Clay-managed Prospeo account or bring your own key.  

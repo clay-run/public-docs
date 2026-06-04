@@ -248,6 +248,12 @@ Search for company-level news signals — such as funding rounds, acquisitions, 
 
 Yes! Both `Find company lookalikes` and `Find people lookalikes` support combining multiple types of inputs, whether domains, professional profile URLs, or emails. When finding person lookalikes using first name and last name, you must also include a company domain or company name to help match the correct contact.
 
+**Will I get duplicate companies when aggregating lookalike results from multiple seed companies?**
+
+Yes, some overlap is expected. When lookalike searches are run across multiple seed companies — whether in a single batch or across multiple runs — the same company can appear as a match for more than one seed. There is no way to filter out these duplicates upfront.
+
+The recommended approach is to send your results into a separate destination table and enable auto-dedupe on a unique identifier column such as company domain. Open the destination table's name dropdown → `Edit table settings` → enable **Auto-dedupe rows**, select the column to match on, and choose whether to keep the **oldest** or **newest** row. See [Table management settings](table-management-settings.md) for setup details.
+
 **What happens if I toggle on additional datapoints in Enrich Person?**
 
 Turning on additional data points, like email and phone, will consume Lusha Unified Credits from your Lusha account. Emails deduct 1 credit per contact, while phone numbers deduct 5 credits per contact.
