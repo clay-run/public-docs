@@ -112,3 +112,15 @@ To verify a technology detected by HG Insights, you can search the company's web
 ### Fewer companies returned than expected
 
 The `Source Companies by product usage` action returns up to **100 companies by default**. If your target accounts aren't all appearing, increase the **Max companies** input to capture more results. Keep in mind that a higher limit will consume more enrichment credits.
+
+### Technology not found in HG Insights
+
+HG Insights has strong coverage for widely-adopted enterprise technologies, but niche, newer, or less-tracked tools may not appear in its database. If a technology you're looking for returns no results, two fallback approaches work well in Clay:
+
+**1. Try BuiltWith**
+
+BuiltWith detects technologies by scanning a company's public website, so it often has coverage for front-end tools — JavaScript libraries, marketing pixels, and other client-side software — that HG Insights may not track. Before running the enrichment, go to [builtwith.com](https://builtwith.com/) and search the technology name directly. If it appears as a "Technology result" (not just a company overview), BuiltWith has coverage for it. You can then use the [BuiltWith Find Technology Stack](https://university.clay.com/docs/builtwith-integration-overview) action in Clay with the technology name as a keyword filter, or download the list of companies using it from BuiltWith's site and import them into Clay.
+
+**2. Use Claygent**
+
+For technologies not tracked by any database provider, a [Claygent](https://university.clay.com/docs/claygent-builder) column can scan the web for evidence. Add a Claygent column to your table, use the company domain as an input variable, and prompt it to search the company's website and public sources for signs of the technology — for example: *"Does {{company_domain}} use [technology name]? Search the company's website, case studies, and press mentions, and return yes or no with the evidence you found."* Claygent returns structured output, so you can add a boolean field for the yes/no result and a text field for the supporting evidence.
