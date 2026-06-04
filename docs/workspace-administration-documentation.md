@@ -33,12 +33,13 @@ To update your account name:
 
 ## **Change your password**
 
+_If you sign in with Google, the **Change password** option will not appear on your Security tab — it is only visible for email + password accounts. See [Switch from Google login to email and password](#switch-from-google-login-to-email-and-password) below instead._
+
 To change your account password:
 
 -   Visit your `Settings` and head to the `Account` section.
 -   Open the `Security` tab under `Your profile`.
 -   Click `Change password`. A magic link will be sent to your registered email address.
-    -   _Note: This option is available only if you signed in using a password and not via an authentication service such as Google or SSO. If you signed up with Google and want to create a password, see [Switch from Google login to email and password](#switch-from-google-login-to-email-and-password) below._
 -   Follow the instructions in the email to securely update your password.
 
 ## **Switch from Google login to email and password**
@@ -51,7 +52,7 @@ To request the change:
 -   Once the change is made, you will receive a password recovery email at your registered address.
 -   If you don't receive the email, visit [app.clay.com/forgot](https://app.clay.com/forgot) and enter your email address to trigger a new one.
 
-After completing the password recovery steps, you can log in with your email and password instead of Google.
+After completing the password recovery steps, you can log in with your email and password. Note that Clay accounts support only one login method at a time — either Google OAuth or email + password, not both. After switching, you will no longer be able to sign in with Google on this account.
 
 **Important:** Once switched, sign in using the **email and password fields** on the Clay login page — do **not** click `Continue with Google`. The `Continue with Google` button authenticates using whichever Google account is currently active in your browser. If you are signed into a different Google account (for example, a personal Gmail), clicking that button will sign you into that account's Clay workspace instead of yours, or may create a new Clay account.
 
@@ -65,6 +66,12 @@ To get back to your correct workspace:
 
 -   **Navigate directly to your existing workspace:** Type `https://app.clay.com/workspaces/<your-workspace-id>` in the address bar. This loads your real workspace without going through the onboarding flow for the unwanted one.
 -   **Contact Clay support:** Use the in-app chat to ask support to stop the onboarding flow or delete the unwanted workspace. The support team can do this on your behalf even if you cannot reach that workspace's settings yourself.
+
+## **Using a corporate identity provider (Entra ID, Okta, etc.)**
+
+Individual Clay accounts support two login methods only: **Sign in with Google** (Google OAuth) or **email and password**. Microsoft Entra ID (Azure AD), Okta, and other corporate identity providers are not available as individual login options.
+
+If your company wants all Clay users to authenticate through a corporate IdP, a workspace admin must contact Clay support to set up workspace-wide SSO. See [Single Sign-On (SSO)](#single-sign-on-sso) for details on eligibility (Enterprise plan or SSO add-on) and the setup process.
 
 ## **Clay API key access**
 
@@ -266,7 +273,7 @@ If a former employee owns tables or workbooks in your workspace, there is no sep
 
 # **Single Sign-On (SSO)**
 
-Single Sign-On (SSO) is available to **Enterprise plan** customers and those who have purchased the SSO add-on. It lets your organization authenticate Clay users through your existing identity provider (IdP). Clay uses WorkOS to manage SSO and supports any IdP that uses SAML or OIDC protocols — including Okta, Azure AD (Entra ID), Google Workspace, and others.
+Single Sign-On (SSO) is available to **Enterprise plan** customers. It is also available as a paid add-on for **Pro plan** customers — contact Clay support to add it to your plan. SSO lets your organization authenticate Clay users through your existing identity provider (IdP). Clay uses WorkOS to manage SSO and supports any IdP that uses SAML or OIDC protocols — including Okta, Azure AD (Entra ID), JumpCloud, Google Workspace, and others.
 
 ## **Setting up SSO**
 
@@ -277,7 +284,7 @@ The typical setup process:
 1.  Contact Clay support to initiate SSO setup.
 2.  Clay support creates your organization in WorkOS and sends a configuration link to your IT contact.
 3.  Your IT team follows the link to connect your identity provider and complete the setup.
-4.  Once your IT team confirms the WorkOS setup is complete, notify Clay support.
+4.  Once your IT team confirms the WorkOS setup is complete, notify Clay support. **Note:** If you test by clicking the Clay tile in your IdP dashboard at this point, you may see `{"type":"BadRequest","message":"Unable to login","details":null}` — this is expected and means SSO activation is still pending on Clay's side.
 5.  Clay support activates (enforces) SSO on your workspace.
 
 **Note:** The email domain used for SSO authentication is configured on Clay's side. If you receive an error during the WorkOS setup stating that your domain is not recognized or not allowed, contact Clay support — only the support team can update the allowed domain setting.
@@ -287,7 +294,7 @@ The typical setup process:
 -   All users whose email address is on your verified domain are required to sign in through SSO. The Clay login page redirects those users to your SSO provider automatically.
 -   Google OAuth sign-in is disabled for users on your domain. Clicking the **Sign in with Google** button on the login page will return an error (`Google OAuth is disabled for this account`) — this button uses Google OAuth, which is a separate authentication path from SSO.
 -   SSO is configured at the email domain level — if your organization uses multiple Clay workspaces, users on your domain will be routed through SSO for all of them.
--   Clay only supports login initiated from the Clay login page — signing in directly from your IdP dashboard (for example, clicking the Clay tile in your Okta launcher) is not supported and will return an `Unable to login` error.
+-   Once SSO is activated, users can sign in from either the Clay login page or directly from your IdP dashboard (for example, clicking the Clay tile in your Okta launcher). If clicking the IdP tile returns `{"type":"BadRequest","message":"Unable to login","details":null}`, SSO has likely not yet been activated on Clay's side — contact Clay support to complete activation.
 
 **How SSO users should sign in:** On the Clay login page, type your **email address** into the email field and click **Continue** — do **not** click the `Sign in with Google` button. Entering your email triggers domain detection, which redirects you to your SSO provider automatically.
 

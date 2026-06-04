@@ -46,6 +46,7 @@ Use this action to look up an object in HubSpot.
 **Inputs**
 
 -   **Object type:** The type of HubSpot object to look up.
+-   **Fields to filter by:** The HubSpot properties to search against (e.g., select `Domain Name` to find a company by domain, or `Email` to find a contact by email address). Available filter fields are loaded dynamically based on the selected object type.
 -   **Remove blank values from results (Optional):** Helpful for reducing result size.
 -   **Limit (Optional):** Maximum number of objects to return. Defaults to 10.
 
@@ -191,6 +192,32 @@ If a property exists in HubSpot but doesn't get updated when you run the Update 
 
 **A different HubSpot account is selected.** If multiple HubSpot accounts are connected to your workspace (for example, if teammates each added their own HubSpot connection), the Update Object action may be authenticating against a different instance than the one you intend to update. Open the column settings and confirm the HubSpot account shown is the correct one. You can verify by running a **Lookup object** action on the same record — if the property appears updated there, the write reached the right account.
 
+### How do I create a contact-to-company association in HubSpot from Clay?
+
+Use the **Lookup object** and **Create association** actions together in your contacts table — you don't need Send table data for this workflow.
+
+**Step 1 — get the company's `hs_object_id` onto each contact row**
+
+Add a **HubSpot → Lookup object** column to your contacts table:
+
+1.  Set **Object type** to **Company**.
+2.  Under **Fields to filter by**, select **Domain Name** (or another shared identifier like email domain).
+3.  Map the filter value to the domain column on your contacts table.
+
+This returns the matching company record directly on each contact row, with `hs_object_id` surfaced at the top of the result.
+
+**Step 2 — create the association**
+
+Add a **HubSpot → Create association** column:
+
+-   **From object type**: Contact
+-   **To object type**: Company
+-   **Association type**: select the appropriate relationship (e.g., "Contact to Company")
+-   **From Object ID**: your contact's `hs_object_id` (from your HubSpot contacts source column)
+-   **To Object ID**: the `hs_object_id` returned by the Lookup object column in step 1
+
+**Note:** The **From Object ID** and **To Object ID** fields appear only after you have selected both object types and an association type.
+
 ### Why does my Lookup Object return no results, but my Create Object still fails with "contact already exists"?
 
 This almost always means the **Lookup Object** and **Create Object** columns are searching and writing to **different email fields**. HubSpot has two separate email properties:
@@ -211,3 +238,37 @@ To handle both new and existing contacts without hitting duplicate errors:
 3.  *(Optional)* Add an **Update object** column for existing contacts. Set an **Only run if** condition to check that the Lookup column returned a result, and map the returned contact ID to the **HubSpot Object ID** input.
 
 For full details on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
+
+### Why do I get an `INVALID_OWNER_ID` error when setting `hubspot_owner_id`?
+
+HubSpot uses two separate identifiers for each user who can own a contact:
+
+-   **Owner ID** — the value used for the `hubspot_owner_id` contact property. This is the `id` field returned by HubSpot's Owners API (`/crm/v3/owners`).
+-   **User ID** — HubSpot's internal account ID for the same person, which appears in contexts like HubSpot's Settings → Users & Teams.
+
+These two values are sometimes identical and sometimes different. Passing a user ID where an owner ID is expected returns an `INVALID_OWNER_ID` error, even though the ID appears valid in HubSpot.
+
+**Fix:** Use Clay's **Find owner** action to look up the owner by email address. The `id` field in the returned result is the correct owner ID to pass as `hubspot_owner_id` in an Update Object action.
+
+Also, keep the column storing the owner ID as a **Text** type in Clay, not a **Number** type. HubSpot's API expects owner IDs as strings — passing a numeric value can cause type-mismatch errors.
+
+### Why does my HubSpot column still show "Missing authentication" after I reconnect my account?
+
+Each HubSpot column stores a reference to the specific connection it was configured with at creation time. If you **delete** your HubSpot connection and **add a brand-new one**, the new connection gets a new internal ID — but your existing columns still reference the old (now deleted) connection ID. The columns continue to show "Missing authentication" even though the new connection shows **Success** in Settings.
+
+**To avoid this in the future:** When troubleshooting HubSpot authentication, use the **Reconnect** option on your *existing* connection instead of deleting it and adding a new one. In **Settings → Integrations → HubSpot**, click the `···` menu next to your connection and choose **Re-authenticate** or **Update connection**. This refreshes the credential while keeping the same connection ID that your existing columns already reference.
+
+**To fix columns that are already broken:**
+
+1. Open each affected column's settings and change the **Account** dropdown to select the new connection. This updates the column to use the new connection ID.
+2. If re-selecting the account in the existing column doesn't resolve the error, create a new column with the same HubSpot action and configuration. New columns automatically pick up the currently active connection and will run successfully.
+
+### Why do HubSpot property fields not appear in the Update Object mapping section?
+
+When you open an **Update Object** column and select an **Object type**, the available HubSpot properties are fetched from your HubSpot account in real time. If the field picker is empty or the mapping section shows no properties, check the following:
+
+**The fields may still be loading.** Property lists are retrieved from HubSpot's API asynchronously — wait a few seconds after selecting the Object type before assuming something is wrong. If nothing appears after waiting, close and reopen the column settings to trigger a fresh fetch.
+
+**The HubSpot connection may be missing required OAuth scopes.** Clay uses the `crm.schemas.companies.read` and `crm.schemas.contacts.read` scopes to load property lists for Company and Contact objects (for deals, `crm.schemas.deals.read` is also required). If these scopes were not granted when you first connected HubSpot, the field picker returns no properties. To fix this, open **Settings → Integrations → HubSpot**, click the `···` menu next to your connection, and choose **Re-authenticate** — this re-requests the full scope set without changing your connection ID or breaking existing columns.
+
+**The connection may be broken or expired.** If Clay cannot reach HubSpot with a valid access token, the field picker silently returns no properties. Open the column settings and verify the selected account shows **Success** in Settings. If it shows an error, see the FAQ above ("Why does my HubSpot column still show 'Missing authentication' after I reconnect my account?") for how to restore the credential without losing your column configurations.

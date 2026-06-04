@@ -65,6 +65,17 @@ Each result includes one or more **Structured Location** entries in the cell det
 
 ## FAQs
 
+### Can I filter by job title or role in company search?
+
+No — `Find Companies` only filters by company-level attributes (industry, size, location, revenue, etc.). There is no job title filter in company search. Job title is a person-level attribute available only in People search.
+
+**To find people with specific roles (e.g., CEO, Founder, Owner) at companies in your list, you have two options:**
+
+-   **From your company table** — Click **Tools** (or **Actions**) → **Find People at These Companies**. Under **Job title keywords**, enter your target titles comma-separated (e.g., `CEO, Founder, Owner, Co-founder`). This returns only those roles at the companies already in your table.
+-   **Start a fresh People search** — Click `+ Add` at the bottom of your workbook, search for `Find People`, and use the **Job title** filter alongside company attributes (industry, size, location).
+
+For more detail on both workflows, see [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md).
+
 ### Can I filter companies by the year they were founded?
 
 Founded year is not available as a filter when building a `Find Companies` search — you can't narrow results by founding date before importing.

@@ -53,6 +53,31 @@ To run enrichment only under specific conditions, use formulas that trigger the 
 
 **Step 4:** Run your enrichment to normalize your company name.
 
+### `Action` Normalize a Domain
+
+Extract and standardize a domain URL to the format you need. To add this action to your table, click **+ Add Column → Enrich Data** and search for **"Normalize a Domain."**
+
+To normalize a domain:
+
+**Step 1:** Input the URL you want to normalize.
+
+**Step 2:** Select a **Normalization Type**:
+
+- **Remove prefix** — strips the protocol and www prefix but keeps the path. For example, `https://apple.com/products` → `apple.com/products`.
+- **Include www.** — adds a www. prefix. For example, `apple.com` → `www.apple.com`.
+- **Include https://** — adds the https:// protocol. For example, `www.apple.com` → `https://www.apple.com`.
+- **Isolate the domain** — extracts only the root domain and top-level domain (TLD), stripping all subdomains and paths. For example, `https://corporate.apple.com/products` → `apple.com`. Use this option when you want to match or deduplicate records by primary domain.
+
+**Step 3:** Configure run settings.
+
+By default, new rows within your Clay table will automatically be formatted. Learn more about auto-update in [this brief guide](https://docs.clay.com/en/articles/9642165-auto-update-and-auto-dedupe-table).
+
+To run enrichment only under specific conditions, use formulas that trigger the column when the formula is true. Learn more about AI formulas in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101).
+
+**Step 4:** Run your enrichment to normalize the domain.
+
+**Note:** This action normalizes the format of a single URL — it does not identify whether two different domains (for example, `twitter.com` and `x.com`) belong to the same company. For that use case, use a [Claygent](claygent-builder.md) prompt that checks whether two domains resolve to the same organization.
+
 ### `Action` Normalize Phone Number
 
 Format and normalize phone numbers to e164, international, and national formats.

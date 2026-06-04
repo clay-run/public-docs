@@ -156,7 +156,7 @@ Two options:
 -   Go to `Settings` → `Usage` and click `Add one-time data credits`.
 -   Available for emergency needs during your billing cycle.
 -   **30% premium** applies (on modern plans; **50% premium** on legacy plans).
--   Subject to rollover limits.
+-   Subject to the 2× rollover cap: at renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap — including purchased top-ups — are dropped.
 
 ### Data Credits for AI
 
@@ -235,7 +235,7 @@ For emergency Data Credit needs during your billing cycle (not available for Act
 3.  Select the amount you need (subject to rollover limits).
 4.  Confirm your purchase.
 
-**Note:** One-time top-ups have a **30% premium** on modern plans (**50% premium** on legacy plans) and are subject to Data Credit rollover limits. For regular needs, upgrading your Data Credits tier is more cost-effective.
+**Note:** One-time top-ups have a **30% premium** on modern plans (**50% premium** on legacy plans). Top-up credits are subject to the 2× rollover cap: at your next renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap are dropped — including credits you purchased. For example, on a plan with 2,500 credits/month, your maximum balance at renewal is 5,000; if you buy a 15,000-credit top-up and don't spend it all before renewal, only up to 5,000 credits carry over. Check your current balance and upcoming renewal date before purchasing a large top-up. For regular needs, upgrading your Data Credits tier is more cost-effective.
 
 ### Downgrade or cancel your plan
 

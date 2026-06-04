@@ -52,6 +52,7 @@ After generating a setup, you can easily edit your original description and rege
     **Note:** If you want to analyze website content using a Content creation column, first use the **Scrape Website** enrichment to pull the page text into a table column, then reference that column in your AI prompt. For more complex web research — visiting multiple pages, following links, or multi-step browsing — a **Claygent** agent column (accessible via **Add column → [AI section]**) is the most reliable option; it has web browsing built in and works with any AI model.
 4.  Select a `Model` from the dropdown.
     1.  Click `Compare models` to get more detailed information about each model.
+    2.  _(Optional)_ Set the **Temperature** to control how creative or consistent the model's output is. Options are **Very Low**, **Low**, **Medium** (default), **High**, and **Very High** — lower values produce more predictable, repeatable results; higher values produce more varied responses. The underlying numeric value varies by model. For tasks requiring consistency — such as structured data extraction, scoring, or categorization — start with **Low** or **Very Low**.
 5.  Write a `Prompt`.
     -   For guidance on writing effective prompts, see our doc on [writing prompts](https://www.clay.com/university/guide/ai-metaprompter-guide).
     -   **Tip:** You can mix static text and column references in the same prompt. Use `{{Column Name}}` syntax only for values that differ from row to row — like a LinkedIn URL or job title that's unique per person. Criteria that stay the same for every row — like a specific industry, keyword, or criterion you're screening for — can be typed directly in the prompt. For example, to check whether each person has ever worked in consulting, write: *"Based on {{Profile URL}}, has this person ever worked in consulting? Return Yes or No."* No "consulting" column needed.
@@ -74,6 +75,8 @@ After generating a setup, you can easily edit your original description and rege
         -   **Keywords such as `minimum`, `maximum`, `minLength`, `maxLength`, `pattern`, `minItems`, `maxItems`, and `uniqueItems` are not supported and will prevent the column from running.** Remove them from your schema if present. To document a constraint, add it to the field's `"description"` instead — for example, `"description": "Confidence score from 0 to 1"` rather than `"minimum": 0, "maximum": 1`.
         -   To skip writing schema by hand, click **Generate from prompt** to let Clay generate a valid schema from your prompt automatically.
 8.  _(Optional – Content creation, manipulation only)_ Click `Examples` and `Add examples` to show AI what responses should look like.
+
+**Tip — testing prompt changes on a sample:** To iterate on a prompt without running your entire table, select a few rows, right-click, and choose **Run [N] rows** (or select specific cells and choose **Run [N] cells**). This lets you validate results before spending credits on every row. Note that when an AI column produces new output, any downstream columns that reference it will automatically re-run — this is expected behavior. To prevent downstream columns from triggering while you refine a prompt, use [Sandbox mode](sandbox-mode.md), which isolates your changes to a test copy of the table. See [Run progress and row management](run-progress.md) for full details on running specific rows.
 
 ## Generating images with Use AI
 
@@ -137,6 +140,21 @@ There are two ways to resolve this:
 -   **Fill in the missing data.** Ensure that the columns referenced in your prompt have values for the rows you want to run.
 -   **Make the inputs optional.** Open the column settings (click the column name → **Edit column**), scroll to the prompt section, and toggle off the **Required to run** switch next to each column reference that should be optional. When a reference is optional, the cell will still run even if that column is blank — the empty field is simply omitted from the prompt for that row.
 
+### AI column output shows as a JSON object (response, reasoning, confidence, stepsTaken)
+
+When a Use AI web research column or Claygent column runs, the result is stored as a structured JSON object. This object automatically includes these fields:
+
+-   **`response`** — the main text answer; this is the value shown as the cell's text preview in the table.
+-   **`reasoning`** — the model's step-by-step thinking notes.
+-   **`confidence`** — Clay's built-in quality indicator (`low`, `medium`, `high`, or `very high`), which drives the color dot on each cell.
+-   **`stepsTaken`** — descriptions of each research step the AI took (for example: `"Searched Google for: 'company headquarters'"` or `"Visited https://example.com to find: 'company revenue'"`).
+
+If this JSON object appears in a downstream column, that column is referencing the full AI column object instead of a specific sub-field.
+
+**To get just the `response` text into a cell:** In a formula column, use the `/` property picker and select `YourAIColumn > response`. You can also use dot notation directly: `{{YourAIColumn}}.response`.
+
+**To write data into named fields (recommended):** Open the column settings (click the column header → **Edit column**), go to the **Configure** tab, and add named output fields in the **Outputs** section (for example: `City`, `Industry`, `Revenue`). Each named field becomes a separately extractable sub-field you can pull into other columns with the `/` picker.
+
 ### Cells showing "Budget Credit Limit Reached"
 
 For AI columns using variable-priced models (such as GPT-4.1, Claude Sonnet, or Gemini 2.5 Pro) with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. This sets the maximum number of Clay credits that can be spent on a single row. If the estimated cost of running a row exceeds this limit, the cell shows **"Budget Credit Limit Reached"** and does not complete. Clicking the cell reveals the full message with the estimated cost and your current budget.
@@ -144,6 +162,17 @@ For AI columns using variable-priced models (such as GPT-4.1, Claude Sonnet, or 
 To fix this, open the column settings and increase the **Clay Credit Budget** value. Consider the length of your prompt and system prompt when choosing a limit, as longer prompts cost more credits per row.
 
 **Note:** This setting only applies to expensive variable-priced models when using Clay's managed account. Users who connect their own API key are billed directly by the AI provider and this cap does not apply.
+
+### Cells showing "API key is missing"
+
+If your AI column cells show an **"API key is missing"** error, the column is configured to use a model that requires your own API key, but no key has been connected for that model.
+
+There are two ways to resolve this:
+
+-   **Switch to a Clay-managed account (recommended).** Open the column settings, find the **Account** dropdown, and select the default Clay-managed account. This uses Clay's shared credits and does not require your own API key.
+-   **Connect your own API key.** If you prefer to use a specific provider (OpenAI, Anthropic, or Google Gemini), open the column settings, click the **Account** dropdown, click **+ Add account**, and follow the prompts to add your key.
+
+**Note:** If you updated the model using Sculptor and the error persists, the change may not have saved correctly. Open the column settings directly (click the column name → **Edit column**) and confirm the **Model** and **Account** fields reflect what you expect, then re-save and re-run.
 
 ### AI column stops working after editing with Sculptor
 
@@ -167,3 +196,19 @@ For reliable email finding, use a dedicated email finder instead:
 -   Individual providers such as Findymail, LeadMagic, Hunter, Dropcontact, and Datagma are also available as standalone enrichments under **Add enrichment**.
 
 **Note:** The **web research** mode in Use AI can scrape specific website URLs you provide as inputs, but it is not designed for email discovery. For finding work email addresses, dedicated enrichment providers are the reliable choice.
+
+### Cells showing "Cell data size exceeds limit" when using Scrape Website output
+
+If your AI column shows a **"Cell data size exceeds limit"** error after referencing a **Body Text** column extracted from a Scrape Website enrichment, the problem is a mismatch between data size and cell type. When the Scrape Website enrichment runs, it stores its full output in the enrichment column itself (200 kB capacity). If you extract the Body Text into a separate standalone column, that extracted column is a basic text field with an 8 kB limit — and a typical webpage's body text far exceeds this.
+
+**Fix: reference the Scrape Website enrichment column directly instead of the extracted Body Text column.**
+
+1.  In your AI column prompt, type `/` to open the reference picker.
+2.  Select **Scrape Website** (the enrichment column itself) and navigate into it to choose only the specific properties your prompt needs — such as the page title, meta description, or other targeted fields.
+3.  Avoid selecting the full Body Text if the page is large; pick the targeted properties instead.
+
+Pulling properties directly from the enrichment column gives you access to the full 200 kB capacity and lets you pass only the fields you need, keeping the input small.
+
+**Alternatively**, configure the Scrape Website enrichment to return less data. Open the enrichment column settings and deselect output fields you don't need (for example, uncheck **Body Text** if your prompt only requires the title and description).
+
+**Skipping rows where scraped data is missing:** If you want the AI column to skip rows where the Scrape Website column returned no data, add a run condition. Open the AI column's **Run Settings**, click **Add run condition**, and set it to `/Scrape Website is not empty`. See [Conditional runs](conditional-runs.md) for full details.

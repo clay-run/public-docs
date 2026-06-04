@@ -1,7 +1,7 @@
 ---
 title: Roles and permissions
 source_url: https://university.clay.com/docs/roles-and-permissions
-description: Understand roles and permissions in Clay.
+description: Roles, permissions, and access control tools available in Clay workspaces.
 last_synced: 2026-04-26T01:40:33.352Z
 ---
 
@@ -124,3 +124,23 @@ Workspace admins can edit access levels for specific workbooks. This helps preve
 1.  In a workbook, click the title → `Edit workbook settings`.
 2.  Under `Edit Access`, select the desired access level.
 3.  If `Workspace admins and specific collaborators` is selected, an option to `+ Add collaborators` will appear.
+
+## Related access controls
+
+Beyond roles, workspace admins have additional tools to control what users can do:
+
+**User groups** _(Enterprise, currently in beta)_
+
+Group workspace members (for example, by team) to manage access at scale. Granting a group access to a connection or workbook instantly gives every group member that access — no need to add people one by one. See [User groups](https://university.clay.com/docs/user-groups).
+
+**Connection restrictions** _(Enterprise, currently in beta)_
+
+Restrict which users or groups can configure workflows using specific integrations (for example, limit who can build with your Salesforce or Google Sheets connection). Admins can also require approval before any member adds a new connection to the workspace. See [Access settings for connections](https://university.clay.com/docs/access-settings-for-connections).
+
+**Credit spend limits** _(Enterprise)_
+
+Set workbook-level credit caps to prevent overspending. Admins can configure a workspace default limit that automatically applies to all new workbooks. For members accessing Clay through AI tools (Claude, ChatGPT, or Glean) via the MCP integration, admins can also set per-user credit budgets. See [Credit spend limits FAQ](https://university.clay.com/docs/credit-spend-limits-faq) and [MCP settings](https://university.clay.com/docs/mcp-settings).
+
+**Audiences**
+
+There are currently no workspace-level access controls specific to the Audiences feature. Note that connection access controls do apply to enrichment columns within Audiences — see [Access settings for connections](https://university.clay.com/docs/access-settings-for-connections) for details.

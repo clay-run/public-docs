@@ -1,7 +1,7 @@
 ---
 title: Find People in Clay
 source_url: https://university.clay.com/docs/find-people-overview
-description: Discover relevant contacts matching your criteria within Clay's database, then enrich results with work email and mobile phone waterfalls.
+description: Discover relevant contacts and LinkedIn posts using Clay's Find People and Find professional posts sources, then enrich results with work email and mobile phone waterfalls.
 last_synced: 2026-04-26T01:39:58.803Z
 ---
 
@@ -31,7 +31,10 @@ This tool is ideal for building targeted sales prospect lists, identifying poten
     -   **Job title must contain exact:** Each result must contain at least one of your search terms, ignoring capitalization and special characters. Synonyms and similar titles are excluded. For example, "Founder/CEO" matches "ceo", but "Frontend Engineer" does not match "Software Developer."
     -   **Job title must match exactly:** Each result must match at least one search term exactly, including capitalization. Special characters are not allowed. For example, neither "Founder/CEO" nor "ceo" will match "CEO."
     -   **Exact phrase matching:** Wrap multi-word terms in quotes to search for exact phrases. For example, "Google Cloud" finds profiles with that specific expertise. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are removed.
--   **Experience:** Filter by current role duration, past position dates, and keywords in experience descriptions.
+-   **Experience:** Filter by current role duration, number of positions held, and keywords in experience descriptions. The Experience section contains three sub-filters:
+    -   **Months in current role:** Set a minimum and/or maximum number of months a person has been in their current position.
+    -   **Number of experiences:** Set a minimum and/or maximum count of separate job entries listed on a person's LinkedIn profile. **This counts individual roles, not total years of career experience.** For example, setting Max = 2 returns people with two or fewer job entries, which is a useful proxy for early-career candidates. There is no direct "total years of experience" filter in Clay — to approximate one, combine this filter with a cap on **Months in current role**, or import results first and use a **Use AI** column to analyze each person's full work history against your criteria.
+    -   **Experience description keywords:** Return only people whose experience descriptions include specific keywords (e.g., "construction", "machine learning").
 -   **Location:** Include or exclude specific regions, countries, or cities.
 -   **Profile:** Filter by names, connection count, or follower count ranges.
 -   **Certifications:** Search for specific certifications (e.g., AWS, Google Cloud).
@@ -73,3 +76,31 @@ If you have a saved Sales Navigator search and want to pull those results into C
 6.  Click **Import to new table**.
 
 **Note:** This source requires a Sales Navigator **people search URL** (`https://www.linkedin.com/sales/search/people/...`), not a saved lead list URL (`linkedin.com/sales/lists/people`) or a saved search URL (those containing `savedSearchId`). If you have a saved Sales Navigator lead list, recreate the equivalent filters as a fresh people search on Sales Navigator and copy that URL instead. Each imported result costs 1 Clay credit.
+
+## Finding LinkedIn posts by keyword
+
+To find LinkedIn posts containing a specific keyword or hashtag, use the **Find professional posts** source — a separate source from Find People that returns posts rather than people profiles.
+
+**To create a table with Find professional posts:**
+
+1.  In a workbook, click `+ Add` at the bottom.
+2.  Search for `Find professional posts` and select it.
+
+**Inputs:**
+
+-   **Keyword:** A single keyword or hashtag to search for in post content (e.g., `#cvpr2026` or `GTM`). Only one keyword is supported — comma-separated lists are not valid.
+-   **Companies filter (optional):** Limit results to posts that mention companies, were posted by companies, or were posted by employees of specific companies.
+-   **People filter (optional):** Limit results to posts that mention or were posted by specific individuals.
+-   **Sort by:** `Most recent` (default) or `Top match`.
+-   **Time frame:** `Last 24 hours` or `Last week` (default).
+-   **Max number of results:** Default is 100; maximum is 1,000.
+
+**Outputs:**
+
+Each row includes the post URL, post text, author name, author LinkedIn URL, author title, reaction counts, comment count, and share count.
+
+**To enrich post authors:** After importing results, add an **Enrich Person** column and map it to the author LinkedIn URL. This returns full contact data — work email, company, and more — for each post author.
+
+**To get comments, reactions, or shares on a specific post:** Click `Add enrichment`, search for **Get comments on a professional post**, **Get reactions on a professional post**, or **Get shares on a professional post**, and map **Post URL** to the post URL column from your import.
+
+> **Important:** These actions require the original post URL — a URL containing `-activity-` in the path (e.g., `https://www.linkedin.com/posts/clay-hq_...-activity-7212099008951975937-ezPv`). Share URLs containing `-share-` are not valid and return an error. To get the original URL for any post: open the post on LinkedIn, click **•••** (three dots) at the top right of the post, and select **Copy link to post**. If the post is a repost of someone else's content, open the original underlying post first and copy its link.
