@@ -166,9 +166,12 @@ Selecting just the merge column captures the full waterfall sequence — every p
 
 **"Function inputs must be unique" error:**
 
-This error means two or more inputs in the "Save as function" dialog share the same name. Clay auto-generates a unique name for each input when you open the dialog, but if you manually rename an input to match another already in the list, the validation fails.
+This error means two or more inputs in the "Save as function" dialog share the same name. This can happen in two ways:
 
-To fix it: review the input names in the dialog, make sure each one is unique, and then click **Create**.
+-   **You manually renamed an input** to match another already in the list.
+-   **The dialog auto-generated duplicates** — when multiple action columns reference the same source column, the function builder may produce two inputs with identical names (a known issue).
+
+To fix it: click the pencil icon next to each duplicate input and rename it to something unique (e.g., append "2" to the name), then click **Create**. Note there is no delete button in this dialog — you can only rename inputs here. Once the function is created, open the function editor to remove any extra inputs you no longer need.
 
 ### How do I configure which columns are returned from my function to the calling table?
 
