@@ -2,7 +2,7 @@
 title: Databricks integration
 source_url: https://university.clay.com/docs/databricks-integration
 description: Import, insert, update, upsert or look up rows in Databricks.
-last_synced: 2026-04-26T01:39:51.000Z
+last_synced: 2026-04-26T01:39:51.990Z
 ---
 
 # Databricks integration
@@ -50,7 +50,7 @@ Connect to Databricks using a Personal Access Token.
 
 1.  While in a Clay table, click `Add enrichment` and search for Databricks.
 2.  Under `Integrations`, select one of the Databricks options.
-3.  In the modal, you will be asked to `Select Databricks account`.
+3.  In the modal, you will be asked to `Select Databricks account`).
     -   If you haven't already connected your Databricks account, click `+ Add account` and go through authentication.
 
 ## Using the Databricks integration
