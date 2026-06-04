@@ -50,7 +50,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   `Google OAuth` (recommended): Connect your Google Workspace account via OAuth.
         -   ⚠️ Note: You or your Workspace admin must authorize the Clay sequencer app for your domain, or you'll see an access error.
     -   `Microsoft Outlook OAuth` (recommended): Connect your Outlook account via OAuth.
-        -   ⚠️ Note: You or your Workspace admin must authorize the Clay sequencer app for your domain, or you'll see an access error.
+        -   ℹ️ Note: Unlike Google OAuth, no Clay-side admin setup is required upfront. If your Microsoft 365 / Entra tenant requires admin approval for third-party apps, your admin may need to grant consent for "Clay Sequencer – Smartlead" in the [Microsoft Entra Admin Center](https://entra.microsoft.com).
     -   `SMTP` (manual or CSV upload): Connect via SMTP credentials directly.
     -   You can also [buy email accounts directly in Clay](https://university.clay.com/docs/buying-email-accounts) if you want to increase your sending capacity.
     -   After setup, you can:
