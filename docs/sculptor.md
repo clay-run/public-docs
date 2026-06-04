@@ -27,7 +27,7 @@ For example, you could:
 3.  **Iterate and review.** Sculptor will propose a workflow with integrations, enrichments, and conditions.
     -   You can reply directly in the chat to adjust or refine the table instantly.
 4.  **Add enrichments.** Click `Continue` to include any recommended enrichments Sculptor suggests for your table.
-5.  **Finalize your table.** Your table is created automatically. You can exit the chat at any time, and return later by clicking `Chat with Sculptor` to make further updates.
+5.  **Finalize your table.** Your table is created automatically. You can exit the chat at any time, and return later by clicking `Chat with Sculptor` to make further updates. To browse and resume any of your previous Sculptor conversations, click the **chat history** button (clock icon) in the Sculptor panel.
 
 ## Best practices
 
