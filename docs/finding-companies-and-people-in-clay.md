@@ -38,7 +38,7 @@ If you need results that meet _either_ of two different filter combinations, set
 
 **If you have a company list**, you have two options depending on how you want to store the results:
 
--   **Find People at These Companies** (Tools or Actions → Find People at These Companies) — creates a separate people table with one row per contact, linked back to the company. Best when you want to run enrichments on each contact individually (work email, phone, etc.) or need to rank/filter contacts before saving.
+-   **Find People at These Companies** — creates a separate people table with one row per contact, linked back to the company. Best when you want to run enrichments on each contact individually (work email, phone, etc.) or need to rank/filter contacts before saving. **To access:** In your company table, click **Tools** (top right) → **Sources** tab → **Find People at These Companies**. The setup panel includes full filters for job title, seniority, location, experience, and more — set your criteria, preview the results, then click **Import** to create the people table.
 -   **Find Contacts at Company** (add as a column in your company table) — stores contacts as a list within each company row. Best when you want contacts to stay in your company table, or when you're adding companies one at a time and don't want a single search to re-run across all rows. Use **Send Table Data** afterward to push individual contacts to another table if needed.
 
 If you don't have a company list, use **People search as a source** — a standalone search by title or other criteria that returns a new table.
