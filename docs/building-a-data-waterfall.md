@@ -86,6 +86,8 @@ This is different from AI columns (such as Use AI or Claygent), where you can de
 -   **Cross-validate across providers.** Run the same enrichment from two or three providers in separate columns, then use a formula or AI column to flag rows where results are consistent across sources. Matching results across providers indicate higher data confidence.
 -   **Track which provider returned the result.** When configuring your waterfall output, enable the option to output the name of the successful provider. This lets you filter or score rows based on which data source you trust most.
 
+**Company revenue reflects total annual revenue, not ARR.** Revenue figures returned by enrichment providers such as PDL, Clearbit, Apollo, and Owler represent estimated total company revenue — not annual recurring revenue (ARR) or any subscription-specific metric. These figures are drawn from public filings, web data, and provider estimates.
+
 ## Trial plan and provider restrictions
 
 Waterfall enrichments are available on all plans, including the Trial plan. However, some individual providers within a waterfall require a paid plan.

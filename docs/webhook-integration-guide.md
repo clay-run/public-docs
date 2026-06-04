@@ -30,18 +30,31 @@ Your table updates instantly with new data, eliminating manual entry. This featu
 
 | Limit | Value |
 |---|---|
-| Throughput | 10 records/second, burst up to 20 records |
+| Throughput | 10 requests/second, burst up to 20 requests |
 | Rate limit scope | Per workspace — all active webhook sources share this budget |
 | Max payload size | 100 KB per request |
 | Max submissions | 50,000 per webhook source |
 
-**Throughput:** Clay accepts up to 10 incoming records per second per workspace, with a one-time burst capacity of up to 20 records. Exceeding the limit returns a `429` error and records are dropped — Clay does not queue them. To avoid data loss when sending in bulk, pace your requests to 10 per second or fewer. Multiple active webhook sources in the same workspace share this limit.
+**Throughput:** Clay accepts up to 10 incoming HTTP requests per second per workspace. A burst of up to 20 requests is allowed when capacity is available — after a burst, throughput returns to the sustained 10-per-second rate. Each POST counts as one request against this limit, regardless of how many fields or records the payload contains. Exceeding the limit returns a `429` error and records are dropped — Clay does not queue them. To avoid data loss when sending in bulk, pace your requests to 10 per second or fewer. Multiple active webhook sources in the same workspace share this limit.
+
+**Need a higher throughput limit?** If 10 requests/second is too restrictive for your workflow, contact Clay support to request an increase — rate limits can be adjusted for your workspace on request.
 
 **Payload size:** Each HTTP POST to Clay's webhook endpoint must be 100 KB or smaller.
 
 **Submission limit:** Each webhook source accepts up to 50,000 submissions. Rows submitted count toward this limit even if you delete them from the table. Once you reach this limit, Clay returns a `403` error and you'll need to create a new webhook to continue receiving data.
 
 **Enterprise Plan:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) (also called passthrough tables) to automatically process and delete rows, allowing unlimited webhook submissions. Learn more in [table management settings](https://www.clay.com/university/guide/table-management-settings).
+
+## Request body format
+
+Each HTTP POST to Clay's webhook endpoint creates **exactly one new row** in your table.
+
+**One record per POST:** Clay does not split array payloads into multiple rows. If you send a JSON array (`[{...}, {...}]`), the entire array becomes the data for a single row rather than creating one row per element. For one row per record, send one POST per record.
+
+**JSON shape:** Any valid JSON object structure is accepted. Both nested objects and flat key structures work — Clay creates columns based on whatever top-level keys you send:
+
+- Nested: `{"contact": {"name": "Jane", "email": "jane@example.com"}}`
+- Flat: `{"contact.name": "Jane", "contact.email": "jane@example.com"}`
 
 ## Connecting middleware tools
 
@@ -78,3 +91,35 @@ So if your source displays more rows than your table (for example, 162 vs. 92), 
 -   **Table filters.** If a filter is active on your table, only the rows matching that filter are shown in the table count. The source count always reflects all stored records, regardless of any filters.
 
 **Note:** Records that Clay rejected with a `429` rate limit error were never stored and do not appear in either count. See the [Limits](#limits) section above for guidance on keeping requests within the 10/second throughput limit to avoid dropped records.
+
+### Why aren't any rows arriving in my webhook table?
+
+If your webhook isn't creating rows — even on a brand-new webhook that has never received a submission — check these common causes:
+
+1. **Missing `Content-Type: application/json` header** — Clay requires this header on every request. Without it, Clay rejects the request with a `400 Bad Request` error and no row is created. Make sure every request includes:
+
+   ```
+   -H "Content-Type: application/json"
+   ```
+
+2. **Incorrect URL** — Confirm you copied the full webhook endpoint URL from the **Monitor webhook** section in your table source settings (not a partial URL or the cURL command itself).
+
+3. **Missing or wrong authentication token** — If you added an auth token when creating the webhook, it must be included in every request as a header. The token is only displayed once at creation — if you didn't copy it, you'll need to delete and recreate the webhook to generate a new one.
+
+4. **Submission limit reached** — See the [Limits](#limits) section. Once a webhook source hits 50,000 submissions, Clay returns a `403` error and stops creating rows. This limit counts all submissions since the webhook was created, even deleted rows.
+
+**Quick isolation test:** To confirm whether the issue is in your request or on Clay's side, try the simplest possible payload:
+
+```
+curl -X POST YOUR_CLAY_WEBHOOK_URL \
+  -H "Content-Type: application/json" \
+  -d '{"test": "hello"}'
+```
+
+If a row appears in your table, the issue is in your original request's formatting, headers, or auth token. If no row appears on a brand-new webhook, contact support.
+
+### How do I find which table a webhook URL belongs to?
+
+There is no customer-facing search to look up a Clay table by its webhook URL. If you have a webhook URL from an external system and need to identify which Clay table it's connected to, contact Clay support with the URL — the team can look it up on your behalf.
+
+**Tip:** To avoid this situation in the future, give each webhook table a descriptive name when you create it (for example, "HubSpot MQL ingest" or "Salesforce lead flow"). Since every table generates a unique webhook URL, a clear name makes it easy to match a URL back to the right table later.

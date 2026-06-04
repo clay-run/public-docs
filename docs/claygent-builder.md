@@ -287,15 +287,17 @@ There are two ways to resolve this:
 
 If your Claygent columns are failing with an error like **"This action is no longer operational as a data provider. Please use another action."** — or are running and consuming credits but returning blank, empty cells — it means those columns are using an older version of the Claygent action that is no longer supported. The column settings panel may still appear editable, but the column cannot produce results.
 
-You need to replace each affected column with a new **Use AI** column. Here's how:
+You need to recreate each affected column using the current Claygent action. Here's how:
 
 1.  Open the old Claygent column and copy your prompt and any JSON output schema.
-2.  Click **Add column** in your table and select **Use AI**.
+2.  Click **Add column** in your table and select **Claygent** from the AI section.
 3.  Paste your prompt into the new column.
 4.  If you had a JSON output schema, paste it into the **JSON Schema** field under outputs. **Tip:** Keep the same output field names as the original column to minimize changes needed in any downstream formula columns that reference those fields.
 5.  Save and rerun the column.
 
 Repeat for each affected column in your table. After recreating, update any downstream formula columns that reference the old column's outputs to point to the new column instead. Once everything is running correctly, delete the old Claygent column.
+
+**Note:** This error is distinct from the model deprecation warning. If you see an orange **"Deprecated"** badge next to a model name in your column settings, that is a separate indicator — it does not stop the column from running immediately. In that case, simply open the column settings, click the **Model** dropdown, and select a currently supported model to clear the warning.
 
 ### My object inputs show "Success" in the test panel instead of their actual content — is that normal?
 
@@ -318,6 +320,16 @@ Yes, with an important limitation. Claygent fetches page content using third-par
 **JavaScript-rendered pixels**: Claygent has a JavaScript rendering fallback, but it only activates when a page returns essentially empty static HTML. Most marketing websites return non-empty HTML even when some content is JavaScript-loaded — meaning the JS rendering path typically does not trigger. Pixel tags that are injected dynamically by JavaScript after page load (common for Facebook Pixel, Google Tag Manager, TikTok Pixel, etc.) are likely to be missed on typical marketing sites. There is no single-step solution in Clay for detecting JS-rendered pixels.
 
 **Alternative**: The **BuiltWith** integration (**Find Technology Stack** action) can confirm whether a particular technology is present on a site, but it does not return specific pixel IDs or tracking codes.
+
+### Why does a column referencing my Claygent output show "Cell data size exceeds limit (8 kB)"?
+
+Clay enforces two different cell size limits: Claygent action columns hold up to **200 kB**, while basic columns — text fields and formula columns that reference or extract from those action columns — are limited to **8 kB**. When a Claygent produces verbose output (such as detailed research logs or step-by-step notes) and that value is extracted into a standalone text column or referenced by a formula column, the result must fit within the 8 kB limit for that basic column.
+
+Changing the column data type will not bypass this limit — the constraint is on the column type, not the data format.
+
+**Fix: reduce output size at the source.** Edit your Claygent prompt or output schema to produce more concise results for the fields being referenced downstream. For example, if your agent records step-by-step research notes, instruct it to summarize each step in 50 characters or fewer. This keeps each output field well within the 8 kB limit.
+
+**Alternatively**, reference the Claygent action column directly in downstream formulas — using `/` to navigate into specific properties — rather than extracting large fields into standalone text columns. Accessing a property of the action column reads from its 200 kB store; only columns that *hold* a copy of the value as text are subject to the 8 kB limit.
 
 ## Tips for success
 

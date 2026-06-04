@@ -95,6 +95,16 @@ If this happens: have the rep disconnect Clay in their AI tool (remove and re-ad
 
 For a full breakdown of all roles, see [Roles and permissions](https://university.clay.com/docs/roles-and-permissions).
 
+### How do I disconnect Clay from an AI tool?
+
+Clay doesn't manage the MCP connection from its side — each AI platform controls its own connector integrations. To disconnect Clay, go to that platform's settings and remove the Clay connector:
+
+-   **ChatGPT:** Open ChatGPT **Settings → Connectors**, find Clay, and remove it.
+-   **Claude:** Go to [claude.com/connectors](https://claude.com/connectors/clay) and remove the Clay connector.
+-   **Codex or other tools:** Find connected apps, MCP integrations, or connectors in that tool's settings and remove Clay from there.
+
+Your Clay workspace data and workflows are unaffected — only the connection from that AI tool is removed.
+
 ### Can admins remove a rep's access to Clay in ChatGPT or Claude?
 
 Yes, by removing them from your workspace. While admins cannot directly revoke a rep's MCP connection from the `MCP users` page, they can remove the rep from the workspace entirely. If a rep is not added to your workspace, they won't have access to the data and workflows in your Clay instance. Alternatively, to limit usage without removing access, set their credit limit to a low value.

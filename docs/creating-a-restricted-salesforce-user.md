@@ -111,9 +111,9 @@ To allowlist these in Salesforce, go to `Setup` → `Network Access` → `New` a
 
 ## **FAQs**
 
-### **Can I use an integration-only user license for this?**
+### **Can I use an integration-only or API-only user license for this?**
 
-Yes, but integration user licenses have some limitations with OAuth flows. If you run into authentication issues, try using a full Salesforce user license instead.
+It depends on the connection method. Integration User and API-only licenses cannot complete the browser-based OAuth flow used by **User Sign In** — attempting this produces an `OAUTH_APPROVAL_ERROR_GENERIC` error. To use an integration or API-only license, switch to the **Client Credentials** connection method instead, which works server-to-server without a browser login. See [Salesforce integration](https://university.clay.com/docs/salesforce-integration-overview) for setup instructions.
 
 ### **What if I need Clay to access multiple objects?**
 

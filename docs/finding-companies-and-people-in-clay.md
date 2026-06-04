@@ -38,7 +38,7 @@ If you need results that meet _either_ of two different filter combinations, set
 
 **If you have a company list**, you have two options depending on how you want to store the results:
 
--   **Find People at These Companies** (Tools → Find People at These Companies) — creates a separate people table with one row per contact, linked back to the company. Best when you want to run enrichments on each contact individually (work email, phone, etc.) or need to rank/filter contacts before saving.
+-   **Find People at These Companies** — creates a separate people table with one row per contact, linked back to the company. Best when you want to run enrichments on each contact individually (work email, phone, etc.) or need to rank/filter contacts before saving. **To access:** In your company table, click **Tools** (top right) → **Sources** tab → **Find People at These Companies**. The setup panel includes full filters for job title, seniority, location, experience, and more — set your criteria, preview the results, then click **Import** to create the people table.
 -   **Find Contacts at Company** (add as a column in your company table) — stores contacts as a list within each company row. Best when you want contacts to stay in your company table, or when you're adding companies one at a time and don't want a single search to re-run across all rows. Use **Send Table Data** afterward to push individual contacts to another table if needed.
 
 If you don't have a company list, use **People search as a source** — a standalone search by title or other criteria that returns a new table.
@@ -251,6 +251,22 @@ This mismatch most commonly occurs with subsidiaries, acquired companies, and or
 -   **Switch to LinkedIn company URLs as your company identifier** (recommended). When you provide a LinkedIn company URL instead of a domain, Clay uses the LinkedIn company slug for matching — which handles subsidiary and acquisition relationships more reliably. See [Use LinkedIn URLs, not domains, as company identifiers](#use-linkedin-urls-not-domains-as-company-identifiers).
 -   **Add a Lookup Rows fallback.** In your people table, add a **Lookup single row in other table** column. Set `Table to search` to your original companies table and match on `domain`. For rows where the person's current company domain is populated, this retrieves company fields directly — even when the automatic Company Table Data link is broken. See [Lookup Rows](lookup-rows.md).
 
+### Company Table Data doesn't include company enrichment data
+
+The **Company Table Data** column retrieves basic field types from the linked company row — text, number, date, URL, and formula columns. **Enrichment columns (action-type columns such as Clearbit Company, Apollo, Enrich Company, or any other Clay integration enrichment) are not included** in what Company Table Data returns.
+
+If you enriched your company table and want that data accessible in your people table, use **Lookup single row in other table** instead:
+
+1.  In your people table, add a **Lookup single row in other table** column.
+2.  Set `Table to search` to your company table.
+3.  Set `Target column` to the company domain column in the company table.
+4.  Set `Row value` to the person's company domain column.
+5.  Run the lookup.
+
+Lookup Rows returns the full company row including enrichment column outputs. To promote a specific enrichment value into a dedicated column, click into a populated cell and select a field → **Create column for it**. See [Lookup Rows](lookup-rows.md) for setup details.
+
+**Alternatively**, extract specific enrichment values into **formula columns** in your company table first (for example, a column with formula `{{Clearbit Enrichment}}?.revenue`). Formula columns are included in Company Table Data, so those extracted values will flow through to the people table when Company Table Data runs.
+
 ### Getting "Invalid companies provided" error despite having a valid LinkedIn URL
 
 If you see the error **"Invalid companies provided: please make sure you are using LinkedIn URLs or Company Domains"** but your column already contains LinkedIn URLs, check the URL format. This error occurs when the LinkedIn URL is a **person profile URL** (`linkedin.com/in/<name>`) rather than a company or school page URL — even though the URL itself is valid LinkedIn syntax, the action only accepts company-type identifiers.
@@ -260,7 +276,7 @@ Valid inputs for the company identifier field:
 -   **Company page URL**: `https://www.linkedin.com/company/<slug>`
 -   **School page URL**: `https://www.linkedin.com/school/<slug>`
 -   **Company domain**: e.g., `example.com`
--   **Sales Navigator company URL or company ID**
+-   **Sales Navigator company URL or company ID`
 
 To fix this, replace the person profile URLs in your column with the corresponding company LinkedIn URLs. You can use the **Find Company** or **Enrich Company** enrichments to retrieve a company URL from a company name or domain, then pass that URL into **Find Contacts at Company**.
 
@@ -350,3 +366,11 @@ If you want to run on *only* the newly added companies (skipping the full compan
 
 **If using Find People as an enrichment action (runs within the company table, per row):**
 New company rows trigger Find People automatically when auto-run is enabled — no extra steps needed. See [Disable auto-run on the people table](#disable-auto-run-on-the-people-table-when-running-find-people-selectively) for caveats about downstream enrichment costs when new rows are added.
+
+### Why does my downstream company table have fewer rows than my original company list?
+
+When you run a people search across a company list and route results to a downstream company table — for example, using **Send Table Data** from a people table, de-duplicated by company domain — that destination table only contains companies where at least one person was found. Companies where the people search returned no results never generate a row in the people table, so nothing flows downstream for them.
+
+For example: if your original company list has 3,818 companies and people were found at 2,694 of them, your downstream company table shows 2,694 rows. The remaining 1,124 companies had no contacts found — this is expected behavior, not missing data. The downstream table is a filtered view of only the companies you can reach.
+
+To identify which companies had no people found, add a **Lookup Rows** column to your original company table (searching your people table, matched on company domain) and filter for rows where the count is zero.

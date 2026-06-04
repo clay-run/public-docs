@@ -21,7 +21,7 @@ You can also click the `⛭` icon in the top toolbar to open the Run Settings pa
 
 ## Auto-dedupe
 
-Auto-dedupe continuously monitors a specified column to detect and resolve duplicate values by retaining the oldest row and deleting the duplicates. Blank cells, stale cells, and cells with more than 200 characters are excluded from this process.
+Auto-dedupe continuously monitors a specified column to detect and resolve duplicate values. When duplicates are found, Clay keeps one row and deletes the rest — you choose whether to keep the **oldest** or **newest** row (defaults to **Keep oldest row**). Blank cells, stale cells, and cells with more than 200 characters are excluded from this process.
 
 **Note:** Auto-dedupe only works with **Text**, **Email**, and **URL** column types. If the selected column uses a different data type (such as Number), auto-dedupe is automatically disabled. Convert the column to **Text** type first to use it for deduplication.
 
@@ -29,10 +29,11 @@ Auto-dedupe continuously monitors a specified column to detect and resolve dupli
 
 To enable or disable auto-dedupe:
 
-1.  Open your table settings dropdown.
-2.  Click the table dropdown menu and select `Enable/Disable auto-dedupe`.
-3.  Toggle the auto-dedupe setting on or off.
+1.  Open the table name dropdown menu.
+2.  Select `Edit table settings`.
+3.  In the settings panel, find the **Auto-dedupe rows** toggle and turn it on or off.
 4.  Select the column to be used for identifying duplicate values.
+5.  Choose **Keep oldest row** or **Keep newest row** to set which duplicate is retained.
 
 ## Auto-run
 
