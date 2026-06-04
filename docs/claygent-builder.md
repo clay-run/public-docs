@@ -65,6 +65,10 @@ _"Adjust the scoring so company fit is weighted at 60% and persona fit at 40%. A
 
 Sculptor rewrites the prompt and shows a "Prompt updated by Sculptor" confirmation. This saves the new prompt text — it does **not** re-run the test automatically. Click **Run** in the test panel to see how the updated prompt performs. Every change is saved automatically in version history.
 
+### Chat history
+
+Sculptor in Claygent Builder saves your conversation history. Click the **chat history** button (clock icon) in the Sculptor sidebar to view and resume previous conversations. Only conversations from the Claygent you're currently viewing are shown. For more on how chat history works across all Sculptor surfaces, see [Chat history](sculptor.md#chat-history).
+
 ## Configuring your agent
 
 ### Business context
