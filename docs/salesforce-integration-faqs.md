@@ -201,6 +201,23 @@ This error typically occurs when:
 2.  If your org enforces SSO, temporarily allow direct username/password login for this user, or create a non-SSO service account for authorization.
 3.  In `Setup` → `Connected Apps OAuth Usage`, verify the Clay app is listed and not blocked. If your org uses App Access Control, pre-install or whitelist the app first.
 
+## Do I need to install Clay's Connected App in my Salesforce org?
+
+Yes. Since Salesforce's August 2025 security policy update, all Connected Apps — including Clay's — must be pre-installed in your org before users can authenticate. If Clay is not installed, Salesforce blocks the OAuth flow with an `OAUTH_APPROVAL_ERROR_GENERIC` error.
+
+Clay's Connected App does not appear in the Salesforce AppExchange. It becomes available in your org only after a user with the "Approve Uninstalled Connected Apps" permission makes their first connection attempt. Salesforce System Administrators have this permission by default; custom profiles do not receive it automatically.
+
+**To install Clay's Connected App:**
+
+1.  **Register Clay in your org.** Have a Salesforce System Administrator attempt the Clay → Salesforce connection from Clay's `Settings` → `Connections`. Even if the connection fails, this attempt registers Clay in your org's Connected Apps OAuth Usage list. If you are using a custom profile (not a System Administrator), ensure the connecting user has the "Approve Uninstalled Connected Apps" permission — add it via a Permission Set in Salesforce Setup.
+2.  **Install the app.** In Salesforce, go to `Setup` → `Apps` → `Connected Apps` → `Connected Apps OAuth Usage`. Find Clay in the list and click `Install`. Confirm when prompted.
+3.  **Configure app policies.** After installation, `Manage App Policies` becomes available. Set `Permitted Users` to one of:
+    -   `All users may self-authorize` — any Salesforce user can connect to Clay.
+    -   `Admin approved users are pre-authorized` — only users explicitly granted access through Permission Sets or Profiles can connect. This is the more restrictive option, common in Enterprise security setups.
+4.  **Reconnect Clay.** Return to Clay and complete the Salesforce connection — it should succeed without the OAuth error.
+
+**Note for Salesforce sandboxes:** Each sandbox refresh assigns a new Org ID. Repeat these installation steps after any sandbox refresh.
+
 ## Why doesn't the Clay connected app appear under "Connected Apps OAuth Usage"?
 
 A connected app only appears after a successful OAuth authorization. If it's missing, one of these is typically true:
