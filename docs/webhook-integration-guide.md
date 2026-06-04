@@ -117,3 +117,9 @@ curl -X POST YOUR_CLAY_WEBHOOK_URL \
 ```
 
 If a row appears in your table, the issue is in your original request's formatting, headers, or auth token. If no row appears on a brand-new webhook, contact support.
+
+### How do I find which table a webhook URL belongs to?
+
+There is no customer-facing search to look up a Clay table by its webhook URL. If you have a webhook URL from an external system and need to identify which Clay table it's connected to, contact Clay support with the URL — the team can look it up on your behalf.
+
+**Tip:** To avoid this situation in the future, give each webhook table a descriptive name when you create it (for example, "HubSpot MQL ingest" or "Salesforce lead flow"). Since every table generates a unique webhook URL, a clear name makes it easy to match a URL back to the right table later.
