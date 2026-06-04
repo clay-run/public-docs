@@ -262,3 +262,13 @@ Each HubSpot column stores a reference to the specific connection it was configu
 
 1. Open each affected column's settings and change the **Account** dropdown to select the new connection. This updates the column to use the new connection ID.
 2. If re-selecting the account in the existing column doesn't resolve the error, create a new column with the same HubSpot action and configuration. New columns automatically pick up the currently active connection and will run successfully.
+
+### Why do HubSpot property fields not appear in the Update Object mapping section?
+
+When you open an **Update Object** column and select an **Object type**, the available HubSpot properties are fetched from your HubSpot account in real time. If the field picker is empty or the mapping section shows no properties, check the following:
+
+**The fields may still be loading.** Property lists are retrieved from HubSpot's API asynchronously — wait a few seconds after selecting the Object type before assuming something is wrong. If nothing appears after waiting, close and reopen the column settings to trigger a fresh fetch.
+
+**The HubSpot connection may be missing required OAuth scopes.** Clay uses the `crm.schemas.companies.read` and `crm.schemas.contacts.read` scopes to load property lists for Company and Contact objects (for deals, `crm.schemas.deals.read` is also required). If these scopes were not granted when you first connected HubSpot, the field picker returns no properties. To fix this, open **Settings → Integrations → HubSpot**, click the `···` menu next to your connection, and choose **Re-authenticate** — this re-requests the full scope set without changing your connection ID or breaking existing columns.
+
+**The connection may be broken or expired.** If Clay cannot reach HubSpot with a valid access token, the field picker silently returns no properties. Open the column settings and verify the selected account shows **Success** in Settings. If it shows an error, see the FAQ above ("Why does my HubSpot column still show 'Missing authentication' after I reconnect my account?") for how to restore the credential without losing your column configurations.
