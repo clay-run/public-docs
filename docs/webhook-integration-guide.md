@@ -92,6 +92,16 @@ So if your source displays more rows than your table (for example, 162 vs. 92), 
 
 **Note:** Records that Clay rejected with a `429` rate limit error were never stored and do not appear in either count. See the [Limits](#limits) section above for guidance on keeping requests within the 10/second throughput limit to avoid dropped records.
 
+### My webhook is sending data successfully but new rows aren't visible in my table
+
+If your external tool reports a successful delivery (for example, a `200 OK` response from Clay's webhook endpoint) but new rows aren't showing up in your table view, the most likely cause is an **active view filter** hiding the incoming rows.
+
+Filters in Clay are display-only — they control which rows appear in the current view, but they do not block or drop incoming webhook data. Every accepted payload creates a row in your table regardless of any active filters. Rows that don't match the filter criteria are still stored; they simply don't appear in the filtered view.
+
+**To check for an active filter:** Look at the table toolbar — when a filter is active, you'll see a number badge on the filter icon and the row count will display as **X/Y rows**, where X is the filtered count and Y is the total. Open the filter panel and click **Clear filters** to remove all active filters and see every row.
+
+If you clear the filters and the expected rows still don't appear, see [Why aren't any rows arriving in my webhook table?](#why-arent-any-rows-arriving-in-my-webhook-table) for configuration-level troubleshooting.
+
 ### Why aren't any rows arriving in my webhook table?
 
 If your webhook isn't creating rows — even on a brand-new webhook that has never received a submission — check these common causes:
