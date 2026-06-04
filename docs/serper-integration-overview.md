@@ -32,9 +32,9 @@ Perform any Google search query and return results, including organic results, a
 
 ## Using Serper for Google Maps scraping
 
-To scrape Google Maps listings, call Serper's Places endpoint directly using the [HTTP API](http-api-integration-overview.md) integration. Each call returns up to 10 results per page — add one column per page to collect multiple pages of results for a given location.
+To scrape Google Maps listings, call Serper's Places endpoint directly using the [HTTP API](http-api-integration-overview.md) integration. Each call covers one page of results — add one column per page to collect multiple pages of results for a given location.
 
-**Tip:** Use Serper's **Places endpoint** (`https://google.serper.dev/places`) rather than the Maps endpoint. The Maps endpoint returns inconsistent results across pages, making systematic collection unreliable.
+**Tip:** Use Serper's **Places endpoint** (`https://google.serper.dev/places`) rather than the Maps endpoint. The Maps endpoint returns vastly different results for each page, making systematic collection unreliable.
 
 ## Performance at scale
 
