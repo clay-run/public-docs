@@ -36,7 +36,8 @@ _Note: Personal email addresses significantly improve match rates when syncing t
     -   **For accounts:** Company name + company website (required for optimal matching)
     -   **Note:** When syncing a LinkedIn **Account list**, a **Company URL** field is also available in the mapping step and can improve match rates. This field does not appear for Contact list audiences — LinkedIn does not support company URL matching for contacts.
 4.  **Review your audience insights and quality summary**.
-    -   Check your estimated match rate and audience size before syncing.\n    -   Make adjustments to your table if needed (for example, narrowing down to specific job titles or industries) and re-run your export.
+    -   Check your estimated match rate and audience size before syncing.
+    -   Make adjustments to your table if needed (for example, narrowing down to specific job titles or industries) and re-run your export.
 5.  **Send your audience** to the selected platform.
     -   Your audience will be created within **24 hours for Meta** and **48 hours for LinkedIn**. You can then attach your audience to campaigns in LinkedIn Campaign Manager or Meta Ads Manager.
 
