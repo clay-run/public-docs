@@ -35,7 +35,9 @@ Your table updates instantly with new data, eliminating manual entry. This featu
 | Max payload size | 100 KB per request |
 | Max submissions | 50,000 per webhook source |
 
-**Throughput:** Clay accepts up to 10 incoming HTTP requests per second per workspace, with a one-time burst capacity of up to 20 requests. Each POST counts as one request against this limit, regardless of how many fields or records the payload contains. Exceeding the limit returns a `429` error and records are dropped — Clay does not queue them. To avoid data loss when sending in bulk, pace your requests to 10 per second or fewer. Multiple active webhook sources in the same workspace share this limit.
+**Throughput:** Clay accepts up to 10 incoming HTTP requests per second per workspace. A burst of up to 20 requests is allowed when capacity is available — after a burst, throughput returns to the sustained 10-per-second rate. Each POST counts as one request against this limit, regardless of how many fields or records the payload contains. Exceeding the limit returns a `429` error and records are dropped — Clay does not queue them. To avoid data loss when sending in bulk, pace your requests to 10 per second or fewer. Multiple active webhook sources in the same workspace share this limit.
+
+**Need a higher throughput limit?** If 10 requests/second is too restrictive for your workflow, contact Clay support to request an increase — rate limits can be adjusted for your workspace on request.
 
 **Payload size:** Each HTTP POST to Clay's webhook endpoint must be 100 KB or smaller.
 
@@ -115,3 +117,9 @@ curl -X POST YOUR_CLAY_WEBHOOK_URL \
 ```
 
 If a row appears in your table, the issue is in your original request's formatting, headers, or auth token. If no row appears on a brand-new webhook, contact support.
+
+### How do I find which table a webhook URL belongs to?
+
+There is no customer-facing search to look up a Clay table by its webhook URL. If you have a webhook URL from an external system and need to identify which Clay table it's connected to, contact Clay support with the URL — the team can look it up on your behalf.
+
+**Tip:** To avoid this situation in the future, give each webhook table a descriptive name when you create it (for example, "HubSpot MQL ingest" or "Salesforce lead flow"). Since every table generates a unique webhook URL, a clear name makes it easy to match a URL back to the right table later.

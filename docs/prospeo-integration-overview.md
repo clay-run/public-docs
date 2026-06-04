@@ -50,6 +50,8 @@ To add your own API key for any Prospeo enrichment, you can do so when you're se
 
 Below is an example of where to click within the enrichment panel to add your API key. For more instructions on how to find your Prospeo API key, [follow these instructions](https://datagmaapi.readme.io/reference/getting-started-with-your-api) within Prospeo's documentation.
 
+**Note:** When you use your own Prospeo API key, each lookup is billed directly against your Prospeo account credits — not Clay Data Credits. The results are saved in Clay only. Clay does not write data back to your Prospeo account, so the leads and emails found will not appear in your Prospeo dashboard or contact lists. If you look up the same contact directly in Prospeo later, that will be treated as a new lookup and charged against your Prospeo credits.
+
 ## `Action` Find Work Email
 
 The **Find Work Email** action lets you find the work email of a contact using a person's name and company domain.

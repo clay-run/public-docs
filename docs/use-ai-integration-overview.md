@@ -140,6 +140,21 @@ There are two ways to resolve this:
 -   **Fill in the missing data.** Ensure that the columns referenced in your prompt have values for the rows you want to run.
 -   **Make the inputs optional.** Open the column settings (click the column name → **Edit column**), scroll to the prompt section, and toggle off the **Required to run** switch next to each column reference that should be optional. When a reference is optional, the cell will still run even if that column is blank — the empty field is simply omitted from the prompt for that row.
 
+### AI column output shows as a JSON object (response, reasoning, confidence, stepsTaken)
+
+When a Use AI web research column or Claygent column runs, the result is stored as a structured JSON object. This object automatically includes these fields:
+
+-   **`response`** — the main text answer; this is the value shown as the cell's text preview in the table.
+-   **`reasoning`** — the model's step-by-step thinking notes.
+-   **`confidence`** — Clay's built-in quality indicator (`low`, `medium`, `high`, or `very high`), which drives the color dot on each cell.
+-   **`stepsTaken`** — descriptions of each research step the AI took (for example: `"Searched Google for: 'company headquarters'"` or `"Visited https://example.com to find: 'company revenue'"`).
+
+If this JSON object appears in a downstream column, that column is referencing the full AI column object instead of a specific sub-field.
+
+**To get just the `response` text into a cell:** In a formula column, use the `/` property picker and select `YourAIColumn > response`. You can also use dot notation directly: `{{YourAIColumn}}.response`.
+
+**To write data into named fields (recommended):** Open the column settings (click the column header → **Edit column**), go to the **Configure** tab, and add named output fields in the **Outputs** section (for example: `City`, `Industry`, `Revenue`). Each named field becomes a separately extractable sub-field you can pull into other columns with the `/` picker.
+
 ### Cells showing "Budget Credit Limit Reached"
 
 For AI columns using variable-priced models (such as GPT-4.1, Claude Sonnet, or Gemini 2.5 Pro) with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. This sets the maximum number of Clay credits that can be spent on a single row. If the estimated cost of running a row exceeds this limit, the cell shows **"Budget Credit Limit Reached"** and does not complete. Clicking the cell reveals the full message with the estimated cost and your current budget.

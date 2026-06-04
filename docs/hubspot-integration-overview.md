@@ -46,6 +46,7 @@ Use this action to look up an object in HubSpot.
 **Inputs**
 
 -   **Object type:** The type of HubSpot object to look up.
+-   **Fields to filter by:** The HubSpot properties to search against (e.g., select `Domain Name` to find a company by domain, or `Email` to find a contact by email address). Available filter fields are loaded dynamically based on the selected object type.
 -   **Remove blank values from results (Optional):** Helpful for reducing result size.
 -   **Limit (Optional):** Maximum number of objects to return. Defaults to 10.
 
@@ -190,6 +191,32 @@ If a property exists in HubSpot but doesn't get updated when you run the Update 
 **Blank values are silently skipped.** The **Ignore blank values** setting is enabled by default. When enabled, any property field that is empty or null in your Clay table is not sent to HubSpot — the existing HubSpot value remains unchanged with no error shown. If the column you are mapping has no value for a given row, the update for that property is skipped. To override this, open the column settings and disable **Ignore blank values** — but note that doing so will overwrite existing HubSpot data with blank values from Clay.
 
 **A different HubSpot account is selected.** If multiple HubSpot accounts are connected to your workspace (for example, if teammates each added their own HubSpot connection), the Update Object action may be authenticating against a different instance than the one you intend to update. Open the column settings and confirm the HubSpot account shown is the correct one. You can verify by running a **Lookup object** action on the same record — if the property appears updated there, the write reached the right account.
+
+### How do I create a contact-to-company association in HubSpot from Clay?
+
+Use the **Lookup object** and **Create association** actions together in your contacts table — you don't need Send table data for this workflow.
+
+**Step 1 — get the company's `hs_object_id` onto each contact row**
+
+Add a **HubSpot → Lookup object** column to your contacts table:
+
+1.  Set **Object type** to **Company**.
+2.  Under **Fields to filter by**, select **Domain Name** (or another shared identifier like email domain).
+3.  Map the filter value to the domain column on your contacts table.
+
+This returns the matching company record directly on each contact row, with `hs_object_id` surfaced at the top of the result.
+
+**Step 2 — create the association**
+
+Add a **HubSpot → Create association** column:
+
+-   **From object type**: Contact
+-   **To object type**: Company
+-   **Association type**: select the appropriate relationship (e.g., "Contact to Company")
+-   **From Object ID**: your contact's `hs_object_id` (from your HubSpot contacts source column)
+-   **To Object ID**: the `hs_object_id` returned by the Lookup object column in step 1
+
+**Note:** The **From Object ID** and **To Object ID** fields appear only after you have selected both object types and an association type.
 
 ### Why does my Lookup Object return no results, but my Create Object still fails with "contact already exists"?
 

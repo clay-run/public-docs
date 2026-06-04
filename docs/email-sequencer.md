@@ -40,7 +40,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead replies (excluding out-of-office replies, which we detect and work around).
     -   Toggle `Preview` mode to see real data from your source table in the message template
     -   Within each message, use `/` to access features such as:
-        -   `Clean variable`: Reference synced lead data with safe fallbacks and optional formatting.
+        -   `Clean variable`: Reference synced lead data with safe fallbacks and optional formatting. When configuring a Clean variable, the **Fallback** field ("Simple text to display if variable is empty") is required — the variable will not save if left blank.
         -   `Sender variable`: Reference identifying information from the sending account
         -   `AI snippet`: Generate copy automatically using lead data.
         -   `Spintax variable`: Choose a random value from a list
@@ -148,7 +148,7 @@ Our sequencer is powered by Smartlead, but everything runs on Clay credits. You 
 
 ### Why does my campaign only show 10 leads after launching?
 
-When a campaign is created, the `Sync leads to campaign` column pushes 10 rows so you can preview and configure your messages. After launching, the rest of your source table is not pushed automatically. To add all remaining rows, run the `Sync leads to campaign` column manually — click the run button in the column header.
+When a campaign is created, the `Sync leads to campaign` column pushes 10 rows so you can preview and configure your messages. After launching, the rest of your source table is not pushed automatically. To add all remaining rows, open your source table (the table where you created the campaign — not the campaign events table) and run the `Sync leads to campaign` column manually — click the run button in the column header.
 
 ### My "Sync leads to campaign" column is showing a warning. What does it mean?
 
@@ -163,6 +163,12 @@ Deleting a campaign through the column header's settings (the **Delete campaign*
 ### I updated my campaign, but the changes didn't save.
 
 Be sure to press `Save settings` after making edits. Note: deleting a campaign step saves immediately without requiring a manual save click—all other edits require pressing `Save settings`.
+
+If you added or edited a **Clean variable** and it is not appearing in your message, check that the **Fallback** field ("Simple text to display if variable is empty") is filled in — this field is required, and the variable will not save if left blank.
+
+### Why can't I see or edit the Message sequence section?
+
+If your campaign is active, all settings — including the Message sequence — are locked. To make edits, open the campaign's `Setup` tab and click `Pause`. Once paused, you can edit message copy and campaign settings. Note that you cannot change the total number of messages while paused — to add or remove messages, complete the campaign and create a new one.
 
 ### How much does the sequencer cost?
 

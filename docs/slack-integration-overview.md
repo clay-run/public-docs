@@ -193,3 +193,15 @@ Clay fetches your Slack channel list live each time you open the **Slack channel
    - `channels:read` — lists public channels
    - `groups:read` — lists private channels the bot has been invited to
    - `chat:write` — sends messages as the Clay bot
+
+### My Slack workspace requires admin approval and the Slack Marketplace link shows an error
+
+If your Slack workspace requires admin approval before installing apps, Slack's approval email will tell you to complete the installation from the Slack Marketplace. However, Clay connects to Slack through a direct OAuth flow — it does not install as a Slack Marketplace app. That Marketplace link is a dead end for Clay, and clicking it will show an error.
+
+Once your Slack workspace admin has approved the Clay app, complete the connection from within Clay:
+
+1. Go to **Settings → Connections** in Clay (or, in a table: **Add enrichment → search "Slack" → click + Add account**).
+2. Click to connect Slack and authorize.
+3. Since your admin already approved Clay, you won't be prompted for workspace approval again — it will connect straight through.
+
+Make sure you are logged into your Slack workspace in the same browser when you do this.
