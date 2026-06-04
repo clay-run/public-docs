@@ -97,6 +97,17 @@ For more details on Meta system user setup, see [Meta's system user documentatio
 
 ## **FAQs**
 
+### **How do I sync a regular Clay table to an ad platform?**
+
+Regular Clay tables don't have a direct export path to LinkedIn or Meta from the table's **Tools → Export** panel. To use your table's contacts as an ad audience, route them through an Audience first:
+
+1.  In your table, click **Add enrichment** and search for **Upsert Audiences Record**. This pushes your table rows into your Audience — creating a new record if no match exists, or updating an existing one.
+2.  Once your records are in an Audience, open that Audience and click **Send → Sync to ad platforms**, then select LinkedIn or Meta.
+
+The required flow is: **table → Audience → ad platform**.
+
+For more on the Upsert Audiences Record action and syncing from an Audience to an ad platform, see [Audiences (Beta)](https://university.clay.com/docs/audiences).
+
 ### **What platforms are supported?**
 
 Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, and **Google Ads**.
