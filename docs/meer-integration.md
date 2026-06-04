@@ -31,7 +31,7 @@ With this integration, you can check phone numbers against regularly updated DNC
 
 ### `Action` Screen phone number against DNC registries
 
-Check if a phone number appears in National Do Not Call registries. Currently supports US (National DNC Registry), UK (TPS/CTPS) registries, Germany ([Robinsonliste.de](http://robinsonliste.de/)), and Ireland ([comreg.ie](http://comreg.ie/)) refreshed weekly. Returns DNC status and source information if found.
+Check if a phone number appears in National Do Not Call registries. Currently supports US (National DNC Registry), UK (TPS/CTPS), Germany ([Robinsonliste.de](http://robinsonliste.de/)), Ireland ([comreg.ie](http://comreg.ie/)), Spain ([Lista Robinson](http://listarobinson.es)), Indiana (Indiana No-Call List), Florida (Florida Do Not Call Program), Massachusetts (Massachusetts DNC Registry), and Colorado (Colorado No-Call List), refreshed weekly. Returns DNC status and source information if found.
 
 **Inputs**
 
@@ -51,6 +51,11 @@ Check if a phone number appears in National Do Not Call registries. Currently su
 
 -   Clay key: 100 requests per second, 100 concurrent requests
 -   User private key: 10 requests per second, 10 concurrent requests
+
+## Troubleshooting
+
+-   **"Please input a valid phone number"** — the phone number could not be parsed. Make sure the number includes a country code (e.g., `+19199463022`). You can use a phone normalization step before this action to standardize formats.
+-   **"Error: Failed to enrich phone number"** — the phone number is valid but its country is not currently supported by Meer. To avoid errors and unnecessary credit charges, add an **Only run if** conditional on this action to restrict it to supported country codes (e.g., `+1` for US, `+44` for UK, `+49` for Germany, `+353` for Ireland, `+34` for Spain).
 
 ## Compliance notes
 
