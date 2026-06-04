@@ -40,7 +40,8 @@ Use this action to create new prospect records in Outreach.
 
 **Inputs**
 
--   **Email**
+-   **Email** — To add multiple email addresses to a prospect, enter them comma-separated in the same field (e.g., `email1@domain.com, email2@domain.com`).
+-   **Account ID (Optional)** — The Outreach account ID to associate the prospect with. When provided, the prospect is linked to the corresponding account in Outreach.
 -   **Basic information like name, company, title, etc. (Optional)**
 -   **Address information (Optional)**
 -   **Contact preferences (Optional)**
