@@ -1,7 +1,7 @@
 ---
 title: Delete content within your workspace
 source_url: https://university.clay.com/docs/delete-content-within-your-workspace
-description: Learn how to delete columns, workbooks, and tables within your workspace.
+description: Learn how to delete and recover tables, workbooks, and rows within your workspace.
 last_synced: 2026-04-26T01:39:53.278Z
 ---
 
@@ -29,11 +29,26 @@ Click on `...` icon on to the right of the table you want to delete. Select `Del
 
 ### Deleting workbooks
 
-When you delete a workbook, each individual table within a workbook will be deleted. If you want to recover an entire workbook, you must restore each table individually.
+When you delete a workbook, all tables within it are deleted along with it.
 
-## Recover deleted tables
+## Recover deleted tables and workbooks
 
-Once you delete a table, it will end up in your Trash. You can access Trash from the bottom left of the workspace sidebar. Once you open Trash you can:
+Once you delete a table or workbook, it will end up in your Trash. You can access Trash from the bottom left of the workspace sidebar. Deleted items are stored in Trash for **30 days**, after which they are permanently deleted. Once you open Trash you can:
 
 -   Delete tables permanently.
 -   Recover tables. You cannot edit a table in Trash unless you restore it.
+
+When you restore a table, all of your row data and column configurations are fully restored — your data comes back exactly as it was when the table was deleted.
+
+When you restore a workbook, all of its tables are automatically restored as well.
+
+## Recover deleted rows
+
+If you accidentally delete a row within a table, a brief confirmation alert appears immediately after deletion — click **Undo** in that alert to restore the row before it disappears.
+
+After that alert closes, there is no self-serve way to recover deleted rows. However, the Clay support team can restore deleted rows within **30 days** of deletion. To request row restoration, reach out to support and share:
+
+-   Your table URL
+-   Approximately when the rows were deleted
+
+Note: rows cannot be restored if doing so would put your table over the 50,000-row limit.
