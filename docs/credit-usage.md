@@ -28,14 +28,16 @@ The columns in this view display:
 
 -   `Name:` The folder, workbook, or table. Click the dropdown next to a folder or workbook to see the contents.
 -   `Usage:` Marked as `Recurring` when it contains recurring credit usage (e.g., scheduled runs or signals).
--   `Owner:` The person who owns the project.
+-   `Owner:` The workbook's creator or assigned owner — not necessarily who triggered the credit spend within it.
 -   `Credits used:` The amount of credits used for this period.
 
 Filter any of the content on this page by:
 
 1.  When the credits were used.
-2.  Owner of the project.
+2.  Owner of the workbook (its creator, not who ran the enrichments).
 3.  Specific integrations being used.
+
+**Note:** The Workbooks tab does not show per-user credit attribution — it groups spend by workbook or table, not by which team member ran the enrichments. If you need per-user credit tracking, see the **MCP** and **API** tabs, which attribute spend to individual users for those access methods.
 
 ### Understanding table-specific credit usage
 
