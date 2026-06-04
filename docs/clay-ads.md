@@ -36,8 +36,7 @@ _Note: Personal email addresses significantly improve match rates when syncing t
     -   **For accounts:** Company name + company website (required for optimal matching)
     -   **Note:** When syncing a LinkedIn **Account list**, a **Company URL** field is also available in the mapping step and can improve match rates. This field does not appear for Contact list audiences — LinkedIn does not support company URL matching for contacts.
 4.  **Review your audience insights and quality summary**.
-    -   Check your estimated match rate and audience size before syncing.
-    -   Make adjustments to your table if needed (for example, narrowing down to specific job titles or industries) and re-run your export.
+    -   Check your estimated match rate and audience size before syncing.\n    -   Make adjustments to your table if needed (for example, narrowing down to specific job titles or industries) and re-run your export.
 5.  **Send your audience** to the selected platform.
     -   Your audience will be created within **24 hours for Meta** and **48 hours for LinkedIn**. You can then attach your audience to campaigns in LinkedIn Campaign Manager or Meta Ads Manager.
 
@@ -97,16 +96,16 @@ For more details on Meta system user setup, see [Meta's system user documentatio
 
 ## **FAQs**
 
-### **How do I sync a regular Clay table to an ad platform?**
+### **I have a regular Clay table with contacts — why don't I see a LinkedIn or Ads option in the Export panel?**
 
-Regular Clay tables don't have a direct export path to LinkedIn or Meta from the table's **Tools → Export** panel. To use your table's contacts as an ad audience, route them through an Audience first:
+The table's **Tools → Export** panel and per-row **Actions** menu do not include LinkedIn or Meta as direct destinations. Ad audiences are set up through the **Ads** section in Clay's left sidebar (under Orchestration), not from within a regular table's export panel.
+
+If you have contacts enriched in a regular Clay table and want them in an ad audience, one supported path is to push them to an Audience first using the **Upsert Audiences Record** enrichment action:
 
 1.  In your table, click **Add enrichment** and search for **Upsert Audiences Record**. This pushes your table rows into your Audience — creating a new record if no match exists, or updating an existing one.
 2.  Once your records are in an Audience, open that Audience and click **Send → Sync to ad platforms**, then select LinkedIn or Meta.
 
-The required flow is: **table → Audience → ad platform**.
-
-For more on the Upsert Audiences Record action and syncing from an Audience to an ad platform, see [Audiences (Beta)](https://university.clay.com/docs/audiences).
+For more on this path, see [Audiences (Beta)](https://university.clay.com/docs/audiences).
 
 ### **What platforms are supported?**
 
