@@ -306,7 +306,7 @@ If you see **"Your source has exceeded your plan's limit of [N], so future runs 
 
 **This limit is a row count, not a Data Credits limit.** The number shown (e.g., 100) refers to how many records the source can import in total — not how many Data Credits you have available. Your Data Credits balance is tracked separately and is used for enrichments such as finding emails or company data. Even after a source hits its row limit, your remaining Data Credits are still available for enrichments on rows already in your table.
 
-The limit varies by plan tier and is shown in the error message itself (for example, 100 on free workspaces, 25,000 on Explorer-tier plans, 50,000 on Pro plans and above).
+The limit varies by plan tier and is shown in the error message itself (for example, 100 on free workspaces, 5,000 on Starter plans, 15,000 on Launch plans, 25,000 on Explorer-tier plans, 50,000 on Pro plans and above).
 
 **To continue importing beyond the limit:**
 
