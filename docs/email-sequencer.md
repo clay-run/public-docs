@@ -112,7 +112,7 @@ Check out the `Email accounts` tab to manage your fleet of sender accounts and `
 
 ## Update sender signatures
 
-You can add or update email signatures for any connected sender account.
+You can add or update email signatures for any connected sender account. Signatures are set at the **sender account level** — if you have multiple sending addresses, each account gets its own independent signature.
 
 **From a specific campaign:**
 
@@ -124,6 +124,9 @@ You can add or update email signatures for any connected sender account.
 6.  Click the three-dot (⋯) menu on the right side of that sender's row.
 7.  Select `Update sender variables`.
     -   You can also access this via the `Email accounts` tab.
+8.  Enter your text in the `Signature` field and click `Update sender variables` to save.
+
+**Note:** The `Signature` field is currently rolling out to all workspaces. If you don't see it in the **Update sender variables** dialog, contact support to enable it for your workspace.
 
 ## Best practices
 
@@ -196,7 +199,7 @@ Email providers like Google and Microsoft occasionally revoke access due to inac
 
 ### How do I add an email signature or sign-off?
 
-Email signatures are configured at the **sender account level**, not per individual email. A signature set for an account is automatically appended to every email sent from that account.
+Email signatures are configured at the **sender account level**, not per individual email. A signature set for an account is automatically appended to every email sent from that account. This means if you send from multiple email addresses, each account can have its own distinct signature.
 
 To set or update a signature:
 
@@ -207,6 +210,8 @@ To set or update a signature:
 5.  Click `Update sender variables` to save.
 
 You can also update the `From name` (the display name recipients see in their inbox) from the same dialog. Only plaintext signatures are currently supported.
+
+**Note:** The `Signature` field is currently rolling out to all workspaces. If you don't see it in the dialog, contact support to enable it for your workspace.
 
 ### What is email account warmup?
 
