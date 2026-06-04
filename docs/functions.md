@@ -225,6 +225,25 @@ The workaround is to create a **formula column** (Merge columns) inside your fun
 
 To access the object's sub-keys downstream, parse it back with `JSON.parse({{Merged Person Data}})`.
 
+### How do I merge multiple list outputs from different enrichment columns into one combined list?
+
+If your function has several enrichment columns that each return a list of items — for example, multiple Claygent columns that each find contacts in a different industry segment — each column's output lands in the calling table as a separate field. By default, you'd need one **Send row for each item in a list** action per output column.
+
+To reduce this to a single **Send table data** action that covers all columns at once, use formula mode in the list input to concatenate the arrays:
+
+1.  In the calling table, add or open your **Send table data** column.
+2.  Choose **Send row for each item in a list**.
+3.  In the list input field, click the **gear icon** on the right and select **Formula** (instead of "Text with Tokens").
+4.  Enter a formula that concatenates all of the function's list outputs using `.concat()`:
+
+    `({{Run Function}}?.Claygent1?.contacts || []).concat({{Run Function}}?.Claygent2?.contacts || [], {{Run Function}}?.Claygent3?.contacts || [])`
+
+    Replace `Claygent1`, `Claygent2`, etc. with the actual field names your function returns, and replace `contacts` with the sub-field that holds the list items within each output.
+
+5.  Save the column. Clay iterates over the merged list and writes each item as a row in the destination table.
+
+**Why this is needed:** Referencing multiple list-valued outputs side by side without a formula does not merge them — Clay receives separate arrays rather than a single list, and the column will fail at runtime with a list error. The `.concat()` formula produces one unified array from all the sources.
+
 ### What does "Awaiting Callback" mean on a function column?
 
 When you call a function from a table, that column shows **Awaiting Callback** while the calling table waits for the function to finish processing and return results. The status resolves once the function's **"Send data back"** column runs successfully and sends results back.
