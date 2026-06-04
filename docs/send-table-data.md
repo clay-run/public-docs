@@ -128,6 +128,7 @@ Repeat this process for each field you want to extract into its own column.
 
 ## Best practices & troubleshooting
 
+-   **The destination table is locked once a Send Table Data column is saved.** Once you create and save a Send Table Data column, the destination field is greyed out and cannot be changed from the column settings — this is true even before any records have been sent. To route data to a different table, create a new Send Table Data column (via `Actions → Send table data`) and configure the new destination there. Note that duplicating an existing column carries over the locked destination and does not allow changing it.
 -   There can be a **maximum of 20 tables** connected. **This includes tables across workbooks.**
 -   **Data can only be sent in a linear direction** (A → B → C). In other words, loops are not possible (A → B → C → A).
     -   If you want to receive data in the table you're also sending data from, use one of these other actions:
