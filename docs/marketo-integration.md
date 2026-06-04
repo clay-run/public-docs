@@ -70,6 +70,7 @@ Optional:
 ### Run settings
 
 -   Auto-update: Recommended when writing enriched data back to Marketo, so that new or updated rows are automatically pushed.
+-   Run in batches: When enabled, groups up to 300 rows into a single API request instead of sending one request per row. This reduces the total number of API calls Clay makes to Marketo and is recommended if you are hitting Marketo's 606 rate limit error. Available for the Create object and Update object actions.
 -   Only run if: The enrichment will only run if conditions are met. ([**Learn more about conditional formulas here!**](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
 
 ## Connecting Marketo via webhook
@@ -88,10 +89,14 @@ Use webhooks to send data from Marketo to Clay for real-time lead enrichment. Th
     -   `Response format`: JSON
     -   `Payload template`: Use the JSON template below, customizing fields as needed.
 
-`{  "id": "{{lead.Id}}",    "first_name": "{{lead.FirstName}}",    "last_name": "{{lead.LastName}}",    "email": "{{lead.EmailAddress}}",    "title": "{{lead.JobTitle}}",    "company": "{{lead.CompanyName}}",    "industry": "{{lead.Industry}}",    "country_code": "{{lead.Country}}"   }`
+`{  "id": "{{lead.Id}}",    "first_name": "{{lead.FirstName}}",    "last_name": "{{lead.LastName}}",    "email": "{{lead.EmailAddress}}",    "title": "{{lead.JobTitle}}",    "company": "{{lead.CompanyName}}",    "industry": "{{lead.Industry}}",    "country_code": "{{lead.Country}}"   }`
 
 ## Troubleshooting
 
 ### Field values containing special characters are split incorrectly in Clay
 
 If a lead field value contains an ampersand (`&`) — such as a job title like "VP & Head of Sales" — and you're using a form-encoded payload template in Marketo, the `&` will be interpreted as a field separator, causing the value to be split across multiple fields in Clay. To avoid this, use a JSON-formatted payload template (as shown in step 5 above). JSON handles special characters correctly and will not split values on `&`.
+
+### Marketo 606 rate limit error
+
+Error 606 (`Max rate limit '100' exceeded with in '20' secs`) means Marketo received more than 100 API calls within a 20-second window. To reduce call volume, enable **Run in batches** in the affected action's Run settings. With batching enabled, Clay groups up to 300 rows into a single POST request instead of one call per row, significantly reducing the number of API calls and helping avoid this error.
