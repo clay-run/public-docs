@@ -26,7 +26,9 @@ Functions are built for workflows you'd otherwise rebuild from scratch in every 
 **Create from existing workflow:**
 
 1.  Open any Clay table with the enrichment sequence you want to make reusable.
-2.  Select multiple columns (Hold `Cmd` on Mac or `Ctrl` on Windows) and click each column header you want to include in the function.
+2.  Select the columns to include in the function:
+    -   **Individual selection:** Hold `Cmd` on Mac or `Ctrl` on Windows and click each column header you want to include.
+    -   **Range selection (recommended for waterfall sequences):** Click the first column header, then hold `Shift` and click the last column header to select the full contiguous range. For waterfall enrichments, selecting the full range ensures only the entry-point inputs appear in the function dialog — not every internal provider or validation step.
 3.  **With your columns highlighted**, right click on a column and select `Save as function`.
 4.  In the dialog that appears:
     -   **Confirm function name/description** — We've auto-filled these fields using AI given the selected workflow. Please audit this to make sure there is a descriptive name/description that you can use to find this function later.
@@ -134,7 +136,15 @@ Yes. All workspace functions are available to use in your tables — no special 
 
 **Editing** enters a sandbox mode where you can make changes while the function continues running live. Your edits only take effect when you publish them.
 
-**Pausing** stops the function entirely — rows that reach a paused function will wait without processing. Use pause when you need to stop execution immediately (e.g., to update an API key or fix an error).
+**Pausing** prevents the function from accepting new rows into its processing queue. Rows already queued or in progress before you paused will still run to completion. Click **Resume** from the function's ellipsis (⋯) menu to re-enable the function. Use Pause when you need to gate new work without disrupting rows already in flight — for example, while updating an API key or fixing a configuration error.
+
+### What is the difference between pausing a function and stopping a function?
+
+**Pause** prevents new rows from entering the function's processing queue. Rows already queued or actively running will continue to completion. Click **Resume** from the function's ellipsis (⋯) menu when you're ready to accept new rows again.
+
+**Stop** attempts to cancel both actively running rows and rows already waiting in the queue. Allow a few minutes for the cancellation to fully take effect.
+
+Use **Pause** when you want to temporarily suspend new work (for example, while fixing a configuration error) without discarding rows already in flight. Use **Stop** when you need to halt all processing — rows that were queued will be cancelled and would need to be re-triggered manually.
 
 ### If I edit a function while it's live, will rows that already ran show as stale?
 
@@ -145,6 +155,20 @@ No. Previously processed rows remain unchanged and won't be marked as stale. Onl
 Include action columns (enrichments, Claygents, waterfalls) — not static input columns like company name or domain. Action columns contain the reusable logic you want to apply across tables.
 
 Remember: every column you include becomes a required input. More columns mean more inputs users must provide when calling the function.
+
+### How do I save a waterfall as a function, and why do I see "Function inputs must be unique"?
+
+**Saving a waterfall as a function:**
+
+The correct method is to right-click the **final waterfall output (merge) column** — the combined result column at the end of the waterfall group — and choose **Save as function** from the column dropdown. Individual waterfall step columns (the per-provider sub-columns) do not expose "Save as function" by design. Only the merge column does.
+
+Selecting just the merge column captures the full waterfall sequence — every provider step, run condition, and validation step — and packages it into the function. You do not need to include the individual step columns separately.
+
+**"Function inputs must be unique" error:**
+
+This error means two or more inputs in the "Save as function" dialog share the same name. Clay auto-generates a unique name for each input when you open the dialog, but if you manually rename an input to match another already in the list, the validation fails.
+
+To fix it: review the input names in the dialog, make sure each one is unique, and then click **Create**.
 
 ### How do I configure which columns are returned from my function to the calling table?
 

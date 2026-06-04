@@ -26,6 +26,8 @@ To view your full audience, click `People` or `Companies` in the left sidebar.
 
 To add a data source for the first time, click the `Add data` button in the top right, then click `Add Source`.
 
+**Note:** Adding a data source requires Admin access. The `Add data` button and most source options are visible to all workspace members, but only Admins can complete source setup — Editors receive an error when attempting to connect a source. If you're an Editor, ask a workspace Admin to connect the source, or have your role changed.
+
 You can import data from:
 
 -   A new people or companies search
@@ -41,8 +43,8 @@ You can import data from:
 2.  Select `People` at the top of the sync panel.
 3.  Enable the `Import` toggle.
 4.  Leave `Export Sync` and `Create new Salesforce records` off for now.
-5.  Add any SFDC fields you frequently use or want to segment by.
-    -   You can update these later.
+5.  Add any SFDC fields you frequently use or want to segment by — only fields included here will appear as columns and filter options in your Audience.
+    -   You can add more fields later. See [A Salesforce field isn't appearing in my audience filters](#a-salesforce-field-isnt-appearing-in-my-audience-filters--how-do-i-add-it) in the FAQs below.
 6.  Name the corresponding Clay fields — these become the column names in Audiences.
 7.  Select `Companies` at the top and repeat steps 3–6 for accounts.
 8.  Select `Leads` at the top of the sync panel.
@@ -94,6 +96,8 @@ Clay pulls data from Salesforce on two schedules:
     -   If the draft shows a banner that says **"X records from this search are already in the All People list,"** those records are already excluded from the merge. Clicking **All people** in step 5 will only add net-new contacts — the existing records are not duplicated.
 4.  In your draft, click `Enrich` to bulk enrich and refine your data, keeping only high-quality leads.
 5.  When your search data looks good, click `All people` to merge.
+
+**Note:** When you save a search to your Audience, only basic identity fields are carried over as columns — additional data fields visible in the search preview (such as Company Size or Annual Revenue for companies, or Job Title for people) are not automatically added to your Audience. To add one of these fields, create it as a custom Audience field first: see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
 
 ### Sending data from Clay table
 
@@ -154,7 +158,7 @@ To create a new audience:
 
 The operators available when building a filter depend on the field's data type, shown by the icon next to the field name:
 
--   **Text fields (T icon)** — support text-matching operators. To match multiple values at once, use **`contains any of`** and enter each value. For example, to include records where Industry is Health, Beauty, or Pets, set the filter to `Industry → contains any of → Health, Beauty, Pets`. This is more efficient than creating a separate filter for each value.
+-   **Text fields (T icon)** — support text-matching operators. To match multiple values at once, use **`contains any of`** or **`does not contain any of`** and enter each value — up to 10 values per filter. For example, to include records where Industry is Health, Beauty, or Pets, set the filter to `Industry → contains any of → Health, Beauty, Pets`. This is more efficient than creating a separate filter for each value.
 -   **Number fields (# icon)** — support range operators: **`is greater than`**, **`is less than`**, **`is greater than or equal to`**, and **`is less than or equal to`**. For example, `Employees → is greater than → 500`.
 
 **Note:** A field that appears numeric may have been imported as text (shown by a T icon rather than #). Text fields — such as "Annual revenue range" synced from Salesforce as a string — will not show range operators. To use range filtering on a field, contact Clay support to have the field's type changed to Number (#). Range operators will then appear when you add a filter on that field.
@@ -176,12 +180,13 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
 
 **Using Audiences from a Clay table:**
 
-Three Clay enrichments let you move data between a Clay table and your Audience directly.
+Four Clay actions let you move data between a Clay table and your Audience directly.
 
 -   In any Clay table, click `Add enrichment` and search for:
     -   `Upsert Audiences Record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. Use it to commit data from unsupported integrations (e.g., HubSpot), qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table.
     -   `Update Audiences Record` writes data from a table row to one or more fields on an existing Audience record. Unlike `Upsert Audiences Record`, it does not create a new record if no match is found. Both actions write only to fields that already exist in your Audience — to create a new custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
-    -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls.
+    -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls. By default, signal data is returned for the past **30 days** and the action returns a maximum of **5 signal results** per record — adjust the lookback period in the column settings to retrieve older signals, or use `Get Audiences Activity` when you need more than 5 results.
+    -   `Get Audiences Activity` retrieves specific signal activity for an Audiences record. Use it when you need more than 5 signal results or want to query a longer time window than `Lookup in Audiences` provides by default.
 
 ### Signals
 
@@ -270,6 +275,20 @@ Once created, the field is immediately available as a filter in any segment and 
 
 **Note:** There is no option to add new fields directly from the Audience screen — you must go through the `Update Audiences Record` column mapping in a bulk enrichment table.
 
+### A Salesforce field isn't appearing in my audience filters — how do I add it?
+
+Only fields explicitly included in the Salesforce import field mapping are brought into Audiences as columns and made available as filter options. If a Salesforce field — including custom fields like `Account_Record_ID__c` — doesn't appear in the filter dropdown, it was not included when the import was configured.
+
+To add a missing field:
+
+1.  Click **Add data** in the top toolbar.
+2.  Find your Salesforce integration and click the **⋮** (three-dot) menu next to it.
+3.  Select **Settings**.
+4.  In the field mapping section, add the Salesforce field you want and name the corresponding Clay column.
+5.  Click **Save and review** → **Confirm**.
+
+The field will be available for filtering after the next incremental sync (typically within 15 minutes). Read-only Salesforce fields — fields shown with a lock icon in the mapping because Salesforce does not allow Clay to write them — can still be imported and used as filters. They will show a **Never write (Read-only)** export rule.
+
 ### My CRM is messy. Should I clean it up before setting up Audiences?
 
 You don't need a clean CRM to get started — CRM cleanup is often the first use case Audiences enables. A common approach: sync your existing CRM, run LinkedIn enrichments to refresh contact data, use the enriched identifiers to surface duplicates, then build further enrichments from there.
@@ -337,3 +356,19 @@ This means the filter answers "find me everyone who is a contact role on these s
 4.  In your **People** audience, add a filter on **Account → [your flag field] equals your flag value**.
 
 This pulls every contact tied to those accounts, regardless of their OpportunityContactRole status.
+
+### Why does Clay MCP show activity data for a contact when the Audiences Activity tab shows no activity?
+
+When a Salesforce lead is converted to a contact, Audiences merges both records into a single People entry using the lead's `ConvertedContactId`. The underlying activity data from the lead record — including activity counts and last-activity dates — is stored in Audiences and is accessible via Clay MCP, including the `ask-question-about-accounts` tool, which queries your Audiences data at the backend level.
+
+However, the current Audiences UI contact view does not yet display a full union of all data from the converted lead. This means activity counts and last-activity dates that originated from the lead record may not appear in the contact's Activity tab even though the data exists in Audiences and is retrievable via MCP.
+
+**Note (beta):** This discrepancy is a known gap during the Audiences beta. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. The UI will be updated to show the full union of contact and converted lead data before general availability.
+
+### Why isn't a signal showing up in my Lookup in Audiences result?
+
+Three things to check:
+
+-   **The signal falls outside the default lookback window.** `Lookup in Audiences` returns signal data for the past 30 days by default. If the signal event is older than 30 days, open the column settings and increase the lookback period.
+-   **The 5-result cap was reached.** `Lookup in Audiences` returns a maximum of 5 signal results per record. If a company has more active signals than that, some may not appear. Use `Get Audiences Activity` to retrieve a larger set of signal data.
+-   **The signal hasn't fired for that record yet.** Signal results are written asynchronously and may not appear immediately after a signal run completes. If a signal should be recent but is still missing, open the signal's column header → `Edit column` and re-run the signal to refresh the data for that record.

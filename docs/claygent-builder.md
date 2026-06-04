@@ -287,15 +287,17 @@ There are two ways to resolve this:
 
 If your Claygent columns are failing with an error like **"This action is no longer operational as a data provider. Please use another action."** — or are running and consuming credits but returning blank, empty cells — it means those columns are using an older version of the Claygent action that is no longer supported. The column settings panel may still appear editable, but the column cannot produce results.
 
-You need to replace each affected column with a new **Use AI** column. Here's how:
+You need to recreate each affected column using the current Claygent action. Here's how:
 
 1.  Open the old Claygent column and copy your prompt and any JSON output schema.
-2.  Click **Add column** in your table and select **Use AI**.
+2.  Click **Add column** in your table and select **Claygent** from the AI section.
 3.  Paste your prompt into the new column.
 4.  If you had a JSON output schema, paste it into the **JSON Schema** field under outputs. **Tip:** Keep the same output field names as the original column to minimize changes needed in any downstream formula columns that reference those fields.
 5.  Save and rerun the column.
 
 Repeat for each affected column in your table. After recreating, update any downstream formula columns that reference the old column's outputs to point to the new column instead. Once everything is running correctly, delete the old Claygent column.
+
+**Note:** This error is distinct from the model deprecation warning. If you see an orange **"Deprecated"** badge next to a model name in your column settings, that is a separate indicator — it does not stop the column from running immediately. In that case, simply open the column settings, click the **Model** dropdown, and select a currently supported model to clear the warning.
 
 ### My object inputs show "Success" in the test panel instead of their actual content — is that normal?
 

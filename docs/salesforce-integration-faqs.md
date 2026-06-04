@@ -33,6 +33,28 @@ The Salesforce connection is tied to the OAuth user who sets it up:
 
 For sensitive fields, you can create a permission set to restrict the OAuth user's access.
 
+## What controls are available at the connector level versus inside individual tables?
+
+When you connect Salesforce to Clay, access control works at two levels:
+
+**Connector level (Salesforce controls this)**
+
+The Salesforce user you authenticated with determines everything Clay can read or write. Clay's Salesforce actions — lookup, create, update, upsert — are all restricted to whatever that user is permitted to do in Salesforce. If the user cannot read the Opportunity object in Salesforce, Clay cannot read it either. If the user has write access to `Account.Website`, every Clay table using that connection can update that field.
+
+Permissions are managed entirely on the Salesforce side, through that user's profile, permission sets, field-level security, org-wide defaults, sharing rules, and role hierarchy.
+
+**Table (workbook) level (Clay controls this)**
+
+Inside a Clay table, you configure which actions to run (such as Lookup Record, Create Record, Update Record) and which fields to read or write for each action. Field update behavior is set per table, not at the connection level. These table-level settings determine what the table _attempts_ to do — the connected Salesforce user's permissions are still the final gate on what actually succeeds.
+
+**There is no table-level permission isolation in Clay**
+
+You cannot restrict individual tables to specific Salesforce objects or fields. For example, there is no setting that says "only table A can update the Website field on accounts" or "only tables B and C are allowed to read contacts and opportunities." All Clay tables that use the same connection share the same Salesforce access as the connected user.
+
+If you need different tables to have different levels of access — for example, one table that can only read and another that can write — create separate Salesforce connections authenticated as different Salesforce users, each with the appropriate Salesforce permissions. Then select the correct connection when setting up each table's actions.
+
+For guidance on creating a Salesforce integration user with scoped access, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
+
 ## What Salesforce license type is required to connect Clay?
 
 The license requirement depends on which connection method you use:
@@ -158,6 +180,13 @@ Please check with your Salesforce admin before making any changes to your Salesf
 
 No, one of Clay's benefits is that you can update any object and any field in Salesforce.
 
+## Can I use a Salesforce API-only or Integration User license with Clay?
+
+It depends on which connection method you use.
+
+-   **User Sign In (OAuth):** No. API-only and Integration User licenses cannot complete the browser-based OAuth flow. Attempting to connect with one of these licenses via User Sign In produces an `OAUTH_APPROVAL_ERROR_GENERIC` error.
+-   **Client Credentials:** Yes. Client Credentials connects server-to-server without a browser login and is compatible with API-only and Integration User licenses. See the [Salesforce integration](https://university.clay.com/docs/salesforce-integration-overview) doc for setup instructions.
+
 ## Why am I seeing an "OAUTH\_APPROVAL\_ERROR\_GENERIC" error when connecting Salesforce?
 
 This error typically occurs when:
@@ -168,9 +197,26 @@ This error typically occurs when:
 
 **How to fix:**
 
-1.  Use a full Salesforce user license (not Integration User) with a profile or permission set that includes API Enabled and Connected App Access.
+1.  **API-only or Integration User license:** Switch to [Client Credentials](https://university.clay.com/docs/salesforce-integration-overview) — it works with these license types and requires no browser login. If you must use User Sign In, switch to a full Salesforce user license (not Integration User) with a profile or permission set that includes API Enabled and Connected App Access.
 2.  If your org enforces SSO, temporarily allow direct username/password login for this user, or create a non-SSO service account for authorization.
 3.  In `Setup` → `Connected Apps OAuth Usage`, verify the Clay app is listed and not blocked. If your org uses App Access Control, pre-install or whitelist the app first.
+
+## Do I need to install Clay's Connected App in my Salesforce org?
+
+Yes. Since Salesforce's August 2025 security policy update, all Connected Apps — including Clay's — must be pre-installed in your org before users can authenticate. If Clay is not installed, Salesforce blocks the OAuth flow with an `OAUTH_APPROVAL_ERROR_GENERIC` error.
+
+Clay's Connected App does not appear in the Salesforce AppExchange. It becomes available in your org only after a user with the "Approve Uninstalled Connected Apps" permission makes their first connection attempt. Salesforce System Administrators have this permission by default; custom profiles do not receive it automatically.
+
+**To install Clay's Connected App:**
+
+1.  **Register Clay in your org.** Have a Salesforce System Administrator attempt the Clay → Salesforce connection from Clay's `Settings` → `Connections`. Even if the connection fails, this attempt registers Clay in your org's Connected Apps OAuth Usage list. If you are using a custom profile (not a System Administrator), ensure the connecting user has the "Approve Uninstalled Connected Apps" permission — add it via a Permission Set in Salesforce Setup.
+2.  **Install the app.** In Salesforce, go to `Setup` → `Apps` → `Connected Apps` → `Connected Apps OAuth Usage`. Find Clay in the list and click `Install`. Confirm when prompted.
+3.  **Configure app policies.** After installation, `Manage App Policies` becomes available. Set `Permitted Users` to one of:
+    -   `All users may self-authorize` — any Salesforce user can connect to Clay.
+    -   `Admin approved users are pre-authorized` — only users explicitly granted access through Permission Sets or Profiles can connect. This is the more restrictive option, common in Enterprise security setups.
+4.  **Reconnect Clay.** Return to Clay and complete the Salesforce connection — it should succeed without the OAuth error.
+
+**Note for Salesforce sandboxes:** Each sandbox refresh assigns a new Org ID. Repeat these installation steps after any sandbox refresh.
 
 ## Why doesn't the Clay connected app appear under "Connected Apps OAuth Usage"?
 
