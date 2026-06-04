@@ -178,12 +178,13 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
 
 **Using Audiences from a Clay table:**
 
-Three Clay enrichments let you move data between a Clay table and your Audience directly.
+Four Clay actions let you move data between a Clay table and your Audience directly.
 
 -   In any Clay table, click `Add enrichment` and search for:
     -   `Upsert Audiences Record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. Use it to commit data from unsupported integrations (e.g., HubSpot), qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table.
     -   `Update Audiences Record` writes data from a table row to one or more fields on an existing Audience record. Unlike `Upsert Audiences Record`, it does not create a new record if no match is found. Both actions write only to fields that already exist in your Audience — to create a new custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
-    -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls.
+    -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls. By default, signal data is returned for the past **30 days** and the action returns a maximum of **5 signal results** per record — adjust the lookback period in the column settings to retrieve older signals, or use `Get Audiences Activity` when you need more than 5 results.
+    -   `Get Audiences Activity` retrieves specific signal activity for an Audiences record. Use it when you need more than 5 signal results or want to query a longer time window than `Lookup in Audiences` provides by default.
 
 ### Signals
 
@@ -347,3 +348,11 @@ When a Salesforce lead is converted to a contact, Audiences merges both records 
 However, the current Audiences UI contact view does not yet display a full union of all data from the converted lead. This means activity counts and last-activity dates that originated from the lead record may not appear in the contact's Activity tab even though the data exists in Audiences and is retrievable via MCP.
 
 **Note (beta):** This discrepancy is a known gap during the Audiences beta. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. The UI will be updated to show the full union of contact and converted lead data before general availability.
+
+### Why isn't a signal showing up in my Lookup in Audiences result?
+
+Three things to check:
+
+-   **The signal falls outside the default lookback window.** `Lookup in Audiences` returns signal data for the past 30 days by default. If the signal event is older than 30 days, open the column settings and increase the lookback period.
+-   **The 5-result cap was reached.** `Lookup in Audiences` returns a maximum of 5 signal results per record. If a company has more active signals than that, some may not appear. Use `Get Audiences Activity` to retrieve a larger set of signal data.
+-   **The signal hasn't fired for that record yet.** Signal results are written asynchronously and may not appear immediately after a signal run completes. If a signal should be recent but is still missing, open the signal's column header → `Edit column` and re-run the signal to refresh the data for that record.
