@@ -274,6 +274,15 @@ In token mode, every column chip inserted via the `/` picker is automatically JS
 ✅ Correct: {"name": "John", "age": 30}
 ```
 
+**Per-field required toggle**
+
+Each field in the body editor has a small toggle to its left. This toggle controls whether that field **must have a value for the row to run**:
+
+-   **Toggle ON (enabled):** Clay requires a value in the referenced column before running. If the column is empty or null for a row, that cell shows **"Some inputs missing"** and skips the row.
+-   **Toggle OFF (optional):** The field is excluded from the request body for that row. Use this for columns that aren't populated for every row (for example, optional metadata fields like `first_name` when only `email` is required by the API).
+
+**Note:** This is separate from the global **Remove empty values** toggle (Step 8 below). That toggle strips null values from the outgoing payload at runtime — it does **not** prevent "Some inputs missing" errors, which fire before the action runs when a required token is blank.
+
 ### Step 5: Header fields
 
 Headers provide authentication and specify data formats. Add them as key-value pairs.
@@ -343,15 +352,19 @@ Request Limit: 100
 Duration (ms): 60000
 ```
 
-### Step 8: Remove empty fields from request
+**⚠️ Common mistake — setting Request Limit to your total row count:** The rate limit is a sliding window that repeats throughout the run, not a one-time total. Setting `Request Limit: 4000, Duration: 145000 ms` means Clay tries to send 4,000 requests within every 145-second window — not 4,000 requests total. Check the target API's documentation for its stated rate limit (e.g., "100 requests per minute") and match those values.
 
-Toggle **ON** to automatically exclude empty, null, or undefined fields from your request.
+### Step 8: Remove empty values
+
+Toggle **ON** to automatically strip fields with empty, null, or undefined values from the payload Clay sends to the API.
 
 **Why use this:**
 
--   Prevents overwriting existing data with blank values.
--   Avoids API errors from unexpected null values.
+-   Prevents overwriting existing data with blank values when updating records.
+-   Avoids sending unexpected null values to APIs that reject them.
 -   Keeps requests clean and efficient.
+
+**Note:** This toggle operates on the outgoing payload at execution time. It does **not** prevent the **"Some inputs missing"** error — that error fires before the action runs when a body field's per-field toggle is ON but the referenced column has no value. To suppress "Some inputs missing" for optional fields, turn off the per-field toggle for that field in the body editor (see Step 4 above).
 
 ## Advanced options
 
@@ -505,6 +518,8 @@ Request Limit: 100
 Duration: 60000 ms
 ```
 
+**Note:** The rate limit is a sliding window applied repeatedly throughout the run — not a total request count. Set **Request Limit** to the API's documented per-window limit (e.g., 100 requests per 60,000 ms), not to your total number of rows.
+
 ### ✓ Optimize with field paths
 
 For large API responses, specify only needed fields:
@@ -592,6 +607,22 @@ Some providers have multiple API keys for different endpoints. Example: Apollo h
 If you used a Clay formula (e.g., `Concatenate()`, `If()`) to build the JSON body and the editor is in its default **token mode**, Clay treats the formula syntax as literal JSON — causing a parse error.
 
 **Fix:** Click the ⚙️ gear icon in the Body editor and select **Formula**. This switches to a full Clay formula editor where your expression is evaluated before the request is sent. Alternatively, remove the formula and rewrite the body in token mode using `/` to insert column values as chip references — for example, `{"email": "/Lead's Email", "score": /Lead Score}`.
+
+### "Some inputs missing" error
+
+This error means a field in your request body has its per-field toggle **ON** (required to run), but the referenced column has no value for that row.
+
+**How to fix:**
+
+**Option 1 — Turn off the per-field toggle for that field**
+
+In the body editor, find the field causing the error and click the small toggle to its left to switch it from ON to OFF. Clay will exclude that field from the request for rows where the column is empty, and the action will run on those rows.
+
+**Option 2 — Add a conditional run**
+
+Under **Advanced options → Conditional run**, add a formula that only runs the action when the required column has a value — for example, `!!{{Email}}` to skip rows where the email column is empty.
+
+**Note:** Turning on the global **Remove empty values** toggle does **not** fix this error. "Remove empty values" strips null values from the outgoing payload at execution time, but "Some inputs missing" fires before execution when a required body field's column is blank.
 
 ### Column value appears as `[object Object]` in the request body
 
