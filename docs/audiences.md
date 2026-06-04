@@ -43,8 +43,8 @@ You can import data from:
 2.  Select `People` at the top of the sync panel.
 3.  Enable the `Import` toggle.
 4.  Leave `Export Sync` and `Create new Salesforce records` off for now.
-5.  Add any SFDC fields you frequently use or want to segment by.
-    -   You can update these later.
+5.  Add any SFDC fields you frequently use or want to segment by — only fields included here will appear as columns and filter options in your Audience.
+    -   You can add more fields later. See [A Salesforce field isn't appearing in my audience filters](#a-salesforce-field-isnt-appearing-in-my-audience-filters--how-do-i-add-it) in the FAQs below.
 6.  Name the corresponding Clay fields — these become the column names in Audiences.
 7.  Select `Companies` at the top and repeat steps 3–6 for accounts.
 8.  Select `Leads` at the top of the sync panel.
@@ -272,6 +272,20 @@ The `+ Add field` option is available in the `Update Audiences Record` column ma
 Once created, the field is immediately available as a filter in any segment and as a target for `Update Audiences Record` or `Upsert Audiences Record` from any Clay table.
 
 **Note:** There is no option to add new fields directly from the Audience screen — you must go through the `Update Audiences Record` column mapping in a bulk enrichment table.
+
+### A Salesforce field isn't appearing in my audience filters — how do I add it?
+
+Only fields explicitly included in the Salesforce import field mapping are brought into Audiences as columns and made available as filter options. If a Salesforce field — including custom fields like `Account_Record_ID__c` — doesn't appear in the filter dropdown, it was not included when the import was configured.
+
+To add a missing field:
+
+1.  Click **Add data** in the top toolbar.
+2.  Find your Salesforce integration and click the **⋮** (three-dot) menu next to it.
+3.  Select **Settings**.
+4.  In the field mapping section, add the Salesforce field you want and name the corresponding Clay column.
+5.  Click **Save and review** → **Confirm**.
+
+The field will be available for filtering after the next incremental sync (typically within 15 minutes). Read-only Salesforce fields — fields shown with a lock icon in the mapping because Salesforce does not allow Clay to write them — can still be imported and used as filters. They will show a **Never write (Read-only)** export rule.
 
 ### My CRM is messy. Should I clean it up before setting up Audiences?
 
