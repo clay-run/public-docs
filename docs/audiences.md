@@ -295,10 +295,6 @@ Once created, the field is immediately available as a filter in any segment and 
 
 **Note:** There is no option to add new fields directly from the Audience screen — you must go through the `Update Audiences Record` column mapping in a bulk enrichment table.
 
-### Can I rename an existing Audience field?
-
-Audience field names cannot be changed from within the Audiences interface — there is no self-serve option to rename a field. To rename a field, contact Clay support with the current field name and the new name you want.
-
 ### A Salesforce field isn't appearing in my audience filters — how do I add it?
 
 Only fields explicitly included in the Salesforce import field mapping are brought into Audiences as columns and made available as filter options. If a Salesforce field — including custom fields like `Account_Record_ID__c` — doesn't appear in the filter dropdown, it was not included when the import was configured.
