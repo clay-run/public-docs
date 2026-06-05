@@ -177,11 +177,11 @@ Clay uses these permissions only to execute the workflows you configure. Clay do
 
 ### New channels not appearing in the channel picker
 
-Clay fetches your Slack channel list live each time you open the **Slack channel** dropdown, so newly created channels should appear automatically. If they still don't show up:
+The channel list in the **Slack channel** dropdown is cached. If a newly created channel doesn't appear, click **Refresh fields** at the top of the action's settings panel to fetch an updated list. If the channel still doesn't show up after refreshing:
 
 1. **Check whether the channel is public or private.**
-   - **Public channels** are listed automatically as soon as they exist in your Slack workspace.
-   - **Private channels** only appear if the Clay integration bot has been explicitly invited to them. Open the private channel in Slack, go to its member settings, and invite the Clay bot — then reopen the channel dropdown in Clay.
+   - **Public channels** are listed automatically once they exist in your Slack workspace. If a public channel is still missing after clicking **Refresh fields**, check that the Clay app hasn't been restricted at the workspace level by a Slack admin.
+   - **Private channels** only appear if the Clay integration bot has been explicitly invited to them. Open the private channel in Slack, go to its member settings, and invite the Clay bot — then click **Refresh fields** in Clay.
 
 2. **Reconnect your Slack integration** to get a fresh OAuth token. This resolves cases where the token has become stale or lost permissions:
    - Go to **Settings → Connections** in Clay.
@@ -196,7 +196,7 @@ Clay fetches your Slack channel list live each time you open the **Slack channel
 
 4. **Use the channel ID as a fallback.** If the channel still doesn't appear after the steps above, you can target it directly by its Slack channel ID — this bypasses the channel picker entirely:
    1. In Slack, open the channel and copy its URL. The channel ID is the alphanumeric string at the end (for example, `C0123ABCDEF`).
-   2. In Clay, click the **gear icon (⚙)** next to the **Slack channel** field and switch to formula mode.
+   2. In Clay, click the **gear icon (⚙)** next to the **Slack channel** field and switch to **Text with tokens** mode.
    3. Paste the channel ID. Clay passes this value directly to Slack's API, so the channel resolves correctly even if it doesn't appear in the picker.
 
 ### My Slack workspace requires admin approval and the Slack Marketplace link shows an error
