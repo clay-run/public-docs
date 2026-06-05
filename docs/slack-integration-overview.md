@@ -55,7 +55,7 @@ Use this action to retrieve a list of members from a specified Slack channel.
 
 **Inputs**
 
--   **Slack channel**: Enter the name of the Slack channel (without the #) from which you want to retrieve members (e.g., "fun-and-random").
+-   **Slack channel**: Select a public channel from the dropdown. The dropdown lists **public channels only** — private channels do not appear. For a private channel, switch the input to text mode and enter the channel **ID** (for example, `C04F8AWK44T`) instead of the channel name. To find a channel's ID: right-click the channel name in Slack → **Copy link** — the ID (starting with `C`) appears at the end of the copied URL.
 -   **Message**
 
 ### **Run settings**
@@ -193,6 +193,16 @@ Clay fetches your Slack channel list live each time you open the **Slack channel
    - `channels:read` — lists public channels
    - `groups:read` — lists private channels the bot has been invited to
    - `chat:write` — sends messages as the Clay bot
+
+### `channel_not_found` error when posting to a private channel
+
+If a Slack action returns `{"ok":false,"error":"channel_not_found"}` when targeting a private channel:
+
+1. **Invite the Clay bot to the channel.** In Slack, open the private channel and type `/invite @Clay`, or add the Clay app through the channel's member settings. The Clay bot must be a member of any private channel it posts to.
+
+2. **Use the channel ID, not the channel name.** The Slack API requires a channel **ID** for private channels — display names are not accepted. A channel ID starts with `C` and looks like `C04F8AWK44T`. To find it: right-click the channel name in Slack → **Copy link** — the ID is the segment at the end of the copied URL.
+
+> **Note for "Send for approval":** The channel dropdown for this action shows only public channels. For a private channel, switch the **Slack channel** input to text mode and enter the channel ID directly.
 
 ### My Slack workspace requires admin approval and the Slack Marketplace link shows an error
 
