@@ -355,6 +355,19 @@ Company and people search sources don't support run conditions. The workaround i
 
 The source returns results in a new table and is subject to a per-source cumulative limit that varies by billing plan (see [the troubleshooting section](#your-source-has-exceeded-your-plans-limit-error-on-find-companies-or-find-people) if you hit that limit). The enrichment action saves results to your existing table, returns 10 people by default with full profile data, and supports a **Reduce data for more results** option that returns up to 500 people (name and LinkedIn URL only). Use the action when you need to rank or filter contacts before saving them, or when you need more records than a single source allows.
 
+### Why does Find Contacts at Company return a different count than Find People with the same inputs?
+
+Both tools draw from the same underlying people dataset (CPJ sourcing), so with truly identical company identifiers and filter settings, they should return the same results.
+
+The most common cause of a count mismatch is the **company identifier**. When you provide a domain, each tool independently resolves it to a company entity — and that lookup can occasionally surface a parent company, subsidiary, or wrong entity. Because Find People and Find Contacts at Company process the domain lookup separately, the same domain can map to different company records, producing different result sets even when every other filter is identical.
+
+**Switch from domain to the company's LinkedIn URL** for both tools. A LinkedIn company URL maps directly to the intended company profile without a lookup step, ensuring both tools search the same company. See [Use LinkedIn URLs, not domains, as company identifiers](#use-linkedin-urls-not-domains-as-company-identifiers).
+
+If counts still differ after switching to a LinkedIn URL:
+
+- **Result limit settings**: Find Contacts at Company defaults to **10 contacts per row**; with **Reduce Data for More Results** enabled, the cap rises to **500 contacts per row** (name and LinkedIn URL only — run `Enrich Person` afterward to get full profiles). Make sure both tools are configured to the same limit.
+- **Filter parity**: Verify that job title, location, seniority, and experience filters are set identically in both tools — even a small difference shifts the result count.
+
 ### I added new companies to my company table — how do I get them through my Find People searches?
 
 **If using Find People as a source (a separate people table):**
