@@ -46,6 +46,8 @@ This tool is ideal for building targeted sales prospect lists, identifying poten
 -   **Limit results:** Set a maximum number of results per search (up to 50,000 records).
 -   **Limit per company:** Set the maximum number of people to return per company (up to 100). Note: the preview count shown before running the search reflects the total match universe across all companies and does not account for this limit — the actual number of imported rows will be lower.
 
+**Note:** If your Find People search imports only around 48–50 rows despite a much larger company list, this is a known issue: when **Limit per company** is configured, the initial import can exit early if the search preview returns fewer than 50 profiles due to how results are sampled across companies. **Workaround:** Re-open the source configuration (click the source and select **Edit**), make any minor change, and re-run — or create a new table with the same search settings. Either approach triggers the full import and returns all matching results.
+
 **Outputs:**
 
 Each result includes a **Structured Location** object in the cell details with geocoded, normalized fields — so you don't need additional AI columns to parse or reformat location data. These fields work with informal location names like "Greater Chicago Area."
