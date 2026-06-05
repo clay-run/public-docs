@@ -17,7 +17,7 @@ To delete a column:
 2. Scroll to the bottom of the menu and select `Delete`.
 3. In the confirmation dialog, click **Delete column** to confirm. If the column has downstream dependencies — such as enrichments or formula columns that reference it — they will be listed in the dialog so you can review before deleting.
 
-**Note:** Once deleted, a column is permanently removed from your table and from the columns panel — unlike tables and workbooks, deleted columns do not go to Trash and cannot be recovered. If you still see a column in the columns panel after trying to delete it, it is likely **hidden** rather than deleted. Hidden columns appear in the columns panel with a closed-eye icon next to their name. To delete a hidden column, temporarily unhide it first, then delete it from the column header dropdown.
+**Note:** Once deleted, a column is permanently removed from your table and from the columns panel — deleted columns do not go to Trash. If you still see a column in the columns panel after trying to delete it, it is likely **hidden** rather than deleted. Hidden columns appear in the columns panel with a closed-eye icon next to their name. To delete a hidden column, temporarily unhide it first, then delete it from the column header dropdown. If you need to recover a deleted column, you can restore an earlier [table version](table-versions.md) that includes it.
 
 ## Delete tables and workbooks
 
