@@ -121,3 +121,14 @@ Provider order: **Clearbit → Google → HG Insights**
 Each provider step that runs costs 1 credit. The waterfall stops at the first provider that returns a domain, so you pay only for the steps that run before a result is found. Best case (Clearbit finds a match): 1 credit. Worst case (no provider finds a domain): 3 credits.
 
 **Tip:** To avoid running the waterfall on rows that already have a domain, add an **Only run if** condition — for example, `Domain is empty` — in the waterfall's run settings.
+
+### Google step: accuracy and workarounds
+
+The Google step finds a domain by running a web search for the company name. Because it relies on search engine rankings rather than a curated database, it can return an incorrect domain when the company name appears prominently on another site — for example, a business-listing directory, a credit-check platform, or any other site that has indexed the company's profile.
+
+This is the most common cause of unexpected results from the Company Domain waterfall: Clearbit didn't find a match, so Google fell back to a web result that ranked highly for the company name — returning that site's domain instead of the company's own website.
+
+**To reduce incorrect results:**
+
+-   **Skip the Google step** — In the waterfall's **Waterfall sequence** configuration, toggle off the Google provider. The waterfall then only queries Clearbit and HG Insights, which draw from structured company databases rather than live web search. You'll get fewer overall matches but higher accuracy on the ones you do find.
+-   **Use Claygent instead** — For the most reliable domain finding, set up a Claygent column that searches for the company name and verifies the found URL belongs to the right company before returning a domain. Claygent uses AI credits rather than standard waterfall credits.
