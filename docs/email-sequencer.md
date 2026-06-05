@@ -303,3 +303,12 @@ Smartlead assigns leads into one of the following categories:
 7.  Wrong Person
 8.  Uncategorizable by Ai
 9.  Sender Originated Bounce
+
+### Why does the reply body show HTML instead of plain text?
+
+This is expected. When a lead replies using an HTML-capable email client like Microsoft Outlook, the reply arrives in HTML format. The `Reply Message` field in your campaign events table includes two sub-fields:
+
+-   `Html`: the raw HTML body as sent by the lead's email client
+-   `Text`: a plain text version of the same content
+
+To work with the reply as clean text — for example, when mapping it to a CRM note or passing it to an AI action — use the `Text` sub-field instead. If you prefer to use `Html` and strip the tags, add a formula column to do so.
