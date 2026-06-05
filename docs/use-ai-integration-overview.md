@@ -155,11 +155,22 @@ If this JSON object appears in a downstream column, that column is referencing t
 
 **To write data into named fields (recommended):** Open the column settings (click the column header → **Edit column**), go to the **Configure** tab, and add named output fields in the **Outputs** section (for example: `City`, `Industry`, `Revenue`). Each named field becomes a separately extractable sub-field you can pull into other columns with the `/` picker.
 
+### Claygent column `response` field contains explanation text instead of expected output
+
+In a Claygent column that uses the **default output schema** (no custom output fields defined), the model is asked to populate two fields as part of the same structured output: `response` (the intended main answer) and `reasoning` (the model's thinking notes). Because both fields are produced by the model as structured outputs in the same response, the model can sometimes put verbose explanation prose in `response` and the actual structured answer you want — such as a comma-separated list or a single category value — in `reasoning`.
+
+To fix this:
+
+-   **Define named output fields (recommended).** Open the column settings, go to the **Configure** tab, and add explicit output fields in the **Outputs** section — for example, a `services` field of type `string`. When you define your own fields, the model targets those instead of the generic `response`/`reasoning` defaults, making output significantly more predictable. See the [Output schema section in the Claygent builder docs](claygent-builder.md) for details.
+-   **Tighten your prompt.** Add an explicit instruction specifying the exact output format and that no explanation should be included — for example: *"Return ONLY a comma-separated list of applicable service categories. Do not include any justification or reasoning."*
+-   **Lower the Temperature.** In the column settings, set **Temperature** to **Low** or **Very Low**. Lower values make output more consistent and help the model follow format instructions reliably.
+-   **Add a downstream formula column as a safeguard.** For rows where the fields have already swapped, add a formula column that checks whether `response` looks like explanation text — for example, by detecting whether it reads as a full sentence — and falls back to the `reasoning` field when it does. This cleans up already-run data; the fixes above prevent the problem for future runs.
+
 ### Cells showing "Budget Credit Limit Reached"
 
 For AI columns using variable-priced models (such as GPT-4.1, Claude Sonnet, or Gemini 2.5 Pro) with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. This sets the maximum number of Clay credits that can be spent on a single row. If the estimated cost of running a row exceeds this limit, the cell shows **"Budget Credit Limit Reached"** and does not complete. Clicking the cell reveals the full message with the estimated cost and your current budget.
 
-To fix this, open the column settings and increase the **Clay Credit Budget** value. Consider the length of your prompt and system prompt when choosing a limit, as longer prompts cost more credits per row.
+To fix this, open the column settings and increase the **Clay Credit Budget** value. Consider the length of your prompt and system prompt when becoming a limit, as longer prompts cost more credits per row.
 
 **Note:** This setting only applies to expensive variable-priced models when using Clay's managed account. Users who connect their own API key are billed directly by the AI provider and this cap does not apply.
 
