@@ -120,7 +120,9 @@ To manually map data from the source column to columns in the destination table:
 4.  Choose to either:
     -   **Create a new column**: Name the column and click `Create column`.
     -   **Map to an existing column**: Select an existing column from the dropdown.
-        -   If the column doesn't already have a formula configured, you'll see a warning about the risk of overwriting data. If the column is empty, it's safe to proceed.
+        -   **If the column contains plain-text data** — for example, values imported from a CSV or entered manually — Clay shows a **"Data overwrite"** warning: *"Mapping to this destination column will overwrite all of its existing data. This action cannot be undone."* Confirming permanently replaces every value in that column with a formula driven by the incoming Send Table Data source. There is no merge option — only cancel or overwrite.
+        -   **To keep existing data while also bringing in new data:** Instead of mapping to the existing column, use **Create a new column** to extract the incoming field into a separate column. Then add a [Merge column](https://university.clay.com/docs/table-columns-overview#merge-columns) that references both the original column and the new one — it returns the first non-empty value per row, preserving whichever source has data.
+        -   If the existing column is already empty, the warning is safe to dismiss.
 
 Repeat this process for each field you want to extract into its own column.
 
