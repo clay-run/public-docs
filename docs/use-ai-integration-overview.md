@@ -174,6 +174,23 @@ There are two ways to resolve this:
 
 **Note:** If you updated the model using Sculptor and the error persists, the change may not have saved correctly. Open the column settings directly (click the column name → **Edit column**) and confirm the **Model** and **Account** fields reflect what you expect, then re-save and re-run.
 
+### OpenAI key shows "Success" but cells fail with "The API key is invalid"
+
+If your OpenAI API key shows a green **Success** status in Clay's connection manager but Use AI columns fail at runtime with **"The API key is invalid. Please check your API key and try again."**, your key is likely configured with **OpenAI data residency** (for example, US data residency).
+
+OpenAI's data residency keys require API calls to be routed to a regional hostname — for example, `us.api.openai.com` — rather than the standard `api.openai.com`. Clay's native OpenAI integration always routes to `api.openai.com`, so data residency keys are incompatible with the built-in Use AI integration. The connection validation probe behaves differently from a full completion request, which is why the key shows green in Clay's settings but fails when the column actually runs.
+
+**Workarounds:**
+
+1. **Use a standard (non-data-residency) OpenAI API key.** Create a new API key in your OpenAI dashboard without data residency enabled, and connect that key in Clay. Standard keys route to `api.openai.com` and work with Clay's native integration.
+
+2. **Use HTTP API enrichment pointed at the regional endpoint.** If you must use a data-residency key, bypass the native OpenAI integration and call OpenAI's API directly using the [HTTP API enrichment](http-api-integration-overview.md):
+   - Set the endpoint URL to `https://us.api.openai.com/v1/chat/completions` (replace `us` with your region if different).
+   - Add an `Authorization` header with the value `Bearer <your-api-key>`.
+   - Set the request body to a valid OpenAI chat completions payload (e.g., `{"model": "gpt-4o", "messages": [{"role": "user", "content": "{{YourColumn}}"}]}`).
+
+   This routes to the correct regional hostname and works with data-residency keys, though you won't have access to Use AI's structured output configuration, model comparison, or web research features.
+
 ### AI column stops working after editing with Sculptor
 
 If you used Sculptor to adjust an AI column and the column now shows an error or stops producing results, something in the prompt was likely broken during the Sculptor edit. Here's what to check:
