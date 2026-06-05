@@ -231,6 +231,14 @@ Salesforce processes the upsert by placing the external ID value directly in the
 
 **Recommended format:** Use only alphanumeric characters, hyphens (`-`), and underscores (`_`). Apply the same sanitized format to the corresponding field in Salesforce so records still match — for example, use `acme-corp` instead of `linkedin.com/company/acme-corp`.
 
+**Tips for choosing and handling an upsert key**
+
+-   **Recommended key for account syncs:** Use **domain** as your upsert key when syncing accounts to Salesforce. Domain is the most stable and widely-supported identifier for account matching. LinkedIn URL can serve as a supplemental identifier, but it is not ideal as a primary upsert key — LinkedIn URLs contain forward slashes that cause upsert failures unless sanitized (see above), and format inconsistencies make matching unreliable. Note that Salesforce's upsert API accepts only **one external ID field per call** — combined or compound keys are not supported.
+
+-   **Blank upsert key behavior:** If the upsert key field is blank or null for a row, the action errors out on that row — it does not skip the row or attempt a create. To avoid errors on rows with missing domain values, add a **conditional run** so the Upsert object action only fires when the domain field is populated. See [Conditional runs](https://university.clay.com/docs/conditional-runs) for setup instructions.
+
+-   **Handling a fallback key:** The cleanest approach is to enrich blank domains before your upsert runs — use Clay's enrichment columns (for example, find domain from LinkedIn URL or company name) so every row has a domain value before the action fires. If enrichment isn't possible for all rows, a two-step approach works: use a **Lookup record** column to find the account by domain, fall back to a second **Lookup record** by LinkedIn URL (with the URL sanitized per the format above), then use conditional **Create record** or **Update record** columns based on which lookup succeeded.
+
 **Inputs:**
 
 -   **Salesforce object:** The object type to look for in your Salesforce.
