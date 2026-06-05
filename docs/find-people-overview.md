@@ -20,7 +20,7 @@ This tool is ideal for building targeted sales prospect lists, identifying poten
 1.  In a workbook, click `+ Add` at the bottom.
 2.  Search for `Find People`.
 
-**Note:** The search wizard shows a preview of up to 50 results so you can check your criteria before importing. When you click **Import**, all matching results — up to the **Limit results** value you configure — are added to the table.
+**Note:** The search wizard shows a preview of up to 50 results and a total match count so you can check your criteria and size your list before importing — both are free to view. When you click **Import**, all matching results — up to the **Limit results** value you configure — are added to the table.
 
 ## `Source` **Find People**
 
@@ -106,3 +106,15 @@ Each row includes the post URL, post text, author name, author LinkedIn URL, aut
 **To get comments, reactions, or shares on a specific post:** Click `Add enrichment`, search for **Get comments on a professional post**, **Get reactions on a professional post**, or **Get shares on a professional post**, and map **Post URL** to the post URL column from your import.
 
 > **Important:** These actions require the original post URL — a URL containing `-activity-` in the path (e.g., `https://www.linkedin.com/posts/clay-hq_...-activity-7212099008951975937-ezPv`). Share URLs containing `-share-` are not valid and return an error. To get the original URL for any post: open the post on LinkedIn, click **•••** (three dots) at the top right of the post, and select **Copy link to post**. If the post is a repost of someone else's content, open the original underlying post first and copy its link.
+
+## FAQs
+
+### Does importing from Find People cost credits?
+
+**No.** Importing people from Clay's Find People source consumes no Actions and no Data Credits — the same as [Find Companies](find-companies.md). The search results come from Clay's proprietary database, so sourcing is free.
+
+The preview count displayed in the search wizard before you click **Import** is also free — it shows the total number of matching people so you can size your list without committing to an import.
+
+Any enrichments you add after importing — such as work email, mobile phone, or LinkedIn profile data — consume Actions and Data Credits as usual. See [Actions & Data Credits](actions-data-credits.md) for pricing details.
+
+**Note:** This applies to the native Find People source only. The **Find people from external search** source (Sales Navigator URL import) costs **1 Clay credit per imported result**.
