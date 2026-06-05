@@ -30,6 +30,8 @@ Sandbox mode is a special table mode that lets you safely build, test, and publi
 
 **Sculptor and sandbox mode:** On Pro and Enterprise plans, [Sculptor](https://www.clay.com/university/guide/sculptor) automatically puts your table into sandbox mode whenever it builds new columns. This lets you review and validate Sculptor's changes before they go live. A broader rollout to additional plans is coming.
 
+> **Important:** If Sculptor put your table into sandbox mode, use the **Review changes** button to publish Sculptor's columns to your live table — do _not_ click **Exit Sandbox**, which will discard all of Sculptor's proposed changes without saving them. See the [Sculptor — Sandbox mode](https://www.clay.com/university/guide/sculptor) section for the full step-by-step.
+
 ## Using sandbox mode
 
 In sandbox mode, you can test formulas, waterfalls, and enrichments. **Here are some other helpful notes:**
