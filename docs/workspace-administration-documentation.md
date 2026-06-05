@@ -273,7 +273,7 @@ If a former employee owns tables or workbooks in your workspace, there is no sep
 
 # **Single Sign-On (SSO)**
 
-Single Sign-On (SSO) is available to **Enterprise plan** customers. It is also available as a paid add-on for **Pro plan** customers — contact Clay support to add it to your plan. SSO lets your organization authenticate Clay users through your existing identity provider (IdP). Clay uses WorkOS to manage SSO and supports any IdP that uses SAML or OIDC protocols — including Okta, Azure AD (Entra ID), JumpCloud, Google Workspace, and others.
+Single Sign-On (SSO) is available to **Enterprise plan** customers at no additional cost. It is also available as a paid add-on for customers on an **annual Growth plan** — contact Clay support to add it to your plan. The SSO add-on is not available for Launch plans or monthly Growth plans. SSO lets your organization authenticate Clay users through your existing identity provider (IdP). Clay uses WorkOS to manage SSO and supports any IdP that uses SAML or OIDC protocols — including Okta, Azure AD (Entra ID), JumpCloud, Google Workspace, and others.
 
 ## **Setting up SSO**
 
