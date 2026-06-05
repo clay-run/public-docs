@@ -162,6 +162,17 @@ It depends on how the function is set up. By default, Claude does not have acces
 
 If you click `Open in Clay`, a table is created in your Clay workspace. For one-off operations — like finding a single contact's email — a table is not created by default.
 
+**Can Clay in Claude write to or add rows to my existing Clay tables?**
+
+Not natively. The Clay connector is designed for finding new contacts and companies, enriching them, and drafting outreach — all within the conversation. It doesn't have a built-in action to push rows into a table you've already built in your Clay workspace.
+
+To move data from a Claude conversation into your Clay tables:
+
+-   **Open in Clay**: After finding or enriching contacts in Claude, click "Open in Clay" to create a new table in your workspace with those results. You can then run enrichments on that table directly in Clay.
+-   **Functions**: If your ops team has configured a Clay workflow that writes to a specific table and enabled it for MCP, you can invoke it from Claude by name. (See the [Running functions](#running-functions) section above.)
+
+For batch workflows like running an email-finder waterfall on a list of companies, work directly in Clay at [app.clay.com](http://app.clay.com).
+
 **How does my admin control my credit limit?**
 
 Your workspace admin can set a default credit limit for all reps, or a per-user override, from `Settings → MCP users`. If you hit your limit, further enrichments will be blocked until the monthly reset on the 1st of each month at midnight UTC. Contact your admin to have your limit adjusted.
