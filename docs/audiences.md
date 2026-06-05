@@ -228,6 +228,31 @@ After you add a signal:
 -   Multiple signals each get their own column; the `Signal Summary` column aggregates all results. Click any row to see per-signal detail.
 -   Any other segment that filters on this signal type will also surface these results.
 
+### Connecting a workflow to a segment
+
+Connect a Clay workflow to an audience segment to automatically run it on every new member that enters. When a contact or company matches the segment's filters, the connected workflow starts within minutes.
+
+**To connect a workflow:**
+
+1.  Navigate to an audience segment and click `Send` → **Send to workflow**.
+2.  In the modal, choose **New workflow** (to create one) or **Existing workflow** (to select from your workspace).
+3.  The workflow appears as a card in the **Workflows** section of the sidebar with a **Draft** status.
+
+**Publishing the workflow trigger**
+
+Once connected, click **Publish** to activate the trigger. Publish is a dropdown with three options:
+
+-   **Publish and run [member count]** — publishes the trigger and immediately runs the workflow on all current segment members. New members added later run automatically.
+-   **Publish and run 10 [members]** — publishes the trigger and runs the workflow on a sample of 10 members to test behavior before committing to a full run. (Shown only when the segment has more than 10 members.)
+-   **Publish and don't run** — publishes the trigger so future members run automatically, but does not run on any existing members.
+
+**Running a published workflow on existing members**
+
+After a workflow is live, open the options menu (⋮) on the workflow card to manually run or re-run it on existing members:
+
+-   **Run all members that haven't run** — runs the workflow on segment members who joined before the trigger was published or who were otherwise skipped.
+-   **Force run all members** — re-runs the workflow on every current segment member, including those that already ran. A confirmation prompt appears before this action runs, since it may use credits.
+
 ### **Sending audiences to workbooks or ad platforms**
 
 When you have a segment ready, you can send it to a workbook or an ad platform to act on it — enrolling contacts in sequences, running account-based ads, or processing records further before taking action.
