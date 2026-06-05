@@ -87,7 +87,7 @@ To manually run the remaining cells for a specific column:
     This triggers all cells in that column that are:
     -   **Empty** — never been run
     -   **Errored** — previously ran but encountered an error
-    -   **Stale** — previously ran successfully, but an input value has changed since then
+    -   **Out-of-date** (also referred to as **stale**) — the cell ran before but is no longer current. In the UI, out-of-date cells show a clock icon with the tooltip "This cell is out of date." A cell becomes out of date when its inputs have changed since it last ran, or when auto-run is disabled and the cell hasn't been re-triggered. For a full explanation, see the **Understanding the out-of-date indicator** section in [Table management settings](table-management-settings.md).
 
 3.  Repeat for each enrichment column you want to run.
 
