@@ -35,6 +35,8 @@ To enable or disable auto-dedupe:
 4.  Select the column to be used for identifying duplicate values.
 5.  Choose **Keep oldest row** or **Keep newest row** to set which duplicate is retained.
 
+**Note:** Auto-dedupe monitors a **single column** only. If you need to deduplicate on a combination of fields — for example, treating each unique `OpportunityId + ContactId + Role` as a distinct row — use the **Uniqueness fields** setting in your source configuration instead (e.g., the [Salesforce SOQL source](salesforce-soql.md)). Source-level uniqueness fields apply at import time, before rows reach the table.
+
 ## Auto-run
 
 Auto-run automatically runs enrichments whenever rows are added or edited, keeping your table current. You can control this feature at multiple levels: table-level (master control), column-level (individual control), and through conditional logic.
