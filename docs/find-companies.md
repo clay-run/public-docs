@@ -23,7 +23,7 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
 
 1.  Configure the source to your preferences:
     -   **Industries** to include and exclude
-    -   **Company size**
+    -   **Company size** — The self-reported size band on the company's profile (e.g., 11–50, 51–200). Select one or more bands from the dropdown.
     -   **Annual revenue ranges** — Filter by revenue brackets from $0–$500K up to $100B+.
     -   **Funding amount**
     -   **Company types** — Privately Held, Public Company, Partnership, Self Employed, Non Profit, Educational, Self Owned, or Government Agency.
@@ -31,7 +31,7 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
         -   **Exact phrase matching:** Wrap multi-word terms in single or double quotes to search for that exact phrase. For example, searching for "Google Cloud" finds companies with "Google Cloud" in their description — not just companies that mention Google and cloud separately. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are stripped out even with quoted phrases.
     -   **Semantic company description** — Enter a free-text description to help rank results based on how closely they match your ideal company profile (e.g., "B2B fintech company selling to mid-market banks").
     -   **Location** — Filter by country, and separately by city or state. Both support include and exclude.
-    -   **Minimum member count** / **Maximum member count** — Filter by the number of LinkedIn members associated with the company.
+    -   **Estimated employee count** — Filter by a numeric count of estimated employees (enter a minimum and/or maximum). This is a separate field from **Company size** — see the [FAQ below](#why-do-company-sizes-and-estimated-employee-count-return-different-results-for-the-same-range) for why the same numeric range can surface different companies.
     -   **AI filters** — Clay-generated attributes applied to company profiles:
         -   **Industries** and **Subindustries** (include or exclude)
         -   **Revenue streams** — e.g., Subscriptions/Recurring, Professional Services, Transaction Fees, Advertising, Licensing/IP
@@ -40,6 +40,7 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
         -   **Vendors** — e.g., AWS, Salesforce, HubSpot
         -   **Products** — e.g., Amazon EC2, Salesforce Sales Cloud
         -   **Main categories** and **Parent categories**
+        Product and vendor names in the filter come from BuyerCaddy's catalog and may not match a company's public brand name exactly. To identify what a product name refers to, run the search and check the **Vendor** field in the cell details for any returned row — it shows the company behind the product.
     -   **Domain filters:**
         -   **Has domain** — Whether a company has a resolved domain.
         -   **Domain is live** — Whether the company's domain is currently active.
@@ -97,3 +98,12 @@ Any enrichments you add to the table afterward (e.g., finding emails, enriching 
 If the count still doesn't match after the import finishes, the **preview count** (e.g., "Showing 50 of ~39,869 results") is an approximate figure — the `~` tilde prefix in the UI indicates the total is estimated using a fast approximate count, not an exact query. The actual import can return a slightly different total, and this is normal.
 
 Also check your **Limit results** setting: the import won't exceed whatever limit you've configured (default 10,000).
+
+### Why do Company sizes and Estimated employee count return different results for the same range?
+
+These two filters measure different things:
+
+-   **Company sizes** is a dropdown that selects categorical size bands — 11–50, 51–200, 201–500, etc. — reflecting the size range a company has reported on its profile.
+-   **Estimated employee count** is a numeric min/max filter based on a separately computed count of estimated employees derived from profile data.
+
+Because the two values are sourced independently, a company whose reported size band is "51–200" may have a computed employee count of 250 — or vice versa. Filtering on one versus the other can return a different set of companies even when the numbers appear to overlap.
