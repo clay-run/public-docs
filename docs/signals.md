@@ -28,7 +28,8 @@ To start a signal, you'll **need a table with** companies or contacts you want t
 **While in your table:**
 
 1.  Click `Actions`, then select one of the `Monitor for...` options—new hires, job changes, or promotions.
-2.  Select the table you want to monitor and identify the correct identifiers (website, LinkedIn URL, etc.)
+2.  Select the **company table** you want to monitor, then select a **view** from that table — the signal will only check rows visible in that view (not the entire table). Identify the correct company identifiers (website, LinkedIn URL, etc.).
+    -   **Note:** The table and view cannot be changed after the signal is saved. To monitor a different set of companies, create a new signal.
 3.  Configure filters for the Signal.
 4.  Set the frequency that the signal should run.
 5.  Optionally, add enrichments to your table to gather additional useful data.
@@ -56,6 +57,17 @@ Most Signals are available on any paid plan.
 ### Why is my Signal returning 0 results?
 
 Signals require a connected data source to run against — either a source table containing the companies or contacts you want to monitor, or an audience segment. Without a linked source table or audience segment (or if the linked table is empty or has been deleted), the Signal has nothing to check and will return 0 results. Confirm that your Signal is connected to an active Clay table with valid company identifiers (domain or LinkedIn URL) or contact LinkedIn URLs, or to a populated audience segment.
+
+### How do I extend my signal to cover more companies?
+
+A signal monitors only the companies visible in the **view** you selected from your source table when setting it up. Once the signal is saved, the table and view selection are locked and cannot be changed.
+
+To cover more companies with the existing signal:
+
+-   **Add more rows to the source table.** New companies added to the source table will be picked up automatically on the signal's next scheduled run, as long as they appear in the selected view.
+-   **Broaden the selected view's filters.** In the source company table, edit the filters on the view the signal is using so it includes more rows — the signal will check those additional rows on the next run.
+
+To monitor a completely different set of companies (using a different view), create a new signal.
 
 ### I want to find job postings by location or title — is that a Signal?
 
