@@ -272,9 +272,23 @@ Use this action to convert a lead.
 
 ## Working with picklist fields
 
-When updating picklist fields in Salesforce from Clay, you need to match the exact format Salesforce expects.
+### How picklist fields appear in the Map fields panel
+
+When you add a Salesforce picklist field in **Map fields**, the input looks different from a regular text field:
+
+-   **Text/number fields** show a free-text input with "Type / to Insert column" — click in the box and type `/` to reference a Clay column.
+-   **Picklist fields** show a **dropdown** listing the available Salesforce options (for example, "Up" or "Down"). Selecting an option sets a **static value** that every row sends to Salesforce.
+
+**To map a Clay column dynamically** (so each row sends the value from that column), click the **gear icon (⚙️)** to the right of the picklist dropdown. A mode picker appears with two options:
+
+-   **Dropdown** — pick a static value from the Salesforce picklist options (the default)
+-   **Text with tokens** — switches to a formula input where you can type `/` to insert a Clay column reference
+
+When using **Text with tokens** mode, the column's value is sent to Salesforce for each row. The value must still exactly match a valid Salesforce picklist option — see format requirements below.
 
 ### Single-select picklist (dropdown)
+
+When updating picklist fields in Salesforce from Clay, you need to match the exact format Salesforce expects.
 
 **Format:** Exact text match (case-sensitive)
 
