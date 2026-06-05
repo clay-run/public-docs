@@ -244,11 +244,11 @@ When you have a segment ready, you can send it to a workbook or an ad platform t
 
 **Syncing to multiple ad platforms**
 
-Each audience can only be synced to one ad platform at a time — there is no option to add a second platform to an existing sync. To push the same segment to two platforms (for example, both Meta and LinkedIn):
+You can add multiple ad platforms to a single audience sync. After your initial sync is active, an **Expand your reach** section appears on the Sync tab showing available platforms you haven't yet connected. Click **Add** next to any platform to configure field mappings for that provider — it will sync on the same schedule as your existing provider.
 
-1.  Duplicate the audience by re-creating the same filters in a new audience segment.
-2.  On the duplicate, click `Send` → `Sync to ad platforms` and select the second platform.
-3.  The two audience syncs are independent — deactivating or removing a sync on one audience does not affect the other.
+**Notes:**
+-   You cannot add a platform while a sync is currently in progress — wait for the active sync to complete first.
+-   Google Ads is only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience uses Clay's company/people search (CPJ) data, Google Ads will not be available to add.
 
 ## Writing back to your CRM
 
@@ -325,7 +325,7 @@ Yes. Segments update in real time as records enter or change, typically within 1
 
 ### Can I sync an audience to multiple ad platforms?
 
-Not directly — each audience supports one active ad platform sync at a time. To push the same segment to both Meta and LinkedIn, duplicate the audience and set up a separate sync on the duplicate pointing to the second platform. The two audiences and their syncs are fully independent of each other.
+Yes — you can add multiple ad platforms to a single audience sync. After your initial sync is active, an **Expand your reach** section appears on the Sync tab. Click **Add** next to any available platform to configure field mappings for that provider. The new platform will sync on the same schedule as your existing provider.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
