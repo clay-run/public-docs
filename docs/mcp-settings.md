@@ -79,6 +79,16 @@ No. Clay's MCP integrations are pre-built apps within each supported platform's 
 
 There is no generic Clay MCP server URL to enter manually. The "Add MCP server" configuration screen in tools like Glean is for custom third-party servers — Clay's integration connects through Glean's built-in app directory, not that form.
 
+### Can I connect Clay's MCP server through a third-party MCP gateway or client?
+
+Not currently. Clay's MCP OAuth flow only accepts redirect URIs from supported platforms. If you try to register a client via Dynamic Client Registration through a third-party MCP gateway, you will see this error:
+
+```
+redirect_uris.0: redirect_uri must be from an allowed domain
+```
+
+There is no self-service way to add a custom redirect URI to Clay's OAuth allowlist. If your organization needs to connect Clay through a specific third-party MCP client or gateway, reach out to Clay support with the redirect URI(s) you require. Adding a new platform requires a code change on Clay's side.
+
 ### What role should I assign to team members who will only use Clay through MCP?
 
 Any team member who needs to use Clay through an AI tool (Claude, ChatGPT, Glean, or xAI) must first be added to your Clay workspace. When inviting them, assign the **Sales Rep** role.
