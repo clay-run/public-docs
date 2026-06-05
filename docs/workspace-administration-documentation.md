@@ -154,7 +154,7 @@ To update your workspace picture:
 To update your workspace name:
 
 -   Go to `Settings` > `Workspace settings`.
--   Update the `Workspace name` field with your desired name.
+-   Update the `Workspace name` field with your desired name.\
     -   This name will be displayed across your workspace and should be accessible for team identification.
 -   Click `Save` to confirm your changes.
 
@@ -273,7 +273,7 @@ If a former employee owns tables or workbooks in your workspace, there is no sep
 
 # **Single Sign-On (SSO)**
 
-Single Sign-On (SSO) is available to **Enterprise plan** customers. It is also available as a paid add-on for **Pro plan** customers — contact Clay support to add it to your plan. SSO lets your organization authenticate Clay users through your existing identity provider (IdP). Clay uses WorkOS to manage SSO and supports any IdP that uses SAML or OIDC protocols — including Okta, Azure AD (Entra ID), JumpCloud, Google Workspace, and others.
+Single Sign-On (SSO) is available to **Enterprise plan** customers at no additional cost. It is also available as a paid add-on for customers on an **annual Growth plan** — contact Clay support to add it to your plan. The SSO add-on is not available for Launch plans or monthly Growth plans. SSO lets your organization authenticate Clay users through your existing identity provider (IdP). Clay uses WorkOS to manage SSO and supports any IdP that uses SAML or OIDC protocols — including Okta, Azure AD (Entra ID), JumpCloud, Google Workspace, and others.
 
 ## **Setting up SSO**
 
@@ -321,7 +321,7 @@ An **integration account** is a configured connection between your workspace and
 
 -   `Account / Key Name`: A user-defined name to identify the account, such as "Marketing HubSpot Account" or "Development Anthropic Key." This helps distinguish it from other accounts in the same service.
 -   `Account Credentials`: The authentication details (e.g., API keys or OAuth tokens) required to connect securely to the external service. Credentials can be tested or updated if they become invalid.
--   `Default Status`: An optional setting that makes the account the default choice for its service, streamlining its use in workflows.
+-   `Default Status`: An optional setting that makes the account the default choice for its service, streamlining its use inorrhea workflows.
 
 ## **Types of accounts**
 
