@@ -34,7 +34,7 @@ Connect to Salesforce via Client Credentials for server-to-server access. No bro
 
 **Setting up in Salesforce**
 
-1.  In Salesforce Setup, search for `External Client App Manager` in Quick Find and select it. Create a new external client app — see [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&language=en_US&type=5) for full creation steps. Once created, click on your app and select `Edit`.
+1.  In Salesforce Setup, search for `External Client App Manager` in Quick Find and select it. Create a new external client app — see [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&language=en_US&type=5) for full creation steps. When configuring the app's OAuth settings, make sure **Access and manage your data (`api`)** is included in the OAuth scopes — without it, Salesforce returns `invalid_grant: no valid scopes defined` when Clay tries to connect. Once created, click on your app and select `Edit`.
 2.  In the `Settings` tab, enable the flow at the app level:
     -   Under `Flow Enablement`, check `Enable Client Credentials Flow`.
 3.  In the `Policies` tab, enable the flow at the org level. This is the setting most commonly missed — if it's off, the flow is blocked regardless of the Settings toggle:
@@ -62,6 +62,15 @@ This error appears during the OAuth flow and is most commonly caused by one of t
 -   **Connected app not pre-approved:** If connected apps require pre-approval, Salesforce may block Clay. In Salesforce Setup, go to `Connected Apps OAuth Usage` and confirm Clay is not blocked. Set `IP Relaxation` to `Relax IP Restrictions` and `Permitted Users` to `All users may self-authorize`.
 -   **SSO enforcement:** If SSO is enforced, the OAuth approval screen may be blocked. Try a non-SSO user, or create a non-SSO service account.
 -   **Missing permission:** The user's profile may lack `Approve uninstalled connected apps`. Ask a Salesforce admin to grant it, or connect with a System Administrator account.
+
+-   **`invalid_grant: no valid scopes defined` when connecting via Client Credentials**
+
+This error means the Salesforce Connected App (or external client app) has no OAuth scopes configured, so Salesforce rejects Clay's token request entirely. To fix:
+
+1.  In Salesforce, go to `Setup` → `App Manager` (for a traditional Connected App) or `External Client App Manager` (for an external client app), and open the app used for Clay.
+2.  Under **OAuth Settings**, add the **Access and manage your data** (`api`) scope.
+3.  Click `Save`. Salesforce can take up to 10 minutes to propagate scope changes.
+4.  Return to Clay and reconnect: `Settings` → `Connections` → add or reconnect your Salesforce `Client Credentials` connection.
 
 ### Testing your connection
 
