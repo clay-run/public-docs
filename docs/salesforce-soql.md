@@ -28,7 +28,11 @@ Build lists of Salesforce records using custom SOQL queries. Query across object
 **Inputs:**
 
 -   **SOQL Query:** Your SELECT statement with explicitly listed fields (e.g., `SELECT Id, Name, Industry FROM Account WHERE Industry = 'Technology' LIMIT 100`).
--   **Unique Fields (Optional):** Select which field(s) determine record uniqueness for deduplication (e.g., `Id`, `Email`).
+-   **Uniqueness fields (Optional):** Select one or more fields that together uniquely identify each record. Clay hashes the values of all selected fields to form a composite key, which it uses to skip duplicate rows during import and re-syncs.
+
+    You can select **multiple fields** to create a compound key. For example, if you're importing Opportunities with Contact Roles — where the same contact can appear multiple times with different roles — select `OpportunityId`, `ContactId`, and `Role` together. Clay treats each unique combination as a distinct row, preserving all contact-role pairs.
+
+    If no fields are selected, Clay uses the entire row content as the unique identifier, which can cause duplicate rows when individual field values change across syncs.
 
 **Query requirements:**
 
@@ -129,7 +133,7 @@ Yes. In your source settings, set **Run this source** to **On a schedule** and c
 
 ### If I update my SOQL query to add new fields, will existing rows get those fields?
 
-Not by default. When you update your SOQL query to add fields to the SELECT clause, Clay will only bring in net-new records — accounts not already matched by your unique ID. Existing rows won't be updated with the new field data.
+Not by default. When you update your SOQL query to add fields to the SELECT clause, Clay will only bring in net-new records — those not already matched by your configured **Uniqueness fields**. Existing rows won't be updated with the new field data.
 
 To populate the new field on existing rows, you have two options:
 
