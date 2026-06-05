@@ -2,9 +2,10 @@
 title: Run progress
 source_url: https://university.clay.com/docs/run-progress
 description: Clay provides multiple ways to track and monitor run progress
-  across your tables, including how to manually trigger unrun enrichment cells,
-  run enrichments on a specific subset of rows, troubleshoot cells stuck in
-  Queued status, and diagnose enrichments that aren't triggering automatically.
+  across your tables, including how to set a row limit to control which rows are
+  processed, manually trigger unrun enrichment cells, run enrichments on a
+  specific subset of rows, troubleshoot cells stuck in Queued status, and
+  diagnose enrichments that aren't triggering automatically.
 last_synced: 2026-04-26T01:40:34.620Z
 ---
 
@@ -105,6 +106,21 @@ To run enrichment or waterfall columns on a targeted subset of rows — for exam
 This triggers all enrichment and waterfall columns on those rows only, leaving other rows unaffected.
 
 **To run a single column on specific rows only**, select the cells in that column for your target rows, then right-click → **Run [N] cells**.
+
+## Setting a row limit
+
+If you want to process only a portion of your table — for example, to find emails for the first 1,000 rows before committing credits to a full run — use the **Row limit** and **Starting row** settings in the toolbar.
+
+Click the **rows** button in the table toolbar (it shows the count of currently visible rows out of the total, for example **6,236/6,236 rows**). A popover opens with two fields:
+
+-   **Starting row** — The row to start from. Leave blank to begin at row 1. Enter a number to skip ahead — for example, enter `1001` to start processing from row 1,001 onward.
+-   **Row limit** — The maximum number of rows to include. Enter `1000` to cap the table at 1,000 rows. Leave blank (or click **Show all rows**) to remove the limit.
+
+Click **Save changes** to apply. The toolbar updates to show the new visible count (for example, **1,000/6,236 rows**), and enrichments will only run on those rows going forward.
+
+To remove the limit and return to the full table, click **Show all rows** in the same popover.
+
+> **Note:** The column and table-level progress bars always count _all_ rows in the table — including rows outside your current row limit. The limit controls which rows are visible and eligible to run, but the progress percentages reflect the full table.
 
 ## Troubleshooting cells stuck in Queued status
 
