@@ -194,6 +194,11 @@ Clay fetches your Slack channel list live each time you open the **Slack channel
    - `groups:read` — lists private channels the bot has been invited to
    - `chat:write` — sends messages as the Clay bot
 
+4. **Use the channel ID as a fallback.** If the channel still doesn't appear after the steps above, you can target it directly by its Slack channel ID — this bypasses the channel picker entirely:
+   1. In Slack, open the channel and copy its URL. The channel ID is the alphanumeric string at the end (for example, `C0123ABCDEF`).
+   2. In Clay, click the **gear icon (⚙)** next to the **Slack channel** field and switch to formula mode.
+   3. Paste the channel ID. Clay passes this value directly to Slack's API, so the channel resolves correctly even if it doesn't appear in the picker.
+
 ### My Slack workspace requires admin approval and the Slack Marketplace link shows an error
 
 If your Slack workspace requires admin approval before installing apps, Slack's approval email will tell you to complete the installation from the Slack Marketplace. However, Clay connects to Slack through a direct OAuth flow — it does not install as a Slack Marketplace app. That Marketplace link is a dead end for Clay, and clicking it will show an error.
