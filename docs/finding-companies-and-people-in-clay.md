@@ -304,6 +304,8 @@ This most often happens when a column containing emails, names, company names, o
 
 **If you only have email addresses:** Leave the **Professional URL** field empty and map only the **Email** field. The action accepts either input. Email-only lookups do not produce this error — if no matching profile exists for the email, the cell shows **"No profile found"** rather than an error.
 
+**If email-only lookups return "No profile found" frequently:** Email matching has lower coverage than LinkedIn URL matching for Enrich Person. To improve match rates when you only have email addresses, first find the LinkedIn profile URL using an email-based enricher — for example, Apollo's **Enrich Person** action accepts an email address and returns a LinkedIn profile URL in the output. Map that LinkedIn URL to the **Professional URL** field in Enrich Person for better results.
+
 After correcting the mapping, right-click the column header → **Run column** → **Run [N] empty or out-of-date rows** to re-run the affected cells.
 
 ### "Your source has exceeded your plan's limit" error on Find Companies or Find People
