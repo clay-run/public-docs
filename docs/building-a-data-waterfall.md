@@ -23,6 +23,19 @@ To run a pre-built waterfall:
 5.  Optionally, choose to output the name of the successful provider and hide the provider columns for a cleaner table view.
 6.  Configure Run settings, including enabling auto-update or setting conditions for when the waterfall should run.
 
+## Editing an existing waterfall
+
+To add, remove, or reorder providers in a waterfall you've already saved:
+
+1.  Click the waterfall column header to open the column menu.
+2.  Select **Edit column**.
+3.  If the waterfall shows a **Quick setup** / **Full configuration** tab selector, click **Full configuration**.
+4.  In the **Waterfall sequence** section, you can:
+    -   Click **Add provider** to add a new data provider.
+    -   Drag providers up or down to reorder them.
+    -   Click the delete icon next to a provider to remove it.
+5.  Click **Save**.
+
 ## Creating a waterfall
 
 1.  While in a table, click `Add column` (which you will find at the far right side).
