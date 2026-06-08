@@ -452,7 +452,7 @@ Clay offers three plans. For a full comparison of features and pricing, visit ou
 
 ### **Workspace row limit**
 
-All workspaces have a global row limit of **10 million rows** across all tables. This cap counts rows in every table in your workspace, regardless of plan. If you reach this limit, you may see the error **"Your Subscription Does Not Allow Any More Records."** Permanently deleting unused tables and rows will reduce your workspace row count.
+All workspaces have a global row limit of **10 million rows** across all tables. This cap counts rows in every table in your workspace, regardless of plan. If you reach this limit, you may see the error **"Your Subscription Does Not Allow Any More Records."** Deleting unused tables reduces your workspace row count immediately — rows are removed from your limit as soon as a table is deleted.
 
 ## **Managing your plan**
 
