@@ -115,6 +115,22 @@ To use a Long Text Area (or other non-filterable) field as a lookup key in Clay,
 
 Once the value is in a filterable Text field, it will appear in the Clay Lookup Record dropdown and can be used as a match key.
 
+## Why am I getting "Error: Bad Request" on the Lookup Record action?
+
+If rows return **"Error: Bad Request"** when using the **Lookup Record** action on a Salesforce object like Account, the most common cause is Salesforce's **15 cross-object reference limit**.
+
+When Clay's Lookup Record action runs, it queries Salesforce using `SELECT FIELDS(ALL)` — pulling every field on the record, including fields that reference other Salesforce objects (parent account, owner, custom relationship fields, and so on). If the object you're querying has more than 15 cross-object reference fields in your org, Salesforce rejects the entire query with a 400 error before any matching logic runs.
+
+**Fix: switch to Lookup Records via SOQL and select only the fields you need**
+
+```sql
+SELECT Id, Name, Website FROM Account WHERE Website LIKE '%/Company Domain%' LIMIT 5
+```
+
+By naming fields explicitly in the `SELECT` clause instead of using `FIELDS(ALL)`, you avoid fetching cross-object references you don't need and the query stays within Salesforce's limit. Use the `/` picker in the SOQL query editor to insert Clay column values into the `WHERE` clause.
+
+For full SOQL syntax tips, see the **Lookup records via SOQL** section of the [Salesforce integration overview](https://university.clay.com/docs/salesforce-integration-overview).
+
 ## Will Clay create duplicate records in Salesforce?
 
 No. By default, Clay prevents duplicate records. However, you can allow duplicates by enabling the "Duplicate Rule Override" in the Create Record enrichment.
