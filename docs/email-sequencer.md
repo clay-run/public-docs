@@ -68,6 +68,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 7.  Explore `Advanced settings` if needed:
     -   `Webhooks`: Route campaign events to a specific Webhook destination instead of the default Campaign Events Clay table. Example: Send Smartlead metrics to tools like OutboundSync or Enrichley for downstream routing.
     -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled)
+    -   `Pause leads at the same company on reply`: When a lead replies, automatically pause other leads with the same email domain. Off by default.
 8.  Go to `Leads` to preview the messages for all people in your campaign
     -   `Send test email` to verify your template looks right
     -   Click the `Pencil` icon to spot-edit a message for a specific lead
