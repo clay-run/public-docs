@@ -74,7 +74,7 @@ To create a new system user token, you first need to create an app:
 2.  Choose `Create a new app ID`.
 3.  Name your app.
 4.  Select the use case as `Other`.
-5.  Set the app type to `Business`.
+5.  Set the app type to `Business`.</s>
 6.  Click `Create app`.
 7.  Ensure the app has `Ads Management Standard Access` permissions. You can find this setting in `App Review` > `Permissions and Features`.
 8.  Navigate to `Business Settings` > `Users` > `System users` and add a new system user with `Admin` access.
@@ -164,3 +164,17 @@ Yes, you can connect multiple LinkedIn or Meta ad accounts and choose which acco
 ### **How much does it cost to sync audiences?**
 
 Each record exported or synced to an ad platform consumes 1 action (for the export/sync work). Data credits are consumed for any enrichments you run in the table to build your audience (e.g., finding emails, enriching profiles). The export itself does not consume additional data credits.
+
+### **Can I use hashed emails for ad targeting in the EU?**
+
+Under GDPR, hashed personal emails are still considered personal data — hashing is a pseudonymization technique, not anonymization. This means EU data-protection rules apply regardless of whether you send a raw or hashed email to an ad platform.
+
+**First-party contacts** (contacts already in your CRM or database who have an existing relationship with your business) can generally be enriched with the `Hashed Emails for Ads` waterfall and activated for EU ad targeting, provided you have a valid GDPR legal basis — such as legitimate interest or consent — for using their data for advertising.
+
+**Net-new contacts discovered through Clay** are a different matter. Using third-party-sourced hashed personal emails for Custom Audience targeting in the EU carries significant GDPR risk, because you likely have no established legal basis to process those individuals' data for advertising.
+
+**EU-compliant approaches:**
+-   **Lookalike targeting (TOFU):** Export your first-party CRM contacts → run the `Hashed Emails for Ads` waterfall → upload to Meta or LinkedIn → build a Lookalike audience in the platform → exclude the seed list.
+-   **ABM targeting:** Run account-based campaigns against named accounts using your CRM contacts, keeping all data first-party.
+
+_This is informational guidance only, not legal advice. Always consult your legal team before activating audiences using EU-based contact data._
