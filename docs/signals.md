@@ -101,7 +101,7 @@ Use **Find Active Job Openings**, not the PredictLeads **Find open jobs** enrich
 
 This is expected behavior. **Find Jobs returns one row per job posting**, not one row per company. If a company has three open roles matching your criteria, it will appear as three separate rows — one for each posting. Each row represents a distinct job, and you can see the specific job title and URL in the cell details.
 
-To cap how many postings are returned per company, open the **Limit results** section in the Find Jobs settings and set a **Limit per company** value (maximum: 100). Setting this to 1, for example, returns only the most recent matching posting per company, which keeps each company to a single row and makes it easier to treat the table as a company list.
+The **Limit results** section in Find Jobs settings includes a **Limit per company** field (maximum: 100). However, this setting is currently not reliably enforced — due to how job data is batched internally, your results may include more postings per company than the value you set. To work around this, use the global **Limit results** field to cap the total number of rows returned, apply more specific job title keyword filters to narrow the search before importing, or filter the results table by company name after import to keep only the most relevant postings.
 
 ### Why did my signal use far more credits than I expected?
 
