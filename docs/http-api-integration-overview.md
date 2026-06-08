@@ -22,6 +22,7 @@ An **HTTP API** uses HTTP methods (GET, POST, PUT, DELETE) to enable communicati
 -   Update contact information in your database.
 -   Access public datasets (NYC Open Data, government APIs).
 -   Connect to custom tools without native Clay integrations.
+-   Push enriched records to a data warehouse or data lake (e.g., POST to an AWS API Gateway endpoint that writes to S3).
 
 ## Choose your path
 
@@ -408,7 +409,7 @@ Use HTTP API as source when you want to:
 -   ✅ Build lists from external APIs.
 -   ✅ Import datasets from third-party services.
 -   ✅ Create tables from endpoints returning multiple records.
--   ✅ Start workflows with data from external sources.
+-   ✅ Start workflows with external data.
 
 **Example use cases:**
 
@@ -698,6 +699,14 @@ When copying from API documentation, paste your code into a plain text editor fi
 ### Can I use HTTP API with pagination?
 
 Currently, HTTP API as source does not support pagination. The import will retrieve only the data from a single API response. Pagination support may be added based on customer demand.
+
+### Can I use HTTP API to push enriched data to AWS (e.g., S3 via API Gateway)?
+
+Yes. Use the **HTTP API enrichment** with a **POST** method to send enriched records to an AWS API Gateway endpoint. Set up API Gateway to trigger a Lambda function that writes the payload to S3 (or another AWS data store).
+
+**Important — AWS authentication method matters:** This pattern works when your API Gateway is configured with **API key or header-based authentication**. API Gateway endpoints secured with **AWS IAM (SigV4 signing)** are not compatible with Clay's standard header-based auth. Confirm your API Gateway's authentication method before building the workflow.
+
+**Note:** HTTP API enrichment processes one row at a time — each cell sends a separate POST request to your endpoint. There is no native batch mode.
 
 ### Can I paste a cURL request directly into Clay?
 
