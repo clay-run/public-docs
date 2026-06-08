@@ -191,8 +191,8 @@ Once your source is connected, toggle on `Import sync` to keep your Audiences da
 
 When enabled, `Import sync` runs:
 
--   **Incremental imports every 15 minutes** — picks up new or changed records
--   **A full sync once a week** — refreshes all data
+-   **Incremental imports:** every **15 minutes** when a timestamp field (cursor) is configured — picks up new or changed records; every **12 hours** when no timestamp field is set — reruns the full SQL query
+-   **A full sync once a week** — refreshes all data and reconciles deleted records
 
 You can also trigger a manual sync at any time from the source settings, which is useful when testing.
 
