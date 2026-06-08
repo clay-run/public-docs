@@ -355,30 +355,13 @@ The answer depends on which feature you're using:
 
 Across both, high-importance profiles (frequently accessed records, decision-makers, active companies) refresh more often than long-tail profiles.
 
-### Find People at These Companies source — FAQ
+### Can I run a people search only on companies that meet certain criteria?
 
-**Can I change the company table after creating the source?**
+Company and people search sources don't support run conditions. The workaround is to create a **filtered view** of your company table (showing only the rows you want), then run **Find People at These Companies** from that view. The source will only process the companies visible in that view.
 
-No — the company table linked to a Find People at These Companies source cannot be changed after the source is created. If you need to point the source to a different company table, you'll need to create a new source. When creating the new source, you can reuse your filters by clicking **See past searches** at the top of the filter panel.
+### What's the difference between the people search source and the enrichment action?
 
-**Why do I get "Missing Input" on Company Table Data for some rows?**
-
-See [Company Table Data shows "Missing Input"](#company-table-data-shows-missing-input-in-the-people-table) above.
-
-**Does the source re-import contacts that were deleted from my table?**
-
-Yes. If you delete rows from your people table and re-run the source, those contacts will be reimported — deduplication only skips records still present in the table at run time.
-
-### Find People at These Companies runs across all companies instead of just new ones
-
-When **Find People at These Companies** is set up as a source, re-running it searches across all companies in the linked table — including ones that already have matching people. It does not run only for newly added companies.
-
-**To run Find People only for specific companies:**
-
-1.  Create a **filtered view** of your company table showing only the rows you want to target (for example, companies added in the last 7 days).
-2.  Run **Find People at These Companies** from that filtered view — the source will only process the companies visible in the view.
-
-To reuse your existing search filters without rebuilding them, open the current Find People source, click **Save search** at the top of the filter panel to save your criteria, then reference that saved search when launching the new run from the filtered view. See [Saved searches](saved-searches.md) for details.
+The source returns results in a new table and is subject to a per-source cumulative limit that varies by billing plan (see [the troubleshooting section](#your-source-has-exceeded-your-plans-limit-error-on-find-companies-or-find-people) if you hit that limit). The enrichment action saves results to your existing table, returns 10 people by default with full profile data, and supports a **Reduce data for more results** option that returns up to 500 people (name and LinkedIn URL only). Use the action when you need to rank or filter contacts before saving them, or when you need more records than a single source allows.
 
 ### I added new companies to my company table — how do I get them through my Find People searches?
 
