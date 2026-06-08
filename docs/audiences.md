@@ -151,7 +151,7 @@ After importing, you will want to create new audiences, so you can appropriately
 To create a new audience:
 
 1.  Click `People` or `Companies` in the left sidebar.
-2.  Click the `+` next to `My Audiences`.
+2.  Click **New audience** in the top-right corner of the list, or click the `+` next to `My Audiences` in the sidebar.
 3.  Select `Criteria` and then add a `Filter` or `Filter group`.
 
 ### Filter operators by field type
