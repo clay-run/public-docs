@@ -3,7 +3,7 @@ title: Signals in Clay
 source_url: https://university.clay.com/docs/signals
 description: Learn about Signals, a way to monitor changes to your contacts like
   promotions, job changes, or new hires.
-last_synced: 2026-04-26T01:40:40.844Z
+last_synced: 2026-04-26T01:40:40.803Z
 ---
 
 # Signals in Clay
@@ -101,7 +101,7 @@ Use **Find Active Job Openings**, not the PredictLeads **Find open jobs** enrich
 
 This is expected behavior. **Find Jobs returns one row per job posting**, not one row per company. If a company has three open roles matching your criteria, it will appear as three separate rows — one for each posting. Each row represents a distinct job, and you can see the specific job title and URL in the cell details.
 
-To cap how many postings are returned per company, open the **Limit results** section in the Find Jobs settings and set a **Limit per company** value (maximum: 100). Setting this to 1, for example, returns only the most recent matching posting per company, which keeps each company to a single row and makes it easier to treat the table as a company list.
+If you want only one posting per company, apply **Auto-dedupe** to the imported table. In Table Settings (⛭ → **Edit table settings**), enable **Auto-dedupe rows**, select the company name or domain column as the deduplication key, and choose whether to keep the oldest or newest row. Clay will reduce the results to one row per unique company. See [Table management settings](table-management-settings.md) for details.
 
 ### Why did my signal use far more credits than I expected?
 
