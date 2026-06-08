@@ -41,6 +41,7 @@ This tool is ideal for building targeted sales prospect lists, identifying poten
 -   **Languages:** Filter by specific languages spoken.
 -   **Education:** Search for specific school names.
 -   **Companies:** Find people at specific companies using an existing Clay table or a custom list. By default, this matches people who **currently** work at those companies.
+    -   **Locked after creation:** The filter type (Clay table vs. custom list) and which table is linked cannot be changed once the source exists — this is what the "Can only be changed during source creation" tooltip means. The table's row contents are not frozen, however: adding or removing rows from the linked table is reflected each time the source runs. When re-run after new companies are added, the source searches across all companies currently in the table, not just the newly added ones.
 -   **Exclude people:** Exclude up to 3 different sets of people from your search using Clay tables, CSVs, or manual lists. You can exclude up to 300,000 people total (100,000 per source). Exclusions require a LinkedIn URL.
 -   **Past experiences:** Enable the **Include past experiences** toggle to extend your company, job title, and experience description keyword filters to also match against a person's past roles — not just their current one.
     -   **Incompatible filters:** This toggle cannot be combined with **Limit per company** or any **Company attributes** filter (company size, company industries, or company description keywords). Selecting them together returns an error.
