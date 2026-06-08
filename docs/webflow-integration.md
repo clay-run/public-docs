@@ -70,4 +70,3 @@ Updates an existing item in a specified Webflow collection.
 -   **Image fields** must use either a direct, CORS-enabled image URL or be uploaded directly to Webflow.
 -   **Remove any** control characters and unsupported HTML from ri**ch text/long text** fields.
 -   **PlainText fields have a 280-character limit:** Clay enforces a 280-character maximum on PlainText fields when creating or updating collection items. Content exceeding this limit returns a validation error. To send longer text, use a RichText field instead.
--   **RichText fields require HTML block elements:** RichText field values must be wrapped in valid HTML block-level tags — for example, `<p>your text</p>`. Sending a plain string without HTML wrapping will fail. Supported block elements include `<p>`, `<h1>`–`<h6>`, `<ul>`/`<li>`, `<ol>`/`<li>`, `<blockquote>`, and `<pre>`.
