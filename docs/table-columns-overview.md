@@ -104,7 +104,10 @@ To create a new column with an endpoint from an enrichment (parent column):
 
 1.  Click on the cell of the enrichment containing the endpoint you want to use. This will open the **Cell details** panel on the right.
 2.  Hover over the desired endpoint and click `Add as column` on the right.
-3.  Under **Map to an existing column**, click on the column you want you map this enrichment endpoint to. Note that this will overwrite the existing values within the destination column.
+3.  Under **Map to an existing column**, click on the column you want to map this enrichment endpoint to.
+    -   **Warning — this overwrites all existing data in the destination column across every row in the table.** Clay converts the column into a formula-driven column referencing the new enrichment source, replacing any previously stored values — including data that came from earlier imports, other sources, or rows that existed before the new data was added. This action cannot be undone, and [Table Versioning](https://university.clay.com/docs/table-versions) does not recover overwritten row data.
+    -   **To keep existing data while also bringing in new data:** Instead of mapping to the existing column, use **Create a new column** to extract the field into a separate column first. Then add a [Merge column](#merge-columns) that references both the original column and the new one — it returns the first non-empty value per row, preserving whichever source has data for each row.
+    -   If the existing column is already empty, the overwrite has no effect and it is safe to proceed.
 
 ### Circular dependency error
 
