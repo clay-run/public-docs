@@ -60,7 +60,7 @@ To find personal emails for Australian (and global) contacts, use the **Personal
 
 No. Firmable is enrichment-only in Clay — it cannot be used as a **source** to import companies or people into a new table. All Firmable actions require an existing contact's LinkedIn URL as input; they return data about Australian contacts you already have, rather than generating a new list.
 
-To build a list of companies in Singapore or another APAC market, use Clay's **Find Companies** source with the **Location** filter set to the target country. Find Companies supports filtering by country, city, or state and works for any region globally.
+To build a list of companies in Singapore or another APAC market, use Clay's **Find Companies** source with the **Location** filter set to the target country. Find Companies supports filtering by country, city, state or province, region, and postal code, and works for any region globally.
 
 For additional sourcing options when building Singapore company lists:
 
