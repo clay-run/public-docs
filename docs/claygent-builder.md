@@ -289,6 +289,8 @@ Each input in the Claygent builder shows **(required)** or **(optional)** next t
 
 Toggle **Required input** back on if you want the Claygent to skip rows where that input is blank. New inputs you add via **Add input** default to optional.
 
+**Note:** The **Inputs** section with the **Required input** toggle is available in workspaces where Claygent builder is enabled. If you don't see it, contact support to request access.
+
 ### Why is my Claygent column showing "Some inputs missing"?
 
 When a Claygent cell shows **"Some inputs missing"**, one or more inputs in the **#INPUTS#** section of your column are marked as required but the referenced column is blank for that row. The cell will not run for affected rows.
