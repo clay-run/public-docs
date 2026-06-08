@@ -20,7 +20,7 @@ To check the credit usage in your workspace:
 2.  Go to `Settings` and then `Usage` in the sidebar.
 3.  Within `Workspace`, you can view folders, workbooks, and tables sorted by their usage.
 
-Sort the content by `Name` (alphabetically) or by number of `Credits used` by clicking the column titles. You can `Export` this content as a CSV.
+Sort the content by `Name` (alphabetically) or by number of `Credits used` by clicking the column titles. To find a specific table or workbook by name, click the search icon and type part of the name to filter the list. You can `Export` this content as a CSV.
 
 ### Filter and sort credit usage
 
