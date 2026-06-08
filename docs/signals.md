@@ -69,6 +69,18 @@ To cover more companies with the existing signal:
 
 To monitor a completely different set of companies (using a different view), create a new signal.
 
+### Why is the View field empty or locked when I open Edit Signal?
+
+When editing an existing company-based signal (New Hire, Job Posting, etc.), the **Company Table**, **View**, and **Company Identifier** fields are permanently locked — they cannot be changed after the signal is first created. If the **View** dropdown appears empty or unselectable, this typically means the source company table the signal was originally built on has since been deleted.
+
+Because these source fields cannot be re-pointed after creation, the fix is to rebuild the signal:
+
+1.  Open your current company table → click **Actions** → select the signal type (e.g., **Monitor for new hires**).
+2.  Configure your filters and set the desired run frequency.
+3.  Click **Save and run**.
+
+You can then delete the old signal. Rebuilding does not reprocess previously seen results.
+
 ### I want to find job postings by location or title — is that a Signal?
 
 No. Signals monitor changes at companies or contacts already in your data source (new hires joining, contacts getting promoted, contacts changing jobs, etc.). They are not a way to search for job postings from scratch.
