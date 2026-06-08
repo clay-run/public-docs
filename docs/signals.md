@@ -29,7 +29,7 @@ To start a signal, you'll **need a table with** companies or contacts you want t
 
 1.  Click `Actions`, then select one of the `Monitor for...` options—new hires, job changes, or promotions.
 2.  Select the **company table** you want to monitor, then select a **view** from that table — the signal will only check rows visible in that view (not the entire table). Identify the correct company identifiers (website, LinkedIn URL, etc.).
-    -   **Note:** The table and view cannot be changed after the signal is saved. To monitor a different set of companies, create a new signal.
+    -   **Note:** The table, view, and company identifier columns cannot be changed after the signal is saved. To use a different company table, view, or identifier column, create a new signal.
 3.  Configure filters for the Signal.
 4.  Set the frequency that the signal should run.
 5.  Optionally, add enrichments to your table to gather additional useful data.
@@ -43,6 +43,8 @@ To start a signal, you'll **need a table with** companies or contacts you want t
     -   It'll have a `📡` icon and usually be called `Event`.
 2.  Click `Edit column`.
 3.  Modify any settings as needed and click `Save changes`.
+
+**Note:** You can edit filters, frequency, and enrichment settings on an existing signal. However, the company table, view, and company identifier columns are locked after the signal is first saved and cannot be changed. To use a different company table, view, or identifier column, create a new signal.
 
 ## FAQs
 
@@ -60,7 +62,7 @@ Signals require a connected data source to run against — either a source table
 
 ### How do I extend my signal to cover more companies?
 
-A signal monitors only the companies visible in the **view** you selected from your source table when setting it up. Once the signal is saved, the table and view selection are locked and cannot be changed.
+A signal monitors only the companies visible in the **view** you selected from your source table when setting it up. Once the signal is saved, the table, view, and company identifier selection are locked and cannot be changed.
 
 To cover more companies with the existing signal:
 
@@ -68,6 +70,15 @@ To cover more companies with the existing signal:
 -   **Broaden the selected view's filters.** In the source company table, edit the filters on the view the signal is using so it includes more rows — the signal will check those additional rows on the next run.
 
 To monitor a completely different set of companies (using a different view), create a new signal.
+
+### Why does my signal show "Please select a valid value" on the company identifiers field?
+
+This error appears when the column previously selected as a company identifier is no longer valid in the source table — for example, if the column was deleted, renamed, or had its data type changed after the signal was created.
+
+Because the company table, view, and identifier columns cannot be changed on an existing signal, you cannot fix this by re-selecting the column. To restore signal monitoring:
+
+1.  Create a new signal with the correct company table, view, and identifier column.
+2.  Disable the broken signal using the blue toggle in its column settings so it stops running in the background.
 
 ### I want to find job postings by location or title — is that a Signal?
 
