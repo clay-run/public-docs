@@ -184,9 +184,9 @@ If your campaign is active, all settings — including the Message sequence — 
 
 ### Why is the three-dot menu on my campaign messages greyed out after pausing?
 
-If you've paused a campaign but the options to add or remove messages are still greyed out, it's because all leads in the campaign have already been fully sequenced — every email in the sequence has been sent to every lead. Once all leads are sequenced, you can still edit message copy and campaign settings, but you can no longer change the total number of messages in the sequence.
+If you've paused a campaign but the options to add or remove messages are still greyed out, it's because structural changes — adding or removing steps — are disabled once a campaign moves past draft status. Pausing only re-enables edits to message copy and campaign settings; it does not restore the ability to add or remove messages from the sequence.
 
-**To add follow-up messages:** Create a new campaign and set up your full sequence — including all follow-up messages — from the start. You can include up to 4 messages per campaign, and multi-step sequences are supported on all paid plans (including Launch).
+**To add follow-up messages:** Create a new campaign and set up your full sequence — including all follow-up messages — from the start. You can include up to 4 messages per campaign.
 
 ### How much does the sequencer cost?
 
