@@ -303,6 +303,20 @@ Repeat for each affected column in your table. After recreating, update any down
 
 **Note:** This error is distinct from the model deprecation warning. If you see an orange **"Deprecated"** badge next to a model name in your column settings, that is a separate indicator — it does not stop the column from running immediately. In that case, simply open the column settings, click the **Model** dropdown, and select a currently supported model to clear the warning.
 
+### My Claygent column shows "Failed to parse formula for 'prompt'" or "Unable to parse the output schema for the column" — what do these mean?
+
+These are two distinct configuration errors that can appear on a Claygent column:
+
+-   **"Failed to parse formula for 'prompt' with error: {offset:XX}"** — The prompt field contains an invalid formula. Clay stores prompt text as a formula so that `{{column}}` references work, and if the formula has a syntax error at the character position shown by `offset`, the column cannot run. Common causes: a stray backtick (`` ` ``), an unmatched brace or quote, or characters introduced when copying text from a source that encodes content as HTML — for example, pasting from a chat window or email client that converts `<`, `>`, and `&` into HTML entities (`&lt;`, `&gt;`, `&amp;`).
+
+-   **"Unable to parse the output schema for the column"** — The JSON output schema cannot be parsed. Common causes: HTML entities in the schema (`&lt;` instead of `<`, `&amp;` instead of `&`, etc.), a trailing comma after the last property in a JSON object or array, or other invalid JSON syntax.
+
+**To fix the prompt formula error:** Open the column settings (**click the column name → Edit column**) and inspect the Prompt field. Remove any stray backticks, unmatched braces or quotes, or HTML entities. If you copied the prompt from a chat tool or email, paste it into a plain-text editor first to strip hidden formatting before pasting into Clay.
+
+**To fix the output schema error:** Open the column settings, go to the **Define column outputs** section, and inspect the JSON schema. Replace any HTML entities with their plain equivalents (`&lt;` → `<`, `&gt;` → `>`, `&amp;` → `&`), and remove any trailing commas. Alternatively, click **Generate from prompt** to have Clay regenerate a valid schema automatically.
+
+**If the column remains broken after these fixes:** Copy your corrected prompt and schema, then recreate the column from scratch — a column with persistent settings errors cannot always be repaired in place. See the FAQ entry above, **My Claygent columns are showing an error or returning blank results**, for step-by-step instructions on recreating a column.
+
 ### My object inputs show "Success" in the test panel instead of their actual content — is that normal?
 
 Yes, this is expected. When a Claygent variable is connected to an object value — such as a JSON enrichment payload or a structured data column — the test panel input preview shows **"✅ Success"** rather than rendering the full object contents. This is a known display limitation; your agent receives and processes the complete object data correctly.
