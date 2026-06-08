@@ -54,6 +54,8 @@ Retrieve active job listings from a company, providing insights into hiring tren
 
 **Output limit:** This action returns up to 10 matching jobs per run. When more matches exist, the **More Matches Than We Can Display** output field is set to `true` and **Total Count of Active Jobs** shows the full count from the provider. The table cell preview shows "10+ matching jobs" in this case. To work with all matching jobs, hover over the **Jobs** field in the cell details panel and click **Take action on list → Write each item to new row in other table**.
 
+> **Credit note:** PredictLeads charges Clay for every lookup regardless of whether any jobs are returned. If a company has no open roles matching your filters, the enrichment will return "no jobs found" but credits are still consumed. To avoid charges on rows where no match is expected, use the `Only run if` condition to gate the enrichment.
+
 ### `Action` Find Technology Stack
 
 Looks at a company's historical job descriptions and aggregates all of the technologies that have been mentioned in those job openings.
