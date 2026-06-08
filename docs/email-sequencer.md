@@ -182,6 +182,12 @@ If you added or edited a **Clean variable** and it is not appearing in your mess
 
 If your campaign is active, all settings — including the Message sequence — are locked. To make edits, open the campaign's `Setup` tab and click `Pause`. Once paused, you can edit message copy and campaign settings. Note that you cannot change the total number of messages while paused — to add or remove messages, complete the campaign and create a new one.
 
+### Why is the three-dot menu on my campaign messages greyed out after pausing?
+
+If you've paused a campaign but the options to add or remove messages are still greyed out, it's because all leads in the campaign have already been fully sequenced — every email in the sequence has been sent to every lead. Once all leads are sequenced, you can still edit message copy and campaign settings, but you can no longer change the total number of messages in the sequence.
+
+**To add follow-up messages:** Create a new campaign and set up your full sequence — including all follow-up messages — from the start. You can include up to 4 messages per campaign, and multi-step sequences are supported on all paid plans (including Launch).
+
 ### How much does the sequencer cost?
 
 The Clay email sequencer is available on all plans. Each lead sequenced consumes 1 Action (platform orchestration work). If you use AI snippets in your messages, those consume 1 Action per run and Data Credits based on the model you select (fixed or variable pricing depending on the model) in addition to the Action for sending the email.
