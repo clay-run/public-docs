@@ -29,8 +29,10 @@ Within Clay you can import CSV as a source to an existing or new table.
 
 4.  Map your CSV columns to the correct Clay table fields.
 5.  Choose how to handle the imported rows:
-    -   `Save and run rows in this CSV` — imports the rows and immediately runs any enrichments on them.
-    -   `Save and don't run` — imports the rows without triggering any enrichments.
+    -   `Save and run rows in this CSV` — imports the rows and immediately queues all enrichment columns to run on every imported row. If your table has enrichment columns configured (email finders, waterfalls, AI columns, etc.), they will all fire and consume credits.
+    -   `Save and don't run` — imports the rows without triggering any enrichments for this batch. This is a one-time skip for the current import only — it does not change your table's [Auto-run](table-management-settings.md) setting.
+
+    > **Tip:** If you're importing into a table that already has enrichment columns and you don't want them to run on the new rows, choose `Save and don't run`. If you want to prevent enrichments from automatically running on all future row additions as well, turn off **Auto-run** in your [table settings](table-management-settings.md) before importing.
 
 ## Next steps after importing
 
@@ -62,6 +64,6 @@ CSV import cannot update rows that already exist in Clay — there is no upsert 
 1.  Import the enriched CSV as a **new** Clay table (choose `Create new table` at step 3 above).
 2.  In your original table, click **Add enrichment** and search for **Lookup Single Row in Other Table**.
 3.  Set the matching column (e.g., LinkedIn Profile URL) so Clay finds the right row in the new table.
-4.  Map the column you want to populate (e.g., "Keep/Remove") as an output.
+4.  Map the column you want to populate (e.g., "Keep/Remove\") as an output.
 
 Each existing Clay row fetches the matching value from the new table without creating duplicates.
