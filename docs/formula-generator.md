@@ -121,3 +121,15 @@ This means a formula containing a lookahead can appear correct in the preview bu
 -   ✅ Equivalent without lookahead (works): `{{Email}}?.replace(/\+.*@/, "@")`
 
 Always verify regex formulas by saving the column and checking actual table results — not just the preview.
+
+### **Why does my formula return 0 when combining values from other formula columns?**
+
+If a formula that sums or combines values from other columns shows 0 in the preview even though those columns contain data, the formula may not be resolving the column references you intended.
+
+The most reliable fix is to use the `/` column picker when writing your prompt:
+
+1.  In the Formula Generator prompt, type `/` to open a dropdown listing all columns in your table.
+2.  Select the column you want to reference. This inserts an exact column token rather than a typed name.
+3.  Click **Regenerate** to update the formula with the explicit references.
+
+Using the `/` picker guarantees the formula targets the exact column, which is especially helpful when column names are similar (for example, "Activity Score" vs. "Activity Type Score") or when combining the output of several formula columns into a final score.
