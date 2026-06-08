@@ -108,3 +108,16 @@ A few important notes:
 -   **Error message text is not guaranteed to be stable** across Clay releases. If you need to branch on error *type* (not message text), use `Clay.getCellStatus()` instead for more reliable conditional logic.
 
 There is no `getCellErrorMessage()` function — the full un-truncated error message is not available in formulas. The 300-character preview is the only error message content accessible via formula.
+
+### **Why does my regex formula work in the preview but fail when the table runs?**
+
+Clay's backend formula engine uses [RE2](https://github.com/google/re2/wiki/Syntax) for regex evaluation. RE2 is designed for fast, predictable matching but **does not support lookaheads or lookbehinds** — patterns like `(?=...)`, `(?!...)`, `(?<=...)`, and `(?<!...)`. The formula preview runs in the browser using native JavaScript regex, which *does* support these constructs.
+
+This means a formula containing a lookahead can appear correct in the preview but produce no output (or fail silently) when the table actually runs.
+
+**Workaround:** Rewrite the regex to avoid lookahead and lookbehind assertions. For example, to strip a subaddress tag before the `@` in an email:
+
+-   ❌ Uses lookahead (fails at runtime): `{{Email}}?.replace(/(+.*)(?=@)/, "")`
+-   ✅ Equivalent without lookahead (works): `{{Email}}?.replace(/\+.*@/, "@")`
+
+Always verify regex formulas by saving the column and checking actual table results — not just the preview.
