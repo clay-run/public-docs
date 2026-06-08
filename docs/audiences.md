@@ -87,6 +87,13 @@ Clay pulls data from Salesforce on two schedules:
 7.  Review and click `Confirm` — Clay begins importing immediately.
 8.  Monitor the import. If records don't appear immediately, refresh the page to see the latest count.
 
+**Sync timing and behavior**
+
+Clay syncs data from Snowflake on the following schedules:
+
+-   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured (for example, `updatedAt`), importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
+-   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
+
 ### Importing from people and companies search
 
 1.  Click `Add data` → `Find people` or `Find companies` to open a search.
