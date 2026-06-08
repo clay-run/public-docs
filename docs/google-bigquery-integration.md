@@ -26,7 +26,7 @@ Imports records from Google BigQuery into a Clay table using a custom SQL query.
 
 **Inputs**
 
--   SQL query: A `SELECT` or `WITH` statement to run against your BigQuery project. Use standard SQL syntax (e.g., `SELECT * FROM \\`project.dataset.table `WHERE created_at > "2024-01-01"`).
+-   SQL query: A `SELECT` or `WITH` statement to run against your BigQuery project. Use standard SQL syntax (e.g., `SELECT * FROM \`project.dataset.table\` WHERE created_at > "2024-01-01"`).
 -   Unique identifier: The column to use for row deduplication. This field appears as a dropdown after you enter a valid query — select a column that contains unique values for each record.
 
 **Note:** The Import Data from BigQuery source supports up to 50,000 rows per run.
@@ -124,3 +124,15 @@ This action does not return output values.
 
 -   Auto-update: Recommended for keeping BigQuery data in sync as new rows are added or updated in your Clay table.
 -   Only run if: The enrichment will only run if conditions are met. ([Learn more about conditional formulas](https://university.clay.com/docs/conditional-formulas)).
+
+## Troubleshooting
+
+### Dataset ID shows "No options found"
+
+The Dataset ID dropdown lists datasets from the GCP project specified by the `project_id` field in your service account JSON key file. If the dropdown is empty, check these three things:
+
+-   **Wrong project ID in the service account key.** The `project_id` in your service account JSON must match the GCP project where your BigQuery datasets live. If the service account key references a different project, Clay cannot discover any datasets — even if the connection tests as successful. Reconnect using a service account key generated from the GCP project that contains your datasets.
+-   **Service account lacks dataset-listing permissions.** The service account needs at least the `BigQuery Data Viewer` or `BigQuery Metadata Viewer` IAM role at the project or dataset level in Google Cloud IAM. Without this, Clay cannot list available datasets.
+-   **No datasets exist in the project.** Confirm that the GCP project referenced by your service account key actually contains BigQuery datasets.
+
+**Note:** The connection test only validates your credentials — it does not verify that datasets are accessible. A successful connection (green checkmark) does not guarantee that datasets will appear in the dropdown.
