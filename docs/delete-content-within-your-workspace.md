@@ -38,6 +38,8 @@ Once you delete a table or workbook, it will end up in your Trash. You can acces
 -   Delete tables permanently.
 -   Recover tables. You cannot edit a table in Trash unless you restore it.
 
+**Note:** Deleting a table moves it to Trash and immediately removes its rows from your workspace row count — you do not need to take any additional action in Trash to free up that row capacity.
+
 When you restore a table, all of your row data and column configurations are fully restored — your data comes back exactly as it was when the table was deleted.
 
 When you restore a workbook, all of its tables are automatically restored as well.
