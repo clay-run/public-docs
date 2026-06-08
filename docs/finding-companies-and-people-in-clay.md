@@ -229,13 +229,16 @@ This is expected behavior. The Find People source deduplicates results against r
 
 **Note:** Deduplication is based on each person's unique profile ID, not your search filters. If the data source returns genuinely new profiles matching your criteria that aren't already in the table, those will still come through on re-run. Only contacts already in the table are filtered out.
 
-### "Has no results" filter shows 0 matches even when some companies returned no contacts
+### Filtering for companies where people search found 0 contacts
 
-When a people search runs on a company row but finds no matching contacts, the column cell is not empty — it records that the search completed with 0 contacts returned. Clay's **Has no results** filter condition checks whether a cell's result is null (meaning the enrichment has never been run or returned an error without data). A cell that shows "0 people found at this company" has a result — it's just a result of zero — so **Has no results** evaluates to false for those rows.
+Clay's filters distinguish two states for enrichment columns:
 
-This is why a filter like "Update People Search has no results" returns 0 matching rows when all companies in your table have had the search run, even if many of those searches found 0 contacts: the filter is looking for unrun or errored cells, not zero-result cells.
+-   **Has no results** — the enrichment ran but returned 0 contacts. This is the `SUCCESS_NO_DATA` status, shown as **❌ No Profile Found** in the cell. For column enrichments like **Find Contacts at Company**, this IS the correct filter to identify rows where the search ran but found nobody.
+-   **Has not run** — the enrichment has never been triggered for that row (the cell is null).
 
-**To identify companies where people search found 0 contacts**, see [Why does my downstream company table have fewer rows than my original company list?](#why-does-my-downstream-company-table-have-fewer-rows-than-my-original-company-list): add a **Lookup Rows** column to your company table that searches your people table matched on company domain, then filter for rows where the lookup count equals zero. Once you identify those companies, consider trying a different people search approach — for example, using the **Find Contacts at Company** column enrichment with a different provider, or running a targeted **Claygent** search for decision-makers at those specific companies.
+The **Update People Table** column (auto-added to your company table when you create a Find People source from it) works differently — it records whether the trigger itself ran successfully, not whether contacts were found in the destination people table. Because of this, filtering on "Update People Search has no results" or "has not run" won't reliably identify companies where the search came up empty.
+
+**To identify companies where Find People found 0 contacts**, see [Why does my downstream company table have fewer rows than my original company list?](#why-does-my-downstream-company-table-have-fewer-rows-than-my-original-company-list): add a **Lookup Rows** column to your company table that searches your people table matched on company domain, then filter for rows where the lookup count equals zero. Once you identify those companies, consider switching to the **Find Contacts at Company** column enrichment — where "has no results" does correctly surface zero-result rows — or running a targeted **Claygent** search for decision-makers at those specific companies.
 
 ### Preview count is much higher than the number of rows actually imported
 
