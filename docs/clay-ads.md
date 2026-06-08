@@ -95,6 +95,18 @@ To create a new system user token, you first need to create an app:
 
 For more details on Meta system user setup, see [Meta's system user documentation](https://www.facebook.com/business/help/503306463479099).
 
+## Google Ads OAuth authentication
+
+Google Ads audience syncing is currently in **closed beta** — contact [Clay support](https://www.clay.com/contact) to request access.
+
+When you connect your Google Ads account, Clay requests the following OAuth permission:
+
+-   **`https://www.googleapis.com/auth/adwords`** — the standard Google Ads API scope
+
+**For security teams:** This scope grants read/write access to the connected Google Ads account. It is the only scope Google's Ads API offers — Google does not provide narrower alternatives for the Ads API, even though Clay only uses the access to manage audience lists. Clay sends contact identity data (personal email or SHA-256 hashed email, phone number, first name, last name, country code, and postal code) to create, update, or remove Customer Match audience lists. The integration does not access campaign performance data, modify bids or budgets, or create or change any ads.
+
+Access control is enforced at the Google Ads account level — the person connecting must have appropriate permissions on the ad account they link.
+
 ## **FAQs**
 
 ### **What platforms are supported?**
@@ -153,9 +165,9 @@ Yes! Once synced, your audiences automatically update as data changes in your Cl
 
 No, LinkedIn and Meta don't provide contact-level match visibility for privacy reasons. However, Clay shows aggregate match rates and total audience size after each sync.
 
-### **How do I connect my LinkedIn or Meta ad account?**
+### **How do I connect my LinkedIn, Meta, or Google Ads account?**
 
-When you create your first ad audience, you'll be prompted to authenticate with LinkedIn Campaign Manager or Meta Business Manager. Make sure you have admin access to the ad account you want to use.
+When you create your first ad audience, you'll be prompted to authenticate with LinkedIn Campaign Manager, Meta Business Manager, or your Google Ads account via OAuth. Make sure you have admin access to the ad account you want to use. Note that Google Ads syncing is currently in closed beta — contact [Clay support](https://www.clay.com/contact) to request access.
 
 ### **Can I sync to multiple ad accounts?**
 
