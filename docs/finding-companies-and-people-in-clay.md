@@ -38,7 +38,7 @@ If you need results that meet _either_ of two different filter combinations, set
 
 **If you have a company list**, you have two options depending on how you want to store the results:
 
--   **Find People at These Companies** — creates a separate people table with one row per contact, linked back to the company. Best when you want to run enrichments on each contact individually (work email, phone, etc.) or need to rank/filter contacts before saving. **To access:** In your company table, click **Tools** (top right) → **Sources** tab → **Find People at These Companies**. The setup panel includes full filters for job title, seniority, location, experience, and more — set your criteria, preview the results, then click **Import** to create the people table.
+-   **Find People at These Companies** — creates a separate people table with one row per contact, linked back to the company. Best when you want to run enrichments on each contact individually (work email, phone, etc.) or need to rank/filter contacts before saving. **To access:** In your company table, click **Tools** (top right) → **Sources** tab → **Find People at These Companies**. The setup panel includes full filters for job title, seniority, location, experience, and more — set your criteria, preview the results, then click **Import** to create the people table. To cap results to a specific number per company (for example, 5 contacts per company), use the **Limit per company** field in the setup panel before clicking Import — this limit is configured at search creation time and cannot be applied retroactively to an existing people table.
 -   **Find Contacts at Company** (add as a column in your company table) — stores contacts as a list within each company row. Best when you want contacts to stay in your company table, or when you're adding companies one at a time and don't want a single search to re-run across all rows. Use **Send Table Data** afterward to push individual contacts to another table if needed.
 
 If you don't have a company list, use **People search as a source** — a standalone search by title or other criteria that returns a new table.
@@ -314,71 +314,49 @@ If you see **"Your source has exceeded your plan's limit of [N], so future runs 
 
 **This limit is a row count, not a Data Credits limit.** The number shown (e.g., 100) refers to how many records the source can import in total — not how many Data Credits you have available. Your Data Credits balance is tracked separately and is used for enrichments such as finding emails or company data. Even after a source hits its row limit, your remaining Data Credits are still available for enrichments on rows already in your table.
 
-The limit varies by plan tier and is shown in the error message itself (for example, 100 on free workspaces, 25,000 on Explorer-tier plans, 50,000 on Pro plans and above).
+The limit resets only when you **create a new source** — either by deleting the existing one and recreating it, or by starting a fresh table.
 
-**To continue importing beyond the limit:**
+To avoid hitting the limit again:
 
--   **Create a new source.** Add a new Find Companies or Find People source with the same (or adjusted) filters. The new source starts with a fresh record count. Use the **Exclude companies** or **Exclude people** filter to avoid re-importing records already in your table.
--   **Upgrade your plan** to access a higher per-source limit.
+-   **Narrow your filters** before the next run so that fewer records qualify.
+-   **Use Exclude people** (for Find People) or **Exclude companies** (for Find Companies) to suppress records already in your workspace.
 
-**Note:** this limit is separate from the 50,000-row table limit. A source can hit its plan-based record limit even when the table shows fewer visible rows — the source tracks every record it has ever introduced, including rows you've since deleted from the table.
+### Find People shows "No results found" when editing an existing search
 
-## FAQs
+When you reopen and try to update a **Find People** search that has already run, you may see **"No results found — try simplifying your search or using fewer filters"** even when the same filters returned results previously.
 
-### Why is this person showing up despite having moved companies?
+This happens because the source deduplicates against rows already in your table. When all records matching your current filter criteria are already present in the table, the search has nothing new to return — and shows zero results.
 
-Clay's company and people search relies on snapshot data that may lag behind real-time changes. To confirm current employment, run `Enrich Person` and use the formula in the **Verify current employment** section above to check whether the company matches.
+**To update your search while avoiding this error:**
 
-### Why am I finding people with unexpected job titles?
+-   **Broaden your filters** (remove a constraint or widen a range) so new records become eligible.
+-   **Delete the existing rows** from your People table first, then re-run — this clears the deduplication state and lets the same search reimport all matching records.
 
-First, check that you're filtering on **Job title keywords** (not just function or seniority). If you're using **Is similar to** mode, you may get some fuzzy matches — filter those out with a formula or AI after the fact.
+### Find People at These Companies runs across all companies instead of just new ones
 
-### Why isn't someone I found on LinkedIn showing in Clay?
+When **Find People at These Companies** is set up as a source, re-running it searches across all companies in the linked table — including ones that already have matching people. It does not run only for newly added companies.
 
-Your search filters may be too specific. Try broadening your criteria incrementally. The profile may also not yet be in the dataset.
+**To run Find People only for specific companies:**
 
-**Tip for job title filters:** Someone with a compound title — for example, "MD, Head of Mortgages" — may not appear when you search for "Head of Mortgages." Multi-word title phrases that include stop words like "of" can produce unexpected phrase-matching results. Using a shorter, single-word keyword such as "Mortgages" avoids this and catches a wider range of title variations, including "Head of Mortgages," "MD, Head of Mortgages," and "Mortgages Director."
+1.  Create a **filtered view** of your company table showing only the rows you want to target (for example, companies added in the last 7 days).
+2.  Run **Find People at These Companies** from that filtered view — the source will only process the companies visible in the view.
 
-### Why does Find Contacts at Company return "No Profile Found"?
+To reuse your existing search filters without rebuilding them, open the current Find People source, click **Save search** at the top of the filter panel to save your criteria, then reference that saved search when launching the new run from the filtered view. See [Saved searches](saved-searches.md) for details.
 
-Two main causes:
+### Find People at These Companies source — FAQ
 
--   **Privacy or access restrictions** — some LinkedIn profiles are not accessible in the stored dataset due to privacy settings. Profiles set to private on LinkedIn are excluded from what providers can index, so a company may show people on LinkedIn when you're logged in but return no results in Clay.
--   **Stale provider data** — Find Contacts at Company draws from a bulk-refreshed index. If a company's employees haven't been re-indexed recently, the current state of the LinkedIn company page may not yet be reflected. See [How often is company and people data updated?](#how-often-is-company-and-people-data-updated) for details on update cadences.
+**Can I change the company table after creating the source?**
 
-### How often is company and people data updated?
+No — the company table linked to a Find People at These Companies source cannot be changed after the source is created. If you need to point the source to a different company table, you'll need to create a new source. When creating the new source, you can reuse your filters by clicking **See past searches** at the top of the filter panel.
 
-The answer depends on which feature you're using:
+**Why do I get "Missing Input" on Company Table Data for some rows?**
 
--   **Enrich Person / Enrich Company** — data is fetched close to real-time each time you run the enrichment, pulling the provider's latest available data at the moment of the run.
--   **Find People / Find Companies / Find Contacts at Company (CPJ sourcing)** — these features draw from a pre-indexed dataset that providers refresh through bulk record processing. Results can show some deviation from what you see live on LinkedIn, because the index reflects the provider's most recent batch update rather than an immediate lookup. Data freshness has improved significantly over time, so deviation is rarely a problem in practice.
+See [Company Table Data shows "Missing Input"](#company-table-data-shows-missing-input-in-the-people-table) above.
 
-Across both, high-importance profiles (frequently accessed records, decision-makers, active companies) refresh more often than long-tail profiles.
+**Does the source re-import contacts that were deleted from my table?**
 
-### Can I run a people search only on companies that meet certain criteria?
+Yes. If you delete rows from your people table and re-run the source, those contacts will be reimported — deduplication only skips records still present in the table at run time.
 
-Company and people search sources don't support run conditions. The workaround is to create a **filtered view** of your company table (showing only the rows you want), then run **Find People at These Companies** from that view. The source will only process the companies visible in that view.
+**Does the Limit per company setting apply retroactively to rows already in my table?**
 
-### What's the difference between the people search source and the enrichment action?
-
-The source returns results in a new table and is subject to a per-source cumulative limit that varies by billing plan (see [the troubleshooting section](#your-source-has-exceeded-your-plans-limit-error-on-find-companies-or-find-people) if you hit that limit). The enrichment action saves results to your existing table, returns 10 people by default with full profile data, and supports a **Reduce data for more results** option that returns up to 500 people (name and LinkedIn URL only). Use the action when you need to rank or filter contacts before saving them, or when you need more records than a single source allows.
-
-### I added new companies to my company table — how do I get them through my Find People searches?
-
-**If using Find People as a source (a separate people table):**
-Re-running the source is all that's needed. It searches across all companies in the linked table — including any you just added — and appends new people while deduplicating against rows already in the table. To re-run: click the source column header in the people table and select **Run**.
-
-**If your company table has an Update People Table column:** That column is the mechanism that triggers Find People refreshes. Despite the UI warning ("does NOT perform incremental Find People searches for new companies"), the column *does* include newly added companies in the refresh — it re-runs the entire Find People search across all companies currently in the table and appends new contacts to the people table. The warning means the refresh runs the full search rather than an isolated search for just the new rows. With **Enable Automatic People Search Updates** toggled on, the column runs automatically when new company rows are added. If you prefer to trigger it manually, turn that toggle off and run the column on demand.
-
-If you want to run on *only* the newly added companies (skipping the full company list), create a **filtered view** of your company table showing just the new rows. To reuse your existing filter criteria without rebuilding them, open the Find People source column (right-click → **Edit column**), click **Save search** at the top of the filter panel to save your current filters, then use that saved search when setting up a new **Find People at These Companies** search on the filtered view. See [Saved searches](saved-searches.md) for full details.
-
-**If using Find People as an enrichment action (runs within the company table, per row):**
-New company rows trigger Find People automatically when auto-run is enabled — no extra steps needed. See [Disable auto-run on the people table](#disable-auto-run-on-the-people-table-when-running-find-people-selectively) for caveats about downstream enrichment costs when new rows are added.
-
-### Why does my downstream company table have fewer rows than my original company list?
-
-When you run a people search across a company list and route results to a downstream company table — for example, using **Send Table Data** from a people table, de-duplicated by company domain — that destination table only contains companies where at least one person was found. Companies where the people search returned no results never generate a row in the people table, so nothing flows downstream for them.
-
-For example: if your original company list has 3,818 companies and people were found at 2,694 of them, your downstream company table shows 2,694 rows. The remaining 1,124 companies had no contacts found — this is expected behavior, not missing data. The downstream table is a filtered view of only the companies you can reach.
-
-To identify which companies had no people found, add a **Lookup Rows** column to your original company table (searching your people table, matched on company domain) and filter for rows where the count is zero.
+No. The **Limit per company** value is enforced at search run time — it controls how many contacts are imported per company during that specific run. Rows already in your people table are not removed or re-evaluated when you change this setting. To enforce a lower per-company limit on existing data, delete the affected rows and re-run the search with the updated limit.
