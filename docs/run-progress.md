@@ -126,6 +126,8 @@ To remove the limit and return to the full table, click **Show all rows** in the
 
 Cells show a **Queued** status when they are waiting to be processed. This is normal when running large tables — Clay processes many rows concurrently, but rows still queue when the system is handling prior requests or when an external API is rate-limiting responses. In most cases the queue resolves automatically.
 
+> **"has not run" vs. "is queued" in column filters:** These are distinct filter states — **"has not run"** matches cells whose status has never been written to the database, while **"is queued"** matches cells actively waiting to process. However, there is a brief propagation window between when Clay internally schedules a cell and when its database status updates to `Queued`. During this window, cells match the **"has not run"** filter even though they will process automatically without any manual action. This delay is typically a few seconds but can be longer on high-latency connections. If auto-run is enabled and the table header shows a running indicator, cells appearing as "has not run" in the filter may already be in the processing pipeline — wait before manually triggering them.
+
 If cells remain Queued for an extended period, common causes include:
 
 -   **High concurrency in progress** — Clay runs many rows at once; if a large number are queued simultaneously, later rows wait while earlier ones complete. The queue will clear on its own.
