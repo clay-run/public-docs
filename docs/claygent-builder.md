@@ -112,7 +112,7 @@ You can also add MCP server connections workspace-wide from `Settings` → `Conn
 
 **Tips for using custom MCP servers:**
 
--   **Be specific in your prompt.** Tell the Claygent exactly which service to access and what to do — for example, _"Use the Salesforce tool to add \{Company Name\} as a lead in my workspace."_
+-   **Be specific in your prompt.** Tell the Claygent exactly which service to access and what to do — for example, _"Use the Salesforce tool to add \\{Company Name\\} as a lead in my workspace."_
 -   **Limit to 2–3 servers per run.** Enabling too many MCP servers at once can confuse the agent and produce inconsistent results.
 -   **Chain servers for multi-step workflows.** For example: add a lead in Salesforce, research their background online, then draft a summary doc in Notion.
 -   **OAuth is not currently supported.** Use API key authentication or open (unauthenticated) endpoints.
@@ -277,6 +277,17 @@ To use tools with your Claygent:
 3.  Click the **Account** dropdown and connect your own Anthropic, OpenAI, or Gemini API key.
 
 Once you're on a supported model with a private API key, the tools in the **Tools** section will become active.
+
+### How do I mark a Claygent input as optional?
+
+Each input in the Claygent builder shows **(required)** or **(optional)** next to its name. To change whether an input is required:
+
+1.  Open your Claygent in Claygent builder.
+2.  In the **Inputs** section, click the pencil icon next to the input you want to edit.
+3.  Toggle **Required input** off to make it optional — the Claygent still runs when that input is empty, and the blank value is omitted from the prompt for that row.
+4.  Click **Save**.
+
+Toggle **Required input** back on if you want the Claygent to skip rows where that input is blank. New inputs you add via **Add input** default to optional.
 
 ### Why is my Claygent column showing "Some inputs missing"?
 
