@@ -3,7 +3,7 @@ title: Signals in Clay
 source_url: https://university.clay.com/docs/signals
 description: Learn about Signals, a way to monitor changes to your contacts like
   promotions, job changes, or new hires.
-last_synced: 2026-04-26T01:40:40.803Z
+last_synced: 2026-04-26T01:40:40.844Z
 ---
 
 # Signals in Clay
