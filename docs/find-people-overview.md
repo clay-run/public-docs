@@ -43,6 +43,8 @@ This tool is ideal for building targeted sales prospect lists, identifying poten
 -   **Companies:** Find people at specific companies using an existing Clay table or a custom list. By default, this matches people who **currently** work at those companies.
 -   **Exclude people:** Exclude up to 3 different sets of people from your search using Clay tables, CSVs, or manual lists. You can exclude up to 300,000 people total (100,000 per source). Exclusions require a LinkedIn URL.
 -   **Past experiences:** Enable the **Include past experiences** toggle to extend your company, job title, and experience description keyword filters to also match against a person's past roles — not just their current one.
+    -   **Incompatible filters:** This toggle cannot be combined with **Limit per company** or any **Company attributes** filter (company size, company industries, or company description keywords). Selecting them together returns an error.
+    -   **May return fewer results when enabled:** Because exclude keywords apply to a person's entire work history when this toggle is on, the result count can decrease rather than increase. For example, if "Manager" is an excluded title, anyone who has ever held a role containing that word is filtered out — not just people whose current role matches.
 -   **Limit results:** Set a maximum number of results per search (up to 50,000 records).
 -   **Limit per company:** Set the maximum number of people to return per company (up to 100). Note: the preview count shown before running the search reflects the total match universe across all companies and does not account for this limit — the actual number of imported rows will be lower.
 
@@ -59,6 +61,8 @@ Each result includes a **Structured Location** object in the cell details with g
 -   **Country Iso**
 
 ## Enriching your results
+
+**Note on data freshness:** Find People results come from a periodically refreshed index — not a live LinkedIn lookup at search time. A person's job title or company in the results may not reflect their most recent LinkedIn update. To get current employment data, run **Enrich Person** after importing — this fetches the live profile and returns the most up-to-date job title and company information.
 
 After importing Find People results, use Clay's enrichments to add contact information such as work email and mobile phone numbers.
 
