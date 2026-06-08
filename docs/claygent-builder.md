@@ -112,7 +112,7 @@ You can also add MCP server connections workspace-wide from `Settings` → `Conn
 
 **Tips for using custom MCP servers:**
 
--   **Be specific in your prompt.** Tell the Claygent exactly which service to access and what to do — for example, _"Use the Salesforce tool to add \\{Company Name\\} as a lead in my workspace."_
+-   **Be specific in your prompt.** Tell the Claygent exactly which service to access and what to do — for example, _"Use the Salesforce tool to add \{Company Name\} as a lead in my workspace."_
 -   **Limit to 2–3 servers per run.** Enabling too many MCP servers at once can confuse the agent and produce inconsistent results.
 -   **Chain servers for multi-step workflows.** For example: add a lead in Salesforce, research their background online, then draft a summary doc in Notion.
 -   **OAuth is not currently supported.** Use API key authentication or open (unauthenticated) endpoints.
