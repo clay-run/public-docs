@@ -74,7 +74,7 @@ To create a new system user token, you first need to create an app:
 2.  Choose `Create a new app ID`.
 3.  Name your app.
 4.  Select the use case as `Other`.
-5.  Set the app type to `Business`.</s>
+5.  Set the app type to `Business`.
 6.  Click `Create app`.
 7.  Ensure the app has `Ads Management Standard Access` permissions. You can find this setting in `App Review` > `Permissions and Features`.
 8.  Navigate to `Business Settings` > `Users` > `System users` and add a new system user with `Admin` access.
