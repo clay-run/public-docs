@@ -105,6 +105,16 @@ Check if a row exists in your Snowflake database.
 -   **Role** (optional)
 -   **Query**: The raw SELECT SQL query to run.
 
+**Tips**
+
+-   **Always include `LIMIT` in your query.** The Lookup row action returns all matching rows. Queries that can match many records per row — such as `ILIKE '%pattern%'` searches — can produce a response large enough to trigger the error "The action function output exceeded the size limit." Adding a `LIMIT` clause keeps each result manageable: use `LIMIT 1` if you only need the first match, or a small number like `LIMIT 5` for a few top results. This is especially important when **Run in Batches** is enabled, because Clay combines results from all sub-queries into a single response.
+
+**Batching**
+
+The Lookup row action supports **Run in batches** mode. When enabled, Clay combines up to 100 queries into a single Snowflake request (using a `UNION ALL` query internally), rather than running each lookup one at a time. This can improve throughput on large tables.
+
+When batch mode is active, if any sub-query returns many rows, the combined result across all batched lookups can exceed a backend size limit — producing the error "The action function output exceeded the size limit" — even if each lookup runs without error when executed individually. To avoid this, include a `LIMIT` clause in your query to cap how many rows each sub-query returns. You can also lower the **Number of rows per batch** setting to reduce how many queries are combined per request.
+
 ### `Action` Upsert row
 
 Upsert a row into a Snowflake database using a single field as a unique identifier. If the identifier exists, the row will be updated. If not, a new row will be created.
