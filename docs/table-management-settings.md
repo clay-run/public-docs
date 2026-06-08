@@ -62,6 +62,8 @@ Every time a source runs or re-runs, Clay walks through a short decision tree be
 -   If the **column's Auto-run toggle is off**: the cell is marked stale and skipped (only runs on a manual click).
 -   If the **column's Auto-run toggle is on** (default): **the cell runs**.
 
+**Note: Adding a source to an existing table auto-runs enrichments on the first 10 rows only.** When you import a data source into a table that already exists — including tables created by duplicating a workbook and then adding a source afterward — Clay automatically queues enrichments for only the **first 10 imported rows**. The remaining rows are added to the table but do not trigger auto-run. This is intentional behavior to prevent unexpected credit burns: importing a large source into a table with many enrichment columns could otherwise trigger a significant spend all at once. To process the remaining rows, manually run them: select all rows in the table, right-click, and choose **Run [N] rows** — or right-click the first column in your workflow and select **Run column**.
+
 ### Table-level auto-run (master control)
 
 Table-level auto-run acts as the master switch that controls automatic enrichment for the entire table.
