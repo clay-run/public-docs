@@ -93,6 +93,7 @@ Clay gives you three ways to get contacts from a company list. Here's how they d
 -   Returns all results in a separate people table with one row per contact.
 -   When re-run, searches across all companies in the linked table — including any newly added ones. New people are appended and deduplicated against rows already in the table.
 -   Subject to a per-source cumulative limit that varies by billing plan — once that limit is hit, the source stops returning new records even if new companies are added. See [the troubleshooting section](#your-source-has-exceeded-your-plans-limit-error-on-find-companies-or-find-people) for details.
+-   **0 credits to import** — finding and importing people records from Clay's database costs no credits. You pay only for downstream enrichments you run on those contacts (for example, Enrich Person at 0.5 credits per profile, or work email and phone waterfalls).
 -   Best when you don't need to rank or further filter contacts before saving them.
 -   **Update People Table column:** When this source is created from a company table, Clay automatically adds an **Update People Table** column to the company table. That column is the link between the two tables — when it runs, it triggers a full re-run of the Find People search across all companies currently in the table, including any newly added ones. It does not run incrementally for only new rows; it re-runs the full search. With **Enable Automatic People Search Updates** toggled on, the column fires automatically when new company rows enter the table; turn it off to trigger refreshes manually.
 
@@ -110,13 +111,13 @@ Clay gives you three ways to get contacts from a company list. Here's how they d
 -   `Reduce data for more results` mode returns up to **500 contacts per row**, but only name and LinkedIn URL — run `Enrich Person` on each row afterward to get full profiles.
 -   Processes each company row independently — adding a new company row does not re-trigger the enrichment on other rows.
 -   Costs **0.5 credits per row** on current pricing plans (1 credit per row on legacy plans).
--   Best when you want contacts to stay associated with their parent company row, or when you're processing companies incrementally and only want to find contacts for specific rows.
+-   Best when you need **run conditions** — for example, only finding contacts for companies that score above a threshold or have a qualified-lead checkbox checked — or when you're processing companies one at a time and don't want a new-row trigger to re-run the search across your entire list. The per-row cost reflects this independently-gated, incremental processing model. If you don't need run conditions and want contacts in a separate table, the free source option is simpler.
 
 ### Use dynamic location filtering with in-table actions
 
 When you run `Find People at These Companies` as an in-table action (rather than launching a separate people search), you can dynamically filter by location by referencing a location column from your company table. This lets you customize the location filter per company without running multiple separate searches.
 
-For example, if you have a "Headquarters Location" column in your company table, you can reference that column in the location filter when setting up the in-table action. Each company will then be searched using its specific location, rather than applying a single static location filter across all companies.
+For example, if you have a "Headquarters Location" column in your company table, you can reference that column in the location filter when setting up the in-table action. Each company will then be searched using its specific location, rather than applying a single static location filter across all courses.
 
 ### Verify current employment before using results
 
@@ -227,6 +228,14 @@ This is expected behavior. The Find People source deduplicates results against r
 **To get the same contacts back** (for example, when testing your table setup): delete the existing rows from your People table first, then re-run the source. Once the rows are cleared, the search will import the same contacts as before.
 
 **Note:** Deduplication is based on each person's unique profile ID, not your search filters. If the data source returns genuinely new profiles matching your criteria that aren't already in the table, those will still come through on re-run. Only contacts already in the table are filtered out.
+
+### "Has no results" filter shows 0 matches even when some companies returned no contacts
+
+When a people search runs on a company row but finds no matching contacts, the column cell is not empty — it records that the search completed with 0 contacts returned. Clay's **Has no results** filter condition checks whether a cell's result is null (meaning the enrichment has never been run or returned an error without data). A cell that shows "0 people found at this company" has a result — it's just a result of zero — so **Has no results** evaluates to false for those rows.
+
+This is why a filter like "Update People Search has no results" returns 0 matching rows when all companies in your table have had the search run, even if many of those searches found 0 contacts: the filter is looking for unrun or errored cells, not zero-result cells.
+
+**To identify companies where people search found 0 contacts**, see [Why does my downstream company table have fewer rows than my original company list?](#why-does-my-downstream-company-table-have-fewer-rows-than-my-original-company-list): add a **Lookup Rows** column to your company table that searches your people table matched on company domain, then filter for rows where the lookup count equals zero. Once you identify those companies, consider trying a different people search approach — for example, using the **Find Contacts at Company** column enrichment with a different provider, or running a targeted **Claygent** search for decision-makers at those specific companies.
 
 ### Preview count is much higher than the number of rows actually imported
 
