@@ -83,7 +83,7 @@ Because the waterfall can't predict what any given provider will return, all pro
 After a waterfall runs, click the **»** arrow on the waterfall column header to expand the column group and reveal each provider's individual sub-column. Each sub-column shows that provider's result for every row:
 
 -   A sub-column that found a result displays the value it returned.
--   A sub-column that was skipped because an earlier provider already found a result shows **Run condition not met**.\
+-   A sub-column that was skipped because an earlier provider already found a result shows **Run condition not met**.
 -   Click into any individual provider sub-column cell to open that provider's details panel for that specific row.
 
 To add a dedicated column per row showing the winning provider's name, enable **Output name of successful provider?** in the waterfall's output settings.
