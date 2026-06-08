@@ -123,8 +123,6 @@ Creating an additional workspace is not available through in-app settings for mo
 
 You do not need to leave any workspaces you're already a member of. Your existing workspace memberships stay intact, and each workspace is independent with its own tables, credits, and billing.
 
-**Note for agencies and users managing multiple client workspaces:** Some accounts have access to an **"Add workspace"** option directly in the workspace switcher. If you need to create multiple workspaces under the same account, contact Clay support to check whether this can be enabled for you.
-
 ## **Switching between workspaces**
 
 Your Clay account can be associated with more than one workspace — for example, if you explored Clay during a free trial and later upgraded or joined a team's workspace. Each workspace has its own tables, credits, and billing.
@@ -138,6 +136,21 @@ To switch between workspaces:
 **If your tables seem to have disappeared** — for example, after upgrading your plan or returning to Clay after some time — check the workspace switcher first. Your data is not deleted; it's in the workspace where you originally created it.
 
 **Note:** When you upgrade a plan, the upgrade applies to the specific workspace you are currently in. If you upgrade while viewing a different workspace than the one where you created your tables, those tables remain in the original workspace. Use the workspace switcher to navigate between them.
+
+## **Using Clay as an agency**
+
+If you're managing Clay for multiple clients, the recommended approach is to use a **separate workspace for each client**. Each workspace is fully independent — it has its own tables, data credits, billing, connections, and settings — so each client's work stays isolated and every configuration applies to that client only.
+
+**Why separate workspaces work well for agencies:**
+
+-   Each workspace has its own **AI Context** domain (configured in **Settings → AI Context**), so you can set the right company domain and business context per client rather than sharing a single workspace setup.
+-   Credits and billing are tracked separately per workspace, making it easy to see exactly what each client is consuming.
+-   When a project ends, you can hand the workspace over to the client by ensuring they have admin access and removing yourself — all tables, workbooks, and settings remain in place.
+
+**Two common ways to set this up:**
+
+1.  **Client creates the workspace and invites you** — the client signs up at [app.clay.com](https://app.clay.com) using their company email, then adds you as an admin. Their workspace has its own billing and credits from day one.
+2.  **You create the workspace on their behalf** — by default, Clay accounts can only hold one workspace. To create additional workspaces for clients, contact Clay support to have this enabled on your account. Once enabled, an **Add workspace** option will appear in the workspace switcher. Workspaces you create this way start without trial credits; billing and credits are configured per workspace after creation.
 
 ## **Workspace picture**
 
