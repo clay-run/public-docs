@@ -50,6 +50,12 @@ To start a signal, you'll **need a table with** companies or contacts you want t
 
 Currently, signals can only be adjusted by frequency, not set to run at specific times.
 
+### Does my Signal run automatically when new rows are added to my table?
+
+No. Signals run on a fixed schedule — Daily, Weekly, Biweekly, Monthly, or Quarterly — not when new rows arrive in your table. If new companies or contacts are added via a webhook or other source, the Signal will pick them up on the **next scheduled run**, not immediately.
+
+To trigger the Signal right away after new rows arrive, open the signal column header → **Edit column** → click **Save and run** (or **Save and re-run** if the signal has run before).
+
 ### What plans are Signals available on?
 
 Most Signals are available on any paid plan.
