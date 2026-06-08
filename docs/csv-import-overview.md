@@ -64,6 +64,6 @@ CSV import cannot update rows that already exist in Clay — there is no upsert 
 1.  Import the enriched CSV as a **new** Clay table (choose `Create new table` at step 3 above).
 2.  In your original table, click **Add enrichment** and search for **Lookup Single Row in Other Table**.
 3.  Set the matching column (e.g., LinkedIn Profile URL) so Clay finds the right row in the new table.
-4.  Map the column you want to populate (e.g., "Keep/Remove\") as an output.
+4.  Map the column you want to populate (e.g., "Keep/Remove") as an output.
 
 Each existing Clay row fetches the matching value from the new table without creating duplicates.
