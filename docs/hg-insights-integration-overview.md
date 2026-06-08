@@ -79,6 +79,15 @@ For example, you can find out if a company uses Salesforce for their CRM or Nets
 -   **Include product first verified date (Optional)**
 -   **Max product (Optional)**
 
+**Checking an existing account list for technology usage**
+
+If you already have a list of companies — for example, accounts imported from Salesforce or a CSV — you can run this enrichment against each row in your table:
+
+1.  In your table, click `Add enrichment`, search for `HG Insights`, and select `Verify technology usage`.
+2.  For the **Company domain or HG company ID** input, select the column in your table that contains the company's website domain. The enrichment runs once per row using that column's value as the lookup.
+3.  Under **Products**, use the filter to select the specific product or competitor you want to check for.
+4.  Click **Save and run** to execute the check across your rows.
+
 ### `Action` **Find company corporate structure**
 
 Find all corporate parents, domestic parents, and lower level entities managed by a group headquarters company.
