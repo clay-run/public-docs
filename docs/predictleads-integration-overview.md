@@ -27,7 +27,8 @@ Retrieve the latest news articles related to a specific company.
 
 -   **Domain**: Company domain to search for news.
 -   **News Categories (Optional):** Filter news by category.
--   **News Found Date (Optional):** Filter news from a specific date or range.
+-   **News Found Date (Optional):** Filter by when PredictLeads first discovered the news — not the article's original publication date. Accepts an ISO date (e.g. `2024-01-15`) or a relative value (e.g. `30 days ago`).
+    -   _Note: When PredictLeads is used alongside other providers in the same enrichment column, the date filter shown in the column's quick-setup overview may only apply to other providers (such as Intellizence). Open the PredictLeads action settings directly to ensure the date filter takes effect._
 
 ### `Action` Find Connections
 
