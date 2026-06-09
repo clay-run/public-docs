@@ -110,4 +110,11 @@ Each row includes the post URL, post text, author name, author LinkedIn URL, aut
 
 **To get comments, reactions, or shares on a specific post:** Click `Add enrichment`, search for **Get comments on a professional post**, **Get reactions on a professional post**, or **Get shares on a professional post**, and map **Post URL** to the post URL column from your import.
 
-> **Important:** These actions require the original post URL — a URL containing `-activity-` in the path (e.g., `https://www.linkedin.com/posts/clay-hq_...-activity-7212099008951975937-ezPv`). Share URLs containing `-share-` are not valid and return an error. To get the original URL for any post: open the post on LinkedIn, click **•••** (three dots) at the top right of the post, and select **Copy link to post**. If the post is a repost of someone else's content, open the original underlying post first and copy its link.
+**To monitor all interactions across multiple posts at once:** Use the **Get interactions with professional posts** source when creating a new table, or configure it as a Custom Signal ("Monitor interactions with professional posts") to run on a recurring schedule. It accepts a list of post URLs and returns each interaction — comments, reactions, and shares — as a separate row with the interactor's name, profile URL, interaction type, and reaction type. Comment rows include a `created_at` timestamp showing when the comment was posted; reaction and share rows do not include a timestamp for when the interaction occurred.
+
+> **Important:** All post interaction enrichments above require a direct post URL in one of these two formats:
+>
+> -   A standard post URL with `-activity-` in the path, e.g., `https://www.linkedin.com/posts/clay-hq_...-activity-7212099008951975937-ezPv`
+> -   A ugcPost feed URL, e.g., `https://www.linkedin.com/feed/update/urn:li:ugcPost:7264751670859911168`
+>
+> Share or reshare URLs (those with `-share-` in the path or `urn:li:share:` in the feed URL) are not supported and will not return results. To get the correct URL for any post: open the post on LinkedIn, click **•••** (three dots) at the top right of the post, and select **Copy link to post**. If the post is a repost of someone else's content, open the original underlying post first and copy its link.
