@@ -2,7 +2,7 @@
 title: Signals in Clay
 source_url: https://university.clay.com/docs/signals
 description: Learn about Signals, a way to monitor changes to your contacts like
-  promotions, job changes, or new hires.
+  promotions, job changes, new hires, or professional post activity.
 last_synced: 2026-04-26T01:40:40.844Z
 ---
 
@@ -18,6 +18,7 @@ Signals are automated tracking systems that notify you of important changes rela
 -   [Promotions](https://www.clay.com/university/guide/promotion-signal-overview): Monitor when contacts receive promotions within their current company, allowing you to engage during high-intent decision-making periods.
 -   [Job changes](https://www.clay.com/university/guide/job-change-signal-overview): Track when your contacts move to new companies, helping you leverage existing relationships for new opportunities or prepare for shifts in account engagement.
 -   [News & fundraising](https://www.clay.com/university/guide/monitor-for-news-fundraising): Alert you to significant events at monitored companies, helping you spot timely engagement opportunities.
+-   **Monitor professional posts**: Watch LinkedIn profiles or company pages for new posts. When a monitored person or company publishes a post, Clay adds a new row to your results table with the post URL, text, author, and metadata — which you can then use with enrichments like **Get reactions on a professional post** or **Get comments on a professional post** to pull engagement data.
 
 Looking to monitor a specific enrichment? [Learn how to create Custom Signals.](https://www.clay.com/university/guide/custom-signals)
 
@@ -27,7 +28,7 @@ To start a signal, you'll **need a table with** companies or contacts you want t
 
 **While in your table:**
 
-1.  Click `Actions`, then select one of the `Monitor for...` options—new hires, job changes, or promotions.
+1.  Click `Actions`, then select one of the `Monitor for...` options—new hires, job changes, promotions, or professional posts.
 2.  Select the **company table** you want to monitor, then select a **view** from that table — the signal will only check rows visible in that view (not the entire table). Identify the correct company identifiers (website, LinkedIn URL, etc.).
     -   **Note:** The table and view cannot be changed after the signal is saved. To monitor a different set of companies, create a new signal.
 3.  Configure filters for the Signal.
@@ -146,3 +147,25 @@ To stop a signal from consuming credits, you must pause or disable it directly f
 3.  Disable or pause the signal, then save.
 
 You can review all active signals and their individual credit spend in the `Signals` tab of the [credit usage dashboard](/docs/credit-usage) (`Settings` → `Usage`).
+
+### How many profiles or pages can I monitor in a single "Monitor professional posts" signal?
+
+The signal has separate input limits for each type:
+
+-   **People filter:** up to **5 LinkedIn profile URLs**. If you add more than 5, the UI shows "Only the first 5 will be used."
+-   **Companies filter:** up to **5 company domains or LinkedIn company page URLs**. Same limit and same UI warning.
+
+These per-field limits are enforced in the product and cannot be increased. To monitor more than 5 people or more than 5 companies, create additional signals — each can watch its own group of up to 5 per field.
+
+### Why are "Get reactions on a professional post" or "Get comments on a professional post" returning no results for some posts in my monitoring table?
+
+The "Monitor professional posts" signal returns all posts from monitored profiles — including **shared posts** (when someone reposts another person's content). Shared post URLs contain `-share-` in the path rather than `-activity-` or `-ugcPost-`.
+
+Because a shared post relays someone else's original content, the reactions and comments on that content typically belong to the **original post's URL**, not the share URL. As a result, "Get reactions on a professional post" and "Get comments on a professional post" may return no data for shared post URLs even when engagement is visible on LinkedIn.
+
+**To work around this,** add a formula column to your monitoring table that filters for original post URLs:
+
+-   A post URL is original if it contains `activity` or `ugcPost` in the path (e.g., `https://www.linkedin.com/posts/username_...-activity-1234567890-XXXX`).
+-   A post URL is a share/repost if it contains `share` in the path (e.g., `https://www.linkedin.com/posts/username_...-share-1234567890-XXXX`).
+
+Create a formula column that evaluates to `true` when the URL contains `activity` or `ugcPost`, then add a filter to your table view for that column. Use the filtered view — showing only original posts — as the input for your Get reactions and Get comments enrichments.
