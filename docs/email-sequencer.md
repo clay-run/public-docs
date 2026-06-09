@@ -42,7 +42,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   Within each message, use `/` to access features such as:
         -   `Clean variable`: Reference synced lead data with safe fallbacks and optional formatting. When configuring a Clean variable, the **Fallback** field ("Simple text to display if variable is empty") is required — the variable will not save if left blank.
         -   `Sender variable`: Reference identifying information from the sending account
-        -   `AI snippet`: Generate copy automatically using lead data.
+        -   `AI snippet`: Generate personalized copy for each lead automatically. After inserting an AI snippet via `/`, a snippet chip appears in your message. Click the chip to open the inline prompt editor — describe what the snippet should generate and reference lead data columns in your instructions (for example: *"Write a one-sentence opening based on [Company Domain] and [Job Title]"*). Toggle **Preview** to see the AI-generated output for your current preview lead in real time and refine the prompt as needed. The AI model is configured at the campaign level, not per snippet; if you need to control which AI model generates the copy, build the personalized content in a **Use AI** column in your source table and reference it as a `Clean variable` in the email template instead.
         -   `Spintax variable`: Choose a random value from a list
         -   `Rows from [Table]`: Directly reference synced data (Clean variables are recommended to handle empty values safely).
         -   (HTML only): If enabled, use hyperlinks, inline images, fonts, and rich text formatting.
@@ -185,7 +185,7 @@ If your campaign is active, all settings — including the Message sequence — 
 
 ### How much does the sequencer cost?
 
-The Clay email sequencer is available on all plans. Each lead sequenced consumes 1 Action (platform orchestration work). If you use AI snippets in your messages, those consume 1 Action per run and Data Credits based on the model you select (fixed or variable pricing depending on the model) in addition to the Action for sending the email.
+The Clay email sequencer is available on all plans. Each lead sequenced consumes 1 Action (platform orchestration work). If you use AI snippets in your messages, those consume 1 Action per run and Data Credits for AI generation in addition to the Action for sending the email.
 
 ### Can I send multiple sequences to the same email address?
 
