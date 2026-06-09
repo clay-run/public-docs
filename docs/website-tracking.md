@@ -235,3 +235,21 @@ Clay can support hundreds of thousands of daily visitors for even the largest en
 ### Is the visitor data consistent across different providers?
 
 Yes, de-anonymized website data is in a consistent format across various providers.
+
+### What do "Total Time On Page" and "Engaged Time On Page" mean, and what are the units?
+
+Both fields are measured in **seconds**.
+
+-   **Total Time On Page** — the total time the user had the page open in their browser, regardless of whether they were actively viewing it.
+-   **Engaged Time On Page** — the total time the user was actively engaged with the page. This timer pauses when the user switches to a different tab, so it reflects genuine attention rather than just the page sitting open in the background.
+
+A third field, **Engagement Time**, surfaces the same value as Engaged Time On Page but at a different nesting level in the session data structure.
+
+### How do I analyze a field like UTM Term across all sessions in the table?
+
+Session attributes such as `UTM Term` are nested under each individual session object in the web intent data. AI columns (Claygent) run at the **row level**, so they can only access values available in that specific row — they won't automatically look across every session or every nested UTM Term field in the full table.
+
+Two approaches work well for cross-session analysis:
+
+-   **Use Sculptor.** Open Sculptor from the bottom-right chat in your table and describe what you want to analyze. As long as the UTM Term values are visible in the table, Sculptor can read and analyze them across all rows and help you create a new column or structure the data.
+-   **Flatten nested fields into columns.** Add explicit columns pulling out each session's value (for example, Session 1 UTM Term, Session 2 UTM Term). Once those values are in dedicated top-level columns, both Sculptor and AI columns can reference them directly.
