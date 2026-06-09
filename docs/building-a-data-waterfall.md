@@ -88,6 +88,16 @@ After a waterfall runs, click the **»** arrow on the waterfall column header to
 
 To add a dedicated column per row showing the winning provider's name, enable **Output name of successful provider?** in the waterfall's output settings.
 
+## Manually overwriting a merge column value
+
+If a waterfall returns an incorrect value in the merge column, you can replace it manually:
+
+1.  Double-click the cell in the merge column.
+2.  Type the correct value, or delete the existing value.
+3.  Press Enter to save.
+
+A pencil icon appears in the cell to indicate the value has been manually overwritten. To prevent the waterfall from re-running and replacing your edit, add an **Only run if** condition to the waterfall column — for example, `Domain is not empty`.
+
 ## Waterfall results and data quality
 
 Waterfall enrichments return the first result found from a provider in your sequence — there is no built-in confidence score or confidence level on the output. For enrichments like company employee count, revenue, or company description, providers return a value when they find one; there is no high/medium/low rating attached to the result.
@@ -143,5 +153,6 @@ This is the most common cause of unexpected results from the Company Domain wate
 
 **To reduce incorrect results:**
 
+-   **Use the Excluded Domains field on the Google step** — In the Google provider's settings within the waterfall, expand the **Excluded Domains** optional field and enter specific domains you want to block from results (for example, `proff.no`, `tracxn.com`, `rocketreach.co`). Note: due to a known issue, this filtering may not work reliably in all cases.
 -   **Skip the Google step** — In the waterfall's **Waterfall sequence** configuration, toggle off the Google provider. The waterfall then only queries Clearbit and HG Insights, which draw from structured company databases rather than live web search. You'll get fewer overall matches but higher accuracy on the ones you do find.
 -   **Use Claygent instead** — For the most reliable domain finding, set up a Claygent column that searches for the company name and verifies the found URL belongs to the right company before returning a domain. Claygent uses AI credits rather than standard waterfall credits.
