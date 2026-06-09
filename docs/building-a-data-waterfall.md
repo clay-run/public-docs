@@ -62,16 +62,16 @@ For more manual run options, see [Run progress](run-progress.md).
 
 ## Running a specific provider vs. re-running the full waterfall
 
-When a waterfall is in its **collapsed** view (only the merged output column is visible), clicking the run ▶ button on that column **clears all existing results** for the affected rows and re-runs every enabled provider in the waterfall sequence from the beginning — even if a row already had a result from a previous run. Data previously found by any provider is overwritten.
+When a waterfall is in its **collapsed** view (only the merged output column is visible), clicking the run ▶ button triggers **all enabled providers** in the waterfall sequence — not just one. **Run empty or out-of-date rows** fires every enabled provider for rows that are empty, errored, or out-of-date. **Force run all rows** (available from the column header dropdown) re-runs every enabled provider on every row and overwrites all previously found results.
 
-**To run only a specific provider** — for example, after adding a new provider to extend coverage on rows that didn't get a result earlier:
+**To run only a specific provider** — for example, after adding a new provider to extend coverage on rows that didn't get a result yet:
 
 1.  Click the **«»** arrow on the waterfall column header to expand the waterfall and reveal each provider's individual sub-column.
-2.  Right-click the specific provider's sub-column header and select **Run column** → **Run [N] empty or out-of-date rows**.
+2.  Right-click that provider's sub-column header and choose **Run column** → **Run [N] empty or out-of-date rows**.
 
-Running a provider sub-column directly triggers only that provider. It does not clear results from other providers or re-run the full waterfall.
+Running an individual sub-column triggers only that provider. Other providers and their existing results are not affected.
 
-**Important:** Toggling a provider off in the waterfall sequence prevents that provider from executing — but it does **not** stop the merged output column from clearing existing results before it starts. If preserving previously found data matters, always run at the individual sub-column level, not from the merged output column.
+**Note:** Editing the waterfall configuration — such as adding a new provider or changing provider toggles — can mark existing rows as out-of-date. Running the collapsed output on out-of-date rows re-runs all currently enabled providers for those rows, which may produce different results if your provider selection has changed since the last run.
 
 ## Avoiding unintended credit usage
 
