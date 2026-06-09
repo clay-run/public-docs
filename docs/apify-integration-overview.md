@@ -71,6 +71,23 @@ Now you can run your Apify actor within your Clay table!
 
 Click into the **Source Cell** for overlapping accounts to see all the data you pulled in from your Apify actor. From here, you can create new columns with the data or reference this data in an enrichment.
 
+### Extracting specific values when output order varies
+
+Apify actors each define their own output schemas. This means different rows can return data in a different order — one row might start with an Instagram URL, another with an email address, another with a phone number. Mapping by position produces inconsistent results in this case.
+
+To reliably pull a specific type of value regardless of where it appears in the output, add an **Extract Values from Data** column (found under **Enrich Data**):
+
+1. Add a new enrichment column and search for **Extract Values from Data**.
+2. Set **Data** to your Apify output column.
+3. Choose an **Extraction Type**:
+   - **Email Addresses** — extracts all email addresses found in the data.
+   - **Personal LinkedIn URLs** — extracts LinkedIn profile URLs.
+   - **Domains** — extracts domain names.
+   - **Custom (Advanced)** — enter a regex pattern to match any specific value type. For example, to extract Instagram profile URLs: `https?://(?:www\.)?instagram\.com/[^\s",]+`
+4. The action returns a **Matches** list (all values found) and a **Joined Matches** string (comma-separated). Cells with no match show **No Matches Found**.
+
+**Tip:** For output that varies too unpredictably for a regex pattern, use an [AI formula column](https://www.clay.com/university/lesson/how-to-use-ai-formulas) and prompt it to find the specific value — for example: *"Find the Instagram URL in {{Apify Results}}"*.
+
 ## Troubleshooting
 
 ### Incomplete imports
