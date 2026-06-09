@@ -99,7 +99,7 @@ To set a schedule, click **Recurring enrichments** in the Run Setup panel and se
 
 When you click **Start Run** on an Audiences bulk enrichment, Clay recalculates your **live segment at that moment** using your current filters — not the member list baked in when the bulk enrichment was first created. The live segment is the source of truth for the run.
 
-**Row counts in setup mode are a snapshot from when the bulk enrichment was created.** They do not update as you edit your segment filters, so what you see in setup mode may not reflect your actual live segment by the time you click **Start Run**. The team is actively working to fix this display discrepancy in a future update.
+**The preview rows displayed in setup mode reflect your segment membership at the time the bulk enrichment was created** — they do not automatically refresh as you edit your segment filters. This is a known limitation the team is actively working to address in a future update.
 
 Here's what happens to setup-mode rows when you click **Start Run**:
 
