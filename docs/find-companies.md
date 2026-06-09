@@ -107,3 +107,13 @@ These two filters measure different things:
 -   **Estimated employee count** is a numeric min/max filter based on a separately computed count of estimated employees derived from profile data.
 
 Because the two values are sourced independently, a company whose reported size band is "51–200" may have a computed employee count of 250 — or vice versa. Filtering on one versus the other can return a different set of companies even when the numbers appear to overlap.
+
+### Re-running Find Companies shows far fewer results than my original run
+
+This is expected behavior. The Find Companies source deduplicates new results against rows already in your table — re-running returns only the net-new companies not yet present in the table.
+
+**Example:** If your table already has 29,000 companies from a previous import, re-running with the same filters returns only the companies genuinely new since the last run — for example, 32 new companies. The existing 29,000 remain in your table; they are not replaced or removed.
+
+Deduplication is based on each company's unique profile ID, not your filter configuration. A company already in the table is skipped on re-run regardless of whether your filters changed.
+
+**To re-import the full result set** (for example, when testing): delete the existing rows from your table first, then re-run the source. Once the rows are cleared, the search re-imports all matching companies from scratch.
