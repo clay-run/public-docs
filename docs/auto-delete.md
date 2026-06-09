@@ -23,15 +23,19 @@ Follow these steps to set up auto-delete:
 
 1.  Open a table.
     -   Note: To fully bypass the 50,000 record source limit, the table source must be **webhooks**, **send table data**, or a **signal source**. For all other source types, the source will still accumulate rows toward the 50,000 limit even with auto-delete enabled. A warning appears during setup if your table includes incompatible sources.
-2.  Click the title of the table and select `Enable auto-delete`.
-3.  Under **Auto-delete mode**, select one of the following options:
+2.  Open the auto-delete settings using either access path:
+    -   Click the **table title** and select **Enable auto-delete** from the dropdown, or
+    -   Click the **auto-delete icon** (archive icon) in the bottom toolbar of the table.
+3.  In the dialog that appears, check **This table uses a webhook, send table data, or signal source**, then click **Configure auto-delete**.
+    -   If your table uses an incompatible source type, auto-delete will still delete rows, but the source record count continues accumulating toward the 50,000 limit.
+4.  Under **Auto-delete mode**, select one of the following options:
     -   **Disabled** — Rows will not be automatically deleted.
     -   **Delete when all actions finish** — Deletes rows once all action columns have finished running.
         -   Optionally, select a **Success column** from the dropdown. When set, a row will only become eligible for deletion after that specific column has run successfully. If no column is selected, rows are deleted as soon as all actions finish.
     -   **Delete based on conditional rules** — Deletes rows that match a set of custom filter conditions you define. Use this mode to trigger deletion based on more complex logic, such as time created or updated, values in a column, or column run status.
         -   Click `Add filter` to build your conditions. At least one filter rule is required to save this mode.
-4.  Optionally, enter a value in the **Number of rows to keep** field. This sets how many of the most recent rows are retained in the table when auto-delete runs. Leave the field empty to use the default of 100 rows.
-5.  Click `Save changes`.
+5.  Optionally, enter a value in the **Number of rows to keep** field. This sets how many of the most recent rows are retained in the table when auto-delete runs. Leave the field empty to use the default of 100 rows.
+6.  Click `Save changes`.
 
 **Warning:** Deleted rows are not recoverable.
 
