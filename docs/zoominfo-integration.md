@@ -68,3 +68,11 @@ To troubleshoot:
 3.  **Refresh the connection in Clay** — Go to **Settings → Connections**, delete the existing ZoomInfo connection, then re-add it and re-authenticate.
 
 If issues persist, reach out to ZoomInfo support to resolve any remaining account restrictions.
+
+### **I'm seeing a ZI0001 "The token provided is invalid" or "Unauthorized access" error. Why?**
+
+The ZI0001 error (*"The token provided is invalid. Please provide a valid token and try again."*, shown under the title "Unauthorized access") is a **transient issue**, not a credential setup problem. It occurs because of how ZoomInfo handles OAuth token refresh cycles: there can be a brief window after a token is issued or refreshed when the new token hasn't fully propagated on ZoomInfo's end, causing enrichments to temporarily return a 401 rejection.
+
+**Fix:** Re-run the affected cells. In most cases they succeed immediately on retry.
+
+If ZI0001 persists across multiple cells after retrying, or if you see it consistently on every run, contact Clay support so we can investigate your ZoomInfo connection.
