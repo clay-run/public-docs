@@ -60,6 +60,19 @@ To run your waterfall on a specific set of rows — for example, to test it on a
 
 For more manual run options, see [Run progress](run-progress.md).
 
+## Running a specific provider vs. re-running the full waterfall
+
+When a waterfall is in its **collapsed** view (only the merged output column is visible), clicking the run ▶ button triggers **all enabled providers** in the waterfall sequence — not just one. **Run empty or out-of-date rows** fires every enabled provider for rows that are empty, errored, or out-of-date. **Force run all rows** (available from the column header dropdown) re-runs every enabled provider on every row and overwrites all previously found results.
+
+**To run only a specific provider** — for example, after adding a new provider to extend coverage on rows that didn't get a result yet:
+
+1.  Click the **«»** arrow on the waterfall column header to expand the waterfall and reveal each provider's individual sub-column.
+2.  Right-click that provider's sub-column header and choose **Run column** → **Run [N] empty or out-of-date rows**.
+
+Running an individual sub-column triggers only that provider. Other providers and their existing results are not affected.
+
+**Note:** Editing the waterfall configuration — such as adding a new provider or changing provider toggles — can mark existing rows as out-of-date. Running the collapsed output on out-of-date rows re-runs all currently enabled providers for those rows, which may produce different results if your provider selection has changed since the last run.
+
 ## Avoiding unintended credit usage
 
 By default, auto-run is **on** for every table — waterfall columns (such as a work email waterfall) fire automatically on every new row as it arrives. If rows are added to your table before your waterfall setup is finalized, all steps in the waterfall trigger immediately and consume credits.
