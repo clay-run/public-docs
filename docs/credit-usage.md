@@ -78,6 +78,12 @@ All views allow you to download the data as a CSV for further analysis.
 
 **Note:** Historical data for the table credit dashboard begins on November 5th, 2025. You'll see a warning about incomplete data if your selected time range begins before this date.
 
+### Checking credit cost for a specific action on a row
+
+The workspace and table dashboards break down spend by workbook, table, column, or run — but not by individual row. To see what a specific enrichment charged on a particular row, click on that **action cell** directly. The cell details panel shows a **Charged** line with the data credits consumed by that enrichment for that row.
+
+This is useful for spot-checking costs before scaling a workflow: run a small batch of rows, click into individual action cells to see per-enrichment charges, then use those figures to estimate total credit cost at higher volumes.
+
 ## **Credit usage breakdown**
 
 The credit usage dashboard is organized into tabs, each covering a different slice of your workspace spend. Use the `When` dropdown and `Apply filters` to scope each tab to a specific time period.
