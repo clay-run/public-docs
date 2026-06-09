@@ -2,20 +2,21 @@
 title: Homepage Resource Tagging
 source_url: https://university.clay.com/docs/homepage-resource-tagging
 description: Resource tags help you organize your Clay workspace by adding
-  custom labels to folders, tables, and workbooks. They make it easier to find
+  custom labels to folders, tables, workbooks, and functions. They make it easier to find
   content, share…
 last_synced: 2026-04-26T01:40:08.361Z
 ---
 
 # Homepage Resource Tagging
 
-Resource tags help you organize your Clay workspace by adding custom labels to folders, tables, and workbooks. They make it easier to find content, share context with your team, and create flexible organizational systems.
+Resource tags help you organize your Clay workspace by adding custom labels to folders, tables, workbooks, and functions. They make it easier to find content, share context with your team, and create flexible organizational systems.
 
 You can add tags to:
 
 -   Folders
 -   Tables
 -   Workbooks
+-   Functions
 
 ## **When to use tags**
 
@@ -54,7 +55,7 @@ All workspace members can assign existing tags to resources.
 
 **Method 1: Right-click menu**
 
-1.  Right-click on any folder, table, or workbook.
+1.  Right-click on any folder, table, workbook, or function.
 2.  Select `Tags` from the context menu.
 3.  Choose from existing tags or search for specific tags.
 4.  Tags are applied immediately.
