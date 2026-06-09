@@ -228,6 +228,16 @@ Clay uses stored snapshot data rather than live LinkedIn search, so results will
 
 If profiles still appear to be missing after switching to LinkedIn URLs, use **Claygent** to find the missing profiles via Google search, then pass those LinkedIn URLs directly into `Enrich Person`. This uses a live-scraping fallback that isn't constrained by the stored dataset.
 
+### Re-running Find Companies shows far fewer results than my original run
+
+This is expected behavior. The Find Companies source deduplicates new results against rows already in your table — re-running returns only the net-new companies not yet present in the table.
+
+**Example:** If your table already has 29,000 companies from a previous import, re-running with the same filters returns only the companies genuinely new since the last run — for example, 32 new companies. The existing 29,000 remain in your table; they are not replaced or removed.
+
+Deduplication is based on each company's unique profile ID, not your filter configuration. A company already in the table is skipped on re-run regardless of whether your filters changed.
+
+**To re-import the full result set** (for example, when testing): delete the existing rows from your table first, then re-run the source. Once the rows are cleared, the search re-imports all matching companies from scratch.
+
 ### Re-running Find People returns 0 new results
 
 This is expected behavior. The Find People source deduplicates results against rows already in the table — re-running the same source on a table that already contains those contacts returns 0 new records. There is no setting to disable this: deduplication is always on for the Find People source.
