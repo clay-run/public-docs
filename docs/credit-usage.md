@@ -78,6 +78,12 @@ All views allow you to download the data as a CSV for further analysis.
 
 **Note:** Historical data for the table credit dashboard begins on November 5th, 2025. You'll see a warning about incomplete data if your selected time range begins before this date.
 
+### Checking credit cost per row
+
+To see what each action charged on a specific row — for example, to understand the cost of enriching a single account before scaling your volume — click the **row header** and select **Run info**. The panel shows each action that ran on that row and the data credits it consumed.
+
+This is the most granular credit view available. The workspace and table dashboards break down spend by workbook, table, column, or run — but the **Run info** panel is the only place to see the credit breakdown for a single record.
+
 ## **Credit usage breakdown**
 
 The credit usage dashboard is organized into tabs, each covering a different slice of your workspace spend. Use the `When` dropdown and `Apply filters` to scope each tab to a specific time period.
