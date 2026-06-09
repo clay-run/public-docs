@@ -130,6 +130,20 @@ To confirm this is what happened: in the waterfall's `Full configuration`, turn 
 
 If you need to use an email that a later provider found despite an earlier invalid result, you can manually paste it into your output column, or create a formula column that pulls directly from the individual provider result columns.
 
+### Why does the validation step show "Click to run" instead of running automatically?
+
+If a validation column shows **"Click to run"** on rows where an email was already found, your table is most likely in manual mode — auto-run is disabled at the table level. When table-level auto-run is off, downstream columns (including validation steps in a waterfall) do not execute automatically, even when an upstream provider successfully finds a result.
+
+To have validation run automatically right after an email is found:
+
+1.  Click the `⛭` icon in the top toolbar (or click the table name → **Run Settings**).
+2.  Toggle **Auto-run** on.
+3.  Choose **Continue without running** or **Update cells** depending on whether you want to process existing rows immediately.
+
+Once auto-run is enabled at the table level, the waterfall will flow through to the validation step on its own as soon as an email is found.
+
+**Note:** Table-level auto-run is the master switch — even if a column's own auto-run is enabled, it won't fire if the table-level setting is off. See [Table management settings](table-management-settings.md) for a full breakdown of how table-level and column-level auto-run interact.
+
 ### Can I use both Infer Email and a validation strategy together?
 
 Yes — and this is the recommended setup for cost-efficient workflows. `Infer Email` handles the free first attempt; your validation strategy then controls how the rest of the waterfall evaluates results from paid providers.
