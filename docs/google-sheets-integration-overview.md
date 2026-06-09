@@ -13,7 +13,7 @@ Google Sheets in Clay enables seamless integration between your Clay tables and 
 
 ## **Enriching data with Google Sheets**
 
-1.  While in a Clay table, click `Actions` and search for `Google Sheets`.
+1.  While in a Clay table, click `Tools` and search for `Google Sheets`.
 2.  Under `Enrichments`, select one of the Google Sheets options.
 3.  In the modal, you will be asked to `Select Google Sheets account`.
     -   If you haven't already connected your Google Sheets, click `+ Add account` and go through authentication.
