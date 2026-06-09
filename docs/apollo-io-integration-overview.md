@@ -89,7 +89,7 @@ Retrieve open job postings for a company using [Apollo.io](http://Apollo.io)'s j
 
 **Inputs**
 
--   Company ID (Optional): Apollo organization ID to identify the company
+-   **Company ID** (Required — see note below): Apollo organization ID to identify the company. Although this field is labeled optional in the Clay interface, leaving it blank always triggers an **"Input missing"** error at runtime.
 -   Job Search Terms (Optional): Keywords to filter job postings (comma-separated)
 
 **Output:**
@@ -343,5 +343,17 @@ Action columns do not have a built-in rate limit control. To stay below Apollo's
 1.  Select a subset of rows (~150–200) by clicking the first row number and Shift-clicking the last.
 2.  Right-click the selection and choose **Run [N] rows**.
 3.  Wait approximately 60 seconds, then repeat for the next batch.
+
+### Find Open Jobs returns "Input missing" when Company ID is blank
+
+The **Company ID** field in the **Find Open Jobs** action is labeled **optional** in the Clay interface, but the action always requires an Apollo Organization ID to run. Leaving the field blank fails every cell with an **"Input missing"** error.
+
+To fix this, retrieve the Apollo Organization ID first, then map it into the enrichment:
+
+1.  Add a new enrichment column, search for **Apollo.io**, and select **Enrich Company**.
+2.  Map your company **domain** column as the input (e.g., `clay.com`).
+3.  Run the enrichment — it returns Apollo company data including the **Organization ID**.
+4.  In your **Find Open Jobs** column, map the **Company ID** input to the **Organization ID** value returned by the Enrich Company step.
+5.  Re-run the Find Open Jobs column.
 
 ## ‍
