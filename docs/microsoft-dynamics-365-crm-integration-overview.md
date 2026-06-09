@@ -53,7 +53,7 @@ To access source panel:
 
 **New table:** In a workbook, click `+ Add` at the bottom. Search for `Microsoft` and select from the results.
 
-**Existing Table:** In an existing table, open the table and select **Actions > Import** to configure Dynamics as a data source.
+**Existing Table:** In an existing table, open the table and select **Tools > Import** to configure Dynamics as a data source.
 
 ### **Step 2:** Select your Dynamics account
 
@@ -81,7 +81,7 @@ Match the relevant fields from your Clay table to the corresponding Dynamics pro
 
 **Step 4:** Configure run settings.
 
-By default auto-update, any new row added to your Clay table will automatically create an object in Dynamics.  Learn more about auto-update in [this brief guide](https://docs.clay.com/en/articles/9642165-auto-update-and-auto-dedupe-table).
+By default auto-update, any new row added to your Clay table will automatically create an object in Dynamics.  Learn more about auto-update in [this brief guide](https://docs.clay.com/en/articles/9642165-auto-update-and-auto-dedupe-table).
 
 To run enrichment only under specific conditions, use formulas that trigger the column when the formula is true. Learn more about AI formulas in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101).
 
@@ -107,7 +107,7 @@ Choose the fields you want to return. If no fields are selected, all available f
 
 **Step 5:** Configure run settings.
 
-By default auto-update, any new row added to your Clay table will automatically lookup for a matching object in Dynamics.  Learn more about auto-update in [this brief guide](https://docs.clay.com/en/articles/9642165-auto-update-and-auto-dedupe-table).
+By default auto-update, any new row added to your Clay table will automatically lookup for a matching object in Dynamics.  Learn more about auto-update in [this brief guide](https://docs.clay.com/en/articles/9642165-auto-update-and-auto-dedupe-table).
 
 To run enrichment only under specific conditions, use formulas that trigger the column when the formula is true. Learn more about AI formulas in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101).
 
@@ -129,7 +129,7 @@ Match the relevant fields from your Clay table to the corresponding Dynamics pro
 
 **Step 5:** Configure run settings.
 
-By default auto-update, any new row added to your Clay table will automatically update the object in Dynamics.  Learn more about auto-update in [this brief guide](https://docs.clay.com/en/articles/9642165-auto-update-and-auto-dedupe-table).
+By default auto-update, any new row added to your Clay table will automatically update the object in Dynamics.  Learn more about auto-update in [this brief guide](https://docs.clay.com/en/articles/9642165-auto-update-and-auto-dedupe-table).
 
 To run enrichment only under specific conditions, use formulas that trigger the column when the formula is true. Learn more about AI formulas in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101).
 

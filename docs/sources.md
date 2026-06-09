@@ -57,7 +57,7 @@ Every Clay table starts with a source. You can import customer data from a CSV f
 To download your table data as a CSV:
 
 1.  **Uncheck all rows.** If any row checkboxes are selected, the toolbar switches to row-level bulk action mode — run, delete, debug — and table-level functions including Export are not shown. Uncheck all rows first.
-2.  In the table toolbar, click `Tools` → `Export`. Depending on your account, this button may be labeled `Actions` instead of `Tools` — the export option is in the same place either way.
+2.  In the table toolbar, click `Tools` → `Export`.
 3.  Click `Download CSV`. Clay processes the export in the background and the file downloads automatically.
 
 **Why can't I see Export?** The most common cause is having one or more rows checked. The toolbar shows different options depending on row selection state: when no rows are selected, you see table-level functions such as Export and Import; when rows are selected, the same button shows bulk row operations instead. Uncheck all rows to restore access to Export.

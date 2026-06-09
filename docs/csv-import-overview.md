@@ -15,7 +15,7 @@ Within Clay you can import CSV as a source to an existing or new table.
 
 1.  Open the source panel:
     -   **For a new table:** From your workspace home, click `+ Create new` and search for `CSV`.
-    -   **For an existing table:** Open the table, click `Tools` (or `Actions`, depending on your account), and select `Import`.
+    -   **For an existing table:** Open the table, click `Tools` and select `Import`.
 2.  Upload your file by clicking `Browse Files` or dragging and dropping your CSV into the upload area.
 
     > **Note:** If your CSV has more rows than your plan allows in a single table, the upload dialog will either block the import with an error or show an **"Import First N Rows"** button that imports only up to your plan's limit. If you see fewer rows than expected after importing, you've likely hit your plan's row limit — upgrade your plan or contact Clay support to increase it.
@@ -40,7 +40,7 @@ Once your data is in Clay, you can enrich rows to pull in additional information
 
 **If you imported a list of companies and want to find contacts and their email addresses:**
 
-1.  In your table, click **Tools** (or **Actions**, depending on your account), switch to the **Sources** tab, and select **Find People at These Companies** to search for people at each company by job title, seniority, or other criteria. Each match is returned as a separate contact row.
+1.  In your table, click **Tools**, switch to the **Sources** tab, and select **Find People at These Companies** to search for people at each company by job title, seniority, or other criteria. Each match is returned as a separate contact row.
 2.  On the resulting contacts table, click **Add enrichment**, search for **Work Email**, and select the waterfall to find and validate a work email address for each contact.
 
 Importing a company list does not automatically add contact rows or email addresses — you need to run these two steps explicitly. For full setup instructions, see [Finding companies and people in Clay](finding-companies-and-people-in-clay.md) and [Work Email waterfall](work-email-waterfall.md).

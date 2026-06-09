@@ -248,7 +248,7 @@ The Body editor has two modes, toggled via the ⚙️ gear icon in the top-right
 
 In token mode, every column chip inserted via the `/` picker is automatically JSON-serialized before the request is sent — strings, numbers, objects, and arrays all serialize correctly, including columns that return nested objects.
 
-**⚠️ Important:** This auto-serialization only applies to direct chip tokens, not to formula expressions. If you use formula mode with an expression that accesses a sub-property of an object column — for example, `{{My Column}}?.["Key Name"]` where "Key Name" is itself a nested object — that intermediate JavaScript value is **not** auto-serialized. Your API will receive the string `[object Object]` instead of the actual data.
+**⚠️ Important:** This auto-serialization only applies to direct chip tokens, not to formula expressions. If you use formula mode with an expression that accesses a sub-property of an object column — for example, `{{My Column}}?.[\"Key Name\"]` where "Key Name" is itself a nested object — that intermediate JavaScript value is **not** auto-serialized. Your API will receive the string `[object Object]` instead of the actual data.
 
 **Fix:** Extract the sub-property into its own formula column first, then reference that column as a chip in the HTTP body via the `/` picker. Chip tokens are always auto-serialized, even when the column value is a complex object or array.
 
@@ -446,7 +446,7 @@ Use HTTP API as source when you want to:
 
 **Step 1: Start import**
 
-1.  Click **Actions** → **View all sources**.
+1.  Click **Tools** → **View all sources**.
 2.  Search for **Import data from an HTTP API**.
 3.  Select it.
 
@@ -696,15 +696,15 @@ If clicking **Run** on your HTTP API column produces no loading indicator, no re
 
 The API receives the literal string `[object Object]` instead of JSON data.
 
-**Why this happens:** In token mode, every column chip inserted via the `/` picker is automatically JSON-serialized before the request is sent. In formula mode, expressions that access sub-properties of object columns — such as `{{Column}}?.["Key Name"]` where "Key Name" is itself a nested object — are **not** auto-serialized. When Clay coerces that JavaScript object to a string, it produces `[object Object]`.
+**Why this happens:** In token mode, every column chip inserted via the `/` picker is automatically JSON-serialized before the request is sent. In formula mode, expressions that access sub-properties of object columns — such as `{{Column}}?.[\"Key Name\"]` where "Key Name" is itself a nested object — are **not** auto-serialized. When Clay coerces that JavaScript object to a string, it produces `[object Object]`.
 
 This most commonly surfaces when:
--   You're pulling values out of a complex enrichment result (e.g. function inputs, AI output objects) using `?.["Key"]` inside a formula expression.
+-   You're pulling values out of a complex enrichment result (e.g. function inputs, AI output objects) using `?.[\"Key\"]` inside a formula expression.
 -   You're using `_.join()` or string concatenation in formula mode where one of the values is a nested object.
 
 **Fix:**
 
-1.  Create an **intermediate formula column** that extracts the value you need — e.g. `{{Enrichment Column}}?.["Key Name"]`.
+1.  Create an **intermediate formula column** that extracts the value you need — e.g. `{{Enrichment Column}}?.[\"Key Name\"]`.
 2.  In your HTTP body (token mode), insert that formula column as a **chip** via the `/` picker.
 
 The chip token is automatically serialized, even when the column value is a complex object or array.
@@ -788,5 +788,5 @@ Map each part as follows:
 
 **Decide which Clay feature to use:**
 
--   **Pulling records in as rows** (e.g. fetching a list from an API to start a table): use **HTTP API as source** (Actions → View all sources → Import data from an HTTP API).
+-   **Pulling records in as rows** (e.g. fetching a list from an API to start a table): use **HTTP API as source** (Tools → View all sources → Import data from an HTTP API).
 -   **Calling an API once per row** (e.g. enriching existing records): use the **HTTP API enrichment column** (Add enrichment → HTTP API).

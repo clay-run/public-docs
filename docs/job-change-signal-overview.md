@@ -22,7 +22,7 @@ Job Change Signals notify you when monitored contacts switch roles, helping you 
 
 To set up Job Change Signals in your table:
 
-1.  Click `Actions`, then select `Monitor for job changes`.
+1.  Click `Tools`, then select `Monitor for job changes`.
 2.  Select your table of the contacts you want to monitor for job changes. It must contain the contact's LinkedIn URL as an identifier.
     -   **LinkedIn URL stored in Salesforce?** If the LinkedIn URL exists in Salesforce but isn't yet a column in your Clay table, add a [Salesforce Lookup Record](salesforce-integration-overview.md) column first — it returns all fields on the Contact record, including custom LinkedIn URL fields.
 3.  Optionally, enable `Initial check`.

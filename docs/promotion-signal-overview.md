@@ -19,7 +19,7 @@ Simply set up event tracking for your contacts, and Clay will monitor their care
 
 To set up Promotion Signals in your table:
 
-1.  Click `Actions`, then select `Monitor for job changes`.
+1.  Click `Tools`, then select `Monitor for job changes`.
 2.  Select your table containing LinkedIn URLs of contacts you want to monitor.
 3.  Set how often the Signal should run.
 4.  Optionally, add enrichments to gather additional data.

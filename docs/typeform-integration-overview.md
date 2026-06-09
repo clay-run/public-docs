@@ -19,7 +19,7 @@ With Clay's Typeform integration, you can import responses from your Typeform su
 
 If you are in a new workbook, navigate to the source panel, select all sources, and add Typeform as a source to a Clay table.  
 
-If you are in a table, go to Actions --> Import and select Typeform as a source.
+If you are in a table, go to Tools → Import and select Typeform as a source.
 
 **Step 2: Connect Your Typeform Account**
 

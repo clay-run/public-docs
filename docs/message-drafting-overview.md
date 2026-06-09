@@ -19,7 +19,7 @@ This is particularly useful for automating outbound campaigns, such as sales out
 
 **Step 1: Open message drafting feature**
 
-Access the message drafting tool through the export actions menu: **Actions > Export > Export Messages to Sequencer**.
+Access the message drafting tool through the export menu: **Tools > Export > Export Messages to Sequencer**.
 
 **Step 2: Select your sequencer**
 
@@ -31,7 +31,7 @@ Choose the sequencer you want to export your messages to from the list.
 
 Within the **Message Drafting Panel**, craft your messages.
 
-Be mindful of your sequencer’s export settings to ensure compatibility.
+Be mindful of your sequencer's export settings to ensure compatibility.
 
 **Step 4: Configure field mappings**
 
@@ -77,9 +77,9 @@ Conditional Snippets allow you to add dynamic logic to your messages, displaying
 
 ### **Key Features**
 
--   [**Conditional Logic**](https://www.clay.com/university/guide/conditional-statements): Define “if/else” conditions to display different content based on recipient-specific data, such as including a personalized greeting if a first name exists.
--   [**Logical Operators**](https://www.clay.com/university/guide/logical-operators): Combine multiple conditions using operators like AND (e.g., First Name exists AND Company Name does not include “Clay”) or OR.
--   [**Comparison Operators**](https://www.clay.com/university/guide/comparison-operators): Compare data values (e.g., check if a field “equals,” “does not equal,” or “contains” specific information) to tailor your message logic.
+-   [**Conditional Logic**](https://www.clay.com/university/guide/conditional-statements): Define "if/else" conditions to display different content based on recipient-specific data, such as including a personalized greeting if a first name exists.
+-   [**Logical Operators**](https://www.clay.com/university/guide/logical-operators): Combine multiple conditions using operators like AND (e.g., First Name exists AND Company Name does not include "Clay") or OR.
+-   [**Comparison Operators**](https://www.clay.com/university/guide/comparison-operators): Compare data values (e.g., check if a field "equals," "does not equal," or "contains" specific information) to tailor your message logic.
 -   **Custom Fields**: Insert dynamic fields from your data for tailored messaging.
 
 ### **How to Use Conditional Snippets**
@@ -90,31 +90,31 @@ Conditional Snippets allow you to add dynamic logic to your messages, displaying
     -   Use the **Where** fields to set conditions based on your data.
     -   Add multiple conditions using **AND** or **OR** to refine your logic branches.
     -   Example: Check if a field (`First Name`) exists or if another field (`Company Name`) contains specific text.
-3.  **Set the “If” Output**:
+3.  **Set the "If" Output**:
     -   Define the content that will appear if the conditions are met.
     -   Use placeholders to dynamically insert data (e.g., `Hey {{First Name}}`,).
-4.  **Set the “Else” Output**:
-    -   Provide fallback content for cases where the conditions aren’t met (e.g., `Hey there`).
+4.  **Set the "Else" Output**:
+    -   Provide fallback content for cases where the conditions aren't met (e.g., `Hey there`).
 5.  **Save and Test**:
-    -   Save your snippet and test it with sample data to verify that the correct content displays for both “if” and “else” scenarios.
+    -   Save your snippet and test it with sample data to verify that the correct content displays for both "if" and "else" scenarios.
 
 ## Lemlist
 
 Lemlist's custom fields support HTML. Note that message draft editor newlines get replaced with spaces so for new lines within Lemlist use <br> or <p> tags.
 
-For more information on Lemlist’s actions, refer to the [Lemlist documentation](https://www.clay.com/university/guide/lemlist-integration-overview).
+For more information on Lemlist's actions, refer to the [Lemlist documentation](https://www.clay.com/university/guide/lemlist-integration-overview).
 
 ## Smartlead
 
 Smartlead's custom fields support HTML and newlines. You are able to create new custom fields from your Clay action panel.
 
-For more information on Smartlead’s actions, refer to the [Smartlead documentation](https://www.clay.com/university/guide/smartlead-integration-overview).
+For more information on Smartlead's actions, refer to the [Smartlead documentation](https://www.clay.com/university/guide/smartlead-integration-overview).
 
 ## Instantly
 
 Smartlead's custom fields support HTML and newlines.
 
-For more information on Instantly’s actions, refer to the [Instantly documentation](https://www.clay.com/university/guide/instantly-integration-overview).
+For more information on Instantly's actions, refer to the [Instantly documentation](https://www.clay.com/university/guide/instantly-integration-overview).
 
 ## Outreach
 
@@ -122,7 +122,7 @@ Outreach's custom fields fully support HTML and newline characters.
 
 We recommend reserving specific Prospect custom fields (e.g. custom10 to custom15) for Clay usage to avoid conflicts with other custom field data. You will have to manually map your messages to these custom fields.
 
-For more information on Outreach’s actions, refer to the [Outreach documentation](https://www.clay.com/university/guide/outreach-integration-interview).
+For more information on Outreach's actions, refer to the [Outreach documentation](https://www.clay.com/university/guide/outreach-integration-interview).
 
 ## Salesloft
 
@@ -130,7 +130,7 @@ Salesloft's custom fields do not support HTML or newlines.
 
 Custom fields must be manually defined in Salesloft before they can be exported from Clay. You will have to manually map your messages to these custom fields.
 
-For more information on Salesloft’s actions, refer to the [Salesloft documentation](https://www.clay.com/university/guide/salesloft-integration-overview).
+For more information on Salesloft's actions, refer to the [Salesloft documentation](https://www.clay.com/university/guide/salesloft-integration-overview).
 
 ## Reply.io
 
@@ -138,13 +138,13 @@ Reply.io's custom fields support HTML. Use <br> or <p> tags for newlines.
 
 Note that there is a default maximum of 50 custom variables in total.
 
-For more information on Reply.io’s actions, refer to the [Reply.io documentation](https://www.clay.com/university/guide/reply-io-integration-overview).
+For more information on Reply.io's actions, refer to the [Reply.io documentation](https://www.clay.com/university/guide/reply-io-integration-overview).
 
 ## HeyReach
 
 HeyReach's custom fields only support alphanumeric characters.
 
-For more information on Salesloft’s actions, refer to the [Heyreach documentation](https://www.clay.com/university/guide/heyreach-integration-overview).
+For more information on Salesloft's actions, refer to the [Heyreach documentation](https://www.clay.com/university/guide/heyreach-integration-overview).
 
 ## La Growth Machine
 
@@ -152,7 +152,7 @@ La Growth Machine's custom attributes support HTML. Use <br> or <p> tags for new
 
 La Growth Machine supports a maximum of 10 custom attributes per lead. Each custom attribute can be up to 250 characters long.
 
-For more information on La Growth Machine’s actions, refer to the [La Growth Machine documentation](https://www.clay.com/university/guide/la-growth-machine-integration-overview).
+For more information on La Growth Machine's actions, refer to the [La Growth Machine documentation](https://www.clay.com/university/guide/la-growth-machine-integration-overview).
 
 ## Customer.io
 

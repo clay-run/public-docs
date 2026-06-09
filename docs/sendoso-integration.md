@@ -14,7 +14,7 @@ The Sendoso integration enables personalized gift sending with AI-powered recomm
 
 ## **Enriching data with Sendoso**
 
-1.  While in a Clay table, click `Actions` and search for `Sendoso`.
+1.  While in a Clay table, click `Tools` and search for `Sendoso`.
 2.  Under `Integrations`, select one of the Sendoso options.
 
 ### **`Action` Send a gift recommended by Sendoso**
