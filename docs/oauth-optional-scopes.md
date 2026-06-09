@@ -1,6 +1,5 @@
 ---
 title: OAuth optional scopes
-source_url: https://university.clay.com/docs/oauth-optional-scopes
 description: Control exactly which permissions you grant to integrations.
 last_synced: 2026-04-26T01:40:25.716Z
 ---

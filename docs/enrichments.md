@@ -1,6 +1,5 @@
 ---
 title: Enrichments
-source_url: https://university.clay.com/docs/enrichments
 description: Learn how to run enrichments in Clay, including run settings, delay options, and custom rate limits.
 last_synced: 2026-04-26T01:39:56.840Z
 ---

@@ -1,6 +1,5 @@
 ---
 title: Conditional runs
-source_url: https://university.clay.com/docs/conditional-runs
 description: Add programmable logic to your Clay workflows.
 last_synced: 2026-04-26T01:39:47.459Z
 ---

@@ -1,6 +1,5 @@
 ---
 title: Octave integration
-source_url: https://university.clay.com/docs/octave-integration
 description: Enrich lead data, qualify prospects, and generate personalized
   outreach sequences using AI-powered insights.
 last_synced: 2026-04-26T01:40:26.379Z

@@ -1,6 +1,5 @@
 ---
 title: Google Slides integration
-source_url: https://university.clay.com/docs/google-slides-integration
 description: Create customized presentations at scale using your table data.
 last_synced: 2026-04-26T01:40:05.093Z
 ---

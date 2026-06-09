@@ -1,6 +1,5 @@
 ---
 title: URL Validator integration
-source_url: https://university.clay.com/docs/url-validator-integration-overview
 description: Check if a URL is active and reachable.
 last_synced: 2026-04-26T01:40:51.282Z
 ---

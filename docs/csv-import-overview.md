@@ -1,6 +1,5 @@
 ---
 title: How to import your CSV into Clay
-source_url: https://university.clay.com/docs/csv-import-overview
 description: Import your CSV into Clay.
 last_synced: 2026-04-26T01:39:49.725Z
 ---

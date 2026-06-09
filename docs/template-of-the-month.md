@@ -1,6 +1,5 @@
 ---
 title: Template of the month
-source_url: https://university.clay.com/docs/template-of-the-month
 description: Publish your Clay template to be considered for a prize
 last_synced: 2026-04-26T01:40:47.355Z
 ---

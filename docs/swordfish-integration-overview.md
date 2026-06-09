@@ -1,6 +1,5 @@
 ---
 title: Swordfish integration
-source_url: https://university.clay.com/docs/swordfish-integration-overview
 description: Contact data search engine providing accurate cell phone and email
   information for sales and recruitment.
 last_synced: 2026-04-26T01:40:45.402Z

@@ -1,6 +1,5 @@
 ---
 title: Run progress
-source_url: https://university.clay.com/docs/run-progress
 description: Clay provides multiple ways to track and monitor run progress
   across your tables, including how to set a row limit to control which rows are
   processed, manually trigger unrun enrichment cells, run enrichments on a

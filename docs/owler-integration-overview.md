@@ -1,6 +1,5 @@
 ---
 title: Owler integration overview
-source_url: https://university.clay.com/docs/owler-integration-overview
 description: Business intelligence platform offering competitive insights, lead
   generation, and real-time alerts.
 last_synced: 2026-04-26T01:40:27.363Z

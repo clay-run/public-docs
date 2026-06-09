@@ -1,6 +1,5 @@
 ---
 title: Apollo.io integration
-source_url: https://university.clay.com/docs/apollo-io-integration-overview
 description: AI-powered platform for sales intelligence, engagement, and
   workflow automation.
 last_synced: 2026-04-27T18:09:15.331Z

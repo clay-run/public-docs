@@ -1,6 +1,5 @@
 ---
 title: HTTP API with JWT authentication
-source_url: https://university.clay.com/docs/http-api-with-jwt-authentication-integration-overview
 description: Use HTTP API connections authenticated securely with JWT tokens.
 last_synced: 2026-04-26T01:40:09.039Z
 ---

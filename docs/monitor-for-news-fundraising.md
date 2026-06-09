@@ -1,6 +1,5 @@
 ---
 title: Monitor for news & fundraising
-source_url: https://university.clay.com/docs/monitor-for-news-fundraising
 description: Set up signals for significant events at monitored companies, like
   fundraising events.
 last_synced: 2026-04-26T01:40:23.757Z

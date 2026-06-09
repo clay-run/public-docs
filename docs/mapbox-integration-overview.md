@@ -1,6 +1,5 @@
 ---
 title: Mapbox integration
-source_url: https://university.clay.com/docs/mapbox-integration-overview
 description: AI-powered maps, navigation, and location data.
 last_synced: 2026-04-26T01:40:19.819Z
 ---

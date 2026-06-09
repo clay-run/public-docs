@@ -1,6 +1,5 @@
 ---
 title: Smartlead integration
-source_url: https://university.clay.com/docs/smartlead-integration-overview
 description: Cold email automation boosting deliverability and sales outreach.
 last_synced: 2026-04-26T01:40:42.145Z
 ---

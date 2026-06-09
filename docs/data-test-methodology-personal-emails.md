@@ -1,6 +1,5 @@
 ---
 title: "[Data test] Personal email providers"
-source_url: https://university.clay.com/docs/data-test-methodology-personal-emails
 description: Personal email finders
 last_synced: 2026-04-26T01:39:51.343Z
 ---

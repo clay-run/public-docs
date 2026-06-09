@@ -1,6 +1,5 @@
 ---
 title: Apify integration
-source_url: https://university.clay.com/docs/apify-integration-overview
 description: Web scraping and automation platform providing data for AI and
   custom solutions, with troubleshooting for incomplete imports, duplicates,
   and data overwrites.

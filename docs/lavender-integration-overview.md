@@ -1,6 +1,5 @@
 ---
 title: Lavender integration overview
-source_url: https://university.clay.com/docs/lavender-integration-overview
 description: AI email coach enhances writing.
 last_synced: 2026-04-26T01:40:13.305Z
 ---

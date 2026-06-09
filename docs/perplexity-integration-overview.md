@@ -1,6 +1,5 @@
 ---
 title: Perplexity integration overview
-source_url: https://university.clay.com/docs/perplexity-integration-overview
 description: AI-powered conversational search engine providing accurate, real-time answers
 last_synced: 2026-04-26T01:40:28.021Z
 ---

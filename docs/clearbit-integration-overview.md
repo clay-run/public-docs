@@ -1,6 +1,5 @@
 ---
 title: Clearbit integration overview
-source_url: https://university.clay.com/docs/clearbit-integration-overview
 description: B2B data solutions for lead generation and marketing personalization.
 last_synced: 2026-04-27T18:09:36.202Z
 ---

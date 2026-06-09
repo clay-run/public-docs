@@ -1,6 +1,5 @@
 ---
 title: Manage cell data
-source_url: https://university.clay.com/docs/manage-cell-data
 description: Learn how to manage cell data within your Clay table.
 last_synced: 2026-04-26T01:40:19.169Z
 ---

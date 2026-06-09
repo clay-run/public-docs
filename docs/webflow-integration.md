@@ -1,6 +1,5 @@
 ---
 title: Webflow integration
-source_url: https://university.clay.com/docs/webflow-integration
 description: Create, retrieve, and update items in Webflow from Clay.
 last_synced: 2026-04-26T01:40:53.914Z
 ---

@@ -1,6 +1,5 @@
 ---
 title: Serper integration overview
-source_url: https://university.clay.com/docs/serper-integration-overview
 description: Use Serper.dev to perform Google searches and scrape Google Maps data at scale in Clay, including performance limits and batch recommendations.
 last_synced: 2026-06-04T00:00:00.000Z
 ---

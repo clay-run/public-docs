@@ -1,6 +1,5 @@
 ---
 title: Auto-delete in tables
-source_url: https://university.clay.com/docs/auto-delete
 description: Efficiently process and enrich large volumes of data using passthrough tables with compatible webhook, send table data, and signal sources.
 last_synced: 2026-04-26T01:39:41.622Z
 ---

@@ -1,6 +1,5 @@
 ---
 title: Clay Lookalikes
-source_url: https://university.clay.com/docs/clay-lookalikes
 description: Find companies or people similar to a seed list using Clay's native lookalike engine, powered by AI embeddings.
 last_synced: 2026-06-09T00:00:00.000Z
 ---

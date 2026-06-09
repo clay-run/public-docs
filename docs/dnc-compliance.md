@@ -1,6 +1,5 @@
 ---
 title: Do Not Contact (DNC) compliance & best practices
-source_url: https://university.clay.com/docs/dnc-compliance
 description: Information about DNC compliance and best practices.
 last_synced: 2026-04-26T01:39:53.932Z
 ---

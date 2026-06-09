@@ -1,6 +1,5 @@
 ---
 title: ContactLevel integration
-source_url: https://university.clay.com/docs/contactlevel-integration
 description: Enrich contacts in Clay with SHA-256 hashed personal email
   addresses for use in high-match ad audiences.
 last_synced: 2026-04-26T01:39:48.108Z

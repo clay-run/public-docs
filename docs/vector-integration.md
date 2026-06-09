@@ -1,6 +1,5 @@
 ---
 title: Vector integration
-source_url: https://university.clay.com/docs/vector-integration
 description: Find hashed emails with Vector.
 last_synced: 2026-04-26T01:40:53.258Z
 ---

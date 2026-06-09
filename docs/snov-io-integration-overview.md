@@ -1,6 +1,5 @@
 ---
 title: Snov.io integration
-source_url: https://university.clay.com/docs/snov-io-integration-overview
 description: Sales automation platform boosting lead generation and outreach effectiveness.
 last_synced: 2026-04-26T01:40:42.470Z
 ---

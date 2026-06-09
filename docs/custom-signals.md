@@ -1,6 +1,5 @@
 ---
 title: Custom Signals
-source_url: https://university.clay.com/docs/custom-signals
 description: Create unique signals to monitor changes to your team's data sources.
 last_synced: 2026-04-26T01:39:50.046Z
 ---

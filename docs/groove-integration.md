@@ -1,6 +1,5 @@
 ---
 title: Groove integration
-source_url: https://university.clay.com/docs/groove-integration
 description: Automate workflows with your Groove account.
 last_synced: 2026-04-26T01:40:05.747Z
 ---

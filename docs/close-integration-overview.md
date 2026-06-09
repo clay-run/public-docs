@@ -1,6 +1,5 @@
 ---
 title: Close integration overview
-source_url: https://university.clay.com/docs/close-integration-overview
 description: Streamlined CRM software for team productivity.
 last_synced: 2026-04-26T01:39:46.174Z
 ---

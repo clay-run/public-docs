@@ -1,6 +1,5 @@
 ---
 title: Legacy plans
-source_url: https://university.clay.com/docs/legacy-plans
 description: Comparing legacy plans to our new plans
 last_synced: 2026-04-26T01:40:14.933Z
 ---

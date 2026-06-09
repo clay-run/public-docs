@@ -1,6 +1,5 @@
 ---
 title: Summit integration
-source_url: https://university.clay.com/docs/summit-integration-overview
 description: IT service management enhances efficiency with automation and cost
   optimization.
 last_synced: 2026-04-26T01:40:44.434Z

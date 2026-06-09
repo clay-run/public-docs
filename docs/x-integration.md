@@ -1,6 +1,5 @@
 ---
 title: X.com integration
-source_url: https://university.clay.com/docs/x-integration
 description: Find and enrich X profiles with user information and recent activity.
 last_synced: 2026-04-26T01:40:57.168Z
 ---

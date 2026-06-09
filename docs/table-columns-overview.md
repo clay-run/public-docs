@@ -1,6 +1,5 @@
 ---
 title: Table columns
-source_url: https://university.clay.com/docs/table-columns-overview
 description: Learn how to navigate columns in your Clay table, including column types, limits, child column mapping, and how to resolve circular dependency errors.
 last_synced: 2026-04-26T01:40:46.052Z
 ---

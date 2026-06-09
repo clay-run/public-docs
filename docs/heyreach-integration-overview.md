@@ -1,6 +1,5 @@
 ---
 title: HeyReach integration
-source_url: https://university.clay.com/docs/heyreach-integration-overview
 description: LinkedIn automation software.
 last_synced: 2026-04-26T01:40:07.367Z
 ---

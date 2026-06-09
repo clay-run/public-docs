@@ -1,6 +1,5 @@
 ---
 title: Fivetran integration overview
-source_url: https://university.clay.com/docs/fivetran-integration-overview
 description: Platform to centralize data from various sources into cloud warehouses
 last_synced: 2026-04-26T01:40:00.431Z
 ---

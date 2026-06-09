@@ -1,6 +1,5 @@
 ---
 title: Functions
-source_url: https://university.clay.com/docs/functions
 description: Functions let you convert any enrichment sequence into a reusable
   workflow. Once created, you can use it across any table — and any updates you
   make to the…

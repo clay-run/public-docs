@@ -1,6 +1,5 @@
 ---
 title: Webhooks in Clay
-source_url: https://university.clay.com/docs/webhook-integration-guide
 description: Real-time data updates enabling application integrations and
   automated workflows.
 last_synced: 2026-04-26T01:40:54.241Z

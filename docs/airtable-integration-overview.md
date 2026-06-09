@@ -1,6 +1,5 @@
 ---
 title: Airtable integration overview
-source_url: https://university.clay.com/docs/airtable-integration-overview
 description: Spreadsheet-like database for organizing information and building applications.
 last_synced: 2026-04-26T01:39:40.638Z
 ---

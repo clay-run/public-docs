@@ -1,6 +1,5 @@
 ---
 title: BetterContact integration
-source_url: https://university.clay.com/docs/bettercontact-integration
 description: Find work emails and mobile phones.
 last_synced: 2026-04-27T18:09:22.050Z
 ---

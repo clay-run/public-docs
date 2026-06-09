@@ -1,6 +1,5 @@
 ---
 title: Sculptor
-source_url: https://university.clay.com/docs/sculptor
 description: Your go-to-market co-pilot
 last_synced: 2026-04-26T01:40:38.269Z
 ---

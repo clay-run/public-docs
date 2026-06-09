@@ -1,6 +1,5 @@
 ---
 title: ClearoutPhone integration overview
-source_url: https://university.clay.com/docs/clearoutphone-integration-overview
 description: Validate phone numbers for accuracy, line type, and global outreach.
 last_synced: 2026-04-26T01:39:45.531Z
 ---

@@ -1,6 +1,5 @@
 ---
 title: Find People in Clay
-source_url: https://university.clay.com/docs/find-people-overview
 description: Discover relevant contacts and LinkedIn posts using Clay's Find People and Find professional posts sources, then enrich results with work email and mobile phone waterfalls.
 last_synced: 2026-04-26T01:39:58.803Z
 ---

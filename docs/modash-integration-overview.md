@@ -1,6 +1,5 @@
 ---
 title: Modash integration
-source_url: https://university.clay.com/docs/modash-integration-overview
 description: Discover and analyze social media creators.
 last_synced: 2026-05-11T17:47:40.000Z
 ---

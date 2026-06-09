@@ -1,6 +1,5 @@
 ---
 title: Share workbooks and tables as templates
-source_url: https://university.clay.com/docs/workbook-table-sharing-guide
 description: Share Clay workbooks and tables as templates, and move workbooks between workspaces.
 last_synced: 2026-04-26T01:40:56.186Z
 ---
