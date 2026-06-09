@@ -30,7 +30,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 ## Create a new email campaign
 
 1.  Start in a table that contains the lead emails you want to contact.
-    -   If you haven't done this yet, click `Actions` → `Import` to add emails from a third party or CSV.
+    -   If you haven't done this yet, click `Tools` → `Import` to add emails from a third party or CSV.
 2.  Click `Tools` → `Exports` → `Create Clay email campaign`
     -   The `Sync leads to campaign` column automatically pushes 10 rows from your parent table into the campaign to draft with
     -   Tip: You can customize the sync data column to only send leads with an email address using `Only run if`.
