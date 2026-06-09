@@ -269,6 +269,8 @@ To downgrade your Clay workspace plan:
 -   Your data remains intact.
 -   Features are limited to the new plan's capabilities.
 
+**Downgrading to the free plan:** The free plan includes only 100 Data Credits per month, giving a maximum rollover cap of 200 credits. **Any credits above that cap are permanently lost at the end of your billing cycle.** If you have a significant credit balance, spend them down before your cycle ends, or contact support before downgrading to explore your options.
+
 ## Cost optimization tips
 
 ### Use your own API keys
@@ -370,6 +372,8 @@ Common causes:
 -   Your balance is capped at 2× the new plan's monthly Data Credit limit.
 -   Your data remains intact.
 -   Features are limited to the new plan's capabilities.
+
+**Downgrading to the free plan:** The free plan includes only 100 Data Credits per month, giving a maximum rollover cap of 200 credits. **Any credits above that cap are permanently lost at the end of your billing cycle.** If you have a significant credit balance, spend them down before your cycle ends, or contact support before downgrading to explore your options.
 
 ### **I have a trial, when do the Data Credits expire?**
 
