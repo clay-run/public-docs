@@ -27,7 +27,7 @@ To start a signal, you'll **need a table with** companies or contacts you want t
 
 **While in your table:**
 
-1.  Click `Actions`, then select one of the `Monitor for...` options—new hires, job changes, or promotions.
+1.  Click `Tools`, then select one of the `Monitor for...` options—new hires, job changes, or promotions.
 2.  Select the **company table** you want to monitor, then select a **view** from that table — the signal will only check rows visible in that view (not the entire table). Identify the correct company identifiers (website, LinkedIn URL, etc.).
     -   **Note:** The table and view cannot be changed after the signal is saved. To monitor a different set of companies, create a new signal.
 3.  Configure filters for the Signal.
@@ -81,7 +81,7 @@ When editing an existing company-based signal (New Hire, Job Posting, etc.), the
 
 Because these source fields cannot be re-pointed after creation, the fix is to rebuild the signal:
 
-1.  Open your current company table → click **Actions** → select the signal type (e.g., **Monitor for new hires**).
+1.  Open your current company table → click **Tools** → select the signal type (e.g., **Monitor for new hires**).
 2.  Configure your filters and set the desired run frequency.
 3.  Click **Save and run**.
 
