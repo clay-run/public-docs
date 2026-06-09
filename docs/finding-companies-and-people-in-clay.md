@@ -43,6 +43,14 @@ If you need results that meet _either_ of two different filter combinations, set
 
 If you don't have a company list, use **People search as a source** — a standalone search by title or other criteria that returns a new table.
 
+### Enriching your results
+
+**Find People at These Companies** returns basic profile data for each contact: name, title, current company, LinkedIn URL, and location. **Work emails and phone numbers are not included** — add them as separate enrichments after your people table is created:
+
+**Work email:** In your people table, click `Add enrichment` and select `Work Email`. This pre-built waterfall searches multiple email providers in sequence and requires the person's name and company domain. For full setup details, see [Work Email waterfall](work-email-waterfall.md).
+
+**Mobile phone:** In your people table, click `Add enrichment`, search for `Phone number`, and select the waterfall option under **Waterfalls**. The phone waterfall cascades through multiple providers — providers that return no result are skipped at no credit cost. It requires the person's LinkedIn URL, which is included in the people table from the search. For provider recommendations by region, see [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md).
+
 ### Build job title lists instead of relying on the function dropdown
 
 The **Job functions** and **Seniority** dropdowns can be too broad or too exclusionary. Instead, paste a comma-separated keyword list directly into the **Job title keywords** field. Use Claude or ChatGPT to generate an exhaustive list of title variations — for example, every way someone might write "VP of Sales" — and paste it in as a single string.
