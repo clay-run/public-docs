@@ -629,6 +629,21 @@ Under **Advanced options → Conditional run**, add a formula that only runs the
 
 **Note:** Turning on the global **Remove empty values** toggle does **not** fix this error. "Remove empty values" strips null values from the outgoing payload at execution time, but "Some inputs missing" fires before execution when a required body field's column is blank.
 
+### Clicking Run does nothing — no loading, no error, no cell update
+
+If clicking **Run** on your HTTP API column produces no loading indicator, no response, and no cell update — whether via the column header dropdown or the Play icon on individual cells — the body formula likely has column references that can't be resolved.
+
+**How to confirm:** Right-click the column header and choose **Edit column**. If you see a red error inside the body editor — for example, *"Settings contains deleted column for 'body' input"* — one or more column references in the body were saved as display names rather than internal field IDs. This can happen when column chips are edited in ways that bypass the `/` picker, or when referenced columns were renamed after the body was configured. Clay silently blocks all execution when this settings error is present: the Run option may be absent from the column header dropdown entirely, and clicking the cell-level Play icon produces no result.
+
+**How to fix:**
+
+1.  Open the HTTP API column editor.
+2.  In the **Body** field, delete all existing column chip references.
+3.  Re-insert each column value by typing `/` inside the body editor and selecting the column from the picker — this saves each reference as an internal field ID rather than a display name.
+4.  Save and test on a single row.
+
+**Note:** If the column was working before and stopped responding, try a hard refresh first (**Mac:** Cmd + Shift + R · **Windows:** Ctrl + Shift + R) to rule out a browser display glitch. If clicking Run still produces nothing after the refresh, use the body fix above.
+
 ### Column value appears as `[object Object]` in the request body
 
 The API receives the literal string `[object Object]` instead of JSON data.
