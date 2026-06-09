@@ -287,6 +287,24 @@ There are two ways to resolve this:
 -   **Fill in the missing data.** Ensure the referenced column has a value for every row you want to run.
 -   **Make the input optional.** Click the column name → **Edit column**, scroll to the **#INPUTS#** section, and toggle off the **Required to run** switch next to each input that doesn't always have data. When an input is optional, the cell will still run for rows where that field is blank — the empty value is simply omitted from the prompt for that row.
 
+### How do I chain Claygents when the first one sometimes returns empty values for certain output fields?
+
+When chaining Claygent A → Claygent B, whether B runs for a given row is controlled by B's input variable settings — not by how A's output schema defines its fields.
+
+**Two distinct "required" settings to know:**
+
+-   **Required in A's output schema** — tells the AI model which fields to try to return. If a field is listed as required in the schema but the model finds no data, A still completes and that field comes back empty. This setting does not affect whether B runs.
+-   **Required to run in B's Variable Config** — the **Required to run** toggle on each input variable in B's **#INPUTS#** section. When enabled (the default), a blank value for that input causes B to show **"Some inputs missing"** and skip that row.
+
+**Recommended pattern for chaining:** If you want B to run whenever A ran — even when some of A's specific output fields are empty — use a run condition on B instead:
+
+1.  Open B's column settings → **Run Settings** → **Add run condition** (or **Only run if**).
+2.  Set the condition to: `/[Claygent A column] has a value`
+
+This gates B on whether A returned any result for that row, regardless of which sub-fields were populated. You can also combine conditions with OR logic — for example, `/scale_signals has a value OR /other_field has a value` — for more flexibility.
+
+**To gate strictly on a specific field:** Leave that input variable's **Required to run** toggle on in B. B will only run for rows where that specific field from A has a value.
+
 ### My Claygent columns are showing an error or returning blank results — what does that mean?
 
 If your Claygent columns are failing with an error like **"This action is no longer operational as a data provider. Please use another action."** — or are running and consuming credits but returning blank, empty cells — it means those columns are using an older version of the Claygent action that is no longer supported. The column settings panel may still appear editable, but the column cannot produce results.
