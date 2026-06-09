@@ -20,6 +20,8 @@ This integration aids in competitive analysis and lead generation by revealing a
 2.  In the modal, you will be asked to `Select Adbeat account`.
     -   If you have your own account, click `+ Add account` and go through authentication. Otherwise, use the Clay provided key.
 
+**Note:** Clay automatically normalizes the domain input for all Adbeat actions — protocols (`https://`), `www.` prefixes, and trailing slashes are stripped before the API call. You do not need to pre-clean your domain data before running Adbeat enrichments.
+
 ### `Action` Find the ad media mix and associated spend for a company
 
 Provides detailed insights into how companies allocate their advertising budgets across different media channels within a specific time frame.
