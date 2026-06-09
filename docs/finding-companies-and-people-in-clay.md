@@ -291,6 +291,15 @@ If you enriched your company table and want that data accessible in your people 
 
 Lookup Rows returns the full company row including enrichment column outputs. To promote a specific enrichment value into a dedicated column, click into a populated cell and select a field → **Create column for it**. See [Lookup Rows](lookup-rows.md) for setup details.
 
+**Note:** The **Company Lookup in another table** enrichment action also drops enrichment column outputs by design — the same limitation as Company Table Data. To surface enrichment data from a company row in your people table, always use **Lookup single row in other table** as described above, not the Company Lookup action.
+
+For enrichment columns that return a **list of objects** — such as Adyntel's Get Meta Ads or Get Google Ads, which return multiple individual ads per company — Lookup Rows surfaces the enrichment column but individual list items cannot be promoted one at a time with **Create column for it**. To bring per-item data into your people table, use a two-step approach:
+
+1.  In your company table, add a **Send table data** column. Choose **Send row for each item in a list**, select the enrichment's results list as the source, and include the company domain as an additional data field.
+2.  In your people table, add a **Lookup multiple rows in other table** column pointing to that destination table, matching on company domain.
+
+Each list item (for example, each individual ad) becomes its own row in the staging table, and the lookup retrieves all matching rows per company into the people table.
+
 **Alternatively**, extract specific enrichment values into **formula columns** in your company table first (for example, a column with formula `{{Clearbit Enrichment}}?.revenue`). Formula columns are included in Company Table Data, so those extracted values will flow through to the people table when Company Table Data runs.
 
 ### Getting "Invalid companies provided" error despite having a valid LinkedIn URL
