@@ -366,6 +366,30 @@ Toggle **ON** to automatically strip fields with empty, null, or undefined value
 
 **Note:** This toggle operates on the outgoing payload at execution time. It does **not** prevent the **"Some inputs missing"** error — that error fires before the action runs when a body field's per-field toggle is ON but the referenced column has no value. To suppress "Some inputs missing" for optional fields, turn off the per-field toggle for that field in the body editor (see Step 4 above).
 
+### Step 9: Retry on failure
+
+Clay can automatically retry a failed request when certain HTTP status codes or network errors occur. The **Retry on failure** toggle is **enabled by default**.
+
+**Default retry behavior:**
+
+-   **Status codes retried:** 408 (Request Timeout), 413 (Payload Too Large), 429 (Rate Limited)
+-   **Network errors retried:** `ECONNREFUSED`, `ECONNRESET`, `ETIMEDOUT`
+-   **Max retries:** 1 (configurable up to 5)
+
+Retries fire immediately with no delay between attempts.
+
+**Customizing retry settings:**
+
+When **Retry on failure** is enabled, three optional sub-settings appear on the **Configure** tab:
+
+-   **Max retries** — number of retry attempts before the row errors out (1–5; default 1).
+-   **Status codes to retry** — comma-separated list of 4XX/5XX codes to retry. Use `-` for ranges (e.g., `429`, `500-503`). When provided, overrides the defaults.
+-   **Error codes to retry** — comma-separated list of network error codes (e.g., `ECONNRESET`, `ETIMEDOUT`). When provided, overrides the defaults.
+
+To disable all retry logic for a column, toggle **Retry on failure** OFF.
+
+**Note:** Retry on failure responds to HTTP status codes and network errors only — not to values inside the response body. For example, if your API returns `{"status": "processing"}` in a 200 response, there is no built-in way to retry on that field value. To re-run a column based on a response field value, use **Conditional runs** ("Only run if") instead — see the Advanced options section below.
+
 ## Advanced options
 
 ### Using integration templates
