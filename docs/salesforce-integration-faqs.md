@@ -115,6 +115,20 @@ To use a Long Text Area (or other non-filterable) field as a lookup key in Clay,
 
 Once the value is in a filterable Text field, it will appear in the Clay Lookup Record dropdown and can be used as a match key.
 
+## Why does the Lookup Record action return a maximum of 5 results?
+
+The standard **Lookup Record** action returns a maximum of 5 records per run. This is by design — it is optimized for finding a single matching record and returns up to 5 results when multiple matches exist.
+
+If you need to retrieve all contacts (or other records) linked to a specific account — for example, when your CRM has 20 or more contacts per account — use the **Lookup Records via SOQL** action instead. With SOQL you control how many results are returned via your own `LIMIT` clause, or omit it to return all matches:
+
+```sql
+SELECT Id, FirstName, LastName, Email, Title
+FROM Contact
+WHERE AccountId = '/Account ID'
+```
+
+Replace `/Account ID` with the relevant column from your Clay table using the `/` picker in the query editor. You can use an AI assistant to help write the query — for example: "write a SOQL query to return all contacts for a given Salesforce account ID." For SOQL syntax reference, see [Salesforce SOQL](salesforce-soql.md).
+
 ## Will Clay create duplicate records in Salesforce?
 
 No. By default, Clay prevents duplicate records. However, you can allow duplicates by enabling the "Duplicate Rule Override" in the Create Record enrichment.
