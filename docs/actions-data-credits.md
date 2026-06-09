@@ -111,7 +111,7 @@ Not all providers in Clay's marketplace can be accessed via Clay Data Credits. T
 
 -   **Clay-managed key**: Clay holds a shared key for the provider, so you can run enrichments directly using Data Credits—no personal subscription required. When setting up these enrichments, you'll see a **"Clay provided key"** option in the account selector. You can also connect your own key to avoid spending Data Credits. Examples: SMARTe, BetterContact, FullEnrich, ContactOut.
 
--   **Bring Your Own Account (BYOA)**: Clay does not hold a managed key for these providers. You must have your own subscription or API credentials—there is no Clay Data Credit option. The account selector shows only **"Add account"** with no Clay-provided fallback. Examples: ZoomInfo, Cognism.
+-   **Bring Your Own Account (BYOA)**: Clay does not hold a managed key for these providers. You must have your own subscription or API credentials—there is no Clay Data Credit option. The account selector shows only **"Add account"** with no Clay-provided fallback. Example: ZoomInfo.
 
 **Tip for mobile number enrichment without a provider subscription:** The built-in **Mobile Phone Waterfall** enrichment routes through multiple Clay-managed providers in sequence using your Data Credits—no individual provider account needed.
 
@@ -351,7 +351,7 @@ If a provider refunds us due to invalid data, we'll refund those Data Credits ba
 
 ### Are Data Credits charged when a provider finds no result?
 
-Data Credits are charged only when Clay is billed by the data provider. In most cases, if a provider returns no result for a record, Clay is not charged and the credits are refunded to your account. In rare cases where a provider charges Clay for the API call regardless of result, the Data Credits will still be deducted. You can check the per-enrichment cost in the enrichment panel before running.
+It depends on the provider's billing model. Some providers charge Clay only when data is successfully found, so credits are refunded if no result is returned. Others charge Clay for the API call regardless of whether data is found, so credits are deducted either way. You can see the exact credit cost for each enrichment in the enrichment panel before running.
 
 ### How long does it take for Data Credits to renew?
 
