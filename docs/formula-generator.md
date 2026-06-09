@@ -2,8 +2,8 @@
 title: Formulas
 source_url: https://university.clay.com/docs/formula-generator
 description: Generate formulas with AI to transform your data. Includes how to
-  use today's date in a formula, pull error messages from action columns with
-  getCellErrorMessagePreview(), and keep date comparisons current automatically.
+  use today's date in a formula, pull error messages with getCellErrorMessagePreview(),
+  check cell status with getCellStatus(), and keep date comparisons current automatically.
 last_synced: 2026-04-26T01:40:01.780Z
 ---
 
@@ -108,6 +108,27 @@ A few important notes:
 -   **Error message text is not guaranteed to be stable** across Clay releases. If you need to branch on error *type* (not message text), use `Clay.getCellStatus()` instead for more reliable conditional logic.
 
 There is no `getCellErrorMessage()` function — the full un-truncated error message is not available in formulas. The 300-character preview is the only error message content accessible via formula.
+
+### **What does `Clay.getCellStatus()` return?**
+
+Use `Clay.getCellStatus()` in a formula column to read the current processing status of any enrichment (action) column:
+
+```javascript
+Clay.getCellStatus({{Column Name}})
+```
+
+This returns a string representing the cell's current state. Possible values include:
+
+-   **Success**: `"SUCCESS"` (data returned), `"SUCCESS_NO_DATA"` (ran successfully but returned no data), `"SUCCESS_BLOCKED_DATA"`
+-   **In progress**: `"RETRY"` (actively retrying — shown as "Retrying…" in the UI), `"QUEUED"`, `"RUNNING"`, `"RATE_LIMITED"`, `"AWAITING_CALLBACK"`
+-   **Error**: `"ERROR"` and error-specific variants such as `"ERROR_TIMEOUT"`, `"ERROR_NUMBER_OF_RETRIES_EXCEEDED"`
+-   `"UNKNOWN"` when no status has been recorded for that cell yet
+
+A few important notes:
+
+-   **The formula preview sidebar will show nothing** — this is expected. `Clay.*` functions are evaluated on the backend and cannot run in the preview. Save the column and the values will populate.
+-   **Only works for enrichment (action) columns.** The function reads the cell's stored status; it returns `"UNKNOWN"` for formula columns or cells that have never run.
+-   The function reflects the cell's **current** status — including in-progress states. A cell actively retrying returns `"RETRY"`, a cell waiting to execute returns `"QUEUED"`.
 
 ### **Why does my regex formula work in the preview but fail when the table runs?**
 
