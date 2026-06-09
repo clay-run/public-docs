@@ -25,7 +25,7 @@ With this integration, you can check phone numbers against regularly updated DNC
 
 ## Using Meer in Clay
 
-1.  While in a Clay table, click `Actions` and search for `Meer`.
+1.  While in a Clay table, click `Tools` and search for `Meer`.
 2.  Under `Enrichments`, select `Screen phone number against DNC registries`.
 3.  Choose to use your own Meer API key or the Clay-managed account.
 
