@@ -72,7 +72,7 @@ No — `Find Companies` only filters by company-level attributes (industry, size
 
 **To find people with specific roles (e.g., CEO, Founder, Owner) at companies in your list, you have two options:**
 
--   **From your company table** — Click **Tools** (or **Actions**) → **Find People at These Companies**. Under **Job title keywords**, enter your target titles comma-separated (e.g., `CEO, Founder, Owner, Co-founder`). This returns only those roles at the companies already in your table.
+-   **From your company table** — Click **Tools** → **Find People at These Companies**. Under **Job title keywords**, enter your target titles comma-separated (e.g., `CEO, Founder, Owner, Co-founder`). This returns only those roles at the companies already in your table.
 -   **Start a fresh People search** — Click `+ Add` at the bottom of your workbook, search for `Find People`, and use the **Job title** filter alongside company attributes (industry, size, location).
 
 For more detail on both workflows, see [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md).
