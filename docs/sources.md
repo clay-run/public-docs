@@ -246,3 +246,18 @@ Clay's scheduled source runs continue to fire normally after the limit is reache
 2.  **Set a row count alert.** Use [table alerts](table-alerts.md) to get notified before the next source approaches the limit. The default threshold is 45,000 rows, giving you time to act before importing stops.
 
 For large ongoing Snowflake imports that regularly approach or exceed 50,000 records, consider [Audiences](audiences.md) (currently in beta for Enterprise customers) instead of a standard table. Audiences scales to millions of records without per-source limits.
+
+### Why did my source run automatically even though it's set to "Run manually"?
+
+**"Run this source: Manually" only prevents the source from running on a recurring schedule — it does not prevent all forms of automatic triggering.**
+
+The **Run this source** setting in the source panel controls the schedule:
+
+-   **Manually** — the source will not run on a schedule. It runs when you click **Run now**, or when a non-schedule trigger fires.
+-   **On a schedule** — the source runs automatically at the selected interval (hourly, daily, weekly, or monthly).
+
+Beyond the schedule, sources can also run in response to other events. For example, if your Find People source uses a Clay companies table as its input (via the **Companies** filter), adding new rows to that input table can trigger the source to re-run for those new entries. This input-update trigger fires independently of the source's schedule setting.
+
+**Note:** The table's **auto-run** setting is a separate control. It determines whether enrichment columns (action fields) run automatically when new rows arrive — it does not trigger sources. See [Auto-run](table-management-settings.md#auto-run) for more.
+
+To investigate why a source ran unexpectedly, click the source column title and select **View Run History**.
