@@ -92,6 +92,8 @@ Look at the sample outputs on the right to ensure your condition behaves as expe
 
 Adjust your condition as needed based on the results.
 
+**Note:** The preview uses data loaded when the panel was opened and may not reflect the most recent values in your columns. If upstream columns have run or changed since you opened the editor, the preview can show stale results that don't match what actually evaluates at runtime. See the **Formula preview may not match runtime results** tip below.
+
 ## Tips
 
 ### Always use / to reference a column
@@ -105,6 +107,14 @@ To reference a column's data in a run condition, **type `/` followed by the colu
 `/Domain is empty`
 
 (where `/Domain` references the column named "Domain" in your table).
+
+### Formula preview may not match runtime results
+
+The preview in the run condition editor is built from the column values loaded when you opened the panel — it does not refresh automatically as your table runs. If upstream columns have run or changed since you opened the editor, the preview can show stale or incomplete results.
+
+For formulas that reference many columns, or that depend on complex values like waterfall outputs or nested lists, the preview may also resolve references differently than the actual runtime evaluation does.
+
+**If the preview looks wrong, don't assume your formula is broken.** Save the condition, run a few test rows, and check the table for the **"Run condition not met"** status on the cells you expect to be skipped. The actual run results are the authoritative source — the preview is a best-effort guide, not a guarantee.
 
 ### Only matching rows consume credits
 
