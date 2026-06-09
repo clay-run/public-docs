@@ -60,3 +60,11 @@ For each custom variable (1-10):
 
 -   `Auto-update`
 -   `Only run if:` The enrichment will only run if conditions are met. ([**Learn more about conditional formulas here!**](https://www.notion.so/2ef7e66eb01480b4871bd7e06cc936df?pvs=21))
+
+## Troubleshooting
+
+**"Invalid input. Check your inputs and try again."**
+
+This error occurs when the Twain API rejects the request because one of the text input fields is too long. The Twain API enforces a character limit on text inputs — fields like `Sender problem statement`, `Prospect description`, `Trigger / Signal`, and similar free-text fields are the most common sources of this error when they contain lengthy content.
+
+To resolve, shorten or summarize the text in the affected input field and re-run the action.
