@@ -15,13 +15,13 @@ Screen phone numbers against national do-not-call registries before initiating o
 1. Click your workspace name or the **Settings** icon
 2. Navigate to **Settings → Enrichments**
 3. Select the **Compliance** tab
-4. Click **Agree and activate**
+4. Enter your company's domain when prompted, then click **Agree and activate**
 
 Once you accept the terms, the Meer enrichment will appear in your actions panel. If you are not a workspace admin, ask your admin to complete these steps — admins will also see an **Accept terms in settings** link directly in the enrichment panel.
 
 The Meer integration helps you maintain Do Not Contact (DNC) compliance by screening phone numbers against national do-not-call registries before initiating outbound calls.
 
-With this integration, you can check phone numbers against regularly updated DNC registries and receive status information to help you avoid contacting numbers on do-not-call lists.
+With this integration, you can check phone numbers against regularly updated DNC registries and receive status information to help you avoid contacting numbers on do-not-call lists. Meer checks whether a phone number is on a DNC list — it does not provide or replace phone numbers.
 
 ## Using Meer in Clay
 
@@ -35,7 +35,7 @@ Check if a phone number appears in National Do Not Call registries. Currently su
 
 **Inputs**
 
--   **Phone Number (Required):** The phone number to check against DNC registries. Phone numbers are automatically normalized, but E.164 format is recommended (e.g., `+19199463022`).
+-   **Phone Number (Required):** The phone number to check against DNC registries. E.164 format is strongly recommended for reliable results (a `+` followed by the country code and number with no spaces or dashes, e.g., `+19199463022`). Numbers in international format with spaces or dashes — such as `+1 919-946-3022` — may fail to parse and return an "Invalid input" error. To avoid this, add a **Clay Formatters → Normalize Phone Number** step and map the **E164** output field as the Meer column's **Phone Number** input.
 
 **Output**
 
@@ -54,7 +54,8 @@ Check if a phone number appears in National Do Not Call registries. Currently su
 
 ## Troubleshooting
 
--   **"Please input a valid phone number"** — the phone number could not be parsed. Make sure the number includes a country code prefix (e.g., `+19199463022`). If your numbers don't already include a country code, add a **Clay Formatters → Normalize Phone Number** step first — then update the Meer column's **Phone Number** input to reference that step's output (e.g., the **E164** field), not the original phone number column. Simply adding the normalize step without re-mapping the input will not fix the error.
+-   **"Invalid input"** — the phone number could not be parsed. Make sure the number includes a country code prefix (e.g., `+19199463022`). If your numbers don't already include a country code, add a **Clay Formatters → Normalize Phone Number** step first — then update the Meer column's **Phone Number** input to reference that step's output (e.g., the **E164** field), not the original phone number column. Simply adding the normalize step without re-mapping the input will not fix the error.
+-   **"Missing input"** — the Phone Number field is empty or references a column with no value. Check that the Meer action's **Phone Number** input is mapped to a column that contains data, and that any upstream normalization step completed successfully.
 -   **"Error: Failed to enrich phone number"** — the phone number is valid but its country is not currently supported by Meer. To avoid errors and unnecessary credit charges, add an **Only run if** conditional on this action to restrict it to supported country codes (e.g., `+1` for US, `+44` for UK, `+49` for Germany, `+353` for Ireland, `+34` for Spain).
 
 ## Compliance notes
