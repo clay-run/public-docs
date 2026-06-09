@@ -256,7 +256,7 @@ Clay provides access to a wide range of AI models from multiple providers. Below
 | Anthropic | Claude 3 HaikuClaude 3.5 HaikuClaude 3.7 SonnetClaude 4 SonnetClaude 4 OpusClaude 4.5 SonnetClaude 4.5 HaikuClaude 4.5 OpusClaude 4.6 Opus |
 | Gemini | 2.0 Flash, Flash Lite2.5 Flash, Flash Lite2.5 Pro, 3 ProImagen 3.0, 3.0 Fast |
 | xAI | Grok 4Grok 4.1 Fast Reasoning |
-| DeepSeek | DeepSeek R1DeepSeek V3.2 |
+| DeepSeek | DeepSeek V3.2 |
 | Mistral | Mistral Medium 3Mistral Large 2.1Mistral Large 3Magistral MediumDevstral 2 |
 | BlackForestLabs | Flux 1 SchnellFlux 1 Dev |
 | Playground | Playground V2Playground V2.5 |
