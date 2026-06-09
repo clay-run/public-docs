@@ -47,19 +47,21 @@ If you are currently on a paid plan, you can use your own Clearbit account withi
 
 **Important:** API key usage is only available on paid plans. Please upgrade to access the API key.
 
-For more information on how to find your Clearbit API key, please see reference [Clearbit’s documentation](https://help.clearbit.com/hc/en-us/articles/6045527495191-Access-your-Clearbit-API-key). Please note that API keys are available for Clearbit accounts created in 2023 and earlier. If you signed up in 2024, API keys are not available regardless of plan.
+For more information on how to find your Clearbit API key, please see reference [Clearbit's documentation](https://help.clearbit.com/hc/en-us/articles/6045527495191-Access-your-Clearbit-API-key). Please note that API keys are available for Clearbit accounts created in 2023 and earlier. If you signed up in 2024, API keys are not available regardless of plan.
 
 You can add your Clearbit API key through the enrichment panel. Below is an example of where add your API key within the enrichment panel.
 
+**Rate limits:** Enrichment requests sent through your own Clearbit API key are subject to the rate limits on your Clearbit account. If you see a `Retried but failed: Rate limit exceeded` error — for example, "Limit is 15 requests per minute" — that limit is enforced by Clearbit for your specific API key based on your account's plan. To check your limit or request an increase, refer to your Clearbit account settings or contact Clearbit support directly.
+
 ### `Action` Find Domain from Company Name
 
-The **Find Domain from Company Name** action helps you find a company’s domain from a given name.
+The **Find Domain from Company Name** action helps you find a company's domain from a given name.
 
 **Step 1: Choose the Clearbit account you want to use**
 
 First, you can use either the Clay-managed Clearbit account or your own API key.
 
-If you use the Clay-managed Clearbit account you won’t be charged any credits.
+If you use the Clay-managed Clearbit account you won't be charged any credits.
 
 **Step 2: Enter company name**
 
@@ -77,7 +79,7 @@ If you want to only run this enrichment under set circumstances, you are able to
 
 **Step 5: Choose data to add as columns to table**
 
-Select which data from the enrichment you’d like to add as columns to your table. Even if you choose not to add columns at this point, the enriched data will still be available and accessible for later use.
+Select which data from the enrichment you'd like to add as columns to your table. Even if you choose not to add columns at this point, the enriched data will still be available and accessible for later use.
 
 ### `Action` Find Logo
 
@@ -129,7 +131,7 @@ If you want to only run this enrichment under set circumstances, you are able to
 
 **Step 5: Choose data to add as columns to table**
 
-Select which data from the enrichment you’d like to add as columns to your table. Even if you choose not to add columns at this point, the enriched data will still be available and accessible for later use.
+Select which data from the enrichment you'd like to add as columns to your table. Even if you choose not to add columns at this point, the enriched data will still be available and accessible for later use.
 
 ### `Action` Enrich Person & Company
 
@@ -157,7 +159,7 @@ If you want to only run this enrichment under set circumstances, you are able to
 
 **Step 5: Choose data to add as columns to table**
 
-Select which data from the enrichment you’d like to add as columns to your table. Even if you choose not to add columns at this point, the enriched data will still be available and accessible for later use.
+Select which data from the enrichment you'd like to add as columns to your table. Even if you choose not to add columns at this point, the enriched data will still be available and accessible for later use.
 
 ### `Action` Find Contacts
 
@@ -165,7 +167,7 @@ The **Find Contacts** action helps you find contacts that work for a company giv
 
 **Step 1: Select Clearbit account**
 
-Please enter your the Clearbit account you want to use. Note that for this action, there is no Clay-managed account.For more information on how to access your Clearbit API Key, please reference [Clearbit’s API documentation](https://help.clearbit.com/hc/en-us/articles/6045527495191-Access-your-Clearbit-API-key).
+Please enter your the Clearbit account you want to use. Note that for this action, there is no Clay-managed account.For more information on how to access your Clearbit API Key, please reference [Clearbit's API documentation](https://help.clearbit.com/hc/en-us/articles/6045527495191-Access-your-Clearbit-API-key).
 
 **Step 2: Enter optional and required setup inputs**
 
@@ -185,4 +187,4 @@ If you want to only run this enrichment under set circumstances, you are able to
 
 **Step 5: Choose data to add as columns to table**
 
-Select which data from the enrichment you’d like to add as columns to your table. Even if you choose not to add columns at this point, the enriched data will still be available and accessible for later use.
+Select which data from the enrichment you'd like to add as columns to your table. Even if you choose not to add columns at this point, the enriched data will still be available and accessible for later use.
