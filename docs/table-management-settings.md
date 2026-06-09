@@ -296,8 +296,8 @@ When enabled, passthrough tables fully bypass the 50,000 record import limit for
 To enable or disable passthrough tables:
 
 1.  Open your table.
-    -   To fully bypass the 50,000 record source limit, the table source must be **webhooks**, **send table data**, or a **signal source**. A warning appears if your table includes incompatible sources. See [auto-delete documentation](https://university.clay.com/docs/auto-delete) for details on source compatibility and warnings.
-2.  Navigate to the bottom navigation panel and select `Enable auto-delete`.
+    -   To fully bypass the 50,000 record source limit, the table source must be **webhooks**, **send table data**, or a **signal source**. A warning appears if your table includes incompatible sources. See [auto-delete documentation](auto-delete.md) for details on source compatibility and warnings.
+2.  Click the **auto-delete icon** (archive icon) in the bottom toolbar, or click the **table title** and select **Enable auto-delete** from the dropdown.
 3.  Within the auto-delete settings, enable `Automatic Row Deletion`.
     -   This action activates the passthrough functionality by ensuring that rows are automatically deleted after processing and transferring.
 
