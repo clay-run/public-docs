@@ -483,7 +483,7 @@ Most APIs nest their data within a specific field rather than returning an array
 
 **Step 5: Configure optional settings**
 
--   **Use static IP**: Enable for allow-listing requirements
+-   **Use static IP**: Route requests through Clay's fixed egress IPs for firewall allow-listing. See [IP allowlisting](#ip-allowlisting) below.
 -   **Remove empty values**: Exclude null or empty fields
 -   **Follow redirects**: Set max redirects if needed
 -   **Response timeout**: Specify timeout in milliseconds
@@ -503,6 +503,30 @@ Most APIs nest their data within a specific field rather than returning an array
 -   **No pagination support**: Currently limited to single API calls. If your API returns paginated results, you'll only get the first page (typically 10-100 records).
 -   **Results path matters**: Take time to examine your API response structure. Some APIs nest data several levels deep (e.g., `data.results.items`).
 -   **Account security**: Your API credentials are stored securely and won't be exposed in the table configuration.
+
+## IP allowlisting
+
+If your server or firewall requires incoming requests to originate from a known set of IP addresses, you can enable **Use static IP** on HTTP API columns. This routes requests from those columns through Clay's fixed egress IP addresses, which you can add to your server's allow-list.
+
+**Availability:** This feature is available for Enterprise customers. Contact your Clay account team or support before enabling — static IP must be activated for your workspace first.
+
+### Enabling static IP for an HTTP API enrichment column
+
+1.  Contact your Clay account team or support to have static IP enabled for your workspace.
+2.  Open the HTTP API column settings in your Clay table.
+3.  At the bottom of the column configuration, toggle on **Use static IP**.
+
+All requests from that column will then originate from Clay's fixed IP addresses. Your account team can provide the current list of IP addresses to add to your allow-list.
+
+**Note:** Static IP for HTTP API is per column, not workspace-wide — you control exactly which columns route through fixed IPs.
+
+### Enabling static IP for HTTP API as source
+
+In Step 5 of the source configuration (**Configure optional settings**), toggle on **Use static IP**.
+
+### Other integrations
+
+For **Snowflake**, **Salesforce**, and **Databricks** connections on Enterprise plans, all requests already route through static IPs by default — no extra setup is needed in Clay. Add Clay's fixed IP addresses to your allow-list on the provider side.
 
 ## Best practices
 
