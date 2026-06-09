@@ -94,3 +94,16 @@ The **Auto-enrich new records** toggle determines whether records that newly qua
 **Recurring enrichments** re-enrich all records in the segment on a schedule, keeping enriched fields up to date over time (for example, refreshing job titles or company data monthly).
 
 To set a schedule, click **Recurring enrichments** in the Run Setup panel and select your desired frequency.
+
+### What happens when you click Start Run
+
+When you click **Start Run** on an Audiences bulk enrichment, Clay recalculates your **live segment at that moment** using your current filters — not the member list baked in when the bulk enrichment was first created. The live segment is the source of truth for the run.
+
+**The preview rows displayed in setup mode reflect your segment membership at the time the bulk enrichment was created** — they do not automatically refresh as you edit your segment filters. This is a known limitation the team is actively working to address in a future update.
+
+Here's what happens to setup-mode rows when you click **Start Run**:
+
+-   **Records that no longer match your current segment** — these are automatically deleted from the bulk enrichment. They will not be enriched, and you will not be charged credits for them.
+-   **Records that still match your current segment** — these are re-enriched from scratch. Credits are spent again for these rows.
+
+This means if you updated your audience segment filters after creating a bulk enrichment, you do not need to manually remove records that no longer match before running — clicking **Start Run** handles cleanup automatically.
