@@ -56,6 +56,19 @@ No. Signals run on a fixed schedule — Daily, Weekly, Biweekly, Monthly, or Qua
 
 To trigger the Signal right away after new rows arrive, open the signal column header → **Edit column** → click **Save and run** (or **Save and re-run** if the signal has run before).
 
+### How do I run a signal on a filtered or growing list of companies from another table?
+
+Use [Send Table Data](send-table-data.md) with a run condition to push qualifying rows to a destination table, then set up your signal to monitor that destination table:
+
+1.  In your source table, add a **Send Table Data** column. Include the **company domain** in the columns you send — the signal needs a company domain or company name to look up company information.
+2.  Optionally add a [run condition](conditional-runs.md) so only qualifying rows (for example, companies with a score of 50 or above) are sent. Enable **Update existing rows on re-run** to avoid duplicates as your source table grows.
+3.  In the destination table, click the **"rows from: …"** source cell and use **Add to column** to extract the company domain into its own standalone column.
+4.  Set up your signal in the destination table, selecting the company domain column as the identifier.
+
+The signal runs on its scheduled cadence and checks all rows in the destination table — including rows that arrived via Send Table Data — **on the next scheduled run**, not immediately when they arrive.
+
+**Why is "Company Record" showing `ERROR_MISSING_INPUT`?** The company record is not a field you can map inside Send Table Data — it populates automatically once a valid company domain or name is present in a table column and wired as the signal's identifier. If you see this error, confirm that: (1) the company domain is included in what you are sending, and (2) you have used **Add to column** to extract it from the **"rows from: …"** source cell into a standalone column in the destination table.
+
 ### What plans are Signals available on?
 
 Most Signals are available on any paid plan.
