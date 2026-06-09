@@ -66,6 +66,18 @@ Each result includes one or more **Structured Location** entries in the cell det
 
 ## FAQs
 
+### When should I use Find Companies vs a custom table?
+
+**Find Companies** is a Clay-native sourcing flow that discovers companies from Clay's proprietary dataset based on filters you set — industry, size, location, revenue, and more. When you import results, Clay creates a **Company table** (shown with a building icon in your workbook navigation). Use it when you want to prospect for net-new companies and don't have a list yet.
+
+A **custom table** (shown with the table icon in your workbook) is a blank canvas for data you already have — for example, a list of companies from your CRM, a CSV export, or a manually curated set of records. Create one by clicking `+ Create new` and selecting `Blank table`, or by [importing a CSV](csv-import-overview.md).
+
+**In short:** Choose **Find Companies** when you need to discover new companies from scratch; choose a **custom table** (or CSV import) when you're starting from a list you already own.
+
+**Keeping related tables in the same workbook**
+
+In Clay, a workbook is a container for related tables. It's common to keep linked tables together in one workbook — for example, a Find Companies table and the Find People table created from it — so the workflow is easy to navigate and share as a template. Create a new workbook when you're working on a distinct project or campaign (for example, separate workbooks for different clients or different outbound plays).
+
 ### Can I filter by job title or role in company search?
 
 No — `Find Companies` only filters by company-level attributes (industry, size, location, revenue, etc.). There is no job title filter in company search. Job title is a person-level attribute available only in People search.
