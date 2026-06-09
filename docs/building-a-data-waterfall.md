@@ -60,6 +60,19 @@ To run your waterfall on a specific set of rows — for example, to test it on a
 
 For more manual run options, see [Run progress](run-progress.md).
 
+## Running a specific provider vs. re-running the full waterfall
+
+When a waterfall is in its **collapsed** view (only the merged output column is visible), clicking the run ▶ button on that column **clears all existing results** for the affected rows and re-runs every enabled provider in the waterfall sequence from the beginning — even if a row already had a result from a previous run. Data previously found by any provider is overwritten.
+
+**To run only a specific provider** — for example, after adding a new provider to extend coverage on rows that didn't get a result earlier:
+
+1.  Click the **«»** arrow on the waterfall column header to expand the waterfall and reveal each provider's individual sub-column.
+2.  Right-click the specific provider's sub-column header and select **Run column** → **Run [N] empty or out-of-date rows**.
+
+Running a provider sub-column directly triggers only that provider. It does not clear results from other providers or re-run the full waterfall.
+
+**Important:** Toggling a provider off in the waterfall sequence prevents that provider from executing — but it does **not** stop the merged output column from clearing existing results before it starts. If preserving previously found data matters, always run at the individual sub-column level, not from the merged output column.
+
 ## Avoiding unintended credit usage
 
 By default, auto-run is **on** for every table — waterfall columns (such as a work email waterfall) fire automatically on every new row as it arrives. If rows are added to your table before your waterfall setup is finalized, all steps in the waterfall trigger immediately and consume credits.
