@@ -63,12 +63,12 @@ You may occasionally need to monitor changes in an enrichment. Below is a step-b
 
 ### Table 3: Identify the difference between runs
 
-1.  In a third table, which we'll call the "Lookup" table, click `Actions` → `Lookup Multiple Rows in Other Table`.
+1.  In a third table, which we'll call the "Lookup" table, click `Tools` → `Lookup Multiple Rows in Other Table`.
 2.  Set up the lookup to check the "Run history" table and use the company name or domain as the identifier.
 3.  Set up a [scheduled run](https://www.clay.com/university/guide/scheduled-columns) for this lookup by clicking `⚙️` in the bottom right corner → enable `Re-run columns on a schedule`.
     -   This should run at the same schedule as the first table.
     -   **Note:** To coordinate run timing between the two tables, enable the second table's schedule a few minutes after the first. You can use the **Custom** frequency option to set a specific day, time of day, and timezone for each table's schedule — see [Scheduled columns](https://www.clay.com/university/guide/scheduled-columns) for details.
-4.  Click `Actions` → `Use AI`. Generate a prompt that references the output from the `Lookup Multiple Rows in Other Table` and identifies the difference between the two most recent runs, using `Created At`.  
+4.  Click `Tools` → `Use AI`. Generate a prompt that references the output from the `Lookup Multiple Rows in Other Table` and identifies the difference between the two most recent runs, using `Created At`.  
     -   This prompt will provide two outputs: any new information returned from the 2nd run that wasn't in the 1st run, and a True/False boolean indicating if there is any new information.**‍**
     -   **Note:** If your data is structured or numerical, you can use a formula to detect changes. However, if there's significant variability between outputs, you'll likely want to use an AI action to holistically determine the difference between runs.
 5.  Take the result from `Use AI` and write it to a fourth table (the "Signal" table), using `Tools` → `Send table data`.  
