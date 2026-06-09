@@ -50,19 +50,21 @@ Use ZoomInfo's contact-level data to enhance data coverage in your Clay workbook
 
 ## **FAQs**
 
-### **I'm not able to set up the ZoomInfo connection with my credentials. Why?**
+### **I'm seeing an "Invalid credentials" error when running ZoomInfo enrichments. Why?**
+
+The "Invalid credentials" error can appear even when your ZoomInfo integration looks connected and active in Clay. Clay shows this generic error whenever ZoomInfo rejects the authentication request—including when the underlying issue is a **ZoomInfo API licensing problem**, not a wrong password.
 
 This is usually due to one of the following:
 
 -   The email or password is incorrect
--   Your ZoomInfo account doesn't have API access enabled
+-   Your ZoomInfo account does not have API access provisioned — this is a **separate entitlement** from a standard ZoomInfo subscription. Even if you have ZoomInfo credits, you may still need API access enabled or purchased through your ZoomInfo Account Manager
 -   Your account has API access but lacks permissions for specific endpoints required by Clay
--   You're using SSO (Single Sign-On), which isn't supported for API
+-   You're using SSO (Single Sign-On), which isn't supported for API access
 
 To troubleshoot:
 
 1.  **Verify your credentials** — Check that the email and password you entered are correct.
-2.  **Check API access** — Contact ZoomInfo support to confirm your account has API access enabled and is provisioned for the required API endpoints.
+2.  **Confirm API access with ZoomInfo** — Contact your ZoomInfo Account Manager to confirm whether your account has API access provisioned. API access is a licensing entitlement separate from your base ZoomInfo subscription; even accounts with available credits may need it specifically enabled or purchased.
 3.  **Refresh the connection in Clay** — Go to **Settings → Connections**, delete the existing ZoomInfo connection, then re-add it and re-authenticate.
 
 If issues persist, reach out to ZoomInfo support to resolve any remaining account restrictions.
