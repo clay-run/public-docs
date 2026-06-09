@@ -59,6 +59,35 @@ When listing inputs in the INPUTS section, don't just name the column — descri
 
 The format `Description of what this is: {{Column Reference}}` consistently outperforms bare column references in the INPUTS section.
 
+## Adding examples to your prompt
+
+For tasks that require a specific voice, format, or creative style — such as cold email opening lines, personalized icebreakers, or one-line summaries — **adding examples dramatically improves output consistency**. Examples show the model exactly what "good" looks like instead of leaving it to interpret your intent from instructions alone.
+
+Add an `## Examples` section at the bottom of your prompt with two or three representative outputs:
+
+```
+**OUTPUT**
+Write one opening sentence. Lowercase. 15–25 words. No punctuation at end.
+
+## Examples
+
+Good output: built a taco bell express inside a hospital, which is a move only someone running three concepts could pull off
+Good output: running a ghost kitchen out of the back of a bar is something most operators wouldn't attempt
+
+Bad output (too generic): you've built something impressive in the restaurant space
+Bad output (uses a question): have you considered how your expansion strategy could benefit from outside capital?
+```
+
+**Why this works:**
+
+-   Positive examples anchor the model to your exact tone and format
+-   Negative (bad output) examples act as guardrails — showing the model what to avoid is more reliable than describing constraints in words alone
+-   A fallback example for sparse data gives the model a concrete template when input signals are thin, instead of forcing it to improvise
+
+**Input data quality matters too.** Prompt structure cannot compensate for missing or generic enrichment data. If the column your prompt references (like a news snippet, bio, or research field) is frequently empty or generic, output will be vague regardless of prompt quality. Before troubleshooting the prompt, verify the upstream enrichment is returning substantive data for your rows.
+
+You can also add examples through the Clay UI without editing the prompt text directly: in the **Configure** tab of any Use AI column, click `Examples` → `Add examples`. See [Use AI](https://www.clay.com/university/lesson/use-ai-integration-overview) for details.
+
 ## Using the AI help tool
 
 1.  While configuring the "Use AI" enrichment, click `Generate with prompt`**.**
