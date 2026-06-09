@@ -254,7 +254,7 @@ To invite a new member to your workspace:
 -   Select the appropriate role (Editor or Admin) from the dropdown.
 -   Click `Send invite`.
 
-The invited person will receive an email to join the workspace with the specified role.
+The invited person will receive an email to join the workspace with the specified role. The person will appear in your team list with a **Pending** status until they accept.
 
 ## **Change a team member's role**
 
@@ -283,6 +283,17 @@ To remove a member from your workspace:
 **Transferring ownership when a team member leaves**
 
 If a former employee owns tables or workbooks in your workspace, there is no separate "transfer ownership" UI in Clay — removing the former member from the workspace is how you do it. All tables, workbooks, and groups they owned will automatically reassign to the longest-tenured admin (the workspace admin whose admin role was assigned earliest).
+
+## **Cancel a pending invite**
+
+If a team member hasn't accepted their invite yet, they appear in `Settings` > `Team` with a **Pending** status. There is no separate "cancel invite" button — use the same `Remove member` action:
+
+-   Go to `Settings` > `Team`.
+-   Find the pending entry (shown with a **Pending** badge).
+-   Click the `…` (three-dot) menu next to their name.
+-   Select `Remove member`.
+
+Once removed, you can re-invite the same email address if needed. Only workspace admins can cancel pending invites.
 
 # **Single Sign-On (SSO)**
 
