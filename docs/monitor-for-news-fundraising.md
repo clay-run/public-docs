@@ -22,7 +22,7 @@ News & Fundraising Signals alert you to significant events at monitored companie
 
 Follow these steps to set up News & Fundraising Signals in your table:
 
-1.  Click `Actions`, then select `Monitor for news & fundraising`.
+1.  Click `Tools`, then select `Monitor for news & fundraising`.
 2.  Select the table with companies you want to monitor.
 3.  Choose the column containing company domains and select your preferred news topics.
 4.  Set the Signal's frequency.
