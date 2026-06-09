@@ -27,7 +27,7 @@ Provide the query you want to search for. You can input plain text directly or r
 
 If no language is provided, the search will default to English.
 
-**Step 3 (Optional):** Filter news results by date, selecting a range from the past hour to the past year.
+**Step 3 (Optional):** Filter news results by date, selecting a range from the past hour to the past year. Note that Google's date filtering is best-effort — for niche or company-specific searches, Google News may return articles from outside the selected range.
 
 **Step 4:** Configure run settings.
 
