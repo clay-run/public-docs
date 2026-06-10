@@ -59,7 +59,7 @@ Connect to Salesforce via Client Credentials for server-to-server access. No bro
 This error appears during the OAuth flow and is most commonly caused by one of the following:
 
 -   **Integration User or API Only license:** These licenses cannot complete the OAuth flow. Use a full Salesforce user license, or switch to `Client Credentials`.
--   **Connected app not pre-approved:** If connected apps require pre-approval, Salesforce may block Clay. In Salesforce Setup, go to `Connected Apps OAuth Usage` and confirm Clay is not blocked. Set `IP Relaxation` to `Relax IP Restrictions` and `Permitted Users` to `All users may self-authorize`.
+-   **Connected app not installed:** Since Salesforce's August 2025 security update, Clay's Connected App must be pre-installed in your Salesforce org before any user can authenticate. If Clay is not yet installed, the OAuth flow will fail even for users with the correct license and permissions. For the full installation steps, see [Do I need to install Clay's Connected App?](https://university.clay.com/docs/salesforce-integration-faqs#do-i-need-to-install-clays-connected-app-in-my-salesforce-org) in the Salesforce integration FAQs.
 -   **SSO enforcement:** If SSO is enforced, the OAuth approval screen may be blocked. Try a non-SSO user, or create a non-SSO service account.
 -   **Missing permission:** The user's profile may lack `Approve uninstalled connected apps`. Ask a Salesforce admin to grant it, or connect with a System Administrator account.
 
@@ -326,7 +326,7 @@ Salesforce Picklist Options: `Technology`, `Healthcare`, `Finance`
 
 **Key requirements:**
 
--   Separate multiple values with semicolons
+-   Separate multiple values withericolons
 -   **No spaces after semicolons**
 -   Each value must exactly match a Salesforce picklist option (case-sensitive)
 
