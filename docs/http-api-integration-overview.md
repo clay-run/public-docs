@@ -735,6 +735,10 @@ If you encounter errors, use Sculptor to help:
 
 ## FAQs
 
+### Does using HTTP API consume Data Credits?
+
+No. HTTP API calls consume 1 Action per run but do not use any Data Credits. Since HTTP API calls reach external endpoints directly — rather than purchasing data through Clay's marketplace — no Data Credit charge applies. This holds regardless of which HTTP method you use (GET, POST, PUT, or DELETE). For a full breakdown of how Actions and Data Credits work together, see [Actions & Data Credits](https://www.clay.com/university/guide/actions-data-credits).
+
 ### Why do I need quotation marks around dynamic string variables?
 
 As of October 2024, you must enclose dynamic string variables in quotation marks when using the HTTP API enrichment column. This ensures proper JSON formatting.
