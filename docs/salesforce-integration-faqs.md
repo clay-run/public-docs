@@ -224,14 +224,14 @@ It depends on which connection method you use.
 This error typically occurs when:
 
 -   **Integration User License limitation:** The user attempting the connection has a Salesforce Integration User License or API Only license, which cannot complete UI-based OAuth approval flows.
--   **Connected app not pre-approved:** Your org requires pre-installation of connected apps. If Clay's connected app isn't pre-approved, Salesforce will block the OAuth approval.
+-   **Connected app not installed:** Since Salesforce's August 2025 security update, Clay's Connected App must be pre-installed in your org before any user can authenticate. If Clay isn't installed, Salesforce blocks the OAuth flow. See [Do I need to install Clay's Connected App?](#do-i-need-to-install-clays-connected-app-in-my-salesforce-org) below.
 -   **SSO enforcement:** When "Is Single Sign-On Enabled" is set on the user or an IdP-redirect flow is forced, Salesforce may not present the OAuth approval screen.
 
 **How to fix:**
 
 1.  **API-only or Integration User license:** Switch to [Client Credentials](https://university.clay.com/docs/salesforce-integration-overview) — it works with these license types and requires no browser login. If you must use User Sign In, switch to a full Salesforce user license (not Integration User) with a profile or permission set that includes API Enabled and Connected App Access.
 2.  If your org enforces SSO, temporarily allow direct username/password login for this user, or create a non-SSO service account for authorization.
-3.  In `Setup` → `Connected Apps OAuth Usage`, verify the Clay app is listed and not blocked. If your org uses App Access Control, pre-install or whitelist the app first.
+3.  **Connected app not installed:** Clay's Connected App must be pre-installed in your Salesforce org. Follow the steps in [Do I need to install Clay's Connected App?](#do-i-need-to-install-clays-connected-app-in-my-salesforce-org) below.
 
 ## Do I need to install Clay's Connected App in my Salesforce org?
 
