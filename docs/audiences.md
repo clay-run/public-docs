@@ -352,6 +352,15 @@ Yes. Segments update in real time as records enter or change, typically within 1
 
 Not directly — each audience supports one active ad platform sync at a time. To push the same segment to both Meta and LinkedIn, duplicate the audience and set up a separate sync on the duplicate pointing to the second platform. The two audiences and their syncs are fully independent of each other.
 
+### How do I export my audience data to CSV?
+
+The Audiences screen does not have a direct CSV download button. To export audience data to CSV:
+
+1. Navigate to your audience segment and click **Send** → **Add to workbook**.
+2. In the resulting workbook table, click **Tools** → **Export** → **Download CSV**.
+
+Neither step consumes actions: sending records to a workbook is a free platform operation, and CSV downloads from tables do not count toward your action usage.
+
 ### What happens to a contact's ad targeting when they become a customer?
 
 If your segment has an exclusion condition (e.g., Account Type ≠ "Customer"), the contact is automatically **removed** from the synced ad audience as soon as that condition is met. See [Clay Ads](https://university.clay.com/docs/clay-ads) for platform-specific guidance.
