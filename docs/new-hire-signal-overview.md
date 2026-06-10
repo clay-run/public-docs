@@ -45,6 +45,8 @@ The **Job title** filter lets you specify job title keywords and how they're mat
 -   **Contains** — returns hires whose title contains your keyword phrase as a whole-word match. "Engineer" matches "Software Engineer" and "Senior Engineer" but not "Engineering Manager" or "Engineering Tech." More precise than "is similar to."
 -   **Is exactly** — returns only hires whose title exactly matches one of your keywords. Use this only when you need very precise title filtering.
 
+> **Tip:** The job title field accepts any text you type — it is not limited to the suggestions shown while you type. Type any keyword (for example, "AI Specialist" or "VP Sales") and press Enter, or select the **Create "[your text]"** option that appears, to add it as a filter. You can add multiple custom keywords this way.
+
 > **Getting zero results despite a valid search?** If your Signal returns no results but a LinkedIn Sales Navigator search for the same companies and titles returns results, check your Job title match mode. Setting it to **Is exactly** means only hires whose title is an exact, character-for-character match will be included. Switch to **Contains** or the default **Is similar to** for broader matching similar to how Sales Navigator works.
 
 ### Job titles to exclude
