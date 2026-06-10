@@ -101,7 +101,7 @@ While Sculptor is powerful, there are a few things to keep in mind:
 -   **No direct CRM integration (yet)** — Connections must be set up manually for now.
 -   **Cross-table operations are limited** — Advanced linking and workflows are still in development.
 -   **No export option** — Export functionality hasn't been integrated yet.
--   **No write capabilities yet** — You can create new tables, but can't modify existing ones.
+-   **Column modifications use sandbox on Pro & Enterprise** — On Pro and Enterprise plans, Sculptor adds new columns to existing tables via [sandbox mode](#sandbox-mode) rather than writing directly to your live table. You'll need to review and publish those changes using the **Review changes** button. On Starter, Sculptor writes new columns directly to the live table.
 -   **Feature gaps** — Signals tables aren't currently supported.
 -   **Data boundaries apply** — Only processes data you provide or data from supported sources and enrichments.
 
@@ -133,6 +133,17 @@ This error means your workspace has hit its weekly Sculptor conversation limit. 
 A "conversation" is a full chat thread — multiple back-and-forth messages within one session count as a single conversation. The limit resets automatically after 7 days.
 
 If you hit the limit and need it increased, contact support.
+
+### Sculptor keeps entering sandbox mode when I add a column
+
+On Pro and Enterprise plans, this is expected behavior — Sculptor uses sandbox mode whenever it adds new columns to an existing table, rather than writing directly to your live table. This gives you a chance to review proposed changes before they go live.
+
+To apply the proposed column to your table:
+1. **Do not click Exit Sandbox** — this discards all of Sculptor's proposed changes without publishing them.
+2. Click **Review changes** (visible in the tab bar above your table, to the right of the "Test data" / "All data" switcher) to see a summary of the column updates.
+3. Click **Publish and run** or **Publish and don't run** to apply the changes to your full table.
+
+If you'd prefer to add a column directly without going through sandbox, use the **Add enrichment** or **+** button in your table toolbar instead.
 
 ## FAQs
 
