@@ -107,15 +107,15 @@ Clay gives you three ways to get contacts from a company list. Here's how they d
 **Find People at These Companies — as an enrichment action (saves to existing table):**
 
 -   Returns 10 people per row by default, with full profile data.
--   `Reduce data for more results` mode returns up to 500 people per row, but only name and LinkedIn URL — you'll need to run `Enrich Person` afterward to get full profiles.
+-   `Reduce data for more results` mode returns up to 500 people per row, but only name, job title, and professional profile URL — you'll need to run `Enrich Person` afterward to get full profiles.
 -   Best when you need to rank contacts first or run a more targeted search per company.
 
 **Find Contacts at Company — as a column enrichment (list stored in cell):**
 
 -   Add as a column directly in your company table. Each row independently runs a people search and stores the matching contacts as a list within the cell.
--   Unlike Find People at These Companies, results are not written as rows to a separate people table — they stay in your company table as cell data. Use **Send Table Data** to push individual contacts to another table if needed.
+-   Unlike Find People at These Companies, results are not written as rows to a separate people table — they stay in your company table as cell data. To turn each contact into its own row in another table, use **Send Table Data** with **Send row for each item in a list**. Quickest setup: click a populated result cell, hover over the **People** section in the cell details panel, and click **Take action on list** → **Write each item to new row in other table**. Note that this method sends up to 20 contacts per run — see [Send table data](send-table-data.md) for full details.
 -   Returns **10 contacts per row by default**, with full profile data.
--   `Reduce data for more results` mode returns up to **500 contacts per row**, but only name and LinkedIn URL — run `Enrich Person` on each row afterward to get full profiles.
+-   `Reduce data for more results` mode returns up to **500 contacts per row**, but only name, job title, and professional profile URL — run `Enrich Person` on each row afterward to get full profiles.
 -   Processes each company row independently — adding a new company row does not re-trigger the enrichment on other rows.
 -   Costs **0.5 credits per row** on current pricing plans (1 credit per row on legacy plans).
 -   Best when you want contacts to stay associated with their parent company row, or when you're processing companies incrementally and only want to find contacts for specific rows.
@@ -379,7 +379,7 @@ Company and people search sources don't support run conditions. The workaround i
 
 ### What's the difference between the people search source and the enrichment action?
 
-The source returns results in a new table and is subject to a per-source cumulative limit that varies by billing plan (see [the troubleshooting section](#your-source-has-exceeded-your-plans-limit-error-on-find-companies-or-find-people) if you hit that limit). The enrichment action saves results to your existing table, returns 10 people by default with full profile data, and supports a **Reduce data for more results** option that returns up to 500 people (name and LinkedIn URL only). Use the action when you need to rank or filter contacts before saving them, or when you need more records than a single source allows.
+The source returns results in a new table and is subject to a per-source cumulative limit that varies by billing plan (see [the troubleshooting section](#your-source-has-exceeded-your-plans-limit-error-on-find-companies-or-find-people) if you hit that limit). The enrichment action saves results to your existing table, returns 10 people by default with full profile data, and supports a **Reduce data for more results** option that returns up to 500 people (name, job title, and professional profile URL only). Use the action when you need to rank or filter contacts before saving them, or when you need more records than a single source allows.
 
 ### I added new companies to my company table — how do I get them through my Find People searches?
 
