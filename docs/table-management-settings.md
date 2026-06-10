@@ -35,6 +35,8 @@ To enable or disable auto-dedupe:
 4.  Select the column to be used for identifying duplicate values.
 5.  Choose **Keep oldest row** or **Keep newest row** to set which duplicate is retained.
 
+**Note — simultaneous row inserts:** Auto-dedupe may not catch duplicates when rows with the same value are added at the same time — for example, when a bulk import, a batch webhook, or concurrent sends push rows within milliseconds of each other. Each insert is processed in its own transaction and is not aware of the other before both are committed to the table, so both can slip through. This is a known limitation. As a workaround, add a dedupe or filter step in your workflow just before any downstream push (such as a CRM or email sequencer) to catch any duplicates that slip through.
+
 ## Auto-run
 
 Auto-run automatically runs enrichments whenever rows are added or edited, keeping your table current. You can control this feature at multiple levels: table-level (master control), column-level (individual control), and through conditional logic.
