@@ -201,6 +201,22 @@ Alternatively, if you no longer need one of the existing sources, you can delete
 2. Click **Sources** → the source name.
 3. Click **Delete source.**
 
+### Why did my source import fewer rows than the number of records it found?
+
+**If your source found N records but only added fewer rows than expected, the most likely cause is that auto-dedupe is enabled on your table.** When auto-dedupe is active, Clay checks each newly added row against existing rows in the same table. If a new row has the same value in the dedupe column as an existing row, the duplicate is deleted — reducing the final row count below the number the source found. Clay indicates this with the message: *"The number of results added may be less than requested, as a result of deduping."*
+
+**Note:** Auto-dedupe only deduplicates within the same table — it does not remove rows based on records in other tables or other tabs in your workbook.
+
+To check or adjust your deduplication setting:
+
+1.  Click the **gear icon** in the table footer (bottom-right), or open the table name dropdown and select **Edit table settings**.
+2.  In the settings panel, find the **Deduplication** section.
+3.  Toggle auto-dedupe off if you don't want deduplication, or change which column is used for matching.
+
+For a full explanation of how auto-dedupe works — including column type requirements and simultaneous-insert limitations — see [Auto-dedupe](table-management-settings.md#auto-dedupe).
+
+A second common cause of fewer-than-expected rows is hitting the 50,000-row source limit — see [What are the row limits for Clay tables and sources?](#what-are-the-row-limits-for-clay-tables-and-sources) below.
+
 ### **What are the row limits for Clay tables and sources?**
 
 Clay tables have a **50,000-row limit** across all plans. This applies to all sources including CSV files, CRM systems, list builders, webhooks, and signals.
