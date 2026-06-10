@@ -159,3 +159,23 @@ To stop a signal from consuming credits, you must pause or disable it directly f
 3.  Disable or pause the signal, then save.
 
 You can review all active signals and their individual credit spend in the `Signals` tab of the [credit usage dashboard](/docs/credit-usage) (`Settings` → `Usage`).
+
+### Why does my signal keep writing results to a new table instead of my existing one?
+
+Where signal events are written depends on **where you start the signal setup**:
+
+-   **If you click `Actions` from within an existing table** and select a `Monitor for...` option, the signal is attached to that table and writes each matching event as a new row in it.
+-   **If you set up a signal from the Signals section or Workbook overview** (not from inside a specific table), Clay creates a new dedicated table to hold the results.
+
+In either case, signals always add **new rows** for each matching event — one row per event, not a new column on existing rows. If your goal is to see signal data (such as a recent funding round) alongside your existing contacts, see the next FAQ.
+
+### My table has contacts (people). How do I bring company-level signal data into it?
+
+Signals track events at the **company level** — each fundraising round, new hire, or news item becomes a new row in the signal's results table. To surface that data inside a contacts table, use **company domain** as a shared key:
+
+1.  Let the signal run in its own results table. Make sure the results table includes the company domain for each event (this is included by default for most signals).
+2.  In your contacts table, click **Add enrichment** and search for **Lookup Single Row in Other Table**.
+3.  Set the matching column to **company domain** — Clay will find the corresponding row in the signal results table for each contact's company.
+4.  Map the signal columns you want to surface (e.g., event type, funding amount, news headline) as output fields.
+
+This lets you see the latest signal event for each company directly in your contacts table without mixing signal event rows into your contacts.
