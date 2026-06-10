@@ -147,3 +147,19 @@ Once auto-run is enabled at the table level, the waterfall will flow through to 
 ### Can I use both Infer Email and a validation strategy together?
 
 Yes — and this is the recommended setup for cost-efficient workflows. `Infer Email` handles the free first attempt; your validation strategy then controls how the rest of the waterfall evaluates results from paid providers.
+
+### Can I run additional validators after the waterfall?
+
+Yes. The waterfall's built-in `Validation Provider` supports one provider at a time, validating emails as the waterfall finds them. To layer additional validators in sequence — for example, running a second email verification enrichment as an extra check after the waterfall completes — add them as **separate enrichment columns** after the waterfall column rather than trying to fit them inside the waterfall itself.
+
+**Example setup for layered validation:**
+
+1. **Work Email waterfall** — with your primary validation provider set (e.g., LeadMagic or ZeroBounce)
+2. **Second validator column** (e.g., a Debounce "Validate Email" enrichment) — set its **Only run if** condition to `/Work Email is not empty` so it only runs after the waterfall has found an email
+3. **Third validator column** (optional) — set its **Only run if** to reference the second validator's output, for example to run only on emails that returned a specific status from the previous step
+
+You can chain as many validators as needed this way. Each column's **Only run if** condition references the previous column's output, creating a sequential validation flow without requiring all validators to be part of the same waterfall step.
+
+**Tip:** Before running at scale, test by right-clicking a single row and choosing **Run 1 cell**, or enable [sandbox mode](sandbox-mode.md) to try your full validation sequence without consuming live credits.
+
+For a full reference on writing conditional run formulas, see [Conditional runs](conditional-runs.md).
