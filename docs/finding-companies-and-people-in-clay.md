@@ -381,6 +381,17 @@ Company and people search sources don't support run conditions. The workaround i
 
 The source returns results in a new table and is subject to a per-source cumulative limit that varies by billing plan (see [the troubleshooting section](#your-source-has-exceeded-your-plans-limit-error-on-find-companies-or-find-people) if you hit that limit). The enrichment action saves results to your existing table, returns 10 people by default with full profile data, and supports a **Reduce data for more results** option that returns up to 500 people (name and LinkedIn URL only). Use the action when you need to rank or filter contacts before saving them, or when you need more records than a single source allows.
 
+### Why do Find People and Find Contacts at Company return different counts for the same company?
+
+Both **Find People at These Companies** (enrichment action) and **Find Contacts at Company** draw from the same underlying dataset — so with identical settings you'd expect comparable results. Small differences are normal, but there are two common sources of larger discrepancies:
+
+-   **Domain-to-company resolution** — when you use a domain as the identifier, Clay expands it to a set of related company records (parent company, subsidiaries, acquired entities). **Find People at These Companies** processes companies in a batch and consolidates related entities before querying; **Find Contacts at Company** processes each company row independently without that consolidation step. The same domain can therefore resolve to a slightly different scope of related entities in each tool, producing different contact counts.
+-   **Private or restricted profiles** — the specific profiles accessible in any given query can vary slightly across runs and tools.
+
+**To get the most consistent results across both tools:** Use a **LinkedIn company URL** as the identifier instead of a domain. LinkedIn URLs map directly to one company profile and bypass domain expansion entirely, which minimizes count differences. See [Use LinkedIn URLs, not domains, as company identifiers](#use-linkedin-urls-not-domains-as-company-identifiers).
+
+If you're seeing substantially different counts even with the same LinkedIn URL and identical filters, contact support and share your table URL for investigation.
+
 ### I added new companies to my company table — how do I get them through my Find People searches?
 
 **If using Find People as a source (a separate people table):**
