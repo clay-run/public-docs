@@ -219,7 +219,7 @@ If you are on a **monthly plan**, unused Data Credits will roll over and accumul
 
 If you are on an **annual plan**, you are eligible for a **15% Data Credit rollover** of unused Data Credits, provided you renew on the same or a higher-tier plan.
 
-_Note: Your rollover and renewal happen on the same day and at the same time you originally subscribed (this timestamp is now shown in your billing details). Processing may take a few hours after that timestamp, so there can be a delay before you see Data Credits updated._
+_Note: Your rollover and renewal happen on the same day and at the same time you originally subscribed (this timestamp is now shown in your billing details). Credits are updated via a payment-processor webhook and typically appear within a few minutes of that timestamp._
 
 ## Managing your plan and credits
 
@@ -358,7 +358,7 @@ It depends on the provider's billing model. Some providers charge Clay only when
 
 ### How long does it take for Data Credits to renew?
 
-When your plan renews, Data Credits may take 1–2 hours to appear due to transaction processing times. This is based on your original billing timestamp.
+When your plan renews, Data Credits are updated via a payment-processor webhook and typically appear within a few minutes of your renewal timestamp. If credits haven't updated shortly after the renewal time shown in your billing settings, wait a few minutes and refresh the page.
 
 ### Why are Data Credits being deducted unexpectedly?
 
