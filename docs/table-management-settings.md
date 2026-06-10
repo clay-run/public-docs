@@ -300,8 +300,12 @@ To enable or disable passthrough tables:
 1.  Open your table.
     -   To fully bypass the 50,000 record source limit, the table source must be **webhooks**, **send table data**, or a **signal source**. A warning appears if your table includes incompatible sources. See [auto-delete documentation](auto-delete.md) for details on source compatibility and warnings.
 2.  Click the **auto-delete icon** (archive icon) in the bottom toolbar, or click the **table title** and select **Enable auto-delete** from the dropdown.
-3.  Within the auto-delete settings, enable `Automatic Row Deletion`.
-    -   This action activates the passthrough functionality by ensuring that rows are automatically deleted after processing and transferring.
+3.  In the auto-delete settings dialog, select your **Auto-delete mode**:
+    -   **Disabled** — Rows will not be automatically deleted.
+    -   **Delete when all actions finish** — Deletes rows once all action columns have finished running.
+    -   **Delete based on conditional rules** — Deletes rows that match custom filter conditions you define.
+
+    See [Auto-delete in tables](auto-delete.md) for details on each mode and additional configuration options.
 
 ## Rename your table
 
