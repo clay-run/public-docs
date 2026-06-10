@@ -50,7 +50,7 @@ Use Clay to gather deep intelligence on target companies—tech stack, funding, 
 **Example prompts:**
 
 -   `What are [Company]'s top go-to-market priorities this year? Any recent executive changes or expansion signals?`
--   `Show me recent public posts from sales or product leaders at [Company] that mention automation or AI automation.`
+-   `Show me recent public posts from sales or product leaders at [Company] that mention automation or AI adoption.`
 -   `What new markets has [Company] expanded into recently? How has headcount changed over the last year? What tools power their partner GTM motion?`
 
 ### Draft personalized outbound
@@ -161,17 +161,6 @@ It depends on how the function is set up. By default, Claude does not have acces
 **Does using Clay in Claude create a Clay table?**
 
 If you click `Open in Clay`, a table is created in your Clay workspace. For one-off operations — like finding a single contact's email — a table is not created by default.
-
-**Can Clay in Claude write to or add rows to my existing Clay tables?**
-
-Not natively. The Clay connector is designed for finding new contacts and companies, enriching them, and drafting outreach — all within the conversation. It doesn't have a built-in action to push rows into a table you've already built in your Clay workspace.
-
-To move data from a Claude conversation into your Clay tables:
-
--   **Open in Clay**: After finding or enriching contacts in Claude, click "Open in Clay" to create a new table in your workspace with those results. You can then run enrichments on that table directly in Clay.
--   **Functions**: If your ops team has configured a Clay workflow that writes to a specific table and enabled it for MCP, you can invoke it from Claude by name. (See the [Running functions](#running-functions) section above.)
-
-For batch workflows like running an email-finder waterfall on a list of companies, work directly in Clay at [app.clay.com](http://app.clay.com).
 
 **How does my admin control my credit limit?**
 
