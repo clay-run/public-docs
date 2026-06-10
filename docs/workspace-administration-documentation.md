@@ -1,7 +1,7 @@
 ---
 title: Account and workspace settings
 source_url: https://university.clay.com/docs/workspace-administration-documentation
-description: Manage account and workspace settings, integration accounts, and billing.
+description: Manage account and workspace settings, team members, SSO, integration accounts, and billing.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -328,7 +328,7 @@ SSO only applies to users whose email address matches your verified domain. Team
 
 ## **User provisioning**
 
-Clay does not add users to your workspace automatically through SSO — there is no JIT (Just-in-Time) provisioning, SCIM, or domain-join provisioning for workspace membership. If an uninvited user with your email domain signs in via SSO, they will authenticate successfully and a Clay account will be created for them, but they will not be added to your enterprise workspace — instead, they will be directed to create a new personal workspace. To onboard a new team member:
+**Clay does not support SCIM provisioning.** SSO (via WorkOS) is used for authentication only — Clay does not add users to your workspace automatically through SSO, and there is no JIT (Just-in-Time), SCIM, or domain-join provisioning for workspace membership. If an uninvited user with your email domain signs in via SSO, they will authenticate successfully and a Clay account will be created for them, but they will not be added to your enterprise workspace — instead, they will be directed to create a new personal workspace. To onboard a new team member:
 
 1.  Invite them to your Clay workspace first via `Settings` > `Team` > `+ Invite`.
 2.  Have them sign in using SSO — they will be authenticated and placed into the correct workspace.
