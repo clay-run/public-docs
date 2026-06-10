@@ -28,6 +28,15 @@ To add a data source for the first time, click the `Add data` button in the top 
 
 **Note:** Adding a data source requires Admin access. The `Add data` button and most source options are visible to all workspace members, but only Admins can complete source setup — Editors receive an error when attempting to connect a source. If you're an Editor, ask a workspace Admin to connect the source, or have your role changed.
 
+**Plan-based record limits**
+
+The total number of records across all enabled Audience imports is capped by your plan. Imports that would push your workspace over the limit are blocked:
+
+-   **Growth:** 250,000 records
+-   **Enterprise:** 25,000,000 records
+
+If an import would exceed your limit, you'll see: *"This import would exceed your plan's Audience record limit. Disable sync or narrow the query/source to import fewer records."* To resolve it, disable sync on one or more existing imports or narrow the query or source to bring in fewer records.
+
 You can import data from:
 
 -   A new people or companies search
