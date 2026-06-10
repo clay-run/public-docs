@@ -274,6 +274,8 @@ This is especially useful when you want to test edge cases or troubleshoot speci
 
 ### How do I make a function input optional?
 
+When you create a function — including from a table that contains a Claygent step — all inputs default to required. This happens regardless of how the inputs are configured inside the source Claygent; the required/optional setting lives at the function level and must be set independently.
+
 Each function input has a **Required input** setting. When this is enabled and no value is provided for that input on a given row, the row will not run — you'll see a "Missing required inputs" error on that cell.
 
 To make an input optional:
