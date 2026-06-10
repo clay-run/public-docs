@@ -149,6 +149,15 @@ The 50,000 row limit applies to ad audiences exported from tables. For larger au
 
 No. Field mapping is configured when you create the Ad Sync and cannot be changed afterward. Deactivating an Ad Sync places it in read-only history — it does not unlock the mapping for editing. To use a different field mapping, deactivate the current sync and create a new Ad Sync with your updated configuration.
 
+### **Can I add a second ad platform to an existing Ad Sync?**
+
+Yes. After your initial sync is active, an **Expand your reach** section appears below your current platform destinations. Click **Add** next to any available platform to configure field mappings for that provider — it will sync on the same schedule as your existing provider.
+
+**Notes:**
+
+-   You cannot add a platform while a sync is currently in progress — wait for the active sync to complete first.
+-   Google Ads is only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience includes contacts from Clay's company/people search data, Google Ads will appear disabled. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) for details.
+
 ### **How long does it take for audiences to be created?**
 
 After sending your audience to LinkedIn or Meta, it will be created within **48 hours** (typically 1-2 days). Plan accordingly when launching time-sensitive campaigns.
