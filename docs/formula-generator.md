@@ -121,13 +121,14 @@ This returns a string representing the cell's current state. Possible values inc
 
 -   **Success**: `"SUCCESS"` (data returned), `"SUCCESS_NO_DATA"` (ran successfully but returned no data), `"SUCCESS_BLOCKED_DATA"`
 -   **In progress**: `"RETRY"` (actively retrying — shown as "Retrying…" in the UI), `"QUEUED"`, `"RUNNING"`, `"RATE_LIMITED"`, `"AWAITING_CALLBACK"`
+-   **Skipped**: `"ERROR_RUN_CONDITION_NOT_MET"` — the column's "Only run if" condition evaluated to false for this row; the enrichment was skipped and no credits were consumed
 -   **Error**: `"ERROR"` and error-specific variants such as `"ERROR_TIMEOUT"`, `"ERROR_NUMBER_OF_RETRIES_EXCEEDED"`
--   `"UNKNOWN"` when no status has been recorded for that cell yet
+-   `"UNKNOWN"` — the cell has never been processed at all (the table has never run for this row, so no status has been recorded yet)
 
 A few important notes:
 
 -   **The formula preview sidebar will show nothing** — this is expected. `Clay.*` functions are evaluated on the backend and cannot run in the preview. Save the column and the values will populate.
--   **Only works for enrichment (action) columns.** The function reads the cell's stored status; it returns `"UNKNOWN"` for formula columns or cells that have never run.
+-   **Only works for enrichment (action) columns.** The function reads the cell's stored status; it returns `"UNKNOWN"` for formula columns or cells that have never been processed. Cells that were skipped due to a run condition return `"ERROR_RUN_CONDITION_NOT_MET"`, not `"UNKNOWN"`.
 -   The function reflects the cell's **current** status — including in-progress states. A cell actively retrying returns `"RETRY"`, a cell waiting to execute returns `"QUEUED"`.
 
 ### **Why does my regex formula work in the preview but fail when the table runs?**
