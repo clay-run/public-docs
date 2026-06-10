@@ -13,7 +13,7 @@ MCP (Model Context Protocol) is how Clay connects your workspace to AI tools lik
 
 Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory — not a generic server URL you configure manually.
 
-Navigate to it from the Clay homepage by clicking `MCP` in the side nav.
+Navigate to it from the Clay homepage by clicking `MCP` in the side nav. The MCP settings page is only visible to workspace admins — if you don't see it in your settings sidebar, ask your workspace admin.
 
 **Note:**  
 
@@ -66,6 +66,8 @@ If your workspace uses Clay Audiences, two additional workspace-level toggles ap
 
 -   **Sync user IDs from audiences** — continuously syncs audience data to match MCP users to the Salesforce accounts they own. Updates run incrementally every 15 minutes, with a full sync once a week.
 -   **Allow querying all accounts** — when enabled, reps can query any account in the synced audience, not just accounts they own in Salesforce.
+
+**Troubleshooting — error: "Contact queries are not available in this workspace":** If a rep using Clay through Claude or ChatGPT sees the error `Contact queries are not available in this workspace. Contact ownership scoping is not yet supported — enable "Allow querying all accounts" in workspace settings to use contact queries`, the **Allow querying all accounts** toggle is off. Go to `Settings → MCP` and enable it. The MCP settings page is only visible to workspace admins — if you don't see it in your settings sidebar, ask your workspace admin to make the change.
 
 **Troubleshooting — rep sees no results when querying Audiences:** When `Allow querying all accounts` is off, results are scoped to accounts the rep owns in Salesforce. A rep who owns no accounts (or whose Salesforce ownership hasn't synced yet) will receive empty results — which can look like the feature isn't working. To resolve: either enable `Allow querying all accounts` so the rep can see all workspace accounts, or ensure `Sync user IDs from audiences` is on and the rep's Salesforce account ownership is correctly mapped.
 
