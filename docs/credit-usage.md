@@ -78,6 +78,12 @@ All views allow you to download the data as a CSV for further analysis.
 
 **Note:** Historical data for the table credit dashboard begins on November 5th, 2025. You'll see a warning about incomplete data if your selected time range begins before this date.
 
+### Checking credit cost for a specific action on a row
+
+The workspace and table dashboards break down spend by workbook, table, column, or run — but not by individual row. To see what a specific enrichment charged on a particular row, click on that **action cell** directly. The cell details panel shows a **Charged** line with the data credits consumed by that enrichment for that row.
+
+This is useful for spot-checking costs before scaling a workflow: run a small batch of rows, click into individual action cells to see per-enrichment charges, then use those figures to estimate total credit cost at higher volumes.
+
 ## **Credit usage breakdown**
 
 The credit usage dashboard is organized into tabs, each covering a different slice of your workspace spend. Use the `When` dropdown and `Apply filters` to scope each tab to a specific time period.
@@ -129,6 +135,20 @@ When you import data to existing tables (via Copy Paste from URLs, adding a sour
 This prevents unexpected credit usage when you add new data to tables with existing enrichment workflows.
 
 ## Troubleshooting unexpected credit usage
+
+### Credits consumed when a workspace member added rows
+
+When any workspace Editor adds rows to a table — manually, via CSV import, or through an integration — every enrichment column with auto-run enabled fires automatically for each new row, consuming credits. This applies regardless of how recently the table was last used: auto-run stays enabled until explicitly disabled, so rows added to an older or inactive table will still trigger all enrichments.
+
+To understand when a run happened, open the **Run view** in the [table credit usage dashboard](#understanding-table-specific-credit-usage). Each entry shows a timestamp and which columns ran.
+
+**Identifying who triggered the run:** The Workbooks tab shows the workbook's owner (its creator), not which team member triggered the run. For standard table runs, the credit dashboard does not attribute spend to individual users — only the **MCP** and **API** tabs show per-user breakdowns. If you cannot determine the source of a run from the usage dashboard, contact Clay support for further investigation.
+
+To prevent unexpected spend on tables you're no longer actively enriching:
+
+-   Disable table-level auto-run (click `⛭` → toggle **Auto-run** off) so new rows don't trigger enrichments until you're ready.
+-   Disable auto-run on individual columns that don't need to fire on every new row (column name → **Edit column** → **Run settings** → toggle **Auto-run** off).
+-   On Enterprise plans, set credit spend limits on workbooks to cap total consumption. See [Credit spend limits FAQ](credit-spend-limits-faq.md).
 
 ### Credits consumed while auto-run is off
 
