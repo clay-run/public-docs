@@ -174,6 +174,21 @@ The enrichment will now only fire for rows where the lookup returned at least on
 
 **See also**: [Lookup Rows](lookup-rows.md) — full reference for single-row and multiple-row lookup patterns, including using lookups as suppression gates.
 
+### Column stops running after a referenced column is deleted
+
+If a run condition formula references a column that has been **deleted** from the table, the column stops running and its cells show **"Invalid input"** status. Opening the cell details panel shows a **"Conditional run errors"** message listing the missing field — for example: *"[Column name] is missing."* Downstream columns that depend on this column will also appear out of date.
+
+**To fix:**
+
+1. Click the column header → **Edit column** → open **Run settings**.
+2. Find the **"Only run if"** formula — it will contain a reference to a column that no longer exists in the table.
+3. Delete the broken condition by clicking the **×** next to it, or click **Use AI** to recreate it using a valid column reference.
+4. Save the column.
+
+Once saved, cells will clear the "Invalid input" state and run normally on the next trigger.
+
+**Tip:** Before deleting a column, check whether any other columns reference it in a run condition. Open each dependent column's **Run settings** and update or remove conditions that point to the column you're about to delete.
+
 ## See also
 
 [Conditional statements](https://www.clay.com/university/guide/conditional-statements)
