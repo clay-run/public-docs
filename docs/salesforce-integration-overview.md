@@ -259,7 +259,7 @@ Use this action to modify existing records in Salesforce.
 After selecting a Salesforce Object, the **Map fields** section lets you specify which fields to update. The section starts empty — add only the fields you need to change.
 
 -   **+ Add field**: Opens a searchable list of all updateable fields for the selected Salesforce object. Select a field to add it, then map it to a column or value from your Clay table. Repeat for each field you want to update.
--   **Refresh**: Reloads the field list from Salesforce. Use this if you've recently added or modified fields in your Salesforce org and they're not appearing in the picker.
+-   **Refresh**: Reloads the field list from Salesforce. If you've recently added or modified fields in your Salesforce org and they're not appearing in the picker.
 
 Fields not added here are left unchanged in Salesforce.
 
@@ -326,7 +326,7 @@ Salesforce Picklist Options: `Technology`, `Healthcare`, `Finance`
 
 **Key requirements:**
 
--   Separate multiple values withericolons
+-   Separate multiple values with semicolons
 -   **No spaces after semicolons**
 -   Each value must exactly match a Salesforce picklist option (case-sensitive)
 
