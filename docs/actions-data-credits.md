@@ -267,6 +267,7 @@ To downgrade your Clay workspace plan:
 -   After a full cancellation, your workspace transitions to a free plan temporarily.
 -   Your data remains stored, but long-term retention isn't guaranteed after extended inactivity.
 -   To ensure your data is preserved, we recommend downgrading instead of fully canceling.
+-   Your Data Credit balance is capped at 200 credits (the free plan's rollover limit) at the end of your billing cycle — any credits above 200 are forfeited.
 
 **During your current billing cycle:**
 
@@ -374,7 +375,7 @@ Common causes:
 -   Pause AI columns that aren't providing value.
 -   Check table settings before re-running enrichments.
 
-### What happens when I downgrade my plan?
+### What happens when I downgrade or cancel my plan?
 
 **During your current billing cycle:**
 
