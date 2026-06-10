@@ -43,7 +43,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 
 To send data from one table to another:
 
-1.  While in a table, click `Exports` → `Send table data`.
+1.  While in a table, click **+ Add column** at the end of the column headers and select **Send table data** (listed under Exports). You can also reach it by opening the **Exports** tab in the command center sidebar.
 2.  Select the destination table.
 3.  Choose the method:
     -   `Send row`: Choose which columns to send as a row to the other table.
