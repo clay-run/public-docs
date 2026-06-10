@@ -67,6 +67,8 @@ If your workspace uses Clay Audiences, two additional workspace-level toggles ap
 -   **Sync user IDs from audiences** — continuously syncs audience data to match MCP users to the Salesforce accounts they own. Updates run incrementally every 15 minutes, with a full sync once a week.
 -   **Allow querying all accounts** — when enabled, reps can query any account in the synced audience, not just accounts they own in Salesforce.
 
+**Troubleshooting — rep sees no results when querying Audiences:** When `Allow querying all accounts` is off, results are scoped to accounts the rep owns in Salesforce. A rep who owns no accounts (or whose Salesforce ownership hasn't synced yet) will receive empty results — which can look like the feature isn't working. To resolve: either enable `Allow querying all accounts` so the rep can see all workspace accounts, or ensure `Sync user IDs from audiences` is on and the rep's Salesforce account ownership is correctly mapped.
+
 ## FAQ
 
 ### Does Clay provide an MCP server URL I can paste into any AI tool?
