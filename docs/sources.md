@@ -37,6 +37,8 @@ Every Clay table starts with a source. You can import customer data from a CSV f
 3.  Configure the source settings.
 4.  Review the preview and click `Import`.
 
+**Note:** When importing a source into an existing table, Clay automatically runs enrichments on only the **first 10 imported rows**. The remaining rows are added to the table but do not trigger auto-run. This is intentional behavior to prevent large, unintended credit burns — importing a large source into a table with many enrichment columns could otherwise trigger a significant spend all at once. To process the remaining rows after import, manually run them: select all rows, right-click, and choose **Run [N] rows** — or right-click the first column in your workflow and select **Run column**. This same behavior applies to tables created by duplicating a workbook and then adding a source to the duplicate.
+
 ### Importing CSV
 
 **To import a CSV file into a new table:**
