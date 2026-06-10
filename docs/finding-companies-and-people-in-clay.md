@@ -188,6 +188,20 @@ You can exclude up to **150,000 companies or people** from any company or people
 
 This is the current way to suppress your existing CRM or list against new searches. In the future, Audiences will allow you to exclude an entire synced CRM instance (e.g., all of Salesforce) in one step.
 
+**Plan availability:** The exclusion option in source settings is available on Launch plan and above. It is not available on Free or Starter plans.
+
+### Exclusions apply to future source runs — not existing rows
+
+Exclusion sources filter companies from **new imports only** — they do not remove or hide rows that are already in your table. If you add an exclusion list to the source settings of an existing, populated table, the rows that are already there are not affected.
+
+To retroactively hide rows that match your exclusion list without re-running the source (and without losing your enrichment data), use a lookup column combined with a view filter:
+
+1.  **Add a lookup column** — In your table, add a **Lookup single row in other table** action. Set `Table to search` to your exclusion table (e.g., a customers table) and match on **domain** for companies or **LinkedIn URL** for people.
+2.  **Filter your view** — Add a view filter that shows only rows where the lookup returned no match (the lookup column is empty). Your enrichment data stays intact and the matched rows are hidden from the view without being deleted.
+3.  **Keep the exclusion in source settings** — This prevents future source runs from re-importing those same companies.
+
+This is the approach to use when you've already run enrichments and don't want to re-run the entire source just to apply exclusions retroactively.
+
 ### Excluding records during enrichment
 
 The exclusion options above remove matched records before they enter your table. If records are already in your table and you want to skip enrichment on contacts that match a suppression list — such as existing customers, competitors, or a broker list — use **Lookup Rows combined with a run condition**:
