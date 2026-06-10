@@ -63,6 +63,7 @@ Your new plan will activate immediately, and any applicable charges will be appl
 -   **Best for:** Teams enriching 10,000+ records per month
 -   **Actions:** 100,000+ per month (custom)
 -   **Data credits:** 100,000+ per month (custom)
+-   **Table limit:** 50,000 rows per standard table (this limit applies by default and is not automatically removed on Enterprise); use [bulk enrichment](bulk-enrichment.md) to process larger datasets — rows are enriched in rolling batches and sent to your destination with no cumulative row cap
 -   **Benefits:** Volume discounts on data credits at higher tiers, dedicated Growth Strategist, managed onboarding, data warehouse integrations, bulk enrichment, SSO, RBAC
 
 ### Downgrade your plan
