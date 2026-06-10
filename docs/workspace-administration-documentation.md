@@ -353,7 +353,7 @@ An **integration account** is a configured connection between your workspace and
 
 -   `Account / Key Name`: A user-defined name to identify the account, such as "Marketing HubSpot Account" or "Development Anthropic Key." This helps distinguish it from other accounts in the same service.
 -   `Account Credentials`: The authentication details (e.g., API keys or OAuth tokens) required to connect securely to the external service. Credentials can be tested or updated if they become invalid.
--   `Default Status`: An optional setting that makes the account the default choice for its service, streamlining its use in workflow.
+-   `Default Status`: An optional setting that makes the account the default choice for its service, streamlining its use in workflows.
 
 ## **Types of accounts**
 
