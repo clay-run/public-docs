@@ -1,7 +1,7 @@
 ---
 title: Auto-delete in tables
 source_url: https://university.clay.com/docs/auto-delete
-description: Efficiently process and enrich large volumes of data using passthrough tables with compatible webhook, send table data, and signal sources.
+description: Efficiently process and enrich large volumes of data using passthrough tables with compatible webhook, send table data, signal, and Audiences sources.
 last_synced: 2026-04-26T01:39:41.622Z
 ---
 
@@ -22,11 +22,11 @@ Auto-delete is a powerful feature designed to help you process and enrich large 
 Follow these steps to set up auto-delete:
 
 1.  Open a table.
-    -   Note: To fully bypass the 50,000 record source limit, the table source must be **webhooks**, **send table data**, or a **signal source**. For all other source types, the source will still accumulate rows toward the 50,000 limit even with auto-delete enabled. A warning appears during setup if your table includes incompatible sources.
+    -   Note: To fully bypass the 50,000 record source limit, the table source must be **webhooks**, **send table data**, a **signal source**, or an **Audiences source**. For all other source types, the source will still accumulate rows toward the 50,000 limit even with auto-delete enabled. A warning appears during setup if your table includes incompatible sources.
 2.  Open the auto-delete settings using either access path:
     -   Click the **table title** and select **Enable auto-delete** from the dropdown, or
     -   Click the **auto-delete icon** (archive icon) in the bottom toolbar of the table.
-3.  In the dialog that appears, check **This table uses a webhook, send table data, or signal source**, then click **Configure auto-delete**.
+3.  In the dialog that appears, check **This table uses a webhook, send table data, signal, or Audiences source.**, then click **Configure auto-delete**.
     -   If your table uses an incompatible source type, auto-delete will still delete rows, but the source record count continues accumulating toward the 50,000 limit.
 4.  Under **Auto-delete mode**, select one of the following options:
     -   **Disabled** — Rows will not be automatically deleted.
@@ -46,10 +46,11 @@ Not all source types support fully bypassing the 50,000 record import limit. Onl
 -   **Webhooks**
 -   **Send table data**
 -   **Signal sources** (e.g., web intent, job posts, news & fundraising, and other signal-based sources)
+-   **Audiences**
 
 All other source types — such as CRM integrations, Snowflake, and database connections — will continue accumulating toward the 50,000 limit even when auto-delete is enabled. Auto-delete will still delete rows from the table for those sources, but the underlying source record count is not cleared.
 
-**Configuration warning:** When enabling auto-delete on a table that includes incompatible sources, Clay displays a warning: "This feature only works for webhook, send table data, and signal sources. All other source types will stop importing after 50,000 records, even with auto-delete enabled."
+**Configuration warning:** When enabling auto-delete on a table that includes incompatible sources, Clay displays a warning: "This feature works for webhook, send table data, signal, and Audiences sources. All other source types will stop importing after 50,000 records, even with auto-delete enabled."
 
 **Incompatible source banner:** If auto-delete is already enabled and your table has one or more incompatible sources, a warning banner appears on the table. The banner title reads "Auto-delete is on with a source that isn't compatible." when exactly one incompatible source is present, or "Auto-delete is on with sources that aren't compatible." when multiple incompatible sources are present. The banner highlights the source closest to the limit with a description like: "[source name] has processed 12,000 of 50,000 records maximum." A details view lists all incompatible sources with their counts in the compact format `12,000 / 50,000`. For tables with incompatible sources, you will need to manually delete rows to stay within the 50,000-record limit — auto-delete cannot prevent the source from hitting the cap for these source types.
 
