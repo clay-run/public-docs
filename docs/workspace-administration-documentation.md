@@ -315,12 +315,18 @@ The typical setup process:
 
 ## **What happens when SSO is enabled**
 
--   All users whose email address is on your verified domain are required to sign in through SSO. The Clay login page redirects those users to your SSO provider automatically.
+-   All users whose email address is on your verified domain are redirected to sign in through SSO when they type their email on the Clay login page. **Note:** This redirect is handled in the browser — users who have an existing email + password Clay account can still log in using their password directly, which bypasses the SSO redirect. Clay does not block password-based login at the backend for SSO-configured domains.
 -   Google OAuth sign-in is disabled for users on your domain. Clicking the **Sign in with Google** button on the login page will return an error (`Google OAuth is disabled for this account`) — this button uses Google OAuth, which is a separate authentication path from SSO.
 -   SSO is configured at the email domain level — if your organization uses multiple Clay workspaces, users on your domain will be routed through SSO for all of them.
 -   Once SSO is activated, users can sign in from either the Clay login page or directly from your IdP dashboard (for example, clicking the Clay tile in your Okta launcher). If clicking the IdP tile returns `{"type":"BadRequest","message":"Unable to login","details":null}`, SSO has likely not yet been activated on Clay's side — contact Clay support to complete activation.
 
 **How SSO users should sign in:** On the Clay login page, type your **email address** into the email field and click **Continue** — do **not** click the `Sign in with Google` button. Entering your email triggers domain detection, which redirects you to your SSO provider automatically.
+
+## **MFA enforcement and compliance requirements**
+
+Clay does not have a workspace admin setting to require multi-factor authentication (MFA) for all users. When SSO is enabled, users on your domain are redirected to your identity provider in the browser — but this is not a backend login block. Users who have an existing email + password Clay account can log in via password and bypass the SSO redirect entirely, which means IdP-level MFA requirements are not enforced for those users.
+
+If your security policy or compliance requirements (for example, SOC 2) mandate that all users authenticate through MFA, this is a current limitation: there is no workspace-level setting in Clay to disable password-based login or restrict authentication to SSO only. For Clay's security and compliance documentation, including the SOC 2 report, visit [trust.clay.com](https://trust.clay.com).
 
 ## **External collaborators (non-domain email addresses)**
 
@@ -347,7 +353,7 @@ An **integration account** is a configured connection between your workspace and
 
 -   `Account / Key Name`: A user-defined name to identify the account, such as "Marketing HubSpot Account" or "Development Anthropic Key." This helps distinguish it from other accounts in the same service.
 -   `Account Credentials`: The authentication details (e.g., API keys or OAuth tokens) required to connect securely to the external service. Credentials can be tested or updated if they become invalid.
--   `Default Status`: An optional setting that makes the account the default choice for its service, streamlining its use in workflows.
+-   `Default Status`: An optional setting that makes the account the default choice for its service, streamlining its use in workflow.
 
 ## **Types of accounts**
 
