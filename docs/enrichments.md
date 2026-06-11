@@ -91,9 +91,3 @@ You can use a boolean formula to check if an enrichment has finished, then use t
 ### "How can I tell how my credits are being used?"
 
 You can track credit usage for your workspace in the [credit usage](https://www.clay.com/university/guide/credit-usage) dashboard. This shows detailed breakdowns of credit consumption by table, integration, and time period, helping you monitor and optimize your usage.
-
-### "My enrichment column only ran on the first 10 rows — why didn't it run on all rows?"
-
-When you set up a new enrichment column using the guided wizard, Clay automatically runs the column on the first 10 rows as a quick preview. The remaining rows are not queued and stay blank until you trigger a run manually. The same result occurs if you selected **Save and run 10 rows** from the save dropdown when adding or editing the column.
-
-To run the column on all remaining rows, right-click the column header and choose **Run column** → **Run N empty or out-of-date rows**.
