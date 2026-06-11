@@ -167,6 +167,16 @@ Changing a HubSpot list's membership criteria (for example, tightening segment f
 
 To refresh your table to reflect the updated list, see [Why doesn't my Clay table update when I change the source filters?](https://www.clay.com/university/guide/sources#faqs) in the Sources guide.
 
+### Why does my HubSpot import show "0 rows were added" even though objects were found?
+
+This is expected behavior on re-runs. When "Import objects from HubSpot" runs on a table that already contains records, Clay compares each incoming object's HubSpot ID to rows already in the table and skips any that are already present. The run summary shows how many objects matched your list in HubSpot — not how many are new to Clay.
+
+For example: if your HubSpot list has 49,000 objects and all were imported in a previous run, re-running reports "Found 49,000 objects" but adds 0 new rows, because every HubSpot ID already exists in the table. This is what the success message ("The number of results added may be less than requested, as a result of deduping") indicates.
+
+Deduplication is scoped to the current table — records in other tables within the same workbook do not affect this count.
+
+**To update existing rows** with fresh HubSpot data on each re-run (instead of skipping them), open your source column → `Edit column` → `Sources`, and enable **Update existing rows**. When enabled, re-runs update matching rows rather than skipping them. See [Table management settings](table-management-settings.md) for more details.
+
 ### Why does my HubSpot lifecycle stage column show an internal code instead of the display label?
 
 HubSpot's API returns internal codes for enumeration/dropdown fields rather than the human-readable labels shown in HubSpot. For example, a contact at the "Marketing Qualified Lead" stage will appear as `marketingqualifiedlead` in Clay. This applies to any HubSpot dropdown property, not just lifecycle stage.
