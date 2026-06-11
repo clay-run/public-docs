@@ -114,18 +114,18 @@ Each row includes the post URL, post text, author name, author LinkedIn URL, aut
 
 ## Getting people who interacted with a post
 
-To build a table of people who liked, commented on, or shared a specific LinkedIn post, use the **Get interactions with professional posts** source. Each row in the resulting table represents one person who interacted with that post.
+To build a table of people who liked, commented on, or shared a specific post, use the **Get interactions with professional posts** source. Each row in the resulting table represents one person who interacted with that post.
 
 **To set up this source:**
 
 1.  In a workbook, click `+ Add`.
 2.  Search for `Get interactions with professional posts` and select it.
-3.  Provide the LinkedIn post URL — either as a manual entry or by linking to a column in an existing Clay table.
+3.  Provide the post URL — either as a manual entry or by linking to a column in an existing Clay table.
 
-**URL format requirement:** This source only accepts `activity` and `ugcPost` type LinkedIn post URLs. Share URLs — those containing `-share-` in the path — are not valid and return an **"Invalid LinkedIn post URL(s)"** error.
+**URL format requirement:** This source only accepts `activity` and `ugcPost` type post URLs. Share URLs — those containing `-share-` in the path — are not valid and return an **"Invalid LinkedIn post URL(s)"** error.
 
 -   **Valid (activity):** `https://www.linkedin.com/posts/username-activity-7212099008951975937-xxxx`
 -   **Valid (ugcPost):** `https://www.linkedin.com/feed/update/urn:li:ugcPost:7264751670859911168`
 -   **Not valid (share):** `https://www.linkedin.com/posts/username-share-7465693718734413824-xxxx`
 
-To get the correct URL: open the post on LinkedIn, click **•••** (three dots) at the top right of the post, and choose **Copy link to post**. If the post is a reshare, open the original underlying post first and copy its link from there.
+To get the correct URL: open the post, click **•••** (three dots) at the top right of the post, and choose **Copy link to post**. If the post is a reshare, open the original underlying post first and copy its link from there.
