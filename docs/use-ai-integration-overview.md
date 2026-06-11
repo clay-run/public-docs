@@ -133,6 +133,16 @@ To call a custom or additional LLM from Clay, use the [HTTP API enrichment](http
 
 ## Troubleshooting
 
+### Cells suddenly stop returning results across all rows
+
+If your AI column cells stop returning results unexpectedly — with no specific error message, and the problem affecting all rows at once — this may indicate a Clay service incident rather than a column configuration problem.
+
+**Before troubleshooting your column setup, check [status.clay.com](https://status.clay.com) for any active incidents.** Clay service incidents can temporarily pause enrichment runs, Claygent columns, and other async actions. If an active incident is listed, no configuration changes are needed — cells will resume running once the incident resolves.
+
+Once the incident resolves, use **Force** run to reprocess any rows that may not have completed during the outage: click the column header, hover over **Run column**, and select **Force**.
+
+If the status page shows no active incidents and cells are still not returning results, proceed to the other troubleshooting entries below for your specific error or symptom.
+
 ### Cells showing "Some inputs missing"
 
 When a cell shows **"Some inputs missing"**, one or more column references in your prompt are marked as required but the underlying column is blank for that row. The cell will not run for affected rows.
