@@ -168,7 +168,7 @@ Please note this step if you are inserting custom variables. This can include su
 
 **Step 5: Configure run settings**
 
-Specify Auto-update and Conditional run settings.
+Specify Auto-update and Conditional run statements.
 
 If you are running trigger campaigns please make sure to turn Auto-update on.
 
