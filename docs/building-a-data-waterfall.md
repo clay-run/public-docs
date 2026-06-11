@@ -107,7 +107,7 @@ To add a dedicated column per row showing the winning provider's name, enable **
 
 ## Expanding contacts from a people waterfall into a new table
 
-When your waterfall uses contact-finding providers (such as Find Contacts at Company), each provider sub-column stores the full list of returned contacts as an array. The merged waterfall output column shows only the single field you selected during setup (for example, a LinkedIn URL or a name) — it does not contain the full array, so the **Take action on list** button does not appear when you click into the merged column.
+When your waterfall uses contact-finding providers (such as Find Contacts at Company), each provider sub-column stores the full list of returned contacts as an array. The merged waterfall output column shows only the single field you selected during setup (for example, a contact's profile URL or name) — it does not contain the full array, so the **Take action on list** button does not appear when you click into the merged column.
 
 To send each contact as its own row to a new table for downstream enrichment (such as Work Email or Enrich Person):
 
