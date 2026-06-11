@@ -1,9 +1,9 @@
 ---
 title: Formulas
 source_url: https://university.clay.com/docs/formula-generator
-description: Generate formulas with AI to transform your data. Includes how to
-  use today's date in a formula, pull error messages with getCellErrorMessagePreview(),
-  check cell status with getCellStatus(), and keep date comparisons current automatically.
+description: Generate formulas with AI to transform your data. Covers generating,
+  improving, and directly editing formula expressions, plus how to use today's
+  date and pull error messages from action columns.
 last_synced: 2026-04-26T01:40:01.780Z
 ---
 
@@ -65,6 +65,19 @@ Clay formulas are powered by **Clayscript**, a JavaScript-based language that ev
 Yes! When editing a formula, you'll see the option to `Save and don't run enrichments`.
 
 Clicking this prevents your formula from running on any enrichment columns that would cost credits. These columns will appear greyed out to indicate they're out of date.
+
+### **How do I view or edit an existing formula expression directly?**
+
+When you open an existing formula column, the Formula generator sidebar pre-loads both the original description (prompt) and the formula expression. The JavaScript expression is shown in the collapsible **Formula** section, below the prompt input.
+
+To view or edit the expression without regenerating:
+
+1.  Open the existing formula column to open the **Formula generator** sidebar.
+2.  Expand the **Formula** section to see the JavaScript expression.
+3.  Click in the formula editor to make changes directly.
+4.  Click **Save column** (or **Save and don't run enrichments** if you don't want downstream enrichment columns to re-run).
+
+**Tip:** If you inherited a formula and want to understand what it does before modifying it, copy the expression text and paste it into an AI assistant (like ChatGPT or Claude) with the prompt: *"Explain what this formula does."* The assistant can walk through the logic step by step and suggest modifications in plain language. Once you have an updated expression you're happy with, paste it back into Clay's formula editor.
 
 ### **Can I use formula columns for text matching and string operations without consuming credits?**
 
