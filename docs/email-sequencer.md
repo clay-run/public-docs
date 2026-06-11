@@ -88,7 +88,7 @@ Once all your settings are saved, you can launch your campaign. Launching a camp
 
 At any point, you can pause or complete a campaign:
 
--   `Pause`: Stops emails from sending and allows edits to message copy and campaign settings (but not change the number of messages in the sequence). You can relaunch later without being charged additional credits for previously sequenced leads.
+-   `Pause`: Stops outbound sequence emails from sending and allows edits to message copy and campaign settings (but not change the number of messages in the sequence). You can relaunch later without being charged additional credits for previously sequenced leads. Note: pausing a campaign does not stop email account warmup — warmup runs at the sender account level and continues independently. To stop warmup, go to `Campaigns` → `Email Accounts` tab and toggle warmup off for the relevant account.
 -   `Complete`: Permanently ends the campaign and freezes analytics. Use this option only when you're certain you won't need to sequence leads in the campaign again.
 
 ### Campaign events table
@@ -242,6 +242,18 @@ When you add accounts via OAuth, we will automatically set up labels and filters
 ### Why did warmup turn itself off?
 
 Warmup automatically disables when your emails are being throttled by your email provider. This protects your sender reputation. You can manually turn warmup back on from the `Sender Accounts` tab once the throttling issue is resolved.
+
+### Why are warmup emails still sending after I paused my campaign?
+
+Pausing a campaign only stops outbound sequence emails. Warmup runs at the **sender account level** and continues independently of the campaign's pause state — it is not affected by pausing or completing a campaign.
+
+To stop warmup sends:
+
+1.  Go to `Campaigns` → `Email Accounts` tab.
+2.  Find the email account(s) connected to your campaign.
+3.  Toggle **Warmup** off for that account.
+
+This stops warmup immediately for that account. Clay recommends keeping warmup on at all times for maximum deliverability, so only turn it off if you no longer need it for that account.
 
 ### I'm getting an error that my email account is already in use. What does this mean?
 
