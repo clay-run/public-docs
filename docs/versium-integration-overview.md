@@ -1,8 +1,8 @@
 ---
 title: Versium integration
 source_url: https://university.clay.com/docs/versium-integration-overview
-description: Versium provides data solutions for audience targeting and
-  omnichannel campaigns.
+description: Versium provides data solutions for audience targeting,
+  omnichannel campaigns, and IP-to-domain company enrichment.
 last_synced: 2026-04-26T01:40:53.582Z
 ---
 
@@ -28,13 +28,14 @@ Utilize your Clay Credits to pay for Versium enrichments, utilizing the credits 
 
 #### Option 2 (**Paid Account Only)**: Connect your Versium API key to Clay
 
-Only workspaces with paid accounts can connect personal API keys to Clay. To connect your API key and set up a personal Versium account, navigate to any of Versium’s integration panels or go to **Settings > Connections**.
+Only workspaces with paid accounts can connect personal API keys to Clay. To connect your API key and set up a personal Versium account, navigate to any of Versium's integration panels or go to **Settings > Connections**.
 
 ## Available Versium Actions
 
-Within Clay, there is one action you can run with Versium:
+Within Clay, there are two actions you can run with Versium:
 
 -   Get additional contact points for advertising audience.
+-   IP to Domain Lookup.
 
 ### `Action`: Get additional contact points for advertising audience
 
@@ -66,9 +67,9 @@ To run only under specific conditions, use formulas that trigger the action when
 #### Input Fields
 
 -   **Email**: A valid email address (business or consumer) used to identify the contact.
--   **First Name**: The individual’s first name.
--   **Last Name**: The individual’s last name.
--   **Social URL**: A valid URL to the individual’s social media profile (e.g., LinkedIn). Lower match rate compared to other inputs.
+-   **First Name**: The individual's first name.
+-   **Last Name**: The individual's last name.
+-   **Social URL**: A valid URL to the individual's social media profile (e.g., LinkedIn). Lower match rate compared to other inputs.
 -   **Company Domain**: The domain of the company associated with the contact (e.g., [example.com](http://example.com)).
 -   **Company Name**: The full name of the company associated with the contact.
 -   **State**: The U.S. state where the individual or company is located (two-letter abbreviation).
@@ -100,3 +101,54 @@ To run only under specific conditions, use formulas that trigger the action when
     -   **Headers**: Email
     -   **Hashed Field**: SHA256-hashed email
     -   **Max Field Count**: 14
+
+### `Action`: IP to Domain Lookup
+
+This action takes an IP address and returns the domain and company information associated with it. It is commonly used in IP de-anonymization workflows — for example, to identify companies visiting your website.
+
+#### Action Walkthrough
+
+To look up company information for an IP address:
+
+**Step 1:** Select the Versium account you want to use.
+
+**Step 2:** Input the IP address to look up.
+
+**Step 3:** Configure run settings.
+
+By default, new rows in your Clay table trigger this action. To run only under specific conditions, use formulas. Learn more [here](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101).
+
+**Step 4:** Run the action to retrieve company information.
+
+#### Input Fields
+
+-   **IP Address**: The IP address to look up.
+
+#### Output Fields
+
+-   **IP Usage Type**: Classifies how the IP is used (e.g., `Business`, `Data Center/Web Hosting/Transit`, `ISP/Mobile ISP`). Shared infrastructure types like data centers may be associated with multiple companies.
+-   **Is ISP**: Indicates whether the IP is registered to an ISP.
+-   **Results**: An array of up to 3 company matches. Each result includes:
+    -   **Domain**: The company's website domain.
+    -   **Company Name**: The company's name.
+    -   **Company Address**, **Company City**, **Company State**, **Company Zip**, **Company Country**: Location details.
+    -   **Phone**: Company phone number.
+    -   **Website Home Page**: The company's homepage URL.
+    -   **Industry**: Industry classification.
+    -   **Employee Range**: Estimated employee count range.
+    -   **Sales Revenue Range**: Estimated annual revenue range.
+    -   **Year Founded**: Year the company was founded.
+    -   **SIC** / **SIC Description**: Standard Industrial Classification code and description.
+    -   **NAICS** / **NAICS Description**: North American Industry Classification System code and description.
+    -   **Public/Private**: Whether the company is publicly or privately held.
+
+#### Understanding multiple results
+
+When an IP address is classified as shared infrastructure (for example, an `IP Usage Type` of `Data Center/Web Hosting/Transit`), Versium may return up to 3 company matches. Multiple organizations can route traffic through the same data center or hosting provider, so the same IP can legitimately be associated with several different companies.
+
+**Important:** The results array is not sorted by confidence — there is no guarantee that the first result is the most accurate match.
+
+**Handling multiple results:**
+
+-   **Keep all matches and enrich further:** Write the results to a new table and continue enriching each company to determine the best match for your use case.
+-   **Filter to high-confidence single results:** Add a conditional run formula to skip rows where multiple companies are returned. For example, use `{{IP to Domain Lookup}}?.results?.length` as your condition and only proceed when the value equals `1`.
