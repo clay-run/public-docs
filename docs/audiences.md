@@ -1,13 +1,13 @@
 ---
 title: Audiences (Beta)
 source_url: https://university.clay.com/docs/audiences
-description: "Note: This feature is currently in beta for Enterprise customers."
+description: "Clay Audiences is the unified data layer for your workspace. Currently in beta for Enterprise customers; going GA for Launch, Growth, and Enterprise plans on June 22, 2026."
 last_synced: 2026-04-27T18:09:16.275Z
 ---
 
 # Audiences (Beta)
 
-**Note:** This feature is currently in beta for Enterprise customers.
+**Note:** Audiences is currently in beta for Enterprise customers. Starting June 22, 2026, Audiences will be generally available (GA) for Launch, Growth, and Enterprise plans.
 
 Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
 
@@ -147,7 +147,7 @@ You can configure one alias field per entity type (one for People, one for Compa
 **Other deduplication behaviors**
 
 -   **Cross-source deduplication** — merge the same person from multiple sources.
--   **Whitespace detection** — when importing from a Find People or Find Companies search, records that already exist in All People are automatically excluded from the merge. The draft shows a banner with the count of excluded records ("X records from this search are already in the All People list"), and clicking **All people** adds only the net-new contacts.
+-   **Whitespace detection** — when importing from a Find People or Find Companies search, or saving results from a Clay table to your Audience, records that already exist in All People or All Companies are automatically excluded from the merge. The draft shows a banner with the count of excluded records, and clicking **All people** or **All companies** will only add net-new records. For Companies, exclusion matches on Clay's internal company identifier (CPJ ID). Existing Audience records need entity resolution to have completed — records missing a recognized domain or professional network URL may not yet have been assigned a CPJ ID, which can cause them to slip through as apparent duplicates. Ensuring your Companies audience records have accurate domains and professional network URLs helps entity resolution complete and improves deduplication coverage.
 
 Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs — org duplicates carry over as-is.
 
@@ -160,6 +160,18 @@ To create a new audience:
 1.  Click `People` or `Companies` in the left sidebar.
 2.  Click **New audience** in the top-right corner of the list, or click the `+` next to `My Audiences` in the sidebar.
 3.  Select `Criteria` and then add a `Filter` or `Filter group`.
+
+### Building AND and OR logic
+
+By default, all filters in a segment are combined with **AND** — a record must match every condition to be included. To mix AND and OR (for example, `Filter 1 AND Filter 2 AND (Filter 3 OR Filter 4)`), use a filter group:
+
+1.  Click **+ Filter group** to add a sub-group of conditions.
+2.  Inside the group, add at least two filters using **+ Filter**.
+3.  Once you have added a second filter, an **"and"** button appears between the filters inside the group — click it to toggle to **"or"**. The entire group then matches any record that satisfies at least one of its conditions.
+
+The filters outside the group remain combined with AND as usual.
+
+**Example:** To build `Employees > 100 AND Country = US AND (Field A OR Field B)`, add the first two filters at the top level, then click **+ Filter group**, add Field A and Field B inside it, and click the **"and"** button between them to switch to **"or"**.
 
 ### Filter operators by field type
 
@@ -282,6 +294,24 @@ You can add multiple ad platforms to a single audience sync. After your initial 
 -   You cannot add a platform while a sync is currently in progress — wait for the active sync to complete first.
 -   Google Ads is only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience uses Clay's company/people search (CPJ) data, Google Ads will not be available to add.
 
+**Enhanced Matching (Beta)**
+
+Enhanced Matching improves ad platform match rates by looking up hashed personal email addresses for your contacts via Clay's provider network and sending up to three per record to the connected ad platform. It is currently in beta — contact your Growth Strategist to enable it for your workspace.
+
+When setting up an Audiences → Ads sync, the **Map** step includes an Enhanced Matching panel where you choose a tier:
+
+| Tier | Cost | Expected match rates |
+|------|------|---------------------|
+| **Premium** | 2 credits/row | Professional network ≤ 95%, Meta ≤ 65% |
+| **Standard** | 1 credit/row | Professional network ≤ 80%, Meta ≤ 50% |
+| **None** | 0 credits | Professional network < 60%, Meta < 30% |
+
+With **Premium** or **Standard**, Clay queries its provider network to find and hash personal emails for each contact automatically. With **None**, you manually map up to three existing hashed email columns from your Audience under **Include emails**.
+
+**Hashed email limit:** All tiers support a maximum of **3 hashed email fields** per contact. If a contact has more than 3 personal email addresses available, only the first three are sent to the ad platform — there is no way to include additional emails beyond this limit.
+
+**Professional network behavior:** The professional network creates a separate audience entry per hashed email address, so your audience size on that platform may exceed your contact count after a sync. This is expected — it means one contact was matched via multiple email addresses.
+
 ## Writing back to your CRM
 
 Audiences supports **bidirectional sync** with Salesforce. Enriched data and segment changes write back automatically.
@@ -346,6 +376,12 @@ The field will be available for filtering after the next incremental sync (typic
 These refer to the same field. In the Salesforce import field mapping, the LinkedIn URL for accounts is labeled **"LinkedIn URL"**. In the audience filter builder, that same field appears as **"Company LinkedIn URL"** — Audiences automatically adds the "Company" prefix to distinguish it from the equivalent person-level field, which appears as **"Person LinkedIn URL"** in People audiences.
 
 The underlying field and data are identical. If you mapped Salesforce's Account LinkedIn URL field and named it "LinkedIn URL" in your import settings, filtering on "Company LinkedIn URL" in your Companies audience targets that same mapped field.
+
+### Why doesn't my Clay table appear in the Person source filter?
+
+The **Person source** filter lists each source by its display name, not by the raw source ID shown in the **Source** column. If you sent records from a Clay table to Audiences using **Continue → Save to People**, look for the table's display name in the Person source dropdown — the raw ID string visible in the Source column (such as `t_0tfg3qav6HC2a54Cdpx`) won't appear there.
+
+If your table still doesn't appear in the dropdown, the records may have been pushed via the `Upsert Audiences Record` table action, which doesn't create a named source entry. In that case, type a plain-language description into the filter search box (for example, "Filter people by source id: t_0tfg3qav6HC2a54Cdpx") — a **Create filters with AI** option may appear as you type. Click it and Clay will build the Person source filter automatically. If the option doesn't appear, contact Clay support.
 
 ### My CRM is messy. Should I clean it up before setting up Audiences?
 
