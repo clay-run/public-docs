@@ -168,9 +168,9 @@ To fix this:
 -   **Lower the Temperature.** In the column settings, set **Temperature** to **Low** or **Very Low**. Lower values make output more consistent and help the model follow format instructions reliably.
 -   **Add a downstream formula column as a safeguard.** For rows where the fields have already swapped, add a formula column that checks whether `response` looks like explanation text — for example, by detecting whether it reads as a full sentence — and falls back to the `reasoning` field when it does. This cleans up already-run data; the fixes above prevent the problem for future runs.
 
-### Cells showing "Budget Credit Limit Reached"
+### Cells showing "This request exceeds your budget limit"
 
-For AI columns using variable-priced models (such as GPT-4.1, Claude Sonnet, or Gemini 2.5 Pro) with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. This sets the maximum number of Clay credits that can be spent on a single row. If the estimated cost of running a row exceeds this limit, the cell shows **"Budget Credit Limit Reached"** and does not complete. Clicking the cell reveals the full message with the estimated cost and your current budget.
+For AI columns using variable-priced models (such as GPT-4.1, Claude Sonnet, or Gemini 2.5 Pro) with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. This sets the maximum number of Clay credits that can be spent on a single row. Before running, Clay estimates the token cost from your prompt length. If the estimated cost exceeds this limit, the cell shows an error beginning with **"This request exceeds your budget limit"** and does not complete. Clicking the cell reveals the full message, which includes the estimated credit cost and your current budget setting.
 
 To fix this, open the column settings and increase the **Clay Credit Budget** value. Consider the length of your prompt and system prompt when choosing a limit, as longer prompts cost more credits per row.
 
