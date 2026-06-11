@@ -146,6 +146,21 @@ To avoid unexpected charges:
 -   Turn off auto-update on columns you don't want to fire automatically: open the column → `Run settings` → toggle off `Auto-update`.
 -   To see the full per-column credit breakdown after a signal fires, click `History` in the lower right corner of your results table and select `Usage history`.
 
+### Why did my Job Posting signal return fewer results than expected?
+
+Check the **Limit results** setting inside the **Filter results** section of your signal configuration. By default, a Job Posting signal can return up to 1,250 job postings per run. If you previously entered a lower number — for example, 20 while testing — that value is saved and applies to every subsequent run.
+
+To check or adjust it:
+
+1.  Click the signal column header (the `📡` icon, usually named `Event`).
+2.  Click **Edit column**.
+3.  Expand the **Filter results** section and review the **Limit results** field. Remove the value or enter a higher number.
+4.  Click **Save and re-run**.
+
+There is also a **Limit per company** option in the same section that caps how many job postings are returned for each individual company in your source table. Check this setting too if some companies appear to return fewer results than you expect.
+
+**Important:** The credit cost for a Job Posting signal is based on the number of **companies checked** in your source table view — not the number of job postings returned. Setting a lower result limit reduces your output, but does not reduce the credits charged for that run.
+
 ### Does pausing or deleting a results table stop the signal from running?
 
 No. Signals operate independently of the tables they populate. Pausing a results table, deleting rows from it, or deleting the table itself does not stop the signal from running on its scheduled cadence or consuming credits.
