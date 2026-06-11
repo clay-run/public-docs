@@ -104,12 +104,12 @@ If you clear the filters and the expected rows still don't appear, see [Why aren
 
 ### Rows are arriving but the column data isn't populated
 
-If your webhook is creating new rows but the properties you're sending (email, LinkedIn URL, or other fields) aren't showing up as column data, the issue is usually how the request body is formatted.
+If your webhook is creating new rows but the properties you're sending (email, contact name, or other fields) aren't showing up as column data, the issue is usually how the request body is formatted.
 
 **1. The body must be valid JSON with `Content-Type: application/json`** — Clay creates table columns from the keys in a JSON request body. For this to work, two things must be true: the body must be a valid JSON object, and the `Content-Type: application/json` header must be set. The JSON keys you use become the column names in your Clay table:
 
 ```json
-{"email": "jane@example.com", "linkedin_url": "https://linkedin.com/in/jane"}
+{"email": "jane@example.com", "company": "Acme Corp"}
 ```
 
 Key-value pair notation (such as `key1=value1`) is not valid JSON. Wrap all fields in curly braces `{}` with string keys and values separated by colons.
@@ -165,13 +165,3 @@ When you duplicate a table that has a webhook source, Clay generates a **brand n
 Because the duplicate has a different URL, any external system currently sending data to the original table will not automatically send to the new table. To start receiving data in the duplicate, update your sending system (for example, Zapier, Make, a custom script, or another tool) to POST to the new URL.
 
 To find the new webhook URL: open the duplicated table, click the webhook source column, and copy the URL shown there.
-
-### Does Clay prevent the same webhook record from being processed more than once?
-
-**No — unlike CRM sources, webhooks do not deduplicate by record identity.** Every HTTP POST creates a new row, regardless of whether identical data already exists in the table. Clay assigns each incoming payload a fresh unique identifier, so sending the same contact or event a second time will create a second row and trigger enrichments again.
-
-This is different from CRM sources such as HubSpot and Salesforce, which track every record they have ever imported and automatically skip any record they have already seen — even if you delete the row from the table.
-
-**To prevent the same record from being enriched multiple times,** enable [auto-dedupe](https://www.clay.com/university/guide/table-management-settings#auto-dedupe) on a column containing a unique identifier for your records (such as an email address or a CRM contact ID). When a second submission arrives with the same value in that column, auto-dedupe detects and removes the duplicate row.
-
-**Note:** Auto-dedupe may not catch duplicates when two payloads arrive within milliseconds of each other. See the [simultaneous insert limitation](https://www.clay.com/university/guide/table-management-settings#auto-dedupe) in the auto-dedupe docs for details and workarounds.
