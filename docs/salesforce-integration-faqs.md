@@ -143,6 +143,32 @@ For full details on writing run conditions, see [Conditional runs](https://unive
 
 [Learn more about Salesforce's duplicate rules here.](https://help.salesforce.com/s/articleView?id=sales.duplicate_rules_map_of_reference.htm&type=5)
 
+## Why am I seeing a `DUPLICATES_DETECTED` error when creating records in Salesforce?
+
+This error means Salesforce has an active duplicate rule that detected an existing record matching the one Clay tried to create. The rule fired during the Create Record action and returned an error rather than letting the save proceed.
+
+There are three ways to handle this:
+
+**Option 1: Enable Duplicate Rule Override in Clay**
+
+If your Salesforce duplicate rule is configured to "allow save" (it warns about duplicates rather than hard-blocking them), you can tell Clay to proceed with the save anyway. In your **Create Record** column settings, enable the **Duplicate Rule Override** toggle. Clay will then bypass the duplicate warning and create the record even when Salesforce detects a match.
+
+**Option 2: Look up first, then update instead of create**
+
+Rather than creating a record that already exists, look it up and update it instead:
+
+1.  Add a **Lookup record** column before your Create Record column. Search by a unique identifier such as email address.
+2.  In your **Create record** column, open **Run settings** and add a conditional run that fires only when the lookup returns no result (the ID field is empty). This means only genuinely new records get created.
+3.  Add an **Update record** column with a conditional run that fires only when the lookup returns a result (the ID field is not empty). Set **Record ID** to the ID returned by your lookup column.
+
+This way, new records are created and existing records are updated — without either action running into a duplicate conflict.
+
+**Option 3: Adjust the Salesforce duplicate rule**
+
+On the Salesforce side, modify the duplicate rule to exclude records coming from Clay's integration user. For example, add a condition such as "Current User not equal to \[the Salesforce user Clay authenticates as\]". This prevents the rule from firing when Clay creates records, while still protecting your org from duplicates created by other users.
+
+For details on Clay's Create Record settings, see [Salesforce integration](https://university.clay.com/docs/salesforce-integration-overview). For more on Salesforce duplicate rules, see [Salesforce's documentation](https://help.salesforce.com/s/articleView?id=sales.duplicate_rules_map_of_reference.htm&type=5).
+
 ## How do I add leads or contacts to a Salesforce campaign and update the status of existing campaign members?
 
 A Campaign Member in Salesforce represents the relationship between a lead or contact and a campaign. Each Campaign Member record is tied to either a `LeadId` or a `ContactId` — not both at once. Because leads or contacts might already be members of the campaign, you need a conditional workflow that handles both cases — adding new members and updating the status of existing ones.
