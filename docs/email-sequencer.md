@@ -171,7 +171,7 @@ Several factors work together to pace delivery over multiple days rather than se
 
 -   **Daily send caps**: Each sender account has a configurable daily sending limit. Once an account reaches that limit, it pauses and resumes only when the next sending window opens (typically the next day). If most of your sender accounts are already at their daily limit when new leads are added, those emails won't go out until the following day.
 -   **Sending window**: Your campaign's schedule settings restrict when emails can go out (timezone, start/end times, and days of the week). A narrow window — like 9 AM to 5 PM in one timezone — caps how many emails can be sent per day across all accounts.
--   **Lead overlap across campaigns**: If the same sender accounts are used across multiple active campaigns, all those campaigns share the same daily sending budget. Adding leads to a new campaign doesn't create additional capacity — it competes for the same pool.
+-   **Multiple campaigns sharing sender accounts**: If the same sender accounts are used across multiple active campaigns, all those campaigns share the same daily sending budget. Adding leads to a new campaign doesn't create additional capacity — it competes for the same pool.
 
 **To speed up delivery, you can:**
 
