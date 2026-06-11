@@ -139,7 +139,7 @@ If your AI column cells stop returning results unexpectedly — with no specific
 
 **Before troubleshooting your column setup, check [status.clay.com](https://status.clay.com) for any active incidents.** Clay service incidents can temporarily pause enrichment runs, Claygent columns, and other async actions. If an active incident is listed, no configuration changes are needed — cells will resume running once the incident resolves.
 
-After the incident clears, rows that were skipped during the outage will not automatically re-run. To reprocess them: click the column header, hover over **Run column**, and select **Force** to trigger a run on all rows.
+Once the incident resolves, use **Force** run to reprocess any rows that may not have completed during the outage: click the column header, hover over **Run column**, and select **Force**.
 
 If the status page shows no active incidents and cells are still not returning results, proceed to the other troubleshooting entries below for your specific error or symptom.
 
