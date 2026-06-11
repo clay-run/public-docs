@@ -163,6 +163,22 @@ To increase your total daily sending capacity:
 
 Keep in mind that sending high volumes of cold email from a single inbox puts your domain at risk. Starting near the default (20 emails/day) and scaling by adding accounts rather than increasing individual limits is safer for deliverability.
 
+### Why are my emails queued up but not sending yet?
+
+Several factors work together to pace delivery over multiple days rather than sending all at once:
+
+-   **Daily send caps**: Each sender account has a configurable daily sending limit. Once an account reaches that limit, it pauses and resumes only when the next sending window opens (typically the next day). If most of your sender accounts are already at their daily limit when new leads are added, those emails won't go out until the following day.
+-   **Sending window**: Your campaign's schedule settings restrict when emails can go out (timezone, start/end times, and days of the week). A narrow window — like 9 AM to 5 PM in one timezone — caps how many emails can be sent per day across all accounts.
+-   **Lead overlap across campaigns**: If the same sender accounts are used across multiple active campaigns, all those campaigns share the same daily sending budget. Adding leads to a new campaign doesn't create additional capacity — it competes for the same pool.
+
+**To speed up delivery, you can:**
+
+-   **Increase the send limit on existing accounts** — open the campaign's `Sender setup`, click the three-dot (⋯) menu next to the account, and select `Update send limit`. Keep in mind that raising individual limits aggressively can hurt deliverability; adding more accounts is generally safer for long-term inbox health.
+-   **Add more sender accounts** — each additional account has its own independent daily budget.
+-   **Widen your sending window** — a broader time range gives more hours per day for sends to go out.
+
+If all your sender accounts have hit their daily limit, the campaign resumes automatically when the next sending window opens.
+
 ### My "Sync leads to campaign" column is showing a warning. What does it mean?
 
 This usually means the Clay table that the column points to was deleted. Hover over the warning icon to confirm — the error reads *"Destination table was deleted. Please either restore that table from the trash, or create a new Send table data column."*
