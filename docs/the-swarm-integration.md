@@ -21,6 +21,8 @@ The Swarm maps relationships across three key dimensions:
 -   **Academic Connections**: Discovers alumni relationships from the same schools and graduating classes
 -   **Investment Networks**: Analyzes connections through shared investors and portfolio companies
 
+**Note on investment network connections:** When The Swarm surfaces a connection through an investment path, the intermediary shown may be a VC firm, PE fund, or other investor entity — not a company where either person worked. This is expected behavior: The Swarm links the target person (who works at a company in that investor's portfolio) to someone in your network through their shared investor relationship. Because investment-based paths tend to carry weaker signal than direct colleague or alumni connections, you can use Clay's filter logic on the **Connection Strength Normalized** field to deprioritize or exclude low-scoring connections from your results.
+
 To access these powerful networking capabilities through LinkedIn, you'll need:
 
 -   An active company Swarm account membership.
