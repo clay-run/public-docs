@@ -142,6 +142,6 @@ Each fully enriched record typically costs 6-20 data credits (including company 
 Payment refunds take up to **10 business days** to appear in your account after Clay initiates them. If 10 business days have passed and the refund still hasn't appeared:
 
 1.  Confirm the funds haven't already been credited to your account.
-2.  Contact [Clay support](https://app.clay.com) and share any available transaction details — an Acquirer Reference Number (ARN) is especially helpful for tracing the payment).
+2.  Contact [Clay support](https://app.clay.com) and share any available transaction details — an Acquirer Reference Number (ARN) is especially helpful for tracing the payment.
 
 Clay Data Credit refunds (for enrichment actions that return no data) are applied to your account balance immediately after processing.
