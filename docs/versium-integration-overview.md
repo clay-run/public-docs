@@ -12,7 +12,7 @@ Versium provides data solutions for audience targeting and omnichannel campaigns
 
 ## Versium Overview
 
-Versium provides contact data for platforms like AdRoll, Facebook, Google, and LinkedIn, ensuring compatibility and optimized delivery for advertising campaigns.
+Versium provides contact data for platforms like AdRoll, Facebook, Google, and professional networks, ensuring compatibility and optimized delivery for advertising campaigns.
 
 The integration securely hashes the output data (using SHA256 or MD5) to protect sensitive information while enabling precise audience targeting.
 
@@ -39,7 +39,7 @@ Within Clay, there are two actions you can run with Versium:
 
 ### `Action`: Get additional contact points for advertising audience
 
-This action takes personal or business data and returns hashed, pre-formatted contact points (e.g., email, phone, location) for targeting users on platforms such as Facebook, Google, LinkedIn, and AdRoll.
+This action takes personal or business data and returns hashed, pre-formatted contact points (e.g., email, phone, location) for targeting users on platforms such as Facebook, Google, professional networks, and AdRoll.
 
 #### Action Walkthrough
 
@@ -69,7 +69,7 @@ To run only under specific conditions, use formulas that trigger the action when
 -   **Email**: A valid email address (business or consumer) used to identify the contact.
 -   **First Name**: The individual's first name.
 -   **Last Name**: The individual's last name.
--   **Social URL**: A valid URL to the individual's social media profile (e.g., LinkedIn). Lower match rate compared to other inputs.
+-   **Social URL**: A valid URL to the individual's social media profile. Lower match rate compared to other inputs.
 -   **Company Domain**: The domain of the company associated with the contact (e.g., [example.com](http://example.com)).
 -   **Company Name**: The full name of the company associated with the contact.
 -   **State**: The U.S. state where the individual or company is located (two-letter abbreviation).
@@ -89,7 +89,7 @@ To run only under specific conditions, use formulas that trigger the action when
     -   **Headers**: Email, Phone
     -   **Hashed Field**: SHA256-hashed for all fields
     -   **Max Field Count**: Email: 3, Phone: 3
--   **LinkedIn**
+-   **Professional network**
     -   **Headers**: Email, Fn (First Name), Ln (Last Name), Job Title, Company, Country, Apple IDFA, Google AID
     -   **Hashed Field**: Email (SHA256), others in plain text
     -   **Max Field Count**: Email: 1
