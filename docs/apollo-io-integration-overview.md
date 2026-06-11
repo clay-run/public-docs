@@ -328,20 +328,18 @@ To resolve, provide at least one company identifier alongside the person's name:
 
 ### Hitting Apollo's API rate limits with large row sets
 
-Apollo enforces API rate limits that can cause cells to error when Clay processes a large list quickly. The available workaround depends on which column type you're using.
+Apollo enforces API rate limits that can cause cells to error when Clay processes a large list quickly. Apollo columns do not support a built-in throttle control, so the options below apply to all Apollo column types.
 
-**Enrich Person and Enrich Company columns — use the Custom rate limit setting:**
+**Run rows in manual batches:**
 
-1.  Open the column settings.
-2.  Scroll to the **Custom rate limit** section.
-3.  Set **Request Limit** (the maximum number of API calls allowed in the time window) and **Duration (in ms)** (the length of the window in milliseconds). For example: `Request Limit: 100, Duration: 60000` caps requests to 100 per minute.
+Select a subset of rows and run them in stages to stay below Apollo's per-minute limit:
 
-**Action columns (Add Contact to Sequence, Find or Create Contact, and others) — run rows in manual batches:**
+1.  Select the rows you want to run by clicking their row number checkboxes (Shift-click to extend the selection to a range).
+2.  An **Actions** button appears in the table toolbar — click it and choose **Run [N] rows**.
+3.  Wait approximately 60 seconds, then repeat with the next batch.
 
-Action columns do not have a built-in rate limit control. To stay below Apollo's per-minute cap:
+**Use a waterfall with fallback providers:**
 
-1.  Select a subset of rows (~150–200) by clicking the first row number and Shift-clicking the last.
-2.  Right-click the selection and choose **Run [N] rows**.
-3.  Wait approximately 60 seconds, then repeat for the next batch.
+When Apollo is a step in a waterfall, a rate-limit error leaves the cell result empty. The waterfall automatically advances to the next provider in the sequence, so enrichment continues rather than simply failing. Adding at least one fallback provider after Apollo means rate-limited rows still have a chance to be enriched without any manual intervention.
 
 ## ‍
