@@ -1,13 +1,13 @@
 ---
 title: Audiences (Beta)
 source_url: https://university.clay.com/docs/audiences
-description: "Note: This feature is currently in beta for Enterprise customers."
+description: "Clay Audiences is the unified data layer for your workspace. Currently in beta for Enterprise customers; going GA for Launch, Growth, and Enterprise plans on June 22, 2026."
 last_synced: 2026-04-27T18:09:16.275Z
 ---
 
 # Audiences (Beta)
 
-**Note:** This feature is currently in beta for Enterprise customers.
+**Note:** Audiences is currently in beta for Enterprise customers. Starting June 22, 2026, Audiences will be generally available (GA) for Launch, Growth, and Enterprise plans.
 
 Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
 
