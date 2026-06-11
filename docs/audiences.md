@@ -147,7 +147,7 @@ You can configure one alias field per entity type (one for People, one for Compa
 **Other deduplication behaviors**
 
 -   **Cross-source deduplication** — merge the same person from multiple sources.
--   **Whitespace detection** — when importing from a Find People or Find Companies search, records that already exist in All People are automatically excluded from the merge. The draft shows a banner with the count of excluded records ("X records from this search are already in the All People list"), and clicking **All people** adds only the net-new contacts.
+-   **Whitespace detection** — when importing from a Find People or Find Companies search, or saving results from a Clay table to your Audience, records that already exist in All People or All Companies are automatically excluded from the merge. The draft shows a banner with the count of excluded records, and clicking **All people** or **All companies** will only add net-new records. For Companies, exclusion matches on Clay's internal company identifier (CPJ ID). Existing Audience records need entity resolution to have completed — records missing a recognized domain or LinkedIn URL may not yet have been assigned a CPJ ID, which can cause them to slip through as apparent duplicates. Ensuring your Companies audience records have accurate domains and LinkedIn URLs helps entity resolution complete and improves deduplication coverage.
 
 Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs — org duplicates carry over as-is.
 
