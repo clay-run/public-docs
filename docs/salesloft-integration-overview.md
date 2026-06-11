@@ -189,3 +189,25 @@ In the Add Person to Cadence column, set the Person input to reference the **Per
 In the Add Person to Cadence column's run settings, add a conditional run so it only executes after Upsert Person has completed successfully. For example, set the condition to run only when the Upsert Person status equals `success`.
 
 Sequencing the two actions this way — Upsert Person first, Add Person to Cadence second — should prevent Add to Cadence from running before the upserted record exists in Salesloft.
+
+## Sending multiple tags to Salesloft
+
+The Tags field in the **Create Person** and **Upsert Person** actions accepts a list of tag values. If you map separate Clay columns to the Tags field individually, their values get combined into a single string — and Salesloft receives that as one tag instead of multiple separate tags.
+
+To send multiple tags as separate entries, combine your tag columns into a single list using a **Formula column**, then map that formula column to the Tags field.
+
+**1. Create a Formula column with your tag values**
+
+Add a Formula column to your Clay table and reference all your tag columns inside square brackets:
+
+`[{{Tag Column 1}}, {{Tag Column 2}}, {{Tag Column 3}}]`
+
+If some rows won't have a value for every tag (for example, a tag that only applies to certain companies), wrap the formula in `_.compact()` to automatically drop any empty values:
+
+`_.compact([{{Tag Column 1}}, {{Tag Column 2}}, {{Tag Column 3}}])`
+
+**2. Map the formula column to Tags**
+
+In your Salesloft **Create Person** or **Upsert Person** action, map the **formula column** to the Tags field instead of the individual tag columns.
+
+Salesloft will then receive each non-empty value in the list as a separate tag.
