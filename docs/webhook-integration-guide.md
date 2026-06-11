@@ -35,7 +35,7 @@ Your table updates instantly with new data, eliminating manual entry. This featu
 | Max payload size | 100 KB per request |
 | Max submissions | 50,000 per webhook source |
 
-**Throughput:** Clay accepts up to 10 incoming HTTP requests per second per workspace. A burst of up to 20 requests is allowed when capacity is available — after a burst, throughput returns to the sustained 10-per-second rate. Each POST counts as one request against this limit, regardless of how many fields or records the payload contains. Exceeding the limit causes records to be dropped — Clay does not queue them. In burst scenarios, Clay may return `200` at the network level while dropping the record internally, because the HTTP response is sent before the rate limiter applies. A `200` response is therefore **not** a guarantee that a row was created if you are sending at or above the rate limit. To avoid data loss when sending in bulk, pace your requests to 10 per second or fewer. Multiple active webhook sources in the same workspace share this limit.
+**Throughput:** Clay accepts up to 10 incoming HTTP requests per second per workspace. A burst of up to 20 requests is allowed when capacity is available — after a burst, throughput returns to the sustained 10-per-second rate. Each POST counts as one request against this limit, regardless of how many fields or records the payload contains. Exceeding the limit returns a `429` error with a `Retry-After: 1` response header — records are dropped and Clay does not queue them. To avoid data loss when sending in bulk, pace your requests to 10 per second or fewer. Multiple active webhook sources in the same workspace share this limit.
 
 **Need a higher throughput limit?** If 10 requests/second is too restrictive for your workflow, contact Clay support to request an increase — rate limits can be adjusted for your workspace on request.
 
@@ -100,9 +100,7 @@ Filters in Clay are display-only — they control which rows appear in the curre
 
 **To check for an active filter:** Look at the table toolbar — when a filter is active, you'll see a number badge on the filter icon and the row count will display as **X/Y rows**, where X is the filtered count and Y is the total. Open the filter panel and click **Clear filters** to remove all active filters and see every row.
 
-If you clear the filters and the expected rows still don't appear, **rate limiting** may be the cause — especially if you sent a burst of requests. Clay accepts up to 10 requests per second per workspace, with a burst allowance of 20 requests. If you exceeded these limits, Clay may have returned `200` at the network level while silently dropping the excess records internally. There is no built-in replay for dropped records — you will need to re-trigger those requests from your source system. See the [Limits](#limits) section for guidance on staying within throughput limits.
-
-If neither filters nor rate limiting explains the missing rows, see [Why aren't any rows arriving in my webhook table?](#why-arent-any-rows-arriving-in-my-webhook-table) for configuration-level troubleshooting.
+If you clear the filters and the expected rows still don't appear, see [Why aren't any rows arriving in my webhook table?](#why-arent-any-rows-arriving-in-my-webhook-table) for configuration-level troubleshooting.
 
 ### Why aren't any rows arriving in my webhook table?
 
