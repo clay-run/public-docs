@@ -95,6 +95,24 @@ If the cell shows no result, click into it to see which providers were tried and
 -   The providers ran but returned results that failed validation. Try a less strict validation strategy, or check the individual provider columns (enable them in waterfall settings) to see what was returned.
 -   Your workspace ran out of credits mid-waterfall. When credit limits are hit, remaining providers in the sequence don't execute — click into the cell to see how far the waterfall got before stopping. See [Actions and data credits](actions-data-credits.md) to add more credits.
 
+### Why do some rows show "Invalid input" with a message about a first or last name?
+
+This error appears when the **Full Name** input contains a value that can't be separated into a distinct first name and last name. Most providers in the Work Email waterfall require at minimum a first and last name — a single-word value, a company name, or a name missing either first or last will cause those providers to return **"Invalid input"**.
+
+**Common causes:**
+
+-   The Full Name column contains a single word with no space (e.g., `"Smith"` instead of `"John Smith"`)
+-   A company name or other non-person text is mapped to the Full Name field
+-   First and last name are stored in separate columns but weren't combined before mapping
+
+**How to fix it:** Map the **Full Name** input to a column that contains a person's complete name with both a first and last name separated by a space (e.g., `"John Smith"`).
+
+If your table stores first and last names in **separate columns**, create a formula column that combines them:
+
+`{{First Name}} + " " + {{Last Name}}`
+
+Then map that formula column to the **Full Name** field in the waterfall inputs.
+
 ### Which email pattern should I use?
 
 The best pattern depends on the companies in your dataset. `first.last@domain.com` is the default because it's the most common format across industries. For more specific datasets, test a small sample (~10 rows) with different patterns to find what performs best before running at scale.
