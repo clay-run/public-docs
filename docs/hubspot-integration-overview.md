@@ -197,7 +197,7 @@ When you use **text with tokens** to map a dynamic Clay column value to a HubSpo
 
 **Mapping enriched industry values to a dropdown**
 
-Clay's Native Company Enrich aggregates industry data from multiple underlying providers (Clearbit, LinkedIn, Apollo, Owler, HG Insights, and others), each using its own taxonomy. Because the exact industry string returned varies by provider and per row, there is no single fixed list of values. Before pushing to a HubSpot dropdown, add a **Use AI** or Formula column to normalize the raw enriched value to one of your HubSpot dropdown's internal option names. For example, a Use AI column can classify an enriched industry string into one of your defined dropdown option names, and a Formula column can apply `.toUpperCase()` to ensure the casing matches HubSpot's expected format.
+Clay's Native Company Enrich aggregates industry data from multiple underlying providers (Clearbit, Apollo, Owler, HG Insights, and others), each using its own taxonomy. Because the exact industry string returned varies by provider and per row, there is no single fixed list of values. Before pushing to a HubSpot dropdown, add a **Use AI** or Formula column to normalize the raw enriched value to one of your HubSpot dropdown's internal option names. For example, a Use AI column can classify an enriched industry string into one of your defined dropdown option names, and a Formula column can apply `.toUpperCase()` to ensure the casing matches HubSpot's expected format.
 
 If your use case requires storing free-form industry values that don't map to a fixed set of options, consider using a **plain text property** in HubSpot instead.
 
