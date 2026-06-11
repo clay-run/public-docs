@@ -27,7 +27,7 @@ This tracking provides insights into how visitors engage with your content and h
         -   We recommend installing the tracking snippet before the closing `</body>` tag on **all pages** of your website to collect comprehensive data. This snippet loads tracking scripts asynchronously, ensuring it won't affect your page loading time.
     -   **Installing via** [**Google Tag Manager**](https://support.google.com/tagmanager/answer/6107167#CustomHTML)**:**
 
-        -   _Note: While this method works, we recommend installing directly as ad blockers often disable Tag Manager._
+        -   _Note: While this method works and many customers use it successfully, we recommend installing directly for best coverage. Many modern browsers include built-in ad blockers that can block GTM tags from loading — visitors with those blockers won't be tracked through GTM at all. As a result, you'll capture less visitor activity than with a direct script installation. The exact impact varies depending on your audience._
 
         1.  Navigate to the `Tags` section in your GTM account.
         2.  Click `New` in the top-left to create a new tag..
