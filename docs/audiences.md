@@ -282,6 +282,24 @@ You can add multiple ad platforms to a single audience sync. After your initial 
 -   You cannot add a platform while a sync is currently in progress — wait for the active sync to complete first.
 -   Google Ads is only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience uses Clay's company/people search (CPJ) data, Google Ads will not be available to add.
 
+**Enhanced Matching (Beta)**
+
+Enhanced Matching improves ad platform match rates by looking up hashed personal email addresses for your contacts via Clay's provider network and sending up to three per record to LinkedIn or Meta. It is currently in beta — contact your Growth Strategist to enable it for your workspace.
+
+When setting up an Audiences → Ads sync, the **Map** step includes an Enhanced Matching panel where you choose a tier:
+
+| Tier | Cost | Expected match rates |
+|------|------|---------------------|
+| **Premium** | 2 credits/row | LinkedIn ≤ 95%, Meta ≤ 65% |
+| **Standard** | 1 credit/row | LinkedIn ≤ 80%, Meta ≤ 50% |
+| **None** | 0 credits | LinkedIn < 60%, Meta < 30% |
+
+With **Premium** or **Standard**, Clay queries its provider network to find and hash personal emails for each contact automatically. With **None**, you manually map up to three existing hashed email columns from your Audience under **Include emails**.
+
+**Hashed email limit:** All tiers support a maximum of **3 hashed email fields** per contact. If a contact has more than 3 personal email addresses available, only the first three are sent to the ad platform — there is no way to include additional emails beyond this limit.
+
+**LinkedIn behavior:** LinkedIn creates a separate audience entry per hashed email address, so your LinkedIn audience size may exceed your contact count after a sync. This is expected — it means one contact was matched via multiple email addresses.
+
 ## Writing back to your CRM
 
 Audiences supports **bidirectional sync** with Salesforce. Enriched data and segment changes write back automatically.
