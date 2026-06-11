@@ -339,6 +339,27 @@ Assignment rules in Salesforce fire on every record save — not just when a rec
 
 **Note:** If your Update Record column was created before this option was added, the toggle may be off. Check your column settings if you are seeing unexpected owner changes after Clay updates a record.
 
+## Why am I seeing a "Retried but failed: Failed to lock row" error when updating Salesforce records?
+
+This error means Salesforce returned an `UNABLE_TO_LOCK_ROW` response — it could not get exclusive write access to a record because another process was writing to it (or a related record) at the same time.
+
+**Why it happens with Clay**
+
+Clay runs enrichment rows in parallel. When a **Create record**, **Update record**, or **Upsert object** action fires on many rows at once, multiple API calls reach Salesforce simultaneously. If those rows write to records that share a common parent — for example, contacts all mapped to the same placeholder Account — Salesforce locks that parent Account record on each update. When many rows try to lock it simultaneously, some are blocked and the error occurs.
+
+A frequent amplifier is **Declarative Lookup Rollup Summaries (DLRS)** — a Salesforce automation that recalculates a rollup value on a parent record whenever any child record is saved. DLRS holds a write lock on the parent while the rollup runs, which causes concurrent saves on sibling child records to fail with `UNABLE_TO_LOCK_ROW`.
+
+Manual retries succeed because running one cell at a time eliminates the simultaneous lock competition.
+
+**Workarounds**
+
+-   **Enable "Run in batches":** In the action column's **Run settings**, enable **Run in batches**. This sends rows through Salesforce's Composite API in sequential groups rather than all at once, reducing concurrent writes and lowering the chance of lock collisions.
+-   **Add a run delay:** In the action column's **Run settings**, set **Delay run** to **Run after delay** and enter a delay in seconds. This staggers when each row fires, giving Salesforce time for in-flight automations (such as DLRS rollups) to finish before the next write arrives.
+-   **Map records to real parent objects:** If many rows share the same placeholder Account (or other shared parent), map them to their actual parent records instead. Each write then locks a different record, eliminating the collision.
+-   **Ask your Salesforce admin to review automations:** If your org uses DLRS or other triggers on shared parent records, your admin can investigate switching those rollups to scheduled mode — this decouples the rollup write from the original save and eliminates the lock contention entirely.
+
+**Note:** `UNABLE_TO_LOCK_ROW` is a Salesforce-side limitation, not a Clay bug. Clay automatically retries when this error occurs, but surfaces "Retried but failed: Failed to lock row" after exhausting its retry budget.
+
 ## How do I connect to Salesforce as a specific user (such as an integration user) using User Sign In?
 
 When you connect via **User Sign In**, Clay opens an OAuth popup that authenticates using whatever Salesforce session is active in your browser at that moment. If you are already signed in to Salesforce as your personal account, Clay will connect as you — not as the intended integration user.
