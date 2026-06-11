@@ -105,6 +105,19 @@ After a waterfall runs, click the **»** arrow on the waterfall column header to
 
 To add a dedicated column per row showing the winning provider's name, enable **Output name of successful provider?** in the waterfall's output settings.
 
+## Expanding contacts from a people waterfall into a new table
+
+When your waterfall uses contact-finding providers (such as Find Contacts at Company), each provider sub-column stores the full list of returned contacts as an array. The merged waterfall output column shows only the single field you selected during setup (for example, a LinkedIn URL or a name) — it does not contain the full array, so the **Take action on list** button does not appear when you click into the merged column.
+
+To send each contact as its own row to a new table for downstream enrichment (such as Work Email or Enrich Person):
+
+1.  Click the **»** arrow on the waterfall column header to expand the waterfall and reveal each provider's sub-columns.
+2.  Click into a cell in one of the provider sub-columns (for example, a "Find Contacts at Company" sub-column).
+3.  In the **Cell details** panel, click **Take action on list** → **Write each item to new row in other table**.
+4.  Select the destination table.
+
+This opens the **Send Table Data** configuration with the correct list pre-populated. See [Send table data](send-table-data.md) for full details, including the 20-item-per-row limit.
+
 ## Manually overwriting a merge column value
 
 If a waterfall returns an incorrect value in the merge column, you can replace it manually:
