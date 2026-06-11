@@ -91,7 +91,9 @@ No. Functions do not add their own credit or action cost. Credits are consumed b
 
 No. As of General Availability, functions support unlimited rows via passthrough. Functions also include a 10x speedup and fair sharding for parallel execution, so large workloads are distributed efficiently instead of queuing. Prior to GA, Functions had a 50,000-row limit.
 
-**Note:** The function's **history view** displays only the most recent **1,000 rows** at a time. All rows are still fully processed and their results returned to the calling table — the 1,000-row limit applies to what's visible in the live view only, not to what is processed.
+**Note:** The function's live view displays only the most recent **1,000 rows** at a time. This limit is intentional: functions are passthrough tables, and keeping the active row count low ensures there is enough space for new incoming records to be processed. All rows are fully processed and their results returned to the calling table regardless of this limit.
+
+To review rows beyond the 1,000 shown in the live view, click the **Archive** button in the function table's toolbar. The Archive section shows historically processed rows organized by timeline, and you can export the full set as a CSV. If you need to retain more active rows in the live view (for example, for easier auditing of recent runs), open the auto-delete settings for the function table and update the **Number of rows to keep** field — though increasing this limit on high-volume functions can slow processing.
 
 ### What's the difference between an input and a column in a function?
 
@@ -225,25 +227,6 @@ The workaround is to create a **formula column** (Merge columns) inside your fun
 
 To access the object's sub-keys downstream, parse it back with `JSON.parse({{Merged Person Data}})`.
 
-### How do I merge multiple list outputs from different enrichment columns into one combined list?
-
-If your function has several enrichment columns that each return a list of items — for example, multiple Claygent columns that each find contacts in a different industry segment — each column's output lands in the calling table as a separate field. By default, you'd need one **Send row for each item in a list** action per output column.
-
-To reduce this to a single **Send table data** action that covers all columns at once, use formula mode in the list input to concatenate the arrays:
-
-1.  In the calling table, add or open your **Send table data** column.
-2.  Choose **Send row for each item in a list**.
-3.  In the list input field, click the **gear icon** on the right and select **Formula** (instead of "Text with Tokens").
-4.  Enter a formula that concatenates all of the function's list outputs using `.concat()`:
-
-    `({{Run Function}}?.Claygent1?.contacts || []).concat({{Run Function}}?.Claygent2?.contacts || [], {{Run Function}}?.Claygent3?.contacts || [])`
-
-    Replace `Claygent1`, `Claygent2`, etc. with the actual field names your function returns, and replace `contacts` with the sub-field that holds the list items within each output.
-
-5.  Save the column. Clay iterates over the merged list and writes each item as a row in the destination table.
-
-**Why this is needed:** Referencing multiple list-valued outputs side by side without a formula does not merge them — Clay receives separate arrays rather than a single list, and the column will fail at runtime with a list error. The `.concat()` formula produces one unified array from all the sources.
-
 ### What does "Awaiting Callback" mean on a function column?
 
 When you call a function from a table, that column shows **Awaiting Callback** while the calling table waits for the function to finish processing and return results. The status resolves once the function's **"Send data back"** column runs successfully and sends results back.
@@ -290,6 +273,8 @@ You can test your function changes against real-world inputs by debugging select
 This is especially useful when you want to test edge cases or troubleshoot specific inputs that previously failed or produced unexpected results.
 
 ### How do I make a function input optional?
+
+When you create a function — including from a table that contains a Claygent step — all inputs default to required. This happens regardless of how the inputs are configured inside the source Claygent; the required/optional setting lives at the function level and must be set independently.
 
 Each function input has a **Required input** setting. When this is enabled and no value is provided for that input on a given row, the row will not run — you'll see a "Missing required inputs" error on that cell.
 
