@@ -43,6 +43,7 @@ Here are examples of formulas you can create with the formula generator:
 4.  Split {{city}} by comma, keep everything before the first comma, remove "Area" if present, then add quotes
 5.  Extract the first word from {{Column\_1}}, combine with {{Column\_2}}, then remove all non-letter characters
 6.  Calculate the number of days between {{Created Date}} and {{Closed Date}}
+7.  Check if any of the words ["Acme Corp", "Globex", "Initech"] appear in {{Call Notes}} and return the matching names as a comma-separated list
 
 ## How Clay formulas work
 
@@ -64,6 +65,16 @@ Clay formulas are powered by **Clayscript**, a JavaScript-based language that ev
 Yes! When editing a formula, you'll see the option to `Save and don't run enrichments`.
 
 Clicking this prevents your formula from running on any enrichment columns that would cost credits. These columns will appear greyed out to indicate they're out of date.
+
+### **Can I use formula columns for text matching and string operations without consuming credits?**
+
+Yes. Formula columns run JavaScript and **do not consume data credits** — they run row-by-row at no per-row cost. This makes them the right tool for deterministic text operations that don't need AI: checking whether a field contains a keyword, matching a value against a predefined list, applying regex patterns, or normalizing text.
+
+For example, to check whether any competitor name from a known list appears in a call transcript, describe your intent in the formula generator:
+
+> Check if any of the words ["CompetitorA", "CompetitorB", "CompetitorC"] appear in {{Call Notes}} and return matching names as a comma-separated list
+
+The formula generator will produce a JavaScript expression that performs the match row-by-row without any credit cost, regardless of how many rows your table has. For a full list of features that don't consume credits, see [Actions and data credits](actions-data-credits.md).
 
 ### **How do I use today's date in a formula?**
 
