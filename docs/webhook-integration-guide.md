@@ -135,3 +135,11 @@ If a row appears in your table, the issue is in your original request's formatti
 There is no customer-facing search to look up a Clay table by its webhook URL. If you have a webhook URL from an external system and need to identify which Clay table it's connected to, contact Clay support with the URL — the team can look it up on your behalf.
 
 **Tip:** To avoid this situation in the future, give each webhook table a descriptive name when you create it (for example, "HubSpot MQL ingest" or "Salesforce lead flow"). Since every table generates a unique webhook URL, a clear name makes it easy to match a URL back to the right table later.
+
+### What happens to my webhook URL if I duplicate a table?
+
+When you duplicate a table that has a webhook source, Clay generates a **brand new, unique webhook URL** for the duplicate. The original table's URL continues working as before — it is not affected by the duplication.
+
+Because the duplicate has a different URL, any external system currently sending data to the original table will not automatically send to the new table. To start receiving data in the duplicate, update your sending system (for example, Zapier, Make, a custom script, or another tool) to POST to the new URL.
+
+To find the new webhook URL: open the duplicated table, click the webhook source column, and copy the URL shown there.
