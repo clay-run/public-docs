@@ -35,7 +35,7 @@ Your table updates instantly with new data, eliminating manual entry. This featu
 | Max payload size | 100 KB per request |
 | Max submissions | 50,000 per webhook source |
 
-**Throughput:** Clay accepts up to 10 incoming HTTP requests per second per workspace. A burst of up to 20 requests is allowed when capacity is available — after a burst, throughput returns to the sustained 10-per-second rate. Each POST counts as one request against this limit, regardless of how many fields or records the payload contains. Exceeding the limit returns a `429` error and records are dropped — Clay does not queue them. To avoid data loss when sending in bulk, pace your requests to 10 per second or fewer. Multiple active webhook sources in the same workspace share this limit.
+**Throughput:** Clay accepts up to 10 incoming HTTP requests per second per workspace. A burst of up to 20 requests is allowed when capacity is available — after a burst, throughput returns to the sustained 10-per-second rate. Each POST counts as one request against this limit, regardless of how many fields or records the payload contains. Exceeding the limit returns a `429` error with a `Retry-After: 1` response header — records are dropped and Clay does not queue them. To avoid data loss when sending in bulk, pace your requests to 10 per second or fewer. Multiple active webhook sources in the same workspace share this limit.
 
 **Need a higher throughput limit?** If 10 requests/second is too restrictive for your workflow, contact Clay support to request an increase — rate limits can be adjusted for your workspace on request.
 
@@ -102,6 +102,30 @@ Filters in Clay are display-only — they control which rows appear in the curre
 
 If you clear the filters and the expected rows still don't appear, see [Why aren't any rows arriving in my webhook table?](#why-arent-any-rows-arriving-in-my-webhook-table) for configuration-level troubleshooting.
 
+### Rows are arriving but the column data isn't populated
+
+If your webhook is creating new rows but the properties you're sending (email, LinkedIn URL, or other fields) aren't showing up as column data, the issue is usually how the request body is formatted.
+
+**1. The body must be valid JSON with `Content-Type: application/json`** — Clay creates table columns from the keys in a JSON request body. For this to work, two things must be true: the body must be a valid JSON object, and the `Content-Type: application/json` header must be set. The JSON keys you use become the column names in your Clay table:
+
+```json
+{"email": "jane@example.com", "linkedin_url": "https://linkedin.com/in/jane"}
+```
+
+Key-value pair notation (such as `key1=value1`) is not valid JSON. Wrap all fields in curly braces `{}` with string keys and values separated by colons.
+
+**2. Don't use Query Parameters for body data** — Query parameters (appended to the URL as `?key=value`) are separate from the request body and are not mapped to column data. Put your property data in the request body, not in the Query Parameters section.
+
+**Quick test** — send a minimal payload to confirm the webhook is parsing correctly:
+
+```
+curl -X POST YOUR_CLAY_WEBHOOK_URL \
+  -H "Content-Type: application/json" \
+  -d '{"test": "hello"}'
+```
+
+If a row appears with a `test` column set to `"hello"`, your webhook is working and the issue is in how your external tool is formatting the request.
+
 ### Why aren't any rows arriving in my webhook table?
 
 If your webhook isn't creating rows — even on a brand-new webhook that has never received a submission — check these common causes:
@@ -133,6 +157,14 @@ If a row appears in your table, the issue is in your original request's formatti
 There is no customer-facing search to look up a Clay table by its webhook URL. If you have a webhook URL from an external system and need to identify which Clay table it's connected to, contact Clay support with the URL — the team can look it up on your behalf.
 
 **Tip:** To avoid this situation in the future, give each webhook table a descriptive name when you create it (for example, "HubSpot MQL ingest" or "Salesforce lead flow"). Since every table generates a unique webhook URL, a clear name makes it easy to match a URL back to the right table later.
+
+### What happens to my webhook URL if I duplicate a table?
+
+When you duplicate a table that has a webhook source, Clay generates a **brand new, unique webhook URL** for the duplicate. The original table's URL continues working as before — it is not affected by the duplication.
+
+Because the duplicate has a different URL, any external system currently sending data to the original table will not automatically send to the new table. To start receiving data in the duplicate, update your sending system (for example, Zapier, Make, a custom script, or another tool) to POST to the new URL.
+
+To find the new webhook URL: open the duplicated table, click the webhook source column, and copy the URL shown there.
 
 ### Does Clay prevent the same webhook record from being processed more than once?
 
