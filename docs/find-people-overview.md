@@ -122,7 +122,7 @@ To build a table of people who liked, commented on, or shared a specific post, u
 2.  Search for `Get interactions with professional posts` and select it.
 3.  Provide the post URL — either as a manual entry or by linking to a column in an existing Clay table.
 
-**URL format requirement:** This source only accepts `activity` and `ugcPost` type post URLs. Share URLs — those containing `-share-` in the path — are not valid and return an **"Invalid LinkedIn post URL(s)"** error.
+**URL format requirement:** This source only accepts `activity` and `ugcPost` type post URLs. Share URLs — those containing `-share-` in the path — are not valid and return an invalid-URL error.
 
 -   **Valid (activity):** `https://www.linkedin.com/posts/username-activity-7212099008951975937-xxxx`
 -   **Valid (ugcPost):** `https://www.linkedin.com/feed/update/urn:li:ugcPost:7264751670859911168`
