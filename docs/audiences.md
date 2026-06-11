@@ -42,23 +42,24 @@ You can import data from:
     -   If you don't see an SFDC integration listed, contact your Growth Strategist.
 2.  Select `People` at the top of the sync panel.
 3.  Enable the `Import` toggle.
-4.  Leave `Export Sync` and `Create new Salesforce records` off for now.
-5.  Add any SFDC fields you frequently use or want to segment by — only fields included here will appear as columns and filter options in your Audience.
+4.  Enable the `Import` toggle.
+5.  Leave `Export Sync` and `Create new Salesforce records` off for now.
+6.  Add any SFDC fields you frequently use or want to segment by — only fields included here will appear as columns and filter options in your Audience.
     -   You can add more fields later. See [A Salesforce field isn't appearing in my audience filters](#a-salesforce-field-isnt-appearing-in-my-audience-filters--how-do-i-add-it) in the FAQs below.
-6.  Name the corresponding Clay fields — these become the column names in Audiences.
-7.  Select `Companies` at the top and repeat steps 3–6 for accounts.
-8.  Select `Leads` at the top of the sync panel.
-9.  Enable the `Import` toggle.
-10.  Add any Lead fields you want to filter or segment by — common fields include `Lead Status`, `Lead Source`, `Title`, and `Company`.
+7.  Name the corresponding Clay fields — these become the column names in Audiences.
+8.  Select `Companies` at the top and repeat steps 3–6 for accounts.
+9.  Select `Leads` at the top of the sync panel.
+10.  Enable the `Import` toggle.
+11.  Add any Lead fields you want to filter or segment by — common fields include `Lead Status`, `Lead Source`, `Title`, and `Company`.
      -   Lead records are automatically merged with matching Contact records into a single person record in your People audience. Data from both sources is combined, and duplicates across Salesforce Leads, Contacts, and other sources count as one person.
      -   After syncing, you can filter your People audience by **sync status** (whether a Lead record has been imported from Salesforce) and **record conversion status** (whether the Lead has been converted to a Contact in Salesforce).
-11.  Name the corresponding Clay fields.
-12.  Select `Opportunities` at the top of the sync panel.
-13.  Enable the `Import` toggle.
-14.  Add any Opportunity fields you want to filter or segment by — common fields include `Stage`, `Amount`, `Close Date`, and `Owner`.
+12.  Name the corresponding Clay fields.
+13.  Select `Opportunities` at the top of the sync panel.
+14.  Enable the `Import` toggle.
+15.  Add any Opportunity fields you want to filter or segment by — common fields include `Stage`, `Amount`, `Close Date`, and `Owner`.
      -   Opportunity data is associated with your Companies records and becomes available as a filter in any Companies audience.
-15.  Name the corresponding Clay fields.
-16.  Click `Save and Preview`, then `Confirm`.
+16.  Name the corresponding Clay fields.
+17.  Click `Save and Preview`, then `Confirm`.
 
 **Sync timing and behavior**
 
@@ -147,7 +148,7 @@ You can configure one alias field per entity type (one for People, one for Compa
 **Other deduplication behaviors**
 
 -   **Cross-source deduplication** — merge the same person from multiple sources.
--   **Whitespace detection** — when importing from a Find People or Find Companies search, records that already exist in All People are automatically excluded from the merge. The draft shows a banner with the count of excluded records ("X records from this search are already in the All People list"), and clicking **All people** adds only the net-new contacts.
+-   **Whitespace detection** — when importing from a Find People or Find Companies search, or saving results from a Clay table to your Audience, records that already exist in All People or All Companies are automatically excluded from the merge. The draft shows a banner with the count of excluded records, and clicking **All people** or **All companies** will only add net-new records. For Companies, exclusion matches on Clay's internal company identifier (CPJ ID). Existing Audience records need entity resolution to have completed — records missing a recognized domain or professional network URL may not yet have been assigned a CPJ ID, which can cause them to slip through as apparent duplicates. Ensuring your Companies audience records have accurate domains and professional network URLs helps entity resolution complete and improves deduplication coverage.
 
 Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs — org duplicates carry over as-is.
 
