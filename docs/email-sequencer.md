@@ -111,6 +111,8 @@ In the Campaigns homepage, you can access the `Global inbox` which centralizes r
 
 Check out the `Email accounts` tab to manage your fleet of sender accounts and `Global blocklist` to add or remove entries.
 
+To duplicate a campaign — for example, to reuse your message sequence and settings for a new persona or messaging variant — open the campaign you want to copy and click its name in the breadcrumb at the top. Select **Duplicate campaign** from the dropdown. Clay creates a new draft campaign named "<original name> (copy)" with the same message sequence, settings, and AI context, then opens it immediately for editing.
+
 ## Update sender signatures
 
 You can add or update email signatures for any connected sender account.
