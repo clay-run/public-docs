@@ -201,6 +201,26 @@ Clay's Native Company Enrich aggregates industry data from multiple underlying p
 
 If your use case requires storing free-form industry values that don't map to a fixed set of options, consider using a **plain text property** in HubSpot instead.
 
+### How do I push multiple values to a HubSpot multiple checkboxes field?
+
+HubSpot's API requires multiple checkbox values to be passed as a single **semicolon-separated string** — not a comma-separated string and not a JSON array. Clay passes your field value directly to HubSpot's API as-is, so if your Clay column contains `Michelin2026,Lekker500` (comma-separated), HubSpot treats the entire string as one value, fails to match it against the allowed options, and returns a `property values were not valid` error.
+
+**To set multiple checkbox values:** Format the field value in your Clay column as a semicolon-separated string with no spaces around the semicolons. For example, to select both `Michelin2026` and `Lekker500`:
+
+```
+Michelin2026;Lekker500
+```
+
+If you are building the value from multiple Clay columns, use a Formula column to join them with a semicolon. Map the resulting column to the HubSpot field.
+
+**To append values to what is already set in HubSpot** (without clearing existing selections), prefix the string with a leading semicolon:
+
+```
+;Lekker500
+```
+
+Each value must exactly match the internal option name used in HubSpot. To confirm the correct internal names, run Clay's **Lookup object** action on a record where the field is already populated — the raw values returned are what HubSpot's API expects.
+
 ### Why isn't my HubSpot Update Object populating a property that already exists in HubSpot?
 
 If a property exists in HubSpot but doesn't get updated when you run the Update Object action, two things are worth checking:
