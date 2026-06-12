@@ -135,7 +135,7 @@ Deduplication is based on each company's unique profile ID, not your filter conf
 
 ### What are the available AI Subindustry filter values?
 
-The **Industries** filter (the standard one at the top of the filter panel) and the **`Industry` output column** use LinkedIn's industry taxonomy — the same industry value a company has set on its LinkedIn profile. Clay recognizes approximately 457 common values (examples: *Software Development, Financial Services, Insurance, Healthcare and Life Sciences, Information Technology and Services, Marketing and Advertising, Non-profit Organization Management*). Because these come from LinkedIn, companies can technically have any value LinkedIn supports, so the list is open-ended rather than a fixed picklist.
+The **Industries** filter (the standard one at the top of the filter panel) and the **`Industry` output column** use a standardized industry taxonomy drawn from company profile data. Clay recognizes approximately 457 common values (examples: *Software Development, Financial Services, Insurance, Healthcare and Life Sciences, Information Technology and Services, Marketing and Advertising, Non-profit Organization Management*). Because these come from what companies set on their professional profiles, the list is open-ended rather than a fixed picklist.
 
 The **AI Subindustries filter** (under **AI filters**) is different. Clay generates a subindustry classification for each company using its own AI model, and this uses a fixed taxonomy of **110 categories**. These are the only values the filter accepts.
 
