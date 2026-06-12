@@ -14,6 +14,8 @@ The `Find Companies` source lets you build targeted lists of companies using fil
 
 It's perfect for creating sales prospect lists, identifying competitors, and conducting market research.
 
+**Looking for similarity-based discovery?** You can switch to **Find lookalikes** mode using the mode dropdown in the filter panel header. See [Clay Lookalikes](clay-lookalikes.md) for documentation on the lookalike source and enrichments.
+
 ## **Creating a table with Find Companies**
 
 1.  In a workbook, click `+ Add` at the bottom.
@@ -30,7 +32,7 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
     -   **Keywords** to include or exclude
         -   **Exact phrase matching:** Wrap multi-word terms in single or double quotes to search for that exact phrase. For example, searching for "Google Cloud" finds companies with "Google Cloud" in their description — not just companies that mention Google and cloud separately. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are stripped out even with quoted phrases.
     -   **Semantic company description** — Enter a free-text description to help rank results based on how closely they match your ideal company profile (e.g., "B2B fintech company selling to mid-market banks").
-    -   **Location** — Filter by country, and separately by city or state. Both support include and exclude.
+    -   **Location** — Filter by company office location. Sub-filters: **Country**, **City**, **State or province**, **Region**, and **Postal code**. Use **Is Headquarters** to restrict results to companies whose primary office is in the specified location. All sub-filters support include and exclude.
     -   **Estimated employee count** — Filter by a numeric count of estimated employees (enter a minimum and/or maximum). This is a separate field from **Company size** — see the [FAQ below](#why-do-company-sizes-and-estimated-employee-count-return-different-results-for-the-same-range) for why the same numeric range can surface different companies.
     -   **AI filters** — Clay-generated attributes applied to company profiles:
         -   **Industries** and **Subindustries** (include or exclude)
@@ -67,13 +69,25 @@ Each result includes one or more **Structured Location** entries in the cell det
 
 ## FAQs
 
+### When should I use Find Companies vs a custom table?
+
+**Find Companies** is a Clay-native sourcing flow that discovers companies from Clay's proprietary dataset based on filters you set — industry, size, location, revenue, and more. When you import results, Clay creates a **Company table** (shown with a building icon in your workbook navigation). Use it when you want to prospect for net-new companies and don't have a list yet.
+
+A **custom table** (shown with the table icon in your workbook) is a blank canvas for data you already have — for example, a list of companies from your CRM, a CSV export, or a manually curated set of records. Create one by clicking `+ Create new` and selecting `Blank table`, or by [importing a CSV](csv-import-overview.md).
+
+**In short:** Choose **Find Companies** when you need to discover new companies from scratch; choose a **custom table** (or CSV import) when you're starting from a list you already own.
+
+**Keeping related tables in the same workbook**
+
+In Clay, a workbook is a container for related tables. It's common to keep linked tables together in one workbook — for example, a Find Companies table and the Find People table created from it — so the workflow is easy to navigate and share as a template. Create a new workbook when you're working on a distinct project or campaign (for example, separate workbooks for different clients or different outbound plays).
+
 ### Can I filter by job title or role in company search?
 
 No — `Find Companies` only filters by company-level attributes (industry, size, location, revenue, etc.). There is no job title filter in company search. Job title is a person-level attribute available only in People search.
 
 **To find people with specific roles (e.g., CEO, Founder, Owner) at companies in your list, you have two options:**
 
--   **From your company table** — Click **Tools** (or **Actions**) → **Find People at These Companies**. Under **Job title keywords**, enter your target titles comma-separated (e.g., `CEO, Founder, Owner, Co-founder`). This returns only those roles at the companies already in your table.
+-   **From your company table** — Click **Tools** → **Find People at These Companies**. Under **Job title keywords**, enter your target titles comma-separated (e.g., `CEO, Founder, Owner, Co-founder`). This returns only those roles at the companies already in your table.
 -   **Start a fresh People search** — Click `+ Add` at the bottom of your workbook, search for `Find People`, and use the **Job title** filter alongside company attributes (industry, size, location).
 
 For more detail on both workflows, see [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md).
@@ -108,3 +122,13 @@ These two filters measure different things:
 -   **Estimated employee count** is a numeric min/max filter based on a separately computed count of estimated employees derived from profile data.
 
 Because the two values are sourced independently, a company whose reported size band is "51–200" may have a computed employee count of 250 — or vice versa. Filtering on one versus the other can return a different set of companies even when the numbers appear to overlap.
+
+### Re-running Find Companies shows far fewer results than my original run
+
+This is expected behavior. The Find Companies source deduplicates new results against rows already in your table — re-running returns only the net-new companies not yet present in the table.
+
+**Example:** If your table already has 29,000 companies from a previous import, re-running with the same filters returns only the companies genuinely new since the last run — for example, 32 new companies. The existing 29,000 remain in your table; they are not replaced or removed.
+
+Deduplication is based on each company's unique profile ID, not your filter configuration. A company already in the table is skipped on re-run regardless of whether your filters changed.
+
+**To re-import the full result set** (for example, when testing): delete the existing rows from your table first, then re-run the source. Once the rows are cleared, the search re-imports all matching companies from scratch.
