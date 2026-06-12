@@ -132,7 +132,7 @@ In natural language, describe what you want to accomplish.
 
 Paste a link to the API's documentation. This helps Sculptor better understand the API's capabilities and improve accuracy.
 
-While helpful, Sculptor can often figure out the configuration without it.
+While helpful, Sculptor can often figure out the configuration without it).
 
 **Step 4: Generate configuration**
 
@@ -507,7 +507,7 @@ Most APIs nest their data within a specific field rather than returning an array
 
 ## IP allowlisting
 
-If your server or firewall requires incoming requests to originate from a known set of IP addresses, you can enable **Use static IP** on HTTP API columns. This routes requests from those columns through Clay's fixed egress IP addresses, which you can add to your server's allow-list.
+If your server, VPN, or firewall requires that outbound requests from Clay originate from a known set of IP addresses — sometimes called **source IPs** or **egress IPs** — you can enable **Use static IP** on the HTTP API column. This is useful when Clay is pushing data to an external endpoint such as a webhook, n8n, or Zapier, and that endpoint or its network restricts access by IP address. Enabling this toggle routes the column's requests through Clay's fixed egress IP addresses, which you can add to your allow-list.
 
 **Availability:** This feature is available for Enterprise customers. Contact your Clay account team or support before enabling — static IP must be activated for your workspace first.
 
