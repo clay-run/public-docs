@@ -133,7 +133,7 @@ This returns a string representing the cell's current state. Possible values inc
 -   **Success**: `"SUCCESS"` (data returned), `"SUCCESS_NO_DATA"` (ran successfully but returned no data), `"SUCCESS_BLOCKED_DATA"`
 -   **In progress**: `"RETRY"` (actively retrying — shown as "Retrying…" in the UI), `"QUEUED"`, `"RUNNING"`, `"RATE_LIMITED"`, `"AWAITING_CALLBACK"`
 -   **Skipped**: `"ERROR_RUN_CONDITION_NOT_MET"` — the column's "Only run if" condition evaluated to false for this row; the enrichment was skipped and no credits were consumed
--   **Error**: `"ERROR"` and error-specific variants such as `"ERROR_TIMEOUT"`, `"ERROR_NUMBER_OF_RETRIES_EXCEEDED"`
+-   **Error**: `"ERROR"` and error-specific variants such as `"ERROR_TIMEOUT"`, `"ERROR_NUMBER_OF_RETRIES_EXCEEDED"`, `"ERROR_ACTION_OUTPUT_DATA_SIZE_LIMIT_EXCEEDED"` (cell size limit exceeded)
 -   `"UNKNOWN"` — the cell has never been processed at all (the table has never run for this row, so no status has been recorded yet)
 
 A few important notes:
