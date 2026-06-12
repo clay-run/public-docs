@@ -1,7 +1,7 @@
 ---
 title: Find People in Clay
 source_url: https://university.clay.com/docs/find-people-overview
-description: Discover relevant contacts and LinkedIn posts using Clay's Find People and Find professional posts sources, then enrich results with work email, mobile phone, and business phone.
+description: Discover relevant contacts and LinkedIn posts using Clay's Find People and Find professional posts sources, then enrich results with work email and mobile phone waterfalls.
 last_synced: 2026-04-26T01:39:58.803Z
 ---
 
@@ -42,7 +42,7 @@ This tool is ideal for building targeted sales prospect lists, identifying poten
 -   **Education:** Search for specific school names.
 -   **Companies:** Find people at specific companies using an existing Clay table or a custom list. By default, this matches people who **currently** work at those companies.
     -   **Locked after creation:** The filter type (Clay table vs. custom list) and which table is linked cannot be changed once the source exists — this is what the "Can only be changed during source creation" tooltip means. The table's row contents are not frozen, however: adding or removing rows from the linked table is reflected each time the source runs. When re-run after new companies are added, the source searches across all companies currently in the table, not just the newly added ones.
-    -   **Run settings:** The source runs **Manually** by default — adding new companies to the linked table does not automatically trigger a new run. To automatically pick up new companies on a recurring basis, click the source column header in your people table, expand **Run settings**, and switch from **Manually** to **On a schedule**. Choose a frequency (Daily is most common) and click **Save schedule**. You can also click **Run now** at any time for an immediate on-demand run.
+    -   **Run settings:** When this source is set up from a company table, Clay automatically adds an **Update People Table** column to the company table. With **Enable Automatic People Search Updates** toggled on (the default), that column fires a full re-run of the Find People search whenever new company rows are added — you don't need to manually trigger a run. The re-run covers all companies currently in the table, not just the newly added rows. To disable this auto-trigger, open the **Update People Table** column and turn off **Enable Automatic People Search Updates**. The source also has its own **Run settings** — **Manually** by default — which you can switch to **On a schedule** for time-based refreshes: click the source column header in your people table, expand **Run settings**, and choose a frequency (Daily is most common), then click **Save schedule**. You can also click **Run now** at any time for an immediate on-demand run.
 -   **Exclude people:** Exclude up to 3 different sets of people from your search using Clay tables, CSVs, or manual lists. You can exclude up to 300,000 people total (100,000 per source). Exclusions require a LinkedIn URL.
 -   **Past experiences:** Enable the **Include past experiences** toggle to extend your company, job title, and experience description keyword filters to also match against a person's past roles — not just their current one.
     -   **Incompatible filters:** This toggle cannot be combined with **Limit per company** or any **Company attributes** filter (company size, company industries, or company description keywords). Selecting them together returns an error.
@@ -66,7 +66,7 @@ Each result includes a **Structured Location** object in the cell details with g
 
 **Note on data freshness:** Find People results come from a periodically refreshed index — not a live LinkedIn lookup at search time. A person's job title or company in the results may not reflect their most recent LinkedIn update. To get current employment data, run **Enrich Person** after importing — this fetches the live profile and returns the most up-to-date job title and company information.
 
-After importing Find People results, use Clay's enrichments to add contact information such as work email and phone numbers.
+After importing Find People results, use Clay's enrichments to add contact information such as work email and mobile phone numbers.
 
 **Work email:** In your table, click `Add enrichment` and select `Work Email`. This pre-built waterfall searches multiple email providers in sequence. For full setup details, including how credits are charged across providers, see [Work Email waterfall](work-email-waterfall.md).
 
@@ -114,3 +114,17 @@ Each row includes the post URL, post text, author name, author LinkedIn URL, aut
 **To get comments, reactions, or shares on a specific post:** Click `Add enrichment`, search for **Get comments on a professional post**, **Get reactions on a professional post**, or **Get shares on a professional post**, and map **Post URL** to the post URL column from your import.
 
 > **Important:** These actions require the original post URL — a URL containing `-activity-` in the path (e.g., `https://www.linkedin.com/posts/clay-hq_...-activity-7212099008951975937-ezPv`). Share URLs containing `-share-` are not valid and return an error. To get the original URL for any post: open the post on LinkedIn, click **•••** (three dots) at the top right of the post, and select **Copy link to post**. If the post is a repost of someone else's content, open the original underlying post first and copy its link.
+
+## Getting people who interacted with a post
+
+To build a table of people who liked, commented on, or shared a specific post, use the **Get interactions with professional posts** source. Each row in the resulting table represents one person who interacted with that post.
+
+**To set up this source:**
+
+1.  In a workbook, click `+ Add`.
+2.  Search for `Get interactions with professional posts` and select it.
+3.  Provide the post URL — either as a manual entry or by linking to a column in an existing Clay table.
+
+**URL format requirement:** This source only accepts `activity` and `ugcPost` type post URLs. Share URLs — those containing `-share-` between the author slug and the post ID — are not valid and return an invalid-URL error. To identify the URL type: valid post URLs contain either `-activity-` or `ugcPost` in the path; share post URLs contain `-share-` and are not accepted.
+
+To get the correct URL: open the post, click **•••** (three dots) at the top right of the post, and choose **Copy link to post**. If the post is a reshare, open the original underlying post first and copy its link from there.
