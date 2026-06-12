@@ -14,7 +14,7 @@ Webhooks enable Clay to automatically receive data from other applications throu
 
 Your table updates instantly with new data, eliminating manual entry. This feature is particularly valuable for real-time updates, such as when adding new leads or modifying records based on external triggers.
 
-**Plan availability:** Webhooks are available on **Explorer**, **Pro**, **Growth**, and **Enterprise** plans. They are not available on Free, Launch, or Starter plans.
+**Plan availability:** Webhooks are available on **Growth** and **Enterprise** plans. Legacy Explorer and Pro plan subscribers also have webhook access — see [Legacy plans](https://www.clay.com/university/guide/legacy-plans) for a full feature comparison.
 
 ## **Creating a table with webhook**
 
