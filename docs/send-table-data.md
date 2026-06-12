@@ -64,9 +64,9 @@ To send data from one table to another:
 
 ### Using `Send row for each item in a list`
 
-Each cell can hold a list of items—like a list of people found at a company. To turn each item in that list into its own row in another table, use `Send row for each item in a list`.
+Each cell can hold a list of items — like a list of people found at a company, or a list of job postings returned by Find Active Job Openings. To turn each item in that list into its own row in another table, use `Send row for each item in a list`.
 
-This is useful for **flattening lists**. For example, if you find multiple people at a company, you can send each person as a separate row in the destination table. **This method always creates a new row for each item.**
+This is useful for **flattening lists**. For example, if you run Find Active Job Openings on a list of companies, each cell may contain multiple job postings — use this method to send each posting as its own row in a destination table, giving you a clean per-role breakdown you can filter and analyze. Similarly, if you find multiple people at a company, you can send each person as a separate row. **This method always creates a new row for each item.**
 
 **Note:** This method sends a maximum of **20 items per row** per run. If the list has more than 20 items, only the first 20 will be sent—there is no setting to increase this limit. For workflows that need to process more than 20 items per row, use [Lookup Multiple Rows](https://university.clay.com/docs/lookup-rows) to query the destination table directly instead.
 
@@ -76,7 +76,7 @@ You can also select additional data to send along with the flattened list, just 
 
 The easiest way to configure `Send row for each item in a list` is to use the **Take action on list** shortcut from the cell details panel:
 
-1.  Click on a cell in the column whose list you want to flatten (for example, a "Find Contacts at Company" result cell).
+1.  Click on a cell in the column whose list you want to flatten (for example, a "Find Active Job Openings" or "Find Contacts at Company" result cell).
 2.  In the Cell details panel, hover over the list section (e.g., "People") to reveal the **Take action on list** button.
 3.  Select **Write each item to new row in other table**.
 
