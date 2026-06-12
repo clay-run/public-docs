@@ -174,6 +174,32 @@ The enrichment will now only fire for rows where the lookup returned at least on
 
 **See also**: [Lookup Rows](lookup-rows.md) — full reference for single-row and multiple-row lookup patterns, including using lookups as suppression gates.
 
+### If "Run empty or out-of-date rows" appears to do nothing
+
+After you add or edit a run condition on an enrichment column, some cells that have not yet processed may appear stuck — clicking **"Run [N] empty or out-of-date rows"** from the column header does nothing (no Confirm Run panel, no spinner, no progress). This can occur even when those cells show as blank in the table. By contrast, opening an individual blank cell and clicking **"Re-run this cell"** works correctly on those same rows.
+
+To bulk-run those rows, use **Force run all [N] rows** from the column dropdown instead:
+
+1. Right-click the column header to open the column menu.
+2. Select **Run column** → **Force run all [N] rows**.
+
+This queues every row in the column regardless of its current state — the same mode used by the individual **"Re-run this cell"** button in the cell details panel.
+
+**Note:** Force run will re-run rows that already have results, not just blank ones. Review the estimated credit cost before confirming.
+
+### Running a column can re-trigger dependent downstream columns
+
+When you run an enrichment column that other enrichment columns depend on, Clay shows a **Confirm Run** panel before starting. This panel lists any downstream action columns that will automatically re-run and their estimated credit cost. If you confirm, those downstream columns will execute and **replace their current results**.
+
+Before confirming a run on an upstream column, check whether any listed downstream columns contain data you want to keep. If so:
+
+-   Temporarily disable **Auto-run** on the downstream columns before running the upstream column.
+-   Or choose **Save and don't run** when saving the upstream column's settings, so no rows are immediately queued and you can run columns individually in a controlled order.
+
+If the Confirm Run panel does not appear when you run a column, that column has no downstream action columns configured to run automatically — running it will not affect other columns.
+
+See [Credit usage](credit-usage.md) for more detail on the run cost breakdown displayed in this panel.
+
 ## See also
 
 [Conditional statements](https://www.clay.com/university/guide/conditional-statements)
