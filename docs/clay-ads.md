@@ -109,6 +109,17 @@ Access control is enforced at the Google Ads account level — the person connec
 
 ## **FAQs**
 
+### **I have a regular Clay table with contacts — why don't I see a LinkedIn or Ads option in the Export panel?**
+
+The table's **Tools → Export** panel and per-row **Actions** menu do not include LinkedIn or Meta as direct destinations. Ad audiences are set up through the **Ads** section in Clay's left sidebar (under Orchestration), not from within a regular table's export panel.
+
+If you have contacts enriched in a regular Clay table and want them in an ad audience, one supported path is to push them to an Audience first using the **Upsert Audiences Record** enrichment action:
+
+1.  In your table, click **Add enrichment** and search for **Upsert Audiences Record**. This pushes your table rows into your Audience — creating a new record if no match exists, or updating an existing one.
+2.  Once your records are in an Audience, open that Audience and click **Send → Sync to ad platforms**, then select LinkedIn or Meta.
+
+For more on this path, see [Audiences (Beta)](https://university.clay.com/docs/audiences).
+
 ### **What platforms are supported?**
 
 Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, and **Google Ads**.
@@ -168,9 +179,9 @@ Personal emails are essential for better match rates because most users sign up 
 
 ### **How does the `Hashed Email for Ads` waterfall work?**
 
-The `Hashed Email for Ads` waterfall uses LinkedIn profile URL as the primary input (some providers also accept work email or other identifiers) to find and return a SHA-256 hashed personal email for each contact. The input is not what gets hashed — it is used only to identify the person and look up their personal email, which is then hashed.
+The `Hashed Email for Ads` waterfall uses professional profile URL as the primary input (some providers also accept work email or other identifiers) to find and return a SHA-256 hashed personal email for each contact. The input is not what gets hashed — it is used only to identify the person and look up their personal email, which is then hashed.
 
-If the waterfall prompts for work email as input, that is normal. One or more providers in the waterfall will use the work email to look up the contact and retrieve their personal email for hashing. Providing work email as input does not cause the work email itself to be hashed, and your match rates on Meta, LinkedIn, and Google Ads are not affected.
+If the waterfall prompts for work email as input, that is normal. One or more providers in the waterfall will use the work email to look up the contact and retrieve their personal email for hashing. Providing work email as input does not cause the work email itself to be hashed, and your match rates are not affected.
 
 The waterfall queries multiple providers and returns a **single hashed email** per contact from the first provider that finds a result.
 
