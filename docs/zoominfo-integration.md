@@ -76,28 +76,3 @@ The ZI0001 error (*"The token provided is invalid. Please provide a valid token 
 **Fix:** Re-run the affected cells. In most cases they succeed immediately on retry.
 
 If ZI0001 persists across multiple cells after retrying, or if you see it consistently on every run, contact Clay support so we can investigate your ZoomInfo connection.
-
-### **How do I call ZoomInfo API endpoints not covered by the native integration, such as looking up records by ZoomInfo ID?**
-
-The native ZoomInfo integration supports two actions: **Enrich Company** (by company name and website) and **Enrich Contact** (by email or name). If you need to call other ZoomInfo API endpoints—for example, to look up records by a ZoomInfo company or contact ID, or to access search functionality not available in those two actions—use Clay's **HTTP API with JWT Authentication** action instead.
-
-This approach uses ZoomInfo's username-and-password authentication, and Clay automatically refreshes the token before it expires, so you won't encounter the hourly 401 errors that occur when managing short-lived tokens manually.
-
-**Setting up ZoomInfo as an HTTP JWT account (one-time per workspace):**
-
-1.  Go to **Settings → Connections**, search for **HTTP API JWT Auth**, and click **+ Add account**.
-2.  Enter the following:
-    -   **Username** — your ZoomInfo username (email address)
-    -   **Password** — your ZoomInfo password
-    -   **JWT Token Endpoint** — `https://api.zoominfo.com/authenticate`
-3.  Name the account (for example, *ZoomInfo JWT*) and click **Save**.
-
-**Configuring the enrichment:**
-
-1.  In your Clay table, click **Add enrichment** and search for **HTTP API with JWT Authentication**.
-2.  Select the ZoomInfo JWT account you just created.
-3.  In the **Location of JWT token in auth response** field, enter `jwt`.
-4.  Leave **Token type** as `Bearer` and **Auth header name** as `Authorization` (both defaults).
-5.  Set the HTTP method, endpoint URL, and request body to match the ZoomInfo API endpoint you want to call. Pass your column values (such as a ZoomInfo ID) as inputs in the request body using [ZoomInfo's API reference](https://docs.zoominfo.com).
-
-**Note:** This setup requires a ZoomInfo subscription with API access enabled. If you see authentication errors, see the [Invalid credentials FAQ](#im-seeing-an-invalid-credentials-error-when-running-zoominfo-enrichments-why) above.
