@@ -82,7 +82,8 @@ To create a new system user token, you first need to create an app:
 10.  Once the system user is created and assets are assigned, select `Generate token`.
      -   Choose the app you created to generate the token.
      -   Select the expiration policy for the token (we recommend `Never expire`).
-     -   Ensure the `ads_management` permission is selected.\n     -   Click `Generate token`.
+     -   Ensure the `ads_management` permission is selected.
+     -   Click `Generate token`.
 11.  Copy the generated token immediately — Meta won't store it, so consider saving it in a secure password vault.
 12.  In Clay, when connecting your Meta account for ad syncs, select `Use system user token` as the authentication method and paste your token.
 
@@ -96,9 +97,9 @@ For more details on Meta system user setup, see [Meta's system user documentatio
 
 ## **FAQs**
 
-### **I have a regular Clay table with contacts — why don't I see a LinkedIn or Ads option in the Export panel?**
+### **I have a regular Clay table with contacts — why don't I see an Ads option in the Export panel?**
 
-The table's **Tools → Export** panel and per-row **Actions** menu do not include LinkedIn or Meta as direct destinations. Ad audiences are set up through the **Ads** section in Clay's left sidebar (under Orchestration), not from within a regular table's export panel.
+The table's **Tools → Export** panel and per-row **Actions** menu do not include ad platforms as direct destinations. Ad audiences are set up through the **Ads** section in Clay's left sidebar (under Orchestration), not from within a regular table's export panel.
 
 If you have contacts enriched in a regular Clay table and want them in an ad audience, one supported path is to push them to an Audience first using the **Upsert Audiences Record** enrichment action:
 
