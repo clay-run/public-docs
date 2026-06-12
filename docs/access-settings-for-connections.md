@@ -112,6 +112,12 @@ Signals follow the same access rules as a single column:
 
 Enrichment columns within bulk enrichment tables (Audiences) and Sculptor/Prospector surfaces follow the same access rules described above for individual columns and waterfalls.
 
+### Sources
+
+When setting up a table source — for example, importing records from a Salesforce report, a HubSpot list view, or another connected provider — the account selector only shows connections the current user is allowed to use. If a connection is set to **Specific people and groups** and the user is not on the allowlist, that connection will not appear in the account selector, and the user will be prompted to add their own account.
+
+To allow all workspace members to use the same connected account as a source, change the connection's access setting to **Anyone in the workspace**.
+
 ## FAQs
 
 **Can admins access every connection in the workspace?**Admins do not, by default, have access to build workflows with every connection in the workspace. All admins can, however, add themselves to any connection in the workspace. Admins are always able to manage and view all connections in the workspace.
