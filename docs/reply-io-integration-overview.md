@@ -59,7 +59,7 @@ Use this action to create a new contact in Reply.io. If the contact already exis
 -   **Time zone ID** (Optional): A Microsoft timezone ID for the contact (for example, "Eastern Standard Time").
 -   **Title** (Optional): The contact's job title or position.
 -   **Phone number** (Optional): The contact's phone number.
--   **Personal LinkedIn URL** (Optional): A link to the contact's LinkedIn profile.
+-   **Personal profile URL** (Optional): A link to the contact's professional networking profile.
 -   **Custom fields** (Optional): Any additional custom fields to set for the contact. Only fields that have been defined in your Reply.io account will be updated.
 
 **Tip:** To push contacts to a Reply.io campaign with data beyond just email — such as job title or custom fields — use a two-step workflow: add a **Create Contact** column first to set those fields in Reply.io, then add a **Push Contact to Campaign** column to enroll the contact in the sequence.
