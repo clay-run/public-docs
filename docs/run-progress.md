@@ -62,7 +62,8 @@ The table-level progress bar, shown at the bottom right of a table, provides a s
 -   The percentage of **all enrichment cells** in the table that have run.
     -   _Note: Includes non-visible rows, but not non-visible columns._
 -   The percentage of rows by status (same definitions as at the column level).
--   Whether any column in the table is currently running.\n-   **Run summary panel** — Hovering over the panel reveals:
+-   Whether any column in the table is currently running.
+-   **Run summary panel** — Hovering over the panel reveals:
     -   A detailed breakdown of status percentages.
     -   Table-level auto-run and scheduled run settings.
     -   A toggle to enable/disable column-level run status data.
@@ -128,6 +129,7 @@ Cells show a **Queued** status when they are waiting to be processed. This is no
 If cells remain Queued for an extended period, common causes include:
 
 -   **High concurrency in progress** — Clay runs many rows at once; if a large number are queued simultaneously, later rows wait while earlier ones complete. The queue will clear on its own.
+-   **Trial and free plan enrichment limits** — On trial and free plans, enrichments triggered manually (via **Run column** or right-click → **Run [N] rows**) are capped at **50 per hour**, compared to 5,000 per hour on paid plans. If you submit a large batch of rows (for example via a webhook source) while the table is in Manual mode, triggering enrichments by hand can exhaust this cap before all rows finish. To process incoming rows without hitting the per-plan limit, enable [auto-run](table-management-settings.md): enrichments triggered automatically by new data run through Clay's background queue, which is not subject to the hourly cap.
 -   **External API rate limits** — Integrations such as OpenAI or HubSpot enforce per-minute request limits. Clay respects these automatically; the queue resumes once the rate-limit window resets.
 -   **API quota exhausted** — If you've hit a quota ceiling (e.g., OpenAI, Google), new runs are blocked until the quota resets or is increased in the provider's dashboard.
 -   **Auto-run settings** — If auto-run is enabled and triggering repeated re-runs, rows may accumulate in the queue unexpectedly. See [Table management settings](table-management-settings.md) for how to adjust auto-run and scheduled run behavior.
