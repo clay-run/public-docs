@@ -271,7 +271,7 @@ To remove a member from your workspace:
 
 -   Go to `Settings` > `Team`.
 -   Find the member you wish to remove.
--   Click the `…` (three-dot) menu next to their name.
+-   Click the `…` (three-dot) menu at the end of their row.
 -   Select `Remove member`.
 -   Confirm the removal in the dialog that appears.
 
@@ -291,7 +291,7 @@ If a team member hasn't accepted their invite yet, they appear in `Settings` > `
 
 -   Go to `Settings` > `Team`.
 -   Find the pending entry (shown with a **Pending** badge).
--   Click the `…` (three-dot) menu next to their name.
+-   Click the `…` (three-dot) menu at the end of their row.
 -   Select `Remove member`.
 
 Once removed, you can re-invite the same email address if needed. Only workspace admins can cancel pending invites.
