@@ -161,6 +161,18 @@ To create a new audience:
 2.  Click **New audience** in the top-right corner of the list, or click the `+` next to `My Audiences` in the sidebar.
 3.  Select `Criteria` and then add a `Filter` or `Filter group`.
 
+### Building AND and OR logic
+
+By default, all filters in a segment are combined with **AND** — a record must match every condition to be included. To mix AND and OR (for example, `Filter 1 AND Filter 2 AND (Filter 3 OR Filter 4)`), use a filter group:
+
+1.  Click **+ Filter group** to add a sub-group of conditions.
+2.  Inside the group, add at least two filters using **+ Filter**.
+3.  Once you have added a second filter, an **"and"** button appears between the filters inside the group — click it to toggle to **"or"**. The entire group then matches any record that satisfies at least one of its conditions.
+
+The filters outside the group remain combined with AND as usual.
+
+**Example:** To build `Employees > 100 AND Country = US AND (Field A OR Field B)`, add the first two filters at the top level, then click **+ Filter group**, add Field A and Field B inside it, and click the **"and"** button between them to switch to **"or"**.
+
 ### Filter operators by field type
 
 The operators available when building a filter depend on the field's data type, shown by the icon next to the field name:
@@ -326,6 +338,19 @@ The `+ Add field` option is available in the `Update Audiences Record` column ma
 Once created, the field is immediately available as a filter in any segment and as a target for `Update Audiences Record` or `Upsert Audiences Record` from any Clay table.
 
 **Note:** There is no option to add new fields directly from the Audience screen — you must go through the `Update Audiences Record` column mapping in a bulk enrichment table.
+
+### How do I delete a custom Audience field?
+
+Custom Audience fields — including fields created through `Update Audiences Record` write-back — can be permanently deleted from your Salesforce integration settings.
+
+1.  In your workspace sidebar, go to **Settings** and navigate to your **Salesforce** integration's **Audiences** tab.
+2.  If the field you want to delete doesn't appear in the list (common for fields created via a bulk enrichment write-back rather than a Salesforce field mapping), click **Add mapping**, enter the exact field name, and save to add it to the list.
+3.  In the field's row, click the **edit (pencil) icon** to open the field editor.
+4.  In the pop-up, click **Delete** and confirm.
+
+The field is permanently removed from your Audiences workspace and will no longer appear as a column or filter option in any segment.
+
+**Note:** The **Delete mapping** option in the row's **⋮** menu only removes the Salesforce↔Audiences write-back pairing — it does not permanently delete the Audiences field. To permanently remove the field, use the **Delete** button inside the edit pop-up.
 
 ### A Salesforce field isn't appearing in my audience filters — how do I add it?
 
