@@ -310,6 +310,10 @@ Actions measure platform work (what you do). Data Credits measure data purchases
 
 Unlike Actions (always 1 per enrichment), Data Credits reflect the real-world value of each data point. You'll see the exact cost displayed next to each enrichment option in the product.
 
+### Why do I see lower enrichment prices in my account but I'm still being charged the old rate?
+
+If you see an in-product pricing summary comparing old and new enrichment costs (for example, ZeroBounce Validate Email showing 1 → 0.1 credits), those reduced rates apply to modern plans (Launch, Growth, or Enterprise) only. Customers on legacy plans continue to pay the original credit costs. To start benefiting from the lower data credit prices, go to `Settings` → `Plans & billing` and switch to a current plan. See [Legacy plans](./legacy-plans.md) for a full comparison of what changes when you migrate.
+
 ### Why do I pay Actions even when using my own API key?
 
 Actions represent the platform orchestration Clay performs—ingesting, storing, and routing your data. Even with your own API keys, Clay is doing work to integrate that data into your workflows.
