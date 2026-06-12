@@ -1,7 +1,7 @@
 ---
 title: Find People in Clay
 source_url: https://university.clay.com/docs/find-people-overview
-description: Discover relevant contacts and LinkedIn posts using Clay's Find People and Find professional posts sources, then enrich results with work email and mobile phone waterfalls.
+description: Discover relevant contacts and LinkedIn posts using Clay's Find People and Find professional posts sources, then enrich results with work email, mobile phone, and business phone.
 last_synced: 2026-04-26T01:39:58.803Z
 ---
 
@@ -66,11 +66,13 @@ Each result includes a **Structured Location** object in the cell details with g
 
 **Note on data freshness:** Find People results come from a periodically refreshed index — not a live LinkedIn lookup at search time. A person's job title or company in the results may not reflect their most recent LinkedIn update. To get current employment data, run **Enrich Person** after importing — this fetches the live profile and returns the most up-to-date job title and company information.
 
-After importing Find People results, use Clay's enrichments to add contact information such as work email and mobile phone numbers.
+After importing Find People results, use Clay's enrichments to add contact information such as work email and phone numbers.
 
 **Work email:** In your table, click `Add enrichment` and select `Work Email`. This pre-built waterfall searches multiple email providers in sequence. For full setup details, including how credits are charged across providers, see [Work Email waterfall](work-email-waterfall.md).
 
 **Mobile phone:** To find mobile phone numbers, click `Add enrichment`, search for `Phone number`, and select the waterfall option under **Waterfalls**. The phone number waterfall cascades through multiple providers in sequence — providers that return no result are skipped at no credit cost, so you only pay when a provider finds a number. For provider recommendations by region, see [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md).
+
+**Business phone:** Phone number waterfalls and contact-level enrichment providers focus on mobile (personal cell) numbers. To source a company's business phone number, use a **Claygent** column instead — in your prompt, ask it to search for the phone number of the business location, and it will pull it from the company's website or other public sources. After Claygent returns a number, run a phone validation enrichment (such as [ClearoutPhone](clearoutphone-integration-overview.md) or [Trestle](trestle-integration.md)) to confirm the number is active and check its line type.
 
 ## Importing from a Sales Navigator search URL
 
