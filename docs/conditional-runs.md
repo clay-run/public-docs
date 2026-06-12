@@ -19,10 +19,6 @@ Conditional runs allow you to execute specific actions or enrichments in a workf
 
 -   **Condition**: `{{email}} is not empty`
 
-**Enrichment with optional inputs**: Run an enrichment only when at least one required identifier is present — for example, when your workflow accepts either an email address or a phone number.
-
--   **Condition**: `/Email is not empty OR /Phone is not empty`
-
 **Sequencer Filtering**: Add leads to a sequence based on lead score or industry.
 
 -   **Condition**: `{{lead_score}} > 80 AND {{industry}} == "SaaS"`
@@ -96,6 +92,8 @@ Look at the sample outputs on the right to ensure your condition behaves as expe
 
 Adjust your condition as needed based on the results.
 
+**Note:** The preview uses data loaded when the panel was opened and may not reflect the most recent values in your columns. If upstream columns have run or changed since you opened the editor, the preview can show stale results that don't match what actually evaluates at runtime. See the **Formula preview may not match runtime results** tip below.
+
 ## Tips
 
 ### Always use / to reference a column
@@ -110,16 +108,13 @@ To reference a column's data in a run condition, **type `/` followed by the colu
 
 (where `/Domain` references the column named "Domain" in your table).
 
-### Use "is empty" and "is not empty" to check for blank fields
+### Formula preview may not match runtime results
 
-When checking whether a field has a value — in a run condition or a formula column — **always use `is empty` or `is not empty`**. These are the correct Clay operators for blank-field checks.
+The preview in the run condition editor is built from the column values loaded when you opened the panel — it does not refresh automatically as your table runs. If upstream columns have run or changed since you opened the editor, the preview can show stale or incomplete results.
 
-**"exist" and "does not exist" are not valid operators in Clay.** Writing `/Column does not exist` or `/Column exist` will not behave as expected; the condition may silently fail or never match.
+For formulas that reference many columns, or that depend on complex values like waterfall outputs or nested lists, the preview may also resolve references differently than the actual runtime evaluation does.
 
-**Correct**:
-
-- `/Email is not empty` — condition passes when the Email column has a value
-- `/Domain is empty` — condition passes when the Domain column is blank
+**If the preview looks wrong, don't assume your formula is broken.** Save the condition, run a few test rows, and check the table for the **"Run condition not met"** status on the cells you expect to be skipped. The actual run results are the authoritative source — the preview is a best-effort guide, not a guarantee.
 
 ### Only matching rows consume credits
 
@@ -147,6 +142,14 @@ On new rows, the upstream column hasn't run yet, so the condition is false and t
 
 **Simpler alternative for scheduled re-run tables**: If the root cause is that your action column is included in a scheduled re-run, the easiest fix is to uncheck it from the scheduled re-run list (Table Settings → Run Settings → Re-run columns on a schedule). Table-level Auto-run still fires the column for genuinely new rows. See [Scheduled columns](scheduled-columns.md).
 
+### "Only run if" re-evaluates each time an upstream column changes
+
+With **Auto-run** enabled, Clay re-evaluates an action column's "Only run if" condition each time a value in the current row changes — including each time an upstream enrichment column finishes running. The condition is **not a one-time gate**: if it evaluates to `true` on multiple occasions as different enrichments complete, the action column can run multiple times on the same row.
+
+**Consequence for webhook and HTTP API export columns**: If you gate a webhook on upstream enrichments being done, it can fire more than once per row. To ensure the action fires only once, use the guard-column pattern from [Running an action only once per row](#running-an-action-only-once-per-row-new-rows-only): gate the action on a formula column that only becomes non-empty once all required upstream work is finished.
+
+**When upstream enrichments have their own run conditions**: If an upstream enrichment was skipped because its own "Only run if" condition wasn't met, `Clay.getCellStatus()` returns `"ERROR_RUN_CONDITION_NOT_MET"` for that cell — not `"SUCCESS"` or `"SUCCESS_NO_DATA"`. To gate a downstream action on "enrichment finished, whether it ran or was skipped," check for each possible final state explicitly. See [Formulas](formula-generator.md) for the full list of `getCellStatus()` return values.
+
 ### Gating a run on data from another table
 
 Run conditions can only reference columns in the **current row** — there is no formula syntax that directly queries another table from inside a run condition.
@@ -170,21 +173,6 @@ Run conditions can only reference columns in the **current row** — there is no
 The enrichment will now only fire for rows where the lookup returned at least one match.
 
 **See also**: [Lookup Rows](lookup-rows.md) — full reference for single-row and multiple-row lookup patterns, including using lookups as suppression gates.
-
-### Column stops running after a referenced column is deleted
-
-If a run condition formula references a column that has been **deleted** from the table, the column stops running and its cells show **"Invalid input"** status. Opening the cell details panel shows a **"Conditional run errors"** message listing the missing field — for example: *"[Column name] is missing."* Downstream columns that depend on this column will also appear out of date.
-
-**To fix:**
-
-1. Click the column header → **Edit column** → open **Run settings**.
-2. Find the **"Only run if"** formula — it will contain a reference to a column that no longer exists in the table.
-3. Delete the broken condition by clicking the **×** next to it, or click **Use AI** to recreate it using a valid column reference.
-4. Save the column.
-
-Once saved, cells will clear the "Invalid input" state and run normally on the next trigger.
-
-**Tip:** Before deleting a column, check whether any other columns reference it in a run condition. Open each dependent column's **Run settings** and update or remove conditions that point to the column you're about to delete.
 
 ### If "Run empty or out-of-date rows" appears to do nothing
 
