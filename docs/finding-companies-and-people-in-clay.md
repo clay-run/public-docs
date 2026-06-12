@@ -400,7 +400,7 @@ The source returns results in a new table and is subject to a per-source cumulat
 ### I added new companies to my company table — how do I get them through my Find People searches?
 
 **If using Find People as a source (a separate people table):**
-Re-running the source is all that's needed. It searches across all companies in the linked table — including any you just added — and appends new people while deduplicating against rows already in the table. To re-run: click the source column header in the people table and select **Run**.
+Re-running the source is all that's needed. It searches across all companies in the linked table — including any you just added — and appends new people while deduplicating against rows already in the table. To re-run: click the source column header in the people table and select **Run**. To have this happen automatically, expand **Run settings** in the source panel and switch from **Manually** to **On a schedule** — choose a frequency (Daily is most common) and click **Save schedule**.
 
 **If your company table has an Update People Table column:** That column is the mechanism that triggers Find People refreshes. Despite the UI warning ("does NOT perform incremental Find People searches for new companies"), the column *does* include newly added companies in the refresh — it re-runs the entire Find People search across all companies currently in the table and appends new contacts to the people table. The warning means the refresh runs the full search rather than an isolated search for just the new rows. With **Enable Automatic People Search Updates** toggled on, the column runs automatically when new company rows are added. If you prefer to trigger it manually, turn that toggle off and run the column on demand.
 
