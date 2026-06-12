@@ -279,6 +279,7 @@ To remove a member from your workspace:
 
 -   All tables, workbooks, and groups owned by the removed member are automatically transferred to the longest-tenured admin in the workspace (the admin whose admin role was granted earliest).
 -   You cannot remove the last admin from a workspace — at least one admin must remain at all times.
+-   Access is revoked immediately. If the removed member has an active browser session open, they are not logged out of the current page right away — but their workspace permissions are invalidated instantly, so any new action, page refresh, or navigation will return an access-denied error.
 
 **Transferring ownership when a team member leaves**
 
@@ -322,6 +323,8 @@ The typical setup process:
 
 **How SSO users should sign in:** On the Clay login page, type your **email address** into the email field and click **Continue** — do **not** click the `Sign in with Google` button. Entering your email triggers domain detection, which redirects you to your SSO provider automatically.
 
+**If your Clay account was originally created with Google (no password set):** Once SSO is enabled for your domain, the `Sign in with Google` button will return an error — Google OAuth is disabled for SSO domains. Because your account was created through Google, you have no Clay email + password; attempting to enter a password or trigger a password reset will not work (there is no Clay password on your account to reset). To sign in, simply type your **email address** into the email field and click **Continue** to be redirected to your SSO provider. If the redirect does not work after SSO has been activated by Clay support, contact Clay support to verify the configuration.
+
 ## **MFA enforcement and compliance requirements**
 
 Clay does not have a workspace admin setting to require multi-factor authentication (MFA) for all users. When SSO is enabled, users on your domain are redirected to your identity provider in the browser — but this is not a backend login block. Users who have an existing email + password Clay account can log in via password and bypass the SSO redirect entirely, which means IdP-level MFA requirements are not enforced for those users.
@@ -340,6 +343,12 @@ SSO only applies to users whose email address matches your verified domain. Team
 2.  Have them sign in using SSO — they will be authenticated and placed into the correct workspace.
 
 **Important:** Always invite users to your workspace before they sign in with SSO. If a user signs in via SSO before receiving their workspace invite, they will be placed into a new standalone personal workspace instead of your enterprise workspace — creating a messy state that requires support to resolve.
+
+## **Disabling or re-enabling SSO**
+
+If you need to temporarily disable SSO enforcement — for example, during an IdP migration, to allow a user to access their account outside of SSO, or for troubleshooting — contact Clay support. The support team can disable SSO on Clay's side without any changes to your IdP or WorkOS configuration.
+
+Your identity provider setup and WorkOS organization remain intact when SSO is disabled, so re-enabling is equally straightforward: contact Clay support and they will turn it back on. No IT reconfiguration is required for either step.
 
 # **Connections**
 
