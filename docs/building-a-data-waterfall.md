@@ -15,7 +15,7 @@ Waterfalls allow you to utilize multiple data providers in a predetermined seque
 
 To run a pre-built waterfall:
 
-1.  Click `Add enrichment` on the top right corner of your table and search for the data point you want to run a waterfall for (ex. Phone number). Under `Waterfalls`, select the waterfall you want to run.
+1.  Click **Tools** in the top right corner of your table, select the **Enrich** tab, and search for the data point you want to run a waterfall for (e.g. `Phone number`). Under **Waterfalls**, select the waterfall you want to run.
 2.  Configure your `Waterfall sequence`. You can reorder, add. or delete your waterfall data providers.
     -   To skip a step in the waterfall, click the toggle switch next to a specific provider.
 3.  Enter the required data inputs, such as email addresses or social profile URLs, to set up the enrichment waterfall.
@@ -161,7 +161,7 @@ Provider order: **Clearbit → Google → HG Insights**
 
 ### Setting up the Company Domain waterfall
 
-1.  In your table, click `Add enrichment` in the top right corner.
+1.  In your table, click **Tools** in the top right corner, then select the **Enrich** tab.
 2.  Search for `Find company domain` and select the **Company Domain** waterfall.
 3.  Map the column containing company names as the input.
 4.  Click `Save`.
