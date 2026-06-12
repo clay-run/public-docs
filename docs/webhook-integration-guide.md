@@ -77,6 +77,8 @@ Clay's webhook URL works with any platform that can send HTTP POST requests in J
 
 For a complete example using Zapier, see [Send Clay data to Zapier](https://www.clay.com/university/guide/clay-to-zapier).
 
+**Need to allow-list Clay's outbound IP addresses?** If your tool or network requires incoming requests to originate from specific IP addresses, enable **Use static IP** on your HTTP API column. This routes outbound requests through Clay's fixed egress IPs, which you can add to your allow-list. See [IP allowlisting](https://university.clay.com/docs/http-api-integration-overview#ip-allowlisting) in the HTTP API guide for setup details. This feature is available for Enterprise customers.
+
 ## FAQs
 
 ### Why does my webhook source show a higher row count than my table?
