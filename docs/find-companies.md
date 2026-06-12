@@ -51,7 +51,8 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
     -   **Limit results** — Defaults to 10,000. Maximum 10,000.
 2.  Click `Preview companies` and `Import to new table` when the results look good.
 3.  Select import options:
-    -   Add additional enrichments like `Company Headcount Growth` or `Most Recent News`.
+    -   Add additional enrichments like `Company Headcount Growth` or `Most Recent News`. Any enrichments you select here run on import and **consume Data Credits** (the wizard shows the estimated cost per row). To avoid credit spend at this step, skip optional enrichments and add them as table columns after the table is created instead.
+    -   **For trial accounts:** The **Enrich Company** enrichment is pre-selected and cannot be removed during import.
     -   Enable or disable auto-update and auto-dedupe.
 4.  Click `Continue`.
 
@@ -99,11 +100,11 @@ However, `Find Companies` automatically includes a **Founded** column in your ta
 
 ### Does importing from Find Companies cost credits?
 
-**No, unless you use technographics filters.** Importing companies using standard filters — industry, size, location, revenue, company type, AI filters — consumes no Actions and no Data Credits.
+**No, unless you use technographics filters or select enrichments during import.** Importing companies using standard filters — industry, size, location, revenue, company type, AI filters — consumes no Actions and no Data Credits.
 
 If you enable **technographics filters**, each company row that matches your criteria costs **3 Data Credits**.
 
-Any enrichments you add to the table afterward (e.g., finding emails, enriching headcount) consume their own Actions and Data Credits as usual — only the import itself is free.
+Any enrichments you select during the import wizard, or add to the table afterward (e.g., finding emails, enriching headcount), consume their own Actions and Data Credits as usual — only pulling company records from Clay's dataset is free.
 
 ### Why does my table show fewer rows than the preview count?
 
