@@ -523,11 +523,11 @@ All requests from that column will then originate from Clay's fixed IP addresses
 
 ### Enabling static IP for HTTP API as source
 
-The same workspace activation is required as for enrichment columns — contact your Clay account team or support to have static IP enabled for your workspace. Once activated, toggle on **Use static IP** in Step 5 of the source configuration (**Configure optional settings**).
+In Step 5 of the source configuration (**Configure optional settings**), toggle on **Use static IP**.
 
 ### Other integrations
 
-For **Snowflake**, **Salesforce**, and **Databricks** connections, all requests automatically route through Clay's static IP addresses — no toggle or extra setup is needed in Clay. Contact your Clay account team or support to get the current list of IP addresses to add to your allow-list on the provider side.
+For **Snowflake**, **Salesforce**, and **Databricks** connections on Enterprise plans, all requests already route through static IPs by default — no extra setup is needed in Clay. Add Clay's fixed IP addresses to your allow-list on the provider side.
 
 ## Best practices
 
