@@ -114,6 +114,7 @@ To remove a member from your workspace:
 
 -   All tables, workbooks, and groups owned by the removed member are automatically transferred to the longest-tenured admin in the workspace (the admin whose admin role was granted earliest).
 -   You cannot remove the last admin from a workspace — at least one admin must remain at all times.
+-   Access is revoked immediately. If the removed member has an active browser session open, they are not logged out of the current page right away — but their workspace permissions are invalidated instantly, so any new action, page refresh, or navigation will return an access-denied error.
 
 ## Edit access levels in a workbook _(Enterprise only)_
 
