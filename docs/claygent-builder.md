@@ -242,6 +242,8 @@ If your goal is to find people associated with companies at scale — rather tha
 
 When selecting a third-party model (Claude, GPT-4o, Gemini, etc.) in Claygent, the **Account** dropdown in your column settings controls how billing works. Selecting the default **Clay-managed account** means Clay's API key handles the request, and the run deducts **Data Credits** at the variable rate for that model — the `~` prefix on the cost estimate shown in the column sidebar (for example, `~4.8`) indicates a variable charge that is reconciled after each row completes. To avoid spending Data Credits on AI, click **Account** → **+ Add account** to connect your own Anthropic, OpenAI, or Gemini API key; with your own key, each Claygent row counts as **1 Action** but no Data Credits are charged. For a full model-by-model credit reference, see [How AI is priced](ai-pricing.md).
 
+**Note:** The **Account** dropdown and the option to use your own API key are currently available in **table columns** only. When running a Claygent inside a **Workflow node**, only the Clay-managed key is used — private API key support in Workflow nodes is not yet available but is actively being added.
+
 ### Can I test different models without changing my prompt?
 
 Yes. Switch models in the configuration panel and rerun tests to compare output quality across different AI models.
