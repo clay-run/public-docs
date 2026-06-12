@@ -95,6 +95,18 @@ To create a new system user token, you first need to create an app:
 
 For more details on Meta system user setup, see [Meta's system user documentation](https://www.facebook.com/business/help/503306463479099).
 
+## Google Ads OAuth authentication
+
+Google Ads audience syncing is currently in **closed beta** — contact [Clay support](https://www.clay.com/contact) to request access.
+
+When you connect your Google Ads account, Clay requests the following OAuth permission:
+
+-   **`https://www.googleapis.com/auth/adwords`** — the standard Google Ads API scope
+
+**For security teams:** This scope grants read/write access to the connected Google Ads account. It is the only scope Google's Ads API offers — Google does not provide narrower alternatives for the Ads API, even though Clay only uses the access to manage audience lists. Clay sends contact identity data (personal email or SHA-256 hashed email, phone number, first name, last name, country code, and postal code) to create, update, or remove Customer Match audience lists. The integration does not access campaign performance data, modify bids or budgets, or create or change any ads.
+
+Access control is enforced at the Google Ads account level — the person connecting must have appropriate permissions on the ad account they link.
+
 ## **FAQs**
 
 ### **I have a regular Clay table with contacts — why don't I see an Ads option in the Export panel?**
@@ -148,6 +160,15 @@ The 50,000 row limit applies to ad audiences exported from tables. For larger au
 
 No. Field mapping is configured when you create the Ad Sync and cannot be changed afterward. Deactivating an Ad Sync places it in read-only history — it does not unlock the mapping for editing. To use a different field mapping, deactivate the current sync and create a new Ad Sync with your updated configuration.
 
+### **Can I add a second ad platform to an existing Ad Sync?**
+
+Yes. After your initial sync is active, an **Expand your reach** section appears below your current platform destinations. Click **Add** next to any available platform to configure field mappings for that provider — it will sync on the same schedule as your existing provider.
+
+**Notes:**
+
+-   You cannot add a platform while a sync is currently in progress — wait for the active sync to complete first.
+-   Google Ads is only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience includes contacts from Clay's company/people search data, Google Ads will appear disabled. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) for details.
+
 ### **How long does it take for audiences to be created?**
 
 After sending your audience to LinkedIn or Meta, it will be created within **48 hours** (typically 1-2 days). Plan accordingly when launching time-sensitive campaigns.
@@ -172,9 +193,9 @@ Yes! Once synced, your audiences automatically update as data changes in your Cl
 
 No, LinkedIn and Meta don't provide contact-level match visibility for privacy reasons. However, Clay shows aggregate match rates and total audience size after each sync.
 
-### **How do I connect my LinkedIn or Meta ad account?**
+### **How do I connect my LinkedIn, Meta, or Google Ads account?**
 
-When you create your first ad audience, you'll be prompted to authenticate with LinkedIn Campaign Manager or Meta Business Manager. Make sure you have admin access to the ad account you want to use.
+When you create your first ad audience, you'll be prompted to authenticate with LinkedIn Campaign Manager, Meta Business Manager, or your Google Ads account via OAuth. Make sure you have admin access to the ad account you want to use. Note that Google Ads syncing is currently in closed beta — contact [Clay support](https://www.clay.com/contact) to request access.
 
 ### **Can I sync to multiple ad accounts?**
 
