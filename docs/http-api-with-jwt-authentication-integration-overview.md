@@ -33,7 +33,7 @@ Use this table to decide which action to use:
 | What the account stores | Header key-value pairs (e.g., API keys, permanent bearer tokens) | Username, password, and token endpoint URL |
 | Token expiry handled? | N/A | Auto-refreshed every ~55 minutes |
 
-Use **standard HTTP API** when the API accepts static credentials (an API key, a permanent bearer token). Use **HTTP API with JWT Authentication** when the API issues a dynamically generated JWT — common in enterprise APIs like Gong, [Snov.io](http://Snov.io), and ZoomInfo's legacy API.
+Use **standard HTTP API** when the API accepts static credentials (an API key, a permanent bearer token). Use **HTTP API with JWT Authentication** when the API issues a dynamically generated JWT — common in enterprise APIs like Gong, [Snov.io](http://Snov.io), and ZoomInfo's API.
 
 ## Setting up your JWT account
 
@@ -130,4 +130,4 @@ The native ZoomInfo integration in Clay supports two actions: **Enrich Company**
 
 Clay refreshes the token automatically before it expires, so you won't encounter the hourly 401 errors that occur when managing short-lived ZoomInfo tokens manually.
 
-**Note:** HTTP API with JWT Authentication is available on Explorer plan and above — it is not available on the Free plan. This ZoomInfo setup also requires a ZoomInfo subscription with API access enabled. SSO (Single Sign-On) accounts cannot use username-and-password authentication with this flow — contact ZoomInfo to confirm your account type before proceeding.
+**Note:** HTTP API with JWT Authentication is available on Explorer plan and above — it is not available on the Free plan. For ZoomInfo account prerequisites (API access requirements and supported authentication methods), see the [ZoomInfo integration guide](https://university.clay.com/docs/zoominfo-integration).
