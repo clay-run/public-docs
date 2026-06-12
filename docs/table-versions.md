@@ -25,6 +25,13 @@ Table versions capture your table's **structure and configuration**, including:
 
 ## Viewing your version history
 
+The `History` panel (bottom-right of your table) contains two options:
+
+-   **Change log** — an audit trail showing individual changes made to your table (who changed what, and when). This is view-only and cannot be used to restore your table.
+-   **All configuration versions** — restorable snapshots of your table's structure and configuration.
+
+To browse and restore versions:
+
 1.  Click `History` in the bottom-right corner of your table.
 2.  Select `All configuration versions`.
 
