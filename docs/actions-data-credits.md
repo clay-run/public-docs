@@ -276,7 +276,6 @@ To downgrade your Clay workspace plan:
 
 **After your billing cycle ends:**
 
--   Your monthly Actions and Data Credit allocation resets to the new plan's level.
 -   Your balance is capped at 2× the new plan's monthly Data Credit limit.
 -   Your data remains intact.
 -   Features are limited to the new plan's capabilities.
@@ -389,7 +388,6 @@ Common causes:
 
 **After your billing cycle ends:**
 
--   Your monthly Actions and Data Credit allocation resets to the new plan's level.
 -   Your balance is capped at 2× the new plan's monthly Data Credit limit.
 -   Your data remains intact.
 -   Features are limited to the new plan's capabilities.
@@ -409,9 +407,3 @@ No. Exporting data to CSV does not consume an Action or any Data Credits. CSV ex
 No. **Lookup Record** operations — such as `Salesforce > Lookup Record` — read data from your CRM into Clay and are treated as CRM imports. They do not consume Action credits. This holds even when the lookup returns **No Records Found**.
 
 Only CRM **write** operations consume Actions: Create Record, Update Record, Upsert Object, and other actions that push data from Clay to your CRM.
-
-### Does enriching the same person in two separate tables charge me credits twice?
-
-Yes. Clay charges **1 Action** (and the associated Data Credits) per enrichment row run, regardless of whether that person has been enriched in another table. There is no cross-table deduplication — each row runs independently. If the same contact appears in two tables and you run an enrichment such as Enrich Person in both, you will be charged for each run separately.
-
-**To avoid double-charging on overlapping lists:** Merge your lists into a single table first and use the **Deduplicate rows** feature (right-click any column header → **Deduplicate rows**) to remove duplicate entries based on a unique identifier such as a profile URL or email address. Enriching the merged, deduplicated table ensures each person is processed and charged only once.
