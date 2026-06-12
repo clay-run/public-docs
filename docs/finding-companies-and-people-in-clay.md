@@ -43,6 +43,10 @@ If you need results that meet _either_ of two different filter combinations, set
 
 If you don't have a company list, use **People search as a source** — a standalone search by title or other criteria that returns a new table.
 
+**If you're receiving data row-by-row via webhook** — for example, one row per incoming job opening — and need to find people automatically for each row, include a company identifier (company name, domain, or LinkedIn company URL) in each webhook payload. With a company identifier in the row, add **Find Contacts at Company** as an enrichment column in your webhook table. This action runs independently per row, finds contacts at that specific company filtered by job title, and stores results in the cell. To route those contacts into individual rows, add a **Send Table Data** column (using **Send row for each item in a list**) to push each contact to a separate people table where you can apply enrichments and AI scoring.
+
+**Note:** The standalone **Find People source** does not run per row — it imports results at creation time and is not retriggered by new incoming webhook rows. For automated per-row people searches triggered by incoming data, use **Find Contacts at Company** (enrichment column) instead.
+
 ### Enriching your results
 
 **Find People at These Companies** returns basic profile data for each contact: name, title, current company, LinkedIn URL, and location. **Work emails and phone numbers are not included** — add them as separate enrichments after your people table is created:
@@ -125,6 +129,8 @@ Clay gives you three ways to get contacts from a company list. Here's how they d
 When you run `Find People at These Companies` as an in-table action (rather than launching a separate people search), you can dynamically filter by location by referencing a location column from your company table. This lets you customize the location filter per company without running multiple separate searches.
 
 For example, if you have a "Headquarters Location" column in your company table, you can reference that column in the location filter when setting up the in-table action. Each company will then be searched using its specific location, rather than applying a single static location filter across all companies.
+
+**Note:** Location filtering accepts named regions, countries, and cities — distance-based filtering (for example, "within 35 miles of a location") is not available in Find People or Find Contacts at Company.
 
 ### Verify current employment before using results
 
