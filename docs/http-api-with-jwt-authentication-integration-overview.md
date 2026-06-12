@@ -33,7 +33,7 @@ Use this table to decide which action to use:
 | What the account stores | Header key-value pairs (e.g., API keys, permanent bearer tokens) | Username, password, and token endpoint URL |
 | Token expiry handled? | N/A | Auto-refreshed every ~55 minutes |
 
-Use **standard HTTP API** when the API accepts static credentials (an API key, a permanent bearer token). Use **HTTP API with JWT Authentication** when the API issues a dynamically generated JWT — common in enterprise APIs like Gong and [Snov.io](http://Snov.io).
+Use **standard HTTP API** when the API accepts static credentials (an API key, a permanent bearer token). Use **HTTP API with JWT Authentication** when the API issues a dynamically generated JWT — common in enterprise APIs like Gong, [Snov.io](http://Snov.io), and ZoomInfo's legacy API.
 
 ## Setting up your JWT account
 
@@ -106,3 +106,28 @@ Editing a saved JWT account will affect every enrichment column across your work
 ### What happens if I enter the wrong token location?
 
 The enrichment will fail with the message `Please fill out your auth fields.` If you see this error, double-check the `Location of JWT token in auth response` field against the actual JSON structure returned by your token endpoint.
+
+### How do I call ZoomInfo API endpoints that the native integration doesn't support, such as looking up records by ZoomInfo ID?
+
+The native ZoomInfo integration in Clay supports two actions: **Enrich Company** (by company name and website) and **Enrich Contact** (by email or name). For other ZoomInfo API endpoints — for example, looking up records by a ZoomInfo company or contact ID — use **HTTP API with JWT Authentication** with the following ZoomInfo-specific settings.
+
+**Account setup (one-time per workspace):**
+
+1.  Go to **Settings → Connections**, search for **HTTP API JWT Auth**, and click **+ Add account**.
+2.  Enter:
+    -   **Username** — your ZoomInfo username (email address)
+    -   **Password** — your ZoomInfo password
+    -   **JWT Token Endpoint** — `https://api.zoominfo.com/authenticate`
+3.  Name the account (for example, *ZoomInfo JWT*) and click **Save**.
+
+**Enrichment setup:**
+
+1.  In your Clay table, click **Add enrichment** and search for **HTTP API with JWT Authentication**.
+2.  Select the ZoomInfo JWT account.
+3.  In the **Location of JWT token in auth response** field, enter `jwt`.
+4.  Leave **Token type** as `Bearer` and **Auth header name** as `Authorization` (both defaults).
+5.  Set the HTTP method, endpoint URL, and request body to match the ZoomInfo API endpoint you want to call. Pass your column values (such as a ZoomInfo ID) as inputs in the request body.
+
+Clay refreshes the token automatically before it expires, so you won't encounter the hourly 401 errors that occur when managing short-lived ZoomInfo tokens manually.
+
+**Note:** This setup requires a ZoomInfo subscription with API access enabled. SSO (Single Sign-On) accounts cannot use username-and-password authentication with this flow — contact ZoomInfo to confirm your account type before proceeding.
