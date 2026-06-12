@@ -68,3 +68,13 @@ The final step of a waterfall returns a basic column with an 8KB limit. If your 
 -   **HTTP-API and webhooks:** May bring in over 200KB; use field-path filters.
 -   **Extracting to basic columns:** May hit the 8KB limit when extracting large action fields.
 -   **Email reply content:** Long email replies (e.g., from the campaign events table) can exceed the 8KB limit when written to a text column. To work around this, reference the reply field in a formula column and use a text function such as `LEFT({{Reply Body}}, 7000)` to extract just the first portion of the content.
+
+**Identifying rows that hit a cell size limit error**
+
+To find rows where a column hit the cell size limit — without confusing them with rows that legitimately returned no data — add a formula column using `Clay.getCellStatus()`:
+
+```
+Clay.getCellStatus({{Your Column}})
+```
+
+This returns `"ERROR"` for cells that failed (including cell size limit exceeded), `"SUCCESS_NO_DATA"` for cells that ran but returned no data, and `"SUCCESS"` for cells with data. Filter or sort the table on this formula column to isolate error rows. See [Formulas](formula-generator.md) for the full list of `getCellStatus()` return values.
