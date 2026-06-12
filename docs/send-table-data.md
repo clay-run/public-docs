@@ -92,6 +92,28 @@ When configuring the list field by hand, select the **list itself** (e.g., `Peop
 
 If your table has no rows with data yet, Clay skips this validation and accepts the formula as-is. In that case, run a few rows first so the enrichment column has real output, then re-open the Send Table Data configuration to confirm the list field is valid before running the full table.
 
+### Routing data conditionally with multiple Send table data columns
+
+You can add more than one Send table data column to the same source table. Each column can target the same destination table or a different one, and each can have its own **run condition** — so rows take different paths depending on conditions in your data.
+
+**Example: branch based on how many contacts were found**
+
+A common pattern with people-finding enrichments is to route contacts down one of two paths depending on how many were returned per company:
+
+-   **When few contacts are found (e.g., fewer than 3):** A "Send table data" column with a run condition like `{{Find Contacts at Company}}?.peopleCount < 3` sends the raw `People` list directly to the destination table using **Send row for each item in a list**.
+-   **When many contacts are found (e.g., 3 or more):** A second "Send table data" column with the inverse condition (`{{Find Contacts at Company}}?.peopleCount >= 3`) only fires when there are more contacts than needed. An upstream AI column first filters the full list down to the top picks — the AI column's prompt should ask for a **JSON array** of the selected contacts — and that AI column's output becomes the list source for this second Send table data column.
+
+To add a second Send table data column, click **+ Add column** and select **Send table data** again. Each column is configured and named independently (Clay auto-names them "Send table data", "Send table data (2)", etc.).
+
+**Setting up run conditions:** In the column configuration panel, scroll to **Run settings**, enable **Only run if**, and enter the condition formula.
+
+**Note on `peopleCount` when no contacts are found:** The `peopleCount` field on "Find Contacts at Company" results is only present when at least one contact was returned — it is not included (and evaluates as `undefined`) when the action finds no results. This means a condition like `peopleCount < 3` evaluates to `false` for rows with zero contacts found, so those rows are skipped by both Send table data columns and nothing is sent for them. This is usually the intended behavior — there's nothing to route. If you need to explicitly handle zero-result rows, add a separate condition or check using `Clay.getCellStatus()`.
+
+**Tips:**
+
+-   Make the run conditions mutually exclusive so each row takes exactly one path and is sent only once.
+-   If both Send table data columns target the same destination table, be mindful of the **Update existing rows on re-run** setting — if both columns can match the same row, one could overwrite what the other sent.
+
 ## Advanced settings
 
 **Update existing rows on re-run**
