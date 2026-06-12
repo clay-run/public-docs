@@ -48,7 +48,7 @@ Lists use zero-based indexing, where the first item is at index 0, the second at
 In the **Cell details** panel, click **Take action on list** to access the following actions:
 
 -   **Filter, find keywords, and more using formula:** Search for and filter specific items using formulas.
--   **Write each item to new row in other table:** Send each list item as its own row to another table.
+-   **Write each item to new row in other table:** Send each list item as its own row to another table — useful for enrichments that return multiple results per row, such as Find Active Job Openings or Find Contacts at Company. Selecting this option opens the [Send Table Data](send-table-data.md) configuration with the list field pre-populated. **Note:** a maximum of 20 items per row are sent per run. See [Send Table Data](send-table-data.md) for full setup instructions.
 -   **Create column with items separated by commas:** Join all items into a single comma-separated text field (only available for lists of simple values).
 -   **Ask question about items with AI:** Get answers or summaries about the list using AI.
 
