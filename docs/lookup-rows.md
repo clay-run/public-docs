@@ -73,6 +73,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 -   **Ensure the target column type matches your lookup value**: If the `Target column` in the reference table is **Number** type but your `Row value` contains non-numeric text (such as an ID with letters, a dash, a blank, or "N/A"), the lookup may return unexpected results or show a type mismatch error. To fix this, change the target column to **Text** type in the reference table.
 -   Use single row lookup instead of multiple row lookup when you only need one result — it's faster
 -   If an expected field isn't visible in the result panel, the matched row in the source table likely has an empty value for that field — the panel only shows fields that have a value for the specific matched row. To add that column anyway, find a row whose matched source record has the field populated, open that lookup cell, and click **Add as column**.
+-   **Lookup not auto-running for new rows?** If the **Row Value** is a static string with no column reference (no `/` pick), Clay sees no upstream dependency and won't trigger the column when new rows are added. Fix: in **Run settings → Only run if**, add a condition that references an upstream column — for example, `/[Your source column] is present`. This creates the dependency Clay needs to fire the lookup automatically for each incoming row.
 
 ### **Using `Lookup multiple rows in other table`**
 
@@ -105,6 +106,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 -   Only use `Add as column` for the few results you actually need to avoid clutter and keep tables readable
 -   **100-record cap**: Lookup multiple rows returns at most 100 records per row — this is a hard limit that cannot be changed. If your source table has more than 100 matching records, only the first 100 are returned. To work around this, split the source table into smaller segments (e.g., by category, region, or product line), create a separate lookup column per segment, and merge the results in a formula or AI prompt. Each segment lookup stays under 100 records while the AI prompt still gets the full set.
 -   Use the lookup result as a gate to control downstream actions (enrich/send/route only when criteria are met) — for a step-by-step example using a run condition, see [Conditional runs](conditional-runs.md).
+-   **Lookup not auto-running for new rows?** If the **Row Value** is a static string with no column reference (no `/` pick), Clay sees no upstream dependency and won't trigger the column when new rows are added. Fix: in **Run settings → Only run if**, add a condition that references an upstream column — for example, `/[Your source column] is present`. This creates the dependency Clay needs to fire the lookup automatically for each incoming row.
 
 ### **Using lookups in the same table**
 
