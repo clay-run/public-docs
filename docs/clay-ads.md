@@ -166,6 +166,14 @@ After sending your audience to LinkedIn or Meta, it will be created within **48 
 
 Personal emails are essential for better match rates because most users sign up for LinkedIn and Meta with personal email addresses rather than work emails. Match rates depend on your audience data quality. To maximize results, use the `Hashed Email for Ads` waterfall to find contact email addresses.
 
+### **How does the `Hashed Email for Ads` waterfall work?**
+
+The `Hashed Email for Ads` waterfall uses LinkedIn profile URL as the primary input (some providers also accept work email or other identifiers) to find and return a SHA-256 hashed personal email for each contact. The input is not what gets hashed — it is used only to identify the person and look up their personal email, which is then hashed.
+
+If the waterfall prompts for work email as input, that is normal. One or more providers in the waterfall will use the work email to look up the contact and retrieve their personal email for hashing. Providing work email as input does not cause the work email itself to be hashed, and your match rates on Meta, LinkedIn, and Google Ads are not affected.
+
+The waterfall queries multiple providers and returns a **single hashed email** per contact from the first provider that finds a result.
+
 ### **Do audiences automatically update?**
 
 Yes! Once synced, your audiences automatically update as data changes in your Clay table. New rows that match your criteria are added, and rows that no longer match are removed. This keeps your ad targeting aligned with your latest data without manual updates.
