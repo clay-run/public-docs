@@ -10,7 +10,7 @@ last_synced: 2026-05-20T19:20:54.410Z
 
 Workspace admins have two ways to control connection access, both managed from `Settings` → `Connections`.
 
-**Note:** This feature is currently in beta for Enterprise customers.
+**Note:** This feature is available to Enterprise customers.
 
 1. **Build permissions** — Restrict which workspace members can use a specific connection to configure workflows and columns. Members only see connections they're allowed to use; all workspace members can still run workflows that are already set up.
 2. **Approval to add connections** — Require that members request admin approval before adding any new connection to the workspace.
@@ -114,9 +114,9 @@ Enrichment columns within bulk enrichment tables (Audiences) and Sculptor/Prospe
 
 ### Sources
 
-When setting up a table source — for example, importing records from a Salesforce report, a HubSpot list view, or another connected provider — the account selector only shows connections the current user is allowed to use. If a connection is set to **Specific people and groups** and the user is not on the allowlist, that connection will not appear in the account selector, and the user will be prompted to add their own account.
+When setting up a table source — for example, importing records from a Salesforce report, a HubSpot list view, or another connected provider — the account selector only shows connections the current user is allowed to use. If the relevant connection is set to **Specific people and groups** and the user is not on the allowlist, they will not be able to select that connection as a source. They will need to either ask the connection owner to add them to the allowlist (via `Settings` → `Connections`) or add their own account.
 
-To allow all workspace members to use the same connected account as a source, change the connection's access setting to **Anyone in the workspace**.
+To allow all workspace members to import from the same connected account, change the connection's access setting to **Anyone in the workspace**.
 
 ## FAQs
 
