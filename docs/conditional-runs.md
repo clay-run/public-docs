@@ -188,9 +188,7 @@ Once saved, cells will clear the "Invalid input" state and run normally on the n
 
 ### If "Run empty or out-of-date rows" appears to do nothing
 
-After you add or edit a run condition on an enrichment column, some cells that have not yet processed may appear stuck — clicking **"Run [N] empty or out-of-date rows"** from the column header does nothing (no Confirm Run panel, no spinner, no progress). This can occur even when those cells show as blank in the table. By contrast, opening an individual blank cell and clicking **"Re-run this cell"** works correctly on those same rows.
-
-To bulk-run those rows, use **Force run all [N] rows** from the column dropdown instead:
+If clicking **"Run [N] empty or out-of-date rows"** from the column header appears to do nothing — no Confirm Run panel, no spinner, no progress — but opening an individual blank cell and clicking **"Re-run this cell"** works on those same rows, use **Force run all [N] rows** from the column dropdown instead:
 
 1. Right-click the column header to open the column menu.
 2. Select **Run column** → **Force run all [N] rows**.
@@ -201,7 +199,7 @@ This queues every row in the column regardless of its current state — the same
 
 ### Running a column can re-trigger dependent downstream columns
 
-When you run an enrichment column that other enrichment columns depend on, Clay shows a **Confirm Run** panel before starting. This panel lists any downstream action columns that will automatically re-run and their estimated credit cost. If you confirm, those downstream columns will execute and **replace their current results**.
+When you run an enrichment column that other enrichment columns depend on, Clay shows a **Confirm Run** panel before starting. This panel lists any dependent downstream columns that may automatically re-run and their estimated credit cost. If you confirm, those downstream columns are marked as out-of-date and queued to re-run — their stored values persist until they actually execute, at which point new results replace them.
 
 Before confirming a run on an upstream column, check whether any listed downstream columns contain data you want to keep. If so:
 
