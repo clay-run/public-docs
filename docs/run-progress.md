@@ -62,8 +62,7 @@ The table-level progress bar, shown at the bottom right of a table, provides a s
 -   The percentage of **all enrichment cells** in the table that have run.
     -   _Note: Includes non-visible rows, but not non-visible columns._
 -   The percentage of rows by status (same definitions as at the column level).
--   Whether any column in the table is currently running.
--   **Run summary panel** — Hovering over the panel reveals:
+-   Whether any column in the table is currently running.\n-   **Run summary panel** — Hovering over the panel reveals:
     -   A detailed breakdown of status percentages.
     -   Table-level auto-run and scheduled run settings.
     -   A toggle to enable/disable column-level run status data.
@@ -179,3 +178,17 @@ To re-enable automatic enrichment:
 After enabling table-level auto-run, column-level settings take effect: columns with auto-run on will trigger automatically; columns with auto-run off will still require a manual trigger.
 
 For the full auto-run decision tree and advanced options (conditional runs, "Keep existing results"), see [Table management settings](table-management-settings.md).
+
+## Troubleshooting: identifying rows that errored vs. rows with no data
+
+When a column's progress bar shows failed rows (🔴), you may need to find exactly *which* rows hit a specific error — for example, "The result of this run exceeded the cell size limit (200 kB)" — without catching rows that legitimately returned no data.
+
+Add a formula column using `Clay.getCellStatus()` and point it at the affected enrichment column:
+
+```
+Clay.getCellStatus({{Your Column}})
+```
+
+This returns a status string for each cell. Cells that hit the cell size limit return `"ERROR_ACTION_OUTPUT_DATA_SIZE_LIMIT_EXCEEDED"`; cells that ran successfully but found nothing return `"SUCCESS_NO_DATA"`; cells with data return `"SUCCESS"`. Filter or sort the table on this formula column to isolate the error rows without catching legitimate empty results.
+
+For the full list of `getCellStatus()` return values, see [Formulas](formula-generator.md).
