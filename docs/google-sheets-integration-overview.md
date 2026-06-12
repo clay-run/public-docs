@@ -3,7 +3,7 @@ title: Google Sheets integration
 source_url: https://university.clay.com/docs/google-sheets-integration-overview
 description: Cloud-based spreadsheet for real-time collaboration. Covers using
   Google Sheets as a Clay table source (including dedup fields and import
-  history) as well as enrichment actions.
+  history), enrichment actions, and troubleshooting common errors.
 last_synced: 2026-04-26T01:40:04.431Z
 ---
 
@@ -91,3 +91,19 @@ Lookup a row in a Google Sheet using a column and a value. Optionally, you can a
 
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
+
+## Troubleshooting
+
+### Error: `Invalid values[row][col]: list_value {}`
+
+This error from Google Sheets means one of the column values mapped to the action contains a **list** (an array of items) rather than a single value. Google Sheets cells only accept scalar values — text, a number, or a boolean — and will reject the entire row if any mapped field is a list.
+
+**Common cause:** The mapped column returns multiple records or items, such as a Salesforce related-records field, a "Find Contacts at Company" result, or any enrichment that outputs an array.
+
+**Fix:** Add a [formula column](https://university.clay.com/docs/formula-generator) that extracts or joins the array into a single string — for example, referencing a specific sub-field like `{{YourListColumn[0].email}}`, or joining all values with a formula. Map that formula column to the Google Sheets action instead of the raw list column.
+
+### `(Deleted column)` shown in the action mapping
+
+If you see `(Deleted column)` next to a field in the action's configuration panel, the Clay column that was previously mapped to that field no longer exists. The action will fail for any row where that reference is present.
+
+**Fix:** Click the **×** next to the `(Deleted column)` reference to remove it, then either leave the field empty or map a replacement column.
