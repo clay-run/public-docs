@@ -130,4 +130,4 @@ The native ZoomInfo integration in Clay supports two actions: **Enrich Company**
 
 Clay refreshes the token automatically before it expires, so you won't encounter the hourly 401 errors that occur when managing short-lived ZoomInfo tokens manually.
 
-**Note:** This setup requires a ZoomInfo subscription with API access enabled. SSO (Single Sign-On) accounts cannot use username-and-password authentication with this flow — contact ZoomInfo to confirm your account type before proceeding.
+**Note:** HTTP API with JWT Authentication is available on Explorer plan and above — it is not available on the Free plan. This ZoomInfo setup also requires a ZoomInfo subscription with API access enabled. SSO (Single Sign-On) accounts cannot use username-and-password authentication with this flow — contact ZoomInfo to confirm your account type before proceeding.
