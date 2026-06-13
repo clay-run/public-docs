@@ -59,12 +59,16 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
         -   `Update send limit`: Change the daily number of emails the account can send per day
         -   `Update sender variables`: Change the sender variable values for the account
 6.  Adjust your `Schedule settings`:
+    -   `Schedule type`: Choose how emails are timed:
+        -   `Optimized for deliverability` (default): Sends Monday–Friday, 9 AM–5 PM, with a 20-minute gap between sends.
+        -   `Send immediately`: Sends 24/7 as fast as account limits allow. Recommended for inbound or transactional use cases only.
+        -   `Custom schedule`: Configure your own sending window. Emails only go out during the window you configure, even after launch — if you launch outside the window, emails will queue until it opens.
     -   `Timezone`: Select the timezone to send from (we recommend matching your prospects').
-    -   `Days of the week`: Choose which days emails are sent.
-    -   `Start/End times`: Set sending windows within the chosen timezone.
-    -   `Minimum time between sends`: Adjustable from 5–30 minutes; longer delays improve deliverability.
+    -   `Days of the week` (Custom schedule only): Choose which days emails are sent.
+    -   `Start/End times` (Custom schedule only): Set sending windows within the chosen timezone.
+    -   `Minimum time between sends` (Custom schedule only): Adjustable from 5–30 minutes; longer delays improve deliverability.
     -   `Maximum new leads per day`: Caps the number of new leads contacted daily (in addition to account send limits).
-    -   `Campaign start date` (optional): Set a future launch date, or start immediately based on your settings.
+    -   `Campaign start date` (optional): Set a future launch date, or leave blank to start sending when the next window opens.
 7.  Explore `Advanced settings` if needed:
     -   `Webhooks`: Route campaign events to a specific Webhook destination instead of the default Campaign Events Clay table. Example: Send Smartlead metrics to tools like OutboundSync or Enrichley for downstream routing.
     -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled)
@@ -150,6 +154,14 @@ Our sequencer is powered by Smartlead, but everything runs on Clay credits. You 
 ### Why does my campaign only show 10 leads after launching?
 
 When a campaign is created, the `Sync leads to campaign` column pushes 10 rows so you can preview and configure your messages. After launching, the rest of your source table is not pushed automatically. To add all remaining rows, open your source table (the table where you created the campaign — not the campaign events table) and run the `Sync leads to campaign` column manually — click the run button in the column header.
+
+### Why aren't my emails sending right after I launched my campaign?
+
+Clay sends emails only during the campaign's configured schedule window. If you launched a **Custom schedule** campaign outside the configured sending window (for example, your campaign sends 7 PM–9 PM but you launched at noon), emails queue and begin sending when the next window opens.
+
+To check your window: open the campaign → `Settings` → `Schedule settings`. The **Expected time to complete campaign** indicator at the top also shows how long sending will take given your configuration.
+
+To start sending right away, pause the campaign, go to `Settings` → `Schedule settings`, switch `Schedule type` to `Send immediately` (sends 24/7 as fast as account limits allow) or `Optimized for deliverability` (Monday–Friday, 9 AM–5 PM), save, and relaunch.
 
 ### Why did my campaign stop sending before reaching all my leads?
 
