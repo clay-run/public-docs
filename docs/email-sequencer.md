@@ -227,6 +227,8 @@ To set or update a signature:
 
 You can also update the `From name` (the display name recipients see in their inbox) from the same dialog. Only plaintext signatures are currently supported.
 
+**To include a formatted signature (with bold text, links, or images):** enable **HTML** in your campaign's `Setup` tab, then compose your signature at the bottom of each email body using the formatting toolbar — bold, italic, hyperlinks, and inline images are available when HTML is enabled. Do not paste raw HTML source code into the editor; the editor does not convert pasted markup to formatted output, and it will appear as literal text in the sent message. Toggle **Preview** or use `Send test email` (in the `Leads` tab) to verify how the signature renders before you launch.
+
 ### What is email account warmup?
 
 Warmup is the process of automatically sending and receiving emails from other inboxes in Smartlead's warmup pool so your actual campaign traffic looks similar to the emails you're already sending. We recommend you keep warmup on at all times for email accounts in the sequencer to maximize deliverability.
