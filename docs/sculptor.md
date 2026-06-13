@@ -102,7 +102,7 @@ While Sculptor is powerful, there are a few things to keep in mind:
 -   **Cross-table operations are limited** — Advanced linking and workflows are still in development.
 -   **No export option** — Export functionality hasn't been integrated yet.
 -   **Column modifications use sandbox on Pro & Enterprise** — On Pro and Enterprise plans, Sculptor adds new columns to existing tables via [sandbox mode](#sandbox-mode) rather than writing directly to your live table. You'll need to review and publish those changes using the **Review changes** button. On Starter, Sculptor writes new columns directly to the live table.
--   **Sculptor cannot modify existing columns — it only creates new ones.** If you ask Sculptor to update a column's prompt or formula, it creates a new column with those changes rather than editing the existing column in place. The new column appears to the right of your current columns — **scroll right** in your table to find it as a pending suggestion. To update an existing column's prompt or formula directly, click into that column and edit it manually.
+-   **Sculptor cannot modify columns you built manually — it only creates new ones.** If you ask Sculptor to update a prompt or formula in a column you created yourself, it creates a new column with those changes instead of editing the existing one. The new column appears to the right of your current columns — **scroll right** in your table to find it as a pending suggestion. To update a manually-built column directly, click into that column and edit its prompt or formula yourself.
 -   **Feature gaps** — Signals tables aren't currently supported.
 -   **Data boundaries apply** — Only processes data you provide or data from supported sources and enrichments.
 
@@ -137,14 +137,14 @@ If you hit the limit and need it increased, contact support.
 
 ### I asked Sculptor to update an existing column but can't find the changes
 
-Sculptor can only **create new columns** — it cannot modify existing columns in place. When you ask Sculptor to update a column's prompt or formula, it creates a new column with those changes instead.
+Sculptor cannot modify columns you created manually — when asked to update a column you built yourself, it creates a new column with those changes instead.
 
 To find Sculptor's proposed column:
 
 -   **Scroll right** in your table. The new column is added to the right of your existing columns as a pending suggestion.
 -   On Pro and Enterprise plans, click **Review changes** in the tab bar above your table to see a summary of all proposed columns.
 
-To update an existing column directly without creating a new one, click into that column's header and edit its prompt or formula manually.
+To update a manually-built column directly without creating a new one, click into that column's header and edit its prompt or formula yourself.
 
 ### Sculptor keeps entering sandbox mode when I add a column
 
