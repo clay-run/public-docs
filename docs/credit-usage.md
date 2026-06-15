@@ -138,6 +138,23 @@ This prevents unexpected credit usage when you add new data to tables with exist
 
 ## Troubleshooting unexpected credit usage
 
+### Enrichments ran on all rows when setting up a new table
+
+The import warning and the first-10-rows auto-run limit both protect you when **adding a source to an existing table** — but neither applies when you create a **brand-new table** with a source and enrichment columns for the first time.
+
+-   **No import warning**: Clay shows the confirmation modal only when a source is added to a table that already has enrichment columns. A new table has no action columns at the moment the source first runs, so no credit-spend warning appears.
+-   **Enrichments fire on all imported rows**: The first-10-rows auto-run limit only applies when importing into an existing table. For a new table, enrichments with auto-run enabled queue on every row the source imports — not just the first 10.
+
+To safely test a new table before committing credits at scale:
+
+1.  Turn table-level auto-run **off** before running your source for the first time (click `⛭` → toggle **Auto-run** off).
+2.  Import your source — rows load into the table without triggering any enrichments.
+3.  Select 5–10 rows, right-click, and choose **Run rows** to manually test your enrichments on a small batch.
+4.  Click individual action cells to see the **Charged** value and confirm the per-row cost.
+5.  Once you're satisfied, turn auto-run back **on** and choose **Update cells** to process the remaining rows.
+
+See [Ways to save Clay credits](clay-credit-conservation.md) for the full recommended testing workflow.
+
 ### Credits consumed while auto-run is off
 
 If table-level auto-run is disabled but credits are still being consumed, the most likely causes are manual or team-triggered actions:
