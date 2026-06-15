@@ -55,7 +55,7 @@ Use this action to retrieve a list of members from a specified Slack channel.
 
 **Inputs**
 
--   **Slack channel**: Select a public channel from the dropdown. The dropdown lists **public channels only** — private channels do not appear. For a private channel, switch the input to text mode and enter the channel **ID** (for example, `C04F8AWK44T`) instead of the channel name. To find a channel's ID: right-click the channel name in Slack → **Copy link** — the ID (starting with `C`) appears at the end of the copied URL.
+-   **Slack channel**: Enter the name of the Slack channel (without the #) from which you want to retrieve members (e.g., "fun-and-random").
 -   **Message**
 
 ### **Run settings**
@@ -177,11 +177,11 @@ Clay uses these permissions only to execute the workflows you configure. Clay do
 
 ### New channels not appearing in the channel picker
 
-Clay fetches your Slack channel list live each time you open the **Slack channel** dropdown, so newly created channels should appear automatically. If they still don't show up:
+The channel list in the **Slack channel** dropdown is cached. If a newly created channel doesn't appear, click **Refresh fields** at the top of the action's settings panel to fetch an updated list. If the channel still doesn't show up after refreshing:
 
 1. **Check whether the channel is public or private.**
-   - **Public channels** are listed automatically as soon as they exist in your Slack workspace.
-   - **Private channels** only appear if the Clay integration bot has been explicitly invited to them. Open the private channel in Slack, go to its member settings, and invite the Clay bot — then reopen the channel dropdown in Clay.
+   - **Public channels** are listed automatically once they exist in your Slack workspace. If a public channel is still missing after clicking **Refresh fields**, check that the Clay app hasn't been restricted at the workspace level by a Slack admin.
+   - **Private channels** only appear if the Clay integration bot has been explicitly invited to them. Open the private channel in Slack, go to its member settings, and invite the Clay bot — then click **Refresh fields** in Clay.
 
 2. **Reconnect your Slack integration** to get a fresh OAuth token. This resolves cases where the token has become stale or lost permissions:
    - Go to **Settings → Connections** in Clay.
@@ -194,15 +194,10 @@ Clay fetches your Slack channel list live each time you open the **Slack channel
    - `groups:read` — lists private channels the bot has been invited to
    - `chat:write` — sends messages as the Clay bot
 
-### `channel_not_found` error when posting to a private channel
-
-If a Slack action returns `{"ok":false,"error":"channel_not_found"}` when targeting a private channel:
-
-1. **Invite the Clay bot to the channel.** In Slack, open the private channel and type `/invite @Clay`, or add the Clay app through the channel's member settings. The Clay bot must be a member of any private channel it posts to.
-
-2. **Use the channel ID, not the channel name.** The Slack API requires a channel **ID** for private channels — display names are not accepted. A channel ID starts with `C` and looks like `C04F8AWK44T`. To find it: right-click the channel name in Slack → **Copy link** — the ID is the segment at the end of the copied URL.
-
-> **Note for "Send for approval":** The channel dropdown for this action shows only public channels. For a private channel, switch the **Slack channel** input to text mode and enter the channel ID directly.
+4. **Use the channel ID as a fallback.** If the channel still doesn't appear after the steps above, you can target it directly by its Slack channel ID — this bypasses the channel picker entirely:
+   1. In Slack, open the channel and copy its URL. The channel ID is the alphanumeric string at the end (for example, `C0123ABCDEF`).
+   2. In Clay, click the **gear icon (⚙)** next to the **Slack channel** field and switch to **Text with tokens** mode.
+   3. Paste the channel ID. Clay passes this value directly to Slack's API, so the channel resolves correctly even if it doesn't appear in the picker.
 
 ### My Slack workspace requires admin approval and the Slack Marketplace link shows an error
 
@@ -215,3 +210,18 @@ Once your Slack workspace admin has approved the Clay app, complete the connecti
 3. Since your admin already approved Clay, you won't be prompted for workspace approval again — it will connect straight through.
 
 Make sure you are logged into your Slack workspace in the same browser when you do this.
+
+### Bot name or Emoji inputs have no effect
+
+If you've filled in the **Bot name** or **Emoji** fields but the Slack message still arrives under the default Clay bot name and avatar, your Slack connection is most likely missing the `chat:write.customize` scope.
+
+**Why this happens:** The `chat:write.customize` scope is required for Slack to honor a custom bot name and icon per message. This scope is enabled by default when you first connect Slack to Clay — but if you chose reduced permissions during the OAuth flow, it may not have been granted. When the scope is absent, Slack silently sends the message with the default bot identity and ignores the values you set for **Bot name** and **Emoji**.
+
+**To fix it:**
+
+1. Go to **Settings → Connections** in Clay.
+2. Find **Slack** in your connections list.
+3. Click the **...** menu next to your Slack account and select **Edit**.
+4. Re-authenticate your Slack account and make sure to accept the `chat:write.customize` scope when prompted.
+
+After reconnecting with the scope in place, new runs of the **Send message to channel** action will use the custom bot name and emoji you specified.
