@@ -261,8 +261,6 @@ Clay's scheduled source runs continue to fire normally after the limit is reache
 
 **Auto-delete does not help for these source types.** Auto-delete only resets the source record count for webhooks, send table data, and signal sources. For Snowflake query imports, HubSpot, Salesforce, and other CRM or database connections, auto-delete removes rows from the table view but the source record count keeps accumulating. See [auto-delete](auto-delete.md) for source compatibility details.
 
-**For HubSpot lists exceeding 50,000 records** (for example, 100k companies) that you want to process all at once: use [Bulk Enrichment](bulk-enrichment.md) instead of a standard table. Export your HubSpot list to CSV from HubSpot, then create a Bulk Enrichment table and select **Import from CSV** as the source type — it handles large datasets without the 50,000-row limit. Note that HubSpot is not yet available as a direct Bulk Enrichment CRM import source (Salesforce and CSV only today).
-
 **To resolve this:**
 
 1.  **Create a new import source.** Delete the old source definition and add a new one with the same query or connection settings. A new source starts at a fresh 0/50,000 record count. Before adding the new source, enable [auto-dedupe](table-management-settings.md) on a unique identifier column (such as email or company domain) — this automatically removes any duplicate rows if the new source re-imports records already present in your table.

@@ -167,6 +167,18 @@ Changing a HubSpot list's membership criteria (for example, tightening segment f
 
 To refresh your table to reflect the updated list, see [Why doesn't my Clay table update when I change the source filters?](https://www.clay.com/university/guide/sources#faqs) in the Sources guide.
 
+### My HubSpot list has more than 50,000 records — how do I process all of them?
+
+The **Import objects from HubSpot** source is limited to 50,000 records. Enabling auto-delete does not bypass this limit for HubSpot imports — auto-delete only resets the record count for webhook and send-table-data sources, not for CRM imports.
+
+For large, one-time batch processing (for example, 100k companies), use [Bulk Enrichment](bulk-enrichment.md) instead of a standard table:
+
+1. Export your HubSpot list to CSV from HubSpot.
+2. Create a Bulk Enrichment table (`New` → `Bulk enrichment`) and select **Import from CSV** as the source type.
+3. Configure your enrichment columns and run.
+
+Bulk Enrichment handles large datasets without the 50,000-row limit. Note that HubSpot is not yet available as a direct Bulk Enrichment CRM import source (Salesforce and CSV only today); exporting to CSV first is the current workaround.
+
 ### Why does my HubSpot lifecycle stage column show an internal code instead of the display label?
 
 HubSpot's API returns internal codes for enumeration/dropdown fields rather than the human-readable labels shown in HubSpot. For example, a contact at the "Marketing Qualified Lead" stage will appear as `marketingqualifiedlead` in Clay. This applies to any HubSpot dropdown property, not just lifecycle stage.
