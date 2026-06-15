@@ -619,6 +619,24 @@ This error means the API credentials in your HTTP API action are no longer valid
 
 **Tip:** Saving credentials in a header account (`Settings → Connections`) is the easiest way to manage token rotation — when a token expires, you only need to update it in one place instead of editing every column individually.
 
+### 429 (Too Many Requests) or persistent rate limit errors
+
+This error means Clay is sending requests faster than the target API's rate limit allows. Clay's **Retry on failure** setting retries individual failed requests, but does not reduce the overall send rate — if Clay is processing rows faster than the API's limit, retries will keep hitting the same wall.
+
+**How to fix:**
+
+Configure the **Custom rate limit** setting to throttle Clay's request rate. Open the HTTP API column settings, go to the **Configure** tab, and scroll to the **Custom rate limit** collapsible section.
+
+Check the target API's documentation for its stated rate limit (e.g., "100 requests per minute") and enter those values directly:
+
+| API rate limit | Request Limit | Duration (ms) |
+|---|---|---|
+| 100 requests per minute | 100 | 60,000 |
+| 800 requests per minute | 800 | 60,000 |
+| 10 requests per second | 10 | 1,000 |
+
+The minimum rate Clay allows is 1 request per second (`Request Limit: 1, Duration: 1000 ms`). For full details, see **Step 7: Custom rate limit** in the manual configuration section above.
+
 ### "Body parse error" or in-editor JSON syntax error
 
 This error indicates a formatting issue in your JSON body. It can appear in two forms:
