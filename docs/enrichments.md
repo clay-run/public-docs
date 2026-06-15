@@ -94,6 +94,10 @@ You can track credit usage for your workspace in the [credit usage](https://www.
 
 ### "My enrichment column only ran on the first 10 rows — why didn't it run on all rows?"
 
-When you set up a new enrichment column using the guided wizard, Clay automatically runs the column on the first 10 rows as a quick preview. The remaining rows are not queued and stay blank until you trigger a run manually. The same result occurs if you selected **Save and run 10 rows** from the save dropdown when adding or editing the column.
+There are two common causes:
 
-To run the column on all remaining rows, right-click the column header and choose **Run column** → **Run N empty or out-of-date rows**.
+**New column wizard preview.** When you set up a new enrichment column using the guided wizard, Clay automatically runs the column on the first 10 rows as a quick preview. The remaining rows are not queued and stay blank until you trigger a run manually. The same result occurs if you selected **Save and run 10 rows** from the save dropdown when adding or editing the column.
+
+**Find Companies / Find People / Find Jobs source added to an existing table.** When one of these sources adds rows to an existing table, Clay automatically runs enrichments on only the **first 10 imported rows**, regardless of the table-level auto-run setting. The remaining rows are added to the table but do not trigger auto-run. This is intentional behavior to prevent large, unintended credit burns — a source adding many rows to a table with multiple enrichment columns could otherwise trigger a significant spend all at once. This applies every time the source runs and adds new rows, not just the first time it is set up.
+
+In either case, to process the remaining rows: right-click the enrichment column header and choose **Run column** → **Run N empty or out-of-date rows**.
