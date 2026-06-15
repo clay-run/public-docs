@@ -355,6 +355,15 @@ You don't need a clean CRM to get started — CRM cleanup is often the first use
 
 Yes. Segments update in real time as records enter or change, typically within 15 minutes. Enrichments and actions trigger automatically for new records when the autoenrich toggle is enabled. No manual runs required after initial setup.
 
+### Why didn't my audience count change after I tightened my search filters?
+
+Audience searches (Find People and Find Companies sources) are **additive** — the search only adds net-new contacts going forward and never removes contacts already in your audience. If your original search pulled in a large set of contacts, tightening the filters afterward won't reduce that count. Contacts added by the earlier, broader search remain.
+
+To work with a strictly smaller set:
+
+1.  Create a new search with the narrower filters — click `Add data` → `Find people` or `Find companies` and set your tighter criteria.
+2.  You don't need to rebuild your enrichment setup from scratch. In your existing enrichment table's **Run setup** panel, update the source to point at the new segment. If the enrichment has already started running, pause and reset it first to return to setup state before editing the source.
+
 ### Can I sync an audience to multiple ad platforms?
 
 Yes — you can add multiple ad platforms to a single audience sync. After your initial sync is active, an **Expand your reach** section appears on the Sync tab. Click **Add** next to any available platform to configure field mappings for that provider. The new platform will sync on the same schedule as your existing provider.
