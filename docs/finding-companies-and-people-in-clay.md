@@ -212,6 +212,26 @@ The exclusion options above remove matched records before they enter your table.
 
 This pattern is especially useful when your suppression list changes over time (update the lookup table and the condition reflects the new list automatically), when you're pulling contacts from multiple sources and want a single suppression layer, or when you need to exclude records discovered after the initial search.
 
+### Excluding people at specific companies (e.g., current customers)
+
+The **Exclude People** filter in a Find People source only removes specific individuals by LinkedIn URL — it does not accept a list of companies. To filter out everyone who works at your current customers, competitors, or other off-limits organizations, use one of two approaches.
+
+**Option 1 — Start with Find Companies and exclude customer companies upfront**
+
+If you haven't built your people table yet (or are willing to re-run the source from scratch), the cleanest approach is a two-step workflow:
+
+1.  Create a **Find Companies** table with your target criteria.
+2.  In the source configuration, expand **Exclude companies** and add your customers table, a CSV of customer domains, or a comma-separated list of domains.
+3.  From the resulting company table, click **Tools** → **Find People at These Companies**. People at excluded companies will not appear in the people table.
+
+**Option 2 — Filter an existing people table by the company the person works at**
+
+If you already have a populated Find People table and want to suppress contacts from customer companies without re-running the source:
+
+1.  Make sure your customers exist in a Clay table with at least a company domain column.
+2.  In your people table, add a **Lookup single row in other table** column. Set `Table to search` to your customers table, `Target column` to the customer domain column, and `Row value` to the person's current company domain.
+3.  Add a **view filter** showing only rows where the lookup returned no match (the lookup column is empty). Contacts at customer companies are hidden from view without being deleted — your enrichment data is preserved.
+
 ## Limitations
 
 **Geographic coverage**
