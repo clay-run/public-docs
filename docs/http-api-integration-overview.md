@@ -513,7 +513,7 @@ If your server or firewall requires incoming requests to originate from a known 
 
 ### Enabling static IP for an HTTP API enrichment column
 
-1.  Contact your Clay account team or support to have static IP enabled for your workspace and the specific table where you plan to use it.
+1.  Contact your Clay account team or support to have static IP enabled for your workspace.
 2.  Open the HTTP API column settings in your Clay table.
 3.  At the bottom of the column configuration, toggle on **Use static IP**.
 
