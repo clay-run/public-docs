@@ -39,6 +39,14 @@ Follow these steps to set up auto-delete:
 
 **Warning:** Deleted rows are not recoverable.
 
+## Keeping space for incoming records
+
+Auto-delete runs after records are written to the table, not before. When records arrive, Clay checks whether the table is below the 50,000-row limit and creates the records first — the auto-delete cleanup job then runs separately, typically about a minute later. This means that if records keep arriving faster than auto-delete can clear space, the table can temporarily reach the 50,000-row limit and new records will be rejected.
+
+**Rejected records are not queued or retried.** If a record is turned away because the table is full, it is permanently lost — it will not be created once auto-delete runs and frees up space. For webhook sources, the sending system receives an error response (not a `200` status code), so you can detect the failure on the sending side and re-send if needed.
+
+**Best practice:** Set **Number of rows to keep** to a value well below 50,000. For example, setting it to 40,000 creates a 10,000-row buffer — auto-delete continually trims the table back to 40,000, leaving room for new records to arrive before the limit is reached. Keeping this value too close to 50,000 increases the risk of the table bursting past the limit during a high-volume burst.
+
 ## Source compatibility
 
 Not all source types support fully bypassing the 50,000 record import limit. Only the following source types clear the source record count when rows are deleted, allowing unlimited imports:
@@ -54,4 +62,14 @@ All other source types — such as CRM integrations, Snowflake, and database con
 
 **Incompatible source banner:** If auto-delete is already enabled and your table has one or more incompatible sources, a warning banner appears on the table. The banner title reads "Auto-delete is on with a source that isn't compatible." when exactly one incompatible source is present, or "Auto-delete is on with sources that aren't compatible." when multiple incompatible sources are present. The banner highlights the source closest to the limit with a description like: "[source name] has processed 12,000 of 50,000 records maximum." A details view lists all incompatible sources with their counts in the compact format `12,000 / 50,000`. For tables with incompatible sources, you will need to manually delete rows to stay within the 50,000-record limit — auto-delete cannot prevent the source from hitting the cap for these source types.
 
-**Continuous-streaming workflows:** Auto-delete allows a table to keep importing new records indefinitely only when the source continuously pushes incoming data — specifically, webhook, send table data, and signal sources. For scheduled CRM or database imports (such as Gong, Salesforce, HubSpot, or Snowflake queries configured to run on a recurring schedule), enabling auto-delete will delete processed rows from the table, but the source will still stop importing after 50,000 records are reached. To process records continuously — for example, enriching every new Gong call as it completes — use a **webhook source** in Clay and configure the external system to push records to Clay as they are created. For Gong specifically, you can do this with Gong's automation rules: create a webhook source in Clay, copy the webhook URL, then set up a Gong rule to send the call ID to that URL whenever a new call is processed.
+**Continuous-streaming workflows:** Auto-delete allows a table to keep importing new records indefinitely only when the source continuously pushes incoming data — specifically, webhook, send table data, and signal sources. For scheduled CRM or database imports (such as Gong, Salesforce, HubSpot, or Snowflake queries configured to run on a recurring schedule), enabling auto-delete will delete processed rows from the table, but the source will still stop importing after 50,000 records are reached. To process records continuously — for example, enriching every new Gong call as it completes — use a **webhook source** in Clay and configure the external system to push records to Clay as they are created. For Gong specifically, you can do this with Gong's automation rules: create a webhook source in Clay, copy the webhook URL, then set up a Gong rule to send the call ID to that URL whenever a new call is processes.
+
+## Archive deleted rows
+
+**Note:** Archive deleted rows is in early access. Contact your Clay account team to have it enabled for your workspace.
+
+When archive is enabled, the **Archive deleted rows** toggle appears in your auto-delete settings. Turning it on stores a copy of every auto-deleted row for up to 30 days after deletion. Archived rows can be downloaded as a CSV file from the History modal.
+
+You can also select an **Indexed column** in the archive settings. Indexing a column lets you search for and retrieve specific deleted rows within the 30-day archive window.
+
+To view deletion activity, open the **History** modal and select the **Auto-deleted rows** tab. The tab shows a daily and monthly breakdown of how many rows auto-delete has removed, so you can track throughput over time.
