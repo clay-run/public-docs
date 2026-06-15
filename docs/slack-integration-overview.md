@@ -210,3 +210,18 @@ Once your Slack workspace admin has approved the Clay app, complete the connecti
 3. Since your admin already approved Clay, you won't be prompted for workspace approval again — it will connect straight through.
 
 Make sure you are logged into your Slack workspace in the same browser when you do this.
+
+### Bot name or Emoji inputs have no effect
+
+If you've filled in the **Bot name** or **Emoji** fields but the Slack message still arrives under the default Clay bot name and avatar, your Slack connection is most likely missing the `chat:write.customize` scope.
+
+**Why this happens:** The `chat:write.customize` scope is required for Slack to honor a custom bot name and icon per message. This scope is enabled by default when you first connect Slack to Clay — but if you chose reduced permissions during the OAuth flow, it may not have been granted. When the scope is absent, Slack silently sends the message with the default bot identity and ignores the values you set for **Bot name** and **Emoji**.
+
+**To fix it:**
+
+1. Go to **Settings → Connections** in Clay.
+2. Find **Slack** in your connections list.
+3. Click the **...** menu next to your Slack account and select **Edit**.
+4. Re-authenticate your Slack account and make sure to accept the `chat:write.customize` scope when prompted.
+
+After reconnecting with the scope in place, new runs of the **Send message to channel** action will use the custom bot name and emoji you specified.
