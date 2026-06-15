@@ -143,4 +143,4 @@ Set workbook-level credit caps to prevent overspending. Admins can configure a w
 
 **Audiences**
 
-There are currently no workspace-level access controls specific to the Audiences feature. Note that connection access controls do apply to enrichment columns within Audiences — see [Access settings for connections](https://university.clay.com/docs/access-settings-for-connections) for details.
+There are currently no workspace-level access controls specific to the Audiences feature. Note that connection access controls do apply throughout Audiences — including enrichment columns and ad platform sync connections. See [Access settings for connections](https://university.clay.com/docs/access-settings-for-connections) for details.
