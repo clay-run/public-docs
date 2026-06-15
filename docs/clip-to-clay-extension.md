@@ -20,7 +20,7 @@ Both tools integrate seamlessly with your Clay workspace, making it easier to co
 
 The Clay for Chrome extension allows you to extract structured data from webpages. You can capture data from a single page, lists across multiple pages, or even custom-defined structures. Once extracted, the data can be added directly to your Clay table, downloaded as a CSV, or copied to your clipboard.
 
-**Note:** Clay for Chrome does not work on LinkedIn. If you want to add contacts from LinkedIn profiles or LinkedIn Sales Navigator to your Clay tables, use the [Clip to Clay extension](#clip-to-clay) instead.
+**Note:** Clay for Chrome does not work on professional networking sites. If you want to add contacts from professional profiles or professional network searches to your Clay tables, use the [Clip to Clay extension](#clip-to-clay) instead.
 
 ### Autodetected lists
 
@@ -66,7 +66,7 @@ To create a recipe for scraping structured data from profile or detail pages:
 
 ## Clip to Clay
 
-The Clip to Clay extension lets you quickly save full webpages into your Clay tables. It's useful for capturing unstructured data or bookmarking key pages. Unlike Clay for Chrome, Clip to Clay works on LinkedIn profile pages and LinkedIn Sales Navigator, letting you add contacts to your Clay tables directly from LinkedIn.
+The Clip to Clay extension lets you quickly save full webpages into your Clay tables. It's useful for capturing unstructured data or bookmarking key pages. Unlike Clay for Chrome, Clip to Clay works on professional networking profile pages and professional network search results, letting you add contacts to your Clay tables directly.
 
 ### Setting up
 
