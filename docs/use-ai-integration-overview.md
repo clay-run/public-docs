@@ -135,16 +135,6 @@ To call a custom or additional LLM from Clay, use the [HTTP API enrichment](http
 
 ## Troubleshooting
 
-### Cells suddenly stop returning results across all rows
-
-If your AI column cells stop returning results unexpectedly — with no specific error message, and the problem affecting all rows at once — this may indicate a Clay service incident rather than a column configuration problem.
-
-**Before troubleshooting your column setup, check [status.clay.com](https://status.clay.com) for any active incidents.** Clay service incidents can temporarily pause enrichment runs, Claygent columns, and other async actions. If an active incident is listed, no configuration changes are needed — cells will resume running once the incident resolves.
-
-Once the incident resolves, use **Force** run to reprocess any rows that may not have completed during the outage: click the column header, hover over **Run column**, and select **Force**.
-
-If the status page shows no active incidents and cells are still not returning results, proceed to the other troubleshooting entries below for your specific error or symptom.
-
 ### Cells showing "Some inputs missing"
 
 When a cell shows **"Some inputs missing"**, one or more column references in your prompt are marked as required but the underlying column is blank for that row. The cell will not run for affected rows.
@@ -180,9 +170,9 @@ To fix this:
 -   **Lower the Temperature.** In the column settings, set **Temperature** to **Low** or **Very Low**. Lower values make output more consistent and help the model follow format instructions reliably.
 -   **Add a downstream formula column as a safeguard.** For rows where the fields have already swapped, add a formula column that checks whether `response` looks like explanation text — for example, by detecting whether it reads as a full sentence — and falls back to the `reasoning` field when it does. This cleans up already-run data; the fixes above prevent the problem for future runs.
 
-### Cells showing "This request exceeds your budget limit"
+### Cells showing "Budget Credit Limit Reached"
 
-For AI columns using variable-priced models (such as GPT-4.1, Claude Sonnet, or Gemini 2.5 Pro) with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. This sets the maximum number of Clay credits that can be spent on a single row. Before running, Clay estimates the token cost from your prompt length. If the estimated cost exceeds this limit, the cell shows an error beginning with **"This request exceeds your budget limit"** and does not complete. Clicking the cell reveals the full message, which includes the estimated credit cost and your current budget setting.
+For AI columns using variable-priced models (such as GPT-4.1, Claude Sonnet, or Gemini 2.5 Pro) with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. This sets the maximum number of Clay credits that can be spent on a single row. If the estimated cost of running a row exceeds this limit, the cell shows **"Budget Credit Limit Reached"** and does not complete. Clicking the cell reveals the full message with the estimated cost and your current budget.
 
 To fix this, open the column settings and increase the **Clay Credit Budget** value. Consider the length of your prompt and system prompt when choosing a limit, as longer prompts cost more credits per row.
 
