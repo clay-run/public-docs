@@ -43,6 +43,10 @@ If you need results that meet _either_ of two different filter combinations, set
 
 If you don't have a company list, use **People search as a source** — a standalone search by title or other criteria that returns a new table.
 
+**If you're receiving data row-by-row via webhook** — for example, one row per incoming job opening — and need to find people automatically for each row, include a company identifier (company name, domain, or company profile URL) in each webhook payload. With a company identifier in the row, add **Find Contacts at Company** as an enrichment column in your webhook table. This action runs independently per row, finds contacts at that specific company filtered by job title, and stores results in the cell. To route those contacts into individual rows, add a **Send Table Data** column (using **Send row for each item in a list**) to push each contact to a separate people table where you can apply enrichments and AI scoring.
+
+**Note:** The standalone **Find People source** does not run per row — it imports results at creation time and is not retriggered by new incoming webhook rows. For automated per-row people searches triggered by incoming data, use **Find Contacts at Company** (enrichment column) instead.
+
 ### Enriching your results
 
 **Find People at These Companies** returns basic profile data for each contact: name, title, current company, LinkedIn URL, and location. **Work emails and phone numbers are not included** — add them as separate enrichments after your people table is created:
@@ -125,6 +129,8 @@ Clay gives you three ways to get contacts from a company list. Here's how they d
 When you run `Find People at These Companies` as an in-table action (rather than launching a separate people search), you can dynamically filter by location by referencing a location column from your company table. This lets you customize the location filter per company without running multiple separate searches.
 
 For example, if you have a "Headquarters Location" column in your company table, you can reference that column in the location filter when setting up the in-table action. Each company will then be searched using its specific location, rather than applying a single static location filter across all companies.
+
+**Note:** Location filtering accepts named regions, countries, and cities — distance-based filtering (for example, "within 35 miles of a location") is not available in Find People or Find Contacts at Company.
 
 ### Verify current employment before using results
 
@@ -211,6 +217,26 @@ The exclusion options above remove matched records before they enter your table.
 3.  On each enrichment you want to gate, open **Run settings → Only run if** and add a condition such as `{{Suppression Lookup}} is empty`. The enrichment will only run for records not found in your suppression list.
 
 This pattern is especially useful when your suppression list changes over time (update the lookup table and the condition reflects the new list automatically), when you're pulling contacts from multiple sources and want a single suppression layer, or when you need to exclude records discovered after the initial search.
+
+### Excluding people at specific companies (e.g., current customers)
+
+The **Exclude People** filter in a Find People source only removes specific individuals by their professional profile URL — it does not accept a list of companies. To filter out everyone who works at your current customers, competitors, or other off-limits organizations, use one of two approaches.
+
+**Option 1 — Start with Find Companies and exclude customer companies upfront**
+
+If you haven't built your people table yet (or are willing to re-run the source from scratch), the cleanest approach is a two-step workflow:
+
+1.  Create a **Find Companies** table with your target criteria.
+2.  In the source configuration, expand **Exclude companies** and add your customers table, a CSV of customer domains, or a comma-separated list of domains.
+3.  From the resulting company table, click **Tools** → **Find People at These Companies**. People at excluded companies will not appear in the people table.
+
+**Option 2 — Filter an existing people table by the company the person works at**
+
+If you already have a populated Find People table and want to suppress contacts from customer companies without re-running the source:
+
+1.  Make sure your customers exist in a Clay table with at least a company domain column.
+2.  In your people table, add a **Lookup single row in other table** column. Set `Table to search` to your customers table, `Target column` to the customer domain column, and `Row value` to the person's current company domain.
+3.  Add a **view filter** showing only rows where the lookup returned no match (the lookup column is empty). Contacts at customer companies are hidden from view without being deleted — your enrichment data is preserved.
 
 ## Limitations
 
