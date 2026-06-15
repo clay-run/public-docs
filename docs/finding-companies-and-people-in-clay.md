@@ -307,6 +307,19 @@ Lookup Rows returns the full company row including enrichment column outputs. To
 
 **Alternatively**, extract specific enrichment values into **formula columns** in your company table first (for example, a column with formula `{{Clearbit Enrichment}}?.revenue`). Formula columns are included in Company Table Data, so those extracted values will flow through to the people table when Company Table Data runs.
 
+### "Company Table Data" shows "Unable to fetch fields for company table"
+
+If rows in your **Company Table Data** column fail with the error **"Unable to fetch fields for company table."**, the Table ID in the column configuration contains a leading `/` that prevents Clay from resolving the referenced table.
+
+In Clay input fields, typing `/` opens the column picker so you can reference a value from another column in the row. If a leading `/` appears before a table ID (for example, `/t_0abc123` instead of `t_0abc123`), Clay treats the entry as a column reference rather than a static table ID. Because no column with that name exists, the lookup can't find the table and the error fires for every row.
+
+**To fix this:**
+
+1.  Right-click the **Company Table Data** column header → **Edit column**.
+2.  In the configuration panel, locate the **Table ID** field.
+3.  Remove the leading `/` so the field contains only the bare table ID (e.g., `t_0abc123...`).
+4.  Save and re-run the affected rows.
+
 ### Getting "Invalid companies provided" error despite having a valid LinkedIn URL
 
 If you see the error **"Invalid companies provided: please make sure you are using LinkedIn URLs or Company Domains"** but your column already contains LinkedIn URLs, check the URL format. This error occurs when the LinkedIn URL is a **person profile URL** (`linkedin.com/in/<name>`) rather than a company or school page URL — even though the URL itself is valid LinkedIn syntax, the action only accepts company-type identifiers.
