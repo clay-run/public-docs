@@ -94,3 +94,30 @@ To get the display name (or any other field) from a linked record, add a second 
 6. Once the lookup succeeds, open the **Cell details** panel on that column and map the name field (or whichever field you need) to a new column.
 
 Alternatively, you can add a **Formula** or **Lookup** field in Airtable itself that returns the linked record's name as plain text, then re-pull that field into Clay.
+
+## Adding more Airtable fields to an existing table
+
+If you've already pulled Airtable records into a Clay table and want to bring in additional Airtable fields — without re-running the import (which would add duplicate rows) — use a **Lookup Record** column to fetch those extra fields by record ID.
+
+**Step 1 — Extract the Airtable Record ID into a column**
+
+When Clay imports Airtable records, each row stores the underlying Airtable Record ID in the source data. To make it usable as a lookup key:
+
+1. Click on any cell in your Airtable source column (labeled **Rows from: …**) to open the **Cell details** panel.
+2. Expand the record entry and locate the **id** field (a string like `recXXXXXXXXXXXXXX`).
+3. Hover that field and click **Add to column** to create a new column containing the Record ID. Give it a descriptive name such as *Airtable Record ID*.
+
+**Step 2 — Add a Lookup Record enrichment column**
+
+1. Click **+ Add column** and select **Airtable › Lookup Record**.
+2. Set **Base ID** to the same Airtable base your original source uses.
+3. Set **Table ID** to the same Airtable table.
+4. For **Lookup Field Name**, choose **Airtable Record ID**.
+5. For **Lookup Value**, reference the Airtable Record ID column you created in Step 1.
+6. Click **Submit** and run the column — each row should show **✅ 1 Record Found**.
+
+**Step 3 — Map the fields you need into new columns**
+
+Click any **1 Record Found** result to open **Cell details**. All Airtable fields for that record are listed. Hover the field you want and click **Add to column** to create a new Clay column from it. Repeat for any additional fields you need.
+
+Once you've extracted all the fields you need, you can delete the Lookup Record column if you no longer need it.
