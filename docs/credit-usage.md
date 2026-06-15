@@ -20,9 +20,7 @@ To check the credit usage in your workspace:
 2.  Go to `Settings` and then `Usage` in the sidebar.
 3.  Within `Workspace`, you can view folders, workbooks, and tables sorted by their usage.
 
-**Tip:** If your workspace is approaching or has reached its monthly credit limit, Clay displays an orange banner at the top of every page. Click **See usage** in that banner to go directly to the credit usage dashboard.
-
-Sort the content by `Name` (alphabetically) or by number of `Credits used` by clicking the column titles. You can `Export` this content as a CSV.
+Sort the content by `Name` (alphabetically) or by number of `Credits used` by clicking the column titles. To find a specific table or workbook by name, click the search icon and type part of the name to filter the list. You can `Export` this content as a CSV.
 
 ### Filter and sort credit usage
 
@@ -137,6 +135,20 @@ When you import data to existing tables (via Copy Paste from URLs, adding a sour
 This prevents unexpected credit usage when you add new data to tables with existing enrichment workflows.
 
 ## Troubleshooting unexpected credit usage
+
+### Credits consumed when a workspace member added rows
+
+When any workspace Editor adds rows to a table — manually, via CSV import, or through an integration — every enrichment column with auto-run enabled fires automatically for each new row, consuming credits. This applies regardless of how recently the table was last used: auto-run stays enabled until explicitly disabled, so rows added to an older or inactive table will still trigger all enrichments.
+
+To understand when a run happened, open the **Run view** in the [table credit usage dashboard](#understanding-table-specific-credit-usage). Each entry shows a timestamp and which columns ran.
+
+**Identifying who triggered the run:** The Workbooks tab shows the workbook's owner (its creator), not which team member triggered the run. For standard table runs, the credit dashboard does not attribute spend to individual users — only the **MCP** and **API** tabs show per-user breakdowns. If you cannot determine the source of a run from the usage dashboard, contact Clay support for further investigation.
+
+To prevent unexpected spend on tables you're no longer actively enriching:
+
+-   Disable table-level auto-run (click `⛭` → toggle **Auto-run** off) so new rows don't trigger enrichments until you're ready.
+-   Disable auto-run on individual columns that don't need to fire on every new row (column name → **Edit column** → **Run settings** → toggle **Auto-run** off).
+-   On Enterprise plans, set credit spend limits on workbooks to cap total consumption. See [Credit spend limits FAQ](credit-spend-limits-faq.md).
 
 ### Credits consumed while auto-run is off
 
