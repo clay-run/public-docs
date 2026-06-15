@@ -513,7 +513,7 @@ If your server or firewall requires incoming requests to originate from a known 
 
 ### Enabling static IP for an HTTP API enrichment column
 
-1.  Contact your Clay account team or support to have static IP enabled for your workspace.
+1.  Contact your Clay account team or support to have static IP enabled for your workspace and the specific table where you plan to use it.
 2.  Open the HTTP API column settings in your Clay table.
 3.  At the bottom of the column configuration, toggle on **Use static IP**.
 
@@ -618,6 +618,28 @@ This error means the API credentials in your HTTP API action are no longer valid
 3.  **Test with a single row** to confirm the new token works before re-running your full table.
 
 **Tip:** Saving credentials in a header account (`Settings → Connections`) is the easiest way to manage token rotation — when a token expires, you only need to update it in one place instead of editing every column individually.
+
+### "Clay received a 429 error from the API" (Too Many Requests)
+
+A 429 error means the external API is rejecting requests because Clay is sending them faster than the API's rate limit allows. To fix this:
+
+1.  Check the external API's documentation for its rate limit — for example, "10 requests per second" or "100 requests per minute."
+2.  Open your HTTP API column settings and go to the **Configure** tab.
+3.  Scroll to the **Custom rate limit** section and set:
+    -   **Request Limit** — the number of requests allowed in the time window (e.g., `10`).
+    -   **Duration (in ms)** — the length of that window in milliseconds (e.g., `1000` for 1 second, `60000` for 1 minute).
+4.  Save and re-run. Clay throttles requests automatically to stay within this limit.
+
+**Example — 10 requests per second:**
+
+```javascript
+Request Limit: 10
+Duration (ms): 1000
+```
+
+See [Step 7: Custom rate limit](#step-7-custom-rate-limit) for full field details and constraints.
+
+**Tip:** Clay also retries 429 responses once by default (see [Step 9: Retry on failure](#step-9-retry-on-failure)). Configuring a custom rate limit prevents 429s from occurring in the first place, rather than just retrying after they happen.
 
 ### "Body parse error" or in-editor JSON syntax error
 
