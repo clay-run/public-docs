@@ -78,7 +78,7 @@ When supported by an enrichment, a **Custom rate limit** collapsible section app
 -   **Request limit** — The maximum number of requests to send within the time window.
 -   **Duration (in ms)** — The length of the time window in milliseconds (between 1 and 900,000 ms / up to 15 minutes).
 
-The request limit and duration together must average at least 1 request per second (for example, 60 requests per 60,000 ms is valid; 1 request per 2,000 ms is also valid).
+The request limit and duration together must average at least 1 request per second (for example, 60 requests per 60,000 ms is valid; 1 request per 1,000 ms is the slowest valid setting).
 
 **Note:** Custom rate limit is not available for Clay's built-in AI enrichments (Use AI, Claygent, etc.). It only appears for enrichments that support custom rate limiting, such as HTTP API and Apollo OAuth enrichments.
 
