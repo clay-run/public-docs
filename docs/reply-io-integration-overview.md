@@ -52,5 +52,5 @@ Use this action to create a new contact in Reply.io. If the contact already exis
 -   **Email address**: Enter or select the contact's email address. This is required.
 -   **First name**: Provide the contact's first name.
 -   **Last name** (Optional): The last name of the contact.
--   **Other contact infomration including City, State, LinkedIn URL**
+-   **Other contact information including City, State, professional network profile URL**
 -   **Custom fields** (Optional): Any additional custom fields to set for the contact. Only fields that have been defined in your Reply.io account will be updated.
