@@ -205,7 +205,7 @@ If your use case requires storing free-form industry values that don't map to a 
 
 If a property exists in HubSpot but doesn't get updated when you run the Update Object action, two things are worth checking:
 
-**Blank values are silently skipped.** The **Ignore blank values** setting is enabled by default. When enabled, any property field that is empty or null in your Clay table is not sent to HubSpot — the existing HubSpot value remains unchanged with no error shown. If the column you are mapping has no value for a given row, the update for that property is skipped. To override this, open the column settings and disable **Ignore blank values** — but note that doing so will overwrite existing HubSpot data with blank values from Clay.
+**Blank values are silently skipped.** The **Ignore blank values** setting is enabled by default. When enabled, any property field that is empty or null in your Clay table is not sent to HubSpot — the existing HubSpot value remains unchanged. If the column you are mapping has no value for a given row, the update for that property is skipped. To override this, open the column settings and disable **Ignore blank values** — but note that doing so will overwrite existing HubSpot data with blank values from Clay. **Note:** If *every* property mapped in that column is blank for a row, the column shows a "No properties found to update" error rather than silently skipping — see the FAQ below for how to address this with a run condition.
 
 **A different HubSpot account is selected.** If multiple HubSpot accounts are connected to your workspace (for example, if teammates each added their own HubSpot connection), the Update Object action may be authenticating against a different instance than the one you intend to update. Open the column settings and confirm the HubSpot account shown is the correct one. You can verify by running a **Lookup object** action on the same record — if the property appears updated there, the write reached the right account.
 
@@ -291,6 +291,16 @@ Each HubSpot column stores a reference to the specific connection it was configu
 
 1. Open each affected column's settings and change the **Account** dropdown to select the new connection. This updates the column to use the new connection ID.
 2. If re-selecting the account in the existing column doesn't resolve the error, create a new column with the same HubSpot action and configuration. New columns automatically pick up the currently active connection and will run successfully.
+
+### Why does my HubSpot Update Object show "No properties found to update" when Ignore blank values is enabled?
+
+This error appears when **every** property mapped in that column is blank for a given row. When **Ignore blank values** is enabled (the default), Clay strips all blank fields from the payload before sending to HubSpot. If every mapped field is blank, nothing is left to send — and HubSpot returns "No properties found to update," which Clay surfaces as an error in the cell.
+
+This is different from the case where some mapped fields have values: when at least one field is populated, the blank fields are simply skipped and the non-blank ones are sent to HubSpot normally.
+
+**Fix:** Add a run condition so the column only fires when the source input has a value. Open the column settings, go to **Run settings → Only run if**, and add a condition that checks the mapped source field is not empty. Rows with no value will be cleanly skipped with no error.
+
+**Note:** The older **Update Contact** and **Update Company** actions handle this case differently — they return a success result with "Nothing to update" instead of an error. If you previously used one of those actions and recently switched to **Update Object**, this difference in behavior is expected.
 
 ### Why do HubSpot property fields not appear in the Update Object mapping section?
 
