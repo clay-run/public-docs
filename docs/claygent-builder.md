@@ -159,6 +159,19 @@ Common errors when writing schema by hand:
     -   **Remove the enum**: delete the `"enum"` array and keep only `"type": "integer"`, letting the model return any integer.
     -   **Switch to strings**: change `"type"` to `"string"` and quote the enum values (`"1000"`, `"500"`, `"100"`).
 
+-   **`object` field with `additionalProperties: false` but no `properties` defined — sub-fields always come back empty.** An `object` field that sets `"additionalProperties": false` without a `"properties"` map is syntactically valid JSON Schema, but it tells the AI provider that no sub-fields are permitted. The model always returns `{}` for that field — the column runs and completes with no error message, but none of the structured data you expected appears. Fix: add a `"properties"` map listing every sub-field you want the AI to populate:
+
+    ```json
+    "engagementSummary": {
+      "type": "object",
+      "description": "Summary of engagement metrics.",
+      "properties": {
+        "totalPosts": { "type": "number" },
+        "avgLikes": { "type": "number" }
+      }
+    }
+    ```
+
 -   **Field named `confidence` overrides Clay's built-in confidence indicator.** Clay automatically adds a `confidence` field to your output schema with enum values `low`, `medium`, `high`, and `very high` — but only when your schema does not already define one. This field drives the red/yellow/green color indicator on each response cell. If you define your own field named `confidence` (for example, as a numeric score), Clay skips injecting its own, and your custom field's values are used for the color indicator instead. Because values like `0.98` don't match the expected text enum, the normalizer defaults to `low` and every cell shows red. To fix it, rename your custom field — for example, to `confidence_score` — and rerun the column. Clay will then inject its own `confidence` field and the color indicator will work correctly.
 
 To avoid writing schema by hand, click **Generate from prompt** to have Clay auto-generate a valid schema from your prompt.
@@ -301,6 +314,19 @@ There are two ways to resolve this:
 
 -   **Fill in the missing data.** Ensure the referenced column has a value for every row you want to run.
 -   **Make the input optional.** Click the column name → **Edit column**, scroll to the **#INPUTS#** section, and toggle off the **Required to run** switch next to each input that doesn't always have data. When an input is optional, the cell will still run for rows where that field is blank — the empty value is simply omitted from the prompt for that row.
+
+### How do I get individual Claygent result fields into their own table columns?
+
+After your Claygent column has run, you can extract any field from its results into a dedicated table column directly from the cell details panel:
+
+1.  Click any cell in the Claygent column that has results to open the **cell details** panel on the right.
+2.  Each field the agent returned — such as Email, URL, Phone, City, or any field from your output schema — appears listed with its value for that row.
+3.  Next to the field you want, click **Add [field name] as new column** → **Create column**. Clay creates a new table column populated with that field's value across all rows.
+4.  To route the field's values into a column you've already created, click **Map to an existing column** and select it from the list.
+
+Repeat for each field you want to extract into its own column.
+
+**Tip:** If you know which fields you need before running, define them as named output fields in the column settings (click the column name → **Edit column** → **Outputs** section). Named fields appear in the cell details panel and can also be referenced by downstream formula columns using the `/` property picker.
 
 ### How do I chain Claygents when the first one sometimes returns empty values for certain output fields?
 
