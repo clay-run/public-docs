@@ -114,6 +114,8 @@ Signals follow the same access rules as a single column:
 
 Enrichment columns within bulk enrichment tables (Audiences) and Sculptor/Prospector surfaces follow the same access rules described above for individual columns and waterfalls.
 
+Connection access settings also govern **ad platform sync connections** in Audiences. When configuring a sync destination (LinkedIn, Meta, or Google Ads), only connections you're allowed to use appear in the picker. If a teammate set up an ad account connection and restricted it to specific people, you won't see that connection in the sync setup — even if it's marked as the workspace default. Setting a connection as default affects auto-selection only, not visibility. To gain access, ask the connection owner or a workspace admin to add you to the connection's allowlist under `Settings` → `Connections`.
+
 ## FAQs
 
 **Can admins access every connection in the workspace?**Admins do not, by default, have access to build workflows with every connection in the workspace. All admins can, however, add themselves to any connection in the workspace. Admins are always able to manage and view all connections in the workspace.
