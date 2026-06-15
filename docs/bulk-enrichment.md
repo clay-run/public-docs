@@ -37,8 +37,6 @@ Once your data is successfully exported, enriched rows are automatically deleted
 4.  Select inputs from `Salesforce object` and `List view`.
 5.  Click `Save` and start adding [enrichments](https://www.clay.com/university/guide/enrichments) normally.
 
-**Note:** The CRM import option currently supports Salesforce only. HubSpot is not yet available as a direct import source for bulk enrichment. If your data is in HubSpot, export your list to CSV from HubSpot and use the **Import from CSV** option instead.
-
 ### Using a bulk enrichment
 
 In the bulk enrichment settings, you can adjust several options:
