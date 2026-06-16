@@ -171,4 +171,10 @@ Clicking **Stop** on a running table or canceling a column run does not immediat
 
 To avoid unexpected spend before it starts, disable [auto-run](table-management-settings.md) before importing large batches of rows. See [Stopping a run](run-progress.md) for full details on stop and cancel behavior.
 
+### Credits shown for deleted or archived workbooks
+
+If the usage dashboard shows credits for a workbook or table labeled **Archived**, those credits were consumed while the workbook was active — before deletion. Once a workbook or table is moved to Trash, its scheduled runs and auto-run stop, so no new credits accumulate after deletion. Permanently deleting from Trash has the same effect and is irreversible.
+
+To confirm a workbook is no longer consuming credits, verify it appears in Trash (accessible from the bottom-left of the workspace sidebar). Emptying Trash is not required to stop credit usage — moving to Trash already handles that. See [Delete content within your workspace](delete-content-within-your-workspace.md) for details on the deletion and recovery workflow.
+
 **Learn more:** For related information, check out our [credit limit FAQs doc](http://university.clay.com/docs/credit-spend-limits-faq).
