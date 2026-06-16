@@ -72,6 +72,24 @@ After importing Find People results, use Clay's enrichments to add contact infor
 
 **Mobile phone:** To find mobile phone numbers, click `Add enrichment`, search for `Phone number`, and select the waterfall option under **Waterfalls**. The phone number waterfall cascades through multiple providers in sequence — providers that return no result are skipped at no credit cost, so you only pay when a provider finds a number. For provider recommendations by region, see [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md).
 
+## Troubleshooting
+
+### Find People returns 0 results or fewer than expected
+
+If your search preview shows 0 results or far fewer than expected, the most common causes are:
+
+-   **Filters set too narrowly** — title, location, or seniority filters that are too specific can exclude real matches. Try broadening one filter at a time: start with location (use a broader region or metro area instead of a specific city), then title keywords (shorter terms like "CFO" or "Finance" match more variations than multi-word phrases like "FP&A Manager" or "Head of Finance").
+-   **Title matching mode too strict** — the default title match finds synonyms and variations. If you've enabled **Job title must contain exact** or **Job title must match exactly**, switch back to the default to allow broader matching and capture more results.
+-   **Multi-word title phrases** — comma-separated lists of multi-word phrases can miss profiles that use variations or abbreviations. Use shorter individual keywords and let the default match mode find the variations automatically.
+
+For more troubleshooting, including data coverage and domain mapping issues, see [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md).
+
+### Re-running Find People returns 0 new results
+
+This is expected behavior. The Find People source deduplicates new results against rows already in your table — re-running the same source on a table that already contains those contacts returns 0 new records. There is no setting to disable this.
+
+**To re-import the same contacts** (for example, when testing your table setup or resetting your search): delete the existing rows from your People table first, then re-run the source. Once the rows are cleared, the search imports those contacts again.
+
 ## Importing from a Sales Navigator search URL
 
 If you have a saved Sales Navigator search and want to pull those results into Clay, use the **Find people from external search** source — not the standard Find People source described above.
