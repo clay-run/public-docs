@@ -192,8 +192,8 @@ Admins can set **Data Credit spend limits** for individual workbooks to control 
 
 **How to enable workbook credit limits:**
 
-1.  Open your workbook. In the settings panel, under `Credit spend limit`, click `Manage`.
-2.  Toggle `Enabled credit spend limit` and add a number to `Workbook limit`.
+1.  Open your workbook. In the settings panel, under `Workbook credit limit`, click `Manage`.
+2.  Toggle `Enable workbook credit limit` and add a number to `Workbook limit`.
 3.  Click `Save changes`.
 
 Once enabled, all Actions run within that workbook will contribute to the workbook's Data Credit spend. When the limit is reached, you'll see an error message preventing further Actions from running.
