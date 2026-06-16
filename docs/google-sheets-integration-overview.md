@@ -19,7 +19,7 @@ You can pull rows from a Google Sheet directly into a Clay table as a source. Ea
 
 ### Setting up a Google Sheets source
 
-1.  In a Clay table, click `Tools` → `Import` (or `Actions` → `Import`, depending on your account).
+1.  In a Clay table, click `Tools` → `Import` (or `Sources`, depending on your account).
 2.  Search for `Google Sheets` and select the source option.
 3.  Connect your Google account and select your spreadsheet.
 4.  Choose the **Sheet ID** (tab) to import from.
