@@ -94,7 +94,7 @@ The **Only run if** allows you to set conditions to control when the AI runs. Fo
 
 The **Write to Other Table** action has two main constraints that you might come across.
 
--   There can be a **maximum of 10 tables** connected via Write to Other Table. **This includes tables across workbooks.**
+-   Write to Other Table connections count toward the same workspace-wide table connection limit as Send Table Data (20 tables by default). **This includes tables across workbooks.** If you exceed the limit, you'll see the error: *"Maximum number of table ID checks exceeded (limit: 20)"*.
 -   Data can only be sent in a linear direction (A → B → C). In other words, loops are not possible (A → B → A).
     -   If you want to go the other direction, you can reference data from any table (B→ A) using one of these other actions:
         -   **`Lookup Multiple Rows in Other Table`**
@@ -129,7 +129,7 @@ If you have data in a comma-separated list and want to send it to a new column o
 
 1.  Use **Extract Data From Values** to process the CSV data.
 2.  Add the correct column using the **Forward Slash** (/) command.
-3.  Apply a custom extraction **Regex**: `[^,"]+\"?[^,"]+`
+3.  Apply a custom extraction **Regex**: `[^,\"]+\\\"?[^,\"]+`
 
 This will split the values into a list.
 
