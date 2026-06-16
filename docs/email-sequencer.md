@@ -59,12 +59,16 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
         -   `Update send limit`: Change the daily number of emails the account can send per day
         -   `Update sender variables`: Change the sender variable values for the account
 6.  Adjust your `Schedule settings`:
+    -   `Schedule type`: Choose how emails are timed:
+        -   `Optimized for deliverability` (default): Sends Monday–Friday, 9 AM–5 PM, with a 20-minute gap between sends.
+        -   `Send immediately`: Sends 24/7 as fast as account limits allow. Recommended for inbound or transactional use cases only.
+        -   `Custom schedule`: Configure your own sending window. Emails only go out during the window you configure, even after launch — if you launch outside the window, emails will queue until it opens.
     -   `Timezone`: Select the timezone to send from (we recommend matching your prospects').
-    -   `Days of the week`: Choose which days emails are sent.
-    -   `Start/End times`: Set sending windows within the chosen timezone.
-    -   `Minimum time between sends`: Adjustable from 5–30 minutes; longer delays improve deliverability.
+    -   `Days of the week` (Custom schedule only): Choose which days emails are sent.
+    -   `Start/End times` (Custom schedule only): Set sending windows within the chosen timezone.
+    -   `Minimum time between sends` (Custom schedule only): Adjustable from 5–30 minutes; longer delays improve deliverability.
     -   `Maximum new leads per day`: Caps the number of new leads contacted daily (in addition to account send limits).
-    -   `Campaign start date` (optional): Set a future launch date, or start immediately based on your settings.
+    -   `Campaign start date` (optional): Set a future launch date, or leave blank to start sending when the next window opens.
 7.  Explore `Advanced settings` if needed:
     -   `Webhooks`: Route campaign events to a specific Webhook destination instead of the default Campaign Events Clay table. Example: Send Smartlead metrics to tools like OutboundSync or Enrichley for downstream routing.
     -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled)
@@ -151,6 +155,24 @@ Our sequencer is powered by Smartlead, but everything runs on Clay credits. You 
 
 When a campaign is created, the `Sync leads to campaign` column pushes 10 rows so you can preview and configure your messages. After launching, the rest of your source table is not pushed automatically. To add all remaining rows, open your source table (the table where you created the campaign — not the campaign events table) and run the `Sync leads to campaign` column manually — click the run button in the column header.
 
+### How do I add leads from a different table to an existing campaign?
+
+If you have leads in a separate table that you want to add to an existing campaign, use **Send table data** to route them into the campaign's source table:
+
+1.  Open the table containing your new leads.
+2.  Click `Tools` → `Exports` → `Send table data`.
+3.  Select the source table your campaign was created from as the destination (this is the table that contains the `Sync leads to campaign` column).
+4.  Map the relevant fields (email address, name, and any other variables your campaign messages use).
+5.  Save and run the column — the new leads land in the source table and will flow into your campaign.
+
+### Why aren't my emails sending right after I launched my campaign?
+
+Clay sends emails only during the campaign's configured schedule window. If you launched a **Custom schedule** campaign outside the configured sending window (for example, your campaign sends 7 PM–9 PM but you launched at noon), emails queue and begin sending when the next window opens.
+
+To check your window: open the campaign → `Settings` → `Schedule settings`. The **Expected time to complete campaign** indicator at the top also shows how long sending will take given your configuration.
+
+To start sending right away, pause the campaign, go to `Settings` → `Schedule settings`, switch `Schedule type` to `Send immediately` (sends 24/7 as fast as account limits allow) or `Optimized for deliverability` (Monday–Friday, 9 AM–5 PM), save, and relaunch.
+
 ### Why did my campaign stop sending before reaching all my leads?
 
 The daily send limit is set at the **email account level**, not per campaign. If you have multiple active campaigns using the same email account, they all share that account's daily sending budget.
@@ -215,9 +237,13 @@ To set or update a signature:
 
 You can also update the `From name` (the display name recipients see in their inbox) from the same dialog. Only plaintext signatures are currently supported.
 
+**To include a formatted signature (with bold text, links, or images):** enable **HTML** in your campaign's `Setup` tab, then compose your signature at the bottom of each email body using the formatting toolbar — bold, italic, hyperlinks, and inline images are available when HTML is enabled. Do not paste raw HTML source code into the editor; the editor does not convert pasted markup to formatted output, and it will appear as literal text in the sent message. Toggle **Preview** or use `Send test email` (in the `Leads` tab) to verify how the signature renders before you launch.
+
 ### What is email account warmup?
 
 Warmup is the process of automatically sending and receiving emails from other inboxes in Smartlead's warmup pool so your actual campaign traffic looks similar to the emails you're already sending. We recommend you keep warmup on at all times for email accounts in the sequencer to maximize deliverability.
+
+**Note:** Warmup emails are real messages sent from and received by your connected account — you will see unfamiliar emails appear in your Sent folder and inbox while warmup is active. This is expected behavior, not a sign that your account has been compromised or is sending unauthorized messages.
 
 When you add accounts via OAuth, we will automatically set up labels and filters to make it clear what emails are warmups and reduce clutter in your inbox. Your workspace has a unique two-word filter key (e.g., `clever-rocket`) that marks all warmup emails so you can apply these labels and filters.
 
@@ -227,7 +253,9 @@ Warmup automatically disables when your emails are being throttled by your email
 
 ### I'm getting an error that my email account is already in use. What does this mean?
 
-Your email account is already connected to another Smartlead account. Smartlead only allows each email address to be connected to one account at a time. If you have access to the other Smartlead account, delete the email account there to free it up. Otherwise, contact support for help.
+Your email address is already connected to a Smartlead account — this could be an account you control, a former employer's account, or an expired trial account you no longer have access to. Smartlead only allows each email address to be in one account at a time, regardless of whether that account is still active.
+
+If you have access to the Smartlead account the email is linked to, go to **Smartlead → Email Accounts** and delete it there. If you can't find which account it's in or don't have access to it, contact support — they can work with Smartlead to clear the association.
 
 ### Are personal email accounts supported (e.g., Gmail, Hotmail)?
 
