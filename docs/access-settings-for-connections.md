@@ -37,8 +37,6 @@ Admins will have seven days to **approve** or **deny** each request from the ema
 -   The member can add **one connection** for the approved provider. The member will have seven days from the request being approved to do so.
 -   To add another connection to the same provider, they must submit a new request.
 
-The connections table includes a **Shared with** column showing at a glance who has access to each connection: **Anyone in the workspace** for connections open to all, the assigned people and groups for restricted ones, or **Nobody added** when no one has been explicitly granted access yet.
-
 ### Setting permissions on a connection
 
 1.  Navigate to `Settings` → `Connections`
