@@ -56,6 +56,19 @@ Legacy plans will be supported for the foreseeable future with bug fixes, securi
 
 No. New features (Ads, new integrations, advanced orchestration) are only available on modern plans. Legacy customers must migrate to modern plans to access them.
 
+**How do I know if switching to a modern plan is right for my usage?**
+
+To evaluate whether switching makes sense, start with two steps:
+
+1. **Review your current usage**: Go to `Settings` → `Usage` to see how many credits you spend per month and which enrichments drive the most usage.
+2. **Estimate your cost under modern pricing**: Use the [Clay Pricing Calculator](https://www.clay.com/credits-calculator) to project how many Actions and Data Credits your workflows would consume on a modern plan, then compare against current [plan pricing](https://www.clay.com/pricing).
+
+The key trade-off: modern plans charge for Actions (~15% the cost of a credit per enrichment or export), but price 70+ common enrichments at 50% lower Data Credit cost than legacy. If your workflows rely heavily on those enrichments, the data savings often offset the Action charges.
+
+Modern plans are also the only way to access features released after February 2026 — including Clay Ads, new integrations, and upcoming capabilities.
+
+For a personalized estimate based on your actual usage history, contact [Clay support](https://app.clay.com).
+
 **What happens if a legacy customer changes their plan?**
 
 After April 10, 2026 11:59pm PDT, any plan change forces migration to modern plans. Legacy customers cannot switch between legacy plans or return to legacy plans once they leave.
