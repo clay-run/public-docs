@@ -54,7 +54,7 @@ The `MCP users` table gives a live view of every rep who has connected Clay to a
 
 Use the search bar at the top of the table to find a specific rep by name or email.
 
-MCP credit usage also appears in the main credit usage dashboard at `Settings → Credit Usage`, alongside all other workspace credit consumption.
+MCP credit usage also appears in the **MCP** tab of the credit usage dashboard at `Settings → Credit Usage`. The tab breaks spend down by user and function — expand any user row to see which functions they invoked.
 
 ## Audiences controls
 
@@ -141,7 +141,7 @@ Further actions through ChatGPT, Claude, Glean, or xAI are hard-blocked until th
 
 ### Where else can I see MCP credit usage?
 
-MCP usage appears in the main credit usage dashboard at `Settings → Credit Usage`, which tracks all credit consumption across your workspace broken down by table, integration, and time period.
+MCP usage appears in the **MCP** tab of the credit usage dashboard at `Settings → Credit Usage`. The tab shows spend broken down by user and function — expand any user row to see which functions they invoked and how many credits each consumed.
 
 ### What's the difference between the default credit limit and a per-user override?
 
