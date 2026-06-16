@@ -20,6 +20,16 @@ Setting up Audiences is four major steps:
 3.  **Enrich and monitor** — run bulk enrichments and signals that write data permanently back to each record.
 4.  **Write back to your CRM** — sync enriched data and segment membership back to Salesforce.
 
+## Navigating the Audiences interface
+
+Audiences has two pages for working with your data at the workspace level:
+
+**Audiences page** — lists all your audience segments in one place. Browse, search, and open any saved segment, organize segments into folders, and create new ones.
+
+**Data Hub page** — a centralized view of every field in your Audiences workspace and its data health. For each field you can see the **fill rate** (the share of records that have a value for that field), which enrichments and signals are attached to the field, and historical trends. Fields with a low fill rate show a colored indicator, making it easy to spot data gaps at a glance. You can add a new enrichment or signal to a field directly from Data Hub without first navigating into a specific segment. Use the search bar to find a field by name, or filter by source or source type to narrow the list.
+
+**Note:** The Audiences page and Data Hub are available to Enterprise open beta customers — contact your Growth Strategist to enable them for your workspace.
+
 ## Importing your data
 
 To view your full audience, click `People` or `Companies` in the left sidebar.
