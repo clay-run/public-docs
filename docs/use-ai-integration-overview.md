@@ -140,7 +140,7 @@ When a cell shows **"Some inputs missing"**, one or more column references in yo
 There are two ways to resolve this:
 
 -   **Fill in the missing data.** Ensure that the columns referenced in your prompt have values for the rows you want to run.
--   **Make the inputs optional.** Open the column settings (click the column name → **Edit column**), scroll to the prompt section, and toggle off the **Required to run** switch next to each column reference that should be optional. When a reference is optional, the cell will still run even if that column is blank — the empty field is simply omitted from the prompt for that row.
+-   **Make the inputs optional.** In the column prompt, hover your cursor over a `{{Column Name}}` reference token — a **Required to run** toggle appears inline on that token. Switch it off for any input you want to be optional. When toggled off, the cell will still run even if that column is blank — the empty field is simply omitted from the prompt for that row.
 
 ### AI column output shows as a JSON object (response, reasoning, confidence, stepsTaken)
 
