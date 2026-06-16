@@ -26,7 +26,7 @@ To set up Job Change Signals in your table:
 2.  Select your table of the contacts you want to monitor for job changes. It must contain the contact's LinkedIn URL as an identifier.
     -   **LinkedIn URL stored in Salesforce?** If the LinkedIn URL exists in Salesforce but isn't yet a column in your Clay table, add a [Salesforce Lookup Record](salesforce-integration-overview.md) column first — it returns all fields on the Contact record, including custom LinkedIn URL fields.
 3.  Optionally, enable `Initial check`.
-    1.  This will add a new row if the contact's current company no longer matches your records.
+    1.  The Job Change Signal monitors for new changes **going forward** from when you set it up — it will not automatically surface contacts who had already changed jobs before monitoring started. Enable Initial check to also scan for recent past job changes. It checks each contact's LinkedIn experience for role changes within your chosen lookback window: **3 months**, **6 months**, or **1 year**.
 4.  Set how often the Signal should run.
 5.  Optionally, add enrichments to gather additional data.
 6.  Optionally, `Add sample results`.
