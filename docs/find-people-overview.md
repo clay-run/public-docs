@@ -80,7 +80,7 @@ After importing Find People results, use Clay's enrichments to add contact infor
 If your search preview shows 0 results or far fewer than expected, the most common causes are:
 
 -   **Filters set too narrowly** — title, location, or seniority filters that are too specific can exclude real matches. Try broadening one filter at a time: start with location (use a broader region or metro area instead of a specific city), then title keywords (shorter terms like "CFO" or "Finance" match more variations than multi-word phrases like "FP&A Manager" or "Head of Finance").
--   **Title matching mode too strict** — the default title match finds synonyms and variations. If you've enabled **Job title must contain exact** or **Job title must match exactly**, switch back to the default to allow broader matching and capture more results.
+-   **Title matching mode too strict** — the default **is similar to** mode finds synonyms and variations. If you've switched to **contains** or **is exactly** mode, switch back to **is similar to** to allow broader matching and capture more results.
 -   **Multi-word title phrases** — comma-separated lists of multi-word phrases can miss profiles that use variations or abbreviations. Use shorter individual keywords and let the default match mode find the variations automatically.
 
 For more troubleshooting, including data coverage and domain mapping issues, see [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md).
