@@ -2,24 +2,24 @@
 title: Does Clay have an API?
 source_url: https://university.clay.com/docs/using-clay-as-an-api
 description: Clay doesn't have a traditional API, but you can send data via
-  webhooks, wrap Clay with Make or Zapier, or use the Enterprise API for people
-  & company lookups.
+  webhooks, wrap Clay with Make or Zapier, use the Enterprise API for people &
+  company lookups, or connect AI tools via MCP.
 last_synced: 2026-04-26T01:40:52.256Z
 ---
 
 # Does Clay have an API?
 
-Clay doesn't have a traditional API, but you can send data via webhooks, wrap Clay with Make or Zapier, or use the Enterprise API for people & company lookups.
+Clay doesn't have a traditional API, but you can send data via webhooks, wrap Clay with Make or Zapier, use the Enterprise API for people & company lookups, or connect AI tools via MCP.
 
 It's one of the most common questions we get — and the honest answer is: not in the traditional sense. Clay isn't built like a typical SaaS tool where you send a request to an endpoint and get data back in milliseconds. Instead, Clay is an enrichment and automation platform designed around tables, workflows, and integrations.
 
-But that doesn't mean you're stuck. Depending on what you're trying to do, there are several ways to interact with Clay programmatically and get results that feel a lot like working with an API. You can pipe data into Clay automatically via webhooks, wrap Clay's functionality using tools like Make or Zapier, or — if you're on an Enterprise plan — access Clay's native People and Company API directly.
+But that doesn't mean you're stuck. Depending on what you're trying to do, there are several ways to interact with Clay programmatically and get results that feel a lot like working with an API. You can pipe data into Clay automatically via webhooks, wrap Clay's functionality using tools like Make or Zapier, connect AI tools like Claude or ChatGPT directly to your Clay workspace via MCP, or — if you're on an Enterprise plan — access Clay's native People and Company API directly.
 
 Below, we'll walk through each approach, when to use it, and how to get started.
 
 **Note:** If you purchase credits from us ("Clay Credits"), you agree not to sell or transfer your Clay Credits to any other user without our prior written approval. You also agree not to re-sell any data you obtain from Clay. [Learn more in our terms of service](https://www.clay.com/terms-of-service#:~:text=4.%20User%20Responsibilities).
 
-### 1\. **Webhooks** (Best for sending data)
+### 1\\. **Webhooks** (Best for sending data)
 
 Every Clay table has a unique webhook endpoint. You can send data into a table programmatically—say from a form submission, CRM, or another app—and Clay will start processing it immediately.
 
@@ -39,13 +39,13 @@ A common use of this pattern is enriching new Salesforce leads or contacts autom
 
 This is a simpler setup than calling the Clay API directly from Salesforce, because Clay handles the enrichment and writes the data back to Salesforce for you — no custom integration code required.
 
-### 2\. **Wrap Clay in a third-party tool** (Best for light API proxying)
+### 2\\. **Wrap Clay in a third-party tool** (Best for light API proxying)
 
 You can use tools like Replit or Make as a wrapper around Clay. These tools receive API requests, trigger Clay to do its thing, and return results once processing is complete.
 
 This works if you absolutely need an endpoint, but be aware: Clay's enrichment model means responses might take a minute or more, and you'll need to build logic to handle that. [Click for a little tutorial on how to do that.](https://www.linkedin.com/posts/horacio-lopez_this-is-probably-the-only-enrichment-api-activity-7224062593689169923-cYg-/)
 
-### 3\. **Enterprise-only People & Company API** (Best for basic lookups)
+### 3\\. **Enterprise-only People & Company API** (Best for basic lookups)
 
 For Enterprise customers, Clay offers a limited but fast API for accessing its proprietary People and Company data. You can send an email or LinkedIn URL to get back basic person details, or a domain to get company info.
 
@@ -58,3 +58,11 @@ For Enterprise customers, Clay offers a limited but fast API for accessing its p
 [Contact our GTM engineers for more information.](https://www.clay.com/contact-form)
 
 **Note:** If you're using Clay as an API, **Auto-delete** helps keep things fast and lightweight. It automatically enriches incoming webhook data, sends results to your destination (like Salesforce or Google Sheets), then deletes the rows—so Clay streams data through rather than storing it. Perfect for high-volume or continuous enrichment jobs. [Learn more](https://www.clay.com/university/guide/auto-delete).
+
+### 4\\. **MCP / AI tool integration** (Best for AI assistants and agent workflows)
+
+If you're using an AI tool like Claude or ChatGPT and want it to run Clay enrichments on your behalf, Clay supports MCP (Model Context Protocol). MCP lets AI assistants look up contacts, enrich data, and invoke custom Clay Functions — without anyone opening Clay directly.
+
+Clay's MCP integrations are pre-built connectors within each supported platform's app or connector directory. There is no generic server URL to configure manually. See the [MCP settings guide](https://university.clay.com/docs/mcp-settings) for the full list of supported platforms and setup instructions.
+
+**Note:** Clay's MCP OAuth currently only accepts connections from its pre-built platform connectors. If you need to connect Clay through a specific third-party agent framework or MCP client not on the supported list, reach out to [Clay support](https://www.clay.com/contact-form).
