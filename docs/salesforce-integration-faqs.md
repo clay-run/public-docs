@@ -130,6 +130,30 @@ To use a Long Text Area (or other non-filterable) field as a lookup key in Clay,
 
 Once the value is in a filterable Text field, it will appear in the Clay Lookup Record dropdown and can be used as a match key.
 
+## Why is a Salesforce field not appearing in the Create Record or Update Record column mapping?
+
+If a field is visible in Salesforce but missing from Clay's Create Record or Update Record column mapping panel, there are two possible causes:
+
+**1. Field-level security (FLS) — most common**
+
+Clay builds the column mapping by calling Salesforce's `describeSObject` API with the connected user's credentials. Salesforce returns only the fields the authenticated user can see and edit according to their profile or permission set. If the field is hidden from the Clay integration user in Salesforce, Clay never receives it and cannot offer it in the mapping panel.
+
+To fix this in Salesforce:
+
+1.  Go to `Setup` → `Object Manager` → select the object (for example, `Contact`).
+2.  Click `Fields & Relationships`, find the field (for example, `Account ID`), and click it.
+3.  Click `Set Field-Level Security`.
+4.  For the profile or permission set your Clay integration user belongs to, check **Visible** and **Editable**.
+5.  Click `Save`.
+
+After saving in Salesforce, click **Refresh fields** in Clay's column mapping panel to reload the field list — the previously missing field should now appear.
+
+**2. Field is not createable by design**
+
+Even with full FLS access, some Salesforce field types cannot be written to — formula fields, rollup summary fields, and auto-number fields are read-only by Salesforce design. Clay filters the `describeSObject` response to writable (`createable`) fields only, so these will not appear in the mapping panel regardless of permissions. If the missing field is one of these types, write to a separate writable field instead — for example, a custom text field populated by a Salesforce Flow or formula.
+
+**Note:** This is different from the [Lookup Record field picker](#why-is-a-salesforce-field-not-appearing-in-the-lookup-record-field-picker), where absence is typically caused by field type (non-filterable fields) rather than FLS.
+
 ## Why does the Lookup Record action return a maximum of 5 results?
 
 The standard **Lookup Record** action returns a maximum of 5 records per run. This is by design — it is optimized for finding a single matching record and returns up to 5 results when multiple matches exist.
