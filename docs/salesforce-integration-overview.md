@@ -190,6 +190,8 @@ Fields not added here are left blank on the new record.
 
 Clay does not have a dedicated "Add to Campaign" action. To add a contact or lead to a Salesforce Campaign, use **Create Record**, select **Campaign Member** as the Salesforce object, and map both the **ContactId** (or **LeadId**) and **CampaignId** fields. If the record is already a campaign member, Salesforce returns a `DUPLICATE_VALUE` error — you can guard against this by first running a **Lookup record** action with "Campaign Member" as the object to check whether the association already exists.
 
+To also set or update the **Status** of existing Campaign Members — for example, when the same lead or contact may already be in the campaign — use a three-step workflow: a **Lookup records via SOQL** action to check if the person is already a member, a conditional **Create record** if they are not, and a conditional **Update record** if they are. For step-by-step instructions and SOQL query examples, see [How do I add leads or contacts to a Salesforce campaign and update the status of existing campaign members?](salesforce-integration-faqs.md) in the Salesforce integration FAQs.
+
 ### `Action` Lookup record
 
 Use this action to find existing records in Salesforce.
