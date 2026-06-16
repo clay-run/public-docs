@@ -2,7 +2,7 @@
 title: HTTP API
 source_url: https://university.clay.com/docs/http-api-integration-overview
 description: Facilitate seamless integration and connectivity with any APIs.
-last_synced: 2026-04-26T01:40:08.701Z
+last_synced: 2026-04-26T01:40:08.241Z
 ---
 
 # HTTP API
@@ -252,6 +252,8 @@ In token mode, every column chip inserted via the `/` picker is automatically JS
 **⚠️ Important:** This auto-serialization only applies to direct chip tokens, not to formula expressions. If you use formula mode with an expression that accesses a sub-property of an object column — for example, `{{My Column}}?.[\"Key Name\"]` where "Key Name" is itself a nested object — that intermediate JavaScript value is **not** auto-serialized. Your API will receive the string `[object Object]` instead of the actual data.
 
 **Fix:** Extract the sub-property into its own formula column first, then reference that column as a chip in the HTTP body via the `/` picker. Chip tokens are always auto-serialized, even when the column value is a complex object or array.
+
+**⚠️ Do not wrap column chips in `JSON.stringify()`** — chips in token mode are already auto-serialized. Switching to formula mode and wrapping a chip in `JSON.stringify(/MyColumn)` runs a second round of serialization, producing a JSON *string* (e.g., `"{\"email\":\"...\"}"`) instead of the expected JSON *object*. Endpoints that receive this typically respond with an "invalid input" or schema validation error. To send an object or array, insert it as a chip in token mode — no manual serialization is needed.
 
 **Example body configuration:**
 
@@ -731,6 +733,21 @@ This most commonly surfaces when:
 2.  In your HTTP body (token mode), insert that formula column as a **chip** via the `/` picker.
 
 The chip token is automatically serialized, even when the column value is a complex object or array.
+
+### Endpoint reports "invalid input" or receives a JSON string instead of an object
+
+If the receiving API returns an "invalid input" or schema validation error, and you have been wrapping column values in `JSON.stringify()`, the likely cause is double-encoding.
+
+**Why it happens:** In token mode, Clay auto-serializes every column chip before sending — objects and arrays are converted to JSON automatically. Switching to formula mode and wrapping a chip in `JSON.stringify()` runs a second serialization on top of Clay's first, producing a string like `"{\"email\":\"test@example.com\"}"` instead of the object `{"email": "test@example.com"}`. The endpoint receives a string where it expects an object.
+
+**Fix:**
+
+1.  Open the HTTP API column settings. Check the body editor mode via the ⚙️ gear icon — switch back to **token mode** if you're in formula mode.
+2.  Remove any `JSON.stringify()` wrapping from the body.
+3.  Re-insert each column value as a **chip** by typing `/` and selecting it from the picker.
+4.  Test on a single row to confirm the endpoint receives a JSON object.
+
+**Note:** Clay's HTTP API action has no "body type" selector (JSON/raw/form) — the body is always sent as `application/json`. You do not need to manually serialize values before sending.
 
 ### Hidden characters in API documentation
 
