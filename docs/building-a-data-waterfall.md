@@ -39,7 +39,7 @@ To add, remove, or reorder providers in a waterfall you've already saved:
 ## Creating a waterfall
 
 1.  While in a table, click `Add column` (which you will find at the far right side).
-2.  Select `Waterfall` and click the `🖹️` to next to the title to rename.
+2.  Select `Waterfall` and click the `🖊️` to next to the title to rename.
 3.  Change the `Data Type` that you'll be working with.
 4.  Add actions to the waterfall and adjust other settings.
 5.  Click `Save`.
