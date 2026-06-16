@@ -179,7 +179,7 @@ You can review all active signals and their individual credit spend in the `Sign
 
 Where signal events are written depends on **where you start the signal setup**:
 
--   **If you click `Actions` from within an existing table** and select a `Monitor for...` option, the signal is attached to that table and writes each matching event as a new row in it.
+-   **If you click `Tools` from within an existing table** and select a `Monitor for...` option, the signal is attached to that table and writes each matching event as a new row in it.
 -   **If you set up a signal from the Signals section or Workbook overview** (not from inside a specific table), Clay creates a new dedicated table to hold the results.
 
 In either case, signals always add **new rows** for each matching event — one row per event, not a new column on existing rows. If your goal is to see signal data (such as a recent funding round) alongside your existing contacts, see the next FAQ.
