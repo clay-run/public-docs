@@ -1,7 +1,7 @@
 ---
 title: Gong integration
 source_url: https://university.clay.com/docs/gong-integration-overview
-description: Obtain call data of your prospects.
+description: Obtain call data of your prospects and manage prospects in Gong Engage flows.
 last_synced: 2026-04-26T01:40:02.764Z
 ---
 
@@ -69,6 +69,18 @@ Use this action to add a prospect to a Gong Engage flow.
 -   **Prospect Owner email:** Email of the Gong Engage user who owns the flow instance. Once this is selected, you'll be able to assign the prospect.
 -   **Flow ID:** ID of the Gong Engage flow you want to add the prospect to.
 -   **CRM Prospect ID:** This is the CRM ID of the prospect you want to add to the flow (Hubspot, Salesforce, etc.). For this to work properly, you must have the CRM connected to your Gong account.
+
+**Note:** Running this action on a prospect who is already enrolled in the flow will return an error — Clay's Gong integration does not support updating a prospect's content once they are inside a flow. To update flow content for an already-enrolled prospect, use **Remove Prospect from Flow** to remove them first, then re-add them with the updated settings.
+
+### `Action` Remove Prospect from Flow
+
+Use this action to remove a prospect from a Gong Engage flow.
+
+**Inputs**
+
+-   **Prospect Owner email:** Email of the Gong Engage user who owns the flow instance.
+-   **Flow ID:** ID of the Gong Engage flow you want to remove the prospect from.
+-   **CRM Prospect ID:** This is the CRM ID of the prospect you want to remove from the flow (Hubspot, Salesforce, etc.). For this to work properly, you must have the CRM connected to your Gong account.
 
 ### `Action` Get Assigned Flows for Prospect
 
