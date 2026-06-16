@@ -117,6 +117,8 @@ To get a missing field into Clay, use one of these approaches:
 1.  **Add a Lookup record column in Clay (fastest).** Use the **Lookup record** enrichment to fetch the full record by its Salesforce Object ID (which is always imported). This returns **all** fields on the object — including any custom fields — regardless of what was in your list view. For cross-object fields, use the related object's ID (e.g., `AccountId` on Contact) to look up the related record and pull any field from it.
 2.  **Add the field to your Salesforce list view.** In Salesforce, edit the list view to include the missing column, then re-run the source in Clay to pick it up. For cross-object fields, first create a formula text field on the object that copies the related value (for example, a formula field on Contact with the expression `Account.Name`). Once added to the list view in Salesforce, Clay imports it as a direct field. This is useful when you need the value available in multiple Clay tables without a per-row lookup step.
 
+**Scheduled refresh:** The list source supports automatic scheduled runs. After setting up your source, change **Run this source** to **On a schedule** to have Clay automatically pull in new records without manual re-runs. For setup steps, see [Scheduled sources](scheduled-sources.md).
+
 ### `Source` Import records from a Salesforce report
 
 **Inputs:**
@@ -130,6 +132,8 @@ To get a missing field into Clay, use one of these approaches:
         -   **Records no longer in the report are not removed:** When the report re-syncs, any records previously imported into your Clay table that no longer appear in the new report run **stay in your table** — they are not deleted automatically. Clay sources are additive only. If you need accounts to be removed from Clay when they fall off the report — for example, to keep a list that reflects accounts qualifying in and out of a segment each day — use [Clay Audiences](audiences.md) instead. With Audiences you connect Salesforce directly and define your criteria as a segment filter; records are added when they match and removed automatically when they no longer qualify.
         -   **Preserving run history / audit logs:** Because re-synced records that match an existing uniqueness key are skipped (not overwritten), your existing enrichment data for those rows is preserved across syncs. If you need to track every sync event — for example, to log when records entered or left the report — add a **Send Table Data** action after your enrichment columns to push a timestamped snapshot to a separate history table. See [Send table data](send-table-data.md) for setup details.
 
+**Scheduled refresh:** The report source supports automatic scheduled runs. After setting up your source, change **Run this source** to **On a schedule** to have Clay re-run the report automatically and pull in new records on your chosen cadence. For setup steps, see [Scheduled sources](scheduled-sources.md).
+
 ## Enriching data with Salesforce
 
 1.  While in a Clay table, click `Add enrichment` and search for `Salesforce`.
@@ -139,7 +143,7 @@ To get a missing field into Clay, use one of these approaches:
 
 ### `Action` Lookup records via SOQL
 
-Look up records in Salesforce using a custom SOQL query. Use this when the standard **Lookup record** action returns too many matches or when you need to filter on multiple fields at once (e.g., website AND country code).
+Look up records in Salesforce using a custom SOQL query. Use this when the standard **Lookup record** action returns too many matches, when you need to filter on multiple fields at once (e.g., website AND country code), or when the Lookup record action returns **"Error: Bad Request"** (which occurs when the object's schema has more than 15 cross-object field references — see [Salesforce integration FAQs](salesforce-integration-faqs.md) for details).
 
 **Inputs:**
 
@@ -371,17 +375,17 @@ Both approaches prevent the AI from producing free-text output that won't match 
 
 ## Batch processing
 
-The `Create record`, `Update record`, and `Upsert object` actions support batch mode, which processes multiple records simultaneously for improved performance with large datasets. Batch mode is automatically enabled when running these actions across multiple rows in your Clay table. No additional configuration is required.
+The `Create record`, `Update record`, and `Upsert object` actions support a **Run in batches** mode. Batch mode is **off by default** — enable it in the action column's **Run settings** to reduce the number of simultaneous Salesforce calls Clay makes.
 
 ### How batch mode works
 
-When you run these actions on multiple rows in Clay, they automatically use Salesforce's Composite API to process records in batches rather than one at a time.
+When **Run in batches** is enabled, Clay groups rows and sends them through Salesforce's Composite API in sequential batches (up to 200 records per batch) rather than firing calls for all rows concurrently. This reduces write concurrency, which can help avoid `UNABLE_TO_LOCK_ROW` errors when many rows write to Salesforce records that share a common parent (for example, contacts all belonging to the same Account). For troubleshooting row-lock errors, see [Salesforce integration FAQs](salesforce-integration-faqs.md).
 
 **Benefits:**
 
--   **Faster execution:** Process multiple records in a single API call
--   **Better performance:** Reduced overhead when working with hundreds or thousands of records
--   **Individual error handling:** Each record in the batch is processed independently—if one fails, others can still succeed
+-   **Fewer concurrent calls:** Rows are sent in sequential groups rather than all at once
+-   **Reduced lock contention:** Useful when bulk-writing to records that share a parent object, such as contacts in the same Account
+-   **Individual error handling:** Each record in a batch is processed independently — if one fails, others in the same batch can still succeed
 
 ## Best practices
 
