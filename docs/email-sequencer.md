@@ -243,6 +243,8 @@ You can also update the `From name` (the display name recipients see in their in
 
 Warmup is the process of automatically sending and receiving emails from other inboxes in Smartlead's warmup pool so your actual campaign traffic looks similar to the emails you're already sending. We recommend you keep warmup on at all times for email accounts in the sequencer to maximize deliverability.
 
+**Note:** Warmup emails are real messages sent from and received by your connected account — you will see unfamiliar emails appear in your Sent folder and inbox while warmup is active. This is expected behavior, not a sign that your account has been compromised or is sending unauthorized messages.
+
 When you add accounts via OAuth, we will automatically set up labels and filters to make it clear what emails are warmups and reduce clutter in your inbox. Your workspace has a unique two-word filter key (e.g., `clever-rocket`) that marks all warmup emails so you can apply these labels and filters.
 
 ### Why did warmup turn itself off?
