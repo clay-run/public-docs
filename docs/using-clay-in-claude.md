@@ -110,7 +110,7 @@ Company search is not currently supported. However, you can research companies b
 
 **Can I query my Audiences data or run analytical queries like "group by seller"?**
 
-If your workspace has Clay Audiences enabled (currently in beta for Enterprise customers), you can use natural language to filter and look up accounts — for example, "Show me my open-pipeline accounts in the northeast" or "Tell me about [Account]." Results are scoped to accounts you own in Salesforce by default; your admin can allow access to all accounts from [MCP settings](https://university.clay.com/docs/mcp-settings). If you see an error that contact queries aren't available in your workspace, ask your admin to enable `Allow querying all accounts` on the `MCP` page in the workspace sidebar — when this toggle is off, contact queries return an error. Note that the MCP page is only visible to workspace admins. If the toggle is on but queries return no results, ensure `Sync user IDs from audiences` is also on and your Salesforce account ownership is correctly mapped.
+If your workspace has Clay Audiences enabled (currently in beta for Enterprise customers), you can use natural language to filter and look up accounts — for example, "Show me my open-pipeline accounts in the northeast" or "Tell me about [Account]." Results are scoped to accounts you own in Salesforce by default; your admin can allow access to all accounts from [MCP settings](https://university.clay.com/docs/mcp-settings). If your queries return no Audiences results, ask your admin to verify the `Allow querying all accounts` toggle is enabled in MCP settings — when it's off and your Salesforce ownership isn't mapped, queries return empty instead of an error.
 
 The integration is designed for targeted, individual account research — not bulk data exports or analytical operations. SQL-style queries such as grouping accounts by owner or aggregating pipeline by territory are not supported. For complex analysis across your full Audiences dataset, use the Clay platform directly at [app.clay.com](http://app.clay.com).
 
@@ -149,16 +149,6 @@ Yes. Ask _"What functions do you have?"_ or _"What workflows has RevOps built fo
 **Does Clay work with Claude Code?**
 
 Yes. Once you connect Clay via Claude's connector system at `claude.com/connectors/clay`, it will also work in Claude Code.
-
-**Troubleshooting: "SDK auth failed: Client name must not impersonate a known platform"**
-
-If you see this error, Clay was added via CLI (e.g., `claude mcp add https://api.clay.com/v3/mcp`) instead of through the Claude desktop app. Clay's MCP does not support CLI installation — the OAuth flow only accepts connections from the official connector.
-
-To fix:
-
-1.  Remove the CLI-added server: `claude mcp remove clay`
-2.  Open the Claude desktop app, go to Connectors, and add Clay — completing the authentication flow in your browser. (Or go directly to [claude.com/connectors/clay](https://claude.com/connectors/clay).)
-3.  Once connected through the desktop app, Claude Code can call the Clay MCP.
 
 **When I run an action in Claude, does it count as a Clay action?**
 
