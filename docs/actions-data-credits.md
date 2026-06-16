@@ -166,7 +166,7 @@ Two options:
 -   Go to `Settings` → `Usage` and click `Add one-time data credits`.
 -   Available for emergency needs during your billing cycle.
 -   **30% premium** applies (on modern plans; **50% premium** on legacy plans).
--   Subject to the 2× rollover cap: at renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap — including purchased top-ups — are dropped.
+-   Subject to the 2× rollover cap: at renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits that would push you over the cap are dropped.
 
 ### Data Credits for AI
 
@@ -192,8 +192,8 @@ Admins can set **Data Credit spend limits** for individual workbooks to control 
 
 **How to enable workbook credit limits:**
 
-1.  Open your workbook. In the settings panel, under `Credit spend limit`, click `Manage`.
-2.  Toggle `Enabled credit spend limit` and add a number to `Workbook limit`.
+1.  Open your workbook. In the settings panel, under `Workbook credit limit`, click `Manage`.
+2.  Toggle `Enable workbook credit limit` and add a number to `Workbook limit`.
 3.  Click `Save changes`.
 
 Once enabled, all Actions run within that workbook will contribute to the workbook's Data Credit spend. When the limit is reached, you'll see an error message preventing further Actions from running.
