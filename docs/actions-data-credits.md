@@ -166,7 +166,7 @@ Two options:
 -   Go to `Settings` → `Usage` and click `Add one-time data credits`.
 -   Available for emergency needs during your billing cycle.
 -   **30% premium** applies (on modern plans; **50% premium** on legacy plans).
--   Subject to the 2× rollover cap: at renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits that would push you over the cap are dropped.
+-   Subject to the 2× rollover cap: at renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap — including purchased top-ups — are dropped.
 
 ### Data Credits for AI
 
@@ -219,7 +219,7 @@ If you are on a **monthly plan**, unused Data Credits will roll over and accumul
 
 If you are on an **annual plan**, you are eligible for a **15% Data Credit rollover** of unused Data Credits, provided you renew on the same or a higher-tier plan.
 
-_Note: Your rollover and renewal happen on the same day and at the same time you originally subscribed (this timestamp is now shown in your billing details). Credits are updated via a payment-processor webhook and typically appear within a few minutes of that timestamp._
+_Note: Your rollover and renewal happen on the same day and at the same time you originally subscribed (this timestamp is now shown in your billing details). Credits are updated via a payment-processor webhook and typically appear within a few minutes of your renewal timestamp._
 
 ## Managing your plan and credits
 
@@ -309,6 +309,10 @@ Actions measure platform work (what you do). Data Credits measure data purchases
 ### Why do Data Credits cost different amounts?
 
 Unlike Actions (always 1 per enrichment), Data Credits reflect the real-world value of each data point. You'll see the exact cost displayed next to each enrichment option in the product.
+
+### Why do I see lower enrichment prices in my account but I'm still being charged the old rate?
+
+If you see an in-product pricing summary comparing old and new enrichment costs (for example, ZeroBounce Validate Email showing 1 → 0.1 credits), those reduced rates apply to modern plans (Launch, Growth, or Enterprise) only. Customers on legacy plans continue to pay the original credit costs. To start benefiting from the lower data credit prices, go to `Settings` → `Plans & billing` and switch to a current plan. See [Legacy plans](./legacy-plans.md) for a full comparison of what changes when you migrate.
 
 ### Why do I pay Actions even when using my own API key?
 
