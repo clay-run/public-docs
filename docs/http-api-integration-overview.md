@@ -279,10 +279,10 @@ In token mode, every column chip inserted via the `/` picker is automatically JS
 
 Each field in the body editor has a small toggle to its left. This toggle controls whether that field **must have a value for the row to run**:
 
--   **Toggle ON (enabled):** Clay requires a value in the referenced column before running. If the column is empty or null for a row, the action is blocked and the cell shows **"Some inputs missing"**.
--   **Toggle OFF (optional):** The action runs for that row even when the column is empty — Clay bypasses the blank-column validation check. Without the global **Remove empty values** toggle (Step 8), the empty field is still sent in the payload as `null`; enable **Remove empty values** as well to strip empty fields from the payload entirely. Use this for any body field that isn't always populated — whether the API considers it optional (for example, `first_name`) or your data simply doesn't have a value for that field on every row (for example, `jobs_2` and `jobs_3` when not every record has multiple jobs). If several body fields may be empty on different rows, turn the toggle off for each of those fields individually.
+-   **Toggle ON (enabled):** Clay requires a value in the referenced column before running. If the column is empty or null for a row, that cell shows **"Some inputs missing"** and skips the row.
+-   **Toggle OFF (optional):** The field is excluded from the request body for that row. Use this for columns that aren't populated for every row (for example, optional metadata fields like `first_name` when only `email` is required by the API).
 
-**Note:** The global **Remove empty values** toggle (Step 8) strips null values from the outgoing payload at runtime — it does **not** prevent "Some inputs missing" errors, which fire before the action runs when a required token is blank. Marking an input as **Optional** in the Column Mapping section also does not change per-field body toggle states — each body field's toggle must be turned off separately in the body editor.
+**Note:** This is separate from the global **Remove empty values** toggle (Step 8 below). That toggle strips null values from the outgoing payload at runtime — it does **not** prevent "Some inputs missing" errors, which fire before the action runs when a required token is blank.
 
 ### Step 5: Header fields
 
@@ -619,28 +619,6 @@ This error means the API credentials in your HTTP API action are no longer valid
 
 **Tip:** Saving credentials in a header account (`Settings → Connections`) is the easiest way to manage token rotation — when a token expires, you only need to update it in one place instead of editing every column individually.
 
-### "Clay received a 429 error from the API" (Too Many Requests)
-
-A 429 error means the external API is rejecting requests because Clay is sending them faster than the API's rate limit allows. To fix this:
-
-1.  Check the external API's documentation for its rate limit — for example, "10 requests per second" or "100 requests per minute."
-2.  Open your HTTP API column settings and go to the **Configure** tab.
-3.  Scroll to the **Custom rate limit** section and set:
-    -   **Request Limit** — the number of requests allowed in the time window (e.g., `10`).
-    -   **Duration (in ms)** — the length of that window in milliseconds (e.g., `1000` for 1 second, `60000` for 1 minute).
-4.  Save and re-run. Clay throttles requests automatically to stay within this limit.
-
-**Example — 10 requests per second:**
-
-```javascript
-Request Limit: 10
-Duration (ms): 1000
-```
-
-See [Step 7: Custom rate limit](#step-7-custom-rate-limit) for full field details and constraints.
-
-**Tip:** Clay also retries 429 responses once by default (see [Step 9: Retry on failure](#step-9-retry-on-failure)). Configuring a custom rate limit prevents 429s from occurring in the first place, rather than just retrying after they happen.
-
 ### "Body parse error" or in-editor JSON syntax error
 
 This error indicates a formatting issue in your JSON body. It can appear in two forms:
@@ -686,19 +664,19 @@ If you used a Clay formula (e.g., `Concatenate()`, `If()`) to build the JSON bod
 
 ### "Some inputs missing" error
 
-This error appears in the cell when a body field's per-field toggle is **ON** (required to run) but the referenced column has no value for that row. Expanding the cell detail shows the more specific message: **"Body has the error(s): [field name] is blank"**.
+This error means a field in your request body has its per-field toggle **ON** (required to run), but the referenced column has no value for that row.
 
 **How to fix:**
 
 **Option 1 — Turn off the per-field toggle for that field**
 
-In the body editor, find the field causing the error and click the small toggle to its left to switch it from ON to OFF. The action will now run for rows where that column is empty. Without the **Remove empty values** toggle, the empty field is still sent as `null` in the payload — enable **Remove empty values** (Step 8) as well if you want empty fields omitted from the payload entirely. If multiple body fields can be empty on different rows — for example, `jobs_1`, `jobs_2`, `jobs_3` where not every record has three jobs — turn off the per-field toggle for **each** of those fields individually (and enable Remove empty values to omit empty entries from the payload).
+In the body editor, find the field causing the error and click the small toggle to its left to switch it from ON to OFF. Clay will exclude that field from the request for rows where the column is empty, and the action will run on those rows.
 
 **Option 2 — Add a conditional run**
 
 Under **Advanced options → Conditional run**, add a formula that only runs the action when the required column has a value — for example, `!!{{Email}}` to skip rows where the email column is empty.
 
-**Note:** Turning on the global **Remove empty values** toggle does **not** fix this error on its own. "Remove empty values" strips null values from the outgoing payload at execution time, but "Some inputs missing" fires before execution when a required body field's column is blank. You need to turn off the per-field toggle first (so the action runs), then optionally enable Remove empty values (so the empty field is omitted from the payload rather than sent as null).
+**Note:** Turning on the global **Remove empty values** toggle does **not** fix this error. "Remove empty values" strips null values from the outgoing payload at execution time, but "Some inputs missing" fires before execution when a required body field's column is blank.
 
 ### Clicking Run does nothing — no loading, no error, no cell update
 
