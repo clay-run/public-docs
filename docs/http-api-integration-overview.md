@@ -280,9 +280,9 @@ In token mode, every column chip inserted via the `/` picker is automatically JS
 Each field in the body editor has a small toggle to its left. This toggle controls whether that field **must have a value for the row to run**:
 
 -   **Toggle ON (enabled):** Clay requires a value in the referenced column before running. If the column is empty or null for a row, that cell shows **"Some inputs missing"** and skips the row.
--   **Toggle OFF (optional):** The field is excluded from the request body for that row. Use this for columns that aren't populated for every row (for example, optional metadata fields like `first_name` when only `email` is required by the API).
+-   **Toggle OFF (optional):** The field is excluded from the request body for that row. Use this for any body field that isn't always populated — whether the API considers it optional (for example, `first_name`) or your data simply doesn't have a value for that field on every row (for example, `jobs_2` and `jobs_3` when not every record has multiple jobs). If several body fields may be empty on different rows, turn the toggle off for each of those fields individually.
 
-**Note:** This is separate from the global **Remove empty values** toggle (Step 8 below). That toggle strips null values from the outgoing payload at runtime — it does **not** prevent "Some inputs missing" errors, which fire before the action runs when a required token is blank.
+**Note:** This is separate from the global **Remove empty values** toggle (Step 8 below). That toggle strips null values from the outgoing payload at runtime — it does **not** prevent "Some inputs missing" errors, which fire before the action runs when a required token is blank. Marking an input as **Optional** in the Column Mapping section also does not make per-field body toggles optional — you must turn off each body field's toggle separately in the body editor.
 
 ### Step 5: Header fields
 
@@ -670,7 +670,7 @@ This error means a field in your request body has its per-field toggle **ON** (r
 
 **Option 1 — Turn off the per-field toggle for that field**
 
-In the body editor, find the field causing the error and click the small toggle to its left to switch it from ON to OFF. Clay will exclude that field from the request for rows where the column is empty, and the action will run on those rows.
+In the body editor, find the field causing the error and click the small toggle to its left to switch it from ON to OFF. Clay will exclude that field from the request for rows where the column is empty, and the action will run on those rows. If multiple body fields can be empty on different rows — for example, `jobs_1`, `jobs_2`, `jobs_3` where not every record has three jobs — turn off the per-field toggle for **each** of those fields individually.
 
 **Option 2 — Add a conditional run**
 
