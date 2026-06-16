@@ -2,7 +2,7 @@
 title: HTTP API
 source_url: https://university.clay.com/docs/http-api-integration-overview
 description: Facilitate seamless integration and connectivity with any APIs.
-last_synced: 2026-04-26T01:40:08.241Z
+last_synced: 2026-04-26T01:40:08.701Z
 ---
 
 # HTTP API
