@@ -27,13 +27,17 @@ Run a Zenrows scrape on a website URL.
 
 **Inputs**
 
--   **Company URL:** The URL you are trying to scrape.
--   **Autoparse**: Automatically parse scraper response.
--   **HTML Output Fields**: Select specific HTML elements to extract.
--   **Render Javascript**: Enable for pages needing JavaScript.
+-   **Scrape URL:** The URL you want to scrape. Must be a valid URL.
+-   **Autoparse**: Automatically parse the scraper response. When enabled, the CSS Extractors and HTML Output Fields options are hidden.
+-   **CSS Extractors** *(only when Autoparse is off)*: Provide CSS selectors in JSON format to extract specific elements (e.g. `{"links": "a @href", "images": "img @src"}`). Takes precedence over HTML Output Fields.
+-   **HTML Output Fields** *(only when Autoparse is off)*: Select which HTML elements to return—Title, Keywords, Description, Social Links, Emails, Phone Numbers, Body Text, and more. Overridden by CSS Extractors when specified.
+-   **Render Javascript**: Enable to render JavaScript with a headless browser for pages that require it.
+-   **Wait Time (ms)**: Milliseconds to wait before scraping (0–20,000). Only applies when Render Javascript is enabled.
+-   **Wait for CSS selector** *(only when Render Javascript is on)*: A CSS selector to wait for in the DOM before scraping. Takes precedence over Wait Time.
 -   **Premium Proxy**: Use a premium proxy for privacy.
--   **Anti-Bot**: Enable anti-bot measures for protected sites.
--   **Proxy Country**: Specify proxy’s country with a two-letter code.
+-   **Anti-Bot**: Enable anti-bot measures for bot-protected sites.
+-   **Proxy Country**: Specify proxy's country with a two-letter code.
+-   **Extract data by field paths**: Filter the returned data using JSONPath expressions. Enable filtering, then choose Include or Exclude mode and enter one or more paths (e.g. `$.store.books[*].title`). Use the "Use AI" button to generate paths automatically.
 
 **Run settings**
 
