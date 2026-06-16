@@ -233,6 +233,19 @@ This error typically occurs when:
 2.  If your org enforces SSO, temporarily allow direct username/password login for this user, or create a non-SSO service account for authorization.
 3.  In `Setup` → `Connected Apps OAuth Usage`, verify the Clay app is listed and not blocked. If your org uses App Access Control, pre-install or whitelist the app first.
 
+## What does "Could not verify your Salesforce account. Please re-authorize and try again." mean?
+
+This error appears on a Salesforce action in a Clay table — for example, **Lookup Record** or **Lookup Records via SOQL** — when the OAuth authorization for your Salesforce connection has expired. Clay can no longer authenticate with Salesforce using the stored token.
+
+**To fix:** remove the affected connection and re-add it.
+
+1.  In the home sidebar, click `Settings` → `Connections`.
+2.  Select `Salesforce`.
+3.  Click the `…` menu next to the affected connection and select `Delete`.
+4.  Click `Add connection`, search for `Salesforce`, and complete the authentication flow again.
+
+Once reconnected, re-run any actions that showed the error.
+
 ## Do I need to install Clay's Connected App in my Salesforce org?
 
 Yes. Since Salesforce's August 2025 security policy update, all Connected Apps — including Clay's — must be pre-installed in your org before users can authenticate. If Clay is not installed, Salesforce blocks the OAuth flow with an `OAUTH_APPROVAL_ERROR_GENERIC` error.
