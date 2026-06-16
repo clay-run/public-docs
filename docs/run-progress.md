@@ -74,6 +74,8 @@ To stop a running table, click the **Stop** button in the run summary panel at t
 
 **Important: clicking Stop does not immediately cancel enrichments that are already in progress.** When you click Stop, Clay cancels all queued cells that haven't been dispatched yet — but any enrichment calls already sent to an external data provider will run to completion and **will still consume credits**. You may see a short delay between clicking Stop and the table fully halting while these in-flight calls finish.
 
+> **Note:** Turning off auto-run — at the table level or on individual columns — does not cancel rows that are already queued. Auto-run controls whether *future* enrichments trigger automatically; it has no effect on jobs already in the queue. To cancel an active queue, you must click the **Stop** button as described above.
+
 To prevent unintended credit usage before it starts, turn off [auto-run](table-management-settings.md) before importing large batches of rows. This prevents enrichments from triggering automatically on new data.
 
 ## Manually running unrun cells
