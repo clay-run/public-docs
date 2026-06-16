@@ -150,6 +150,16 @@ Yes. Ask _"What functions do you have?"_ or _"What workflows has RevOps built fo
 
 Yes. Once you connect Clay via Claude's connector system at `claude.com/connectors/clay`, it will also work in Claude Code.
 
+**Troubleshooting: "SDK auth failed: Client name must not impersonate a known platform"**
+
+If you see this error, Clay was added via CLI (e.g., `claude mcp add https://api.clay.com/v3/mcp`) instead of through the Claude desktop app. Clay's MCP does not support CLI installation — the OAuth flow only accepts connections from the official connector.
+
+To fix:
+
+1.  Remove the CLI-added server: `claude mcp remove clay`
+2.  Open the Claude desktop app, go to Connectors, and add Clay — completing the authentication flow in your browser. (Or go directly to [claude.com/connectors/clay](https://claude.com/connectors/clay).)
+3.  Once connected through the desktop app, Claude Code can call the Clay MCP.
+
 **When I run an action in Claude, does it count as a Clay action?**
 
 Yes. Everything runs on a Clay table behind the scenes, so actions taken through Claude count as Clay actions and draw from your credit balance accordingly.
