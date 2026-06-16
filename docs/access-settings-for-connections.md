@@ -110,9 +110,9 @@ Signals follow the same access rules as a single column:
 -   When **creating** a Claygent, connection access controls apply when adding documents or connecting data sources.
 -   When running an existing Claygent, users can only leverage connections they're allowlisted for. For example, if you run a Claygent, it will use your own OpenAI connection rather than another user's connection. Within the Claygent builder experience itself, no functionality is limited.
 
-### Audiences, Sculptor, and Prospector
+### Audiences and Sculptor
 
-Enrichment columns within bulk enrichment tables (Audiences) and Sculptor/Prospector surfaces follow the same access rules described above for individual columns and waterfalls.
+Enrichment columns within bulk enrichment tables (Audiences) and Sculptor surfaces follow the same access rules described above for individual columns and waterfalls.
 
 ## FAQs
 
