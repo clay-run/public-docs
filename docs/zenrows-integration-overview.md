@@ -33,7 +33,7 @@ Run a Zenrows scrape on a website URL.
 -   **Render Javascript**: Enable for pages needing JavaScript.
 -   **Premium Proxy**: Use a premium proxy for privacy.
 -   **Anti-Bot**: Enable anti-bot measures for protected sites.
--   **Proxy Country**: Specify proxy's country with a two-letter code.
+-   **Proxy Country**: Specify proxy’s country with a two-letter code.
 
 **Run settings**
 
