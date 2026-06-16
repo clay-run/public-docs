@@ -98,7 +98,9 @@ To find LinkedIn posts containing a specific keyword or hashtag, use the **Find 
 
 -   **Keyword:** A single keyword or hashtag to search for in post content (e.g., `#cvpr2026` or `GTM`). Only one keyword is supported — comma-separated lists are not valid.
 -   **Companies filter (optional):** Limit results to posts that mention companies, were posted by companies, or were posted by employees of specific companies.
+-   **Company domains or profile URLs (optional):** Scope results to posts by or about specific companies. Enter up to 5 company domains or LinkedIn company profile URLs — only the first 5 are used. Enter values manually or use the **From table** tab to pull from a separate Clay table.
 -   **People filter (optional):** Limit results to posts that mention or were posted by specific individuals.
+-   **Person professional profile URLs (optional):** Scope results to posts by specific people. Enter up to 5 LinkedIn profile URLs — only the first 5 are used. Enter values manually or use the **From table** tab to pull from a separate Clay table. **Note:** Source inputs do not support dynamic column references — you cannot point this field to a column in the same table. To target profiles from an existing table, write the LinkedIn profile URLs to a separate table first and link it using the **From table** option.
 -   **Sort by:** `Most recent` (default) or `Top match`.
 -   **Time frame:** `Last 24 hours` or `Last week` (default).
 -   **Max number of results:** Default is 100; maximum is 1,000.
@@ -108,6 +110,10 @@ To find LinkedIn posts containing a specific keyword or hashtag, use the **Find 
 Each row includes the post URL, post text, author name, author LinkedIn URL, author title, reaction counts, comment count, and share count.
 
 **To enrich post authors:** After importing results, add an **Enrich Person** column and map it to the author LinkedIn URL. This returns full contact data — work email, company, and more — for each post author.
+
+**To summarize posts with AI:** Add a **Claygent** column and write a prompt asking it to summarize the post text. Turn off **Web research** in the Claygent settings — since the post content is already in your table, web lookups are unnecessary and add credit cost. Test on a small batch of rows first.
+
+**To get all interactions on a specific post:** Use the **Get interactions with professional posts** source. In a workbook, click `+ Add`, search for `Get interactions with professional posts`, and select it. Map the post URL column from your import. This returns a row per interaction (comments, reactions, and shares combined).
 
 **To get comments, reactions, or shares on a specific post:** Click `Add enrichment`, search for **Get comments on a professional post**, **Get reactions on a professional post**, or **Get shares on a professional post**, and map **Post URL** to the post URL column from your import.
 
