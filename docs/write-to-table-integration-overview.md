@@ -129,7 +129,7 @@ If you have data in a comma-separated list and want to send it to a new column o
 
 1.  Use **Extract Data From Values** to process the CSV data.
 2.  Add the correct column using the **Forward Slash** (/) command.
-3.  Apply a custom extraction **Regex**: `[^,\"]+\\\"?[^,\"]+`
+3.  Apply a custom extraction **Regex**: `[^,"]+\"?[^,"]+`
 
 This will split the values into a list.
 
