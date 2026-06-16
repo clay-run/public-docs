@@ -71,6 +71,14 @@ If your workspace uses Clay Audiences, two additional workspace-level toggles ap
 
 ## FAQ
 
+### Why does Clay MCP return different results than my Clay table?
+
+The native Clay MCP contact enrichment — including the "Find and Enrich list of contacts" tool — runs a preset set of enrichment steps. It does not run the multi-provider waterfall you may have set up in your Clay tables. As a result, contacts that are only findable via a specific waterfall provider may return an email in your Clay table but not through MCP.
+
+**To bring your waterfall coverage into MCP**, wrap the waterfall in a Clay Function and enable it for MCP. See [Enabling a function for MCP](#enabling-a-function-for-mcp) above for step-by-step instructions. Once enabled, you and your reps can invoke the waterfall function directly from Claude or ChatGPT.
+
+The `Enable for MCP` option requires a modern Launch, Growth, Enterprise, or Legacy Enterprise plan.
+
 ### Does Clay provide an MCP server URL I can paste into any AI tool?
 
 No. Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory. Connect through:
