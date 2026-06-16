@@ -282,6 +282,14 @@ Use this action to convert a lead.
 -   **Opportunity name (optional):** The name of the opportunity to create.
     -   If not provided, the lead's name will be used.
 
+**Tip: Lead conversion workflow**
+
+A common pattern is to look up an existing contact, create a lead, and then convert it — merging the new lead with the contact found in the lookup step. Here is a three-column setup:
+
+1.  **Lookup record** — Search for an existing contact or account in Salesforce by email address, domain, or another unique identifier. This returns the Contact ID and Account ID if a matching record already exists.
+2.  **Create record (conditional)** — Use **Create record** with **Lead** as the Salesforce object to create the lead. Add a [conditional run](conditional-runs.md) tied to the lookup column so this step only fires when no existing contact was found.
+3.  **Convert lead** — Map the Lead ID from Step 2 into **Lead ID**. To merge the converted lead with the contact from Step 1 rather than creating a new contact, pass the existing **Contact ID** and **Account ID** from the lookup column into the corresponding optional fields.
+
 ## Working with picklist fields
 
 ### How picklist fields appear in the Map fields panel
