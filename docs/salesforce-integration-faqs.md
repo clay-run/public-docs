@@ -105,9 +105,17 @@ Fields that Salesforce marks as non-filterable — most notably **Long Text Area
 
 **Permissions are not the issue** if the field is visible to your Salesforce users but still absent from the Clay dropdown. Field-type filtering is applied on top of access checks.
 
+**Indexed fields vs. filterable fields**
+
+The **Indexed** column in Salesforce's Fields & Relationships setup page (which marks External ID fields and other indexed fields) is a separate concept from filterability. Most standard Text, Email, Phone, and URL fields are filterable and will appear in Clay's Lookup Record picker regardless of whether they are marked as indexed or set as External IDs. Conversely, Rich Text Area and Long Text Area fields remain non-filterable even if they were indexed — their data type is what prevents them from appearing, and indexing does not change that.
+
+**Note on SOQL as a workaround**
+
+Salesforce also prohibits filtering on Long Text Area and Rich Text Area fields in SOQL `WHERE` clauses — the same Salesforce restriction applies. Using a **Lookup records via SOQL** action is not an alternative workaround for these non-filterable field types; the query will return an error. The only solution is to store a copy of the value in a filterable field type, as described below.
+
 **Workaround**
 
-To use a Long Text Area (or other non-filterable) field as a lookup key in Clay, store a copy of the value in a filterable field type:
+To use a Long Text Area or Rich Text Area field as a lookup key in Clay, store a copy of the value in a filterable field type:
 
 1.  In Salesforce, create a new **Text** field on the same object.
 2.  Populate the new Text field with the same value using a Salesforce Flow or a formula field.
