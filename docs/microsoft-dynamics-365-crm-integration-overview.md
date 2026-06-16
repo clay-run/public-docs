@@ -53,7 +53,7 @@ For enterprise and team setups, we recommend connecting Dynamics 365 to Clay usi
 
 To connect with a service account, follow the same setup steps above and sign in with the service account credentials at Step 3.
 
-**Note on MFA re-authentication:** Depending on your organization's Azure AD Conditional Access policies, the OAuth connection may require periodic re-authentication when MFA is enforced on the account. To avoid connection interruptions, work with your Azure AD administrator to configure an appropriate conditional access exception for the service account used with Clay.
+**Note on MFA re-authentication:** The OAuth connection requires re-authentication when your Azure AD Conditional Access policies enforce MFA or sign-in frequency limits (commonly every 7 days). If the service account is not re-authenticated within your organization's required window, the connection will stop working. To avoid disruptions, re-authenticate proactively on schedule or work with your Azure AD administrator to configure a sign-in frequency exemption for the service account used with Clay.
 
 **Entra Service Principal (app-only) authentication is not currently supported.** The Dynamics 365 connection requires signing in with a Microsoft user account (personal or service account). If your organization requires app-only authentication without user account MFA dependencies, please reach out to Clay support to register your interest.
 
