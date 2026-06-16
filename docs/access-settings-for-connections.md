@@ -50,6 +50,8 @@ Admins will have seven days to **approve** or **deny** each request from the ema
     -   To remove access, simply remove individual members or groups from the allowlist.
 5.  Click `Save` to apply the changes
 
+The connections table includes a **Shared with** column showing at a glance who has access to each connection: **Anyone in the workspace** for connections open to all, the assigned people and groups for restricted ones, or **Nobody added** when no one has been explicitly granted access yet.
+
 To update access later, just edit the connection and add or remove users or user groups from the allowlist.
 
 ## What users can and cannot do
