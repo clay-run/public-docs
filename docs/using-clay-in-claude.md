@@ -183,6 +183,18 @@ To move data from a Claude conversation into your Clay tables:
 
 For batch workflows like running an email-finder waterfall on a list of companies, work directly in Clay at [app.clay.com](http://app.clay.com).
 
+**Can I push enriched contacts directly to Salesforce or another CRM from Claude?**
+
+Not directly. Clay in Claude is designed for finding contacts, enriching them, and drafting outreach — it does not include built-in tools to write records to Salesforce or other CRMs from within the Claude interface.
+
+To sync enriched data to Salesforce, use this workflow:
+
+1.  Use Claude to find and enrich your prospects.
+2.  Click **"Open in Clay"** to bring that data into your Clay workspace.
+3.  Use Clay's **Create Record**, **Update Record**, or **Upsert Record** Salesforce actions to sync the data to your CRM.
+
+For more advanced CRM workflows, work directly in Clay at [app.clay.com](http://app.clay.com).
+
 **How does my admin control my credit limit?**
 
 Your workspace admin can set a default credit limit for all reps, or a per-user override, from `Settings → MCP users`. If you hit your limit, further enrichments will be blocked until the monthly reset on the 1st of each month at midnight UTC. Contact your admin to have your limit adjusted.
