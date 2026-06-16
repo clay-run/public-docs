@@ -39,7 +39,7 @@ To add, remove, or reorder providers in a waterfall you've already saved:
 ## Creating a waterfall
 
 1.  While in a table, click `Add column` (which you will find at the far right side).
-2.  Select `Waterfall` and click the `🖊️` to next to the title to rename.
+2.  Select `Waterfall` and click the `🖹️` to next to the title to rename.
 3.  Change the `Data Type` that you'll be working with.
 4.  Add actions to the waterfall and adjust other settings.
 5.  Click `Save`.
@@ -138,22 +138,8 @@ This is different from AI columns (such as Use AI or Claygent), where you can de
 
 -   **Cross-validate across providers.** Run the same enrichment from two or three providers in separate columns, then use a formula or AI column to flag rows where results are consistent across sources. Matching results across providers indicate higher data confidence.
 -   **Track which provider returned the result.** When configuring your waterfall output, enable the option to output the name of the successful provider. This lets you filter or score rows based on which data source you trust most.
--   **Check that the enriched company domain matches the contact's email domain.** Enrichment providers use a best-match algorithm — they return the company they believe is the right match based on name or profile data, and do not validate that the returned company's domain matches the contact's email address. If a contact's profile is outdated (for example, a person recently changed jobs but their profile still shows their previous employer), providers may return data for the old company. See [Handling email/company domain mismatches](#handling-emailcompany-domain-mismatches) below for detection and remediation steps.
 
 **Company revenue reflects total annual revenue, not ARR.** Revenue figures returned by enrichment providers such as PDL, Clearbit, Apollo, and Owler represent estimated total company revenue — not annual recurring revenue (ARR) or any subscription-specific metric. These figures are drawn from public filings, web data, and provider estimates.
-
-### Handling email/company domain mismatches
-
-When enriching a person or company, providers match on name or profile data — not on whether the returned company domain agrees with the contact's work email. A contact whose profile still shows a previous employer can come through your waterfall with the wrong company and title, and a company domain that doesn't match their email address.
-
-**Detecting mismatches:** Add a formula or AI column that extracts the domain from the contact's work email (the portion after `@`) and compares it to the enriched company domain. A boolean "Domain Match" column makes it easy to filter and audit mismatched rows at scale.
-
-**Preventing mismatches from reaching downstream systems:** Use the domain-match column as a run condition on downstream write steps — for example, your **Update CRM Record** or **Create CRM Record** action — so a contact is only pushed when the email domain and company domain agree. See [Conditional runs](conditional-runs.md) for how to set this up.
-
-**Fixing contacts that are already mismatched:**
-
-1. Filter the table to rows where the domain-match column is `false`.
-2. Re-enrich the company using the email domain as the primary input instead of the company name. A validated work email domain is a more reliable signal than a profile-based best-match result.
 
 ## Trial plan and provider restrictions
 
