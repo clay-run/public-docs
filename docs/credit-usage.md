@@ -20,7 +20,9 @@ To check the credit usage in your workspace:
 2.  Go to `Settings` and then `Usage` in the sidebar.
 3.  Within `Workspace`, you can view folders, workbooks, and tables sorted by their usage.
 
-Sort the content by `Name` (alphabetically) or by number of `Credits used` by clicking the column titles. To find a specific table or workbook by name, click the search icon and type part of the name to filter the list. You can `Export` this content as a CSV.
+**Tip:** If your workspace is approaching or has reached its monthly credit limit, Clay displays an orange banner at the top of every page. Click **See usage** in that banner to go directly to the credit usage dashboard.
+
+Sort the content by `Name` (alphabetically) or by number of `Credits used` by clicking the column titles. You can `Export` this content as a CSV.
 
 ### Filter and sort credit usage
 
@@ -38,7 +40,7 @@ Filter any of the content on this page by:
 3.  Specific integrations being used.
 4.  **Recurring runs only:** Toggle `Recurring` to show only credits from recurring or scheduled runs. By default (toggle off), the dashboard shows all credit consumption — both one-time manual runs and recurring automated runs. When this filter is on, only workbooks and tables with recurring usage are shown in the expanded list — but folder and workbook `Credits used` totals always reflect the complete spend for all their contents, including non-recurring workbooks. If a folder's total appears higher than the sum of the workbooks visible when you expand it, the difference comes from non-recurring workbooks hidden by the filter. Toggle the filter off to see all workbooks and their individual credits.
 
-**Note:** The Workbooks tab does not show per-user credit attribution — it groups spend by workbook or table, not by which team member ran the enrichments. If you need per-user credit tracking, see the **MCP** and **API** tabs, which attribute spend to individual users for those access methods. The MCP tab also shows a per-function breakdown so you can see exactly which function each user invoked.
+**Note:** The Workbooks tab does not show per-user credit attribution — it groups spend by workbook or table, not by which team member ran the enrichments. If you need per-user credit tracking, see the **MCP** and **API** tabs, which attribute spend to individual users for those access methods.
 
 ### Understanding table-specific credit usage
 
@@ -88,10 +90,10 @@ This is useful for spot-checking costs before scaling a workflow: run a small ba
 
 The credit usage dashboard is organized into tabs, each covering a different slice of your workspace spend. Use the `When` dropdown and `Apply filters` to scope each tab to a specific time period.
 
--   **Workbooks** — shows credit spend broken down by folder, workbook, and table. Click the dropdown next to any folder or workbook to drill into its contents. Sort by `Name` or `Credits used`. Click `Export` to download a CSV for offline analysis. Credits from functions called by a table attribute to the calling table — when table A invokes function B, the spend appears under table A in this view, matching how credit budgets are applied.
--   **Integrations** — shows credit spend grouped by integration across your entire workspace, so you can quickly see which data providers are consuming the most credits. Expand any integration row to see spend broken down by individual API key — Clay-managed keys spend both credits and actions, while personal (BYOK) keys spend actions only. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
+-   **Workbooks** — shows credit spend broken down by folder, workbook, and table. Click the dropdown next to any folder or workbook to drill into its contents. Sort by `Name` or `Credits used`. Click `Export` to download a CSV for offline analysis.
+-   **Integrations** — shows credit spend grouped by integration across your entire workspace, so you can quickly see which data providers are consuming the most credits. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
 -   **Signals** — shows credit spend broken down by individual signal. A totals row (`All Signals`) appears at the top, followed by a per-signal breakdown of `Credits used` and `Actions used`.
--   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user and function. Expand any user row to see which functions they invoked and the credit spend for each. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
+-   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
 -   **API** — shows programmatic spend generated through Clay's API and Exportly, broken down by user. Like MCP, unattributable spend appears as `Unattributed`.
 
 ## Credit estimates before running
@@ -136,19 +138,22 @@ This prevents unexpected credit usage when you add new data to tables with exist
 
 ## Troubleshooting unexpected credit usage
 
-### Credits consumed when a workspace member added rows
+### Enrichments ran on all rows when setting up a new table
 
-When any workspace Editor adds rows to a table — manually, via CSV import, or through an integration — every enrichment column with auto-run enabled fires automatically for each new row, consuming credits. This applies regardless of how recently the table was last used: auto-run stays enabled until explicitly disabled, so rows added to an older or inactive table will still trigger all enrichments.
+The import warning and the first-10-rows auto-run limit both protect you when **adding a source to an existing table** — but neither applies when you create a **brand-new table** with a source and enrichment columns for the first time.
 
-To understand when a run happened, open the **Run view** in the [table credit usage dashboard](#understanding-table-specific-credit-usage). Each entry shows a timestamp and which columns ran.
+-   **No import warning**: Clay shows the confirmation modal only when a source is added to a table that already has enrichment columns. A new table has no action columns at the moment the source first runs, so no credit-spend warning appears.
+-   **Enrichments fire on all imported rows**: The first-10-rows auto-run limit only applies when importing into an existing table. For a new table, enrichments with auto-run enabled queue on every row the source imports — not just the first 10.
 
-**Identifying who triggered the run:** The Workbooks tab shows the workbook's owner (its creator), not which team member triggered the run. For standard table runs, the credit dashboard does not attribute spend to individual users — only the **MCP** and **API** tabs show per-user breakdowns. If you cannot determine the source of a run from the usage dashboard, contact Clay support for further investigation.
+To safely test a new table before committing credits at scale:
 
-To prevent unexpected spend on tables you're no longer actively enriching:
+1.  Turn table-level auto-run **off** before running your source for the first time (click `⛭` → toggle **Auto-run** off).
+2.  Import your source — rows load into the table without triggering any enrichments.
+3.  Select 5–10 rows, right-click, and choose **Run rows** to manually test your enrichments on a small batch.
+4.  Click individual action cells to see the **Charged** value and confirm the per-row cost.
+5.  Once you're satisfied, turn auto-run back **on** and choose **Update cells** to process the remaining rows.
 
--   Disable table-level auto-run (click `⛭` → toggle **Auto-run** off) so new rows don't trigger enrichments until you're ready.
--   Disable auto-run on individual columns that don't need to fire on every new row (column name → **Edit column** → **Run settings** → toggle **Auto-run** off).
--   On Enterprise plans, set credit spend limits on workbooks to cap total consumption. See [Credit spend limits FAQ](credit-spend-limits-faq.md).
+See [Ways to save Clay credits](clay-credit-conservation.md) for the full recommended testing workflow.
 
 ### Credits consumed while auto-run is off
 
