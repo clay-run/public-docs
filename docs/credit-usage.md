@@ -40,7 +40,7 @@ Filter any of the content on this page by:
 3.  Specific integrations being used.
 4.  **Recurring runs only:** Toggle `Recurring` to show only credits from recurring or scheduled runs. By default (toggle off), the dashboard shows all credit consumption — both one-time manual runs and recurring automated runs. When this filter is on, only workbooks and tables with recurring usage are shown in the expanded list — but folder and workbook `Credits used` totals always reflect the complete spend for all their contents, including non-recurring workbooks. If a folder's total appears higher than the sum of the workbooks visible when you expand it, the difference comes from non-recurring workbooks hidden by the filter. Toggle the filter off to see all workbooks and their individual credits.
 
-**Note:** The Workbooks tab does not show per-user credit attribution — it groups spend by workbook or table, not by which team member ran the enrichments. If you need per-user credit tracking, see the **MCP** and **API** tabs, which attribute spend to individual users for those access methods.
+**Note:** The Workbooks tab does not show per-user credit attribution — it groups spend by workbook or table, not by which team member ran the enrichments. If you need per-user credit tracking, see the **MCP** and **API** tabs, which attribute spend to individual users for those access methods. The MCP tab also breaks spend down by function — expand any user row to see which functions they invoked.
 
 ### Understanding table-specific credit usage
 
@@ -90,10 +90,10 @@ This is useful for spot-checking costs before scaling a workflow: run a small ba
 
 The credit usage dashboard is organized into tabs, each covering a different slice of your workspace spend. Use the `When` dropdown and `Apply filters` to scope each tab to a specific time period.
 
--   **Workbooks** — shows credit spend broken down by folder, workbook, and table. Click the dropdown next to any folder or workbook to drill into its contents. Sort by `Name` or `Credits used`. Click `Export` to download a CSV for offline analysis.
--   **Integrations** — shows credit spend grouped by integration across your entire workspace, so you can quickly see which data providers are consuming the most credits. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
+-   **Workbooks** — shows credit spend broken down by folder, workbook, and table. Click the dropdown next to any folder or workbook to drill into its contents. Sort by `Name` or `Credits used`. Click `Export` to download a CSV for offline analysis. When a table calls a Clay Function, credits are attributed to the calling table and appear in its row here.
+-   **Integrations** — shows credit spend grouped by integration across your entire workspace, so you can quickly see which data providers are consuming the most credits. Sort by `Name` or `Credits used`. Click `Export` to download a CSV. Expand any integration row to see spend broken down by individual API key — Clay-managed keys and personal (BYOK) keys are listed separately. Spend that couldn't be attributed to a specific key (including historical spend from before key-level tracking began) appears under **Other**.
 -   **Signals** — shows credit spend broken down by individual signal. A totals row (`All Signals`) appears at the top, followed by a per-signal breakdown of `Credits used` and `Actions used`.
--   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
+-   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user and function. Expand any user row to see which specific functions they invoked and how many credits each consumed. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
 -   **API** — shows programmatic spend generated through Clay's API and Exportly, broken down by user. Like MCP, unattributable spend appears as `Unattributed`.
 
 ## Credit estimates before running
