@@ -124,7 +124,7 @@ Use AI supports a fixed set of built-in AI providers (such as GPT, Claude, Gemin
 
 To call a custom or additional LLM from Clay, use the [HTTP API enrichment](https://university.clay.com/docs/http-api-integration-overview) to send requests to any OpenAI-compatible endpoint:
 
--   **Hosted proxy services** (e.g., LiteLLM, Azure OpenAI, AWS Bedrock): Configure the HTTP API enrichment to call the provider's OpenAI-compatible endpoint. See [LiteLLM's API documentation](https://docs.litellm.ai/docs/providers/openai_compatible) for endpoint and licensing details.
+-   **Hosted proxy services** (e.g., LiteLLM, Azure OpenAI, AWS Bedrock): Configure the HTTP API enrichment to call the provider's OpenAI-compatible endpoint. See [LiteLLM's API documentation](https://docs.litellm.ai/docs/providers/openai_compatible) for endpoint and authentication details.
 -   **Self-hosted open-source models** (e.g., LLaMA): Host the model at a reachable HTTP endpoint, then configure the HTTP API enrichment to call it.
 
 **Limitations compared to Use AI:**
