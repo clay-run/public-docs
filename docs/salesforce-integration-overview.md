@@ -190,8 +190,6 @@ Fields not added here are left blank on the new record.
 
 Clay does not have a dedicated "Add to Campaign" action. To add a contact or lead to a Salesforce Campaign, use **Create Record**, select **Campaign Member** as the Salesforce object, and map both the **ContactId** (or **LeadId**) and **CampaignId** fields. If the record is already a campaign member, Salesforce returns a `DUPLICATE_VALUE` error — you can guard against this by first running a **Lookup record** action with "Campaign Member" as the object to check whether the association already exists.
 
-To also set or update the **Status** of existing Campaign Members — for example, when the same lead or contact may already be in the campaign — use a three-step workflow: a **Lookup records via SOQL** action to check if the person is already a member, a conditional **Create record** if they are not, and a conditional **Update record** if they are. For step-by-step instructions and SOQL query examples, see [How do I add leads or contacts to a Salesforce campaign and update the status of existing campaign members?](salesforce-integration-faqs.md) in the Salesforce integration FAQs.
-
 ### `Action` Lookup record
 
 Use this action to find existing records in Salesforce.
@@ -281,14 +279,6 @@ Use this action to convert a lead.
 -   **Opportunity ID (optional):** The ID of the opportunity to link to the converted lead.
 -   **Opportunity name (optional):** The name of the opportunity to create.
     -   If not provided, the lead's name will be used.
-
-**Tip: Lead conversion workflow**
-
-A common pattern is to look up an existing contact, create a lead, and then convert it — merging the new lead with the contact found in the lookup step. Here is a three-column setup:
-
-1.  **Lookup record** — Search for an existing contact or account in Salesforce by email address, domain, or another unique identifier. This returns the Contact ID and Account ID if a matching record already exists.
-2.  **Create record (conditional)** — Use **Create record** with **Lead** as the Salesforce object to create the lead. Add a [conditional run](conditional-runs.md) tied to the lookup column so this step only fires when no existing contact was found.
-3.  **Convert lead** — Map the Lead ID from Step 2 into **Lead ID**. To merge the converted lead with the contact from Step 1 rather than creating a new contact, pass the existing **Contact ID** and **Account ID** from the lookup column into the corresponding optional fields.
 
 ## Working with picklist fields
 
