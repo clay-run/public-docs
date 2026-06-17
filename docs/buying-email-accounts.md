@@ -1,56 +1,56 @@
 ---
-title: Buying email accounts
+title: Buying email accounts in Clay (Beta)
 source_url: https://university.clay.com/docs/buying-email-accounts
-description: Purchase and manage email accounts directly from Clay for use in
-  outreach campaigns. Understand how accounts are provisioned, when they're
-  ready, and how billing and setup works.
-last_synced: 2026-04-26T01:39:38.000Z
+description: Protect your domain reputation while scaling cold outreach — buy
+  alternative domains and email accounts directly in Clay using Clay credits.
+last_synced: 2026-04-26T01:39:42.909Z
 ---
 
-# Buying email accounts
+# Buying email accounts in Clay (Beta)
 
-Purchase and manage email accounts directly from Clay for use in outreach campaigns. Understand how accounts are provisioned, when they're ready, and how billing and setup works.
+Protect your domain reputation while scaling cold outreach — buy alternative domains and email accounts directly in Clay using Clay credits.
 
-Clay lets you purchase email accounts directly from the platform to use in outreach campaigns. Purchased accounts are provisioned through Smartlead (via Zapmail) and are billed monthly. Once purchased, you can manage them from your Clay workspace settings.
+Cold outbound often requires sending a high volume of emails to inboxes that may not engage — and over time, that can damage the reputation of the domain you're sending from. Buying email accounts in Clay lets you scale your sending capacity by purchasing alternative domains and email accounts directly with Clay credits, without sacrificing deliverability.
 
-## Buying email accounts in Clay
+## ‍**Buying email accounts**
 
-To purchase email accounts:
+From the `Campaigns` homepage, go to the `Email Accounts` tab and click `Add Email Accounts`. Select `Buy email accounts with Smart Senders` to open the purchase flow.
 
-1.  Go to `Settings` → `Email accounts`.
-2.  Click `Buy email accounts`.
-3.  Choose how many accounts you want to purchase.
-4.  Review the monthly cost and click `Purchase`.
+1.  **Search for alt domains.** Clay automatically loads your workspace's company domain as a starting point. Search for available alternative domains and select the ones you want to add to your order.
+    -   Each domain supports up to 5 email accounts.
+    -   The preview panel on the right shows your current order, including per-domain pricing (yearly) and per-account pricing (monthly).
+2.  **Add personas.** Personas map directly to the reps who will manage replies coming into these inboxes.
+    -   Each persona requires a first name, last name, and profile picture to appear as realistic as possible.
+    -   **Auto-balance** is enabled by default and distributes email accounts evenly across personas. Turn it off to assign accounts manually per domain or to customize email prefixes.
+3.  **Add contact details.** Enter the contact details that will be attached to the generated Google Workspace.
+    -   Set your **forwarding domain** — this is the domain where purchased domains will redirect. Clay recommends using your company's primary domain (e.g., `clay.com`).
+4.  **Review your order summary.** The summary shows the total credits you can expect to be charged annually and monthly. Confirm your purchase when you're ready.
 
-Payment is charged to the credit card on file in your Clay workspace.
+![](https://cdn.prod.website-files.com/687e604972375496b891fe58/69c6b5ea48b4f4c966867201_Buying%20Email%20Accounts%20in%20Clay%20\(1\).png)
 
-## FAQs
+**Note:** After confirming your purchase, email accounts typically take a couple of days to be provisioned. Once they appear in your `Email Accounts` tab, warm them up for approximately two weeks before use — purchased domains are not pre-warmed.
 
-### **When will my purchased email accounts be ready to use?**
+## **FAQs**
 
-Email accounts are typically provisioned within 24 hours of purchase. Once ready, they will appear in your Clay workspace and be available for use in outreach campaigns.
+### **Can I add more email accounts to a domain after I've purchased it?**
 
-### **Where can I manage my purchased email accounts?**
+No. Once a domain is purchased, you cannot add additional email accounts to it. Select your desired number of accounts (up to 5 per domain) before confirming your order.
 
-You can manage your email accounts at `Settings` → `Email accounts`. From there, you can view active accounts, check provisioning status, and manage billing.
+### **What happens if I cancel a domain before the year is up? Will I get a refund?**
 
-### **What's the monthly cost?**
+Clay does not offer partial refunds for domains cancelled before the end of their yearly billing period.
 
-Email accounts are billed at $4 per account per month. You're charged for the full month at the time of purchase, and billing renews monthly on the same date.
+### **What happens if I delete one email account within a domain?**
 
-### **Can I cancel email accounts I've purchased?**
+Deleting a single email account from a domain will delete **all** email accounts in that domain. Proceed with caution.
 
-Yes. To cancel an email account:
+### **How are credit costs calculated?**
 
-1.  Go to `Settings` → `Email accounts`.
-2.  Find the account you want to cancel.
-3.  Click the `···` menu and select `Cancel`.
+Credit costs are calculated using your workspace's cost-per-credit (CPC) against target prices of **$4.50/account/month** and **$15/domain/year**.
 
-Cancelled accounts are not refunded for the current billing period.
+### **Are purchased domains pre-warmed?**
 
-### **Do I still need to warm up a purchased domain?**
-
-Yes. You must still warm up purchased domains for approximately two weeks after purchase before using them for outreach. Sending cold emails from an unwarmed domain risks deliverability issues and potential blacklisting.
+No. You must still warm up purchased domains for approximately two weeks after provisioning before using them in campaigns.
 
 ### **Where are the purchased email accounts from?**
 

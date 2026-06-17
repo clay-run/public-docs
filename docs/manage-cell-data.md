@@ -9,41 +9,62 @@ last_synced: 2026-04-26T01:40:19.169Z
 
 Learn how to manage cell data within your Clay table.
 
-## Viewing and interacting with cell data
+## Inspect cell details
 
-All cell data in Clay is stored as JSON, but Clay makes it easy to view and interact with it in a human-readable format:
+View and analyze enriched data or outputs within a specific cell.
 
--   **Click on a cell** to open it in the right-side panel, which displays the cell’s data in a more readable format.
--   **Hover over a cell** to see a brief summary of its content—a compact view of the data stored.
+To inspect cell details:
 
-Clay provides several ways to extract specific values out of cells and into columns:
+1.  Locate the cell you want to inspect.
+2.  Click on the cell to open the cell details panel.
 
--   **Click and drag** a specific value from the cell panel to an existing column in your table, or drop it into an empty area to create a new column. This is an easy way to pull specific fields out of enrichment results.
--   **Add field path filter:** When you add an enrichment, configure the column to extract specific fields from the enrichment output. Use this to pre-select the fields you want to surface when you set up the enrichment.
--   **Dot notation in formulas:** Reference specific fields from an enrichment result using dot notation in a formula column. For example, if you have an enrichment stored in a column named `Find Company` and want to extract the `name` field, you can write `{{Find Company}}.name` in the formula.
+If you re-run a cell while the cell details panel is open, the output automatically refreshes to show the latest data — no need to close and reopen the panel or reload the page.
 
-## Cell data size limits
+## Search within a cell
 
-Clay enforces cell data size limits based on the type of column:
+Quickly find specific data within a cell's outputs using the search feature.
 
-| Column type | Size limit |
-| --- | --- |
-| Enrichment/action column | 200 kB |
-| Basic column (extracted field, formula, text) | 8 kB |
+To search for outputs in a cell:
 
-### Why does my data appear truncated in an extracted column?
+1.  Click on the cell to open the cell details panel.
+2.  Type a keyword or data point into the search bar to filter and display matching outputs.
 
-When you extract a value from an enrichment column into a basic column, the basic column has an 8 kB limit. If the original data exceeds this limit, the extracted value will be truncated or empty.
+## Cell output schema
 
-To work around this, reference the enrichment column directly in downstream enrichments and AI columns, rather than extracting the value to an intermediate column. You can reference enrichment column outputs using the `/` picker in any enrichment or AI input field.
+A cell output schema describes how data is structured in an enrichment output. It shows:
 
-### When does the 200 kB limit on enrichment columns apply?
+-   **Keys and values:** Labels like "Company Name" or "Contact Email" with their corresponding data types (text, numbers, or lists).
+-   **Organization:** Whether data is a single value (e.g., "John Doe") or a grouped list (e.g., multiple contacts).
+-   **Nested data:** Information grouped under larger categories. For example, "Company Lookalikes" might contain "Lookalike #1" and "Lookalike #2," each with their own details.
 
-The 200 kB limit applies to the output data stored in an enrichment or action column. If your enrichment returns more than 200 kB of data (for example, a large web page scrape), Clay will not store the excess data and you may see incomplete results.
+## Lists
 
-Common cases where the 200 kB limit may be hit:
+A list is an array of items grouped together in a single cell. Lists most often appear as outputs from enrichment (action) columns — for example, a "Find Contacts at Company" enrichment returning multiple people. They can also be produced by a formula column that returns an array (e.g., `[{{Col1}}, {{Col2}}, {{Col3}}]`).
 
--   **Web scraping:** Pages with large amounts of content or embedded data.
+Lists use zero-based indexing, where the first item is at index 0, the second at index 1, and so on. For example, in a skills list, "Solution Selling" is at index 0, "Cloud Computing" is at index 1, and "Virtualization" is at index 2.
+
+## Take action on a list
+
+In the **Cell details** panel, click **Take action on list** to access the following actions:
+
+-   **Filter, find keywords, and more using formula:** Search for and filter specific items using formulas.
+-   **Write each item to new row in other table:** Send each list item as its own row to another table.
+-   **Create column with items separated by commas:** Join all items into a single comma-separated text field (only available for lists of simple values).
+-   **Ask question about items with AI:** Get answers or summaries about the list using AI.
+
+## Cell size limits
+
+Clay has two types of cell size limits:
+
+-   **Basic columns** (text and formula columns): 8KB limit
+-   **Action columns** (enrichment outputs): 200KB limit
+
+The final step of a waterfall returns a basic column with an 8KB limit. If your waterfall contains large amounts of data, it may exceed this limit.
+
+**Common scenarios where cell size limits are encountered:**
+
+-   **Gong transcripts:** Often exceed the 200KB limit.
+-   **Technology waterfall (BuiltWith):** Can output over 200KB; use keywords to filter.
 -   **HTTP-API and webhooks:** May bring in over 200KB; use field-path filters.
 -   **Extracting to basic columns:** May hit the 8KB limit when extracting large action fields.
 -   **Email reply content:** Long email replies (e.g., from the campaign events table) can exceed the 8KB limit when written to a text column. To work around this, reference the reply field in a formula column and use a text function such as `LEFT({{Reply Body}}, 7000)` to extract just the first portion of the content.
