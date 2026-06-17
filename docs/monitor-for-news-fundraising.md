@@ -1,32 +1,26 @@
 ---
-title: Monitor for news & fundraising
+title: Monitor for news & fundraising signals
 source_url: https://university.clay.com/docs/monitor-for-news-fundraising
-description: Set up signals for significant events at monitored companies, like
-  fundraising events.
-last_synced: 2026-04-26T01:40:23.757Z
+description: Monitor companies for news and fundraising events and track these
+  as signals.
+last_synced: 2026-04-26T01:40:20.000Z
 ---
 
-# Monitor for news & fundraising
+# Monitor for news & fundraising signals
 
-Set up signals for significant events at monitored companies, like fundraising events.
+Monitor companies for news and fundraising events and track these as signals.
 
-News & Fundraising Signals alert you to significant events at monitored companies, helping you spot timely engagement opportunities.
+Clay's **News & Fundraising Signals** let you monitor companies for news coverage and funding activity in real time. Once configured, the signal watches your list of companies and surfaces relevant events as they happen.
 
--   Track potential customers' growth, funding rounds, and key announcements.
--   Stay informed about client developments to anticipate their needs.
--   Keep company intelligence up-to-date through automated news monitoring.
-
-**_Cost:_** _Each result consumes 1 action plus 6 data credits._
-
-## Monitoring news & fundraising
+## Setting up a signal
 
 Follow these steps to set up News & Fundraising Signals in your table:
 
-1.  Click `Tools`, then select `Monitor for news & fundraising`.
-2.  Select the table with companies you want to monitor.
-3.  Choose the column containing company domains and select your preferred news topics.
-4.  Set the Signal's frequency.
-5.  Add enrichments for extra data if needed.
+1.  In a Clay table, click `Add column`.
+2.  Under the `Signals` section, select the `News & Fundraising Signals`.
+3.  Select `Topic Filter`: Select what kind of news to look for (e.g., funding, hiring, etc.).
+4.  Select `Signal Input Field`: Choose the column whose values will be used as inputs to look for news (typically a company domain).
+5.  Optionally, `Add Domain Exclusions`: Add domains to exclude from signal detection.
 6.  Optionally, `Add sample results`.
     -   This lets you preview how the data will appear after any changes actually happen.
 7.  Click `Save and run X rows` to complete setup.
