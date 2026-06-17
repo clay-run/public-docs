@@ -13,6 +13,8 @@ Waterfalls allow you to utilize multiple data providers in a predetermined seque
 
 ## Using pre-built waterfalls
 
+Pre-built waterfalls are available for enrichments that return a single value per row — such as work email, phone number, and company domain. There is no pre-built waterfall for finding people at companies; these enrichments return a list of contacts rather than a single value. To find contacts across multiple providers, add each as a separate enrichment column using **Add enrichment**.
+
 To run a pre-built waterfall:
 
 1.  Click **Tools** in the top right corner of your table, select the **Enrich** tab, and search for the data point you want to run a waterfall for (e.g. `Phone number`). Under **Waterfalls**, select the waterfall you want to run.
