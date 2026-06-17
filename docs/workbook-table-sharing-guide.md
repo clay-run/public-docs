@@ -23,15 +23,15 @@ Note that when sharing as a template, only the table structure and one row of sa
 
 ## Use a shared template
 
-When someone shares a template link with you, opening it creates a **new workbook** — you cannot apply a template to an existing empty table or sheet.
+When someone shares a template link with you, opening it creates a **new table or workbook** — you cannot apply a template to an existing empty table or sheet.
 
-To create a workbook from a template:
+To create a table or workbook from a template:
 
 1. Open the template link in your browser.
-2. If you have access to multiple workspaces, Clay will prompt you to choose which workspace to create the workbook in. Select the workspace and confirm.
-3. Clay creates a fresh workbook containing the template's table structure and sample data.
+2. If you have access to multiple workspaces, Clay will prompt you to choose which workspace to create the table or workbook in. Select the workspace and confirm.
+3. Clay creates a fresh table or workbook containing the template's structure and sample data.
 
-You can then rename the workbook, clear the sample row, and start adding your own data.
+You can then rename it, clear the sample row, and start adding your own data.
 
 ## Move a workbook to a different workspace
 
