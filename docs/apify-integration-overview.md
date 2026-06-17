@@ -1,63 +1,56 @@
 ---
-title: Apify integration overview
+title: Apify integration
 source_url: https://university.clay.com/docs/apify-integration-overview
-description: Using Clay to run, monitor, and import data from Apify Actors.
-last_synced: 2026-04-26T01:39:11.000Z
+description: Web scraping and automation platform providing data for AI and
+  custom solutions, with troubleshooting for incomplete imports, duplicates,
+  and data overwrites.
+last_synced: 2026-04-26T01:39:40.957Z
 ---
 
 # Apify integration
 
-Using Clay to run, monitor, and import data from Apify Actors.
+Web scraping and automation platform providing data for AI and custom solutions.
 
-[Apify](https://apify.com/) is a web scraping and automation platform that lets you run pre-built or custom Actors to collect and process web data. This integration lets you trigger Apify Actors directly from Clay, import results into your table, and use those results as inputs for further enrichment.
+## Apify Integration Overview
 
-## Connecting to Apify
+With Clay's Apify integration, you can quickly retrieve data from Apify actor runs or launch actors directly in Clay to get results on demand.
 
-To connect your Apify account:
+## Setting up in Apify
 
-1.  In the home sidebar, click `Settings` → `Connections`.
-2.  Click `Add connection` and search for `Apify`.
-3.  Enter your Apify API token, which you can find in your [Apify account settings](https://console.apify.com/account/integrations).
-4.  Click `Authenticate` to save the connection.
+To set up Apify:
 
-## Creating a table with Apify
+1.  Log in to your Apify account and [retrieve an API token](https://console.apify.com/account/integrations). Name it something clear for future reference.
+2.  In Clay, navigate to Settings → Connections.
+3.  Click Add connection, find the Apify integration, and paste the token.
 
-1.  In a workbook, click `+ Add` at the bottom.
-2.  Search for `Apify` and select from the results.
+## Enriching data with Apify
+
+1.  While in a Clay table, click `Add enrichment` and search for `Apify`.
+2.  Under `Integrations`, select one of the Apify options.
 3.  In the modal, you will be asked to `Select Apify account`.
     -   If you haven't already connected your Apify account, click `+ Add account` and go through authentication.
 
 ### `Source` Import data from Apify
 
-Import the output dataset from an Apify Actor run into Clay.
+Import data from an Apify actor.
 
-**Inputs:**
+-   **Actor ID**: The ID of the actor to run. You can find the actor ID in the Apify console.
+-   **Actor Input**: The input data for the actor. This is a JSON object that specifies the data to be processed.
 
--   **Apify Actor:** Search for and select the Actor you want to run. Clay lists all Actors available in your Apify account.
--   **Actor input:** Configure the Actor's input parameters. These vary by Actor — refer to the Actor's documentation for the available fields and expected values.
+### `Action` Get actor results
 
-**How the source works**
+Get the results of an Apify actor from a previously started run.
 
-When you run the source, Clay triggers the selected Apify Actor, waits for the run to complete, and then imports all items from the Actor's output dataset into your Clay table. Each dataset item becomes one row.
+-   **Actor ID**: The ID of the actor to run. You can find the actor ID in the Apify console.
+-   **Actor Input**: The input data for the actor. This is a JSON object that specifies the data to be processed.
+-   **Run ID**: The run ID of the actor run to retrieve results from.
 
-**Note:** Running the Apify source consumes Apify compute units (your Apify account quota) in addition to any Clay credits. Very large Actor runs — for example, scraping hundreds of thousands of pages — may take longer than Clay's source timeout allows.
+### `Action` Run Actor
 
-## Enriching data with Apify
+Run an Apify actor.
 
-While in a Clay table, click `Add enrichment` and search for `Apify`.
-
-### `Action` Run Apify Actor
-
-Trigger an Apify Actor run and retrieve the output.
-
-**Inputs:**
-
--   **Apify Actor:** The Actor to run, selected from your Apify account.
--   **Actor input:** The input configuration for the Actor run. Map values from your Clay table columns using the `/` picker.
-
-**How the action works**
-
-The action triggers the selected Actor, waits for the run to finish, and returns the Actor's full output dataset as a JSON array in the enrichment result. You can then extract specific fields from the result using field-path selectors or a formula column.
+-   **Actor ID**: The ID of the actor to run. You can find the actor ID in the Apify console.
+-   **Actor Input**: The input data for the actor. This is a JSON object that specifies the data to be processed.
 
 ## FAQs
 
@@ -94,3 +87,10 @@ To resolve duplicate data:
 
 -   Ensure **Auto-dedupe** is enabled on a unique identifier column (such as a profile URL) before running or re-running the source. Auto-dedupe prevents duplicate rows from being added when the same Actor is run multiple times.
 -   If duplicates already exist, use Clay's built-in deduplication tools to identify and merge them.
+
+### Data is getting overwritten
+
+If data is getting overwritten when running the source multiple times:
+
+-   Enable Auto-dedupe before running the source (if you have already run the source and need to deduplicate, you can still enable this setting).
+-   Ensure that the data that you're running on doesn't already exist in the destination table.
