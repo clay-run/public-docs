@@ -74,6 +74,10 @@ To downgrade your Clay workspace plan:
 2.  Navigate to `Plans & billing` and click `Switch plan`.
 3.  Choose the plan you'd like to downgrade to and confirm your selection.
 
+**How downgrade billing works:** Plan downgrades are deferred to the end of your current billing cycle — your existing plan stays active until then, and you keep receiving its current Actions and Data Credit allocation. At renewal, your workspace switches to the new plan and your monthly Actions and Data Credit allocation resets to the new plan's level.
+
+**What happens to your Data Credits:** When the plan change takes effect, your credit balance is reduced to the rollover cap of your new plan — 2× its monthly credit limit. For the free plan (100 credits/month), that cap is 200 credits. Any credits above the cap are forfeited. If you have a large balance, spend it down before the change takes effect.
+
 ## Billing
 
 To update your billing and payment information:
@@ -106,7 +110,17 @@ You can track both actions and data credits usage in the `Usage Dashboard`, whic
 
 **Annual plans:** When your plan refreshes, you can roll over up to 15% of your annual data credits in addition to the new credits you receive, provided you renew on the same or a higher-tier plan.
 
+**If you cancel or downgrade your plan:** When the plan change takes effect, your Data Credit balance is reduced to the rollover cap of your new plan — 2× that plan's monthly credit limit. For example, canceling to the free plan (100 credits/month) caps your balance at 200 credits; any credits above 200 are forfeited. You can continue spending your existing credits up until the plan change takes effect.
+
 For more details, see our guide on [actions and data credits](https://www.notion.so/Actions-and-data-credits-2a77e66eb01480b798f2ddca99d45e80?pvs=21).
+
+### Can I pause my subscription?
+
+No — Clay does not currently offer a subscription pause feature. If you need to stop or reduce billing, your options are:
+
+-   **Stay subscribed.** On monthly plans, unused Data Credits roll over up to 2× your monthly credit limit, so your balance will be there when you're ready to use Clay again.
+-   **Downgrade to a lower plan.** Go to `Settings` → `Plans & billing` → `Change plan` and select a lower tier (or free). Your tables, flows, and configurations stay intact, but features are limited to the new plan. Remaining Data Credits are usable through your current billing cycle, then capped at 2× the new plan's monthly credit limit at renewal.
+-   **Cancel your plan.** Go to `Settings` → `Plans & billing` and cancel. You keep your current Data Credit balance and plan features until your billing cycle ends. After that, your workspace moves to the free plan and your balance is capped at 200 credits — any credits above 200 are forfeited.
 
 ### Is upgrading my plan prorated?
 
