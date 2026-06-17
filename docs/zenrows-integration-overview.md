@@ -9,19 +9,21 @@ last_synced: 2026-04-26T01:40:58.780Z
 
 Extract data from websites with the Zenrows scraper.
 
-Zenrows is a web scraping service that helps you extract data from websites efficiently.
+## Connecting to Zenrows
 
-With this integration, you can reliably return website information directly into your Clay table.
+1.  In the home sidebar, click `Settings` → `Connections`.
+2.  Click `Add connection` and search for `Zenrows`.
+3.  Enter your Zenrows API key, which you can find in your [Zenrows dashboard](https://app.zenrows.com/).
+4.  Click `Authenticate` to save the connection.
 
-## Setting up the Zenrows integration
+## Enriching data with Zenrows
 
 1.  While in a Clay table, click `Add enrichment` and search for `Zenrows`.
-2.  Under `Integrations`, select the Zenrows action.
-3.  By default, you will be using your Clay-managed Zenrows account, but you can also select `+ Add Account` if you have your own Zenrows account.
+2.  Under `Integrations`, select `Zenrows`.
+3.  In the modal, you will be asked to `Select Zenrows account`.
+    -   If you haven't already connected your Zenrows account, click `+ Add account` and go through authentication.
 
-## Using the Zenrows integration
-
-### `Action` Run Zenrows scrape
+### `Action` Scrape Website
 
 Run a Zenrows scrape on a website URL.
 
@@ -41,5 +43,4 @@ Run a Zenrows scrape on a website URL.
 
 **Run settings**
 
--   **Auto-update**
--   **Only run if:** The enrichment will only run if conditions are met.
+By default, new rows within your Clay table will automatically be formatted. Learn more about auto-update in [this brief guide](https://docs.clay.com/en/articles/9642165-auto-update-and-auto-dedupe-table).
