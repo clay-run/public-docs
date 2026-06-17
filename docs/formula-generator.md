@@ -166,17 +166,3 @@ The most reliable fix is to use the `/` column picker when writing your prompt:
 3.  Click **Regenerate** to update the formula with the explicit references.
 
 Using the `/` picker guarantees the formula targets the exact column, which is especially helpful when column names are similar (for example, "Activity Score" vs. "Activity Type Score") or when combining the output of several formula columns into a final score.
-
-### **Why does my formula return results for some rows but not others?**
-
-The formula generator converts your prompt into a fixed JavaScript expression **once** — at the time you click **Generate**. That expression is built around the data structure Clay saw in your table when the formula was created: specific section-title patterns, label-before-colon structures, bullet styles, and so on. Clay stores that expression and evaluates it deterministically on every row; no AI is involved at row-evaluation time.
-
-If you later edit the prompt of an upstream column (for example, an AI column that generates CRM notes), the new outputs may have a slightly different structure than the data the formula was built from. The formula still works for rows whose data matches the original format and returns empty for rows with the new format. Creating a new formula column doesn't help — it generates a new piece of fixed code with the same limitation unless you regenerate it using examples from the new data.
-
-**Three ways to fix this:**
-
--   **Output the desired format directly from your AI column.** Add the formatting instructions to the prompt of the column that generates your notes — for example, *"Format your output as HTML: wrap section titles in `<b>` tags, put each bullet in `<li>` inside a `<ul>`, and separate sections with `<br>`."* This eliminates the need for a separate formatting step.
--   **Use a Use AI column for the formatting step instead of a formula column.** A Use AI column evaluates every row freshly against its prompt, so it handles structural variation in the input that a fixed formula cannot. See [Use AI](use-ai-integration-overview.md) for setup details.
--   **Regenerate the formula with examples from your updated data.** Click a preview cell showing a wrong result, enter the correct output in **Edit expected output**, and click **Regenerate** to rebuild the formula around your new data structure (see **Improve formula accuracy** above).
-
-Also note: after changing any column, rows that have already run will not update automatically. Select those rows and click **Run column** to re-process them.
