@@ -13,7 +13,7 @@ MCP (Model Context Protocol) is how Clay connects your workspace to AI tools lik
 
 Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory — not a generic server URL you configure manually.
 
-Navigate to it from the Clay homepage by clicking `MCP` in the side nav. The MCP settings page is only visible to workspace admins — if you don't see it in your settings sidebar, ask your workspace admin.
+Navigate to it from the Clay homepage by clicking `MCP` in the side nav.
 
 **Note:**  
 
@@ -67,19 +67,9 @@ If your workspace uses Clay Audiences, two additional workspace-level toggles ap
 -   **Sync user IDs from audiences** — continuously syncs audience data to match MCP users to the Salesforce accounts they own. Updates run incrementally every 15 minutes, with a full sync once a week.
 -   **Allow querying all accounts** — when enabled, reps can query any account in the synced audience, not just accounts they own in Salesforce.
 
-**Troubleshooting — error: "Contact queries are not available in this workspace":** If a rep using Clay through Claude or ChatGPT sees the error `Contact queries are not available in this workspace. Contact ownership scoping is not yet supported — enable "Allow querying all accounts" in workspace settings to use contact queries`, the **Allow querying all accounts** toggle is off. Click `MCP` in the workspace sidebar and enable it. The MCP page is only visible to workspace admins — if you don't see it in the sidebar, ask your workspace admin to make the change.
-
 **Troubleshooting — rep sees no results when querying Audiences:** When `Allow querying all accounts` is off, results are scoped to accounts the rep owns in Salesforce. A rep who owns no accounts (or whose Salesforce ownership hasn't synced yet) will receive empty results — which can look like the feature isn't working. To resolve: either enable `Allow querying all accounts` so the rep can see all workspace accounts, or ensure `Sync user IDs from audiences` is on and the rep's Salesforce account ownership is correctly mapped.
 
 ## FAQ
-
-### Why does Clay MCP return different results than my Clay table?
-
-The native Clay MCP contact enrichment — including the "Find and Enrich list of contacts" tool — runs a preset set of enrichment steps. It does not run the multi-provider waterfall you may have set up in your Clay tables. As a result, contacts that are only findable via a specific waterfall provider may return an email in your Clay table but not through MCP.
-
-**To bring your waterfall coverage into MCP**, wrap the waterfall in a Clay Function and enable it for MCP. See [Enabling a function for MCP](#enabling-a-function-for-mcp) above for step-by-step instructions. Once enabled, you and your reps can invoke the waterfall function directly from Claude or ChatGPT.
-
-The `Enable for MCP` option requires a modern Launch, Growth, Enterprise, or Legacy Enterprise plan.
 
 ### Does Clay provide an MCP server URL I can paste into any AI tool?
 
