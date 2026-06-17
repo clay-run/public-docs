@@ -157,3 +157,16 @@ To automatically import data for multiple companies or URLs without overwriting 
 Clay's native **Run Apify Actor** integration enforces a fixed limit of **4 concurrent requests**, regardless of your Apify plan. This limit applies to all workspaces and cannot be raised on a per-workspace basis — it is set to match the concurrency cap on Apify's lowest plan.
 
 If rows are sitting in **Queued** status and you are on a higher-tier Apify plan, you can bypass this cap by calling Apify's API through an **HTTP API column** instead of the native integration. The HTTP API column does not apply this fixed limit, so Clay will dispatch requests at the rate your Apify plan supports. See the [HTTP API](http-api-integration-overview.md) guide for setup instructions.
+
+### Actor runs timing out
+
+The native **Run Apify Actor** integration has a **200-second execution limit**. If an actor takes longer than 200 seconds to complete, Clay will show **Timed out** in the result cell — even when the actor run itself succeeds in Apify.
+
+This limit applies to all workspaces and cannot be raised on a per-workspace basis through the native integration.
+
+**Workaround — two-step HTTP API approach:** For actors that regularly run longer than 200 seconds, switch to the [HTTP API integration](http-api-integration-overview.md) using an asynchronous two-step pattern:
+
+1. **Column 1 — Start the run:** POST to Apify's `/v2/acts/{actorId}/runs` endpoint. This triggers the actor without waiting for it to finish and returns a `runId` immediately.
+2. **Column 2 — Fetch the results:** Once the actor has had time to complete, GET `/v2/acts/{actorId}/runs/{runId}/dataset/items` to retrieve the results.
+
+Because each HTTP API call completes in well under 200 seconds, your actor can take as long as it needs to finish between the two steps.
