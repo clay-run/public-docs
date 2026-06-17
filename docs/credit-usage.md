@@ -30,7 +30,7 @@ The columns in this view display:
 
 -   `Name:` The folder, workbook, or table. Click the dropdown next to a folder or workbook to see the contents.
 -   `Usage:` Marked as `Recurring` when it contains recurring credit usage (e.g., scheduled runs or signals).
--   `Owner:` The workbook’s creator or assigned owner — not necessarily who triggered the credit spend within it.
+-   `Owner:` The workbook's creator or assigned owner — not necessarily who triggered the credit spend within it.
 -   `Credits used:` The amount of credits used for this period. On the top-level **Workspace** row, this total includes credits from tables that have since been deleted. Hover over the ⓘ icon on the Workspace row to see how many credits came from deleted tables.
 
 Filter any of the content on this page by:
@@ -38,7 +38,7 @@ Filter any of the content on this page by:
 1.  When the credits were used.
 2.  Owner of the workbook (its creator, not who ran the enrichments).
 3.  Specific integrations being used.
-4.  **Recurring runs only:** Toggle `Recurring` to show only credits from recurring or scheduled runs. By default (toggle off), the dashboard shows all credit consumption — both one-time manual runs and recurring automated runs. When this filter is on, only workbooks and tables with recurring usage are shown in the expanded list — but folder and workbook `Credits used` totals always reflect the complete spend for all their contents, including non-recurring workbooks. If a folder’s total appears higher than the sum of the workbooks visible when you expand it, the difference comes from non-recurring workbooks hidden by the filter. Toggle the filter off to see all workbooks and their individual credits.
+4.  **Recurring runs only:** Toggle `Recurring` to show only credits from recurring or scheduled runs. By default (toggle off), the dashboard shows all credit consumption — both one-time manual runs and recurring automated runs. When this filter is on, only workbooks and tables with recurring usage are shown in the expanded list — but folder and workbook `Credits used` totals always reflect the complete spend for all their contents, including non-recurring workbooks. If a folder's total appears higher than the sum of the workbooks visible when you expand it, the difference comes from non-recurring workbooks hidden by the filter. Toggle the filter off to see all workbooks and their individual credits.
 
 **Note:** The Workbooks tab does not show per-user credit attribution — it groups spend by workbook or table, not by which team member ran the enrichments. If you need per-user credit tracking, see the **MCP** and **API** tabs, which attribute spend to individual users for those access methods.
 
@@ -46,7 +46,7 @@ Filter any of the content on this page by:
 
 For deeper insights into credit spend within a specific table, you can access the table credit usage dashboard. This gives you realtime data on when and how credits were spent within that table.
 
-**Note:** Historical data for the table credit dashboard begins on November 5th, 2025. You’ll see a warning about incomplete data if your selected time range begins before this date.
+**Note:** Historical data for the table credit dashboard begins on November 5th, 2025. You'll see a warning about incomplete data if your selected time range begins before this date.
 
 **How to access the table dashboard:**
 
@@ -57,13 +57,13 @@ _From a table:_
 
 _From the workspace credit dashboard:_
 
--   Click the chart button next to any table’s name to open its table-level dashboard.
+-   Click the chart button next to any table's name to open its table-level dashboard.
 
 **Dashboard views:**
 
 The table credit dashboard offers three ways to analyze your credit spend:
 
-`Time view:` See a time series graph of your table’s credit spend over time. You can:
+`Time view:` See a time series graph of your table's credit spend over time. You can:
 
 -   Choose your time range
 -   Aggregate by different time units (day, week, month)
@@ -78,7 +78,7 @@ The table credit dashboard offers three ways to analyze your credit spend:
 
 All views allow you to download the data as a CSV for further analysis.
 
-**Note:** Historical data for the table credit dashboard begins on November 5th, 2025. You’ll see a warning about incomplete data if your selected time range begins before this date.
+**Note:** Historical data for the table credit dashboard begins on November 5th, 2025. You'll see a warning about incomplete data if your selected time range begins before this date.
 
 ### Checking credit cost for a specific action on a row
 
@@ -93,8 +93,8 @@ The credit usage dashboard is organized into tabs, each covering a different sli
 -   **Workbooks** — shows credit spend broken down by folder, workbook, and table. Click the dropdown next to any folder or workbook to drill into its contents. Sort by `Name` or `Credits used`. Click `Export` to download a CSV for offline analysis.
 -   **Integrations** — shows credit spend grouped by integration across your entire workspace, so you can quickly see which data providers are consuming the most credits. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
 -   **Signals** — shows credit spend broken down by individual signal. A totals row (`All Signals`) appears at the top, followed by a per-signal breakdown of `Credits used` and `Actions used`.
--   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user. Spend that can’t be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
--   **API** — shows programmatic spend generated through Clay’s API and Exportly, broken down by user. Like MCP, unattributable spend appears as `Unattributed`.
+-   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
+-   **API** — shows programmatic spend generated through Clay's API and Exportly, broken down by user. Like MCP, unattributable spend appears as `Unattributed`.
 
 ## Credit estimates before running
 
@@ -102,7 +102,7 @@ Clay provides transparent cost estimates before you run enrichments or actions i
 
 ### Run cost breakdown
 
-When you run a column that has dependent columns (downstream enrichments that will automatically trigger), you’ll see:
+When you run a column that has dependent columns (downstream enrichments that will automatically trigger), you'll see:
 
 -   Total estimated credits for the run.
 -   Breakdown by column showing which columns will run and their individual costs.
@@ -118,7 +118,7 @@ This estimate appears for any column run that would trigger dependent enrichment
 
 ### Expensive run warnings
 
-Clay shows a warning when you’re about to initiate a run that will use a significant portion of your workspace’s monthly credit allotment. Specifically:
+Clay shows a warning when you're about to initiate a run that will use a significant portion of your workspace's monthly credit allotment. Specifically:
 
 -   Runs that cost more than 10% of your monthly credit allotment.
 -   With a minimum threshold of 500 credits.
@@ -128,7 +128,7 @@ This helps prevent accidental large credit expenditures.
 
 ### Import warnings
 
-When you import data to existing tables (via Copy Paste from URLs, adding a source, or CSV upload), you’ll see a confirmation modal if the import would trigger downstream actions. This modal:
+When you import data to existing tables (via Copy Paste from URLs, adding a source, or CSV upload), you'll see a confirmation modal if the import would trigger downstream actions. This modal:
 
 -   Warns you about potential credit usage from auto-running enrichments
 -   Shows estimated credit impact
@@ -147,11 +147,11 @@ The import warning and the first-10-rows auto-run limit both protect you when **
 
 To safely test a new table before committing credits at scale:
 
-1.  Turn table-level auto-run **off** before running your source for the first time (click `⛍` → toggle **Auto-run** off).
+1.  Turn table-level auto-run **off** before running your source for the first time (click `⛭` → toggle **Auto-run** off).
 2.  Import your source — rows load into the table without triggering any enrichments.
 3.  Select 5–10 rows, right-click, and choose **Run rows** to manually test your enrichments on a small batch.
 4.  Click individual action cells to see the **Charged** value and confirm the per-row cost.
-5.  Once you’re satisfied, turn auto-run back **on** and choose **Update cells** to process the remaining rows.
+5.  Once you're satisfied, turn auto-run back **on** and choose **Update cells** to process the remaining rows.
 
 See [Ways to save Clay credits](clay-credit-conservation.md) for the full recommended testing workflow.
 
@@ -160,8 +160,8 @@ See [Ways to save Clay credits](clay-credit-conservation.md) for the full recomm
 If table-level auto-run is disabled but credits are still being consumed, the most likely causes are manual or team-triggered actions:
 
 -   **Manual column runs** — any Editor on the workspace can right-click a column header and choose **Run column**, which bypasses the auto-run toggle and immediately dispatches enrichments.
--   **Scheduled columns** — a column may have a recurring schedule that runs independently of the table’s auto-run setting. Open **Run Settings → Re-run columns on a schedule** to review which columns are scheduled and disable any you no longer need. See [Ways to save Clay credits](clay-credit-conservation.md) for guidance on auditing scheduled runs.
--   **Hidden columns with auto-run enabled** — columns that are hidden from view still run if their individual auto-run toggle is on. Open the columns panel to check for hidden columns and disable auto-run for any you don’t need actively running. See [Table columns overview](table-columns-overview.md) for details.
+-   **Scheduled columns** — a column may have a recurring schedule that runs independently of the table's auto-run setting. Open **Run Settings → Re-run columns on a schedule** to review which columns are scheduled and disable any you no longer need. See [Ways to save Clay credits](clay-credit-conservation.md) for guidance on auditing scheduled runs.
+-   **Hidden columns with auto-run enabled** — columns that are hidden from view still run if their individual auto-run toggle is on. Open the columns panel to check for hidden columns and disable auto-run for any you don't need actively running. See [Table columns overview](table-columns-overview.md) for details.
 
 To identify what triggered a specific run, use the **Run view** in the [table credit usage dashboard](#understanding-table-specific-credit-usage). Each entry shows whether the run was manual, automated, or scheduled, along with a timestamp.
 
