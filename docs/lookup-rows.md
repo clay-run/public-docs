@@ -64,6 +64,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 -   Check against a static reference database, like a list of users
 -   Check a Do Not Contact list or verify whether a record has already been enriched, then branch actions based on yes/no
 -   Validate that a contact's email domain matches their company's domain — use a formula column to extract the domain from an enriched email address, then look it up against a table of company-level domains
+-   Personalize AI-generated emails to match each sender's tone and writing style — create a rep reference table with one row per sales rep (name, tone notes, and writing examples), look up the current row's Lead Owner field to pull that rep's context, then reference it in your AI prompt column
 
 **Best practices**
 
