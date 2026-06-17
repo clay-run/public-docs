@@ -16,11 +16,11 @@ Clay offers two powerful Chrome extensions that help you gather and organize inf
 
 Both tools integrate seamlessly with your Clay workspace, making it easier to collect, organize, and act on web data.
 
-For LinkedIn prospecting specifically, Clip to Clay can save LinkedIn profile URLs to your Clay table and will automatically create a LinkedIn Profile column. However, results on LinkedIn can be unpredictable. For a more reliable LinkedIn prospecting experience, [Exportly.ai](https://www.exportly.ai/) is the recommended Clay partner extension.
-
 ## Clay for Chrome
 
 The Clay for Chrome extension allows you to extract structured data from webpages. You can capture data from a single page, lists across multiple pages, or even custom-defined structures. Once extracted, the data can be added directly to your Clay table, downloaded as a CSV, or copied to your clipboard.
+
+**Note:** Clay for Chrome does not work on professional networking sites. If you want to add contacts from professional profiles or professional network searches to your Clay tables, try the [Clip to Clay extension](https://chromewebstore.google.com/detail/clip-to-clay/peaelamodldoacgjbgemamnljcjehiif) instead, though results on professional networking sites can be unpredictable. For a more reliable experience, [Exportly.ai](https://www.exportly.ai/) is the recommended Clay partner extension.
 
 ### Autodetected lists
 
