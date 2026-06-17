@@ -76,7 +76,7 @@ Daily is the fastest schedule available on non-Enterprise plans; Enterprise cust
 ## Enriching data with Snowflake
 
 1.  While in a Clay table, click `Add enrichment` and search for `Snowflake`.
-2.  Under `Integrations`, select one of the Snowflake options.\
+2.  Under `Integrations`, select one of the Snowflake options.
 3.  In the modal, you will be asked to `Select Snowflake account`.
     -   If you haven't already connected your Snowflake account, click `+ Add account` and select your authentication method.
 
