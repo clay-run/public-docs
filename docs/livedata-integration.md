@@ -2,7 +2,7 @@
 title: LiveData integration
 source_url: https://university.clay.com/docs/livedata-integration
 description: Find social profiles using work email or name.
-last_synced: 2026-04-26T01:40:16.569Z
+last_synced: 2026-04-26T01:40:16.563Z
 ---
 
 # LiveData integration
