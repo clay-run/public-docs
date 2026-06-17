@@ -25,6 +25,11 @@ Select the date or datetime you want to parse and the format of the value you wa
 
 **(Optional) Step 2:** Specify the timezones of the original and new values.
 
+- **Original Timezone** — The timezone your input date is stored in. If left blank, it defaults to UTC. Select a UTC offset from the dropdown (for example, UTC-6 for Central Standard Time, UTC-5 for Eastern Daylight Time).
+- **New Timezone** — The timezone to convert the output date to. If left blank, the output stays in the original timezone.
+
+To convert a datetime from one timezone to another, set **Original Timezone** to the source timezone and **New Timezone** to the target timezone. For example, to convert a stored UTC timestamp to Central Standard Time, set Original Timezone to UTC and New Timezone to UTC-6.
+
 **(Optional) Step 3:** Select the language of your locale.
 
 **Step 4:** Configure run settings.
