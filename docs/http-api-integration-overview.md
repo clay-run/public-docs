@@ -385,7 +385,7 @@ When **Retry on failure** is enabled, three optional sub-settings appear on the 
 
 -   **Max retries** — number of retry attempts before the row errors out (1–5; default 1).
 -   **Status codes to retry** — comma-separated list of 4XX/5XX codes to retry. Use `-` for ranges (e.g., `429`, `500-503`). When provided, overrides the defaults.
--   **Error codes to retry** — comma-separated list of network error codes (e.g., `ECONNRESET`, `ETIMEDOUT`). When provided, overrides the defaults.
+-   **Error codes to retry** — comma-separated list of Node.js network-level error code strings (e.g., `ECONNRESET`, `ETIMEDOUT`, `ECONNREFUSED`). When provided, overrides the defaults. **Note:** This field only accepts Node.js error code strings — not numeric HTTP status codes. To retry on a specific HTTP status code (such as `429`), add it to **Status codes to retry** instead.
 
 To disable all retry logic for a column, toggle **Retry on failure** OFF.
 
