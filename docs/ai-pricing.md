@@ -34,6 +34,7 @@ You can always see which pricing structure applies when selecting a model in the
 | o3 | 5 | variable |
 | Anthropic | Claude 4.5 Haiku | 1 | variable |
 | Claude 4.5 Sonnet | 1.5 | variable |
+| Claude 4.6 Sonnet | 1 | variable |
 | Claude 4.6 Opus | 7.5 | variable |
 | Gemini | 2.5 Pro | 3 | variable |
 | 2.5 Flash | 0.5 | 1 |
