@@ -38,6 +38,7 @@ You can always see which pricing structure applies when selecting a model in the
 | Gemini | 2.5 Pro | 3 | variable |
 | 2.5 Flash | 0.5 | 1 |
 | 2.5 Flash Lite | 0.5 | 1 |
+| 3.1 Flash Lite | 0.5 | variable |
 
 _Costs are in data credits._
 
