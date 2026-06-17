@@ -13,7 +13,7 @@ Web scraping and automation platform providing data for AI and custom solutions.
 
 ## Apify Integration Overview
 
-With Clay’s Apify integration, you can quickly retrieve data from Apify actor runs or launch actors directly in Clay to get results on demand.
+With Clay's Apify integration, you can quickly retrieve data from Apify actor runs or launch actors directly in Clay to get results on demand.
 
 ## Setting up in Apify
 
@@ -27,7 +27,7 @@ You can connect your Apify account to Clay in two ways:
 
 ### **Method 1: Connect Apify account within enrichment panel**
 
-When running an Apify integration in Clay, you’ll be prompted to **Add account**.
+When running an Apify integration in Clay, you'll be prompted to **Add account**.
 
 Add your API key and name it to create an account. You can find your API token on the [Integrations](https://console.apify.com/account#/integrations) page in the Apify Console.
 
@@ -49,11 +49,11 @@ If you are using Apify as an enrichment for an existing table, access the enrich
 
 **Step 2: Select Apify account**
 
-Within the enrichment pane, select your Apify account, and add your account if you haven’t already.
+Within the enrichment pane, select your Apify account, and add your account if you haven't already.
 
 **Step 3: Select Apify actor and configure input data**
 
-Select the Apify actor you want to run. Then In the **Input Data** section, you’ll need to specify the data the actor will use. Enter the data body in JSON format.
+Select the Apify actor you want to run. Then In the **Input Data** section, you'll need to specify the data the actor will use. Enter the data body in JSON format.
 
 When referencing column tokens (dynamic data from your Clay table), ensure the key is in quotes, but do not put quotes around the token itself. For example:
 
@@ -137,6 +137,6 @@ To automatically import data for multiple companies or URLs without overwriting 
 
 ### Rows running slowly or stuck in Queued — concurrency limit
 
-Clay’s native **Run Apify Actor** integration enforces a fixed limit of **4 concurrent requests**, regardless of your Apify plan. This limit applies to all workspaces and cannot be raised on a per-workspace basis — it is set to match the concurrency cap on Apify’s lowest plan.
+Clay's native **Run Apify Actor** integration enforces a fixed limit of **4 concurrent requests**, regardless of your Apify plan. This limit applies to all workspaces and cannot be raised on a per-workspace basis — it is set to match the concurrency cap on Apify's lowest plan.
 
-If rows are sitting in **Queued** status and you are on a higher-tier Apify plan, you can bypass this cap by calling Apify’s API through an **HTTP API column** instead of the native integration. The HTTP API column does not apply this fixed limit, so Clay will dispatch requests at the rate your Apify plan supports. See the [HTTP API](http-api-integration-overview.md) guide for setup instructions.
+If rows are sitting in **Queued** status and you are on a higher-tier Apify plan, you can bypass this cap by calling Apify's API through an **HTTP API column** instead of the native integration. The HTTP API column does not apply this fixed limit, so Clay will dispatch requests at the rate your Apify plan supports. See the [HTTP API](http-api-integration-overview.md) guide for setup instructions.
