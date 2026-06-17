@@ -13,7 +13,7 @@ Web scraping and automation platform providing data for AI and custom solutions.
 
 ## Apify Integration Overview
 
-With Clay's Apify integration, you can quickly retrieve data from Apify actor runs or launch actors directly in Clay to get results on demand.
+With Clay’s Apify integration, you can quickly retrieve data from Apify actor runs or launch actors directly in Clay to get results on demand.
 
 ## Setting up in Apify
 
@@ -27,7 +27,7 @@ You can connect your Apify account to Clay in two ways:
 
 ### **Method 1: Connect Apify account within enrichment panel**
 
-When running an Apify integration in Clay, you'll be prompted to **Add account**.
+When running an Apify integration in Clay, you’ll be prompted to **Add account**.
 
 Add your API key and name it to create an account. You can find your API token on the [Integrations](https://console.apify.com/account#/integrations) page in the Apify Console.
 
@@ -49,11 +49,11 @@ If you are using Apify as an enrichment for an existing table, access the enrich
 
 **Step 2: Select Apify account**
 
-Within the enrichment pane, select your Apify account, and add your account if you haven't already.
+Within the enrichment pane, select your Apify account, and add your account if you haven’t already.
 
 **Step 3: Select Apify actor and configure input data**
 
-Select the Apify actor you want to run. Then In the **Input Data** section, you'll need to specify the data the actor will use. Enter the data body in JSON format.
+Select the Apify actor you want to run. Then In the **Input Data** section, you’ll need to specify the data the actor will use. Enter the data body in JSON format.
 
 When referencing column tokens (dynamic data from your Clay table), ensure the key is in quotes, but do not put quotes around the token itself. For example:
 
@@ -98,24 +98,7 @@ If the Import data from Apify source does not pull in your full dataset:
 - Re-trigger the import to pull in missing data.
 - Export the full CSV directly from Apify, import it into Clay, and compare the datasets to identify discrepancies.
 
-If re-triggering the import shows 0 new rows added, the source may have reached the 50,000-record limit — see [Scheduled Apify source stopped adding new rows](#scheduled-apify-source-stopped-adding-new-rows-after-hitting-the-50000-record-limit) below.
-
 For large datasets, Clay fetches Apify dataset items in fixed batches of 50 rows per step, retrying automatically until all rows are retrieved. If rows are still missing after an import, trigger the import manually multiple times until the complete dataset appears.
-
-### Scheduled Apify source stopped adding new rows after hitting the 50,000-record limit
-
-If your Apify source is set to run on a schedule but has stopped adding new rows — even though Apify shows successful actor runs with data — the most likely cause is that the source has accumulated 50,000 records and is now silently discarding all incoming data.
-
-**Important:** This is the *source record count*, not the number of rows currently visible in your table. Clay tracks every record a source has ever imported, including rows you have since deleted from the table. Deleting rows does **not** reset this counter — a table can show far fewer than 50,000 visible rows while the source has already reached the 50,000-record limit.
-
-The schedule itself is not broken — it continues to fire normally. But at the point of inserting records, Clay silently discards all incoming data without displaying an error or sending a notification.
-
-**To resolve this:**
-
-1. **Create a new source definition.** Delete the current Apify source and add it again with the same settings. A new source starts at a fresh 0/50,000 record count. Alternatively, create a new table and add the Apify source there.
-2. **Enable auto-dedupe before re-adding the source.** If your new source will import records already present in the table, enable [auto-dedupe](table-management-settings.md) on a unique identifier column (such as a profile URL or company domain) to automatically remove duplicate rows.
-
-For more on the 50,000-record source limit and workarounds for large ongoing imports, see [What are the row limits for Clay tables and sources?](sources.md#what-are-the-row-limits-for-clay-tables-and-sources).
 
 ### Duplicate data
 
@@ -154,6 +137,6 @@ To automatically import data for multiple companies or URLs without overwriting 
 
 ### Rows running slowly or stuck in Queued — concurrency limit
 
-Clay's native **Run Apify Actor** integration enforces a fixed limit of **4 concurrent requests**, regardless of your Apify plan. This limit applies to all workspaces and cannot be raised on a per-workspace basis — it is set to match the concurrency cap on Apify's lowest plan.
+Clay’s native **Run Apify Actor** integration enforces a fixed limit of **4 concurrent requests**, regardless of your Apify plan. This limit applies to all workspaces and cannot be raised on a per-workspace basis — it is set to match the concurrency cap on Apify’s lowest plan.
 
-If rows are sitting in **Queued** status and you are on a higher-tier Apify plan, you can bypass this cap by calling Apify's API through an **HTTP API column** instead of the native integration. The HTTP API column does not apply this fixed limit, so Clay will dispatch requests at the rate your Apify plan supports. See the [HTTP API](http-api-integration-overview.md) guide for setup instructions.
+If rows are sitting in **Queued** status and you are on a higher-tier Apify plan, you can bypass this cap by calling Apify’s API through an **HTTP API column** instead of the native integration. The HTTP API column does not apply this fixed limit, so Clay will dispatch requests at the rate your Apify plan supports. See the [HTTP API](http-api-integration-overview.md) guide for setup instructions.
