@@ -56,7 +56,7 @@ After generating a setup, you can easily edit your original description and rege
 5.  Write a `Prompt`.
     -   For guidance on writing effective prompts, see our doc on [writing prompts](https://www.clay.com/university/guide/ai-metaprompter-guide).
     -   **Tip:** You can mix static text and column references in the same prompt. Use `{{Column Name}}` syntax only for values that differ from row to row — like a LinkedIn URL or job title that's unique per person. Criteria that stay the same for every row — like a specific industry, keyword, or criterion you're screening for — can be typed directly in the prompt. For example, to check whether each person has ever worked in consulting, write: *"Based on {{Profile URL}}, has this person ever worked in consulting? Return Yes or No."* No "consulting" column needed.
-    -   **Tip — optional column references:** Every `{{Column Name}}` reference you add is **required to run** by default. If that column is blank for a row, the cell will show **"Some inputs missing"** and skip that row. If some of your referenced columns may be empty for certain rows, scroll down in the column settings to the inputs list and toggle off **Required to run** next to any non-essential column reference. When marked optional, the cell still runs and the blank field is simply omitted from the prompt for that row.
+    -   **Tip — optional column references:** Every `{{Column Name}}` reference you add is **required to run** by default. If that column is blank for a row, the cell will show **"Some inputs missing"** and skip that row. To allow the column to run when a field is empty, hover over the `{{Column Name}}` token in the prompt — a **Required to run** toggle appears inline on that token. Switch it off for any input that doesn't always have data.
 6.  _(Optional – Content creation, manipulation only)_ Provide context for task.
 7.  Add and define outputs.
     -   **Fields**
@@ -124,7 +124,7 @@ Use AI supports a fixed set of built-in AI providers (such as GPT, Claude, Gemin
 
 To call a custom or additional LLM from Clay, use the [HTTP API enrichment](https://university.clay.com/docs/http-api-integration-overview) to send requests to any OpenAI-compatible endpoint:
 
--   **Hosted proxy services** (e.g., LiteLLM, Azure OpenAI, AWS Bedrock): Configure the HTTP API enrichment to call the provider's OpenAI-compatible endpoint. See [LiteLLM's API documentation](https://docs.litellm.ai/docs/providers/openai_compatible) for endpoint and authentication details.
+-   **Hosted proxy services** (e.g., LiteLLM, Azure OpenAI, AWS Bedrock): Configure the HTTP API enrichment to call the provider's OpenAI-compatible endpoint. See [LiteLLM's API documentation](https://docs.litellm.ai/docs/providers/openai_compatible) for endpoint and licensing details.
 -   **Self-hosted open-source models** (e.g., LLaMA): Host the model at a reachable HTTP endpoint, then configure the HTTP API enrichment to call it.
 
 **Limitations compared to Use AI:**
@@ -141,7 +141,7 @@ When a cell shows **"Some inputs missing"**, one or more column references in yo
 There are two ways to resolve this:
 
 -   **Fill in the missing data.** Ensure that the columns referenced in your prompt have values for the rows you want to run.
--   **Make the inputs optional.** Open the column settings (click the column name → **Edit column**), scroll to the prompt section, and toggle off the **Required to run** switch next to each column reference that should be optional. When a reference is optional, the cell will still run even if that column is blank — the empty field is simply omitted from the prompt for that row.
+-   **Make the inputs optional.** In the column prompt, hover your cursor over a `{{Column Name}}` reference token — a **Required to run** toggle appears inline on that token. Switch it off for any input you want to be optional. When toggled off, the cell will still run even if that column is blank — the empty field is simply omitted from the prompt for that row.
 
 ### AI column output shows as a JSON object (response, reasoning, confidence, stepsTaken)
 
@@ -243,3 +243,20 @@ Pulling properties directly from the enrichment column gives you access to the f
 **Alternatively**, configure the Scrape Website enrichment to return less data. Open the enrichment column settings and deselect output fields you don't need (for example, uncheck **Body Text** if your prompt only requires the title and description).
 
 **Skipping rows where scraped data is missing:** If you want the AI column to skip rows where the Scrape Website column returned no data, add a run condition. Open the AI column's **Run Settings**, click **Add run condition**, and set it to `/Scrape Website is not empty`. See [Conditional runs](conditional-runs.md) for full details.
+
+### Cells showing "Rate limit wait time exceeded" with your own OpenAI API key
+
+If cells in a **Use AI** column show a **"Rate limit wait time exceeded"** error and you have your own OpenAI API key connected, the error means Clay has hit the token-per-minute (TPM) rate limits on your key. Clay automatically waits for the rate-limit window to reset before retrying, but if your key's TPM limits are persistently below what the operation requires, rows will remain stuck.
+
+Clay reads rate-limit headers in OpenAI's responses to detect your key's available TPM. If the detected limit is below what the column needs to run at a sustainable pace, Clay pauses and retries — but the error persists until the limit clears or is increased.
+
+**Resolution options:**
+
+1. **Switch to Clay's managed OpenAI account (recommended for "Create or modify content" columns).** Open the column settings, click the **Account** dropdown, and select the default Clay-managed account. Clay's managed account handles rate limits automatically — no tier upgrade needed on your end.
+
+2. **Upgrade your OpenAI API usage tier.** In your OpenAI account, increase your usage tier to raise your TPM limits. Clay requires at least **30,000 TPM** for "Create or modify content" Use AI columns. Claygent (web research) columns require substantially higher TPM — see [AI Tokens](ai-tokens.md) for the specific requirements by provider.
+
+To check your current OpenAI rate limits and request a tier increase:
+- [Usage](https://platform.openai.com/usage)
+- [Limits](https://platform.openai.com/settings/organization/limits)
+- [Usage Tiers](https://platform.openai.com/docs/guides/rate-limits#usage-tiers)
