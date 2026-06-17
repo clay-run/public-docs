@@ -190,6 +190,8 @@ Fields not added here are left blank on the new record.
 
 Clay does not have a dedicated "Add to Campaign" action. To add a contact or lead to a Salesforce Campaign, use **Create Record**, select **Campaign Member** as the Salesforce object, and map both the **ContactId** (or **LeadId**) and **CampaignId** fields. If the record is already a campaign member, Salesforce returns a `DUPLICATE_VALUE` error — you can guard against this by first running a **Lookup record** action with "Campaign Member" as the object to check whether the association already exists.
 
+To also set or update the **Status** of existing Campaign Members — for example, when the same lead or contact may already be in the campaign — use a three-step workflow: a **Lookup records via SOQL** action to check if the person is already a member, a conditional **Create record** if they are not, and a conditional **Update record** if they are. For step-by-step instructions and SOQL query examples, see [How do I add leads or contacts to a Salesforce campaign and update the status of existing campaign members?](salesforce-integration-faqs.md) in the Salesforce integration FAQs.
+
 ### `Action` Lookup record
 
 Use this action to find existing records in Salesforce.
@@ -280,6 +282,14 @@ Use this action to convert a lead.
 -   **Opportunity name (optional):** The name of the opportunity to create.
     -   If not provided, the lead's name will be used.
 
+**Tip: Lead conversion workflow**
+
+A common pattern is to look up an existing contact, create a lead, and then convert it — merging the new lead with the contact found in the lookup step. Here is a three-column setup:
+
+1.  **Lookup record** — Search for an existing contact or account in Salesforce by email address, domain, or another unique identifier. This returns the Contact ID and Account ID if a matching record already exists.
+2.  **Create record (conditional)** — Use **Create record** with **Lead** as the Salesforce object to create the lead. Add a [conditional run](conditional-runs.md) tied to the lookup column so this step only fires when no existing contact was found.
+3.  **Convert lead** — Map the Lead ID from Step 2 into **Lead ID**. To merge the converted lead with the contact from Step 1 rather than creating a new contact, pass the existing **Contact ID** and **Account ID** from the lookup column into the corresponding optional fields.
+
 ## Working with picklist fields
 
 ### How picklist fields appear in the Map fields panel
@@ -368,6 +378,27 @@ Alternatively, if you are using **JSON Schema** output mode, add an `"enum"` arr
 ```
 
 Both approaches prevent the AI from producing free-text output that won't match a valid Salesforce restricted picklist option.
+
+### Normalizing enrichment-provided values before writeback
+
+When you enrich records using a data provider — such as Clay's own enrichments, Apollo, ZoomInfo, or Clearbit — the values returned may not match what your Salesforce fields expect. Two common mismatches:
+
+**Picklist taxonomy mismatch**
+
+Enrichment providers use their own industry or category taxonomies, which frequently differ from your Salesforce picklist values. For example, Apollo may return `"information technology & services"` for Industry while your Salesforce restricted picklist only accepts `"Technology"`. Salesforce rejects values that don't exactly match an allowed option.
+
+To fix this, add a formula column or an AI column *after* the enrichment column to translate the enrichment output to the exact Salesforce value before writeback:
+
+-   **Formula column:** Use an `if`/`switch` expression to map each enrichment value to its Salesforce equivalent.
+-   **AI column (Claygent or Use AI):** Set the output format to **Fields**, choose **Select** as the field type, and add each allowed Salesforce picklist value as an option. The AI will only return one of the defined options — ensuring an exact match every time.
+
+Map the formula or AI column (not the raw enrichment column) in your **Update Record** or **Create Record** action.
+
+**Revenue range vs. currency field type mismatch**
+
+Salesforce's `AnnualRevenue` field is a **currency (number)** type — it expects a numeric value, not a text string. Many enrichment providers return revenue as a text range: Clay's own CPJ enrichment returns `"$1M-$10M"`, ZoomInfo returns `"$25 mil. - $50 mil."`, and Clearbit's `estimatedAnnualRevenue` field returns `"$10B+"`. Mapping any of these directly to Salesforce's `AnnualRevenue` field fails with a deserialization error — Salesforce cannot convert the text to a number.
+
+To fix this, add a formula column after the enrichment that converts the text range to a single numeric value. Where a provider also returns a separate numeric field (for example, Apollo's `annual_revenue` field returns a number alongside `annual_revenue_printed`), map the numeric field directly instead.
 
 ## Batch processing
 
