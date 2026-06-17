@@ -55,7 +55,3 @@ No. You must still warm up purchased domains for approximately two weeks after p
 ### **Where are the purchased email accounts from?**
 
 Clay fulfills orders through Smartlead, which in turn uses Zapmail to provision and manage the email accounts.
-
-### **How can I look up the rep's details for a purchased account?**
-
-Use the **Get rep data** enrichment in a Clay table. Provide the SmartSender account email address as the input — the action returns the rep's email address and full name (when available). This is useful for personalizing campaign messages with the sender's name.
