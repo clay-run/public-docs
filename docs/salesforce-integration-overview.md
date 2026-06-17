@@ -369,27 +369,6 @@ Alternatively, if you are using **JSON Schema** output mode, add an `"enum"` arr
 
 Both approaches prevent the AI from producing free-text output that won't match a valid Salesforce restricted picklist option.
 
-### Normalizing enrichment-provided values before writeback
-
-When you enrich records using a data provider — such as Clay's own enrichments, Apollo, ZoomInfo, or Clearbit — the values returned may not match what your Salesforce fields expect. Two common mismatches:
-
-**Picklist taxonomy mismatch**
-
-Enrichment providers use their own industry or category taxonomies, which frequently differ from your Salesforce picklist values. For example, Apollo may return `"information technology & services"` for Industry while your Salesforce restricted picklist only accepts `"Technology"`. Salesforce rejects values that don't exactly match an allowed option.
-
-To fix this, add a formula column or an AI column *after* the enrichment column to translate the enrichment output to the exact Salesforce value before writeback:
-
--   **Formula column:** Use an `if`/`switch` expression to map each enrichment value to its Salesforce equivalent.
--   **AI column (Claygent or Use AI):** Set the output format to **Fields**, choose **Select** as the field type, and add each allowed Salesforce picklist value as an option. The AI will only return one of the defined options — ensuring an exact match every time.
-
-Map the formula or AI column (not the raw enrichment column) in your **Update Record** or **Create Record** action.
-
-**Revenue range vs. currency field type mismatch**
-
-Salesforce's `AnnualRevenue` field is a **currency (number)** type — it expects a numeric value, not a text string. Many enrichment providers return revenue as a text range: Clay's own CPJ enrichment returns `"$1M-$10M"`, ZoomInfo returns `"$25 mil. - $50 mil."`, and Clearbit's `estimatedAnnualRevenue` field returns `"$10B+"`. Mapping any of these directly to Salesforce's `AnnualRevenue` field fails with a deserialization error — Salesforce cannot convert the text to a number.
-
-To fix this, add a formula column after the enrichment that converts the text range to a single numeric value. Where a provider also returns a separate numeric field (for example, Apollo's `annual_revenue` field returns a number alongside `annual_revenue_printed`), map the numeric field directly instead.
-
 ## Batch processing
 
 The `Create record`, `Update record`, and `Upsert object` actions support batch mode, which processes multiple records simultaneously for improved performance with large datasets. Batch mode is automatically enabled when running these actions across multiple rows in your Clay table. No additional configuration is required.
