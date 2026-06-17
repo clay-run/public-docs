@@ -147,7 +147,7 @@ The import warning and the first-10-rows auto-run limit both protect you when **
 
 To safely test a new table before committing credits at scale:
 
-1.  Turn table-level auto-run **off** before running your source for the first time (click `⧍` → toggle **Auto-run** off).
+1.  Turn table-level auto-run **off** before running your source for the first time (click `⛭` → toggle **Auto-run** off).
 2.  Import your source — rows load into the table without triggering any enrichments.
 3.  Select 5–10 rows, right-click, and choose **Run rows** to manually test your enrichments on a small batch.
 4.  Click individual action cells to see the **Charged** value and confirm the per-row cost.
