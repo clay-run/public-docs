@@ -2,7 +2,7 @@
 title: LiveData integration
 source_url: https://university.clay.com/docs/livedata-integration
 description: Find social profiles using work email or name.
-last_synced: 2026-04-26T01:40:16.563Z
+last_synced: 2026-04-26T01:40:16.569Z
 ---
 
 # LiveData integration
@@ -21,21 +21,21 @@ With this integration, you can find social profiles using various data points li
     -   If you haven't already connected your LiveData account, click `+ Add account` and go through authentication.
     -   If you have your own account, click `+ Add account` and go through authentication. Otherwise, use the Clay provided key.
 
-### `Action` Find Social Profile
+### `Action` Find Professional Profile
 
-Use this action to find a person's social profile using their work email or full name.
+Use this action to find a person's professional profile using their work email or full name.
 
-**Tip:** For best results, include the person's work email or full name, plus a company detail like the company name, domain, social link, or stock ticker.
+**Note:** When using full name as input without an email address, you must also include at least one company identifier — company name, company professional URL, company domain, or company ticker. Providing a full name alone (with no email or company context) returns a "Missing input" error.
 
 **Inputs**
 
 -   **Person's work email (Optional)**
 -   **Person's full name (Optional)**
 -   **Company name (Optional)**
--   **Company social URL (Optional)**
+-   **Company professional URL (Optional)**
 -   **Company domain (Optional)**
 -   **Company ticker (Optional)**
--   **Person's social URL (Optional)**
+-   **Person's professional URL (Optional)**
 -   **Person's job title (Optional)**
 -   **School name (Optional)**
 -   **Limit (Optional):** The maximum and default is 5.
