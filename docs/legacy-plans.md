@@ -37,6 +37,7 @@ In March 2026, Clay introduced a new pricing model to give you more flexibility 
 | New Integrations | ❌ Future integrations blocked | ✅ All new integrations |
 | Advanced Orchestration | Current features only | ✅ New releases prioritized |
 | Functions (Repeatable Workflows) | ✅ Available | ✅ Available |
+| MCP: Enable Functions for use in Claude / ChatGPT | ❌ Not available (Legacy Enterprise: ✅ Available) | ✅ Available |
 | HTTP API | Explorer+ | Growth+ |
 | CRM Integrations | Pro+ | Growth+ |
 | Webhooks | Explorer+ | Growth+ |
@@ -71,3 +72,7 @@ Yes for Starter and Explorer annual plans. No for Pro annual plans — requires 
 **What's the difference between priority support on Growth vs. legacy Pro?**
 
 Legacy Pro plan economics (higher CPC, no action charges) cannot support the same level of priority support investment as modern Growth plans. Only modern Growth+ plans qualify for priority queue support.
+
+**Can legacy Pro customers use the "Enable for MCP" feature on Functions?**
+
+No. The **"Enable for MCP"** toggle on Functions — which lets your team invoke custom Clay workflows directly from Claude or ChatGPT — is available on modern plans (Launch, Growth, Enterprise) and Legacy Enterprise only. Legacy Pro and Legacy Starter workspaces do not have access to this feature. To use Functions via MCP, you would need to upgrade to a modern plan.
