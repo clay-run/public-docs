@@ -30,8 +30,8 @@ Glean integration is available on Enterprise plans only.
 Functions are reusable enrichment workflows built in Clay that reps can invoke directly from ChatGPT, Claude, or Glean with a single prompt. Admins build them once and enable them for MCP — reps never need to open Clay to use them.
 
 1.  Go to the `Functions` tab in your workspace and find the function you want (or click `+ New function` to create a new one.)
-2.  Click the function to open it's settings and toggle `Enable for MCP`.
-    -   Set a name and description for the MCP app — this is what reps see when browsing available functions, so make it actionable (e.g., _"Company enrichment waterfall"_ or _"Outbound email generator"_).
+2.  Click the function to open its settings and toggle `Enable for MCP`.
+    -   Set the **Tool name** and description — this is how the function appears in the AI tool when reps browse available functions. Make it actionable (e.g., _"Company enrichment waterfall"_ or _"Outbound email generator"_). To rename or update the description later, return to the function's settings and edit the **Tool name** or description fields while **Enable for MCP** is toggled on.
 
 _For more information about functions, check out our_ [_full doc_](https://university.clay.com/docs/functions)_._
 
