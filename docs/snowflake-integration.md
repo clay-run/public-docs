@@ -233,3 +233,16 @@ After your query runs, Clay displays the columns it pulled in and lets you map t
 
 -   Click `Auto-map` to automatically match Snowflake columns to existing Clay fields.
 -   To add additional mappings, click `+ Add mapping`. If the destination Clay field doesn't exist yet, select `Create field`, choose a field type (Text, Email, URL, Number, Date, or Checkbox), and name it.
+
+## Troubleshooting
+
+### "You don't have access to this account" when editing a Snowflake source or column
+
+This error appears when the Snowflake Key-Pair connection used to set up this source or column was created by a different workspace member and you haven't been granted access to it — for example, when the original owner has left the team.
+
+You have two ways to resolve this:
+
+-   **Use a different Snowflake Key-Pair account:** In the source or column settings, select a Snowflake Key-Pair connection you do have access to from the dropdown. If you don't have one yet, click `+ Add account` to create a new connection with your own credentials.
+-   **Get access to the existing connection:** A workspace admin can add you to the existing connection in **Settings → Connections**. Once added, you'll be able to edit the source or column using the original connection.
+
+For more on how connection permissions work, see [Access settings for connections](access-settings-for-connections.md).
