@@ -35,7 +35,7 @@ The columns in this view display:
 
 Filter any of the content on this page by:
 
-1.  When the credits were used.
+1.  **When the credits were used** — use the `When` dropdown to select a preset period (`This week`, `Last week`, `This month`, or `Last month`) or choose `Custom range` to enter a specific start and end date. This lets you scope the dashboard to any window — for example, to see how many credits you used in a single day or between two specific dates.
 2.  Owner of the workbook (its creator, not who ran the enrichments).
 3.  Specific integrations being used.
 4.  **Recurring runs only:** Toggle `Recurring` to show only credits from recurring or scheduled runs. By default (toggle off), the dashboard shows all credit consumption — both one-time manual runs and recurring automated runs. When this filter is on, only workbooks and tables with recurring usage are shown in the expanded list — but folder and workbook `Credits used` totals always reflect the complete spend for all their contents, including non-recurring workbooks. If a folder's total appears higher than the sum of the workbooks visible when you expand it, the difference comes from non-recurring workbooks hidden by the filter. Toggle the filter off to see all workbooks and their individual credits.
