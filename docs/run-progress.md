@@ -170,7 +170,7 @@ If your enrichment columns are configured with auto-run enabled but cells still 
 
 To re-enable automatic enrichment:
 
-1.  Click the `⛭` icon in the top toolbar (or click the table name → **Run Settings**).
+1.  Click the `⛛` icon in the top toolbar (or click the table name → **Run Settings**).
 2.  Toggle **Auto-run** on.
 3.  Choose:
     -   **Update cells** — immediately queue all out-of-date cells to run.
