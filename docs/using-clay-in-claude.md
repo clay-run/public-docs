@@ -110,7 +110,7 @@ Company search is not currently supported. However, you can research companies b
 
 **Can I query my Audiences data or run analytical queries like "group by seller"?**
 
-If your workspace has Clay Audiences enabled (currently in beta for Enterprise customers), you can use natural language to filter and look up accounts — for example, "Show me my open-pipeline accounts in the northeast" or "Tell me about [Account]." Results are scoped to accounts you own in Salesforce by default; your admin can allow access to all accounts from [MCP settings](https://university.clay.com/docs/mcp-settings). If you see an error that contact queries aren't available in your workspace, ask your admin to enable `Allow querying all accounts` on the `MCP` page in the workspace sidebar — when this toggle is off, contact queries return an error. Note that the MCP page is only visible to workspace admins. If the toggle is on but queries return no results, ensure `Sync user IDs from audiences` is also on and your Salesforce account ownership is correctly mapped.
+If your workspace has Clay Audiences enabled (currently in beta for Enterprise customers), you can use natural language to filter and look up accounts — for example, "Show me my open-pipeline accounts in the northeast" or "Tell me about [Account]." Results are scoped to accounts you own in Salesforce by default; your admin can allow access to all accounts from [MCP settings](https://university.clay.com/docs/mcp-settings). If your queries return no Audiences results, ask your admin to verify the `Allow querying all accounts` toggle is enabled in MCP settings — when it's off and your Salesforce ownership isn't mapped, queries return empty instead of an error.
 
 The integration is designed for targeted, individual account research — not bulk data exports or analytical operations. SQL-style queries such as grouping accounts by owner or aggregating pipeline by territory are not supported. For complex analysis across your full Audiences dataset, use the Clay platform directly at [app.clay.com](http://app.clay.com).
 
@@ -150,16 +150,6 @@ Yes. Ask _"What functions do you have?"_ or _"What workflows has RevOps built fo
 
 Yes. Once you connect Clay via Claude's connector system at `claude.com/connectors/clay`, it will also work in Claude Code.
 
-**Troubleshooting: "SDK auth failed: Client name must not impersonate a known platform"**
-
-If you see this error, Clay was added via CLI (e.g., `claude mcp add https://api.clay.com/v3/mcp`) instead of through the Claude desktop app. Clay's MCP does not support CLI installation — the OAuth flow only accepts connections from the official connector.
-
-To fix:
-
-1.  Remove the CLI-added server: `claude mcp remove clay`
-2.  Open the Claude desktop app, go to Connectors, and add Clay — completing the authentication flow in your browser. (Or go directly to [claude.com/connectors/clay](https://claude.com/connectors/clay).)
-3.  Once connected through the desktop app, Claude Code can call the Clay MCP.
-
 **When I run an action in Claude, does it count as a Clay action?**
 
 Yes. Everything runs on a Clay table behind the scenes, so actions taken through Claude count as Clay actions and draw from your credit balance accordingly.
@@ -182,18 +172,6 @@ To move data from a Claude conversation into your Clay tables:
 -   **Functions**: If your ops team has configured a Clay workflow that writes to a specific table and enabled it for MCP, you can invoke it from Claude by name. (See the [Running functions](#running-functions) section above.)
 
 For batch workflows like running an email-finder waterfall on a list of companies, work directly in Clay at [app.clay.com](http://app.clay.com).
-
-**Can I push enriched contacts directly to Salesforce or another CRM from Claude?**
-
-Not directly. Clay in Claude is designed for finding contacts, enriching them, and drafting outreach — it does not include built-in tools to write records to Salesforce or other CRMs from within the Claude interface.
-
-To sync enriched data to Salesforce, use this workflow:
-
-1.  Use Claude to find and enrich your prospects.
-2.  Click **"Open in Clay"** to bring that data into your Clay workspace.
-3.  Use Clay's **Create Record**, **Update Record**, or **Upsert Record** Salesforce actions to sync the data to your CRM.
-
-For more advanced CRM workflows, work directly in Clay at [app.clay.com](http://app.clay.com).
 
 **How does my admin control my credit limit?**
 
