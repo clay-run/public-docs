@@ -99,6 +99,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 -   Count related records (e.g., how many people map to each company)
 -   Detect interest/volume (e.g., multiple inbound form submissions tied to one company)
 -   Trigger follow-ups based on count (e.g., 0 → run a "find people" search; 3+ → prioritize outreach)
+-   Check whether multiple conditions are all met across related rows — for example, only fire an alert when an entity has failed both a tax ID check *and* a business registration check, where each failure arrives as a separate row sharing a common ID
 
 **Best practices**
 
@@ -109,6 +110,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 -   Only use `Add as column` for the few results you actually need to avoid clutter and keep tables readable
 -   **100-record cap**: Lookup multiple rows returns at most 100 records per row — this is a hard limit that cannot be changed. If your source table has more than 100 matching records, only the first 100 are returned. To work around this, split the source table into smaller segments (e.g., by category, region, or product line), create a separate lookup column per segment, and merge the results in a formula or AI prompt. Each segment lookup stays under 100 records while the AI prompt still gets the full set.
 -   Use the lookup result as a gate to control downstream actions (enrich/send/route only when criteria are met) — for a step-by-step example using a run condition, see [Conditional runs](conditional-runs.md).
+-   **Formulas only see the current row**: a formula column has no way to read values from other rows directly. Use Lookup Multiple Rows to pull all related rows into the current row, then write a formula on the lookup result to check conditions across them — for example, inspect whether the returned rows array contains both a required value A *and* a required value B. When this pattern gates a downstream action, set the run condition to fire only on one specific row type (e.g., only on the final event row for an entity) to prevent the same action from triggering once per matching row.
 -   **Lookup not auto-running for new rows?** If the **Row Value** is a static string with no column reference (no `/` pick), Clay sees no upstream dependency and won't trigger the column when new rows are added. Fix: in **Run settings → Only run if**, add a condition that references an upstream column — for example, `/[Your source column] is present`. This creates the dependency Clay needs to fire the lookup automatically for each incoming row.
 
 ### **Using lookups in the same table**
@@ -135,6 +137,7 @@ You can also use `Lookup multiple rows` within the same table to find duplicates
 -   Use a clean, consistent match key (domain is usually more reliable than company name)
 -   Remember a self-lookup will usually match the row to itself—account for that when interpreting counts (e.g., "other matches" vs "total matches")
 -   Use the lookup result as a gate to control downstream actions (enrich/send/route only when criteria are met)
+-   **Timing with real-time webhook sources**: when rows for the same entity arrive one at a time from a webhook, the lookup on each row runs immediately and only sees rows that have already arrived — it has no awareness of rows that will land later. To reliably check cross-row conditions, either trigger from a single entity-level event that fires after all sub-events complete (so all rows exist before any lookup runs), add a delay before the lookup column to give sibling rows time to arrive, or use a separate table with one row per entity to run the aggregation logic there.
 
 ### **Timing considerations in multi-step workflows**
 
