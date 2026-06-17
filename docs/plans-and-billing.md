@@ -38,7 +38,7 @@ To upgrade your Clay workspace plan:
 
 Your new plan will activate immediately, and any applicable charges will be applied.
 
-**How upgrade billing works:** Plan upgrades are **not prorated** — you pay the full price of the new tier immediately, not a partial amount for remaining days in your current cycle. In return, you receive the **full** Actions and Data Credits for your new plan right away. Unused Actions from your previous plan are not carried over (Actions reset each billing cycle and do not roll over). Your existing unused Data Credits are preserved when you upgrade.
+**How upgrade billing works:** Plan upgrades are **not prorated** — you pay the full price of the new tier immediately, not a partial amount for remaining days in your current cycle. In return, you receive the **full** Actions and Data Credits for your new plan right away. Unused Actions from your previous plan are not carried over (Actions reset each billing cycle and do not roll over). Your existing unused Data Credits carry over when you upgrade, though the 2× rollover cap of your new plan applies immediately — your total balance (existing credits plus new plan credits) cannot exceed 2× the new plan's monthly credit limit, and any credits above that cap are dropped.
 
 ### Launch plan
 
@@ -120,7 +120,7 @@ No — Clay does not currently offer a subscription pause feature. If you need t
 
 No. Plan upgrades are not prorated. When you upgrade to a higher tier, you are charged the full price for the new plan immediately — not a partial amount for remaining days in your current billing cycle. In return, you receive the **full** Actions and Data Credits for your new tier right away, not just the incremental difference over your current plan.
 
-Unused Actions from your previous plan are not refunded or carried over (Actions reset each billing cycle and do not roll over). Your existing unused Data Credits are preserved when you upgrade.
+Unused Actions from your previous plan are not refunded or carried over (Actions reset each billing cycle and do not roll over). Your existing unused Data Credits carry over when you upgrade, but the 2× rollover cap of your new plan applies immediately: your total balance (existing credits plus new plan credits) cannot exceed 2× the new plan's monthly credit limit, and any credits above that cap are dropped. For example, if your new plan includes 6,000 Data Credits per month, your maximum post-upgrade balance is 12,000 — even if you had 10,000 credits before upgrading. Clay shows a warning on the upgrade confirmation page when your balance will be affected.
 
 If you're unsure whether you need a higher tier, check your current usage in `Settings` → `Usage` to see how many Actions and Data Credits you've consumed this billing cycle before committing to an upgrade.
 
