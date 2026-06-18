@@ -77,6 +77,10 @@ Clay's webhook URL works with any platform that can send HTTP POST requests in J
 
 For a complete example using Zapier, see [Send Clay data to Zapier](https://www.clay.com/university/guide/clay-to-zapier).
 
+**Rate limits and retry for outbound calls:** Clay does not impose a fixed rate limit on outbound HTTP API enrichment calls — the rate bottleneck is whatever limit the receiving service enforces. To keep requests within what your receiving endpoint can handle, configure the **Custom rate limit** setting inside your HTTP API column settings. By default, the HTTP API enrichment **retries failed requests automatically** when the receiving service returns a `408`, `413`, or `429` status code, or a network-level connection error — up to 1 retry by default, configurable up to 5. For details on both settings, see the [HTTP API guide](https://www.clay.com/university/guide/http-api-integration-overview).
+
+**Note:** The 10 requests/second throughput limit in the [Limits](#limits) section above applies only to data *arriving at* Clay through a webhook source. It does not apply to outbound HTTP API calls your table makes to external services.
+
 ## FAQs
 
 ### Why does my webhook source show a higher row count than my table?
