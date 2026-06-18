@@ -192,6 +192,10 @@ Clay does not have a dedicated "Add to Campaign" action. To add a contact or lea
 
 To also set or update the **Status** of existing Campaign Members — for example, when the same lead or contact may already be in the campaign — use a three-step workflow: a **Lookup records via SOQL** action to check if the person is already a member, a conditional **Create record** if they are not, and a conditional **Update record** if they are. For step-by-step instructions and SOQL query examples, see [How do I add leads or contacts to a Salesforce campaign and update the status of existing campaign members?](salesforce-integration-faqs.md) in the Salesforce integration FAQs.
 
+**Tip: Posting a Salesforce Chatter note**
+
+To post a Chatter note on any Salesforce record (such as an Account, Contact, or Opportunity), use **Create Record**, select **Feed Item** as the Salesforce object, and map two fields: **Parent ID** (the Salesforce ID of the record you want to post to) and **Body** (the text content of the post). **Feed Item** only appears in the object picker if Chatter is enabled in your Salesforce org — if you don't see it, check your Salesforce org's Chatter settings.
+
 ### `Action` Lookup record
 
 Use this action to find existing records in Salesforce.
