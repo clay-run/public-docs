@@ -74,6 +74,8 @@ The company identifier field accepts these LinkedIn URL formats:
 
 **Important:** Person profile URLs (`https://www.linkedin.com/in/<name>`) are not valid as company identifiers. Passing a person LinkedIn URL produces a confusing "Invalid companies provided" error even though the URL is real and correctly formatted — the field only accepts company or school page URLs, not individual profiles. See the [troubleshooting section](#getting-invalid-companies-provided-error-despite-having-a-valid-linkedin-url) below if you hit this error.
 
+**Changing the Company Identifier for an existing search:** The identifier is set in the **Column Mapping** panel on the company table's **Update People Table** column — click into any company row to open it. This setting is independent of the **Company identifiers** field shown when you click **Go to source** (which reflects the linked Companies source table's own configuration, not the people search). Updating the Column Mapping is what changes the identifier the search uses; you do not need to change anything in the source Companies table.
+
 ### Run conditional people searches with table views
 
 Company and people search sources don't have run conditions the way enrichment actions do. If you only want to find people at companies that meet specific criteria (e.g., only public companies), the workaround is to **create a filtered view** of your company table first, then run **Find People at These Companies** from that view. The source will only pull from the rows visible in the view.
