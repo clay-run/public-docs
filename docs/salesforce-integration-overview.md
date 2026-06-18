@@ -192,7 +192,7 @@ Use this action to create a new record in Salesforce.
 After selecting a Salesforce Object, the **Map fields** section lets you specify which fields to set on the new record. The section starts empty — add only the fields you need.
 
 -   **+ Add field**: Opens a searchable list of all available fields for the selected Salesforce object. Select a field to add it, then map it to a column or value from your Clay table. Repeat for each field you want to set.
--   **Refresh**: Reloads the field list from Salesforce. Use this if you've recently added or modify fields in your Salesforce org and they're not appearing in the picker.
+-   **Refresh**: Reloads the field list from Salesforce. Use this if you've recently added or modified fields in your Salesforce org and they're not appearing in the picker.
 
 Fields not added here are left blank on the new record.
 
