@@ -74,8 +74,6 @@ The company identifier field accepts these LinkedIn URL formats:
 
 **Important:** Person profile URLs (`https://www.linkedin.com/in/<name>`) are not valid as company identifiers. Passing a person LinkedIn URL produces a confusing "Invalid companies provided" error even though the URL is real and correctly formatted — the field only accepts company or school page URLs, not individual profiles. See the [troubleshooting section](#getting-invalid-companies-provided-error-despite-having-a-valid-linkedin-url) below if you hit this error.
 
-**Changing the Company Identifier for an existing search:** The identifier is set in the **Column Mapping** panel on the company table's **Update People Table** column — click into any company row to open it. This setting is independent of the **Company identifiers** field shown when you click **Go to source** (which reflects the linked Companies source table's own configuration, not the people search). Updating the Column Mapping is what changes the identifier the search uses; you do not need to change anything in the source Companies table.
-
 ### Run conditional people searches with table views
 
 Company and people search sources don't have run conditions the way enrichment actions do. If you only want to find people at companies that meet specific criteria (e.g., only public companies), the workaround is to **create a filtered view** of your company table first, then run **Find People at These Companies** from that view. The source will only pull from the rows visible in the view.
@@ -208,7 +206,7 @@ This is the approach to use when you've already run enrichments and don't want t
 
 The exclusion options above remove matched records before they enter your table. If records are already in your table and you want to skip enrichment on contacts that match a suppression list — such as existing customers, competitors, or a broker list — use **Lookup Rows combined with a run condition**:
 
-1.  Import your suppression list as a Clay table (or use an existing one in your workspace).
+1.  Import your suppression list as a Clay table (or use an existing one in your workspace).\
 2.  In your enrichment table, add a **Lookup single row in other table** action. Set `Table to search` to your suppression table and match on a stable identifier — LinkedIn URL for people, or domain for companies.
 3.  On each enrichment you want to gate, open **Run settings → Only run if** and add a condition such as `{{Suppression Lookup}} is empty`. The enrichment will only run for records not found in your suppression list.
 
