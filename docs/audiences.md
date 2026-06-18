@@ -15,7 +15,7 @@ Use it to build dynamic segments across millions of records, run automated enric
 
 Setting up Audiences is four major steps:
 
-1.  **Import your data** — connect Salesforce or Snowflake and bring your records into Audiences.
+1.  **Import your data** — connect Salesforce, HubSpot, or Snowflake and bring your records into Audiences.
 2.  **Create audiences** — build dynamic segments using filters to target the right contacts and accounts.
 3.  **Enrich and monitor** — run bulk enrichments and signals that write data permanently back to each record.
 4.  **Write back to your CRM** — sync enriched data and segment membership back to Salesforce.
@@ -31,6 +31,7 @@ To add a data source for the first time, click the `Add data` button in the top 
 You can import data from:
 
 -   A new people or companies search
+-   HubSpot
 -   Snowflake
 -   Salesforce
 
@@ -70,6 +71,21 @@ Clay pulls data from Salesforce on two schedules:
 **Formula and calculated fields:** Salesforce formula and calculated fields do not update `SystemModstamp` when they recalculate. Changes to these fields are not captured during incremental syncs — they appear in Audiences only after the next weekly full sync.
 
 **Deleted records:** Clay does not remove deleted Salesforce records from Audiences immediately. Instead, the record is marked **Deleted in source**, which you can filter on in your audience. The weekly full sync reconciles hard-deleted records. If a Salesforce record is deleted and recreated (assigning it a new Salesforce ID), it will temporarily appear as a duplicate entry until the next weekly full sync resolves it. There is no self-serve option to trigger an early full sync — contact Clay support if you need an expedited cleanup.
+
+### Importing from HubSpot
+
+HubSpot Contacts and Companies can be imported into Audiences and sync automatically. HubSpot Deals are available in early access — contact your Growth Strategist to enable Deals for your workspace.
+
+1.  Click `Add data` → `Add Source` → select your [**HubSpot integration**](https://university.clay.com/docs/hubspot-integration-overview).
+    -   If you don't see a HubSpot integration listed, contact your Growth Strategist.
+2.  Select the object type to configure: `Contacts`, `Companies`, or (if enabled for your workspace) `Deals`.
+3.  Enable the `Import` toggle.
+4.  Add the HubSpot fields you want to segment by — only fields included here will appear as columns and filter options in your Audience.
+5.  Name the corresponding Clay fields — these become the column names in Audiences.
+6.  Repeat steps 2–5 for each object type you want to import.
+7.  Click `Save and Preview`, then `Confirm`.
+
+Deal records are associated with your contact and company records, and Deal fields become available as filters in your People and Companies audiences.
 
 ### Importing from Snowflake
 
@@ -190,7 +206,7 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
 Four Clay actions let you move data between a Clay table and your Audience directly.
 
 -   In any Clay table, click `Add enrichment` and search for:
-    -   `Upsert Audiences Record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. Use it to commit data from unsupported integrations (e.g., HubSpot), qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table.
+    -   `Upsert Audiences Record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. Use it to commit data from integrations Audiences doesn't yet support natively, qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table.
     -   `Update Audiences Record` writes data from a table row to one or more fields on an existing Audience record. Unlike `Upsert Audiences Record`, it does not create a new record if no match is found. Both actions write only to fields that already exist in your Audience — to create a new custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
     -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls. By default, signal data is returned for the past **30 days** and the action returns a maximum of **5 signal results** per record — adjust the lookback period in the column settings to retrieve older signals, or use `Get Audiences Activity` when you need more than 5 results.
     -   `Get Audiences Activity` retrieves signal and activity data for an Audiences record — including signal events and, if Gong is connected to your workspace, Gong call records. Use it when you need more than 5 results or want to query a longer time window than `Lookup in Audiences` provides by default.
