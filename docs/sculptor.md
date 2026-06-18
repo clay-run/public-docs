@@ -48,8 +48,6 @@ History is scoped to the surface you're currently working in:
 
 ## Sandbox mode
 
-> **Available on Pro and Enterprise plans. A broader rollout to additional plans is coming.**
-
 When Sculptor builds new columns for your table, it automatically puts the table into [sandbox mode](https://www.clay.com/university/guide/sandbox-mode) first. This gives you a chance to review and validate the new columns before they go live—reducing unintended credit burn and giving you more control over changes.
 
 > **Important:** To save Sculptor's proposed columns to your live table, use the **Review changes** button — do _not_ click **Exit Sandbox**. Clicking **Exit Sandbox** will discard all of Sculptor's proposed changes without publishing them.
@@ -101,7 +99,7 @@ While Sculptor is powerful, there are a few things to keep in mind:
 -   **No direct CRM integration (yet)** — Connections must be set up manually for now.
 -   **Cross-table operations are limited** — Advanced linking and workflows are still in development.
 -   **No export option** — Export functionality hasn't been integrated yet.
--   **Column modifications use sandbox on Pro & Enterprise** — On Pro and Enterprise plans, Sculptor adds new columns to existing tables via [sandbox mode](#sandbox-mode) rather than writing directly to your live table. You'll need to review and publish those changes using the **Review changes** button. On Starter, Sculptor writes new columns directly to the live table.
+-   **Column modifications use sandbox mode** — When Sculptor adds new columns to existing tables, it uses [sandbox mode](#sandbox-mode) rather than writing directly to your live table. You'll need to review and publish those changes using the **Review changes** button.
 -   **Feature gaps** — Signals tables aren't currently supported.
 -   **Data boundaries apply** — Only processes data you provide or data from supported sources and enrichments.
 
@@ -136,7 +134,7 @@ If you hit the limit and need it increased, contact support.
 
 ### Sculptor keeps entering sandbox mode when I add a column
 
-On Pro and Enterprise plans, this is expected behavior — Sculptor uses sandbox mode whenever it adds new columns to an existing table, rather than writing directly to your live table. This gives you a chance to review proposed changes before they go live.
+This is expected behavior — Sculptor uses sandbox mode whenever it adds new columns to an existing table, rather than writing directly to your live table. This gives you a chance to review proposed changes before they go live.
 
 To apply the proposed column to your table:
 1. **Do not click Exit Sandbox** — this discards all of Sculptor's proposed changes without publishing them.
