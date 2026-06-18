@@ -45,7 +45,7 @@ Use this when you want to import data from an API to create a new table.
 -   ✅ Import datasets from external APIs.
 -   ✅ Build lists from third-party services.
 -   ✅ Start workflows with external data.
--   ⚠️ Note: No pagination support currently.
+-   ✅ Supports pagination up to 50,000 rows (offset/limit, page, cursor, or next URL).
 
 👉 Jump to source setup (see below).
 
@@ -482,7 +482,11 @@ You'd specify `items` as the results path.
 
 Most APIs nest their data within a specific field rather than returning an array at the root level.
 
-**Step 5: Configure optional settings**
+**Step 5: Configure pagination (optional)**
+
+If your API returns results across multiple pages, enable pagination to automatically fetch all pages up to 50,000 rows. See [Configuring pagination](#configuring-pagination) below for a full walkthrough.
+
+**Step 6: Configure optional settings**
 
 -   **Use static IP**: Route requests through Clay's fixed egress IPs for firewall allow-listing. See [IP allowlisting](#ip-allowlisting) below.
 -   **Remove empty values**: Exclude null or empty fields
@@ -490,18 +494,43 @@ Most APIs nest their data within a specific field rather than returning an array
 -   **Response timeout**: Specify timeout in milliseconds
 -   **Retry on failure**: Configure retry attempts and conditions
 
-**Step 6: Preview and import**
+**Step 7: Preview and import**
 
 1.  Preview the API response to verify the data structure.
 2.  Map the API response fields to table columns.
 3.  Import the data to create your new table.
+
+### Configuring pagination
+
+HTTP API as source can automatically fetch multiple pages of results, up to 50,000 rows total. To enable pagination, open the source configuration and choose a pagination mode from the **Pagination** dropdown.
+
+**Pagination modes**
+
+-   **Update query parameter(s)** — Clay injects one or more query parameters into each subsequent request. Use this for offset/limit, page-number, and cursor-based APIs that accept the next-page token as a query parameter.
+-   **Update body parameter(s)** — Same as above, but Clay injects the parameters into the request body instead. Use this for POST-based APIs.
+-   **Response contains next URL** — Clay reads a URL from the previous response and uses it as the endpoint for the next request. Use this when the API returns a `next` or `next_url` field in each response.
+
+**Pagination tokens**
+
+When using **Update query parameter(s)** or **Update body parameter(s)**, set the value for each parameter to one of the following:
+
+-   `$offset` — total number of records fetched so far (for offset/limit APIs)
+-   `$page` — current page number, starting at 1 (for page-number APIs)
+-   `$pageZeroIndex` — current page number, starting at 0
+-   A dot-path into the previous response (e.g., `meta.next_cursor`) — for cursor-based APIs; pagination stops automatically when the path resolves to an empty value
+
+**Additional stop conditions**
+
+-   **Stop path** — a dot-path in the response that must be truthy for pagination to continue (e.g., `pagination.has_more`). Pagination stops when this field is falsy or absent.
+-   **Max pages path** — a dot-path that resolves to the total page count in the response (e.g., `pagination.totalPages`). Clay stops once it has fetched that many pages.
+-   Clay also stops automatically when a page returns zero results or the 50,000-row cap is reached.
 
 ### Limitations
 
 **⚠️ Important considerations:**
 
 -   **Array output required**: Make sure the results path points to an array in the API response.
--   **No pagination support**: Currently limited to single API calls. If your API returns paginated results, you'll only get the first page (typically 10-100 records).
+-   **50,000-row cap**: Pagination fetches up to 50,000 rows across all pages. Results beyond this limit are not imported.
 -   **Results path matters**: Take time to examine your API response structure. Some APIs nest data several levels deep (e.g., `data.results.items`).
 -   **Account security**: Your API credentials are stored securely and won't be exposed in the table configuration.
 
@@ -523,7 +552,7 @@ All requests from that column will then originate from Clay's fixed IP addresses
 
 ### Enabling static IP for HTTP API as source
 
-In Step 5 of the source configuration (**Configure optional settings**), toggle on **Use static IP**.
+In Step 6 of the source configuration (**Configure optional settings**), toggle on **Use static IP**.
 
 ### Other integrations
 
@@ -787,7 +816,13 @@ When copying from API documentation, paste your code into a plain text editor fi
 
 ### Can I use HTTP API with pagination?
 
-Currently, HTTP API as source does not support pagination. The import will retrieve only the data from a single API response. Pagination support may be added based on customer demand.
+Yes. HTTP API as source supports pagination and can fetch up to 50,000 rows across multiple pages. Choose from three pagination modes in the source configuration:
+
+-   **Update query parameter(s)** — inject an `$offset`, `$page`, `$pageZeroIndex`, or cursor token into the query string on each subsequent request.
+-   **Update body parameter(s)** — same as above, but via the request body (for POST-based APIs).
+-   **Response contains next URL** — follow a next-page URL returned in each response (e.g., a `links.next` field).
+
+See [Configuring pagination](#configuring-pagination) above for full setup details.
 
 ### Can I use HTTP API to push enriched data to AWS (e.g., S3 via API Gateway)?
 
