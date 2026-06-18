@@ -45,7 +45,7 @@ Use this when you want to import data from an API to create a new table.
 -   ✅ Import datasets from external APIs.
 -   ✅ Build lists from third-party services.
 -   ✅ Start workflows with external data.
--   ⚠️ Note: No pagination support currently.
+-   ✅ Pagination supported up to 50,000 rows (Explorer, Pro, and Enterprise plans).
 
 👉 Jump to source setup (see below).
 
@@ -489,6 +489,7 @@ Most APIs nest their data within a specific field rather than returning an array
 -   **Follow redirects**: Set max redirects if needed
 -   **Response timeout**: Specify timeout in milliseconds
 -   **Retry on failure**: Configure retry attempts and conditions
+-   **Pagination**: Collect results across multiple API pages — see [Pagination](#pagination) below.
 
 **Step 6: Preview and import**
 
@@ -496,12 +497,24 @@ Most APIs nest their data within a specific field rather than returning an array
 2.  Map the API response fields to table columns.
 3.  Import the data to create your new table.
 
+### Pagination
+
+HTTP API as source supports paginating through multi-page API responses, collecting up to 50,000 rows across all pages. Pagination is available on Explorer, Pro, and Enterprise plans.
+
+After the initial request runs, each subsequent request can inject values from the previous response to advance to the next page. Clay stops paginating when the results array is empty, no next-page value is found, or the 50,000-row limit is reached.
+
+**Pagination types:**
+
+-   **Offset / limit** — Clay automatically increments an `$offset` counter with each request. Pass `$offset` as a query parameter or body value to tell the API where to start the next batch.
+-   **Page** — Clay increments a `$page` counter (1-indexed) or `$pageZeroIndex` (0-indexed). Pass the counter as a query parameter or body value.
+-   **Cursor-based** — Extract a cursor or next-page token from the previous response using a dot-path (e.g., `response.meta.next_cursor`) and inject it into the next request's parameters or body.
+-   **Full URL** — Extract the complete next-page URL from the previous response (e.g., `response.links.next`) and use it as the endpoint for the next request.
+
 ### Limitations
 
 **⚠️ Important considerations:**
 
 -   **Array output required**: Make sure the results path points to an array in the API response.
--   **No pagination support**: Currently limited to single API calls. If your API returns paginated results, you'll only get the first page (typically 10-100 records).
 -   **Results path matters**: Take time to examine your API response structure. Some APIs nest data several levels deep (e.g., `data.results.items`).
 -   **Account security**: Your API credentials are stored securely and won't be exposed in the table configuration.
 
@@ -787,7 +800,7 @@ When copying from API documentation, paste your code into a plain text editor fi
 
 ### Can I use HTTP API with pagination?
 
-Currently, HTTP API as source does not support pagination. The import will retrieve only the data from a single API response. Pagination support may be added based on customer demand.
+Yes. HTTP API as source supports four pagination types — offset/limit, page, cursor-based, and full URL — and can collect up to 50,000 rows across all pages. After the initial request runs, subsequent requests automatically inject values from the previous response to advance through pages. Pagination is available on Explorer, Pro, and Enterprise plans. See [Pagination](#pagination) above for setup details.
 
 ### Can I use HTTP API to push enriched data to AWS (e.g., S3 via API Gateway)?
 
