@@ -117,6 +117,16 @@ To get a missing field into Clay, use one of these approaches:
 1.  **Add a Lookup record column in Clay (fastest).** Use the **Lookup record** enrichment to fetch the full record by its Salesforce Object ID (which is always imported). This returns **all** fields on the object — including any custom fields — regardless of what was in your list view. For cross-object fields, use the related object's ID (e.g., `AccountId` on Contact) to look up the related record and pull any field from it.
 2.  **Add the field to your Salesforce list view.** In Salesforce, edit the list view to include the missing column, then re-run the source in Clay to pick it up. For cross-object fields, first create a formula text field on the object that copies the related value (for example, a formula field on Contact with the expression `Account.Name`). Once added to the list view in Salesforce, Clay imports it as a direct field. This is useful when you need the value available in multiple Clay tables without a per-row lookup step.
 
+**Filter conditions in your Salesforce list view**
+
+Clay imports records using the SOQL query that Salesforce returns for your selected list view. However, Salesforce generates list view queries on a per-user basis, so **filter conditions are not always included** — particularly Owner-based filters and formula-field filters, and when the list view was created or is managed by a different Salesforce user than the one Clay's connection authenticates as. When filter conditions are missing from the query, Clay imports all records on the object rather than just the filtered subset. This is why you may see records owned by people other than the intended owner, or record counts that don't match what Salesforce shows.
+
+If you rely on list view filters to scope your import, use one of these alternatives:
+
+1.  **Use the SOQL source (recommended).** Switch to [Import records from a Salesforce SOQL query](salesforce-soql.md) and write the filter directly into the query — for example, `SELECT Id, Name, OwnerId FROM Contact WHERE OwnerId = 'USER_ID'`. This encodes the filter in the query itself and reliably returns only matching records.
+2.  **Filter inside Clay.** Keep your current list view import but add a filter on your Clay view to show only rows that match your criteria (for example, filter where Owner ID equals the specific user's ID).
+3.  **Use a Salesforce report.** Recreate the list as a Salesforce report and use the **Import records from a Salesforce report** source instead — reports carry their filter conditions through to Clay.
+
 ### `Source` Import records from a Salesforce report
 
 **Inputs:**
