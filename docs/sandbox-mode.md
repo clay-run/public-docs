@@ -20,6 +20,7 @@ Sandbox mode is a special table mode that lets you safely build, test, and publi
 ## **Enabling sandbox mode**
 
 1.  Click the `Sandbox mode` button in the toolbar.
+    -   Sandbox mode is now available on all Clay plans. If the `Sandbox mode` button is not yet visible in your toolbar, it may still be rolling out to your workspace.
 2.  After a few seconds, a new sandbox will be set up with sample rows, ready for you to make changes.
     -   **To discard changes and start a fresh copy of the sandbox:** Click `⚙️` → `Reset sandbox`.
     -   **To turn off sandbox mode:** Click `Exit sandbox` in the toolbar. This will return you to your normal table and discard all unpublished changes in your sandbox.
