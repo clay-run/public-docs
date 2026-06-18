@@ -48,6 +48,8 @@ History is scoped to the surface you're currently working in:
 
 ## Sandbox mode
 
+> **Now available on all plans.** Previously limited to Pro and Enterprise, Sculptor sandbox mode is now rolling out to all workspaces.
+
 When Sculptor builds new columns for your table, it automatically puts the table into [sandbox mode](https://www.clay.com/university/guide/sandbox-mode) first. This gives you a chance to review and validate the new columns before they go live—reducing unintended credit burn and giving you more control over changes.
 
 > **Important:** To save Sculptor's proposed columns to your live table, use the **Review changes** button — do _not_ click **Exit Sandbox**. Clicking **Exit Sandbox** will discard all of Sculptor's proposed changes without publishing them.
