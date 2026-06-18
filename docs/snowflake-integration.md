@@ -129,6 +129,12 @@ Upsert a row into a Snowflake database using a single field as a unique identifi
 -   **Snowflake warehouse**
 -   **Role** (optional)
 
+**Batching**
+
+The Upsert row action supports **Run in batches** mode. When enabled, Clay groups up to 1,000 rows into a single `MERGE INTO` statement — combining one `SELECT` per row via `UNION ALL` — and sends it to Snowflake in one request instead of running each upsert individually.
+
+If a batch fails, the error message will include **"Note: Try reducing the batch size"**. This occurs when the generated SQL becomes too large for Snowflake to handle, typically when running at the default maximum of 1,000 rows with many columns. To fix it, lower the **Number of rows per batch** setting in the action's run options: 500 is a good starting point; if errors persist, try 250.
+
 ### `Action` Update row
 
 Update a row in a Snowflake database using a single field as a unique identifier. If the identifier exists, the row will be updated. If not, a new row will be created.
@@ -141,6 +147,10 @@ Update a row in a Snowflake database using a single field as a unique identifier
 -   **Table name**
 -   **Snowflake warehouse**
 -   **Role** (optional)
+
+**Batching**
+
+The Update row action also supports **Run in batches** mode with the same behavior: up to 1,000 rows are combined into a single request. If you see a **"Note: Try reducing the batch size"** error, lower the **Number of rows per batch** setting — 500 is a good starting point.
 
 ### Run settings
 
@@ -233,3 +243,14 @@ After your query runs, Clay displays the columns it pulled in and lets you map t
 
 -   Click `Auto-map` to automatically match Snowflake columns to existing Clay fields.
 -   To add additional mappings, click `+ Add mapping`. If the destination Clay field doesn't exist yet, select `Create field`, choose a field type (Text, Email, URL, Number, Date, or Checkbox), and name it.
+
+## Troubleshooting
+
+### "You don't have access to this account" when editing a Snowflake source or column
+
+This error appears when the Snowflake Key-Pair connection used to set up this source or column was created by a different workspace member and you haven't been granted access to it — for example, when the original owner has left the team.
+
+You have two ways to resolve this:
+
+-   **Use a different Snowflake Key-Pair account:** In the source or column settings, select a Snowflake Key-Pair connection you do have access to from the dropdown. If you don't have one yet, click `+ Add account` to create a new connection with your own credentials.
+-   **Get access to the existing connection (Enterprise plans):** A workspace admin can open the connection in **Settings → Connections**, expand **Access settings**, and add you under "Specific people and groups." Once added, you'll be able to edit the source or column using the original connection. See [Access settings for connections](access-settings-for-connections.md).
