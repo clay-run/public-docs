@@ -107,6 +107,8 @@ The out-of-date clock indicator on a cell means the cell is stale — it has an 
 
 A cell also shows as out of date when its inputs have changed since it last ran — for example, if an upstream column with auto-run enabled re-ran and updated its values, or if the column's own configuration was modified (such as editing a prompt). In these cases the indicator is informational: the existing value is still valid and usable downstream. In many cases re-running would produce the same result, so only trigger a re-run if you specifically need fresh output.
 
+**Note:** The out-of-date indicator tracks column dependencies within the same table only. Changes in a separate table — for example, updated rows in a table you look up with [Lookup Rows](lookup-rows.md) — do not directly cause cells in this table to show as out of date.
+
 If a cell **keeps** showing as out of date even after you re-run it, check whether an upstream column has auto-run enabled. Each time that upstream column runs and updates its output, Clay marks any column referencing it as out of date again — even one you just re-ran. To resolve this:
 
 -   **Disable auto-run on the downstream column** — the column will only run when you trigger it manually. This is the most targeted fix and leaves the upstream column untouched.
