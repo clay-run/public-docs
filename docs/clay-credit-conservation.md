@@ -153,13 +153,11 @@ See [Find People in Clay](find-people-overview.md) for the full list of filter a
 
 **How does this save credits?**
 
-[Sandbox mode](sandbox-mode.md) lets you build and test table configurations—formulas, enrichments, waterfalls—on a small subset of rows without running them on your full table. Changes only go live when you explicitly publish them, so you can catch configuration mistakes and refine your setup before spending credits at scale.
+[Sandbox mode](sandbox-mode.md) lets you build and test table configurations—formulas, enrichments, waterfalls—on a small subset of rows without running them on your full table. Changes only go live when you explicitly publish them, so you can catch configuration mistakes and refine your setup before spending credits at scale. When you publish, any rows you already ran in sandbox are automatically copied to your production table — so you don't have to re-run them and spend credits twice.
 
 **How do you implement this?**
 
 Click the `Sandbox mode` button in the table toolbar. Clay duplicates the top 10 rows of your table into an isolated sandbox (expandable to 50 rows). Make and test your changes there; when ready, click **Review changes** and then **Publish** to apply the configuration to your full table.
-
-**Note:** Sandbox mode is available on Pro and Enterprise plans.
 
 ## Audit and manage scheduled column runs
 
