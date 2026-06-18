@@ -9,7 +9,7 @@ last_synced: 2026-04-26T01:40:20.821Z
 
 Connect your Clay workspace to AI tools.
 
-MCP (Model Context Protocol) is how Clay connects your workspace to AI tools like ChatGPT, Claude, and Glean. Clay lets workspace admins set credit limits and monitor usage for team members who access Clay through these platforms.
+MCP (Model Context Protocol) is how Clay connects your workspace to AI tools like ChatGPT, Claude, Glean, and Cursor. Clay lets workspace admins set credit limits and monitor usage for team members who access Clay through these platforms.
 
 Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory — not a generic server URL you configure manually.
 
@@ -90,6 +90,12 @@ No. Clay's MCP integrations are pre-built apps within each supported platform's 
 -   **Glean:** Your Glean admin connects Clay through Glean's MCP Apps directory (Enterprise plans only)
 
 There is no generic Clay MCP server URL to enter manually. The "Add MCP server" configuration screen in tools like Glean is for custom third-party servers — Clay's integration connects through Glean's built-in app directory, not that form.
+
+### Does the Clay widget work in Cursor?
+
+Yes. Clay's interactive widget now renders in Cursor. Single-contact enrichment — finding emails, phone numbers, work history, and other data points for a specific person — works the same way it does in Claude and ChatGPT.
+
+**Limitation:** The multi-contact suggestion carousel (which lets you enrich a full list of contacts inline) is not available in Cursor. Cursor does not support fullscreen widget views, which the carousel requires. Enrichments triggered directly by the Cursor agent (e.g., "find emails for these contacts") still work and display results in the inline widget.
 
 ### Can I connect Clay's MCP server through a third-party MCP gateway or client?
 
