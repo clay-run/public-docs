@@ -45,7 +45,7 @@ Use this when you want to import data from an API to create a new table.
 -   ✅ Import datasets from external APIs.
 -   ✅ Build lists from third-party services.
 -   ✅ Start workflows with external data.
--   ✅ Pagination supported up to 50,000 rows (Explorer, Pro, and Enterprise plans).
+-   ✅ Pagination supported up to 50,000 rows — currently in beta on Explorer, Pro, and Enterprise plans.
 
 👉 Jump to source setup (see below).
 
@@ -499,7 +499,7 @@ Most APIs nest their data within a specific field rather than returning an array
 
 ### Pagination
 
-HTTP API as source supports paginating through multi-page API responses, collecting up to 50,000 rows across all pages. Pagination is available on Explorer, Pro, and Enterprise plans.
+HTTP API as source supports paginating through multi-page API responses, collecting up to 50,000 rows across all pages. Pagination is currently in beta — available on Explorer, Pro, and Enterprise plans. Contact support to enable it for your workspace.
 
 After the initial request runs, each subsequent request can inject values from the previous response to advance to the next page. Clay stops paginating when the results array is empty, no next-page value is found, or the 50,000-row limit is reached.
 
@@ -800,7 +800,7 @@ When copying from API documentation, paste your code into a plain text editor fi
 
 ### Can I use HTTP API with pagination?
 
-Yes. HTTP API as source supports four pagination types — offset/limit, page, cursor-based, and full URL — and can collect up to 50,000 rows across all pages. After the initial request runs, subsequent requests automatically inject values from the previous response to advance through pages. Pagination is available on Explorer, Pro, and Enterprise plans. See [Pagination](#pagination) above for setup details.
+Yes. HTTP API as source supports four pagination types — offset/limit, page, cursor-based, and full URL — and can collect up to 50,000 rows across all pages. After the initial request runs, subsequent requests automatically inject values from the previous response to advance through pages. Pagination is currently in beta on Explorer, Pro, and Enterprise plans — contact support to enable it. See [Pagination](#pagination) above for setup details.
 
 ### Can I use HTTP API to push enriched data to AWS (e.g., S3 via API Gateway)?
 
