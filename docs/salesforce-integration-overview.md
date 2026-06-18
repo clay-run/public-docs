@@ -40,7 +40,7 @@ Connect to Salesforce via Client Credentials for server-to-server access. No bro
 3.  In the `Policies` tab, enable the flow at the org level. This is the setting most commonly missed — if it's off, the flow is blocked regardless of the Settings toggle:
     -   Under `OAuth Flows and External Client App Enhancements`, check `Enable Client Credentials Flow`.
     -   In the `Run As` field, enter the username of the integration user the app will authenticate as.
-4.  Click `Save`. See [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.configure_client_credentials_flow_for_extended_client_apps.htm&language=en_US&type=5) for full details on configuring the Client Credentials flow.
+4.  Click `Save`. See [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.configure_client_credentials_flow_for_external_client_apps.htm&language=en_US&type=5) for full details on configuring the Client Credentials flow.
 
 **Connecting in Clay**
 
@@ -192,7 +192,7 @@ Use this action to create a new record in Salesforce.
 After selecting a Salesforce Object, the **Map fields** section lets you specify which fields to set on the new record. The section starts empty — add only the fields you need.
 
 -   **+ Add field**: Opens a searchable list of all available fields for the selected Salesforce object. Select a field to add it, then map it to a column or value from your Clay table. Repeat for each field you want to set.
--   **Refresh**: Reloads the field list from Salesforce. Use this if you've recently added or modified fields in your Salesforce org and they're not appearing in the picker.
+-   **Refresh**: Reloads the field list from Salesforce. Use this if you've recently added or modify fields in your Salesforce org and they're not appearing in the picker.
 
 Fields not added here are left blank on the new record.
 
