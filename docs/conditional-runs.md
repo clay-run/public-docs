@@ -160,7 +160,7 @@ Clay blocks this and lists Status (or the intermediate column completing the cyc
 
 **How to diagnose**: Starting from the column referenced in your run condition, trace each of its inputs one step at a time. Work backwards through the dependency chain until you either reach raw source columns (import data or columns not derived from any enrichment) or encounter the column you're trying to gate.
 
-**How to fix**: Find the step in the dependency chain that uses the gated column as an input, and replace that input with an equivalent identifier that comes from your import source — one that exists before the gated enrichment runs. Common substitutes: Company Domain, Company Name, LinkedIn URL, First Name, Last Name.
+**How to fix**: Find the step in the dependency chain that uses the gated column as an input, and replace that input with an equivalent identifier that comes from your import source — one that exists before the gated enrichment runs. Common substitutes: Company Domain, Company Name, professional profile URL, First Name, Last Name.
 
 Alternatively, restructure so the condition-determining step happens fully upstream using only pre-enrichment data as inputs, with no dependency on the gated column.
 
