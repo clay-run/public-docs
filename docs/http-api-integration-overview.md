@@ -173,7 +173,7 @@ Once verified, run the enrichment on your full table.
 If you encounter errors, you can use Sculptor to help diagnose issues:
 
 -   Paste error messages for suggested fixes.
--   Share API docs to verify configuration.\
+-   Share API docs to verify configuration.
 -   Get help interpreting unexpected responses.
 
 Sculptor understands common API patterns and can guide you through authentication issues, body formatting problems, and other configuration challenges.
