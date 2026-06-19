@@ -180,6 +180,19 @@ After enabling table-level auto-run, column-level settings take effect: columns 
 
 For the full auto-run decision tree and advanced options (conditional runs, "Keep existing results"), see [Table management settings](table-management-settings.md).
 
+### Column runs once but never re-runs automatically (no column references)
+
+Another common cause: **the column does not reference any other columns in the table.**
+
+Clay's auto-run is cascade-driven — when a source updates, it triggers any column that references one of its output values; those columns trigger columns that reference them, and so on. A column with no references to other columns (neither in its input fields nor in its "Only run if" formula) is not part of this cascade and will not re-trigger automatically, even with auto-run enabled. The column runs fine when you trigger it manually, but never fires on its own afterward.
+
+This is most common with integrations where all inputs are hardcoded — for example, a Salesforce SOQL query that filters on fixed values instead of pulling a field from the current row.
+
+**Fix: create a dependency on another column.** Two options:
+
+-   **Reference a table column in the action config** — Use the `/` picker inside the action's input fields to reference any column from the same row (for example, include the row's name or company ID as a filter parameter in your query). When that column updates, this column will be included in the auto-run cascade.
+-   **Add a run condition that always evaluates to true** — Open the column's **Run settings → Only run if** and add a condition that **references another column** and is always met, such as `/Name is not empty`. Even though the condition never actually blocks the run, the column reference is what creates the dependency Clay needs. **Note:** a constant formula with no column reference (such as entering `true` on its own) does not create a dependency and will not fix the issue.
+
 ## Troubleshooting: identifying rows that errored vs. rows with no data
 
 When a column's progress bar shows failed rows (🔴), you may need to find exactly *which* rows hit a specific error — for example, "The result of this run exceeded the cell size limit (200 kB)" — without catching rows that legitimately returned no data.
