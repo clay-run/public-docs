@@ -315,6 +315,19 @@ Lookup Rows returns the full company row including enrichment column outputs. To
 
 **Alternatively**, extract specific enrichment values into **formula columns** in your company table first (for example, a column with formula `{{Clearbit Enrichment}}?.revenue`). Formula columns are included in Company Table Data, so those extracted values will flow through to the people table when Company Table Data runs.
 
+### A new column I added to my company table isn't showing in Company Table Data
+
+When you add a new column to your company table after the people table was already created, the **Company Table Data** column in the people table doesn't automatically pick up that new column. The column fetches a fresh snapshot of each linked company row every time it runs — so the new column's data only appears after the next run.
+
+**To pull in newly added company table columns:**
+
+1.  In your people table, right-click the **Company Table Data** column header.
+2.  Select **Run column → Force run all [N] rows**.
+
+This re-runs Company Table Data for every row and retrieves the current state of the linked company row, including any columns added since the last run.
+
+**Note:** Only basic field types are returned — text, number, date, URL, and formula columns. Enrichment action columns (Clearbit, Apollo, Enrich Company, etc.) are never included in Company Table Data regardless of re-running — see [Company Table Data doesn't include company enrichment data](#company-table-data-doesnt-include-company-enrichment-data) for how to access enrichment data in your people table.
+
 ### "Company Table Data" shows "Unable to fetch fields for company table"
 
 If rows in your **Company Table Data** column fail with the error **"Unable to fetch fields for company table."**, the Table ID in the column configuration contains a leading `/` that prevents Clay from resolving the referenced table.
