@@ -62,7 +62,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   `Timezone`: Select the timezone to send from (we recommend matching your prospects').
     -   `Days of the week`: Choose which days emails are sent.
     -   `Start/End times`: Set sending windows within the chosen timezone.
-    -   `Minimum time between sends`: Adjustable from 5–30 minutes; longer delays improve deliverability.
+    -   `Min time between emails (min)`: Minimum gap between consecutive sends from a single account (3–30 minutes, Custom schedule only). Shorter gaps increase daily throughput; longer gaps improve deliverability.
     -   `Maximum new leads per day`: Caps the number of new leads contacted daily (in addition to account send limits).
     -   `Campaign start date` (optional): Set a future launch date, or start immediately based on your settings.
 7.  Explore `Advanced settings` if needed:
@@ -174,6 +174,21 @@ To increase your total daily sending capacity:
 -   **Increase the send limit** on an existing account — open the campaign's `Sender setup`, click the three-dot (⋯) menu next to the account, and select `Update send limit`.
 
 Keep in mind that sending high volumes of cold email from a single inbox puts your domain at risk. Starting near the default (20 emails/day) and scaling by adding accounts rather than increasing individual limits is safer for deliverability.
+
+### Why is the expected campaign completion time so long?
+
+The **Expected time to complete campaign** shown at the top of Schedule settings estimates how many days it will take to reach all leads based on your sending window, per-account limits, and schedule.
+
+The biggest lever is the **Min time between emails (min)** setting (Custom schedule only). It controls the minimum gap between consecutive sends from a single sender account, which caps that account's maximum daily output:
+
+**Max sends per sender per day ≈ sending window (minutes) ÷ min time between emails (minutes)**
+
+For example: an 08:00 AM–07:00 PM window is 660 minutes. With the minimum set to 20 minutes, each sender account can send at most 33 emails per day. At that rate, reaching 1,000 leads with one sender account takes roughly 30+ weekdays.
+
+To shorten the estimated time:
+-   **Lower the min time between emails** — a smaller gap increases daily sends per account. Shorter intervals can raise spam risk; the [Best practices](#best-practices) section recommends pacing sends throughout the day.
+-   **Add more sender accounts** — each account adds its own independent daily capacity.
+-   **Increase the account send limit** — in `Sender setup`, click the three-dot (⋯) menu next to an account and select `Update send limit`.
 
 ### My "Sync leads to campaign" column is showing a warning. What does it mean?
 
