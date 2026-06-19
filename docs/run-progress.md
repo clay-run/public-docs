@@ -191,7 +191,7 @@ This is most common with integrations where all inputs are hardcoded — for exa
 **Fix: create a dependency on another column.** Two options:
 
 -   **Reference a table column in the action config** — Use the `/` picker inside the action's input fields to reference any column from the same row (for example, include the row's name or company ID as a filter parameter in your query). When that column updates, this column will be included in the auto-run cascade.
--   **Add a run condition that always evaluates to true** — Open the column's **Run settings → Only run if** and add a condition that references another column and is always met, such as `/Name is not empty`. Even though the condition never actually blocks the run, the column reference creates the dependency Clay needs to include this column in the auto-run cascade.
+-   **Add a run condition that always evaluates to true** — Open the column's **Run settings → Only run if** and add a condition that **references another column** and is always met, such as `/Name is not empty`. Even though the condition never actually blocks the run, the column reference is what creates the dependency Clay needs. **Note:** a constant formula with no column reference (such as entering `true` on its own) does not create a dependency and will not fix the issue.
 
 ## Troubleshooting: identifying rows that errored vs. rows with no data
 
