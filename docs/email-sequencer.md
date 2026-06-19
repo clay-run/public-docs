@@ -24,7 +24,6 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 6.  Select `Clay Sequencer (Web)` from the results.
 7.  Choose which org units should have access — either `All in [your org] (all users)` or specific org units — then click `Continue`.
 8.  Select `Trusted` under Access to Google Data and click `Continue`.
-    -   **Important:** You must choose `Trusted`, not `Specific Google Data`. Selecting `Specific Google Data` will not grant all the permissions Clay needs, and the access error will persist. Despite the name, `Trusted` only allows Clay to request Gmail-specific permissions (full email access, basic email settings, OpenID, and your profile) — it does **not** grant Clay access to Google Drive, Calendar, Docs, or any other Google service.
 9.  Review the summary and click `Finish`.
 10.  Back in Clay, click `Continue` in the modal, then click `Connect your Google account` and complete the OAuth sign-in.
 
@@ -39,7 +38,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   `Lead email address`: We automatically detect email address columns, but confirm this before proceeding.
     -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links.
 4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead replies (excluding out-of-office replies, which we detect and work around).
-    -   Toggle `Preview` mode to see real data from your source table in the message template
+    -   Toggle `Preview` mode to see real data from your source table in the message template. When HTML is enabled, Preview also renders how your formatting will appear in the recipient's inbox — the message editor shows the content structure you've built, not the final rendered output, so use Preview to verify formatting before sending.
     -   Within each message, use `/` to access features such as:
         -   `Clean variable`: Reference synced lead data with safe fallbacks and optional formatting. When configuring a Clean variable, the **Fallback** field ("Simple text to display if variable is empty") is required — the variable will not save if left blank.
         -   `Sender variable`: Reference identifying information from the sending account
@@ -80,6 +79,7 @@ Once all your settings are saved, you can launch your campaign. Launching a camp
 
 -   Emails begin sending according to your schedule, following deliverability best practices.
 -   The `Analytics` tab displays detailed stats for your campaign. You can refresh data manually using the button in the top right.
+-   The `Activity` tab shows a chronological feed of all campaign events. Use the lead sidebar on the left to filter the feed to a specific enrolled lead, and the **Email type** and **Lead status** filter chips to narrow by event type or lead status.
 -   The `Replies` tab shows you any incoming replies and lets you respond to them directly in Clay
 -   Actions are consumed for each email sent (1 Action per lead, plus standard Action and Data Credit rates for any AI snippets used).
 -   Your campaign becomes live, which means:
@@ -94,7 +94,18 @@ At any point, you can pause or complete a campaign:
 
 ### Campaign events table
 
-When a campaign launches, a dedicated campaign events table is created. It records key actions such as sends, bounces, and replies. Because this is a Clay table, you can build automations around these events. Reply events may appear with a 15–30 minute delay.
+When a campaign launches, a dedicated campaign events table is created. It records all campaign activity as it occurs — one row per event. The **Event type** column shows what happened:
+
+-   `EMAIL_SENT` — an email was delivered to a lead
+-   `EMAIL_OPEN` — a lead opened an email (requires HTML tracking)
+-   `EMAIL_LINK_CLICK` — a lead clicked a tracked link
+-   `EMAIL_REPLY` — a lead replied
+-   `EMAIL_BOUNCE` — an email bounced
+-   `LEAD_UNSUBSCRIBED` — a lead clicked the unsubscribe link
+-   `LEAD_CATEGORY_UPDATED` — Smartlead assigned a reply category to a lead (e.g. Interested, Not Interested). See [How are replies categorized in the Campaign Events table?](#how-are-replies-categorized-in-the-campaign-events-table)
+-   `CAMPAIGN_STATUS_CHANGED` — the campaign's overall status changed (e.g. paused, resumed, or marked complete)
+
+Because this is a Clay table, you can build automations around these events. Reply events may appear with a 15–30 minute delay.
 
 The events table can also be created before launching the campaign if you'd like to set up any automations in Clay.
 
@@ -260,6 +271,13 @@ Because the campaign events table is a standard Clay table, you can add CRM enri
 
 7.  **Test before scaling.** Turn off `Auto-run` and manually run 5–10 rows first to validate your field mappings before enabling full automation.
 
+### How do I detect when a lead finishes the sequence?
+
+There is no dedicated "sequence completed" event per lead in the campaign events table. Here are the signals available:
+
+-   **Last email in the sequence sent:** To catch when a lead has received all emails in the sequence, filter for `EMAIL_SENT` events and add a formula column that extracts the `sent.sequence_number` from the raw event data. Set your CRM action's **Only run if** to fire when that value equals the final step number in your campaign (for example, `3` for a 3-step campaign). Keep in mind that sequences stop automatically when a lead replies — a lead who replies at step 1 of a 3-step campaign will never trigger a step-3 `EMAIL_SENT` event, so they won't appear as "completed" using this approach.
+-   **Campaign marked complete:** The `CAMPAIGN_STATUS_CHANGED` event fires when the campaign's overall status changes — for example, when you click `Complete` in the campaign UI. This is a campaign-wide event, not per lead. The `campaign.status` field nested in every event row reflects the campaign's current overall state (`ACTIVE`, `PAUSED`, `STOPPED`, `COMPLETED`, `ARCHIVED`) — not an individual lead's progress through the sequence.
+
 ### How do unsubscribes work in the sequencer?
 
 When HTML is enabled, you can turn on an unsubscribe link in `Advanced` settings. This adds a hyperlinked phrase at the bottom of every email (default text: "Not interested? Click here to unsubscribe."). You can customize this text in the `Advanced` section.
@@ -286,7 +304,7 @@ These are disclosed when you add your account via OAuth. We request: full Gmail 
 
 ### How do I authorize Clay's app in the Google Admin panel?
 
-Follow the instructions in the modal and have your Google Workspace admin set our Clay sequencer app to `Trusted` — not `Specific Google Data`. Selecting `Specific Google Data` will not grant all the permissions Clay needs, and the access error will persist. Despite its name, `Trusted` only allows Clay to request Gmail-specific permissions (full email access, basic email settings, OpenID, and your profile) — it does not grant access to Google Drive, Calendar, Docs, or any other Google service. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the Clay sequencer.
+Follow the instructions in the modal and have your Google Workspace admin set our Clay sequencer app to `Trusted`. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the Clay sequencer.
 
 ### I followed the admin setup steps but still see "Access blocked: clay.com has not completed the Google verification process." What should I do?
 
