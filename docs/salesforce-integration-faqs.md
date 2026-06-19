@@ -143,6 +143,20 @@ For full details on writing run conditions, see [Conditional runs](https://unive
 
 [Learn more about Salesforce's duplicate rules here.](https://help.salesforce.com/s/articleView?id=sales.duplicate_rules_map_of_reference.htm&type=5)
 
+## How do I prevent Salesforce records from being created or updated when there is no valid email?
+
+Use conditional runs on your **Create Record** and **Update Record** action columns to gate them on a passing email validation result. Rows where email validation fails are skipped automatically and do not consume credits.
+
+Here's how to set it up:
+
+1.  Ensure your table has an email validation enrichment column (for example, Clay's built-in **Validate Email** enrichment or a third-party email validator). This column produces a status or result value for each row.
+2.  On your **Create Record** column, open **Run settings** and add a conditional run. Set the condition to only run when the email validation column indicates a valid email — for example, `/Email Validation Status is "valid"` or `/Validate Email is not empty`, depending on what your validation enrichment outputs.
+3.  Repeat the same conditional run configuration on any **Update Record** columns that should also be skipped when email validation fails.
+
+Rows where the condition is not met show **"Run condition not met"** in the column cell — no Salesforce record is created or updated, and no credits are consumed for those rows.
+
+For full details on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
+
 ## How do I add leads or contacts to a Salesforce campaign and update the status of existing campaign members?
 
 A Campaign Member in Salesforce represents the relationship between a lead or contact and a campaign. Each Campaign Member record is tied to either a `LeadId` or a `ContactId` — not both at once. Because leads or contacts might already be members of the campaign, you need a conditional workflow that handles both cases — adding new members and updating the status of existing ones.
