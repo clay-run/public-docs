@@ -2,7 +2,7 @@
 title: Audiences (Beta)
 source_url: https://university.clay.com/docs/audiences
 description: "Note: This feature is currently in beta for Enterprise customers."
-last_synced: 2026-04-27T18:09:16.275Z
+last_synced: 2026-06-19T03:57:10.790Z
 ---
 
 # Audiences (Beta)
@@ -179,6 +179,14 @@ To create a new audience:
 2.  Click **New audience** in the top-right corner of the list, or click the `+` next to `My Audiences` in the sidebar.
 3.  Select `Criteria` and then add a `Filter` or `Filter group`.
 
+**Best practice:** Always filter your audience to the specific segment you want to enrich before running enrichments. This helps you:
+
+-   Control credit spend by enriching only relevant records
+-   Test enrichments on a small subset before scaling
+-   Avoid enriching duplicate or low-quality records
+
+For example, filter to `Email Status = Valid` or `Company Size > 50` before enriching contact data.
+
 ### Filter operators by field type
 
 The operators available when building a filter depend on the field's data type, shown by the icon next to the field name:
@@ -191,6 +199,8 @@ The operators available when building a filter depend on the field's data type, 
 ## Enriching and monitoring
 
 ### Adding enrichments
+
+**Best practice:** Define your audience filters _before_ running Bulk Enrich to control credit spend. Unlike Clay tables — where filtering is required before enrichment runs — Audiences allows you to enrich your entire dataset if no segment is applied. Always filter to the segment you want to enrich, test on 10 rows, and review results before scaling to the full audience.
 
 Bulk enrichments add contact data, firmographics, technographics, and more to your audience records at scale. They run on an audience and write results permanently back to All People — not just the segment you ran them from. This means any enriched field is immediately available as a filter in any other segment.
 
