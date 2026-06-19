@@ -33,8 +33,8 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 1.  Start in a table that contains the lead emails you want to contact.
     -   If you haven't done this yet, click `Tools` → `Import` to add emails from a third party or CSV.
 2.  Click `Tools` → `Exports` → `Create Clay email campaign`
-    -   The `Sync leads to campaign` column automatically pushes 10 rows from your parent table into the campaign to draft with
-    -   Tip: You can customize the sync data column to only send leads with an email address using `Only run if`.
+    -   The `Sync lead data to campaign` column automatically pushes 10 rows from your parent table into the campaign to draft with
+    -   Tip: You can customize the `Sync lead data to campaign` column to only send leads with an email address using `Only run if`.
 3.  In the `Setup` tab, you can set:
     -   `Lead email address`: We automatically detect email address columns, but confirm this before proceeding.
     -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links.
@@ -63,7 +63,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   `Timezone`: Select the timezone to send from (we recommend matching your prospects').
     -   `Days of the week`: Choose which days emails are sent.
     -   `Start/End times`: Set sending windows within the chosen timezone.
-    -   `Minimum time between sends`: Adjustable from 5–30 minutes; longer delays improve deliverability.
+    -   `Min time between emails (min)`: Minimum gap between consecutive sends from a single account (3–30 minutes, Custom schedule only). Shorter gaps increase daily throughput; longer gaps improve deliverability.
     -   `Maximum new leads per day`: Caps the number of new leads contacted daily (in addition to account send limits).
     -   `Campaign start date` (optional): Set a future launch date, or start immediately based on your settings.
 7.  Explore `Advanced settings` if needed:
@@ -150,7 +150,7 @@ Our sequencer is powered by Smartlead, but everything runs on Clay credits. You 
 
 ### Why does my campaign only show 10 leads after launching?
 
-When a campaign is created, the `Sync leads to campaign` column pushes 10 rows so you can preview and configure your messages. After launching, the rest of your source table is not pushed automatically. To add all remaining rows, open your source table (the table where you created the campaign — not the campaign events table) and run the `Sync leads to campaign` column manually — click the run button in the column header.
+When a campaign is created, the `Sync lead data to campaign` column pushes 10 rows so you can preview and configure your messages. After launching, the rest of your source table is not pushed automatically. To add all remaining rows, open your source table (the table where you created the campaign — not the campaign events table) and run the `Sync lead data to campaign` column manually — click the run button in the column header.
 
 ### Why did my campaign stop sending before reaching all my leads?
 
@@ -164,7 +164,22 @@ To increase your total daily sending capacity:
 
 Keep in mind that sending high volumes of cold email from a single inbox puts your domain at risk. Starting near the default (20 emails/day) and scaling by adding accounts rather than increasing individual limits is safer for deliverability.
 
-### My "Sync leads to campaign" column is showing a warning. What does it mean?
+### Why is the expected campaign completion time so long?
+
+The **Expected time to complete campaign** shown at the top of Schedule settings estimates how many days it will take to reach all leads based on your sending window, per-account limits, and schedule.
+
+The biggest lever is the **Min time between emails (min)** setting (Custom schedule only). It controls the minimum gap between consecutive sends from a single sender account, which caps that account's maximum daily output:
+
+**Max sends per sender per day ≈ sending window (minutes) ÷ min time between emails (minutes)**
+
+For example: an 08:00 AM–07:00 PM window is 660 minutes. With the minimum set to 20 minutes, each sender account can send at most 33 emails per day. At that rate, reaching 1,000 leads with one sender account takes roughly 30+ weekdays.
+
+To shorten the estimated time:
+-   **Lower the min time between emails** — a smaller gap increases daily sends per account. Shorter intervals can raise spam risk; the [Best practices](#best-practices) section recommends pacing sends throughout the day.
+-   **Add more sender accounts** — each account adds its own independent daily capacity.
+-   **Increase the account send limit** — in `Sender setup`, click the three-dot (⋯) menu next to an account and select `Update send limit`.
+
+### My "Sync lead data to campaign" column is showing a warning. What does it mean?
 
 This usually means the Clay table that the column points to was deleted. Hover over the warning icon to confirm — the error reads *"Destination table was deleted. Please either restore that table from the trash, or create a new Send table data column."*
 
