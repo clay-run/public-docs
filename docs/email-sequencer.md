@@ -33,8 +33,8 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 1.  Start in a table that contains the lead emails you want to contact.
     -   If you haven't done this yet, click `Tools` → `Import` to add emails from a third party or CSV.
 2.  Click `Tools` → `Exports` → `Create Clay email campaign`
-    -   The `Sync leads to campaign` column automatically pushes 10 rows from your parent table into the campaign to draft with
-    -   Tip: You can customize the sync data column to only send leads with an email address using `Only run if`.
+    -   The `Sync lead data to campaign` column automatically pushes 10 rows from your parent table into the campaign to draft with
+    -   Tip: You can customize the `Sync lead data to campaign` column to only send leads with an email address using `Only run if`.
 3.  In the `Setup` tab, you can set:
     -   `Lead email address`: We automatically detect email address columns, but confirm this before proceeding.
     -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links.
@@ -150,7 +150,7 @@ Our sequencer is powered by Smartlead, but everything runs on Clay credits. You 
 
 ### Why does my campaign only show 10 leads after launching?
 
-When a campaign is created, the `Sync leads to campaign` column pushes 10 rows so you can preview and configure your messages. After launching, the rest of your source table is not pushed automatically. To add all remaining rows, open your source table (the table where you created the campaign — not the campaign events table) and run the `Sync leads to campaign` column manually — click the run button in the column header.
+When a campaign is created, the `Sync lead data to campaign` column pushes 10 rows so you can preview and configure your messages. After launching, the rest of your source table is not pushed automatically. To add all remaining rows, open your source table (the table where you created the campaign — not the campaign events table) and run the `Sync lead data to campaign` column manually — click the run button in the column header.
 
 ### Why did my campaign stop sending before reaching all my leads?
 
@@ -179,7 +179,7 @@ To shorten the estimated time:
 -   **Add more sender accounts** — each account adds its own independent daily capacity.
 -   **Increase the account send limit** — in `Sender setup`, click the three-dot (⋯) menu next to an account and select `Update send limit`.
 
-### My "Sync leads to campaign" column is showing a warning. What does it mean?
+### My "Sync lead data to campaign" column is showing a warning. What does it mean?
 
 This usually means the Clay table that the column points to was deleted. Hover over the warning icon to confirm — the error reads *"Destination table was deleted. Please either restore that table from the trash, or create a new Send table data column."*
 
