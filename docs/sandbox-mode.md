@@ -3,7 +3,7 @@ title: Sandbox mode
 source_url: https://university.clay.com/docs/sandbox-mode
 description: Learn about sandbox mode, a playground to safely iterate +
   experiment with your data!
-last_synced: 2026-04-26T01:40:36.624Z
+last_synced: 2026-06-19T03:29:18.030Z
 ---
 
 # Sandbox mode
@@ -71,11 +71,14 @@ Click `Review changes` — visible in the tab bar above your table, to the right
 -   Renaming a column name/description.
 -   Update configurations to a formula, waterfall, or enrichment.
 
+**Credit-saving feature:** When you publish, rows that were already run in sandbox mode are copied back to your production table with their results intact. This means you don't have to re-run those rows and spend credits again.
+
 **Notes on publishing changes:**
 
 -   Visual updates (such as pinned columns, column ordering, and colors) won't appear in the list, **but** **_will_** **be applied when you publish**.
 -   Manually added rows and manual overrides to individual cell data **will not be published**.
 -   Changes to a column that affect downstream columns are shown in a nested format to clearly indicate which other columns may be impacted.
+-   Enrichment results from rows run in sandbox mode are copied to your production table on publish, so you don't need to re-run them.
 
 ### Publishing changes
 
