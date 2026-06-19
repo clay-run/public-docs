@@ -140,12 +140,3 @@ Any standard or custom object in your Attio workspace is supported. The `Object`
 ### What is the difference between the View and Filter inputs?
 
 `View` lets you select a saved view from your Attio workspace, which applies any filters and segments already configured in that view. `Filter` accepts a raw JSON filter query for custom filtering logic. If both are provided, the `View` takes precedence and the `Filter` is ignored.
-
-### How do I enter JSON in the Filter and Sort fields?
-
-Type or paste your JSON directly as text into the field — you cannot upload a JSON file. Clay's JSON input fields support two modes:
-
--   **Token mode (default):** Write your JSON structure directly and type `/` to insert a column value as a dynamic reference. Clay substitutes the column's current row value when the source runs. Best for most use cases.
--   **Formula mode:** Switch to this mode using the settings icon in the input field. Write any Clay formula expression that returns a valid JSON string (e.g., `JSON.stringify(...)`). Use formula mode when you need conditional logic that can't be expressed with column token references alone.
-
-For the JSON structure Attio expects, see [Attio's filtering and sorting docs](https://docs.attio.com/rest-api/guides/filtering-and-sorting).

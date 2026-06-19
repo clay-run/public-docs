@@ -143,4 +143,4 @@ Set workbook-level credit caps to prevent overspending. Admins can configure a w
 
 **Audiences**
 
-There are currently no configurable workspace-level access controls specific to the Audiences feature — you cannot restrict which workspace members can view or filter audience data. However, **setting up data sources in Audiences requires Admin access**: Editors can view and filter audiences but cannot add or configure sources. If you're an Editor who needs to connect a source, ask a workspace Admin to do it, or have your role upgraded. Note that connection access controls do apply to enrichment columns within Audiences — see [Access settings for connections](https://university.clay.com/docs/access-settings-for-connections) for details.
+There are currently no workspace-level access controls specific to the Audiences feature. Note that connection access controls do apply to enrichment columns within Audiences — see [Access settings for connections](https://university.clay.com/docs/access-settings-for-connections) for details.
