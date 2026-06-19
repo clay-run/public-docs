@@ -101,7 +101,7 @@ For full instructions on setting up a restricted Salesforce user with field-leve
 
 **Inputs:**
 
--   **Salesforce object:** The type of object to look for in your Salesforce.
+-   **Salesforce object:** The type of object to look for in Salesforce.
 -   **List view:** The view to sync into Clay.
     -   Views that are not SOQL-compatible (those that cannot be generated from a SOQL query) have a 2,000-record limit.
 
