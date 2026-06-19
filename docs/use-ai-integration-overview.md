@@ -56,7 +56,6 @@ After generating a setup, you can easily edit your original description and rege
 5.  Write a `Prompt`.
     -   For guidance on writing effective prompts, see our doc on [writing prompts](https://www.clay.com/university/guide/ai-metaprompter-guide).
     -   **Tip:** You can mix static text and column references in the same prompt. Use `{{Column Name}}` syntax only for values that differ from row to row — like a LinkedIn URL or job title that's unique per person. Criteria that stay the same for every row — like a specific industry, keyword, or criterion you're screening for — can be typed directly in the prompt. For example, to check whether each person has ever worked in consulting, write: *"Based on {{Profile URL}}, has this person ever worked in consulting? Return Yes or No."* No "consulting" column needed.
-    -   **Tip — optional column references:** Every `{{Column Name}}` reference you add is **required to run** by default. If that column is blank for a row, the cell will show **"Some inputs missing"** and skip that row. To allow the column to run when a field is empty, hover over the `{{Column Name}}` token in the prompt — a **Required to run** toggle appears inline on that token. Switch it off for any input that doesn't always have data.
 6.  _(Optional – Content creation, manipulation only)_ Provide context for task.
 7.  Add and define outputs.
     -   **Fields**
