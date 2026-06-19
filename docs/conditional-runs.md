@@ -142,6 +142,28 @@ On new rows, the upstream column hasn't run yet, so the condition is false and t
 
 **Simpler alternative for scheduled re-run tables**: If the root cause is that your action column is included in a scheduled re-run, the easiest fix is to uncheck it from the scheduled re-run list (Table Settings → Run Settings → Re-run columns on a schedule). Table-level Auto-run still fires the column for genuinely new rows. See [Scheduled columns](scheduled-columns.md).
 
+### "Circular dependency error" when setting a run condition
+
+When you save a run condition, Clay validates that the column referenced in the condition does not depend — directly or through a chain of other columns — on the column being gated. If a cycle is detected, Clay shows a **"Circular dependency error"** modal and prevents saving. The modal lists the specific column(s) that complete the loop.
+
+**This check covers indirect chains, not just direct self-reference.** Even if the condition column doesn't visibly reference the gated column, the error can still occur if the condition column's value is derived from other columns that themselves depend on the gated column's output.
+
+**Example**: You want Work Email to run only when a Status field is not "customer". But Status is written by a matching step that reads from Apollo Contact, which depends on Work Email. The full dependency chain is:
+
+`Work Email → Apollo Contact → Match Records → Status`
+
+Setting a run condition on Work Email based on Status creates the loop:
+
+`Work Email → Status → Work Email`
+
+Clay blocks this and lists Status (or the intermediate column completing the cycle) in the error modal.
+
+**How to diagnose**: Starting from the column referenced in your run condition, trace each of its inputs one step at a time. Work backwards through the dependency chain until you either reach raw source columns (import data or columns not derived from any enrichment) or encounter the column you're trying to gate.
+
+**How to fix**: Find the step in the dependency chain that uses the gated column as an input, and replace that input with an equivalent identifier that comes from your import source — one that exists before the gated enrichment runs. Common substitutes: Company Domain, Company Name, LinkedIn URL, First Name, Last Name.
+
+Alternatively, restructure so the condition-determining step happens fully upstream using only pre-enrichment data as inputs, with no dependency on the gated column.
+
 ### "Only run if" re-evaluates each time an upstream column changes
 
 With **Auto-run** enabled, Clay re-evaluates an action column's "Only run if" condition each time a value in the current row changes — including each time an upstream enrichment column finishes running. The condition is **not a one-time gate**: if it evaluates to `true` on multiple occasions as different enrichments complete, the action column can run multiple times on the same row.
