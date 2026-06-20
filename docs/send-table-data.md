@@ -43,7 +43,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 
 To send data from one table to another:
 
-1.  Open the **Exports** tab in the command center sidebar and select **Send table data**.
+1.  While in a table, click **+ Add column** at the end of the column headers and select **Send table data** (listed under Exports). You can also reach it by opening the **Exports** tab in the command center sidebar.
 2.  Select the destination table.
 3.  Choose the method:
     -   `Send row`: Choose which columns to send as a row to the other table.
@@ -58,7 +58,7 @@ To send data from one table to another:
 **Additionally you can:**
 
 -   Send nested data from the parent table. (This is useful when you want to avoid extracting basic fields from an action column's output.)
--   Map any selected column to a specific existing column in the destination table. By default, each column routes to a destination column with the same name — hover over the row and click the **edit icon** to open a dropdown of all destination columns and choose a different target.
+-   Rename any field in the destination table using the destination column dropdown.
 
 **Note:** When you first send a row, it creates a new row in the destination table. For subsequent sends, it updates that same row. This applies to both regular row data and nested data. You can turn this off to always create a new row via the \`Update existing rows on re-run\` setting.
 
@@ -91,6 +91,10 @@ When configuring the list field by hand, select the **list itself** (e.g., `Peop
 **If the column holds a stringified JSON array** — for example, a text value that looks like `[{"name": "Alice"}, {"name": "Bob"}]`, common when data arrives from an HTTP API call or webhook — Clay won't recognize it as a native list and will show the same **"Please add a valid list."** error. To fix this, click the **gear icon** on the right side of the list input to switch to formula mode, then enter `JSON.parse(/YourColumn)`, replacing `YourColumn` with the name of your column (use `/` to reference it). This converts the text string into a native array that Clay can iterate over.
 
 If your table has no rows with data yet, Clay skips this validation and accepts the formula as-is. In that case, run a few rows first so the enrichment column has real output, then re-open the Send Table Data configuration to confirm the list field is valid before running the full table.
+
+**Consolidating multiple list columns into one destination table**
+
+If your source table has several different list columns you want to flatten into the same destination — for example, contacts returned by Apollo, Surfe, and Clay Native each in their own column — add one Send Table Data action per list column, all pointing to the same destination table. Each action creates its own **"rows from: [source table name]"** source in the destination, and all rows funnel together into the same table.
 
 ## Advanced settings
 
@@ -141,3 +145,4 @@ Repeat this process for each field you want to extract into its own column.
 -   **All rows in the destination table show the same contact's data (for example, the same email or LinkedIn URL repeated across every row):** the field mappings within the list are referencing a fixed indexed position (like the first contact) instead of each item's own data. Delete the Send Table Data column and recreate it using **Take action on list** from the cell details panel (see [Using Send row for each item in a list](#using-send-row-for-each-item-in-a-list)), which auto-configures both the list source and the correct per-item field mappings.
 -   **Some rows show `"Invalid send table data inputs … 'listData' … 'Required'"` while others succeed (using `Send row for each item in a list`):** This error means the list column had no data for that specific row — for example, an enrichment returned no results for that company, or a webhook event didn't include the expected field. Clay validates each row individually at runtime, so rows with a valid list array succeed and rows without one fail. **Fix:** Add a [run condition](https://university.clay.com/docs/conditional-runs) to the Send Table Data column so it only runs when the list column is not empty. For example, if your list column is `Find Contacts at Company`, set the condition to run only when `Find Contacts at Company` has a value.
 -   **Send to Table is creating new columns in the destination table instead of populating my existing ones.** By default, `Auto-extract new columns` creates a new column for each incoming field. To route incoming data into an *existing* column instead: open the destination table, click the **"rows from: [source table name]"** cell, hover over the field you want to map (e.g., an email address), and click **Add to column** — then select an existing column from the dropdown (labeled **Map to an existing column**). Repeat for each field you want to map. If the existing column is empty, dismiss the data-overwrite warning safely. To map multiple fields at once, enable **Auto-map existing columns** in the action's advanced settings — Clay will automatically set formulas on all destination columns whose names match incoming fields. Note that for columns with manually entered or CSV-imported values, this will overwrite that existing data.
+-   **You don't see a "rows from: [source table name]" column in the destination table:** The column only appears after the Send Table Data action has been run at least once — saving the configuration alone is not enough. Run the Send Table Data column in the source table first, then open the destination table to see the column. If the action shows "✅ Sent" but the column still hasn't appeared, refresh the destination table. In rare cases the column doesn't generate on the very first run; if that happens, run a small test batch (5–10 rows) to confirm it appears before running the full table.
