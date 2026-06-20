@@ -9,7 +9,7 @@ last_synced: 2026-04-26T01:40:20.821Z
 
 Connect your Clay workspace to AI tools.
 
-MCP (Model Context Protocol) is how Clay connects your workspace to AI tools like ChatGPT, Claude, and Glean. Clay lets workspace admins set credit limits and monitor usage for team members who access Clay through these platforms.
+MCP (Model Context Protocol) is how Clay connects your workspace to AI tools like ChatGPT, Claude, Codex, and Glean. Clay lets workspace admins set credit limits and monitor usage for team members who access Clay through these platforms.
 
 Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory — not a generic server URL you configure manually.
 
@@ -87,6 +87,7 @@ No. Clay's MCP integrations are pre-built apps within each supported platform's 
 
 -   **Claude:** [claude.com/connectors/clay](https://claude.com/connectors/clay)
 -   **ChatGPT:** Type `@Clay` (browser) or `/Clay` (desktop) in a prompt
+-   **Codex:** Add the `clay-run/agent-plugins` marketplace in Codex, then install the `clay` plugin
 -   **Glean:** Your Glean admin connects Clay through Glean's MCP Apps directory (Enterprise plans only)
 
 There is no generic Clay MCP server URL to enter manually. The "Add MCP server" configuration screen in tools like Glean is for custom third-party servers — Clay's integration connects through Glean's built-in app directory, not that form.
