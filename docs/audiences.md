@@ -345,6 +345,8 @@ Once created, the field is immediately available as a filter in any segment and 
 
 **Note:** There is no option to add new fields directly from the Audience screen — you must go through the `Update Audiences Record` column mapping in a bulk enrichment table.
 
+**Note:** Audiences enforces a per-entity field limit: Enterprise workspaces can have up to **135 fields per entity type** (People or Companies). If you hit this limit when adding a field, contact Clay support.
+
 ### A Salesforce field isn't appearing in my audience filters — how do I add it?
 
 Only fields explicitly included in the Salesforce import field mapping are brought into Audiences as columns and made available as filter options. If a Salesforce field — including custom fields like `Account_Record_ID__c` — doesn't appear in the filter dropdown, it was not included when the import was configured.
