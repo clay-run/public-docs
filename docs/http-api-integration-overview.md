@@ -45,7 +45,7 @@ Use this when you want to import data from an API to create a new table.
 -   ✅ Import datasets from external APIs.
 -   ✅ Build lists from third-party services.
 -   ✅ Start workflows with external data.
--   ⚠️ Note: No pagination support currently.
+-   ✅ Pagination support for up to 50,000 rows.
 
 👉 Jump to source setup (see below).
 
@@ -484,6 +484,7 @@ Most APIs nest their data within a specific field rather than returning an array
 
 **Step 5: Configure optional settings**
 
+-   **Pagination**: Automatically fetch multiple pages of results up to 50,000 rows. See [Pagination](#pagination) below.
 -   **Use static IP**: Route requests through Clay's fixed egress IPs for firewall allow-listing. See [IP allowlisting](#ip-allowlisting) below.
 -   **Remove empty values**: Exclude null or empty fields
 -   **Follow redirects**: Set max redirects if needed
@@ -496,12 +497,28 @@ Most APIs nest their data within a specific field rather than returning an array
 2.  Map the API response fields to table columns.
 3.  Import the data to create your new table.
 
+### Pagination
+
+HTTP API as source supports automatic pagination for up to 50,000 rows. To enable it, open the **Pagination** dropdown in the source configuration and choose a mode:
+
+-   **Update query parameter(s)**: Injects parameters into the query string on each subsequent request. Use the reserved tokens `$offset` (total records fetched so far), `$page` (1-based page number), or `$pageZeroIndex` (0-based page number) as values — or reference a field from the previous response using dot notation (e.g. `meta.next_cursor`).
+-   **Update body parameter(s)**: Same as above, but merges parameters into the request body instead of the query string.
+-   **Response contains next URL**: Reads a full URL from the response body (e.g. at path `links.next`) and uses it as the endpoint for the next request. Stops when that path is empty or matches the current URL.
+
+**Additional stop conditions (optional):**
+
+-   **Stop when this path is empty**: Enter a dot-path into the response (e.g. `has_more`). Pagination stops when the value at that path is falsy.
+-   **Total pages path**: Enter a dot-path that resolves to the total page count (e.g. `pagination.totalPages`). Pagination stops once that many pages have been fetched.
+
+Pagination always stops at 50,000 rows regardless of other settings.
+
+**Availability:** HTTP API as source (including pagination) is available on Explorer and above plans.
+
 ### Limitations
 
 **⚠️ Important considerations:**
 
 -   **Array output required**: Make sure the results path points to an array in the API response.
--   **No pagination support**: Currently limited to single API calls. If your API returns paginated results, you'll only get the first page (typically 10-100 records).
 -   **Results path matters**: Take time to examine your API response structure. Some APIs nest data several levels deep (e.g., `data.results.items`).
 -   **Account security**: Your API credentials are stored securely and won't be exposed in the table configuration.
 
@@ -787,7 +804,7 @@ When copying from API documentation, paste your code into a plain text editor fi
 
 ### Can I use HTTP API with pagination?
 
-Currently, HTTP API as source does not support pagination. The import will retrieve only the data from a single API response. Pagination support may be added based on customer demand.
+Yes. HTTP API as source supports automatic pagination for up to 50,000 rows. Three modes are available: update query parameters on each request (useful for offset/limit or page-based APIs), update body parameters, or follow a next URL returned in the response (useful for cursor-based APIs). See [Pagination](#pagination) for full setup details.
 
 ### Can I use HTTP API to push enriched data to AWS (e.g., S3 via API Gateway)?
 
