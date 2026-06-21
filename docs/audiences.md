@@ -179,6 +179,8 @@ To create a new audience:
 2.  Click **New audience** in the top-right corner of the list, or click the `+` next to `My Audiences` in the sidebar.
 3.  Select `Criteria` and then add a `Filter` or `Filter group`.
 
+**Note:** Each workspace has a plan-based limit on the total number of audience segments (counted across both People and Companies): **500** for Enterprise plans, **250** for all other plans. Deleted segments do not count toward the limit. Workspaces already over the limit keep their existing segments but cannot create new ones. When the limit is reached, you will see: *"You've reached your plan's audience segment limit. Delete an existing segment before creating a new one."*
+
 ### Filter operators by field type
 
 The operators available when building a filter depend on the field's data type, shown by the icon next to the field name:
