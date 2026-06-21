@@ -85,7 +85,7 @@ Clay pulls data from Salesforce on two schedules:
 7.  To import Deals (if enabled for your workspace), select `Deals` at the top of the sync panel.
 8.  Enable the `Import` toggle.
 9.  Add any Deal fields you want to filter or segment by — common fields include `Deal Stage`, `Amount`, `Close Date`, and `Owner`.
-    -   Deal data is associated with your Companies records and becomes available as a filter in any Companies audience.
+    -   Deal data is associated with your Companies and People records and becomes available as a filter in Companies and People audiences.
 10.  Name the corresponding Clay fields.
 11.  Click `Save and Preview`, then `Confirm`.
 
