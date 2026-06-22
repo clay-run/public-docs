@@ -203,9 +203,9 @@ This is the most common cause of unexpected results from the Company Domain wate
 
 ## Tech Stack waterfall
 
-The **Tech Stack** waterfall finds which technologies a company has installed by cascading across up to four providers — stopping as soon as one returns a result.
+The **Tech Stack** waterfall finds which technologies a company has installed by cascading across four providers — stopping as soon as one returns a result.
 
-**Providers included:** BuiltWith, Predict Leads, HG Insights, Store Leads
+Provider order: **SimilarWeb → Predict Leads → BuiltWith → Apollo**
 
 ### Setting up the Tech Stack waterfall
 
@@ -217,15 +217,24 @@ The **Tech Stack** waterfall finds which technologies a company has installed by
 **Input required:** Company domain  
 **Output:** Technologies detected at the company
 
-### Provider credit costs and strengths
+### Provider strengths
 
-Each provider detects technology using different signals, which affects what types of software it can identify:
+Each provider detects technology using different methods:
 
--   **BuiltWith (2 credits)** — Scans a company's public website code. Best at detecting client-side tools: marketing pixels, JavaScript libraries, and any front-end technology embedded in the site. Will not find back-end or internally-deployed software that isn't visible in page source.
--   **Predict Leads (1 credit)** — Mines job postings and resumes for technology mentions. Surfaces tools referenced in hiring descriptions, including software that doesn't appear in website code.
--   **HG Insights (9 credits)** — Analyzes business documents such as contracts, RFPs, and job postings. Has strong coverage for back-end and enterprise service platforms — ERP systems, CRMs, service software, and other internally-deployed tools that front-end scanners can't detect.
--   **Store Leads (1 credit)** — E-commerce focused. Returns technology data only for companies that have an online store.
+-   **SimilarWeb** — Identifies technologies installed on a domain, including installation and uninstallation dates and technology categorization. Draws from web analytics and crawl data.
+-   **Predict Leads** — Sources technology data from historical job descriptions, website script tags, and DNS records. Surfaces tools that appear in hiring descriptions, including software not visible in website source code.
+-   **BuiltWith** — Scans a company's public website source code to find client-side technologies: marketing pixels, JavaScript libraries, and front-end software embedded in the site.
+-   **Apollo** — Returns technology data as part of its company profile enrichment. Note: the Apollo step requires your own Apollo API key connected in Clay (**Settings → Connections**). If no Apollo account is connected, this step is skipped.
 
-**For cost optimization:** Place BuiltWith and Predict Leads earlier in your waterfall sequence and HG Insights later. HG Insights provides deeper coverage for enterprise and back-end tools, but at 9 credits per result it is most efficient as a fallback after the cheaper providers.
+### Verifying whether a company uses a specific product
 
-**For detecting back-end service software** (e.g., Zendesk, Gainsight, Salesforce Service Cloud): Lead with BuiltWith and Predict Leads first, then fall through to HG Insights for companies where those providers return no result. HG Insights' document-based signals make it the strongest option for service and enterprise tools that don't appear in public website code. You can also add a Claygent column or job posting search to catch tools that slip through all three providers.
+For verifying whether a company uses a particular enterprise product — including back-end platforms, CRMs, ERP systems, and service software that doesn't appear in website code — use the separate **Verify Product Usage** waterfall. This waterfall uses HG Insights, which analyzes business documents such as contracts, RFPs, and job postings to surface internally-deployed tools that front-end scanners can't detect.
+
+To set up Verify Product Usage:
+
+1.  In your table, click **Tools** in the top right corner, then select the **Enrich** tab.
+2.  Search for `Verify Product Usage` and select the waterfall.
+3.  Map your company domain column as the input and specify the product you want to verify.
+4.  Click `Save`.
+
+See [HG Insights integration](hg-insights-integration-overview.md) for more details on HG Insights' detection methodology and what types of technologies it covers best.
