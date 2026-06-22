@@ -25,6 +25,23 @@ The `Enable for MCP` option on Functions is available on modern Launch, Growth, 
 
 Glean integration is available on Enterprise plans only.
 
+Allowed MCP client controls are available to workspace admins on all modern paid plans (Launch, Growth, Enterprise) and Legacy Enterprise.  
+
+## Allowed MCP clients
+
+The **Allowed MCP clients** section controls which client applications members can use to connect to your workspace's MCP server. These are access-control toggles — not indicators of active connections. A client appearing in the list, even with its toggle on, does not mean anyone has actively connected via that platform.
+
+All client types are **enabled by default**. Workspace admins can turn off any client to block new connections and invalidate existing token refreshes from that platform.
+
+The recognized clients are:
+
+-   **ChatGPT** — connections from OpenAI's ChatGPT.
+-   **Claude** — connections from Anthropic's Claude.
+-   **Grok** — connections from xAI's Grok.
+-   **Unknown** — a catch-all for any MCP client not explicitly listed above (for example, Cursor or similar tools). Enabling this allows Clay to accept connections from clients it doesn't specifically recognize.
+
+To see which team members have actually connected and which platforms they're using, see the [Monitoring usage](#monitoring-usage) section.
+
 ## **Enabling a function for MCP**
 
 Functions are reusable enrichment workflows built in Clay that reps can invoke directly from ChatGPT, Claude, or Glean with a single prompt. Admins build them once and enable them for MCP — reps never need to open Clay to use them.
