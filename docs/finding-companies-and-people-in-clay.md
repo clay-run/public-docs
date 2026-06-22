@@ -175,7 +175,7 @@ This returns people who currently work at your target companies and have the for
 
 ## Excluding companies and people
 
-You can exclude up to **300,000 companies or people** from any company or people search by adding up to **three exclusion sources** (100,000 per source). Each exclusion source can be one of:
+You can exclude up to **150,000 companies or people** from any company or people search by adding up to **three exclusion sources**. Each exclusion source can be one of:
 
 -   A Clay table
 -   A comma-separated list of URLs (e.g., LinkedIn profile or company page URLs)
@@ -185,8 +185,6 @@ You can exclude up to **300,000 companies or people** from any company or people
 
 -   For companies: domain or LinkedIn URL
 -   For people: LinkedIn URL
-
-**Important:** In a people search, the exclusion table matches records by individual person identifier — a LinkedIn profile URL. It cannot suppress all people at a company by company name or domain. To exclude everyone at a specific company from a Find People search, use the post-import pattern described in [Excluding records during enrichment](#excluding-records-during-enrichment).
 
 This is the current way to suppress your existing CRM or list against new searches. In the future, Audiences will allow you to exclude an entire synced CRM instance (e.g., all of Salesforce) in one step.
 
