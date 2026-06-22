@@ -11,7 +11,7 @@ High-frequency data platform for sales, marketing, and investment insights.
 
 ## **Getting started with Mixrank**
 
-[Mixrank](https://www.clay.com/integrations/data-provider/mixrank) in Clay allows users to enrich a person's profile using their email address or find their personal email address from their LinkedIn profile.
+[Mixrank](https://www.clay.com/integrations/data-provider/mixrank) in Clay allows users to enrich a person's profile using their email address or find their personal email address from their LinkedIn or Twitter profiles.
 
 There are two actions you can do with [Mixrank](https://www.clay.com/integrations/data-provider/mixrank), including:
 
@@ -34,7 +34,7 @@ That said, let's get into it on how to use Mixrank with Clay!
 
 ## **Connecting with Clay with Mixrank**
 
-By default, all Mixrank actions within Clay are handled through your Clay account. There’s no need to set up an additional Mixrank account or input an API key.
+By default, all Mixrank actions within Clay are handled through your Clay account. There's no need to set up an additional Mixrank account or input an API key.
 
 Each Mixrank action will deduct two credits from your Clay account.
 
@@ -58,15 +58,15 @@ If you want to only run this enrichment under set circumstances, you are able to
 
 **Step 4: Choose data to add as columns to table**
 
-Select which data from the enrichment you’d like to add as columns to your table. Even if you choose not to add columns at this point, the enriched data will still be available and accessible for later use.
+Select which data from the enrichment you'd like to add as columns to your table. Even if you choose not to add columns at this point, the enriched data will still be available and accessible for later use.
 
 ### `Action` Find Personal Email
 
-The **Find Personal Email** action helps you find a person’s personal email address using their LinkedIn URL.
+The **Find Personal Email** action helps you find a person's personal email address using their LinkedIn URL or Twitter Profile.
 
-**Step 1: Enter the Social URL (LinkedIn)**
+**Step 1: Enter either Social URL (LinkedIn) or Twitter URL**
 
-Enter the LinkedIn URL of the person whose personal email address you are trying to find.
+Enter either the LinkedIn or Twitter URL of the person whose personal email address you are trying to find.
 
 **Step 2 (Optional): Select Auto-update**
 
@@ -80,4 +80,4 @@ If you want to only run this enrichment under set circumstances, you are able to
 
 **Step 4: Choose data to add as columns to table**
 
-Select which data from the enrichment you’d like to add as columns to your table. Even if you choose not to add columns at this point, the enriched data will still be available and accessible for later use.
+Select which data from the enrichment you'd like to add as columns to your table. Even if you choose not to add columns at this point, the enriched data will still be available and accessible for later use.

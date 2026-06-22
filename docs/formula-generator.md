@@ -39,7 +39,7 @@ Here are examples of formulas you can create with the formula generator:
 
 1.  Extract the domain from {{Email}}
 2.  Use {{LinkedIn URL}} if available; otherwise use {{LinkedIn Profile}}.url
-3.  Extract the text after @ in {{Social Handle}}
+3.  Extract the text after @ in {{Twitter Handle}}
 4.  Split {{city}} by comma, keep everything before the first comma, remove "Area" if present, then add quotes
 5.  Extract the first word from {{Column\_1}}, combine with {{Column\_2}}, then remove all non-letter characters
 6.  Calculate the number of days between {{Created Date}} and {{Closed Date}}
@@ -97,7 +97,7 @@ To keep a date comparison up to date without manually re-running the table each 
     moment({{Event Date}}).isAfter(moment({{Today API.dateTime}}).add(6, 'months')) ? "Yes" : ""
     ```
 
-3.  Schedule the HTTP API column to run daily: click the **⛭** icon in the top toolbar → **Run Settings** → **Re-run columns on a schedule** → **Only selected columns** → select your HTTP API column → **Day** → **Save changes**. Note: only enrichment/action columns are selectable here — formula columns cannot be directly scheduled, but the formula will update automatically as a downstream effect of the HTTP API column running. See [Scheduled columns](scheduled-columns.md) for full details.
+3.  Schedule the HTTP API column to run daily: click the **⛙** icon in the top toolbar → **Run Settings** → **Re-run columns on a schedule** → **Only selected columns** → select your HTTP API column → **Day** → **Save changes**. Note: only enrichment/action columns are selectable here — formula columns cannot be directly scheduled, but the formula will update automatically as a downstream effect of the HTTP API column running. See [Scheduled columns](scheduled-columns.md) for full details.
 
 Once the HTTP API column fetches a fresh date each day, any formula that references it automatically re-evaluates against the new value.
 
