@@ -34,3 +34,22 @@ To set up Job Change Signals in your table:
 7.  Click `Save and run X rows` to finish.
 
 **Need regular data updates instead of specific change monitoring through Signals?** Check out [scheduled columns](https://www.clay.com/university/guide/scheduled-columns) and [scheduled sources](https://www.clay.com/university/guide/scheduled-sources).
+
+## FAQs
+
+### Does Clay have a built-in persistent contact ID that follows someone across job changes?
+
+No. Clay does not have a native persistent person identifier equivalent to a third-party data provider's contact ID (such as a ZoomInfo Contact ID). Instead, **LinkedIn URL** is the practical stable anchor — because a person's LinkedIn profile follows them across employers, it lets Clay continue tracking that contact after a job change.
+
+For this reason, the Job Change Signal requires each contact's LinkedIn URL as input. When Clay detects that the person's current employer on LinkedIn no longer matches your records, it fires an event so you can re-enrich or update your CRM.
+
+### How do I track contacts who change jobs ("movers") and refresh their details?
+
+Use the **Job Change Signal** (see setup steps above). It monitors each contact's LinkedIn URL on a schedule you set. When a job change is detected, you can attach enrichment columns — such as Enrich Person, Find Work Email, or Find Phone — to pull the contact's updated company, title, and contact information automatically.
+
+If you also want a stable custom contact ID that survives job changes, build a **formula column** using fields that don't change with employment:
+
+-   **Personal email** — the most durable option; doesn't depend on employer
+-   **LinkedIn URL** — follows the person across jobs (note: vanity slugs can occasionally be edited by the user, so it is not fully immutable)
+
+Avoid basing a custom ID on work email, company name, or a CRM contact ID, since all of these can change when someone switches employers.
