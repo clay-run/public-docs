@@ -174,6 +174,21 @@ Common errors when writing schema by hand:
 
 -   **Field named `confidence` overrides Clay's built-in confidence indicator.** Clay automatically adds a `confidence` field to your output schema with enum values `low`, `medium`, `high`, and `very high` — but only when your schema does not already define one. This field drives the red/yellow/green color indicator on each response cell. If you define your own field named `confidence` (for example, as a numeric score), Clay skips injecting its own, and your custom field's values are used for the color indicator instead. Because values like `0.98` don't match the expected text enum, the normalizer defaults to `low` and every cell shows red. To fix it, rename your custom field — for example, to `confidence_score` — and rerun the column. Clay will then inject its own `confidence` field and the color indicator will work correctly.
 
+-   **Flat key-value descriptions or pipe-separated enum strings.** Both patterns cause the `Unable to parse the output schema for the column` error because they are not valid JSON Schema:
+    -   **Flat key-value descriptions** — A plain object like `{"agentSignal": "Yes | No | Unknown", "source": "1-2 sentences"}` is not a JSON Schema. The schema must be a proper JSON Schema object with `"type": "object"` and a `"properties"` map where each field defines at least a `"type"`:
+
+        ```json
+        {
+          "type": "object",
+          "properties": {
+            "agentSignal": { "type": "string", "enum": ["Yes", "No", "Unknown"] },
+            "source": { "type": "string", "description": "1-2 sentences on where evidence was found" }
+          }
+        }
+        ```
+
+    -   **Pipe-separated enum strings** — Writing `"enum": "Yes | No | Unknown"` (a string) is not valid JSON Schema because `enum` must be an array. Use `"enum": ["Yes", "No", "Unknown"]` instead.
+
 To avoid writing schema by hand, click **Generate from prompt** to have Clay auto-generate a valid schema from your prompt.
 
 ## Testing before you deploy
@@ -368,7 +383,7 @@ These are two distinct configuration errors that can appear on a Claygent column
 
 -   **"Failed to parse formula for 'prompt' with error: {offset:XX}"** — The prompt field contains an invalid formula. Clay stores prompt text as a formula so that `{{column}}` references work, and if the formula has a syntax error at the character position shown by `offset`, the column cannot run. Common causes: a stray backtick (`` ` ``), an unmatched brace or quote, or characters introduced when copying text from a source that encodes content as HTML — for example, pasting from a chat window or email client that converts `<`, `>`, and `&` into HTML entities (`&lt;`, `&gt;`, `&amp;`).
 
--   **"Unable to parse the output schema for the column"** — The JSON output schema cannot be parsed. Common causes: HTML entities in the schema (`&lt;` instead of `<`, `&amp;` instead of `&`, etc.), a trailing comma after the last property in a JSON object or array, or other invalid JSON syntax.
+-   **"Unable to parse the output schema for the column"** — The JSON output schema cannot be parsed. Common causes: HTML entities in the schema (`&lt;` instead of `<`, `&amp;` instead of `&`, etc.), a trailing comma after the last property in a JSON object or array, a flat key-value object instead of a proper JSON Schema (e.g. `{"field": "description"}` instead of `{"type": "object", "properties": {...}}`), pipe-separated enum strings instead of arrays (e.g. `"Yes | No | Unknown"` instead of `["Yes", "No", "Unknown"]`), or other invalid JSON syntax.
 
 **To fix the prompt formula error:** Open the column settings (**click the column name → Edit column**) and inspect the Prompt field. Remove any stray backticks, unmatched braces or quotes, or HTML entities. If you copied the prompt from a chat tool or email, paste it into a plain-text editor first to strip hidden formatting before pasting into Clay.
 
