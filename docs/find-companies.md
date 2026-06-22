@@ -14,7 +14,7 @@ The `Find Companies` source lets you build targeted lists of companies using fil
 
 It's perfect for creating sales prospect lists, identifying competitors, and conducting market research.
 
-**Looking for similarity-based discovery?** You can switch to **Find lookalikes** mode using the mode dropdown in the filter panel header. See [Clay Lookalikes](clay-lookalikes.md) for documentation on the lookalike source and enigments.
+**Looking for similarity-based discovery?** You can switch to **Find lookalikes** mode using the mode dropdown in the filter panel header. See [Clay Lookalikes](clay-lookalikes.md) for documentation on the lookalike source and enrichments.
 
 ## **Creating a table with Find Companies**
 
