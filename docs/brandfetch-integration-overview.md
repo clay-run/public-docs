@@ -28,7 +28,7 @@ Get company logo, colors, social media, and company data.
 
 **Outputs**
 
--   **Source URL**: The link to the company’s logo in an image format (e.g., .svg or .png).
+-   **Source URL**: The link to the company's logo in an image format (e.g., .svg or .png).
 -   **ID**: A unique identifier assigned to the company.
 -   **Name**: The name of the company.
 -   **Domain**: The domain or website URL of the company (e.g., [example.com](http://example.com)).
@@ -36,15 +36,15 @@ Get company logo, colors, social media, and company data.
 -   **Description**: A short overview or tagline describing the company.
 -   **Long Description**: An extended description providing detailed information about the company.
 -   **Links**: A collection of social media or other relevant links associated with the company.
--   **Link Name**: The name or platform of the link (e.g., Facebook, Instagram).
--   **URL**: The specific URL for the link (e.g., [https://facebook.com/example](https://facebook.com/example)).
+-   **Link Name**: The name or platform of the link (e.g., Twitter, Facebook).
+-   **URL**: The specific URL for the link (e.g., [https://twitter.com/example](https://twitter.com/example)).
 -   **Theme**: The type of logo theme, such as dark or light.
 -   **Type**: Specifies the type of logo (e.g., icon, wordmark).
 -   **Formats**: Available formats for the logo files (e.g., .svg, .png).
--   **Hex Code**: The hexadecimal code representing the brand’s color (e.g., #FFFFFF).
+-   **Hex Code**: The hexadecimal code representing the brand's color (e.g., #FFFFFF).
 -   **Type**: The classification of the color (e.g., accent, primary).
 -   **Brightness**: A numerical value representing the brightness of the color.
--   **Font Name**: The name of the font used in the company’s branding (e.g., Roboto).
+-   **Font Name**: The name of the font used in the company's branding (e.g., Roboto).
 -   **Type**: The font type (e.g., title, body).
 -   **Origin**: The source of the font (e.g., Google Fonts).
 -   **Type**: The type of image provided (e.g., banner, thumbnail).

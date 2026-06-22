@@ -83,6 +83,7 @@ At least one of the following company identifiers is required:
 -   **Company domain:** Company website.
 -   **Professional profile URL**
 -   **Facebook ID:** Company's Facebook ID (e.g., `adobe` from [facebook.com/adobe](http://facebook.com/adobe)).
+-   **Twitter ID:** Company's Twitter ID (e.g., `adobe` from [twitter.com/adobe](http://twitter.com/adobe)).
 -   **Crunchbase ID:** Company's Crunchbase ID (e.g., `apple` from [crunchbase.com/organization/apple](http://crunchbase.com/organization/apple)).
 -   **Pitchbook ID:** Company's Pitchbook ID (e.g., `41082-40` from [pitchbook.com/profiles/company/41082-40](http://pitchbook.com/profiles/company/41082-40)).
 -   **Product Hunt ID:** Company's Product Hunt ID (e.g., `airtable` from [producthunt.com/products/airtable](http://producthunt.com/products/airtable)).
@@ -110,6 +111,7 @@ At least one of the following company identifiers is required:
 -   **Company domain:** The company's website domain.
 -   **Professional profile URL:** The company's LinkedIn URL (e.g., `https://www.linkedin.com/company/grow-with-clay`).
 -   **Facebook ID:** Company's Facebook ID (e.g., `adobe` from [facebook.com/adobe](http://facebook.com/adobe)).
+-   **Twitter ID:** Company's Twitter ID (e.g., `adobe` from [twitter.com/adobe](http://twitter.com/adobe)).
 -   **Crunchbase ID:** Company's Crunchbase ID (e.g., `apple` from [crunchbase.com/organization/apple](http://crunchbase.com/organization/apple)).
 -   **Pitchbook ID:** Company's Pitchbook ID (e.g., `41082-40` from [pitchbook.com/profiles/company/41082-40](http://pitchbook.com/profiles/company/41082-40)).
 -   **Product Hunt ID:** Company's Product Hunt ID (e.g., `airtable` from [producthunt.com/products/airtable](http://producthunt.com/products/airtable)).
@@ -140,6 +142,7 @@ At least one of the following company identifiers is required:
 -   **Company domain:** The company's website domain.
 -   **Professional profile URL:** The company's LinkedIn URL (e.g., `https://www.linkedin.com/company/grow-with-clay`).
 -   **Facebook ID:** Company's Facebook ID (e.g., `adobe` from [facebook.com/adobe](http://facebook.com/adobe)).
+-   **Twitter ID:** Company's Twitter ID (e.g., `adobe` from [twitter.com/adobe](http://twitter.com/adobe)).
 -   **Crunchbase ID:** Company's Crunchbase ID (e.g., `apple` from [crunchbase.com/organization/apple](http://crunchbase.com/organization/apple)).
 -   **Pitchbook ID:** Company's Pitchbook ID (e.g., `41082-40` from [pitchbook.com/profiles/company/41082-40](http://pitchbook.com/profiles/company/41082-40)).
 -   **Product Hunt ID:** Company's Product Hunt ID (e.g., `airtable` from [producthunt.com/products/airtable](http://producthunt.com/products/airtable)).
@@ -193,6 +196,7 @@ Optional:
 
 -   **Professional profile URL**
 -   **Facebook ID:** Company's Facebook page ID (e.g., `adobe` from [facebook.com/adobe](http://facebook.com/adobe)).
+-   **Twitter ID:** Company's Twitter handle.
 -   **Crunchbase ID:** Company's Crunchbase identifier.
 -   **Pitchbook ID:** Company's Pitchbook identifier.
 -   **Product Hunt ID:** Company's Product Hunt identifier.
@@ -212,7 +216,7 @@ Optional:
 
 ### `Action` Find private company social metrics
 
-Use this action to retrieve historical social media metrics for companies, including Facebook likes data over time.
+Use this action to retrieve historical social media metrics for companies, including Twitter followers and Facebook likes data over time.
 
 **Inputs**
 
@@ -221,6 +225,7 @@ At least one of the following company identifiers is required:
 -   **Company domain:** The company's website domain.
 -   **Professional profile URL**
 -   **Facebook ID:** Company's Facebook profile ID (e.g., `adobe` from [facebook.com/adobe](http://facebook.com/adobe)).
+-   **Twitter ID:** Company's Twitter handle (e.g., `adobe` from [twitter.com/adobe](http://twitter.com/adobe)).
 -   **Crunchbase ID:** Company's Crunchbase identifier.
 -   **Pitchbook ID:** Company's Pitchbook identifier.
 -   **Product Hunt ID:** Company's Product Hunt identifier.
@@ -232,6 +237,7 @@ Optional:
 
 -   **Date filter:** Filter historical data from a specific date (defaults to 12 months ago if not specified).
 -   **Require Facebook likes trends:** Toggle to include historical Facebook page likes data.
+-   **Require Twitter followers trends:** Toggle to include historical Twitter followers data.
 
 ### Run settings
 

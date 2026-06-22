@@ -57,14 +57,14 @@ To create a recipe for scraping structured data from profile or detail pages:
 1.  Open the Clay for Chrome extension on the page you want to scrape.
 2.  Click `Select Data to Add from Page`, then choose `Select a Single Attribute`.
 3.  Map each attribute you want to extract:
-    -   For example: name, website, LinkedIn, or Crunchbase.
+    -   For example: name, website, LinkedIn, Twitter, or Crunchbase.
 4.  Adjust the `URL Matching` settings to apply the recipe to similar pages:
     -   Replace specific URL components with variables (e.g., `:company_name`).
 5.  Name and save your recipe.
 
 ## Clip to Clay
 
-The Clip to Clay extension lets you quickly save full webpages into your Clay tables. It’s useful for capturing unstructured data or bookmarking key pages.
+The Clip to Clay extension lets you quickly save full webpages into your Clay tables. It's useful for capturing unstructured data or bookmarking key pages.
 
 ### Setting up
 
@@ -80,8 +80,8 @@ To save a webpage:
 
 1.  Visit the webpage you want to save and open the Clip to Clay extension.
 2.  Select your destination Clay table.
-    -   If the table doesn’t appear, check that:
-        -   You’re in the correct workspace.
+    -   If the table doesn't appear, check that:
+        -   You're in the correct workspace.
         -   The table has been enabled for the extension.
 3.  Click `Add to Table` to save the page.
 

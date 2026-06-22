@@ -43,6 +43,7 @@ Provides comprehensive profiles by supplementing missing or incomplete contact a
 -   **Social media profiles:**
     -   LinkedIn
     -   Facebook
+    -   Twitter
 -   **Professional details:**
     -   Work experience
     -   Education history
