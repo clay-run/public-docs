@@ -20,7 +20,6 @@ Sandbox mode is a special table mode that lets you safely build, test, and publi
 ## **Enabling sandbox mode**
 
 1.  Click the `Sandbox mode` button in the toolbar.
-    -   If you do not see this button, check that you are on a Pro or Enterprise Plan
 2.  After a few seconds, a new sandbox will be set up with sample rows, ready for you to make changes.
     -   **To discard changes and start a fresh copy of the sandbox:** Click `⚙️` → `Reset sandbox`.
     -   **To turn off sandbox mode:** Click `Exit sandbox` in the toolbar. This will return you to your normal table and discard all unpublished changes in your sandbox.
@@ -28,7 +27,7 @@ Sandbox mode is a special table mode that lets you safely build, test, and publi
 
 **Note:** During sandbox mode, your regular table becomes read-only and cannot be updated directly — the **All data** tab shows a **View-only** indicator while sandbox is active. You can switch between your sandbox and the read-only production table using the tabs menu. All recurring sources ([webhooks](https://www.clay.com/university/guide/webhook-integration-guide), [signals](https://www.clay.com/university/guide/signals), etc.) and [scheduled runs](https://www.clay.com/university/guide/scheduled-columns) will still run while sandbox mode is active.
 
-**Sculptor and sandbox mode:** On Pro and Enterprise plans, [Sculptor](https://www.clay.com/university/guide/sculptor) automatically puts your table into sandbox mode whenever it builds new columns. This lets you review and validate Sculptor's changes before they go live. A broader rollout to additional plans is coming.
+**Sculptor and sandbox mode:** [Sculptor](https://www.clay.com/university/guide/sculptor) automatically puts your table into sandbox mode whenever it builds new columns. This lets you review and validate Sculptor's changes before they go live.
 
 > **Important:** If Sculptor put your table into sandbox mode, use the **Review changes** button to publish Sculptor's columns to your live table — do _not_ click **Exit Sandbox**, which will discard all of Sculptor's proposed changes without saving them. See the [Sculptor — Sandbox mode](https://www.clay.com/university/guide/sculptor) section for the full step-by-step.
 
@@ -74,12 +73,12 @@ Click `Review changes` — visible in the tab bar above your table, to the right
 **Notes on publishing changes:**
 
 -   Visual updates (such as pinned columns, column ordering, and colors) won't appear in the list, **but** **_will_** **be applied when you publish**.
--   Manually added rows and manual overrides to individual cell data **will not be published**.
+-   When you publish, sandbox values are automatically copied back to the matching rows in your production table, replacing any updates made to those rows since the sandbox was created — so you don't need to re-run them or spend additional credits.
 -   Changes to a column that affect downstream columns are shown in a nested format to clearly indicate which other columns may be impacted.
 
 ### Publishing changes
 
 When you are ready to publish the changes in your sandbox to your regular table, you have two options:
 
--   `Publish and don't Run` will sync all your column configuration changes to all data but will _not start_ a run for any of these columns. You would need to manually run them later.
--   `Publish and run` will sync all column configuration changes to all data **and** run all affected columns on all rows in the full table.
+-   `Publish and don't Run` will sync all your column configuration changes and copy sandbox row data to your production table, but will _not start_ a run for rows that haven't been enriched yet. You would need to manually run those later.
+-   `Publish and run` will sync all column configuration changes, copy sandbox row data to your production table, **and** run all affected columns on any remaining rows in the full table.
