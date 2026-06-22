@@ -502,3 +502,14 @@ Archiving a record is a **soft delete** — the record is not permanently remove
 **Note on lookup timing:** After archiving a record, there is a brief processing delay before the change is reflected in `Lookup in Audiences` results. Running a lookup immediately after archiving may still return the archived record — lookups typically update within a short time as changes propagate.
 
 To exclude Salesforce-deleted records from your audience lookups, filter on **Sync status → Deleted in source** to identify them, then archive the records you no longer want matched against.
+
+### Why did Update Audiences Record report 0 fields updated?
+
+The most common cause is that all mapped fields had null values in the source row. By default, `Update Audiences Record` has an **Ignore blank values** toggle turned on, which skips any field whose value is `null` before writing to the Audience. When every mapped field is null, there is nothing to write — the action completes successfully but reports 0 fields updated.
+
+**To confirm this is the cause:** Check whether the columns you mapped into `Update Audiences Record` are populated for the rows that show 0 fields updated.
+
+There are two ways to fix this:
+
+-   **Use an explicit placeholder value instead of null.** Rework your formula so it always returns a meaningful non-null value. For example, if you use a timestamp to mark when a contact becomes eligible, have the formula return the eligible date when it applies and a text value like `"Not Eligible"` when it doesn't. Both are real values, so `Update Audiences Record` writes an update on every run — and you can route off the result (process the row when the field contains a date; skip when it says `"Not Eligible"`).
+-   **Turn off Ignore blank values.** In the `Update Audiences Record` column settings, disable the **Ignore blank values** toggle. With this off, null is passed through and written to the Audience field, which clears any existing value on that field.
