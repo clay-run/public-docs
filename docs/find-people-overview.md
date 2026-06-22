@@ -41,8 +41,9 @@ This tool is ideal for building targeted sales prospect lists, identifying poten
 -   **Languages:** Filter by specific languages spoken.
 -   **Education:** Search for specific school names.
 -   **Companies:** Find people at specific companies using an existing Clay table or a custom list. By default, this matches people who **currently** work at those companies.
+    -   **Custom list:** Enter company identifiers directly — no separate Clay table required. Accepted formats: company domains (e.g., `vestas.com`), professional network company page URLs, Sales Navigator URLs, and Sales Navigator company IDs. See [company identifier best practices](finding-companies-and-people-in-clay.md) for guidance on which format gives the most accurate results.
     -   **Locked after creation:** The filter type (Clay table vs. custom list) and which table is linked cannot be changed once the source exists — this is what the "Can only be changed during source creation" tooltip means. The table's row contents are not frozen, however: adding or removing rows from the linked table is reflected each time the source runs. When re-run after new companies are added, the source searches across all companies currently in the table, not just the newly added ones.
-    -   **Run settings:** The source runs **Manually** by default — adding new companies to the linked table does not automatically trigger a new run. To automatically pick up new companies on a recurring basis, click the source column header in your people table, expand **Run settings**, and switch from **Manually** to **On a schedule**. Choose a frequency (Daily is most common) and click **Save schedule**. You can also click **Run now** at any time for an immediate on-demand run.
+    -   **Run settings:** When this source is set up from a company table, Clay automatically adds an **Update People Table** column to the company table. With **Enable Automatic People Search Updates** toggled on (the default), that column fires a full re-run of the Find People search whenever new company rows are added — you don't need to manually trigger a run. The re-run covers all companies currently in the table, not just the newly added rows. To disable this auto-trigger, open the **Update People Table** column and turn off **Enable Automatic People Search Updates**. The source also has its own **Run settings** — **Manually** by default — which you can switch to **On a schedule** for time-based refreshes: click the source column header in your people table, expand **Run settings**, and choose a frequency (Daily is most common), then click **Save schedule**. You can also click **Run now** at any time for an immediate on-demand run.
 -   **Exclude people:** Exclude up to 3 different sets of people from your search using Clay tables, CSVs, or manual lists. You can exclude up to 300,000 people total (100,000 per source). Exclusions require a LinkedIn URL.
 -   **Past experiences:** Enable the **Include past experiences** toggle to extend your company, job title, and experience description keyword filters to also match against a person's past roles — not just their current one.
     -   **Incompatible filters:** This toggle cannot be combined with **Limit per company** or any **Company attributes** filter (company size, company industries, or company description keywords). Selecting them together returns an error.
@@ -72,6 +73,24 @@ After importing Find People results, use Clay's enrichments to add contact infor
 
 **Mobile phone:** To find mobile phone numbers, click `Add enrichment`, search for `Phone number`, and select the waterfall option under **Waterfalls**. The phone number waterfall cascades through multiple providers in sequence — providers that return no result are skipped at no credit cost, so you only pay when a provider finds a number. For provider recommendations by region, see [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md).
 
+## Troubleshooting
+
+### Find People returns 0 results or fewer than expected
+
+If your search preview shows 0 results or far fewer than expected, the most common causes are:
+
+-   **Filters set too narrowly** — title, location, or seniority filters that are too specific can exclude real matches. Try broadening one filter at a time: start with location (use a broader region or metro area instead of a specific city), then title keywords (shorter terms like "CFO" or "Finance" match more variations than multi-word phrases like "FP&A Manager" or "Head of Finance").
+-   **Title matching mode too strict** — the default **is similar to** mode finds synonyms and variations. If you've switched to **contains** or **is exactly** mode, switch back to **is similar to** to allow broader matching and capture more results.
+-   **Multi-word title phrases** — comma-separated lists of multi-word phrases can miss profiles that use variations or abbreviations. Use shorter individual keywords and let the default match mode find the variations automatically.
+
+For more troubleshooting, including data coverage and domain mapping issues, see [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md).
+
+### Re-running Find People returns 0 new results
+
+This is expected behavior. The Find People source deduplicates new results against rows already in your table — re-running the same source on a table that already contains those contacts returns 0 new records. There is no setting to disable this.
+
+**To re-import the same contacts** (for example, when testing your table setup or resetting your search): delete the existing rows from your People table first, then re-run the source. Once the rows are cleared, the search imports those contacts again.
+
 ## Importing from a Sales Navigator search URL
 
 If you have a saved Sales Navigator search and want to pull those results into Clay, use the **Find people from external search** source — not the standard Find People source described above.
@@ -98,7 +117,10 @@ To find LinkedIn posts containing a specific keyword or hashtag, use the **Find 
 
 -   **Keyword:** A single keyword or hashtag to search for in post content (e.g., `#cvpr2026` or `GTM`). Only one keyword is supported — comma-separated lists are not valid.
 -   **Companies filter (optional):** Limit results to posts that mention companies, were posted by companies, or were posted by employees of specific companies.
+-   **Company domains or profile URLs (optional):** Scope results to posts by or about specific companies. Enter up to 5 company domains or professional network company page URLs — only the first 5 are used. Enter values manually or use the **From table** tab to pull from a separate Clay table.
 -   **People filter (optional):** Limit results to posts that mention or were posted by specific individuals.
+-   **Person professional profile URLs (optional):** Scope results to posts by specific people. Enter up to 5 professional profile URLs — only the first 5 are used. Enter values manually or use the **From table** tab to pull from a separate Clay table. **Note:** Source inputs do not support dynamic column references — you cannot point this field to a column in the same table. To target profiles from an existing table, write the profile URLs to a separate table first and link it using the **From table** option.
+-   **Tracking more than 5 profiles:** Each source is limited to 5 person or company profile URLs — this is a hard cap, not a preview. To monitor a larger list, create multiple "Find professional posts" sources, each configured with up to 5 profiles.
 -   **Sort by:** `Most recent` (default) or `Top match`.
 -   **Time frame:** `Last 24 hours` or `Last week` (default).
 -   **Max number of results:** Default is 100; maximum is 1,000.
@@ -109,6 +131,22 @@ Each row includes the post URL, post text, author name, author LinkedIn URL, aut
 
 **To enrich post authors:** After importing results, add an **Enrich Person** column and map it to the author LinkedIn URL. This returns full contact data — work email, company, and more — for each post author.
 
+**To summarize posts with AI:** Add a **Claygent** column and write a prompt asking it to summarize the post text. Turn off **Web research** in the Claygent settings — since the post content is already in your table, web lookups are unnecessary and add credit cost. Test on a small batch of rows first.
+
 **To get comments, reactions, or shares on a specific post:** Click `Add enrichment`, search for **Get comments on a professional post**, **Get reactions on a professional post**, or **Get shares on a professional post**, and map **Post URL** to the post URL column from your import.
 
 > **Important:** These actions require the original post URL — a URL containing `-activity-` in the path (e.g., `https://www.linkedin.com/posts/clay-hq_...-activity-7212099008951975937-ezPv`). Share URLs containing `-share-` are not valid and return an error. To get the original URL for any post: open the post on LinkedIn, click **•••** (three dots) at the top right of the post, and select **Copy link to post**. If the post is a repost of someone else's content, open the original underlying post first and copy its link.
+
+## Getting people who interacted with a post
+
+To build a table of people who liked, commented on, or shared a specific post, use the **Get interactions with professional posts** source. Each row in the resulting table represents one person who interacted with that post.
+
+**To set up this source:**
+
+1.  In a workbook, click `+ Add`.
+2.  Search for `Get interactions with professional posts` and select it.
+3.  Provide the post URL — either as a manual entry or by linking to a column in an existing Clay table.
+
+**URL format requirement:** This source only accepts `activity` and `ugcPost` type post URLs. Share URLs — those containing `-share-` between the author slug and the post ID — are not valid and return an invalid-URL error. To identify the URL type: valid post URLs contain either `-activity-` or `ugcPost` in the path; share post URLs contain `-share-` and are not accepted.
+
+To get the correct URL: open the post, click **•••** (three dots) at the top right of the post, and choose **Copy link to post**. If the post is a reshare, open the original underlying post first and copy its link from there.
