@@ -29,6 +29,8 @@ Allowed MCP client controls are available to workspace admins on all modern paid
 
 ## Allowed MCP clients
 
+**Note: This feature is currently in beta.**
+
 The **Allowed MCP clients** section controls which client applications members can use to connect to your workspace's MCP server. These are access-control toggles — not indicators of active connections. A client appearing in the list, even with its toggle on, does not mean anyone has actively connected via that platform.
 
 All client types are **enabled by default**. Workspace admins can turn off any client to block new connections and invalidate existing token refreshes from that platform.
