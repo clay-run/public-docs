@@ -157,9 +157,7 @@ See [Find People in Clay](find-people-overview.md) for the full list of filter a
 
 **How do you implement this?**
 
-Click the `Sandbox mode` button in the table toolbar. Clay duplicates the top 10 rows of your table into an isolated sandbox (expandable to 50 rows). Make and test your changes there; when ready, click **Review changes** and then **Publish** to apply the configuration to your full table.
-
-**Note:** Sandbox mode is available on Pro and Enterprise plans.
+Click the `Sandbox mode` button in the table toolbar. Clay duplicates the top 10 rows of your table into an isolated sandbox (expandable to 50 rows). Make and test your changes there; when ready, click **Review changes** and then **Publish** to apply the configuration to your full table. Rows you already enriched in the sandbox are automatically copied to your production table on publish — so you won't be charged credits again for those rows.
 
 ## Audit and manage scheduled column runs
 
