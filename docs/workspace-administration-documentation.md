@@ -49,8 +49,7 @@ If you signed up with Google and want to create a password so you can log in wit
 To request the change:
 
 -   Open the in-app chat and ask the support team to switch your login method from Google to password.
--   Once the change is made, you will receive a password recovery email at your registered address.
--   If you don't receive the email, visit [app.clay.com/forgot](https://app.clay.com/forgot) and enter your email address to trigger a new one.
+-   Once the change is made, go to [app.clay.com/forgot](https://app.clay.com/forgot), enter your email address, and follow the link in the email to set your new password.
 
 After completing the password recovery steps, you can log in with your email and password. Note that Clay accounts support only one login method at a time — either Google OAuth or email + password, not both. After switching, you will no longer be able to sign in with Google on this account.
 
