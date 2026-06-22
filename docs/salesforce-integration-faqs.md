@@ -327,18 +327,6 @@ Assignment rules in Salesforce fire on every record save — not just when a rec
 
 **Note:** If your Update Record column was created before this option was added, the toggle may be off. Check your column settings if you are seeing unexpected owner changes after Clay updates a record.
 
-## Why do records created or updated by Clay show my name (or another user's name) in Salesforce's Created By or Last Modified By field?
-
-Salesforce's `CreatedBy` and `LastModifiedBy` audit fields always reflect the **Salesforce user whose credentials authenticated the API request**. Clay does not have a mechanism to override this — it passes the connection's access token with each API request, and Salesforce sets those fields accordingly.
-
-**For the User Sign In connection method:** Clay authenticates as whichever Salesforce user was active in the browser when you completed the OAuth setup. If you were logged into your personal Salesforce account at that moment, all records Clay writes will show your personal name in those fields — even if you have a dedicated "integration user" configured in Salesforce. The integration user's name will only appear in `CreatedBy` and `LastModifiedBy` if the Clay connection was actually authenticated *as* that integration user.
-
-**To fix this**, reconnect Clay using the integration user's credentials. See [How do I connect to Salesforce as a specific user](#how-do-i-connect-to-salesforce-as-a-specific-user-such-as-an-integration-user-using-user-sign-in) below for steps.
-
-**For the Client Credentials connection method:** `CreatedBy` and `LastModifiedBy` reflect the Salesforce execution user configured in the Connected App's **Run As** field during setup — not whoever configured the Clay connection. This is one reason Client Credentials is often preferred for dedicated integration accounts — the audit fields consistently show the configured execution user regardless of who set up the Clay connection.
-
-**To check which Salesforce user your connection is currently authenticated as**, go to `Settings` → `Connections` → `Salesforce`, click `…` next to your connection, and select `Test Connection`. Clay will display the email address of the authenticated user.
-
 ## How do I connect to Salesforce as a specific user (such as an integration user) using User Sign In?
 
 When you connect via **User Sign In**, Clay opens an OAuth popup that authenticates using whatever Salesforce session is active in your browser at that moment. If you are already signed in to Salesforce as your personal account, Clay will connect as you — not as the intended integration user.
