@@ -258,7 +258,7 @@ This is expected behavior. The Find Companies source deduplicates new results ag
 
 Deduplication is based on each company's unique profile ID, not your filter configuration. A company already in the table is skipped on re-run regardless of whether your filters changed.
 
-**To re-import the full result set** (for example, when testing): delete the existing rows from your table first, then re-run the source. Once the rows are cleared, the search re-imports all calling companies from scratch.
+**To re-import the full result set** (for example, when testing): delete the existing rows from your table first, then re-run the source. Once the rows are cleared, the search re-imports all matching companies from scratch.
 
 ### Re-running Find People returns 0 new results
 
