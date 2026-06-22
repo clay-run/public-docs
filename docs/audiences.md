@@ -85,7 +85,7 @@ Clay pulls data from Salesforce on two schedules:
 7.  To import Deals (if enabled for your workspace), select `Deals` at the top of the sync panel.
 8.  Enable the `Import` toggle.
 9.  Add any Deal fields you want to filter or segment by — common fields include `Deal Stage`, `Amount`, `Close Date`, and `Owner`.
-    -   Deal data is associated with your Companies records and becomes available as a filter in any Companies audience.
+    -   Deal data is associated with both your Companies and People records. In a Companies audience, you can filter by deal attributes. In a People audience, only contacts directly linked to a deal via HubSpot contact associations appear when you filter on deal attributes — not all contacts at the company that owns the deal.
 10.  Name the corresponding Clay fields.
 11.  Click `Save and Preview`, then `Confirm`.
 
@@ -384,6 +384,19 @@ You don't need a clean CRM to get started — CRM cleanup is often the first use
 
 Yes. Segments update in real time as records enter or change, typically within 15 minutes. Enrichments and actions trigger automatically for new records when the autoenrich toggle is enabled. No manual runs required after initial setup.
 
+### Why aren't Salesforce field changes showing up in a table I built from an Audience?
+
+When you use an Audience segment as the source for a Clay table — whether via **Send → Add to workbook** or by connecting an Audience source directly — the table captures records as they appear at that moment. After the initial push, the table does not stay in sync with the Audience or Salesforce: if a company's field value changes in Salesforce (for example, `Customer Service Level` updates from Tier 2 to something else), the existing table row keeps its original value and is not automatically updated. New records that start qualifying for the segment are also not added automatically.
+
+This is intentional: once records are in the table, enrichment columns and downstream work you've built on those rows are preserved regardless of upstream changes.
+
+**To work with current Audience data in a table:**
+
+-   **Add a "Lookup in Audiences" enrichment column.** This pulls the current value of any Audience field for each row on demand — use it to check whether a company still qualifies for your segment or to refresh a specific field value (such as `Customer Service Level`) without re-importing from scratch.
+-   **Use a Salesforce source directly.** If you want the table to continuously pull in new qualifying records and reflect field changes automatically, connect a Salesforce List View or SOQL query as your table source instead. Salesforce sources support scheduled runs and an **Update existing rows** toggle, so new qualifying accounts are added on each run and field values stay current. See [Salesforce SOQL queries](https://university.clay.com/docs/salesforce-soql) for details.
+
+**Note:** Audience segments themselves update automatically — records enter or leave within 15 minutes of a Salesforce change. It is only the table built from an Audience that is a static snapshot.
+
 ### Why didn't my audience count change after I tightened my search filters?
 
 Audience searches (Find People and Find Companies sources) are **additive** — the search only adds net-new contacts going forward and never removes contacts already in your audience. If your original search pulled in a large set of contacts, tightening the filters afterward won't reduce that count. Contacts added by the earlier, broader search remain.
@@ -502,3 +515,14 @@ Archiving a record is a **soft delete** — the record is not permanently remove
 **Note on lookup timing:** After archiving a record, there is a brief processing delay before the change is reflected in `Lookup in Audiences` results. Running a lookup immediately after archiving may still return the archived record — lookups typically update within a short time as changes propagate.
 
 To exclude Salesforce-deleted records from your audience lookups, filter on **Sync status → Deleted in source** to identify them, then archive the records you no longer want matched against.
+
+### Why did Update Audiences Record report 0 fields updated?
+
+The most common cause is that all mapped fields had null values in the source row. By default, `Update Audiences Record` has an **Ignore blank values** toggle turned on, which skips any field whose value is `null` before writing to the Audience. When every mapped field is null, there is nothing to write — the action completes successfully but reports 0 fields updated.
+
+**To confirm this is the cause:** Check whether the columns you mapped into `Update Audiences Record` are populated for the rows that show 0 fields updated.
+
+There are two ways to fix this:
+
+-   **Use an explicit placeholder value instead of null.** Rework your formula so it always returns a meaningful non-null value. For example, if you use a timestamp to mark when a contact becomes eligible, have the formula return the eligible date when it applies and a text value like `"Not Eligible"` when it doesn't. Both are real values, so `Update Audiences Record` writes an update on every run — and you can route off the result (process the row when the field contains a date; skip when it says `"Not Eligible"`).
+-   **Turn off Ignore blank values.** In the `Update Audiences Record` column settings, disable the **Ignore blank values** toggle. With this off, null is passed through and written to the Audience field, which clears any existing value on that field.
