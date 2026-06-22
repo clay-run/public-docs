@@ -386,16 +386,16 @@ Yes. Segments update in real time as records enter or change, typically within 1
 
 ### Why aren't Salesforce field changes showing up in a table I built from an Audience?
 
-When you use an Audience segment as the source for a Clay table — whether via **Send → Add to workbook** or by connecting an Audience source directly — the table captures records as they appear at that moment. After the initial push, the table does not stay in sync with the Audience or Salesforce: if a company's field value changes in Salesforce (for example, `Customer Service Level` updates from Tier 2 to something else), the existing table row keeps its original value and is not automatically updated. New records that start qualifying for the segment are also not added automatically.
+When you connect an Audience segment as a Clay table source, new qualifying records are pushed to your table automatically — typically within 15 minutes of a record joining the segment. However, **field-value changes to records already in the table do not flow back automatically**. If a company's field value changes in Salesforce after that row was imported (for example, `Customer Service Level` updates from Tier 2 to something else), the table row keeps its original value.
 
 This is intentional: once records are in the table, enrichment columns and downstream work you've built on those rows are preserved regardless of upstream changes.
 
-**To work with current Audience data in a table:**
+**To refresh field values for existing rows:**
 
--   **Add a "Lookup in Audiences" enrichment column.** This pulls the current value of any Audience field for each row on demand — use it to check whether a company still qualifies for your segment or to refresh a specific field value (such as `Customer Service Level`) without re-importing from scratch.
--   **Use a Salesforce source directly.** If you want the table to continuously pull in new qualifying records and reflect field changes automatically, connect a Salesforce List View or SOQL query as your table source instead. Salesforce sources support scheduled runs and an **Update existing rows** toggle, so new qualifying accounts are added on each run and field values stay current. See [Salesforce SOQL queries](https://university.clay.com/docs/salesforce-soql) for details.
+-   **Add a "Lookup in Audiences" enrichment column.** This pulls the current value of any Audience field for each row on demand — use it to refresh a specific field value (such as `Customer Service Level`) without re-importing from scratch.
+-   **Use a Salesforce source directly.** If you want field changes to flow through automatically on a schedule, connect a Salesforce List View or SOQL query as your table source instead and enable the **Update existing rows** toggle. On each scheduled run, Clay fetches the latest field values for every record the query returns. See [Salesforce SOQL queries](https://university.clay.com/docs/salesforce-soql) for details.
 
-**Note:** Audience segments themselves update automatically — records enter or leave within 15 minutes of a Salesforce change. It is only the table built from an Audience that is a static snapshot.
+**Note:** Audience segments themselves update automatically — records enter or leave within 15 minutes of a Salesforce change, and new segment members are pushed to connected workbook tables within the same window.
 
 ### Why didn't my audience count change after I tightened my search filters?
 
