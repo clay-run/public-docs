@@ -38,7 +38,7 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
         -   **Industries** and **Subindustries** (include or exclude)
         -   **Revenue streams** — e.g., Subscriptions/Recurring, Professional Services, Transaction Fees, Advertising, Licensing/IP
         -   **Business types** — B2B, B2C, or Nonprofit
-    -   **Technographics** — Filter by installed technology, powered by [BuyerCaddy](https://university.clay.com/docs/buyercaddy-integration). Costs **3 credits per matching company row** — cheaper in most cases than pulling a broad list and running a technographic enrichment afterward, since you pay only for companies that already match your tech criteria. **No warning is shown before credits are charged — credits are deducted as soon as you click `Import to new table`.** Before importing, use `Preview companies` to check the approximate result count and multiply by 3 to estimate your spend (e.g., ~470 matching companies ≈ 1,410 credits). Technographics data is also included when sending company rows to Audiences; the same 3-credit cost per matching row applies.
+    -   **Technographics** — Filter by installed technology, powered by [BuyerCaddy](https://university.clay.com/docs/buyercaddy-integration). Costs **3 credits per matching company row** — cheaper in most cases than pulling a broad list and running a technographic enrichment afterward, since you pay only for companies that already match your tech criteria. **Credits are charged immediately when you click `Import to new table` — there is no confirmation dialog.** Before importing, use `Preview companies` to check the approximate result count and multiply by 3 to estimate your spend (e.g., ~470 matching companies ≈ 1,410 credits). Technographics data is also included when sending company rows to Audiences; the same 3-credit cost per matching row applies.
         -   **Vendors** — e.g., AWS, Salesforce, HubSpot
         -   **Products** — e.g., Amazon EC2, Salesforce Sales Cloud
         -   **Main categories** and **Parent categories**
@@ -101,7 +101,7 @@ However, `Find Companies` automatically includes a **Founded** column in your ta
 
 **No, unless you use technographics filters.** Importing companies using standard filters — industry, size, location, revenue, company type, AI filters — consumes no Actions and no Data Credits.
 
-If you enable **technographics filters**, each company row that matches your criteria costs **3 Data Credits**. Credits are charged when you click `Import to new table` — no confirmation or warning is shown beforehand. To estimate your cost before committing: click `Preview companies`, note the approximate result count, and multiply by 3.
+If you enable **technographics filters**, each company row that matches your criteria costs **3 Data Credits**. Credits are charged when you click `Import to new table` — there is no confirmation dialog. To estimate your cost before committing: click `Preview companies`, note the approximate result count, and multiply by 3.
 
 Any enrichments you add to the table afterward (e.g., finding emails, enriching headcount) consume their own Actions and Data Credits as usual — only the import itself is free.
 
