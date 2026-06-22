@@ -23,6 +23,14 @@ A common TAM sourcing mistake is pulling a large list and then running enrichmen
 
 **Note:** Technographics filtering is also available directly in company search and costs 3 credits per company returned — cheaper in most cases than running a technographic enrichment after the fact, and more direct since you only pay for companies that already match your tech criteria. Technographics data is also available when sending company rows to Audiences; the same credit cost applies.
 
+### Filter by location with structured fields
+
+The **Location** filter in company search supports structured sub-filters — **Country**, **City**, **State or province**, **Region**, and **Postal code** — each with include and exclude modes. These fields match against geocoded, normalized location data, so you get accurate results rather than relying on free-text string matching.
+
+Enable **Is Headquarters** to restrict results to companies whose *primary* office is in the specified location. Without it, any matching office — branch, satellite, or headquarters — qualifies a company for inclusion.
+
+For the full filter spec and a list of the structured location fields returned in each result's cell details, see [Find Companies](find-companies.md).
+
 ### Understand how filters combine
 
 Company search uses AND logic across filter types and OR logic within a single filter:
@@ -250,7 +258,7 @@ This is expected behavior. The Find Companies source deduplicates new results ag
 
 Deduplication is based on each company's unique profile ID, not your filter configuration. A company already in the table is skipped on re-run regardless of whether your filters changed.
 
-**To re-import the full result set** (for example, when testing): delete the existing rows from your table first, then re-run the source. Once the rows are cleared, the search re-imports all matching companies from scratch.
+**To re-import the full result set** (for example, when testing): delete the existing rows from your table first, then re-run the source. Once the rows are cleared, the search re-imports all calling companies from scratch.
 
 ### Re-running Find People returns 0 new results
 
