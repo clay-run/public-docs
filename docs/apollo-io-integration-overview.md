@@ -80,7 +80,7 @@ Returns detailed company information including:
 -   Annual revenue and financial data
 -   Technologies used (tech stack)
 -   Company headquarters and office locations
--   Social media profiles (LinkedIn, Twitter, Facebook)
+-   Social media profiles (LinkedIn, Facebook)
 -   Founded year and company type
 
 ### **`Action`** **Find Open Jobs**

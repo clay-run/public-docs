@@ -39,7 +39,7 @@ Here are examples of formulas you can create with the formula generator:
 
 1.  Extract the domain from {{Email}}
 2.  Use {{LinkedIn URL}} if available; otherwise use {{LinkedIn Profile}}.url
-3.  Extract the text after @ in {{Twitter Handle}}
+3.  Extract the text after @ in {{Social Handle}}
 4.  Split {{city}} by comma, keep everything before the first comma, remove "Area" if present, then add quotes
 5.  Extract the first word from {{Column\_1}}, combine with {{Column\_2}}, then remove all non-letter characters
 6.  Calculate the number of days between {{Created Date}} and {{Closed Date}}

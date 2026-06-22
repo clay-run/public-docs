@@ -117,7 +117,7 @@ If you use the Clay-managed Clearbit account you will be charged at 8 credits pe
 
 Please input the domain of the company which you are trying to enrich.
 
-If you want to ensure you are enriching the right company, you can also add the LinkedIn URL, Twitter URL, Facebook URL, and Company Name.
+If you want to ensure you are enriching the right company, you can also add the LinkedIn URL, Facebook URL, and Company Name.
 
 **Step 3 (Optional): Select Auto-update**
 

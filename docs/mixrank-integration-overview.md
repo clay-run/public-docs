@@ -11,7 +11,7 @@ High-frequency data platform for sales, marketing, and investment insights.
 
 ## **Getting started with Mixrank**
 
-[Mixrank](https://www.clay.com/integrations/data-provider/mixrank) in Clay allows users to enrich a person's profile using their email address or find their personal email address from their LinkedIn or Twitter profiles.
+[Mixrank](https://www.clay.com/integrations/data-provider/mixrank) in Clay allows users to enrich a person's profile using their email address or find their personal email address from their LinkedIn profile.
 
 There are two actions you can do with [Mixrank](https://www.clay.com/integrations/data-provider/mixrank), including:
 
@@ -62,11 +62,11 @@ Select which data from the enrichment you’d like to add as columns to your tab
 
 ### `Action` Find Personal Email
 
-The **Find Personal Email** action helps you find a person’s personal email address using their LinkedIn URL or Twitter Profile.
+The **Find Personal Email** action helps you find a person’s personal email address using their LinkedIn URL.
 
-**Step 1: Enter either Social URL (LinkedIn) or Twitter URL**
+**Step 1: Enter the Social URL (LinkedIn)**
 
-Enter either the LinkedIn or Twitter URL of the person whose personal email address you are trying to find.
+Enter the LinkedIn URL of the person whose personal email address you are trying to find.
 
 **Step 2 (Optional): Select Auto-update**
 

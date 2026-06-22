@@ -36,7 +36,7 @@ Use this action to retrieve a breakdown of traffic by source (direct, referral, 
 
 ### `Action` Get company social media engagement
 
-Use this action to analyze social media performance across platforms like Facebook, Twitter, Instagram, and YouTube.
+Use this action to analyze social media performance across platforms like Facebook, Instagram, and YouTube.
 
 **Inputs**
 

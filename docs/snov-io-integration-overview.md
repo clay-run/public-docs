@@ -68,7 +68,6 @@ Finds and retrieves email addresses for a specific person using their name and c
 
 -   Contact Email - Personal, Work
 -   Contact - Full Name, First Name, Last Name
--   Contact Twitter URL
 -   Contact LinkedIn URL
 -   Company Name
 -   Domain - Website
@@ -88,7 +87,6 @@ Discovers email addresses at a company based on domain and optionally filters by
 
 -   Contact Email - Personal, Work
 -   Contact - Full Name, First Name, Last Name
--   Contact Twitter URL
 -   Contact LinkedIn URL
 -   Company Name
 -   Domain - Website
