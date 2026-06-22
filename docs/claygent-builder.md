@@ -174,21 +174,6 @@ Common errors when writing schema by hand:
 
 -   **Field named `confidence` overrides Clay's built-in confidence indicator.** Clay automatically adds a `confidence` field to your output schema with enum values `low`, `medium`, `high`, and `very high` — but only when your schema does not already define one. This field drives the red/yellow/green color indicator on each response cell. If you define your own field named `confidence` (for example, as a numeric score), Clay skips injecting its own, and your custom field's values are used for the color indicator instead. Because values like `0.98` don't match the expected text enum, the normalizer defaults to `low` and every cell shows red. To fix it, rename your custom field — for example, to `confidence_score` — and rerun the column. Clay will then inject its own `confidence` field and the color indicator will work correctly.
 
--   **Flat key-value descriptions or pipe-separated enum strings.** Both patterns cause the `Unable to parse the output schema for the column` error because they are not valid JSON Schema:
-    -   **Flat key-value descriptions** — A plain object like `{"agentSignal": "Yes | No | Unknown", "source": "1-2 sentences"}` is not a JSON Schema. The schema must be a proper JSON Schema object with `"type": "object"` and a `"properties"` map where each field defines at least a `"type"`:
-
-        ```json
-        {
-          "type": "object",
-          "properties": {
-            "agentSignal": { "type": "string", "enum": ["Yes", "No", "Unknown"] },
-            "source": { "type": "string", "description": "1-2 sentences on where evidence was found" }
-          }
-        }
-        ```
-
-    -   **Pipe-separated enum strings** — Writing `"enum": "Yes | No | Unknown"` (a string) is not valid JSON Schema because `enum` must be an array. Use `"enum": ["Yes", "No", "Unknown"]` instead.
-
 To avoid writing schema by hand, click **Generate from prompt** to have Clay auto-generate a valid schema from your prompt.
 
 ## Testing before you deploy
@@ -383,11 +368,11 @@ These are two distinct configuration errors that can appear on a Claygent column
 
 -   **"Failed to parse formula for 'prompt' with error: {offset:XX}"** — The prompt field contains an invalid formula. Clay stores prompt text as a formula so that `{{column}}` references work, and if the formula has a syntax error at the character position shown by `offset`, the column cannot run. Common causes: a stray backtick (`` ` ``), an unmatched brace or quote, or characters introduced when copying text from a source that encodes content as HTML — for example, pasting from a chat window or email client that converts `<`, `>`, and `&` into HTML entities (`&lt;`, `&gt;`, `&amp;`).
 
--   **"Unable to parse the output schema for the column"** — The JSON output schema cannot be parsed. Common causes: HTML entities in the schema (`&lt;` instead of `<`, `&amp;` instead of `&`, etc.), a trailing comma after the last property in a JSON object or array, a flat key-value object instead of a proper JSON Schema (e.g. `{"field": "description"}` instead of `{"type": "object", "properties": {...}}`), pipe-separated enum strings instead of arrays (e.g. `"Yes | No | Unknown"` instead of `["Yes", "No", "Unknown"]`), or other invalid JSON syntax.
+-   **"Unable to parse the output schema for the column"** — The JSON output schema cannot be parsed. Common causes: HTML entities in the schema (`&lt;` instead of `<`, `&amp;` instead of `&`, etc.), a trailing comma after the last property in a JSON object or array, a flat description map (`{"fieldName": "description text"}`) used instead of a proper JSON Schema (the schema must have `"type": "object"` at the root and a `"properties"` map — never use a plain `{"key": "value description"}` format), a root-level `"type": "array"` (the root schema must always be `"type": "object"`), enum values written as a pipe-separated string (`"enum": "Yes | No | Unknown"`) instead of a JSON array (`"enum": ["Yes", "No", "Unknown"]`), or other invalid JSON syntax.
 
 **To fix the prompt formula error:** Open the column settings (**click the column name → Edit column**) and inspect the Prompt field. Remove any stray backticks, unmatched braces or quotes, or HTML entities. If you copied the prompt from a chat tool or email, paste it into a plain-text editor first to strip hidden formatting before pasting into Clay.
 
-**To fix the output schema error:** Open the column settings, go to the **Define column outputs** section, and inspect the JSON schema. Replace any HTML entities with their plain equivalents (`&lt;` → `<`, `&gt;` → `>`, `&amp;` → `&`), and remove any trailing commas. Alternatively, click **Generate from prompt** to have Clay regenerate a valid schema automatically.
+**To fix the output schema error:** Open the column settings, go to the **Define column outputs** section, and inspect the JSON schema. Replace any HTML entities with their plain equivalents (`&lt;` → `<`, `&gt;` → `>`, `&amp;` → `&`), and remove any trailing commas. If you used a flat description map, rewrite it as a proper JSON Schema — each field needs at least `"type": "string"` (or another JSON Schema type), and any field constrained to a fixed set of values uses `"enum"` as an array of strings. If you wrote `"enum"` as a pipe-separated string, convert it to a JSON array. Alternatively, click **Generate from prompt** to have Clay regenerate a valid schema automatically.
 
 **If the column remains broken after these fixes:** Copy your corrected prompt and schema, then recreate the column from scratch — a column with persistent settings errors cannot always be repaired in place. See the FAQ entry above, **My Claygent columns are showing an error or returning blank results**, for step-by-step instructions on recreating a column.
 
@@ -401,32 +386,6 @@ To inspect exactly what data was passed to your agent, deploy your Claygent to a
 
 Clay uses a built-in `confidence` field — with text values `low`, `medium`, `high`, and `very high` — to drive the red/yellow/green color indicator on each response cell. Clay automatically adds this field to your output schema, but only when your schema does not already define a field named `confidence`.
 
-If your JSON output schema includes a field named `confidence` with non-matching values (for example, a numeric score like `0.98` or a boolean), Clay uses that field for the color indicator. Because the value doesn't match the expected text enum, every cell shows red regardless of how accurate the response is. The output itself is still correct — the red is purely cosmetic.
+If your JSON output schema includes a field named `confidence` with non-matching values (for example, a numeric score like `0.98`), Clay's normalizer maps those values to the color indicator. Since `0.98` doesn't match any of the expected text values, it defaults to `low` — and every cell shows red.
 
-To fix it, open your column's output schema and rename the field — for example, from `confidence` to `confidence_score`. Clay will then automatically add its own `confidence` field with the correct enum values, and the color indicator will work as expected.
-
-### Can Claygent detect tracking pixels or marketing technologies on a website?
-
-Yes, with an important limitation. Claygent fetches page content using third-party scraping services and analyzes the HTML and text — it does not trace JavaScript execution events, intercept network requests, or follow `<script src>` links the way a browser developer tool would. When prompting Claygent to look for tracking pixels or marketing technologies, write the prompt to analyze page content (for example: *"Look at this company's website and check whether the page HTML contains tracking pixel tags such as the Facebook Pixel or Google Tag Manager"*) rather than instructions that assume DevTools-style network monitoring.
-
-**JavaScript-rendered pixels**: Claygent has a JavaScript rendering fallback, but it only activates when a page returns essentially empty static HTML. Most marketing websites return non-empty HTML even when some content is JavaScript-loaded — meaning the JS rendering path typically does not trigger. Pixel tags that are injected dynamically by JavaScript after page load (common for Facebook Pixel, Google Tag Manager, TikTok Pixel, etc.) are likely to be missed on typical marketing sites. There is no single-step solution in Clay for detecting JS-rendered pixels.
-
-**Alternative**: The **BuiltWith** integration (**Find Technology Stack** action) can confirm whether a particular technology is present on a site, but it does not return specific pixel IDs or tracking codes.
-
-### Why does a column referencing my Claygent output show "Cell data size exceeds limit (8 kB)"?
-
-Clay enforces two different cell size limits: Claygent action columns hold up to **200 kB**, while basic columns — text fields and formula columns that reference or extract from those action columns — are limited to **8 kB**. When a Claygent produces verbose output (such as detailed research logs or step-by-step notes) and that value is extracted into a standalone text column or referenced by a formula column, the result must fit within the 8 kB limit for that basic column.
-
-Changing the column data type will not bypass this limit — the constraint is on the column type, not the data format.
-
-**Fix: reduce output size at the source.** Edit your Claygent prompt or output schema to produce more concise results for the fields being referenced downstream. For example, if your agent records step-by-step research notes, instruct it to summarize each step in 50 characters or fewer. This keeps each output field well within the 8 kB limit.
-
-**Alternatively**, reference the Claygent action column directly in downstream formulas — using `/` to navigate into specific properties — rather than extracting large fields into standalone text columns. Accessing a property of the action column reads from its 200 kB store; only columns that *hold* a copy of the value as text are subject to the 8 kB limit.
-
-## Tips for success
-
-**Importing test cases**: Instead of manually creating test data, import real rows from your tables. Click `Import from table` in the test panel to pull actual data and see how your agent performs on real-world inputs.
-
-**Variable mapping**: When deploying a Claygent to a new table with different column names, Builder will auto-suggest mappings. Review these carefully to ensure the correct data flows through.
-
-**Start simple**: Build your agent with a basic prompt first, test it, then layer in complexity. It's easier to debug and refine when you're working incrementally.
+To fix this, rename your custom field in the JSON schema to something like `confidence_score`. Then rerun the column. Clay will inject its own `confidence` field, and the color indicator will use the correct text-enum values.
