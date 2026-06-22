@@ -200,3 +200,32 @@ This is the most common cause of unexpected results from the Company Domain wate
 -   **Use the Excluded Domains field on the Google step** — In the Google provider's settings within the waterfall, expand the **Excluded Domains** optional field and enter specific domains you want to block from results (for example, `proff.no`, `tracxn.com`, `rocketreach.co`). Note: due to a known issue, this filtering may not work reliably in all cases.
 -   **Skip the Google step** — In the waterfall's **Waterfall sequence** configuration, toggle off the Google provider. The waterfall then only queries Clearbit and HG Insights, which draw from structured company databases rather than live web search. You'll get fewer overall matches but higher accuracy on the ones you do find.
 -   **Use Claygent instead** — For the most reliable domain finding, set up a Claygent column that searches for the company name and verifies the found URL belongs to the right company before returning a domain. Claygent uses AI credits rather than standard waterfall credits.
+
+## Tech Stack waterfall
+
+The **Tech Stack** waterfall finds which technologies a company has installed by cascading across up to four providers — stopping as soon as one returns a result.
+
+**Providers included:** BuiltWith, Predict Leads, HG Insights, Store Leads
+
+### Setting up the Tech Stack waterfall
+
+1.  In your table, click **Tools** in the top right corner, then select the **Enrich** tab.
+2.  Search for `Tech stack` and select the **Tech Stack** waterfall.
+3.  Map the column containing company domains as the input.
+4.  Click `Save`.
+
+**Input required:** Company domain  
+**Output:** Technologies detected at the company
+
+### Provider credit costs and strengths
+
+Each provider detects technology using different signals, which affects what types of software it can identify:
+
+-   **BuiltWith (2 credits)** — Scans a company's public website code. Best at detecting client-side tools: marketing pixels, JavaScript libraries, and any front-end technology embedded in the site. Will not find back-end or internally-deployed software that isn't visible in page source.
+-   **Predict Leads (1 credit)** — Mines job postings and resumes for technology mentions. Surfaces tools referenced in hiring descriptions, including software that doesn't appear in website code.
+-   **HG Insights (9 credits)** — Analyzes business documents such as contracts, RFPs, and job postings. Has strong coverage for back-end and enterprise service platforms — ERP systems, CRMs, service software, and other internally-deployed tools that front-end scanners can't detect.
+-   **Store Leads (1 credit)** — E-commerce focused. Returns technology data only for companies that have an online store.
+
+**For cost optimization:** Place BuiltWith and Predict Leads earlier in your waterfall sequence and HG Insights later. HG Insights provides deeper coverage for enterprise and back-end tools, but at 9 credits per result it is most efficient as a fallback after the cheaper providers.
+
+**For detecting back-end service software** (e.g., Zendesk, Gainsight, Salesforce Service Cloud): Lead with BuiltWith and Predict Leads first, then fall through to HG Insights for companies where those providers return no result. HG Insights' document-based signals make it the strongest option for service and enterprise tools that don't appear in public website code. You can also add a Claygent column or job posting search to catch tools that slip through all three providers.
