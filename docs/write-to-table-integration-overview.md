@@ -94,7 +94,7 @@ The **Only run if** allows you to set conditions to control when the AI runs. Fo
 
 The **Write to Other Table** action has two main constraints that you might come across.
 
--   There can be a **maximum of 10 tables** connected via Write to Other Table. **This includes tables across workbooks.**
+-   There can be a **maximum of 20 tables** in the workspace-wide routing graph via Write to Other Table. **This includes tables across workbooks.**
 -   Data can only be sent in a linear direction (A → B → C). In other words, loops are not possible (A → B → A).
     -   If you want to go the other direction, you can reference data from any table (B→ A) using one of these other actions:
         -   **`Lookup Multiple Rows in Other Table`**
