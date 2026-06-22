@@ -72,12 +72,6 @@ Individual Clay accounts support two login methods only: **Sign in with Google**
 
 If your company wants all Clay users to authenticate through a corporate IdP, a workspace admin must contact Clay support to set up workspace-wide SSO. See [Single Sign-On (SSO)](#single-sign-on-sso) for details on eligibility (Enterprise plan or SSO add-on) and the setup process.
 
-## **Two-factor authentication (2FA)**
-
-Clay does not offer two-factor authentication (2FA) or multi-factor authentication (MFA) for individual user accounts — there is no setting in your account profile to enable 2FA.
-
-If your organization requires MFA for security or compliance purposes, it is available through workspace-level Single Sign-On (SSO). When SSO is configured, users authenticate through your organization's identity provider (such as Okta or Azure AD), which can enforce MFA at that level. SSO is included on the Enterprise plan and available as a paid add-on for other plans — see [Single Sign-On (SSO)](#single-sign-on-sso) for eligibility and setup details. Note that even with SSO in place, there is a [limitation on full MFA enforcement](#mfa-enforcement-and-compliance-requirements) for users with existing Clay email + password accounts.
-
 ## **Clay API key access**
 
 Your Clay API key enables Clay-specific integrations and external connections. To manage your API key:
@@ -261,8 +255,6 @@ To invite a new member to your workspace:
 
 The invited person will receive an email to join the workspace with the specified role. The person will appear in your team list with a **Pending** status until they accept.
 
-There is no limit on the total number of members you can invite to a workspace.
-
 ## **Change a team member's role**
 
 To update a member's role:
@@ -301,29 +293,6 @@ If a team member hasn't accepted their invite yet, they appear in `Settings` > `
 -   Select `Remove member`.
 
 Once removed, you can re-invite the same email address if needed. Only workspace admins can cancel pending invites.
-
-## **Troubleshoot: "This invite was sent to a different email address"**
-
-Each Clay workspace invite is tied to the specific email address it was sent to. When you click an invite link, Clay checks that the email on your currently signed-in account matches the email the invite was sent to. If they don't match, you'll see:
-
-> **This invite was sent to a different email address. Please use the account associated with the email where you received the invite.**
-
-**To resolve this error:**
-
--   Open the invite link in a **private or incognito browser window**.
--   Sign in (or sign up) using the exact email address the invite was sent to.
--   If you have another Clay account on a different email, make sure you are fully logged out of it before signing in.
-
-**If the invite link shows "Invite not found"**
-
-Once an invite link has been invalidated — for example, because it was opened while logged into a different account — the original link cannot be reused. A workspace admin needs to re-issue a fresh invite:
-
-1.  Go to `Settings` > `Team`.
-2.  Find the pending entry for that email address.
-3.  Click the `…` (three-dot) menu and select `Remove member`.
-4.  Re-invite the person by clicking `+ Invite` and entering their email address again.
-
-The invitee will receive a new invite email. When it arrives, open it in a private/incognito window and sign in with the correct email to accept it successfully.
 
 # **Single Sign-On (SSO)**
 
