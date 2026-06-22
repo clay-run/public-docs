@@ -75,6 +75,30 @@ Analyst mode lets you query any Clay table using natural language to uncover tre
 3.  Review the analysis. Sculptor will query your table and present insights with visualizations and explanations.
 4.  Export your findings to Notion or as a PDF.
 
+## Workflow triggers
+
+> **Sculptor visual workflows are currently in beta — contact support to request access for your workspace.**
+
+Sculptor can build visual, node-based workflows in addition to tables. These workflows use a **Triggers** node on the canvas to define when the workflow runs. A single workflow can have multiple triggers active at the same time — for example, one or more audience segment triggers that fire automatically, alongside a manual trigger for on-demand runs.
+
+### Trigger types
+
+| Type | Description |
+| --- | --- |
+| **Manual** | Always present on every workflow. Runs the workflow when you click **Run** in the Triggers node. Cannot be disabled or removed — it fires only when you explicitly click Run and never runs automatically. |
+| **Audience segment** | Fires automatically when a contact or company enters a matching segment. Connect from a segment's **Send → Send to workflow** option. Multiple audience segment triggers can be added to the same workflow. |
+| **Webhook** | Triggers the workflow when an external system sends a request to the workflow's webhook URL. |
+
+### Pausing an audience segment trigger
+
+Individual audience segment triggers can be paused and resumed independently from the Triggers node:
+
+1. Click the **Triggers** node on the workflow canvas.
+2. Locate the audience segment trigger you want to pause and click **Pause**.
+3. To re-activate it, open the trigger card and click **Publish**.
+
+> **Note:** The manual trigger is always active and cannot be paused or removed. If you want the workflow to run only from audience segments, you can leave the manual trigger as-is — it only fires when you explicitly click **Run** and will not initiate runs on its own.
+
 ## Use cases and examples
 
 | Use case | Notes and caveats |
