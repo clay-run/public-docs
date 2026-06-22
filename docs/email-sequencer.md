@@ -52,7 +52,8 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
         -   ⚠️ Note: You or your Workspace admin must authorize the Clay sequencer app for your domain, or you'll see an access error.
     -   `Microsoft Outlook OAuth` (recommended): Connect your Outlook account via OAuth.
         -   ℹ️ Note: Unlike Google OAuth, no Clay-side admin setup is required upfront. If your Microsoft 365 / Entra tenant requires admin approval for third-party apps, your admin may need to grant consent for "Clay Sequencer – Smartlead" in the [Microsoft Entra Admin Center](https://entra.microsoft.com).
-    -   `SMTP` (manual or CSV upload): Connect via SMTP credentials directly.
+    -   `SMTP`: Connect a single account via SMTP credentials directly.
+    -   `Bulk CSV upload`: Add multiple accounts at once by uploading a CSV. Download the example template from the modal and fill in the following eight columns for each account: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`. For Google Workspace accounts, generate an app password for each account (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` value.
     -   You can also [buy email accounts directly in Clay](https://university.clay.com/docs/buying-email-accounts) if you want to increase your sending capacity.
     -   After setup, you can:
         -   `Enable warmup`: Sends and receives automated emails from the linked account to build reputation. Each account uses a unique two-word keyphrase (e.g., `clever-rocket`) to identify warmup emails. Follow the in-app instructions to set up a label and filter to easily ignore warmup messages.
@@ -244,6 +245,14 @@ Warmup automatically disables when your emails are being throttled by your email
 ### I'm getting an error that my email account is already in use. What does this mean?
 
 Clay's email sequencer runs on shared Smartlead infrastructure, and Smartlead only allows each email address to be connected once across the entire system. This error most commonly appears when the email was already connected to the sequencer in **another Clay workspace** — you don't need a separate Smartlead account for this to occur. To fix it, check your other Clay workspaces: go to `Campaigns` → `Email Accounts`, locate the address, and delete it there. Once removed from the other workspace, you can add it to the current one. If you can't identify which workspace has it, contact Clay support with the email address and we'll remove it from our end.
+
+### How do I add multiple email accounts at once?
+
+Use the `Bulk CSV upload` option on the `Add email accounts` screen (it's a top-level choice, not nested under SMTP). Download the example template from the modal and fill in one row per account with eight columns: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`.
+
+For Google Workspace accounts on adjacent or alternate domains, you'll need to:
+1. Enable SMTP access for each domain in your Google Workspace Admin panel (Apps → Google Workspace → Gmail → End User Access → Enable IMAP and SMTP).
+2. Generate an app password for each email alias (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` column value.
 
 ### Are personal email accounts supported (e.g., Gmail, Hotmail)?
 
