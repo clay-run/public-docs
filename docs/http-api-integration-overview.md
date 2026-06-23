@@ -509,12 +509,12 @@ Most APIs nest their data within a specific field rather than returning an array
 
 If your server or firewall requires incoming requests to originate from a known set of IP addresses, you can enable **Use static IP** on HTTP API columns. This routes requests from those columns through Clay's fixed egress IP addresses, which you can add to your server's allow-list.
 
-**Availability:** This feature is available for Enterprise customers. Contact your Clay account team or support before enabling — static IP must be activated for your workspace first.
+**Availability:** Static IP for HTTP API is available for **Enterprise customers only** and must be manually enabled by Clay. Contact your Clay account team or support to request activation for your workspace and the specific table(s) where you plan to use it — self-serve enablement is not available.
 
 ### Enabling static IP for an HTTP API enrichment column
 
-1.  Contact your Clay account team or support to have static IP enabled for your workspace and the specific table where you plan to use it.
-2.  Open the HTTP API column settings in your Clay table.
+1.  Contact your Clay account team or support to have static IP enabled for your workspace and the specific table where you plan to use it. Clay must manually enable this for you — there is no self-serve toggle to turn it on.
+2.  Once Clay confirms enablement, open the HTTP API column settings in your Clay table.
 3.  At the bottom of the column configuration, toggle on **Use static IP**.
 
 All requests from that column will then originate from Clay's fixed IP addresses. Your account team can provide the current list of IP addresses to add to your allow-list.
@@ -523,7 +523,7 @@ All requests from that column will then originate from Clay's fixed IP addresses
 
 ### Enabling static IP for HTTP API as source
 
-In Step 5 of the source configuration (**Configure optional settings**), toggle on **Use static IP**.
+In Step 5 of the source configuration (**Configure optional settings**), toggle on **Use static IP**. This option is only available after Clay has enabled static IP for your workspace (Enterprise only — contact your account team or support).
 
 ### Other integrations
 
