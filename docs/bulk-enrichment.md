@@ -78,7 +78,7 @@ For more options on re-running specific rows or cells, see [Run progress](run-pr
 
 ## Run Setup settings (Audiences)
 
-When a bulk enrichment is attached to an [Audiences](https://university.clay.com/docs/audiences) segment (available in beta for Enterprise customers), clicking the enrichment card opens a **Run Setup** panel with additional settings for ongoing enrichment behavior.
+When a bulk enrichment is attached to an [Audiences](https://university.clay.com/docs/audiences) segment (available on Growth and Enterprise plans), clicking the enrichment card opens a **Run Setup** panel with additional settings for ongoing enrichment behavior.
 
 ### Field mapping
 
