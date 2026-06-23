@@ -266,7 +266,7 @@ Clay's scheduled source runs continue to fire normally after the limit is reache
 
 2.  **Set a row count alert.** Use [table alerts](table-alerts.md) to get notified before the next source approaches the limit. The default threshold is 45,000 rows, giving you time to act before importing stops.
 
-For large ongoing Snowflake imports that regularly approach or exceed 50,000 records, consider [Audiences](audiences.md) (currently in beta for Enterprise customers) instead of a standard table. Audiences scales to millions of records without per-source limits.
+For large ongoing Snowflake imports that regularly approach or exceed 50,000 records, consider [Audiences](audiences.md) instead of a standard table. Audiences scales to millions of records without per-source limits.
 
 ### Why did my source run automatically even though it's set to "Run manually"?
 
