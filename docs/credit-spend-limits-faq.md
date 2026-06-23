@@ -88,13 +88,15 @@ Yes. When a workbook calls a function that consumes credits, those credits are a
 When a limit is reached:
 
 -   All credit-consuming processes stop
--   Users see a message that the limit has been reached
+-   Cells that tried to run show a **Workbook credit limit reached** error
 -   Any recurring spends are canceled
 -   Users are notified of canceled processes
 
+**To resolve it**, workspace admins will see a **Manage credit limit** button directly on the error and an **Increase spend limit** button on a banner at the top of any table in the workbook. Both open the credit limit editor, where you can raise the cap or remove it entirely by toggling off **Enable workbook credit limit**. Non-admins will see the error message with a prompt to contact their workspace admin.
+
 **Can users request a limit increase?**
 
-Users can request higher limits from their Admin outside of Clay. Since Admins can modify limits directly, there's no in-product flow for requesting increases. Team members should reach out to their Admin directly.
+Workspace admins can raise a limit directly in Clay — either by clicking **Manage credit limit** on the **Workbook credit limit reached** error or from the workbook's settings panel. Non-admin users do not have an in-product way to request an increase; they should reach out to their workspace admin directly.
 
 **What happens if an Admin lowers a limit below what's already been spent?**
 
