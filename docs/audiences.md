@@ -114,6 +114,8 @@ Clay syncs data from Snowflake on the following schedules:
 
 ### Importing from Google BigQuery
 
+**Note:** Google BigQuery import is currently in early access — contact your Growth Strategist to enable it for your workspace.
+
 1.  Click `Add data` → `Add Source` → select your [**Google BigQuery integration**](https://university.clay.com/docs/google-bigquery-integration).
     -   If you haven't connected BigQuery yet, click `+ Add account` and upload your service account JSON key file. See the [Google BigQuery integration](https://university.clay.com/docs/google-bigquery-integration) for setup instructions.
 2.  Enter a SQL `SELECT` query to define which records to import (for example, `SELECT * FROM \`project.dataset.table\` WHERE created_at > "2024-01-01"`).
