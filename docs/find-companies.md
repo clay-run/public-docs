@@ -31,7 +31,7 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
     -   **Keywords** to include or exclude
         -   **Exact phrase matching:** Wrap multi-word terms in single or double quotes to search for that exact phrase. For example, searching for "Google Cloud" finds companies with "Google Cloud" in their description — not just companies that mention Google and cloud separately. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are stripped out even with quoted phrases.
     -   **Semantic company description** — Enter a free-text description to help rank results based on how closely they match your ideal company profile (e.g., "B2B fintech company selling to mid-market banks").
-    -   **Location** — Filter by company office location. Sub-filters: **Country**, **City**, **State or province**, **Region**, and **Postal code**. Use **Is Headquarters** to restrict results to companies whose primary office is in the specified location. All sub-filters support include and exclude.
+    -   **Location** — Filter by company office location. Sub-filters: **Country**, **City**, **State or province**, **Region** (EMEA, NAM, APAC, or LATAM), and **Postal code**. Use **Is Headquarters** to restrict results to companies whose primary office is in the specified location. All sub-filters support include and exclude. Location search uses structured, geocoded data — searching in English works for non-English city names too (for example, searching "Moscow" also matches results for "Москва").
     -   **Estimated employee count** — Filter by a numeric count of estimated employees (enter a minimum and/or maximum). This is a separate field from **Company size** — see the [FAQ below](#why-do-company-sizes-and-estimated-employee-count-return-different-results-for-the-same-range) for why the same numeric range can surface different companies.
     -   **AI filters** — Clay-generated attributes applied to company profiles:
         -   **Industries** and **Subindustries** (include or exclude)
@@ -56,7 +56,7 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
 
 **Outputs:**
 
-Each result includes one or more **Structured Location** entries in the cell details with geocoded, normalized fields — so you don't need additional AI columns to parse or reformat location data. These fields work with informal location names like "Greater Chicago Area." Use **Is Headquarters** to identify the company's primary location when multiple entries are returned.
+Each result includes **Structured Location** entries in the cell details — geocoded, normalized fields so you don't need additional AI columns to parse or reformat location data. These fields work with informal location names like "Greater Chicago Area." Search results display up to 5 structured locations per company, always including the headquarters (if known) and the location matching your search query; to view the complete location list for a company, run **Enrich Company**. Use **Is Headquarters** to identify the company's primary location when multiple entries are returned.
 
 -   **City**
 -   **State**
