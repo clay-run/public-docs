@@ -114,7 +114,11 @@ Each row includes the post URL, post text, author name, author LinkedIn URL, aut
 
 ## Getting people who interacted with a post
 
-To build a table of people who liked, commented on, or shared a specific post, use the **Get interactions with professional posts** source. Each row in the resulting table represents one person who interacted with that post.
+To build a table of people who liked, commented on, or shared a specific post, use the **Get interactions with professional posts** source. Each interaction is included as a separate row, and you choose how duplicate interactions are handled via the required **duplicate interaction behavior** setting:
+
+-   **One row per person globally** (`interactor`): a given person appears at most once across all results.
+-   **One row per person per post** (`post-interactor`): a given person appears at most once per post, but can appear across multiple posts.
+-   **Include all interactions** (`no-dedupe`): every interaction is returned as its own row, so the same person can appear in many rows.
 
 **To set up this source:**
 
