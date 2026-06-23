@@ -172,7 +172,7 @@ Common errors when writing schema by hand:
     }
     ```
 
--   **Field named `confidence` overrides Clay's built-in confidence indicator.** Clay automatically adds a `confidence` field to your output schema with enum values `low`, `medium`, `high`, and `very high` — but only when your schema does not already define one. This field drives the red/yellow/green color indicator on each response cell. If you define your own field named `confidence` (for example, as a numeric score), Clay skips injecting its own, and your custom field's values are used for the color indicator instead. Because values like `0.98` don't match the expected text enum, the normalizer defaults to `low` and every cell shows red. To fix it, rename your custom field — for example, to `confidence_score` — and rerun the column. Clay will then inject its own `confidence` field and the color indicator will work correctly.
+-   **Field named `confidence` overrides Clay's built-in confidence indicator.** Clay automatically adds a `confidence` field to your output schema with enum values `low`, `medium`, `high`, and `very high` — but only when your schema does not already define one. This field drives the red/yellow/green color indicator on each response cell. If you define your own field named `confidence` (for example, as a numeric score), Clay skips injecting its own, and your custom field's values are used for the color indicator instead. Numeric values are mapped through thresholds to the text enum — for example, `0.98` maps to `very high` — which may not match the color you intend for your own scoring scale. To fix it, rename your custom field — for example, to `confidence_score` — and rerun the column. Clay will then inject its own `confidence` field and the color indicator will work as designed.
 
 To avoid writing schema by hand, click **Generate from prompt** to have Clay auto-generate a valid schema from your prompt.
 
@@ -382,10 +382,10 @@ Yes, this is expected. When a Claygent variable is connected to an object value 
 
 To inspect exactly what data was passed to your agent, deploy your Claygent to a table, run it, then click the cell to open the **cell details panel** and examine the full input and output values there.
 
-### Why are my Claygent cells highlighted red even though my confidence value is high?
+### Why are my Claygent cells showing the wrong confidence color even though my confidence value is high?
 
 Clay uses a built-in `confidence` field — with text values `low`, `medium`, `high`, and `very high` — to drive the red/yellow/green color indicator on each response cell. Clay automatically adds this field to your output schema, but only when your schema does not already define a field named `confidence`.
 
-If your JSON output schema includes a field named `confidence` with non-matching values (for example, a numeric score like `0.98`), Clay's normalizer maps those values to the color indicator. Since `0.98` doesn't match any of the expected text values, it defaults to `low` — and every cell shows red.
+If your JSON output schema includes a field named `confidence` with numeric values (for example, a score like `0.98`), Clay's normalizer maps those numbers to the text enum through thresholds — so `0.98` is mapped to `very high`, not to whatever color your own scoring scale intends. This can produce indicator colors that don't match your expectations.
 
 To fix this, rename your custom field in the JSON schema to something like `confidence_score`. Then rerun the column. Clay will inject its own `confidence` field, and the color indicator will use the correct text-enum values.
