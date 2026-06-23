@@ -1,5 +1,6 @@
 ---
 title: Audiences (Beta)
+source_url: https://university.clay.com/docs/audiences
 description: "Note: This feature is currently in beta for Enterprise customers."
 last_synced: 2026-04-27T18:09:16.275Z
 ---
@@ -31,9 +32,9 @@ You can import data from:
 
 -   A new people or companies search
 -   Snowflake
+-   Google BigQuery
 -   Salesforce
 -   HubSpot
--   Google BigQuery (beta — contact your Growth Strategist to enable)
 
 ### Importing from Salesforce
 
@@ -114,26 +115,30 @@ Clay syncs data from Snowflake on the following schedules:
 
 ### Importing from Google BigQuery
 
-**Note:** Google BigQuery import in Audiences is currently in beta — contact your Growth Strategist to enable it for your workspace.
-
-1.  Click `Add data` → `Add Source` → select `Import from BigQuery`.
-    -   If you haven't connected BigQuery yet, click `+ Add account` and upload your service account JSON key file.
-2.  Select `People` or `Companies` as the audience type.
-3.  Write a SQL `SELECT` query to specify which records to import. Do not include an `ORDER BY` clause — Clay adds one automatically.
-    -   Click `Test` to preview results, then click `Continue`.
-4.  Map your BigQuery columns to Audience fields.
-5.  Set the `Unique identifier` — the column that uniquely identifies each record:
-    -   For People: typically `email`.
-    -   For Companies: typically `domain`.
-6.  (Optional) Set a `Timestamp field` — Clay uses this to detect changed records and sync only those. Without one, syncs run less frequently. Use an `updated_at` timestamp in UTC; avoid `created_at`, which doesn't capture future updates.
-7.  Enable `Import sync` and click `Save` — Clay begins importing immediately.
+1.  Click `Add data` → `Add Source` → select **Google BigQuery**.
+2.  Select your BigQuery account from the dropdown.
+    -   If you haven't connected BigQuery yet, click `+ Add account` and upload your service account JSON key file. See the [Google BigQuery integration](https://university.clay.com/docs/google-bigquery-integration) for connection setup details.
+3.  Select the entity type: **People** or **Companies**.
+4.  Enter your SQL query in the editor.
+    -   Use a `SELECT` or `WITH` statement targeting your BigQuery project, dataset, and table.
+    -   Click `Test` to preview results before continuing.
+5.  Click `Continue`.
+6.  Map your BigQuery columns to Audience fields.
+7.  Set the **Unique identifier** — the column that uniquely identifies each record:
+    -   For People: typically `email` or `user_id`.
+    -   For Companies: typically `domain` or `company_id`.
+8.  (Optional) Set a **Timestamp field** for incremental syncing. Select an `updated_at` column in UTC — Clay uses this to detect which records have changed since the last sync. Avoid `created_at`, which doesn't capture future updates.
+    -   With a timestamp field: syncs run every **15 minutes** and only import new/changed records.
+    -   Without a timestamp field: the full query reruns every **12 hours**.
+9.  (Optional, People only) Set a **Company association field** to link People records to Company records in your audience.
+10. Click `Save and review`, then confirm — Clay begins importing immediately.
 
 **Sync timing and behavior**
 
 Clay syncs data from Google BigQuery on the following schedules:
 
--   **Incremental sync (every 15 minutes):** Picks up new or changed records when a `Timestamp field` is configured.
--   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records.
+-   **Incremental sync:** Runs every **15 minutes** when a Timestamp field is configured, importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
+-   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
 
 ### Importing from people and companies search
 
