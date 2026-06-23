@@ -106,7 +106,9 @@ If you have contacts enriched in a regular Clay table and want them in an ad aud
 1.  In your table, click **Add enrichment** and search for **Upsert Audiences Record**. This pushes your table rows into your Audience — creating a new record if no match exists, or updating an existing one.
 2.  Once your records are in an Audience, open that Audience and click **Send → Sync to ad platforms**, then select LinkedIn or Meta.
 
-For more on this path, see [Audiences (Beta)](https://university.clay.com/docs/audiences).
+**Note:** The **Sync to ad platforms** step (LinkedIn / Meta) on an Audience is currently in beta and available only to **Enterprise**-plan workspaces with the feature enabled. If you don't see this option on your Audience, contact Clay support to check eligibility.
+
+For more on this path, see [Audiences](https://university.clay.com/docs/audiences).
 
 ### **What platforms are supported?**
 
