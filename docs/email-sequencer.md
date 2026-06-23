@@ -66,7 +66,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   `Timezone`: Select the timezone to send from (we recommend matching your prospects').
     -   `Days of the week` (Custom schedule only): Choose which days emails are sent.
     -   `Start/End times` (Custom schedule only): Set sending windows within the chosen timezone.
-    -   `Minimum time between sends` (Custom schedule only): Adjustable from 5–30 minutes; longer delays improve deliverability.
+    -   `Minimum time between sends` (Custom schedule only): Adjustable from 3–30 minutes; longer delays improve deliverability.
     -   `Maximum new leads per day`: Caps the number of new leads contacted daily (in addition to account send limits).
     -   `Campaign start date` (optional): Set a future launch date, or leave blank to start sending when the next window opens.
 7.  Explore `Advanced settings` if needed:
