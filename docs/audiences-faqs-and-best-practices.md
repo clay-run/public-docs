@@ -32,7 +32,7 @@ Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data 
 
 ## My CRM is messy. Should I clean it up before setting up Audiences?
 
-You don't need a clean CRM to get started — CRM cleanup is often the first use case Audiences enables. A common approach: sync your existing CRM, run LinkedIn enrichments to refresh contact data, use the enriched identifiers to surface duplicates, then build further enrichments from there.
+You don't need a clean CRM to get started — CRM cleanup is often the first use case Audiences enables. A common approach: sync your existing CRM, run professional network enrichments to refresh contact data, use the enriched identifiers to surface duplicates, then build further enrichments from there.
 
 ## Does Audiences update automatically?
 
@@ -45,7 +45,7 @@ Enrichments configured with `Continuous Enrichment` enabled automatically proces
 
 ## **How does matching work in Audiences?**
 
-Clay automatically deduplicates records across sources using a priority-ordered list of identifiers. For people records, Clay matches on: **LinkedIn URL**, then **email**, then **phone**, then **name + state**. For company records, Clay matches on: **domain**, then **LinkedIn URL**.
+Clay automatically deduplicates records across sources using a priority-ordered list of identifiers. For people records, Clay matches on: **professional network profile URL**, then **email**, then **phone**, then **name + state**. For company records, Clay matches on: **domain**, then **professional network profile URL**.
 
 When a match is found across sources, Clay merges the records into a single unified profile. The more of these fields you map when importing a source, the more accurate your matching will be.
 
@@ -58,7 +58,7 @@ When a Salesforce Lead is converted into a Contact in Salesforce, Clay automatic
 There are two types of record matching in Clay Audiences:
 
 -   **Automatic Lead/Contact merging** — When Salesforce converts a Lead to a Contact, Clay automatically merges these records. This is Salesforce-specific and not user-configurable.
--   **Deterministic matching** — User-configurable matching across different data sources. You choose which field to match on (email, domain, LinkedIn URL, etc.) when importing a new source. This allows you to merge the same person or company across Salesforce, Snowflake, HubSpot, and other sources.
+-   **Deterministic matching** — User-configurable matching across different data sources. You choose which field to match on (email, domain, profile URL, etc.) when importing a new source. This allows you to merge the same person or company across Salesforce, Snowflake, HubSpot, and other sources.
 
 Both work together to ensure you have a single, unified record per person or company in your Audiences.
 
