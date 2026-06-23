@@ -130,7 +130,7 @@ Repeat this process for each field you want to extract into its own column.
 
 ## Best practices & troubleshooting
 
--   There can be a **maximum of 20 tables** connected via Send Table Data across your entire workspace, including tables in other workbooks. Any Write to Other Table connections also count toward this same workspace-wide limit. If you exceed the limit, you'll see the error: *"Maximum number of table ID checks exceeded (limit: 20)"*. **Lookup Single Row in Other Table** and **Lookup Multiple Rows in Other Table** do not count toward this limit — only Send Table Data and Write to Other Table connections do. If you hit this limit, consider replacing connections that only need to pull data (not push it) with **Lookup Rows** actions instead.
+-   There can be a **maximum of 20 tables** connected via Send Table Data across your entire workspace, including tables in other workbooks. Connections made by **Write to Other Table**, **Execute Subroutine**, and **Route to Campaign** actions also count toward this same workspace-wide limit. If you exceed the limit, you'll see the error: *"Maximum number of table ID checks exceeded (limit: 20)"*. **Lookup Single Row in Other Table** and **Lookup Multiple Rows in Other Table** do not count toward this limit. If you hit this limit, consider replacing connections that only need to pull data (not push it) with **Lookup Rows** actions instead.
 -   **Data can only be sent in a linear direction** (A → B → C). In other words, loops are not possible (A → B → C → A).
     -   If you want to receive data in the table you're also sending data from, use one of these other actions:
         -   `Lookup Multiple Rows in Other Table`
