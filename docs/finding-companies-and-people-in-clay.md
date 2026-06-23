@@ -301,7 +301,7 @@ This mismatch most commonly occurs with subsidiaries, acquired companies, and or
 
 ### Company Table Data doesn't include company enrichment data
 
-The **Company Table Data** column retrieves basic field types from the linked company row — text, number, date, URL, and formula columns. **Enrichment columns (action-type columns such as Clearbit Company, Apollo, Enrich Company, or any other Clay integration enrichment) are not included** in what Company Table Data returns.
+The **Company Table Data** column retrieves basic field types from the linked company row — text, longtext, number, boolean, date, URL, email, image, JSON, and formula columns. **Enrichment columns (action-type columns such as Clearbit Company, Apollo, Enrich Company, or any other Clay integration enrichment) are not included** in what Company Table Data returns.
 
 If you enriched your company table and want that data accessible in your people table, use **Lookup single row in other table** instead:
 
@@ -326,7 +326,7 @@ When you add a new column to your company table after the people table was alrea
 
 This re-runs Company Table Data for every row and retrieves the current state of the linked company row, including any columns added since the last run.
 
-**Note:** Only basic field types are returned — text, number, date, URL, and formula columns. Enrichment action columns (Clearbit, Apollo, Enrich Company, etc.) are never included in Company Table Data regardless of re-running — see [Company Table Data doesn't include company enrichment data](#company-table-data-doesnt-include-company-enrichment-data) for how to access enrichment data in your people table.
+**Note:** Only basic field types are returned — text, longtext, number, boolean, date, URL, email, image, JSON, and formula columns. Enrichment action columns (Clearbit, Apollo, Enrich Company, etc.) are never included in Company Table Data regardless of re-running — see [Company Table Data doesn't include company enrichment data](#company-table-data-doesnt-include-company-enrichment-data) for how to access enrichment data in your people table.
 
 ### "Company Table Data" shows "Unable to fetch fields for company table"
 
