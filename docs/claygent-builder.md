@@ -90,6 +90,29 @@ Enable web search when your agent needs live research (recent company news, hiri
 
 Give your Claygent access to find people and jobs data directly. This enables prospecting workflows like "find the best person who would manage growth at a company" — where the right title varies by company size.
 
+### Skills
+
+Skills are reusable instruction sets — playbooks you create once and toggle on across any number of Claygents. A skill has a name, a one-line description, and a body of natural language instructions that define the methodology the agent follows (for example, a specific research sequence, quality checks, or output format).
+
+Create and manage skills from the **Skills** section of your Claygent's Configuration panel. Skills are scoped to your workspace and can be enabled or disabled per Claygent.
+
+**How skill invocation works.** When a Claygent runs, it receives a lightweight menu listing each enabled skill's name and description. The model reads this menu and autonomously decides which skills to load based on the current task. When the model determines a skill applies, it calls the skill by name — which loads the full methodology instructions into context for that step. Skills that aren't relevant to the task stay unloaded.
+
+There is no `@skill-name` or `{{skill-name}}` syntax to force a skill to load — the model decides based solely on the skill's name and description.
+
+**Writing effective skill descriptions.** The description is the only signal the model uses to decide whether to invoke a skill. Write it to be explicit about what's inside and exactly when to use it. For example:
+
+> "Contains a list of real customer names and contacts. Load this skill whenever writing outbound emails that need customer references or social proof."
+
+A vague description like "customer data" gives the model no clear signal about when to call it.
+
+**Tips for reliable invocation:**
+
+-   **Use plain language in your prompt, not `@` syntax.** If your prompt referenced a skill as `@my-skill-name`, remove that notation. Instead, instruct the model in plain language: _"Before writing the email, check your available skills for customer reference data and load any relevant skill."_
+-   **Add an explicit review step.** Structure your prompt to include a step like: _"Step 1: Review your available skills. If a skill is relevant to this task, load it now before proceeding."_ This nudges the model to actively consult the skills menu.
+
+**Model requirement.** Skills use tool calling, which is not supported by Clay parallel models (Neon, Argon, Helium). To use skills, select a Claude Sonnet/Opus 4 series or GPT-5 series model in the model picker and connect your own Anthropic, OpenAI, or Gemini API key via the Account dropdown.
+
 ### Custom MCP server
 
 Connect any external MCP (Model Context Protocol) server to your Claygent as a tool. This lets your agent interact with services like Salesforce, HubSpot, Gmail, or Google Calendar, and gives you access to thousands of connectors through catalogs like [Smithery](https://smithery.ai/) and [Pipedream](https://mcp.pipedream.com/).
@@ -306,6 +329,18 @@ To use tools with your Claygent:
 3.  Click the **Account** dropdown and connect your own Anthropic, OpenAI, or Gemini API key.
 
 Once you're on a supported model with a private API key, the tools in the **Tools** section will become active.
+
+### My skills are enabled but the Claygent isn't invoking them — what should I do?
+
+Skills are loaded on demand: when a Claygent runs, the model sees a menu of enabled skill names and descriptions and autonomously decides which to call. If a skill isn't being invoked, the most common cause is that its description doesn't give the model enough signal to know when to use it.
+
+**Fix the description first.** Open the skill in the **Skills** section of the Configuration panel and update its description to be explicit about what's inside and exactly when to use it. For example, instead of "customer data," write: _"Contains a list of real customer names and contacts. Load this skill whenever writing outbound emails that need customer references or social proof."_
+
+**Check for `@skill-name` syntax in your prompt.** Writing `@skill-name` in your prompt does not trigger skill loading — the model doesn't parse that as a skill reference. Remove any `@` syntax and replace it with plain-language instructions that tell the model to consult its available skills.
+
+**Add an explicit skill-review step to your prompt.** Add a step like: _"Step 1: Review your available skills. Load any skill that is relevant to this task before proceeding."_
+
+**Confirm you're on a supported model.** Skills require tool calling, which is not available on Clay parallel models (Neon, Argon, Helium). If you see "Tools are not available for the selected model," switch to a Claude Sonnet/Opus 4 series or GPT-5 series model and connect your own API key.
 
 ### How do I mark a Claygent input as optional?
 
