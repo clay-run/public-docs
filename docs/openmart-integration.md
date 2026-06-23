@@ -1,6 +1,5 @@
 ---
 title: Openmart integration
-source_url: https://university.clay.com/docs/openmart-integration
 description: Automate data gathering, verification, and updates across multiple channels.
 last_synced: 2026-04-26T01:40:26.706Z
 ---

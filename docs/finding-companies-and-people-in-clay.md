@@ -1,6 +1,5 @@
 ---
 title: "Guide: Finding companies and people in Clay"
-source_url: https://university.clay.com/docs/finding-companies-and-people-in-clay
 description: Best practices to Clay's company and people search features, including valid LinkedIn URL formats for the company identifier and troubleshooting common errors.
 last_synced: 2026-04-26T01:39:59.452Z
 ---

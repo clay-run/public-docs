@@ -1,6 +1,5 @@
 ---
 title: Databricks integration
-source_url: https://university.clay.com/docs/databricks-integration
 description: Import, insert, update, upsert or look up rows in Databricks.
 last_synced: 2026-04-26T01:39:51.990Z
 ---

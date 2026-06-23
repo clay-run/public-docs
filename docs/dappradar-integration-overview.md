@@ -1,6 +1,5 @@
 ---
 title: Dappradar integration overview
-source_url: https://university.clay.com/docs/dappradar-integration-overview
 description: Blockchain dapp store providing data and analytics for NFT, DeFi,
   and gaming exploration.
 last_synced: 2026-04-26T01:39:50.701Z

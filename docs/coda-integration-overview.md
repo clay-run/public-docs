@@ -1,6 +1,5 @@
 ---
 title: Coda integration overview
-source_url: https://university.clay.com/docs/coda-integration-overview
 description: All-in-one workspace for team collaboration.
 last_synced: 2026-04-26T01:39:46.493Z
 ---

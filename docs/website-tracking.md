@@ -1,6 +1,5 @@
 ---
 title: Web intent
-source_url: https://university.clay.com/docs/website-tracking
 description: Collect visitor information including pages visited, time spent,
   and traffic sources. Includes workflow for sending emails to identified visitors.
 last_synced: 2026-04-26T01:40:54.567Z

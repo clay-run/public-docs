@@ -1,6 +1,5 @@
 ---
 title: Identity Matrix integration
-source_url: https://university.clay.com/docs/identity-matrix-integration
 description: Enhances contact data by providing hashed email addresses
 last_synced: 2026-04-26T01:40:10.344Z
 ---

@@ -1,6 +1,5 @@
 ---
 title: Crunchbase integration
-source_url: https://university.clay.com/docs/crunchbase-integration
 description: Access company data including financials, growth metrics, funding
   details, and acquisition history.
 last_synced: 2026-04-27T18:09:41.382Z

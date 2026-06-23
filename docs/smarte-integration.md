@@ -1,6 +1,5 @@
 ---
 title: SMARTe integration
-source_url: https://university.clay.com/docs/smarte-integration
 description: Enrich company details and find emails/phone numbers.
 last_synced: 2026-04-26T01:40:41.821Z
 ---

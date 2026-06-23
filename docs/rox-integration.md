@@ -1,6 +1,5 @@
 ---
 title: Rox integration
-source_url: https://university.clay.com/docs/rox-integration
 description: Update contacts in Rox directly from Clay
 last_synced: 2026-04-26T01:40:34.009Z
 ---

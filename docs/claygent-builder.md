@@ -1,6 +1,5 @@
 ---
 title: Claygent builder
-source_url: https://university.clay.com/docs/claygent-builder
 description: Build smarter agents faster
 last_synced: 2026-05-11T17:47:40.000Z
 ---

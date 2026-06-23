@@ -1,6 +1,5 @@
 ---
 title: Send Clay data to Zapier
-source_url: https://university.clay.com/docs/clay-to-zapier
 description: Use webhooks to send Clay data to trigger Zapier workflows.
 last_synced: 2026-04-26T01:39:44.880Z
 ---

@@ -1,6 +1,5 @@
 ---
 title: Audiences (Beta)
-source_url: https://university.clay.com/docs/audiences
 description: "Note: This feature is currently in beta for Enterprise customers."
 last_synced: 2026-04-27T18:09:16.275Z
 ---

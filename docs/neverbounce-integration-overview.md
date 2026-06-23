@@ -1,6 +1,5 @@
 ---
 title: Neverbounce integration
-source_url: https://university.clay.com/docs/neverbounce-integration-overview
 description: Email verification and cleaning service ensuring deliverability and
   inbox placement.
 last_synced: 2026-04-26T01:40:24.081Z

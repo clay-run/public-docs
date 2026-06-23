@@ -1,6 +1,5 @@
 ---
 title: Bright Data integration overview
-source_url: https://university.clay.com/docs/bright-data-integration-overview
 description: Web data platform providing proxies, scrapers, and datasets.
 last_synced: 2026-04-27T18:09:26.562Z
 ---

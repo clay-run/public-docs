@@ -1,6 +1,5 @@
 ---
 title: Find AI integration
-source_url: https://university.clay.com/docs/find-ai-integration-overview
 description: Find people and companies with natural language.
 last_synced: 2026-04-26T01:39:58.161Z
 ---

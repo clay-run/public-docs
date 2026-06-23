@@ -1,6 +1,5 @@
 ---
 title: Pipedrive integration overview
-source_url: https://university.clay.com/docs/pipedrive-integration-overview
 description: Sales CRM software boosting sales with automation.
 last_synced: 2026-04-26T01:40:28.671Z
 ---

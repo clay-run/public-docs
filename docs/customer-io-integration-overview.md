@@ -1,6 +1,5 @@
 ---
 title: Customer.io integration
-source_url: https://university.clay.com/docs/customer-io-integration-overview
 description: Power your lifecycle campaigns with personalized leads.
 last_synced: 2026-04-26T01:39:50.377Z
 ---

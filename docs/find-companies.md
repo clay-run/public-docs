@@ -1,6 +1,5 @@
 ---
 title: Find Companies in Clay
-source_url: https://university.clay.com/docs/find-companies
 description: Find companies that match your specific criteria within Clay's
   proprietary dataset.
 last_synced: 2026-04-26T01:39:58.486Z

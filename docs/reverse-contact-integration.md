@@ -1,6 +1,5 @@
 ---
 title: Reverse Contact integration
-source_url: https://university.clay.com/docs/reverse-contact-integration
 description: Find professional profiles with Reverse Contact.
 last_synced: 2026-04-26T01:40:33.006Z
 ---

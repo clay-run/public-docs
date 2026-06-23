@@ -1,6 +1,5 @@
 ---
 title: Comparison operators
-source_url: https://university.clay.com/docs/comparison-operators
 description: Define workflow logic based on comparing numbers, text, or dates
 last_synced: 2026-04-26T01:39:47.140Z
 ---

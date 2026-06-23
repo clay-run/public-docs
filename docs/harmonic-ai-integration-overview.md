@@ -1,6 +1,5 @@
 ---
 title: Harmonic.ai integration overview
-source_url: https://university.clay.com/docs/harmonic-ai-integration-overview
 description: Platform for discovering startups with real-time data, network
   insights, and alerts.
 last_synced: 2026-04-26T01:40:06.717Z

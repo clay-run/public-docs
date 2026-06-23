@@ -1,6 +1,5 @@
 ---
 title: Referencing dynamic data from other columns
-source_url: https://university.clay.com/docs/referencing-dynamic-data-from-other-columns
 description: Reference data from other columns for AI prompting, formulas, and
   message drafting.
 last_synced: 2026-04-26T01:40:31.942Z

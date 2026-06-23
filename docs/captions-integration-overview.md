@@ -1,6 +1,5 @@
 ---
 title: Captions integration overview
-source_url: https://university.clay.com/docs/captions-integration-overview
 description: AI-powered video creation studio offering tools for editing,
   subtitling, and translation.
 last_synced: 2026-04-27T18:09:31.190Z

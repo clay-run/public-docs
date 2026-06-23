@@ -1,6 +1,5 @@
 ---
 title: Bulk enrichment
-source_url: https://university.clay.com/docs/bulk-enrichment
 description: Enrich millions of rows quickly, securely, and at scale. No row
   limits, no slowdown.
 last_synced: 2026-04-27T18:09:27.586Z

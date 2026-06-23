@@ -1,6 +1,5 @@
 ---
 title: Infinite loops
-source_url: https://university.clay.com/docs/infinite-loops
 description: Learn about infinite loops and how to prevent/fix them.
 last_synced: 2026-04-26T01:40:10.668Z
 ---

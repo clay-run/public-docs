@@ -1,6 +1,5 @@
 ---
 title: Work Email waterfall
-source_url: https://university.clay.com/docs/work-email-waterfall
 description: Find and validate work emails faster — the Work Email waterfall
   cascades across multiple providers in sequence, stopping as soon as a valid
   result is found.

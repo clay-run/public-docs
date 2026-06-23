@@ -1,6 +1,5 @@
 ---
 title: Account and workspace settings
-source_url: https://university.clay.com/docs/workspace-administration-documentation
 description: Manage account and workspace settings, team members, SSO, integration accounts, and billing.
 last_synced: 2026-04-26T01:40:56.525Z
 ---

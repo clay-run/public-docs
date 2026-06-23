@@ -1,6 +1,5 @@
 ---
 title: Use AI
-source_url: https://university.clay.com/docs/use-ai-integration-overview
 description: Leverage AI to process, categorize, and conduct web research for
   actionable insights.
 last_synced: 2026-04-26T01:40:51.610Z

@@ -1,6 +1,5 @@
 ---
 title: Column group templates
-source_url: https://university.clay.com/docs/column-group-templates
 description: Create, apply, and edit column group templates to reuse related column sets across your workspace.
 last_synced: 2026-04-26T01:39:46.810Z
 ---

@@ -1,6 +1,5 @@
 ---
 title: Saved searches
-source_url: https://university.clay.com/docs/saved-searches
 description: Save and reuse your filter criteria for Find companies, Find
   people, and Find jobs sources in Clay.
 last_synced: 2026-04-26T01:40:36.947Z

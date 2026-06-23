@@ -1,6 +1,5 @@
 ---
 title: Gong integration
-source_url: https://university.clay.com/docs/gong-integration-overview
 description: Obtain call data of your prospects.
 last_synced: 2026-04-26T01:40:02.764Z
 ---

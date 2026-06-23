@@ -1,6 +1,5 @@
 ---
 title: Best practices for B2B email direct marketing
-source_url: https://university.clay.com/docs/direct-marketing-best-practices
 description: Conduct effective outbound email outreach whilst also lowering the
   risk of challenges
 last_synced: 2026-04-26T01:39:53.596Z

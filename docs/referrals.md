@@ -1,6 +1,5 @@
 ---
 title: Referrals
-source_url: https://university.clay.com/docs/referrals
 description: Learn how you can earn 3,000 credits each time you refer someone.
 last_synced: 2026-04-26T01:40:32.262Z
 ---

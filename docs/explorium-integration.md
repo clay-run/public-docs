@@ -1,6 +1,5 @@
 ---
 title: Explorium integration
-source_url: https://university.clay.com/docs/explorium-integration
 description: Access structured data from public filings, employee reviews, and social media.
 last_synced: 2026-04-26T01:39:57.835Z
 ---

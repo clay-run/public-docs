@@ -1,6 +1,5 @@
 ---
 title: Lookup Rows
-source_url: https://university.clay.com/docs/lookup-rows
 description: Bring in data into your table from other tables.
 last_synced: 2026-04-26T01:40:17.543Z
 ---

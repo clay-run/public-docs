@@ -1,6 +1,5 @@
 ---
 title: Reply.io integration
-source_url: https://university.clay.com/docs/reply-io-integration-overview
 description: AI-powered sales automation boosting lead generation and meeting bookings.
 last_synced: 2026-04-26T01:40:32.677Z
 ---

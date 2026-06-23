@@ -1,6 +1,5 @@
 ---
 title: Debounce integration overview
-source_url: https://university.clay.com/docs/debounce-integration-overview
 description: Validate and clean email lists for accurate and deliverable campaigns.
 last_synced: 2026-04-26T01:39:52.958Z
 ---

@@ -1,6 +1,5 @@
 ---
 title: Sandbox mode
-source_url: https://university.clay.com/docs/sandbox-mode
 description: Learn about sandbox mode, a playground to safely iterate +
   experiment with your data!
 last_synced: 2026-04-26T01:40:36.624Z

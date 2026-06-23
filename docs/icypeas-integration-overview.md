@@ -1,6 +1,5 @@
 ---
 title: Icypeas integration overview
-source_url: https://university.clay.com/docs/icypeas-integration-overview
 description: Email discovery and verification tool.
 last_synced: 2026-04-26T01:40:10.024Z
 ---

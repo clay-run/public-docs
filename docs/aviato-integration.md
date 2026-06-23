@@ -1,6 +1,5 @@
 ---
 title: Aviato integration
-source_url: https://university.clay.com/docs/aviato-integration
 description: Find professional profiles, normalize location data, find personal
   emails, retrieve company financials.
 last_synced: 2026-04-27T18:09:19.488Z

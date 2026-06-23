@@ -1,6 +1,5 @@
 ---
 title: Clay Ads
-source_url: https://university.clay.com/docs/clay-ads
 description: Build and sync contact and account lists to LinkedIn, Meta, and Google Ads for
   precise ad targeting.
 last_synced: 2026-05-11T17:47:40.000Z

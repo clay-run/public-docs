@@ -1,6 +1,5 @@
 ---
 title: Hacker News integration overview
-source_url: https://university.clay.com/docs/hacker-news-integration-overview
 description: Discover tech news, trends, and discussions in real-time
 last_synced: 2026-04-26T01:40:06.391Z
 ---

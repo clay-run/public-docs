@@ -1,6 +1,5 @@
 ---
 title: Oakie.ai integration
-source_url: https://university.clay.com/docs/oakie-ai-integration
 description: Extract key insights from public company filings
 last_synced: 2026-04-26T01:40:25.392Z
 ---

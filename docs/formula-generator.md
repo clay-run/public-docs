@@ -1,6 +1,5 @@
 ---
 title: Formulas
-source_url: https://university.clay.com/docs/formula-generator
 description: Generate formulas with AI to transform your data. Includes how to
   use today's date in a formula, pull error messages with getCellErrorMessagePreview(),
   check cell status with getCellStatus(), and keep date comparisons current automatically.

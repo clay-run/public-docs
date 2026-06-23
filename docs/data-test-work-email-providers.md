@@ -1,6 +1,5 @@
 ---
 title: "[Data test] Work email providers"
-source_url: https://university.clay.com/docs/data-test-work-email-providers
 description: Work email finders
 last_synced: 2026-04-26T01:39:51.666Z
 ---

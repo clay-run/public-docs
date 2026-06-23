@@ -1,6 +1,5 @@
 ---
 title: Lemlist integration
-source_url: https://university.clay.com/docs/lemlist-integration-overview
 description: Automated multichannel outreach tool.
 last_synced: 2026-04-26T01:40:15.254Z
 ---

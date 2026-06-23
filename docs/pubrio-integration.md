@@ -1,6 +1,5 @@
 ---
 title: Pubrio integration
-source_url: https://university.clay.com/docs/pubrio-integration
 description: Identify key contacts at companies, find phone numbers, analyze
   tech stacks, and discover job openings.
 last_synced: 2026-04-26T01:40:30.939Z

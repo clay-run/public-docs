@@ -1,6 +1,5 @@
 ---
 title: Google Sheets integration
-source_url: https://university.clay.com/docs/google-sheets-integration-overview
 description: Cloud-based spreadsheet for real-time collaboration. Covers using
   Google Sheets as a Clay table source (including dedup fields and import
   history) as well as enrichment actions.

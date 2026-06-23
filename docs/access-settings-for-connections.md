@@ -1,6 +1,5 @@
 ---
 title: Access settings for connections
-source_url: https://university.clay.com/docs/access-settings-for-connections
 description: Two controls for managing connection access — restrict who can build
   with existing connections, and require approval before anyone adds a new one.
 last_synced: 2026-05-20T19:20:54.410Z

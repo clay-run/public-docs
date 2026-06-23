@@ -1,6 +1,5 @@
 ---
 title: YouTube integration
-source_url: https://university.clay.com/docs/youtube-integration-overview
 description: Video-sharing platform offering content discovery, creation, and
   community engagement.
 last_synced: 2026-04-26T01:40:57.806Z

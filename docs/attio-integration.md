@@ -1,6 +1,5 @@
 ---
 title: Attio integration
-source_url: https://university.clay.com/docs/attio-integration
 description: Pull your Attio records directly into a table as a source and push
   enriched data back by creating, updating, or upserting records across any
   Attio object.
