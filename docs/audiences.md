@@ -1,21 +1,21 @@
 ---
-title: Audiences (Beta)
+title: Audiences
 source_url: https://university.clay.com/docs/audiences
-description: "Note: This feature is currently in beta for Enterprise customers."
+description: "Clay Audiences is the unified data layer for your workspace, available on Growth and Enterprise plans."
 last_synced: 2026-04-27T18:09:16.275Z
 ---
 
-# Audiences (Beta)
-
-**Note:** This feature is currently in beta for Enterprise customers.
+# Audiences
 
 Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
+
+Available on **Growth** and **Enterprise** plans. Growth plan includes up to 250,000 records imported from CRM and data warehouse sources.
 
 Use it to build dynamic segments across millions of records, run automated enrichment and signal workflows at scale, and sync results back to Salesforce without managing dozens of separate tables.
 
 Setting up Audiences is four major steps:
 
-1.  **Import your data** — connect Salesforce, HubSpot, or Snowflake and bring your records into Audiences.
+1.  **Import your data** — connect Salesforce, HubSpot, Snowflake, or BigQuery and bring your records into Audiences.
 2.  **Create audiences** — build dynamic segments using filters to target the right contacts and accounts.
 3.  **Enrich and monitor** — run bulk enrichments and signals that write data permanently back to each record.
 4.  **Write back to your CRM** — sync enriched data and segment membership back to Salesforce.
@@ -32,6 +32,7 @@ You can import data from:
 
 -   A new people or companies search
 -   Snowflake
+-   BigQuery
 -   Salesforce
 -   HubSpot
 
