@@ -329,16 +329,17 @@ Once created, the field is immediately available as a filter in any segment and 
 
 ### How do I delete a custom Audience field?
 
-Custom fields — those you created (not system or Salesforce-synced fields) — can be deleted from the **Data hub**. Deleting a field requires workspace admin permissions.
+Custom fields — those you created (not system or Salesforce-synced default fields) — can be deleted from the **Data hub**. Deleting a field requires workspace admin permissions.
 
 To delete a custom field:
 
 1.  In your Audiences workspace, click **Data hub** in the left sidebar.
 2.  Select the **Fields** tab.
-3.  Click the **⋮** (three-dot) menu next to the field you want to remove.
-4.  Select **Delete field** and confirm.
+3.  Click the row for the field you want to remove to open its sidebar.
+4.  In the sidebar header, click the **⋮** (three-dot) menu.
+5.  Select **Delete field** and confirm.
 
-**Note:** Deleting a custom field is permanent — all data stored in that field is removed and cannot be recovered. System fields and Salesforce-synced fields cannot be deleted.
+**Note:** Deleting a custom field is permanent and cannot be undone. System fields and Salesforce default fields (such as `SalesforceOwnerId`) cannot be deleted from the Data hub. Salesforce import-mapped custom fields appear in the deletable list, but in practice are managed from the Salesforce settings page rather than the Data hub.
 
 ### A Salesforce field isn't appearing in my audience filters — how do I add it?
 
