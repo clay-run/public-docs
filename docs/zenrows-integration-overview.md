@@ -27,7 +27,7 @@ Run a Zenrows scrape on a website URL.
 
 **Inputs**
 
--   **Company URL:** The URL you are trying to scrape.
+-   **Scrape URL:** The URL you want to scrape.
 -   **Autoparse**: Automatically parse scraper response.
 -   **HTML Output Fields**: Select specific HTML elements to extract.
 -   **Render Javascript**: Enable for pages needing JavaScript.
