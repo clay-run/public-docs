@@ -1,12 +1,12 @@
 ---
-title: Audiences (Beta)
-description: "Note: This feature is currently in beta for Enterprise customers."
+title: Audiences
+description: "Audiences is available on all modern paid plans (Launch, Growth, Enterprise)."
 last_synced: 2026-04-27T18:09:16.275Z
 ---
 
-# Audiences (Beta)
+# Audiences
 
-**Note:** This feature is currently in beta for Enterprise customers.
+**Note:** Audiences is available on all modern paid plans (Launch, Growth, Enterprise).
 
 Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
 
@@ -320,7 +320,7 @@ Export sync behavior:
 
 To estimate API calls for initial export, divide record count by 10,000 and compare against your Salesforce limit.
 
-**Note:** CRM export is admin-only and currently free during beta. Enrichments and signals follow standard Clay table pricing. Export pricing may change at GA.
+**Note:** CRM export is admin-only. Enrichments and signals follow standard Clay table pricing.
 
 ## FAQs
 
@@ -480,7 +480,7 @@ When a Salesforce lead is converted to a contact, Audiences merges both records 
 
 However, the current Audiences UI contact view does not yet display a full union of all data from the converted lead. This means activity counts and last-activity dates that originated from the lead record may not appear in the contact's Activity tab even though the data exists in Audiences and is retrievable via MCP.
 
-**Note (beta):** This discrepancy is a known gap during the Audiences beta. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. The UI will be updated to show the full union of contact and converted lead data before general availability.
+**Note:** This discrepancy is a known limitation. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. A future update will show the full union of contact and converted lead data in the UI.
 
 ### Why isn't a signal showing up in my Lookup in Audiences result?
 
