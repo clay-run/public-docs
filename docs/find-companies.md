@@ -57,7 +57,9 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
 
 **Outputs:**
 
-Each result includes one or more **Structured Location** entries in the cell details with geocoded, normalized fields — so you don't need additional AI columns to parse or reformat location data. These fields work with informal location names like "Greater Chicago Area." Use **Is Headquarters** to identify the company's primary location when multiple entries are returned.
+The **Location** column in the results table displays the matched city, state, and country corresponding to your location filter — so you can immediately see which specific location drove each result.
+
+Expanding any row's cell details reveals one or more **Structured Location** entries with geocoded, normalized fields — so you don't need additional AI columns to parse or reformat location data. These fields work with informal location names like "Greater Chicago Area." Use **Is Headquarters** to identify the company's primary location when multiple entries are returned.
 
 -   **City**
 -   **State**
