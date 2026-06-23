@@ -224,7 +224,7 @@ Each provider detects technology using different methods:
 -   **SimilarWeb** — Identifies technologies installed on a domain, including installation and uninstallation dates and technology categorization. Draws from web analytics and crawl data.
 -   **Predict Leads** — Sources technology data from historical job descriptions, website script tags, and DNS records. Surfaces tools that appear in hiring descriptions, including software not visible in website source code.
 -   **BuiltWith** — Scans a company's public website source code to find client-side technologies: marketing pixels, JavaScript libraries, and front-end software embedded in the site.
--   **Apollo** — Returns technology data as part of its company profile enrichment. Note: the Apollo step requires your own Apollo API key connected in Clay (**Settings → Connections**). If no Apollo account is connected, this step is skipped.
+-   **Apollo** — Returns technology data as part of its company profile enrichment. Note: the Apollo step requires your own Apollo account connected in Clay via OAuth (**Settings → Connections**). If no Apollo account is connected, this step is skipped.
 
 ### Verifying whether a company uses a specific product
 
