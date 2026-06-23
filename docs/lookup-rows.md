@@ -38,7 +38,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 -   You need to **route or segment** your data into different tables based on logic or filters
 -   You want to **flatten lists** into individual rows (e.g., turn a list of 5 people into 5 separate rows)
 -   You need to **merge data** from several tables into one consolidated table
--   You want to **separate concerns** across multiple tables (e.g., companies in one table, people in another)
+-   You want to **separate concerns** across multiple tables (e.g., companies in one table, people in another)\
 -   You're building **multi-stage workflows** where each table handles a specific step in your process
 
 [**Learn more about Send Table Data →**](https://university.clay.com/docs/send-table-data)
@@ -69,7 +69,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 
 -   For readability, when a result is found you can promote returned fields into their own columns (select a returned value → `Create column for it`)
 -   Match on stable, unique identifiers (e.g., a URL is often better than a company name)
--   **When pulling row-specific data, match on a field that's unique per row**: A company-level field like domain is stable but not unique per person — if multiple rows in the source table share the same domain, the lookup returns whichever row it finds first, and every contact at that company gets the same result. When the data you're pulling should vary per person (e.g., personalized email copy, individual contact records), use a person-level unique identifier such as email address or LinkedIn URL as the match key instead.
+-   **When pulling row-specific data, match on a field that's unique per row**: A company-level field like domain is stable but not unique per person — if multiple rows in the source table share the same domain, the lookup returns whichever row it finds first, and every contact at that company gets the same result. When the data you're pulling should vary per person (e.g., personalized email copy, individual contact records), use a person-level unique identifier such as email address or professional profile URL as the match key instead.
 -   Clean and normalize both sides of the match key (trim, lowercase, consistent formatting)
 -   **Ensure the target column type matches your lookup value**: If the `Target column` in the reference table is **Number** type but your `Row value` contains non-numeric text (such as an ID with letters, a dash, a blank, or "N/A"), the lookup returns an error — you may see a message like *"This may be because the value you are searching for has an unexpected type."* To fix this, change the target column to **Text** type in the reference table.
 -   Use single row lookup instead of multiple row lookup when you only need one result — it's faster
