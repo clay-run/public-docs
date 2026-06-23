@@ -13,7 +13,7 @@ Clay doesn't have a traditional API, but you can send data via webhooks, wrap Cl
 
 It's one of the most common questions we get — and the honest answer is: not in the traditional sense. Clay isn't built like a typical SaaS tool where you send a request to an endpoint and get data back in milliseconds. Instead, Clay is an enrichment and automation platform designed around tables, workflows, and integrations.
 
-But that doesn't mean you're stuck. Depending on what you're trying to do, there are several ways to interact with Clay programmatically and get results that feel a lot like working with an API. You can pipe data into Clay automatically via webhooks, wrap Clay's functionality using tools like Make or Zapier, connect AI tools like Claude or ChatGPT directly to your Clay workspace via MCP, or — if you're on an Enterprise plan — access Clay's native People and Company API directly.
+But that doesn't mean you're stuck. Depending on what you're trying to do, there are several ways to interact with Clay programmatically and get results that feel a lot like working with an API. You can pipe data into Clay automatically via webhooks, wrap Clay's functionality using tools like Make or Zapier, connect AI tools like Claude or ChatGPT directly to your Clay workspace via MCP, or — if you're an Enterprise customer with beta access enabled — access Clay's native People and Company API directly.
 
 Below, we'll walk through each approach, when to use it, and how to get started.
 
@@ -47,9 +47,9 @@ This works if you absolutely need an endpoint, but be aware: Clay's enrichment m
 
 ### 3\. **Enterprise-only People & Company API** (Best for basic lookups)
 
-For Enterprise customers, Clay offers a limited but fast API for accessing its proprietary People and Company data. You can send an email or LinkedIn URL to get back basic person details, or a domain to get company info.
+For select Enterprise customers, Clay offers a limited but fast API for accessing its proprietary People and Company data. You can send an email or LinkedIn URL to get back basic person details, or a domain to get company info.
 
-**Note:** This API is currently in beta. Access is not automatic, even on Enterprise plans — it is enabled per workspace on request. Contact your GTM engineer or [our team](https://www.clay.com/contact-form) to have it enabled for your workspace.
+**Note:** This API is currently in beta and available to select Enterprise customers. Access is not automatic, even on Enterprise plans — it is enabled per workspace on request. Contact your GTM engineer or [our team](https://www.clay.com/contact-form) to have it enabled for your workspace.
 
 -   It's useful for lightweight lookups and lead enrichment.
 -   It doesn't include deep enrichment like emails, phone numbers, or revenue data.
