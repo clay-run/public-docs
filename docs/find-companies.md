@@ -141,36 +141,36 @@ The **AI Subindustries filter** (under **AI filters**) is different. Clay genera
 
 The full set, grouped by parent category:
 
--   **Software and IT:** AI and ML Platforms, Agriculture and Forestry Software, Blockchain and Web3, Carriers and ISPs, Cloud and Infrastructure Software, Consumer Software, Data and Analytics Software, Developer Tools and Platforms, Enterprise Software Solutions, Financial Services Software, Government and Public Sector Software, Hardware and Networking, Healthcare Software, IoT and Embedded Systems Software, IT Services and Cybersecurity, Manufacturing Software, Metaverse AR/VR and Other Emerging Platforms, Quantum Computing Software, Real Estate and PropTech Software, Retail and Ecommerce Software, Security and Identity Software
+-   **Software and IT:** AI and ML Platforms, Agriculture and Forestry Software, Blockchain and Web3, Carriers and ISPs, Cloud and Infrastructure Software, Consumer Software, Data and Analytics Software, Developer Tools and Platforms, Enterprise Software Solutions, Financial Services Software, Government and Public Sector Software, Hardware and Networking, Healthcare Software, IoT and Embedded Systems Software, IT Services and Cybersecurity, Manufacturing Software, Metaverse, AR/VR and Other Emerging Platforms, Quantum Computing Software, Real Estate and PropTech Software, Retail and Ecommerce Software, Security and Identity Software
 
--   **Healthcare and Life Sciences:** Biotechnology and Pharmaceuticals, Digital Health and Telemedicine, Hospitals Clinics and Outpatient Care, Medical Devices and Diagnostic Equipment, Medical Testing and Clinical Laboratories, Mental Health and Rehabilitation Services, Pharma Distribution and CRO Services
+-   **Healthcare and Life Sciences:** Biotechnology and Pharmaceuticals, Digital Health and Telemedicine, Hospitals, Clinics and Outpatient Care, Medical Devices and Diagnostic Equipment, Medical Testing and Clinical Laboratories, Mental Health and Rehabilitation Services, Pharma Distribution and CRO Services
 
 -   **Finance and Insurance:** Banking and Lending, Capital Markets and Cryptocurrency, Cryptocurrency and Blockchain Services, Financial Services Platforms, Insurance and InsurTech, Investment Management and WealthTech, Venture Capital and Private Equity
 
--   **Energy, Utilities and Environmental Services:** Electric Power and Grid Management, Nuclear and Advanced Generation, Oil and Gas Exploration/Production and Services, Renewable Energy and Clean Tech, Sustainability Tech and Environmental Consulting, Water/Waste and Environmental Management
+-   **Energy, Utilities and Environmental Services:** Electric Power and Grid Management, Nuclear and Advanced Generation, Oil and Gas Exploration, Production and Services, Renewable Energy and Clean Tech, Sustainability Tech and Environmental Consulting, Water, Waste and Environmental Management
 
--   **Industrial Manufacturing and Materials:** 3D Printing and Advanced Manufacturing, Building Materials and Chemicals, Consumer Goods and Appliances, Electronics and Computer Equipment, Food/Beverage and Tobacco Production, Industrial Machinery and Equipment, Mining/Metals and Natural Resources
+-   **Industrial Manufacturing and Materials:** 3D Printing and Advanced Manufacturing, Building Materials and Chemicals, Consumer Goods and Appliances, Electronics and Computer Equipment, Food, Beverage and Tobacco Production, Industrial Machinery and Equipment, Mining, Metals and Natural Resources
 
--   **Real Estate and Construction:** Architecture/Urban Planning and Green Building, Commercial Real Estate Development and Leasing, Construction and Civil Engineering Services, Property and Facility Management, Residential Real Estate Development and Brokerage, Specialty Construction Products
+-   **Real Estate and Construction:** Architecture, Urban Planning and Green Building, Commercial Real Estate Development and Leasing, Construction and Civil Engineering Services, Property and Facility Management, Residential Real Estate Development and Brokerage, Specialty Construction Products
 
 -   **Retail and Consumer Channels:** Automotive Service and Collision Repair, Brick-and-Mortar Retail, Media and Entertainment Retail, Online Commerce and Marketplaces, Retail Technology, Specialty Auctions and Collectibles, Wholesale and Distribution
 
--   **Transportation and Logistics:** Autonomous Vehicles and Drone Delivery, Car and Truck Rental, Freight and Cargo, Logistics Technology, Passenger Transit and Mobility, Warehousing/Fulfillment and 3PL Services
+-   **Transportation and Logistics:** Autonomous Vehicles and Drone Delivery, Car and Truck Rental, Freight and Cargo, Logistics Technology, Passenger Transit and Mobility, Warehousing, Fulfillment and 3PL Services
 
--   **Professional, Business and Legal Services:** Accounting/Audit and Financial Advisory, Advertising/Marketing and Multimedia Design, Defense and Government Services, Facilities Management and Commercial Cleaning, Human Resources/Staffing and Recruitment, Legal Services and Regulatory Compliance, Management Consulting and Strategy Consulting, Translation/Document and Information Management
+-   **Professional, Business and Legal Services:** Accounting, Audit and Financial Advisory, Advertising, Marketing and Multimedia Design, Defense and Government Services, Facilities Management and Commercial Cleaning, Human Resources, Staffing and Recruitment, Legal Services and Regulatory Compliance, Management Consulting and Strategy Consulting, Translation, Document and Information Management
 
--   **Education and Training:** Corporate Training and Learning and Development, E-Learning Platforms and EdTech, K-12 and Higher Education Institutions, Test Prep/Tutoring and After-School Services, Vocational Training and Certification Programs
+-   **Education and Training:** Corporate Training and Learning and Development, E-Learning Platforms and EdTech, K-12 and Higher Education Institutions, Test Prep, Tutoring and After-School Services, Vocational Training and Certification Programs
 
--   **Media, Entertainment and Culture:** Digital Publishing and Streaming Platforms, Film/Television and Broadcasting, Gaming/Esports and Interactive Entertainment, Live Events/Experiences and Ticketed Attractions, Museums/Art Galleries and Cultural Preservation, Music/Audio and Podcast Services, Sports and Recreation
+-   **Media, Entertainment and Culture:** Digital Publishing and Streaming Platforms, Film, Television and Broadcasting, Gaming, Esports and Interactive Entertainment, Live Events, Experiences and Ticketed Attractions, Museums, Art Galleries and Cultural Preservation, Music, Audio and Podcast Services, Sports and Recreation
 
 -   **Hospitality, Food and Travel Services:** Food and Beverage Services, Hospitality and Lodging, Travel Agencies and Leisure Services
 
 -   **Personal and Home Services:** Funeral Homes and Related Services, Home Services, Personal Care and Wellness, Veterinary Care and Pet Services
 
--   **Agriculture, Forestry and Fisheries:** AgriTech and Precision Farming, Aquaculture and Fisheries, Crop Farming and Livestock Production, Farming Equipment and Supplies, Forestry/Logging and Wood Products, Mining and Extraction
+-   **Agriculture, Forestry and Fisheries:** AgriTech and Precision Farming, Aquaculture and Fisheries, Crop Farming and Livestock Production, Farming Equipment and Supplies, Forestry, Logging and Wood Products, Mining and Extraction
 
 -   **Automotive, Aerospace and Defense Manufacturing:** Aviation and Aerospace Component Manufacturing, Automotive and Rental Retail, Commercial Space Innovation, Defense Systems and Marine Manufacturing, Motor Vehicle and Parts Manufacturing
 
--   **Non-Profit, Public Sector and Education (Non-Commercial):** Government Administration and Municipal Services, NGOs/Charities and Community Organizations, Public Healthcare and Social Services, Public/Private Research Institutions and Educational Foundations, Student Organizations and Campus Services
+-   **Non-Profit, Public Sector and Education (Non-Commercial):** Government Administration and Municipal Services, NGOs, Charities and Community Organizations, Public Healthcare and Social Services, Public/Private Research Institutions and Educational Foundations, Student Organizations and Campus Services
 
 **Note:** AI Subindustries is a filter input, not an output column. It controls which companies are returned in Find Companies, but does not add a dedicated Subindustry column to your table.
