@@ -124,6 +124,26 @@ This action does not return output values.
 -   Auto-update: Recommended for keeping BigQuery data in sync as new rows are added or updated in your Clay table.
 -   Only run if: The enrichment will only run if conditions are met. ([Learn more about conditional formulas](https://university.clay.com/docs/conditional-formulas)).
 
+## Importing Google BigQuery data into Audiences
+
+**Note:** Google BigQuery import in Audiences is currently in beta — contact your Growth Strategist to enable it for your workspace.
+
+Clay Audiences supports importing data directly from Google BigQuery using a SQL query, letting you bring in contacts and companies alongside your CRM records and Clay-sourced data — all deduplicated around a shared identifier like email or domain. See [Importing from Google BigQuery](https://university.clay.com/docs/audiences#importing-from-google-bigquery) in the Audiences documentation for full setup instructions.
+
+### Connecting and configuring the import
+
+1.  In your Audiences workspace, navigate to the `People` or `Companies` tab and click `Add data`.
+2.  Click `Add Source` → select `Import from BigQuery`.
+3.  Select your BigQuery account, or click `+ Add account` and upload your service account JSON key file.
+4.  Select `People` or `Companies` as the audience type.
+5.  Write a SQL `SELECT` query. Do not include an `ORDER BY` clause — Clay adds one automatically. Click `Test` to preview, then `Continue`.
+6.  Map your BigQuery columns to Audience fields.
+7.  Set the `Unique identifier` (required) — for People, typically `email`; for Companies, typically `domain`.
+8.  (Optional) Set a `Timestamp field` — Clay uses this to detect changed records and sync only those. Without one, syncs run less frequently.
+9.  Enable `Import sync` and click `Save`.
+
+**Sync schedule:** Incremental runs every **15 minutes** when a `Timestamp field` is configured; full sync once a week.
+
 ## Troubleshooting
 
 ### Dataset ID shows "No options found"
