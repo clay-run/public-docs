@@ -187,7 +187,7 @@ Fields not added here are left blank on the new record.
 
 **Tip: Adding contacts or leads to a Salesforce Campaign**
 
-Clay does not have a dedicated "Add to Campaign" action. To add a contact or lead to a Salesforce Campaign, use **Create Record**, select **Campaign Member** as the Salesforce object, and map both the **ContactId** (or **LeadId**) and **CampaignId** fields. If the record is already a campaign member, Salesforce returns a `DUPLICATE_VALUE` error — you can guard against this by first running a **Lookup record** action with "Campaign Member" as the object to check whether the association already exists.
+Clay does not have a dedicated "Add to Campaign" action. To add a contact or lead to a Salesforce Campaign, use **Create Record**, select **Campaign Member** as the Salesforce object, and map both the **ContactId** (or **LeadId**) and **CampaignId**fields. If the record is already a campaign member, Salesforce returns a `DUPLICATE_VALUE` error — you can guard against this by first running a **Lookup record** action with "Campaign Member" as the object to check whether the association already exists.
 
 ### `Action` Lookup record
 
@@ -287,6 +287,8 @@ When you add a Salesforce picklist field in **Map fields**, the input looks diff
 
 -   **Text/number fields** show a free-text input with "Type / to Insert column" — click in the box and type `/` to reference a Clay column.
 -   **Picklist fields** show a **dropdown** listing the available Salesforce options (for example, "Up" or "Down"). Selecting an option sets a **static value** that every row sends to Salesforce.
+
+**Note:** This picklist UI is currently rolling out — if you see a plain text input instead of a dropdown for your picklist fields, your workspace may not have this update yet. Contact Clay support to have it enabled.
 
 **To map a Clay column dynamically** (so each row sends the value from that column), click the **gear icon (⚙️)** to the right of the picklist dropdown. A mode picker appears with two options:
 
