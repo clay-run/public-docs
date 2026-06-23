@@ -79,10 +79,8 @@ If ZI0001 persists across multiple cells after retrying, or if you see it consis
 
 ### **Why are some rows returning "out of credits" errors when I still have ZoomInfo credits?**
 
-If you see a mix of successful enrichments and "out of credits" errors across rows in the same run, the likely cause is that your ZoomInfo **API credits** ran out mid-run.
+If you see a mix of successful enrichments and "out of credits" errors across rows in the same run, the likely cause is that your ZoomInfo account has **exceeded its enrichment limit**. The underlying error returned to Clay is: *"Your ZoomInfo account has exceeded its enrichment limit. Please contact your ZoomInfo Account Manager."*
 
-Clay connects to ZoomInfo via its API, which draws from your ZoomInfo **API credit** allocation—a separate pool from your ZoomInfo **platform credits** (the credits used when browsing or exporting data directly on the ZoomInfo website). These two pools are independent: having a large balance of platform credits does not prevent your API credits from running out.
+When a table run starts with enough remaining enrichment headroom to fulfill some rows but not all, you'll see partial results: earlier rows succeed and later rows fail with this error. Re-running the column will continue to return the same error until your enrichment limit is raised or reset by ZoomInfo.
 
-When a table run starts with enough API credits to fulfill some rows but not all, you'll see partial results: earlier rows succeed and later rows fail with a credit error. Re-running the column will continue to return the same error until API credits are replenished.
-
-**What to do:** Contact your ZoomInfo Account Manager or representative and ask them to check your **API credit** balance and usage specifically. They can see API usage separately in their system and can request an increase to your API credit allocation if needed.
+**What to do:** Contact your ZoomInfo Account Manager or representative and ask them to check your **enrichment limit** and usage. They can see your enrichment usage in their system and can request an increase to your allocation if needed.
