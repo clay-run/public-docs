@@ -1,24 +1,43 @@
 ---
-title: Audiences (Beta)
-source_url: https://university.clay.com/docs/audiences
-description: "Note: This feature is currently in beta for Enterprise customers."
-last_synced: 2026-04-27T18:09:16.275Z
+title: Audiences
+description: "Audiences is available on all paid plans at no additional charge. Growth: up to 250K CRM/DWH records with daily refresh. Enterprise: up to 25M records with 15-min refresh. Launch: Clay database and CSV only. Not available on free plan."
+last_synced: 2026-06-23T13:57:50.536Z
 ---
 
-# Audiences (Beta)
+# Audiences
 
-**Note:** This feature is currently in beta for Enterprise customers.
+**Note:** Audiences is available on all paid plans at no additional charge — you pay only for the credits and actions you use. Growth plan customers can sync up to 250,000 CRM/data warehouse records with a daily refresh. Enterprise plan customers can sync up to 25 million CRM/data warehouse records with a 15-minute refresh. Launch plan customers can import from Clay's people and companies database and CSV only. Audiences is not available on the free plan.
 
 Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
 
-Use it to build dynamic segments across millions of records, run automated enrichment and signal workflows at scale, and sync results back to Salesforce without managing dozens of separate tables.
+Use it to build dynamic segments across millions of records, run automated enrichment and signal workflows at scale, and sync results back to your CRM without managing dozens of separate tables.
 
 Setting up Audiences is four major steps:
 
-1.  **Import your data** — connect Salesforce, HubSpot, or Snowflake and bring your records into Audiences.
+1.  **Import your data** — connect Salesforce, HubSpot, Snowflake, BigQuery, or import from CSV or Clay's people and companies database.
 2.  **Create audiences** — build dynamic segments using filters to target the right contacts and accounts.
 3.  **Enrich and monitor** — run bulk enrichments and signals that write data permanently back to each record.
-4.  **Write back to your CRM** — sync enriched data and segment membership back to Salesforce.
+4.  **Write back to your CRM** — sync enriched data and segment membership back to Salesforce or HubSpot.
+
+## Navigating Audiences
+
+Audiences has two main views for managing your data and segments.
+
+**The Audiences page** is the home for all your segments. It replaces hunting through the sidebar list.
+
+-   Three tabs: segments **you** created, segments **others in your workspace** created, and **Drafts**.
+-   Each row shows record count, creator, and inline actions to add an enrichment or automation.
+-   Create new audiences directly from this page.
+-   Click into any audience to open the table view, where `Enrich` and `Send` are available.
+
+**Note:** Clicking `Add Data` from anywhere in Audiences routes to `Settings → Sources / Destinations`, where all import and export configurations are managed in one place.
+
+**The Data Hub** is the control center for the data inside your audiences. It has four tabs:
+
+-   **Overview** — record, field, enrichment, and signal counts with quick-add shortcuts.
+-   **Fields** — a list of all fields with fill-rate indicators. Click any field for a side panel showing fill rate, total records covered, source (Salesforce vs. enriched in Clay), cost, type, field description, export status, and associated enrichments.
+-   **Enrichments** — a central list of every enrichment across your audiences, showing cost vs. budget, run status, and which audiences and fields each enrichment covers. From here you can point a single enrichment at multiple audiences at once.
+-   **Signals** — the same layout as Enrichments. Add a signal and assign it to multiple audiences from one place.
 
 ## Importing your data
 
@@ -32,8 +51,10 @@ You can import data from:
 
 -   A new people or companies search
 -   Snowflake
+-   BigQuery
 -   Salesforce
 -   HubSpot
+-   CSV
 
 ### Importing from Salesforce
 
@@ -111,6 +132,17 @@ Clay syncs data from Snowflake on the following schedules:
 
 -   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured (for example, `updatedAt`), importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
 -   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
+
+### Importing from BigQuery
+
+BigQuery is available as a native Audiences import source. The setup follows the same pattern as Snowflake: select your database, schema, and warehouse, then query directly with SQL. Results appear as Audiences data you can map in.
+
+### Importing from CSV
+
+1.  Click `Add data` → `Add Source` → `CSV`.
+2.  Name the source and upload your file.
+3.  Preview the data to confirm it looks correct.
+4.  Click `Confirm` — records begin importing immediately.
 
 ### Importing from people and companies search
 
