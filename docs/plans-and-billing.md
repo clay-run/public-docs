@@ -74,6 +74,8 @@ To downgrade your Clay workspace plan:
 2.  Navigate to `Plans & billing` and click `Switch plan`.
 3.  Choose the plan you'd like to downgrade to and confirm your selection.
 
+**To downgrade to the Free plan:** The Free plan does not appear in the `Switch plan` picker. To move to the Free plan, go to `Plan options` → `Cancel plan` instead. Your paid plan stays active through the end of your current billing cycle, then your workspace moves to the Free plan automatically. Your tables and previously enriched data are preserved. Your Data Credit balance is capped at 200 credits (2× the Free plan's 100-credit monthly limit) at the end of your billing cycle. CRM integrations are disabled on the Free plan, though your saved CRM credentials remain intact.
+
 ## Billing
 
 To update your billing and payment information:
