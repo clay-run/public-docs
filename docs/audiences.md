@@ -100,7 +100,7 @@ Clay syncs data from Snowflake on the following schedules:
 2.  Narrow your search using parameters like `Job title` and `Experience`.
 3.  Click `Continue` → `Save to People/Companies`.
     -   Note: This sends your search results to a draft version—it won't combine them with your existing Audience data.
-    -   If the draft shows a banner that says **"X records from this search are already in the All People list,"** those records are already excluded from the merge. Clicking **All people** in step 5 will only add net-new contacts — the existing records are not duplicated.
+    -   If the draft shows a banner that says **"X records from this search are already in the All People list,"** those records are already excluded from the merge. Clicking **See records** on the banner opens the list of already-existing records; proceeding with the merge in step 5 will only add net-new contacts — the existing records are not duplicated.
 4.  In your draft, click `Enrich` to bulk enrich and refine your data, keeping only high-quality leads.
 5.  When your search data looks good, click `All people` to merge.
 
@@ -147,7 +147,7 @@ You can configure one alias field per entity type (one for People, one for Compa
 **Other deduplication behaviors**
 
 -   **Cross-source deduplication** — merge the same person from multiple sources.
--   **Whitespace detection** — when importing from a Find People or Find Companies search, or saving results from a Clay table to your Audience, records that already exist in All People or All Companies are automatically excluded from the merge. The draft shows a banner with the count of excluded records, and clicking **All people** or **All companies** will only add net-new records. For Companies, exclusion matches on Clay's internal company identifier (CPJ ID). Existing Audience records need entity resolution to have completed — records missing a recognized domain or professional network URL may not yet have been assigned a CPJ ID, which can cause them to slip through as apparent duplicates. Ensuring your Companies audience records have accurate domains and professional network URLs helps entity resolution complete and improves deduplication coverage.
+-   **Whitespace detection** — when importing from a Find People or Find Companies search, records that already exist in All People or All Companies are automatically excluded from the merge. The draft shows a banner with the count of excluded records (for example, "N records from this search are already in the All People list") and a **See records** button to view them. Proceeding with the merge will only add net-new records. For Companies, exclusion matches on Clay's internal company identifier (CPJ ID). Existing Audience records need entity resolution to have completed — records missing a recognized domain or professional network URL may not yet have been assigned a CPJ ID, which can cause them to slip through as apparent duplicates. Ensuring your Companies audience records have accurate domains and professional network URLs helps entity resolution complete and improves deduplication coverage.
 
 Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs — org duplicates carry over as-is.
 
@@ -288,11 +288,13 @@ Enhanced Matching improves ad platform match rates by looking up hashed personal
 
 When setting up an Audiences → Ads sync, the **Map** step includes an Enhanced Matching panel where you choose a tier:
 
-| Tier | Cost | Expected match rates |
-|------|------|---------------------|
-| **Premium** | 2 credits/row | Professional network ≤ 95%, Meta ≤ 65% |
-| **Standard** | 1 credit/row | Professional network ≤ 80%, Meta ≤ 50% |
-| **None** | 0 credits | Professional network < 60%, Meta < 30% |
+| Tier | Cost (modern plans) | Cost (legacy Enterprise) | Expected match rates |
+|------|---------------------|--------------------------|---------------------|
+| **Premium** | 2 credits/row | 3 credits/row | Professional network ≤ 95%, Meta ≤ 65% |
+| **Standard** | 1 credit/row | 2 credits/row | Professional network ≤ 80%, Meta ≤ 50% |
+| **None** | 0 credits | 0 credits | Professional network < 60%, Meta < 30% |
+
+**Pricing note:** Modern plan pricing (Standard = 1 cr/row, Premium = 2 cr/row) applies to customers on post-2026 plans. Legacy Enterprise customers (on pre-2026 plans) are billed at Standard = 2 cr/row and Premium = 3 cr/row.
 
 With **Premium** or **Standard**, Clay queries its provider network to find and hash personal emails for each contact automatically. With **None**, you manually map up to three existing hashed email columns from your Audience under **Include emails**.
 
