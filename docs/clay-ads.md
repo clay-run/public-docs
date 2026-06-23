@@ -136,14 +136,14 @@ These restrictions exist for compliance reasons, as third-party sourced contact 
 
 Ad audiences are available on **Growth** and **Enterprise** plans:
 
--   **Growth**: Includes 1 ads audience sync — you can create 1 audience segment (up to 50,000 contacts) and push it to your connected ad platforms simultaneously. Creating multiple distinct audience segments (for example, separate lists filtered by job title, location, or company size) is not supported on Growth; each additional audience segment requires its own sync slot.
+-   **Growth**: Includes audience segments of up to 250,000 contacts. Active ads audience syncs are not included by default on Growth — contact Clay support to enable ads syncs for your workspace.
 -   **Enterprise**: Includes unlimited audiences and additional ads platform syncs
 
 Each record exported or synced consumes 1 action. Data credits apply for any enrichments used in the table to build the audience.
 
 ### **What are the limitations?**
 
-The 50,000 row limit applies to ad audiences exported from tables. For larger audiences, create multiple tables and attach multiple audiences to your campaigns in the ad platform.
+The 250,000 row limit applies to ad audiences exported from tables on the Growth plan. For larger audiences, create multiple tables and attach multiple audiences to your campaigns in the ad platform.
 
 ### **Can I edit the field mapping after setting up an Ad Sync?**
 
