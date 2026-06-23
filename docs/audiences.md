@@ -24,9 +24,9 @@ Setting up Audiences is four major steps:
 
 Audiences has two pages for working with your data at the workspace level:
 
-**Audiences page** — lists all your audience segments in one place. Browse, search, and open any saved segment, organize segments into folders, and create new ones.
+**Audiences page** — lists all your audience segments in one place. Browse, search, and open any saved segment, and create new ones.
 
-**Data Hub page** — a centralized view of every field in your Audiences workspace and its data health. For each field you can see the **fill rate** (the share of records that have a value for that field), which enrichments and signals are attached to the field, and historical trends. Fields with a low fill rate show a colored indicator, making it easy to spot data gaps at a glance. You can add a new enrichment or signal to a field directly from Data Hub without first navigating into a specific segment. Use the search bar to find a field by name, or filter by source or source type to narrow the list.
+**Data Hub page** — a centralized view of every field in your Audiences workspace and its data health. For each field you can see the **fill rate** (the share of records that have a value for that field) and which enrichments and signals are attached to the field. Fields with a low fill rate show a colored indicator, making it easy to spot data gaps at a glance. You can add a new enrichment or signal to a field directly from Data Hub without first navigating into a specific segment. Use the search bar to find a field by name.
 
 **Note:** The Audiences page and Data Hub are available to Enterprise open beta customers — contact your Growth Strategist to enable them for your workspace.
 
