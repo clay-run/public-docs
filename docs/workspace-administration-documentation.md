@@ -340,7 +340,7 @@ SSO only applies to users whose email address matches your verified domain. Team
 1.  Invite them to your Clay workspace first via `Settings` > `Team` > `+ Invite`.
 2.  Have them sign in using SSO — they will be authenticated and placed into the correct workspace.
 
-**Important:** Always invite users to your workspace before they sign in with SSO. If a user signs in via SSO before receiving their workspace invite, they will be placed into a new standalone personal workspace instead of your enterprise workspace — creating a messy state that requires support to resolve.
+**Important:** Invite users to your workspace before they sign in with SSO. If a user signs in via SSO without a prior workspace invite, they will authenticate successfully but land in a new personal workspace rather than your enterprise workspace. To add them to the correct workspace afterward, send them a workspace invite and have them accept it — if the unintended personal workspace needs to be cleaned up, contact Clay support.
 
 # **Connections**
 
