@@ -1,5 +1,6 @@
 ---
 title: Table management settings
+source_url: https://university.clay.com/docs/table-management-settings
 description: Manage table settings like rename, auto-dedupe, auto-run,
   auto-delete, and table descriptions.
 last_synced: 2026-04-26T01:40:46.622Z
@@ -107,6 +108,8 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
 The out-of-date clock indicator on a cell means the cell is stale — it has an existing result but auto-run is not re-running it. The most common cause is "Keep existing results" being enabled: Clay skips cells that already have a result rather than overwriting them and spending credits. The cell's current value is still usable downstream; other columns can reference it normally.
 
 A cell also shows as out of date when its inputs have changed since it last ran — for example, if an upstream column with auto-run enabled re-ran and updated its values, or if the column's own configuration was modified (such as editing a prompt). In these cases the indicator is informational: the existing value is still valid and usable downstream. In many cases re-running would produce the same result, so only trigger a re-run if you specifically need fresh output.
+
+**Note:** The out-of-date indicator tracks column dependencies within the same table only. Changes in a separate table — for example, updated rows in a table you look up with [Lookup Rows](lookup-rows.md) — do not directly cause cells in this table to show as out of date.
 
 If a cell **keeps** showing as out of date even after you re-run it, check whether an upstream column has auto-run enabled. Each time that upstream column runs and updates its output, Clay marks any column referencing it as out of date again — even one you just re-ran. To resolve this:
 
