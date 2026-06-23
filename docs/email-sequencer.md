@@ -12,6 +12,8 @@ Run outbound campaigns directly from your table.
 
 Clay's email sequencer lets you run outbound email campaigns directly from your tables. This guide covers setup, campaign configuration, sending behavior, analytics, and troubleshooting tips.
 
+**Availability:** The email sequencer (Campaigns V2) is currently available only on **Enterprise** (legacy or modern) and **Growth** plans. It is not available on Starter or Free plans. HTML features (formatting, open/click tracking, unsubscribe links, inline images) are gated behind an additional rollout flag — contact support if HTML options are not visible in your workspace.
+
 ## Connecting Google Workspace via OAuth
 
 **Note:** This setup requires Google Workspace admin access and only needs to be done once per domain. Changes can take up to 24 hours to apply.
@@ -36,7 +38,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   Tip: You can customize the sync data column to only send leads with an email address using `Only run if`.
 3.  In the `Setup` tab, you can set:
     -   `Lead email address`: We automatically detect email address columns, but confirm this before proceeding.
-    -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links.
+    -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links. (HTML features are currently behind an additional rollout flag — contact support if the toggle is not visible.)
 4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead replies (excluding out-of-office replies, which we detect and work around).
     -   Toggle `Preview` mode to see real data from your source table in the message template. When HTML is enabled, Preview also renders how your formatting will appear in the recipient's inbox — the message editor shows the content structure you've built, not the final rendered output, so use Preview to verify formatting before sending.
     -   Within each message, use `/` to access features such as:
@@ -203,7 +205,7 @@ If you've paused a campaign but the options to add or remove messages are still 
 
 ### How much does the sequencer cost?
 
-The Clay email sequencer is available on all plans. Each lead sequenced consumes 1 Action (platform orchestration work). If you use AI snippets in your messages, those consume 1 Action per run and Data Credits for AI generation in addition to the Action for sending the email.
+The Clay email sequencer is available on **Enterprise** and **Growth** plans. Each lead sequenced consumes 1 Action (platform orchestration work). If you use AI snippets in your messages, those consume 1 Action per run and Data Credits for AI generation in addition to the Action for sending the email.
 
 ### Can I send multiple sequences to the same email address?
 
