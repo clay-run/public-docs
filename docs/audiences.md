@@ -503,11 +503,11 @@ Archiving a record is a **soft delete** — the record is not permanently remove
 
 To exclude Salesforce-deleted records from your audience lookups, filter on **Sync status → Deleted in source** to identify them, then archive the records you no longer want matched against.
 
-### Why did Update Audiences Record report 0 fields updated?
+### Why did Update Audiences Record show ✅ Success but no fields were actually updated?
 
-The most common cause is that all mapped fields had null values in the source row. By default, `Update Audiences Record` has an **Ignore blank values** toggle turned on, which skips any field whose value is `null` before writing to the Audience. When every mapped field is null, there is nothing to write — the action completes successfully but reports 0 fields updated.
+The most common cause is that all mapped fields had null values in the source row. By default, `Update Audiences Record` has an **Ignore blank values** toggle turned on, which skips any field whose value is `null` before writing to the Audience. When every mapped field is null, there is nothing to write — the action still reports `✅ Success` (the standard result text for this action regardless of how many fields were written), but no fields on the Audience record are actually updated.
 
-**To confirm this is the cause:** Check whether the columns you mapped into `Update Audiences Record` are populated for the rows that show 0 fields updated.
+**To confirm this is the cause:** Check whether the columns you mapped into `Update Audiences Record` are populated for the rows that show `✅ Success` but no visible change on the Audience record.
 
 There are two ways to fix this:
 
