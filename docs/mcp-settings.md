@@ -40,7 +40,9 @@ The recognized clients are:
 -   **ChatGPT** — connections from OpenAI's ChatGPT.
 -   **Claude** — connections from Anthropic's Claude.
 -   **Grok** — connections from xAI's Grok.
--   **Unknown** — a catch-all for any MCP client not explicitly listed above (for example, Cursor or similar tools). Enabling this allows Clay to accept connections from clients it doesn't specifically recognize.
+-   **Microsoft Copilot** — connections from Microsoft Copilot. Currently in beta — contact support to enable for your workspace.
+-   **Gemini Enterprise** — connections from Gemini Enterprise. Currently in beta — contact support to enable for your workspace.
+-   **Unknown** — a catch-all for any MCP client not explicitly recognized above. Enabling this allows Clay to accept connections from clients it doesn't specifically recognize.
 
 To see which team members have actually connected and which platforms they're using, see the [Monitoring usage](#monitoring-usage) section.
 
