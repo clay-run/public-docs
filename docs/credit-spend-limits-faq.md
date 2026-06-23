@@ -92,11 +92,11 @@ When a limit is reached:
 -   Any recurring spends are canceled
 -   Users are notified of canceled processes
 
-**To resolve it**, workspace admins will see a **Manage credit limit** button directly on the error and an **Increase spend limit** button on a banner at the top of any table in the workbook. Both open the credit limit editor, where you can raise the cap or remove it entirely by toggling off **Enable workbook credit limit**. Non-admins will see the error message with a prompt to contact their workspace admin.
+**To resolve it**, workspace admins on Enterprise plans will see a **Manage credit limit** button directly on the error and an **Increase spend limit** button on a banner at the top of any table in the workbook. Both open the credit limit editor, where you can raise the cap or remove it entirely by toggling off **Enable workbook credit limit**. Non-admins will see the error message with a prompt to contact their workspace admin.
 
 **Can users request a limit increase?**
 
-Workspace admins can raise a limit directly in Clay — either by clicking **Manage credit limit** on the **Workbook credit limit reached** error or from the workbook's settings panel. Non-admin users do not have an in-product way to request an increase; they should reach out to their workspace admin directly.
+Workspace admins on Enterprise plans can raise a limit directly in Clay — either by clicking **Manage credit limit** on the **Workbook credit limit reached** error or from the workbook's settings panel. Non-admin users do not have an in-product way to request an increase; they should reach out to their workspace admin directly.
 
 **What happens if an Admin lowers a limit below what's already been spent?**
 
