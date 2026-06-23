@@ -99,8 +99,8 @@ While Sculptor is powerful, there are a few things to keep in mind:
 -   **No direct CRM integration (yet)** — Connections must be set up manually for now.
 -   **Cross-table operations are limited** — Advanced linking and workflows are still in development.
 -   **No export option** — Export functionality hasn't been integrated yet.
--   **Column modifications use sandbox mode** — When Sculptor adds new columns to existing tables, it uses [sandbox mode](#sandbox-mode) rather than writing directly to your live table. You'll need to review and publish those changes using the **Review changes** button.
--   **Sculptor cannot modify columns you built manually — it only creates new ones.** If you ask Sculptor to update a prompt or formula in a column you created yourself, it creates a new column with those changes instead of editing the existing one. The new column appears to the right of your current columns — **scroll right** in your table to find it as a pending suggestion. To update a manually-built column directly, click into that column and edit its prompt or formula yourself.
+-   **Column modifications use sandbox mode** — When Sculptor adds new or updated columns to existing tables, it uses [sandbox mode](#sandbox-mode) rather than writing directly to your live table. You'll need to review and publish those changes using the **Review changes** button.
+-   **Sculptor can edit AI and formula columns, but not other column types you built manually.** Sculptor can directly edit existing AI columns and formula columns — including ones you built yourself — by updating their prompt or formula in place. For other column types (such as source, basic, action, and waterfall columns), Sculptor cannot modify them; you'll need to edit those columns yourself by clicking into the column header.
 -   **Feature gaps** — Signals tables aren't currently supported.
 -   **Data boundaries apply** — Only processes data you provide or data from supported sources and enrichments.
 
@@ -135,14 +135,11 @@ If you hit the limit and need it increased, contact support.
 
 ### I asked Sculptor to update an existing column but can't find the changes
 
-Sculptor cannot modify columns you created manually — when asked to update a column you built yourself, it creates a new column with those changes instead.
+If you asked Sculptor to update an **AI column or formula column**, Sculptor edits the existing column in place — even if you built it manually. The change will appear on the original column (you may need to refresh the column or check it within sandbox mode to see the updated prompt or formula).
 
-To find Sculptor's proposed column:
+For **other column types** (source, basic, action, and waterfall columns), Sculptor cannot edit them directly. To update those, click into the column's header and edit it yourself.
 
--   **Scroll right** in your table. The new column is added to the right of your existing columns as a pending suggestion.
--   Click **Review changes** in the tab bar above your table to see a summary of all proposed columns.
-
-To update a manually-built column directly without creating a new one, click into that column's header and edit its prompt or formula yourself.
+You can also click **Review changes** in the tab bar above your table to see a summary of all column updates Sculptor has proposed, including edits to existing columns.
 
 ### Sculptor keeps entering sandbox mode when I add a column
 
