@@ -33,7 +33,7 @@ To update your account name:
 
 ## **Change your password**
 
-_If you sign in with Google, the **Change password** option will not appear on your Security tab — it is only visible for email + password accounts. See [Switch from Google login to email and password](#switch-from-google-login-to-email-and-password) below instead._
+_If you sign in with Google, the **Change password** option will not appear on your Security tab, and using **Forgot password** on the Clay login page will not send an email — there is no Clay password to reset. See [Switch from Google login to email and password](#switch-from-google-login-to-email-and-password) below._
 
 To change your account password:
 
@@ -46,9 +46,11 @@ To change your account password:
 
 If you signed up with Google and want to create a password so you can log in with your email and password instead, this cannot be done through your account settings — it requires a support action.
 
+**Note:** If you try the **Forgot password** link on the Clay login page before contacting support, you will not receive an email — Clay has no password on your account to reset until after support makes the switch.
+
 To request the change:
 
--   Open the in-app chat and ask the support team to switch your login method from Google to password.
+-   Open the in-app chat and ask the support team to switch your login method from Google to password. If you are reaching out via email instead, send your request from the email address registered with your Clay account to [support@clay.com](mailto:support@clay.com) — this confirms account ownership so the team can make the change.
 -   Once the change is made, go to [app.clay.com/forgot](https://app.clay.com/forgot), enter your email address, and follow the link in the email to set your new password.
 
 After completing the password recovery steps, you can log in with your email and password. Note that Clay accounts support only one login method at a time — either Google OAuth or email + password, not both. After switching, you will no longer be able to sign in with Google on this account.
