@@ -219,6 +219,20 @@ To color multiple column headers at once:
 2.  Right-click on any selected column.
 3.  Select `Change color` and choose your desired color.
 
+### Rename color labels
+
+You can give custom names to the color categories used in your table. For example, you might rename "Green" to "Approved" or "Red" to "Needs review." Custom labels apply to the whole table — they appear consistently across all views of that table.
+
+To rename color labels:
+
+1.  Click on a column header to open the dropdown menu.
+2.  Select `Change color`.
+3.  Click `Rename colors` at the bottom of the color picker.
+4.  Enter a custom name for each color you want to rename.
+5.  Click `Save changes`.
+
+Colors with no custom name default to their original label (Red, Orange, Yellow, etc.). The Default (grey) color cannot be renamed.
+
 ### Best practices
 
 Use colored columns to keep your tables organized:
