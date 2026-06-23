@@ -36,7 +36,6 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   Tip: You can customize the sync data column to only send leads with an email address using `Only run if`.
 3.  In the `Setup` tab, you can set:
     -   `Lead email address`: We automatically detect email address columns, but confirm this before proceeding.
-    -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links.
 4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead replies (excluding out-of-office replies, which we detect and work around).
     -   Toggle `Preview` mode to see real data from your source table in the message template
     -   Within each message, use `/` to access features such as:
@@ -46,7 +45,8 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
         -   `Spintax variable`: Choose a random value from a list
         -   `Rows from [Table]`: Directly reference synced data (Clean variables are recommended to handle empty values safely).
         -   (HTML only): If enabled, use hyperlinks, inline images, fonts, and rich text formatting.
-5.  Go to `Settings` to add your email account:
+5.  Go to `Settings` to add your email account and configure campaign options:
+    -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links.
     -   `Google OAuth` (recommended): Connect your Google Workspace account via OAuth.
         -   ⚠️ Note: You or your Workspace admin must authorize the Clay sequencer app for your domain, or you'll see an access error.
     -   `Microsoft Outlook OAuth` (recommended): Connect your Outlook account via OAuth.
@@ -66,14 +66,14 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   `Timezone`: Select the timezone to send from (we recommend matching your prospects').
     -   `Days of the week` (Custom schedule only): Choose which days emails are sent.
     -   `Start/End times` (Custom schedule only): Set sending windows within the chosen timezone.
-    -   `Minimum time between sends` (Custom schedule only): Adjustable from 5–30 minutes; longer delays improve deliverability.
+    -   `Minimum time between sends` (Custom schedule only): Adjustable from 3–30 minutes; longer delays improve deliverability.
     -   `Maximum new leads per day`: Caps the number of new leads contacted daily (in addition to account send limits).
     -   `Campaign start date` (optional): Set a future launch date, or leave blank to start sending when the next window opens.
 7.  Explore `Advanced settings` if needed:
     -   `Webhooks`: Route campaign events to a specific Webhook destination instead of the default Campaign Events Clay table. Example: Send Smartlead metrics to tools like OutboundSync or Enrichley for downstream routing.
     -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled)
     -   `Pause leads at the same company on reply`: When a lead replies, automatically pause other leads with the same email domain. Off by default.
-8.  Go to `Leads` to preview the messages for all people in your campaign
+8.  Preview the messages for all people in your campaign
     -   `Send test email` to verify your template looks right
     -   Click the `Pencil` icon to spot-edit a message for a specific lead
 
@@ -193,7 +193,7 @@ If you added or edited a **Clean variable** and it is not appearing in your mess
 
 ### Why can't I see or edit the Message sequence section?
 
-If your campaign is active, all settings — including the Message sequence — are locked. To make edits, open the campaign's `Setup` tab and click `Pause`. Once paused, you can edit message copy and campaign settings. Note that you cannot change the total number of messages while paused — to add or remove messages, complete the campaign and create a new one.
+If your campaign is active, all settings — including the Message sequence — are locked. To make edits, open the campaign and click `Pause`. Once paused, you can edit message copy and campaign settings. Note that you cannot change the total number of messages while paused — to add or remove messages, complete the campaign and create a new one.
 
 ### Why is the three-dot menu on my campaign messages greyed out after pausing?
 
@@ -227,7 +227,7 @@ To set or update a signature:
 
 You can also update the `From name` (the display name recipients see in their inbox) from the same dialog. Only plaintext signatures are currently supported.
 
-**To include a formatted signature (with bold text, links, or images):** enable **HTML** in your campaign's `Setup` tab, then compose your signature at the bottom of each email body using the formatting toolbar — bold, italic, hyperlinks, and inline images are available when HTML is enabled. Do not paste raw HTML source code into the editor; the editor does not convert pasted markup to formatted output, and it will appear as literal text in the sent message. Toggle **Preview** or use `Send test email` (in the `Leads` tab) to verify how the signature renders before you launch.
+**To include a formatted signature (with bold text, links, or images):** enable **HTML** in your campaign's `Settings` tab, then compose your signature at the bottom of each email body using the formatting toolbar — bold, italic, hyperlinks, and inline images are available when HTML is enabled. Do not paste raw HTML source code into the editor; the editor does not convert pasted markup to formatted output, and it will appear as literal text in the sent message. Toggle **Preview** or use `Send test email` to verify how the signature renders before you launch.
 
 ### What is email account warmup?
 
