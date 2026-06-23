@@ -38,7 +38,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 -   You need to **route or segment** your data into different tables based on logic or filters
 -   You want to **flatten lists** into individual rows (e.g., turn a list of 5 people into 5 separate rows)
 -   You need to **merge data** from several tables into one consolidated table
--   You want to **separate concerns** across multiple tables (e.g., companies in one table, people in another)\
+-   You want to **separate concerns** across multiple tables (e.g., companies in one table, people in another)
 -   You're building **multi-stage workflows** where each table handles a specific step in your process
 
 [**Learn more about Send Table Data →**](https://university.clay.com/docs/send-table-data)
