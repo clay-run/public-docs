@@ -126,7 +126,7 @@ This action does not return output values.
 
 ## Importing Google BigQuery data into Audiences
 
-**Note:** Google BigQuery import in Audiences is currently in beta — contact your Growth Strategist to enable it for your workspace.
+**Note:** Google BigQuery import in Audiences is currently in beta — contact your Growth Strategist to enable it for your workspace. This feature requires the Growth or Enterprise plan.
 
 Clay Audiences supports importing data directly from Google BigQuery using a SQL query, letting you bring in contacts and companies alongside your CRM records and Clay-sourced data — all deduplicated around a shared identifier like email or domain. See [Importing from Google BigQuery](https://university.clay.com/docs/audiences#importing-from-google-bigquery) in the Audiences documentation for full setup instructions.
 
@@ -139,10 +139,10 @@ Clay Audiences supports importing data directly from Google BigQuery using a SQL
 5.  Write a SQL `SELECT` query. Do not include an `ORDER BY` clause — Clay adds one automatically. Click `Test` to preview, then `Continue`.
 6.  Map your BigQuery columns to Audience fields.
 7.  Set the `Unique identifier` (required) — for People, typically `email`; for Companies, typically `domain`.
-8.  (Optional) Set a `Timestamp field` — Clay uses this to detect changed records and sync only those. Without one, syncs run less frequently.
+8.  (Optional) Set a `Timestamp field` — Clay uses this to detect changed records and sync only those. Without one, Clay falls back to hash-based incremental syncs that run every **12 hours**.
 9.  Enable `Import sync` and click `Save`.
 
-**Sync schedule:** Incremental runs every **15 minutes** when a `Timestamp field` is configured; full sync once a week.
+**Sync schedule:** Incremental runs every **15 minutes** when a `Timestamp field` is configured (every **12 hours** without one); full sync once a week.
 
 ## Troubleshooting
 
