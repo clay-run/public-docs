@@ -1,12 +1,13 @@
 ---
-title: Audiences
-description: "Audiences is available on all modern paid plans (Launch, Growth, Enterprise)."
+title: Audiences (Beta)
+source_url: https://university.clay.com/docs/audiences
+description: "Note: This feature is currently in beta for Enterprise customers."
 last_synced: 2026-04-27T18:09:16.275Z
 ---
 
-# Audiences
+# Audiences (Beta)
 
-**Note:** Audiences is available on all modern paid plans (Launch, Growth, Enterprise).
+**Note:** This feature is currently in beta for Enterprise customers.
 
 Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
 
@@ -31,6 +32,7 @@ You can import data from:
 
 -   A new people or companies search
 -   Snowflake
+-   Google BigQuery
 -   Salesforce
 -   HubSpot
 
@@ -111,6 +113,33 @@ Clay syncs data from Snowflake on the following schedules:
 -   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured (for example, `updatedAt`), importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
 -   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
 
+### Importing from Google BigQuery
+
+1.  Click `Add data` → `Add Source` → select **Google BigQuery**.
+2.  Select your BigQuery account from the dropdown.
+    -   If you haven't connected BigQuery yet, click `+ Add account` and upload your service account JSON key file. See the [Google BigQuery integration](https://university.clay.com/docs/google-bigquery-integration) for connection setup details.
+3.  Select the entity type: **People** or **Companies**.
+4.  Enter your SQL query in the editor.
+    -   Use a `SELECT` or `WITH` statement targeting your BigQuery project, dataset, and table.
+    -   Click `Test` to preview results before continuing.
+5.  Click `Continue`.
+6.  Map your BigQuery columns to Audience fields.
+7.  Set the **Unique identifier** — the column that uniquely identifies each record:
+    -   For People: typically `email` or `user_id`.
+    -   For Companies: typically `domain` or `company_id`.
+8.  (Optional) Set a **Timestamp field** for incremental syncing. Select an `updated_at` column in UTC — Clay uses this to detect which records have changed since the last sync. Avoid `created_at`, which doesn't capture future updates.
+    -   With a timestamp field: syncs run every **15 minutes** and only import new/changed records.
+    -   Without a timestamp field: the full query reruns every **12 hours**.
+9.  (Optional, People only) Set a **Company association field** to link People records to Company records in your audience.
+10. Click `Save and review`, then confirm — Clay begins importing immediately.
+
+**Sync timing and behavior**
+
+Clay syncs data from Google BigQuery on the following schedules:
+
+-   **Incremental sync:** Runs every **15 minutes** when a Timestamp field is configured, importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
+-   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
+
 ### Importing from people and companies search
 
 1.  Click `Add data` → `Find people` or `Find companies` to open a search.
@@ -150,7 +179,7 @@ Records need a high-confidence identifier to match. Auto-enrichment adds `Linked
 
 **Import record matching (beta)**
 
-When importing from Salesforce or Snowflake, you can configure **Import record matching** to deduplicate records at ingestion time. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
+When importing from Salesforce, Snowflake, or Google BigQuery, you can configure **Import record matching** to deduplicate records at ingestion time. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
 
 To configure:
 
@@ -320,7 +349,7 @@ Export sync behavior:
 
 To estimate API calls for initial export, divide record count by 10,000 and compare against your Salesforce limit.
 
-**Note:** CRM export is admin-only. Enrichments and signals follow standard Clay table pricing.
+**Note:** CRM export is admin-only and currently free during beta. Enrichments and signals follow standard Clay table pricing. Export pricing may change at GA.
 
 ## FAQs
 
@@ -480,7 +509,7 @@ When a Salesforce lead is converted to a contact, Audiences merges both records 
 
 However, the current Audiences UI contact view does not yet display a full union of all data from the converted lead. This means activity counts and last-activity dates that originated from the lead record may not appear in the contact's Activity tab even though the data exists in Audiences and is retrievable via MCP.
 
-**Note:** This discrepancy is a known limitation. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. A future update will show the full union of contact and converted lead data in the UI.
+**Note (beta):** This discrepancy is a known gap during the Audiences beta. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. The UI will be updated to show the full union of contact and converted lead data before general availability.
 
 ### Why isn't a signal showing up in my Lookup in Audiences result?
 
