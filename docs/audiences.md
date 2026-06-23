@@ -5,13 +5,13 @@ description: "Note: This feature is currently in beta for Enterprise customers."
 last_synced: 2026-04-27T18:09:16.275Z
 ---
 
-# Audiences (Beta)
-
-**Note:** This feature is currently in beta for Enterprise customers.
+# Audiences
 
 Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
 
 Use it to build dynamic segments across millions of records, run automated enrichment and signal workflows at scale, and sync results back to Salesforce without managing dozens of separate tables.
+
+Audiences is generally available on Trial, Launch, Growth, and Enterprise plans. CRM and data warehouse syncs are available on Growth and Enterprise plans; on Trial and Launch plans, those syncs are disabled.
 
 Setting up Audiences is four major steps:
 
@@ -349,7 +349,7 @@ Export sync behavior:
 
 To estimate API calls for initial export, divide record count by 10,000 and compare against your Salesforce limit.
 
-**Note:** CRM export is admin-only and currently free during beta. Enrichments and signals follow standard Clay table pricing. Export pricing may change at GA.
+**Note:** CRM export is admin-only. CRM and data warehouse syncs are available on Growth and Enterprise plans; on Trial and Launch plans, those syncs are disabled. Enrichments and signals follow standard Clay table pricing.
 
 ## FAQs
 
@@ -509,7 +509,7 @@ When a Salesforce lead is converted to a contact, Audiences merges both records 
 
 However, the current Audiences UI contact view does not yet display a full union of all data from the converted lead. This means activity counts and last-activity dates that originated from the lead record may not appear in the contact's Activity tab even though the data exists in Audiences and is retrievable via MCP.
 
-**Note (beta):** This discrepancy is a known gap during the Audiences beta. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. The UI will be updated to show the full union of contact and converted lead data before general availability.
+This discrepancy is a known gap. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. The UI will be updated to show the full union of contact and converted lead data in a future release.
 
 ### Why isn't a signal showing up in my Lookup in Audiences result?
 
