@@ -36,6 +36,8 @@ To enable or disable auto-dedupe:
 
 **Note — simultaneous row inserts:** Auto-dedupe may not catch duplicates when rows with the same value are added at the same time — for example, when a bulk import, a batch webhook, or concurrent sends push rows within milliseconds of each other. Each insert is processed in its own transaction and is not aware of the other before both are committed to the table, so both can slip through. This is a known limitation. As a workaround, add a dedupe or filter step in your workflow just before any downstream push (such as a CRM or email sequencer) to catch any duplicates that slip through.
 
+**Note — formula columns as dedup keys:** Auto-dedupe checks for a duplicate value at the moment a row is inserted. Formula columns calculate *after* the row arrives — meaning the formula cell is stale (blank) at insertion time, and blank or stale cells are excluded from deduplication. The duplicate check runs before the formula has resolved, so the row passes through even if an identical value already exists in the table. Use a **raw, static source column** as your dedup key instead — source column values are populated at insertion time and are reliably checked. If you need to dedup on a transformed or normalized value (for example, a stripped domain like `corsair.com` instead of `www.corsair.com`), filter duplicates out in a workflow step *before* rows reach the table rather than relying on auto-dedupe on a formula column.
+
 ## Auto-run
 
 Auto-run automatically runs enrichments whenever rows are added or edited, keeping your table current. You can control this feature at multiple levels: table-level (master control), column-level (individual control), and through conditional logic.
