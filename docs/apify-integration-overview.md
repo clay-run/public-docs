@@ -162,7 +162,7 @@ If rows are sitting in **Queued** status and you are on a higher-tier Apify plan
 
 The native **Run Apify Actor** integration has a **200-second execution limit**. If an actor takes longer than 200 seconds to complete, Clay will show **Timed out** in the result cell — even when the actor run itself succeeds in Apify.
 
-This limit applies to all workspaces and cannot be raised on a per-workspace basis through the native integration.
+This limit applies to all workspaces by default and is not customer-configurable through a self-serve setting. If you regularly need a longer timeout, contact Clay support — Clay engineering can raise the Lambda timeout further on a case-by-case basis.
 
 **Workaround — two-step HTTP API approach:** For actors that regularly run longer than 200 seconds, switch to the [HTTP API integration](http-api-integration-overview.md) using an asynchronous two-step pattern:
 
