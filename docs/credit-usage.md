@@ -38,7 +38,7 @@ Filter any of the content on this page by:
 3.  Specific integrations being used.
 4.  **Recurring runs only:** Toggle `Recurring` to show only credits from recurring or scheduled runs. By default (toggle off), the dashboard shows all credit consumption — both one-time manual runs and recurring automated runs. When this filter is on, only workbooks and tables with recurring usage are shown in the expanded list — but folder and workbook `Credits used` totals always reflect the complete spend for all their contents, including non-recurring workbooks. If a folder's total appears higher than the sum of the workbooks visible when you expand it, the difference comes from non-recurring workbooks hidden by the filter. Toggle the filter off to see all workbooks and their individual credits.
 
-**Note:** The Workbooks tab does not show per-user credit attribution — it groups spend by workbook or table, not by which team member ran the enrichments. If you need per-user credit tracking, see the **MCP** and **API** tabs, which attribute spend to individual users for those access methods. The MCP tab also shows a per-function breakdown so you can see exactly which function each user invoked.
+**Note:** The Workbooks tab does not show per-user credit attribution — it groups spend by workbook or table, not by which team member ran the enrichments. If you need per-user credit tracking, see the **MCP** tab, which attributes spend to individual users for that access method. The MCP tab also shows a per-function breakdown so you can see exactly which function each user invoked. The **API** tab groups spend by access method type (e.g., "Run enrichment API", "Chrome extension") rather than by individual user.
 
 ### Understanding table-specific credit usage
 
@@ -92,7 +92,7 @@ The credit usage dashboard is organized into tabs, each covering a different sli
 -   **Integrations** — shows credit spend grouped by integration across your entire workspace, so you can quickly see which data providers are consuming the most credits. Expand any integration row to see spend broken down by individual API key — Clay-managed keys spend both credits and actions, while personal (BYOK) keys spend actions only. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
 -   **Signals** — shows credit spend broken down by individual signal. A totals row (`All Signals`) appears at the top, followed by a per-signal breakdown of `Credits used` and `Actions used`.
 -   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user and function. Expand any user row to see which functions they invoked and the credit spend for each. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
--   **API** — shows programmatic spend generated through Clay's API and Exportly, broken down by user. Like MCP, unattributable spend appears as `Unattributed`.
+-   **API** — shows programmatic spend generated through Clay's API and Exportly, broken down by access method type (e.g., "Run enrichment API", "Chrome extension") rather than by individual user.
 
 ## Credit estimates before running
 
@@ -159,7 +159,7 @@ When any workspace Editor adds rows to a table — manually, via CSV import, or 
 
 To understand when a run happened, open the **Run view** in the [table credit usage dashboard](#understanding-table-specific-credit-usage). Each entry shows a timestamp and which columns ran.
 
-**Identifying who triggered the run:** The Workbooks tab shows the workbook's owner (its creator), not which team member triggered the run. For standard table runs, the credit dashboard does not attribute spend to individual users — only the **MCP** and **API** tabs show per-user breakdowns. If you cannot determine the source of a run from the usage dashboard, contact Clay support for further investigation.
+**Identifying who triggered the run:** The Workbooks tab shows the workbook's owner (its creator), not which team member triggered the run. For standard table runs, the credit dashboard does not attribute spend to individual users — only the **MCP** tab shows a per-user breakdown. The **API** tab breaks spend down by access method type (e.g., "Run enrichment API", "Chrome extension") rather than by individual user. If you cannot determine the source of a run from the usage dashboard, contact Clay support for further investigation.
 
 To prevent unexpected spend on tables you're no longer actively enriching:
 
