@@ -293,7 +293,7 @@ When you add a Salesforce picklist field in **Map fields**, the input looks diff
 -   **Dropdown** — pick a static value from the Salesforce picklist options (the default)
 -   **Text with tokens** — switches to a formula input where you can type `/` to insert a Clay column reference
 
-When using **Text with tokens** mode, the column's value is sent to Salesforce for each row. The value must still exactly match a valid Salesforce picklist option — see format requirements below.
+When using **Text with tokens** mode, the column's value is sent to Salesforce for each row. The value must still exactly match a valid Salesforce picklist option — see format requirements below. The "tokens" in the mode name are column reference placeholders — they are not Clay credits and have no effect on your billing or credit usage.
 
 ### Single-select picklist (dropdown)
 
