@@ -100,7 +100,7 @@ This error from Google Sheets means one of the column values mapped to the actio
 
 **Common cause:** The mapped column returns multiple records or items, such as a Salesforce related-records field, a "Find Contacts at Company" result, or any enrichment that outputs an array.
 
-**Fix:** Add a [formula column](https://university.clay.com/docs/formula-generator) that extracts or joins the array into a single string — for example, referencing a specific sub-field like `{{YourListColumn[0].email}}`, or joining all values with a formula. Map that formula column to the Google Sheets action instead of the raw list column.
+**Fix:** Add a [formula column](https://university.clay.com/docs/formula-generator) that extracts or joins the array into a single string — for example, referencing a specific sub-field like `{{YourListColumn}}?.[0]?.email`, or joining all values with a formula. Map that formula column to the Google Sheets action instead of the raw list column.
 
 ### `(Deleted column)` shown in the action mapping
 
