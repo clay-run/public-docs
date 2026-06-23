@@ -2,12 +2,17 @@
 title: Audiences (Beta)
 source_url: https://university.clay.com/docs/audiences
 description: "Note: This feature is currently in beta for Enterprise customers."
-last_synced: 2026-04-27T18:09:16.275Z
+last_synced: 2026-06-23T14:02:59.755Z
 ---
 
 # Audiences (Beta)
 
-**Note:** This feature is currently in beta for Enterprise customers.
+**Note (plans & limits):**
+
+-   Available on all paid plans at no additional charge — you only pay for the credits and actions you use.
+-   **Growth:** sync up to 250,000 CRM/data warehouse records with a daily refresh.
+-   **Launch:** import from Clay's people and companies database and CSV only.
+-   **Enterprise:** sync up to 25 million CRM/data warehouse records with a 15-minute refresh.
 
 Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
 
