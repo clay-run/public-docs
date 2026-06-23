@@ -1,5 +1,6 @@
 ---
 title: Find Companies in Clay
+source_url: https://university.clay.com/docs/find-companies
 description: Find companies that match your specific criteria within Clay's
   proprietary dataset.
 last_synced: 2026-04-26T01:39:58.486Z
@@ -31,13 +32,13 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
     -   **Keywords** to include or exclude
         -   **Exact phrase matching:** Wrap multi-word terms in single or double quotes to search for that exact phrase. For example, searching for "Google Cloud" finds companies with "Google Cloud" in their description — not just companies that mention Google and cloud separately. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are stripped out even with quoted phrases.
     -   **Semantic company description** — Enter a free-text description to help rank results based on how closely they match your ideal company profile (e.g., "B2B fintech company selling to mid-market banks").
-    -   **Location** — Filter by company office location. Sub-filters: **Country**, **City**, **State or province**, **Region** (EMEA, NAM, APAC, or LATAM), and **Postal code**. Use **Is Headquarters** to restrict results to companies whose primary office is in the specified location. All sub-filters support include and exclude. Location search uses structured, geocoded data — searching in English works for non-English city names too (for example, searching "Moscow" also matches results for "Москва").
+    -   **Location** — Filter by company office location. Sub-filters: **Country**, **City**, **State or province**, **Region** (EMEA, NAM, APAC, or LATAM), and **Postal code**. Use **Is Headquarters** to restrict results to companies whose primary office is in the specified location. All sub-filters support include and exclude. City and state filters use exact field matching — searching `York` returns companies in York, not New York. To disambiguate city names shared across states or countries (e.g., `Springfield`), add a state or country filter alongside.
     -   **Estimated employee count** — Filter by a numeric count of estimated employees (enter a minimum and/or maximum). This is a separate field from **Company size** — see the [FAQ below](#why-do-company-sizes-and-estimated-employee-count-return-different-results-for-the-same-range) for why the same numeric range can surface different companies.
     -   **AI filters** — Clay-generated attributes applied to company profiles:
         -   **Industries** and **Subindustries** (include or exclude)
         -   **Revenue streams** — e.g., Subscriptions/Recurring, Professional Services, Transaction Fees, Advertising, Licensing/IP
         -   **Business types** — B2B, B2C, or Nonprofit
-    -   **Technographics** — Filter by installed technology, powered by [BuyerCaddy](https://university.clay.com/docs/buyercaddy-integration). Costs **3 credits per matching company row** — cheaper in most cases than pulling a broad list and running a technographic enrichment afterward, since you pay only for companies that already match your tech criteria. Technographics data is also included when sending company rows to Audiences; the same 3-credit cost per matching row applies.
+    -   **Technographics** — Filter by installed technology, powered by [BuyerCaddy](https://university.clay.com/docs/buyercaddy-integration). Costs **3 credits per matching company row** — cheaper in most cases than pulling a broad list and running a technographic enrichment afterward, since you pay only for companies that already match your tech criteria. **Credits are charged immediately when you click `Import to new table` — there is no confirmation dialog.** Before importing, use `Preview companies` to check the approximate result count and multiply by 3 to estimate your spend (e.g., ~470 matching companies ≈ 1,410 credits). Technographics data is also included when sending company rows to Audiences; the same 3-credit cost per matching row applies.
         -   **Vendors** — e.g., AWS, Salesforce, HubSpot
         -   **Products** — e.g., Amazon EC2, Salesforce Sales Cloud
         -   **Main categories** and **Parent categories**
@@ -56,7 +57,9 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
 
 **Outputs:**
 
-Each result includes **Structured Location** entries in the cell details — geocoded, normalized fields so you don't need additional AI columns to parse or reformat location data. These fields work with informal location names like "Greater Chicago Area." Search results display up to 5 structured locations per company, always including the headquarters (if known) and the location matching your search query; to view the complete location list for a company, run **Enrich Company**. Use **Is Headquarters** to identify the company's primary location when multiple entries are returned.
+Each result includes one or more **Structured Location** entries in the cell details with geocoded, normalized fields — so you don't need additional AI columns to parse or reformat location data. These fields work with informal location names like "Greater Chicago Area." Each company shows up to 5 locations, including the headquarters (if available) and the location that matched your search filters — run **Enrich Company** to retrieve all locations for a given company.
+
+The **Location** column in your table displays the matched city, state, and country corresponding to your search. Use **Is Headquarters** in the cell details to identify the company's primary location when multiple entries are returned.
 
 -   **City**
 -   **State**
@@ -100,7 +103,7 @@ However, `Find Companies` automatically includes a **Founded** column in your ta
 
 **No, unless you use technographics filters.** Importing companies using standard filters — industry, size, location, revenue, company type, AI filters — consumes no Actions and no Data Credits.
 
-If you enable **technographics filters**, each company row that matches your criteria costs **3 Data Credits**.
+If you enable **technographics filters**, each company row that matches your criteria costs **3 Data Credits**. Credits are charged when you click `Import to new table` — there is no confirmation dialog. To estimate your cost before committing: click `Preview companies`, note the approximate result count, and multiply by 3.
 
 Any enrichments you add to the table afterward (e.g., finding emails, enriching headcount) consume their own Actions and Data Credits as usual — only the import itself is free.
 
