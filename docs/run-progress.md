@@ -183,6 +183,23 @@ After enabling table-level auto-run, column-level settings take effect: columns 
 
 For the full auto-run decision tree and advanced options (conditional runs, "Keep existing results"), see [Table management settings](table-management-settings.md).
 
+## Troubleshooting: a specific column stopped running on new rows
+
+If an enrichment or waterfall column processed some rows — whether manually triggered or when it was first set up — but new rows added to the table aren't being picked up automatically, the **column's own auto-run setting** may be turned off.
+
+Column-level auto-run is independent of table-level auto-run. Even when the table is configured to run automatically, individual columns can have their auto-run toggled off in their own **Run settings**. A column with auto-run off only runs on rows you trigger manually — it won't start automatically when new rows arrive.
+
+**To fix it:**
+
+1.  Click the column header to open its settings (or right-click → **Edit column**).
+2.  Scroll to **Run settings**.
+3.  Toggle **Auto-run** on.
+4.  Click **Save**.
+
+After saving, the column will process new rows automatically. To also run rows that were already added while auto-run was off, right-click the column header → **Run column** → **Run [N] empty or out-of-date rows**.
+
+> **Note:** Table-level auto-run must also be on for column-level auto-run to take effect. If enabling column-level auto-run still doesn't start automatic runs, check whether the table itself is in Manual mode — see [Troubleshooting: enrichments not triggering automatically despite auto-run being enabled](#troubleshooting-enrichments-not-triggering-automatically-despite-auto-run-being-enabled).
+
 ## Troubleshooting: identifying rows that errored vs. rows with no data
 
 When a column's progress bar shows failed rows (🔴), you may need to find exactly *which* rows hit a specific error — for example, "The result of this run exceeded the cell size limit (200 kB)" — without catching rows that legitimately returned no data.

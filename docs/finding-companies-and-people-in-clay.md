@@ -272,6 +272,14 @@ If contacts still don't reappear after re-running, use **Replace existing result
 
 If you want to keep the People table's existing rows intact, create a new source pointing to a fresh copy of the table instead. Because that table has no import history, all matching contacts come through on the first run.
 
+### The preview count drops dramatically when editing an existing Find People source
+
+When you open and edit an existing Find People source — for example, to update your filters or add an exclusion list — the preview reflects only *net new* records: people who match your current search criteria and are not already in your table. Clay automatically excludes contacts already imported in previous runs, so the preview count can look far lower than the total universe of matching people.
+
+**Example:** If your table already contains 18,000 imported contacts and you edit the source to add an exclusion list, the preview may show only a handful of results — not because the exclusion list is over-filtering, but because nearly all contacts matching your criteria are already in your table.
+
+**To verify the full count of matching contacts** (for example, to check that your exclusion list is working correctly): create a new Find People search with the same filters and exclusion list. Since the new search starts fresh, the preview shows the complete matching universe — the total matching contacts minus your exclusion list.
+
 ### Preview count is much higher than the number of rows actually imported
 
 The **preview count** shown before you run a search reflects the total number of matching people across all companies — it does not account for the **Limit per company** setting. Once you run the search, the per-company cap is applied and the actual row count will be substantially lower.
