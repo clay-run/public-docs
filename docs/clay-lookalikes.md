@@ -12,8 +12,12 @@ Clay Lookalikes is a first-party Clay feature that uses AI-powered embeddings to
 
 ## Accessing Clay Lookalikes
 
+The **Company Lookalikes source** (table-builder) can be accessed two ways:
+
 -   **Home → Find leads → Lookalikes** — select the **Lookalikes** card from the quick-start grid on the Find Leads homepage.
 -   **Find Companies page** — open the Find Companies setup panel and switch to **Find lookalikes** using the mode dropdown in the filter panel header.
+
+**People Lookalikes** is available both as a standalone **Find People Lookalikes source** (table-builder, powered by Lusha and runnable on Clay credits without a Lusha API key) and as an in-table enrichment. See [`Action` Find People Lookalikes](#action-find-people-lookalikes) below.
 
 ## `Source` Find Company Lookalikes (Clustered)
 
@@ -50,7 +54,7 @@ Add a column to an existing table to enrich each row with companies similar to t
 
 ## `Action` Find People Lookalikes
 
-Find people similar to a seed person. The enrichment identifies companies similar to the seed person's employer and then finds people with matching titles and seniority levels at those lookalike companies.
+Find people similar to a seed person. In addition to the standalone **Find People Lookalikes source** (table-builder, which accepts 5–100 seed LinkedIn URLs or emails and can run on Clay credits without a Lusha API key), this is also available as an in-table enrichment. The enrichment identifies companies similar to the seed person's employer and then finds people with matching titles and seniority levels at those lookalike companies.
 
 1.  In a Clay table, click `Add enrichment` and search for `Find People Lookalikes`.
 2.  Map **Professional profile URL** to the LinkedIn URL column for your seed person. You can alternatively provide an **Email** if no LinkedIn URL is available.
