@@ -1,5 +1,6 @@
 ---
 title: Salesforce integration FAQs
+source_url: https://university.clay.com/docs/salesforce-integration-faqs
 description: Answering common questions about connecting and troubleshooting the
   Salesforce integration.
 last_synced: 2026-04-26T01:40:34.981Z
