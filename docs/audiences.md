@@ -206,6 +206,18 @@ To create a new audience:
 2.  Click **New audience** in the top-right corner of the list, or click the `+` next to `My Audiences` in the sidebar.
 3.  Select `Criteria` and then add a `Filter` or `Filter group`.
 
+### Building AND and OR logic
+
+By default, all filters in a segment are combined with **AND** — a record must match every condition to be included. To mix AND and OR (for example, `Filter 1 AND Filter 2 AND (Filter 3 OR Filter 4)`), use a filter group:
+
+1.  Click **+ Filter group** to add a sub-group of conditions.
+2.  Inside the group, add at least two filters using **+ Filter**.
+3.  In the group header, use the **"all"/"any"** dropdown to switch the group's logic — **"all"** combines the filters with AND, **"any"** combines them with OR. The "and"/"or" label shown between individual filters inside the group is a non-interactive indicator that reflects the current group mode; clicking it does nothing.
+
+The filters outside the group remain combined with AND as usual.
+
+**Example:** To build `Employees > 100 AND Country = US AND (Field A OR Field B)`, add the first two filters at the top level, then click **+ Filter group**, add Field A and Field B inside it, and switch the group's header dropdown from **"all"** to **"any"**.
+
 ### Filter operators by field type
 
 The operators available when building a filter depend on the field's data type, shown by the icon next to the field name:
@@ -371,6 +383,12 @@ The `+ Add field` option is available in the `Update Audiences Record` column ma
 Once created, the field is immediately available as a filter in any segment and as a target for `Update Audiences Record` or `Upsert Audiences Record` from any Clay table.
 
 **Note:** There is no option to add new fields directly from the Audience screen — you must go through the `Update Audiences Record` column mapping in a bulk enrichment table.
+
+### How do I delete a custom Audience field?
+
+You can permanently delete a custom Audience field directly from your workspace. Open the field's sidebar from the Audiences data health view, click the **⋮** menu next to the field, and select **Delete field**. Confirm in the dialog that appears to permanently remove the field. This action requires the workspace-level **Manage fields** permission.
+
+The **Delete mapping** option in a Salesforce field-mapping row's **⋮** menu (in your Salesforce integration settings) is a separate action — it only removes the Salesforce↔Audiences write-back pairing and does not delete the Audiences field itself.
 
 ### A Salesforce field isn't appearing in my audience filters — how do I add it?
 
