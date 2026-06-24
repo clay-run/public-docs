@@ -89,7 +89,7 @@ Clay pulls data from Salesforce on two schedules:
 10.  Name the corresponding Clay fields.
 11.  Click `Save and Preview`, then `Confirm`.
 
-**Troubleshooting — "Export permission required":** If the HubSpot account you select is missing the **Export CRM data** permission, Clay displays a warning and disables the Connect button. Click **Re-authorize HubSpot** in the warning to reconnect your account with the required permission enabled, then continue setup.
+**Troubleshooting — "Export permission required" (Audiences open beta):** If the HubSpot account you select is missing the **Export CRM data** permission, Clay displays a warning and disables the Connect button. Click **Re-authorize HubSpot** in the warning to reconnect your account with the required permission enabled, then continue setup.
 
 ### Importing from Snowflake
 
