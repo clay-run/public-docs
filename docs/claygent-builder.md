@@ -416,7 +416,7 @@ Yes, with an important limitation. Claygent fetches page content using third-par
 
 Standard Claygent fetches page content via third-party scraping services and cannot complete a website login — it has no mechanism to perform an OAuth flow or maintain an authenticated session between requests.
 
-**Claygent Navigator** has a **Setup Browser Context** feature that enables authenticated access. You open an embedded browser directly in Clay, log in to any service — including those that require OAuth, such as HubSpot or LinkedIn — and save the session. Navigator reuses those saved cookies and authentication state on subsequent runs, so your agent can reach pages behind a login wall without prompting you to re-authenticate.
+**Claygent Navigator** has a **Setup Browser Context** feature that enables authenticated access. You open an embedded browser directly in Clay, log in to any service — including those that require OAuth, such as HubSpot or other professional networks — and save the session. Navigator reuses those saved cookies and authentication state on subsequent runs, so your agent can reach pages behind a login wall without prompting you to re-authenticate.
 
 > **Note:** Claygent Navigator and the Browser Context feature are currently in beta. Contact support to request access.
 
