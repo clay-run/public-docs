@@ -100,3 +100,13 @@ There are two common causes:
 **Find Companies / Find People / Find Jobs source added to an existing table.** When one of these sources adds rows to an existing table, Clay automatically runs enrichments on only the **first 10 imported rows**, regardless of the table-level auto-run setting. The remaining rows are added to the table but do not trigger auto-run. This is intentional behavior to prevent large, unintended credit burns — a source adding many rows to a table with multiple enrichment columns could otherwise trigger a significant spend all at once. This 10-row cap only applies the first time the source is set up on the existing table; subsequent scheduled runs of the same source will run enrichments on all newly imported rows.
 
 In either case, to process the remaining rows: right-click the enrichment column header and choose **Run column** → **Run N empty or out-of-date rows**.
+
+### "My column is showing AI-generated suggestions instead of actual contact data (phone numbers, email addresses)"
+
+If your column returns paragraphs of advice — such as strategy recommendations or notes like "For large-scale enrichment, use a two-stage approach..." — you added a **Use AI** or **Claygent** column rather than a dedicated data enrichment integration. **Use AI** generates text from the model's training data and does not query external sources. **Claygent** is an AI Web Researcher that can search Google and browse web pages live, but it is not connected to Clay's contact data providers and is not a reliable way to look up real phone numbers or email addresses.
+
+To retrieve actual contact data, add a dedicated enrichment column instead:
+
+-   **Work email addresses** — click `Add enrichment` and select `Work Email`. This pre-built waterfall cascades through multiple email providers in sequence. See [Work Email waterfall](work-email-waterfall.md) for full setup details.
+-   **Phone numbers** — click `Add enrichment`, search for `Phone`, and select the waterfall option for your region under **Waterfalls** — `Mobile Phone (US and Canada)`, `Mobile Phone (EMEA)`, `Mobile Phone (APAC)`, or `Mobile Phone (Global)`. See [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md) for provider recommendations by region.
+-   **Full profile data (job title, company, professional profile URL, and more)** — click `Add enrichment` and search for `Enrich Person` to browse provider-specific integrations. Each provider connects to a different data source — choose the one that fits your needs, or stack several as a [waterfall](building-a-data-waterfall.md) for broader coverage.
