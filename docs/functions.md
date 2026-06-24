@@ -250,7 +250,7 @@ Yes. Enable "share as template" on the function to generate a shareable link. An
 
 ### Can a function be enabled for MCP tools like ChatGPT, Claude, or Glean?
 
-Yes. In the function editor panel there is an option to enable the function for MCP, which makes it accessible via connected AI tools.
+Yes, on supported plans. The `Enable for MCP` option in the function editor panel is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans. On other legacy plans (such as legacy Pro), the toggle does not appear in the function settings — if you do not see it, your workspace plan does not include this capability. Upgrading to a modern plan is required to enable custom Functions for MCP. For setup instructions, see [MCP settings](https://university.clay.com/docs/mcp-settings).
 
 ### How can I limit who can edit my functions?
 

@@ -130,3 +130,23 @@ You can also use `Lookup multiple rows` within the same table to find duplicates
 -   Use a clean, consistent match key (domain is usually more reliable than company name)
 -   Remember a self-lookup will usually match the row to itself—account for that when interpreting counts (e.g., "other matches" vs "total matches")
 -   Use the lookup result as a gate to control downstream actions (enrich/send/route only when criteria are met)
+
+### **Timing considerations in multi-step workflows**
+
+A lookup reads the target table at the exact moment it runs — it doesn't wait for other enrichments to finish and has no awareness of in-progress steps elsewhere. If your workflow populates a table in one step and then immediately looks up that same table in a dependent step, the lookup can execute before the first step has finished adding rows. When that happens, the lookup returns no results even though matching records will exist shortly.
+
+**Symptoms to watch for:**
+
+-   The lookup returns no results (or fewer results than expected) for some rows, but manually re-running the same cells later finds records.
+-   Adding a delay between steps reduces failures but doesn't eliminate them entirely — results are inconsistent row to row.
+
+**Why re-runs work:** By the time you manually re-run the cell, the other step has finished populating the table, so the lookup finds the records it missed the first time.
+
+**Why delays help but aren't fully reliable:** A delay gives the other step more time to finish, but enrichment timing varies per row — some records complete in seconds, others take longer. A fixed delay that works for most rows can still fail for the slowest ones.
+
+**Ways to make it more reliable (most to least effective):**
+
+-   **Remove the cross-table dependency:** Run the enrichment (e.g., a "Find People at Company" action) directly in the same table where you need the results, rather than populating a separate people table and then looking it up. This eliminates the timing dependency entirely and is the most reliable fix.
+-   **Restructure to a sequential flow:** Make sure the source table fully finishes running before the dependent table reads from it. For scheduled tables, offset the second table's schedule by enough time for the first to complete — see [Custom signals](custom-signals.md) for an example of staggering table schedules.
+-   **Use a scheduled lookup:** A table run on a schedule reads other tables that have already completed their prior runs, so it is less susceptible to this issue than a lookup triggered in real time alongside an in-progress enrichment.
+-   **Add a delay:** Insert a delay column before the lookup (up to 600 seconds). This reduces failures but does not guarantee they disappear, since enrichment time varies per row.

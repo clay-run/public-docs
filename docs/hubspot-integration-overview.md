@@ -184,6 +184,23 @@ HubSpot's API returns internal codes for enumeration/dropdown fields rather than
 
 If your HubSpot account uses custom lifecycle stages, find their internal codes in HubSpot under **Settings → Properties → Lifecycle Stage**.
 
+### Why do I get a "property values were not valid" error when pushing to a HubSpot dropdown property?
+
+When you use **text with tokens** to map a dynamic Clay column value to a HubSpot dropdown (enumeration) property, HubSpot validates the string against its accepted internal option values — and the match is case-sensitive. Clay passes your mapped value to HubSpot's API as-is, without any case transformation or label-to-value mapping.
+
+**HubSpot's built-in dropdown properties store their internal values in ALL CAPS.** For example, the Industry property's internal value for "Design" is `DESIGN`, not `Design`. Passing the display label or a mixed-case string returns a `property values were not valid` error even when the value looks correct to you in HubSpot's UI.
+
+**To find the correct internal values for a dropdown property:**
+
+- Use Clay's **Lookup object** action on a record where the property is already populated in HubSpot. The raw value returned (e.g., `DESIGN`, `INFORMATION_TECHNOLOGY_AND_SERVICES`) is the internal value you must pass.
+- Or open **Settings → Properties** in HubSpot, select the property, and check each option's internal name — that is what HubSpot's API expects.
+
+**Mapping enriched industry values to a dropdown**
+
+Clay's Native Company Enrich aggregates industry data from multiple underlying providers (Clearbit, Apollo, Owler, HG Insights, and others), each using its own taxonomy. Because the exact industry string returned varies by provider and per row, there is no single fixed list of values. Before pushing to a HubSpot dropdown, add a **Use AI** or Formula column to normalize the raw enriched value to one of your HubSpot dropdown's internal option names. For example, a Use AI column can classify an enriched industry string into one of your defined dropdown option names, and a Formula column can apply `.toUpperCase()` to ensure the casing matches HubSpot's expected format.
+
+If your use case requires storing free-form industry values that don't map to a fixed set of options, consider using a **plain text property** in HubSpot instead.
+
 ### Why isn't my HubSpot Update Object populating a property that already exists in HubSpot?
 
 If a property exists in HubSpot but doesn't get updated when you run the Update Object action, two things are worth checking:
