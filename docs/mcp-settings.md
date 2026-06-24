@@ -22,6 +22,8 @@ Audiences controls are available on all modern paid plans (Launch, Growth, Enter
 
 The `Enable for MCP` option on Functions is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans.
 
+Enabling workflows for MCP and other tool surfaces is currently in beta for Enterprise customers — see [Enabling a workflow for MCP](#enabling-a-workflow-for-mcp).
+
 Glean integration is available on Enterprise plans only.
 
 ## **Enabling a function for MCP**
@@ -33,6 +35,18 @@ Functions are reusable enrichment workflows built in Clay that reps can invoke d
     -   Set a name and description for the MCP app — this is what reps see when browsing available functions, so make it actionable (e.g., _"Company enrichment waterfall"_ or _"Outbound email generator"_).
 
 _For more information about functions, check out our_ [_full doc_](https://university.clay.com/docs/functions)_._
+
+## Enabling a workflow for MCP
+
+**Currently in beta for Enterprise customers — contact your CSM or support to request access. MCP support for workflows is going GA July 21, 2026.**
+
+Workflows can also be exposed as tools so they can be invoked from ChatGPT, Claude, and other MCP clients — similar to Functions, but for agent-style workflows built in the **Workflows** tab.
+
+1.  Open the workflow you want to expose from the **Workflows** tab in your workspace.
+2.  Click the **Settings** tab in the workflow editor.
+3.  In the **Integrations** section, check **MCP** (and optionally **Claygent** or **API & CLI** if those surfaces are enabled for your workspace).
+    -   Optionally set a tool name and description — this is what reps see when browsing available tools. If left blank, the workflow's own name is used.
+4.  Click **Save**.
 
 ## Setting credit limits
 
