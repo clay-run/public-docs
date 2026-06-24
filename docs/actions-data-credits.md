@@ -82,7 +82,7 @@ Your Actions capacity is determined by your plan tier. Plan tiers are designed s
 
 ### How to get more Actions
 
-**Upgrade your action capacity tier** in `Settings` → `Plans & billing`.
+**Upgrade your action capacity tier** in `Settings` → `Plan & billing`.
 
 Actions cannot be purchased as one-time top-ups because they represent fixed platform capacity tied to your action tier.
 
@@ -156,7 +156,7 @@ Two options:
 
 **1\\. Upgrade your Data Credits tier** (recommended)
 
--   Go to `Settings` → `Plans & billing`.
+-   Go to `Settings` → `Plan & billing`.
 -   Select a higher Data Credits tier.
 -   No premium charged.
 
@@ -228,8 +228,8 @@ You can adjust your Clay plan, Actions, and Data Credits at any time to match yo
 
 If you need ongoing increases in capacity:
 
-1.  Go to `Settings` → `Plans & Billing`.
-2.  Click `Change plan` to upgrade your plan tier, or adjust your Actions and Data Credits limits.
+1.  Go to `Settings` → `Plan & billing`.
+2.  Click `Switch plan` (or `Upgrade` if you're on the free plan) to upgrade your plan tier, or adjust your Actions and Data Credits limits.
 3.  Select the higher tier or credit amount that fits your needs.
 4.  Click `Upgrade` to confirm.
 
@@ -251,7 +251,7 @@ For emergency Data Credit needs during your billing cycle (not available for Act
 To downgrade your Clay workspace plan:
 
 1.  Click your profile picture in the top-right corner and select `Settings`.
-2.  Navigate to `Plans & billing` and click `Change plan`.
+2.  Navigate to `Plan & billing` and click `Switch plan`.
 3.  Choose the plan you'd like to downgrade to and confirm your selection.
 
 **If you downgrade:**
@@ -309,6 +309,10 @@ Actions measure platform work (what you do). Data Credits measure data purchases
 ### Why do Data Credits cost different amounts?
 
 Unlike Actions (always 1 per enrichment), Data Credits reflect the real-world value of each data point. You'll see the exact cost displayed next to each enrichment option in the product.
+
+### Why do I see lower enrichment prices in my account but I'm still being charged the old rate?
+
+If you see an in-product pricing summary comparing old and new enrichment costs (for example, ZeroBounce Validate Email showing 1 → 0.1 credits), those reduced rates apply to modern plans (Launch, Growth, or Enterprise) only. Customers on legacy plans continue to pay the original credit costs. To start benefiting from the lower data credit prices, go to `Settings` → `Plan & billing` and switch to a current plan. See [Legacy plans](./legacy-plans.md) for a full comparison of what changes when you migrate.
 
 ### Why do I pay Actions even when using my own API key?
 
