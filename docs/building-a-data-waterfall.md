@@ -178,7 +178,8 @@ Provider order: **Clearbit → Google → HG Insights**
 
 1.  In your table, click **Tools** in the top right corner, then select the **Enrich** tab.
 2.  Search for `Find company domain` and select the **Company Domain** waterfall.
-3.  Click `Save`.
+3.  Map the column containing company names as the input.
+4.  Click `Save`.
 
 **Input required:** Company name  
 **Output:** Company domain (e.g., `clay.com`)
