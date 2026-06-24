@@ -205,7 +205,7 @@ You can permanently delete your Clay workspace through workspace settings. This 
 
 ## **Roles and permissions**
 
-Clay offers three user roles with different permission levels to help manage your workspace effectively.
+Clay offers four user roles with different permission levels to help manage your workspace effectively.
 
 ### **Admin**
 
@@ -241,6 +241,12 @@ Clay offers three user roles with different permission levels to help manage you
 **Viewers** have read-only access to workspace content.
 
 **Note:** The Viewer role is available on the Enterprise plan only.
+
+Viewers can be granted Editor-level access to specific workbooks. To do this, set the workbook's access to **Admin and invited collaborators only** in workbook settings, then add the Viewer as a collaborator. As a collaborator, the Viewer can update records, add columns, and run enrichments within that workbook — but still cannot create workbooks at the workspace level.
+
+### **Sales Rep**
+
+**Sales Reps** can set up their email account for use with Clay's email Sequencer. Sales Reps have **no access to the standard Clay workspace** and cannot view tables, workbooks, or any other part of the Clay interface.
 
 ## **Add a team member to your workspace**
 
@@ -331,6 +337,18 @@ If your security policy or compliance requirements (for example, SOC 2) mandate 
 ## **External collaborators (non-domain email addresses)**
 
 SSO only applies to users whose email address matches your verified domain. Team members with email addresses outside your domain are not affected and continue to access Clay through their regular login (Google or password).
+
+## **Breakglass accounts and per-user SSO exclusions**
+
+Clay does not support per-user exclusions from SSO enforcement — there is no setting to exempt individual accounts on your verified domain from the SSO redirect. All users whose email addresses match your configured SSO domain are routed through SSO.
+
+If you need a service account or breakglass account that can sign in independently of SSO, the supported option is to use an **email address on a different domain** (see [External collaborators](#external-collaborators-non-domain-email-addresses) above). Accounts with email addresses outside your verified SSO domain are not affected by SSO enforcement and can sign in via email + password or Google.
+
+**Note:** Users who had an existing Clay email + password account before SSO was activated on your domain can still sign in using their password — the SSO redirect is enforced in the browser, and Clay does not block password-based login at the backend for SSO-configured domains. However, this is a side effect of the redirect architecture, not a supported design for dedicated service accounts. See [MFA enforcement and compliance requirements](#mfa-enforcement-and-compliance-requirements) for the security implications.
+
+## **If SSO becomes unavailable**
+
+Clay does not have a self-serve emergency access procedure for SSO outages. If SSO is unavailable and affected users cannot sign in, contact Clay support via the in-app chat. The support team can manually adjust authentication methods on your account to restore access. Clay support can also escalate to the engineering team and work directly with WorkOS to resolve the underlying issue.
 
 ## **User provisioning**
 
