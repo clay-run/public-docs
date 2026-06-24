@@ -10,7 +10,7 @@ Answering questions about the credit spend limits feature.
 
 **Credit spend limits** let workspace admins control credit usage by setting spending caps on workbooks and tables. This helps teams manage budgets, prevent overspending, and allocate resources across projects and users.
 
-**Note:** This feature is only available for Enterprise Plan.
+**Note:** This feature is available exclusively on Enterprise plans and is currently in open beta — a beta badge is visible throughout the product. To enroll your workspace, contact your Clay representative.
 
 ## Who can set and manage credit limits?
 
