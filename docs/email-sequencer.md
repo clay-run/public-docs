@@ -51,8 +51,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
         -   ⚠️ Note: You or your Workspace admin must authorize the Clay sequencer app for your domain, or you'll see an access error.
     -   `Microsoft Outlook OAuth` (recommended): Connect your Outlook account via OAuth.
         -   ℹ️ Note: Unlike Google OAuth, no Clay-side admin setup is required upfront. If your Microsoft 365 / Entra tenant requires admin approval for third-party apps, your admin may need to grant consent for "Clay Sequencer – Smartlead" in the [Microsoft Entra Admin Center](https://entra.microsoft.com).
-    -   `SMTP`: Connect a single account via SMTP credentials directly.
-    -   `Bulk CSV upload`: Add multiple accounts at once by uploading a CSV. Download the example template from the modal and fill in the following eight columns for each account: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`. For Google Workspace accounts, generate an app password for each account (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` value.
+    -   `SMTP` (manual or CSV upload): Connect via SMTP credentials directly.
     -   You can also [buy email accounts directly in Clay](https://university.clay.com/docs/buying-email-accounts) if you want to increase your sending capacity.
     -   After setup, you can:
         -   `Enable warmup`: Sends and receives automated emails from the linked account to build reputation. Each account uses a unique two-word keyphrase (e.g., `clever-rocket`) to identify warmup emails. Follow the in-app instructions to set up a label and filter to easily ignore warmup messages.
@@ -251,14 +250,6 @@ Warmup automatically disables when your emails are being throttled by your email
 
 Clay's email sequencer runs on shared Smartlead infrastructure, and Smartlead only allows each email address to be connected once across the entire system. This error most commonly appears when the email was already connected to the sequencer in **another Clay workspace** — you don't need a separate Smartlead account for this to occur. To fix it, check your other Clay workspaces: go to `Campaigns` → `Email Accounts`, locate the address, and delete it there. Once removed from the other workspace, you can add it to the current one. If you can't identify which workspace has it, contact Clay support with the email address and we'll remove it from our end.
 
-### How do I add multiple email accounts at once?
-
-Use the `Bulk CSV upload` option on the `Add email accounts` screen (it's a top-level choice, not nested under SMTP). Download the example template from the modal and fill in one row per account with eight columns: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`.
-
-For Google Workspace accounts on adjacent or alternate domains, you'll need to:
-1. Enable SMTP access for each domain in your Google Workspace Admin panel (Apps → Google Workspace → Gmail → End User Access → Enable IMAP and SMTP).
-2. Generate an app password for each email alias (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` column value.
-
 ### Are personal email accounts supported (e.g., Gmail, Hotmail)?
 
 No, only business accounts (Google Workspace, Microsoft Outlook) are supported for OAuth. Personal Gmail accounts can be connected through a legacy SMTP method (see [these docs](https://helpcenter.smartlead.ai/en/articles/4-connect-gmail-with-smtp)), but this workaround may stop working if Google discontinues it.
@@ -321,25 +312,31 @@ Follow the instructions in the modal and have your Google Workspace admin set ou
 
 This error is expected — Clay's sequencer uses automated warmup sends, which prevents the app from passing Google's standard verification process. Admin approval in your Google Workspace Admin panel is the intended workaround; Clay's app will not become Google-verified.
 
-If the error persists more than 24 hours after your admin marked the app as `Trusted`, confirm that they approved the app for the exact domain of the email account you're connecting (e.g., for `ryan@company.com`, the admin must approve for `company.com` specifically — not a different domain they manage). If the error still persists, [contact Clay support](https://www.clay.com/contact).
+If the error persists more than 24 hours after your admin marked the app as `Trusted`, confirm that they approved the app for the exact domain of the email account you're connecting (e.g., for `ryan@company.com`, the admin must approve for `company.com` specifically — not a different domain they manage). If you're connecting accounts from multiple domains, each domain requires its own separate Trusted configuration — having one domain approved does not automatically cover the others. Your admin can verify which org units are currently configured by going to Google Admin → Security → API Controls → App Access Control and checking the Clay Sequencer app's org unit count. If it's still blocked after verifying the domain, contact support.
+
+### What exact Microsoft permissions does sequencer require?
+
+These are disclosed when you add your account via OAuth. We request: offline\_access, openid, email, profile, Mail.Send, Mail.Send.Shared, Mail.ReadWrite, Mail.ReadWrite.Shared, [User.Read](http://User.Read), MailboxSettings.ReadWrite.
 
 ### How are replies categorized in the Campaign Events table?
 
-In the Campaign Events table, the `Event type` column reflects the reply classification assigned by Smartlead. Categories include:
+Smartlead assigns leads into one of the following categories:
 
--   `EMAIL_REPLY` — any reply from a lead
--   `LEAD_UNSUBSCRIBED` — lead clicked the unsubscribe link
--   `LEAD_CATEGORY_UPDATED` — Smartlead has classified the reply (e.g., as `Interested`, `Do Not Contact`, `Not Interested`, `Out of Office`, or other categories)
+1.  Interested
+2.  Meeting Request
+3.  Not Interested
+4.  Do Not Contact
+5.  Information Request
+6.  Out Of Office
+7.  Wrong Person
+8.  Uncategorizable by Ai
+9.  Sender Originated Bounce
 
-Note that `EMAIL_REPLY` fires for every reply (including out-of-office), while `LEAD_CATEGORY_UPDATED` fires after Smartlead processes and classifies the reply. Both events may appear for the same reply.
+### Why does the reply body show HTML instead of plain text?
 
-### How do I handle replies from leads?
+This is expected. When a lead replies using an HTML-capable email client like Microsoft Outlook, the reply arrives in HTML format. The `Reply Message` field in your campaign events table includes two sub-fields:
 
-Replies are available in the `Replies` tab of your campaign and in the campaign events table. You can reply directly from Clay using the `Reply to lead` enrichment in the campaign events table.
+-   `Html`: the raw HTML body as sent by the lead's email client
+-   `Text`: a plain text version of the same content
 
-### Useful links
-
--   [Smartlead documentation](https://helpcenter.smartlead.ai/)
--   [Buying email accounts in Clay](buying-email-accounts.md)
--   [Clay email sequencer pricing](https://www.clay.com/pricing)
--   [Clay community forum](https://community.clay.com/)
+To work with the reply as clean text — for example, when mapping it to a CRM note or passing it to an AI action — use the `Text` sub-field instead. If you prefer to use `Html` and strip the tags, add a formula column to do so.
