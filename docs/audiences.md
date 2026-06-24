@@ -264,13 +264,11 @@ Since enrichment results write permanently back to All People, you can filter an
 
 **Errored rows after a run**
 
-A row appears in the **Errored rows** tab when the column designated as your **deletion criterion** fails to complete. If your deletion criterion is set to a provider enrichment column and that provider returns no match for a record (for example, a domain that isn't in the provider's database), the row is marked as errored even if the **Update Audiences Record** step succeeded and your data was already written back to Audiences. This is expected behavior, not a bug.
+In Audiences bulk enrichment, a row appears in the **Errored rows** tab when any of its action columns fail — for example, if a data provider returns no match for a domain. This is true even if the **Update Audiences Record** step succeeded and your data was already written back to Audiences. This is expected behavior, not a bug — Audiences treats a row as complete only when all configured action columns succeed.
 
 To resolve errored rows:
 -   **Rerun failed rows** — in the bulk enrichment table, right-click the failing column header → **Run column** → **Run [N] empty or out-of-date rows** to retry only records that didn't get a result.
--   **Adjust your deletion criterion** — if the failing provider is non-critical, change your deletion criterion to the **Update Audiences Record** column. Rows will then complete whenever the export step succeeds, regardless of whether other enrichment columns returned data.
-
-For more on deletion criteria configuration, see [Bulk enrichment](https://university.clay.com/docs/bulk-enrichment).
+-   **Remove non-critical provider columns** — if a provider consistently fails to match your records and the data isn't essential, removing that column from the bulk enrichment table means its failures will no longer mark rows as errored.
 
 ### Signals
 
