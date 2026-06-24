@@ -115,6 +115,18 @@ For formulas that reference many columns, or that depend on complex values like 
 
 **If the preview looks wrong, don't assume your formula is broken.** Save the condition, run a few test rows, and check the table for the **"Run condition not met"** status on the cells you expect to be skipped. The actual run results are the authoritative source — the preview is a best-effort guide, not a guarantee.
 
+### Prefer empty checks over error-text matching for fallback run conditions
+
+When building a fallback pattern — run one enrichment first, then a second only when the first found nothing — avoid gating the fallback on a specific text string the first enrichment might return (such as `"Not Found"` or `"no data"`). Enrichment providers handle no-result states differently: some write a literal string, others leave the cell empty. Even when the displayed value looks like `"Not Found"`, the stored value can contain trailing whitespace or other characters that cause an exact string comparison to silently fail.
+
+Instead, check for an **empty/blank value** or for the **presence of a valid result**:
+
+- **Preferred — check for empty**: `/First Enrichment Column is empty`
+- **Preferred — check for valid result**: `!String({{First Enrichment Column}} ?? "").toLowerCase().includes("expected-value")`
+- **Avoid**: `{{First Enrichment Column}} == "Not Found"` or `contains "not found"`
+
+The `is empty` check is the most robust option: it works regardless of how the provider stores its no-result state, and it matches what Clay natively treats as "nothing here."
+
 ### Only matching rows consume credits
 
 When a run condition is set, Clay only processes rows where the condition evaluates to **true**. Rows where the condition is not met are skipped and shown as **"Run condition not met"** — no credits are consumed for those rows.
@@ -143,7 +155,7 @@ On new rows, the upstream column hasn't run yet, so the condition is false and t
 
 ### "Circular dependency error" when setting a run condition
 
-When you save a run condition, Clay validates that the column referenced in the condition does not depend — directly or through a chain of other columns — on the column being gated. If a cycle is detected, Clay shows a **"Circular dependency error"** modal and prevents saving. The modal lists the specific column(s) that complete the loop.
+When you save a run condition, Clay validates that the column referenced in the condition does not depend — directly or through a chain of other columns — on the column being gated. If a cycle is detected, Clay shows a **"Circular dependency error"** modal with the message "You referenced downstream columns that depend on the values of this column as input," and prevents saving.
 
 **This check covers indirect chains, not just direct self-reference.** Even if the condition column doesn't visibly reference the gated column, the error can still occur if the condition column's value is derived from other columns that themselves depend on the gated column's output.
 
@@ -155,7 +167,7 @@ Setting a run condition on Work Email based on Status creates the loop:
 
 `Work Email → Status → Work Email`
 
-Clay blocks this and lists Status (or the intermediate column completing the cycle) in the error modal.
+Clay blocks this with the "Circular dependency error" modal.
 
 **How to diagnose**: Starting from the column referenced in your run condition, trace each of its inputs one step at a time. Work backwards through the dependency chain until you either reach raw source columns (import data or columns not derived from any enrichment) or encounter the column you're trying to gate.
 
