@@ -230,6 +230,8 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
     -   Enable the auto-enrich toggle so that any new record entering this segment is automatically passed through the enrichment — typically within 15 minutes.
 5.  Click `Start Run`.
 
+**Note:** Clay does not impose rate limits on Audiences bulk enrichments — the system is built to handle large lists at scale. Third-party data providers (such as Clearbit or Apollo) apply their own rate limits, but Clay queues requests and manages these automatically in the background. If you supply personal API keys for a provider, those keys' own rate limits apply.
+
 **Using Audiences from a Clay table:**
 
 Four Clay actions let you move data between a Clay table and your Audience directly.
@@ -259,6 +261,16 @@ Since enrichment results write permanently back to All People, you can filter an
 1.  Add a filter to your audience.
 2.  Select the enriched field (for example, `Phone` or `LinkedIn URL`).
 3.  Set the operator to **`is not empty`** to show only records where the enrichment returned a value.
+
+**Errored rows after a run**
+
+A row appears in the **Errored rows** tab when the column designated as your **deletion criterion** fails to complete. If your deletion criterion is set to a provider enrichment column and that provider returns no match for a record (for example, a domain that isn't in the provider's database), the row is marked as errored even if the **Update Audiences Record** step succeeded and your data was already written back to Audiences. This is expected behavior, not a bug.
+
+To resolve errored rows:
+-   **Rerun failed rows** — in the bulk enrichment table, right-click the failing column header → **Run column** → **Run [N] empty or out-of-date rows** to retry only records that didn't get a result.
+-   **Adjust your deletion criterion** — if the failing provider is non-critical, change your deletion criterion to the **Update Audiences Record** column. Rows will then complete whenever the export step succeeds, regardless of whether other enrichment columns returned data.
+
+For more on deletion criteria configuration, see [Bulk enrichment](https://university.clay.com/docs/bulk-enrichment).
 
 ### Signals
 
