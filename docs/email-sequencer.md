@@ -213,6 +213,12 @@ The Clay email sequencer is available on all plans. Each lead sequenced consumes
 
 Each lead can only be sequenced once per campaign. To send multiple sequences to the same email address (like [bob@example.com](mailto:bob@example.com)), create a separate campaign for each sequence. Best practice: wait at least a couple of months between sequences to the same person unless you have a completely different offer.
 
+### What happens if my source table has two leads with the same email address?
+
+If two leads in the same campaign share a recipient email address, Clay automatically enrolls only one of them to prevent duplicate outreach. The other lead is permanently skipped and will not be retried in future enrollment runs. Leads without an email address are not affected — they pass through to standard enrollment validation.
+
+To avoid losing leads this way, deduplicate your source table before launching. Click any email column header → **Dedupe** to remove rows with identical email values before starting the campaign.
+
 ### My sender account got disconnected. What happened?
 
 Email providers like Google and Microsoft occasionally revoke access due to inactivity, security checks, or suspicious activity detection. To fix this, delete the disconnected account from your sequencer settings and re-authenticate it.
