@@ -34,7 +34,7 @@ _Note: Personal email addresses significantly improve match rates when syncing t
     -   **For contacts:** Hashed email + first name/last name (required for optimal matching)
     -   **For accounts:** Company name + company website (required for optimal matching)
     -   **Note:** When syncing a LinkedIn **Account list**, a **Company URL** field is also available in the mapping step and can improve match rates. This field does not appear for Contact list audiences — LinkedIn does not support company URL matching for contacts.
-    -   **Important:** Email is LinkedIn's primary field for matching contacts. If no email column is mapped, LinkedIn will process the sync but return an audience size of 0 — even for tens of thousands of contacts. This appears as a "too small for use in campaigns" status. Because field mapping cannot be changed after an Ad Sync is created, verify at least one email column is mapped before sending your audience.
+    -   **Important:** Email is the primary field ad platforms use to match contacts. If no email column is mapped, the platform will process the sync but return an audience size of 0 — even for tens of thousands of contacts. This appears as a "too small for use in campaigns" status. Because field mapping cannot be changed after an Ad Sync is created, verify at least one email column is mapped before sending your audience.
 4.  **Review your audience insights and quality summary**.
     -   Check your estimated match rate and audience size before syncing.
     -   Make adjustments to your table if needed (for example, narrowing down to specific job titles or industries) and re-run your export.
@@ -182,11 +182,11 @@ Yes! Once synced, your audiences automatically update as data changes in your Cl
 
 No, LinkedIn and Meta don't provide contact-level match visibility for privacy reasons. However, Clay shows aggregate match rates and total audience size after each sync.
 
-### **Why does my LinkedIn audience show "too small for use in campaigns"?**
+### **Why does my ad audience show "too small for use in campaigns"?**
 
-LinkedIn reports an audience as "too small" when fewer than 300 contacts matched. The most common cause is that no email column was mapped in the field mapping — LinkedIn matches contacts by email, so without it LinkedIn processes all sent records but matches 0.
+Ad platforms report an audience as "too small" when fewer than 300 contacts matched. The most common cause is that no email column was mapped in the field mapping — ad platforms match contacts by email, so without it the platform processes all sent records but matches 0.
 
-A second factor: if Enhanced Matching is enabled, it uses a LinkedIn URL or Work Email column you designate to look up personal emails before syncing. If those input columns are not configured, Enhanced Matching cannot improve your match rate.
+A second factor: if Enhanced Matching is enabled, it uses a professional profile URL or Work Email column you designate to look up personal emails before syncing. If those input columns are not configured, Enhanced Matching cannot improve your match rate.
 
 **To fix this:** Because field mapping cannot be changed after an Ad Sync is created, you'll need to deactivate the current sync and create a new one. Map at least one email column, and configure Enhanced Matching inputs if using that feature. See [Why should I use personal emails instead of work emails?](#why-should-i-use-personal-emails-instead-of-work-emails) for guidance on which email type gives the best results.
 
