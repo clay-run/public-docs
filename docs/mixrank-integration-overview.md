@@ -1,5 +1,6 @@
 ---
 title: Mixrank integration overview
+source_url: https://university.clay.com/docs/mixrank-integration-overview
 description: High-frequency data platform for sales, marketing, and investment insights.
 last_synced: 2026-04-26T01:40:23.112Z
 ---
