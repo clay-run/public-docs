@@ -98,8 +98,8 @@ To find LinkedIn posts containing a specific keyword or hashtag, use the **Find 
 **Inputs:**
 
 -   **Keyword:** A single keyword or hashtag to search for in post content (e.g., `#cvpr2026` or `GTM`). Only one keyword is supported — comma-separated lists are not valid.
--   **Companies filter (optional):** Limit results to posts that mention companies, were posted by companies, or were posted by employees of specific companies.
--   **People filter (optional):** Limit results to posts that mention or were posted by specific individuals.
+-   **Companies filter (optional):** Limit results to posts that mention companies, were posted by companies, or were posted by employees of specific companies. **Only the first 5 company domains or profile URLs are used** — if you supply more (from a table column or manual list), entries beyond the fifth are ignored. To cover more than 5 companies, create one source per group of 5.
+-   **People filter (optional):** Limit results to posts that mention or were posted by specific individuals. **Only the first 5 person profile URLs are used** — entries beyond the fifth are ignored. To cover more than 5 individuals, create one source per group of 5.
 -   **Sort by:** `Most recent` (default) or `Top match`.
 -   **Time frame:** `Last 24 hours` or `Last week` (default).
 -   **Max number of results:** Default is 100; maximum is 1,000.
