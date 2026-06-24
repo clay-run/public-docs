@@ -216,7 +216,7 @@ If you are on a **monthly plan**, unused Data Credits will roll over and accumul
 -   For example, if your plan includes 50,000 credits per month, your maximum balance is 100,000. If you already have 82,000 credits when your plan renews, your balance becomes 100,000 — not 132,000. The 32,000 excess is dropped.
 -   If you cancel or downgrade, you can use any excess Data Credits until your current billing cycle ends. After the billing cycle ends, your balance will be reduced to the **Data Credit rollover limit** of your new plan.
 
-If you are on an **annual plan**, you are eligible for a **15% Data Credit rollover** of unused Data Credits, provided you renew on the same or a higher-tier plan.
+If you are on an **annual plan**, up to **15% of your new plan's annual Data Credit allotment** can roll over from your unused balance at renewal, provided you renew on the same or a higher-tier plan. This cap is based on the *new* plan's allotment — so if you switch to a plan with fewer annual credits, only 15% of the lower allotment carries over, regardless of your previous balance. For example, switching to a plan with 72,000 annual credits means at most 10,800 credits (15% × 72,000) carry over, even if you had a much larger balance before.
 
 _Note: Your rollover and renewal happen on the same day and at the same time you originally subscribed (this timestamp is now shown in your billing details). Credits are updated via a payment-processor webhook and typically appear within a few minutes of that timestamp._
 
@@ -275,7 +275,8 @@ To downgrade your Clay workspace plan:
 
 **After your billing cycle ends:**
 
--   Your balance is capped at 2× the new plan's monthly Data Credit limit.
+-   **On a monthly plan:** Your balance is capped at 2× the new plan's monthly Data Credit limit.
+-   **On an annual plan:** Your carryover is capped at 15% of the new plan's annual Data Credit allotment. Credits above that cap are forfeited.
 -   Your data remains intact.
 -   Features are limited to the new plan's capabilities.
 
@@ -383,7 +384,8 @@ Common causes:
 
 **After your billing cycle ends:**
 
--   Your balance is capped at 2× the new plan's monthly Data Credit limit.
+-   **On a monthly plan:** Your balance is capped at 2× the new plan's monthly Data Credit limit.
+-   **On an annual plan:** Your carryover is capped at 15% of the new plan's annual Data Credit allotment. Credits above that cap are forfeited.
 -   Your data remains intact.
 -   Features are limited to the new plan's capabilities.
 
