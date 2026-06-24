@@ -199,3 +199,41 @@ This is the most common cause of unexpected results from the Company Domain wate
 -   **Use the Excluded Domains field on the Google step** — In the Google provider's settings within the waterfall, expand the **Excluded Domains** optional field and enter specific domains you want to block from results (for example, `proff.no`, `tracxn.com`, `rocketreach.co`). Note: due to a known issue, this filtering may not work reliably in all cases.
 -   **Skip the Google step** — In the waterfall's **Waterfall sequence** configuration, toggle off the Google provider. The waterfall then only queries Clearbit and HG Insights, which draw from structured company databases rather than live web search. You'll get fewer overall matches but higher accuracy on the ones you do find.
 -   **Use Claygent instead** — For the most reliable domain finding, set up a Claygent column that searches for the company name and verifies the found URL belongs to the right company before returning a domain. Claygent uses AI credits rather than standard waterfall credits.
+
+## Tech Stack waterfall
+
+The **Tech Stack** waterfall finds which technologies a company has installed by cascading across four providers — stopping as soon as one returns a result.
+
+Provider order: **SimilarWeb → Predict Leads → BuiltWith → Apollo**
+
+### Setting up the Tech Stack waterfall
+
+1.  In your table, click **Tools** in the top right corner, then select the **Enrich** tab.
+2.  Search for `Tech stack` and select the **Tech Stack** waterfall.
+3.  Map the column containing company domains as the input.
+4.  Click `Save`.
+
+**Input required:** Company domain  
+**Output:** Technologies detected at the company
+
+### Provider strengths
+
+Each provider detects technology using different methods:
+
+-   **SimilarWeb** — Identifies technologies installed on a domain, including installation and uninstallation dates and technology categorization. Draws from web analytics and crawl data.
+-   **Predict Leads** — Sources technology data from historical job descriptions, website script tags, and DNS records. Surfaces tools that appear in hiring descriptions, including software not visible in website source code.
+-   **BuiltWith** — Scans a company's public website source code to find client-side technologies: marketing pixels, JavaScript libraries, and front-end software embedded in the site.
+-   **Apollo** — Returns technology data as part of its company profile enrichment. Note: the Apollo step requires your own Apollo account connected in Clay via OAuth (**Settings → Connections**). If no Apollo account is connected, this step is skipped.
+
+### Verifying whether a company uses a specific product
+
+For verifying whether a company uses a particular enterprise product — including back-end platforms, CRMs, ERP systems, and service software that doesn't appear in website code — use the separate **Verify Product Usage** waterfall. This waterfall uses HG Insights, which analyzes business documents such as contracts, RFPs, and job postings to surface internally-deployed tools that front-end scanners can't detect.
+
+To set up Verify Product Usage:
+
+1.  In your table, click **Tools** in the top right corner, then select the **Enrich** tab.
+2.  Search for `Verify Product Usage` and select the waterfall.
+3.  Map your company domain column as the input and specify the product you want to verify.
+4.  Click `Save`.
+
+See [HG Insights integration](hg-insights-integration-overview.md) for more details on HG Insights' detection methodology and what types of technologies it covers best.
