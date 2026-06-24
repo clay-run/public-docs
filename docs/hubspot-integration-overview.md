@@ -291,6 +291,14 @@ Each HubSpot column stores a reference to the specific connection it was configu
 1. Open each affected column's settings and change the **Account** dropdown to select the new connection. This updates the column to use the new connection ID.
 2. If re-selecting the account in the existing column doesn't resolve the error, create a new column with the same HubSpot action and configuration. New columns automatically pick up the currently active connection and will run successfully.
 
+### Why does my HubSpot Create Object show "Invalid input" on some rows?
+
+When a row is missing a required input — for example, the company ID needed to associate a new Lead with a company — Clay shows an **"Invalid input"** error for that row (e.g., *"Invalid input: Please provide all association fields"*). This error is separate from authentication errors: it means the row does not have the data needed to complete the create request.
+
+**Fix:** Add a run condition so the action only runs on rows where the required field is populated. Open the column settings, go to **Run settings → Only run if**, and add a condition that checks the required input field is not empty. Rows without the required value will be skipped cleanly without showing an error.
+
+**Tip:** If you see both "Missing authentication" and "Invalid input" errors in the same column, resolve the authentication issue first (see the FAQ above), then re-run the column to identify which remaining errors are due to missing field values.
+
 ### Why does my HubSpot Update Object show "No properties found to update" when Ignore blank values is enabled?
 
 This error appears when **every** property mapped in that column is blank for a given row. When **Ignore blank values** is enabled (the default), Clay strips all blank fields from the payload before sending to HubSpot. If every mapped field is blank, nothing is left to send — and HubSpot returns "No properties found to update," which Clay surfaces as an error in the cell.
