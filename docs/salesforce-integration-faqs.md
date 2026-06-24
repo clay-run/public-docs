@@ -326,6 +326,19 @@ Assignment rules in Salesforce fire on every record save — not just when a rec
 
 **Note:** If your Update Record column was created before this option was added, the toggle may be off. Check your column settings if you are seeing unexpected owner changes after Clay updates a record.
 
+## Why is a Salesforce field being set back to a value I didn't expect after Clay runs?
+
+If a Salesforce field appears to revert — for example, a `Contact Owner` you just assigned keeps getting overwritten a few minutes later — the most common cause is **multiple Clay columns writing to the same Salesforce field**. When more than one column is mapped to write to the same field (whether in the same table or across different tables), there is no conflict resolution: whichever column runs last determines the final value.
+
+This is easy to miss because every write from Clay appears in Salesforce's record history under the same connected user account. If you see that account writing to the same field twice within a short window, two or more Clay columns are likely both targeting that field.
+
+**To diagnose this**, open the record's field history in Salesforce and look for two writes to the same field by your connected integration user at different times. Then search your Clay tables for any column that writes to that Salesforce field — check across all your tables, not just the one you were working in.
+
+**To fix this**, choose one of the following approaches:
+
+-   **Add a run condition to the overwriting column.** Open the column that should not overwrite earlier changes and add a conditional run. For example, a round-robin ownership column can be set to only run when `Contact Owner` is empty — so it handles initial assignment without overwriting subsequent manual changes. See [Conditional runs](https://university.clay.com/docs/conditional-runs) for setup instructions.
+-   **Designate one column as the source of truth.** Disable auto-run on all other columns that write to the same field so only one column controls that field's value at a time.
+
 ## Why do records created or updated by Clay show my name (or another user's name) in Salesforce's Created By or Last Modified By field?
 
 Salesforce's `CreatedBy` and `LastModifiedBy` audit fields always reflect the **Salesforce user whose credentials authenticated the API request**. Clay does not have a mechanism to override this — it passes the connection's access token with each API request, and Salesforce sets those fields accordingly.
