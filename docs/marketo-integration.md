@@ -99,3 +99,11 @@ If a lead field value contains an ampersand (`&`) — such as a job title like "
 ### Marketo 606 rate limit error
 
 Error 606 (`Max rate limit '100' exceeded with in '20' secs`) means Marketo received more than 100 API calls within a 20-second window. To reduce call volume, enable **Run in batches** in the affected action's Run settings. With batching enabled, Clay groups up to 300 rows into a single POST request instead of one call per row, significantly reducing the number of API calls and helping avoid this error.
+
+### Clay returns a 429 error when Marketo sends leads via webhook
+
+When a Marketo smart campaign or Flow Action triggers for many leads at once, Marketo fires a separate HTTP POST to Clay's webhook endpoint for each lead. Clay's webhook endpoint accepts **10 requests per second per workspace**, with a burst of up to 20. When more than 20 requests arrive in rapid succession, Clay returns a `429 Too Many Requests` error — dropped records are **not** queued or retried by Clay, so those leads will not appear in your table.
+
+There is no "batch size" setting for Clay webhooks: each POST creates exactly one row. The practical limit is how many leads Marketo fires within a single second. To avoid data loss, add a **Wait** step between leads in your Marketo campaign flow to pace requests to 10 or fewer per second. If your workflow consistently requires a higher throughput, contact Clay support to request a rate limit increase for your workspace.
+
+For full details on Clay's webhook rate limits and retry guidance, see [Webhooks in Clay](https://www.clay.com/university/guide/webhook-integration-guide).
