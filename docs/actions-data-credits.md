@@ -230,7 +230,7 @@ You can adjust your Clay plan, Actions, and Data Credits at any time to match yo
 If you need ongoing increases in capacity:
 
 1.  Go to `Settings` → `Plan & billing`.
-2.  Click `Change plan` to upgrade your plan tier, or adjust your Actions and Data Credits limits.
+2.  Click `Switch plan` (or `Upgrade` if you're on the free plan) to upgrade your plan tier, or adjust your Actions and Data Credits limits.
 3.  Select the higher tier or credit amount that fits your needs.
 4.  Click `Upgrade` to confirm.
 
@@ -252,7 +252,7 @@ For emergency Data Credit needs during your billing cycle (not available for Act
 To downgrade your Clay workspace plan:
 
 1.  Click your profile picture in the top-right corner and select `Settings`.
-2.  Navigate to `Plan & billing` and click `Change plan`.
+2.  Navigate to `Plan & billing` and click `Switch plan`.
 3.  Choose the plan you'd like to downgrade to and confirm your selection.
 
 **If you downgrade:**
