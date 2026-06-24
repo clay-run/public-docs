@@ -37,7 +37,7 @@ If you need results that meet _either_ of two different filter combinations, set
 
 **If you have a company list**, you have two options depending on how you want to store the results:
 
--   **Find People at These Companies** — creates a separate people table with one row per contact, linked back to the company. Best when you want to run enrichments on each contact individually (work email, phone, etc.) or need to rank/filter contacts before saving. **To access:** In your company table, click **Tools** (top right) → **Sources** tab → **Find People at These Companies**. The setup panel includes full filters for job title, seniority, location, experience, and more — set your criteria, preview the results, then click **Import** to create the people table. To cap results to a specific number per company (for example, 5 contacts per company), use the **Limit per company** field in the setup panel before clicking Import — this limit is configured at search creation time and cannot be applied retroactively to an existing people table.
+-   **Find People at These Companies** — creates a separate people table with one row per contact, linked back to the company. Best when you want to run enrichments on each contact individually (work email, phone, etc.) or need to rank/filter contacts before saving. **To access:** In your company table, click **Tools** (top right) → **Import** tab → **Find People at These Companies**. The setup panel includes full filters for job title, seniority, location, experience, and more — set your criteria, preview the results, then click **Import** to create the people table. To cap results to a specific number per company (for example, 5 contacts per company), use the **Limit per company** field in the setup panel before clicking Import — this limit is configured at search creation time and cannot be applied retroactively to an existing people table.
 -   **Find Contacts at Company** (add as a column in your company table) — stores contacts as a list within each company row. Best when you want contacts to stay in your company table, or when you're adding companies one at a time and don't want a single search to re-run across all rows. Use **Send Table Data** afterward to push individual contacts to another table if needed.
 
 If you don't have a company list, use **People search as a source** — a standalone search by title or other criteria that returns a new table.
@@ -300,7 +300,7 @@ This mismatch most commonly occurs with subsidiaries, acquired companies, and or
 
 ### Company Table Data doesn't include company enrichment data
 
-The **Company Table Data** column retrieves basic field types from the linked company row — text, number, date, URL, and formula columns. **Enrichment columns (action-type columns such as Clearbit Company, Apollo, Enrich Company, or any other Clay integration enrichment) are not included** in what Company Table Data returns.
+The **Company Table Data** column retrieves basic field types from the linked company row — text, long text, number, boolean, date, email, URL, image, JSON, and formula columns. **Enrichment columns (action-type columns such as Clearbit Company, Apollo, Enrich Company, or any other Clay integration enrichment) are not included** in what Company Table Data returns.
 
 If you enriched your company table and want that data accessible in your people table, use **Lookup single row in other table** instead:
 
@@ -313,6 +313,19 @@ If you enriched your company table and want that data accessible in your people 
 Lookup Rows returns the full company row including enrichment column outputs. To promote a specific enrichment value into a dedicated column, click into a populated cell and select a field → **Create column for it**. See [Lookup Rows](lookup-rows.md) for setup details.
 
 **Alternatively**, extract specific enrichment values into **formula columns** in your company table first (for example, a column with formula `{{Clearbit Enrichment}}?.revenue`). Formula columns are included in Company Table Data, so those extracted values will flow through to the people table when Company Table Data runs.
+
+### A new column I added to my company table isn't showing in Company Table Data
+
+When you add a new column to your company table after the people table was already created, the **Company Table Data** column in the people table doesn't automatically pick up that new column. The column fetches a fresh snapshot of each linked company row every time it runs — so the new column's data only appears after the next run.
+
+**To pull in newly added company table columns:**
+
+1.  In your people table, right-click the **Company Table Data** column header.
+2.  Select **Run column → Force run all [N] rows**.
+
+This re-runs Company Table Data for every row and retrieves the current state of the linked company row, including any columns added since the last run.
+
+**Note:** Only the following field types are returned — text, long text, number, boolean, date, email, URL, image, JSON, and formula columns. Enrichment action columns (Clearbit, Apollo, Enrich Company, etc.) are never included in Company Table Data regardless of re-running — see [Company Table Data doesn't include company enrichment data](#company-table-data-doesnt-include-company-enrichment-data) for how to access enrichment data in your people table.
 
 ### "Company Table Data" shows "Unable to fetch fields for company table"
 
