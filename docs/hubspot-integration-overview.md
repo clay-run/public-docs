@@ -237,6 +237,17 @@ If a property exists in HubSpot but doesn't get updated when you run the Update 
 
 **A different HubSpot account is selected.** If multiple HubSpot accounts are connected to your workspace (for example, if teammates each added their own HubSpot connection), the Update Object action may be authenticating against a different instance than the one you intend to update. Open the column settings and confirm the HubSpot account shown is the correct one. You can verify by running a **Lookup object** action on the same record — if the property appears updated there, the write reached the right account.
 
+### Why do all records I push from Clay appear with the same source in HubSpot?
+
+HubSpot automatically labels records created or updated through API integrations (including Clay) as **Original Source = Offline Sources** and locks the Original Source sub-fields. This is HubSpot's own behavior for any integration-created record — it cannot be overridden through the integration.
+
+To track different source values per record, use a custom HubSpot property:
+
+1. In your Clay table, add a **Formula** column that outputs the source label you want for each row — for example, `"Webinar"` for some rows and `"Outbound Campaign"` for others, based on criteria from other columns in your table.
+2. In your **Create object** or **Update object** action, map that Formula column to a custom HubSpot property you create in HubSpot (for example, a text property called **Lead Source** under **Settings → Properties**).
+
+The conditional logic lives in Clay; HubSpot records and reports on whatever value Clay sends. For help writing the formula expression, see [Formulas](formula-generator.md).
+
 ### Why does my HubSpot Update Object show "Required inputs missing" after I deleted a column?
 
 If the column that was previously mapped to the **HubSpot Object ID** field has been deleted from the table, the field retains a stale reference to that removed column. The action sees this as a missing required input and will not run.
