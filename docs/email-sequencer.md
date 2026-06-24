@@ -322,11 +322,11 @@ If the error persists more than 24 hours after your admin marked the app as `Tru
 
 In the Campaign Events table, the `Event type` column reflects the reply classification assigned by Smartlead. Categories include:
 
--   `LEAD_REPLIED` — any reply from a lead
+-   `EMAIL_REPLY` — any reply from a lead
 -   `LEAD_UNSUBSCRIBED` — lead clicked the unsubscribe link
 -   `LEAD_CATEGORY_UPDATED` — Smartlead has classified the reply (e.g., as `Interested`, `Do Not Contact`, `Not Interested`, `Out of Office`, or other categories)
 
-Note that `LEAD_REPLIED` fires for every reply (including out-of-office), while `LEAD_CATEGORY_UPDATED` fires after Smartlead processes and classifies the reply. Both events may appear for the same reply.
+Note that `EMAIL_REPLY` fires for every reply (including out-of-office), while `LEAD_CATEGORY_UPDATED` fires after Smartlead processes and classifies the reply. Both events may appear for the same reply.
 
 ### How do I handle replies from leads?
 
