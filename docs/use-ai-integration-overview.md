@@ -242,3 +242,17 @@ Pulling properties directly from the enrichment column gives you access to the f
 **Alternatively**, configure the Scrape Website enrichment to return less data. Open the enrichment column settings and deselect output fields you don't need (for example, uncheck **Body Text** if your prompt only requires the title and description).
 
 **Skipping rows where scraped data is missing:** If you want the AI column to skip rows where the Scrape Website column returned no data, add a run condition. Open the AI column's **Run Settings**, click **Add run condition**, and set it to `/Scrape Website is not empty`. See [Conditional runs](conditional-runs.md) for full details.
+
+### Scrape Website returns empty results on login-required pages
+
+If Clay's **Scrape Website** enrichment returns a login screen or empty results instead of the content you expected, the page is likely gated behind user authentication.
+
+Clay's Scrape Website action includes JavaScript rendering (enabled by default) and can handle many dynamic websites. However, it fetches pages as an anonymous browser — it has no access to your account credentials or session cookies. When a page requires users to be signed in before the content loads (such as conference attendee lists on event platforms, paywalled databases, or private CRM dashboards), Clay receives only the login screen or a restricted preview rather than the protected data.
+
+**Why this happens:** Even with JavaScript rendering on, Clay cannot authenticate as you. Sites that gate content behind a login — where the list, report, or dataset only appears after you sign in — are not accessible to any external scraper, regardless of JavaScript settings.
+
+**Workarounds:**
+
+-   **Export directly from the platform.** Most event management platforms, databases, and portals offer a built-in data export for logged-in users. Look for a "Download attendee list," "Export," or "Download CSV" option inside the platform once you're signed in.
+-   **Import the exported file into Clay.** Once you have the data as a CSV, upload it to a Clay table via **Tools → Sources** and select your file. See [How to import your CSV into Clay](csv-import-overview.md) for step-by-step instructions, then add enrichment columns to fill in missing details like email addresses, social profiles, and full names.
+-   **Capture the underlying API request (advanced).** If the platform doesn't offer a built-in export, open your browser's DevTools **Network** tab while signed in, navigate to the page, and find the underlying API call that loads the data. You can replay that authenticated request — which carries your login cookies or token — to extract the raw data manually.
