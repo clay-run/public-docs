@@ -56,7 +56,7 @@ You can import data from:
 11.  Name the corresponding Clay fields.
 12.  Select `Opportunities` at the top of the sync panel.
 13.  Enable the `Import` toggle.
-14.  Add any Opportunity fields you want to filter or segment by — common fields include `Stage`, `Amount`, `Close Date`, and `Owner`.
+14.  Add any Opportunity fields you want to filter or segment by — common fields include `Stage`, `Amount`, `Close Date`, and `Owner`.\
      -   Opportunity data is associated with your Companies records and becomes available as a filter in any Companies audience.
 15.  Name the corresponding Clay fields.
 16.  Click `Save and Preview`, then `Confirm`.
@@ -72,7 +72,7 @@ Clay pulls data from Salesforce on two schedules:
 
 **Deleted records:** Clay does not remove deleted Salesforce records from Audiences immediately. Instead, the record is marked **Deleted in source**, which you can filter on in your audience. The weekly full sync reconciles hard-deleted records. If a Salesforce record is deleted and recreated (assigning it a new Salesforce ID), it will temporarily appear as a duplicate entry until the next weekly full sync resolves it. There is no self-serve option to trigger an early full sync — contact Clay support if you need an expedited cleanup.
 
-**Salesforce activities:** When Salesforce is connected, the Activity tab on each record's detail view shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp.
+**Salesforce activities (beta):** Clay can import Salesforce Task and Event activity data and associate it with your account records. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace. Once the feature is enabled for your workspace, an **Import activities** toggle appears in your Salesforce Companies import settings. Enable this toggle to begin importing activities; accounts are associated automatically in the background. After enabling, the Activity tab on each record's detail view shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp.
 
 ### Importing from HubSpot
 
@@ -539,4 +539,4 @@ Archiving a record is a **soft delete** — the record is not permanently remove
 
 **Note on lookup timing:** After archiving a record, there is a brief processing delay before the change is reflected in `Lookup in Audiences` results. Running a lookup immediately after archiving may still return the archived record — lookups typically update within a short time as changes propagate.
 
-To exclude Salesforce-deleted records from your audience lookups, filter on **Sync status → Deleted in source** to identify them, then archive the records you no longer want matched against.
+To exclude Salesforce-deleted records from your audience lookups, filter on **Sync status → Deleted in source** to identify them, then archive the records you don't want matched against.
