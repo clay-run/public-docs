@@ -65,6 +65,19 @@ Yes! When editing a formula, you'll see the option to `Save and don't run enrich
 
 Clicking this prevents your formula from running on any enrichment columns that would cost credits. These columns will appear greyed out to indicate they're out of date.
 
+### **How do I view or edit an existing formula expression directly?**
+
+When you open an existing formula column, the Formula generator sidebar pre-loads both the original description (prompt) and the formula expression. The JavaScript expression is shown in the collapsible **Formula** section, below the prompt input.
+
+To view or edit the expression without regenerating:
+
+1.  Open the existing formula column to open the **Formula generator** sidebar.
+2.  Expand the **Formula** section to see the JavaScript expression.
+3.  Click in the formula editor to make changes directly.
+4.  Click **Save column**.
+
+**Tip:** If you inherited a formula and want to understand what it does before modifying it, copy the expression text and paste it into an AI assistant (like ChatGPT or Claude) with the prompt: *"Explain what this formula does."* The assistant can walk through the logic step by step and suggest modifications in plain language. Once you have an updated expression you're happy with, paste it back into Clay's formula editor.
+
 ### **Can I use formula columns for text matching and string operations without consuming credits?**
 
 Yes. Formula columns run JavaScript and **do not consume data credits** — they run row-by-row at no per-row cost. This makes them the right tool for deterministic text operations that don't need AI: checking whether a field contains a keyword, matching a value against a predefined list, applying regex patterns, or normalizing text.
