@@ -18,6 +18,10 @@ Conditional runs allow you to execute specific actions or enrichments in a workf
 
 -   **Condition**: `{{email}} is not empty`
 
+**Enrichment with optional inputs**: Run an enrichment only when at least one required identifier is present — for example, when your workflow accepts either an email address or a phone number.
+
+-   **Condition**: `/Email is not empty OR /Phone is not empty`
+
 **Sequencer Filtering**: Add leads to a sequence based on lead score or industry.
 
 -   **Condition**: `{{lead_score}} > 80 AND {{industry}} == "SaaS"`
@@ -106,6 +110,17 @@ To reference a column's data in a run condition, **type `/` followed by the colu
 `/Domain is empty`
 
 (where `/Domain` references the column named "Domain" in your table).
+
+### Use "is empty" and "is not empty" to check for blank fields
+
+When checking whether a field has a value — in a run condition or a formula column — **always use `is empty` or `is not empty`**. These are the correct Clay operators for blank-field checks.
+
+**"exist" and "does not exist" are not valid operators in Clay.** Writing `/Column does not exist` or `/Column exist` will not behave as expected; the condition may silently fail or never match.
+
+**Correct**:
+
+- `/Email is not empty` — condition passes when the Email column has a value
+- `/Domain is empty` — condition passes when the Domain column is blank
 
 ### Avoid combining `!!` with equality checks on 0 or other falsy values
 
@@ -217,6 +232,21 @@ Run conditions can only reference columns in the **current row** — there is no
 The enrichment will now only fire for rows where the lookup returned at least one match.
 
 **See also**: [Lookup Rows](lookup-rows.md) — full reference for single-row and multiple-row lookup patterns, including using lookups as suppression gates.
+
+### Column stops running after a referenced column is deleted
+
+If a run condition formula references a column that has been **deleted** from the table, the column stops running. Existing cells retain whatever status they had prior to the deletion — they are not updated to a new error state — and downstream columns that depend on this column will appear out of date because no new output is being produced.
+
+**To fix:**
+
+1. Click the column header → **Edit column** → open **Run settings**.
+2. Find the **"Only run if"** formula — it will contain a reference to a column that no longer exists in the table.
+3. Delete the broken condition by clicking the **×** next to it, or click **Use AI** to recreate it using a valid column reference.
+4. Save the column.
+
+Once saved, the column will run normally on the next trigger.
+
+**Tip:** Before deleting a column, check whether any other columns reference it in a run condition. Open each dependent column's **Run settings** and update or remove conditions that point to the column you're about to delete.
 
 ## See also
 
