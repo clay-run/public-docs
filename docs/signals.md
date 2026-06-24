@@ -193,15 +193,3 @@ Signals track events at the **company level** — each fundraising round, new hi
 4.  Map the signal columns you want to surface (e.g., event type, funding amount, news headline) as output fields.
 
 This lets you see the latest signal event for each company directly in your contacts table without mixing signal event rows into your contacts.
-
-### Why did my brand mentions signal stop working?
-
-The social network brand mentions signal — along with related social listening actions — was discontinued in early March 2026. Clay's data partner for these actions updated their terms of use, and to remain aligned with their guidelines, Clay discontinued this feature.
-
-If you had a brand mentions signal set up before the deprecation, it will show an error when run and cannot be re-enabled.
-
-**Alternatives for monitoring brand mentions:**
-
--   **Claygent** — Use Clay's AI web scraper to monitor brand mentions from publicly available sources on the web.
--   **Google News alerts** — Integrate through Clay to track brand mentions across news and web content.
--   **Third-party social listening tools** — Many social listening platforms can connect to Clay through API integrations, letting you route mention data into your Clay tables.

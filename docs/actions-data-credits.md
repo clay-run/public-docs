@@ -82,7 +82,7 @@ Your Actions capacity is determined by your plan tier. Plan tiers are designed s
 
 ### How to get more Actions
 
-**Upgrade your action capacity tier** in `Settings` → `Plan & billing`.
+**Upgrade your action capacity tier** in `Settings` → `Plans & billing`.
 
 Actions cannot be purchased as one-time top-ups because they represent fixed platform capacity tied to your action tier.
 
@@ -156,7 +156,7 @@ Two options:
 
 **1\\. Upgrade your Data Credits tier** (recommended)
 
--   Go to `Settings` → `Plan & billing`.
+-   Go to `Settings` → `Plans & billing`.
 -   Select a higher Data Credits tier.
 -   No premium charged.
 
@@ -228,8 +228,8 @@ You can adjust your Clay plan, Actions, and Data Credits at any time to match yo
 
 If you need ongoing increases in capacity:
 
-1.  Go to `Settings` → `Plan & billing`.
-2.  Click `Switch plan` (or `Upgrade` if you're on the free plan) to upgrade your plan tier, or adjust your Actions and Data Credits limits.
+1.  Go to `Settings` → `Plans & Billing`.
+2.  Click `Change plan` to upgrade your plan tier, or adjust your Actions and Data Credits limits.
 3.  Select the higher tier or credit amount that fits your needs.
 4.  Click `Upgrade` to confirm.
 
@@ -251,7 +251,7 @@ For emergency Data Credit needs during your billing cycle (not available for Act
 To downgrade your Clay workspace plan:
 
 1.  Click your profile picture in the top-right corner and select `Settings`.
-2.  Navigate to `Plan & billing` and click `Switch plan`.
+2.  Navigate to `Plans & billing` and click `Change plan`.
 3.  Choose the plan you'd like to downgrade to and confirm your selection.
 
 **If you downgrade:**
@@ -275,7 +275,6 @@ To downgrade your Clay workspace plan:
 
 **After your billing cycle ends:**
 
--   Your monthly Actions and Data Credit allocation resets to the new plan's level.
 -   Your balance is capped at 2× the new plan's monthly Data Credit limit.
 -   Your data remains intact.
 -   Features are limited to the new plan's capabilities.
@@ -309,10 +308,6 @@ Actions measure platform work (what you do). Data Credits measure data purchases
 ### Why do Data Credits cost different amounts?
 
 Unlike Actions (always 1 per enrichment), Data Credits reflect the real-world value of each data point. You'll see the exact cost displayed next to each enrichment option in the product.
-
-### Why do I see lower enrichment prices in my account but I'm still being charged the old rate?
-
-If you see an in-product pricing summary comparing old and new enrichment costs (for example, ZeroBounce Validate Email showing 1 → 0.1 credits), those reduced rates apply to modern plans (Launch, Growth, or Enterprise) only. Customers on legacy plans continue to pay the original credit costs. To start benefiting from the lower data credit prices, go to `Settings` → `Plan & billing` and switch to a current plan. See [Legacy plans](./legacy-plans.md) for a full comparison of what changes when you migrate.
 
 ### Why do I pay Actions even when using my own API key?
 
@@ -388,7 +383,6 @@ Common causes:
 
 **After your billing cycle ends:**
 
--   Your monthly Actions and Data Credit allocation resets to the new plan's level.
 -   Your balance is capped at 2× the new plan's monthly Data Credit limit.
 -   Your data remains intact.
 -   Features are limited to the new plan's capabilities.
@@ -408,9 +402,3 @@ No. Exporting data to CSV does not consume an Action or any Data Credits. CSV ex
 No. **Lookup Record** operations — such as `Salesforce > Lookup Record` — read data from your CRM into Clay and are treated as CRM imports. They do not consume Action credits. This holds even when the lookup returns **No Records Found**.
 
 Only CRM **write** operations consume Actions: Create Record, Update Record, Upsert Object, and other actions that push data from Clay to your CRM.
-
-### Does enriching the same person in two separate tables charge me credits twice?
-
-Yes. Clay charges **1 Action** (and the associated Data Credits) per enrichment row run, regardless of whether that person has been enriched in another table. There is no cross-table deduplication — each row runs independently. If the same contact appears in two tables and you run an enrichment such as Enrich Person in both, you will be charged for each run separately.
-
-**To avoid double-charging on overlapping lists:** Merge your lists into a single table first and use the **Dedupe** feature (click a text, email, or URL column header → **Dedupe**) to remove duplicate entries based on a unique identifier such as a profile URL or email address. Enriching the merged, deduplicated table ensures each person is processed and charged only once.
