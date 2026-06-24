@@ -84,7 +84,7 @@ Once all your settings are saved, you can launch your campaign. Launching a camp
 -   Your campaign becomes live, which means:
     -   Any new leads routed into the campaign will automatically be sequenced, enabling "always-on" campaigns for inbound routing.
     -   All campaign settings become locked.
--   If you haven't set up custom webhooks in the `Advanced` section, a campaign events view will be created to capture all activity for this campaign as it occurs.
+-   The shared workspace-level campaign events table captures all activity for this campaign as it occurs. A per-campaign view filtered to just this campaign's events can be opened on demand from the analytics panel or the campaign topbar dropdown — it is not created automatically at launch.
 
 At any point, you can pause or complete a campaign:
 
@@ -93,7 +93,7 @@ At any point, you can pause or complete a campaign:
 
 ### Campaign events table
 
-Clay maintains a single, workspace-level campaign events table that records all campaign activity across your workspace — one row per event. The first time you launch a campaign in your workspace, this shared table is created. On each subsequent campaign launch, a per-campaign **view** on that shared table is created, filtered to just that campaign's events. The **Event type** column shows what happened:
+Clay maintains a single, workspace-level campaign events table that records all campaign activity across your workspace — one row per event. The first time you launch a campaign in your workspace, this shared table is created. A per-campaign **view** on that shared table — filtered to just that campaign's events — is created on demand when you open the campaign events view from the analytics panel or campaign topbar dropdown, not automatically at launch. The **Event type** column shows what happened:
 
 -   `EMAIL_SENT` — an email was delivered to a lead
 -   `EMAIL_OPEN` — a lead opened an email (requires HTML tracking)
@@ -106,7 +106,7 @@ Clay maintains a single, workspace-level campaign events table that records all 
 
 Because the underlying events table is a Clay table, you can build automations around these events from any per-campaign view. Reply events may appear with a 15–30 minute delay.
 
-The per-campaign events view can also be created before launching the campaign if you'd like to set up any automations in Clay.
+The per-campaign events view can be opened at any time — including before launching the campaign — if you'd like to set up any automations in Clay.
 
 Special sequencer enrichments available in the table include:
 
