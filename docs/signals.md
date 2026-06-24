@@ -1,6 +1,5 @@
 ---
 title: Signals in Clay
-source_url: https://university.clay.com/docs/signals
 description: Learn about Signals, a way to monitor changes to your contacts like
   promotions, job changes, or new hires.
 last_synced: 2026-04-26T01:40:40.844Z
@@ -121,8 +120,6 @@ This gives you both behaviors: new companies you add are enriched automatically,
 
 **Tip:** The same pattern works for finding people — use the **Find People at Company** enrichment with your company domain to return contacts at each account, then combine auto-run and scheduled re-runs to keep results current.
 
-**Tip: Extracting individual job roles from the output.** Each Find Active Job Openings cell holds a **list** of job postings — a company with 5 open roles returns all 5 in one cell, not as 5 separate rows. To get a usable per-role breakdown: click into any populated cell in the column, then in the Cell details panel click **Take action on list** → **Write each item to new row in other table**, and pick a destination table. Each job posting becomes its own row in that table. See [Send table data](send-table-data.md) for full configuration details.
-
 ### Which enrichment should I use to filter job openings by a specific country or city?
 
 Use **Find Active Job Openings**, not the PredictLeads **Find open jobs** enrichment, when you need to scope results to a particular country or city.
@@ -154,7 +151,7 @@ Check the **Limit results** setting inside the **Filter results** section of you
 
 To check or adjust it:
 
-1.  Click the signal column header (the `📡` icon, usually named `Event`).\
+1.  Click the signal column header (the `📡` icon, usually named `Event`).
 2.  Click **Edit column**.
 3.  Expand the **Filter results** section and review the **Limit results** field. Remove the value or enter a higher number.
 4.  Click **Save and re-run**.
@@ -179,9 +176,12 @@ You can review all active signals and their individual credit spend in the `Sign
 
 ### Why does my signal keep writing results to a new table instead of my existing one?
 
-Signals always write each matching event as a new row in a **newly-created output table**. Whether you start signal setup from inside an existing table (via `Tools` → `Monitor for...`) or from the Signals section / Workbook overview, the existing table you select is used as the **source input** (the people or companies to monitor), and a fresh output table is created to capture matching events. The existing table is not written to.
+Where signal events are written depends on **where you start the signal setup**:
 
-Signals always add **new rows** for each matching event — one row per event, not a new column on existing rows. If your goal is to see signal data (such as a recent funding round) alongside your existing contacts, see the next FAQ.
+-   **If you click `Actions` from within an existing table** and select a `Monitor for...` option, the signal is attached to that table and writes each matching event as a new row in it.
+-   **If you set up a signal from the Signals section or Workbook overview** (not from inside a specific table), Clay creates a new dedicated table to hold the results.
+
+In either case, signals always add **new rows** for each matching event — one row per event, not a new column on existing rows. If your goal is to see signal data (such as a recent funding round) alongside your existing contacts, see the next FAQ.
 
 ### My table has contacts (people). How do I bring company-level signal data into it?
 
@@ -196,7 +196,7 @@ This lets you see the latest signal event for each company directly in your cont
 
 ### Why did my brand mentions signal stop working?
 
-The social network brand mentions signal was discontinued in early March 2026. Clay's data partner for these actions updated their terms of use, and to remain aligned with their guidelines, Clay discontinued this feature.
+The social network brand mentions signal — along with related social listening actions — was discontinued in early March 2026. Clay's data partner for these actions updated their terms of use, and to remain aligned with their guidelines, Clay discontinued this feature.
 
 If you had a brand mentions signal set up before the deprecation, it will show an error when run and cannot be re-enabled.
 
