@@ -10,7 +10,7 @@ Answering questions about the credit spend limits feature.
 
 **Credit spend limits** let workspace admins control credit usage by setting spending caps on workbooks and tables. This helps teams manage budgets, prevent overspending, and allocate resources across projects and users.
 
-**Note:** This feature is currently in open beta and available to Enterprise Plan customers.
+**Note:** This feature is only available for Enterprise Plan.
 
 ## Who can set and manage credit limits?
 
