@@ -412,6 +412,16 @@ Yes, with an important limitation. Claygent fetches page content using third-par
 
 **Alternative**: The **BuiltWith** integration (**Find Technology Stack** action) can confirm whether a particular technology is present on a site, but it does not return specific pixel IDs or tracking codes.
 
+### Can Claygent log into websites or access data behind a login?
+
+Standard Claygent fetches page content via third-party scraping services and cannot complete a website login — it has no mechanism to perform an OAuth flow or maintain an authenticated session between requests.
+
+**Claygent Navigator** has a **Setup Browser Context** feature that enables authenticated access. You open an embedded browser directly in Clay, log in to any service — including those that require OAuth, such as HubSpot or LinkedIn — and save the session. Navigator reuses those saved cookies and authentication state on subsequent runs, so your agent can reach pages behind a login wall without prompting you to re-authenticate.
+
+> **Note:** Claygent Navigator and the Browser Context feature are currently in beta. Contact support to request access.
+
+If you want to retrieve data from a service that offers an API (for example, HubSpot contact activity timelines), using the API directly via an **HTTP API** enrichment is often faster and more reliable than browser automation. Store your API credentials as a workspace-level **HTTP API (Headers) account** so they can be reused across runs.
+
 ### Why does a column referencing my Claygent output show "Cell data size exceeds limit (8 kB)"?
 
 Clay enforces two different cell size limits: Claygent action columns hold up to **200 kB**, while basic columns — text fields and formula columns that reference or extract from those action columns — are limited to **8 kB**. When a Claygent produces verbose output (such as detailed research logs or step-by-step notes) and that value is extracted into a standalone text column or referenced by a formula column, the result must fit within the 8 kB limit for that basic column.
