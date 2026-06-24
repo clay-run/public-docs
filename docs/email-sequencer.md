@@ -68,13 +68,13 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   `Start/End times` (Custom schedule only): Set sending windows within the chosen timezone.
     -   `Minimum time between sends` (Custom schedule only): Adjustable from 3–30 minutes; longer delays improve deliverability.
     -   `Maximum new leads per day`: Caps the number of new leads contacted daily (in addition to account send limits).
-    -   `Campaign start date` (optional): Set a future launch date, or leave blank to start sending when the next window opens.
+    -   `Campaign start date` (Custom schedule only, optional): Set a future launch date, or leave blank to start sending when the next window opens.
 7.  Explore `Advanced settings` if needed:
     -   `Webhooks`: Route campaign events to a specific Webhook destination instead of the default Campaign Events Clay table. Example: Send Smartlead metrics to tools like OutboundSync or Enrichley for downstream routing.
     -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled)
     -   `Pause leads at the same company on reply`: When a lead replies, automatically pause other leads with the same email domain. Off by default.
-8.  Go to `Leads` to preview the messages for all people in your campaign
-    -   `Send test email` to verify your template looks right
+8.  Preview the messages for all people in your campaign in the `Leads` tab
+    -   Use `Send test email` (available in the campaign header) to verify your template looks right
     -   Click the `Pencil` icon to spot-edit a message for a specific lead
 
 ## Launching your campaign
@@ -237,7 +237,7 @@ To set or update a signature:
 
 You can also update the `From name` (the display name recipients see in their inbox) from the same dialog. Only plaintext signatures are currently supported.
 
-**To include a formatted signature (with bold text, links, or images):** enable **HTML** in your campaign's `Setup` tab, then compose your signature at the bottom of each email body using the formatting toolbar — bold, italic, hyperlinks, and inline images are available when HTML is enabled. Do not paste raw HTML source code into the editor; the editor does not convert pasted markup to formatted output, and it will appear as literal text in the sent message. Toggle **Preview** or use `Send test email` (in the `Leads` tab) to verify how the signature renders before you launch.
+**To include a formatted signature (with bold text, links, or images):** enable **HTML** in your campaign's `Setup` tab, then compose your signature at the bottom of each email body using the formatting toolbar — bold, italic, hyperlinks, and inline images are available when HTML is enabled. Do not paste raw HTML source code into the editor; the editor does not convert pasted markup to formatted output, and it will appear as literal text in the sent message. Toggle **Preview** or use `Send test email` (available in the campaign header) to verify how the signature renders before you launch.
 
 ### What is email account warmup?
 
