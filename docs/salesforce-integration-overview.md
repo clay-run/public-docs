@@ -85,7 +85,7 @@ After testing a connection, Clay saves the result and shows the connected user a
 
 ### IP allowlisting
 
-On **Enterprise plans**, all Salesforce connections in Clay automatically route through Clay's static IP addresses — no toggle or configuration is needed. You can allowlist these IPs in Salesforce under `Setup` → `Network Access` → `New`. Contact Clay support to get the current list of IP addresses to allowlist.
+On **Enterprise plans**, all Salesforce connections in Clay automatically route through Clay's static IP addresses — no toggle or configuration is needed. If your Salesforce org restricts connections by IP address, contact Clay support to request the current IP list, then allowlist them in Salesforce under `Setup` → `Network Access` → `New`.
 
 For full instructions on setting up a restricted Salesforce user with field-level security and IP allowlisting, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
 
