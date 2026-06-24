@@ -106,7 +106,7 @@ There is no self-service way to add a custom redirect URI to Clay's OAuth allowl
 
 ### What role should I assign to team members who will only use Clay through MCP?
 
-Any team member who needs to use Clay through an AI tool (Claude, ChatGPT, or xAI) must first be added to your Clay workspace. When inviting them, assign the **Sales Rep** role.
+Any team member who needs to use Clay through an AI tool (Claude or ChatGPT) must first be added to your Clay workspace. When inviting them, assign the **Sales Rep** role.
 
 The Sales Rep role restricts access to the main Clay workspace: users can invoke functions and run enrichments from within their AI tool, but they cannot open or interact with the Clay interface (tables, workbooks, etc.). This makes it the right choice for team members who should use Clay through AI tools only — not build workflows directly in Clay.
 
