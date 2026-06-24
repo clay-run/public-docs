@@ -18,12 +18,14 @@ Your table updates instantly with new data, eliminating manual entry. This featu
 ## **Creating a table with webhook**
 
 1.  In a workbook, click `+ Add` at the bottom.
-2.  Search for `Webhooks` and click `Monitor webhook`.
+2.  Search for `Webhooks` and click **Pull in data from a Webhook**.
 3.  Copy the URL/cURL.
     -   **URL:** Paste this URL into the application sending data to Clay. This URL is where your data will be sent.
     -   **cURL:** Paste the cURL command into your command line to send data directly to Clay.
 4.  Optionally, add authentication token. To secure your webhook, you can include an authentication token in the header of your request.
     -   Make sure to copy the token immediately, as you can only access authentication tokens once.
+
+**Note:** The webhook URL is always retrievable after setup — see [How do I find my webhook URL on an existing webhook table?](#how-do-i-find-my-webhook-url-on-an-existing-webhook-table) in the FAQs below.
 
 ## Limits
 
@@ -63,7 +65,7 @@ Clay's webhook URL works with any platform that can send HTTP POST requests in J
 
 ### Send data from a middleware tool into Clay
 
-1. In your Clay workbook, create a table using **Monitor webhook** as the source (see [Creating a table with webhook](#creating-a-table-with-webhook)).
+1. In your Clay workbook, create a table using **Pull in data from a Webhook** as the source (see [Creating a table with webhook](#creating-a-table-with-webhook)).
 2. Copy the webhook URL Clay generates.
 3. In your middleware tool, configure your flow or recipe to POST JSON data to that Clay webhook URL.
 
@@ -111,7 +113,7 @@ If your webhook isn't creating rows — even on a brand-new webhook that has nev
    -H "Content-Type: application/json"
    ```
 
-2. **Incorrect URL** — Confirm you copied the full webhook endpoint URL from the **Monitor webhook** section in your table source settings (not a partial URL or the cURL command itself).
+2. **Incorrect URL** — Confirm you copied the full webhook endpoint URL from the **Webhook URL** section in your source settings (not a partial URL or the cURL command itself). To find it on an existing table, see [How do I find my webhook URL on an existing webhook table?](#how-do-i-find-my-webhook-url-on-an-existing-webhook-table).
 
 3. **Missing or wrong authentication token** — If you added an auth token when creating the webhook, it must be included in every request as a header. The token is only displayed once at creation — if you didn't copy it, you'll need to delete and recreate the webhook to generate a new one.
 
@@ -126,6 +128,12 @@ curl -X POST YOUR_CLAY_WEBHOOK_URL \
 ```
 
 If a row appears in your table, the issue is in your original request's formatting, headers, or auth token. If no row appears on a brand-new webhook, contact support.
+
+### How do I find my webhook URL on an existing webhook table?
+
+If you've already created a webhook table and need to retrieve the URL, open the table and click the **gear icon** in the toolbar to open **Table Settings**. In the **Source settings** section, click the webhook row — this opens the source detail panel where the **Webhook URL** is always displayed, ready to copy.
+
+You can also reach it directly: click the database icon on the **Webhook** source column header (tooltip: **Edit source**) to open the same panel.
 
 ### How do I find which table a webhook URL belongs to?
 
