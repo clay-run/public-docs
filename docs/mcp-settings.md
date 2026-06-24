@@ -1,5 +1,6 @@
 ---
 title: MCP settings
+source_url: https://university.clay.com/docs/mcp-settings
 description: Connect your Clay workspace to AI tools.
 last_synced: 2026-04-26T01:40:20.821Z
 ---
@@ -18,7 +19,7 @@ Navigate to it from the Clay homepage by clicking `MCP` in the side nav. The MCP
 
 Credit controls and usage monitoring are available on all modern paid plans (Launch, Growth, Enterprise) and Legacy Enterprise.  
 
-Audiences controls are available on all modern paid plans (Launch, Growth, Enterprise).  
+Audiences controls are available to Enterprise customers enrolled in the Audiences Open Beta.  
 
 The `Enable for MCP` option on Functions is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans.
 
@@ -65,7 +66,7 @@ The `MCP users` table gives a live view of every rep who has connected Clay to a
 -   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, Glean, or a combination)
 -   **Credit limit** — the rep's current limit, either the workspace default or a per-user override
 -   **Credits used** — live usage tracked against the rep's limit
--   **Salesforce ID _(Audiences users only)_** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
+-   **Salesforce ID _(Enterprise Beta users only)_** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
 
 Use the search bar at the top of the table to find a specific rep by name or email.
 
