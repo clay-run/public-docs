@@ -34,18 +34,19 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 2.  Click `Tools` → `Exports` → `Create Clay email campaign`
     -   The `Sync lead data to campaign` column automatically pushes 10 rows from your parent table into the campaign to draft with
     -   Tip: You can customize the `Sync lead data to campaign` column to only send leads with an email address using `Only run if`.
-3.  In the `Setup` tab, you can set:
+3.  In the `Settings` tab, you can set:
     -   `Lead email address`: We automatically detect email address columns, but confirm this before proceeding.
     -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links.
 4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead replies (excluding out-of-office replies, which we detect and work around).
     -   Toggle `Preview` mode to see real data from your source table in the message template
+    -   Use `Send test email` from the Sequence editor to verify your template looks right
     -   Within each message, use `/` to access features such as:
         -   `Clean variable`: Reference synced lead data with safe fallbacks and optional formatting. When configuring a Clean variable, the **Fallback** field ("Simple text to display if variable is empty") is required — the variable will not save if left blank.
         -   `Sender variable`: Reference identifying information from the sending account
         -   `AI snippet`: Generate personalized copy for each lead automatically. After inserting an AI snippet via `/`, a snippet chip appears in your message. Click the chip to open the inline prompt editor — describe what the snippet should generate and reference lead data columns in your instructions (for example: *"Write a one-sentence opening based on [Company Domain] and [Job Title]"*). Toggle **Preview** to see the AI-generated output for your current preview lead in real time and refine the prompt as needed. The AI model is configured at the campaign level, not per snippet; if you need to control which AI model generates the copy, build the personalized content in a **Use AI** column in your source table and reference it as a `Clean variable` in the email template instead.
         -   `Spintax variable`: Choose a random value from a list
         -   `Rows from [Table]`: Directly reference synced data (Clean variables are recommended to handle empty values safely).
-        -   (HTML only): If enabled, use hyperlinks, inline images, fonts, and rich text formatting.
+        -   (HTML only): If enabled, use hyperlinks, fonts, and rich text formatting.
 5.  Go to `Settings` to add your email account:
     -   `Google OAuth` (recommended): Connect your Google Workspace account via OAuth.
         -   ⚠️ Note: You or your Workspace admin must authorize the Clay sequencer app for your domain, or you'll see an access error.
@@ -70,8 +71,8 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   `Webhooks`: Route campaign events to a specific Webhook destination instead of the default Campaign Events Clay table. Example: Send Smartlead metrics to tools like OutboundSync or Enrichley for downstream routing.
     -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled)
     -   `Pause leads at the same company on reply`: When a lead replies, automatically pause other leads with the same email domain. Off by default.
-8.  Go to `Leads` to preview the messages for all people in your campaign
-    -   `Send test email` to verify your template looks right
+8.  In the `Sequence` editor, preview the messages for people in your campaign
+    -   Use `Send test email` (available per step in the Sequence editor) to verify your template looks right
     -   Click the `Pencil` icon to spot-edit a message for a specific lead
 
 ## Launching your campaign
@@ -137,7 +138,7 @@ Key practices to follow:
 
 -   Don't spam. Spam is high-volume, low-quality, and generic. Instead, use Clay to research leads at scale and send hyper-targeted, personalized offers.
 -   Don't deceive. Tricks may get you a click once, but they damage trust. Instead, be upfront about your value and what you're offering.
--   Send plaintext for cold outreach. Bold text, fonts, inline images, and hyperlinks rely on HTML, which ESPs often block to fight phishing. Unless you already have an email history with the recipient, stick to plaintext.
+-   Send plaintext for cold outreach. Bold text, fonts, and hyperlinks rely on HTML, which ESPs often block to fight phishing. Unless you already have an email history with the recipient, stick to plaintext.
 -   Warm up your inbox. ESPs flag sudden spikes in email volume as suspicious. Gradual inbox warmup builds trust and reputation before you scale.
 -   Vary your copy. Avoid sending the same message repeatedly. Use AI, Spintax, and lead-specific variables to keep your outreach fresh and personal.
 -   Mimic human sending patterns. Pace emails as if each were written individually—spread them throughout the day (e.g., one every 10 minutes) with some randomness, rather than blasting them all at once.
@@ -197,7 +198,7 @@ If you added or edited a **Clean variable** and it is not appearing in your mess
 
 ### Why can't I see or edit the Message sequence section?
 
-If your campaign is active, all settings — including the Message sequence — are locked. To make edits, open the campaign's `Setup` tab and click `Pause`. Once paused, you can edit message copy and campaign settings. Note that you cannot change the total number of messages while paused — to add or remove messages, complete the campaign and create a new one.
+If your campaign is active, all settings — including the Message sequence — are locked. To make edits, click `Pause` in the campaign's top action bar (it's available from any tab — Sequence, Settings, Analytics, etc.). Once paused, you can edit message copy and campaign settings. Note that you cannot change the total number of messages while paused — to add or remove messages, complete the campaign and create a new one.
 
 ### Why is the three-dot menu on my campaign messages greyed out after pausing?
 
@@ -230,6 +231,8 @@ To set or update a signature:
 5.  Click `Update sender variables` to save.
 
 You can also update the `From name` (the display name recipients see in their inbox) from the same dialog. Only plaintext signatures are currently supported.
+
+**To include a formatted signature (with bold text or links):** enable **HTML** in your campaign's `Settings` tab, then compose your signature at the bottom of each email body using the formatting toolbar — bold, italic, underline, bulleted/numbered lists, and hyperlinks are available when HTML is enabled. Do not paste raw HTML source code into the editor; the editor does not convert pasted markup to formatted output, and it will appear as literal text in the sent message. Toggle **Preview** or use `Send test email` (available per step in the Sequence editor) to verify how the signature renders before you launch.
 
 ### What is email account warmup?
 
@@ -315,7 +318,11 @@ Follow the instructions in the modal and have your Google Workspace admin set ou
 
 This error is expected — Clay's sequencer uses automated warmup sends, which prevents the app from passing Google's standard verification process. Admin approval in your Google Workspace Admin panel is the intended workaround; Clay's app will not become Google-verified.
 
-If the error persists more than 24 hours after your admin marked the app as `Trusted`, confirm that they approved the app for the exact domain of the email account you're connecting (e.g., for `ryan@company.com`, the admin must approve for `company.com` specifically — not a different domain they manage). If the error still persists, [contact Clay support](https://www.clay.com/contact).
+If the error persists more than 24 hours after your admin marked the app as `Trusted`, confirm that they approved the app for the exact domain of the email account you're connecting (e.g., for `ryan@company.com`, the admin must approve for `company.com` specifically — not a different domain they manage). If you're connecting accounts from multiple domains, each domain requires its own separate Trusted configuration — having one domain approved does not automatically cover the others. Your admin can verify which org units are currently configured by going to Google Admin → Security → API Controls → App Access Control and checking the Clay Sequencer app's org unit count. If it's still blocked after verifying the domain, [contact Clay support](https://www.clay.com/contact).
+
+### What exact Microsoft permissions does sequencer require?
+
+These are disclosed when you add your account via OAuth. We request: offline\_access, openid, email, profile, Mail.Send, Mail.Send.Shared, Mail.ReadWrite, Mail.ReadWrite.Shared, [User.Read](http://User.Read), MailboxSettings.ReadWrite.
 
 ### How are replies categorized in the Campaign Events table?
 
@@ -326,6 +333,27 @@ In the Campaign Events table, the `Event type` column reflects the reply classif
 -   `LEAD_CATEGORY_UPDATED` — Smartlead has classified the reply (e.g., as `Interested`, `Do Not Contact`, `Not Interested`, `Out of Office`, or other categories)
 
 Note that `EMAIL_REPLY` fires for every reply (including out-of-office), while `LEAD_CATEGORY_UPDATED` fires after Smartlead processes and classifies the reply. Both events may appear for the same reply.
+
+Smartlead assigns leads into one of the following categories:
+
+1.  Interested
+2.  Meeting Request
+3.  Not Interested
+4.  Do Not Contact
+5.  Information Request
+6.  Out Of Office
+7.  Wrong Person
+8.  Uncategorizable by Ai
+9.  Sender Originated Bounce
+
+### Why does the reply body show HTML instead of plain text?
+
+This is expected. When a lead replies using an HTML-capable email client like Microsoft Outlook, the reply arrives in HTML format. The `Reply Message` field in your campaign events table includes two sub-fields:
+
+-   `Html`: the raw HTML body as sent by the lead's email client
+-   `Text`: a plain text version of the same content
+
+To work with the reply as clean text — for example, when mapping it to a CRM note or passing it to an AI action — use the `Text` sub-field instead. If you prefer to use `Html` and strip the tags, add a formula column to do so.
 
 ### How do I handle replies from leads?
 
