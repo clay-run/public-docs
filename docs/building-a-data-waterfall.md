@@ -37,11 +37,13 @@ To add, remove, or reorder providers in a waterfall you've already saved:
 
 ## Creating a waterfall
 
-1.  While in a table, click `Add column` (which you will find at the far right side).
-2.  Select `Waterfall` and click the `🖊️` to next to the title to rename.
-3.  Change the `Data Type` that you'll be working with.
-4.  Add actions to the waterfall and adjust other settings.
-5.  Click `Save`.
+Use this when you want to chain multiple enrichment providers for the same data point — for example, enriching company details from Clearbit, then Apollo, then PDL in sequence, stopping as soon as one returns a result.
+
+1.  While in a table, click **Add column** (at the far right of the table).
+2.  Select **Waterfall** and click the ✏️ icon next to the title to rename it.
+3.  Set the **Data Type** to match what you want the waterfall to output — for example, **Text** for a company name or description, **URL** for a website, or **Number** for revenue or headcount.
+4.  In the **Waterfall sequence** section, click **Add provider** to add enrichment providers as steps. You can add as many as you need and reorder them by dragging.
+5.  Click **Save**.
 
 ## Creating a waterfall template
 
