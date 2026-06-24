@@ -142,3 +142,17 @@ This is different from CRM sources such as HubSpot and Salesforce, which track e
 **To prevent the same record from being enriched multiple times,** enable [auto-dedupe](https://www.clay.com/university/guide/table-management-settings#auto-dedupe) on a column containing a unique identifier for your records (such as an email address or a CRM contact ID). When a second submission arrives with the same value in that column, auto-dedupe detects and removes the duplicate row.
 
 **Note:** Auto-dedupe may not catch duplicates when two payloads arrive within milliseconds of each other. See the [simultaneous insert limitation](https://www.clay.com/university/guide/table-management-settings#auto-dedupe) in the auto-dedupe docs for details and workarounds.
+
+### What happens when I map a webhook field to an existing column — and why did my data disappear?
+
+When you click a cell in your webhook column, open **Cell details**, hover over a field, and select **Add as column → Map to an existing column**, Clay changes the destination column's formula to pull from the webhook source. What happens next depends on what was already in that column:
+
+-   **Manually-entered data** (typed directly or imported from a CSV): Clay shows a "Data overwrite" warning before proceeding. If you confirm, all existing values in that column are permanently replaced — the column becomes formula-driven by the webhook field, and rows that didn't arrive via the webhook will show as empty.
+-   **Enrichment-based data** (already driven by an enrichment formula): No overwrite occurs. Clay appends the webhook source as a fallback, so the column formula becomes `{{EnrichmentResult}} || {{WebhookField}}`. Existing enrichment-based values are preserved; the webhook fills in where the enrichment is empty.
+
+**To keep existing data while also bringing in webhook data,** don't map to the original column. Instead:
+
+1.  Use **Add as column → Create new column** to extract the webhook field into a separate new column (for example, "Email from webhook").
+2.  Add a [Merge column](https://university.clay.com/docs/table-columns-overview#merge-columns) that references both the original column and the new webhook column — it returns the first non-empty value per row, preserving your original data for older rows while populating from the webhook for new arrivals.
+
+**Note:** Clay's Table Versioning feature can restore a table's column schema and formula configuration from a previous snapshot, but it cannot recover lost manually-entered or CSV-imported cell data values. If you confirmed the overwrite and lost that underlying data, re-import the original source and use the approach above going forward.
