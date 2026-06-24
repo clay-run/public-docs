@@ -39,9 +39,9 @@ To start a signal, you'll **need a table with** companies or contacts you want t
 ### Edit an existing Signal
 
 1.  Click on the column title with the Signal.
-    -   It'll have a `📡` icon and is named `Event: [Signal Type]` by default (e.g., `Event: Job change`, `Event: New hire`).
-2.  Click `Edit signal`.
-3.  Modify any settings as needed and click `Save and re-run` (or `Save and run` if the signal has never run before, `Save only` for scheduled signals, or `Save` for non-scheduled signals).
+    -   It'll have a `📡` icon and usually be called `Event`.
+2.  Click `Edit column`.
+3.  Modify any settings as needed and click `Save changes`.
 
 ## FAQs
 
@@ -53,7 +53,7 @@ Currently, signals can only be adjusted by frequency, not set to run at specific
 
 No. Signals run on a fixed schedule — Daily, Weekly, Biweekly, Monthly, or Quarterly — not when new rows arrive in your table. If new companies or contacts are added via a webhook or other source, the Signal will pick them up on the **next scheduled run**, not immediately.
 
-To trigger the Signal right away after new rows arrive, open the signal column header → **Edit signal** → click **Save and run** (or **Save and re-run** if the signal has run before).
+To trigger the Signal right away after new rows arrive, open the signal column header → **Edit column** → click **Save and run** (or **Save and re-run** if the signal has run before).
 
 ### How do I run a signal on a filtered or growing list of companies from another table?
 
@@ -75,31 +75,6 @@ Most Signals are available on any paid plan.
 ### Why is my Signal returning 0 results?
 
 Signals require a connected data source to run against — either a source table containing the companies or contacts you want to monitor, or an audience segment. Without a linked source table or audience segment (or if the linked table is empty or has been deleted), the Signal has nothing to check and will return 0 results. Confirm that your Signal is connected to an active Clay table with valid company identifiers (domain or LinkedIn URL) or contact LinkedIn URLs, or to a populated audience segment.
-
-### How do I update or replace my master source table without breaking my signal workflows?
-
-Signal columns reference their source table by its internal ID, not its name. Renaming a table won't break any connected signals — but replacing it with a different table will disconnect them unless you update each signal to point to the new one.
-
-**Option 1 (recommended) — Update the rows inside the same table:**
-
-The safest approach is to replace the data inside your existing source table so its ID stays the same:
-
-1.  In your existing master source table, delete the old rows.
-2.  Re-import your updated account list into the same table (via CSV, CRM sync, or any source).
-3.  In each signal table, re-run the signal column (click the 📡 column header → run) so it picks up the new account list on its next cycle.
-
-Because the table ID hasn't changed, all downstream signal workflows remain connected automatically.
-
-**Option 2 — Redirect each signal to a new table:**
-
-If you want to use a different table as your master going forward:
-
-1.  In each signal table, click the signal column header (the 📡 icon, named `Event: [Signal Type]` by default).
-2.  Click **Edit signal**.
-3.  Update the source table selection to point to your new master table.
-4.  Click **Save and re-run** (or **Save and run** if the signal has never run before, **Save only** for scheduled signals, or **Save** for non-scheduled signals), then re-run the signal column.
-
-Repeat for each signal table that referenced the old master.
 
 ### How do I extend my signal to cover more companies?
 
@@ -145,12 +120,31 @@ This gives you both behaviors: new companies you add are enriched automatically,
 
 **Tip:** The same pattern works for finding people — use the **Find People at Company** enrichment with your company domain to return contacts at each account, then combine auto-run and scheduled re-runs to keep results current.
 
+**Tip: Extracting individual job roles from the output.** Each Find Active Job Openings cell holds a **list** of job postings — a company with 5 open roles returns all 5 in one cell, not as 5 separate rows. To get a usable per-role breakdown: click into any populated cell in the column, then in the Cell details panel click **Take action on list** → **Write each item to new row in other table**, and pick a destination table. Each job posting becomes its own row in that table. See [Send table data](send-table-data.md) for full configuration details.
+
 ### Which enrichment should I use to filter job openings by a specific country or city?
 
 Use **Find Active Job Openings**, not the PredictLeads **Find open jobs** enrichment, when you need to scope results to a particular country or city.
 
 -   **Find Active Job Openings** has a `Locations` field that accepts comma-separated countries or cities (e.g., `Germany` or `Berlin, United States`).
 -   The PredictLeads **Find open jobs** enrichment only has an `Only jobs tied to a location?` toggle, which excludes jobs with no location tag but cannot filter to a specific place.
+
+### Why is Find Active Job Openings returning "No Job Found" for most rows?
+
+"No Job Found" means the action ran successfully but found no jobs matching your filter criteria for that company — it is not an error, and credits are refunded for those rows.
+
+The most common causes of unexpectedly narrow results:
+
+**1. Keywords are matched as literal phrases**
+Each keyword is matched exactly as written. `Trust Safety` will not match a posting titled "Trust & Safety Engineer" — the ampersand breaks the match. Write keywords the way they appear in actual job titles, or break multi-word phrases into shorter single-word keywords (e.g., `Trust` and `Safety` separately) to catch more variations.
+
+**2. Job Title Keywords and Job Description Keywords are AND-combined**
+When both fields are populated, a job must satisfy both simultaneously — matching at least one Job Title Keyword *and* at least one Job Description Keyword. Stacking many description keywords on top of several title keywords can make the filter extremely narrow. Start with only **Job Title Keywords** populated and leave **Job Description Keywords** empty. Add description keywords back only if you need to narrow down a result set that is already too large.
+
+**3. The date window is too narrow for senior or specialized roles**
+Senior, security, and executive-level roles are posted infrequently. A 90-day **Maximum Days Since Posted** limit may exclude valid postings. Widen the window or remove it entirely first, then tighten once results are coming through.
+
+**Recommended approach:** Start with one or two broad Job Title Keywords, no Job Description Keywords, and no date limit. Confirm results appear, then layer filters back one at a time until you reach the right balance of relevance and volume.
 
 ### Why do I see the same company name appear multiple times in my Find Jobs results?
 
@@ -176,8 +170,8 @@ Check the **Limit results** setting inside the **Filter results** section of you
 
 To check or adjust it:
 
-1.  Click the signal column header (the `📡` icon, named `Event: [Signal Type]` by default).
-2.  Click **Edit signal**.
+1.  Click the signal column header (the `📡` icon, usually named `Event`).
+2.  Click **Edit column**.
 3.  Expand the **Filter results** section and review the **Limit results** field. Remove the value or enter a higher number.
 4.  Click **Save and re-run**.
 
@@ -193,20 +187,17 @@ Credits for signal monitoring are charged based on the number of contacts or row
 
 To stop a signal from consuming credits, you must pause or disable it directly from the signal's column settings — not by pausing the table it populates:
 
-1.  Click the signal column header (the `📡` icon, named `Event: [Signal Type]` by default).
-2.  Click `Edit signal`.
+1.  Click the signal column header (the `📡` icon, usually named `Event`).
+2.  Click `Edit column`.
 3.  Disable or pause the signal, then save.
 
 You can review all active signals and their individual credit spend in the `Signals` tab of the [credit usage dashboard](/docs/credit-usage) (`Settings` → `Usage`).
 
 ### Why does my signal keep writing results to a new table instead of my existing one?
 
-Where signal events are written depends on **where you start the signal setup**:
+Signals always write each matching event as a new row in a **newly-created output table**. Whether you start signal setup from inside an existing table (via `Tools` → `Monitor for...`) or from the Signals section / Workbook overview, the existing table you select is used as the **source input** (the people or companies to monitor), and a fresh output table is created to capture matching events. The existing table is not written to.
 
--   **If you click `Actions` from within an existing table** and select a `Monitor for...` option, the signal is attached to that table and writes each matching event as a new row in it.
--   **If you set up a signal from the Signals section or Workbook overview** (not from inside a specific table), Clay creates a new dedicated table to hold the results.
-
-In either case, signals always add **new rows** for each matching event — one row per event, not a new column on existing rows. If your goal is to see signal data (such as a recent funding round) alongside your existing contacts, see the next FAQ.
+Signals always add **new rows** for each matching event — one row per event, not a new column on existing rows. If your goal is to see signal data (such as a recent funding round) alongside your existing contacts, see the next FAQ.
 
 ### My table has contacts (people). How do I bring company-level signal data into it?
 
