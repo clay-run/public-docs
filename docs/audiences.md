@@ -56,7 +56,7 @@ You can import data from:
 11.  Name the corresponding Clay fields.
 12.  Select `Opportunities` at the top of the sync panel.
 13.  Enable the `Import` toggle.
-14.  Add any Opportunity fields you want to filter or segment by — common fields include `Stage`, `Amount`, `Close Date`, and `Owner`.\
+14.  Add any Opportunity fields you want to filter or segment by — common fields include `Stage`, `Amount`, `Close Date`, and `Owner`.
      -   Opportunity data is associated with your Companies records and becomes available as a filter in any Companies audience.
 15.  Name the corresponding Clay fields.
 16.  Click `Save and Preview`, then `Confirm`.
@@ -90,6 +90,8 @@ Clay pulls data from Salesforce on two schedules:
     -   Deal data is associated with your Companies records and becomes available as a filter in any Companies audience.
 10.  Name the corresponding Clay fields.
 11.  Click `Save and Preview`, then `Confirm`.
+
+**Troubleshooting — "Export permission required" (Audiences open beta):** If the HubSpot account you select is missing the **Export CRM data** permission, Clay displays a warning and disables the Connect button. Click **Re-authorize HubSpot** in the warning to reconnect your account with the required permission enabled, then continue setup.
 
 ### Importing from Snowflake
 
@@ -539,4 +541,4 @@ Archiving a record is a **soft delete** — the record is not permanently remove
 
 **Note on lookup timing:** After archiving a record, there is a brief processing delay before the change is reflected in `Lookup in Audiences` results. Running a lookup immediately after archiving may still return the archived record — lookups typically update within a short time as changes propagate.
 
-To exclude Salesforce-deleted records from your audience lookups, filter on **Sync status → Deleted in source** to identify them, then archive the records you don't want matched against.
+To exclude Salesforce-deleted records from your audience lookups, filter on **Sync status → Deleted in source** to identify them, then archive the records you no longer want matched against.
