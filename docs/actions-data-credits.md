@@ -82,7 +82,7 @@ Your Actions capacity is determined by your plan tier. Plan tiers are designed s
 
 ### How to get more Actions
 
-**Upgrade your action capacity tier** in `Settings` → `Plan & billing`.
+**Upgrade your action capacity tier** in `Settings` → `Plans & billing`.
 
 Actions cannot be purchased as one-time top-ups because they represent fixed platform capacity tied to your action tier.
 
@@ -156,7 +156,7 @@ Two options:
 
 **1\\. Upgrade your Data Credits tier** (recommended)
 
--   Go to `Settings` → `Plan & billing`.
+-   Go to `Settings` → `Plans & billing`.
 -   Select a higher Data Credits tier.
 -   No premium charged.
 
@@ -216,7 +216,7 @@ If you are on a **monthly plan**, unused Data Credits will roll over and accumul
 -   For example, if your plan includes 50,000 credits per month, your maximum balance is 100,000. If you already have 82,000 credits when your plan renews, your balance becomes 100,000 — not 132,000. The 32,000 excess is dropped.
 -   If you cancel or downgrade, you can use any excess Data Credits until your current billing cycle ends. After the billing cycle ends, your balance will be reduced to the **Data Credit rollover limit** of your new plan.
 
-If you are on an **annual plan**, you are eligible for a **15% Data Credit rollover** of unused Data Credits, provided you renew on the same or a higher-tier plan.
+If you are on an **annual plan**, up to **15% of your new plan's annual Data Credit allotment** can roll over from your unused balance at renewal, provided you renew on the same or a higher-tier plan. This cap is based on the *new* plan's allotment — so if you switch to a plan with fewer annual credits, only 15% of the lower allotment carries over, regardless of your previous balance. For example, switching to a plan with 72,000 annual credits means at most 10,800 credits (15% × 72,000) carry over, even if you had a much larger balance before.
 
 _Note: Your rollover and renewal happen on the same day and at the same time you originally subscribed (this timestamp is now shown in your billing details). Credits are updated via a payment-processor webhook and typically appear within a few minutes of that timestamp._
 
@@ -228,8 +228,8 @@ You can adjust your Clay plan, Actions, and Data Credits at any time to match yo
 
 If you need ongoing increases in capacity:
 
-1.  Go to `Settings` → `Plan & billing`.
-2.  Click `Upgrade` (on a free plan) or `Switch plan` (on a paid plan) to upgrade your plan tier, or adjust your Actions and Data Credits limits.
+1.  Go to `Settings` → `Plans & Billing`.
+2.  Click `Change plan` to upgrade your plan tier, or adjust your Actions and Data Credits limits.
 3.  Select the higher tier or credit amount that fits your needs.
 4.  Click `Upgrade` to confirm.
 
@@ -251,7 +251,7 @@ For emergency Data Credit needs during your billing cycle (not available for Act
 To downgrade your Clay workspace plan:
 
 1.  Click your profile picture in the top-right corner and select `Settings`.
-2.  Navigate to `Plan & billing` and click `Switch plan` (or `Upgrade` if you're currently on a free plan).
+2.  Navigate to `Plans & billing` and click `Change plan`.
 3.  Choose the plan you'd like to downgrade to and confirm your selection.
 
 **If you downgrade:**
@@ -275,8 +275,8 @@ To downgrade your Clay workspace plan:
 
 **After your billing cycle ends:**
 
--   Your monthly Actions and Data Credit allocation resets to the new plan's level.
--   Your balance is capped at 2× the new plan's monthly Data Credit limit.
+-   **On a monthly plan:** Your balance is capped at 2× the new plan's monthly Data Credit limit.
+-   **On an annual plan:** Your carryover is capped at 15% of the new plan's annual Data Credit allotment. Credits above that cap are forfeited.
 -   Your data remains intact.
 -   Features are limited to the new plan's capabilities.
 
@@ -310,10 +310,6 @@ Actions measure platform work (what you do). Data Credits measure data purchases
 
 Unlike Actions (always 1 per enrichment), Data Credits reflect the real-world value of each data point. You'll see the exact cost displayed next to each enrichment option in the product.
 
-### Why do I see lower enrichment prices in my account but I'm still being charged the old rate?
-
-If you see an in-product pricing summary comparing old and new enrichment costs (for example, ZeroBounce Validate Email showing 1 → 0.1 credits), those reduced rates apply to modern plans (Launch, Growth, or Enterprise) only. Customers on legacy plans continue to pay the original credit costs. To start benefiting from the lower data credit prices, go to `Settings` → `Plan & billing` and switch to a current plan. See [Legacy plans](./legacy-plans.md) for a full comparison of what changes when you migrate.
-
 ### Why do I pay Actions even when using my own API key?
 
 Actions represent the platform orchestration Clay performs—ingesting, storing, and routing your data. Even with your own API keys, Clay is doing work to integrate that data into your workflows.
@@ -331,8 +327,6 @@ You don't need to change your Actions tier.
 
 You must upgrade to a higher action tier. Actions cannot be topped up separately because they're tied to your action tier's capacity.
 
-If your billing cycle resets soon, waiting is also an option — your full Actions allotment replenishes automatically at your next renewal. You can check your exact renewal date in `Settings` → `Plan & billing`.
-
 ### Why can't I top up Actions?
 
 Actions represent fixed platform capacity tied to your action tier. To get more Actions, you must upgrade to a higher action tier. Data Credits, however, are consumption-based and can be purchased as one-time top-ups or by upgrading your Data Credits tier.
@@ -342,6 +336,16 @@ Actions represent fixed platform capacity tied to your action tier. To get more 
 Actions reset each billing cycle and don't roll over, since they reflect the platform capacity your plan includes. Each plan includes enough Actions to cover 90% of customer usage, and if you need more, you can increase your Action tier.
 
 Data Credits work more like a currency and do roll over. On Launch and Growth plans, unused credits can accumulate up to 2x your monthly credit amount (e.g., a 10,000 credit plan can bank up to 20,000 total). Enterprise customers can roll over up to 15% of their prior year's purchased credits, provided they renew at an equal or higher commitment.
+
+### Why do I see a warning that credits are "over the rollover limit" when my current balance is below the 2× cap?
+
+The warning appears when your current balance is already high enough that adding your next monthly renewal would push the total over the 2× rollover cap — not because you are over it right now.
+
+When your plan renews, your credit balance is capped at 2× your monthly allotment. If your current balance plus the credits you will receive at renewal would exceed that cap, you will see a warning showing how many credits are projected to fall above the cap at renewal.
+
+**Example:** On a 10,000 credits/month plan (2× cap = 20,000), if your current balance is 17,150 credits, adding 10,000 at renewal would reach 27,150 — 7,150 above the cap. The warning shows: *"7,150 credits are over the rollover limit. Use them by [renewal date] or they will expire."* At renewal, your balance is set to 20,000.
+
+No credits are affected before your renewal date — you can use them freely until then. To preserve more credits, spend down your balance before the renewal date shown in the warning.
 
 ### How do I estimate what my workflow will cost?
 
@@ -390,8 +394,8 @@ Common causes:
 
 **After your billing cycle ends:**
 
--   Your monthly Actions and Data Credit allocation resets to the new plan's level.
--   Your balance is capped at 2× the new plan's monthly Data Credit limit.
+-   **On a monthly plan:** Your balance is capped at 2× the new plan's monthly Data Credit limit.
+-   **On an annual plan:** Your carryover is capped at 15% of the new plan's annual Data Credit allotment. Credits above that cap are forfeited.
 -   Your data remains intact.
 -   Features are limited to the new plan's capabilities.
 
@@ -410,9 +414,3 @@ No. Exporting data to CSV does not consume an Action or any Data Credits. CSV ex
 No. **Lookup Record** operations — such as `Salesforce > Lookup Record` — read data from your CRM into Clay and are treated as CRM imports. They do not consume Action credits. This holds even when the lookup returns **No Records Found**.
 
 Only CRM **write** operations consume Actions: Create Record, Update Record, Upsert Object, and other actions that push data from Clay to your CRM.
-
-### Does enriching the same person in two separate tables charge me credits twice?
-
-Yes. Clay charges **1 Action** (and the associated Data Credits) per enrichment row run, regardless of whether that person has been enriched in another table. There is no cross-table deduplication — each row runs independently. If the same contact appears in two tables and you run an enrichment such as Enrich Person in both, you will be charged for each run separately.
-
-**To avoid double-charging on overlapping lists:** Merge your lists into a single table first and use the **Dedupe** feature (click a text, email, or URL column header → **Dedupe**) to remove duplicate entries based on a unique identifier such as a profile URL or email address. Enriching the merged, deduplicated table ensures each person is processed and charged only once.
