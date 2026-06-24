@@ -34,7 +34,7 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
     -   **Location** — Filter by company office location. Sub-filters: **Country**, **City**, **State or province**, **Region** (EMEA, NAM, APAC, or LATAM), and **Postal code**. Use **Is Headquarters** to restrict results to companies whose primary office is in the specified location. All sub-filters support include and exclude.
     -   **Estimated employee count** — Filter by a numeric count of estimated employees (enter a minimum and/or maximum). This is a separate field from **Company size** — see the [FAQ below](#why-do-company-sizes-and-estimated-employee-count-return-different-results-for-the-same-range) for why the same numeric range can surface different companies.
     -   **AI filters** — Clay-generated attributes applied to company profiles:
-        -   **Industries** and **Subindustries** (include or exclude)
+        -   **Industries** and **Subindustries** (include or exclude) — see [the FAQ below](#what-are-the-available-ai-subindustry-filter-values) for the full list of AI Subindustry values
         -   **Revenue streams** — e.g., Subscriptions/Recurring, Professional Services, Transaction Fees, Advertising, Licensing/IP
         -   **Business types** — B2B, B2C, or Nonprofit
     -   **Technographics** — Filter by installed technology, powered by [BuyerCaddy](https://university.clay.com/docs/buyercaddy-integration). Costs **3 credits per matching company row** — cheaper in most cases than pulling a broad list and running a technographic enrichment afterward, since you pay only for companies that already match your tech criteria. Technographics data is also included when sending company rows to Audiences; the same 3-credit cost per matching row applies.
@@ -50,7 +50,8 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
     -   **Limit results** — Defaults to 10,000. Maximum 10,000.
 2.  Click `Preview companies` and `Import to new table` when the results look good.
 3.  Select import options:
-    -   Add additional enrichments like `Company Headcount Growth` or `Most Recent News`.
+    -   Add additional enrichments like `Company Headcount Growth` or `Most Recent News`. Any enrichments you select here run on import and **consume Data Credits** (the wizard shows the estimated cost per row). To avoid credit spend at this step, skip optional enrichments and add them as table columns after the table is created instead.
+    -   **For trial accounts:** The **Enrich Company** enrichment is pre-selected and cannot be removed during import.
     -   Enable or disable auto-update and auto-dedupe.
 4.  Click `Continue`.
 
@@ -98,11 +99,11 @@ However, `Find Companies` automatically includes a **Founded** column in your ta
 
 ### Does importing from Find Companies cost credits?
 
-**No, unless you use technographics filters.** Importing companies using standard filters — industry, size, location, revenue, company type, AI filters — consumes no Actions and no Data Credits.
+**No, unless you use technographics filters or select enrichments during import.** Importing companies using standard filters — industry, size, location, revenue, company type, AI filters — consumes no Actions and no Data Credits.
 
 If you enable **technographics filters**, each company row that matches your criteria costs **3 Data Credits**.
 
-Any enrichments you add to the table afterward (e.g., finding emails, enriching headcount) consume their own Actions and Data Credits as usual — only the import itself is free.
+Any enrichments you select during the import wizard, or add to the table afterward (e.g., finding emails, enriching headcount), consume their own Actions and Data Credits as usual — only pulling company records from Clay's dataset is free.
 
 ### Why does my table show fewer rows than the preview count?
 
@@ -130,3 +131,45 @@ This is expected behavior. The Find Companies source deduplicates new results ag
 Deduplication is based on each company's unique profile ID, not your filter configuration. A company already in the table is skipped on re-run regardless of whether your filters changed.
 
 **To re-import the full result set** (for example, when testing): delete the existing rows from your table first, then re-run the source. Once the rows are cleared, the search re-imports all matching companies from scratch.
+
+### What are the available AI Subindustry filter values?
+
+The **Industries** filter (the standard one at the top of the filter panel) and the **`Industry` output column** use a standardized industry taxonomy drawn from company profile data. Clay recognizes approximately 457 common values (examples: *Software Development, Financial Services, Insurance, Healthcare and Life Sciences, Information Technology and Services, Marketing and Advertising, Non-profit Organization Management*). Because these come from what companies set on their professional profiles, the list is open-ended rather than a fixed picklist.
+
+The **AI Subindustries filter** (under **AI filters**) is different. Clay generates a subindustry classification for each company using its own AI model, and this uses a fixed taxonomy of **110 categories**. These are the only values the filter accepts.
+
+The full set, grouped by parent category:
+
+-   **Software and IT:** AI and ML Platforms, Agriculture and Forestry Software, Blockchain and Web3, Carriers and ISPs, Cloud and Infrastructure Software, Consumer Software, Data and Analytics Software, Developer Tools and Platforms, Enterprise Software Solutions, Financial Services Software, Government and Public Sector Software, Hardware and Networking, Healthcare Software, IoT and Embedded Systems Software, IT Services and Cybersecurity, Manufacturing Software, Metaverse, AR/VR and Other Emerging Platforms, Quantum Computing Software, Real Estate and PropTech Software, Retail and Ecommerce Software, Security and Identity Software
+
+-   **Healthcare and Life Sciences:** Biotechnology and Pharmaceuticals, Digital Health and Telemedicine, Hospitals, Clinics and Outpatient Care, Medical Devices and Diagnostic Equipment, Medical Testing and Clinical Laboratories, Mental Health and Rehabilitation Services, Pharma Distribution and CRO Services
+
+-   **Finance and Insurance:** Banking and Lending, Capital Markets and Cryptocurrency, Cryptocurrency and Blockchain Services, Financial Services Platforms, Insurance and InsurTech, Investment Management and WealthTech, Venture Capital and Private Equity
+
+-   **Energy, Utilities and Environmental Services:** Electric Power and Grid Management, Nuclear and Advanced Generation, Oil and Gas Exploration, Production and Services, Renewable Energy and Clean Tech, Sustainability Tech and Environmental Consulting, Water, Waste and Environmental Management
+
+-   **Industrial Manufacturing and Materials:** 3D Printing and Advanced Manufacturing, Building Materials and Chemicals, Consumer Goods and Appliances, Electronics and Computer Equipment, Food, Beverage and Tobacco Production, Industrial Machinery and Equipment, Mining, Metals and Natural Resources
+
+-   **Real Estate and Construction:** Architecture, Urban Planning and Green Building, Commercial Real Estate Development and Leasing, Construction and Civil Engineering Services, Property and Facility Management, Residential Real Estate Development and Brokerage, Specialty Construction Products
+
+-   **Retail and Consumer Channels:** Automotive Service and Collision Repair, Brick-and-Mortar Retail, Media and Entertainment Retail, Online Commerce and Marketplaces, Retail Technology, Specialty Auctions and Collectibles, Wholesale and Distribution
+
+-   **Transportation and Logistics:** Autonomous Vehicles and Drone Delivery, Car and Truck Rental, Freight and Cargo, Logistics Technology, Passenger Transit and Mobility, Warehousing, Fulfillment and 3PL Services
+
+-   **Professional, Business and Legal Services:** Accounting, Audit and Financial Advisory, Advertising, Marketing and Multimedia Design, Defense and Government Services, Facilities Management and Commercial Cleaning, Human Resources, Staffing and Recruitment, Legal Services and Regulatory Compliance, Management Consulting and Strategy Consulting, Translation, Document and Information Management
+
+-   **Education and Training:** Corporate Training and Learning and Development, E-Learning Platforms and EdTech, K-12 and Higher Education Institutions, Test Prep, Tutoring and After-School Services, Vocational Training and Certification Programs
+
+-   **Media, Entertainment and Culture:** Digital Publishing and Streaming Platforms, Film, Television and Broadcasting, Gaming, Esports and Interactive Entertainment, Live Events, Experiences and Ticketed Attractions, Museums, Art Galleries and Cultural Preservation, Music, Audio and Podcast Services, Sports and Recreation
+
+-   **Hospitality, Food and Travel Services:** Food and Beverage Services, Hospitality and Lodging, Travel Agencies and Leisure Services
+
+-   **Personal and Home Services:** Funeral Homes and Related Services, Home Services, Personal Care and Wellness, Veterinary Care and Pet Services
+
+-   **Agriculture, Forestry and Fisheries:** AgriTech and Precision Farming, Aquaculture and Fisheries, Crop Farming and Livestock Production, Farming Equipment and Supplies, Forestry, Logging and Wood Products, Mining and Extraction
+
+-   **Automotive, Aerospace and Defense Manufacturing:** Aviation and Aerospace Component Manufacturing, Automotive and Rental Retail, Commercial Space Innovation, Defense Systems and Marine Manufacturing, Motor Vehicle and Parts Manufacturing
+
+-   **Non-Profit, Public Sector and Education (Non-Commercial):** Government Administration and Municipal Services, NGOs, Charities and Community Organizations, Public Healthcare and Social Services, Public/Private Research Institutions and Educational Foundations, Student Organizations and Campus Services
+
+**Note:** AI Subindustries is a filter input, not an output column. It controls which companies are returned in Find Companies, but does not add a dedicated Subindustry column to your table.
