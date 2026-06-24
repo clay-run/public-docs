@@ -72,7 +72,7 @@ Clay pulls data from Salesforce on two schedules:
 
 **Deleted records:** Clay does not remove deleted Salesforce records from Audiences immediately. Instead, the record is marked **Deleted in source**, which you can filter on in your audience. The weekly full sync reconciles hard-deleted records. If a Salesforce record is deleted and recreated (assigning it a new Salesforce ID), it will temporarily appear as a duplicate entry until the next weekly full sync resolves it. There is no self-serve option to trigger an early full sync — contact Clay support if you need an expedited cleanup.
 
-**Salesforce activities:** When Salesforce is connected, the Activity tab on each record's detail view shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp.
+**Salesforce activities (beta):** Clay can import Salesforce Task and Event activity data and associate it with your account records. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace. Once the feature is enabled for your workspace, an **Import activities** toggle appears in your Salesforce Companies import settings. Enable this toggle to begin importing activities; accounts are associated automatically in the background. After enabling, the Activity tab on each record's detail view shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp.
 
 ### Importing from HubSpot
 
@@ -90,6 +90,8 @@ Clay pulls data from Salesforce on two schedules:
     -   Deal data is associated with your Companies records and becomes available as a filter in any Companies audience.
 10.  Name the corresponding Clay fields.
 11.  Click `Save and Preview`, then `Confirm`.
+
+**Troubleshooting — "Export permission required" (Audiences open beta):** If the HubSpot account you select is missing the **Export CRM data** permission, Clay displays a warning and disables the Connect button. Click **Re-authorize HubSpot** in the warning to reconnect your account with the required permission enabled, then continue setup.
 
 ### Importing from Snowflake
 
