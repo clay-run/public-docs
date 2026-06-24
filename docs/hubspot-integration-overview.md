@@ -293,7 +293,7 @@ Each HubSpot column stores a reference to the specific connection it was configu
 
 ### Why does my HubSpot Create Object show "Invalid input" on some rows?
 
-When a row is missing a value for a required field (for example, a company name or contact email address), Clay shows an **"Invalid input: Please provide a value for [field]"** error for that row. This is a pre-run validation error, separate from authentication errors — it means the row simply does not have the data needed to create the object in HubSpot.
+When a row is missing a required input — for example, the company ID needed to associate a new Lead with a company — Clay shows an **"Invalid input"** error for that row (e.g., *"Invalid input: Please provide all association fields"*). This error is separate from authentication errors: it means the row does not have the data needed to complete the create request.
 
 **Fix:** Add a run condition so the action only runs on rows where the required field is populated. Open the column settings, go to **Run settings → Only run if**, and add a condition that checks the required input field is not empty. Rows without the required value will be skipped cleanly without showing an error.
 
