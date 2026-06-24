@@ -1,7 +1,7 @@
 ---
 title: Audiences (Beta)
 source_url: https://university.clay.com/docs/audiences
-description: "Clay Audiences is the unified data layer for your workspace. Currently in beta for Enterprise customers; going GA for Launch, Growth, and Enterprise plans on June 22, 2026."
+description: "Clay Audiences is the unified data layer for your workspace. Currently in beta for Enterprise customers; going GA for Launch, Growth, and Enterprise plans on June 23, 2026."
 last_synced: 2026-04-27T18:09:16.275Z
 ---
 
