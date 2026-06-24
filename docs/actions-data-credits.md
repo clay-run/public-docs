@@ -336,6 +336,16 @@ Actions reset each billing cycle and don't roll over, since they reflect the pla
 
 Data Credits work more like a currency and do roll over. On Launch and Growth plans, unused credits can accumulate up to 2x your monthly credit amount (e.g., a 10,000 credit plan can bank up to 20,000 total). Enterprise customers can roll over up to 15% of their prior year's purchased credits, provided they renew at an equal or higher commitment.
 
+### Why do I see a warning that credits are "over the rollover limit" when my current balance is below the 2× cap?
+
+The warning appears when your current balance is already high enough that adding your next monthly renewal would push the total over the 2× rollover cap — not because you are over it right now.
+
+When your plan renews, your credit balance is capped at 2× your monthly allotment. If your current balance plus the credits you will receive at renewal would exceed that cap, you will see a warning showing how many credits are projected to fall above the cap at renewal.
+
+**Example:** On a 10,000 credits/month plan (2× cap = 20,000), if your current balance is 17,150 credits, adding 10,000 at renewal would reach 27,150 — 7,150 above the cap. The warning shows: *"7,150 credits are over the rollover limit. Use them by [renewal date] or they will expire."* At renewal, your balance is set to 20,000.
+
+No credits are affected before your renewal date — you can use them freely until then. To preserve more credits, spend down your balance before the renewal date shown in the warning.
+
 ### How do I estimate what my workflow will cost?
 
 **Before purchasing a plan:** Use the [Clay Pricing Calculator](https://www.clay.com/credits-calculator) to scope out how many Actions and Data Credits your workflow is likely to consume.
