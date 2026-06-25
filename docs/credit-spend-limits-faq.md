@@ -12,8 +12,6 @@ Answering questions about the credit spend limits feature.
 
 **Note:** This feature is only available for Enterprise Plan.
 
-**Related feature:** For shared spending pools that span multiple workbooks and users, see [Credit budgets](/docs/credit-budgets) (Enterprise, currently in open beta).
-
 ## Who can set and manage credit limits?
 
 **Who can create and modify credit spend limits?**
