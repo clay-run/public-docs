@@ -46,7 +46,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
         -   `Spintax variable`: Choose a random value from a list
         -   `Rows from [Table]`: Directly reference synced data (Clean variables are recommended to handle empty values safely).
         -   (HTML only): If enabled, use hyperlinks, inline images, fonts, and rich text formatting.
-5.  Go to `Settings` to add your email account:
+5.  Go to `Sender accounts` to add email accounts to this campaign:
     -   `Google OAuth` (recommended): Connect your Google Workspace account via OAuth.
         -   ⚠️ Note: You or your Workspace admin must authorize the Clay sequencer app for your domain, or you'll see an access error.
     -   `Microsoft Outlook OAuth` (recommended): Connect your Outlook account via OAuth.
@@ -120,12 +120,10 @@ You can add or update email signatures for any connected sender account.
 
 1.  Go to `Campaigns` from your home screen.
 2.  Click on the name of your campaign under `Sequences`.
-3.  Navigate to the `Settings` tab.
-4.  Scroll to the `Sender setup` section.
-5.  Under `Email accounts`, locate the sender you want to edit.
-6.  Click the three-dot (⋯) menu on the right side of that sender's row.
-7.  Select `Update sender variables`.
-    -   You can also access this via the `Email accounts` tab.
+3.  Go to the `Sender accounts` tab.
+4.  Locate the sender you want to edit.
+5.  Click the three-dot (⋯) menu on the right side of that sender's row.
+6.  Select `Update sender variables`.
 
 ## Best practices
 
@@ -160,7 +158,7 @@ The daily send limit is set at the **email account level**, not per campaign. If
 
 To increase your total daily sending capacity:
 -   **Add more email accounts** — each additional account has its own independent daily budget. With two accounts you can send up to twice as many emails per day.
--   **Increase the send limit** on an existing account — open the campaign's `Sender setup`, click the three-dot (⋯) menu next to the account, and select `Update send limit`.
+-   **Increase the send limit** on an existing account — open the campaign's `Sender accounts` tab, click the three-dot (⋯) menu next to the account, and select `Update send limit`.
 
 Keep in mind that sending high volumes of cold email from a single inbox puts your domain at risk. Starting near the default (20 emails/day) and scaling by adding accounts rather than increasing individual limits is safer for deliverability.
 
@@ -177,7 +175,7 @@ For example: an 08:00 AM–07:00 PM window is 660 minutes. With the minimum set 
 To shorten the estimated time:
 -   **Lower the min time between emails** — a smaller gap increases daily sends per account. Shorter intervals can raise spam risk; the [Best practices](#best-practices) section recommends pacing sends throughout the day.
 -   **Add more sender accounts** — each account adds its own independent daily capacity.
--   **Increase the account send limit** — in `Sender setup`, click the three-dot (⋯) menu next to an account and select `Update send limit`.
+-   **Increase the account send limit** — in the `Sender accounts` tab, click the three-dot (⋯) menu next to an account and select `Update send limit`.
 
 ### My "Sync lead data to campaign" column is showing a warning. What does it mean?
 
@@ -227,7 +225,7 @@ Email signatures are configured at the **sender account level**, not per individ
 
 To set or update a signature:
 
-1.  Open your campaign and go to `Sender setup`.
+1.  Open your campaign and go to the `Sender accounts` tab.
 2.  Click the three-dot menu (⋯) next to the sending account.
 3.  Select `Update sender variables`.
 4.  Enter your text in the `Signature` field.
