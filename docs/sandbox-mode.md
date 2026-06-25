@@ -2,7 +2,7 @@
 title: Sandbox mode
 description: Learn about sandbox mode, a playground to safely iterate +
   experiment with your data!
-last_synced: 2026-04-26T01:40:36.624Z
+last_synced: 2026-06-25T18:51:54.011Z
 ---
 
 # Sandbox mode
@@ -11,7 +11,7 @@ Learn about sandbox mode, a playground to safely iterate + experiment with your 
 
 Sandbox mode is a special table mode that lets you safely build, test, and publish table configurations using a small subset of rows—without affecting your running workflow. **With sandbox mode you can:**
 
--   Test enrichments and integrations on a smaller dataset so you conserve credits and prevent accidental credit usage.
+-   Test enrichments and integrations on a smaller dataset without using extra credits.
 -   Hand-pick specific rows from your table to experiment with in your sandbox.
 -   Keep your production table safe from changes while sandbox mode is active.
 -   Review all changes before applying them to your full table.
@@ -19,7 +19,6 @@ Sandbox mode is a special table mode that lets you safely build, test, and publi
 ## **Enabling sandbox mode**
 
 1.  Click the `Sandbox mode` button in the toolbar.
-    -   If you do not see this button, check that you are on a Pro or Enterprise Plan
 2.  After a few seconds, a new sandbox will be set up with sample rows, ready for you to make changes.
     -   **To discard changes and start a fresh copy of the sandbox:** Click `⚙️` → `Reset sandbox`.
     -   **To turn off sandbox mode:** Click `Exit sandbox` in the toolbar. This will return you to your normal table and discard all unpublished changes in your sandbox.
