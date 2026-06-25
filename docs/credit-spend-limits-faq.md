@@ -125,3 +125,5 @@ Notifications will be delivered via both email and in-product UI across various 
 No. The notifications above are for workbook-level credit spend limits only — they fire when a specific workbook reaches its configured cap. There is currently no automated alert when your workspace's overall monthly Data Credit allotment is running low or is exhausted.
 
 To manually monitor your monthly credit balance, go to **Settings → Usage**. The Usage Dashboard shows your remaining Data Credits and your current billing period end date. For a detailed breakdown of credit consumption, see [Credit usage](/docs/credit-usage).
+
+**Looking for team-level credit pools?** Credit spend limits cap individual workbooks. For managing credits across teams and departments — creating shared budget pools and assigning them to groups of users — see [Credit budgets](/docs/workspace-administration-documentation) (Enterprise open beta).
