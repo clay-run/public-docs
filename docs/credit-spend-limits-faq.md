@@ -12,6 +12,8 @@ Answering questions about the credit spend limits feature.
 
 **Note:** This feature is only available for Enterprise Plan.
 
+**Looking for higher-level budget organization?** If you want to group workbooks into named budgets, track team-level spend, and get email alerts at usage thresholds, see [Credit budgets](/docs/credit-budgets) — a complementary Enterprise feature now in open beta.
+
 ## Who can set and manage credit limits?
 
 **Who can create and modify credit spend limits?**
