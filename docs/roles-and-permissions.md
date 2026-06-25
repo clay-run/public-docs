@@ -77,7 +77,7 @@ The sales rep role is designed for team members who need to set up email account
 -   Access tables, workbooks, or any other part of the standard Clay interface
 -   Create or edit workflows directly in Clay
 
-Admins control which Functions reps can access (via the Functions settings page) and can set per-user credit budgets. See [MCP settings](https://university.clay.com/docs/mcp-settings) for details.
+Admins control which Functions reps can access (via the Functions settings page) and can set per-user credit limits. See [MCP settings](https://university.clay.com/docs/mcp-settings) for details.
 **If you were assigned the Sales Rep role but need access to the standard Clay workspace**, contact your workspace admin and ask them to change your role. Admins can update roles at `Settings` → `Team`.
 
 **Note:** Currently, we do not support table-level view restriction. Members can view all tables/workbooks once invited to a workspace.
@@ -139,7 +139,11 @@ Restrict which users or groups can configure workflows using specific integratio
 
 **Credit spend limits** _(Enterprise)_
 
-Set workbook-level credit caps to prevent overspending. Admins can configure a workspace default limit that automatically applies to all new workbooks. For members accessing Clay through AI tools (Claude, ChatGPT, or Glean) via the MCP integration, admins can also set per-user credit budgets. See [Credit spend limits FAQ](https://university.clay.com/docs/credit-spend-limits-faq) and [MCP settings](https://university.clay.com/docs/mcp-settings).
+Set workbook-level credit caps to prevent overspending. Admins can configure a workspace default limit that automatically applies to all new workbooks. For members accessing Clay through AI tools (Claude, ChatGPT, or Glean) via the MCP integration, admins can also set per-user credit limits. See [Credit spend limits FAQ](https://university.clay.com/docs/credit-spend-limits-faq) and [MCP settings](https://university.clay.com/docs/mcp-settings).
+
+**Credit budgets** _(Enterprise, open beta)_
+
+Create named credit spending pools and assign them to users or groups, so spend can be tracked and governed by team or cost center. Workbooks are assigned to a budget, and any Data Credits they consume count against that budget's limit. Access via `Settings` → `Budgets`. See [Credit budgets](https://university.clay.com/docs/actions-data-credits#credit-budgets-enterprise-open-beta) in the Actions & Data Credits guide.
 
 **Audiences**
 
