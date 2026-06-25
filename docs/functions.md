@@ -1,6 +1,5 @@
 ---
 title: Functions
-source_url: https://university.clay.com/docs/functions
 description: Functions let you convert any enrichment sequence into a reusable
   workflow. Once created, you can use it across any table — and any updates you
   make to the…
@@ -130,26 +129,6 @@ Functions eliminate duplicate work when you need the same workflow in multiple t
 
 No. Saving columns as a function preserves the existing data without rerunning the enrichments. You won't be charged credits twice.
 
-### What happened to my original columns and prompts after I used "Replace columns with function"?
-
-When you check **Replace columns with function** during function creation, Clay doesn't delete your original columns — it moves them inside the function. All column configurations, AI prompts, enrichment settings, and run conditions are preserved intact inside the function's internal table.
-
-**To view and copy your original prompts:**
-
-1.  In your table, click the function column's header (for example, "Enrich with all columns for…").
-2.  Select **Edit function** to open the function editor.
-3.  Your original columns appear inside the function exactly as they were — click any column header to see its full configuration, prompt text, and settings. From here you can copy any prompt out to reuse elsewhere.
-
-**To restore the original separate columns:**
-
-There's no one-click way to split a function back into standalone columns. If you need the original column layout back, use [table version history](table-versions.md):
-
-1.  In your table, click **History** (bottom-right corner) → **All configuration versions**.
-2.  Find a version taken before you created the function.
-3.  Click **Restore Configuration** and confirm.
-
-Restoring removes the function column (which was added after the snapshot) and brings back your original columns with their configurations. Note that table versioning restores **structure and configuration only** — cell value data is not affected by a version restore. See [Table versions](table-versions.md) for full details on what changes.
-
 ### Can I use a function someone else on my team built?
 
 Yes. All workspace functions are available to use in your tables — no special permissions needed. Use them as-is, duplicate and modify for your needs, or request edit access from the owner to collaborate directly.
@@ -206,16 +185,6 @@ Every function includes a built-in **"Send data back"** column — the final ste
 6.  Click **Publish Changes** to apply.
 
 If a column's data is not appearing in the calling table, check whether that column is selected here — it may exist in the function but be unchecked in this list.
-
-### If I add a new output after a function has already run, will existing rows be updated?
-
-No. Adding or enabling a column in the **"Send data back"** step — including mapping a new Audience field — only applies to rows that enter the function **after** you publish the change. Rows that have already been processed are not retroactively re-sent.
-
-For example, if a function produced social media URLs but that column wasn't checked in "Send data back" when the rows ran, that data will not automatically flow to your calling table or Audiences — even though it exists in the function's output history.
-
-**To get the new output for previously processed rows:** go to your origin table and re-run the function column for those rows. This dispatches a fresh invocation through the updated function configuration, and the new column data will be returned this time.
-
-**Best practice:** Before running a function on a large dataset, configure all the outputs you will need — including Audience field mappings and any external destinations (such as Google Sheets or Snowflake) — so you don't need to re-run to capture additional fields later.
 
 ### Why doesn't my function output appear in the formula column's `/` field picker?
 
