@@ -128,6 +128,12 @@ Upsert a row into a Snowflake database using a single field as a unique identifi
 -   **Snowflake warehouse**
 -   **Role** (optional)
 
+**Batching**
+
+The Upsert row action supports **Run in batches** mode. When enabled, Clay groups up to 1,000 rows into a single `MERGE INTO` statement — combining one `SELECT` per row via `UNION ALL` — and sends it to Snowflake in one request instead of running each upsert individually.
+
+If a batch fails, the error message will include **"Note: Try reducing the batch size"**. This occurs when the generated SQL becomes too large for Snowflake to handle, typically when running at the default maximum of 1,000 rows with many columns. To fix it, lower the **Number of rows per batch** setting in the action's run options: 500 is a good starting point; if errors persist, try 250.
+
 ### `Action` Update row
 
 Update a row in a Snowflake database using a single field as a unique identifier. If the identifier exists, the row will be updated. If not, a new row will be created.
@@ -140,6 +146,10 @@ Update a row in a Snowflake database using a single field as a unique identifier
 -   **Table name**
 -   **Snowflake warehouse**
 -   **Role** (optional)
+
+**Batching**
+
+The Update row action also supports **Run in batches** mode with the same behavior: up to 1,000 rows are combined into a single request. If you see a **"Note: Try reducing the batch size"** error, lower the **Number of rows per batch** setting — 500 is a good starting point.
 
 ### Run settings
 
