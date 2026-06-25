@@ -1,5 +1,6 @@
 ---
 title: Find People in Clay
+source_url: https://university.clay.com/docs/find-people-overview
 description: Discover relevant contacts and LinkedIn posts using Clay's Find People and Find professional posts sources, then enrich results with work email and mobile phone waterfalls.
 last_synced: 2026-04-26T01:39:58.803Z
 ---
@@ -84,9 +85,16 @@ If you have a saved Sales Navigator search and want to pull those results into C
 5.  Optionally set a **Max Count** (default and maximum is 2,500 — this is a Sales Navigator limit).
 6.  Click **Import to new table**.
 
-**Note:** This source requires a Sales Navigator **people search URL** (`https://www.linkedin.com/sales/search/people/...`), not a saved lead list URL (`linkedin.com/sales/lists/people`) or a saved search URL (those containing `savedSearchId`). If you have a saved Sales Navigator lead list, recreate the equivalent filters as a fresh people search on Sales Navigator and copy that URL instead. Each imported result costs 1 Clay credit.
+**Note:** This source requires a Sales Navigator **people search URL** (`https://www.linkedin.com/sales/search/people/...`), not a saved lead list URL (`linkedin.com/sales/lists/people`). Your search URL also cannot use filters that require access to your personal Sales Navigator account — Clay cannot see your account-specific data. Blocked filter types include:
 
-If the list was manually curated and cannot be recreated from search filters, export it from Sales Navigator as a CSV and [import it into Clay](csv-import-overview.md) instead.
+- Saved or recent search IDs (`savedSearchId`, `recentSearchId` in the URL)
+- Lead Lists or Account Lists
+- Connection-based filters (Connection type, Connections of, Past colleague, Shared experiences)
+- Activity-based filters (Following your company, Viewed your profile recently, People you interacted with)
+- CRM-based filters (People in CRM, Saved leads and accounts)
+- Persona
+
+If your search uses any of these, remove them and rebuild using only standard demographic or company filters. If the list was manually curated and cannot be recreated from search filters, export it from Sales Navigator as a CSV and [import it into Clay](csv-import-overview.md) instead. Each imported result costs 1 Clay credit.
 
 ## Finding LinkedIn posts by keyword
 
@@ -115,21 +123,3 @@ Each row includes the post URL, post text, author name, author LinkedIn URL, aut
 **To get comments, reactions, or shares on a specific post:** Click `Add enrichment`, search for **Get comments on a professional post**, **Get reactions on a professional post**, or **Get shares on a professional post**, and map **Post URL** to the post URL column from your import.
 
 > **Important:** These actions require the original post URL — a URL containing `-activity-` in the path (e.g., `https://www.linkedin.com/posts/clay-hq_...-activity-7212099008951975937-ezPv`). Share URLs containing `-share-` are not valid and return an error. To get the original URL for any post: open the post on LinkedIn, click **•••** (three dots) at the top right of the post, and select **Copy link to post**. If the post is a repost of someone else's content, open the original underlying post first and copy its link.
-
-## Getting people who interacted with a post
-
-To build a table of people who liked, commented on, or shared a specific post, use the **Get interactions with professional posts** source. Each interaction is included as a separate row, and you choose how duplicate interactions are handled via the required **duplicate interaction behavior** setting:
-
--   **One row per person globally** (`interactor`): a given person appears at most once across all results.
--   **One row per person per post** (`post-interactor`): a given person appears at most once per post, but can appear across multiple posts.
--   **Include all interactions** (`no-dedupe`): every interaction is returned as its own row, so the same person can appear in many rows.
-
-**To set up this source:**
-
-1.  In a workbook, click `+ Add`.
-2.  Search for `Get interactions with professional posts` and select it.
-3.  Provide the post URL — either as a manual entry or by linking to a column in an existing Clay table.
-
-**URL format requirement:** This source only accepts `activity` and `ugcPost` type post URLs. Share URLs — those containing `-share-` between the author slug and the post ID — are not valid and return an invalid-URL error. To identify the URL type: valid post URLs contain either `-activity-` or `ugcPost` in the path; share post URLs contain `-share-` and are not accepted.
-
-To get the correct URL: open the post, click **•••** (three dots) at the top right of the post, and choose **Copy link to post**. If the post is a reshare, open the original underlying post first and copy its link from there.
