@@ -80,6 +80,17 @@ For more options on re-running specific rows or cells, see [Run progress](run-pr
 
 When a bulk enrichment is attached to an [Audiences](https://university.clay.com/docs/audiences) segment (available in beta for Enterprise customers), clicking the enrichment card opens a **Run Setup** panel with additional settings for ongoing enrichment behavior.
 
+### Field mapping
+
+The **Field mapping** setting controls whether enriched data is written back to your Audiences records after each row runs.
+
+-   **On (default)** — enriched data is sent to Audiences. Click **Set up mappings** to configure which columns map to which Audience fields.
+-   **Off** — the Send to Audiences step is skipped for every row. No data is written back to Audiences, and each row shows **✅ Skipped** in the results column.
+
+To turn field mapping off, click **Set up mappings** in the Run Setup panel, then toggle **Field mapping** off at the top of the configuration panel.
+
+Turn field mapping off when you want to run enrichments and route results somewhere else — for example, writing directly to Salesforce via an action column — without also writing the data back to Audiences.
+
 ### Auto-enrich new records
 
 The **Auto-enrich new records** toggle determines whether records that newly qualify for the segment are enriched automatically after the initial run.

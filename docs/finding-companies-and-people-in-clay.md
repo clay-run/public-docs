@@ -294,11 +294,12 @@ When Clay resolves a domain to a company, it expands the search to include all c
 
 After running Find People from a company list, some rows in the resulting people table may show **Missing Input** in the **Company Table Data** column. This happens when a person's current employer uses a different domain than the company you searched — for example, searching on `broadcom.com` returns someone whose current employer resolves to `vmware.com`. Because the domains don't match, Clay can't link that person back to the original company row, leaving the company record ID blank.
 
-This mismatch most commonly occurs with subsidiaries, acquired companies, and organizations that operate under multiple domains.
+This mismatch most commonly occurs with subsidiaries, acquired companies, and organizations that operate under multiple domains. It can also be caused by domain format differences: Find People results typically return domains without the `www.` prefix or protocol (for example, `plantitgeo.com` rather than `www.plantitgeo.com`). If your company table stores domains with a `www.` prefix or a protocol, the automatic link can break even when both tables refer to the same company.
 
 **To fix this:**
 
 -   **Switch to LinkedIn company URLs as your company identifier** (recommended). When you provide a LinkedIn company URL instead of a domain, Clay uses the LinkedIn company slug for matching — which handles subsidiary and acquisition relationships more reliably. See [Use LinkedIn URLs, not domains, as company identifiers](#use-linkedin-urls-not-domains-as-company-identifiers).
+-   **Normalize domain formats in your company table.** Find People results typically return domains in shortened format — no protocol, no `www.` prefix (e.g., `example.com`). If your company table stores domains in full-URL format (e.g., `www.example.com`), this mismatch breaks the automatic link. Store company domains without the `www.` prefix; if you already have full-URL format domains, add a formula column in your people table to strip the prefix before using it as a lookup key.
 -   **Add a Lookup Rows fallback.** In your people table, add a **Lookup single row in other table** column. Set `Table to search` to your original companies table and match on `domain`. For rows where the person's current company domain is populated, this retrieves company fields directly — even when the automatic Company Table Data link is broken. See [Lookup Rows](lookup-rows.md).
 
 ### Company Table Data doesn't include company enrichment data
