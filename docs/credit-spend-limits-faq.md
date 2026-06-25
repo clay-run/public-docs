@@ -1,12 +1,36 @@
 ---
 title: Credit spend limits FAQ
-description: Answering questions about the credit spend limits feature.
+description: Credit Budgets and credit spend limits — tools for organizing and controlling how your team spends credits in Clay.
 last_synced: 2026-04-26T01:39:48.764Z
 ---
 
 # Credit spend limits FAQ
 
-Answering questions about the credit spend limits feature.
+Clay offers two complementary tools for Enterprise credit governance:
+
+-   **Credit Budgets** _(open beta)_ — named budget pools that admins assign workbooks, users, and other resources to, with homepage filtering, bulk-assignment, and email alerts. Find it in `Settings` → `Budgets`.
+-   **Credit Spend Limits** — per-workbook and per-table spending caps that stop credit-consuming processes once a configured limit is reached. Find it in `Settings` → `Usage` → `Workbook limits`.
+
+Both features are available on the Enterprise plan.
+
+---
+
+## Credit Budgets (open beta)
+
+**Credit Budgets** let workspace admins create named budget pools and assign workbooks, tables, users, and other resources to them. Think company cards for GTM workflows — budgets help teams attribute spend, prevent overspend, and expand Clay usage across their org with confidence.
+
+Currently in open beta for Enterprise — Enterprise plan customers can access it in `Settings` → `Budgets` today. If you're not on the Enterprise plan and want early access, contact your account manager or [Clay support](https://www.clay.com/contact).
+
+### What you can do with budgets
+
+-   **Create and manage named budgets** — set a credit limit for each budget and assign workbooks or other resources to it.
+-   **Filter by budget on the homepage** — use the homepage filter bar to see all workbooks and tables assigned to a specific budget.
+-   **Bulk-assign resources to a budget** — select multiple workbooks or tables on the homepage and assign them to a budget in one step.
+-   **Email alerts** — receive email notifications as a budget approaches and reaches its credit limit, so you can respond before workflows are blocked.
+
+---
+
+## Credit Spend Limits
 
 **Credit spend limits** let workspace admins control credit usage by setting spending caps on workbooks and tables. This helps teams manage budgets, prevent overspending, and allocate resources across projects and users.
 
