@@ -34,7 +34,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 2.  Click `Tools` → `Exports` → `Create Clay email campaign`
     -   The `Sync lead data to campaign` column automatically pushes 10 rows from your parent table into the campaign to draft with
     -   Tip: You can customize the `Sync lead data to campaign` column to only send leads with an email address using `Only run if`.
-3.  In the `Setup` tab, you can set:
+3.  In the `Sequence` tab, you can set:
     -   `Lead email address`: We automatically detect email address columns, but confirm this before proceeding.
     -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links.
 4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead replies (excluding out-of-office replies, which we detect and work around).
@@ -195,7 +195,7 @@ If you added or edited a **Clean variable** and it is not appearing in your mess
 
 ### Why can't I see or edit the Message sequence section?
 
-If your campaign is active, all settings — including the Message sequence — are locked. To make edits, open the campaign's `Setup` tab and click `Pause`. Once paused, you can edit message copy and campaign settings. Note that you cannot change the total number of messages while paused — to add or remove messages, complete the campaign and create a new one.
+If your campaign is active, all settings — including the Message sequence — are locked. To make edits, open the campaign's `Sequence` tab and click `Pause`. Once paused, you can edit message copy and campaign settings. Note that you cannot change the total number of messages while paused — to add or remove messages, complete the campaign and create a new one.
 
 ### Why is the three-dot menu on my campaign messages greyed out after pausing?
 
@@ -213,11 +213,7 @@ Each lead can only be sequenced once per campaign. To send multiple sequences to
 
 ### My sender account got disconnected. What happened?
 
-Email providers like Google and Microsoft occasionally revoke access due to inactivity, security checks, or suspicious activity detection.
-
-**If you connected via Google OAuth or Microsoft Outlook OAuth:** When an account shows an authentication error, click the three-dot (⋯) menu next to the account in `Campaigns` → `Email Accounts` and select `Reconnect`. This re-authenticates the account through the same OAuth flow without removing it from your campaigns.
-
-**If you connected via SMTP:** Delete the disconnected account from your sequencer settings and re-add it with fresh credentials.
+Email providers like Google and Microsoft occasionally revoke access due to inactivity, security checks, or suspicious activity detection. To fix this, delete the disconnected account from your sequencer settings and re-authenticate it.
 
 ### How do I add an email signature or sign-off?
 
