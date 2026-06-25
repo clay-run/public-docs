@@ -229,3 +229,16 @@ If you've filled in the **Bot name** or **Emoji** fields but the Slack message s
 4. Re-authenticate your Slack account and make sure to accept the `chat:write.customize` scope when prompted.
 
 After reconnecting with the scope in place, new runs of the **Send message to channel** action will use the custom bot name and emoji you specified.
+
+### Getting an `account_inactive` error from Slack
+
+If Clay returns an error like `{"ok":false,"error":"account_inactive"}` when running a Slack action (such as **Send message to channel** or **Send for approval to Slack channel**), this means the Clay bot user is no longer active in your Slack workspace. This most commonly happens when the Clay app has been uninstalled or deactivated in Slack — for example, by a workspace admin. If you can no longer find the Clay bot in Slack, that confirms the same root cause.
+
+**Why reconnecting in Clay alone doesn't fix this:**
+The reconnect flow in Clay starts a fresh OAuth authorization — it does not reuse any existing token. However, OAuth still requires the Clay app to be installed in your Slack workspace. If the app has been removed, even a fresh connection attempt will fail until the app is reinstalled on the Slack side.
+
+**To resolve this:**
+1. In Slack, go to **Settings & Administration → Manage Apps** and check whether the Clay app is still listed as installed.
+2. If it was removed or restricted by a workspace admin, reinstall it from Slack. If you're not a Slack workspace admin, ask whoever manages apps in your workspace to reinstall the Clay app.
+3. Once the Clay app is reinstalled, go to **Settings → Connections** in Clay and reconnect your Slack account.
+4. Re-run your Slack action.
