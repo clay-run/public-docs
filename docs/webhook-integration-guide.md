@@ -68,6 +68,20 @@ Clay's webhook URL works with any platform that can send HTTP POST requests in J
 2. Copy the webhook URL Clay generates.
 3. In your middleware tool, configure your flow or recipe to POST JSON data to that Clay webhook URL.
 
+### Receive data from HubSpot via Workflows
+
+HubSpot's native Workflows automation (under **Automation → Workflows**) can send contacts or records directly to Clay's webhook URL — no third-party middleware required.
+
+1. In your Clay workbook, create a table using **Monitor webhook** as the source (see [Creating a table with webhook](#creating-a-table-with-webhook)) and copy the webhook URL Clay generates.
+2. In HubSpot, go to **Automation → Workflows**.
+3. Create a new workflow with the trigger that fits your use case — for example, when a contact is created or a form is submitted.
+4. Add a workflow action and select **Send a webhook** (called **Trigger a webhook** in some HubSpot versions).
+5. Paste your Clay webhook URL as the destination.
+6. Map the HubSpot contact properties you want to send to Clay (such as email, name, and company).
+7. Save and activate the workflow.
+
+Clay receives each triggered record as a new row in real time.
+
 ### Send enriched data from Clay to a middleware tool
 
 1. In your middleware tool, set up a webhook trigger and copy the endpoint URL it provides.
