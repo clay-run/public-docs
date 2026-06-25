@@ -137,7 +137,7 @@ If you have a table of company domains or names and want to pull active job open
 **To set this up:**
 
 1.  In your company table, click `Add enrichment` and search for `Find Active Job Openings`.
-2.  Map your company domain to the input field. You can optionally filter by job title keywords, location, or days since posted.
+2.  Map your company domain to the input field. You can optionally filter by job title keywords, job description keywords, location, or days since posted.
 3.  Enable **Auto-run** on the table (click the ⛭ icon → **Run Settings**) so the enrichment fires automatically whenever you add a new company row.
 4.  To keep job openings refreshed over time, open Table Settings (⛭) → **Run Settings** → toggle on **Re-run columns on a schedule** → select the Find Active Job Openings column → set the frequency to Daily (or as often as you need fresh results).
 
@@ -230,3 +230,9 @@ If you had a brand mentions signal set up before the deprecation, it will show a
 -   **Claygent** — Use Clay's AI web scraper to monitor brand mentions from publicly available sources on the web.
 -   **Google News alerts** — Integrate through Clay to track brand mentions across news and web content.
 -   **Third-party social listening tools** — Many social listening platforms can connect to Clay through API integrations, letting you route mention data into your Clay tables.
+
+### Why did my job description keyword search return unexpected results?
+
+Job description keywords use phrase matching — your search term must appear as a contiguous sequence of words in the job description. Hyphens in your search terms are treated as word separators, so "K-12" and "K 12" produce the same search (both look for the phrase "k 12" in the description). If you want to search for a compound term as a single unbroken token, enter it without separators (for example, use "k12" instead of "K-12").
+
+For filtering that keywords alone cannot capture, run **Find Active Job Openings** first and then add a **Use AI** column to verify which results match your actual criteria.
