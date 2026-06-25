@@ -184,6 +184,8 @@ Note: Some very niche or newly formed businesses may have no coverage across any
 
 The most common cause is using `Best Match` instead of `Waterfall` for de-anonymization. `Waterfall` stops after the first match, while `Best Match` tests all providers and can cost 5-10 times more. Remember that IPs are cached for 30 days to avoid repeat costs.
 
+**Credits can exceed your row count on domain-grouped tables:** Credits are charged per successful IP de-anonymization, not per row. When your table is grouped by company domain, multiple employees from the same company visiting your site with different IP addresses are each charged separately — even though they all appear as a single domain row. The **Total Session Count in Window** column shows how many IP de-anonymizations contributed to each row, which is why your credit usage is often higher than your visible row count.
+
 Other common causes: adding new pages to tracking, removing exclusions, loosening filters, or surges in site traffic.
 
 ### Can the tracking snippet cause my site to crash?
@@ -210,7 +212,7 @@ Charges begin after you install the tracking snippet and Clay starts receiving e
 
 ### How does pricing work?
 
-**Cost:** Each successful IP enrichment consumes 1 action plus the applicable data credits (based on the de-anonymization provider). Results are cached for 30 days to avoid repeat costs.
+**Cost:** Each successful IP enrichment consumes 1 action plus the applicable data credits (based on the de-anonymization provider). Results are cached for 30 days to avoid repeat costs. Because credits are charged per unique visitor IP — not per domain row — your credit usage will typically be higher than the number of rows in your table when multiple employees from the same company visit with different IPs.
 
 You can view your credit spend for signals underneath the `Signals` tab of the [credit usage dashboard](https://www.clay.com/university/guide/credit-usage). To access, click on your account name → `Settings` → `Usage`.
 
