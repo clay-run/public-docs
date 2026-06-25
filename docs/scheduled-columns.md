@@ -37,6 +37,18 @@ To control this:
 
 Scheduled columns are best suited for data enrichment columns where refreshing values over time is the goal — for example, headcount, funding data, or job titles.
 
+## Downstream columns after a scheduled run
+
+Scheduled column runs force-run **only the selected columns**. After the scheduled column completes and its output updates, downstream columns that reference it follow Clay's normal auto-run rules:
+
+-   **Default mode (Auto-run on, "All columns"):** If the scheduled column's output changed for a row, downstream columns automatically re-run on those rows. If the output is unchanged, downstream columns stay up to date and are not re-triggered.
+-   **"Keep existing results" mode:** Downstream columns that already have results are marked "out of date" but are **not** automatically re-run. The scheduled run does not cascade to them.
+-   **Downstream column auto-run off:** The downstream column is marked "out of date" but requires a manual trigger.
+
+**To make a downstream column re-run on the same recurring cycle as the upstream scheduled column**, add it to the scheduled run list (**Table Settings → Run Settings → Re-run columns on a schedule → Only selected columns**). Scheduled column runs always force-run, so the downstream column executes every cycle regardless of "Keep existing results."
+
+To prevent the downstream column from running on every row on every cycle — for example, if you only want it to execute when the upstream value meets a condition — add a run condition. In the downstream column's **Run settings**, enable **Add run condition** and enter a formula that references the upstream column's value (for example, `Only run when [Sentiment] contains "BULLISH" & [Full Name] is not empty`). Clay evaluates the condition on each row and skips rows where it is not met, so you only consume credits for rows where the upstream result warrants it. See [Conditional runs](conditional-runs.md) for setup details.
+
 ## Usage limits
 
 Each plan has a limit to the total number of tables with scheduled columns.
