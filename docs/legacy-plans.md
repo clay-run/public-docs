@@ -63,6 +63,16 @@ After April 10, 2026 11:59pm PDT, any plan change forces migration to modern pla
 
 No. Only customers on modern plans see the data cost savings in-product. Rule of thumb: If you're charged for actions, you're on new pricing and see credit savings. If you're NOT charged for actions, you're on legacy pricing and do NOT see credit savings.
 
+**How do I purchase additional credits on a legacy plan?**
+
+To buy a one-time credit top-up:
+
+1.  Go to `Settings` → `Usage`.
+2.  Click **Add one-time data credits**.
+3.  Select the amount you need and confirm.
+
+Legacy plans carry a **50% premium** on top-up purchases (compared to 30% on modern plans). Enterprise customers on annual plans should contact their account manager to purchase additional credits. For full details on credits and rollover limits, see [Actions & Data Credits](./actions-data-credits.md).
+
 **Can legacy annual customers renew early?**
 
 Yes for Starter and Explorer annual plans. No for Pro annual plans — requires GS or support intervention, which may be used as an upsell opportunity to Enterprise.
