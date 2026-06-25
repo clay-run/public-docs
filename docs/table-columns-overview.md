@@ -126,6 +126,35 @@ You can identify the parent column of a child column to better understand its da
 1.  Click on the child column to open the dropdown menu.
 2.  Within the menu, select `Go to parent column`.
 
+## Sort columns
+
+You can sort your table by any column to arrange rows in ascending (A → Z / 0 → 9) or descending (Z → A / 9 → 0) order. Sorts are view-specific — each view of a table can have its own independent sort configuration.
+
+### Sort by a single column
+
+Click a column header to open its dropdown menu and select **Sort A → Z** or **Sort Z → A**. The table immediately reorders all rows by that column's values.
+
+### Sort by multiple columns
+
+When you apply more than one sort, Clay applies them **in priority order**: the first (top) sort arranges all rows, and each additional sort only reorders rows that have the **same value** for every higher-priority sort column. This is the same behavior as an `ORDER BY col1, col2, col3` clause in a database.
+
+**Example:** If your view has three sorts active —
+
+1.  Competitor Status (Z → A) — highest priority
+2.  Hiring Sales (Z → A)
+3.  Has RevOps (A → Z) — lowest priority
+
+— then all rows are arranged by Competitor Status first. Within any group of rows that share the same Competitor Status value, those rows are further sorted by Hiring Sales. Within rows that share both the same Competitor Status and Hiring Sales value, Has RevOps then determines the order.
+
+**This is expected behavior, not a bug.** If a column's sort appears to have no effect, it means the higher-priority sort columns have unique values for every row — there are no ties to break.
+
+To manage multiple sorts:
+
+1.  Click the **Sort** button in the table toolbar (it shows the number of active sorts when any are applied, e.g., **2 sorts**).
+2.  Click **Add sort** to add another column and direction.
+3.  **Drag** sort items up or down to change their priority — the topmost item always has the highest priority.
+4.  Click the **×** on a sort item to remove it.
+
 ## Hiding columns
 
 You can hide a column to help simplify your table view. This is helpful when you want to hide parent columns.
