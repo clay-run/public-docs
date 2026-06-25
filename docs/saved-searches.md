@@ -20,8 +20,6 @@ This feature is especially useful when you're building lists with similar criter
 3.  Add a name and description for your search to help you remember what the search is for.
 4.  Your saved search will now be available to reuse in future tables.
 
-**Note:** For `Find companies` and `Find people` sources, if you navigate away with unsaved filter changes — via browser navigation, switching to a different source type, or switching search modes — Clay will prompt you to save or discard your changes before leaving.
-
 ## Use a saved search
 
 1.  When setting up a new `Find companies`, `Find people`, or `Find jobs` source, click `Browse past searches` in the modal.
