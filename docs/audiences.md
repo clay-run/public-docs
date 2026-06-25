@@ -72,7 +72,7 @@ Clay pulls data from Salesforce on two schedules:
 
 **Deleted records:** Clay does not remove deleted Salesforce records from Audiences immediately. Instead, the record is marked **Deleted in source**, which you can filter on in your audience. The weekly full sync reconciles hard-deleted records. If a Salesforce record is deleted and recreated (assigning it a new Salesforce ID), it will temporarily appear as a duplicate entry until the next weekly full sync resolves it. There is no self-serve option to trigger an early full sync — contact Clay support if you need an expedited cleanup.
 
-**Salesforce activities:** When Salesforce is connected, the Activity tab on each record's detail view shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp.
+**Salesforce activities:** To import Salesforce Tasks and Events into Audiences, go to your Salesforce source settings, select `Companies`, and enable the **Also import activities (tasks and events) associated with these accounts** toggle. Once enabled, accounts are associated automatically in the background. The Activity tab on each record's detail view then shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp.
 
 ### Importing from HubSpot
 
@@ -90,6 +90,8 @@ Clay pulls data from Salesforce on two schedules:
     -   Deal data is associated with your Companies records and becomes available as a filter in any Companies audience.
 10.  Name the corresponding Clay fields.
 11.  Click `Save and Preview`, then `Confirm`.
+
+**Troubleshooting — "Export permission required" (Audiences open beta):** If the HubSpot account you select is missing the **Export CRM data** permission, Clay displays a warning and disables the Connect button. Click **Re-authorize HubSpot** in the warning to reconnect your account with the required permission enabled, then continue setup.
 
 ### Importing from Snowflake
 
@@ -230,6 +232,8 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
     -   Enable the auto-enrich toggle so that any new record entering this segment is automatically passed through the enrichment — typically within 15 minutes.
 5.  Click `Start Run`.
 
+**Note:** Clay does not impose rate limits on Audiences bulk enrichments — the system is built to handle large lists at scale. Third-party data providers (such as Clearbit or Apollo) apply their own rate limits, but Clay queues requests and manages these automatically in the background. If you supply personal API keys for a provider, those keys' own rate limits apply.
+
 **Using Audiences from a Clay table:**
 
 Four Clay actions let you move data between a Clay table and your Audience directly.
@@ -259,6 +263,14 @@ Since enrichment results write permanently back to All People, you can filter an
 1.  Add a filter to your audience.
 2.  Select the enriched field (for example, `Phone` or `LinkedIn URL`).
 3.  Set the operator to **`is not empty`** to show only records where the enrichment returned a value.
+
+**Errored rows after a run**
+
+In Audiences bulk enrichment, a row appears in the **Errored rows** tab when any of its action columns fail — for example, if a data provider returns no match for a domain. This is true even if the **Update Audiences Record** step succeeded and your data was already written back to Audiences. This is expected behavior, not a bug — Audiences treats a row as complete only when all configured action columns succeed.
+
+To resolve errored rows:
+-   **Rerun failed rows** — in the bulk enrichment table, right-click the failing column header → **Run column** → **Run [N] empty or out-of-date rows** to retry only records that didn't get a result.
+-   **Remove non-critical provider columns** — if a provider consistently fails to match your records and the data isn't essential, removing that column from the bulk enrichment table means its failures will no longer mark rows as errored.
 
 ### Signals
 
@@ -528,6 +540,24 @@ Three things to check:
 -   **The signal falls outside the default lookback window.** `Lookup in Audiences` returns signal data for the past 30 days by default. If the signal event is older than 30 days, open the column settings and increase the lookback period.
 -   **The 5-result cap was reached.** `Lookup in Audiences` returns a maximum of 5 signal results per record. If a company has more active signals than that, some may not appear. Use `Get Audiences Activity` to retrieve a larger set of signal data.
 -   **The signal hasn't fired for that record yet.** Signal results are written asynchronously and may not appear immediately after a signal run completes. If a signal should be recent but is still missing, open the signal's column header → `Edit column` and re-run the signal to refresh the data for that record.
+
+### How does Audiences decide which value to keep when a field has been set by multiple sources?
+
+When multiple sources provide a value for the same Audience field on the same record, Audiences uses a fixed source precedence to decide which value to keep. Higher-priority sources always win; when two sources at the same priority tier have competing values, the most recently updated value is used.
+
+Source precedence order (highest to lowest):
+
+1. **Upsert Audiences Record / Bulk enrich** — values written directly to Audiences via a Clay table action (`Upsert Audiences Record`, `Update Audiences Record`) or a bulk enrichment field mapping
+2. **Salesforce Contact, Salesforce Account, Salesforce Opportunity, HubSpot** — all equal priority; tiebreaker is the most recently updated value
+3. **Salesforce Lead**
+4. **Snowflake, Google BigQuery**
+5. **CSV**
+
+**Practical implication for bidirectional Salesforce syncs:** If Audiences has a bulk-enriched value for a field, that value takes priority over the Salesforce-imported value. When the Salesforce import runs and finds a different value in SFDC, Audiences pulls in that value but keeps the bulk-enriched value because it ranks higher. On the next 24-hour export, Audiences writes the bulk-enriched value back to Salesforce — which can appear to overwrite an update you made directly in Salesforce or via a Clay Action on the SFDC record.
+
+To make Salesforce the authoritative source for a specific field, avoid setting that field through a bulk enrichment or `Upsert Audiences Record` action — or clear the bulk-enriched value from the record so the Salesforce import can take effect.
+
+**Note:** Workspace-level configuration can adjust this precedence (for example, to treat CSV as a higher-priority source). Contact Clay support if you need custom precedence behavior for your workspace.
 
 ### What happens when I archive a record in Audiences?
 
