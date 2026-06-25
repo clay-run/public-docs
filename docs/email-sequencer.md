@@ -215,7 +215,11 @@ Each lead can only be sequenced once per campaign. To send multiple sequences to
 
 ### My sender account got disconnected. What happened?
 
-Email providers like Google and Microsoft occasionally revoke access due to inactivity, security checks, or suspicious activity detection. To fix this, delete the disconnected account from your sequencer settings and re-authenticate it.
+Email providers like Google and Microsoft occasionally revoke access due to inactivity, security checks, or suspicious activity detection.
+
+**If you connected via Google OAuth or Microsoft Outlook OAuth:** When an account shows an authentication error, click the three-dot (⋯) menu next to the account in `Campaigns` → `Email Accounts` and select `Reconnect`. This re-authenticates the account through the same OAuth flow without removing it from your campaigns.
+
+**If you connected via SMTP:** Delete the disconnected account from your sequencer settings and re-add it with fresh credentials.
 
 ### How do I add an email signature or sign-off?
 
