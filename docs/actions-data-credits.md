@@ -201,6 +201,32 @@ Once enabled, all Actions run within that workbook will contribute to the workbo
 
 For complete documentation on credit spend limits—including default workspace limits, notifications, and behavior when limits are reached—see the [Credit spend limits FAQ](https://university.clay.com/docs/credit-spend-limits-faq).
 
+### Credit budgets (Enterprise, open beta)
+
+_Credit budgets are currently in open beta for Enterprise Plan workspaces._
+
+Credit budgets let admins create named spending pools and assign them to users or groups, so each team or cost center's Data Credit usage is tracked and governed independently. Unlike workbook credit limits—which cap a single workbook's spend—a budget spans multiple workbooks and users, making it well-suited for team- or department-level cost allocation.
+
+**How to access:** `Settings` → `Budgets`.
+
+**How credit budgets work:**
+
+1.  An admin creates a named budget (e.g., "Marketing") and sets a Data Credit limit for it.
+2.  The admin grants budget access to user groups or individual members.
+3.  Users assign their workbooks to a budget. Any Data Credits consumed by those workbooks count against the assigned budget's limit.
+
+When a budget's limit is reached, credit-consuming actions are blocked for all workbooks assigned to that budget. Workbooks remain fully editable, but enrichment runs cannot start until an admin increases the limit or resets the budget.
+
+**Key behaviors:**
+
+-   **Data Credits only.** Budgets track Data Credit spend only, not Actions.
+-   **Spending caps, not reserved credits.** The sum of all budget limits can exceed your total workspace credit balance—you don't need to divide your full credit pool upfront.
+-   **No automatic reset.** Budget balances count down continuously; an admin must manually reset them.
+-   **Independent from workbook limits.** If a workbook has both a workbook credit limit and a budget assigned, credits count against each independently.
+-   **Homepage filter.** Filter your workbooks by budget from the Clay homepage to see spend by team or initiative.
+-   **Bulk assignment.** Admins can assign multiple workbooks to a budget at once.
+-   **Email alerts.** Receive email notifications when a budget's usage approaches or reaches its limit.
+
 ## Rollover Data Credits
 
 ### Actions: No rollover
