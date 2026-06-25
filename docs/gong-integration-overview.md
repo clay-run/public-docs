@@ -38,6 +38,7 @@ To connect your Gong account for Clay actions:
 2.  Under `Integrations`, select one of the Gong actions.
 3.  Within the settings side panel, you will be asked to `Select Gong account`.
     -   To connect your Gong account, click `Add account` and go through authentication.
+    -   **Note:** Your Gong user must have API access enabled to connect. If you see an "Insufficient permissions" error on Gong's authorization screen, ask your Gong admin to enable API access for your account in Gong's Admin settings.
 
 ### `Action` Get call details
 
@@ -68,6 +69,19 @@ Use this action to add a prospect to a Gong Engage flow.
 -   **Prospect Owner email:** Email of the Gong Engage user who owns the flow instance. Once this is selected, you'll be able to assign the prospect.
 -   **Flow ID:** ID of the Gong Engage flow you want to add the prospect to.
 -   **CRM Prospect ID:** This is the CRM ID of the prospect you want to add to the flow (Hubspot, Salesforce, etc.). For this to work properly, you must have the CRM connected to your Gong account.
+
+**Important:** The Gong account connected in Clay must belong to the same user whose email is set as Prospect Owner. If a different user's Gong account is connected, there will be a mismatch between the authenticating user and the flow owner, which may prevent the prospect from being enrolled in Gong Engage.
+
+**Troubleshooting: Clay shows "Added to flow" but the prospect doesn't appear in Gong Engage**
+
+If Clay reports a successful enrollment but the prospect isn't visible in the flow, the issue is typically on the Gong or CRM configuration side. Check the following:
+
+1.  **Gong account matches Prospect Owner:** Confirm that the Gong account connected in Clay belongs to the same user set as the Prospect Owner email. Using a different account creates a mismatch between who is authenticating the API call and who owns the flow.
+2.  **Salesforce ↔ Gong connection:** In Gong Admin settings, verify that Salesforce is connected and contacts are actively syncing.
+3.  **CRM Prospect ID:** Double-check that the Salesforce or HubSpot Contact ID you're passing actually exists in your CRM.
+4.  **Gong Engage seat:** The Prospect Owner must have a Gong Engage seat—a standard Gong license is not sufficient.
+5.  **Flow is active:** Confirm the flow is published and active in Gong Engage.
+6.  **Already enrolled:** If the contact was previously added to the same flow, Gong may skip re-enrolling them.
 
 ### `Action` Get Assigned Flows for Prospect
 
