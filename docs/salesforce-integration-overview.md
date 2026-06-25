@@ -33,11 +33,17 @@ Connect to Salesforce via Client Credentials for server-to-server access. No bro
 
 **Setting up in Salesforce**
 
-1.  In Salesforce Setup, search for `External Client App Manager` in Quick Find and select it. Create a new external client app — see [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&language=en_US&type=5) for full creation steps. When configuring the app's OAuth settings, make sure **Access and manage your data (`api`)** is included in the OAuth scopes — without it, Salesforce returns `invalid_grant: no valid scopes defined` when Clay tries to connect. Once created, click on your app and select `Edit`.
+1.  In Salesforce Setup, search for `External Client App Manager` in Quick Find and select it. Create a new external client app — see [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&language=en_US&type=5) for full creation steps. Set **Distribution State** to `Local`. When configuring the app's OAuth settings:
+    -   **Callback URL:** Salesforce requires this field to be populated even for server-to-server flows. You can enter `https://login.salesforce.com/services/oauth/callback`.
+    -   **OAuth Scopes:** Add **Access and manage your data (`api`)** — this scope is required; without it, Salesforce returns `invalid_grant: no valid scopes defined` when Clay tries to connect. Adding **Access the identity URL service (`id, profile, email, address, phone`)** is optional but enables Clay's Test Connection feature to display which user and org the connection is authenticated as.
+
+    Once created, click on your app and select `Edit`.
 2.  In the `Settings` tab, enable the flow at the app level:
     -   Under `Flow Enablement`, check `Enable Client Credentials Flow`.
-3.  In the `Policies` tab, enable the flow at the org level. This is the setting most commonly missed — if it's off, the flow is blocked regardless of the Settings toggle:
-    -   Under `OAuth Flows and External Client App Enhancements`, check `Enable Client Credentials Flow`.
+3.  In the `Policies` tab, configure access and enable the flow:
+    -   Under **Select Permission Sets**, choose only the permission set(s) assigned to your integration user.
+    -   Set **Permitted Users** to `Admin approved users are pre-authorized`.
+    -   Under `OAuth Flows and External Client App Enhancements`, check `Enable Client Credentials Flow`. This is the setting most commonly missed — if it's off, the flow is blocked regardless of the Settings toggle.
     -   In the `Run As` field, enter the username of the integration user the app will authenticate as.
 4.  Click `Save`. See [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.configure_client_credentials_flow_for_external_client_apps.htm&language=en_US&type=5) for full details on configuring the Client Credentials flow.
 
