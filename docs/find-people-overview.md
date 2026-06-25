@@ -85,7 +85,7 @@ If you have a saved Sales Navigator search and want to pull those results into C
 5.  Optionally set a **Max Count** (default and maximum is 2,500 — this is a Sales Navigator limit).
 6.  Click **Import to new table**.
 
-**Note:** This source requires a Sales Navigator **people search URL** (`https://www.linkedin.com/sales/search/people/...`), not a saved lead list URL (`linkedin.com/sales/lists/people`). Your search URL also cannot use filters that require access to your personal Sales Navigator account — Clay cannot see your account-specific data. Blocked filter types include:
+**Note:** Your search URL must be a Sales Navigator people search URL (not a company search URL or a saved lead list URL). It also cannot contain filters that require access to your personal Sales Navigator account — Clay cannot see your account-specific data. Blocked filter types include:
 
 - Saved or recent search IDs (`savedSearchId`, `recentSearchId` in the URL)
 - Lead Lists or Account Lists
