@@ -72,7 +72,7 @@ Clay pulls data from Salesforce on two schedules:
 
 **Deleted records:** Clay does not remove deleted Salesforce records from Audiences immediately. Instead, the record is marked **Deleted in source**, which you can filter on in your audience. The weekly full sync reconciles hard-deleted records. If a Salesforce record is deleted and recreated (assigning it a new Salesforce ID), it will temporarily appear as a duplicate entry until the next weekly full sync resolves it. There is no self-serve option to trigger an early full sync — contact Clay support if you need an expedited cleanup.
 
-**Salesforce activities:** When Salesforce is connected, the Activity tab on each record's detail view shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp.
+**Salesforce activities (beta):** Audiences can import Salesforce Tasks and Events as activities. When you configure your Salesforce source for Companies, enable the **Import activities** toggle to turn this on. Clay then syncs Tasks and Events and automatically associates them with the matching account records. Imported activities appear alongside other connected activity sources (for example, Gong calls or email sequence activity) in the Activity tab on each record's detail view — each entry displays the activity type (Task or Event), title, and timestamp. This feature is currently in beta — if the **Import activities** toggle is not visible in your Salesforce source settings, contact your Growth Strategist to enable it for your workspace.
 
 ### Importing from HubSpot
 
