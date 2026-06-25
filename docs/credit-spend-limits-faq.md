@@ -1,6 +1,6 @@
 ---
 title: Credit spend limits FAQ
-description: Answering questions about the credit spend limits feature.
+description: Answering questions about credit spend limits and the Credit Budgets open beta — enterprise tools for controlling and governing credit usage in Clay.
 last_synced: 2026-04-26T01:39:48.764Z
 ---
 
@@ -125,3 +125,29 @@ Notifications will be delivered via both email and in-product UI across various 
 No. The notifications above are for workbook-level credit spend limits only — they fire when a specific workbook reaches its configured cap. There is currently no automated alert when your workspace's overall monthly Data Credit allotment is running low or is exhausted.
 
 To manually monitor your monthly credit balance, go to **Settings → Usage**. The Usage Dashboard shows your remaining Data Credits and your current billing period end date. For a detailed breakdown of credit consumption, see [Credit usage](/docs/credit-usage).
+
+## Credit Budgets (Enterprise open beta)
+
+**Credit Budgets** is a separate but related enterprise feature that gives admins a higher-level way to organize and govern credit spend across teams. Instead of capping individual workbooks, you create named budgets and assign workspace resources to them — giving visibility into where credits are being consumed across teams or projects, and preventing overspend as Clay adoption scales across an organization.
+
+**Note:** Credit Budgets is currently in open beta and available for Enterprise plan customers. You'll see a **Beta** badge next to `Settings > Budgets`.
+
+### Accessing Credit Budgets
+
+Enterprise admins can access Credit Budgets from `Settings > Budgets`.
+
+### What you can do with Credit Budgets
+
+-   **Create named budgets** — Define credit pools to represent teams, projects, or business units.
+-   **Assign workspace resources** — Assign workbooks and tables to a budget directly from the workspace homepage. Use bulk-assignment to assign multiple resources at once.
+-   **Filter by budget on the homepage** — Use the budget filter on the workspace homepage to quickly see which workbooks belong to each budget.
+-   **Email alerts** — Receive email notifications when a budget reaches 75%, 90%, and 100% of its credit limit.
+
+### Credit Budgets vs. credit spend limits
+
+| | Credit spend limits | Credit Budgets |
+|---|---|---|
+| **What it controls** | Cap on an individual workbook or table | Named credit pool shared across assigned resources |
+| **Where to configure** | `Settings → Usage → Workbook limits` or inside a workbook's settings | `Settings → Budgets` |
+| **Use case** | Prevent a single workbook from overspending | Organize and attribute credit spend across teams or projects |
+| **Who can use** | Enterprise plan | Enterprise plan (open beta) |
