@@ -186,6 +186,16 @@ Every function includes a built-in **"Send data back"** column — the final ste
 
 If a column's data is not appearing in the calling table, check whether that column is selected here — it may exist in the function but be unchecked in this list.
 
+### If I add a new output after a function has already run, will existing rows be updated?
+
+No. Adding or enabling a column in the **"Send data back"** step — including mapping a new Audience field — only applies to rows that enter the function **after** you publish the change. Rows that have already been processed are not retroactively re-sent.
+
+For example, if a function produced social media URLs but that column wasn't checked in "Send data back" when the rows ran, that data will not automatically flow to your calling table or Audiences — even though it exists in the function's output history.
+
+**To get the new output for previously processed rows:** go to your origin table and re-run the function column for those rows. This dispatches a fresh invocation through the updated function configuration, and the new column data will be returned this time.
+
+**Best practice:** Before running a function on a large dataset, configure all the outputs you will need — including Audience field mappings and any external destinations (such as Google Sheets or Snowflake) — so you don't need to re-run to capture additional fields later.
+
 ### Why doesn't my function output appear in the formula column's `/` field picker?
 
 When you type `/` in a formula column to reference another column, Clay scans the first **100 rows** of the table to determine which column outputs are available. If your function column has no populated results in those first 100 rows — for example, because the function has only run on rows further down the table — its outputs won't appear in the picker even if they're correctly configured.
