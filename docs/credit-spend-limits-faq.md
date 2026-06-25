@@ -88,13 +88,15 @@ Yes. When a workbook calls a function that consumes credits, those credits are a
 When a limit is reached:
 
 -   All credit-consuming processes stop
--   Users see a message that the limit has been reached
+-   Cells that tried to run show a **Workbook credit limit reached** error
 -   Any recurring spends are canceled
 -   Users are notified of canceled processes
 
+**To resolve it**, workspace admins on Enterprise plans will see a **Manage credit limit** button directly on the error and an **Increase spend limit** button on a banner at the top of any table in the workbook. Both open the credit limit editor, where you can raise the cap or remove it entirely by toggling off **Enable workbook credit limit**. Non-admins will see the error message with a prompt to contact their workspace admin.
+
 **Can users request a limit increase?**
 
-Users can request higher limits from their Admin outside of Clay. Since Admins can modify limits directly, there's no in-product flow for requesting increases. Team members should reach out to their Admin directly.
+Workspace admins on Enterprise plans can raise a limit directly in Clay — either by clicking **Manage credit limit** on the **Workbook credit limit reached** error or from the workbook's settings panel. Non-admin users do not have an in-product way to request an increase; they should reach out to their workspace admin directly.
 
 **What happens if an Admin lowers a limit below what's already been spent?**
 
@@ -128,26 +130,21 @@ To manually monitor your monthly credit balance, go to **Settings → Usage**. T
 
 ## Credit Budgets (Enterprise open beta)
 
-**Credit Budgets** is a separate but related enterprise feature that gives admins a higher-level way to organize and govern credit spend across teams. Instead of capping individual workbooks, you create named budgets and assign workspace resources to them — giving visibility into where credits are being consumed across teams or projects, and preventing overspend as Clay adoption scales across an organization.
+**What's the difference between credit spend limits and credit budgets?**
 
-**Note:** Credit Budgets is currently in open beta and available for Enterprise plan customers. You'll see a **Beta** badge next to `Settings > Budgets`.
+**Credit spend limits** (covered in this guide) set workbook-level spending caps — admins define a maximum credit amount for each workbook, and all tables and campaigns within it share that cap.
 
-### Accessing Credit Budgets
+**Credit Budgets** is a related but separate feature now in open beta for all Enterprise customers. Instead of capping individual workbooks, admins create named budget pools and assign workspace resources to them — giving visibility into where credits are being consumed across teams or projects, and preventing overspend as Clay adoption scales across an organization.
+
+**Note:** Credit Budgets is currently in open beta. Look for the **Beta** badge next to `Settings > Budgets`.
+
+**How do I access Credit Budgets?**
 
 Enterprise admins can access Credit Budgets from `Settings > Budgets`.
 
-### What you can do with Credit Budgets
+**What can I do with Credit Budgets?**
 
 -   **Create named budgets** — Define credit pools to represent teams, projects, or business units.
 -   **Assign workspace resources** — Assign workbooks and tables to a budget directly from the workspace homepage. Use bulk-assignment to assign multiple resources at once.
 -   **Filter by budget on the homepage** — Use the budget filter on the workspace homepage to quickly see which workbooks belong to each budget.
 -   **Email alerts** — Receive email notifications when a budget reaches 75%, 90%, and 100% of its credit limit.
-
-### Credit Budgets vs. credit spend limits
-
-| | Credit spend limits | Credit Budgets |
-|---|---|---|
-| **What it controls** | Cap on an individual workbook or table | Named credit pool shared across assigned resources |
-| **Where to configure** | `Settings → Usage → Workbook limits` or inside a workbook's settings | `Settings → Budgets` |
-| **Use case** | Prevent a single workbook from overspending | Organize and attribute credit spend across teams or projects |
-| **Who can use** | Enterprise plan | Enterprise plan (open beta) |
