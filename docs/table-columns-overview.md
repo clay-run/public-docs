@@ -103,10 +103,11 @@ To map an endpoint from an enrichment to an existing column:
 
 1.  Click on the cell of the enrichment containing the endpoint you want to use. This will open the **Cell details** panel on the right.
 2.  Hover over the desired endpoint and click `Add as column` on the right.
-3.  Under **Map to an existing column**, click on the column you want to map this enrichment endpoint to.
-    -   If the destination column contains **manually-entered data** (typed directly or imported from a CSV), Clay shows a "Data overwrite" warning. Confirming permanently replaces all values in that column with a formula referencing the enrichment result. This cannot be undone.
-    -   If the destination column is already **enrichment-based** (driven by a formula), Clay appends the new source as a fallback — existing values are preserved and the new enrichment fills in where the original is empty.
-    -   To keep both sources without overwriting, use **Create new column** instead and combine them with a [Merge column](#merge-columns).
+3.  Under **Map to an existing column**, click on the column you want to map this enrichment endpoint to. What happens depends on the destination column's current state:
+    -   **If the destination column has no formula** (for example, values you entered manually or imported from a CSV), Clay replaces the column with a formula referencing the new source column. Clay shows a **"Data overwrite"** warning before proceeding. If you confirm, that column will be blank for any rows where the new source column is empty — including rows from a different source in a multi-source table. **This cannot be undone.**
+    -   **If the destination column already has a formula**, Clay automatically applies a waterfall pattern — the new source column is appended as a fallback, so existing data is preserved.
+
+**To keep manually entered or CSV-imported data while also bringing in new enrichment data:** Instead of mapping to the existing column, use **Create new column** to extract the incoming field into a separate column. Then add a [Merge column](#merge-columns) that references both the original column and the new one — it returns the first non-empty value per row, preserving whichever source has data.
 
 ### Circular dependency error
 
