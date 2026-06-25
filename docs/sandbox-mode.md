@@ -1,5 +1,6 @@
 ---
 title: Sandbox mode
+source_url: https://university.clay.com/docs/sandbox-mode
 description: Learn about sandbox mode, a playground to safely iterate +
   experiment with your data!
 last_synced: 2026-06-25T18:51:54.011Z
@@ -26,7 +27,7 @@ Sandbox mode is a special table mode that lets you safely build, test, and publi
 
 **Note:** During sandbox mode, your regular table becomes read-only and cannot be updated directly — the **All data** tab shows a **View-only** indicator while sandbox is active. You can switch between your sandbox and the read-only production table using the tabs menu. All recurring sources ([webhooks](https://www.clay.com/university/guide/webhook-integration-guide), [signals](https://www.clay.com/university/guide/signals), etc.) and [scheduled runs](https://www.clay.com/university/guide/scheduled-columns) will still run while sandbox mode is active.
 
-**Sculptor and sandbox mode:** On Pro and Enterprise plans, [Sculptor](https://www.clay.com/university/guide/sculptor) automatically puts your table into sandbox mode whenever it builds new columns. This lets you review and validate Sculptor's changes before they go live. A broader rollout to additional plans is coming.
+**Sculptor and sandbox mode:** [Sculptor](https://www.clay.com/university/guide/sculptor) automatically puts your table into sandbox mode whenever it builds new columns. This lets you review and validate Sculptor's changes before they go live.
 
 > **Important:** If Sculptor put your table into sandbox mode, use the **Review changes** button to publish Sculptor's columns to your live table — do _not_ click **Exit Sandbox**, which will discard all of Sculptor's proposed changes without saving them. See the [Sculptor — Sandbox mode](https://www.clay.com/university/guide/sculptor) section for the full step-by-step.
 
@@ -69,11 +70,14 @@ Click `Review changes` — visible in the tab bar above your table, to the right
 -   Renaming a column name/description.
 -   Update configurations to a formula, waterfall, or enrichment.
 
+**Credit-saving feature:** When you publish, rows that were already run in sandbox mode are copied back to your production table with their results intact. This means you don't have to re-run those rows and spend credits again.
+
 **Notes on publishing changes:**
 
 -   Visual updates (such as pinned columns, column ordering, and colors) won't appear in the list, **but** **_will_** **be applied when you publish**.
 -   Manually added rows and manual overrides to individual cell data **will not be published**.
 -   Changes to a column that affect downstream columns are shown in a nested format to clearly indicate which other columns may be impacted.
+-   When you publish, any rows that were already run in your sandbox are automatically copied to your production table — so you won't need to re-run those rows or spend additional credits on them.
 
 ### Publishing changes
 
