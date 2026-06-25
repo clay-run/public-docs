@@ -11,7 +11,7 @@ AI-powered sales automation boosting lead generation and meeting bookings.
 
 ## Integration Overview
 
-With [Reply.io](http://Reply.io) within Clay, you can export your data to run personalized email campaigns, send cold emails, and automate follow ups. In this guide we’ll go over:
+With [Reply.io](http://Reply.io) within Clay, you can export your data to run personalized email campaigns, send cold emails, and automate follow ups. In this guide we'll go over:
 
 -   Setting up Reply.io and Clay
 -   Actions you for Reply.io you can run within Clay
@@ -39,9 +39,9 @@ Use this action to add an existing contact to a campaign (sequence) in Reply.io.
 **Setup Inputs**
 
 -   **Campaign ID**: Choose the campaign (sequence) to add the contact to. If no options appear, try refreshing the fields to load available campaigns.
--   **Email Address**: Enter or select the column with the contact’s email address for inclusion in the campaign.
+-   **Email Address**: Enter or select the column with the contact's email address for inclusion in the campaign.
 
-Note that other setup inputs may appear based on the specific fields within the selected campaign. These fields allow for further customization, such as adding relevant tags or attributes to the contact in your campaign.
+To include additional contact data in Reply.io — such as job title, phone number, or custom fields — add a **Create Contact** column before this step to create or update the contact with those fields first. See the Create Contact action below.
 
 ### `Action` Create Contact
 
@@ -49,8 +49,17 @@ Use this action to create a new contact in Reply.io. If the contact already exis
 
 **Setup Inputs**:
 
--   **Email address**: Enter or select the contact’s email address. This is required.
--   **First name**: Provide the contact’s first name.
+-   **Email address**: Enter or select the contact's email address. This is required.
+-   **First name**: Provide the contact's first name. This is required.
 -   **Last name** (Optional): The last name of the contact.
--   **Other contact infomration including City, State, LinkedIn URL**
+-   **Company** (Optional): The name of the contact's company or organization.
+-   **City** (Optional): The city where the contact is located.
+-   **State** (Optional): The state where the contact is located.
+-   **Country** (Optional): The country where the contact is located.
+-   **Time zone ID** (Optional): A Microsoft timezone ID for the contact (for example, "Eastern Standard Time").
+-   **Title** (Optional): The contact's job title or position.
+-   **Phone number** (Optional): The contact's phone number.
+-   **Personal profile URL** (Optional): A link to the contact's professional networking profile.
 -   **Custom fields** (Optional): Any additional custom fields to set for the contact. Only fields that have been defined in your Reply.io account will be updated.
+
+**Tip:** To push contacts to a Reply.io campaign with data beyond just email — such as job title or custom fields — use a two-step workflow: add a **Create Contact** column first to set those fields in Reply.io, then add a **Push Contact to Campaign** column to enroll the contact in the sequence.

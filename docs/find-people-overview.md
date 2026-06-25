@@ -72,6 +72,8 @@ After importing Find People results, use Clay's enrichments to add contact infor
 
 **Mobile phone:** To find mobile phone numbers, click `Add enrichment`, search for `Phone number`, and select the waterfall option under **Waterfalls**. The phone number waterfall cascades through multiple providers in sequence — providers that return no result are skipped at no credit cost, so you only pay when a provider finds a number. For provider recommendations by region, see [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md).
 
+**Business phone:** Phone number waterfalls and contact-level enrichment providers focus on mobile (personal cell) numbers. To source a company's business phone number, use a **Claygent** column instead — in your prompt, ask it to search for the phone number of the business location, and it will pull it from the company's website or other public sources. After Claygent returns a number, run a phone validation enrichment (such as [ClearoutPhone](clearoutphone-integration-overview.md) or [Trestle](trestle-integration.md)) to confirm the number is active and check its line type.
+
 ## Importing from a Sales Navigator search URL
 
 If you have a saved Sales Navigator search and want to pull those results into Clay, use the **Find people from external search** source — not the standard Find People source described above.
