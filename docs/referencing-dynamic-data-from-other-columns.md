@@ -11,11 +11,11 @@ Reference data from other columns for AI prompting, formulas, and message drafti
 
 ## Reference an endpoint from a column
 
-You can use forward slash (`/`)  to access the menu to reference enrichment data from other columns.
+You can use forward slash (`/`)  to access the menu to reference enrichment data from other columns.
 
 ## Use cases for dynamic column referencing
 
-Dynamic referencing allows you to reference and insert fields — like a contact’s name, location, or company — into formulas, prompts, or message drafts.
+Dynamic referencing allows you to reference and insert fields — like a contact's name, location, or company — into formulas, prompts, or message drafts.
 
 ### Formula generator
 
@@ -60,7 +60,7 @@ You can reference all the data returned by an enrichment, giving you access to e
 
 **Example**
 
-Let’s say you want to reference all the data from a **Website Summary** enrichment:
+Let's say you want to reference all the data from a **Website Summary** enrichment:
 
 1.  Locate the **Website Summary** column, which contains the enrichment results.
 2.  Select **Insert all properties** to reference the entire enrichment.
@@ -73,9 +73,9 @@ This is useful when you need to process or extract information for all entries i
 
 **Example**
 
-Let’s say you want to pull the first names of all employees in a list:
+Let's say you want to pull the first names of all employees in a list:
 
-1.  Locate the **“people”** list, which contains multiple items.
+1.  Locate the **"people"** list, which contains multiple items.
 2.  Select **Insert all items** to reference the entire list.
 3.  Extract the **first\_name** property from the list with formulas.
 
@@ -87,9 +87,9 @@ Referencing an item gives you access to **all the data** contained within it, in
 
 **Example**
 
-Let’s say you want to reference the first employee from a list of employees:
+Let's say you want to reference the first employee from a list of employees:
 
-1.  Locate the **“people”** list, which contains multiple items.
+1.  Locate the **"people"** list, which contains multiple items.
 2.  Expand the first item (Index **0**) to view its details.
 3.  Referencing this item gives you access to all its data, such as **name**, **first\_name**, **last\_name**, and **url.**
 
@@ -99,8 +99,8 @@ You can drill down into an **item** within a list to reference its specific fiel
 
 **Example**
 
-Let’s say you want to reference the **URL** of the latest experience from a contact. You can:
+Let's say you want to reference the **URL** of the latest experience from a contact. You can:
 
-1.  Locate the **“experience”** list, which contains multiple items, or in this case experiences.
+1.  Locate the **"experience"** list, which contains multiple items, or in this case experiences.
 2.  Expand the first item (Index **0**) to access its details.
 3.  From the item, select the specific endpoint, such as url. This allows you to reference endpoints such as the **URL** of the experience, **title** of the role, **company** name, or a **summary** of the experience.
