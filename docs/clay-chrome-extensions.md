@@ -59,7 +59,7 @@ To create a recipe for scraping structured data from profile or detail pages:
 1.  Open the Clay for Chrome extension on the page you want to scrape.
 2.  Click `Select Data to Add from Page`, then choose `Select a Single Attribute`.
 3.  Map each attribute you want to extract:
-    -   For example: name, website, Twitter, or Crunchbase.
+    -   For example: name, website, or Crunchbase URL.
 4.  Adjust the `URL Matching` settings to apply the recipe to similar pages:
     -   Replace specific URL components with variables (e.g., `:company_name`).
 5.  Name and save your recipe.
