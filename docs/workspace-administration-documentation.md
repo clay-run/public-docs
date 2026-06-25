@@ -437,6 +437,36 @@ Clay-managed accounts simplify access to external services by providing pre-conf
 
 For some integrations, only Clay-managed accounts are supported. For others, you will need to provide your own API key.
 
+# **Credit budgets** _(Enterprise open beta)_
+
+**Credit budgets** give workspace admins a way to create named credit pools — similar to company expense cards — and assign them to teams or individual users. Budgets bring visibility and control to credit spend as you scale Clay usage across your organization.
+
+**Note:** Credit budgets are currently in open beta for Enterprise plan workspaces. To enable this feature for your workspace, reach out to your Clay account team or contact Clay via the `#team-enterprise-and-billing` channel.
+
+To access credit budgets, go to `Settings` > `Budgets`.
+
+## **How credit budgets work**
+
+1.  **Admins create named budgets** (for example, "Marketing" or "Sales Ops") and set a credit limit for each.
+2.  **Admins grant access** to specific users or user groups.
+3.  **Users assign a budget to their workbooks.** Credits consumed by those workbooks count against the assigned budget's limit.
+
+When a budget reaches its limit, credit-consuming enrichments and actions stop for all workbooks assigned to that budget. Workbooks remain fully editable — only execution is blocked. Admins can reset the budget balance or increase the limit at any time to resume.
+
+## **Budget features**
+
+-   **Filter by budget on the homepage** — filter the workspace homepage to show only workbooks assigned to a specific budget.
+-   **Bulk-assign budgets** — select multiple workbooks at once and assign them to a budget in one action.
+-   **Email alerts** — receive email notifications when a budget approaches or reaches its credit limit.
+
+## **Things to know**
+
+-   **Budgets are spending caps, not reserved credits.** The sum of all budget limits can exceed your total workspace credit balance — you can define limits without dividing your full credit pool upfront.
+-   **Budgets do not reset automatically.** Budget balances continue counting down until an admin manually resets the balance or increases the limit.
+-   **Budgets apply to Data Credits only**, not to Actions.
+-   **Resources without a budget** draw directly from your workspace's shared credit balance.
+-   **Credit budgets are different from workbook credit spend limits.** Workbook spend limits cap a single workbook's spend; credit budgets are shared pools that span multiple workbooks and users, useful for team- or department-level allocation. If a workbook has both, credits count against each independently. See [Credit spend limits FAQ](/docs/credit-spend-limits-faq) for details on workbook-level caps.
+
 # **Plans and billing**
 
 ## **Understanding actions and data credits**
