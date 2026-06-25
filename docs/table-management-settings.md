@@ -233,6 +233,8 @@ When you duplicate a table, Clay copies the table structure and run settings —
 -   Enriched data — enrichment columns start empty in the duplicate
 -   Source import history — the duplicate starts with a fresh record count
 
+**To copy existing enriched data without re-running enrichments:** Use [Send Table Data](send-table-data.md) to transfer rows from the original table to the duplicate. Add a Send Table Data column to the original table, select the columns you want to copy, and set the destination to the duplicate. This moves the already-computed cell values directly — no enrichment credits are consumed.
+
 **Auto-run carries over:** Because run settings are preserved, if Auto-run was enabled in the original table, the duplicate will also have Auto-run enabled. To create a copy that starts in manual mode (useful for demos or templates), turn off Auto-run in the original table **before** duplicating — or turn it off in the duplicate immediately after creating it. See [Auto-run](#auto-run) for how to toggle this setting.
 
 **Connected sources (Salesforce, SOQL queries, and similar):** If a table has a Salesforce report, SOQL query, or other import source configured, duplicating copies the source configuration but does **not** automatically start the import. You will need to manually trigger the source in the duplicated table when you're ready to populate it with data.
