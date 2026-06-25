@@ -12,6 +12,8 @@ Answering questions about the credit spend limits feature.
 
 **Note:** This feature is only available for Enterprise Plan.
 
+**Looking for team-level budgeting?** Credit spend limits cap individual workbooks. If you need shared credit pools that span multiple workbooks and users (for example, a "Marketing" budget for a whole team), see [Credit budgets](/docs/credit-budgets) — currently in open beta for Enterprise workspaces.
+
 ## Who can set and manage credit limits?
 
 **Who can create and modify credit spend limits?**
