@@ -397,17 +397,17 @@ To fix this, add a formula column after the enrichment that converts the text ra
 
 ## Batch processing
 
-The `Create record`, `Update record`, and `Upsert object` actions support batch mode, which processes multiple records simultaneously for improved performance with large datasets. Batch mode is automatically enabled when running these actions across multiple rows in your Clay table. No additional configuration is required.
+The `Create record`, `Update record`, and `Upsert object` actions support a **Run in batches** mode. Batch mode is **off by default** — enable it in the action column's **Run settings** to reduce the number of simultaneous Salesforce calls Clay makes.
 
 ### How batch mode works
 
-When you run these actions on multiple rows in Clay, they automatically use Salesforce's Composite API to process records in batches rather than one at a time.
+When **Run in batches** is enabled, Clay groups rows and sends them through Salesforce's Composite API in sequential batches (up to 200 records per batch) rather than firing calls for all rows concurrently. This reduces write concurrency, which can help avoid `UNABLE_TO_LOCK_ROW` errors when many rows write to Salesforce records that share a common parent (for example, contacts all belonging to the same Account). For troubleshooting row-lock errors, see [Salesforce integration FAQs](salesforce-integration-faqs.md).
 
 **Benefits:**
 
--   **Faster execution:** Process multiple records in a single API call
--   **Better performance:** Reduced overhead when working with hundreds or thousands of records
--   **Individual error handling:** Each record in the batch is processed independently—if one fails, others can still succeed
+-   **Fewer concurrent calls:** Rows are sent in sequential groups rather than all at once
+-   **Reduced lock contention:** Useful when bulk-writing to records that share a parent object, such as contacts in the same Account
+-   **Individual error handling:** Each record in a batch is processed independently — if one fails, others in the same batch can still succeed
 
 ## Best practices
 
