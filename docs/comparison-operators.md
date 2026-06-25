@@ -221,7 +221,7 @@ Example: Find leads where `Created At is empty`.
 
 Identifies records with a date value in the field.
 
-Example: Include records where `Created At is empty`.
+Example: Include records where `Created At is not empty`.
 
 ## Best Practices
 

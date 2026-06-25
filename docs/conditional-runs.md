@@ -107,6 +107,17 @@ To reference a column's data in a run condition, **type `/` followed by the colu
 
 (where `/Domain` references the column named "Domain" in your table).
 
+### Use "is empty" and "is not empty" to check for blank fields
+
+When checking whether a field has a value — in a run condition or a formula column — **always use `is empty` or `is not empty`**. These are the correct Clay operators for blank-field checks.
+
+**"exist" and "does not exist" are not valid operators in Clay.** Writing `/Column does not exist` or `/Column exist` will not behave as expected; the condition may silently fail or never match.
+
+**Correct**:
+
+- `/Email is not empty` — condition passes when the Email column has a value
+- `/Domain is empty` — condition passes when the Domain column is blank
+
 ### Avoid combining `!!` with equality checks on 0 or other falsy values
 
 The `!!` prefix coerces a value to boolean: `!!value` returns `true` for truthy values and `false` for falsy ones. Falsy values include `0`, `""` (empty string), `null`, and `false`.
