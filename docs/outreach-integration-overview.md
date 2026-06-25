@@ -33,6 +33,8 @@ Use this action to update existing prospect records in Outreach.
 -   **Campaign & source information like tags, campaign name, event name, etc. (Optional)**
 -   **Personal details like date of birth, gender, graduation date, etc. (Optional)**
 
+_Note: The **Owner** field is not supported by Clay's native Outreach "Update prospect" action. To update a prospect's owner from Clay, use an [HTTP API](https://university.clay.com/docs/http-api-integration-overview) column to send a `PATCH` request to the [Outreach Prospect Relationships API](https://developers.outreach.io/api/reference/prospect/prospect-relationships). You can retrieve Outreach user IDs using the [Outreach Users API](https://developers.outreach.io/api/reference/user/paths/~1users/get)._
+
 ### `Action` Create prospect
 
 Use this action to create new prospect records in Outreach.

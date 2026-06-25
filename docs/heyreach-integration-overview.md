@@ -67,3 +67,9 @@ This is expected behavior for a newly created campaign. Once Clay adds the first
 ### Leads are not being added to the campaign
 
 Ensure your HeyReach campaign was created with `Create empty list` and is designated as a lead list. The campaign must be Active for leads to be added successfully.
+
+### I'm seeing "The selected HeyReach LinkedIn account is no longer connected"
+
+This error means the LinkedIn sender account configured in your **Add Lead to Campaign** column has been removed from your HeyReach workspace. HeyReach returns a generic error in this case, so Clay checks whether the configured account still exists and surfaces this message when it does not.
+
+To resolve this, open the column's settings and re-select an active LinkedIn sender account from the **LinkedIn account** dropdown.

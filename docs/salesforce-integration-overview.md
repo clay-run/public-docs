@@ -33,11 +33,17 @@ Connect to Salesforce via Client Credentials for server-to-server access. No bro
 
 **Setting up in Salesforce**
 
-1.  In Salesforce Setup, search for `External Client App Manager` in Quick Find and select it. Create a new external client app — see [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&language=en_US&type=5) for full creation steps. When configuring the app's OAuth settings, make sure **Access and manage your data (`api`)** is included in the OAuth scopes — without it, Salesforce returns `invalid_grant: no valid scopes defined` when Clay tries to connect. Once created, click on your app and select `Edit`.
+1.  In Salesforce Setup, search for `External Client App Manager` in Quick Find and select it. Create a new external client app — see [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&language=en_US&type=5) for full creation steps. Set **Distribution State** to `Local`. When configuring the app's OAuth settings:
+    -   **Callback URL:** Salesforce requires this field to be populated even for server-to-server flows. You can enter `https://login.salesforce.com/services/oauth/callback`.
+    -   **OAuth Scopes:** Add **Access and manage your data (`api`)** — this scope is required; without it, Salesforce returns `invalid_grant: no valid scopes defined` when Clay tries to connect. Adding **Access the identity URL service (`id, profile, email, address, phone`)** is optional but enables Clay's Test Connection feature to display which user and org the connection is authenticated as.
+
+    Once created, click on your app and select `Edit`.
 2.  In the `Settings` tab, enable the flow at the app level:
     -   Under `Flow Enablement`, check `Enable Client Credentials Flow`.
-3.  In the `Policies` tab, enable the flow at the org level. This is the setting most commonly missed — if it's off, the flow is blocked regardless of the Settings toggle:
-    -   Under `OAuth Flows and External Client App Enhancements`, check `Enable Client Credentials Flow`.
+3.  In the `Policies` tab, configure access and enable the flow:
+    -   Under **Select Permission Sets**, choose only the permission set(s) assigned to your integration user.
+    -   Set **Permitted Users** to `Admin approved users are pre-authorized`.
+    -   Under `OAuth Flows and External Client App Enhancements`, check `Enable Client Credentials Flow`. This is the setting most commonly missed — if it's off, the flow is blocked regardless of the Settings toggle.
     -   In the `Run As` field, enter the username of the integration user the app will authenticate as.
 4.  Click `Save`. See [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.configure_client_credentials_flow_for_external_client_apps.htm&language=en_US&type=5) for full details on configuring the Client Credentials flow.
 
@@ -391,17 +397,17 @@ To fix this, add a formula column after the enrichment that converts the text ra
 
 ## Batch processing
 
-The `Create record`, `Update record`, and `Upsert object` actions support batch mode, which processes multiple records simultaneously for improved performance with large datasets. Batch mode is automatically enabled when running these actions across multiple rows in your Clay table. No additional configuration is required.
+The `Create record`, `Update record`, and `Upsert object` actions support a **Run in batches** mode. Batch mode is **off by default** — enable it in the action column's **Run settings** to reduce the number of simultaneous Salesforce calls Clay makes.
 
 ### How batch mode works
 
-When you run these actions on multiple rows in Clay, they automatically use Salesforce's Composite API to process records in batches rather than one at a time.
+When **Run in batches** is enabled, Clay groups rows and sends them through Salesforce's Composite API in sequential batches (up to 200 records per batch) rather than firing calls for all rows concurrently. This reduces write concurrency, which can help avoid `UNABLE_TO_LOCK_ROW` errors when many rows write to Salesforce records that share a common parent (for example, contacts all belonging to the same Account). For troubleshooting row-lock errors, see [Salesforce integration FAQs](salesforce-integration-faqs.md).
 
 **Benefits:**
 
--   **Faster execution:** Process multiple records in a single API call
--   **Better performance:** Reduced overhead when working with hundreds or thousands of records
--   **Individual error handling:** Each record in the batch is processed independently—if one fails, others can still succeed
+-   **Fewer concurrent calls:** Rows are sent in sequential groups rather than all at once
+-   **Reduced lock contention:** Useful when bulk-writing to records that share a parent object, such as contacts in the same Account
+-   **Individual error handling:** Each record in a batch is processed independently — if one fails, others in the same batch can still succeed
 
 ## Best practices
 

@@ -107,6 +107,17 @@ To reference a column's data in a run condition, **type `/` followed by the colu
 
 (where `/Domain` references the column named "Domain" in your table).
 
+### Use "is empty" and "is not empty" to check for blank fields
+
+When checking whether a field has a value — in a run condition or a formula column — **always use `is empty` or `is not empty`**. These are the correct Clay operators for blank-field checks.
+
+**"exist" and "does not exist" are not valid operators in Clay.** Writing `/Column does not exist` or `/Column exist` will not behave as expected; the condition may silently fail or never match.
+
+**Correct**:
+
+- `/Email is not empty` — condition passes when the Email column has a value
+- `/Domain is empty` — condition passes when the Domain column is blank
+
 ### Avoid combining `!!` with equality checks on 0 or other falsy values
 
 The `!!` prefix coerces a value to boolean: `!!value` returns `true` for truthy values and `false` for falsy ones. Falsy values include `0`, `""` (empty string), `null`, and `false`.
@@ -217,6 +228,30 @@ Run conditions can only reference columns in the **current row** — there is no
 The enrichment will now only fire for rows where the lookup returned at least one match.
 
 **See also**: [Lookup Rows](lookup-rows.md) — full reference for single-row and multiple-row lookup patterns, including using lookups as suppression gates.
+
+### If "Run empty or out-of-date rows" appears to do nothing
+
+If clicking **"Run [N] empty or out-of-date rows"** from the column header appears to do nothing — no Confirm Run panel, no spinner, no progress — but opening an individual blank cell and clicking **"Re-run this cell"** works on those same rows, use **Force run all [N] rows** from the column dropdown instead:
+
+1. Right-click the column header to open the column menu.
+2. Select **Run column** → **Force run all [N] rows**.
+
+This queues every row in the column regardless of its current state — the same mode used by the individual **"Re-run this cell"** button in the cell details panel.
+
+**Note:** Force run will re-run rows that already have results, not just blank ones. Review the estimated credit cost before confirming.
+
+### Running a column can re-trigger dependent downstream columns
+
+When you run an enrichment column that other enrichment columns depend on, Clay shows a **Confirm Run** panel before starting. This panel lists any dependent downstream columns that may automatically re-run and their estimated credit cost. If you confirm, those downstream columns are marked as out-of-date and queued to re-run — their stored values persist until they actually execute, at which point new results replace them.
+
+Before confirming a run on an upstream column, check whether any listed downstream columns contain data you want to keep. If so:
+
+-   Temporarily disable **Auto-run** on the downstream columns before running the upstream column.
+-   Or choose **Save and don't run** when saving the upstream column's settings, so no rows are immediately queued and you can run columns individually in a controlled order.
+
+If the Confirm Run panel does not appear when you run a column, that column has no downstream action columns configured to run automatically — running it will not affect other columns.
+
+See [Credit usage](credit-usage.md) for more detail on the run cost breakdown displayed in this panel.
 
 ## See also
 
