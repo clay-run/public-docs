@@ -42,7 +42,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 
 To send data from one table to another:
 
-1.  Open the **Exports** tab in the command center sidebar and select **Send table data**.
+1.  While in a table, click **+ Add column** at the end of the column headers and select **Send table data** (listed under Exports). You can also reach it by opening the **Exports** tab in the command center sidebar.
 2.  Select the destination table.
 3.  Choose the method:
     -   `Send row`: Choose which columns to send as a row to the other table.
@@ -59,7 +59,7 @@ To send data from one table to another:
 -   Send nested data from the parent table. (This is useful when you want to avoid extracting basic fields from an action column's output.)
 -   Map any selected column to a specific existing column in the destination table. By default, each column routes to a destination column with the same name — hover over the row and click the **edit icon** to open a dropdown of all destination columns and choose a different target.
 
-**Note:** When you first send a row, it creates a new row in the destination table. For subsequent sends, it updates that same row. This applies to both regular row data and nested data. You can turn this off to always create a new row via the \`Update existing rows on re-run\` setting.
+**Note:** When you first send a row, it creates a new row in the destination table. For subsequent sends, it updates that same row. This applies to both regular row data and nested data. You can turn this off to always create a new row via the `Update existing rows on re-run` setting.
 
 ### Using `Send row for each item in a list`
 
