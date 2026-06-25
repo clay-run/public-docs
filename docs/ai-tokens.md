@@ -101,6 +101,11 @@ Each option has different benefits and considerations in terms of cost, convenie
 
 **Note:** When using a personal API key, price breakdowns won't appear in the Clay UI. You'll need to monitor your usage and upgrade tiers manually.
 
+**If you see "Rate limit wait time exceeded" errors when running many rows simultaneously with a personal OpenAI API key:** Clay runs multiple rows in parallel, which can exhaust your OpenAI account's tokens-per-minute (TPM) or requests-per-minute (RPM) limits faster than expected. Clay automatically retries rate-limited requests, but if the limit persists, cells will return a **"Rate limit wait time exceeded"** error. To resolve this:
+
+-   **Upgrade your OpenAI API tier** — higher tiers provide significantly more TPM and RPM capacity. See [OpenAI usage tiers](https://platform.openai.com/docs/guides/rate-limits/usage-tiers#usage-tiers) for details.
+-   **Switch to Clay credits** — Clay manages OpenAI rate limits, tier access, and scaling on your behalf, so individual key limits don't apply (see "Clay credits" above).
+
 **If you hit Gemini API rate limits with a personal API key:** The Gemini API enforces rate limits on calls from Clay independently of Google AI Studio — AI Studio may show available capacity while API calls are still throttled. To resolve rate limit errors:
 
 -   **Switch to Clay credits** — Clay automatically manages Gemini rate limits, tier access, and scaling on your behalf (see "Clay credits" above).
