@@ -45,7 +45,7 @@ To create a recipe that extracts data from list-style pages:
 1.  [Install the Clay for Chrome extension](https://chromewebstore.google.com/detail/clay-for-chrome/acmfklpkefjlldbkdgmjoiknfgidadoh?hl=en).
 2.  Open the Clay for Chrome extension on a webpage with a list.
 3.  Click `Select Data to Add from Page`.
-4.  Choose `Select a List` and click multiple items to help the extension detect patterns.\
+4.  Choose `Select a List` and click multiple items to help the extension detect patterns.
 5.  Add attributes for each item:
     -   For images, select the `Image Attribute` (e.g., logos).
     -   For text, select the `Text Attribute` (e.g., name, location).
@@ -59,7 +59,7 @@ To create a recipe for scraping structured data from profile or detail pages:
 1.  Open the Clay for Chrome extension on the page you want to scrape.
 2.  Click `Select Data to Add from Page`, then choose `Select a Single Attribute`.
 3.  Map each attribute you want to extract:
-    -   For example: name, website, Twitter, or Crunchbase.
+    -   For example: name, website, or Crunchbase URL.
 4.  Adjust the `URL Matching` settings to apply the recipe to similar pages:
     -   Replace specific URL components with variables (e.g., `:company_name`).
 5.  Name and save your recipe.
@@ -95,7 +95,7 @@ To view your saved clips:
 2.  Browse your previously saved links and their destination tables.
 3.  Click `Go to Table` to open the saved page in your Clay workspace.
 
-To customize your history view:
+To customize your history view:\
 
 1.  Open the Clay table connected to the extension.
 2.  Click the table name, then click `Configure Chrome Extension Fields`.
