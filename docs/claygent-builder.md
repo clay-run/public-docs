@@ -388,3 +388,29 @@ Clay uses a built-in `confidence` field — with text values `low`, `medium`, `h
 If your JSON output schema includes a field named `confidence` with numeric values (for example, a score like `0.98`), Clay's normalizer maps those numbers to the text enum through thresholds — so `0.98` is mapped to `very high`, not to whatever color your own scoring scale intends. This can produce indicator colors that don't match your expectations.
 
 To fix this, rename your custom field in the JSON schema to something like `confidence_score`. Then rerun the column. Clay will inject its own `confidence` field, and the color indicator will use the correct text-enum values.
+
+### Can Claygent detect tracking pixels or marketing technologies on a website?
+
+Yes, with an important limitation. Claygent fetches page content using third-party scraping services and analyzes the HTML and text — it does not trace JavaScript execution events, intercept network requests, or follow `<script src>` links the way a browser developer tool would. When prompting Claygent to look for tracking pixels or marketing technologies, write the prompt to analyze page content (for example: *"Look at this company's website and check whether the page HTML contains tracking pixel tags such as the Facebook Pixel or Google Tag Manager"*) rather than instructions that assume DevTools-style network monitoring.
+
+**JavaScript-rendered pixels**: Claygent has a JavaScript rendering fallback, but it only activates when a page returns essentially empty static HTML. Most marketing websites return non-empty HTML even when some content is JavaScript-loaded — meaning the JS rendering path typically does not trigger. Pixel tags that are injected dynamically by JavaScript after page load (common for Facebook Pixel, Google Tag Manager, TikTok Pixel, etc.) are likely to be missed on typical marketing sites. There is no single-step solution in Clay for detecting JS-rendered pixels.
+
+**Alternative**: The **BuiltWith** integration (**Find Technology Stack** action) can confirm whether a particular technology is present on a site, but it does not return specific pixel IDs or tracking codes.
+
+### Why does a column referencing my Claygent output show "Cell data size exceeds limit (8 kB)"?
+
+Clay enforces two different cell size limits: Claygent action columns hold up to **200 kB**, while basic columns — text fields and formula columns that reference or extract from those action columns — are limited to **8 kB**. When a Claygent produces verbose output (such as detailed research logs or step-by-step notes) and that value is extracted into a standalone text column or referenced by a formula column, the result must fit within the 8 kB limit for that basic column.
+
+Changing the column data type will not bypass this limit — the constraint is on the column type, not the data format.
+
+**Fix: reduce output size at the source.** Edit your Claygent prompt or output schema to produce more concise results for the fields being referenced downstream. For example, if your agent records step-by-step research notes, instruct it to summarize each step in 50 characters or fewer. This keeps each output field well within the 8 kB limit.
+
+**Alternatively**, reference the Claygent action column directly in downstream formulas — using `/` to navigate into specific properties — rather than extracting large fields into standalone text columns. Accessing a property of the action column reads from its 200 kB store; only columns that *hold* a copy of the value as text are subject to the 8 kB limit.
+
+## Tips for success
+
+**Importing test cases**: Instead of manually creating test data, import real rows from your tables. Click `Import from table` in the test panel to pull actual data and see how your agent performs on real-world inputs.
+
+**Variable mapping**: When deploying a Claygent to a new table with different column names, Builder will auto-suggest mappings. Review these carefully to ensure the correct data flows through.
+
+**Start simple**: Build your agent with a basic prompt first, test it, then layer in complexity. It's easier to debug and refine when you're working incrementally.
