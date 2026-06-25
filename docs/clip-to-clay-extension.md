@@ -95,7 +95,7 @@ To view your saved clips:
 2.  Browse your previously saved links and their destination tables.
 3.  Click `Go to Table` to open the saved page in your Clay workspace.
 
-To customize your history view:\
+To customize your history view:
 
 1.  Open the Clay table connected to the extension.
 2.  Click the table name, then click `Configure Chrome Extension Fields`.
