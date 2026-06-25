@@ -86,6 +86,8 @@ If you have a saved Sales Navigator search and want to pull those results into C
 
 **Note:** This source requires a Sales Navigator **people search URL** (`https://www.linkedin.com/sales/search/people/...`), not a saved lead list URL (`linkedin.com/sales/lists/people`) or a saved search URL (those containing `savedSearchId`). If you have a saved Sales Navigator lead list, recreate the equivalent filters as a fresh people search on Sales Navigator and copy that URL instead. Each imported result costs 1 Clay credit.
 
+If the list was manually curated and cannot be recreated from search filters, export it from Sales Navigator as a CSV and [import it into Clay](csv-import-overview.md) instead.
+
 ## Finding LinkedIn posts by keyword
 
 To find LinkedIn posts containing a specific keyword or hashtag, use the **Find professional posts** source — a separate source from Find People that returns posts rather than people profiles.
