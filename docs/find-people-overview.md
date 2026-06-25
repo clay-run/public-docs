@@ -34,7 +34,7 @@ This tool is ideal for building targeted sales prospect lists, identifying poten
     -   **Months in current role:** Set a minimum and/or maximum number of months a person has been in their current position.
     -   **Number of experiences:** Set a minimum and/or maximum count of separate job entries listed on a person's LinkedIn profile. **This counts individual roles, not total years of career experience.** For example, setting Max = 2 returns people with two or fewer job entries, which is a useful proxy for early-career candidates. There is no direct "total years of experience" filter in Clay — to approximate one, combine this filter with a cap on **Months in current role**, or import results first and use a **Use AI** column to analyze each person's full work history against your criteria.
     -   **Experience description keywords:** Return only people whose experience descriptions include specific keywords (e.g., "construction", "machine learning").
--   **Location:** Include or exclude specific regions, countries, or cities.
+-   **Location:** Include or exclude specific regions, countries, or cities. Distance-based filtering (for example, "within 35 miles of a location") is not available — location filters accept named regions, countries, and cities only.
 -   **Profile:** Filter by names, connection count, or follower count ranges.
 -   **Certifications:** Search for specific certifications (e.g., AWS, Google Cloud).
 -   **Languages:** Filter by specific languages spoken.
