@@ -141,6 +141,10 @@ Restrict which users or groups can configure workflows using specific integratio
 
 Set workbook-level credit caps to prevent overspending. Admins can configure a workspace default limit that automatically applies to all new workbooks. For members accessing Clay through AI tools (Claude, ChatGPT, or Glean) via the MCP integration, admins can also set per-user credit budgets. See [Credit spend limits FAQ](https://university.clay.com/docs/credit-spend-limits-faq) and [MCP settings](https://university.clay.com/docs/mcp-settings).
 
+**Credit budgets** _(Enterprise, currently in beta)_
+
+Create shared credit pools that span multiple workbooks and users — useful for team- or department-level spend governance. Admins define named budgets with credit limits, assign access to users or groups, and track spend per budget. Users can filter the homepage by budget and bulk-assign budgets to existing workbooks. See [Credit budgets](/docs/credit-budgets).
+
 **Audiences**
 
 There are currently no configurable workspace-level access controls specific to the Audiences feature — you cannot restrict which workspace members can view or filter audience data. However, **setting up data sources in Audiences requires Admin access**: Editors can view and filter audiences but cannot add or configure sources. If you're an Editor who needs to connect a source, ask a workspace Admin to do it, or have your role upgraded. Note that connection access controls do apply to enrichment columns within Audiences — see [Access settings for connections](https://university.clay.com/docs/access-settings-for-connections) for details.
