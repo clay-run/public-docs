@@ -125,3 +125,11 @@ Notifications will be delivered via both email and in-product UI across various 
 No. The notifications above are for workbook-level credit spend limits only — they fire when a specific workbook reaches its configured cap. There is currently no automated alert when your workspace's overall monthly Data Credit allotment is running low or is exhausted.
 
 To manually monitor your monthly credit balance, go to **Settings → Usage**. The Usage Dashboard shows your remaining Data Credits and your current billing period end date. For a detailed breakdown of credit consumption, see [Credit usage](/docs/credit-usage).
+
+**What happens when my workspace's monthly Data Credit allotment is exhausted?**
+
+When your plan's monthly credit balance reaches zero, tables don't completely turn off — but new enrichments are blocked from starting. Any enrichments that are already in-progress will complete, but no new runs can start until your credits reset at the beginning of your next billing cycle. Action cells for blocked enrichments show "Not enough Clay credits."
+
+Your tables resume running new enrichments automatically when credits reset — you don't need to re-enable anything.
+
+**Note:** This is separate from the workbook-level credit spend limits described above. Workbook spend limits are admin-configured caps on individual workbooks; the monthly allotment is your plan's total credit balance that refills each billing cycle.
