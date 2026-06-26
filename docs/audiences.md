@@ -1,7 +1,7 @@
 ---
 title: Audiences
 description: "Audiences is available on all modern paid plans (Launch, Growth, Enterprise)."
-last_synced: 2026-04-27T18:09:16.475Z
+last_synced: 2026-04-27T18:09:16.275Z
 ---
 
 # Audiences
