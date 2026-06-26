@@ -24,7 +24,7 @@ It offers detailed insights into company structures, competitive landscapes, and
 
 ### **`Action` Enrich company**
 
-Gets key company data like revenue and competitors to help prioritize prospects, and provides company hierarchy information through various ID references.
+Gets key company data — including revenue, competitor intelligence, and total location count — to help prioritize prospects, and provides company hierarchy information through various ID references.
 
 **Inputs**
 
