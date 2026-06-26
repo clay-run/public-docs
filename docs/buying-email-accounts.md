@@ -58,3 +58,9 @@ Clay fulfills orders through Smartlead, which in turn uses Zapmail to provision 
 ### **How can I look up the rep's details for a purchased account?**
 
 Use the **Get rep data** enrichment in a Clay table. Provide the SmartSender account email address as the input — the action returns the rep's email address and full name (when available). This is useful for personalizing campaign messages with the sender's name.
+
+### **How many emails per day can each SmartSenders account send?**
+
+SmartSenders accounts support a maximum of **30 emails per day**. Newly provisioned accounts start at a lower daily limit and can be increased up to 30 by going to `Campaigns` → `Email Accounts`, clicking the three-dot (⋯) menu next to the account, and selecting `Update send limit`. This cap is set for deliverability reasons and cannot be raised further.
+
+For higher per-account throughput, self-connected accounts (Google Workspace, Microsoft Outlook, or SMTP) can be configured up to 500 emails per day.
