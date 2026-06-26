@@ -30,6 +30,8 @@ Follow these steps to set up News & Fundraising Signals in your table:
     -   This lets you preview how the data will appear after any changes actually happen.
 7.  Click `Save and run X rows` to complete setup.
 
+**Note:** Signal events are written as new rows to a newly-created output table — the existing table you select is used as the source input (the people or companies to monitor), and a fresh output table is created to capture matching events. The existing table is not written to.
+
 ## FAQs
 
 ### Why is my signal returning articles where my target company isn't the main subject?
