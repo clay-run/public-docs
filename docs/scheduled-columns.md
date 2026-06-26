@@ -26,7 +26,7 @@ This keeps your data current without manual updates (e.g., keeping enrichment da
 
 ## Action columns and scheduled re-runs
 
-Scheduled column re-runs fire for **every row** in the table on each cycle — including rows that already have successful results. Unlike table-level Auto-run, scheduled column runs always force-run and do not respect the "Keep existing results" option.
+Scheduled column re-runs fire for **every row** in the table on each cycle — including rows that already have successful results. Scheduled column runs always force-run: they do not respect the "Keep existing results" option, and they bypass the column-level auto-run toggle. A column added to the scheduled run list will execute on each cycle even if the column's individual auto-run is turned off (paused) — the scheduled run overrides that pause.
 
 **Avoid including action columns in a scheduled re-run.** Columns that perform an external action — such as sending a Slack message, writing to a CRM, or sending an email — will fire for every row on every scheduled cycle, not just new rows. This can produce duplicate Slack messages, duplicate CRM records, or repeated emails on rows that were already processed.
 
