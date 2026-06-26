@@ -132,7 +132,7 @@ To manually monitor your monthly credit balance, go to **Settings → Usage**. T
 
 When your plan's monthly credit balance reaches zero, tables don't completely turn off — but new enrichments are blocked from starting. Any enrichments that are already in-progress will complete, but no new runs can start until your credits reset at the beginning of your next billing cycle. Action cells for blocked enrichments show "Not enough Clay credits."
 
-Your tables resume running new enrichments automatically when credits reset — you don't need to re-enable anything.
+After your credits reset, enrichments work again when triggered — **scheduled tables** pick back up automatically on their next scheduled run. For cells that were blocked during a non-scheduled (manual or bulk) run, you'll need to manually re-run those columns or cells after credits reset.
 
 **Note:** This is separate from the workbook-level credit spend limits described above. Workbook spend limits are admin-configured caps on individual workbooks; the monthly allotment is your plan's total credit balance that refills each billing cycle.
 
