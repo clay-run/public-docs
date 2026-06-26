@@ -59,6 +59,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
         -   `Restrict access`: Limit the account to your use only (e.g., for a personal business address). Otherwise, accounts are available to anyone with edit access in your workspace.
         -   `Update send limit`: Change the daily number of emails the account can send per day
         -   `Update sender variables`: Change the sender variable values for the account
+    -   **Searching and bulk actions:** Use the **search bar** and **Filter** control in `Sender setup` to quickly find accounts by email address or name. Filter by account type (Google OAuth, Outlook, or SMTP) or status (Ready, Warming up, Not warming, or Auth error). Select multiple accounts to bulk-enable warmup or remove them from the campaign at once.
 6.  Adjust your `Schedule settings`:
     -   `Timezone`: Select the timezone to send from (we recommend matching your prospects').
     -   `Days of the week`: Choose which days emails are sent.
@@ -163,6 +164,17 @@ To increase your total daily sending capacity:
 -   **Increase the send limit** on an existing account — open the campaign's `Sender setup`, click the three-dot (⋯) menu next to the account, and select `Update send limit`.
 
 Keep in mind that sending high volumes of cold email from a single inbox puts your domain at risk. Starting near the default (20 emails/day) and scaling by adding accounts rather than increasing individual limits is safer for deliverability.
+
+### How many emails can I send per day, and is the sequencer right for large-volume campaigns?
+
+The daily send limit is set at the **email account level** and varies by account type:
+
+-   **Self-connected accounts** (Google Workspace OAuth, Microsoft Outlook OAuth, or SMTP) default to 20 emails per day and can be adjusted from 10 to 500. Go to your campaign's `Sender setup`, click the three-dot (⋯) menu next to an account, and select `Update send limit`.
+-   **SmartSenders accounts** purchased through Clay (currently in beta; available on Growth and Enterprise plans) have a maximum of 30 emails per day. Newly provisioned accounts start at a lower send limit and can be increased up to 30 via `Update send limit`. See [Buying email accounts](buying-email-accounts.md).
+
+Total daily throughput scales with the number of connected accounts — each account has its own independent daily budget.
+
+Clay's sequencer is built for **targeted, personalized sales outbound** — high-quality sequences to well-researched lists. For very large-scale sends (e.g., 1M+ contacts), a dedicated bulk or marketing email platform is generally a better fit for delivery volume. Clay works well as the enrichment and list-building layer in that setup.
 
 ### Why is the expected campaign completion time so long?
 
