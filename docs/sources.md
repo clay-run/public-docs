@@ -61,7 +61,7 @@ To download your table data as a CSV:
 2.  In the table toolbar, click `Tools` → `Export`.
 3.  Click `Download CSV`. Clay processes the export in the background and the file downloads automatically.
 
-**Why can't I see Export?** The most common cause is having one or more rows checked. The toolbar shows different options depending on row selection state: when no rows are selected, you see table-level functions such as Export and Import; when rows are selected, the same button shows bulk row operations instead. Uncheck all rows to restore access to Export.
+**Why can't I see Export?** The most common cause is having one or more rows checked. The toolbar shows different options depending on row selection state: when no rows are selected, you see the `Tools` button with table-level functions such as Export and Import; when rows are selected, an `Actions` button appears instead with bulk row operations (Run rows, Debug, Delete rows). Uncheck all rows to restore access to Export.
 
 **Long text or AI column data appears truncated in the export.** If a column stores enrichment or AI-generated output as nested structured data — such as the output of a Use AI, Claygent, or enrichment integration column — the CSV export may show only a short preview ending in "..." rather than the full text value.
 
@@ -144,6 +144,17 @@ To fix this:
     -   If you selected **Free text**: enter a search query (for example, "coffee shops" or "HVAC contractors").
 3.  Once all required fields are filled, the Submit button will become clickable.
 
+### Does the "Find local businesses using Google Maps" source charge credits for businesses already in my table when I re-run or schedule it?
+
+**No — the Google Maps source deduplicates results against every business it has previously found, so you are only charged for net-new businesses on each run.**
+
+When you re-run or schedule a "Find local businesses using Google Maps" source, Clay checks each incoming result against the full history of businesses that source has ever imported. Businesses already in that history are skipped — they are not re-added to your table and no credits are charged for them. The success message *"The number of results added may be less than requested, as a result of deduping"* confirms this filtering occurred.
+
+Key details:
+
+-   **Deduplication is cumulative across all runs.** On every re-run (including scheduled runs), the source compares against every business it has ever found — not just the most recent run. A business found in week 1 is still tracked and skipped in week 52.
+-   **Deduplication is tied to the source definition.** If you delete and re-add the source, or create a new source with the same search criteria, deduplication starts over. The new source has no history, so all businesses it finds are treated as new and credited accordingly.
+
 ### Why doesn't my Clay table update when I change the source filters?
 
 **Editing the source of a Clay table after it's been run won't retroactively update the results, because Clay doesn't reprocess previously generated data automatically.**
@@ -153,7 +164,7 @@ Even if the source preview shows the new filters, the table won't refresh until 
 To control which rows are in your table after updating source filters, you have two options:
 
 -   **Remove specific rows manually:** Apply a table filter to isolate rows you no longer want, select them, and delete them. This preserves the rest of your table without re-running the source.
--   **Reset the table to match current filters:** Delete all existing rows and re-run the source (or duplicate the table with the updated source). This clears the table and re-imports only records that match the current source filters. **For CRM, database, and Google Sheets sources (Salesforce, HubSpot, Snowflake, Google Sheets):** deleting rows and re-running the same source will not re-add the deleted records — the source permanently tracks every record it has already imported. Duplicate the table (or delete and re-add the source) to get a fresh import history. See [I deleted rows from my table and re-ran the source, but they didn't reappear](#i-deleted-rows-from-my-table-and-re-ran-the-source-but-they-didnt-reappear) for more.
+-   **Reset the table to match current filters:** Delete all existing rows and re-run the source (or duplicate the table with the updated source). This clears the table and re-imports only records that match the current source filters. **For CRM, database, Google Sheets, and Google Maps sources (Salesforce, HubSpot, Snowflake, Google Sheets, Find local businesses using Google Maps):** deleting rows and re-running the same source will not re-add the deleted records — the source permanently tracks every record it has already imported. Duplicate the table (or delete and re-add the source) to get a fresh import history. See [I deleted rows from my table and re-ran the source, but they didn't reappear](#i-deleted-rows-from-my-table-and-re-ran-the-source-but-they-didnt-reappear) for more.
 
 ### Will rows already in my table be removed if they no longer match the source filter?
 
@@ -166,11 +177,11 @@ The **Update existing rows** toggle (available when re-running a source) control
 To remove rows that no longer match your filter, you have two options:
 
 -   **Delete them manually** — select the rows in the table and delete them.
--   **Delete and re-run the source** — this re-imports records based on the current filter. You will need to clear any previously imported rows first if you want a clean slate. **For CRM, database, and Google Sheets sources (Salesforce, HubSpot, Snowflake, Google Sheets):** the source tracks previously imported records and will not re-add deleted rows even after re-running. Duplicate the table (or delete and re-add the source) instead.
+-   **Delete and re-run the source** — this re-imports records based on the current filter. You will need to clear any previously imported rows first if you want a clean slate. **For CRM, database, Google Sheets, and Google Maps sources (Salesforce, HubSpot, Snowflake, Google Sheets, Find local businesses using Google Maps):** the source tracks previously imported records and will not re-add deleted rows even after re-running. Duplicate the table (or delete and re-add the source) instead.
 
 ### I deleted rows from my table and re-ran the source, but they didn't reappear
 
-**For Salesforce, HubSpot, Snowflake, Google Sheets, and other CRM or database sources, re-running the same source after deleting rows will not restore those records.** Clay's import source tracks every record it has ever introduced to the table — including rows you've since deleted. When the source runs again, it recognizes and skips any record it has already seen, preventing both duplicate imports and unintentional revival of deleted rows.
+**For Salesforce, HubSpot, Snowflake, Google Sheets, Google Maps searches, and other CRM or database sources, re-running the same source after deleting rows will not restore those records.** Clay's import source tracks every record it has ever introduced to the table — including rows you've since deleted. When the source runs again, it recognizes and skips any record it has already seen, preventing both duplicate imports and unintentional revival of deleted rows.
 
 When dedup blocks all records on a re-run, that run's **Rows Added** count in Source history shows **0** — not the number of records in your upstream source. The higher counts visible elsewhere in Source history are from earlier runs when those records were first imported. Your table can appear empty while Source history shows non-zero counts from past imports: the records were added in an earlier run and then deleted from the table, but the source still has them logged.
 
@@ -178,9 +189,25 @@ When dedup blocks all records on a re-run, that run's **Rows Added** count in So
 
 Duplicate the table (or delete and re-add the source). A new source definition starts with a clean record history, allowing the same records to be imported again. Before doing this, enable [auto-dedupe](table-management-settings.md) on a unique identifier column to avoid creating duplicates of rows still present in your table.
 
-**Can I turn off source record tracking?** No — source-level deduplication for CRM and database sources cannot be disabled. The only path to re-import records a source has already seen is a fresh source definition (delete and re-add the source, or duplicate the table). If you want to disable the *table-level* deduplication that removes rows with duplicate column values, that is a separate setting — see [Auto-dedupe](table-management-settings.md#auto-dedupe) to toggle it on or off.
+**Can I turn off source record tracking?** No — source-level deduplication for CRM, database, and Google Maps sources cannot be disabled. The only path to re-import records a source has already seen is a fresh source definition (delete and re-add the source, or duplicate the table). If you want to disable the *table-level* deduplication that removes rows with duplicate column values, that is a separate setting — see [Auto-dedupe](table-management-settings.md#auto-dedupe) to toggle it on or off.
 
-**Note:** This tracking behavior applies to CRM, database, and Google Sheets sources (Salesforce, HubSpot, Snowflake, Google Sheets, and similar). List builder sources such as Find People and Find Companies do not track records this way — deleting rows and re-running will re-import matching records, subject to your table's auto-dedupe settings.
+**Note:** This tracking behavior applies to **CRM and database sources** (Salesforce, HubSpot, Snowflake, and similar), to **Google Sheets sources** (which generate a unique ID per row by hashing the **"Fields to deduplicate by"** fields configured on the source), to the **Find People** list builder source (which tracks previously-seen profiles and skips them on subsequent runs), and to the **Find local businesses using Google Maps** source (which tracks every business it has previously found and skips duplicates on re-runs). **Find Companies** does not track records this way — deleting rows and re-running will re-import matching companies, subject to your table's auto-dedupe settings.
+
+### My Google Sheets source found rows but fewer rows appear in my table than expected
+
+Two separate behaviors can cause a Google Sheets source to report finding rows while fewer (or none) land in your table:
+
+**Source-level deduplication: deleted rows not re-added**
+
+The Google Sheets source generates a unique ID for each row by hashing the **"Fields to deduplicate by"** fields you configured when setting up the source. Clay tracks which IDs it has already imported, and subsequent runs — including runs after you delete rows from the table — skip any row whose hash was seen in a previous import. Deleting rows from the table does not clear this tracking.
+
+To re-import the same rows after deleting them: delete the existing Google Sheets source and re-add it. A fresh source has no import history and will treat every matching row as new. Before re-adding, enable [auto-dedupe](table-management-settings.md) on a unique column (such as Email) to prevent duplicate rows if some rows are still in the table.
+
+**Non-unique deduplication fields: rows collapsing into one**
+
+If the fields you selected under **"Fields to deduplicate by"** are not unique per row — for example, if you selected **Company** and multiple rows in your sheet share the same company name — those rows produce identical hashes and collapse into a single record. The run history may report *N* rows found while only one row appears in your table per unique hash value.
+
+To get one Clay row per sheet row, set **"Fields to deduplicate by"** to a field that is genuinely unique per record, such as **Email**, **LinkedIn Profile URL**, or a dedicated ID column. Avoid fields like Company or Title that many rows may share.
 
 ### I am trying to add a source to an existing table, but I get an error
 
@@ -220,7 +247,7 @@ For a full explanation of how auto-dedupe works — including column type requir
 
 A second common cause of fewer-than-expected rows is hitting the 50,000-row source limit — see [What are the row limits for Clay tables and sources?](#what-are-the-row-limits-for-clay-tables-and-sources) below.
 
-A third cause — specific to **CRM, database, and Google Sheets sources** (Salesforce, HubSpot, Snowflake, Google Sheets) that have been run at least once before — is **source record tracking**. Each CRM source definition remembers every record it has ever imported, including rows you've since deleted from the table. On subsequent runs, the source skips previously-seen records and only adds genuinely new ones. When all incoming records were previously imported by the same source definition, the run reports 0 rows added even though the source found records upstream. See [I deleted rows from my table and re-ran the source, but they didn't reappear](#i-deleted-rows-from-my-table-and-re-ran-the-source-but-they-didnt-reappear) for the fix.
+A third cause — specific to **CRM, database, Google Sheets, and Google Maps sources** (Salesforce, HubSpot, Snowflake, Google Sheets, Find local businesses using Google Maps) that have been run at least once before — is **source record tracking**. Each such source definition remembers every record it has ever imported, including rows you've since deleted from the table. On subsequent runs, the source skips previously-seen records and only adds genuinely new ones. When all incoming records were previously imported by the same source definition, the run reports 0 rows added even though the source found records upstream. See [I deleted rows from my table and re-ran the source, but they didn't reappear](#i-deleted-rows-from-my-table-and-re-ran-the-source-but-they-didnt-reappear) for the fix.
 
 ### **What are the row limits for Clay tables and sources?**
 
