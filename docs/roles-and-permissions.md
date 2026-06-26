@@ -137,9 +137,13 @@ Group workspace members (for example, by team) to manage access at scale. Granti
 
 Restrict which users or groups can configure workflows using specific integrations (for example, limit who can build with your Salesforce or Google Sheets connection). Admins can also require approval before any member adds a new connection to the workspace. See [Access settings for connections](https://university.clay.com/docs/access-settings-for-connections).
 
+**Credit budgets** _(Enterprise, currently in beta)_
+
+Create named budget pools and assign them to workbooks, tables, and campaigns. Budgets help admins organize credit spend by team or project, set credit limits per budget, get email alerts on usage, and filter the workspace homepage by budget. See [Credit budgets](https://university.clay.com/docs/credit-budgets).
+
 **Credit spend limits** _(Enterprise)_
 
-Set workbook-level credit caps to prevent overspending. Admins can configure a workspace default limit that automatically applies to all new workbooks. For members accessing Clay through AI tools (Claude, ChatGPT, or Glean) via the MCP integration, admins can also set per-user credit budgets. See [Credit spend limits FAQ](https://university.clay.com/docs/credit-spend-limits-faq) and [MCP settings](https://university.clay.com/docs/mcp-settings).
+Set per-workbook and per-table credit caps to prevent overspending. Admins can configure a workspace default limit that automatically applies to all new workbooks. For members accessing Clay through AI tools (Claude, ChatGPT, or Glean) via the MCP integration, admins can also set per-user credit limits. See [Credit spend limits FAQ](https://university.clay.com/docs/credit-spend-limits-faq) and [MCP settings](https://university.clay.com/docs/mcp-settings).
 
 **Audiences**
 
