@@ -1,7 +1,7 @@
 ---
 title: Audiences
 description: "Audiences is available on all modern paid plans (Launch, Growth, Enterprise)."
-last_synced: 2026-04-27T18:09:16.275Z
+last_synced: 2026-04-27T18:09:16.475Z
 ---
 
 # Audiences
@@ -14,7 +14,7 @@ Use it to build dynamic segments across millions of records, run automated enric
 
 Setting up Audiences is four major steps:
 
-1.  **Import your data** — connect Salesforce, HubSpot, Snowflake, or Google BigQuery and bring your records into Audiences.
+1.  **Import your data** — connect Salesforce, HubSpot, Snowflake, Google BigQuery, or Databricks and bring your records into Audiences.
 2.  **Create audiences** — build dynamic segments using filters to target the right contacts and accounts.
 3.  **Enrich and monitor** — run bulk enrichments and signals that write data permanently back to each record.
 4.  **Write back to your CRM** — sync enriched data and segment membership back to Salesforce.
@@ -32,6 +32,7 @@ You can import data from:
 -   A new people or companies search
 -   Snowflake
 -   Google BigQuery
+-   Databricks
 -   Salesforce
 -   HubSpot
 
@@ -135,6 +136,32 @@ Clay syncs data from Snowflake on the following schedules:
 **Sync timing and behavior**
 
 Clay syncs data from Google BigQuery on the following schedules:
+
+-   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured, importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
+-   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
+
+### Importing from Databricks
+
+**Note:** Databricks import is currently in beta — contact your account team to enable it for your workspace.
+
+1.  Click `Add data` → `Add Source` → select your [**Databricks integration**](https://university.clay.com/docs/databricks-integration).
+    -   If you haven't connected Databricks yet, click `+ Add account`. See the [Databricks integration](https://university.clay.com/docs/databricks-integration) for setup instructions.
+2.  Select a `Databricks SQL warehouse`.
+3.  Enter a SQL `SELECT` query to define which records to import (for example, `SELECT * FROM my_catalog.my_schema.contacts WHERE updated_at > '2024-01-01'`).
+    -   Click `Test` to preview your data before continuing.
+4.  Confirm the preview looks correct, then click `Continue`.
+5.  Define the `Unique Identifier`:
+    -   For People: `email` or `user_id`.
+    -   For Companies: `company_id` or `domain`.
+6.  (Optional) Configure a `Timestamp Field` for incremental syncing:
+    -   With a timestamp: syncs run every **15 minutes** and only import new/changed records.
+    -   Without a timestamp: the full query reruns every **12 hours**.
+7.  Map your Databricks columns to Audience fields.
+8.  Review and click `Confirm` — Clay begins importing immediately.
+
+**Sync timing and behavior**
+
+Clay syncs data from Databricks on the following schedules:
 
 -   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured, importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
 -   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
@@ -303,7 +330,6 @@ Once connected, click **Publish** to activate the trigger. Publish is a dropdown
 After a workflow is live, open the options menu (⋮) on the workflow card to manually run or re-run it on existing members:
 
 -   **Run all members that haven't run** — runs the workflow on segment members who joined before the trigger was published or who were otherwise skipped.
--   **Force run all members** — re-runs the workflow on every current segment member, including those that already ran. A confirmation prompt appears before this action runs, since it may use credits.
 
 ### **Sending audiences to workbooks or ad platforms**
 
@@ -359,6 +385,17 @@ Use Audiences by default for anything you want to reuse, segment on, or build au
 ### What if my integration isn't supported yet?
 
 Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data into a Clay table from any source, then use `Upsert Audiences Record` to push those records permanently into your audience. This works for any source Audiences doesn't yet natively support.
+
+### Can I write Audience data back to HubSpot?
+
+Native CRM write-back from Audiences to HubSpot — including the write-if-blank per-field setting available in Salesforce export — is not yet supported. HubSpot export is on the roadmap. The [Writing back to your CRM](#writing-back-to-your-crm) section currently covers Salesforce only.
+
+In the meantime, you can push enriched data to HubSpot and replicate write-if-blank logic using a Bulk Enrich table:
+
+1. Add a **HubSpot Get Object** action column to look up each record in HubSpot and retrieve the current field values.
+2. For each field you want to protect, add a **HubSpot Update Object** action column and configure a [conditional run](https://university.clay.com/docs/conditional-runs) to fire only when the value from step 1 is blank.
+
+Because each field needs its own conditional Update Object column, the total action cost grows with the number of fields you want to protect.
 
 ### How do I create a custom Audience field that isn't tied to Salesforce?
 
