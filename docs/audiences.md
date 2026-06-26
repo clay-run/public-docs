@@ -48,6 +48,7 @@ You can import data from:
     -   You can add more fields later. See [A Salesforce field isn't appearing in my audience filters](#a-salesforce-field-isnt-appearing-in-my-audience-filters--how-do-i-add-it) in the FAQs below.
 6.  Name the corresponding Clay fields — these become the column names in Audiences.
 7.  Select `Companies` at the top and repeat steps 3–6 for accounts.
+    -   After enabling the `Import` toggle, an **`Import activities`** toggle may also appear — enable it to import Salesforce Tasks and Events for your accounts. If you don't see this toggle, contact your Growth Strategist to enable the feature for your workspace.
 8.  Select `Leads` at the top of the sync panel.
 9.  Enable the `Import` toggle.
 10.  Add any Lead fields you want to filter or segment by — common fields include `Lead Status`, `Lead Source`, `Title`, and `Company`.
@@ -72,7 +73,7 @@ Clay pulls data from Salesforce on two schedules:
 
 **Deleted records:** Clay does not remove deleted Salesforce records from Audiences immediately. Instead, the record is marked **Deleted in source**, which you can filter on in your audience. The weekly full sync reconciles hard-deleted records. If a Salesforce record is deleted and recreated (assigning it a new Salesforce ID), it will temporarily appear as a duplicate entry until the next weekly full sync resolves it. There is no self-serve option to trigger an early full sync — contact Clay support if you need an expedited cleanup.
 
-**Salesforce activities:** When Salesforce is connected, the Activity tab on each record's detail view shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp.
+**Salesforce activities:** When the **`Import activities`** toggle is enabled on your Companies import, Clay imports Salesforce Tasks and Events for your accounts. These appear in the Activity tab on each record's detail view alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp. Account associations are resolved automatically in the background — if an account hasn't synced yet when an activity arrives, it associates once that account imports.
 
 ### Importing from HubSpot
 
@@ -409,13 +410,13 @@ When Salesforce data syncs into Audiences, Leads and Contacts are not always sep
 
 - **Multiple Leads → same Contact** — If two Lead records both have a `ConvertedContactId` pointing to the same Contact, both Leads collapse into that one Clay person record. Only the Lead with the direct conversion pointer is surfaced in Clay; the other Lead is absorbed because both share the same `003…` external ID alias.
 
-- **A Lead without `ConvertedContactId` does not merge this way** — Without a conversion pointer, no shared alias is created. That Lead appears as its own Clay person record unless a separate matching condition applies (for example, a shared LinkedIn URL resolved via entity resolution).
+- **A Lead without `ConvertedContactId` does not merge this way** — Without a conversion pointer, no shared alias is created. That Lead appears as its own Clay person record unless a separate matching condition applies (for example, a shared profile URL resolved via entity resolution).
 
-- **Email address is not part of this initial import matching** — Different email addresses on two Lead records that point to the same Contact are irrelevant to the `ConvertedContactId` matching step. The `003…` alias is the sole key — not email, phone, or LinkedIn URL.
+- **Email address is not part of this initial import matching** — Different email addresses on two Lead records that point to the same Contact are irrelevant to the `ConvertedContactId` matching step. The `003…` alias is the sole key — not email, phone, or profile URL.
 
 **To investigate a missing Lead record:** Check whether the Lead has a `ConvertedContactId` value in Salesforce. If it does, look for a Contact in your Audiences whose Salesforce external ID matches that `003…` value — the Lead's data will be present on that Contact person record.
 
-**Note:** This record matching is distinct from Audiences' entity resolution (which matches by LinkedIn URL, email, or probabilistic signals). `ConvertedContactId` matching happens at import time, before entity resolution runs.
+**Note:** This record matching is distinct from Audiences' entity resolution (which matches by profile URL, email, or probabilistic signals). `ConvertedContactId` matching happens at import time, before entity resolution runs.
 
 ### Why does "Company LinkedIn URL" appear in my audience filters when I mapped the field as "LinkedIn URL"?
 
