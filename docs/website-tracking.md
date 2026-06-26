@@ -213,6 +213,16 @@ Charges begin after you install the tracking snippet and Clay starts receiving e
 
 You can view your credit spend for signals underneath the `Signals` tab of the [credit usage dashboard](https://www.clay.com/university/guide/credit-usage). To access, click on your account name → `Settings` → `Usage`.
 
+### Why do I see more credits charged than rows in my table?
+
+Credits are charged per unique IP address that is successfully de-anonymized to a company domain — not per row created in your table. When multiple people from the same company visit your website with different IP addresses, each IP is charged individually. Clay then deduplicates by company domain: all those visitors upsert into the same row, so the number of credits consumed can be significantly higher than the number of rows visible in your table.
+
+For example, if five people from Company A visit your site using five different IP addresses, you will see five de-anonymization charges — but only one row for Company A (with a **Total Session Count** greater than 1 on tables grouped by domain).
+
+This also means you may see credits accumulating in **Settings → Usage → Signals** before any rows appear: session data is only added after a visitor's session finishes (up to 30 minutes after their last page view), so credits can accumulate before rows show up.
+
+To stop charges, disable the website connection under **Settings → Website tracking**. The connection keeps running and consuming credits as long as it is enabled, regardless of whether a results table is open or empty.
+
 ### Can I track person-level information?
 
 Clay's visitor tracking identifies unique accounts visiting your website, not individuals. Once an account is identified, you can use enrichments (like **Find People** and the Work Email Waterfall) to find specific people at those companies and get their email addresses. To send emails to those contacts, see [Sending emails to identified website visitors](#sending-emails-to-identified-website-visitors) above.
