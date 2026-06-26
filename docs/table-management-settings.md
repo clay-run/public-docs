@@ -42,7 +42,7 @@ To enable or disable auto-dedupe:
 
 **Viewing deduplication history:** To see which rows auto-dedupe has removed, open the table name dropdown → **Table history** → **Row deduplication** tab. The tab lists every row that was automatically deleted, showing the value that triggered the match — for example, "Duplicate record for Acme Corp automatically deleted." If your row count drops unexpectedly and auto-dedupe is enabled, this tab shows exactly what was removed and when.
 
-**Tip — choosing the right dedupe column:** The dedupe column determines what counts as a "duplicate." Deduplicating on **Company** keeps only one row per company name — correct for a company-focused table, but not for a contacts table where multiple people from the same company are expected. For contact-based tables, use a unique identifier like **Email** or **LinkedIn URL** as the dedupe column instead.
+**Tip — choosing the right dedupe column:** The dedupe column determines what counts as a "duplicate." Deduplicating on **Company** keeps only one row per company name — correct for a company-focused table, but not for a contacts table where multiple people from the same company are expected. For contact-based tables, use a unique identifier like **Email** or a **professional profile URL** as the dedupe column instead.
 
 ## Auto-run
 
