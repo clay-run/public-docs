@@ -309,13 +309,17 @@ These are disclosed when you add your account via OAuth. We request: full Gmail 
 
 ### How do I authorize Clay's app in the Google Admin panel?
 
-Follow the instructions in the modal and have your Google Workspace admin set our Clay sequencer app to `Trusted` — not `Specific Google Data`. Selecting `Specific Google Data` will not grant all the permissions Clay needs, and the access error will persist. Despite its name, `Trusted` only allows Clay to request Gmail-specific permissions (full email access, basic email settings, OpenID, and your profile) — it does not grant access to Google Drive, Calendar, Docs, or any other Google service. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the Clay sequencer.
+Follow the instructions in the modal and have your Google Workspace admin set our Clay sequencer app to `Trusted` — not `Specific Google Data`. When searching in Google Admin, the app is listed as **Clay Sequencer (Web)** — the `(Web)` suffix indicates the web client type and refers to the same Clay Sequencer app. Selecting `Specific Google Data` will not grant all the permissions Clay needs, and the access error will persist. Despite its name, `Trusted` only allows Clay to request Gmail-specific permissions (full email access, basic email settings, OpenID, and your profile) — it does not grant access to Google Drive, Calendar, Docs, or any other Google service. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the Clay sequencer.
 
 ### I followed the admin setup steps but still see "Access blocked: clay.com has not completed the Google verification process." What should I do?
 
 This error is expected — Clay's sequencer uses automated warmup sends, which prevents the app from passing Google's standard verification process. Admin approval in your Google Workspace Admin panel is the intended workaround; Clay's app will not become Google-verified.
 
-If the error persists more than 24 hours after your admin marked the app as `Trusted`, confirm that they approved the app for the exact domain of the email account you're connecting (e.g., for `ryan@company.com`, the admin must approve for `company.com` specifically — not a different domain they manage). If the error still persists, [contact Clay support](https://www.clay.com/contact).
+If the error persists more than 24 hours after your admin marked the app as `Trusted`, confirm that they approved the app for the exact domain of the email account you're connecting (e.g., for `ryan@company.com`, the admin must approve for `company.com` specifically — not a different domain they manage). If you're connecting accounts from multiple domains, each domain requires its own separate Trusted configuration — having one domain approved does not automatically cover the others. Your admin can verify which org units are currently configured by going to Google Admin → Security → API Controls → App Access Control and checking the Clay Sequencer app's org unit count. If it's still blocked after verifying the domain, contact support.
+
+### What exact Microsoft permissions does sequencer require?
+
+These are disclosed when you add your account via OAuth. We request: offline\_access, openid, email, profile, Mail.Send, Mail.Send.Shared, Mail.ReadWrite, Mail.ReadWrite.Shared, [User.Read](http://User.Read), MailboxSettings.ReadWrite.
 
 ### How are replies categorized in the Campaign Events table?
 
