@@ -165,7 +165,7 @@ LIMIT 1
 -   **Use `LIKE` for website and domain fields.** Salesforce often stores URLs with inconsistent prefixes (`www.example.com`, `https://example.com`, `example.com`). The `LIKE` operator with `%` wildcards matches all formats: `WHERE Website LIKE '%/Company Domain%'`.
 -   **Handle missing values with an `OR NULL` fallback.** If the extra filter field is not consistently populated in Salesforce, a strict `AND` will drop valid records. Add a null check so rows with a blank field are still returned: `AND (BillingCountryCode = '/Country Code Column' OR BillingCountryCode = null)`.
 -   **Use a waterfall for optional tiebreakers.** To use an extra field as a preference rather than a hard filter, create two SOQL columns — one matching on website + country code, one on website only — and use a Formula column to return the first non-empty result.
--   **Clean special characters in input values.** Apostrophes (`'`) and pipe characters (`|`) in column values break SOQL string literals and produce an "Invalid input: Invalid SOQL Query" error on those rows. Create a formula column to strip or replace these characters before passing the value into your query — for example: `#{{Company Name}}.replace(/['\|]/g, ' ')`. Use the cleaned formula column as your SOQL input instead of the raw column.
+-   **Clean apostrophes in input values.** Apostrophes (`'`) in column values break SOQL string literals and produce an "Invalid input: Invalid SOQL Query" error on those rows. Create a formula column to strip or replace apostrophes before passing the value into your query — for example: `#{{Company Name}}.replace(/'/g, ' ')`. Use the cleaned formula column as your SOQL input instead of the raw column.
 
 ### `Action` Create record
 
