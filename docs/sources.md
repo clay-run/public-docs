@@ -189,8 +189,6 @@ When dedup blocks all records on a re-run, that run's **Rows Added** count in So
 
 Duplicate the table (or delete and re-add the source). A new source definition starts with a clean record history, allowing the same records to be imported again. Before doing this, enable [auto-dedupe](table-management-settings.md) on a unique identifier column to avoid creating duplicates of rows still present in your table.
 
-**Can I turn off source record tracking?** No — source-level deduplication for CRM, database, and Google Maps sources cannot be disabled. The only path to re-import records a source has already seen is a fresh source definition (delete and re-add the source, or duplicate the table). If you want to disable the *table-level* deduplication that removes rows with duplicate column values, that is a separate setting — see [Auto-dedupe](table-management-settings.md#auto-dedupe) to toggle it on or off.
-
 **Note:** This tracking behavior applies to **CRM and database sources** (Salesforce, HubSpot, Snowflake, and similar), to **Google Sheets sources** (which generate a unique ID per row by hashing the **"Fields to deduplicate by"** fields configured on the source), to the **Find People** list builder source (which tracks previously-seen profiles and skips them on subsequent runs), and to the **Find local businesses using Google Maps** source (which tracks every business it has previously found and skips duplicates on re-runs). **Find Companies** does not track records this way — deleting rows and re-running will re-import matching companies, subject to your table's auto-dedupe settings.
 
 ### My Google Sheets source found rows but fewer rows appear in my table than expected
@@ -207,7 +205,7 @@ To re-import the same rows after deleting them: delete the existing Google Sheet
 
 If the fields you selected under **"Fields to deduplicate by"** are not unique per row — for example, if you selected **Company** and multiple rows in your sheet share the same company name — those rows produce identical hashes and collapse into a single record. The run history may report *N* rows found while only one row appears in your table per unique hash value.
 
-To get one Clay row per sheet row, set **"Fields to deduplicate by"** to a field that is genuinely unique per record, such as **Email**, **LinkedIn Profile URL**, or a dedicated ID column. Avoid fields like Company or Title that many rows may share.
+To get one Clay row per sheet row, set **"Fields to deduplicate by"** to a field that is genuinely unique per record, such as **Email**, a professional profile URL, or a dedicated ID column. Avoid fields like Company or Title that many rows may share.
 
 ### I am trying to add a source to an existing table, but I get an error
 
@@ -246,8 +244,6 @@ To check or adjust your deduplication setting:
 For a full explanation of how auto-dedupe works — including column type requirements and simultaneous-insert limitations — see [Auto-dedupe](table-management-settings.md#auto-dedupe).
 
 A second common cause of fewer-than-expected rows is hitting the 50,000-row source limit — see [What are the row limits for Clay tables and sources?](#what-are-the-row-limits-for-clay-tables-and-sources) below.
-
-A third cause — specific to **CRM, database, Google Sheets, and Google Maps sources** (Salesforce, HubSpot, Snowflake, Google Sheets, Find local businesses using Google Maps) that have been run at least once before — is **source record tracking**. Each such source definition remembers every record it has ever imported, including rows you've since deleted from the table. On subsequent runs, the source skips previously-seen records and only adds genuinely new ones. When all incoming records were previously imported by the same source definition, the run reports 0 rows added even though the source found records upstream. See [I deleted rows from my table and re-ran the source, but they didn't reappear](#i-deleted-rows-from-my-table-and-re-ran-the-source-but-they-didnt-reappear) for the fix.
 
 ### **What are the row limits for Clay tables and sources?**
 
