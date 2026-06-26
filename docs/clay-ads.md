@@ -185,6 +185,15 @@ No, LinkedIn and Meta don't provide contact-level match visibility for privacy r
 
 When you create your first ad audience, you'll be prompted to authenticate with LinkedIn Campaign Manager, Meta Business Manager, or your Google Ads account via OAuth. Make sure you have admin access to the ad account you want to use. Note that Google Ads syncing is currently in closed beta — contact [Clay support](https://www.clay.com/contact) to request access.
 
+### **Why did I receive an email saying my Meta account will disconnect soon?**
+
+This is expected behavior. Meta enforces a 60-day expiry on OAuth tokens — when you connect your Meta account to Clay using "Sign in with Facebook," the connection stays active for 60 days before it needs to be renewed. Clay sends a warning email 7 days before expiry and again 1 day before expiry so you can take action before any Ad Syncs are interrupted.
+
+**To resolve this, you have two options:**
+
+-   **Reconnect your Meta account** — go to your Meta connections in Clay and click to reconnect using "Sign in with Facebook." This resets the 60-day timer.
+-   **Switch to a System User Token** — system user tokens can be configured to never expire, avoiding the need to reconnect every 60 days. This is the recommended approach for production Ad Sync workflows. See [Meta system user token authentication](#meta-system-user-token-authentication) for setup instructions.
+
 ### **Can I sync to multiple ad accounts?**
 
 Yes, you can connect multiple LinkedIn or Meta ad accounts and choose which account to sync each audience to.
