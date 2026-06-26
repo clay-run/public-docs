@@ -1,6 +1,5 @@
 ---
 title: Slack integration
-source_url: https://university.clay.com/docs/slack-integration-overview
 description: Team communication and collaboration platform boosting productivity
   with AI and integrations.
 last_synced: 2026-04-26T01:40:41.499Z
@@ -215,3 +214,31 @@ Once your Slack workspace admin has approved the Clay app, complete the connecti
 3. Since your admin already approved Clay, you won't be prompted for workspace approval again — it will connect straight through.
 
 Make sure you are logged into your Slack workspace in the same browser when you do this.
+
+### Bot name or Emoji inputs have no effect
+
+If you've filled in the **Bot name** or **Emoji** fields but the Slack message still arrives under the default Clay bot name and avatar, your Slack connection is most likely missing the `chat:write.customize` scope.
+
+**Why this happens:** The `chat:write.customize` scope is required for Slack to honor a custom bot name and icon per message. This scope is enabled by default when you first connect Slack to Clay — but if you chose reduced permissions during the OAuth flow, it may not have been granted. When the scope is absent, Slack silently sends the message with the default bot identity and ignores the values you set for **Bot name** and **Emoji**.
+
+**To fix it:**
+
+1. Go to **Settings → Connections** in Clay.
+2. Find **Slack** in your connections list.
+3. Click the **...** menu next to your Slack account and select **Edit**.
+4. Re-authenticate your Slack account and make sure to accept the `chat:write.customize` scope when prompted.
+
+After reconnecting with the scope in place, new runs of the **Send message to channel** action will use the custom bot name and emoji you specified.
+
+### Getting an `account_inactive` error from Slack
+
+If Clay returns an error like `{"ok":false,"error":"account_inactive"}` when running a Slack action (such as **Send message to channel** or **Send for approval to Slack channel**), this means the Clay bot user is no longer active in your Slack workspace. This most commonly happens when the Clay app has been uninstalled or deactivated in Slack — for example, by a workspace admin. If you can no longer find the Clay bot in Slack, that confirms the same root cause.
+
+**Why reconnecting in Clay alone doesn't fix this:**
+The reconnect flow in Clay starts a fresh OAuth authorization — it does not reuse any existing token. However, OAuth still requires the Clay app to be installed in your Slack workspace. If the app has been removed, even a fresh connection attempt will fail until the app is reinstalled on the Slack side.
+
+**To resolve this:**
+1. In Slack, go to **Settings & Administration → Manage Apps** and check whether the Clay app is still listed as installed.
+2. If it was removed or restricted by a workspace admin, reinstall it from Slack. If you're not a Slack workspace admin, ask whoever manages apps in your workspace to reinstall the Clay app.
+3. Once the Clay app is reinstalled, go to **Settings → Connections** in Clay and reconnect your Slack account.
+4. Re-run your Slack action.

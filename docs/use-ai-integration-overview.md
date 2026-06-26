@@ -1,6 +1,5 @@
 ---
 title: Use AI
-source_url: https://university.clay.com/docs/use-ai-integration-overview
 description: Leverage AI to process, categorize, and conduct web research for
   actionable insights.
 last_synced: 2026-04-26T01:40:51.610Z
@@ -55,7 +54,8 @@ After generating a setup, you can easily edit your original description and rege
     2.  _(Optional)_ Set the **Temperature** to control how creative or consistent the model's output is. Options are **Very Low**, **Low**, **Medium** (default), **High**, and **Very High** — lower values produce more predictable, repeatable results; higher values produce more varied responses. The underlying numeric value varies by model. For tasks requiring consistency — such as structured data extraction, scoring, or categorization — start with **Low** or **Very Low**.
 5.  Write a `Prompt`.
     -   For guidance on writing effective prompts, see our doc on [writing prompts](https://www.clay.com/university/guide/ai-metaprompter-guide).
-    -   **Tip:** You can mix static text and column references in the same prompt. Use `{{Column Name}}` syntax only for values that differ from row to row — like a LinkedIn URL or job title that's unique per person. Criteria that stay the same for every row — like a specific industry, keyword, or criterion you're screening for — can be typed directly in the prompt. For example, to check whether each person has ever worked in consulting, write: *"Based on {{Profile URL}}, has this person ever worked in consulting? Return Yes or No."* No "consulting" column needed.
+    -   **Tip:** You can mix static text and column references in the same prompt. To reference a column, type `/` in the prompt editor and select the column from the menu — it will appear as `{{Column Name}}` in your prompt. **Do not type `{{Column Name}}` as literal text** — only references inserted via the `/` shortcut are substituted with actual row data when the column runs; text you type in `{{...}}` form is treated as a plain string and will not be filled in. Use column references for values that differ from row to row (like a website URL or LinkedIn profile unique to each contact). Criteria that stay the same for every row — like a specific industry, keyword, or criterion you're screening for — can be typed directly in the prompt. For example, to check whether each person has ever worked in consulting, write: *"Based on {{Profile URL}}, has this person ever worked in consulting? Return Yes or No."* No "consulting" column needed.
+    -   **Tip — optional column references:** Every `{{Column Name}}` reference you add is **required to run** by default. If that column is blank for a row, the cell will show **"Some inputs missing"** and skip that row. To allow the column to run when a field is empty, hover over the `{{Column Name}}` token in the prompt — a **Required to run** toggle appears inline on that token. Switch it off for any input that doesn't always have data.
 6.  _(Optional – Content creation, manipulation only)_ Provide context for task.
 7.  Add and define outputs.
     -   **Fields**
@@ -242,3 +242,17 @@ Pulling properties directly from the enrichment column gives you access to the f
 **Alternatively**, configure the Scrape Website enrichment to return less data. Open the enrichment column settings and deselect output fields you don't need (for example, uncheck **Body Text** if your prompt only requires the title and description).
 
 **Skipping rows where scraped data is missing:** If you want the AI column to skip rows where the Scrape Website column returned no data, add a run condition. Open the AI column's **Run Settings**, click **Add run condition**, and set it to `/Scrape Website is not empty`. See [Conditional runs](conditional-runs.md) for full details.
+
+### Scrape Website returns empty results on login-required pages
+
+If Clay's **Scrape Website** enrichment returns a login screen or empty results instead of the content you expected, the page is likely gated behind user authentication.
+
+Clay's Scrape Website action includes JavaScript rendering (enabled by default) and can handle many dynamic websites. However, it fetches pages as an anonymous browser — it has no access to your account credentials or session cookies. When a page requires users to be signed in before the content loads (such as conference attendee lists on event platforms, paywalled databases, or private CRM dashboards), Clay receives only the login screen or a restricted preview rather than the protected data.
+
+**Why this happens:** Even with JavaScript rendering on, Clay cannot authenticate as you. Sites that gate content behind a login — where the list, report, or dataset only appears after you sign in — are not accessible to any external scraper, regardless of JavaScript settings.
+
+**Workarounds:**
+
+-   **Export directly from the platform.** Most event management platforms, databases, and portals offer a built-in data export for logged-in users. Look for a "Download attendee list," "Export," or "Download CSV" option inside the platform once you're signed in.
+-   **Import the exported file into Clay.** Once you have the data as a CSV, upload it to a Clay table via **Tools → Sources** and select your file. See [How to import your CSV into Clay](csv-import-overview.md) for step-by-step instructions, then add enrichment columns to fill in missing details like email addresses, social profiles, and full names.
+-   **Capture the underlying API request (advanced).** If the platform doesn't offer a built-in export, open your browser's DevTools **Network** tab while signed in, navigate to the page, and find the underlying API call that loads the data. You can replay that authenticated request — which carries your login cookies or token — to extract the raw data manually.

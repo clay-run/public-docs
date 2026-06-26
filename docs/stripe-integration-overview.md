@@ -1,6 +1,5 @@
 ---
 title: Stripe integration
-source_url: https://university.clay.com/docs/stripe-integration-overview
 description: Global payment processing platform enabling secure transactions and
   revenue growth.
 last_synced: 2026-04-26T01:40:43.790Z

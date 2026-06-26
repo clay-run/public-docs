@@ -1,6 +1,5 @@
 ---
 title: BuiltWith overview
-source_url: https://university.clay.com/docs/builtwith-integration-overview
 description: Web technology intelligence for sales, marketing, and market analysis.
 last_synced: 2026-04-27T18:09:27.255Z
 ---

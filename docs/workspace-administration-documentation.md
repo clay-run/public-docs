@@ -1,6 +1,5 @@
 ---
 title: Account and workspace settings
-source_url: https://university.clay.com/docs/workspace-administration-documentation
 description: Manage account and workspace settings, team members, SSO, integration accounts, and billing.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
@@ -49,8 +48,7 @@ If you signed up with Google and want to create a password so you can log in wit
 To request the change:
 
 -   Open the in-app chat and ask the support team to switch your login method from Google to password.
--   Once the change is made, you will receive a password recovery email at your registered address.
--   If you don't receive the email, visit [app.clay.com/forgot](https://app.clay.com/forgot) and enter your email address to trigger a new one.
+-   Once the change is made, go to [app.clay.com/forgot](https://app.clay.com/forgot), enter your email address, and follow the link in the email to set your new password.
 
 After completing the password recovery steps, you can log in with your email and password. Note that Clay accounts support only one login method at a time — either Google OAuth or email + password, not both. After switching, you will no longer be able to sign in with Google on this account.
 
@@ -271,7 +269,7 @@ To remove a member from your workspace:
 
 -   Go to `Settings` > `Team`.
 -   Find the member you wish to remove.
--   Click the `…` (three-dot) menu next to their name.
+-   Click the `…` (three-dot) menu at the end of their row.
 -   Select `Remove member`.
 -   Confirm the removal in the dialog that appears.
 
@@ -279,6 +277,7 @@ To remove a member from your workspace:
 
 -   All tables, workbooks, and groups owned by the removed member are automatically transferred to the longest-tenured admin in the workspace (the admin whose admin role was granted earliest).
 -   You cannot remove the last admin from a workspace — at least one admin must remain at all times.
+-   Access is revoked immediately. If the removed member has an active browser session open, they are not logged out of the current page right away — but their workspace permissions are invalidated instantly, so any new action, page refresh, or navigation will return an access-denied error.
 
 **Transferring ownership when a team member leaves**
 
@@ -290,7 +289,7 @@ If a team member hasn't accepted their invite yet, they appear in `Settings` > `
 
 -   Go to `Settings` > `Team`.
 -   Find the pending entry (shown with a **Pending** badge).
--   Click the `…` (three-dot) menu next to their name.
+-   Click the `…` (three-dot) menu at the end of their row.
 -   Select `Remove member`.
 
 Once removed, you can re-invite the same email address if needed. Only workspace admins can cancel pending invites.
@@ -342,6 +341,12 @@ SSO only applies to users whose email address matches your verified domain. Team
 2.  Have them sign in using SSO — they will be authenticated and placed into the correct workspace.
 
 **Important:** Always invite users to your workspace before they sign in with SSO. If a user signs in via SSO before receiving their workspace invite, they will be placed into a new standalone personal workspace instead of your enterprise workspace — creating a messy state that requires support to resolve.
+
+## **Disabling or re-enabling SSO**
+
+If you need to temporarily disable SSO enforcement — for example, during an IdP migration, to allow a user to access their account outside of SSO, or for troubleshooting — contact Clay support. The support team can disable SSO on Clay's side without any changes to your IdP or WorkOS configuration.
+
+Your identity provider setup and WorkOS organization remain intact when SSO is disabled, so re-enabling is equally straightforward: contact Clay support and they will turn it back on. No IT reconfiguration is required for either step.
 
 # **Connections**
 

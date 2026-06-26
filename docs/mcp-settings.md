@@ -1,6 +1,5 @@
 ---
 title: MCP settings
-source_url: https://university.clay.com/docs/mcp-settings
 description: Connect your Clay workspace to AI tools.
 last_synced: 2026-04-26T01:40:20.821Z
 ---
@@ -9,17 +8,17 @@ last_synced: 2026-04-26T01:40:20.821Z
 
 Connect your Clay workspace to AI tools.
 
-MCP (Model Context Protocol) is how Clay connects your workspace to AI tools like ChatGPT, Claude, and Glean. Clay lets workspace admins set credit limits and monitor usage for team members who access Clay through these platforms.
+MCP (Model Context Protocol) is how Clay connects your workspace to AI tools like ChatGPT, Claude, Codex, and Glean. Clay lets workspace admins set credit limits and monitor usage for team members who access Clay through these platforms.
 
 Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory — not a generic server URL you configure manually.
 
-Navigate to it from the Clay homepage by clicking `MCP` in the side nav.
+Navigate to it from the Clay homepage by clicking `MCP` in the side nav. The MCP settings page is only visible to workspace admins — if you don't see it in your settings sidebar, ask your workspace admin.
 
 **Note:**  
 
 Credit controls and usage monitoring are available on all modern paid plans (Launch, Growth, Enterprise) and Legacy Enterprise.  
 
-Audiences controls are available to Enterprise customers enrolled in the Audiences Open Beta.  
+Audiences controls are available on all modern paid plans (Launch, Growth, Enterprise).  
 
 The `Enable for MCP` option on Functions is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans.
 
@@ -52,7 +51,7 @@ The `MCP users` table gives a live view of every rep who has connected Clay to a
 -   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, Glean, or a combination)
 -   **Credit limit** — the rep's current limit, either the workspace default or a per-user override
 -   **Credits used** — live usage tracked against the rep's limit
--   **Salesforce ID _(Enterprise Beta users only)_** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
+-   **Salesforce ID _(Audiences users only)_** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
 
 Use the search bar at the top of the table to find a specific rep by name or email.
 
@@ -67,9 +66,19 @@ If your workspace uses Clay Audiences, two additional workspace-level toggles ap
 -   **Sync user IDs from audiences** — continuously syncs audience data to match MCP users to the Salesforce accounts they own. Updates run incrementally every 15 minutes, with a full sync once a week.
 -   **Allow querying all accounts** — when enabled, reps can query any account in the synced audience, not just accounts they own in Salesforce.
 
+**Troubleshooting — error: "Contact queries are not available in this workspace":** If a rep using Clay through Claude or ChatGPT sees the error `Contact queries are not available in this workspace. Contact ownership scoping is not yet supported — enable "Allow querying all accounts" in workspace settings to use contact queries`, the **Allow querying all accounts** toggle is off. Click `MCP` in the workspace sidebar and enable it. The MCP page is only visible to workspace admins — if you don't see it in the sidebar, ask your workspace admin to make the change.
+
 **Troubleshooting — rep sees no results when querying Audiences:** When `Allow querying all accounts` is off, results are scoped to accounts the rep owns in Salesforce. A rep who owns no accounts (or whose Salesforce ownership hasn't synced yet) will receive empty results — which can look like the feature isn't working. To resolve: either enable `Allow querying all accounts` so the rep can see all workspace accounts, or ensure `Sync user IDs from audiences` is on and the rep's Salesforce account ownership is correctly mapped.
 
 ## FAQ
+
+### Why does Clay MCP return different results than my Clay table?
+
+The native Clay MCP contact enrichment — including the "Find and Enrich list of contacts" tool — runs a preset set of enrichment steps. It does not run the multi-provider waterfall you may have set up in your Clay tables. As a result, contacts that are only findable via a specific waterfall provider may return an email in your Clay table but not through MCP.
+
+**To bring your waterfall coverage into MCP**, wrap the waterfall in a Clay Function and enable it for MCP. See [Enabling a function for MCP](#enabling-a-function-for-mcp) above for step-by-step instructions. Once enabled, you and your reps can invoke the waterfall function directly from Claude or ChatGPT.
+
+The `Enable for MCP` option requires a modern Launch, Growth, Enterprise, or Legacy Enterprise plan.
 
 ### Does Clay provide an MCP server URL I can paste into any AI tool?
 
@@ -77,6 +86,7 @@ No. Clay's MCP integrations are pre-built apps within each supported platform's 
 
 -   **Claude:** [claude.com/connectors/clay](https://claude.com/connectors/clay)
 -   **ChatGPT:** Type `@Clay` (browser) or `/Clay` (desktop) in a prompt
+-   **Codex:** Add the `clay-run/agent-plugins` marketplace in Codex, then install the `clay` plugin
 -   **Glean:** Your Glean admin connects Clay through Glean's MCP Apps directory (Enterprise plans only)
 
 There is no generic Clay MCP server URL to enter manually. The "Add MCP server" configuration screen in tools like Glean is for custom third-party servers — Clay's integration connects through Glean's built-in app directory, not that form.

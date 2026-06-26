@@ -1,6 +1,5 @@
 ---
 title: Table columns
-source_url: https://university.clay.com/docs/table-columns-overview
 description: Learn how to navigate columns in your Clay table, including column types, limits, child column mapping, and how to resolve circular dependency errors.
 last_synced: 2026-04-26T01:40:46.052Z
 ---
@@ -104,11 +103,11 @@ To map an endpoint from an enrichment to an existing column:
 
 1.  Click on the cell of the enrichment containing the endpoint you want to use. This will open the **Cell details** panel on the right.
 2.  Hover over the desired endpoint and click `Add as column` on the right.
-3.  Under **Map to an existing column**, click on the column you want to map this enrichment endpoint to.
+3.  Under **Map to an existing column**, click on the column you want to map this enrichment endpoint to. What happens depends on the destination column's current state:
+    -   **If the destination column has no formula** (for example, values you entered manually or imported from a CSV), Clay replaces the column with a formula referencing the new source column. Clay shows a **"Data overwrite"** warning before proceeding. If you confirm, that column will be blank for any rows where the new source column is empty — including rows from a different source in a multi-source table. **This cannot be undone.**
+    -   **If the destination column already has a formula**, Clay automatically applies a waterfall pattern — the new source column is appended as a fallback, so existing data is preserved.
 
-**Warning:** Mapping to a column that already contains data — including values from CSV imports or manual entry — will permanently erase those values. Clay replaces the destination column's formula with one that references your integration source. For any row where that source has no data (such as rows you imported from a CSV or typed in manually), the formula evaluates to empty and overwrites whatever was in that cell. Clay shows a confirmation dialog when the destination column contains manually entered data, but the overwrite cannot be undone once confirmed.
-
-If your table has rows from mixed sources, map to a **new** column instead, then combine the integration data and your manual data using a [Merge column](#merge-columns).
+**To keep manually entered or CSV-imported data while also bringing in new enrichment data:** Instead of mapping to the existing column, use **Create new column** to extract the incoming field into a separate column. Then add a [Merge column](#merge-columns) that references both the original column and the new one — it returns the first non-empty value per row, preserving whichever source has data.
 
 ### Circular dependency error
 
@@ -127,6 +126,35 @@ You can identify the parent column of a child column to better understand its da
 
 1.  Click on the child column to open the dropdown menu.
 2.  Within the menu, select `Go to parent column`.
+
+## Sort columns
+
+You can sort your table by any column to arrange rows in ascending (A → Z / 0 → 9) or descending (Z → A / 9 → 0) order. Sorts are view-specific — each view of a table can have its own independent sort configuration.
+
+### Sort by a single column
+
+Click a column header to open its dropdown menu and select **Sort A → Z** or **Sort Z → A**. The table immediately reorders all rows by that column's values.
+
+### Sort by multiple columns
+
+When you apply more than one sort, Clay applies them **in priority order**: the first (top) sort arranges all rows, and each additional sort only reorders rows that have the **same value** for every higher-priority sort column. This is the same behavior as an `ORDER BY col1, col2, col3` clause in a database.
+
+**Example:** If your view has three sorts active —
+
+1.  Competitor Status (Z → A) — highest priority
+2.  Hiring Sales (Z → A)
+3.  Has RevOps (A → Z) — lowest priority
+
+— then all rows are arranged by Competitor Status first. Within any group of rows that share the same Competitor Status value, those rows are further sorted by Hiring Sales. Within rows that share both the same Competitor Status and Hiring Sales value, Has RevOps then determines the order.
+
+**This is expected behavior, not a bug.** If a column's sort appears to have no effect, it means the higher-priority sort columns have unique values for every row — there are no ties to break.
+
+To manage multiple sorts:
+
+1.  Click the **Sort** button in the table toolbar (it shows the number of active sorts when any are applied, e.g., **2 sorts**).
+2.  Click **Add sort** to add another column and direction.
+3.  **Drag** sort items up or down to change their priority — the topmost item always has the highest priority.
+4.  Click the **×** on a sort item to remove it.
 
 ## Hiding columns
 
@@ -218,6 +246,20 @@ To color multiple column headers at once:
 1.  Select multiple column headers by holding `Shift` or `Cmd` (Mac) / `Ctrl` (Windows).
 2.  Right-click on any selected column.
 3.  Select `Change color` and choose your desired color.
+
+### Rename color labels
+
+You can give custom names to the color categories used in your table. For example, you might rename "Green" to "Approved" or "Red" to "Needs review." Custom labels apply to the whole table — they appear consistently across all views of that table.
+
+To rename color labels:
+
+1.  Click on a column header to open the dropdown menu.
+2.  Select `Change color`.
+3.  Click `Rename colors` at the bottom of the color picker.
+4.  Enter a custom name for each color you want to rename.
+5.  Click `Save changes`.
+
+Colors with no custom name default to their original label (Red, Orange, Yellow, etc.). The Default (grey) color cannot be renamed.
 
 ### Best practices
 

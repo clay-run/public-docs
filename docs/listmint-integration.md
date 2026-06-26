@@ -1,6 +1,5 @@
 ---
 title: Listmint integration
-source_url: https://university.clay.com/docs/listmint-integration
 description: Verify email validity, including automatic catch-all verification
   for domains with catch-all settings.
 last_synced: 2026-04-26T01:40:16.231Z

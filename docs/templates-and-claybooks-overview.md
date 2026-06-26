@@ -1,6 +1,5 @@
 ---
 title: Templates and Claybooks
-source_url: https://university.clay.com/docs/templates-and-claybooks-overview
 description: Understand Clay use cases with Templates and Claybooks.
 last_synced: 2026-04-26T01:40:47.673Z
 ---

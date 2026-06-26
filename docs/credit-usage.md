@@ -1,6 +1,5 @@
 ---
 title: Credit usage
-source_url: https://university.clay.com/docs/credit-usage
 description: Track credit consumption across your workspace.
 last_synced: 2026-05-04T00:00:00.000Z
 upstream_hash: 49adc53e477510baa3bbdef7bf19e66afe61d2d6471b8803966d822f686ba5a4
@@ -35,7 +34,7 @@ The columns in this view display:
 
 Filter any of the content on this page by:
 
-1.  When the credits were used.
+1.  **When the credits were used** — use the `When` dropdown to select a preset period (`This week`, `Last week`, `This month`, or `Last month`) or choose `Custom range` to enter a specific start and end date. This lets you scope the dashboard to any window — for example, to see how many credits you used in a single day or between two specific dates.
 2.  Owner of the workbook (its creator, not who ran the enrichments).
 3.  Specific integrations being used.
 4.  **Recurring runs only:** Toggle `Recurring` to show only credits from recurring or scheduled runs. By default (toggle off), the dashboard shows all credit consumption — both one-time manual runs and recurring automated runs. When this filter is on, only workbooks and tables with recurring usage are shown in the expanded list — but folder and workbook `Credits used` totals always reflect the complete spend for all their contents, including non-recurring workbooks. If a folder's total appears higher than the sum of the workbooks visible when you expand it, the difference comes from non-recurring workbooks hidden by the filter. Toggle the filter off to see all workbooks and their individual credits.
@@ -137,6 +136,23 @@ When you import data to existing tables (via Copy Paste from URLs, adding a sour
 This prevents unexpected credit usage when you add new data to tables with existing enrichment workflows.
 
 ## Troubleshooting unexpected credit usage
+
+### Enrichments ran on all rows when setting up a new table
+
+The import warning and the first-10-rows auto-run limit both protect you when **adding a source to an existing table** — but neither applies when you create a **brand-new table** with a source and enrichment columns for the first time.
+
+-   **No import warning**: Clay shows the confirmation modal only when a source is added to a table that already has enrichment columns. A new table has no action columns at the moment the source first runs, so no credit-spend warning appears.
+-   **Enrichments fire on all imported rows**: The first-10-rows auto-run limit only applies when importing into an existing table. For a new table, enrichments with auto-run enabled queue on every row the source imports — not just the first 10.
+
+To safely test a new table before committing credits at scale:
+
+1.  Turn table-level auto-run **off** before running your source for the first time (click `⛭` → toggle **Auto-run** off).
+2.  Import your source — rows load into the table without triggering any enrichments.
+3.  Select 5–10 rows, right-click, and choose **Run rows** to manually test your enrichments on a small batch.
+4.  Click individual action cells to see the **Charged** value and confirm the per-row cost.
+5.  Once you're satisfied, turn auto-run back **on** and choose **Update cells** to process the remaining rows.
+
+See [Ways to save Clay credits](clay-credit-conservation.md) for the full recommended testing workflow.
 
 ### Credits consumed while auto-run is off
 

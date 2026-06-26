@@ -1,6 +1,5 @@
 ---
 title: Send table data
-source_url: https://university.clay.com/docs/send-table-data
 description: Send data between tables to create simple multi-table setups.
 last_synced: 2026-04-26T01:40:38.918Z
 ---
@@ -58,15 +57,15 @@ To send data from one table to another:
 **Additionally you can:**
 
 -   Send nested data from the parent table. (This is useful when you want to avoid extracting basic fields from an action column's output.)
--   Rename any field in the destination table using the destination column dropdown.
+-   Map any selected column to a specific existing column in the destination table. By default, each column routes to a destination column with the same name — hover over the row and click the **edit icon** to open a dropdown of all destination columns and choose a different target.
 
-**Note:** When you first send a row, it creates a new row in the destination table. For subsequent sends, it updates that same row. This applies to both regular row data and nested data. You can turn this off to always create a new row via the \`Update existing rows on re-run\` setting.
+**Note:** When you first send a row, it creates a new row in the destination table. For subsequent sends, it updates that same row. This applies to both regular row data and nested data. You can turn this off to always create a new row via the `Update existing rows on re-run` setting.
 
 ### Using `Send row for each item in a list`
 
-Each cell can hold a list of items—like a list of people found at a company. To turn each item in that list into its own row in another table, use `Send row for each item in a list`.
+Each cell can hold a list of items — like a list of people found at a company, or a list of job postings returned by Find Active Job Openings. To turn each item in that list into its own row in another table, use `Send row for each item in a list`.
 
-This is useful for **flattening lists**. For example, if you find multiple people at a company, you can send each person as a separate row in the destination table. **This method always creates a new row for each item.**
+This is useful for **flattening lists**. For example, if you run Find Active Job Openings on a list of companies, each cell may contain multiple job postings — use this method to send each posting as its own row in a destination table, giving you a clean per-role breakdown you can filter and analyze. Similarly, if you find multiple people at a company, you can send each person as a separate row. **This method always creates a new row for each item.**
 
 **Note:** This method sends a maximum of **20 items per row** per run. If the list has more than 20 items, only the first 20 will be sent—there is no setting to increase this limit. For workflows that need to process more than 20 items per row, use [Lookup Multiple Rows](https://university.clay.com/docs/lookup-rows) to query the destination table directly instead.
 
@@ -76,7 +75,7 @@ You can also select additional data to send along with the flattened list, just 
 
 The easiest way to configure `Send row for each item in a list` is to use the **Take action on list** shortcut from the cell details panel:
 
-1.  Click on a cell in the column whose list you want to flatten (for example, a "Find Contacts at Company" result cell).
+1.  Click on a cell in the column whose list you want to flatten (for example, a "Find Active Job Openings" or "Find Contacts at Company" result cell).
 2.  In the Cell details panel, hover over the list section (e.g., "People") to reveal the **Take action on list** button.
 3.  Select **Write each item to new row in other table**.
 
@@ -104,7 +103,7 @@ Automatically creates new columns in the destination table for any that don't al
 
 **Auto-map existing columns**
 
-For existing columns in the destination table, updates the formula to reference the configured source data. For columns without a formula (e.g., manually entered data or CSV imports), the formula won't be updated to avoid overwriting data.
+Automatically maps incoming fields to existing destination columns that share the same name. For columns that already have a formula, the new source is appended to the existing formula. For columns without a formula (e.g., manually entered or CSV-imported data), a new extraction formula is set — **this will overwrite any existing values in those columns**.
 
 ## Mapping table data in the destination table
 
@@ -130,7 +129,7 @@ Repeat this process for each field you want to extract into its own column.
 
 ## Best practices & troubleshooting
 
--   There can be a **maximum of 20 tables** connected. **This includes tables across workbooks.**
+-   There can be a **maximum of 20 tables** connected via Send Table Data across your entire workspace, including tables in other workbooks. Connections made by **Write to Other Table**, **Execute Subroutine**, and **Route to Campaign** actions also count toward this same workspace-wide limit. If you exceed the limit, you'll see the error: *"Maximum number of table ID checks exceeded (limit: 20)"*. **Lookup Single Row in Other Table** and **Lookup Multiple Rows in Other Table** do not count toward this limit. If you hit this limit, consider replacing connections that only need to pull data (not push it) with **Lookup Rows** actions instead.
 -   **Data can only be sent in a linear direction** (A → B → C). In other words, loops are not possible (A → B → C → A).
     -   If you want to receive data in the table you're also sending data from, use one of these other actions:
         -   `Lookup Multiple Rows in Other Table`
@@ -140,3 +139,5 @@ Repeat this process for each field you want to extract into its own column.
 -   **The "Send data to table with auto-run on" confirmation dialog shows a higher cost estimate than you expect to pay.** The dialog calculates "Estimated total cost" by multiplying the per-row credit estimate by the total number of rows being sent — it does not filter for run conditions. If your Send table data column has a run condition, only rows where the condition evaluates to true will actually run and consume credits; rows that show "Run condition not met" are skipped at no cost. The dialog's own tooltip notes this is a *maximum* estimate: "actual usage may vary based on your data and configurations."
 -   **All rows in the destination table show the same contact's data (for example, the same email or LinkedIn URL repeated across every row):** the field mappings within the list are referencing a fixed indexed position (like the first contact) instead of each item's own data. Delete the Send Table Data column and recreate it using **Take action on list** from the cell details panel (see [Using Send row for each item in a list](#using-send-row-for-each-item-in-a-list)), which auto-configures both the list source and the correct per-item field mappings.
 -   **Some rows show `"Invalid send table data inputs … 'listData' … 'Required'"` while others succeed (using `Send row for each item in a list`):** This error means the list column had no data for that specific row — for example, an enrichment returned no results for that company, or a webhook event didn't include the expected field. Clay validates each row individually at runtime, so rows with a valid list array succeed and rows without one fail. **Fix:** Add a [run condition](https://university.clay.com/docs/conditional-runs) to the Send Table Data column so it only runs when the list column is not empty. For example, if your list column is `Find Contacts at Company`, set the condition to run only when `Find Contacts at Company` has a value.
+-   **Send to Table is creating new columns in the destination table instead of populating my existing ones.** By default, `Auto-extract new columns` creates a new column for each incoming field. To route incoming data into an *existing* column instead: open the destination table, click the **"rows from: [source table name]"** cell, hover over the field you want to map (e.g., an email address), and click **Add to column** — then select an existing column from the dropdown (labeled **Map to an existing column**). Repeat for each field you want to map. If the existing column is empty, dismiss the data-overwrite warning safely. To map multiple fields at once, enable **Auto-map existing columns** in the action's advanced settings — Clay will automatically set formulas on all destination columns whose names match incoming fields. Note that for columns with manually entered or CSV-imported values, this will overwrite that existing data.
+-   **Rows created by `Send row for each item in a list` don't have an automatic array-index column.** When Clay expands a list into individual rows in the destination table, it passes each item's own fields plus any additional columns you selected — but it does not include the item's numeric position in the original array. There is also no built-in row ID variable accessible in formula columns. If you need a unique identifier per expanded row — for example, to populate an External ID field for a Salesforce upsert — combine stable fields from the list item. Add a formula column in the destination table that concatenates fields which together uniquely identify each record. For employment history data, for instance, combining contact ID, company name, and start date (`{{Contact ID}} + "-" + {{Company Name}} + "-" + {{Start Date}}`) produces a stable composite key per job entry. Use enough fields to make the combination unique for your data. (Note: Clay's formula engine does not support object spread syntax like `{ ...item, _index: idx }`, so you can't pre-augment list items with an index in a formula column before sending.) **For upsert workflows, use only deterministic (stable) field values in your ID.** Avoid basing the ID on `Math.random()`: because `Math.random()` generates a new value every time the formula column re-runs, re-running the column assigns a different ID to each existing row and causes the upsert target to create duplicates instead of updating the originals.

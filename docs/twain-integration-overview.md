@@ -1,6 +1,5 @@
 ---
 title: Twain integration
-source_url: https://university.clay.com/docs/twain-integration-overview
 description: The accurate deep research API for GTM Engineers building agents.
 last_synced: 2026-04-26T01:40:49.969Z
 ---

@@ -1,6 +1,5 @@
 ---
 title: Exellius integration
-source_url: https://university.clay.com/docs/exellius-integration
 description: Find and verify contact information in Singapore and Japan.
 last_synced: 2026-04-26T01:39:57.498Z
 ---

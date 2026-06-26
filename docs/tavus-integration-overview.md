@@ -1,6 +1,5 @@
 ---
 title: Tavus integration
-source_url: https://university.clay.com/docs/tavus-integration-overview
 description: AI video APIs create realistic digital twins for engaging
   conversations and video generation.
 last_synced: 2026-04-26T01:40:47.029Z

@@ -1,6 +1,5 @@
 ---
 title: Table management settings
-source_url: https://university.clay.com/docs/table-management-settings
 description: Manage table settings like rename, auto-dedupe, auto-run,
   auto-delete, and table descriptions.
 last_synced: 2026-04-26T01:40:46.622Z
@@ -23,6 +22,8 @@ You can also click the `⛭` icon in the top toolbar to open the Run Settings pa
 
 Auto-dedupe continuously monitors a specified column to detect and resolve duplicate values. When duplicates are found, Clay keeps one row and deletes the rest — you choose whether to keep the **oldest** or **newest** row (defaults to **Keep oldest row**). Blank cells, stale cells, and cells with more than 200 characters are excluded from this process.
 
+**When does auto-dedupe fire?** Auto-dedupe runs whenever a row is added to the table **and** whenever a cell value in the dedupe column changes — including when a formula field recalculates from an empty or stale state to its final value. This means if a formula field is blank or still processing when a row is first inserted, the duplicate check runs again automatically once the formula resolves. You don't need to manually trigger deduplication after a formula updates.
+
 **Note:** Auto-dedupe only works with **Text**, **Email**, and **URL** column types. If the selected column uses a different data type (such as Number), auto-dedupe is automatically disabled. Convert the column to **Text** type first to use it for deduplication.
 
 **Note:** The auto-dedupe toggle cannot be changed while the table is running. Stop the run first by clicking the **Stop** button in the run summary panel at the bottom-right of the table. If the toggle remains greyed out after the table has stopped, try a hard refresh (`Cmd+Shift+R` on Mac, `Ctrl+Shift+R` on Windows/Linux) to clear stale browser state.
@@ -34,6 +35,8 @@ To enable or disable auto-dedupe:
 3.  In the settings panel, find the **Auto-dedupe rows** toggle and turn it on or off.
 4.  Select the column to be used for identifying duplicate values.
 5.  Choose **Keep oldest row** or **Keep newest row** to set which duplicate is retained.
+
+**Note:** Auto-dedupe monitors a **single column** only. If you need to deduplicate on a combination of fields — for example, treating each unique `OpportunityId + ContactId + Role` as a distinct row — use the **Uniqueness fields** setting in your source configuration instead (e.g., the [Salesforce SOQL source](salesforce-soql.md)). Source-level uniqueness fields apply at import time, before rows reach the table.
 
 **Note — simultaneous row inserts:** Auto-dedupe may not catch duplicates when rows with the same value are added at the same time — for example, when a bulk import, a batch webhook, or concurrent sends push rows within milliseconds of each other. Each insert is processed in its own transaction and is not aware of the other before both are committed to the table, so both can slip through. This is a known limitation. As a workaround, add a dedupe or filter step in your workflow just before any downstream push (such as a CRM or email sequencer) to catch any duplicates that slip through.
 
@@ -233,6 +236,8 @@ When you duplicate a table, Clay copies the table structure and run settings —
 **What is not copied:**
 -   Enriched data — enrichment columns start empty in the duplicate
 -   Source import history — the duplicate starts with a fresh record count
+
+**To copy existing enriched data without re-running enrichments:** Use [Send Table Data](send-table-data.md) to transfer rows from the original table to the duplicate. Add a Send Table Data column to the original table, select the columns you want to copy, and set the destination to the duplicate. This moves the already-computed cell values directly — no enrichment credits are consumed.
 
 **Auto-run carries over:** Because run settings are preserved, if Auto-run was enabled in the original table, the duplicate will also have Auto-run enabled. To create a copy that starts in manual mode (useful for demos or templates), turn off Auto-run in the original table **before** duplicating — or turn it off in the duplicate immediately after creating it. See [Auto-run](#auto-run) for how to toggle this setting.
 

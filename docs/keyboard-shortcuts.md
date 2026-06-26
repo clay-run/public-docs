@@ -1,6 +1,5 @@
 ---
 title: Keyboard shortcuts
-source_url: https://university.clay.com/docs/keyboard-shortcuts
 description: Work faster in Clay with keyboard shortcuts.
 last_synced: 2026-04-27T18:10:15.366Z
 ---

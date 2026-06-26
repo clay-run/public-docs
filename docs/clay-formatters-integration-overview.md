@@ -1,6 +1,5 @@
 ---
 title: Clay formatters overview
-source_url: https://university.clay.com/docs/clay-formatters-integration-overview
 description: Format your Clay table data for free.
 last_synced: 2026-04-26T01:39:44.557Z
 ---
@@ -76,7 +75,7 @@ To run enrichment only under specific conditions, use formulas that trigger the 
 
 **Step 4:** Run your enrichment to normalize the domain.
 
-**Note:** This action normalizes the format of a single URL — it does not identify whether two different domains (for example, `twitter.com` and `x.com`) belong to the same company. For that use case, use a [Claygent](claygent-builder.md) prompt that checks whether two domains resolve to the same organization.
+**Note:** This action normalizes the format of a single URL — it does not identify whether two different domains (for example, `meta.com` and `facebook.com`) belong to the same company. For that use case, use a [Claygent](claygent-builder.md) prompt that checks whether two domains resolve to the same organization.
 
 ### `Action` Normalize Phone Number
 

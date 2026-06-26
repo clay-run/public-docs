@@ -1,6 +1,5 @@
 ---
 title: Semrush integration
-source_url: https://university.clay.com/docs/semrush-integration-overview
 description: Online marketing platform boosting visibility, rankings, and
   strategy optimization.
 last_synced: 2026-04-26T01:40:38.598Z
@@ -36,7 +35,7 @@ Use this action to retrieve a breakdown of traffic by source (direct, referral, 
 
 ### `Action` Get company social media engagement
 
-Use this action to analyze social media performance across platforms like Facebook, Twitter, Instagram, and YouTube.
+Use this action to analyze social media performance across platforms like Facebook, Instagram, and YouTube.
 
 **Inputs**
 

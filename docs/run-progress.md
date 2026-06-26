@@ -1,6 +1,5 @@
 ---
 title: Run progress
-source_url: https://university.clay.com/docs/run-progress
 description: Clay provides multiple ways to track and monitor run progress
   across your tables, including how to set a row limit to control which rows are
   processed, manually trigger unrun enrichment cells, run enrichments on a
@@ -129,9 +128,11 @@ Cells show a **Queued** status when they are waiting to be processed. This is no
 If cells remain Queued for an extended period, common causes include:
 
 -   **High concurrency in progress** — Clay runs many rows at once; if a large number are queued simultaneously, later rows wait while earlier ones complete. The queue will clear on its own.
--   **External API rate limits** — Integrations such as OpenAI or HubSpot enforce per-minute request limits. Clay respects these automatically; the queue resumes once the rate-limit window resets.
+-   **External API rate limits** — Integrations such as OpenAI or HubSpot enforce per-minute request limits. For Clay's managed integrations (where Clay provides the API key), Clay handles this automatically and the queue resumes once the rate-limit window resets. If you are using your own API key, Clay may send requests faster than your account's tier allows — rows that exhaust the retry window return a **"Rate limit wait time exceeded"** error. To prevent this on enrichment columns that support it (such as HTTP API), configure the **Custom rate limit** setting on the column to match your provider's tier; see [Enrichments](enrichments.md) for details. For AI enrichments using a personal API key, see [AI tokens](ai-tokens.md).
 -   **API quota exhausted** — If you've hit a quota ceiling (e.g., OpenAI, Google), new runs are blocked until the quota resets or is increased in the provider's dashboard.
 -   **Auto-run settings** — If auto-run is enabled and triggering repeated re-runs, rows may accumulate in the queue unexpectedly. See [Table management settings](table-management-settings.md) for how to adjust auto-run and scheduled run behavior.
+
+> **Note on CPJ source previews:** When previewing a CPJ source column (Companies, People, or Jobs search) in the Sculptor column builder, previews are capped at **50 per hour** on trial and free plans, and **5,000 per hour** on paid plans. This cap applies only to interactive previews in the column builder — it does not apply to "Run column" or right-click → "Run [N] rows" on table rows.
 
 **To unblock a stuck queue:**
 
@@ -179,3 +180,17 @@ To re-enable automatic enrichment:
 After enabling table-level auto-run, column-level settings take effect: columns with auto-run on will trigger automatically; columns with auto-run off will still require a manual trigger.
 
 For the full auto-run decision tree and advanced options (conditional runs, "Keep existing results"), see [Table management settings](table-management-settings.md).
+
+## Troubleshooting: identifying rows that errored vs. rows with no data
+
+When a column's progress bar shows failed rows (🔴), you may need to find exactly *which* rows hit a specific error — for example, "The result of this run exceeded the cell size limit (200 kB)" — without catching rows that legitimately returned no data.
+
+Add a formula column using `Clay.getCellStatus()` and point it at the affected enrichment column:
+
+```
+Clay.getCellStatus({{Your Column}})
+```
+
+This returns a status string for each cell. Cells that hit the cell size limit return `"ERROR_ACTION_OUTPUT_DATA_SIZE_LIMIT_EXCEEDED"`; cells that ran successfully but found nothing return `"SUCCESS_NO_DATA"`; cells with data return `"SUCCESS"`. Filter or sort the table on this formula column to isolate the error rows without catching legitimate empty results.
+
+For the full list of `getCellStatus()` return values, see [Formulas](formula-generator.md).

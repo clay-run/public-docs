@@ -1,6 +1,5 @@
 ---
 title: Salesforce integration
-source_url: https://university.clay.com/docs/salesforce-integration-overview
 description: Cloud-based customer relationship management software.
 last_synced: 2026-05-11T17:47:40.000Z
 ---
@@ -34,11 +33,17 @@ Connect to Salesforce via Client Credentials for server-to-server access. No bro
 
 **Setting up in Salesforce**
 
-1.  In Salesforce Setup, search for `External Client App Manager` in Quick Find and select it. Create a new external client app — see [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&language=en_US&type=5) for full creation steps. When configuring the app's OAuth settings, make sure **Access and manage your data (`api`)** is included in the OAuth scopes — without it, Salesforce returns `invalid_grant: no valid scopes defined` when Clay tries to connect. Once created, click on your app and select `Edit`.
+1.  In Salesforce Setup, search for `External Client App Manager` in Quick Find and select it. Create a new external client app — see [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&language=en_US&type=5) for full creation steps. Set **Distribution State** to `Local`. When configuring the app's OAuth settings:
+    -   **Callback URL:** Salesforce requires this field to be populated even for server-to-server flows. You can enter `https://login.salesforce.com/services/oauth/callback`.
+    -   **OAuth Scopes:** Add **Access and manage your data (`api`)** — this scope is required; without it, Salesforce returns `invalid_grant: no valid scopes defined` when Clay tries to connect. Adding **Access the identity URL service (`id, profile, email, address, phone`)** is optional but enables Clay's Test Connection feature to display which user and org the connection is authenticated as.
+
+    Once created, click on your app and select `Edit`.
 2.  In the `Settings` tab, enable the flow at the app level:
     -   Under `Flow Enablement`, check `Enable Client Credentials Flow`.
-3.  In the `Policies` tab, enable the flow at the org level. This is the setting most commonly missed — if it's off, the flow is blocked regardless of the Settings toggle:
-    -   Under `OAuth Flows and External Client App Enhancements`, check `Enable Client Credentials Flow`.
+3.  In the `Policies` tab, configure access and enable the flow:
+    -   Under **Select Permission Sets**, choose only the permission set(s) assigned to your integration user.
+    -   Set **Permitted Users** to `Admin approved users are pre-authorized`.
+    -   Under `OAuth Flows and External Client App Enhancements`, check `Enable Client Credentials Flow`. This is the setting most commonly missed — if it's off, the flow is blocked regardless of the Settings toggle.
     -   In the `Run As` field, enter the username of the integration user the app will authenticate as.
 4.  Click `Save`. See [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.configure_client_credentials_flow_for_external_client_apps.htm&language=en_US&type=5) for full details on configuring the Client Credentials flow.
 
@@ -86,7 +91,7 @@ After testing a connection, Clay saves the result and shows the connected user a
 
 ### IP allowlisting
 
-On **Enterprise plans**, all Salesforce connections in Clay automatically route through Clay's static IP addresses — no toggle or configuration is needed. You can allowlist these IPs in Salesforce under `Setup` → `Network Access` → `New`. Contact Clay support to get the current list of IP addresses to allowlist.
+On **Enterprise plans**, all Salesforce connections in Clay automatically route through Clay's static IP addresses — no toggle or configuration is needed. If your Salesforce org restricts connections by IP address, contact Clay support to request the current IP list, then allowlist them in Salesforce under `Setup` → `Network Access` → `New`.
 
 For full instructions on setting up a restricted Salesforce user with field-level security and IP allowlisting, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
 
@@ -368,6 +373,27 @@ Alternatively, if you are using **JSON Schema** output mode, add an `"enum"` arr
 ```
 
 Both approaches prevent the AI from producing free-text output that won't match a valid Salesforce restricted picklist option.
+
+### Normalizing enrichment-provided values before writeback
+
+When you enrich records using a data provider — such as Clay's own enrichments, Apollo, ZoomInfo, or Clearbit — the values returned may not match what your Salesforce fields expect. Two common mismatches:
+
+**Picklist taxonomy mismatch**
+
+Enrichment providers use their own industry or category taxonomies, which frequently differ from your Salesforce picklist values. For example, Apollo may return `"information technology & services"` for Industry while your Salesforce restricted picklist only accepts `"Technology"`. Salesforce rejects values that don't exactly match an allowed option.
+
+To fix this, add a formula column or an AI column *after* the enrichment column to translate the enrichment output to the exact Salesforce value before writeback:
+
+-   **Formula column:** Use an `if`/`switch` expression to map each enrichment value to its Salesforce equivalent.
+-   **AI column (Claygent or Use AI):** Set the output format to **Fields**, choose **Select** as the field type, and add each allowed Salesforce picklist value as an option. The AI will only return one of the defined options — ensuring an exact match every time.
+
+Map the formula or AI column (not the raw enrichment column) in your **Update Record** or **Create Record** action.
+
+**Revenue range vs. currency field type mismatch**
+
+Salesforce's `AnnualRevenue` field is a **currency (number)** type — it expects a numeric value, not a text string. Many enrichment providers return revenue as a text range: Clay's own CPJ enrichment returns `"$1M-$10M"`, ZoomInfo returns `"$25 mil. - $50 mil."`, and Clearbit's `estimatedAnnualRevenue` field returns `"$10B+"`. Mapping any of these directly to Salesforce's `AnnualRevenue` field fails with a deserialization error — Salesforce cannot convert the text to a number.
+
+To fix this, add a formula column after the enrichment that converts the text range to a single numeric value. Where a provider also returns a separate numeric field (for example, Apollo's `annual_revenue` field returns a number alongside `annual_revenue_printed`), map the numeric field directly instead.
 
 ## Batch processing
 

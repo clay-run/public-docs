@@ -1,6 +1,5 @@
 ---
 title: Apollo.io integration
-source_url: https://university.clay.com/docs/apollo-io-integration-overview
 description: AI-powered platform for sales intelligence, engagement, and
   workflow automation.
 last_synced: 2026-04-27T18:09:15.331Z
@@ -80,7 +79,7 @@ Returns detailed company information including:
 -   Annual revenue and financial data
 -   Technologies used (tech stack)
 -   Company headquarters and office locations
--   Social media profiles (LinkedIn, Twitter, Facebook)
+-   Social media profiles (LinkedIn, Facebook)
 -   Founded year and company type
 
 ### **`Action`** **Find Open Jobs**

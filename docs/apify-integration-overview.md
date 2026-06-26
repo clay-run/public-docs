@@ -1,6 +1,5 @@
 ---
 title: Apify integration
-source_url: https://university.clay.com/docs/apify-integration-overview
 description: Web scraping and automation platform providing data for AI and
   custom solutions, with troubleshooting for incomplete imports, duplicates,
   and data overwrites.
@@ -98,7 +97,24 @@ If the Import data from Apify source does not pull in your full dataset:
 - Re-trigger the import to pull in missing data.
 - Export the full CSV directly from Apify, import it into Clay, and compare the datasets to identify discrepancies.
 
+If re-triggering the import shows 0 new rows added, the source may have reached the 50,000-record limit — see [Scheduled Apify source stopped adding new rows](#scheduled-apify-source-stopped-adding-new-rows-after-hitting-the-50000-record-limit) below.
+
 For large datasets, Clay fetches Apify dataset items in fixed batches of 50 rows per step, retrying automatically until all rows are retrieved. If rows are still missing after an import, trigger the import manually multiple times until the complete dataset appears.
+
+### Scheduled Apify source stopped adding new rows after hitting the 50,000-record limit
+
+If your Apify source is set to run on a schedule but has stopped adding new rows — even though Apify shows successful actor runs with data — the most likely cause is that the source has accumulated 50,000 records and is now silently discarding all incoming data.
+
+**Important:** This is the *source record count*, not the number of rows currently visible in your table. Clay tracks every record a source has ever imported, including rows you have since deleted from the table. Deleting rows does **not** reset this counter — a table can show far fewer than 50,000 visible rows while the source has already reached the 50,000-record limit.
+
+The schedule itself is not broken — it continues to fire normally. But at the point of inserting records, Clay silently discards all incoming data without displaying an error or sending a notification.
+
+**To resolve this:**
+
+1. **Create a new source definition.** Delete the current Apify source and add it again with the same settings. A new source starts at a fresh 0/50,000 record count. Alternatively, create a new table and add the Apify source there.
+2. **Enable auto-dedupe before re-adding the source.** If your new source will import records already present in the table, enable [auto-dedupe](table-management-settings.md) on a unique identifier column (such as a profile URL or company domain) to automatically remove duplicate rows.
+
+For more on the 50,000-record source limit and workarounds for large ongoing imports, see [What are the row limits for Clay tables and sources?](sources.md#what-are-the-row-limits-for-clay-tables-and-sources).
 
 ### Duplicate data
 

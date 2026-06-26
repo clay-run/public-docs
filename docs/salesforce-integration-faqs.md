@@ -1,6 +1,5 @@
 ---
 title: Salesforce integration FAQs
-source_url: https://university.clay.com/docs/salesforce-integration-faqs
 description: Answering common questions about connecting and troubleshooting the
   Salesforce integration.
 last_synced: 2026-04-26T01:40:34.981Z
@@ -142,6 +141,46 @@ To avoid creating duplicates from your Clay table, first look up an object to ch
 For full details on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
 
 [Learn more about Salesforce's duplicate rules here.](https://help.salesforce.com/s/articleView?id=sales.duplicate_rules_map_of_reference.htm&type=5)
+
+## Why am I seeing a `DUPLICATES_DETECTED` error when creating records in Salesforce?
+
+This error means Salesforce has an active duplicate rule that detected an existing record matching the one Clay tried to create. The rule fired during the Create Record action and returned an error rather than letting the save proceed.
+
+There are three ways to handle this:
+
+**Option 1: Enable Duplicate Rule Override in Clay**
+
+If your Salesforce duplicate rule is configured to "allow save" (it warns about duplicates rather than hard-blocking them), you can tell Clay to proceed with the save anyway. In your **Create Record** column settings, enable the **Duplicate Rule Override** toggle. Clay will then bypass the duplicate warning and create the record even when Salesforce detects a match.
+
+**Option 2: Look up first, then update instead of create**
+
+Rather than creating a record that already exists, look it up and update it instead:
+
+1.  Add a **Lookup record** column before your Create Record column. Search by a unique identifier such as email address.
+2.  In your **Create record** column, open **Run settings** and add a conditional run that fires only when the lookup returns no result (the ID field is empty). This means only genuinely new records get created.
+3.  Add an **Update record** column with a conditional run that fires only when the lookup returns a result (the ID field is not empty). Set **Record ID** to the ID returned by your lookup column.
+
+This way, new records are created and existing records are updated — without either action running into a duplicate conflict.
+
+**Option 3: Adjust the Salesforce duplicate rule**
+
+On the Salesforce side, modify the duplicate rule to exclude records coming from Clay's integration user. For example, add a condition such as "Current User not equal to \[the Salesforce user Clay authenticates as\]". This prevents the rule from firing when Clay creates records, while still protecting your org from duplicates created by other users.
+
+For details on Clay's Create Record settings, see [Salesforce integration](https://university.clay.com/docs/salesforce-integration-overview). For more on Salesforce duplicate rules, see [Salesforce's documentation](https://help.salesforce.com/s/articleView?id=sales.duplicate_rules_map_of_reference.htm&type=5).
+
+## How do I prevent Salesforce records from being created or updated when there is no valid email?
+
+Use conditional runs on your **Create Record** and **Update Record** action columns to gate them on a passing email validation result. Rows where email validation fails are skipped automatically and do not consume credits.
+
+Here's how to set it up:
+
+1.  Ensure your table has an email validation enrichment column (for example, Clay's built-in **Validate Email** enrichment or a third-party email validator). This column produces a status or result value for each row.
+2.  On your **Create Record** column, open **Run settings** and add a conditional run. Set the condition to only run when the email validation column indicates a valid email — for example, `/Email Validation Status is "valid"` or `/Validate Email is not empty`, depending on what your validation enrichment outputs.
+3.  Repeat the same conditional run configuration on any **Update Record** columns that should also be skipped when email validation fails.
+
+Rows where the condition is not met show **"Run condition not met"** in the column cell — no Salesforce record is created or updated, and no credits are consumed for those rows.
+
+For full details on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
 
 ## How do I add leads or contacts to a Salesforce campaign and update the status of existing campaign members?
 
@@ -312,6 +351,18 @@ Assignment rules in Salesforce fire on every record save — not just when a rec
 **To prevent this**, open the settings for your **Update Record** column and enable the **Disable auto-assignment rules** option. This tells Salesforce to skip assignment rules when Clay saves the record.
 
 **Note:** If your Update Record column was created before this option was added, the toggle may be off. Check your column settings if you are seeing unexpected owner changes after Clay updates a record.
+
+## Why do records created or updated by Clay show my name (or another user's name) in Salesforce's Created By or Last Modified By field?
+
+Salesforce's `CreatedBy` and `LastModifiedBy` audit fields always reflect the **Salesforce user whose credentials authenticated the API request**. Clay does not have a mechanism to override this — it passes the connection's access token with each API request, and Salesforce sets those fields accordingly.
+
+**For the User Sign In connection method:** Clay authenticates as whichever Salesforce user was active in the browser when you completed the OAuth setup. If you were logged into your personal Salesforce account at that moment, all records Clay writes will show your personal name in those fields — even if you have a dedicated "integration user" configured in Salesforce. The integration user's name will only appear in `CreatedBy` and `LastModifiedBy` if the Clay connection was actually authenticated *as* that integration user.
+
+**To fix this**, reconnect Clay using the integration user's credentials. See [How do I connect to Salesforce as a specific user](#how-do-i-connect-to-salesforce-as-a-specific-user-such-as-an-integration-user-using-user-sign-in) below for steps.
+
+**For the Client Credentials connection method:** `CreatedBy` and `LastModifiedBy` reflect the Salesforce execution user configured in the Connected App's **Run As** field during setup — not whoever configured the Clay connection. This is one reason Client Credentials is often preferred for dedicated integration accounts — the audit fields consistently show the configured execution user regardless of who set up the Clay connection.
+
+**To check which Salesforce user your connection is currently authenticated as**, go to `Settings` → `Connections` → `Salesforce`, click `…` next to your connection, and select `Test Connection`. Clay will display the email address of the authenticated user.
 
 ## How do I connect to Salesforce as a specific user (such as an integration user) using User Sign In?
 

@@ -1,6 +1,5 @@
 ---
 title: Findymail integration
-source_url: https://university.clay.com/docs/findymail-integration-overview
 description: Verified B2B email data for sales outreach.
 last_synced: 2026-04-26T01:39:59.775Z
 ---

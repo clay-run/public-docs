@@ -1,6 +1,5 @@
 ---
 title: Share workbooks and tables as templates
-source_url: https://university.clay.com/docs/workbook-table-sharing-guide
 description: Share Clay workbooks and tables as templates, and move workbooks between workspaces.
 last_synced: 2026-04-26T01:40:56.186Z
 ---
@@ -20,6 +19,18 @@ In Clay, you can share tables and workbooks via a public link or specific emails
 Note that when sharing as a template, only the table structure and one row of sample data are shared. If you need to share your table data, you can export the table as a CSV file.
 
 **Table limit:** By default, workbooks with more than 10 tables cannot be duplicated or shared as templates. If your workbook exceeds this limit, contact Clay support to have the limit raised for your workspace.
+
+## Use a shared template
+
+When someone shares a template link with you, opening it creates a **new table or workbook** — you cannot apply a template to an existing empty table or sheet.
+
+To create a table or workbook from a template:
+
+1. Open the template link in your browser.
+2. If you have access to multiple workspaces, Clay will prompt you to choose which workspace to create the table or workbook in. Select the workspace and confirm.
+3. Clay creates a fresh table or workbook containing the template's structure and sample data.
+
+You can then rename it, clear the sample row, and start adding your own data.
 
 ## Move a workbook to a different workspace
 

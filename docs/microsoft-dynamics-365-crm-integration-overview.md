@@ -1,6 +1,5 @@
 ---
 title: Microsoft Dynamics 365 CRM integration overview
-source_url: https://university.clay.com/docs/microsoft-dynamics-365-crm-integration-overview
 description: Cloud-based Customer Relationship Management platform
 last_synced: 2026-04-26T01:40:21.790Z
 ---
@@ -40,6 +39,22 @@ To set up the Dynamics 365 CRM Integration, follow these steps:
 **Step 4:** Name your account key.
 
 Optionally, you can set this account as the default for your workspace.
+
+## Connecting with a service account
+
+For enterprise and team setups, we recommend connecting Dynamics 365 to Clay using a **dedicated service account** — a shared Microsoft account — rather than a personal user account. This prevents connection disruptions if an individual's credentials change or a team member leaves.
+
+**Requirements for the service account:**
+
+-   A valid Microsoft (Azure AD) account
+-   A Dynamics 365 license assigned to the account
+-   The required Dynamics 365 permissions (for example, a System User role or equivalent)
+
+To connect with a service account, follow the same setup steps above and sign in with the service account credentials at Step 3.
+
+**Note on MFA re-authentication:** The OAuth connection requires re-authentication when your Azure AD Conditional Access policies enforce MFA or sign-in frequency limits (commonly every 7 days). If the service account is not re-authenticated within your organization's required window, the connection will stop working. To avoid disruptions, re-authenticate proactively on schedule or work with your Azure AD administrator to configure a sign-in frequency exemption for the service account used with Clay.
+
+**Entra Service Principal (app-only) authentication is not currently supported.** The Dynamics 365 connection requires signing in with a Microsoft user account (personal or service account). If your organization requires app-only authentication without user account MFA dependencies, please reach out to Clay support to register your interest.
 
 ## [‍](https://app.arcade.software/share/IiX3ez8JQvNmSDhn9F7w)Import your Microsoft Dynamics data into Clay
 

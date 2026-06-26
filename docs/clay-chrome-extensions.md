@@ -1,6 +1,5 @@
 ---
 title: Clay Chrome extensions
-source_url: https://university.clay.com/docs/clay-chrome-extensions
 description: Extract structured data from any webpage with the Clay Chrome Extension.
 last_synced: 2026-04-26T01:39:43.902Z
 ---
@@ -57,7 +56,7 @@ To create a recipe for scraping structured data from profile or detail pages:
 1.  Open the Clay for Chrome extension on the page you want to scrape.
 2.  Click `Select Data to Add from Page`, then choose `Select a Single Attribute`.
 3.  Map each attribute you want to extract:
-    -   For example: name, website, LinkedIn, Twitter, or Crunchbase.
+    -   For example: name, website, LinkedIn, or Crunchbase.
 4.  Adjust the `URL Matching` settings to apply the recipe to similar pages:
     -   Replace specific URL components with variables (e.g., `:company_name`).
 5.  Name and save your recipe.

@@ -1,6 +1,5 @@
 ---
 title: Prospeo integration overview
-source_url: https://university.clay.com/docs/prospeo-integration-overview
 description: Find work emails and enrich person details using name, domain, or LinkedIn.
 last_synced: 2026-04-26T01:40:30.619Z
 ---

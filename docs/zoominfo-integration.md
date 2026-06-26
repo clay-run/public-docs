@@ -1,6 +1,5 @@
 ---
 title: ZoomInfo integration
-source_url: https://university.clay.com/docs/zoominfo-integration
 description: Get detailed insights into company structures, competitive
   landscapes, and accurate contact details.
 last_synced: 2026-04-26T01:40:59.430Z
@@ -76,3 +75,11 @@ The ZI0001 error (*"The token provided is invalid. Please provide a valid token 
 **Fix:** Re-run the affected cells. In most cases they succeed immediately on retry.
 
 If ZI0001 persists across multiple cells after retrying, or if you see it consistently on every run, contact Clay support so we can investigate your ZoomInfo connection.
+
+### **Why are some rows returning "out of credits" errors when I still have ZoomInfo credits?**
+
+If you see a mix of successful enrichments and "out of credits" errors across rows in the same run, the likely cause is that your ZoomInfo account has **exceeded its enrichment limit**. The underlying error returned to Clay is: *"Your ZoomInfo account has exceeded its enrichment limit. Please contact your ZoomInfo Account Manager."*
+
+When a table run starts with enough remaining enrichment headroom to fulfill some rows but not all, you'll see partial results: earlier rows succeed and later rows fail with this error. Re-running the column will continue to return the same error until your enrichment limit is raised or reset by ZoomInfo.
+
+**What to do:** Contact your ZoomInfo Account Manager or representative and ask them to check your **enrichment limit** and usage. They can see your enrichment usage in their system and can request an increase to your allocation if needed.

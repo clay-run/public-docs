@@ -1,6 +1,5 @@
 ---
 title: Saved searches
-source_url: https://university.clay.com/docs/saved-searches
 description: Save and reuse your filter criteria for Find companies, Find
   people, and Find jobs sources in Clay.
 last_synced: 2026-04-26T01:40:36.947Z
@@ -20,6 +19,8 @@ This feature is especially useful when you're building lists with similar criter
 2.  Click `Save search` before importing.
 3.  Add a name and description for your search to help you remember what the search is for.
 4.  Your saved search will now be available to reuse in future tables.
+
+**Note:** For `Find companies` and `Find people` sources, if you navigate away with unsaved filter changes — via browser navigation, switching to a different source type, or switching search modes — Clay will prompt you to save or discard your changes before leaving.
 
 ## Use a saved search
 

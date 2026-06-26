@@ -1,6 +1,5 @@
 ---
 title: Delete content within your workspace
-source_url: https://university.clay.com/docs/delete-content-within-your-workspace
 description: Learn how to delete and recover tables, workbooks, and rows within your workspace.
 last_synced: 2026-04-26T01:39:53.278Z
 ---

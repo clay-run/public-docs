@@ -1,6 +1,5 @@
 ---
 title: AI Tokens
-source_url: https://university.clay.com/docs/ai-tokens
 description: Understand AI Tokens
 last_synced: 2026-04-26T01:39:40.311Z
 ---

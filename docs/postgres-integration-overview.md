@@ -1,6 +1,5 @@
 ---
 title: Postgres integration overview
-source_url: https://university.clay.com/docs/postgres-integration-overview
 description: Open-source relational database for reliable data management and
   scalable solutions.
 last_synced: 2026-04-26T01:40:29.644Z

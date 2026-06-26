@@ -1,6 +1,5 @@
 ---
 title: Sculptor
-source_url: https://university.clay.com/docs/sculptor
 description: Your go-to-market co-pilot
 last_synced: 2026-04-26T01:40:38.269Z
 ---
@@ -47,8 +46,6 @@ History is scoped to the surface you're currently working in:
 -   **Use Sculptor as a strategist.** Treat it like a partner to help shorten your learning curve, navigate complex systems faster, and accelerate iteration.
 
 ## Sandbox mode
-
-> **Available on Pro and Enterprise plans. A broader rollout to additional plans is coming.**
 
 When Sculptor builds new columns for your table, it automatically puts the table into [sandbox mode](https://www.clay.com/university/guide/sandbox-mode) first. This gives you a chance to review and validate the new columns before they go live—reducing unintended credit burn and giving you more control over changes.
 
@@ -101,7 +98,8 @@ While Sculptor is powerful, there are a few things to keep in mind:
 -   **No direct CRM integration (yet)** — Connections must be set up manually for now.
 -   **Cross-table operations are limited** — Advanced linking and workflows are still in development.
 -   **No export option** — Export functionality hasn't been integrated yet.
--   **Column modifications use sandbox on Pro & Enterprise** — On Pro and Enterprise plans, Sculptor adds new columns to existing tables via [sandbox mode](#sandbox-mode) rather than writing directly to your live table. You'll need to review and publish those changes using the **Review changes** button. On Starter, Sculptor writes new columns directly to the live table.
+-   **Column modifications use sandbox mode** — Sculptor adds new columns to existing tables via [sandbox mode](#sandbox-mode) rather than writing directly to your live table. You'll need to review and publish those changes using the **Review changes** button.
+-   **Sculptor can edit AI columns and formula columns, but not action/enrichment or basic columns.** If you ask Sculptor to update an existing AI column or formula column, it can edit it in place. However, action/enrichment columns (including Claygent action columns) and basic columns cannot be edited after creation — in those cases, Sculptor creates a new column with the requested changes instead. The new column appears to the right of your current columns — **scroll right** in your table to find it as a pending suggestion. To update an action/enrichment or basic column directly, click into that column and edit it yourself.
 -   **Feature gaps** — Signals tables aren't currently supported.
 -   **Data boundaries apply** — Only processes data you provide or data from supported sources and enrichments.
 
@@ -134,9 +132,20 @@ A "conversation" is a full chat thread — multiple back-and-forth messages with
 
 If you hit the limit and need it increased, contact support.
 
+### I asked Sculptor to update an existing column but can't find the changes
+
+Sculptor can edit existing AI columns and formula columns in place. However, if you asked it to update an action/enrichment column (including Claygent action columns) or a basic column, those column types can't be edited after creation — Sculptor creates a new column with the requested changes instead.
+
+To find Sculptor's proposed column:
+
+-   **Scroll right** in your table. The new column is added to the right of your existing columns as a pending suggestion.
+-   Click **Review changes** in the tab bar above your table to see a summary of all proposed columns.
+
+To update an action/enrichment or basic column directly without creating a new one, click into that column's header and edit it yourself.
+
 ### Sculptor keeps entering sandbox mode when I add a column
 
-On Pro and Enterprise plans, this is expected behavior — Sculptor uses sandbox mode whenever it adds new columns to an existing table, rather than writing directly to your live table. This gives you a chance to review proposed changes before they go live.
+This is expected behavior — Sculptor uses sandbox mode whenever it adds new columns to an existing table, rather than writing directly to your live table. This gives you a chance to review proposed changes before they go live.
 
 To apply the proposed column to your table:
 1. **Do not click Exit Sandbox** — this discards all of Sculptor's proposed changes without publishing them.
@@ -160,8 +169,8 @@ Sculptor can be helpful throughout the building process, and you can freely turn
 
 **✅ Full Support**
 
--   **AI Columns** — Read, recommend, configure, edit, preview
--   **Formulas** — Read, recommend, configure, edit
+-   **AI Columns** — Read, recommend, configure, preview ("Use AI" columns only; Claygent and Image Generation columns do not support preview)
+-   **Formulas** — Read, recommend, configure (no preview)
 
 **🟡 Partial Support (Read / Recommend only)**
 

@@ -1,6 +1,5 @@
 ---
 title: Scheduled sources
-source_url: https://university.clay.com/docs/scheduled-sources
 description: Automatically refresh data from sources on a set schedule.
 last_synced: 2026-04-26T01:40:37.604Z
 ---
@@ -37,6 +36,8 @@ This keeps your data current without manual updates by pulling in new informatio
     3.  Week
     4.  Month
 -   Toggle **Update existing rows**: When the source is re-run, any record **returned by that run** will have its existing row updated with the latest data. Records that are not returned by the source query — even if they were previously imported — will not be updated.
+
+**Scheduled source runs are additive.** Each run adds new records from the source to your table. Records that are no longer in the source — for example, contacts removed from a HubSpot list since the last run — remain in your Clay table and are not deleted. To remove rows that are no longer in the source, delete them manually or start fresh with a new table.
 
 ## Usage limits
 

@@ -1,13 +1,12 @@
 ---
-title: Audiences (Beta)
-source_url: https://university.clay.com/docs/audiences
-description: "Note: This feature is currently in beta for Enterprise customers."
+title: Audiences
+description: "Audiences is available on all modern paid plans (Launch, Growth, Enterprise)."
 last_synced: 2026-04-27T18:09:16.275Z
 ---
 
-# Audiences (Beta)
+# Audiences
 
-**Note:** This feature is currently in beta for Enterprise customers.
+**Note:** Audiences is available on all modern paid plans (Launch, Growth, Enterprise).
 
 Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
 
@@ -15,7 +14,7 @@ Use it to build dynamic segments across millions of records, run automated enric
 
 Setting up Audiences is four major steps:
 
-1.  **Import your data** — connect Salesforce or Snowflake and bring your records into Audiences.
+1.  **Import your data** — connect Salesforce, HubSpot, Snowflake, or Google BigQuery and bring your records into Audiences.
 2.  **Create audiences** — build dynamic segments using filters to target the right contacts and accounts.
 3.  **Enrich and monitor** — run bulk enrichments and signals that write data permanently back to each record.
 4.  **Write back to your CRM** — sync enriched data and segment membership back to Salesforce.
@@ -32,7 +31,9 @@ You can import data from:
 
 -   A new people or companies search
 -   Snowflake
+-   Google BigQuery
 -   Salesforce
+-   HubSpot
 
 ### Importing from Salesforce
 
@@ -71,6 +72,25 @@ Clay pulls data from Salesforce on two schedules:
 
 **Deleted records:** Clay does not remove deleted Salesforce records from Audiences immediately. Instead, the record is marked **Deleted in source**, which you can filter on in your audience. The weekly full sync reconciles hard-deleted records. If a Salesforce record is deleted and recreated (assigning it a new Salesforce ID), it will temporarily appear as a duplicate entry until the next weekly full sync resolves it. There is no self-serve option to trigger an early full sync — contact Clay support if you need an expedited cleanup.
 
+**Salesforce activities:** When Salesforce is connected, the Activity tab on each record's detail view shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp.
+
+### Importing from HubSpot
+
+**Note:** Setup must be completed separately for Contacts, Companies, and Deals. HubSpot Deal import is currently in early access — contact your Growth Strategist to enable it for your workspace.
+
+1.  Click `Add data` → `Add Source` → select your [**HubSpot integration**](https://university.clay.com/docs/hubspot-integration-overview).
+2.  Select `Contacts` at the top of the sync panel.
+3.  Enable the `Import` toggle.
+4.  Add any HubSpot fields you want to segment by — only fields included here will appear as columns and filter options in your Audience.
+5.  Name the corresponding Clay fields — these become the column names in Audiences.
+6.  Select `Companies` and repeat steps 3–5 for accounts.
+7.  To import Deals (if enabled for your workspace), select `Deals` at the top of the sync panel.
+8.  Enable the `Import` toggle.
+9.  Add any Deal fields you want to filter or segment by — common fields include `Deal Stage`, `Amount`, `Close Date`, and `Owner`.
+    -   Deal data is associated with your Companies records and becomes available as a filter in any Companies audience.
+10.  Name the corresponding Clay fields.
+11.  Click `Save and Preview`, then `Confirm`.
+
 ### Importing from Snowflake
 
 1.  Click `Add data` → `Import from Snowflake`.
@@ -92,6 +112,31 @@ Clay pulls data from Salesforce on two schedules:
 Clay syncs data from Snowflake on the following schedules:
 
 -   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured (for example, `updatedAt`), importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
+-   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
+
+### Importing from Google BigQuery
+
+**Note:** Google BigQuery import is currently in early access — contact your Growth Strategist to enable it for your workspace.
+
+1.  Click `Add data` → `Add Source` → select your [**Google BigQuery integration**](https://university.clay.com/docs/google-bigquery-integration).
+    -   If you haven't connected BigQuery yet, click `+ Add account` and upload your service account JSON key file. See the [Google BigQuery integration](https://university.clay.com/docs/google-bigquery-integration) for setup instructions.
+2.  Enter a SQL `SELECT` query to define which records to import (for example, `SELECT * FROM \`project.dataset.table\` WHERE created_at > "2024-01-01"`).
+    -   Click `Test` to preview your data before continuing.
+3.  Confirm the preview looks correct, then click `Continue`.
+4.  Define the `Unique Identifier`:
+    -   For People: `email` or `user_id`.
+    -   For Companies: `company_id` or `domain`.
+5.  (Optional) Configure a `Timestamp Field` for incremental syncing:
+    -   With a timestamp: syncs run every **15 minutes** and only import new/changed records.
+    -   Without a timestamp: the full query reruns every **12 hours**.
+6.  Map your BigQuery columns to Audience fields.
+7.  Review and click `Confirm` — Clay begins importing immediately.
+
+**Sync timing and behavior**
+
+Clay syncs data from Google BigQuery on the following schedules:
+
+-   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured, importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
 -   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
 
 ### Importing from people and companies search
@@ -190,7 +235,7 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
 Four Clay actions let you move data between a Clay table and your Audience directly.
 
 -   In any Clay table, click `Add enrichment` and search for:
-    -   `Upsert Audiences Record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. Use it to commit data from unsupported integrations (e.g., HubSpot), qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table.
+    -   `Upsert Audiences Record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. Use it to commit data from integrations not yet natively supported in Audiences, qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table.
     -   `Update Audiences Record` writes data from a table row to one or more fields on an existing Audience record. Unlike `Upsert Audiences Record`, it does not create a new record if no match is found. Both actions write only to fields that already exist in your Audience — to create a new custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
     -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls. By default, signal data is returned for the past **30 days** and the action returns a maximum of **5 signal results** per record — adjust the lookback period in the column settings to retrieve older signals, or use `Get Audiences Activity` when you need more than 5 results.
     -   `Get Audiences Activity` retrieves signal and activity data for an Audiences record — including signal events and, if Gong is connected to your workspace, Gong call records. Use it when you need more than 5 results or want to query a longer time window than `Lookup in Audiences` provides by default.
@@ -303,7 +348,7 @@ Export sync behavior:
 
 To estimate API calls for initial export, divide record count by 10,000 and compare against your Salesforce limit.
 
-**Note:** CRM export is admin-only and currently free during beta. Enrichments and signals follow standard Clay table pricing. Export pricing may change at GA.
+**Note:** CRM export is admin-only. Enrichments and signals follow standard Clay table pricing.
 
 ## FAQs
 
@@ -339,7 +384,18 @@ To add a missing field:
 4.  In the field mapping section, add the Salesforce field you want and name the corresponding Clay column.
 5.  Click **Save and review** → **Confirm**.
 
-The field will be available for filtering after the next incremental sync (typically within 15 minutes). Read-only Salesforce fields — fields shown with a lock icon in the mapping because Salesforce does not allow Clay to write them — can still be imported and used as filters. They will show a **Never write (Read-only)** export rule.
+The filter option for the field becomes available after the next incremental sync (typically within 15 minutes). However, if you added this field to the mapping after your initial import, records that haven't been modified in Salesforce since the mapping was saved won't have data for the new field yet — see [I added a new Salesforce field to my mapping but some records are missing data for it](#i-added-a-new-salesforce-field-to-my-mapping-but-some-records-are-missing-data-for-it) below. Read-only Salesforce fields — fields shown with a lock icon in the mapping because Salesforce does not allow Clay to write them — can still be imported and used as filters. They will show a **Never write (Read-only)** export rule.
+
+### I added a new Salesforce field to my mapping but some records are missing data for it
+
+When you add a field to your Salesforce import mapping after the initial import, the filter option for that field becomes available after the next incremental sync (typically within 15 minutes). However, existing records are **not** automatically backfilled — only records whose `SystemModstamp` has changed in Salesforce after the mapping was saved will be re-synced with the new field data.
+
+If an existing record had a value for the field in Salesforce before you added the mapping, and that record hasn't been modified since, the value won't appear in your audience until either:
+
+-   **The record is modified in Salesforce** — any change that updates `SystemModstamp` (a user edit, a workflow update, or an integration write-back) triggers the record to be re-synced on the next incremental sync (within 15 minutes). Making a small edit to the record in Salesforce is sufficient.
+-   **The weekly full sync runs** — every 7 days, Clay re-reads all Salesforce records regardless of `SystemModstamp`. Missing field values are filled in automatically at that point.
+
+**To fill in missing data immediately for specific records:** In Salesforce, make a small change to any field on the affected accounts or contacts (for example, add and remove a space in a text field). This updates `SystemModstamp` and Clay will pick up those records — with all their current field values including the newly mapped field — on the next incremental sync.
 
 ### Why does "Company LinkedIn URL" appear in my audience filters when I mapped the field as "LinkedIn URL"?
 
@@ -354,6 +410,15 @@ You don't need a clean CRM to get started — CRM cleanup is often the first use
 ### Does Audiences update automatically?
 
 Yes. Segments update in real time as records enter or change, typically within 15 minutes. Enrichments and actions trigger automatically for new records when the autoenrich toggle is enabled. No manual runs required after initial setup.
+
+### Why didn't my audience count change after I tightened my search filters?
+
+Audience searches (Find People and Find Companies sources) are **additive** — the search only adds net-new contacts going forward and never removes contacts already in your audience. If your original search pulled in a large set of contacts, tightening the filters afterward won't reduce that count. Contacts added by the earlier, broader search remain.
+
+To work with a strictly smaller set:
+
+1.  Create a new search with the narrower filters — click `Add data` → `Find people` or `Find companies` and set your tighter criteria.
+2.  You don't need to rebuild your enrichment setup from scratch. In your existing enrichment table's **Run setup** panel, update the source to point at the new segment. If the enrichment has already started running, pause and reset it first to return to setup state before editing the source.
 
 ### Can I sync an audience to multiple ad platforms?
 
@@ -409,6 +474,19 @@ Add a **Salesforce Update Record** action column directly inside your bulk enric
 
 If you have the Audiences Salesforce export enabled, enriched fields also sync back to Salesforce automatically on the next 24-hour export cycle (see [Writing back to your CRM](#writing-back-to-your-crm)). Adding Update Record directly in the enrichment table is useful when you need immediate write-back or when you are not using the native Audiences Salesforce import.
 
+### How do I access Account-level fields (like Company Name or Company Domain) from a People audience?
+
+When you import Salesforce Contacts into a People audience, only fields from the **Contact object** are available as columns — Account-level fields (Company Name, Company Domain, and any custom Account object fields) are not included automatically, even if the Contact has a linked Salesforce Account.
+
+To pull Account-level data into a Clay table:
+
+1. In your table, open the **Audiences Record** cell for a Contact row and navigate to **Records → Related IDs → Account IDs**. This value is the **Clay Company ID** for the linked account — Clay's internal identifier for the Company record in your Audiences. It is **not** the Salesforce Account ID.
+2. Add a `Lookup in Audiences` action column.
+3. Set **Object type** to **Companies**.
+4. Set the filter field to **Company ID** and map it to the Account IDs value from step 1.
+
+The lookup returns the matching Company record from your Audiences, including all Account-level fields configured when you imported Salesforce Accounts into the Companies audience (for example, Company Name, Company Domain, and custom Account fields).
+
 ### Why does filtering my People audience by deal attributes return fewer contacts than expected?
 
 When you filter a People audience by opportunity or deal attributes (for example, Stage, Amount, or a custom deal field), Clay only includes contacts that are **directly linked to the matching deal via OpportunityContactRole** in Salesforce — not all contacts at the account that owns the deal.
@@ -430,7 +508,18 @@ When a Salesforce lead is converted to a contact, Audiences merges both records 
 
 However, the current Audiences UI contact view does not yet display a full union of all data from the converted lead. This means activity counts and last-activity dates that originated from the lead record may not appear in the contact's Activity tab even though the data exists in Audiences and is retrievable via MCP.
 
-**Note (beta):** This discrepancy is a known gap during the Audiences beta. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. The UI will be updated to show the full union of contact and converted lead data before general availability.
+**Note:** This discrepancy is a known limitation. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. A future update will show the full union of contact and converted lead data in the UI.
+
+### How does filtering work in Lookup in Audiences when I select multiple fields?
+
+When you select multiple fields in **Fields to filter by**, the lookup uses **AND logic** — a record must match on **all** selected fields to be returned. There is no option to switch to OR logic.
+
+Two behaviors to keep in mind:
+
+-   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record is only returned when both values match exactly. A record with the right email but a different or missing secondary value won't be returned.
+-   **Blank or empty filter values prevent any match.** If any field in **Fields to filter by** has a blank or null value in your table row, the lookup returns "No records found" — even if the Audiences record also has a blank value for that field. Every filter field must have a non-empty value for the lookup to run.
+
+**Tip:** Use a single strong identifier like `Email` when you want reliable matches. Email is unique per person and avoids the no-match issue that occurs when secondary identifier fields are inconsistently populated.
 
 ### Why isn't a signal showing up in my Lookup in Audiences result?
 

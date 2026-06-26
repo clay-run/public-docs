@@ -1,6 +1,5 @@
 ---
 title: Google Shopping integration overview
-source_url: https://university.clay.com/docs/google-shopping-integration-overview
 description: Discover and compare products across various retailers.
 last_synced: 2026-04-26T01:40:04.753Z
 ---

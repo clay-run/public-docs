@@ -1,6 +1,5 @@
 ---
 title: Claygent builder
-source_url: https://university.clay.com/docs/claygent-builder
 description: Build smarter agents faster
 last_synced: 2026-05-11T17:47:40.000Z
 ---
@@ -159,7 +158,20 @@ Common errors when writing schema by hand:
     -   **Remove the enum**: delete the `"enum"` array and keep only `"type": "integer"`, letting the model return any integer.
     -   **Switch to strings**: change `"type"` to `"string"` and quote the enum values (`"1000"`, `"500"`, `"100"`).
 
--   **Field named `confidence` overrides Clay's built-in confidence indicator.** Clay automatically adds a `confidence` field to your output schema with enum values `low`, `medium`, `high`, and `very high` — but only when your schema does not already define one. This field drives the red/yellow/green color indicator on each response cell. If you define your own field named `confidence` (for example, as a numeric score), Clay skips injecting its own, and your custom field's values are used for the color indicator instead. Because values like `0.98` don't match the expected text enum, the normalizer defaults to `low` and every cell shows red. To fix it, rename your custom field — for example, to `confidence_score` — and rerun the column. Clay will then inject its own `confidence` field and the color indicator will work correctly.
+-   **`object` field with `additionalProperties: false` but no `properties` defined — sub-fields always come back empty.** An `object` field that sets `"additionalProperties": false` without a `"properties"` map is syntactically valid JSON Schema, but it tells the AI provider that no sub-fields are permitted. The model always returns `{}` for that field — the column runs and completes with no error message, but none of the structured data you expected appears. Fix: add a `"properties"` map listing every sub-field you want the AI to populate:
+
+    ```json
+    "engagementSummary": {
+      "type": "object",
+      "description": "Summary of engagement metrics.",
+      "properties": {
+        "totalPosts": { "type": "number" },
+        "avgLikes": { "type": "number" }
+      }
+    }
+    ```
+
+-   **Field named `confidence` overrides Clay's built-in confidence indicator.** Clay automatically adds a `confidence` field to your output schema with enum values `low`, `medium`, `high`, and `very high` — but only when your schema does not already define one. This field drives the red/yellow/green color indicator on each response cell. If you define your own field named `confidence` (for example, as a numeric score), Clay skips injecting its own, and your custom field's values are used for the color indicator instead. Numeric values are mapped through thresholds to the text enum — for example, `0.98` maps to `very high` — which may not match the color you intend for your own scoring scale. To fix it, rename your custom field — for example, to `confidence_score` — and rerun the column. Clay will then inject its own `confidence` field and the color indicator will work as designed.
 
 To avoid writing schema by hand, click **Generate from prompt** to have Clay auto-generate a valid schema from your prompt.
 
@@ -240,7 +252,7 @@ Credit cost depends on the AI model you select. Claygent defaults to **Argon** f
 
 If your goal is to find people associated with companies at scale — rather than open-ended web research — **Find People** is significantly more cost-effective: the **Find Contacts at Company** action costs 0.5 credits per row on current pricing plans (1 credit per row on legacy plans), versus 3 credits per row for Argon-based Claygent. Use Claygent when you need judgment-based research (summarizing company news, scoring leads, writing personalized outreach). Use Find People when you need structured contact lookups at scale.
 
-When selecting a third-party model (Claude, GPT-4o, Gemini, etc.) in Claygent, the **Account** dropdown in your column settings controls how billing works. Selecting the default **Clay-managed account** means Clay's API key handles the request, and the run deducts **Data Credits** at the variable rate for that model — the `~` prefix on the cost estimate shown in the column sidebar (for example, `~4.8`) indicates a variable charge that is reconciled after each row completes. To avoid spending Data Credits on AI, click **Account** → **+ Add account** to connect your own Anthropic, OpenAI, or Gemini API key; with your own key, each Claygent row counts as **1 Action** but no Data Credits are charged. For a full model-by-model credit reference, see [How AI is priced](ai-pricing.md).
+When selecting a third-party model (Claude, GPT-4o, Gemini, etc.) in Claygent, the **Account** dropdown in your column settings or workflow node configuration controls how billing works. Selecting the default **Clay-managed account** means Clay's API key handles the request, and the run deducts **Data Credits** at the variable rate for that model — the `~` prefix on the cost estimate shown in the column sidebar (for example, `~4.8`) indicates a variable charge that is reconciled after each row completes. To avoid spending Data Credits on AI, click **Account** → **+ Add account** to connect your own Anthropic, OpenAI, or Gemini API key; with your own key, each Claygent row counts as **1 Action** but no Data Credits are charged. For a full model-by-model credit reference, see [How AI is priced](ai-pricing.md).
 
 ### Can I test different models without changing my prompt?
 
@@ -302,6 +314,19 @@ There are two ways to resolve this:
 -   **Fill in the missing data.** Ensure the referenced column has a value for every row you want to run.
 -   **Make the input optional.** Click the column name → **Edit column**, scroll to the **#INPUTS#** section, and toggle off the **Required to run** switch next to each input that doesn't always have data. When an input is optional, the cell will still run for rows where that field is blank — the empty value is simply omitted from the prompt for that row.
 
+### How do I get individual Claygent result fields into their own table columns?
+
+After your Claygent column has run, you can extract any field from its results into a dedicated table column directly from the cell details panel:
+
+1.  Click any cell in the Claygent column that has results to open the **cell details** panel on the right.
+2.  Each field the agent returned — such as Email, URL, Phone, City, or any field from your output schema — appears listed with its value for that row.
+3.  Next to the field you want, click **Add [field name] as new column** → **Create column**. Clay creates a new table column populated with that field's value across all rows.
+4.  To route the field's values into a column you've already created, click **Map to an existing column** and select it from the list.
+
+Repeat for each field you want to extract into its own column.
+
+**Tip:** If you know which fields you need before running, define them as named output fields in the column settings (click the column name → **Edit column** → **Outputs** section). Named fields appear in the cell details panel and can also be referenced by downstream formula columns using the `/` property picker.
+
 ### How do I chain Claygents when the first one sometimes returns empty values for certain output fields?
 
 When chaining Claygent A → Claygent B, whether B runs for a given row is controlled by B's input variable settings — not by how A's output schema defines its fields.
@@ -342,11 +367,11 @@ These are two distinct configuration errors that can appear on a Claygent column
 
 -   **"Failed to parse formula for 'prompt' with error: {offset:XX}"** — The prompt field contains an invalid formula. Clay stores prompt text as a formula so that `{{column}}` references work, and if the formula has a syntax error at the character position shown by `offset`, the column cannot run. Common causes: a stray backtick (`` ` ``), an unmatched brace or quote, or characters introduced when copying text from a source that encodes content as HTML — for example, pasting from a chat window or email client that converts `<`, `>`, and `&` into HTML entities (`&lt;`, `&gt;`, `&amp;`).
 
--   **"Unable to parse the output schema for the column"** — The JSON output schema cannot be parsed. Common causes: HTML entities in the schema (`&lt;` instead of `<`, `&amp;` instead of `&`, etc.), a trailing comma after the last property in a JSON object or array, or other invalid JSON syntax.
+-   **"Unable to parse the output schema for the column"** — The JSON output schema cannot be parsed. Common causes: HTML entities in the schema (`&lt;` instead of `<`, `&amp;` instead of `&`, etc.), a trailing comma after the last property in a JSON object or array, a flat description map (`{"fieldName": "description text"}`) used instead of a proper JSON Schema (the schema must have `"type": "object"` at the root and a `"properties"` map — never use a plain `{"key": "value description"}` format), a root-level `"type": "array"` (the root schema must always be `"type": "object"`), enum values written as a pipe-separated string (`"enum": "Yes | No | Unknown"`) instead of a JSON array (`"enum": ["Yes", "No", "Unknown"]`), or other invalid JSON syntax.
 
 **To fix the prompt formula error:** Open the column settings (**click the column name → Edit column**) and inspect the Prompt field. Remove any stray backticks, unmatched braces or quotes, or HTML entities. If you copied the prompt from a chat tool or email, paste it into a plain-text editor first to strip hidden formatting before pasting into Clay.
 
-**To fix the output schema error:** Open the column settings, go to the **Define column outputs** section, and inspect the JSON schema. Replace any HTML entities with their plain equivalents (`&lt;` → `<`, `&gt;` → `>`, `&amp;` → `&`), and remove any trailing commas. Alternatively, click **Generate from prompt** to have Clay regenerate a valid schema automatically.
+**To fix the output schema error:** Open the column settings, go to the **Define column outputs** section, and inspect the JSON schema. Replace any HTML entities with their plain equivalents (`&lt;` → `<`, `&gt;` → `>`, `&amp;` → `&`), and remove any trailing commas. If you used a flat description map, rewrite it as a proper JSON Schema — each field needs at least `"type": "string"` (or another JSON Schema type), and any field constrained to a fixed set of values uses `"enum"` as an array of strings. If you wrote `"enum"` as a pipe-separated string, convert it to a JSON array. Alternatively, click **Generate from prompt** to have Clay regenerate a valid schema automatically.
 
 **If the column remains broken after these fixes:** Copy your corrected prompt and schema, then recreate the column from scratch — a column with persistent settings errors cannot always be repaired in place. See the FAQ entry above, **My Claygent columns are showing an error or returning blank results**, for step-by-step instructions on recreating a column.
 
@@ -356,13 +381,13 @@ Yes, this is expected. When a Claygent variable is connected to an object value 
 
 To inspect exactly what data was passed to your agent, deploy your Claygent to a table, run it, then click the cell to open the **cell details panel** and examine the full input and output values there.
 
-### Why are my Claygent cells highlighted red even though my confidence value is high?
+### Why are my Claygent cells showing the wrong confidence color even though my confidence value is high?
 
 Clay uses a built-in `confidence` field — with text values `low`, `medium`, `high`, and `very high` — to drive the red/yellow/green color indicator on each response cell. Clay automatically adds this field to your output schema, but only when your schema does not already define a field named `confidence`.
 
-If your JSON output schema includes a field named `confidence` with non-matching values (for example, a numeric score like `0.98` or a boolean), Clay uses that field for the color indicator. Because the value doesn't match the expected text enum, every cell shows red regardless of how accurate the response is. The output itself is still correct — the red is purely cosmetic.
+If your JSON output schema includes a field named `confidence` with numeric values (for example, a score like `0.98`), Clay's normalizer maps those numbers to the text enum through thresholds — so `0.98` is mapped to `very high`, not to whatever color your own scoring scale intends. This can produce indicator colors that don't match your expectations.
 
-To fix it, open your column's output schema and rename the field — for example, from `confidence` to `confidence_score`. Clay will then automatically add its own `confidence` field with the correct enum values, and the color indicator will work as expected.
+To fix this, rename your custom field in the JSON schema to something like `confidence_score`. Then rerun the column. Clay will inject its own `confidence` field, and the color indicator will use the correct text-enum values.
 
 ### Can Claygent detect tracking pixels or marketing technologies on a website?
 

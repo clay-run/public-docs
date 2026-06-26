@@ -1,6 +1,5 @@
 ---
 title: HitHorizons integration overview
-source_url: https://university.clay.com/docs/hithorizons-integration-overview
 description: Europe-focused company data provider.
 last_synced: 2026-04-26T01:40:08.037Z
 ---

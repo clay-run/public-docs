@@ -1,6 +1,5 @@
 ---
 title: Signals in Clay
-source_url: https://university.clay.com/docs/signals
 description: Learn about Signals, a way to monitor changes to your contacts like
   promotions, job changes, or new hires.
 last_synced: 2026-04-26T01:40:40.844Z
@@ -40,9 +39,9 @@ To start a signal, you'll **need a table with** companies or contacts you want t
 ### Edit an existing Signal
 
 1.  Click on the column title with the Signal.
-    -   It'll have a `📡` icon and usually be called `Event`.
-2.  Click `Edit column`.
-3.  Modify any settings as needed and click `Save changes`.
+    -   It'll have a `📡` icon and is named `Event: [Signal Type]` by default (e.g., `Event: Job change`, `Event: New hire`).
+2.  Click `Edit signal`.
+3.  Modify any settings as needed and click `Save and re-run` (or `Save and run` if the signal has never run before, `Save only` for scheduled signals, or `Save` for non-scheduled signals).
 
 ## FAQs
 
@@ -54,7 +53,7 @@ Currently, signals can only be adjusted by frequency, not set to run at specific
 
 No. Signals run on a fixed schedule — Daily, Weekly, Biweekly, Monthly, or Quarterly — not when new rows arrive in your table. If new companies or contacts are added via a webhook or other source, the Signal will pick them up on the **next scheduled run**, not immediately.
 
-To trigger the Signal right away after new rows arrive, open the signal column header → **Edit column** → click **Save and run** (or **Save and re-run** if the signal has run before).
+To trigger the Signal right away after new rows arrive, open the signal column header → **Edit signal** → click **Save and run** (or **Save and re-run** if the signal has run before).
 
 ### How do I run a signal on a filtered or growing list of companies from another table?
 
@@ -76,6 +75,31 @@ Most Signals are available on any paid plan.
 ### Why is my Signal returning 0 results?
 
 Signals require a connected data source to run against — either a source table containing the companies or contacts you want to monitor, or an audience segment. Without a linked source table or audience segment (or if the linked table is empty or has been deleted), the Signal has nothing to check and will return 0 results. Confirm that your Signal is connected to an active Clay table with valid company identifiers (domain or LinkedIn URL) or contact LinkedIn URLs, or to a populated audience segment.
+
+### How do I update or replace my master source table without breaking my signal workflows?
+
+Signal columns reference their source table by its internal ID, not its name. Renaming a table won't break any connected signals — but replacing it with a different table will disconnect them unless you update each signal to point to the new one.
+
+**Option 1 (recommended) — Update the rows inside the same table:**
+
+The safest approach is to replace the data inside your existing source table so its ID stays the same:
+
+1.  In your existing master source table, delete the old rows.
+2.  Re-import your updated account list into the same table (via CSV, CRM sync, or any source).
+3.  In each signal table, re-run the signal column (click the 📡 column header → run) so it picks up the new account list on its next cycle.
+
+Because the table ID hasn't changed, all downstream signal workflows remain connected automatically.
+
+**Option 2 — Redirect each signal to a new table:**
+
+If you want to use a different table as your master going forward:
+
+1.  In each signal table, click the signal column header (the 📡 icon, named `Event: [Signal Type]` by default).
+2.  Click **Edit signal**.
+3.  Update the source table selection to point to your new master table.
+4.  Click **Save and re-run** (or **Save and run** if the signal has never run before, **Save only** for scheduled signals, or **Save** for non-scheduled signals), then re-run the signal column.
+
+Repeat for each signal table that referenced the old master.
 
 ### How do I extend my signal to cover more companies?
 
@@ -113,7 +137,7 @@ If you have a table of company domains or names and want to pull active job open
 **To set this up:**
 
 1.  In your company table, click `Add enrichment` and search for `Find Active Job Openings`.
-2.  Map your company domain to the input field. You can optionally filter by job title keywords, location, or days since posted.
+2.  Map your company domain to the input field. You can optionally filter by job title keywords, job description keywords, location, or days since posted.
 3.  Enable **Auto-run** on the table (click the ⛭ icon → **Run Settings**) so the enrichment fires automatically whenever you add a new company row.
 4.  To keep job openings refreshed over time, open Table Settings (⛭) → **Run Settings** → toggle on **Re-run columns on a schedule** → select the Find Active Job Openings column → set the frequency to Daily (or as often as you need fresh results).
 
@@ -152,8 +176,8 @@ Check the **Limit results** setting inside the **Filter results** section of you
 
 To check or adjust it:
 
-1.  Click the signal column header (the `📡` icon, usually named `Event`).
-2.  Click **Edit column**.
+1.  Click the signal column header (the `📡` icon, named `Event: [Signal Type]` by default).
+2.  Click **Edit signal**.
 3.  Expand the **Filter results** section and review the **Limit results** field. Remove the value or enter a higher number.
 4.  Click **Save and re-run**.
 
@@ -169,8 +193,8 @@ Credits for signal monitoring are charged based on the number of contacts or row
 
 To stop a signal from consuming credits, you must pause or disable it directly from the signal's column settings — not by pausing the table it populates:
 
-1.  Click the signal column header (the `📡` icon, usually named `Event`).
-2.  Click `Edit column`.
+1.  Click the signal column header (the `📡` icon, named `Event: [Signal Type]` by default).
+2.  Click `Edit signal`.
 3.  Disable or pause the signal, then save.
 
 You can review all active signals and their individual credit spend in the `Signals` tab of the [credit usage dashboard](/docs/credit-usage) (`Settings` → `Usage`).
@@ -194,3 +218,21 @@ Signals track events at the **company level** — each fundraising round, new hi
 4.  Map the signal columns you want to surface (e.g., event type, funding amount, news headline) as output fields.
 
 This lets you see the latest signal event for each company directly in your contacts table without mixing signal event rows into your contacts.
+
+### Why did my brand mentions signal stop working?
+
+The social network brand mentions signal — along with related social listening actions — was discontinued in early March 2026. Clay's data partner for these actions updated their terms of use, and to remain aligned with their guidelines, Clay discontinued this feature.
+
+If you had a brand mentions signal set up before the deprecation, it will show an error when run and cannot be re-enabled.
+
+**Alternatives for monitoring brand mentions:**
+
+-   **Claygent** — Use Clay's AI web scraper to monitor brand mentions from publicly available sources on the web.
+-   **Google News alerts** — Integrate through Clay to track brand mentions across news and web content.
+-   **Third-party social listening tools** — Many social listening platforms can connect to Clay through API integrations, letting you route mention data into your Clay tables.
+
+### Why did my job description keyword search return unexpected results?
+
+Job description keywords use phrase matching — your search term must appear as a contiguous sequence of words in the job description. Hyphens in your search terms are treated as word separators, so "K-12" and "K 12" produce the same search (both look for the phrase "k 12" in the description). If you want to search for a compound term as a single unbroken token, enter it without separators (for example, use "k12" instead of "K-12").
+
+For filtering that keywords alone cannot capture, run **Find Active Job Openings** first and then add a **Use AI** column to verify which results match your actual criteria.

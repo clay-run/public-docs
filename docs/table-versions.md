@@ -1,6 +1,5 @@
 ---
 title: Table versions
-source_url: https://university.clay.com/docs/table-versions
 description: Table versioning lets you track structural changes to your Clay
   tables over time and restore previous configurations when needed.
 last_synced: 2026-04-26T01:40:46.704Z
@@ -24,6 +23,13 @@ Table versions capture your table's **structure and configuration**, including:
 **Note:** Cell value data is not versioned. Table Versioning preserves your table's structure and configuration—not the actual data within rows. If row-level data is overwritten or deleted, it cannot be recovered through versioning.
 
 ## Viewing your version history
+
+The `History` panel (bottom-right of your table) contains two options:
+
+-   **Change log** — an audit trail showing individual changes made to your table (who changed what, and when). This is view-only and cannot be used to restore your table.
+-   **All configuration versions** — restorable snapshots of your table's structure and configuration.
+
+To browse and restore versions:
 
 1.  Click `History` in the bottom-right corner of your table.
 2.  Select `All configuration versions`.

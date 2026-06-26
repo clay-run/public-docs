@@ -1,6 +1,5 @@
 ---
 title: Using Clay in Claude
-source_url: https://university.clay.com/docs/using-clay-in-claude
 description: Find people, enrich contacts, and draft personalized outreach—all
   within a Claude conversation
 last_synced: 2026-04-26T01:40:52.929Z
@@ -17,7 +16,6 @@ The Clay connector in Claude lets you find people, enrich contacts, and draft pe
 1.  Go to the [Claude Connectors page](https://claude.com/connectors/clay) to connect Clay to your account. _Note: If you're on a Claude Enterprise plan, an admin must add the Clay connector before you can use it._
     -   If you have an existing Clay account, you'll connect immediately. If you're new to Clay, an account will be created for you during setup.
     -   If your admin has invited you to a team workspace, accept the invite email first before connecting here — connecting before accepting the invite will create a personal workspace instead of routing you into the team workspace.
-    -   You'll receive 500 free Clay credits when you connect for the first time.
 2.  In any Claude conversation, ask Claude to find people or companies—the Clay connector will activate automatically.
 3.  Ask Claude to find people, research accounts, or enrich contacts using natural language. For example:
     -   "Find VP- and Director-level RevOps leaders at \[Company\] who started in the last 9 months."
@@ -110,20 +108,19 @@ Company search is not currently supported. However, you can research companies b
 
 **Can I query my Audiences data or run analytical queries like "group by seller"?**
 
-If your workspace has Clay Audiences enabled (currently in beta for Enterprise customers), you can use natural language to filter and look up accounts — for example, "Show me my open-pipeline accounts in the northeast" or "Tell me about [Account]." Results are scoped to accounts you own in Salesforce by default; your admin can allow access to all accounts from [MCP settings](https://university.clay.com/docs/mcp-settings). If your queries return no Audiences results, ask your admin to verify the `Allow querying all accounts` toggle is enabled in MCP settings — when it's off and your Salesforce ownership isn't mapped, queries return empty instead of an error.
+If your workspace has Clay Audiences enabled (available on Growth and Enterprise plans), you can use natural language to filter and look up accounts — for example, "Show me my open-pipeline accounts in the northeast" or "Tell me about [Account]." Results are scoped to accounts you own in Salesforce by default; your admin can allow access to all accounts from [MCP settings](https://university.clay.com/docs/mcp-settings). If you see an error that contact queries aren't available in your workspace, ask your admin to disable `Restrict account querying by Salesforce owner` on the `MCP` page in the workspace sidebar — when this toggle is on, contact queries return an error. Note that the MCP page is only visible to workspace admins. If the toggle is off but queries return no results, ensure `Sync user IDs from audiences` is on and your Salesforce account ownership is correctly mapped.
 
 The integration is designed for targeted, individual account research — not bulk data exports or analytical operations. SQL-style queries such as grouping accounts by owner or aggregating pipeline by territory are not supported. For complex analysis across your full Audiences dataset, use the Clay platform directly at [app.clay.com](http://app.clay.com).
 
 **How many credits do I get?**
 
-All users receive 500 credits when connecting to Clay in Claude for the first time. If you reach your limit, you can continue searching for people without enrichments, or upgrade to a paid plan for full functionality.
+Credits for Clay in Claude draw from your standard Clay workspace credit balance — there is no separate credit pool for Claude usage. If you run out of credits, you can continue searching for people without enrichments, or upgrade to a paid plan for full functionality.
 
 **Can the app be used for free?**
 
-All users receive 500 credits to test this feature. When you reach the credit limit, you can:
+Clay in Claude draws from your standard Clay workspace credit balance — there is no separate trial credit pool for Claude. When you run out of credits, you can:
 
 -   Continue running people searches in Claude for free, but without enrichments like email.
--   Continue building in your trial account directly in Clay, with full functionality and 2,000 more credits.
 -   Upgrade to a paid plan.
 
 **Do I need a paid Claude plan?**
@@ -132,11 +129,11 @@ No.
 
 **Will this use credits from my account?**
 
-All users receive 500 bonus credits to test the app. After that, credits will be drawn from your paid plan.
+Yes. Credits are drawn directly from your Clay workspace credit balance — there is no separate credit pool for Claude usage.
 
 **How does pricing work?**
 
-Credit pricing matches standard Clay plans. Claude serves as an alternative interface for using your Clay credits. You'll receive 500 free credits when you connect Clay to Claude (whether you're signing up for the first time or connecting an existing account). After that, credits will be drawn from your Clay plan as you use enrichments and data sources.
+Credit pricing matches standard Clay plans. Claude serves as an alternative interface for using your Clay credits — usage draws from the same balance as the Clay platform.
 
 **Do I need to invoke Clay manually, or will Claude know to use it?**
 
@@ -149,6 +146,16 @@ Yes. Ask _"What functions do you have?"_ or _"What workflows has RevOps built fo
 **Does Clay work with Claude Code?**
 
 Yes. Once you connect Clay via Claude's connector system at `claude.com/connectors/clay`, it will also work in Claude Code.
+
+**Troubleshooting: "SDK auth failed: Client name must not impersonate a known platform"**
+
+If you see this error, Clay was added via CLI (e.g., `claude mcp add https://api.clay.com/v3/mcp`) instead of through the Claude desktop app. Clay's MCP does not support CLI installation — the OAuth flow only accepts connections from the official connector.
+
+To fix:
+
+1.  Remove the CLI-added server: `claude mcp remove clay`
+2.  Open the Claude desktop app, go to Connectors, and add Clay — completing the authentication flow in your browser. (Or go directly to [claude.com/connectors/clay](https://claude.com/connectors/clay).)
+3.  Once connected through the desktop app, Claude Code can call the Clay MCP.
 
 **When I run an action in Claude, does it count as a Clay action?**
 
@@ -172,6 +179,18 @@ To move data from a Claude conversation into your Clay tables:
 -   **Functions**: If your ops team has configured a Clay workflow that writes to a specific table and enabled it for MCP, you can invoke it from Claude by name. (See the [Running functions](#running-functions) section above.)
 
 For batch workflows like running an email-finder waterfall on a list of companies, work directly in Clay at [app.clay.com](http://app.clay.com).
+
+**Can I push enriched contacts directly to Salesforce or another CRM from Claude?**
+
+Not directly. Clay in Claude is designed for finding contacts, enriching them, and drafting outreach — it does not include built-in tools to write records to Salesforce or other CRMs from within the Claude interface.
+
+To sync enriched data to Salesforce, use this workflow:
+
+1.  Use Claude to find and enrich your prospects.
+2.  Click **"Open in Clay"** to bring that data into your Clay workspace.
+3.  Use Clay's **Create Record**, **Update Record**, or **Upsert Record** Salesforce actions to sync the data to your CRM.
+
+For more advanced CRM workflows, work directly in Clay at [app.clay.com](http://app.clay.com).
 
 **How does my admin control my credit limit?**
 

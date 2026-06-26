@@ -1,6 +1,5 @@
 ---
 title: Writing AI prompts in Clay
-source_url: https://university.clay.com/docs/ai-metaprompter-guide
 description: Create high-quality AI prompts in Clay so you can easily accomplish your goals.
 last_synced: 2026-04-26T01:39:39.607Z
 ---

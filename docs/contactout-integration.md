@@ -1,6 +1,5 @@
 ---
 title: ContactOut integration
-source_url: https://university.clay.com/docs/contactout-integration
 description: Find accurate professional emails and phone numbers.
 last_synced: 2026-04-27T18:09:39.654Z
 ---

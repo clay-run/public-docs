@@ -1,6 +1,5 @@
 ---
 title: Ironclad integration
-source_url: https://university.clay.com/docs/ironclad-integration
 description: Retrieve and utilize detailed workflow information, automatically
   populate data into internal systems, and send structured contract updates.
 last_synced: 2026-04-26T01:40:12.276Z

@@ -1,6 +1,5 @@
 ---
 title: Champify integration
-source_url: https://university.clay.com/docs/champify-integration
 description: Find potential sales champions.
 last_synced: 2026-04-27T18:09:33.390Z
 ---

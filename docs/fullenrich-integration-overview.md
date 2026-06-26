@@ -1,6 +1,5 @@
 ---
 title: Fullenrich integration
-source_url: https://university.clay.com/docs/fullenrich-integration-overview
 description: B2B contact enrichment for emails and phone numbers.
 last_synced: 2026-04-26T01:40:01.449Z
 ---

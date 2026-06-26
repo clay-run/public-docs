@@ -1,6 +1,5 @@
 ---
 title: Google News integration
-source_url: https://university.clay.com/docs/google-news-integration-overview
 description: News aggregator delivering current events and information.
 last_synced: 2026-04-26T01:40:03.783Z
 ---

@@ -1,6 +1,5 @@
 ---
 title: Instagram integration
-source_url: https://university.clay.com/docs/instagram-integration
 description: Easily gather Instagram data to use in your Clay tables.
 last_synced: 2026-04-26T01:40:11.309Z
 ---

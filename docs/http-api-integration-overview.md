@@ -1,6 +1,5 @@
 ---
 title: HTTP API
-source_url: https://university.clay.com/docs/http-api-integration-overview
 description: Facilitate seamless integration and connectivity with any APIs.
 last_synced: 2026-04-26T01:40:08.701Z
 ---
@@ -45,7 +44,7 @@ Use this when you want to import data from an API to create a new table.
 -   ✅ Import datasets from external APIs.
 -   ✅ Build lists from third-party services.
 -   ✅ Start workflows with external data.
--   ⚠️ Note: No pagination support currently.
+-   ✅ Pagination support for up to 50,000 rows.
 
 👉 Jump to source setup (see below).
 
@@ -279,10 +278,10 @@ In token mode, every column chip inserted via the `/` picker is automatically JS
 
 Each field in the body editor has a small toggle to its left. This toggle controls whether that field **must have a value for the row to run**:
 
--   **Toggle ON (enabled):** Clay requires a value in the referenced column before running. If the column is empty or null for a row, that cell shows **"Some inputs missing"** and skips the row.
--   **Toggle OFF (optional):** The field is excluded from the request body for that row. Use this for columns that aren't populated for every row (for example, optional metadata fields like `first_name` when only `email` is required by the API).
+-   **Toggle ON (enabled):** Clay requires a value in the referenced column before running. If the column is empty or null for a row, the action is blocked and the cell shows **"Some inputs missing"**.
+-   **Toggle OFF (optional):** The action runs for that row even when the column is empty — Clay bypasses the blank-column validation check. Without the global **Remove empty values** toggle (Step 8), the empty field is still sent in the payload as `null`; enable **Remove empty values** as well to strip empty fields from the payload entirely. Use this for any body field that isn't always populated — whether the API considers it optional (for example, `first_name`) or your data simply doesn't have a value for that field on every row (for example, `jobs_2` and `jobs_3` when not every record has multiple jobs). If several body fields may be empty on different rows, turn the toggle off for each of those fields individually.
 
-**Note:** This is separate from the global **Remove empty values** toggle (Step 8 below). That toggle strips null values from the outgoing payload at runtime — it does **not** prevent "Some inputs missing" errors, which fire before the action runs when a required token is blank.
+**Note:** The global **Remove empty values** toggle (Step 8) strips null values from the outgoing payload at runtime — it does **not** prevent "Some inputs missing" errors, which fire before the action runs when a required token is blank. Marking an input as **Optional** in the Column Mapping section also does not change per-field body toggle states — each body field's toggle must be turned off separately in the body editor.
 
 ### Step 5: Header fields
 
@@ -385,7 +384,7 @@ When **Retry on failure** is enabled, three optional sub-settings appear on the 
 
 -   **Max retries** — number of retry attempts before the row errors out (1–5; default 1).
 -   **Status codes to retry** — comma-separated list of 4XX/5XX codes to retry. Use `-` for ranges (e.g., `429`, `500-503`). When provided, overrides the defaults.
--   **Error codes to retry** — comma-separated list of network error codes (e.g., `ECONNRESET`, `ETIMEDOUT`). When provided, overrides the defaults.
+-   **Error codes to retry** — comma-separated list of Node.js network-level error code strings (e.g., `ECONNRESET`, `ETIMEDOUT`, `ECONNREFUSED`). When provided, overrides the defaults. **Note:** This field only accepts Node.js error code strings — not numeric HTTP status codes. To retry on a specific HTTP status code (such as `429`), add it to **Status codes to retry** instead.
 
 To disable all retry logic for a column, toggle **Retry on failure** OFF.
 
@@ -484,6 +483,7 @@ Most APIs nest their data within a specific field rather than returning an array
 
 **Step 5: Configure optional settings**
 
+-   **Pagination**: Automatically fetch multiple pages of results up to 50,000 rows. See [Pagination](#pagination) below.
 -   **Use static IP**: Route requests through Clay's fixed egress IPs for firewall allow-listing. See [IP allowlisting](#ip-allowlisting) below.
 -   **Remove empty values**: Exclude null or empty fields
 -   **Follow redirects**: Set max redirects if needed
@@ -496,12 +496,28 @@ Most APIs nest their data within a specific field rather than returning an array
 2.  Map the API response fields to table columns.
 3.  Import the data to create your new table.
 
+### Pagination
+
+HTTP API as source supports automatic pagination for up to 50,000 rows. To enable it, open the **Pagination** dropdown in the source configuration and choose a mode:
+
+-   **Update query parameter(s)**: Injects parameters into the query string on each subsequent request. Use the reserved tokens `$offset` (total records fetched so far), `$page` (1-based page number), or `$pageZeroIndex` (0-based page number) as values — or reference a field from the previous response using dot notation (e.g. `meta.next_cursor`).
+-   **Update body parameter(s)**: Same as above, but merges parameters into the request body instead of the query string.
+-   **Response contains next URL**: Reads a full URL from the response body (e.g. at path `links.next`) and uses it as the endpoint for the next request. Stops when that path is empty or matches the current URL.
+
+**Additional stop conditions (optional):**
+
+-   **Stop when this path is empty**: Enter a dot-path into the response (e.g. `has_more`). Pagination stops when the value at that path is falsy.
+-   **Total pages path**: Enter a dot-path that resolves to the total page count (e.g. `pagination.totalPages`). Pagination stops once that many pages have been fetched.
+
+Pagination always stops at 50,000 rows regardless of other settings.
+
+**Availability:** HTTP API as source (including pagination) is available on Explorer and above plans.
+
 ### Limitations
 
 **⚠️ Important considerations:**
 
 -   **Array output required**: Make sure the results path points to an array in the API response.
--   **No pagination support**: Currently limited to single API calls. If your API returns paginated results, you'll only get the first page (typically 10-100 records).
 -   **Results path matters**: Take time to examine your API response structure. Some APIs nest data several levels deep (e.g., `data.results.items`).
 -   **Account security**: Your API credentials are stored securely and won't be exposed in the table configuration.
 
@@ -619,6 +635,28 @@ This error means the API credentials in your HTTP API action are no longer valid
 
 **Tip:** Saving credentials in a header account (`Settings → Connections`) is the easiest way to manage token rotation — when a token expires, you only need to update it in one place instead of editing every column individually.
 
+### "Clay received a 429 error from the API" (Too Many Requests)
+
+A 429 error means the external API is rejecting requests because Clay is sending them faster than the API's rate limit allows. To fix this:
+
+1.  Check the external API's documentation for its rate limit — for example, "10 requests per second" or "100 requests per minute."
+2.  Open your HTTP API column settings and go to the **Configure** tab.
+3.  Scroll to the **Custom rate limit** section and set:
+    -   **Request Limit** — the number of requests allowed in the time window (e.g., `10`).
+    -   **Duration (in ms)** — the length of that window in milliseconds (e.g., `1000` for 1 second, `60000` for 1 minute).
+4.  Save and re-run. Clay throttles requests automatically to stay within this limit.
+
+**Example — 10 requests per second:**
+
+```javascript
+Request Limit: 10
+Duration (ms): 1000
+```
+
+See [Step 7: Custom rate limit](#step-7-custom-rate-limit) for full field details and constraints.
+
+**Tip:** Clay also retries 429 responses once by default (see [Step 9: Retry on failure](#step-9-retry-on-failure)). Configuring a custom rate limit prevents 429s from occurring in the first place, rather than just retrying after they happen.
+
 ### "Body parse error" or in-editor JSON syntax error
 
 This error indicates a formatting issue in your JSON body. It can appear in two forms:
@@ -664,19 +702,19 @@ If you used a Clay formula (e.g., `Concatenate()`, `If()`) to build the JSON bod
 
 ### "Some inputs missing" error
 
-This error means a field in your request body has its per-field toggle **ON** (required to run), but the referenced column has no value for that row.
+This error appears in the cell when a body field's per-field toggle is **ON** (required to run) but the referenced column has no value for that row. Expanding the cell detail shows the more specific message: **"Body has the error(s): [field name] is blank"**.
 
 **How to fix:**
 
 **Option 1 — Turn off the per-field toggle for that field**
 
-In the body editor, find the field causing the error and click the small toggle to its left to switch it from ON to OFF. Clay will exclude that field from the request for rows where the column is empty, and the action will run on those rows.
+In the body editor, find the field causing the error and click the small toggle to its left to switch it from ON to OFF. The action will now run for rows where that column is empty. Without the **Remove empty values** toggle, the empty field is still sent as `null` in the payload — enable **Remove empty values** (Step 8) as well if you want empty fields omitted from the payload entirely. If multiple body fields can be empty on different rows — for example, `jobs_1`, `jobs_2`, `jobs_3` where not every record has three jobs — turn off the per-field toggle for **each** of those fields individually (and enable Remove empty values to omit empty entries from the payload).
 
 **Option 2 — Add a conditional run**
 
 Under **Advanced options → Conditional run**, add a formula that only runs the action when the required column has a value — for example, `!!{{Email}}` to skip rows where the email column is empty.
 
-**Note:** Turning on the global **Remove empty values** toggle does **not** fix this error. "Remove empty values" strips null values from the outgoing payload at execution time, but "Some inputs missing" fires before execution when a required body field's column is blank.
+**Note:** Turning on the global **Remove empty values** toggle does **not** fix this error on its own. "Remove empty values" strips null values from the outgoing payload at execution time, but "Some inputs missing" fires before execution when a required body field's column is blank. You need to turn off the per-field toggle first (so the action runs), then optionally enable Remove empty values (so the empty field is omitted from the payload rather than sent as null).
 
 ### Clicking Run does nothing — no loading, no error, no cell update
 
@@ -765,7 +803,7 @@ When copying from API documentation, paste your code into a plain text editor fi
 
 ### Can I use HTTP API with pagination?
 
-Currently, HTTP API as source does not support pagination. The import will retrieve only the data from a single API response. Pagination support may be added based on customer demand.
+Yes. HTTP API as source supports automatic pagination for up to 50,000 rows. Three modes are available: update query parameters on each request (useful for offset/limit or page-based APIs), update body parameters, or follow a next URL returned in the response (useful for cursor-based APIs). See [Pagination](#pagination) for full setup details.
 
 ### Can I use HTTP API to push enriched data to AWS (e.g., S3 via API Gateway)?
 

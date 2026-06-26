@@ -1,6 +1,5 @@
 ---
 title: Clay Ads
-source_url: https://university.clay.com/docs/clay-ads
 description: Build and sync contact and account lists to LinkedIn, Meta, and Google Ads for
   precise ad targeting.
 last_synced: 2026-05-11T17:47:40.000Z
@@ -165,6 +164,14 @@ After sending your audience to LinkedIn or Meta, it will be created within **48 
 ### **Why should I use personal emails instead of work emails?**
 
 Personal emails are essential for better match rates because most users sign up for LinkedIn and Meta with personal email addresses rather than work emails. Match rates depend on your audience data quality. To maximize results, use the `Hashed Email for Ads` waterfall to find contact email addresses.
+
+### **How does the `Hashed Email for Ads` waterfall work?**
+
+The `Hashed Email for Ads` waterfall uses professional profile URL as the primary input (some providers also accept work email or other identifiers) to find and return a SHA-256 hashed personal email for each contact. The input is not what gets hashed — it is used only to identify the person and look up their personal email, which is then hashed.
+
+If the waterfall prompts for work email as input, that is normal. One or more providers in the waterfall will use the work email to look up the contact and retrieve their personal email for hashing. Providing work email as input does not cause the work email itself to be hashed, and your match rates are not affected.
+
+The waterfall queries multiple providers and returns a **single hashed email** per contact from the first provider that finds a result.
 
 ### **Do audiences automatically update?**
 

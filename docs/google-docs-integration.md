@@ -1,6 +1,5 @@
 ---
 title: Google Docs integration
-source_url: https://university.clay.com/docs/google-docs-integration
 description: Create or update your docs from Clay.
 last_synced: 2026-04-26T01:40:03.437Z
 ---

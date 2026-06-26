@@ -1,6 +1,5 @@
 ---
 title: Madkudu integration overview
-source_url: https://university.clay.com/docs/madkudu-integration-overview
 description: Predictive intelligence platform boosting sales and marketing ROI via scoring.
 last_synced: 2026-04-26T01:40:18.849Z
 ---

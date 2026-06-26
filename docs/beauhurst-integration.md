@@ -1,6 +1,5 @@
 ---
 title: Beauhurst integration
-source_url: https://university.clay.com/docs/beauhurst-integration
 description: Beauhurst is a private company intelligence platform covering every
   private company in the UK and Germany. Within Clay, you can use Beauhurst to
   enrich…

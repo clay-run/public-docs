@@ -1,6 +1,5 @@
 ---
 title: Brandfetch integration
-source_url: https://university.clay.com/docs/brandfetch-integration-overview
 description: Access brand data for next-level B2B personalization.
 last_synced: 2026-04-27T18:09:23.800Z
 ---
@@ -36,8 +35,8 @@ Get company logo, colors, social media, and company data.
 -   **Description**: A short overview or tagline describing the company.
 -   **Long Description**: An extended description providing detailed information about the company.
 -   **Links**: A collection of social media or other relevant links associated with the company.
--   **Link Name**: The name or platform of the link (e.g., Twitter, Facebook).
--   **URL**: The specific URL for the link (e.g., [https://twitter.com/example](https://twitter.com/example)).
+-   **Link Name**: The name or platform of the link (e.g., Facebook, Instagram).
+-   **URL**: The specific URL for the link (e.g., [https://facebook.com/example](https://facebook.com/example)).
 -   **Theme**: The type of logo theme, such as dark or light.
 -   **Type**: Specifies the type of logo (e.g., icon, wordmark).
 -   **Formats**: Available formats for the logo files (e.g., .svg, .png).

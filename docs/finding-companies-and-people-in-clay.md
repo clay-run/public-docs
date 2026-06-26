@@ -1,6 +1,5 @@
 ---
 title: "Guide: Finding companies and people in Clay"
-source_url: https://university.clay.com/docs/finding-companies-and-people-in-clay
 description: Best practices to Clay's company and people search features, including valid LinkedIn URL formats for the company identifier and troubleshooting common errors.
 last_synced: 2026-04-26T01:39:59.452Z
 ---
@@ -38,10 +37,14 @@ If you need results that meet _either_ of two different filter combinations, set
 
 **If you have a company list**, you have two options depending on how you want to store the results:
 
--   **Find People at These Companies** — creates a separate people table with one row per contact, linked back to the company. Best when you want to run enrichments on each contact individually (work email, phone, etc.) or need to rank/filter contacts before saving. **To access:** In your company table, click **Tools** (top right) → **Sources** tab → **Find People at These Companies**. The setup panel includes full filters for job title, seniority, location, experience, and more — set your criteria, preview the results, then click **Import** to create the people table. To cap results to a specific number per company (for example, 5 contacts per company), use the **Limit per company** field in the setup panel before clicking Import — this limit is configured at search creation time and cannot be applied retroactively to an existing people table.
+-   **Find People at These Companies** — creates a separate people table with one row per contact, linked back to the company. Best when you want to run enrichments on each contact individually (work email, phone, etc.) or need to rank/filter contacts before saving. **To access:** In your company table, click **Tools** (top right) → **Import** tab → **Find People at These Companies**. The setup panel includes full filters for job title, seniority, location, experience, and more — set your criteria, preview the results, then click **Import** to create the people table. To cap results to a specific number per company (for example, 5 contacts per company), use the **Limit per company** field in the setup panel before clicking Import — this limit is configured at search creation time and cannot be applied retroactively to an existing people table.
 -   **Find Contacts at Company** (add as a column in your company table) — stores contacts as a list within each company row. Best when you want contacts to stay in your company table, or when you're adding companies one at a time and don't want a single search to re-run across all rows. Use **Send Table Data** afterward to push individual contacts to another table if needed.
 
 If you don't have a company list, use **People search as a source** — a standalone search by title or other criteria that returns a new table.
+
+**If you're receiving data row-by-row via webhook** — for example, one row per incoming job opening — and need to find people automatically for each row, include a company identifier (company name, domain, or company profile URL) in each webhook payload. With a company identifier in the row, add **Find Contacts at Company** as an enrichment column in your webhook table. This action runs independently per row, finds contacts at that specific company filtered by job title, and stores results in the cell. To route those contacts into individual rows, add a **Send Table Data** column (using **Send row for each item in a list**) to push each contact to a separate people table where you can apply enrichments and AI scoring.
+
+**Note:** The standalone **Find People source** does not run per row — it imports results at creation time and is not retriggered by new incoming webhook rows. For automated per-row people searches triggered by incoming data, use **Find Contacts at Company** (enrichment column) instead.
 
 ### Enriching your results
 
@@ -125,6 +128,8 @@ Clay gives you three ways to get contacts from a company list. Here's how they d
 When you run `Find People at These Companies` as an in-table action (rather than launching a separate people search), you can dynamically filter by location by referencing a location column from your company table. This lets you customize the location filter per company without running multiple separate searches.
 
 For example, if you have a "Headquarters Location" column in your company table, you can reference that column in the location filter when setting up the in-table action. Each company will then be searched using its specific location, rather than applying a single static location filter across all companies.
+
+**Note:** Location filtering accepts named regions, countries, and cities — distance-based filtering (for example, "within 35 miles of a location") is not available in Find People or Find Contacts at Company.
 
 ### Verify current employment before using results
 
@@ -212,6 +217,26 @@ The exclusion options above remove matched records before they enter your table.
 
 This pattern is especially useful when your suppression list changes over time (update the lookup table and the condition reflects the new list automatically), when you're pulling contacts from multiple sources and want a single suppression layer, or when you need to exclude records discovered after the initial search.
 
+### Excluding people at specific companies (e.g., current customers)
+
+The **Exclude People** filter in a Find People source only removes specific individuals by their professional profile URL — it does not accept a list of companies. To filter out everyone who works at your current customers, competitors, or other off-limits organizations, use one of two approaches.
+
+**Option 1 — Start with Find Companies and exclude customer companies upfront**
+
+If you haven't built your people table yet (or are willing to re-run the source from scratch), the cleanest approach is a two-step workflow:
+
+1.  Create a **Find Companies** table with your target criteria.
+2.  In the source configuration, expand **Exclude companies** and add your customers table, a CSV of customer domains, or a comma-separated list of domains.
+3.  From the resulting company table, click **Tools** → **Find People at These Companies**. People at excluded companies will not appear in the people table.
+
+**Option 2 — Filter an existing people table by the company the person works at**
+
+If you already have a populated Find People table and want to suppress contacts from customer companies without re-running the source:
+
+1.  Make sure your customers exist in a Clay table with at least a company domain column.
+2.  In your people table, add a **Lookup single row in other table** column. Set `Table to search` to your customers table, `Target column` to the customer domain column, and `Row value` to the person's current company domain.
+3.  Add a **view filter** showing only rows where the lookup returned no match (the lookup column is empty). Contacts at customer companies are hidden from view without being deleted — your enrichment data is preserved.
+
 ## Limitations
 
 **Geographic coverage**
@@ -260,6 +285,14 @@ This is expected behavior. The Find People source deduplicates results against r
 
 **Note:** Deduplication is based on each person's unique profile ID, not your search filters. If the data source returns genuinely new profiles matching your criteria that aren't already in the table, those will still come through on re-run. Only contacts already in the table are filtered out.
 
+### The preview count drops dramatically when editing an existing Find People source
+
+When you open and edit an existing Find People source — for example, to update your filters or add an exclusion list — the preview reflects only *net new* records: people who match your current search criteria and are not already in your table. Clay automatically excludes contacts already imported in previous runs, so the preview count can look far lower than the total universe of matching people.
+
+**Example:** If your table already contains 18,000 imported contacts and you edit the source to add an exclusion list, the preview may show only a handful of results — not because the exclusion list is over-filtering, but because nearly all contacts matching your criteria are already in your table.
+
+**To verify the full count of matching contacts** (for example, to check that your exclusion list is working correctly): create a new Find People search with the same filters and exclusion list. Since the new search starts fresh, the preview shows the complete matching universe — the total matching contacts minus your exclusion list.
+
 ### Preview count is much higher than the number of rows actually imported
 
 The **preview count** shown before you run a search reflects the total number of matching people across all companies — it does not account for the **Limit per company** setting. Once you run the search, the per-company cap is applied and the actual row count will be substantially lower.
@@ -293,7 +326,7 @@ This mismatch most commonly occurs with subsidiaries, acquired companies, and or
 
 ### Company Table Data doesn't include company enrichment data
 
-The **Company Table Data** column retrieves basic field types from the linked company row — text, number, date, URL, and formula columns. **Enrichment columns (action-type columns such as Clearbit Company, Apollo, Enrich Company, or any other Clay integration enrichment) are not included** in what Company Table Data returns.
+The **Company Table Data** column retrieves basic field types from the linked company row — text, long text, number, boolean, date, email, URL, image, JSON, and formula columns. **Enrichment columns (action-type columns such as Clearbit Company, Apollo, Enrich Company, or any other Clay integration enrichment) are not included** in what Company Table Data returns.
 
 If you enriched your company table and want that data accessible in your people table, use **Lookup single row in other table** instead:
 
@@ -306,6 +339,32 @@ If you enriched your company table and want that data accessible in your people 
 Lookup Rows returns the full company row including enrichment column outputs. To promote a specific enrichment value into a dedicated column, click into a populated cell and select a field → **Create column for it**. See [Lookup Rows](lookup-rows.md) for setup details.
 
 **Alternatively**, extract specific enrichment values into **formula columns** in your company table first (for example, a column with formula `{{Clearbit Enrichment}}?.revenue`). Formula columns are included in Company Table Data, so those extracted values will flow through to the people table when Company Table Data runs.
+
+### A new column I added to my company table isn't showing in Company Table Data
+
+When you add a new column to your company table after the people table was already created, the **Company Table Data** column in the people table doesn't automatically pick up that new column. The column fetches a fresh snapshot of each linked company row every time it runs — so the new column's data only appears after the next run.
+
+**To pull in newly added company table columns:**
+
+1.  In your people table, right-click the **Company Table Data** column header.
+2.  Select **Run column → Force run all [N] rows**.
+
+This re-runs Company Table Data for every row and retrieves the current state of the linked company row, including any columns added since the last run.
+
+**Note:** Only the following field types are returned — text, long text, number, boolean, date, email, URL, image, JSON, and formula columns. Enrichment action columns (Clearbit, Apollo, Enrich Company, etc.) are never included in Company Table Data regardless of re-running — see [Company Table Data doesn't include company enrichment data](#company-table-data-doesnt-include-company-enrichment-data) for how to access enrichment data in your people table.
+
+### "Company Table Data" shows "Unable to fetch fields for company table"
+
+If rows in your **Company Table Data** column fail with the error **"Unable to fetch fields for company table."**, the Table ID in the column configuration contains a leading `/` that prevents Clay from resolving the referenced table.
+
+In Clay input fields, typing `/` opens the column picker so you can reference a value from another column in the row. If a leading `/` appears before a table ID (for example, `/t_0abc123` instead of `t_0abc123`), Clay treats the entry as a column reference rather than a static table ID. Because no column with that name exists, the lookup can't find the table and the error fires for every row.
+
+**To fix this:**
+
+1.  Right-click the **Company Table Data** column header → **Edit column**.
+2.  In the configuration panel, locate the **Table ID** field.
+3.  Remove the leading `/` so the field contains only the bare table ID (e.g., `t_0abc123...`).
+4.  Save and re-run the affected rows.
 
 ### Getting "Invalid companies provided" error despite having a valid LinkedIn URL
 

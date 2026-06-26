@@ -1,6 +1,5 @@
 ---
 title: Creating a restricted Salesforce user
-source_url: https://university.clay.com/docs/creating-a-restricted-salesforce-user
 description: Create a restricted user with limited field-level access.
 last_synced: 2026-04-26T01:39:48.438Z
 ---

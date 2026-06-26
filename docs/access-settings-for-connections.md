@@ -1,6 +1,5 @@
 ---
 title: Access settings for connections
-source_url: https://university.clay.com/docs/access-settings-for-connections
 description: Two controls for managing connection access — restrict who can build
   with existing connections, and require approval before anyone adds a new one.
 last_synced: 2026-05-20T19:20:54.410Z
@@ -10,7 +9,7 @@ last_synced: 2026-05-20T19:20:54.410Z
 
 Workspace admins have two ways to control connection access, both managed from `Settings` → `Connections`.
 
-**Note:** This feature is currently in beta for Enterprise customers.
+**Note:** This feature is available to Enterprise customers.
 
 1. **Build permissions** — Restrict which workspace members can use a specific connection to configure workflows and columns. Members only see connections they're allowed to use; all workspace members can still run workflows that are already set up.
 2. **Approval to add connections** — Require that members request admin approval before adding any new connection to the workspace.
@@ -49,6 +48,8 @@ Admins will have seven days to **approve** or **deny** each request from the ema
     -   Add [user groups](https://university.clay.com/docs/user-groups) to grant access to all members of that group
     -   To remove access, simply remove individual members or groups from the allowlist.
 5.  Click `Save` to apply the changes
+
+The connections table includes a **Shared with** column showing at a glance who has access to each connection: **Anyone in the workspace** for connections open to all, the assigned people and groups for restricted ones, or **Nobody added** when no one has been explicitly granted access yet.
 
 To update access later, just edit the connection and add or remove users or user groups from the allowlist.
 
@@ -111,6 +112,12 @@ Signals follow the same access rules as a single column:
 ### Audiences, Sculptor, and Prospector
 
 Enrichment columns within bulk enrichment tables (Audiences) and Sculptor/Prospector surfaces follow the same access rules described above for individual columns and waterfalls.
+
+### Sources
+
+When setting up a table source — for example, importing records from a Salesforce report, a HubSpot list view, or another connected provider — the account selector only shows connections the current user is allowed to use. If the relevant connection is set to **Specific people and groups** and the user is not on the allowlist, they will not be able to select that connection as a source. They will need to either ask the connection owner to add them to the allowlist (via `Settings` → `Connections`) or add their own account.
+
+To allow all workspace members to import from the same connected account, change the connection's access setting to **Anyone in the workspace**.
 
 ## FAQs
 

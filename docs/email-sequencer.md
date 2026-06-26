@@ -1,6 +1,5 @@
 ---
 title: Email sequencer
-source_url: https://university.clay.com/docs/email-sequencer
 description: Run outbound campaigns directly from your table.
 last_synced: 2026-05-04T00:00:00.000Z
 upstream_hash: 3d3db81ae3036812b3d4dc0b56f1ae7fff367acb652370008e4fdffc6f91fa96
@@ -24,6 +23,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 6.  Select `Clay Sequencer (Web)` from the results.
 7.  Choose which org units should have access — either `All in [your org] (all users)` or specific org units — then click `Continue`.
 8.  Select `Trusted` under Access to Google Data and click `Continue`.
+    -   **Important:** You must choose `Trusted`, not `Specific Google Data`. Selecting `Specific Google Data` will not grant all the permissions Clay needs, and the access error will persist. Despite the name, `Trusted` only allows Clay to request Gmail-specific permissions (full email access, basic email settings, OpenID, and your profile) — it does **not** grant Clay access to Google Drive, Calendar, Docs, or any other Google service.
 9.  Review the summary and click `Finish`.
 10.  Back in Clay, click `Continue` in the modal, then click `Connect your Google account` and complete the OAuth sign-in.
 
@@ -32,8 +32,8 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 1.  Start in a table that contains the lead emails you want to contact.
     -   If you haven't done this yet, click `Tools` → `Import` to add emails from a third party or CSV.
 2.  Click `Tools` → `Exports` → `Create Clay email campaign`
-    -   The `Sync leads to campaign` column automatically pushes 10 rows from your parent table into the campaign to draft with
-    -   Tip: You can customize the sync data column to only send leads with an email address using `Only run if`.
+    -   The `Sync lead data to campaign` column automatically pushes 10 rows from your parent table into the campaign to draft with
+    -   Tip: You can customize the `Sync lead data to campaign` column to only send leads with an email address using `Only run if`.
 3.  In the `Setup` tab, you can set:
     -   `Lead email address`: We automatically detect email address columns, but confirm this before proceeding.
     -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links.
@@ -51,7 +51,8 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
         -   ⚠️ Note: You or your Workspace admin must authorize the Clay sequencer app for your domain, or you'll see an access error.
     -   `Microsoft Outlook OAuth` (recommended): Connect your Outlook account via OAuth.
         -   ℹ️ Note: Unlike Google OAuth, no Clay-side admin setup is required upfront. If your Microsoft 365 / Entra tenant requires admin approval for third-party apps, your admin may need to grant consent for "Clay Sequencer – Smartlead" in the [Microsoft Entra Admin Center](https://entra.microsoft.com).
-    -   `SMTP` (manual or CSV upload): Connect via SMTP credentials directly.
+    -   `SMTP`: Connect a single account via SMTP credentials directly.
+    -   `Bulk CSV upload`: Add multiple accounts at once by uploading a CSV. Download the example template from the modal and fill in the following eight columns for each account: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`. For Google Workspace accounts, generate an app password for each account (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` value.
     -   You can also [buy email accounts directly in Clay](https://university.clay.com/docs/buying-email-accounts) if you want to increase your sending capacity.
     -   After setup, you can:
         -   `Enable warmup`: Sends and receives automated emails from the linked account to build reputation. Each account uses a unique two-word keyphrase (e.g., `clever-rocket`) to identify warmup emails. Follow the in-app instructions to set up a label and filter to easily ignore warmup messages.
@@ -62,7 +63,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   `Timezone`: Select the timezone to send from (we recommend matching your prospects').
     -   `Days of the week`: Choose which days emails are sent.
     -   `Start/End times`: Set sending windows within the chosen timezone.
-    -   `Minimum time between sends`: Adjustable from 5–30 minutes; longer delays improve deliverability.
+    -   `Min time between emails (min)`: Minimum gap between consecutive sends from a single account (3–30 minutes, Custom schedule only). Shorter gaps increase daily throughput; longer gaps improve deliverability.
     -   `Maximum new leads per day`: Caps the number of new leads contacted daily (in addition to account send limits).
     -   `Campaign start date` (optional): Set a future launch date, or start immediately based on your settings.
 7.  Explore `Advanced settings` if needed:
@@ -149,7 +150,7 @@ Our sequencer is powered by Smartlead, but everything runs on Clay credits. You 
 
 ### Why does my campaign only show 10 leads after launching?
 
-When a campaign is created, the `Sync leads to campaign` column pushes 10 rows so you can preview and configure your messages. After launching, the rest of your source table is not pushed automatically. To add all remaining rows, open your source table (the table where you created the campaign — not the campaign events table) and run the `Sync leads to campaign` column manually — click the run button in the column header.
+When a campaign is created, the `Sync lead data to campaign` column pushes 10 rows so you can preview and configure your messages. After launching, the rest of your source table is not pushed automatically. To add all remaining rows, open your source table (the table where you created the campaign — not the campaign events table) and run the `Sync lead data to campaign` column manually — click the run button in the column header.
 
 ### Why did my campaign stop sending before reaching all my leads?
 
@@ -163,7 +164,22 @@ To increase your total daily sending capacity:
 
 Keep in mind that sending high volumes of cold email from a single inbox puts your domain at risk. Starting near the default (20 emails/day) and scaling by adding accounts rather than increasing individual limits is safer for deliverability.
 
-### My "Sync leads to campaign" column is showing a warning. What does it mean?
+### Why is the expected campaign completion time so long?
+
+The **Expected time to complete campaign** shown at the top of Schedule settings estimates how many days it will take to reach all leads based on your sending window, per-account limits, and schedule.
+
+The biggest lever is the **Min time between emails (min)** setting (Custom schedule only). It controls the minimum gap between consecutive sends from a single sender account, which caps that account's maximum daily output:
+
+**Max sends per sender per day ≈ sending window (minutes) ÷ min time between emails (minutes)**
+
+For example: an 08:00 AM–07:00 PM window is 660 minutes. With the minimum set to 20 minutes, each sender account can send at most 33 emails per day. At that rate, reaching 1,000 leads with one sender account takes roughly 30+ weekdays.
+
+To shorten the estimated time:
+-   **Lower the min time between emails** — a smaller gap increases daily sends per account. Shorter intervals can raise spam risk; the [Best practices](#best-practices) section recommends pacing sends throughout the day.
+-   **Add more sender accounts** — each account adds its own independent daily capacity.
+-   **Increase the account send limit** — in `Sender setup`, click the three-dot (⋯) menu next to an account and select `Update send limit`.
+
+### My "Sync lead data to campaign" column is showing a warning. What does it mean?
 
 This usually means the Clay table that the column points to was deleted. Hover over the warning icon to confirm — the error reads *"Destination table was deleted. Please either restore that table from the trash, or create a new Send table data column."*
 
@@ -227,7 +243,15 @@ Warmup automatically disables when your emails are being throttled by your email
 
 ### I'm getting an error that my email account is already in use. What does this mean?
 
-Your email account is already connected to another Smartlead account. Smartlead only allows each email address to be connected to one account at a time. If you have access to the other Smartlead account, delete the email account there to free it up. Otherwise, contact support for help.
+Clay's email sequencer runs on shared Smartlead infrastructure, and Smartlead only allows each email address to be connected once across the entire system. This error most commonly appears when the email was already connected to the sequencer in **another Clay workspace** — you don't need a separate Smartlead account for this to occur. To fix it, check your other Clay workspaces: go to `Campaigns` → `Email Accounts`, locate the address, and delete it there. Once removed from the other workspace, you can add it to the current one. If you can't identify which workspace has it, contact Clay support with the email address and we'll remove it from our end.
+
+### How do I add multiple email accounts at once?
+
+Use the `Bulk CSV upload` option on the `Add email accounts` screen (it's a top-level choice, not nested under SMTP). Download the example template from the modal and fill in one row per account with eight columns: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`.
+
+For Google Workspace accounts on adjacent or alternate domains, you'll need to:
+1. Enable SMTP access for each domain in your Google Workspace Admin panel (Apps → Google Workspace → Gmail → End User Access → Enable IMAP and SMTP).
+2. Generate an app password for each email alias (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` column value.
 
 ### Are personal email accounts supported (e.g., Gmail, Hotmail)?
 
@@ -285,37 +309,31 @@ These are disclosed when you add your account via OAuth. We request: full Gmail 
 
 ### How do I authorize Clay's app in the Google Admin panel?
 
-Follow the instructions in the modal and have your Google Workspace admin set our Clay sequencer app to `Trusted`. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the Clay sequencer.
+Follow the instructions in the modal and have your Google Workspace admin set our Clay sequencer app to `Trusted` — not `Specific Google Data`. Selecting `Specific Google Data` will not grant all the permissions Clay needs, and the access error will persist. Despite its name, `Trusted` only allows Clay to request Gmail-specific permissions (full email access, basic email settings, OpenID, and your profile) — it does not grant access to Google Drive, Calendar, Docs, or any other Google service. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the Clay sequencer.
 
 ### I followed the admin setup steps but still see "Access blocked: clay.com has not completed the Google verification process." What should I do?
 
 This error is expected — Clay's sequencer uses automated warmup sends, which prevents the app from passing Google's standard verification process. Admin approval in your Google Workspace Admin panel is the intended workaround; Clay's app will not become Google-verified.
 
-If the error persists more than 24 hours after your admin marked the app as `Trusted`, confirm that they approved the app for the exact domain of the email account you're connecting (e.g., for `ryan@company.com`, the admin must approve for `company.com` specifically — not a different domain they manage). If you're connecting accounts from multiple domains, each domain requires its own separate Trusted configuration — having one domain approved does not automatically cover the others. Your admin can verify which org units are currently configured by going to Google Admin → Security → API Controls → App Access Control and checking the Clay Sequencer app's org unit count. If it's still blocked after verifying the domain, contact support.
-
-### What exact Microsoft permissions does sequencer require?
-
-These are disclosed when you add your account via OAuth. We request: offline\_access, openid, email, profile, Mail.Send, Mail.Send.Shared, Mail.ReadWrite, Mail.ReadWrite.Shared, [User.Read](http://User.Read), MailboxSettings.ReadWrite.
+If the error persists more than 24 hours after your admin marked the app as `Trusted`, confirm that they approved the app for the exact domain of the email account you're connecting (e.g., for `ryan@company.com`, the admin must approve for `company.com` specifically — not a different domain they manage). If the error still persists, [contact Clay support](https://www.clay.com/contact).
 
 ### How are replies categorized in the Campaign Events table?
 
-Smartlead assigns leads into one of the following categories:
+In the Campaign Events table, the `Event type` column reflects the reply classification assigned by Smartlead. Categories include:
 
-1.  Interested
-2.  Meeting Request
-3.  Not Interested
-4.  Do Not Contact
-5.  Information Request
-6.  Out Of Office
-7.  Wrong Person
-8.  Uncategorizable by Ai
-9.  Sender Originated Bounce
+-   `EMAIL_REPLY` — any reply from a lead
+-   `LEAD_UNSUBSCRIBED` — lead clicked the unsubscribe link
+-   `LEAD_CATEGORY_UPDATED` — Smartlead has classified the reply (e.g., as `Interested`, `Do Not Contact`, `Not Interested`, `Out of Office`, or other categories)
 
-### Why does the reply body show HTML instead of plain text?
+Note that `EMAIL_REPLY` fires for every reply (including out-of-office), while `LEAD_CATEGORY_UPDATED` fires after Smartlead processes and classifies the reply. Both events may appear for the same reply.
 
-This is expected. When a lead replies using an HTML-capable email client like Microsoft Outlook, the reply arrives in HTML format. The `Reply Message` field in your campaign events table includes two sub-fields:
+### How do I handle replies from leads?
 
--   `Html`: the raw HTML body as sent by the lead's email client
--   `Text`: a plain text version of the same content
+Replies are available in the `Replies` tab of your campaign and in the campaign events table. You can reply directly from Clay using the `Reply to lead` enrichment in the campaign events table.
 
-To work with the reply as clean text — for example, when mapping it to a CRM note or passing it to an AI action — use the `Text` sub-field instead. If you prefer to use `Html` and strip the tags, add a formula column to do so.
+### Useful links
+
+-   [Smartlead documentation](https://helpcenter.smartlead.ai/)
+-   [Buying email accounts in Clay](buying-email-accounts.md)
+-   [Clay email sequencer pricing](https://www.clay.com/pricing)
+-   [Clay community forum](https://community.clay.com/)

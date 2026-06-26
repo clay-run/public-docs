@@ -1,6 +1,5 @@
 ---
 title: Formulas
-source_url: https://university.clay.com/docs/formula-generator
 description: Generate formulas with AI to transform your data. Includes how to
   use today's date in a formula, pull error messages with getCellErrorMessagePreview(),
   check cell status with getCellStatus(), and keep date comparisons current automatically.
@@ -39,7 +38,7 @@ Here are examples of formulas you can create with the formula generator:
 
 1.  Extract the domain from {{Email}}
 2.  Use {{LinkedIn URL}} if available; otherwise use {{LinkedIn Profile}}.url
-3.  Extract the text after @ in {{Twitter Handle}}
+3.  Extract the text after @ in {{Social Handle}}
 4.  Split {{city}} by comma, keep everything before the first comma, remove "Area" if present, then add quotes
 5.  Extract the first word from {{Column\_1}}, combine with {{Column\_2}}, then remove all non-letter characters
 6.  Calculate the number of days between {{Created Date}} and {{Closed Date}}
@@ -65,6 +64,19 @@ Clay formulas are powered by **Clayscript**, a JavaScript-based language that ev
 Yes! When editing a formula, you'll see the option to `Save and don't run enrichments`.
 
 Clicking this prevents your formula from running on any enrichment columns that would cost credits. These columns will appear greyed out to indicate they're out of date.
+
+### **How do I view or edit an existing formula expression directly?**
+
+When you open an existing formula column, the Formula generator sidebar pre-loads both the original description (prompt) and the formula expression. The JavaScript expression is shown in the collapsible **Formula** section, below the prompt input.
+
+To view or edit the expression without regenerating:
+
+1.  Open the existing formula column to open the **Formula generator** sidebar.
+2.  Expand the **Formula** section to see the JavaScript expression.
+3.  Click in the formula editor to make changes directly.
+4.  Click **Save column**.
+
+**Tip:** If you inherited a formula and want to understand what it does before modifying it, copy the expression text and paste it into an AI assistant (like ChatGPT or Claude) with the prompt: *"Explain what this formula does."* The assistant can walk through the logic step by step and suggest modifications in plain language. Once you have an updated expression you're happy with, paste it back into Clay's formula editor.
 
 ### **Can I use formula columns for text matching and string operations without consuming credits?**
 
@@ -166,3 +178,17 @@ The most reliable fix is to use the `/` column picker when writing your prompt:
 3.  Click **Regenerate** to update the formula with the explicit references.
 
 Using the `/` picker guarantees the formula targets the exact column, which is especially helpful when column names are similar (for example, "Activity Score" vs. "Activity Type Score") or when combining the output of several formula columns into a final score.
+
+### **Why does my formula return results for some rows but not others?**
+
+The formula generator converts your prompt into a fixed JavaScript expression **once** — at the time you click **Generate**. That expression is built around the data structure Clay saw in your table when the formula was created: specific section-title patterns, label-before-colon structures, bullet styles, and so on. Clay stores that expression and evaluates it deterministically on every row; no AI is involved at row-evaluation time.
+
+If you later edit the prompt of an upstream column (for example, an AI column that generates CRM notes), the new outputs may have a slightly different structure than the data the formula was built from. The formula still works for rows whose data matches the original format and returns empty for rows with the new format. Creating a new formula column doesn't help — it generates a new piece of fixed code with the same limitation unless you regenerate it using examples from the new data.
+
+**Three ways to fix this:**
+
+-   **Output the desired format directly from your AI column.** Add the formatting instructions to the prompt of the column that generates your notes — for example, *"Format your output as HTML: wrap section titles in `<b>` tags, put each bullet in `<li>` inside a `<ul>`, and separate sections with `<br>`."* This eliminates the need for a separate formatting step.
+-   **Use a Use AI column for the formatting step instead of a formula column.** A Use AI column evaluates every row freshly against its prompt, so it handles structural variation in the input that a fixed formula cannot. See [Use AI](use-ai-integration-overview.md) for setup details.
+-   **Regenerate the formula with examples from your updated data.** Click a preview cell showing a wrong result, enter the correct output in **Edit expected output**, and click **Regenerate** to rebuild the formula around your new data structure (see **Improve formula accuracy** above).
+
+Also note: after changing any column, rows that have already run will not update automatically. Select those rows and click **Run column** to re-process them.

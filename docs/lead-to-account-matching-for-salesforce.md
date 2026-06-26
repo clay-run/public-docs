@@ -1,6 +1,5 @@
 ---
 title: Lead-to-account matching for Salesforce
-source_url: https://university.clay.com/docs/lead-to-account-matching-for-salesforce
 description: Connect Salesforce leads with their corresponding Salesforce accounts.
 last_synced: 2026-04-26T01:40:13.950Z
 ---

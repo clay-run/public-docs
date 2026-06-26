@@ -1,6 +1,5 @@
 ---
 title: Manage cell data
-source_url: https://university.clay.com/docs/manage-cell-data
 description: Learn how to manage cell data within your Clay table.
 last_synced: 2026-04-26T01:40:19.169Z
 ---
@@ -68,3 +67,15 @@ The final step of a waterfall returns a basic column with an 8KB limit. If your 
 -   **HTTP-API and webhooks:** May bring in over 200KB; use field-path filters.
 -   **Extracting to basic columns:** May hit the 8KB limit when extracting large action fields.
 -   **Email reply content:** Long email replies (e.g., from the campaign events table) can exceed the 8KB limit when written to a text column. To work around this, reference the reply field in a formula column and use a text function such as `LEFT({{Reply Body}}, 7000)` to extract just the first portion of the content.
+
+### "The value in this field is larger than the cell size limit" error
+
+When you try to extract a large enrichment value into a text or formula column and the value exceeds 8KB, Clay shows this warning:
+
+> The value in this field is larger than the cell size limit of an extracted column. To reference this data, you should use the enrichment or source output directly.
+
+**Creating a formula column that references the extracted column will not help** — formula columns share the same 8KB limit as text columns.
+
+**The fix:** Instead of extracting the value to a separate column, add the enrichment action column's output as a direct input to your downstream enrichment or AI column. In the input field, use the slash picker (`/`) to select the original enrichment column's nested output value. This passes the data between enrichment columns without writing it to a basic column, so the 8KB limit does not apply.
+
+**Cross-table workflows:** Lookup columns (e.g., Lookup Single Row in Other Table) also pass data through a basic column and are subject to the same 8KB cap. If your large enrichment output is in one table and you need to process it in another, move the downstream enrichment step into the same table as the large action column, reference the output directly there, and use Send to Table Data to push the result to your other table.

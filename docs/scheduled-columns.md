@@ -1,6 +1,5 @@
 ---
 title: Scheduled columns
-source_url: https://university.clay.com/docs/scheduled-columns
 description: Automatically re-run your enrichments on a set schedule.
 last_synced: 2026-04-26T01:40:37.281Z
 ---
@@ -37,6 +36,18 @@ To control this:
 -   **Add a run condition to the action column.** In the column's **Run settings**, enable `Only run if` and set a condition that's false once the action has already completed — for example, `/SlackMessage is empty`. This prevents the column from re-running on rows that already have a result, even if it's included in a scheduled re-run.
 
 Scheduled columns are best suited for data enrichment columns where refreshing values over time is the goal — for example, headcount, funding data, or job titles.
+
+## Downstream columns after a scheduled run
+
+Scheduled column runs force-run **only the selected columns**. After the scheduled column completes and its output updates, downstream columns that reference it follow Clay's normal auto-run rules:
+
+-   **Default mode (Auto-run on, "All columns"):** If the scheduled column's output changed for a row, downstream columns automatically re-run on those rows. If the output is unchanged, downstream columns stay up to date and are not re-triggered.
+-   **"Keep existing results" mode:** Downstream columns that already have results are marked "out of date" but are **not** automatically re-run. The scheduled run does not cascade to them.
+-   **Downstream column auto-run off:** The downstream column is marked "out of date" but requires a manual trigger.
+
+**To make a downstream column re-run on the same recurring cycle as the upstream scheduled column**, add it to the scheduled run list (**Table Settings → Run Settings → Re-run columns on a schedule → Only selected columns**). Scheduled column runs always force-run, so the downstream column executes every cycle regardless of "Keep existing results."
+
+To prevent the downstream column from running on every row on every cycle — for example, if you only want it to execute when the upstream value meets a condition — add a run condition. In the downstream column's **Run settings**, enable **Add run condition** and enter a formula that references the upstream column's value (for example, `Only run when [Sentiment] contains "BULLISH" & [Full Name] is not empty`). Clay evaluates the condition on each row and skips rows where it is not met, so you only consume credits for rows where the upstream result warrants it. See [Conditional runs](conditional-runs.md) for setup details.
 
 ## Usage limits
 

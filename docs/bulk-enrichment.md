@@ -1,6 +1,5 @@
 ---
 title: Bulk enrichment
-source_url: https://university.clay.com/docs/bulk-enrichment
 description: Enrich millions of rows quickly, securely, and at scale. No row
   limits, no slowdown.
 last_synced: 2026-04-27T18:09:27.586Z
@@ -78,16 +77,16 @@ For more options on re-running specific rows or cells, see [Run progress](run-pr
 
 ## Run Setup settings (Audiences)
 
-When a bulk enrichment is attached to an [Audiences](https://university.clay.com/docs/audiences) segment (available in beta for Enterprise customers), clicking the enrichment card opens a **Run Setup** panel with additional settings for ongoing enrichment behavior.
+When a bulk enrichment is attached to an [Audiences](https://university.clay.com/docs/audiences) segment, clicking the enrichment card opens a **Run Setup** panel with additional settings for ongoing enrichment behavior.
 
 ### Field mapping
 
 The **Field mapping** setting controls whether enriched data is written back to your Audiences records after each row runs.
 
--   **On (default)** — enriched data is sent to Audiences. Click **Set up mappings** to configure which columns map to which Audience fields.
+-   **On (default)** — enriched data is sent to Audiences. Click **Set up** to configure which columns map to which Audience fields. At least one column must be mapped before you can start the run — clicking **Start Run** without completing this step shows an inline error: *"Map at least one column, or turn off field mapping."*
 -   **Off** — the Send to Audiences step is skipped for every row. No data is written back to Audiences, and each row shows **✅ Skipped** in the results column.
 
-To turn field mapping off, click **Set up mappings** in the Run Setup panel, then toggle **Field mapping** off at the top of the configuration panel.
+To turn field mapping off, click **Set up** in the Run Setup panel, then toggle **Field mapping** off at the top of the configuration panel.
 
 Turn field mapping off when you want to run enrichments and route results somewhere else — for example, writing directly to Salesforce via an action column — without also writing the data back to Audiences.
 

@@ -1,6 +1,5 @@
 ---
 title: Does Clay have an API?
-source_url: https://university.clay.com/docs/using-clay-as-an-api
 description: Clay doesn't have a traditional API, but you can send data via
   webhooks, wrap Clay with Make or Zapier, or use the Enterprise API for people
   & company lookups.

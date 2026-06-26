@@ -1,6 +1,5 @@
 ---
 title: Upcell integration
-source_url: https://university.clay.com/docs/upcell-integration
 description: Find mobile numbers from LinkedIn profiles.
 last_synced: 2026-04-26T01:40:50.636Z
 ---

@@ -1,6 +1,5 @@
 ---
 title: Waterfalls
-source_url: https://university.clay.com/docs/building-a-data-waterfall
 description: Maximize your data coverage with waterfalls.
 last_synced: 2026-04-27T18:09:26.920Z
 ---
@@ -15,13 +14,15 @@ Waterfalls allow you to utilize multiple data providers in a predetermined seque
 
 To run a pre-built waterfall:
 
-1.  Click `Add enrichment` on the top right corner of your table and search for the data point you want to run a waterfall for (ex. Phone number). Under `Waterfalls`, select the waterfall you want to run.
+1.  Click **Tools** in the top right corner of your table, select the **Enrich** tab, and search for the data point you want to run a waterfall for (e.g. `Phone number`). Under **Waterfalls**, select the waterfall you want to run.
 2.  Configure your `Waterfall sequence`. You can reorder, add. or delete your waterfall data providers.
     -   To skip a step in the waterfall, click the toggle switch next to a specific provider.
 3.  Enter the required data inputs, such as email addresses or social profile URLs, to set up the enrichment waterfall.
 4.  In the **Waterfall output** dropdown, select which sub-field to display in the waterfall's merged column (for example, `people > 0 > title`). You can only pick one field at a time — but all individual provider columns are still added to your table with their full data regardless of which field you select. You can access any field from a provider column by clicking into a row or referencing it in a formula.
 5.  Optionally, choose to output the name of the successful provider and hide the provider columns for a cleaner table view.
 6.  Configure Run settings, including enabling auto-update or setting conditions for when the waterfall should run.
+
+**Tip: Adding a pre-built waterfall to another table.** Pre-built waterfall enrichments are standalone tools available on every table — there is no need to copy or replicate a waterfall column from an existing table. To use the same waterfall in a different table, open that table, click **Tools** in the top right corner, search for the enrichment by name (for example, *tech stack*), and add it. Configure the inputs and run settings for the new table independently.
 
 ## Editing an existing waterfall
 
@@ -38,11 +39,13 @@ To add, remove, or reorder providers in a waterfall you've already saved:
 
 ## Creating a waterfall
 
-1.  While in a table, click `Add column` (which you will find at the far right side).
-2.  Select `Waterfall` and click the `🖊️` to next to the title to rename.
-3.  Change the `Data Type` that you'll be working with.
-4.  Add actions to the waterfall and adjust other settings.
-5.  Click `Save`.
+Use this when you want to chain multiple enrichment providers for the same data point — for example, enriching company details from Clearbit, then Apollo, then PDL in sequence, stopping as soon as one returns a result.
+
+1.  While in a table, click **Add column** (at the far right of the table).
+2.  Select **Waterfall** and click the ✏️ icon next to the title to rename it.
+3.  Set the **Data Type** to match what you want the waterfall to output — for example, **Text** for a company name or description, **URL** for a website, or **Number** for revenue or headcount.
+4.  In the **Waterfall sequence** section, click **Add provider** to add enrichment providers as steps. You can add as many as you need and reorder them by dragging.
+5.  Click **Save**.
 
 ## Creating a waterfall template
 
@@ -138,8 +141,22 @@ This is different from AI columns (such as Use AI or Claygent), where you can de
 
 -   **Cross-validate across providers.** Run the same enrichment from two or three providers in separate columns, then use a formula or AI column to flag rows where results are consistent across sources. Matching results across providers indicate higher data confidence.
 -   **Track which provider returned the result.** When configuring your waterfall output, enable the option to output the name of the successful provider. This lets you filter or score rows based on which data source you trust most.
+-   **Check that the enriched company domain matches the contact's email domain.** Enrichment providers use a best-match algorithm — they return the company they believe is the right match based on name or profile data, and do not validate that the returned company's domain matches the contact's email address. If a contact's profile is outdated (for example, a person recently changed jobs but their profile still shows their previous employer), providers may return data for the old company. See [Handling email/company domain mismatches](#handling-emailcompany-domain-mismatches) below for detection and remediation steps.
 
 **Company revenue reflects total annual revenue, not ARR.** Revenue figures returned by enrichment providers such as PDL, Clearbit, Apollo, and Owler represent estimated total company revenue — not annual recurring revenue (ARR) or any subscription-specific metric. These figures are drawn from public filings, web data, and provider estimates.
+
+### Handling email/company domain mismatches
+
+When enriching a person or company, providers match on name or profile data — not on whether the returned company domain agrees with the contact's work email. A contact whose profile still shows a previous employer can come through your waterfall with the wrong company and title, and a company domain that doesn't match their email address.
+
+**Detecting mismatches:** Add a formula or AI column that extracts the domain from the contact's work email (the portion after `@`) and compares it to the enriched company domain. A boolean "Domain Match" column makes it easy to filter and audit mismatched rows at scale.
+
+**Preventing mismatches from reaching downstream systems:** Use the domain-match column as a run condition on downstream write steps — for example, your **Update CRM Record** or **Create CRM Record** action — so a contact is only pushed when the email domain and company domain agree. See [Conditional runs](conditional-runs.md) for how to set this up.
+
+**Fixing contacts that are already mismatched:**
+
+1. Filter the table to rows where the domain-match column is `false`.
+2. Re-enrich the company using the email domain as the primary input instead of the company name. A validated work email domain is a more reliable signal than a profile-based best-match result.
 
 ## Trial plan and provider restrictions
 
@@ -161,7 +178,7 @@ Provider order: **Clearbit → Google → HG Insights**
 
 ### Setting up the Company Domain waterfall
 
-1.  In your table, click `Add enrichment` in the top right corner.
+1.  In your table, click **Tools** in the top right corner, then select the **Enrich** tab.
 2.  Search for `Find company domain` and select the **Company Domain** waterfall.
 3.  Map the column containing company names as the input.
 4.  Click `Save`.
@@ -186,3 +203,41 @@ This is the most common cause of unexpected results from the Company Domain wate
 -   **Use the Excluded Domains field on the Google step** — In the Google provider's settings within the waterfall, expand the **Excluded Domains** optional field and enter specific domains you want to block from results (for example, `proff.no`, `tracxn.com`, `rocketreach.co`). Note: due to a known issue, this filtering may not work reliably in all cases.
 -   **Skip the Google step** — In the waterfall's **Waterfall sequence** configuration, toggle off the Google provider. The waterfall then only queries Clearbit and HG Insights, which draw from structured company databases rather than live web search. You'll get fewer overall matches but higher accuracy on the ones you do find.
 -   **Use Claygent instead** — For the most reliable domain finding, set up a Claygent column that searches for the company name and verifies the found URL belongs to the right company before returning a domain. Claygent uses AI credits rather than standard waterfall credits.
+
+## Tech Stack waterfall
+
+The **Tech Stack** waterfall finds which technologies a company has installed by cascading across four providers — stopping as soon as one returns a result.
+
+Provider order: **SimilarWeb → Predict Leads → BuiltWith → Apollo**
+
+### Setting up the Tech Stack waterfall
+
+1.  In your table, click **Tools** in the top right corner, then select the **Enrich** tab.
+2.  Search for `Tech stack` and select the **Tech Stack** waterfall.
+3.  Map the column containing company domains as the input.
+4.  Click `Save`.
+
+**Input required:** Company domain  
+**Output:** Technologies detected at the company
+
+### Provider strengths
+
+Each provider detects technology using different methods:
+
+-   **SimilarWeb** — Identifies technologies installed on a domain, including installation and uninstallation dates and technology categorization. Draws from web analytics and crawl data.
+-   **Predict Leads** — Sources technology data from historical job descriptions, website script tags, and DNS records. Surfaces tools that appear in hiring descriptions, including software not visible in website source code.
+-   **BuiltWith** — Scans a company's public website source code to find client-side technologies: marketing pixels, JavaScript libraries, and front-end software embedded in the site.
+-   **Apollo** — Returns technology data as part of its company profile enrichment. Note: the Apollo step requires your own Apollo account connected in Clay via OAuth (**Settings → Connections**). If no Apollo account is connected, this step is skipped.
+
+### Verifying whether a company uses a specific product
+
+For verifying whether a company uses a particular enterprise product — including back-end platforms, CRMs, ERP systems, and service software that doesn't appear in website code — use the separate **Verify Product Usage** waterfall. This waterfall uses HG Insights, which analyzes business documents such as contracts, RFPs, and job postings to surface internally-deployed tools that front-end scanners can't detect.
+
+To set up Verify Product Usage:
+
+1.  In your table, click **Tools** in the top right corner, then select the **Enrich** tab.
+2.  Search for `Verify Product Usage` and select the waterfall.
+3.  Map your company domain column as the input and specify the product you want to verify.
+4.  Click `Save`.
+
+See [HG Insights integration](hg-insights-integration-overview.md) for more details on HG Insights' detection methodology and what types of technologies it covers best.

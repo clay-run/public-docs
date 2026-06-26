@@ -1,6 +1,5 @@
 ---
 title: Capterra integration overview
-source_url: https://university.clay.com/docs/capterra-integration-overview
 description: Compare software solutions with user reviews to find best fit.
 last_synced: 2026-04-27T18:09:30.751Z
 ---

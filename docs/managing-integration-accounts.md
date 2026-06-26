@@ -1,6 +1,5 @@
 ---
 title: Managing integration accounts
-source_url: https://university.clay.com/docs/managing-integration-accounts
 description: Manage your Clay-managed and personal integration accounts.
 last_synced: 2026-04-26T01:40:19.493Z
 ---

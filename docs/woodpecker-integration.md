@@ -1,6 +1,5 @@
 ---
 title: Woodpecker integration
-source_url: https://university.clay.com/docs/woodpecker-integration
 description: Add prospects to your database and campaigns, enriching prospect
   data with comprehensive details.
 last_synced: 2026-04-26T01:40:55.539Z

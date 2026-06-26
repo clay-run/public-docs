@@ -1,6 +1,5 @@
 ---
 title: Ocean.io integration
-source_url: https://university.clay.com/docs/ocean-io-integration-overview
 description: Find companies similar to a given company based on various criteria.
 last_synced: 2026-04-26T01:40:26.052Z
 ---
@@ -126,7 +125,7 @@ Returns up to 10 ranked lookalike results. Each result includes:
     -   Logo: URL of the company logo.
     -   Mobile apps: App store links and names for the company's mobile apps.
     -   Web traffic: Visits, page views, pages per visit, and bounce rate.
-    -   Medias: Social media profiles (LinkedIn, Twitter, YouTube, Facebook) including URL, handle, and name.
+    -   Medias: Social media profiles (LinkedIn, YouTube, Facebook) including URL, handle, and name.
 -   Score: The similarity score for the result.
 
 ### `Action` Find lookalike people with [Ocean.io](http://Ocean.io)

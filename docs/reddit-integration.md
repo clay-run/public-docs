@@ -1,6 +1,5 @@
 ---
 title: Reddit integration
-source_url: https://university.clay.com/docs/reddit-integration
 description: Monitor Reddit mentions and comments.
 last_synced: 2026-04-26T01:40:31.604Z
 ---

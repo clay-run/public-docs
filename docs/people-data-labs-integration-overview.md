@@ -1,6 +1,5 @@
 ---
 title: People Data Labs integration overview
-source_url: https://university.clay.com/docs/people-data-labs-integration-overview
 description: Enrich B2B person and company profiles with comprehensive, actionable data.
 last_synced: 2026-04-26T01:40:27.701Z
 ---
@@ -85,7 +84,7 @@ Use this action to retrieve comprehensive personal data such as social profiles,
 
 -   **Person's Name**: Provide the full name of the individual.
 -   **Company Name**: Specify the company name associated with the person. Must be used with Person's Name.
--   **Social Media Profile URL** (Optional): Enter the LinkedIn, Twitter, or Facebook URL for the person to narrow down results.
+-   **Social Media Profile URL** (Optional): Enter the LinkedIn or Facebook URL for the person to narrow down results.
 
 ### `Action` Find Personal Email
 
@@ -95,7 +94,7 @@ Retrieve a person's personal email by searching with available identifiers.
 
 -   **Person's Name**: The individual's full name. Used in combination with Company Name.
 -   **Company Name**: The company associated with the individual. Must be used with Person's Name.
--   **Social Media Profile URL** (Optional): Provide a LinkedIn, Twitter, or other social profile URL to improve accuracy.
+-   **Social Media Profile URL** (Optional): Provide a LinkedIn or other social profile URL to improve accuracy.
 
 ### `Action` Get Employee Count by Criteria
 

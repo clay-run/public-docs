@@ -1,6 +1,5 @@
 ---
 title: Webhooks in Clay
-source_url: https://university.clay.com/docs/webhook-integration-guide
 description: Real-time data updates enabling application integrations and
   automated workflows.
 last_synced: 2026-04-26T01:40:54.241Z
@@ -35,13 +34,13 @@ Your table updates instantly with new data, eliminating manual entry. This featu
 | Max payload size | 100 KB per request |
 | Max submissions | 50,000 per webhook source |
 
-**Throughput:** Clay accepts up to 10 incoming HTTP requests per second per workspace. A burst of up to 20 requests is allowed when capacity is available — after a burst, throughput returns to the sustained 10-per-second rate. Each POST counts as one request against this limit, regardless of how many fields or records the payload contains. Exceeding the limit returns a `429` error and records are dropped — Clay does not queue them. To avoid data loss when sending in bulk, pace your requests to 10 per second or fewer. Multiple active webhook sources in the same workspace share this limit.
+**Throughput:** Clay accepts up to 10 incoming HTTP requests per second per workspace. A burst of up to 20 requests is allowed when capacity is available — after a burst, throughput returns to the sustained 10-per-second rate. Each POST counts as one request against this limit, regardless of how many fields or records the payload contains. Exceeding the limit returns a `429` error and records are dropped — Clay does not queue them. Clay's `429` response includes a `Retry-After: 1` header. For event-driven integrations where you cannot control the send rate directly (for example, a webhook triggered by a form submission), implement retry logic with exponential backoff on your sending system: wait at least 1 second after receiving a `429` before retrying. To avoid data loss when sending in bulk, pace your requests to 10 per second or fewer. Multiple active webhook sources in the same workspace share this limit.
 
 **Need a higher throughput limit?** If 10 requests/second is too restrictive for your workflow, contact Clay support to request an increase — rate limits can be adjusted for your workspace on request.
 
 **Payload size:** Each HTTP POST to Clay's webhook endpoint must be 100 KB or smaller.
 
-**Submission limit:** Each webhook source accepts up to 50,000 submissions. This is a cumulative lifetime count — every accepted submission increments the counter, and deleting rows from the table does **not** reduce it. Once you reach this limit, Clay returns a `403` error and you'll need to create a new webhook to continue receiving data.
+**Submission limit:** Each webhook source accepts up to 50,000 submissions. This is a cumulative lifetime count — every accepted submission increments the counter, and deleting rows from the table does **not** reduce it. Once you reach this limit, Clay returns a `403 Record limit reached for webhook` error and you'll need to create a new webhook to continue receiving data.
 
 **Enterprise Plan — run a webhook indefinitely:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) (also called passthrough tables). When passthrough mode is active, the webhook source takes a separate code path that **bypasses the 50,000 submission limit entirely** — a single webhook URL can keep accepting data indefinitely without ever hitting the cap. This is the recommended approach for automated enrichment pipelines. Auto-delete is available on Enterprise plans and only works for webhook, send-table-data, and signal sources. Learn more in [table management settings](https://www.clay.com/university/guide/table-management-settings).
 
@@ -76,6 +75,10 @@ Clay's webhook URL works with any platform that can send HTTP POST requests in J
 4. Configure the JSON request body to include the Clay columns you want to send.
 
 For a complete example using Zapier, see [Send Clay data to Zapier](https://www.clay.com/university/guide/clay-to-zapier).
+
+**Rate limits and retry for outbound calls:** Clay applies a default rate limit of **100 requests per second per workspace** on outbound HTTP API enrichment calls. If the receiving service enforces a stricter limit, configure the **Custom rate limit** setting inside your HTTP API column settings to match it. By default, the HTTP API enrichment **retries failed requests automatically** when the receiving service returns a `408`, `413`, or `429` status code, or a network-level connection error — up to 1 retry by default, configurable up to 5. For details on both settings, see the [HTTP API guide](https://www.clay.com/university/guide/http-api-integration-overview).
+
+**Note:** The 10 requests/second throughput limit in the [Limits](#limits) section above applies only to data *arriving at* Clay through a webhook source. It does not apply to outbound HTTP API calls your table makes to external services.
 
 ## FAQs
 
@@ -116,7 +119,7 @@ If your webhook isn't creating rows — even on a brand-new webhook that has nev
 
 3. **Missing or wrong authentication token** — If you added an auth token when creating the webhook, it must be included in every request as a header. The token is only displayed once at creation — if you didn't copy it, you'll need to delete and recreate the webhook to generate a new one.
 
-4. **Submission limit reached** — See the [Limits](#limits) section. Once a webhook source hits 50,000 submissions, Clay returns a `403` error and stops creating rows. This limit is cumulative — it counts all submissions since the webhook was created, and deleting rows does not reset it. **Enterprise plan:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) to bypass this limit entirely — when passthrough mode is active, the 50,000 cap is skipped and the webhook can accept data indefinitely.
+4. **Submission limit reached** — See the [Limits](#limits) section. Once a webhook source hits 50,000 submissions, Clay returns a `403 Record limit reached for webhook` error and stops creating rows. This limit is cumulative — it counts all submissions since the webhook was created, and deleting rows does not reset it. **Enterprise plan:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) to bypass this limit entirely — when passthrough mode is active, the 50,000 cap is skipped and the webhook can accept data indefinitely.
 
 **Quick isolation test:** To confirm whether the issue is in your request or on Clay's side, try the simplest possible payload:
 
@@ -143,3 +146,17 @@ This is different from CRM sources such as HubSpot and Salesforce, which track e
 **To prevent the same record from being enriched multiple times,** enable [auto-dedupe](https://www.clay.com/university/guide/table-management-settings#auto-dedupe) on a column containing a unique identifier for your records (such as an email address or a CRM contact ID). When a second submission arrives with the same value in that column, auto-dedupe detects and removes the duplicate row.
 
 **Note:** Auto-dedupe may not catch duplicates when two payloads arrive within milliseconds of each other. See the [simultaneous insert limitation](https://www.clay.com/university/guide/table-management-settings#auto-dedupe) in the auto-dedupe docs for details and workarounds.
+
+### What happens when I map a webhook field to an existing column — and why did my data disappear?
+
+When you click a cell in your webhook column, open **Cell details**, hover over a field, and select **Add as column → Map to an existing column**, Clay changes the destination column's formula to pull from the webhook source. What happens next depends on what was already in that column:
+
+-   **Manually-entered data** (typed directly or imported from a CSV): Clay shows a "Data overwrite" warning before proceeding. If you confirm, all existing values in that column are permanently replaced — the column becomes formula-driven by the webhook field, and rows that didn't arrive via the webhook will show as empty.
+-   **Enrichment-based data** (already driven by an enrichment formula): No overwrite occurs. Clay appends the webhook source as a fallback, so the column formula becomes `{{EnrichmentResult}} || {{WebhookField}}`. Existing enrichment-based values are preserved; the webhook fills in where the enrichment is empty.
+
+**To keep existing data while also bringing in webhook data,** don't map to the original column. Instead:
+
+1.  Use **Add as column → Create new column** to extract the webhook field into a separate new column (for example, "Email from webhook").
+2.  Add a [Merge column](https://university.clay.com/docs/table-columns-overview#merge-columns) that references both the original column and the new webhook column — it returns the first non-empty value per row, preserving your original data for older rows while populating from the webhook for new arrivals.
+
+**Note:** Clay's Table Versioning feature can restore a table's column schema and formula configuration from a previous snapshot, but it cannot recover lost manually-entered or CSV-imported cell data values. If you confirmed the overwrite and lost that underlying data, re-import the original source and use the approach above going forward.

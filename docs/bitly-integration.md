@@ -1,6 +1,5 @@
 ---
 title: Bitly integration
-source_url: https://university.clay.com/docs/bitly-integration
 description: Modify your Bitly links from within Clay.
 last_synced: 2026-04-26T01:39:42.272Z
 ---
