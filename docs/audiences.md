@@ -48,7 +48,6 @@ You can import data from:
     -   You can add more fields later. See [A Salesforce field isn't appearing in my audience filters](#a-salesforce-field-isnt-appearing-in-my-audience-filters--how-do-i-add-it) in the FAQs below.
 6.  Name the corresponding Clay fields — these become the column names in Audiences.
 7.  Select `Companies` at the top and repeat steps 3–6 for accounts.
-    -   After enabling the `Import` toggle, an **`Import activities`** toggle may also appear — enable it to import Salesforce Tasks and Events for your accounts. If you don't see this toggle, contact your Growth Strategist to enable the feature for your workspace.
 8.  Select `Leads` at the top of the sync panel.
 9.  Enable the `Import` toggle.
 10.  Add any Lead fields you want to filter or segment by — common fields include `Lead Status`, `Lead Source`, `Title`, and `Company`.
@@ -73,7 +72,7 @@ Clay pulls data from Salesforce on two schedules:
 
 **Deleted records:** Clay does not remove deleted Salesforce records from Audiences immediately. Instead, the record is marked **Deleted in source**, which you can filter on in your audience. The weekly full sync reconciles hard-deleted records. If a Salesforce record is deleted and recreated (assigning it a new Salesforce ID), it will temporarily appear as a duplicate entry until the next weekly full sync resolves it. There is no self-serve option to trigger an early full sync — contact Clay support if you need an expedited cleanup.
 
-**Salesforce activities:** When the **`Import activities`** toggle is enabled on your Companies import, Clay imports Salesforce Tasks and Events for your accounts. These appear in the Activity tab on each record's detail view alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp. Account associations are resolved automatically in the background — if an account hasn't synced yet when an activity arrives, it associates once that account imports.
+**Salesforce activities:** When Salesforce is connected, the Activity tab on each record's detail view shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp.
 
 ### Importing from HubSpot
 
