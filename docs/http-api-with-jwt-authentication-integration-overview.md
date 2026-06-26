@@ -107,9 +107,9 @@ Editing a saved JWT account will affect every enrichment column across your work
 
 The enrichment will fail with the message `Please fill out your auth fields.` If you see this error, double-check the `Location of JWT token in auth response` field against the actual JSON structure returned by your token endpoint.
 
-### How do I call ZoomInfo API endpoints that the native integration doesn't support, such as looking up records by ZoomInfo ID?
+### How do I call ZoomInfo API endpoints that the native integration doesn't support?
 
-The native ZoomInfo integration in Clay supports two actions: **Enrich Company** (by company name and website) and **Enrich Contact** (by email or name). For other ZoomInfo API endpoints — for example, looking up records by a ZoomInfo company or contact ID — use **HTTP API with JWT Authentication** with the following ZoomInfo-specific settings.
+The native ZoomInfo integration in Clay supports four actions: **Enrich Company**, **Enrich Contact**, **Enrich contact(s) by ID** (enrich up to 25 contacts at once using their ZoomInfo contact IDs), and **Search contacts**. For ZoomInfo API endpoints not covered by these native actions, use **HTTP API with JWT Authentication** with the following ZoomInfo-specific settings.
 
 **Account setup (one-time per workspace):**
 
