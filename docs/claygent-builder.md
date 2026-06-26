@@ -242,6 +242,23 @@ Claygents handle judgment-based, nondeterministic work in your GTM stack — wor
 -   **Outbound copywriting** — write personalized emails using your ICP and enriched data.
 -   **Persona classification** — categorize contacts by tier, role, or buying persona.
 
+### How do I look up the number of physical locations a company has?
+
+**If you have a ZoomInfo subscription**, the **ZoomInfo Enrich Company** action returns a **Location Count** field directly — no AI research needed. Connect your own ZoomInfo OAuth credentials in Clay (ZoomInfo is not available via a Clay-managed key), then add a ZoomInfo Enrich Company column and map the **Location Count** output to your table.
+
+**Without ZoomInfo**, Claygent AI web research is the recommended approach. A prompt like *"How many total physical locations or storefronts does {{Company Name}} have? Return a number and cite your source."* works well for retailers, restaurant chains, banks, healthcare networks, and other businesses with publicly reported footprints.
+
+A few things to expect when using Claygent for this:
+
+-   **Fill rate tracks how "location-based" each company is.** Retailers, restaurant franchises, banks, and healthcare networks typically fill cleanly. Utilities, telecoms, and pure-software businesses rarely have a public total — those rows come back empty by design, not because of an error.
+-   **Treat results as directional.** Web-sourced counts reflect the most recent public data and can be slightly out of date. Including a source URL in your prompt output lets your team spot-check before acting on the number.
+
+**To save credits when scaling up:**
+
+1.  **Add a run condition** to gate the column on company type. Most SMBs are single-location, so running location research on them is not worth the credit spend. Open the column's **Run Settings → Only run if** and set a condition like `/industry is one of (Retail, Restaurants, Healthcare, Banking, Hospitality)` or gate on a minimum headcount.
+2.  **Run the locations column in isolation** before scaling to all columns — AI research columns run independently, so this isolates cost before your full run.
+3.  **Test on 50–100 rows per segment** before committing credits across thousands of rows. Fill rate varies by company mix, so a quick sample shows the real return before the full run.
+
 ### Who can create or edit agents?
 
 Agent access follows your workspace permissions. Editors can create and modify agents, while viewers can reference approved agents in tables.
