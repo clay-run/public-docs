@@ -107,6 +107,30 @@ Send Table Data **pushes** data from your current table into another table. It c
 -   Use the lookup result as a gate to control downstream actions (enrich/send/route only when criteria are met) — for a step-by-step example using a run condition, see [Conditional runs](conditional-runs.md).
 -   **Lookup not auto-running for new rows?** If the **Row Value** is a static string with no column reference (no `/` pick), Clay sees no upstream dependency and won't trigger the column when new rows are added. Fix: in **Run settings → Only run if**, add a condition that references an upstream column — for example, `/[Your source column] is present`. This creates the dependency Clay needs to fire the lookup automatically for each incoming row.
 
+**Example: Automatically find new contacts when an account is under-covered**
+
+When prospecting existing accounts, contacts can leave a company, change roles, or opt out of email — leaving you without enough active prospects to reach. To automatically trigger a fresh contact search for any account that falls below a coverage threshold:
+
+1. In your account-level table (one row per account), add a **Lookup Multiple Rows in Other Table** column:
+   - `Table to search` → your prospects table
+   - `Target column` → the company domain column in your prospects table
+   - `Filter operator` → `Equals`
+   - `Row value` → the company domain column in this table
+
+   This column returns a count of how many prospects you currently have on file for each account.
+
+2. Add a **Find People** enrichment column. Open its **Run settings → Only run if** and set the condition:
+
+   `/Prospects Count < 2`
+
+   Find People now only fires for accounts where you have fewer than 2 prospects on file. (Clay automatically ensures the lookup runs before this condition is evaluated — column order in the table does not matter.)
+
+3. To avoid returning contacts who are already in your prospects table, open the Find People source configuration and add your prospects table to the **Exclude people** filter. Exclusions match by individual LinkedIn profile URL, so your prospects table must contain a profile URL column for this to work. See [Find People in Clay](find-people-overview.md) for details.
+
+4. Add a **Send Table Data → Send row for each item in a list** column and point it at your prospects table. Each contact returned by Find People becomes a new row in your prospects table, where they flow into your existing enrichment and sequencing workflow.
+
+**Scaling to multiple workbooks**: Save the lookup and coverage-check logic as a [Function](functions.md). Define the company domain as the input and the coverage count as the output, then call that function from any account table without rebuilding the lookup each time.
+
 ### **Using lookups in the same table**
 
 You can also use `Lookup multiple rows` within the same table to find duplicates, count related records, or group rows by shared traits.
