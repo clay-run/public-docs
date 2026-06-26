@@ -22,6 +22,8 @@ To run a pre-built waterfall:
 5.  Optionally, choose to output the name of the successful provider and hide the provider columns for a cleaner table view.
 6.  Configure Run settings, including enabling auto-update or setting conditions for when the waterfall should run.
 
+**Tip: Adding a pre-built waterfall to another table.** Pre-built waterfall enrichments are standalone tools available on every table — there is no need to copy or replicate a waterfall column from an existing table. To use the same waterfall in a different table, open that table, click **Tools** in the top right corner, search for the enrichment by name (for example, *tech stack*), and add it. Configure the inputs and run settings for the new table independently.
+
 ## Editing an existing waterfall
 
 To add, remove, or reorder providers in a waterfall you've already saved:
