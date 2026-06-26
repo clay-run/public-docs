@@ -59,7 +59,7 @@ The `Validation` section in `Full configuration` controls how the waterfall eval
 
 `Validation Provider` (optional): The provider used to validate each email. When set, a validation column is added after each provider step.
 
-`Require validation success?`: When toggled on, the waterfall only accepts an email if the validation provider explicitly confirms it as valid. When off, the waterfall may accept emails where validation was inconclusive.
+`Require validation success?` (off by default): When toggled on, the waterfall only accepts an email if the validation provider explicitly confirms it as valid. When off, the waterfall may accept emails where validation was inconclusive — meaning unvalidated or catch-all emails can reach your final output. For cold outreach where bounce rates affect sender reputation, turn this on.
 
 `Validation strategy`: Controls your risk tolerance for what counts as a valid email. Select from:
 
@@ -180,3 +180,18 @@ You can chain as many validators as needed this way. Each column's **Only run if
 **Tip:** Before running at scale, test by right-clicking a single row and choosing **Run 1 cell**, or enable [sandbox mode](sandbox-mode.md) to try your full validation sequence without consuming live credits.
 
 For a full reference on writing conditional run formulas, see [Conditional runs](conditional-runs.md).
+
+### Why am I getting bounced emails from my Work Email waterfall?
+
+The most common configuration cause is that `Require validation success?` is not enabled. When this setting is off (the default), the waterfall accepts emails even if the validation provider returned an inconclusive result — meaning unconfirmed emails can reach your final output and eventually bounce.
+
+To fix this:
+
+1. Click the Work Email waterfall column header and select **Edit column** → **Full configuration**.
+2. In the **Validation** section, confirm a **Validation Provider** is selected.
+3. Toggle on **Require validation success?**.
+4. Click **Save**.
+
+With this on, only emails the validation provider explicitly marks as valid reach the final output. Rows where validation is inconclusive stay blank, and the waterfall continues to the next provider.
+
+**Note:** Bounced emails can also result from contacts whose job and email domain have changed — their work email no longer matches the company you're targeting. To detect these mismatches before sending, add a formula column that compares the domain in the contact's work email to the enriched company domain. See [Waterfall results and data quality](building-a-data-waterfall.md#waterfall-results-and-data-quality) for the full detection and remediation pattern.
