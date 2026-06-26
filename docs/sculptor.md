@@ -86,7 +86,7 @@ Sculptor can build visual, node-based workflows in addition to tables. These wor
 | Type | Description |
 | --- | --- |
 | **Manual** | Always present on every workflow. Runs the workflow when you click **Run** in the Triggers node. Cannot be disabled or removed — it fires only when you explicitly click Run and never runs automatically. |
-| **Audience segment** | Fires automatically when a contact or company enters a matching segment. Connect from a segment's **Send → Send to workflow** option. Multiple audience segment triggers can be added to the same workflow. |
+| **Audience segment** | Fires automatically when a contact or company enters a matching segment. Connect from a segment's **Send → Export action → Send to workflow** option. Multiple audience segment triggers can be added to the same workflow. |
 | **Webhook** | Triggers the workflow when an external system sends a request to the workflow's webhook URL. |
 
 ### Pausing an audience segment trigger
