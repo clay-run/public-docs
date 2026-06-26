@@ -68,7 +68,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   `Start/End times` (Custom schedule only): Set sending windows within the chosen timezone.
     -   `Minimum time between sends` (Custom schedule only): Adjustable from 3–30 minutes; longer delays improve deliverability.
     -   `Maximum new leads per day`: Caps the number of new leads contacted daily (in addition to account send limits).
-    -   `Campaign start date` (optional): Set a future launch date, or leave blank to start sending when the next window opens.
+    -   `Campaign start date` (Custom schedule only, optional): Set a future launch date, or leave blank to start sending when the next window opens.
 7.  Explore `Advanced settings` if needed:
     -   `Webhooks`: Route campaign events to a specific Webhook destination instead of the default Campaign Events Clay table. Example: Send Smartlead metrics to tools like OutboundSync or Enrichley for downstream routing.
     -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled)
