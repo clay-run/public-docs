@@ -200,7 +200,7 @@ The operators available when building a filter depend on the field's data type, 
 
 ### Adding enrichments
 
-**Best practice:** Define your audience filters _before_ running Bulk Enrich to control credit spend. Unlike Clay tables — where filtering is required before enrichment runs — Audiences allows you to enrich your entire dataset if no segment is applied. Always filter to the segment you want to enrich, test on 10 rows, and review results before scaling to the full audience.
+**Best practice:** Define your audience filters _before_ running Bulk Enrich to control credit spend. Like Clay tables, Audiences allows you to enrich your entire dataset if no segment is applied — filtering is a recommended best practice, not a product-enforced requirement. Always filter to the segment you want to enrich, test on 10 rows, and review results before scaling to the full audience.
 
 Bulk enrichments add contact data, firmographics, technographics, and more to your audience records at scale. They run on an audience and write results permanently back to All People — not just the segment you ran them from. This means any enriched field is immediately available as a filter in any other segment.
 
