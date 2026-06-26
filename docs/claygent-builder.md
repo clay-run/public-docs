@@ -41,6 +41,8 @@ If you've already built a Claygent prompt in a table that works well, you can sa
 
 This is useful when you've refined a prompt in one table and want to reuse it elsewhere without starting from scratch.
 
+**Note:** The Use AI column editor also has a **Templates** dropdown with a **Save as template** option. This is different from **Create Claygent** — "Save as template" stores the column's current configuration as a reusable column template that appears in the "Templates for Use AI" browser (open via Templates → **Browse templates**, then filter to **Created by: You**). Column templates are not standalone Claygents and will not appear in the Claygents section of the sidebar. Use **Create Claygent** when you want an agent you can deploy and manage across multiple tables.
+
 ## Building an agent with Sculptor
 
 Sculptor is Clay's conversational agent builder. Describe what you want your agent to do in natural language, and Sculptor generates the prompt, variables, output format, and test cases.
@@ -62,7 +64,7 @@ You can refine your agent by telling Sculptor what to adjust:
 
 _"Adjust the scoring so company fit is weighted at 60% and persona fit at 40%. Also break out company size as its own factor."_
 
-Sculptor rewrites the prompt and shows a "Prompt updated by Sculptor" confirmation. This saves the new prompt text — it does **not** re-run the test automatically. Click **Run** in the test panel to see how the updated prompt performs. Every change is saved automatically in version history.
+Sculptor rewrites the prompt and shows a "Prompt updated by Sculptor" confirmation. This saves the new prompt text — it does **not** re-run the test automatically. Click **Run** in the test panel to see how the updated prompt performs. Click **Save** to persist your changes to version history.
 
 ### Resuming previous conversations
 
@@ -218,13 +220,15 @@ This is the difference between managing duplicate prompts across multiple tables
 
 ## Version history
 
-Every change you make is saved automatically. You can:
+Edits to a Claygent are not auto-saved — click the **Save** button in the editor to persist your changes as a new version. The Save button is disabled when there are no unsaved changes. To access version history:
 
--   View all previous versions.
--   See what changed between versions.
--   Roll back to any previous version.
+1.  Open the Claygent in Claygent builder.
+2.  Click the **version badge** (e.g., **v3**) next to the Claygent's name at the top of the editor.
+3.  The version history panel opens, listing all versions from newest to oldest.
 
-Access version history from the Claygent builder editor.
+To inspect any version, click its row to expand it — you can review the prompt, model settings, inputs, output format, and tools for that version. There is no automated side-by-side diff; compare versions by expanding them individually.
+
+To restore a previous version, click the **revert** icon next to any non-current version. That version immediately becomes the current one.
 
 ## FAQs
 
@@ -253,6 +257,8 @@ Credit cost depends on the AI model you select. Claygent defaults to **Argon** f
 If your goal is to find people associated with companies at scale — rather than open-ended web research — **Find People** is significantly more cost-effective: the **Find Contacts at Company** action costs 0.5 credits per row on current pricing plans (1 credit per row on legacy plans), versus 3 credits per row for Argon-based Claygent. Use Claygent when you need judgment-based research (summarizing company news, scoring leads, writing personalized outreach). Use Find People when you need structured contact lookups at scale.
 
 When selecting a third-party model (Claude, GPT-4o, Gemini, etc.) in Claygent, the **Account** dropdown in your column settings or workflow node configuration controls how billing works. Selecting the default **Clay-managed account** means Clay's API key handles the request, and the run deducts **Data Credits** at the variable rate for that model — the `~` prefix on the cost estimate shown in the column sidebar (for example, `~4.8`) indicates a variable charge that is reconciled after each row completes. To avoid spending Data Credits on AI, click **Account** → **+ Add account** to connect your own Anthropic, OpenAI, or Gemini API key; with your own key, each Claygent row counts as **1 Action** but no Data Credits are charged. For a full model-by-model credit reference, see [How AI is priced](ai-pricing.md).
+
+**Note:** The **Account** dropdown and the option to use your own API key are available in both **table columns** and **Workflow Claygent nodes**.
 
 ### Can I test different models without changing my prompt?
 
