@@ -112,6 +112,20 @@ In the Campaigns homepage, you can access the `Global inbox` which centralizes r
 
 Check out the `Email accounts` tab to manage your fleet of sender accounts and `Global blocklist` to add or remove entries.
 
+### Managing sender accounts within a campaign
+
+Within each campaign's `Settings` → `Sender setup` section, you can view, filter, and take action on all sender accounts attached to that campaign. This is especially useful when managing campaigns with many email accounts.
+
+**Filtering your sender accounts:** Use the filter options to narrow by:
+
+-   **Warmup status** — show only accounts with warmup on or off.
+-   **Connection status** — show only connected or disconnected accounts.
+-   **Search by email** — find a specific sender account by address.
+
+**Taking action:** Click the three-dot (⋯) menu on a specific row for per-account actions, or select multiple accounts to apply bulk actions. Available actions include enabling or disabling warmup, updating send limits, updating sender variables, restricting access, and deleting the account from the campaign.
+
+**Note:** This sender accounts view is available in table campaigns. People campaigns — built on top of Audiences — are currently in closed beta; contact [Clay support](https://www.clay.com/contact) to request access.
+
 ## Update sender signatures
 
 You can add or update email signatures for any connected sender account.
