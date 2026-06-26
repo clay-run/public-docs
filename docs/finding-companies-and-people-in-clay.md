@@ -244,13 +244,13 @@ If profiles still appear to be missing after switching to LinkedIn URLs, use **C
 
 ### Re-running Find Companies shows far fewer results than my original run
 
-This is expected behavior. The Find Companies source tracks all previously imported companies internally — re-running returns only net-new companies that have never been imported by this source. **Deleting rows from your table does not reset this history**, so manually clearing rows and re-running will not bring those same companies back.
+This is expected behavior. The Find Companies source tracks all previously imported companies internally — re-running returns only net-new companies that have never been imported by this source. By default, deleting rows from your table **does** allow those companies to reappear on a subsequent re-run: company exclusions are driven by the source records currently present in the table, so removing a row removes that company from the exclusion list for future runs.
 
 **Example:** If your table already has 29,000 companies from a previous import, re-running with the same filters returns only the companies genuinely new since the last run — for example, 32 new companies. The existing 29,000 remain in your table; they are not replaced or removed.
 
-Deduplication is based on each company's unique profile ID, not your filter configuration. A company previously imported is skipped on re-run regardless of whether your filters changed.
+Deduplication is based on each company's unique profile ID, not your filter configuration. As long as a company's row is still present in the table, it is skipped on re-run regardless of whether your filters changed.
 
-**To re-import the full result set** (for example, when testing): use the **Replace existing results in table** option. Open the source (click the source column header → **Edit column**), click the **Import** button dropdown, and select **Replace existing results in table**. This resets the import history and re-imports all matching companies from scratch.
+**To re-import the full result set** (for example, when testing): use the **Replace existing results in table** option. Open the source (click the source column header → **Edit column**), click the **Import** button dropdown, and select **Replace existing results in table**. This clears the existing rows and re-imports all matching companies from scratch.
 
 ### Re-running Find People returns 0 new results
 
