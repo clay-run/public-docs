@@ -137,6 +137,8 @@ Column-level auto-run controls whether a specific enrichment runs automatically.
 -   If table-level is **ON** + column-level is **OFF**: That specific column won't run automatically.
 -   If table-level is **ON** + column-level is **ON**: Column runs automatically. ✅
 
+**Exception — scheduled column runs:** Turning a column's auto-run off (pausing it) does not prevent it from running if it is included in **Run Settings → Re-run columns on a schedule**. Scheduled re-runs always force-run and override the column-level auto-run toggle. To exclude a column from scheduled runs, remove it from the scheduled run list or add a run condition. See [Scheduled columns](scheduled-columns.md) for details.
+
 ### Conditional runs ("Only run if")
 
 Add conditional logic to control when an enrichment executes. The enrichment only runs when the formula evaluates to true.
