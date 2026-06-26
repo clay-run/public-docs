@@ -303,7 +303,6 @@ Once connected, click **Publish** to activate the trigger. Publish is a dropdown
 After a workflow is live, open the options menu (⋮) on the workflow card to manually run or re-run it on existing members:
 
 -   **Run all members that haven't run** — runs the workflow on segment members who joined before the trigger was published or who were otherwise skipped.
--   **Force run all members** — re-runs the workflow on every current segment member, including those that already ran. A confirmation prompt appears before this action runs, since it may use credits.
 
 ### **Sending audiences to workbooks or ad platforms**
 
@@ -359,6 +358,17 @@ Use Audiences by default for anything you want to reuse, segment on, or build au
 ### What if my integration isn't supported yet?
 
 Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data into a Clay table from any source, then use `Upsert Audiences Record` to push those records permanently into your audience. This works for any source Audiences doesn't yet natively support.
+
+### Can I write Audience data back to HubSpot?
+
+Native CRM write-back from Audiences to HubSpot — including the write-if-blank per-field setting available in Salesforce export — is not yet supported. HubSpot export is on the roadmap. The [Writing back to your CRM](#writing-back-to-your-crm) section currently covers Salesforce only.
+
+In the meantime, you can push enriched data to HubSpot and replicate write-if-blank logic using a Bulk Enrich table:
+
+1. Add a **HubSpot Get Object** action column to look up each record in HubSpot and retrieve the current field values.
+2. For each field you want to protect, add a **HubSpot Update Object** action column and configure a [conditional run](https://university.clay.com/docs/conditional-runs) to fire only when the value from step 1 is blank.
+
+Because each field needs its own conditional Update Object column, the total action cost grows with the number of fields you want to protect.
 
 ### How do I create a custom Audience field that isn't tied to Salesforce?
 
