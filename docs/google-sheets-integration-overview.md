@@ -18,7 +18,7 @@ You can pull rows from a Google Sheet directly into a Clay table as a source. Ea
 
 ### Setting up a Google Sheets source
 
-1.  In a Clay table, click `Tools` → `Import` (or `Actions` → `Import`, depending on your account).
+1.  In a Clay table, click `Tools` → `Import` (or `Sources`, depending on your account).
 2.  Search for `Google Sheets` and select the source option.
 3.  Connect your Google account and select your spreadsheet.
 4.  Choose the **Sheet ID** (tab) to import from.
@@ -90,3 +90,22 @@ Lookup a row in a Google Sheet using a column and a value. Optionally, you can a
 
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
+
+## Troubleshooting
+
+### 401 error when connecting your Google account
+
+If you see a **401 error** from Google when connecting your Google account to Clay (for example, "The server cannot process the request because it is malformed"), Google is blocking Clay's authorization request. This is most commonly caused by a Google Workspace admin restriction on your account.
+
+-   **If you're on a personal Google account**, try disconnecting and reconnecting your Google account. In Clay, go to your workspace `Settings` → `Connections`, remove the Google account, and re-add it.
+
+-   **If you're on a Google Workspace (company) account**, your Google Workspace admin needs to add Clay as a trusted app:
+
+    1.  In the [Google Workspace Admin Panel](https://admin.google.com/), go to `Security` → `API Controls` → `App Access Control`.
+    2.  Click `Configure new app`.
+    3.  Search for `Clay` and select it from the results.
+    4.  Choose which org units should have access, then click `Continue`.
+    5.  Select `Trusted` under **Access to Google Data** and click `Continue`.
+    6.  Review the summary and click `Finish`.
+
+    **Note:** Changes in Google Admin can take up to 24 hours to apply. Once complete, return to Clay and reconnect your Google account.
