@@ -39,6 +39,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links.
 4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead replies (excluding out-of-office replies, which we detect and work around).
     -   Toggle `Preview` mode to see real data from your source table in the message template
+    -   The left sidebar's **Lead setup** section includes an **Exclusions** card once an audience is selected. Click it to open a modal where you can select audience segments to exclude from enrollment and set a cooldown window (None, 30, 60, 90, or custom days). A filtered count on the card shows how many leads will be removed before sending. Exclusions can be edited while the campaign is in draft or paused status; they lock when the campaign is active or completed. *(Requires Campaigns V2, currently in beta — contact support if this option isn't visible in your workspace.)*
     -   Within each message, use `/` to access features such as:
         -   `Clean variable`: Reference synced lead data with safe fallbacks and optional formatting. When configuring a Clean variable, the **Fallback** field ("Simple text to display if variable is empty") is required — the variable will not save if left blank.
         -   `Sender variable`: Reference identifying information from the sending account
@@ -70,6 +71,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   `Webhooks`: Route campaign events to a specific Webhook destination instead of the default Campaign Events Clay table. Example: Send Smartlead metrics to tools like OutboundSync or Enrichley for downstream routing.
     -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled)
     -   `Pause leads at the same company on reply`: When a lead replies, automatically pause other leads with the same email domain. Off by default.
+    -   `Trigger cooldowns`: When enabled, enrolling a lead in this campaign marks them as ineligible for other campaigns during their cooldown window. Set the cooldown duration in the **Exclusions** card within the sequence editor's Lead setup sidebar.
 8.  Go to `Leads` to preview the messages for all people in your campaign
     -   `Send test email` to verify your template looks right
     -   Click the `Pencil` icon to spot-edit a message for a specific lead
