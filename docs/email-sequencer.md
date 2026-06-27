@@ -37,10 +37,6 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 3.  In the `Setup` tab, you can set:
     -   `Lead email address`: We automatically detect email address columns, but confirm this before proceeding.
     -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links.
-
-    Once an audience segment is connected, an **Exclusions** card appears in the `Lead setup` panel on the left side of the sequence editor. Click the pencil icon to filter leads at enrollment time:
-    -   **Audience segments to exclude**: Select Clay contact audiences — leads belonging to those segments are skipped when the campaign runs. A live count shows how many leads each exclusion removes.
-    -   **Cooldown window**: Skip leads who completed another campaign within the last N days. Options: None (no filter), 30, 60, or 90 days, or a custom number of days.
 4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead replies (excluding out-of-office replies, which we detect and work around).
     -   Toggle `Preview` mode to see real data from your source table in the message template
     -   Within each message, use `/` to access features such as:
@@ -74,7 +70,6 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   `Webhooks`: Route campaign events to a specific Webhook destination instead of the default Campaign Events Clay table. Example: Send Smartlead metrics to tools like OutboundSync or Enrichley for downstream routing.
     -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled)
     -   `Pause leads at the same company on reply`: When a lead replies, automatically pause other leads with the same email domain. Off by default.
-    -   `Trigger cooldowns`: When enabled, enrolling a lead here marks them as ineligible for other campaigns for the duration of their cooldown window. Off by default.
 8.  Go to `Leads` to preview the messages for all people in your campaign
     -   `Send test email` to verify your template looks right
     -   Click the `Pencil` icon to spot-edit a message for a specific lead
