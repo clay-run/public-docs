@@ -132,6 +132,10 @@ These restrictions exist for compliance reasons, as third-party sourced contact 
 
 **Note:** CPJ filtering during ad syncs is currently available for Enterprise workspaces. Contact Clay support if you'd like this enabled for your workspace.
 
+### **Do HubSpot contacts need to be "marketing contacts" to be used in Clay Ads?**
+
+No. HubSpot's "marketing contact" designation is a HubSpot billing concept — it determines which contacts count toward your HubSpot plan quota. It does not affect Clay's ability to read contacts from your HubSpot lists or views, enrich them, or include them in Ads enhanced matching audiences. Any contact in HubSpot, regardless of marketing contact status, can be pulled into Clay and processed for ad targeting.
+
 ### **Is this feature available on all plans?**
 
 Ad audiences are available on **Growth** and **Enterprise** plans:

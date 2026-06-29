@@ -40,7 +40,7 @@ You can import data from:
 **Note:** Setup must be completed separately for People, Companies, Leads, and Opportunities. Complete steps for `People` first, then repeat for `Companies`, then `Leads`, then `Opportunities`.
 
 1.  Click `Add data` → `Add Source` → select your [**Salesforce integration**](https://university.clay.com/docs/salesforce-integration-overview).
-    -   If you don't see an SFDC integration listed, contact your Growth Strategist.
+    -   Audiences uses the same Salesforce connections as regular Clay tables — if your workspace already has Salesforce set up, it will appear here for a workspace admin to select. If no Salesforce connection is listed yet, a workspace admin can add one under **Settings → Connections** → **Add connection** → Salesforce. Both the **User Sign In** and **Client Credentials** methods work for Audiences; for server-to-server or integration user setups, **Client Credentials** is often preferred — it requires your Salesforce My Domain URL, Consumer Key, and Consumer Secret from a Connected App. See the [Salesforce integration overview](https://university.clay.com/docs/salesforce-integration-overview) for full setup instructions.
 2.  Select `People` at the top of the sync panel.
 3.  Enable the `Import` toggle.
 4.  Leave `Export Sync` and `Create new Salesforce records` off for now.
@@ -252,6 +252,10 @@ If you're viewing a specific segment, use the dropdown at the top of the list to
 
 To inspect row-level results, click `⋮` on any enrichment card and select **Open bulk enrichment**. This opens the underlying bulk enrichment table where you can see each row's output and status.
 
+The bulk enrichment table has two tabs at the top — **Queued rows** and **Errored rows** — that let you switch between rows waiting to process and rows that encountered an error. It is not possible to filter within the bulk enrichment by specific error type; the Errored rows tab shows all rows with errors together. To see the error message for a specific row, open the bulk enrichment, click the **Errored rows** tab, and hover over the relevant cell.
+
+If a bulk enrichment was automatically paused after reaching a credit limit, click **Resume** in the bulk enrichment and select **From where you stopped** to continue processing the remaining rows without restarting from the beginning.
+
 **Filter the audience by the enriched field**
 
 Since enrichment results write permanently back to All People, you can filter any segment to see only records that received data:
@@ -448,7 +452,7 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 The Audiences screen does not have a direct CSV download button. To export audience data to CSV:
 
-1. Navigate to your audience segment and click **Send** → **Add to workbook**.
+1. Navigate to your audience segment and click **Send** → **Export action** → **Add to workbook**.
 2. In the resulting workbook table, click **Tools** → **Export** → **Download CSV**.
 
 Neither step consumes actions: sending records to a workbook is a free platform operation, and CSV downloads from tables do not count toward your action usage.
@@ -516,7 +520,7 @@ This means the filter answers "find me everyone who is a contact role on these s
 **To pull all contacts at accounts with matching deals:**
 
 1.  Build a **Companies** audience filtered by your deal criteria (for example, Stage, Amount, or deal name).
-2.  From your Companies audience, click **Send → Add to workbook** to export the matched accounts.
+2.  From your Companies audience, click **Send** → **Export action** → **Add to workbook** to export the matched accounts.
 3.  In the workbook, write a flag value to a custom Salesforce field on those accounts (for example, a text field set to `"target-campaign-q2"`).
 4.  In your **People** audience, add a filter on **Account → [your flag field] equals your flag value**.
 
