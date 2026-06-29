@@ -1,6 +1,6 @@
 ---
 title: Find People in Clay
-description: Discover relevant contacts and LinkedIn posts using Clay's Find People and Find professional posts sources, then enrich results with work email and mobile phone waterfalls.
+description: Discover relevant contacts and professional posts using Clay's Find People and Find professional posts sources, then enrich results with work email, mobile phone, and a person's professional posts and shares.
 last_synced: 2026-04-26T01:39:58.803Z
 ---
 
@@ -133,3 +133,51 @@ To build a table of people who liked, commented on, or shared a specific post, u
 **URL format requirement:** This source only accepts `activity` and `ugcPost` type post URLs. Share URLs — those containing `-share-` between the author slug and the post ID — are not valid and return an invalid-URL error. To identify the URL type: valid post URLs contain either `-activity-` or `ugcPost` in the path; share post URLs contain `-share-` and are not accepted.
 
 To get the correct URL: open the post, click **•••** (three dots) at the top right of the post, and choose **Copy link to post**. If the post is a reshare, open the original underlying post first and copy its link from there.
+
+## Getting a person's posts and shares
+
+**Get a person's professional posts and shares** is an enrichment you add to an existing table of people. It fetches that person's most recent professional activity — both original posts and reposts.
+
+**Adding the enrichment:**
+
+1.  In a table with a professional profile URL column, click **Add enrichment**.
+2.  Search for `Get a person's professional posts and shares` and select it.
+3.  Map **Professional URL** to your profile URL column.
+4.  Click **Save**.
+
+**Output structure:**
+
+The enrichment returns a single `posts` array. Each item in that array can be an original post or a repost, distinguished by the `activity_type` field:
+
+-   `activity_type: "post"` — an original post the person authored
+-   `activity_type: "share"` — content the person shared from someone else
+
+**Important:** There is no separate `shares` array. Both original posts and reposts are stored together in the same `posts` array.
+
+**Extracting post text:**
+
+For original posts, the text is in `posts[N].text`. For reposts, `posts[N].text` is `null` when the person shared without adding their own comment — in that case, the text of the original content being shared is in `posts[N].shared_post.text`.
+
+> **Note:** Use `shared_post` (snake_case) in formulas. The Cell details panel displays this field as "Shared Post," but formula references must use `shared_post`.
+
+To pull text from all activity — both original posts and reposts — into a single column, add a formula column and paste:
+
+```
+{{Get a person's professional posts and shares}}?.posts?.map(p => p.text || p.shared_post?.text || "").filter(Boolean).join("\n")
+```
+
+This returns one entry per item, each on its own line, skipping items where no text is available.
+
+**Exporting to CSV:**
+
+CSV export does not include nested JSON from enrichment columns — only a short preview appears in the export. To get the full post text into a CSV:
+
+1.  Add a formula column using the formula above to extract the text into a flat text field.
+2.  Export via **Tools → Export → Download CSV**.
+
+**Note:** Formula and text columns have an 8KB cell limit. If a person has many posts, the joined text may exceed this. In that case, create separate columns for individual posts by index — for example:
+
+-   Post 1: `{{Get a person's professional posts and shares}}?.posts?.[0]?.text || {{Get a person's professional posts and shares}}?.posts?.[0]?.shared_post?.text`
+-   Post 2: `{{Get a person's professional posts and shares}}?.posts?.[1]?.text || {{Get a person's professional posts and shares}}?.posts?.[1]?.shared_post?.text`
+
+Repeat for as many posts as you need. Each column stays under the 8KB limit. See [Cell size limits](manage-cell-data.md#cell-size-limits) for more detail.
