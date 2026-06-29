@@ -90,7 +90,7 @@ No. Clay's MCP integrations are pre-built apps within each supported platform's 
 -   **Glean:** Your Glean admin connects Clay through Glean's MCP Apps directory
 -   **Grok:** Connect Clay from within [grok.com](https://grok.com) through Grok's MCP integrations
 
-Each connector authenticates via OAuth 2.0 — when you click through to connect, you're redirected to log in to your Clay workspace to complete the authorization.
+Each connector uses Clay's OAuth flow for authentication — when you click through to connect, you're redirected to log in to your Clay workspace to complete the authorization.
 
 There is no generic Clay MCP server URL to enter manually. The "Add MCP server" configuration screen in tools like Glean is for custom third-party servers — Clay's integration connects through Glean's built-in app directory, not that form.
 
