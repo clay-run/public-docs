@@ -108,6 +108,8 @@ Check if a row exists in your Snowflake database.
 **Tips**
 
 -   **Always include `LIMIT` in your query.** The Lookup row action returns all matching rows. Queries that can match many records per row — such as `ILIKE '%pattern%'` searches — can produce a response large enough to trigger the error "The action function output exceeded the size limit." Adding a `LIMIT` clause keeps each result manageable: use `LIMIT 1` if you only need the first match, or a small number like `LIMIT 5` for a few top results. This is especially important when **Run in Batches** is enabled, because Clay combines results from all sub-queries into a single response.
+-   **Cell size limit:** Snowflake Lookup results are capped at 200 kB per cell. Select only the columns you need (instead of `SELECT *`) and use precise filter conditions to keep the payload small.
+-   **Dynamic column references:** When inserting a Clay column value into the SQL query using the `/` field picker, use a **text** or **URL** column — not a source column. Source columns store their full data as a JSON object; referencing one directly can cause the value to resolve as empty in the SQL string, producing a broad match (e.g., `ILIKE '%%'`) that returns far more rows than intended and can exceed the 200 kB limit. To work around this, copy the source column's value to a text column using a formula and reference that column in your query instead.
 
 **Batching**
 
