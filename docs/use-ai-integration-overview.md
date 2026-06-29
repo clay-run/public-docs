@@ -254,5 +254,15 @@ Clay's Scrape Website action includes JavaScript rendering (enabled by default) 
 **Workarounds:**
 
 -   **Export directly from the platform.** Most event management platforms, databases, and portals offer a built-in data export for logged-in users. Look for a "Download attendee list," "Export," or "Download CSV" option inside the platform once you're signed in.
--   **Import the exported file into Clay.** Once you have the data as a CSV, upload it to a Clay table via **Tools → Sources** and select your file. See [How to import your CSV into Clay](csv-import-overview.md) for step-by-step instructions, then add enrichment columns to fill in missing details like email addresses, social profiles, and full names.
+-   **Import the exported file into Clay.** Once you have the data as a CSV, upload it to a Clay table via **Tools → Import** and select your file. See [How to import your CSV into Clay](csv-import-overview.md) for step-by-step instructions, then add enrichment columns to fill in missing details like email addresses, social profiles, and full names.
 -   **Capture the underlying API request (advanced).** If the platform doesn't offer a built-in export, open your browser's DevTools **Network** tab while signed in, navigate to the page, and find the underlying API call that loads the data. You can replay that authenticated request — which carries your login cookies or token — to extract the raw data manually.
+
+### Scraping data spread across multiple pages
+
+Clay's Scrape Website action runs on one URL at a time. If the content you need is spread across many pages — for example, a directory paginated across 20 or 30 pages — you can scrape all pages in Clay by treating each page URL as its own row:
+
+1.  Create a column in your table that holds each page URL. You can add each page URL as a row manually, or use a formula column that appends a page number to the base URL (for example, `"https://example.com/directory?page=1"`, `"https://example.com/directory?page=2"`, and so on).
+2.  Add a Scrape Website enrichment column that references that URL column.
+3.  The enrichment will run against every row, scraping each page in parallel.
+
+This approach works well when each page URL loads its content directly and does not require a login. For pages behind authentication walls, see [Scrape Website returns empty results on login-required pages](#scrape-website-returns-empty-results-on-login-required-pages) above.
