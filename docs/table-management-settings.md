@@ -114,6 +114,14 @@ The out-of-date clock indicator on a cell means the cell is stale — it has an 
 
 A cell also shows as out of date when its inputs have changed since it last ran — for example, if an upstream column with auto-run enabled re-ran and updated its values, or if the column's own configuration was modified (such as editing a prompt). In these cases the indicator is informational: the existing value is still valid and usable downstream. In many cases re-running would produce the same result, so only trigger a re-run if you specifically need fresh output.
 
+**Manual tables and sequential column runs:** If your table is in Manual mode and you run enrichment columns one at a time from left to right, you may see the out-of-date indicator appear across most columns — including ones you've already run. This is expected behavior, not a bug. Every time you run an upstream column, Clay immediately marks all downstream columns that depend on it as out of date, because their inputs may have changed. In a table where columns feed sequentially into each other (for example, a scoring table), running them in order creates a wave of stale indicators that propagates forward as you work. **Your data is not broken**: cell values marked out of date because auto-run is off are still valid and can be referenced by other columns without blocking downstream runs.
+
+Since the table is in Manual mode, these indicators won't auto-clear. A few options:
+
+-   **Ignore the icons** if the values look correct — the clock icon in this context is a workflow indicator, not a data quality signal.
+-   **Run all columns in order** — right-click each column header from left to right and select **Run column → Run [N] empty or out-of-date rows** to clear all stale indicators in one pass.
+-   **Switch to auto-run with "Keep existing results"** — turn on Auto-run and check **Keep existing results**. The table will then automatically queue only empty, errored, or new cells when dependencies change, without re-running (and spending credits on) cells that already have results.
+
 If a cell **keeps** showing as out of date even after you re-run it, check whether an upstream column has auto-run enabled. Each time that upstream column runs and updates its output, Clay marks any column referencing it as out of date again — even one you just re-ran. To resolve this:
 
 -   **Disable auto-run on the downstream column** — the column will only run when you trigger it manually. This is the most targeted fix and leaves the upstream column untouched.
