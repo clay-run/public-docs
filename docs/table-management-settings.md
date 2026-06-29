@@ -40,7 +40,7 @@ To enable or disable auto-dedupe:
 
 **Note — simultaneous row inserts:** Auto-dedupe may not catch duplicates when rows with the same value are added at the same time — for example, when a bulk import, a batch webhook, or concurrent sends push rows within milliseconds of each other. Each insert is processed in its own transaction and is not aware of the other before both are committed to the table, so both can slip through. This is a known limitation. As a workaround, add a dedupe or filter step in your workflow just before any downstream push (such as a CRM or email sequencer) to catch any duplicates that slip through.
 
-**Viewing deduplication history:** To see which rows auto-dedupe has removed, open the table name dropdown → **Table history** → **Row deduplication** tab. The tab lists every row that was automatically deleted, showing the value that triggered the match — for example, "Duplicate record for Acme Corp automatically deleted." If your row count drops unexpectedly and auto-dedupe is enabled, this tab shows exactly what was removed and when.
+**Viewing deduplication history:** To see which rows auto-dedupe has removed, click the **History** dropdown in the bottom-right corner of the table and select **Row deduplication**. The modal lists every row that was automatically deleted, showing the value that triggered the match — for example, "Duplicate record for Acme Corp automatically deleted." If your row count drops unexpectedly and auto-dedupe is enabled, this view shows exactly what was removed and when.
 
 **Tip — choosing the right dedupe column:** The dedupe column determines what counts as a "duplicate." Deduplicating on **Company** keeps only one row per company name — correct for a company-focused table, but not for a contacts table where multiple people from the same company are expected. For contact-based tables, use a unique identifier like **Email** or a **professional profile URL** as the dedupe column instead.
 
@@ -341,7 +341,7 @@ Track changes to your table, including who made them and when. View updates to s
 -   Table settings (name, description, run settings)
 -   Column additions, updates, and deletions
 -   Detailed change diffs with AI summaries
--   Auto-dedupe row deletions (visible in the **Row deduplication** tab)
+-   Auto-dedupe row deletions (visible via **Row deduplication**)
 
 **Retention:** Change log retention varies by plan:
 
@@ -353,10 +353,10 @@ Track changes to your table, including who made them and when. View updates to s
 **To view table history:**
 
 1.  Open your table.
-2.  Open the table name dropdown → **Table history**. The History panel has two tabs:
-    -   **Change log** — shows settings changes, column additions, updates, and deletions with AI-generated summaries.
-    -   **Row deduplication** — lists every row removed by [auto-dedupe](#auto-dedupe), including the value that triggered the deletion.
-3.  In the **Change log** tab, review the timeline of changes, including who made each change and when.
+2.  Click the **History** dropdown in the bottom-right corner of the table. The dropdown has two separate options:
+    -   **Change log** — opens a sidebar showing settings changes, column additions, updates, and deletions with AI-generated summaries.
+    -   **Row deduplication** — opens a modal listing every row removed by [auto-dedupe](#auto-dedupe), including the value that triggered the deletion.
+3.  In the **Change log** sidebar, review the timeline of changes, including who made each change and when.
 4.  Click `View details` to get more information on a specific entry.
 
 For restoring your table to a previous configuration, see [Table versions](table-versions.md).
