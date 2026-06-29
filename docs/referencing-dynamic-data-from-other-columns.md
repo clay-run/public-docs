@@ -104,3 +104,29 @@ Let's say you want to reference the **URL** of the latest experience from a cont
 1.  Locate the **"experience"** list, which contains multiple items, or in this case experiences.
 2.  Expand the first item (Index **0**) to access its details.
 3.  From the item, select the specific endpoint, such as url. This allows you to reference endpoints such as the **URL** of the experience, **title** of the role, **company** name, or a **summary** of the experience.
+
+## Selecting which item to return from a list-based enrichment section
+
+Some enrichment sections return multiple entries as a list. In **Enrich Person**, for example, the Experience section may contain several past roles for a contact — each role is one item in that list. The same applies to Education (each degree is one item), Awards (each award is one item), and other sections like Certifications, Courses, Projects, Languages, Volunteering, and Publications.
+
+When you configure one of these sections, you'll see two controls working together:
+
+-   **Field toggles** — the on/off switches next to each field (URL, Title, Company, etc.) that control which fields are included in the enrichment output.
+-   **"For the below data, return results of the" dropdown** — selects which item in the list those field values are pulled from.
+
+The dropdown options are:
+
+-   **First item** — the first entry in the list
+-   **Second item** — the second entry in the list
+-   **Third item** — the third entry in the list
+-   **Last item** — the final entry in the list, regardless of total count
+
+Each section is independent. Choosing "second item" in the Experience section only affects Experience; Education, Awards, and every other section each have their own separate dropdown.
+
+### Sort order
+
+**Experience** is generally returned with the most recent role first, so "first item" typically corresponds to the person's current or most recent job. This ordering is consistent across most data providers but is not guaranteed for all sources.
+
+**Awards, Certifications, and all other list-based sections** do not have a defined sort order — the position does not reliably indicate which entry is most recent or most significant.
+
+If recency matters — for example, you want to personalize outreach with a contact's most recent award — do not rely on the dropdown position alone. Instead, run the enrichment without a position restriction to capture the full list, then add a **Use AI** column to identify the most recent entry based on its date.
