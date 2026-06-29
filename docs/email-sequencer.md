@@ -73,8 +73,9 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   `Webhooks`: Route campaign events to a specific Webhook destination instead of the default Campaign Events Clay table. Example: Send Smartlead metrics to tools like OutboundSync or Enrichley for downstream routing.
     -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled)
     -   `Pause leads at the same company on reply`: When a lead replies, automatically pause other leads with the same email domain. Off by default.
+8.  Go to the `Settings` tab to configure campaign-wide options. This tab includes:
     -   `Trigger cooldowns`: When enabled, enrolling a lead here marks them as ineligible for other campaigns for the duration of their cooldown window. On by default (takes effect only when a cooldown window is also set).
-8.  Go to `Leads` to preview the messages for all people in your campaign
+9.  Go to `Leads` to preview the messages for all people in your campaign
     -   `Send test email` to verify your template looks right
     -   Click the `Pencil` icon to spot-edit a message for a specific lead
 
@@ -123,7 +124,7 @@ Within each campaign's `Sender accounts` tab, you can view, filter, and take act
 **Filtering your sender accounts:** Use the filter options to narrow by:
 
 -   **Type** — filter by account type (Gmail, Outlook, or SMTP).
--   **Status** — filter by account status (Ready, Warming, Not warming, or Auth error).
+-   **Status** — filter by account status (Ready, Warming up, Not warming, or Auth error).
 -   **Search by email** — find a specific sender account by address.
 
 **Taking action:** Click the three-dot (⋯) menu on a specific row for per-account actions: enable or disable warming, update send limit, update sender variables, and remove the account from the campaign. Select multiple accounts to apply bulk actions; campaign-level bulk actions are limited to enabling warming and removing accounts from the campaign.
