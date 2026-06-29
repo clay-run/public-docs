@@ -479,3 +479,14 @@ When you run a people search across a company list and route results to a downst
 For example: if your original company list has 3,818 companies and people were found at 2,694 of them, your downstream company table shows 2,694 rows. The remaining 1,124 companies had no contacts found — this is expected behavior, not missing data. The downstream table is a filtered view of only the companies you can reach.
 
 To identify which companies had no people found, add a **Lookup Rows** column to your original company table (searching your people table, matched on company domain) and filter for rows where the count is zero.
+
+### Why do "Picture URL Copy" and "Picture URL Orig" return null in Enrich Person?
+
+This is expected behavior. Clay stopped returning professional profile picture URLs through the Enrich Person enrichment for privacy and compliance reasons. Both the **Picture URL Copy** and **Picture URL Orig** output fields are present but always return null for all customer workspaces — this is not a bug and is not plan-specific (Growth, Pro, and Enterprise plans are all affected equally).
+
+If you need professional profile photos in your workflow, the alternative is to use a third-party scraping tool integrated with Clay via HTTP API or webhooks:
+
+-   **Phantombuster** — uses your session cookie to access profile photos.
+-   **Apify** — offers profile scrapers with authentication.
+
+When using third-party scrapers, ensure your usage complies with the platform's Terms of Service and your organization's data privacy policies.
