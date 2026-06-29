@@ -203,7 +203,7 @@ You can review all active signals and their individual credit spend in the `Sign
 
 ### Why does my signal keep writing results to a new table instead of my existing one?
 
-Signals always write each matching event as a new row in a **newly-created output table**. Whether you start signal setup from inside an existing table (via `Tools` → `Monitor for...`) or from the Signals section / Workbook overview, the existing table you select is used as the **source input** (the people or companies to monitor), and a fresh output table is created to capture matching events. The existing table is not written to.
+Signals always write their matching events to a **new dedicated results table** — one row per event. Whether you start signal setup from inside an existing table (via `Tools` → `Monitor for...`) or from the Signals section / Workbook overview, the existing table you select is used as the **input source** that supplies the companies or contacts to monitor; it is not the destination for the events. Clay creates a fresh output table to capture matching events.
 
 Signals always add **new rows** for each matching event — one row per event, not a new column on existing rows. If your goal is to see signal data (such as a recent funding round) alongside your existing contacts, see the next FAQ.
 
