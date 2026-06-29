@@ -254,6 +254,10 @@ To invite a new member to your workspace:
 
 The invited person will receive an email to join the workspace with the specified role. The person will appear in your team list with a **Pending** status until they accept.
 
+**If the invitee sees the error "This invite was sent to a different email address"**
+
+This error appears when the invitee is already logged into Clay with a different account than the one the invite was sent to. Clay verifies server-side that the logged-in account's email matches the invite email — if they don't match, the invite cannot be accepted from that session. To resolve it, have the invitee open the invite link in an **incognito or private browsing window** (where no Clay session is active) — they will be prompted to sign in or sign up with the correct email and can then accept the invite. Alternatively, they can log out of Clay first and then click the invite link again.
+
 ## **Change a team member's role**
 
 To update a member's role:
