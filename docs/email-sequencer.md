@@ -46,7 +46,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
         -   `Spintax variable`: Choose a random value from a list
         -   `Rows from [Table]`: Directly reference synced data (Clean variables are recommended to handle empty values safely).
         -   (HTML only): If enabled, use hyperlinks, inline images, fonts, and rich text formatting.
-5.  Go to `Settings` to add your email account:
+5.  Go to `Sender accounts` to add your email account:
     -   `Google OAuth` (recommended): Connect your Google Workspace account via OAuth.
         -   ⚠️ Note: You or your Workspace admin must authorize the Clay sequencer app for your domain, or you'll see an access error.
     -   `Microsoft Outlook OAuth` (recommended): Connect your Outlook account via OAuth.
@@ -110,7 +110,21 @@ You can view and manage all campaigns from the `Campaigns` tab on your home scre
 
 In the Campaigns homepage, you can access the `Global inbox` which centralizes replies across all campaigns, giving you one place to review and manage every response. `Global analytics` shows you how all of your campaigns are performing.
 
-Check out the `Email accounts` tab to manage your fleet of sender accounts and `Global blocklist` to add or remove entries.
+The `Email accounts` tab on the Campaigns homepage shows all sender accounts connected to your workspace. You can filter accounts by type (Google OAuth, Microsoft Outlook OAuth, or SMTP), status (Ready, Warming up, Not warming, Auth error), owner, source, or domain — helpful when managing dozens or hundreds of accounts. Select multiple accounts to take bulk actions: enable or disable warming, update send limits, toggle workspace visibility, or delete accounts. The `Global blocklist` tab lets you add or remove email addresses and domains.
+
+### Managing sender accounts within a campaign
+
+Each campaign has a dedicated `Sender accounts` tab for viewing, searching, filtering, and acting on all sender accounts attached to that campaign — helpful when managing campaigns with large numbers of email accounts.
+
+**Filtering your sender accounts:** Use the toolbar to narrow by:
+
+-   **Search** — find a specific sender account by email address.
+-   **Type filter** — show only Google, Outlook, or SMTP accounts.
+-   **Status filter** — show only accounts in a particular status (active, paused, disconnected, etc.).
+
+**Taking action:** Click the three-dot (⋯) menu on a specific row for per-account actions, or select multiple accounts to apply bulk actions. Available actions include enabling or disabling warmup, updating send limits, updating sender variables, and removing accounts from the campaign.
+
+**Note:** This sender accounts view is available in table campaigns. People campaigns — built on top of Audiences — are currently in closed beta; contact [Clay support](https://www.clay.com/contact) to request access.
 
 ## Update sender signatures
 
@@ -119,13 +133,11 @@ You can add or update email signatures for any connected sender account.
 **From a specific campaign:**
 
 1.  Go to `Campaigns` from your home screen.
-2.  Click on the name of your campaign under `Sequences`.
-3.  Navigate to the `Settings` tab.
-4.  Scroll to the `Sender setup` section.
-5.  Under `Email accounts`, locate the sender you want to edit.
-6.  Click the three-dot (⋯) menu on the right side of that sender's row.
-7.  Select `Update sender variables`.
-    -   You can also access this via the `Email accounts` tab.
+2.  Click on the name of your campaign.
+3.  Navigate to the `Sender accounts` tab.
+4.  Locate the sender you want to edit.
+5.  Click the three-dot (⋯) menu on the right side of that sender's row.
+6.  Select `Update sender variables`.
 
 ## Best practices
 
@@ -160,7 +172,7 @@ The daily send limit is set at the **email account level**, not per campaign. If
 
 To increase your total daily sending capacity:
 -   **Add more email accounts** — each additional account has its own independent daily budget. With two accounts you can send up to twice as many emails per day.
--   **Increase the send limit** on an existing account — open the campaign's `Sender setup`, click the three-dot (⋯) menu next to the account, and select `Update send limit`.
+-   **Increase the send limit** on an existing account — open the campaign's `Sender accounts` tab, click the three-dot (⋯) menu next to the account, and select `Update send limit`.
 
 Keep in mind that sending high volumes of cold email from a single inbox puts your domain at risk. Starting near the default (20 emails/day) and scaling by adding accounts rather than increasing individual limits is safer for deliverability.
 
@@ -177,7 +189,7 @@ For example: an 08:00 AM–07:00 PM window is 660 minutes. With the minimum set 
 To shorten the estimated time:
 -   **Lower the min time between emails** — a smaller gap increases daily sends per account. Shorter intervals can raise spam risk; the [Best practices](#best-practices) section recommends pacing sends throughout the day.
 -   **Add more sender accounts** — each account adds its own independent daily capacity.
--   **Increase the account send limit** — in `Sender setup`, click the three-dot (⋯) menu next to an account and select `Update send limit`.
+-   **Increase the account send limit** — in the `Sender accounts` tab, click the three-dot (⋯) menu next to an account and select `Update send limit`.
 
 ### My "Sync lead data to campaign" column is showing a warning. What does it mean?
 
@@ -223,7 +235,7 @@ Email signatures are configured at the **sender account level**, not per individ
 
 To set or update a signature:
 
-1.  Open your campaign and go to `Sender setup`.
+1.  Open your campaign and go to the `Sender accounts` tab.
 2.  Click the three-dot menu (⋯) next to the sending account.
 3.  Select `Update sender variables`.
 4.  Enter your text in the `Signature` field.
@@ -239,7 +251,7 @@ When you add accounts via OAuth, we will automatically set up labels and filters
 
 ### Why did warmup turn itself off?
 
-Warmup automatically disables when your emails are being throttled by your email provider. This protects your sender reputation. You can manually turn warmup back on from the `Sender Accounts` tab once the throttling issue is resolved.
+Warmup automatically disables when your emails are being throttled by your email provider. This protects your sender reputation. You can manually turn warmup back on from the `Sender accounts` tab once the throttling issue is resolved.
 
 ### I'm getting an error that my email account is already in use. What does this mean?
 
