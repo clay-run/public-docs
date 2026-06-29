@@ -108,3 +108,11 @@ Once enriched, you can:
 
 -   Sync call summaries to **Salesforce**, **Snowflake**, or **Google Sheets.**
 -   Trigger **follow-up emails**, CRM updates, or analytics workflows in Clay.
+
+## `Guide` Reassigning a prospect to a new flow owner
+
+To move a prospect from one Gong Engage flow owner to another—for example, when reassigning an overdue SLA contact to a new rep:
+
+1.  **Remove the prospect from their current flow:** Add a **Remove Prospect from Flow** enrichment action. Provide the current owner's email, the Flow ID, and the CRM Prospect ID (the contact's Salesforce or HubSpot ID).
+2.  **Look up the new owner's email:** If your table doesn't already have the new owner's email, add a **Salesforce Lookup Record** enrichment column set to look up the **User** object using the contact's `OwnerId` field and pull back the `Email` field.
+3.  **Re-enroll the prospect under the new owner:** Add an **Add Prospect to Flow** enrichment action. Map the new owner's email to **Prospect Owner email**, provide the Flow ID, and map the CRM Prospect ID.
