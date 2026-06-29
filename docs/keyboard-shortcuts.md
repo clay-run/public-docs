@@ -23,6 +23,7 @@ Work faster in Clay with keyboard shortcuts.
 -   `Cmd/Ctrl` + `F` — Open table search
 -   `Cmd/Ctrl` + `K` (or `Cmd/Ctrl` + `P`) — Open search to jump between tables in your workbook
 -   `Cmd/Ctrl` + `E` — Open the enrichment panel
+-   `Cmd/Ctrl` + `I` — Toggle the Sculptor AI chat panel
 -   `Cmd/Ctrl` + `G` — Jump to a specific row number
 
 ### Quick actions
