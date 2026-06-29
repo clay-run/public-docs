@@ -8,7 +8,7 @@ last_synced: 2026-06-09T00:00:00.000Z
 
 Find companies or people similar to a seed list using Clay's native lookalike engine.
 
-Clay Lookalikes is a first-party Clay feature that uses AI-powered embeddings to find companies and people that closely match your best customers, partners, or ICP — without manually specifying filters. It is the recommended replacement for Ocean.io's lookalike features, [which are being deprecated](#migrating-from-ocean-io).
+Clay Lookalikes is a first-party Clay feature that uses AI-powered embeddings to find companies and people that closely match your best customers, partners, or ICP — without manually specifying filters. It is the recommended replacement for Ocean.io's lookalike features, [which have been removed from Clay](#migrating-from-ocean-io).
 
 ## Accessing Clay Lookalikes
 
@@ -76,4 +76,4 @@ Find people similar to a seed person. In addition to the standalone **Find Peopl
 
 ## Migrating from Ocean.io
 
-Clay Lookalikes replaces Ocean.io's lookalike enrichments and sources. Ocean.io's lookalike features are being deprecated — see [Ocean.io integration](ocean-io-integration-overview.md) for the deprecation notice and migration guidance.
+Clay Lookalikes replaces Ocean.io's lookalike enrichments and sources. Ocean.io's lookalike features have been removed from Clay — see [Ocean.io integration](ocean-io-integration-overview.md) for migration guidance.
