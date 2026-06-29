@@ -95,7 +95,9 @@ If your table has no rows with data yet, Clay skips this validation and accepts 
 
 **Update existing rows on re-run**
 
-When re-running, updates the matching row in the destination table instead of creating a new one.
+Controls what happens when you re-run a source row that has already been sent. When on (default), re-running updates the corresponding destination row with the current source values. When off, re-running creates a new destination row instead. **Brand-new source rows — those being sent for the first time — always create a new row in the destination table, regardless of this setting.**
+
+This setting controls row-level behavior only. It is separate from the column-level overwrite that occurs when you map a source field to an existing plain-text destination column (see [Mapping table data in the destination table](#mapping-table-data-in-the-destination-table)). Turning this setting off does not prevent column-level overwrites triggered by column mapping or by the **Auto-map existing columns** setting below.
 
 **Auto-extract new columns**
 
@@ -133,6 +135,8 @@ Repeat this process for each field you want to extract into its own column.
     -   **Lookup Single Row / Lookup Multiple Rows do not count toward this limit.** If you're using Send Table Data primarily to check whether a record exists in another table (for example, a "Do Not Contact" or "Recently Contacted" list), replace those with Lookup Rows — they return the same match result without consuming a connection slot. See [Lookup Rows](https://university.clay.com/docs/lookup-rows) for setup instructions.
     -   If multiple workbooks all write to the **same destination table**, that table counts as only **one** connection regardless of how many workbooks or columns point to it. Centralizing writes into a small number of shared destination tables can significantly reduce your connection count.
     -   This limit applies across all plans.
+-   **A Send Table Data column fails with "Destination table already has the maximum number of routing sources (20)":** Each destination table can receive data from at most **20 source tables**. When a new Send Table Data connection is attempted and the destination is already at 20, Clay rejects the registration and the column fails to save. To free up a slot, open the destination table, right-click the **"Rows from: \[source table name\]"** column header, select **Edit source**, and remove any old or unused sources. Alternatively, point this workflow at a fresh destination table, which starts with zero sources.
+-   **A Send Table Data column shows "Missing source id for routing action with destination \[table\_id\]":** This error means the column has no valid source registration linking it to the destination. The most common cause is **duplicating a table** that already contains a Send Table Data column — the copy loses its source-destination link and cannot run. The fix is to delete the broken Send Table Data column and create a new one from scratch: click **+ Add column → Send table data** and reselect your destination table. Avoid using table duplication as a shortcut to pre-configure a Send Table Data column — duplicated columns always need to be fully reconfigured.
 -   **Data can only be sent in a linear direction** (A → B → C). In other words, loops are not possible (A → B → C → A).
     -   If you want to receive data in the table you're also sending data from, use one of these other actions:
         -   `Lookup Multiple Rows in Other Table`
