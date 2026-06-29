@@ -36,7 +36,10 @@ Use this action to create an object in HubSpot.
 
 **Inputs**
 
--   **Object type:** The type of HubSpot object to create.
+-   **Object type:** The type of HubSpot object to create (Contact, Company, Deal, Lead, or a custom object type).
+-   **Properties:** After selecting an object type, HubSpot's writable properties load dynamically. Map each Clay column to the HubSpot property you want to populate (for example, map your company name column to `name` and your domain column to `domain`).
+
+**Note:** For Contact, Company, Deal, and custom object types, associating a created record with another HubSpot object (for example, linking a contact to a company) is not part of the Create Object step — it requires a separate **Create association** action. See [How do I create a contact-to-company association in HubSpot from Clay?](#how-do-i-create-a-contact-to-company-association-in-hubspot-from-clay) for a step-by-step workflow. For **Lead** objects, association fields (to object type, association type, and to object ID) are built directly into the Create Object step and appear inline after you select Lead as the object type.
 
 ### `Action` Lookup object
 
@@ -166,6 +169,31 @@ Changing a HubSpot list's membership criteria (for example, tightening segment f
 
 To refresh your table to reflect the updated list, see [Why doesn't my Clay table update when I change the source filters?](https://www.clay.com/university/guide/sources#faqs) in the Sources guide.
 
+### When I schedule my HubSpot list source to refresh, does it pick up removals from the list?
+
+**No — scheduled refreshes are additive only.** When a HubSpot list source runs on a schedule, it adds new records from the list to your Clay table but does not remove records that have since been dropped from the list. Records stay in your table even after they are no longer members of the HubSpot list in HubSpot.
+
+**Schedule options:** The default frequency when setting up a scheduled source is daily. You can also choose weekly or monthly. To set or change the schedule, click the source column title, select your source, and choose **On a schedule** under **Run this source**. For all available intervals and plan requirements, see [Scheduled sources](https://www.clay.com/university/guide/scheduled-sources).
+
+**If your HubSpot list rotates periodically** (for example, a quarterly suppression or exclusion list that gets replaced with a new list), a scheduled refresh of the existing source will not remove the old records. To get a clean slate:
+
+-   **Create a new table** from the updated list — this starts a fresh import containing only the current list members.
+-   **Manually delete** the rows you want to remove from the existing table, then re-run the source to pull in any new additions.
+
+For more on additive source behavior across all source types, see [Will rows already in my table be removed if they no longer match the source filter?](https://www.clay.com/university/guide/sources#will-rows-already-in-my-table-be-removed-if-they-no-longer-match-the-source-filter) in the Sources guide.
+
+### My HubSpot list has more than 50,000 records — how do I process all of them?
+
+The **Import objects from HubSpot** source is limited to 50,000 records. Enabling auto-delete does not bypass this limit for HubSpot imports — the 50,000-record ceiling is enforced by the import's pagination cap, so deleting rows after the fact does not allow the source to pull additional records beyond what was paginated.
+
+For large, one-time batch processing (for example, 100k companies), use [Bulk Enrichment](bulk-enrichment.md) instead of a standard table:
+
+1. Export your HubSpot list to CSV from HubSpot.
+2. Create a Bulk Enrichment table (`New` → `Bulk enrichment`) and select **Import from CSV** as the source type.
+3. Configure your enrichment columns and run.
+
+Bulk Enrichment handles large datasets without the 50,000-row limit. Note that HubSpot is not yet available as a direct Bulk Enrichment CRM import source (Salesforce and CSV only today); exporting to CSV first is the current workaround.
+
 ### Why does my HubSpot lifecycle stage column show an internal code instead of the display label?
 
 HubSpot's API returns internal codes for enumeration/dropdown fields rather than the human-readable labels shown in HubSpot. For example, a contact at the "Marketing Qualified Lead" stage will appear as `marketingqualifiedlead` in Clay. This applies to any HubSpot dropdown property, not just lifecycle stage.
@@ -204,7 +232,7 @@ If your use case requires storing free-form industry values that don't map to a 
 
 If a property exists in HubSpot but doesn't get updated when you run the Update Object action, two things are worth checking:
 
-**Blank values are silently skipped.** The **Ignore blank values** setting is enabled by default. When enabled, any property field that is empty or null in your Clay table is not sent to HubSpot — the existing HubSpot value remains unchanged. If the column you are mapping has no value for a given row, the update for that property is skipped. To override this, open the column settings and disable **Ignore blank values** — but note that doing so will overwrite existing HubSpot data with blank values from Clay. **Note:** If *every* property mapped in that column is blank for a row, the column shows a "No properties found to update" error rather than silently skipping — see the FAQ below for how to address this with a run condition.
+**Blank values are silently skipped.** The **Ignore blank values** setting is enabled by default. When enabled, any property field that is empty or null in your Clay table is not sent to HubSpot — existing HubSpot values are left unchanged with no error shown. If the column you are mapping has no value for a given row, the update for that property is skipped. To override this, open the column settings and disable **Ignore blank values** — but note that doing so will overwrite existing HubSpot data with blank values from Clay. **Note:** If *every* property mapped in that column is blank for a row, the column shows a "No properties found to update" error rather than silently skipping — see the FAQ below for how to address this with a run condition.
 
 **A different HubSpot account is selected.** If multiple HubSpot accounts are connected to your workspace (for example, if teammates each added their own HubSpot connection), the Update Object action may be authenticating against a different instance than the one you intend to update. Open the column settings and confirm the HubSpot account shown is the correct one. You can verify by running a **Lookup object** action on the same record — if the property appears updated there, the write reached the right account.
 
