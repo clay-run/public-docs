@@ -307,15 +307,27 @@ A cold lead is someone who doesn't already know about your business and you. A w
 
 These are disclosed when you add your account via OAuth. We request: full Gmail email access, basic Gmail settings access, OpenID, user email address and profile picture. Additionally, you will need to have a Google Workspace admin authorize our app to request these permissions for the domain(s) you want to add to the sequencer.
 
+### I'm seeing "Access blocked: clay.com has not completed the Google verification process" when I try to connect my Google account. What does this mean?
+
+This error is expected — Clay's sequencer uses automated warmup sends, which prevents it from passing Google's standard app verification process. It does not mean Clay is broken or untrustworthy. The fix is for your **Google Workspace admin** to authorize Clay Sequencer as a Trusted app in your Google Admin panel. Until they do, all users in your domain will see this error when attempting to connect via OAuth.
+
+To resolve it, have your admin follow the steps in [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth). Changes can take up to 24 hours to apply.
+
+If your admin has already completed those steps and you still see the error, see [I followed the admin setup steps but still see "Access blocked"](#i-followed-the-admin-setup-steps-but-still-see-access-blocked-claycoms-has-not-completed-the-google-verification-process-what-should-i-do).
+
 ### How do I authorize Clay's app in the Google Admin panel?
 
-Follow the instructions in the modal and have your Google Workspace admin set our Clay sequencer app to `Trusted` — not `Specific Google Data`. Selecting `Specific Google Data` will not grant all the permissions Clay needs, and the access error will persist. Despite its name, `Trusted` only allows Clay to request Gmail-specific permissions (full email access, basic email settings, OpenID, and your profile) — it does not grant access to Google Drive, Calendar, Docs, or any other Google service. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the Clay sequencer.
+Follow the instructions in the modal and have your Google Workspace admin set our Clay sequencer app to `Trusted` — not `Specific Google Data`. When searching in Google Admin, the app is listed as **Clay Sequencer (Web)** — the `(Web)` suffix indicates the web client type and refers to the same Clay Sequencer app. Selecting `Specific Google Data` will not grant all the permissions Clay needs, and the access error will persist. Despite its name, `Trusted` only allows Clay to request Gmail-specific permissions (full email access, basic email settings, OpenID, and your profile) — it does not grant access to Google Drive, Calendar, Docs, or any other Google service. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the Clay sequencer.
 
 ### I followed the admin setup steps but still see "Access blocked: clay.com has not completed the Google verification process." What should I do?
 
 This error is expected — Clay's sequencer uses automated warmup sends, which prevents the app from passing Google's standard verification process. Admin approval in your Google Workspace Admin panel is the intended workaround; Clay's app will not become Google-verified.
 
-If the error persists more than 24 hours after your admin marked the app as `Trusted`, confirm that they approved the app for the exact domain of the email account you're connecting (e.g., for `ryan@company.com`, the admin must approve for `company.com` specifically — not a different domain they manage). If the error still persists, [contact Clay support](https://www.clay.com/contact).
+If the error persists more than 24 hours after your admin marked the app as `Trusted`, confirm that they approved the app for the exact domain of the email account you're connecting (e.g., for `ryan@company.com`, the admin must approve for `company.com` specifically — not a different domain they manage). If you're connecting accounts from multiple domains, each domain requires its own separate Trusted configuration — having one domain approved does not automatically cover the others. Your admin can verify which org units are currently configured by going to Google Admin → Security → API Controls → App Access Control and checking the Clay Sequencer app's org unit count. If it's still blocked after verifying the domain, contact support.
+
+### What exact Microsoft permissions does sequencer require?
+
+These are disclosed when you add your account via OAuth. We request: offline\_access, openid, email, profile, Mail.Send, Mail.Send.Shared, Mail.ReadWrite, Mail.ReadWrite.Shared, [User.Read](http://User.Read), MailboxSettings.ReadWrite.
 
 ### How are replies categorized in the Campaign Events table?
 
@@ -330,6 +342,15 @@ Note that `EMAIL_REPLY` fires for every reply (including out-of-office), while `
 ### How do I handle replies from leads?
 
 Replies are available in the `Replies` tab of your campaign and in the campaign events table. You can reply directly from Clay using the `Reply to lead` enrichment in the campaign events table.
+
+### Why does the reply body show HTML instead of plain text?
+
+This is expected. When a lead replies using an HTML-capable email client like Microsoft Outlook, the reply arrives in HTML format. The `Reply Message` field in your campaign events table includes two sub-fields:
+
+-   `Html`: the raw HTML body as sent by the lead's email client
+-   `Text`: a plain text version of the same content
+
+To work with the reply as clean text — for example, when mapping it to a CRM note or passing it to an AI action — use the `Text` sub-field instead. If you prefer to use `Html` and strip the tags, add a formula column to do so.
 
 ### Useful links
 

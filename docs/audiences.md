@@ -14,7 +14,7 @@ Use it to build dynamic segments across millions of records, run automated enric
 
 Setting up Audiences is four major steps:
 
-1.  **Import your data** — connect Salesforce, HubSpot, Snowflake, or Google BigQuery and bring your records into Audiences.
+1.  **Import your data** — connect Salesforce, HubSpot, Snowflake, Google BigQuery, or Databricks and bring your records into Audiences.
 2.  **Create audiences** — build dynamic segments using filters to target the right contacts and accounts.
 3.  **Enrich and monitor** — run bulk enrichments and signals that write data permanently back to each record.
 4.  **Write back to your CRM** — sync enriched data and segment membership back to Salesforce.
@@ -32,6 +32,7 @@ You can import data from:
 -   A new people or companies search
 -   Snowflake
 -   Google BigQuery
+-   Databricks
 -   Salesforce
 -   HubSpot
 
@@ -138,6 +139,29 @@ Clay syncs data from Google BigQuery on the following schedules:
 
 -   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured, importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
 -   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
+
+### Importing from Databricks
+
+**Note:** Databricks import is not yet generally available and is still in active development — it is not currently offered as a customer beta. Contact your account team if you'd like to be notified when it ships.
+
+When Databricks import becomes available, setup will follow these steps:
+
+1.  Click `Add data` → `Add Source` → select your [**Databricks integration**](https://university.clay.com/docs/databricks-integration).
+    -   If you haven't connected Databricks yet, click `+ Add account`. See the [Databricks integration](https://university.clay.com/docs/databricks-integration) for setup instructions.
+2.  Select a `Databricks SQL warehouse`.
+3.  Enter a SQL `SELECT` query to define which records to import (for example, `SELECT * FROM my_catalog.my_schema.contacts WHERE updated_at > '2024-01-01'`).
+    -   Click `Test` to preview your data before continuing.
+4.  Confirm the preview looks correct, then click `Continue`.
+5.  Define the `Unique Identifier`:
+    -   For People: `email` or `user_id`.
+    -   For Companies: `company_id` or `domain`.
+6.  (Optional) Configure a `Timestamp Field` for incremental syncing.
+7.  Map your Databricks columns to Audience fields.
+8.  Review and click `Confirm` — Clay begins importing immediately.
+
+**Sync timing and behavior**
+
+Sync cadences for Databricks (including incremental sync intervals and full sync behavior) are still being finalized and will be documented when Databricks import ships. Full sync for Databricks is not yet implemented.
 
 ### Importing from people and companies search
 
@@ -358,6 +382,17 @@ Use Audiences by default for anything you want to reuse, segment on, or build au
 ### What if my integration isn't supported yet?
 
 Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data into a Clay table from any source, then use `Upsert Audiences Record` to push those records permanently into your audience. This works for any source Audiences doesn't yet natively support.
+
+### Can I write Audience data back to HubSpot?
+
+Native CRM write-back from Audiences to HubSpot — including the write-if-blank per-field setting available in Salesforce export — is not yet supported. HubSpot export is on the roadmap. The [Writing back to your CRM](#writing-back-to-your-crm) section currently covers Salesforce only.
+
+In the meantime, you can push enriched data to HubSpot and replicate write-if-blank logic using a Bulk Enrich table:
+
+1. Add a **HubSpot Lookup object** action column to look up each record in HubSpot and retrieve the current field values.
+2. For each field you want to protect, add a **HubSpot Update Object** action column and configure a [conditional run](https://university.clay.com/docs/conditional-runs) to fire only when the value from step 1 is blank.
+
+Because each field needs its own conditional Update Object column, the total action cost grows with the number of fields you want to protect.
 
 ### How do I create a custom Audience field that isn't tied to Salesforce?
 
