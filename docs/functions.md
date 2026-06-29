@@ -84,7 +84,7 @@ Functions is available on all paid plans at no additional cost, including paid l
 
 ### Does running a function cost extra credits?
 
-No. Functions do not add their own credit or action cost. Credits are consumed by the individual enrichment actions inside the function (e.g., a LinkedIn lookup, an email waterfall step) and are attributed to the table where the function is called, not to the function itself. If a function only contains formula columns and no enrichment steps, it will cost zero credits. Credit cost is visible in the function editor panel and also in the table where the function is referenced.
+No. Functions do not add their own credit or action cost. Credits are consumed by the individual enrichment actions inside the function (e.g., a LinkedIn lookup, an email waterfall step) and are attributed to the table where the function is called, not to the function itself. If a function only contains formula columns and no enrichment steps, it will cost zero credits. Estimated cost is visible in the function editor panel and also in the table where the function is referenced.
 
 ### Is there a row limit for functions?
 
