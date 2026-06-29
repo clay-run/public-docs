@@ -73,7 +73,7 @@ This is useful when you need to process or extract information for all entries i
 
 **Example**
 
-Let's say you want to pull the first names of all employees in a list:\
+Let's say you want to pull the first names of all employees in a list:
 
 1.  Locate the **"people"** list, which contains multiple items.
 2.  Select **Insert all items** to reference the entire list.
