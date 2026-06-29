@@ -22,6 +22,14 @@ A common TAM sourcing mistake is pulling a large list and then running enrichmen
 
 **Note:** Technographics filtering is also available directly in company search and costs 3 credits per company returned — cheaper in most cases than running a technographic enrichment after the fact, and more direct since you only pay for companies that already match your tech criteria. Technographics data is also available when sending company rows to Audiences; the same credit cost applies.
 
+### Filter by location with structured fields
+
+The **Location** filter in company search supports structured sub-filters — **Country**, **City**, **State or province**, **Region**, and **Postal code** — each with include and exclude modes. These fields match against geocoded, normalized location data, so you get accurate results rather than relying on free-text string matching.
+
+Enable **Headquarters only** to restrict results to companies whose *primary* office is in the specified location. Without it, any matching office — branch, satellite, or headquarters — qualifies a company for inclusion.
+
+For the full filter spec and a list of the structured location fields returned in each result's cell details, see [Find Companies](find-companies.md).
+
 ### Understand how filters combine
 
 Company search uses AND logic across filter types and OR logic within a single filter:
@@ -132,6 +140,24 @@ When you run `Find People at These Companies` as an in-table action (rather than
 For example, if you have a "Headquarters Location" column in your company table, you can reference that column in the location filter when setting up the in-table action. Each company will then be searched using its specific location, rather than applying a single static location filter across all companies.
 
 **Note:** Location filtering accepts named regions, countries, and cities — distance-based filtering (for example, "within 35 miles of a location") is not available in Find People or Find Contacts at Company.
+
+### Target ICP contacts first with a senior fallback
+
+When your goal is to reach your ideal customer profile (ICP) at each company — but fall back to the most senior people available if no ICP match is found — run two separate `Find Contacts at Company` enrichment columns in your company table, then use AI to select the best contacts before routing them to a people table.
+
+**High-level flow:**
+
+`Company table → ICP people search → Senior fallback search → AI selects best N → Send to people table → Enrich with email and phone`
+
+**Steps:**
+
+1. **ICP search column** — Add `Find Contacts at Company` as an enrichment column in your company table. Filter **Job title keywords** to your ICP titles (for example, "Head of Ecommerce" or "VP of Marketing"). This column runs for every company row.
+2. **Senior fallback column** — Add a second `Find Contacts at Company` column filtered to high **Seniority** levels (C-level, VP, Director). In **Run settings → Only run if**, add a condition so this column only fires when the ICP search returned no contacts — for example, `{{ICP search column}} is empty`. See [Conditional runs](conditional-runs.md).
+3. **AI selection column** — Add a `Use AI` column. Reference both result lists (ICP column and fallback column) and prompt the AI to return the best N candidates, prioritising ICP title match and then seniority. For example: *"Review these candidates and return the best 10 contacts, prioritising ICP title match, then seniority level."*
+4. **Send to people table** — In the company table, click a populated AI-result cell, then **Take action on list → Write each item to new row in other table** to push selected contacts into a dedicated people table. See [Send table data](send-table-data.md).
+5. **Enrich in the people table** — Add **Work Email waterfall** and **Phone waterfall** enrichments to the people table. See [Enriching your results](#enriching-your-results).
+
+**To carry company attributes (employee count, industry, size) into the people table:** Add a `Lookup single row in other table` column in the people table, matching on company domain. This retrieves company enrichment data that does not flow through the automatic Company Table Data link — see [Company Table Data doesn't include company enrichment data](#company-table-data-doesnt-include-company-enrichment-data) for details.
 
 ### Verify current employment before using results
 
