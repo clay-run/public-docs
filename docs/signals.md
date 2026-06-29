@@ -226,7 +226,7 @@ If you had a brand mentions signal set up before the deprecation, it will show a
 
 **Alternatives for monitoring brand mentions:**
 
--   **Monitor Professional Posts signal** — To find LinkedIn posts that mention your company (rather than posts that merely contain your company name as a keyword), use the **Monitor Professional Posts** signal. Set the **Companies filter** to **Mentions companies** and provide your company domain or LinkedIn URL as the identifier. Up to 5 domains or URLs are supported.
+-   **Monitor Professional Posts signal** — To find professional posts that mention your company (rather than posts that merely contain your company name as a keyword), use the **Monitor Professional Posts** signal. Set the **Companies filter** to **Mentions companies** and provide your company domain or professional profile URL as the identifier. Up to 5 domains or URLs are supported.
 -   **Claygent** — Use Clay's AI web scraper to monitor brand mentions from publicly available sources on the web.
 -   **Google News alerts** — Integrate through Clay to track brand mentions across news and web content.
 -   **Third-party social listening tools** — Many social listening platforms can connect to Clay through API integrations, letting you route mention data into your Clay tables.
