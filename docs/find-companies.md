@@ -133,21 +133,6 @@ Deduplication is based on each company's unique profile ID, not your filter conf
 
 **To re-import the full result set** (for example, when testing): delete the existing rows from your table first, then re-run the source. Once the rows are cleared, the search re-imports all matching companies from scratch.
 
-### Why are my Lookalike companies results showing irrelevant or too few companies?
-
-The **Lookalike companies** filter finds companies similar to your seed list. If results feel off, the most common reasons are:
-
--   **Seed companies that are too diverse** — seed companies spanning very different industries or sizes broaden the matching signal and produce less targeted results. Use seeds that are closely similar to each other.
--   **No additional filters applied** — adding **Industries**, **Company size**, **Location**, or **Company types** filters alongside the Lookalike companies setting constrains the result set and can improve targeting.
-
-### Why does the preview only show 50 results, and why doesn't Lookalike companies show a total count?
-
-The search preview is capped at **up to 50 results** for all Find Companies searches — this is a sample to help you confirm your filters look right before importing. To get more than 50 companies, click **Import to new table** to save the search to your workbook. The import is not limited to 50; it follows your **Limit results** setting (default 10,000, maximum 10,000).
-
-For standard filters (industry, size, location, and similar), the preview shows an estimated total count alongside the sample — for example, "Previewing 50 of ~12,453 results."
-
-When using **Lookalike companies**, the total count is not shown in the preview. Instead, an info tooltip appears noting: "Result counts from lookalike search may vary." This is expected — lookalike searches rank by similarity and the full result count isn't computable until the import runs. To see all matching lookalike companies, import to a workbook.
-
 ### What are the available AI Subindustry filter values?
 
 The **Industries** filter (the standard one at the top of the filter panel) and the **`Industry` output column** use a standardized industry taxonomy drawn from company profile data. Clay recognizes approximately 457 common values (examples: *Software Development, Financial Services, Insurance, Healthcare and Life Sciences, Information Technology and Services, Marketing and Advertising, Non-profit Organization Management*). Because these come from what companies set on their professional profiles, the list is open-ended rather than a fixed picklist.
