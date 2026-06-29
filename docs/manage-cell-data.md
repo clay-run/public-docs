@@ -65,6 +65,7 @@ The final step of a waterfall returns a basic column with an 8KB limit. If your 
 -   **Gong transcripts:** Often exceed the 200KB limit.
 -   **Technology waterfall (BuiltWith):** Can output over 200KB; use keywords to filter.
 -   **HTTP-API and webhooks:** May bring in over 200KB; use field-path filters.
+-   **Snowflake Lookup:** Large query results can exceed the 200 kB limit. Select only the columns you need instead of `SELECT *`, and avoid broad wildcard patterns (e.g., a leading `%` in an `ILIKE` clause) that match far more rows than intended. See the [Snowflake integration](snowflake-integration.md) page for additional tips.
 -   **Extracting to basic columns:** May hit the 8KB limit when extracting large action fields.
 -   **Email reply content:** Long email replies (e.g., from the campaign events table) can exceed the 8KB limit when written to a text column. To work around this, reference the reply field in a formula column and use a text function such as `LEFT({{Reply Body}}, 7000)` to extract just the first portion of the content.
 
