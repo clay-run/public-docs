@@ -108,15 +108,13 @@ If you're seeing rates well below 60%, see [How can I improve my email match rat
 
 If you want to find emails for more of your contacts, here are the most effective steps to take:
 
-1.  **Make sure Company Domain is populated.** It's the most important input for email finding — rows without a domain are skipped by most providers. If you only have a company name, use the [Company Domain waterfall](building-a-data-waterfall.md) to find domains first.
+1.  **Make sure Company Domain and full name are populated.** Most providers need both to run. Rows without a company domain in particular are skipped by a large portion of the waterfall. If you only have a company name, use the [Company Domain waterfall](building-a-data-waterfall.md) to find domains first.
 
-2.  **Add a LinkedIn URL.** If you have LinkedIn profile URLs for your contacts, map them as an additional input. This expands the number of providers able to run on each row, increasing overall coverage.
+2.  **Add profile URLs for your contacts.** Mapping professional profile URLs as an additional input can expand which providers are able to run on each row, increasing your overall coverage.
 
-3.  **Enable Infer Email.** In Full Configuration, toggle on `Include infer-email enrichment as first step?`. This adds a free step that guesses an email from the person's name and domain — if it passes validation, no paid provider is called. See [Infer Email](#infer-email) for details.
+3.  **Check which providers are finding emails.** In the waterfall's Full Configuration, toggle off `Hide provider columns?` to reveal individual per-provider result columns. This shows you exactly which providers are returning emails for your list and where coverage drops off — useful for identifying whether adding new providers might help.
 
-4.  **Check which providers are finding emails.** In Full Configuration, toggle off `Hide provider columns?` to reveal individual per-provider result columns. This shows you exactly which providers are returning emails for your list and where coverage drops off.
-
-5.  **Add more providers to the waterfall.** Open Full Configuration and click **Add provider**. Different providers cover different datasets, so a longer sequence gives more chances to find emails your current providers missed.
+4.  **Add more providers to your waterfall.** In Full Configuration, click **Add provider**. Different providers cover different datasets, so a longer sequence gives more chances to find emails your current providers missed.
 
 ### Why do some rows show "Invalid input" with a message about a first or last name?
 
