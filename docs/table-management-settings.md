@@ -334,13 +334,13 @@ To edit your table description:
 
 ## View table history
 
-Track changes to your table, including who made them and when. View updates to settings, column additions, updates, and deletions with AI-generated summaries.
+Track changes to your table, including who made them and when. View updates to settings, column additions, updates, and deletions.
 
 **What you can track:**
 
 -   Table settings (name, description, run settings)
 -   Column additions, updates, and deletions
--   Detailed change diffs with AI summaries
+-   Detailed change diffs
 -   Auto-dedupe row deletions (visible via **Row deduplication**)
 
 **Retention:** Change log retention varies by plan:
@@ -354,7 +354,7 @@ Track changes to your table, including who made them and when. View updates to s
 
 1.  Open your table.
 2.  Click the **History** dropdown in the bottom-right corner of the table. The dropdown has two separate options:
-    -   **Change log** — opens a sidebar showing settings changes, column additions, updates, and deletions with AI-generated summaries.
+    -   **Change log** — opens a sidebar showing settings changes, column additions, updates, and deletions.
     -   **Row deduplication** — opens a modal listing every row removed by [auto-dedupe](#auto-dedupe), including the value that triggered the deletion.
 3.  In the **Change log** sidebar, review the timeline of changes, including who made each change and when.
 4.  Click `View details` to get more information on a specific entry.
