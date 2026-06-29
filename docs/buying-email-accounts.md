@@ -1,11 +1,11 @@
 ---
-title: Buying email accounts in Clay (Beta)
+title: Buying email accounts in Clay
 description: Protect your domain reputation while scaling cold outreach — buy
   alternative domains and email accounts directly in Clay using Clay credits.
 last_synced: 2026-04-26T01:39:42.909Z
 ---
 
-# Buying email accounts in Clay (Beta)
+# Buying email accounts in Clay
 
 Protect your domain reputation while scaling cold outreach — buy alternative domains and email accounts directly in Clay using Clay credits.
 
@@ -13,7 +13,7 @@ Cold outbound often requires sending a high volume of emails to inboxes that may
 
 ## ‍**Buying email accounts**
 
-From the `Campaigns` homepage, go to the `Email Accounts` tab and click `Add Email Accounts`. Select `Buy email accounts with Smart Senders` to open the purchase flow.
+From the `Campaigns` homepage, go to the `Email Accounts` tab and click `Add Email Accounts`. Select `Buy email accounts` to open the purchase flow.
 
 1.  **Search for alt domains.** Clay automatically loads your workspace's company domain as a starting point. Search for available alternative domains and select the ones you want to add to your order.
     -   Each domain supports up to 5 email accounts.
@@ -27,7 +27,7 @@ From the `Campaigns` homepage, go to the `Email Accounts` tab and click `Add Ema
 
 ![](https://cdn.prod.website-files.com/687e604972375496b891fe58/69c6b5ea48b4f4c966867201_Buying%20Email%20Accounts%20in%20Clay%20\(1\).png)
 
-**Note:** After confirming your purchase, email accounts typically take a couple of days to be provisioned. Once they appear in your `Email Accounts` tab, warm them up for approximately two weeks before use — purchased domains are not pre-warmed.
+**Note:** After confirming your purchase, email accounts typically arrive within hours of your purchase, but may take up to 72 hours to be provisioned. Once they appear in your `Email Accounts` tab, warm them up for approximately two weeks before use — purchased domains are not pre-warmed.
 
 ## **FAQs**
 
