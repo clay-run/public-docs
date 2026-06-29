@@ -45,7 +45,7 @@ Optional:
 -   Breach exposure: Known data breaches associated with the email address.
 -   Compromised credentials: Historical password leaks or account compromises.
 -   Social platform presence: Detected accounts across 25+ platforms including:
-    -   Professional networks: LinkedIn, GitHub, AngelList, Crunchbase.
+    -   Professional networks: GitHub, AngelList, Crunchbase, and other professional networking sites.
     -   Social media: Twitter/X, Instagram, Facebook, TikTok, Telegram, WhatsApp, Skype.
     -   Other platforms: PayPal, TrueCaller, Xing, plus dating, gambling, crypto, and adult platforms.
 -   Inferred identity: First name, last name, approximate age or age range, location (city, state, country).
