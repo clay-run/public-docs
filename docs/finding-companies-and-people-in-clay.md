@@ -482,11 +482,11 @@ To identify which companies had no people found, add a **Lookup Rows** column to
 
 ### Why do "Picture URL Copy" and "Picture URL Orig" return null in Enrich Person?
 
-This is expected behavior. Clay stopped returning LinkedIn profile picture URLs through the Enrich Person enrichment for privacy and compliance reasons. Both the **Picture URL Copy** and **Picture URL Orig** output fields are present but always return null for all customer workspaces — this is not a bug and is not plan-specific (Growth, Pro, and Enterprise plans are all affected equally).
+This is expected behavior. Clay stopped returning professional profile picture URLs through the Enrich Person enrichment for privacy and compliance reasons. Both the **Picture URL Copy** and **Picture URL Orig** output fields are present but always return null for all customer workspaces — this is not a bug and is not plan-specific (Growth, Pro, and Enterprise plans are all affected equally).
 
-If you need LinkedIn profile photos in your workflow, the alternative is to use a third-party scraping tool integrated with Clay via HTTP API or webhooks:
+If you need professional profile photos in your workflow, the alternative is to use a third-party scraping tool integrated with Clay via HTTP API or webhooks:
 
--   **Phantombuster** — requires your LinkedIn session cookie to access profile photos.
--   **Apify** — offers LinkedIn profile scrapers with authentication.
+-   **Phantombuster** — uses your session cookie to access profile photos.
+-   **Apify** — offers profile scrapers with authentication.
 
-When using third-party scrapers, ensure your usage complies with LinkedIn's Terms of Service and your organization's data privacy policies.
+When using third-party scrapers, ensure your usage complies with the platform's Terms of Service and your organization's data privacy policies.
