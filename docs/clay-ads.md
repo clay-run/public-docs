@@ -184,7 +184,7 @@ No, LinkedIn and Meta don't provide contact-level match visibility for privacy r
 
 ### **Why does my ad audience show "too small for use in campaigns"?**
 
-Ad platforms report an audience as "too small" when fewer than 300 contacts matched. The most common cause is that no email column was mapped in the field mapping — ad platforms match contacts by email, so without it the platform processes all sent records but matches 0.
+Ad platforms report an audience as "too small" when it falls below the platform's minimum threshold. Thresholds vary by platform: **LinkedIn** requires at least **300 matched contacts** in a contact list, while **Meta** and **Google Ads** gate eligibility on the number of **valid emails** (minimum 100). The most common cause is that no email column was mapped in the field mapping — ad platforms match contacts by email, so without it the platform processes all sent records but matches 0.
 
 A second factor: if Enhanced Matching is enabled, it uses a professional profile URL or Work Email column you designate to look up personal emails before syncing. If those input columns are not configured, Enhanced Matching cannot improve your match rate.
 
