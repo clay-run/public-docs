@@ -46,7 +46,6 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
         -   **Has domain** — Whether a company has a resolved domain.
         -   **Domain is live** — Whether the company's domain is currently active.
         -   **Domain redirects to another domain** — Whether the domain redirects elsewhere.
-    -   **Lookalike companies** — Find companies similar to a set of seed companies you provide. Enter up to 10 company identifiers; professional network company profile URLs give the best results, but company domains, Sales Navigator company URLs, and Sales Navigator company IDs are also accepted. Combine with other filters — **Industries**, **Company size**, **Location**, **Company types** — to focus results on a specific segment. For the most targeted results, use seed companies that are closely similar to each other; mixing seeds from very different industries or sizes produces broader results.
     -   **Exclude companies:** Exclude up to 3 different sets of companies from your search using Clay tables, CSVs, or manual lists. You can exclude up to 300,000 companies total (100,000 per source). Exclusions require a domain or LinkedIn URL.
     -   **Limit results** — Defaults to 10,000. Maximum 10,000.
 2.  Click `Preview companies` and `Import to new table` when the results look good.
@@ -133,20 +132,11 @@ Deduplication is based on each company's unique profile ID, not your filter conf
 
 **To re-import the full result set** (for example, when testing): delete the existing rows from your table first, then re-run the source. Once the rows are cleared, the search re-imports all matching companies from scratch.
 
-### Why are my Lookalike companies results showing irrelevant or too few companies?
-
-The **Lookalike companies** filter finds companies similar to your seed list. If results feel off, the most common reasons are:
-
--   **Seed companies that are too diverse** — seed companies spanning very different industries or sizes broaden the matching signal and produce less targeted results. Use seeds that are closely similar to each other.
--   **No additional filters applied** — adding **Industries**, **Company size**, **Location**, or **Company types** filters alongside the Lookalike companies setting constrains the result set and can improve targeting.
-
-### Why does the preview only show 50 results, and why doesn't Lookalike companies show a total count?
+### Why does the preview only show 50 results?
 
 The search preview is capped at **up to 50 results** for all Find Companies searches — this is a sample to help you confirm your filters look right before importing. To get more than 50 companies, click **Import to new table** to save the search to your workbook. The import is not limited to 50; it follows your **Limit results** setting (default 10,000, maximum 10,000).
 
 For standard filters (industry, size, location, and similar), the preview shows an estimated total count alongside the sample — for example, "Previewing 50 of ~12,453 results."
-
-When using **Lookalike companies**, the total count is not shown in the preview. Instead, an info tooltip appears noting: "Result counts from lookalike search may vary." This is expected — lookalike searches rank by similarity and the full result count isn't computable until the import runs. To see all matching lookalike companies, import to a workbook.
 
 ### What are the available AI Subindustry filter values?
 
