@@ -95,7 +95,9 @@ If your table has no rows with data yet, Clay skips this validation and accepts 
 
 **Update existing rows on re-run**
 
-When re-running, updates the matching row in the destination table instead of creating a new one.
+Controls what happens when you re-run a source row that has already been sent. When on (default), re-running updates the corresponding destination row with the current source values. When off, re-running creates a new destination row instead. **Brand-new source rows — those being sent for the first time — always create a new row in the destination table, regardless of this setting.**
+
+This setting controls row-level behavior only. It is separate from the column-level overwrite that occurs when you map a source field to an existing plain-text destination column (see [Mapping table data in the destination table](#mapping-table-data-in-the-destination-table)). Turning this setting off does not prevent column-level overwrites triggered by column mapping or by the **Auto-map existing columns** setting below.
 
 **Auto-extract new columns**
 
