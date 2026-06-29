@@ -8,7 +8,7 @@ last_synced: 2026-04-26T01:40:26.052Z
 
 Find companies similar to a given company based on various criteria.
 
-> **Deprecation notice:** Ocean.io's lookalike enrichments and sources in Clay are being deprecated at the end of June 2026. [Clay Lookalikes](clay-lookalikes.md) is the recommended replacement — it covers company and people lookalikes natively, with clustering, Sculptor support, and audience-scale inputs. New users should use Clay Lookalikes instead.
+> **Removed:** Ocean.io's lookalike enrichments and sources have been fully removed from Clay as of June 2026. [Clay Lookalikes](clay-lookalikes.md) is the recommended replacement — it covers company and people lookalikes natively, with clustering, Sculptor support, and audience-scale inputs.
 
 [Ocean.io](http://Ocean.io) is an AI-powered company discovery platform that helps you find companies and people similar to a given target based on criteria like industry, size, location, and technology. Within Clay, you can use [Ocean.io](http://Ocean.io) to create a new table populated with lookalike companies, or enrich existing rows to find matching companies and people that fit your ICP.
 
