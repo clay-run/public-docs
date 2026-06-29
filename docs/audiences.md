@@ -142,7 +142,9 @@ Clay syncs data from Google BigQuery on the following schedules:
 
 ### Importing from Databricks
 
-**Note:** Databricks import is currently in beta — contact your account team to enable it for your workspace.
+**Note:** Databricks import is not yet generally available and is still in active development — it is not currently offered as a customer beta. Contact your account team if you'd like to be notified when it ships.
+
+When Databricks import becomes available, setup will follow these steps:
 
 1.  Click `Add data` → `Add Source` → select your [**Databricks integration**](https://university.clay.com/docs/databricks-integration).
     -   If you haven't connected Databricks yet, click `+ Add account`. See the [Databricks integration](https://university.clay.com/docs/databricks-integration) for setup instructions.
@@ -153,18 +155,13 @@ Clay syncs data from Google BigQuery on the following schedules:
 5.  Define the `Unique Identifier`:
     -   For People: `email` or `user_id`.
     -   For Companies: `company_id` or `domain`.
-6.  (Optional) Configure a `Timestamp Field` for incremental syncing:
-    -   With a timestamp: syncs run every **15 minutes** and only import new/changed records.
-    -   Without a timestamp: the full query reruns every **12 hours**.
+6.  (Optional) Configure a `Timestamp Field` for incremental syncing.
 7.  Map your Databricks columns to Audience fields.
 8.  Review and click `Confirm` — Clay begins importing immediately.
 
 **Sync timing and behavior**
 
-Clay syncs data from Databricks on the following schedules:
-
--   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured, importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
--   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
+Sync cadences for Databricks (including incremental sync intervals and full sync behavior) are still being finalized and will be documented when Databricks import ships. Full sync for Databricks is not yet implemented.
 
 ### Importing from people and companies search
 
