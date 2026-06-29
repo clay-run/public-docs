@@ -130,4 +130,4 @@ The native ZoomInfo integration in Clay supports four actions: **Enrich Company*
 
 Clay refreshes the token automatically before it expires, so you won't encounter the hourly 401 errors that occur when managing short-lived ZoomInfo tokens manually.
 
-**Note:** HTTP API with JWT Authentication is available on Explorer plan and above — it is not available on the Free plan. For ZoomInfo account prerequisites (API access requirements and supported authentication methods), see the [ZoomInfo integration guide](https://university.clay.com/docs/zoominfo-integration).
+**Note:** HTTP API with JWT Authentication is available on all paid plans — it is not available on the Free plan. For ZoomInfo account prerequisites (API access requirements and supported authentication methods), see the [ZoomInfo integration guide](https://university.clay.com/docs/zoominfo-integration).
