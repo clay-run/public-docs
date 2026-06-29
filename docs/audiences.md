@@ -40,7 +40,7 @@ You can import data from:
 **Note:** Setup must be completed separately for People, Companies, Leads, and Opportunities. Complete steps for `People` first, then repeat for `Companies`, then `Leads`, then `Opportunities`.
 
 1.  Click `Add data` → `Add Source` → select your [**Salesforce integration**](https://university.clay.com/docs/salesforce-integration-overview).
-    -   If you don't see an SFDC integration listed, contact your Growth Strategist.
+    -   Audiences uses the same Salesforce connections as regular Clay tables — if your workspace already has Salesforce set up, it will appear here for a workspace admin to select. If no Salesforce connection is listed yet, a workspace admin can add one under **Settings → Connections** → **Add connection** → Salesforce. Both the **User Sign In** and **Client Credentials** methods work for Audiences; for server-to-server or integration user setups, **Client Credentials** is often preferred — it requires your Salesforce My Domain URL, Consumer Key, and Consumer Secret from a Connected App. See the [Salesforce integration overview](https://university.clay.com/docs/salesforce-integration-overview) for full setup instructions.
 2.  Select `People` at the top of the sync panel.
 3.  Enable the `Import` toggle.
 4.  Leave `Export Sync` and `Create new Salesforce records` off for now.
