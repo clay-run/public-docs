@@ -129,6 +129,26 @@ Functions eliminate duplicate work when you need the same workflow in multiple t
 
 No. Saving columns as a function preserves the existing data without rerunning the enrichments. You won't be charged credits twice.
 
+### What happened to my original columns and prompts after I used "Replace columns with function"?
+
+When you check **Replace columns with function** during function creation, Clay doesn't delete your original columns — it moves them inside the function. All column configurations, AI prompts, enrichment settings, and run conditions are preserved intact inside the function's internal table.
+
+**To view and copy your original prompts:**
+
+1.  In your table, click the function column's header (for example, "Enrich with all columns for…").
+2.  Select **Edit function** to open the function editor.
+3.  Your original columns appear inside the function exactly as they were — click any column header to see its full configuration, prompt text, and settings. From here you can copy any prompt out to reuse elsewhere.
+
+**To restore the original separate columns:**
+
+There's no one-click way to split a function back into standalone columns. If you need the original column layout back, use [table version history](table-versions.md):
+
+1.  In your table, click **History** (bottom-right corner) → **All configuration versions**.
+2.  Find a version taken before you created the function.
+3.  Click **Restore Configuration** and confirm.
+
+Restoring removes the function column (which was added after the snapshot) and brings back your original columns with their configurations. Note that table versioning restores **structure and configuration only** — cell value data is not affected by a version restore. See [Table versions](table-versions.md) for full details on what changes.
+
 ### Can I use a function someone else on my team built?
 
 Yes. All workspace functions are available to use in your tables — no special permissions needed. Use them as-is, duplicate and modify for your needs, or request edit access from the owner to collaborate directly.
