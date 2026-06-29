@@ -110,7 +110,7 @@ You can view and manage all campaigns from the `Campaigns` tab on your home scre
 
 In the Campaigns homepage, you can access the `Global inbox` which centralizes replies across all campaigns, giving you one place to review and manage every response. `Global analytics` shows you how all of your campaigns are performing.
 
-The `Email accounts` tab on the Campaigns homepage shows all sender accounts connected to your workspace. You can filter accounts by type (Google OAuth, Microsoft Outlook OAuth, or SMTP), status (Ready, Warming up, Not warming, Auth error), owner, source, or domain — helpful when managing dozens or hundreds of accounts. Select multiple accounts to take bulk actions: enable or disable warming, update send limits, toggle workspace visibility, or delete accounts. The `Global blocklist` tab lets you add or remove email addresses and domains.
+The `Email accounts` tab on the Campaigns homepage shows all sender accounts connected to your workspace. You can filter accounts by type (Gmail, Outlook, or SMTP/IMAP), status (Ready, Warming up, Not warming, Auth error), owner, source, or domain — helpful when managing dozens or hundreds of accounts. Select multiple accounts to take bulk actions: enable or disable warming, update send limits, toggle workspace visibility, or delete accounts. The `Global blocklist` tab lets you add or remove email addresses and domains.
 
 ### Managing sender accounts within a campaign
 
@@ -119,8 +119,8 @@ Each campaign has a dedicated `Sender accounts` tab for viewing, searching, filt
 **Filtering your sender accounts:** Use the toolbar to narrow by:
 
 -   **Search** — find a specific sender account by email address.
--   **Type filter** — show only Google, Outlook, or SMTP accounts.
--   **Status filter** — show only accounts in a particular status (active, paused, disconnected, etc.).
+-   **Type filter** — show only Gmail, Outlook, or SMTP/IMAP accounts.
+-   **Status filter** — show only accounts in a particular status (Ready, Warming up, Not warming, Auth error).
 
 **Taking action:** Click the three-dot (⋯) menu on a specific row for per-account actions, or select multiple accounts to apply bulk actions. Available actions include enabling or disabling warmup, updating send limits, updating sender variables, and removing accounts from the campaign.
 
