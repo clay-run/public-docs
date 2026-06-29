@@ -389,7 +389,7 @@ Native CRM write-back from Audiences to HubSpot — including the write-if-blank
 
 In the meantime, you can push enriched data to HubSpot and replicate write-if-blank logic using a Bulk Enrich table:
 
-1. Add a **HubSpot Get Object** action column to look up each record in HubSpot and retrieve the current field values.
+1. Add a **HubSpot Lookup object** action column to look up each record in HubSpot and retrieve the current field values.
 2. For each field you want to protect, add a **HubSpot Update Object** action column and configure a [conditional run](https://university.clay.com/docs/conditional-runs) to fire only when the value from step 1 is blank.
 
 Because each field needs its own conditional Update Object column, the total action cost grows with the number of fields you want to protect.
