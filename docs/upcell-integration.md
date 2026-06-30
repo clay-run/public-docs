@@ -21,13 +21,23 @@ With this integration, you can find mobile numbers associated with LinkedIn prof
 
 ### `Action` Find mobile number
 
-Find person’s mobile number from their professional social profile.
+Find person's mobile number from their professional social profile.
 
 **Inputs:**
 
--   **Professional profile URL:** The profile URL of the person whose phone number you want to look up.
+-   **Professional profile URL:** The profile URL of the person whose phone number you want to look up. This input requires a column with the **Personal LinkedIn URL** data type — not a plain text column that happens to contain a LinkedIn URL string. Columns with this type are created automatically by Clay's people-search imports, Enrich Person, and similar enrichments that return LinkedIn profile URLs.
 
 ### **Run settings**
 
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
+
+## Troubleshooting
+
+### "Missing profile URL" error despite having a LinkedIn URL
+
+If Upcell reports a missing profile URL error when a row appears to have a LinkedIn URL, confirm that the **Professional profile URL** input is mapped to a column with the **Personal LinkedIn URL** data type.
+
+Columns with the Personal LinkedIn URL type are automatically created by Clay's Find People imports, Enrich Person, Find Personal LinkedIn Profile, and other enrichments that return LinkedIn profile URLs. The input selector in the Upcell configuration shows only compatible columns.
+
+If your LinkedIn URL exists in a plain text column, use the original LinkedIn URL column from a Find People import or run an Enrich Person step to get a properly typed column, then map that column to the **Professional profile URL** input.
