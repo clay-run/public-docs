@@ -39,6 +39,16 @@ This keeps your data current without manual updates by pulling in new informatio
 
 **Scheduled source runs are additive.** Each run adds new records from the source to your table. Records that are no longer in the source — for example, contacts removed from a HubSpot list since the last run — remain in your Clay table and are not deleted. To remove rows that are no longer in the source, delete them manually or start fresh with a new table.
 
+## Triggering an immediate run
+
+If you need to run a scheduled source right now — for example, after expanding a HubSpot list and not wanting to wait for the next scheduled run — you can trigger a one-time run without changing or canceling your existing schedule.
+
+1.  Click the source column title in your table.
+2.  In the source settings panel, scroll to the **Run settings** section.
+3.  Click **Run now**.
+
+The source runs immediately. Your schedule is unaffected — the next automatic run still fires at the time you configured.
+
 ## Usage limits
 
 Each plan has a limit to the total number of scheduled sources, across all tables.
