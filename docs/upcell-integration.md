@@ -1,7 +1,7 @@
 ---
 title: Upcell integration
 description: Find mobile numbers from LinkedIn profiles.
-last_synced: 2026-04-26T01:40:50.636Z
+last_synced: 2026-04-26T01:40:50.634Z
 ---
 
 # Upcell integration
@@ -25,7 +25,7 @@ Find person's mobile number from their professional social profile.
 
 **Inputs:**
 
--   **Professional profile URL:** The profile URL of the person whose phone number you want to look up. This input requires a column with the **Personal LinkedIn URL** data type — not a plain text column that happens to contain a LinkedIn URL string. Columns with this type are created automatically by Clay's people-search imports, Enrich Person, and similar enrichments that return LinkedIn profile URLs.
+-   **Professional profile URL:** The profile URL of the person whose phone number you want to look up. This input requires a column with the **Personal profile URL** data type — not a plain text column that happens to contain a profile URL string. Columns with this type are created automatically by Clay's people-search imports, Enrich Person, and similar enrichments that return professional profile URLs.
 
 ### **Run settings**
 
@@ -34,10 +34,10 @@ Find person's mobile number from their professional social profile.
 
 ## Troubleshooting
 
-### "Missing profile URL" error despite having a LinkedIn URL
+### "Missing profile URL" error despite having a profile URL
 
-If Upcell reports a missing profile URL error when a row appears to have a LinkedIn URL, confirm that the **Professional profile URL** input is mapped to a column with the **Personal LinkedIn URL** data type.
+If Upcell reports a missing profile URL error when a row appears to have a professional profile URL, confirm that the **Professional profile URL** input is mapped to a column with the **Personal profile URL** data type.
 
-Columns with the Personal LinkedIn URL type are automatically created by Clay's Find People imports, Enrich Person, Find Personal LinkedIn Profile, and other enrichments that return LinkedIn profile URLs. The input selector in the Upcell configuration shows only compatible columns.
+Columns with this data type are created automatically by Clay's Find People imports, Enrich Person, Find Personal Profile, and other enrichments that return professional profile URLs. The input selector in the Upcell configuration shows only compatible columns by default.
 
-If your LinkedIn URL exists in a plain text column, use the original LinkedIn URL column from a Find People import or run an Enrich Person step to get a properly typed column, then map that column to the **Professional profile URL** input.
+If your profile URL is in a plain text column, use the profile URL column from a Find People import or run an Enrich Person step to get a properly typed column, then map that column to the **Professional profile URL** input.
