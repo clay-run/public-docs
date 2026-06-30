@@ -170,4 +170,14 @@ Clicking **Stop** on a running table or canceling a column run does not immediat
 
 To avoid unexpected spend before it starts, disable [auto-run](table-management-settings.md) before importing large batches of rows. See [Stopping a run](run-progress.md) for full details on stop and cancel behavior.
 
+### Requesting a goodwill credit refund
+
+If credits were accidentally consumed — for example, from a misconfigured scheduled run or an unintended large batch — you can contact [Clay support](https://app.clay.com) to request a one-time goodwill credit refund. When submitting a request, include:
+
+-   Your workspace name
+-   The table where the credits were consumed
+-   The number of credits used
+
+The support team will review your request and, if eligible, restore the credits to your account balance. Goodwill refunds are a one-time exception and are not guaranteed for repeat requests. For credits consumed due to a scheduled table run or integration issue, a partial refund may be considered depending on the circumstances.
+
 **Learn more:** For related information, check out our [credit limit FAQs doc](http://university.clay.com/docs/credit-spend-limits-faq).
