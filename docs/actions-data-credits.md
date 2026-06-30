@@ -343,6 +343,8 @@ Actions reset each billing cycle and don't roll over, since they reflect the pla
 
 Data Credits work more like a currency and do roll over. On Launch and Growth plans, unused credits can accumulate up to 2x your monthly credit amount (e.g., a 10,000 credit plan can bank up to 20,000 total). Enterprise customers can roll over up to 15% of their prior year's purchased credits, provided they renew at an equal or higher commitment.
 
+**Trial plans:** Trial Data Credits are handled differently — see the [*I have a trial, when do the Data Credits expire?*](#i-have-a-trial-when-do-the-data-credits-expire) section below for details.
+
 ### Why do I see a warning that credits are "over the rollover limit" when my current balance is below the 2× cap?
 
 The warning appears when your current balance is already high enough that adding your next monthly renewal would push the total over the 2× rollover cap — not because you are over it right now.
