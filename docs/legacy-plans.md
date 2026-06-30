@@ -98,7 +98,7 @@ Legacy plans carry a **50% premium** on top-up purchases (compared to 30% on mod
 
 **Can legacy annual customers renew early?**
 
-Yes for Starter and Explorer annual plans. No for Pro annual plans — requires GS or success intervention, which may be used as an upsell opportunity to Enterprise.
+Yes for Starter and Explorer annual plans. No for Pro annual plans — requires GS or support intervention, which may be used as an upsell opportunity to Enterprise.
 
 **What's the difference between priority support on Growth vs. legacy Pro?**
 
