@@ -18,7 +18,7 @@ Navigate to it from the Clay homepage by clicking `MCP` in the side nav. The MCP
 
 Credit controls and usage monitoring are available on all modern paid plans (Launch, Growth, Enterprise) and Legacy Enterprise.  
 
-Audiences controls are available on Growth and Enterprise plans.  
+Audiences controls are available to workspaces with Clay Audiences enabled — contact support if you're unsure whether your workspace qualifies.  
 
 The `Enable for MCP` option on Functions is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans.
 
@@ -51,15 +51,13 @@ The `MCP users` table gives a live view of every rep who has connected Clay to a
 -   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, Glean, or a combination)
 -   **Credit limit** — the rep's current limit, either the workspace default or a per-user override
 -   **Credits used** — live usage tracked against the rep's limit
--   **Salesforce ID _(Growth and Enterprise only)_** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
+-   **Salesforce ID** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
 
 Use the search bar at the top of the table to find a specific rep by name or email.
 
 MCP credit usage also appears in the main credit usage dashboard at `Settings → Credit Usage`, alongside all other workspace credit consumption.
 
 ## Audiences controls
-
-**Note: This feature is in beta for Enterprise Plan.**
 
 If your workspace uses Clay Audiences, two additional workspace-level toggles appear on the `MCP users` page:
 
