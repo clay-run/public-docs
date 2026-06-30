@@ -106,7 +106,7 @@ To add a second Send table data column, click **+ Add column** and select **Send
 
 **Setting up run conditions:** In the column configuration panel, scroll to **Run settings**, enable **Only run if**, and enter the condition formula.
 
-**Note on `peopleCount` when no contacts are found:** The `peopleCount` field on "Find Contacts at Company" results is always present — when the action finds no results, it returns `peopleCount: 0` (not `undefined`). This means a condition like `peopleCount < 3` evaluates to `true` for rows with zero contacts found (since `0 < 3`), so those rows **will** be routed by the first Send table data column along with rows that have 1 or 2 contacts. If you want to exclude zero-result rows from that path, tighten the condition (for example, `peopleCount > 0 && peopleCount < 3`) or add an explicit check using `Clay.getCellStatus()`.
+**Note on `peopleCount` when no contacts are found:** The `peopleCount` field on "Find Contacts at Company" results is only present when at least one contact was returned — it is not included (and evaluates as `undefined`) when the action finds no results. This means a condition like `peopleCount < 3` evaluates to `false` for rows with zero contacts found, so those rows are skipped by both Send table data columns and nothing is sent for them. This is usually the intended behavior — there's nothing to route. If you need to explicitly handle zero-result rows, add a separate condition or check using `Clay.getCellStatus()`.
 
 **Tips:**
 
