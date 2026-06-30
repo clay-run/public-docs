@@ -56,7 +56,7 @@ To send data from one table to another:
 
 **Additionally you can:**
 
--   Send nested data from the parent table. (This is useful when you want to avoid extracting basic fields from an action column's output.)
+-   Send nested data from the parent table: action columns (enrichments like **Enrich Person** or **Find Contacts at Company**) are not included in the default column checklist — only basic extracted fields appear there. To include an action column's output, scroll to the **Additional data** section in the Send Table Data settings and click **Add field**, then select the action column. After saving, re-run the Send Table Data column; the nested output arrives in the destination table's **"Rows from: …"** cell alongside any basic fields you selected.
 -   Map any selected column to a specific existing column in the destination table. By default, each column routes to a destination column with the same name — hover over the row and click the **edit icon** to open a dropdown of all destination columns and choose a different target.
 
 **Note:** When you first send a row, it creates a new row in the destination table. For subsequent sends, it updates that same row. This applies to both regular row data and nested data. You can turn this off to always create a new row via the `Update existing rows on re-run` setting.
