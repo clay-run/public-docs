@@ -171,6 +171,21 @@ Clicking **Stop** on a running table or canceling a column run does not immediat
 
 To avoid unexpected spend before it starts, disable [auto-run](table-management-settings.md) before importing large batches of rows. See [Stopping a run](run-progress.md) for full details on stop and cancel behavior.
 
+### Credits spiked after editing a formula or upstream column
+
+When you edit a formula in a column that other enrichments reference, Clay marks all downstream cells as stale. With auto-run in its default **run all cells** mode, this queues a re-run for every stale cell across all rows — which can trigger every dependent enrichment column at once and produce a large, unexpected credit charge.
+
+To avoid this, enable **Keep existing results** before making formula or configuration changes:
+
+1.  Click `⛭` in the top toolbar to open Run Settings.
+2.  Check **Keep existing results**.
+
+With **Keep existing results** on, auto-run only fires on cells that are empty or errored — cells that already have a result are skipped, even when their upstream formula changes. This lets you update formulas without re-running (and re-charging) your entire table.
+
+Alternatively, turn auto-run **off** entirely before editing (`⛭` → toggle **Auto-run** off), make your changes, then manually run only the specific rows or columns you need.
+
+See [Table management settings](table-management-settings.md) for full details on **Keep existing results** and how the auto-run mode affects which cells run.
+
 ### Requesting a goodwill credit refund
 
 If credits were accidentally consumed — for example, from a misconfigured scheduled run or an unintended large batch — you can contact [Clay support](https://app.clay.com) to request a one-time goodwill credit refund. When submitting a request, include:
