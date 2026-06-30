@@ -309,3 +309,7 @@ Beyond the schedule, sources can also run in response to other events. For examp
 **Note:** The table's **auto-run** setting is a separate control. It determines whether enrichment columns (action fields) run automatically when new rows arrive — it does not trigger sources. See [Auto-run](table-management-settings.md#auto-run) for more.
 
 To investigate why a source ran unexpectedly, click the source column title and select **View Run History**.
+
+### What happened to the Action button and Source option?
+
+The toolbar button previously labeled **Action** has been renamed to **Tools** — this applies to all workspaces. Within the **Tools** panel, the tab previously labeled **Sources** is called **Import** in workspaces where the Functions feature is enabled (currently in beta — contact support to enable it); workspaces without Functions enabled continue to see a **Sources** tab in the same panel.
