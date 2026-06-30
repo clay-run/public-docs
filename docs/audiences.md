@@ -37,7 +37,7 @@ You can import data from:
 
 ### Importing from Salesforce
 
-**Note:** Setup must be completed separately for People, Companies, Leads, and Opportunities. Complete steps for `People` first, then repeat for `Companies`, then `Leads`, then `Opportunities`.
+**Note:** Setup must be completed separately for People, Accounts, Leads, and Opportunities. Complete steps for `People` first, then repeat for `Accounts`, then `Leads`, then `Opportunities`.
 
 1.  Click `Add data` → `Add Source` → select your [**Salesforce integration**](https://university.clay.com/docs/salesforce-integration-overview).
     -   If you don't see an SFDC integration listed, contact your Growth Strategist.
@@ -47,7 +47,7 @@ You can import data from:
 5.  Add any SFDC fields you frequently use or want to segment by — only fields included here will appear as columns and filter options in your Audience.
     -   You can add more fields later. See [A Salesforce field isn't appearing in my audience filters](#a-salesforce-field-isnt-appearing-in-my-audience-filters--how-do-i-add-it) in the FAQs below.
 6.  Name the corresponding Clay fields — these become the column names in Audiences.
-7.  Select `Companies` at the top and repeat steps 3–6 for accounts.
+7.  Select `Accounts` at the top and repeat steps 3–6 for accounts.
 8.  Select `Leads` at the top of the sync panel.
 9.  Enable the `Import` toggle.
 10.  Add any Lead fields you want to filter or segment by — common fields include `Lead Status`, `Lead Source`, `Title`, and `Company`.
@@ -72,7 +72,7 @@ Clay pulls data from Salesforce on two schedules:
 
 **Deleted records:** Clay does not remove deleted Salesforce records from Audiences immediately. Instead, the record is marked **Deleted in source**, which you can filter on in your audience. The weekly full sync reconciles hard-deleted records. If a Salesforce record is deleted and recreated (assigning it a new Salesforce ID), it will temporarily appear as a duplicate entry until the next weekly full sync resolves it. There is no self-serve option to trigger an early full sync — contact Clay support if you need an expedited cleanup.
 
-**Salesforce activities:** When Salesforce is connected, the Activity tab on each record's detail view shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp.
+**Salesforce activities (beta):** Importing Salesforce Tasks and Events into Audiences is currently in beta — the toggle is gated by an internal feature flag and may not yet be enabled for your workspace. Contact Clay support to request access. Once enabled, go to your Salesforce source settings, select `Accounts`, and enable the **Also import activities (tasks and events) associated with these accounts** toggle. Accounts are associated automatically in the background. The Activity tab on each record's detail view then shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp.
 
 ### Importing from HubSpot
 
@@ -90,6 +90,8 @@ Clay pulls data from Salesforce on two schedules:
     -   Deal data is associated with both your Companies and People records. In a Companies audience, you can filter by deal attributes. In a People audience, only contacts directly linked to a deal via HubSpot contact associations appear when you filter on deal attributes — not all contacts at the company that owns the deal.
 10.  Name the corresponding Clay fields.
 11.  Click `Save and Preview`, then `Confirm`.
+
+**Troubleshooting — "Export permission required":** If the HubSpot account you select is missing the **Export CRM data** permission, Clay displays a warning and disables the Connect button. Click **Re-authorize HubSpot** in the warning to reconnect your account with the required permission enabled, then continue setup.
 
 ### Importing from Snowflake
 
@@ -231,6 +233,8 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
     -   Enable the auto-enrich toggle so that any new record entering this segment is automatically passed through the enrichment — typically within 15 minutes.
 5.  Click `Start Run`.
 
+**Note:** Clay does not impose rate limits on Audiences bulk enrichments — the system is built to handle large lists at scale. Third-party data providers (such as Clearbit or Apollo) apply their own rate limits, but Clay queues requests and manages these automatically in the background. If you supply personal API keys for a provider, those keys' own rate limits apply.
+
 **Using Audiences from a Clay table:**
 
 Four Clay actions let you move data between a Clay table and your Audience directly.
@@ -264,6 +268,14 @@ Since enrichment results write permanently back to All People, you can filter an
 1.  Add a filter to your audience.
 2.  Select the enriched field (for example, `Phone` or `LinkedIn URL`).
 3.  Set the operator to **`is not empty`** to show only records where the enrichment returned a value.
+
+**Errored rows after a run**
+
+In Audiences bulk enrichment, a row appears in the **Errored rows** tab when any of its action columns fail — for example, if a data provider returns no match for a domain. This is true even if the **Update Audiences Record** step succeeded and your data was already written back to Audiences. This is expected behavior, not a bug — Audiences treats a row as complete only when all configured action columns succeed.
+
+To resolve errored rows:
+-   **Rerun failed rows** — in the bulk enrichment table, right-click the failing column header → **Run column** → **Run [N] empty or out-of-date rows** to retry only records that didn't get a result.
+-   **Remove non-critical provider columns** — if a provider consistently fails to match your records and the data isn't essential, removing that column from the bulk enrichment table means its failures will no longer mark rows as errored.
 
 ### Signals
 
