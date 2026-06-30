@@ -500,7 +500,7 @@ Deleting a table removes its rows from your workspace row count immediately — 
 
 If you are approaching the workspace row limit, take stock of tables that are no longer needed:
 
--   On the Home page, sort by **Last Modified** to surface older tables that may no longer be in use.
+-   On the Home page, sort by **Created at** or **Last opened by me** to surface older or less-recently-accessed tables that may no longer be in use.
 -   Open `Settings` > `Usage` to view the credit usage dashboard. Filter by a recent time period and sort by `Credits used` ascending to identify tables with little or no recent credit activity — these are often good candidates for deletion.
 
 For instructions on deleting tables and permanently removing them from Trash, see [Delete content within your workspace](delete-content-within-your-workspace.md).
