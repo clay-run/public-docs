@@ -242,8 +242,8 @@ Four Clay actions let you move data between a Clay table and your Audience direc
 -   In any Clay table, click `Add enrichment` and search for:
     -   `Upsert Audiences Record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. Use it to commit data from integrations not yet natively supported in Audiences, qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table.
     -   `Update Audiences Record` writes data from a table row to one or more fields on an existing Audience record. Unlike `Upsert Audiences Record`, it does not create a new record if no match is found. Both actions write only to fields that already exist in your Audience — to create a new custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
-    -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls. By default, signal data is returned for the past **30 days** and the action returns a maximum of **5 signal results** per record — adjust the lookback period in the column settings to retrieve older signals, or use `Get Audiences Activity` when you need more than 5 results.
-    -   `Get Audiences Activity` retrieves signal and activity data for an Audiences record — including signal events and, if Gong is connected to your workspace, Gong call records. Use it when you need more than 5 results or want to query a longer time window than `Lookup in Audiences` provides by default.
+    -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls. By default, signal data is returned for the past **90 days** and the action returns **5 signal results** per record by default — adjust the **Signal data to include (days)** setting in the column settings to retrieve older signals, or increase the result limit (up to 50) when you need more results per record. Use `Get Audiences Activity` when you need a larger set of results.
+    -   `Get Audiences Activity` retrieves signal and activity data for an Audiences record — including signal events and, if Gong is connected to your workspace, Gong call records. Use it when you need more results or want to query a longer time window than `Lookup in Audiences` provides by default.
 
 ### Reviewing enrichment results
 
@@ -322,19 +322,16 @@ After a workflow is live, open the options menu (⋮) on the workflow card to ma
 -   **Run all members that haven't run** — runs the workflow on segment members who joined before the trigger was published or who were otherwise skipped.
 -   **Force run all members** — re-runs the workflow on every current segment member, including those that already ran. A confirmation prompt appears before this action runs, since it may use credits.
 
-### **Sending audiences to workbooks or ad platforms**
+### **Syncing audiences to ad platforms**
 
-When you have a segment ready, you can send it to a workbook or an ad platform to act on it — enrolling contacts in sequences, running account-based ads, or processing records further before taking action.
+When you have a segment ready, you can sync it to an ad platform to run account-based advertising across your highest-fit contacts and companies.
 
 1.  Click `Send` → `Export action`.
-2.  Then click `Add to workbook` or `Sync to ad platforms`.
+2.  Click `Sync to ad platforms`.
 
 **How you might use this:**
 
--   **Outbound sequences** — send high-fit contacts to a workbook, add personalization (LinkedIn activity, news, custom snippets), then enroll in Outreach or Salesloft.
 -   **Account-based advertising** — sync company segments to LinkedIn, Meta, or Google Ads. Contacts who no longer qualify are automatically removed.
--   **Rep-owned outbound** — scope workbooks by territory or rep so each AE works only their assigned accounts.
--   **Additional processing** — send to a workbook to enrich, score, or filter before pushing to your destination.
 
 **Syncing to multiple ad platforms**
 
@@ -404,6 +401,8 @@ To add a missing field:
 
 The filter option for the field becomes available after the next incremental sync (typically within 15 minutes). However, if you added this field to the mapping after your initial import, records that haven't been modified in Salesforce since the mapping was saved won't have data for the new field yet — see [I added a new Salesforce field to my mapping but some records are missing data for it](#i-added-a-new-salesforce-field-to-my-mapping-but-some-records-are-missing-data-for-it) below. Read-only Salesforce fields — fields shown with a lock icon in the mapping because Salesforce does not allow Clay to write them — can still be imported and used as filters. They will show a **Never write (Read-only)** export rule.
 
+**If a field doesn't appear in the Settings mapping dropdown** (not just in the filter options), the Salesforce account connected to Clay may lack the permissions required to read it. Verify that your Salesforce connection has the required OAuth permissions — see [Salesforce integration FAQs](https://university.clay.com/docs/salesforce-integration-faqs) for the permissions listed under "What permissions and scope do I need for the Salesforce enrichment?" After permissions are updated, return to **Settings** to add the field.
+
 ### I added a new Salesforce field to my mapping but some records are missing data for it
 
 When you add a field to your Salesforce import mapping after the initial import, the filter option for that field becomes available after the next incremental sync (typically within 15 minutes). However, existing records are **not** automatically backfilled — only records whose `SystemModstamp` has changed in Salesforce after the mapping was saved will be re-synced with the new field data.
@@ -464,12 +463,7 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 ### How do I export my audience data to CSV?
 
-The Audiences screen does not have a direct CSV download button. To export audience data to CSV:
-
-1. Navigate to your audience segment and click **Send** → **Export action** → **Add to workbook**.
-2. In the resulting workbook table, click **Tools** → **Export** → **Download CSV**.
-
-Neither step consumes actions: sending records to a workbook is a free platform operation, and CSV downloads from tables do not count toward your action usage.
+The Audiences screen does not have a direct CSV download button, and there is currently no built-in path to download audience data as a CSV file directly from the Audiences screen.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
@@ -541,9 +535,8 @@ This means the filter answers "find me everyone who is a contact role on these s
 **To pull all contacts at accounts with matching deals:**
 
 1.  Build a **Companies** audience filtered by your deal criteria (for example, Stage, Amount, or deal name).
-2.  From your Companies audience, click **Send** → **Export action** → **Add to workbook** to export the matched accounts.
-3.  In the workbook, write a flag value to a custom Salesforce field on those accounts (for example, a text field set to `"target-campaign-q2"`).
-4.  In your **People** audience, add a filter on **Account → [your flag field] equals your flag value**.
+2.  Connect a workflow to that Companies audience (**Send** → **Send to workflow**) that writes a flag value to a custom Salesforce field on each matching account — for example, a **Salesforce Update Record** action that sets a text field to `"target-campaign-q2"`. Publish and run it on all current segment members.
+3.  In your **People** audience, add a filter on **Account → [your flag field] equals your flag value**.
 
 This pulls every contact tied to those accounts, regardless of their OpportunityContactRole status.
 
@@ -570,8 +563,8 @@ Two behaviors to keep in mind:
 
 Three things to check:
 
--   **The signal falls outside the default lookback window.** `Lookup in Audiences` returns signal data for the past 30 days by default. If the signal event is older than 30 days, open the column settings and increase the lookback period.
--   **The 5-result cap was reached.** `Lookup in Audiences` returns a maximum of 5 signal results per record. If a company has more active signals than that, some may not appear. Use `Get Audiences Activity` to retrieve a larger set of signal data.
+-   **The signal falls outside the default lookback window.** `Lookup in Audiences` returns signal data for the past **90 days** by default via the **Signal data to include (days)** column setting. This lookback is independent of your audience's filter criteria — a contact can be correctly included in a "job change results" audience yet still show empty signal data in a lookup if the job-change event falls outside the configured window. To retrieve older signals, open the column settings and increase **Signal data to include (days)** to cover the relevant time range.
+-   **The default 5-result count was reached.** `Lookup in Audiences` returns 5 signal results per record by default. If a company has more active signals than that, some may not appear — increase the result limit in the column settings (up to 50), or use `Get Audiences Activity` to retrieve a larger set of signal data.
 -   **The signal hasn't fired for that record yet.** Signal results are written asynchronously and may not appear immediately after a signal run completes. If a signal should be recent but is still missing, open the signal's column header → `Edit column` and re-run the signal to refresh the data for that record.
 
 ### What happens when I archive a record in Audiences?
