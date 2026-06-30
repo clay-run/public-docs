@@ -45,8 +45,6 @@ Once you've researched an account, Clay can help you find the right people to re
 -   `@Clay Find Product execs who joined [Company] in the last 6 months.`
 -   `@Clay Who are the engineering leaders at [Company] and what are their emails?`
 
-**Note:** Search is only available for people. Company search is not currently supported.
-
 ### Research any account
 
 Use Clay to gather deep intelligence on target companies—tech stack, funding, hiring trends, website traffic, and more. Clay pulls from multiple data sources to give you a complete picture of any account.
@@ -110,7 +108,7 @@ If you need additional data points or more advanced workflows, access the full C
 
 **Can I search for companies?**
 
-Company search is not currently supported. However, you can research companies by asking Clay questions about target accounts—tech stack, funding, hiring trends, leadership changes, and more. Clay surfaces information that's otherwise hard to find: org charts, job changes, funding history, social context, and tech stack signals.
+Yes — company search is available in Clay in ChatGPT. You can search for and enrich companies in the interactive view, including data like tech stack, funding, headcount trends, and leadership. To move company data into a full Clay table for further workflow, click `Open in Clay` in the top right corner.
 
 **Can I query my Audiences data or run analytical queries like "group by seller"?**
 
@@ -120,11 +118,11 @@ The integration is designed for targeted, individual account research — not bu
 
 **How many credits do I get?**
 
-Credits for Clay in ChatGPT draw from your standard Clay workspace credit balance — there is no separate credit pool for ChatGPT usage. If you run out of credits, you can continue searching for people without enrichments, or upgrade to a paid plan for full functionality.
+When you first connect Clay to ChatGPT, you receive 500 bonus credits as a one-time welcome reward. After those are used, credits draw from your standard Clay workspace balance. If you run out of credits, you can continue searching for people without enrichments, or upgrade to a paid plan for full functionality.
 
 **Can the app be used for free?**
 
-Clay in ChatGPT draws from your standard Clay workspace credit balance — there is no separate trial credit pool for ChatGPT. When you run out of credits, you can:
+When you first connect Clay to ChatGPT, you receive 500 bonus credits to try the integration. After those are used, credits draw from your standard Clay workspace balance. When you run out of credits, you can:
 
 -   Continue running people searches in ChatGPT for free, but without enrichments like email.
 -   Upgrade to a paid plan.
@@ -135,7 +133,7 @@ No, you only need to be logged in to ChatGPT.
 
 **Will this use credits from my account?**
 
-Yes. Credits are drawn directly from your Clay workspace credit balance — there is no separate credit pool for ChatGPT usage.
+After the initial 500-credit welcome bonus (granted once on your first connection), yes — all usage draws directly from your standard Clay workspace balance.
 
 **How does pricing work?**
 
