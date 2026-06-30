@@ -151,6 +151,23 @@ Repeat this process for each field you want to extract into its own column.
 
 ## Guide: Merging two tables with Send table data
 
+When merging data from multiple source tables into a single destination table, following a few key practices helps avoid mapping errors and data loss.
+
+**Use a new table as the destination.** Do not send one table's data directly into an existing source table — this can cause irreversible mapping conflicts. Instead, create a dedicated destination table and send data from both source tables into it. Test with a small subset of rows before running your full dataset.
+
+**Map all necessary columns during the initial setup.** Only the columns you explicitly select during Send Table Data configuration will appear in the destination table. If you need to add columns later, open the destination table, click the source cell, and use **Add to column** in the cell details panel to map additional fields.
+
+**Extract enrichment column fields before merging.** System-generated enrichment columns — such as **Company Table Data** in a people table — cannot be transferred as-is. Extract the specific fields you need first:
+
+1. Click a populated **Company Table Data** cell to open the cell details panel.
+2. Hover over a field and click **Add as column** to extract it into a regular column in your source table.
+3. In your Send Table Data configuration, include those newly created columns alongside your other data.
+
+**Compare filters across source tables.** When consolidating results from multiple search sources (for example, two different people search tables), review each table's source configuration to understand where results differ:
+
+1. In each source table, click the **Edit source** icon in the source column header.
+2. Review the filter settings — such as keywords, titles, and locations — and compare them across tables. Variations in company selections, exact-match toggles, or leftover filters often explain why two searches return different results.
+
 ## Best practices & troubleshooting
 
 -   There can be a **maximum of 20 tables** in the workspace-wide routing graph. **This includes tables across workbooks.** The limit counts unique destination tables reachable through the inter-table connection graph — not the number of Send Table Data columns. Connections made by **Write to Other Table**, **Execute Subroutine**, and **Route to Campaign** actions also count toward this same workspace-wide limit. If you exceed this limit, you'll see the error: *"Maximum number of table ID checks exceeded (limit: 20)"*. To work within this limit:
