@@ -256,11 +256,14 @@ Clay provides access to a wide range of AI models from multiple providers. Below
 | Gemini | 2.0 Flash, Flash Lite2.5 Flash, Flash Lite2.5 Pro, 3 ProImagen 3.0, 3.0 Fast |
 | xAI | Grok 4Grok 4.1 Fast Reasoning |
 | DeepSeek | DeepSeek V3.2 |
+| Kimi | Kimi K2.6 (beta) |
 | Mistral | Mistral Medium 3Mistral Large 2.1Mistral Large 3Magistral MediumDevstral 2 |
 | BlackForestLabs | Flux 1 SchnellFlux 1 Dev |
 | Playground | Playground V2Playground V2.5 |
 | Segmind | SSD 1B |
 | Stability | Stable Diffusion XL 1024 |
+
+**Note:** Kimi K2.6 is currently in beta — contact Clay support to request access.
 
 Questions?
 
