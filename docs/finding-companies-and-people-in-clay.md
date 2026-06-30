@@ -480,6 +480,14 @@ The answer depends on which feature you're using:
 
 Across both, high-importance profiles (frequently accessed records, decision-makers, active companies) refresh more often than long-tail profiles.
 
+### Why does the same search return different results than last time?
+
+This is expected behavior. Clay's search index is continuously updated from multiple sources — new profiles and companies are added, others are removed, and contact information changes as people switch jobs. Running the same search with identical criteria days or weeks later can therefore return a different set of results.
+
+This is distinct from individual record freshness (see [How often is company and people data updated?](#how-often-is-company-and-people-data-updated) above): even if a person's profile is already in the index, their job title or employer may not reflect their most recent profile update. For the most current information on specific contacts, run **Enrich Person** after importing — it fetches live data at the time of the run.
+
+**If you need a stable list to work from:** save your results to a table once you're satisfied with them. Rows in your table are a snapshot you control and don't change automatically as the index refreshes. Use that saved table as the foundation for downstream enrichments and outreach.
+
 ### Can I run a people search only on companies that meet certain criteria?
 
 Company and people search sources don't support run conditions. The workaround is to create a **filtered view** of your company table (showing only the rows you want), then run **Find People at These Companies** from that view. The source will only process the companies visible in that view.
