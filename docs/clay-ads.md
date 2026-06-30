@@ -34,6 +34,7 @@ _Note: Personal email addresses significantly improve match rates when syncing t
     -   **For contacts:** Hashed email + first name/last name (required for optimal matching)
     -   **For accounts:** Company name + company website (required for optimal matching)
     -   **Note:** When syncing a LinkedIn **Account list**, a **Company URL** field is also available in the mapping step and can improve match rates. This field does not appear for Contact list audiences — LinkedIn does not support company URL matching for contacts.
+    -   **Important:** Email is the primary field ad platforms use to match contacts. If no email column is mapped, the platform will process the sync but return an audience size of 0 — even for tens of thousands of contacts. This appears as a "too small for use in campaigns" status. Because field mapping cannot be changed after an Ad Sync is created, verify at least one email column is mapped before sending your audience.
 4.  **Review your audience insights and quality summary**.
     -   Check your estimated match rate and audience size before syncing.
     -   Make adjustments to your table if needed (for example, narrowing down to specific job titles or industries) and re-run your export.
@@ -84,7 +85,7 @@ To create a new system user token, you first need to create an app:
      -   Ensure the `ads_management` permission is selected.
      -   Click `Generate token`.
 11.  Copy the generated token immediately — Meta won't store it, so consider saving it in a secure password vault.
-12.  In Clay, when connecting your Meta account for ad syncs, select `Use system user token` as the authentication method and paste your token.
+12.  In Clay, navigate to **Settings > Connections > Meta**. You can either add a new connection or use the **Reconnect** option on your existing account — in both cases, select the **System User Token** tab and paste your token.
 
 ### Why use a system user token?
 
@@ -181,9 +182,26 @@ Yes! Once synced, your audiences automatically update as data changes in your Cl
 
 No, LinkedIn and Meta don't provide contact-level match visibility for privacy reasons. However, Clay shows aggregate match rates and total audience size after each sync.
 
+### **Why does my ad audience show "too small for use in campaigns"?**
+
+Ad platforms report an audience as "too small" when it falls below the platform's minimum threshold. Thresholds vary by platform: **LinkedIn** requires at least **300 matched contacts** in a contact list, while **Meta** and **Google Ads** gate eligibility on the number of **valid emails** (minimum 100). The most common cause is that no email column was mapped in the field mapping — ad platforms match contacts by email, so without it the platform processes all sent records but matches 0.
+
+A second factor: if Enhanced Matching is enabled, it uses a professional profile URL or Work Email column you designate to look up personal emails before syncing. If those input columns are not configured, Enhanced Matching cannot improve your match rate.
+
+**To fix this:** Because field mapping cannot be changed after an Ad Sync is created, you'll need to deactivate the current sync and create a new one. Map at least one email column, and configure Enhanced Matching inputs if using that feature. See [Why should I use personal emails instead of work emails?](#why-should-i-use-personal-emails-instead-of-work-emails) for guidance on which email type gives the best results.
+
 ### **How do I connect my LinkedIn, Meta, or Google Ads account?**
 
 When you create your first ad audience, you'll be prompted to authenticate with LinkedIn Campaign Manager, Meta Business Manager, or your Google Ads account via OAuth. Make sure you have admin access to the ad account you want to use. Note that Google Ads syncing is currently in closed beta — contact [Clay support](https://www.clay.com/contact) to request access.
+
+### **Why did I receive an email saying my Meta account will disconnect soon?**
+
+This is expected behavior. Meta enforces a 60-day expiry on OAuth tokens — when you connect your Meta account to Clay using "Sign in with Facebook," the connection stays active for 60 days before it needs to be renewed. Clay sends a warning email 7 days before expiry and again 1 day before expiry so you can take action before any Ad Syncs are interrupted.
+
+**To resolve this, you have two options:**
+
+-   **Reconnect your Meta account** — navigate to **Settings > Connections > Meta** in Clay and click to reconnect using "Sign in with Facebook." This resets the 60-day timer.
+-   **Switch to a System User Token** — system user tokens can be configured to never expire, avoiding the need to reconnect every 60 days. This is the recommended approach for production Ad Sync workflows. See [Meta system user token authentication](#meta-system-user-token-authentication) for setup instructions.
 
 ### **Can I sync to multiple ad accounts?**
 
