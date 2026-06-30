@@ -225,6 +225,12 @@ The Clay email sequencer is available on all plans. Each lead sequenced consumes
 
 Each lead can only be sequenced once per campaign. To send multiple sequences to the same email address (like [bob@example.com](mailto:bob@example.com)), create a separate campaign for each sequence. Best practice: wait at least a couple of months between sequences to the same person unless you have a completely different offer.
 
+### What happens if my source table has two leads with the same email address?
+
+If two leads in the same campaign share a recipient email address, Clay automatically enrolls only one of them to prevent duplicate outreach. The other lead is permanently skipped and will not be retried in future enrollment runs. In the `Leads` view, skipped contacts show the status: "Another lead with this email address is already enrolled in this campaign, so we skipped this one." Leads without an email address are not affected — they pass through to standard enrollment validation.
+
+To avoid losing leads this way, deduplicate your source table before launching. Click any email column header → **Dedupe** to remove rows with identical email values before starting the campaign.
+
 ### My sender account got disconnected. What happened?
 
 Email providers like Google and Microsoft occasionally revoke access due to inactivity, security checks, or suspicious activity detection. To fix this, delete the disconnected account from your sequencer settings and re-authenticate it.
@@ -353,13 +359,17 @@ These are disclosed when you add your account via OAuth. We request: offline\_ac
 
 ### How are replies categorized in the Campaign Events table?
 
-In the Campaign Events table, the `Event type` column reflects the reply classification assigned by Smartlead. Categories include:
+Smartlead assigns leads into one of the following categories:
 
--   `EMAIL_REPLY` — any reply from a lead
--   `LEAD_UNSUBSCRIBED` — lead clicked the unsubscribe link
--   `LEAD_CATEGORY_UPDATED` — Smartlead has classified the reply (e.g., as `Interested`, `Do Not Contact`, `Not Interested`, `Out of Office`, or other categories)
-
-Note that `EMAIL_REPLY` fires for every reply (including out-of-office), while `LEAD_CATEGORY_UPDATED` fires after Smartlead processes and classifies the reply. Both events may appear for the same reply.
+1.  Interested
+2.  Meeting Request
+3.  Not Interested
+4.  Do Not Contact
+5.  Information Request
+6.  Out Of Office
+7.  Wrong Person
+8.  Uncategorizable by Ai
+9.  Sender Originated Bounce
 
 ### How do I handle replies from leads?
 
