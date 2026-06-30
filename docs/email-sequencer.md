@@ -110,7 +110,21 @@ You can view and manage all campaigns from the `Campaigns` tab on your home scre
 
 In the Campaigns homepage, you can access the `Global inbox` which centralizes replies across all campaigns, giving you one place to review and manage every response. `Global analytics` shows you how all of your campaigns are performing.
 
-Check out the `Email accounts` tab to manage your fleet of sender accounts and `Global blocklist` to add or remove entries.
+The `Email accounts` tab on the Campaigns homepage shows all sender accounts connected to your workspace. You can filter accounts by type (Gmail, Outlook, or SMTP/IMAP), status (Ready, Warming up, Not warming, Auth error), owner, source, or domain — helpful when managing dozens or hundreds of accounts. Select multiple accounts to take bulk actions: enable or disable warming, update send limits, toggle workspace visibility, or delete accounts. The `Global blocklist` tab lets you add or remove email addresses and domains.
+
+### Managing sender accounts within a campaign
+
+Each campaign has a dedicated `Sender accounts` tab for viewing, searching, filtering, and acting on all sender accounts attached to that campaign — helpful when managing campaigns with large numbers of email accounts.
+
+**Filtering your sender accounts:** Use the toolbar to narrow by:
+
+-   **Search** — find a specific sender account by email address.
+-   **Type filter** — show only Gmail, Outlook, or SMTP/IMAP accounts.
+-   **Status filter** — show only accounts in a particular status (Ready, Warming up, Not warming, Auth error).
+
+**Taking action:** Click the three-dot (⋯) menu on a specific row for per-account actions, or select multiple accounts to apply bulk actions. Available actions include enabling or disabling warmup, updating send limits, updating sender variables, and removing accounts from the campaign.
+
+**Note:** This sender accounts view is available in table campaigns. People campaigns — built on top of Audiences — are currently in closed beta; contact [Clay support](https://www.clay.com/contact) to request access.
 
 ### Managing sender accounts within a campaign
 
@@ -248,6 +262,8 @@ You can also update the `From name` (the display name recipients see in their in
 Warmup is the process of automatically sending and receiving emails from other inboxes in Smartlead's warmup pool so your actual campaign traffic looks similar to the emails you're already sending. We recommend you keep warmup on at all times for email accounts in the sequencer to maximize deliverability.
 
 When you add accounts via OAuth, we will automatically set up labels and filters to make it clear what emails are warmups and reduce clutter in your inbox. Your workspace has a unique two-word filter key (e.g., `clever-rocket`) that marks all warmup emails so you can apply these labels and filters.
+
+Warmup is enabled during the account connection flow: after connecting your email account, Clay shows a prompt with all newly added accounts pre-selected for warmup. Clicking **Enable warming** activates it — warmup emails will then appear in your inbox (filed under your warmup label/filter) even if you haven't launched a campaign yet. If you enabled warmup by accident or want to stop it, go to `Campaigns` → `Email Accounts`, find the account, click the ⋯ options menu, and select **Disable warming**.
 
 ### Why did warmup turn itself off?
 
