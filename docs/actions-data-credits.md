@@ -374,11 +374,17 @@ It depends on whether the data provider refunds Clay. If the provider refunds Cl
 
 Use the in-app chat (the icon in the bottom-right corner of the Clay interface) to contact support and start a refund request. Include the workbook, table, and column details where the issue occurred to help the support team investigate.
 
-Note that credits are not refunded for enrichments where the system operated as intended — for example, an email validation that returns "invalid" is a valid result, not an error.
+Note that credits are not refunded for enrichments where the system operated as intended — for example, an email validation that returns "invalid" is a valid result, not an error. The exception is AI columns (see below).
 
 ### Are Data Credits charged when a provider finds no result?
 
 It depends on the provider's billing model. Some providers charge Clay only when data is successfully found, so credits are refunded if no result is returned. Others charge Clay for the API call regardless of whether data is found, so credits are deducted either way. You can see the exact credit cost for each enrichment in the enrichment panel before running.
+
+### Can I request a credit refund for poor AI column results?
+
+AI columns complete with a success status even when the output quality is low or the column returns empty content, so no automatic credit refund fires for poor results. If an AI column produced consistently poor output due to a prompt misconfiguration or unexpected model behavior, you can contact [Clay support](https://app.clay.com) to request a review — a one-time credit exception may be granted at Clay's discretion. This is not an automated policy and is not guaranteed for future requests on the same column.
+
+To minimize the risk of this situation: use the **Generate** button in the prompt cell to test your prompt on a single row before running at scale, and write clear, specific instructions with example inputs and outputs.
 
 ### How long does it take for Data Credits to renew?
 
