@@ -88,13 +88,15 @@ Yes. When a workbook calls a function that consumes credits, those credits are a
 When a limit is reached:
 
 -   All credit-consuming processes stop
--   Users see a message that the limit has been reached
+-   Cells that tried to run show a **Workbook credit limit reached** error
 -   Any recurring spends are canceled
 -   Users are notified of canceled processes
 
+**To resolve it**, workspace admins on Enterprise plans will see a **Manage credit limit** button directly on the error and an **Increase spend limit** button on a banner at the top of any table in the workbook. Both open the credit limit editor, where you can raise the cap or remove it entirely by toggling off **Enable workbook credit limit**. Non-admins will see the error message with a prompt to contact their workspace admin.
+
 **Can users request a limit increase?**
 
-Users can request higher limits from their Admin outside of Clay. Since Admins can modify limits directly, there's no in-product flow for requesting increases. Team members should reach out to their Admin directly.
+Workspace admins on Enterprise plans can raise a limit directly in Clay — either by clicking **Manage credit limit** on the **Workbook credit limit reached** error or from the workbook's settings panel. Non-admin users do not have an in-product way to request an increase; they should reach out to their workspace admin directly.
 
 **What happens if an Admin lowers a limit below what's already been spent?**
 
@@ -125,3 +127,11 @@ Notifications will be delivered via both email and in-product UI across various 
 No. The notifications above are for workbook-level credit spend limits only — they fire when a specific workbook reaches its configured cap. There is currently no automated alert when your workspace's overall monthly Data Credit allotment is running low or is exhausted.
 
 To manually monitor your monthly credit balance, go to **Settings → Usage**. The Usage Dashboard shows your remaining Data Credits and your current billing period end date. For a detailed breakdown of credit consumption, see [Credit usage](/docs/credit-usage).
+
+## Credit Budgets (open beta)
+
+**What's the difference between credit spend limits and credit budgets?**
+
+**Credit spend limits** (covered in this guide) set workbook-level spending caps — admins define a maximum credit amount for each workbook, and all tables and campaigns within it share that cap.
+
+**Credit Budgets** is a related but separate feature currently in open beta for Enterprise customers. It lets admins create named budget pools, assign users or user groups to each budget, and associate workbooks, tables, and campaigns with a specific budget — providing more granular, shared credit governance as your organization scales Clay across multiple teams. To join the Credit Budgets open beta, contact your Growth Strategist.
