@@ -161,3 +161,7 @@ If a payment fails, Clay retries the charge automatically before canceling your 
 Once downgraded to the Free plan, your Data Credit balance is capped at **200 credits** (the Free plan's rollover limit) — any credits above that cap are forfeited at the end of your billing cycle.
 
 To avoid an interruption, keep your payment information current in `Settings` → `Plan & billing`.
+
+### What are Clay's support hours?
+
+Clay's support team is available **Monday through Friday, 9 am–9 pm U.S. Eastern Time**. To reach support, use the in-app chat icon in the bottom-right corner of Clay.
