@@ -158,8 +158,6 @@ See [Find People in Clay](find-people-overview.md) for the full list of filter a
 
 Click the `Sandbox mode` button in the table toolbar. Clay duplicates the top 10 rows of your table into an isolated sandbox (expandable to 50 rows). Make and test your changes there; when ready, click **Review changes** and then **Publish** to apply the configuration to your full table.
 
-**Note:** Sandbox mode is available on Pro and Enterprise plans.
-
 ## Audit and manage scheduled column runs
 
 **How does this save credits?**
