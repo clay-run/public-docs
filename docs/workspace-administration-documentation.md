@@ -527,6 +527,10 @@ If your team wants to do a trial, each team member can create their own trial ac
 
 Trial tables can hold up to **1,000 rows each**. The table view also displays only the first **50 rows** — rows beyond that are blurred in the UI until you upgrade to a paid plan.
 
+## **Contacting support**
+
+Clay's support team is available **Monday through Friday, 9 am–9 pm U.S. Eastern Time**. To reach support, use the in-app chat icon in the bottom-right corner of Clay.
+
 # **Referrals**
 
 Clay's referral program allows you to invite others to join and earn rewards. When someone signs up using your referral link and activates a **paying workspace**, both of you will earn **3,000 Clay credits**. These credits are not added immediately — they are typically applied around **30 days after the referred user upgrades to a paid plan**. Referral credits are not subject to the usual rollover rules — they stay in your account until you use them.
