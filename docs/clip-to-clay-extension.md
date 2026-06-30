@@ -65,7 +65,7 @@ To create a recipe for scraping structured data from profile or detail pages:
 
 ## Clip to Clay
 
-The Clip to Clay extension lets you quickly save full webpages into your Clay tables. It’s useful for capturing unstructured data or bookmarking key pages.
+The Clip to Clay extension lets you quickly save full webpages into your Clay tables. It's useful for capturing unstructured data or bookmarking key pages.
 
 ### Setting up
 
@@ -81,10 +81,16 @@ To save a webpage:
 
 1.  Visit the webpage you want to save and open the Clip to Clay extension.
 2.  Select your destination Clay table.
-    -   If the table doesn’t appear, check that:
-        -   You’re in the correct workspace.
+    -   If the table doesn't appear, check that:
+        -   You're in the correct workspace.
         -   The table has been enabled for the extension.
 3.  Click `Add to Table` to save the page.
+
+### Capturing professional profiles
+
+Clip to Clay works on professional networking sites. When you visit a professional profile page, the extension adds a button that lets you send that person directly to your Clay table with one click.
+
+Once added, any enrichment columns already configured in your table run automatically — no separate enrichment step needed.
 
 ### Viewing history and customizing fields
 
