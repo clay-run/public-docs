@@ -163,6 +163,14 @@ When a run condition is not met, Clay skips the enrichment and stores **no outpu
 
 **Note:** If a row previously ran and produced output, that output is preserved when the condition is not met on a subsequent run — the run condition only gates new executions and does not clear existing cell data.
 
+### Using the "Explain" button to diagnose a skipped run condition
+
+When a cell shows **"Run condition not met"**, an **Explain** button appears next to the status message in the cell details panel. Clicking it triggers an AI analysis of your run condition formula and the current row's values, then returns a plain-language explanation of exactly why the condition evaluated to false for that row.
+
+**To use it:** Click the cell showing "Run condition not met," then click the **Explain** button in the status area. The explanation appears inline below the message.
+
+This is particularly useful when the formula looks correct but the condition still isn't met — for example, when a value appears populated in the table but the comparison fails due to type mismatches, unexpected whitespace, or a nested formula that resolves differently at runtime than it previews.
+
 ### Running an action only once per row (new rows only)
 
 Clay has no built-in "is new row" flag. To prevent an action column — such as sending a Slack message, writing to a CRM, or sending an email — from re-firing on rows it already processed, gate it on a **separate upstream column** that only has a value after the row was first processed:
