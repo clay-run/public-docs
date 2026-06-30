@@ -309,23 +309,22 @@ To resolve:
 
 ### Insufficient credits
 
-Apollo enrichments in Clay can consume either **Clay Data Credits** or **Apollo lead credits**, depending on how you've connected Apollo:
+Apollo enrichments in Clay can consume either **Clay Data Credits** or **Apollo lead credits**, depending on which integration type is in use:
 
--   **Clay Data Credits**: Used when you connect Apollo via the default OAuth flow (no personal Apollo subscription required). Clay's managed connection handles requests on your behalf.
--   **Apollo lead credits**: Used when you supply your own Apollo API key via the HTTP API step. Requests run against your Apollo account directly, so Apollo's limits and credit balance apply.
+-   **Clay Data Credits**: Used with the current OAuth-based Apollo integration. New Apollo columns use OAuth by default.
+-   **Apollo lead credits**: Used with older API-key-based Apollo columns. If you set up Apollo columns before the OAuth integration launched, those columns may still run against your own Apollo account's lead credits.
 
-If an enrichment step fails with a credits error, first confirm which connection type you're using, then follow the relevant steps.
+If an enrichment step fails with a credits error, first confirm which type of connection your column is using.
 
-**If using Clay Data Credits (OAuth/built-in connection):**
+**If using the OAuth integration (Clay Data Credits):**
 
 Check your Clay workspace credit balance. If credits are depleted, add more or upgrade your Clay plan.
 
-**If using your own Apollo API key (HTTP API step):**
+**If using a legacy API-key-based Apollo column (Apollo lead credits):**
 
 1.  Check your Apollo subscription to confirm it includes enough lead credits for the action. If not, upgrade through Apollo's settings.
 2.  If you recently upgraded your Apollo account but still see the error in Clay, try reconnecting your Apollo account to refresh the connection. Ensure the credit type you have matches the activity you are performing.
 3.  If Apollo credits are not recognized despite being available, there may be a brief delay in credit activation — try rerunning your rows after some time, or contact Apollo support.
-4.  If you cannot resolve the credit issue, consider using Clay's built-in **Enrich Company** enrichment instead of the Apollo-specific version. The generic enrichment uses Clay Data Credits and does not require an Apollo subscription.
 
 ### Null results in enrichment
 
