@@ -39,7 +39,7 @@ Once your data is in Clay, you can enrich rows to pull in additional information
 
 **If you imported a list of companies and want to find contacts and their email addresses:**
 
-1.  In your table, click **Tools**, switch to the **Import** tab, and select **Find People at These Companies** to search for people at each company by job title, seniority, or other criteria. Each match is returned as a separate contact row.
+1.  In your table, click **Tools**, switch to the **Sources** tab (labeled **Import** in some accounts), and select **Find People at These Companies** to search for people at each company by job title, seniority, or other criteria. Each match is returned as a separate contact row.
 2.  On the resulting contacts table, click **Add enrichment**, search for **Work Email**, and select the waterfall to find and validate a work email address for each contact.
 
 Importing a company list does not automatically add contact rows or email addresses — you need to run these two steps explicitly. For full setup instructions, see [Finding companies and people in Clay](finding-companies-and-people-in-clay.md) and [Work Email waterfall](work-email-waterfall.md).
