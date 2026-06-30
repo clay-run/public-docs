@@ -19,6 +19,8 @@ Both tools integrate seamlessly with your Clay workspace, making it easier to co
 
 The Clay for Chrome extension allows you to extract structured data from webpages. You can capture data from a single page, lists across multiple pages, or even custom-defined structures. Once extracted, the data can be added directly to your Clay table, downloaded as a CSV, or copied to your clipboard.
 
+**Note:** Clay for Chrome does not work on professional networking sites. To add contacts from professional profiles to your Clay tables, use [Exportly](https://www.exportly.ai/) — a Clay partner extension built for professional networking.
+
 ### Autodetected lists
 
 The extension automatically detects list-like structures on the page and formats them into a table.
@@ -56,7 +58,7 @@ To create a recipe for scraping structured data from profile or detail pages:
 1.  Open the Clay for Chrome extension on the page you want to scrape.
 2.  Click `Select Data to Add from Page`, then choose `Select a Single Attribute`.
 3.  Map each attribute you want to extract:
-    -   For example: name, website, LinkedIn, or Crunchbase.
+    -   For example: name, website, or Crunchbase URL.
 4.  Adjust the `URL Matching` settings to apply the recipe to similar pages:
     -   Replace specific URL components with variables (e.g., `:company_name`).
 5.  Name and save your recipe.
