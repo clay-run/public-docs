@@ -40,6 +40,10 @@ To enable or disable auto-dedupe:
 
 **Note — simultaneous row inserts:** Auto-dedupe may not catch duplicates when rows with the same value are added at the same time — for example, when a bulk import, a batch webhook, or concurrent sends push rows within milliseconds of each other. Each insert is processed in its own transaction and is not aware of the other before both are committed to the table, so both can slip through. This is a known limitation. As a workaround, add a dedupe or filter step in your workflow just before any downstream push (such as a CRM or email sequencer) to catch any duplicates that slip through.
 
+**Viewing deduplication history:** To see which rows auto-dedupe has removed, click the **History** dropdown in the bottom-right corner of the table and select **Row deduplication**. The modal lists every row that was automatically deleted, showing the value that triggered the match — for example, "Duplicate record for Acme Corp automatically deleted." If your row count drops unexpectedly and auto-dedupe is enabled, this view shows exactly what was removed and when.
+
+**Tip — choosing the right dedupe column:** The dedupe column determines what counts as a "duplicate." Deduplicating on **Company** keeps only one row per company name — correct for a company-focused table, but not for a contacts table where multiple people from the same company are expected. For contact-based tables, use a unique identifier like **Email** or a **professional profile URL** as the dedupe column instead.
+
 ## Auto-run
 
 Auto-run automatically runs enrichments whenever rows are added or edited, keeping your table current. You can control this feature at multiple levels: table-level (master control), column-level (individual control), and through conditional logic.
@@ -109,6 +113,14 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
 The out-of-date clock indicator on a cell means the cell is stale — it has an existing result but auto-run is not re-running it. The most common cause is "Keep existing results" being enabled: Clay skips cells that already have a result rather than overwriting them and spending credits. The cell's current value is still usable downstream; other columns can reference it normally.
 
 A cell also shows as out of date when its inputs have changed since it last ran — for example, if an upstream column with auto-run enabled re-ran and updated its values, or if the column's own configuration was modified (such as editing a prompt). In these cases the indicator is informational: the existing value is still valid and usable downstream. In many cases re-running would produce the same result, so only trigger a re-run if you specifically need fresh output.
+
+**Manual tables and sequential column runs:** If your table is in Manual mode and you run enrichment columns one at a time from left to right, you may see the out-of-date indicator appear across most columns — including ones you've already run. This is expected behavior, not a bug. Every time you run an upstream column, Clay immediately marks all downstream columns that depend on it as out of date, because their inputs may have changed. In a table where columns feed sequentially into each other (for example, a scoring table), running them in order creates a wave of stale indicators that propagates forward as you work. **Your data is not broken**: cell values marked out of date because auto-run is off are still valid and can be referenced by other columns without blocking downstream runs.
+
+Since the table is in Manual mode, these indicators won't auto-clear. A few options:
+
+-   **Ignore the icons** if the values look correct — the clock icon in this context is a workflow indicator, not a data quality signal.
+-   **Run all columns in order** — right-click each column header from left to right and select **Run column → Run [N] empty or out-of-date rows** to clear all stale indicators in one pass.
+-   **Switch to auto-run with "Keep existing results"** — turn on Auto-run and check **Keep existing results**. The table will then automatically queue only empty, errored, or new cells when dependencies change, without re-running (and spending credits on) cells that already have results.
 
 If a cell **keeps** showing as out of date even after you re-run it, check whether an upstream column has auto-run enabled. Each time that upstream column runs and updates its output, Clay marks any column referencing it as out of date again — even one you just re-ran. To resolve this:
 
@@ -237,7 +249,7 @@ When you duplicate a table, Clay copies the table structure and run settings —
 -   Enriched data — enrichment columns start empty in the duplicate
 -   Source import history — the duplicate starts with a fresh record count
 
-**To copy existing enriched data without re-running enrichments:** Use [Send Table Data](send-table-data.md) to transfer rows from the original table to the duplicate. Add a Send Table Data column to the original table, select the columns you want to copy, and set the destination to the duplicate. This moves the already-computed cell values directly — no enrichment credits are consumed.
+**To copy existing enriched data without re-running enrichments:** Use [Send Table Data](send-table-data.md) to transfer rows from the original table to the duplicate. Add a Send Table Data column to the original table, select the columns you want to copy, and set the destination to the duplicate. This moves the already-computed cell values directly — the Send Table Data action itself consumes no credits. **Important:** Because auto-run carries over to the duplicate (see below), enrichment columns in the destination (such as Claygent) will automatically re-fire on incoming rows and consume credits unless you turn off auto-run in the duplicate — or disable it on individual enrichment columns you don't want to re-run — before sending data.
 
 **Auto-run carries over:** Because run settings are preserved, if Auto-run was enabled in the original table, the duplicate will also have Auto-run enabled. To create a copy that starts in manual mode (useful for demos or templates), turn off Auto-run in the original table **before** duplicating — or turn it off in the duplicate immediately after creating it. See [Auto-run](#auto-run) for how to toggle this setting.
 
@@ -330,13 +342,14 @@ To edit your table description:
 
 ## View table history
 
-Track changes to your table, including who made them and when. View updates to settings, column additions, updates, and deletions with AI-generated summaries.
+Track changes to your table, including who made them and when. View updates to settings, column additions, updates, and deletions.
 
 **What you can track:**
 
 -   Table settings (name, description, run settings)
 -   Column additions, updates, and deletions
--   Detailed change diffs with AI summaries
+-   Detailed change diffs
+-   Auto-dedupe row deletions (visible via **Row deduplication**)
 
 **Retention:** Change log retention varies by plan:
 
@@ -348,8 +361,10 @@ Track changes to your table, including who made them and when. View updates to s
 **To view table history:**
 
 1.  Open your table.
-2.  Click the `History` → `Change log`.
-3.  Review the timeline of changes, including who made each change and when.
-4.  Click `View details` to get more information.
+2.  Click the **History** dropdown in the bottom-right corner of the table. The dropdown has two separate options:
+    -   **Change log** — opens a sidebar showing settings changes, column additions, updates, and deletions.
+    -   **Row deduplication** — opens a modal listing every row removed by [auto-dedupe](#auto-dedupe), including the value that triggered the deletion.
+3.  In the **Change log** sidebar, review the timeline of changes, including who made each change and when.
+4.  Click `View details` to get more information on a specific entry.
 
 For restoring your table to a previous configuration, see [Table versions](table-versions.md).
