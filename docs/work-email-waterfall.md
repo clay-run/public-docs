@@ -124,6 +124,8 @@ No. `Infer Email` is completely free. The validation step _does_ cost Clay credi
 
 You only pay for the provider step that successfully finds an email — providers that run and return nothing are not charged. Total credit cost per matched email depends on which provider in the sequence finds a result first: if the first provider succeeds, you pay that provider's cost; if the waterfall tries two or three providers before finding a valid email, you pay for each attempt. Credit costs vary by provider and your plan tier. To reduce per-email spend, enable `Infer Email` — it adds a free first step that can skip paid providers entirely when the naming pattern matches.
 
+For additional strategies — including connecting your own provider API keys (which drop the Clay credit cost for that step to 0) or using Lookup Columns to pull existing email data before the waterfall runs — see [Ways to save Clay credits](clay-credit-conservation.md).
+
 ### What happens if Infer Email guesses the wrong email?
 
 If the inferred email fails validation, the waterfall moves on to the next provider as normal. No credits are charged for the failed `Infer Email` step.
@@ -146,6 +148,12 @@ To confirm this is what happened: in the waterfall's `Full configuration`, turn 
 **A related sub-case — same email found by multiple providers:** To avoid paying for validation twice, the waterfall skips re-validation for any email address that was already found and validated (as invalid) by an earlier provider step. If Provider 3 finds the same email address that Provider 1 already returned and confirmed as invalid, the validation column for Provider 3 will show **run conditions not met** and that email will not be written to the final output column. This is expected behavior — the waterfall continues searching because a later provider might still return a different, valid email.
 
 If you need to use an email that a later provider found despite an earlier invalid result, you can manually paste it into your output column, or create a formula column that pulls directly from the individual provider result columns.
+
+### Why does my own email address appear in the Work Email results?
+
+If your own email address shows up in the Work Email output column, a field containing your own email — such as an "Account Owner" column synced from a CRM — has likely been wired to one of the waterfall's input fields. The waterfall passes mapped inputs directly to providers without checking whether the value belongs to you or to a contact, so any field mapped to an email input is used as-is.
+
+**How to fix it:** Open the waterfall settings and review which column is mapped to each input field. Remove any column that contains your own email address or account-owner information from the input mapping.
 
 ### Why does the validation step show "Click to run" instead of running automatically?
 
