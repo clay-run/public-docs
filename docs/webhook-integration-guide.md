@@ -147,6 +147,14 @@ This is different from CRM sources such as HubSpot and Salesforce, which track e
 
 **Note:** Auto-dedupe may not catch duplicates when two payloads arrive within milliseconds of each other. See the [simultaneous insert limitation](https://www.clay.com/university/guide/table-management-settings#auto-dedupe) in the auto-dedupe docs for details and workarounds.
 
+### Can Clay replay webhook events that were acknowledged but not processed?
+
+No — Clay does not have a built-in replay function for webhook events. Once Clay returns a `200 OK` for an incoming payload, that acknowledgment is final. There is no admin endpoint, UI control, or automatic retry that can reprocess or re-deliver those events from within Clay.
+
+To recover events that were acknowledged by Clay but did not appear as rows in your table, you will need to **re-trigger them from your source system's delivery logs**. Most webhook senders (HubSpot, Zapier, Make, Salesforce, and others) maintain a delivery history where you can replay or resend individual events. Check your source system's documentation for how to replay past webhook deliveries.
+
+**To prevent data loss going forward,** pace requests within Clay's [throughput limits](#limits) and ensure your source system implements retry logic with exponential backoff for `429` responses.
+
 ### What happens when I map a webhook field to an existing column — and why did my data disappear?
 
 When you click a cell in your webhook column, open **Cell details**, hover over a field, and select **Add as column → Map to an existing column**, Clay changes the destination column's formula to pull from the webhook source. What happens next depends on what was already in that column:
