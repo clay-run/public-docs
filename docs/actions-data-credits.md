@@ -374,6 +374,8 @@ It depends on whether the data provider refunds Clay. If the provider refunds Cl
 
 Use the in-app chat (the icon in the bottom-right corner of the Clay interface) to contact support and start a refund request. Include the workbook, table, and column details where the issue occurred to help the support team investigate.
 
+**Accidental enrichments:** If you ran an enrichment by mistake, the support team typically issues a one-time 50% Data Credit refund per account as standard policy. To avoid accidental enrichments, turn off `Auto-run` in column settings when you're not actively running enrichments, and test new workflows on a small batch first.
+
 Note that credits are not refunded for enrichments where the system operated as intended — for example, an email validation that returns "invalid" is a valid result, not an error. The exception is AI columns (see below).
 
 ### Are Data Credits charged when a provider finds no result?
@@ -395,13 +397,13 @@ When your plan renews, Data Credits are updated via a payment-processor webhook 
 Common causes:
 
 -   **Actions stopped midway:** Already-sent requests still consume Data Credits.
--   `Auto-Update` enabled: Automatic refreshes trigger enrichments.
+-   `Auto-run` enabled: Automatic refreshes trigger enrichments.
 -   **AI columns:** Every row processed incurs a cost.
 -   **Duplicate enrichments:** Re-running columns triggers new usage.
 
 **Prevention tips:**
 
--   Turn off `Auto-Update` when not needed.
+-   Turn off `Auto-run` when not needed.
 -   Pause AI columns that aren't providing value.
 -   Check table settings before re-running enrichments.
 
