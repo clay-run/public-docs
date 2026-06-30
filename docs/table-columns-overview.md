@@ -169,7 +169,7 @@ When you apply more than one sort, Clay applies them **in priority order**: the 
 To manage multiple sorts:
 
 1.  Click the **Sort** button in the table toolbar (it shows the number of active sorts when any are applied, e.g., **2 sorts**).
-2.  Click **Add sort** to add another column and direction.\
+2.  Click **Add sort** to add another column and direction.
 3.  **Drag** sort items up or down to change their priority — the topmost item always has the highest priority.
 4.  Click the **×** on a sort item to remove it.
 
