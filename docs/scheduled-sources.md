@@ -53,9 +53,8 @@ The source runs immediately. Your schedule is unaffected — the next automatic 
 
 ## Usage limits
 
-Each plan has a limit to the total number of scheduled sources, across all tables.
+Scheduled sources are not available on the Free plan. For paid plans, the limit applies to the total number of scheduled sources across all tables.
 
--   Free: 100 sources
 -   Launch: 100 sources
 -   Growth: 100 sources
 -   Enterprise: 1,000 sources
