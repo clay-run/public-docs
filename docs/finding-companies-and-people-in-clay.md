@@ -360,7 +360,7 @@ This mismatch most commonly occurs with subsidiaries, acquired companies, and or
 
 ### Enrichment columns show "Missing input" for company rows
 
-If enrichment columns — such as **Enrich Company**, **Find Contacts at Company**, or third-party company enrichments — show **"Missing input"** for some rows, those rows are missing the required identifiers. Most company enrichments require at least one of: a domain, a company name, or a LinkedIn company URL.
+If enrichment columns — such as **Enrich Company**, **Find Contacts at Company**, or third-party company enrichments — show **"Missing input"** for some rows, those rows are missing the required identifiers. Most company enrichments require at least one of: a domain, a company name, or a company profile URL.
 
 **Common causes:**
 
