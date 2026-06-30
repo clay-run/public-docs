@@ -73,6 +73,8 @@ To stop a running table, click the **Stop** button in the run summary panel at t
 
 **Important: clicking Stop does not immediately cancel enrichments that are already in progress.** When you click Stop, Clay cancels all queued cells that haven't been dispatched yet — but any enrichment calls already sent to an external data provider will run to completion and **will still consume credits**. You may see a short delay between clicking Stop and the table fully halting while these in-flight calls finish.
 
+> **Note:** Turning off auto-run — at the table level or on individual columns — does not cancel rows that are already queued. Auto-run controls whether *future* enrichments trigger automatically; it has no effect on jobs already in the queue. To cancel an active queue, you must click the **Stop** button as described above.
+
 To prevent unintended credit usage before it starts, turn off [auto-run](table-management-settings.md) before importing large batches of rows. This prevents enrichments from triggering automatically on new data.
 
 ## Manually running unrun cells
@@ -128,6 +130,7 @@ Cells show a **Queued** status when they are waiting to be processed. This is no
 If cells remain Queued for an extended period, common causes include:
 
 -   **High concurrency in progress** — Clay runs many rows at once; if a large number are queued simultaneously, later rows wait while earlier ones complete. The queue will clear on its own.
+-   **Trial and free plan enrichment limits** — On trial and free plans, enrichments triggered manually (via **Run column** or right-click → **Run [N] rows**) are capped at **50 per hour**, compared to 5,000 per hour on paid plans. If you submit a large batch of rows (for example via a webhook source) while the table is in Manual mode, triggering enrichments by hand can exhaust this cap before all rows finish. To process incoming rows without hitting the per-plan limit, enable [auto-run](table-management-settings.md): enrichments triggered automatically by new data run through Clay's background queue, which is not subject to the hourly cap.
 -   **External API rate limits** — Integrations such as OpenAI or HubSpot enforce per-minute request limits. For Clay's managed integrations (where Clay provides the API key), Clay handles this automatically and the queue resumes once the rate-limit window resets. If you are using your own API key, Clay may send requests faster than your account's tier allows — rows that exhaust the retry window return a **"Rate limit wait time exceeded"** error. To prevent this on enrichment columns that support it (such as HTTP API), configure the **Custom rate limit** setting on the column to match your provider's tier; see [Enrichments](enrichments.md) for details. For AI enrichments using a personal API key, see [AI tokens](ai-tokens.md).
 -   **API quota exhausted** — If you've hit a quota ceiling (e.g., OpenAI, Google), new runs are blocked until the quota resets or is increased in the provider's dashboard.
 -   **Auto-run settings** — If auto-run is enabled and triggering repeated re-runs, rows may accumulate in the queue unexpectedly. See [Table management settings](table-management-settings.md) for how to adjust auto-run and scheduled run behavior.
@@ -180,6 +183,23 @@ To re-enable automatic enrichment:
 After enabling table-level auto-run, column-level settings take effect: columns with auto-run on will trigger automatically; columns with auto-run off will still require a manual trigger.
 
 For the full auto-run decision tree and advanced options (conditional runs, "Keep existing results"), see [Table management settings](table-management-settings.md).
+
+## Troubleshooting: a specific column stopped running on new rows
+
+If an enrichment or waterfall column processed some rows — whether manually triggered or when it was first set up — but new rows added to the table aren't being picked up automatically, the **column's own auto-run setting** may be turned off.
+
+Column-level auto-run is independent of table-level auto-run. Even when the table is configured to run automatically, individual columns can have their auto-run toggled off in their own **Run settings**. A column with auto-run off only runs on rows you trigger manually — it won't start automatically when new rows arrive.
+
+**To fix it:**
+
+1.  Click the column header to open its settings (or right-click → **Edit column**).
+2.  Scroll to **Run settings**.
+3.  Toggle **Auto-run** on.
+4.  Click **Save**.
+
+After saving, the column will process new rows automatically. To also run rows that were already added while auto-run was off, right-click the column header → **Run column** → **Run [N] empty or out-of-date rows**.
+
+> **Note:** Table-level auto-run must also be on for column-level auto-run to take effect. If enabling column-level auto-run still doesn't start automatic runs, check whether the table itself is in Manual mode — see [Troubleshooting: enrichments not triggering automatically despite auto-run being enabled](#troubleshooting-enrichments-not-triggering-automatically-despite-auto-run-being-enabled).
 
 ## Troubleshooting: identifying rows that errored vs. rows with no data
 
