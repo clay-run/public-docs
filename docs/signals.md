@@ -90,16 +90,11 @@ The safest approach is to replace the data inside your existing source table so 
 
 Because the table ID hasn't changed, all downstream signal workflows remain connected automatically.
 
-**Option 2 — Redirect each signal to a new table:**
+**Option 2 — Switch to a different source table (requires rebuilding each signal):**
 
-If you want to use a different table as your master going forward:
+The signal's Company Table, View, and Company Identifier fields are locked after the signal is created and cannot be updated via **Edit signal**. If Option 1 is not feasible — for example, if you need to monitor a fundamentally different set of companies — you will need to rebuild each affected signal.
 
-1.  In each signal table, click the signal column header (the 📡 icon, named `Event: [Signal Type]` by default).
-2.  Click **Edit signal**.
-3.  Update the source table selection to point to your new master table.
-4.  Click **Save and re-run** (or **Save and run** if the signal has never run before, **Save only** for scheduled signals, or **Save** for non-scheduled signals), then re-run the signal column.
-
-Repeat for each signal table that referenced the old master.
+**To preserve your enrichment columns when rebuilding**, save the existing signal results table as a template first: click the table title → scroll to **Share as template** → toggle it on and copy the link. Open the link to create a new table — the new table will include all your enrichment column configurations. Then set up your signal from scratch in your source company table (via **Tools** → the relevant signal type), targeting the new source table.
 
 ### How do I extend my signal to cover more companies?
 
@@ -123,6 +118,8 @@ Because these source fields cannot be re-pointed after creation, the fix is to r
 3.  Click **Save and run**.
 
 You can then delete the old signal. Rebuilding does not reprocess previously seen results.
+
+**Tip — preserve your enrichment columns during a rebuild:** If your existing signal results table has enrichment columns you've built out, save the table as a template before rebuilding. Click the table title → scroll to **Share as template** → toggle it on and copy the link. Open the link to create a new table — the new table will include all your enrichment column configurations, so you don't have to rebuild them from scratch.
 
 ### I want to find job postings by location or title — is that a Signal?
 
