@@ -120,6 +120,10 @@ Clay gives you three ways to get contacts from a company list. Here's how they d
 -   Costs **0.5 credits per row** on current pricing plans (1 credit per row on legacy plans).
 -   Best when you want contacts to stay associated with their parent company row, or when you're processing companies incrementally and only want to find contacts for specific rows.
 
+### Check headcounts before running a full people search
+
+Use **Find Employee Headcount by Criteria** as an enrichment column in your company table to get a contact count matching your criteria before committing to a full people search. It takes the same filters as people search — job title keywords, seniority levels, location, and more — but returns only a `Role Count` number per company row rather than pulling full profiles. Add it as a column in your company table and pass a company LinkedIn URL or domain as the company identifier. Once the counts are populated, filter your table for companies above (or below) your threshold before running `Find Contacts at Company` or `Find People at These Companies` — this avoids spending credits on companies with too few matching contacts.
+
 ### Use dynamic location filtering with in-table actions
 
 When you run `Find People at These Companies` as an in-table action (rather than launching a separate people search), you can dynamically filter by location by referencing a location column from your company table. This lets you customize the location filter per company without running multiple separate searches.
