@@ -309,12 +309,23 @@ To resolve:
 
 ### Insufficient credits
 
-If an Apollo enrichment step fails with a credits error, your Apollo account may not have enough lead credits to complete the action. This can happen even on paid Apollo plans, since the number of credits available depends on your specific subscription tier.
+Apollo enrichments in Clay can consume either **Clay Data Credits** or **Apollo lead credits**, depending on how you've connected Apollo:
 
-To resolve:
+-   **Clay Data Credits**: Used when you connect Apollo via the default OAuth flow (no personal Apollo subscription required). Clay's managed connection handles requests on your behalf.
+-   **Apollo lead credits**: Used when you supply your own Apollo API key via the HTTP API step. Requests run against your Apollo account directly, so Apollo's limits and credit balance apply.
+
+If an enrichment step fails with a credits error, first confirm which connection type you're using, then follow the relevant steps.
+
+**If using Clay Data Credits (OAuth/built-in connection):**
+
+Check your Clay workspace credit balance. If credits are depleted, add more or upgrade your Clay plan.
+
+**If using your own Apollo API key (HTTP API step):**
 
 1.  Check your Apollo subscription to confirm it includes enough lead credits for the action. If not, upgrade through Apollo's settings.
-2.  If you recently used credits, there may be a brief delay before the count refreshes — re-run the step to check whether credits have been restored.
+2.  If you recently upgraded your Apollo account but still see the error in Clay, try reconnecting your Apollo account to refresh the connection. Ensure the credit type you have matches the activity you are performing.
+3.  If Apollo credits are not recognized despite being available, there may be a brief delay in credit activation — try rerunning your rows after some time, or contact Apollo support.
+4.  If you cannot resolve the credit issue, consider using Clay's built-in **Enrich Company** enrichment instead of the Apollo-specific version. The generic enrichment uses Clay Data Credits and does not require an Apollo subscription.
 
 ### Null results in enrichment
 
