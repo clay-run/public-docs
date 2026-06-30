@@ -1,7 +1,7 @@
 ---
 title: Enrichments
 description: Learn how to run enrichments in Clay, including run settings, delay options, and custom rate limits.
-last_synced: 2026-04-26T01:39:56.840Z
+last_synced: 2026-04-26T01:39:56.052Z
 ---
 
 # Enrichments
@@ -82,6 +82,14 @@ The request limit and duration together must average at least 1 request per seco
 **Note:** Custom rate limit is not available for Clay's built-in AI enrichments (Use AI, Claygent, etc.). It only appears for enrichments that support custom rate limiting, such as HTTP API and Apollo OAuth enrichments.
 
 ## Troubleshooting
+
+### "The Save button is greyed out when I set up or edit an enrichment"
+
+The Save button stays disabled until all required configuration is in place. The most common causes:
+
+-   **Required input fields are not yet mapped.** Each enrichment has at least one required input field — for example, a company domain enrichment requires a company name input. If a required field hasn't been mapped to a column in your table, the Save button remains disabled. Look for any empty input fields in the enrichment panel and map each one to a column using the column picker (type `/` to open it).
+-   **Enrichment column limit reached.** If your table has hit its enrichment column limit, the Save button is disabled for both new and existing enrichment columns. See [Column limits](table-columns-overview.md#column-limits) for how to check your count and free up space.
+-   **Integration account not connected.** Some enrichments require an API key or account connection before you can save. Click **+ Add account** in the enrichment panel if no account is connected yet.
 
 ### "Is there a way to make one enrichment (column) run only after another has finished?"
 
