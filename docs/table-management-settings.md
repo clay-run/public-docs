@@ -251,6 +251,8 @@ When you duplicate a table, Clay copies the table structure and run settings —
 
 **Connected sources (Salesforce, SOQL queries, and similar):** If a table has a Salesforce report, SOQL query, or other import source configured, duplicating copies the source configuration but does **not** automatically start the import. You will need to manually trigger the source in the duplicated table when you're ready to populate it with data.
 
+**Webhook sources:** If a table has a webhook source column, duplicating generates a **brand new, unique webhook URL** for the copy. The original table's URL is not affected. Any external system sending data to the original URL will not automatically send to the new table — you need to update your sending tool to POST to the new URL. To find the new URL, click the webhook source column in the duplicate. See [Webhooks in Clay](webhook-integration-guide.md) for more details.
+
 To duplicate a table:
 
 1.  Click on the title of the table on the top left.
