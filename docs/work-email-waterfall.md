@@ -94,6 +94,28 @@ If the cell shows no result, click into it to see which providers were tried and
 -   The providers ran but returned results that failed validation. Try a less strict validation strategy, or check the individual provider columns (enable them in waterfall settings) to see what was returned.
 -   Your workspace ran out of credits mid-waterfall. When credit limits are hit, remaining providers in the sequence don't execute — click into the cell to see how far the waterfall got before stopping. See [Actions and data credits](actions-data-credits.md) to add more credits.
 
+### What match rate should I expect from the Work Email waterfall?
+
+For a well-configured Work Email waterfall with good input data, a match rate of **60–75%** is typical across most B2B contact lists. Results vary based on:
+
+-   **Input data completeness** — rows with a company domain and full name consistently get higher match rates. Missing either input significantly limits which providers can run.
+-   **Your list composition** — match rates vary by industry, geography, and contact type. Some datasets skew higher; others skew lower.
+-   **Number of providers** — more providers in the waterfall sequence give more opportunities to find an email.
+
+If you're seeing rates well below 60%, see [How can I improve my email match rate?](#how-can-i-improve-my-email-match-rate) below. If you're already near 70% and have optimized your inputs and provider sequence, you may be close to the ceiling for your specific contact list — some contacts simply don't have emails findable through any commercial data provider.
+
+### How can I improve my email match rate?
+
+If you want to find emails for more of your contacts, here are the most effective steps to take:
+
+1.  **Make sure Company Domain and full name are populated.** Most providers need both to run. Rows without a company domain in particular are skipped by a large portion of the waterfall. If you only have a company name, use the [Company Domain waterfall](building-a-data-waterfall.md) to find domains first.
+
+2.  **Add profile URLs for your contacts.** Mapping professional profile URLs as an additional input can expand which providers are able to run on each row, increasing your overall coverage.
+
+3.  **Check which providers are finding emails.** In the waterfall's Full Configuration, toggle off `Hide provider columns?` to reveal individual per-provider result columns. This shows you exactly which providers are returning emails for your list and where coverage drops off — useful for identifying whether adding new providers might help.
+
+4.  **Add more providers to your waterfall.** In Full Configuration, click **Add provider**. Different providers cover different datasets, so a longer sequence gives more chances to find emails your current providers missed.
+
 ### Why do some rows show "Invalid input" with a message about a first or last name?
 
 This error appears when the **Full Name** input contains a value that can't be separated into a distinct first name and last name. Most providers in the Work Email waterfall require at minimum a first and last name — a single-word value, a company name, or a name missing either first or last will cause those providers to return **"Invalid input"**.
