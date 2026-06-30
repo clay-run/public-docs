@@ -294,6 +294,8 @@ To downgrade your Clay workspace plan:
 -   To ensure your data is preserved, we recommend downgrading instead of fully canceling.
 -   Your Data Credit balance is capped at 200 credits (the free plan’s rollover limit) at the end of your billing cycle — any credits above 200 are forfeited.
 
+_**Note:** The credit balance icon in the top-right corner of your workspace shows a projected rollover amount. If you have scheduled a **downgrade to another paid plan**, the projection already reflects the pending plan's credits. However, if you have scheduled a **cancellation** (which moves your workspace to the Free plan), the projected amount does not account for the Free plan's 200-credit rollover cap — your actual balance after your billing cycle ends will be capped at 200 credits, regardless of the amount shown in the credit balance display._
+
 **During your current billing cycle:**
 
 -   Your Data Credit balance remains until the cycle ends.
@@ -422,14 +424,6 @@ AI columns complete with a success status even when the output quality is low or
 
 To minimize the risk of this situation: use the **Generate** button in the prompt cell to test your prompt on a single row before running at scale, and write clear, specific instructions with example inputs and outputs.
 
-### What happens to credits if an enriched email fails validation or turns out to be undeliverable?
-
-Credits are charged when a provider returns a result — including email addresses that later fail a validation step or turn out to be undeliverable. There is no automatic credit refund when a returned email fails validation or bounces after sending; credits are deducted at the point the provider returns data, regardless of what happens to that address downstream.
-
-For system errors (such as a timeout or infrastructure failure during enrichment), credits are automatically refunded.
-
-**To limit credit spend on invalid emails:** Add an email validation step immediately after your waterfall enrichment. This won't recover credits already spent on the waterfall lookup, but it lets you filter out invalid addresses before running further enrichments — preventing additional credit spend on contacts with unusable email addresses. See [Waterfalls](building-a-data-waterfall.md) for how to configure validation in your waterfall workflow.
-
 ### How long does it take for Data Credits to renew?
 
 When your plan renews, Data Credits are updated via a payment-processor webhook and typically appear within a few minutes of your renewal timestamp. If credits haven’t updated shortly after the renewal time shown in your billing settings, wait a few minutes and refresh the page.
@@ -464,6 +458,8 @@ Common causes:
 -   Features are limited to the new plan’s capabilities.
 
 **Downgrading to the free plan:** The free plan includes only 100 Data Credits per month (rollover cap: 200 credits). Credits at or below 200 carry over; any credits above 200 are forfeited at the end of your billing cycle. If you have a large credit balance, spend it down before your cycle ends or contact support before downgrading to explore your options.
+
+_**Note:** The credit balance icon in the top-right corner of your workspace shows a projected rollover amount. If you have scheduled a **downgrade to another paid plan**, the projection already reflects the pending plan's credits. However, if you have scheduled a **cancellation** (which moves your workspace to the Free plan), the projected amount does not account for the Free plan's 200-credit rollover cap — your actual balance after your billing cycle ends will be capped at 200 credits, regardless of the amount shown in the credit balance display._
 
 ### Can Data Credits be restored after an unexpected loss?
 
