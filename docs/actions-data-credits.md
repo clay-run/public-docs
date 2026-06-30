@@ -407,6 +407,21 @@ Common causes:
 
 **Downgrading to the free plan:** The free plan includes only 100 Data Credits per month (rollover cap: 200 credits). Credits at or below 200 carry over; any credits above 200 are forfeited at the end of your billing cycle. If you have a large credit balance, spend it down before your cycle ends or contact support before downgrading to explore your options.
 
+### Can Data Credits be restored after an unexpected loss?
+
+In some situations, Clay's support team can manually restore Data Credits that were unexpectedly lost. Credit restoration is discretionary, handled case-by-case, and is not guaranteed. The following scenarios are worth contacting support about:
+
+-   **Accidental usage**: If credits were consumed unintentionally (for example, by a run you did not mean to trigger), support may grant a one-time exception.
+-   **Reactivating a paid plan after a lapse**: If you let a subscription lapse and then reactivate a paid plan, credits forfeited during the lapse may be eligible for restoration. Contact support after reactivating to request a review.
+-   **Missing rollover credits after a plan upgrade**: If credits you expected to carry over are missing after upgrading your plan, contact support — this can be verified and manually corrected.
+
+**What support cannot restore:**
+
+-   Credits dropped above the 2× rollover cap — the system enforces this cap at renewal and cannot retroactively recover credits removed by it.
+-   Credits forfeited when downgrading to the free plan above the 200-credit rollover cap.
+
+To request a review, contact [Clay support](https://www.clay.com/contact) with details about your plan, when the credits were lost, and the reason.
+
 ### **I have a trial, when do the Data Credits expire?**
 
 Unused trial Data Credits do not roll over. What happens to them depends on whether you convert to a paid plan:
