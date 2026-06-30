@@ -77,6 +77,22 @@ To downgrade your Clay workspace plan:
 
 **What happens to your Data Credits:** When the plan change takes effect, your credit balance is reduced to the rollover cap of your new plan — 2× its monthly credit limit. For the free plan (100 credits/month), that cap is 200 credits. Any credits above the cap are forfeited. If you have a large balance, spend it down before the change takes effect.
 
+### Cancel your plan
+
+Clay subscriptions **auto-renew by default** — if you do not cancel before your renewal date, your plan renews and you are billed for the next period.
+
+To cancel your Clay subscription:
+
+1.  Click your profile picture in the top-right corner and select `Settings`.
+2.  Navigate to `Plan & billing`.
+3.  Click the `Plan options` dropdown and select `Cancel plan`.
+
+**How cancellation billing works:** Cancellation takes effect at the end of your current billing cycle. Your plan remains active — with full feature access and credit allocation — until the cycle ends. At that point, your workspace moves to the free plan.
+
+**What happens to your Data Credits:** Your credit balance is capped at the free plan's rollover limit — 200 credits. Any credits above 200 are forfeited. If you have a large balance, spend it down before the cancellation takes effect.
+
+To request a refund for a recent charge, contact [Clay support](https://app.clay.com). For refund timing, see the FAQs section below.
+
 ## Billing
 
 To update your billing and payment information:
