@@ -16,7 +16,7 @@ Build and maintain lead lists by finding companies and people, enriching their p
 
 ### Data integration
 
-Clay connects to 100+ data providers — including Apollo, ZoomInfo, LinkedIn, HubSpot, Salesforce, and People Data Labs — so you can pull accurate, up-to-date contact and company data directly into your tables. See [Enrichments](enrichments.md) and [Sources](sources.md).
+Clay connects to 100+ data providers — including Apollo, ZoomInfo, HubSpot, Salesforce, and People Data Labs — so you can pull accurate, up-to-date contact and company data directly into your tables. See [Enrichments](enrichments.md) and [Sources](sources.md).
 
 ### AI-powered research
 
