@@ -80,3 +80,43 @@ Yes for Starter and Explorer annual plans. No for Pro annual plans — requires 
 **What's the difference between priority support on Growth vs. legacy Pro?**
 
 Legacy Pro plan economics (higher CPC, no action charges) cannot support the same level of priority support investment as modern Growth plans. Only modern Growth+ plans qualify for priority queue support.
+
+**If I'm on Pro (Legacy), what changes when I migrate to Enterprise?**
+
+Moving from Pro (Legacy) to Enterprise involves three categories of change.
+
+**Important:** Moving to a modern plan means you begin paying for Actions in addition to Data Credits. You will benefit from ~50% cheaper enrichments on 70+ data providers, a lower credit top-up premium (30% vs. 50% on legacy), and access to all new features Clay launches going forward.
+
+**Features you gain on Enterprise:**
+
+These features are not available on Pro (Legacy) but are included on Enterprise:
+
+- **Run enrichment in bulk:** Yes
+- **Sync to Ad Platforms:** Up to 2 ad syncs
+- **Connect to data warehouses:** Yes
+- **Build Audiences:** Available (see [Audiences](./audiences.md) for plan details)
+- **Advanced RBAC:** Yes
+- **Custom CSA and DPA:** Yes
+- **Workbook-level credit budget:** Yes
+- **Dedicated Growth Strategist:** Yes
+- **Onboarding and co-building:** Yes
+- **Bi-annual business review:** Yes
+
+**Features you will not lose:**
+
+You will not lose any features by moving from Pro (Legacy) to Enterprise.
+
+**Features that change:**
+
+These features exist on both plans but work differently on Enterprise:
+
+- **Credit top-up premium:** Improves from 50% to 30%
+- **SSO:** Changes from a paid add-on to included at no extra cost
+- **Row limit per table:** 50,000 rows; auto-deletion (passthrough mode) is available on Enterprise to process rows continuously without hitting the cap
+- **Table version history:** Extends from 30 days to 180 days (6 months)
+- **Rollover credits:** Changes from standard rollover (up to 2× monthly; 15% annual on renewal) to a custom rollover percentage
+- **Support level:** Enterprise receives a dedicated Slack channel; Pro (Legacy) does not qualify for priority queue support
+
+**Key pricing model change:**
+
+Actions are not charged on Pro (Legacy). Enterprise is a modern plan and introduces action charges. The trade-off is that 70+ enrichments are ~50% cheaper on modern plans, so your data credits go further than they did on your legacy plan.
