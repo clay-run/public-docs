@@ -77,6 +77,8 @@ To downgrade your Clay workspace plan:
 
 **What happens to your Data Credits:** When the plan change takes effect, your credit balance is reduced to the rollover cap of your new plan — 2× its monthly credit limit. For the free plan (100 credits/month), that cap is 200 credits. Any credits above the cap are forfeited. If you have a large balance, spend it down before the change takes effect.
 
+**What happens to your features:** Existing integrations, workflows, and plan-gated columns — such as webhook imports, HTTP API columns, and email sequencer connections — that were configured before the downgrade continue to run normally. However, if your new plan does not include access to those features, you will not be able to create new webhook, HTTP API, or email sequencer columns until you return to a higher plan.
+
 ## Billing
 
 To update your billing and payment information:
