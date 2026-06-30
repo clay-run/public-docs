@@ -1,7 +1,8 @@
 ---
 title: Phantombuster integration
 description: Data extraction platform automating web scraping and data
-  collection from websites.
+  collection from websites, with troubleshooting for skipped rows and partial
+  imports.
 last_synced: 2026-04-26T01:40:28.345Z
 ---
 
@@ -63,3 +64,21 @@ Use this action to send data from Clay to a PhantomBuster agent for processing.
 
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
+
+## Troubleshooting
+
+### Skipped rows or partial imports
+
+If Clay imports fewer rows than expected from a PhantomBuster agent, the most common cause is PhantomBuster storing result sets as CSV file attachments.
+
+**What happens:** When a result set is large enough that PhantomBuster stores it as a CSV file attachment, Clay's integration cannot parse that CSV and silently skips the affected container. Clay does read JSON results directly and follows `jsonUrl` links to fetch JSON data, so containers that return JSON are imported correctly.
+
+**Workarounds:**
+
+-   **Reduce the batch size in PhantomBuster.** Configure parameters like "Followers per launch" to smaller values so results are returned as JSON rather than stored as a CSV file attachment.
+-   **Disable "Only Fetch Latest Container"** in the Pull Data action to retrieve results from multiple containers instead of only the most recent one.
+-   **Export and import manually.** Download the full CSV directly from PhantomBuster and import it into Clay using the CSV import option, or via Google Sheets.
+
+### Errors during scraping ("page crashed")
+
+PhantomBuster may log "page crashed" errors when it encounters issues with specific records during scraping. These errors appear in PhantomBuster's run logs, not in Clay, and can result in empty columns or missing rows. Check the PhantomBuster logs to identify the affected records and contact PhantomBuster support if the issue persists.
