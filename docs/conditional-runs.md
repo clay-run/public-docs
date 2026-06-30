@@ -125,7 +125,7 @@ The `!!` prefix coerces a value to boolean: `!!value` returns `true` for truthy 
 This means a condition like `!!{{DNC}} && {{DNC}} == 0` is **always false** and will never trigger the enrichment — because:
 
 - When `{{DNC}}` is `0`, `!!0` evaluates to `false`, which immediately short-circuits the entire `&&` chain.
-- When `{{DNC}}` is any non-zero value`, `{{DNC}} == 0` is `false`.
+- When `{{DNC}}` is any non-zero value, `{{DNC}} == 0` is `false`.
 
 No value of `{{DNC}}` can satisfy both clauses simultaneously.
 
