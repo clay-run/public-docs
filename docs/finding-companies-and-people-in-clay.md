@@ -358,6 +358,24 @@ This mismatch most commonly occurs with subsidiaries, acquired companies, and or
 -   **Switch to LinkedIn company URLs as your company identifier** (recommended). When you provide a LinkedIn company URL instead of a domain, Clay uses the LinkedIn company slug for matching — which handles subsidiary and acquisition relationships more reliably. See [Use LinkedIn URLs, not domains, as company identifiers](#use-linkedin-urls-not-domains-as-company-identifiers).
 -   **Add a Lookup Rows fallback.** In your people table, add a **Lookup single row in other table** column. Set `Table to search` to your original companies table and match on `domain`. For rows where the person's current company domain is populated, this retrieves company fields directly — even when the automatic Company Table Data link is missing. See [Lookup Rows](lookup-rows.md).
 
+### Enrichment columns show "Missing input" for company rows
+
+If enrichment columns — such as **Enrich Company**, **Find Contacts at Company**, or third-party company enrichments — show **"Missing input"** for some rows, those rows are missing the required identifiers. Most company enrichments require at least one of: a domain, a company name, or a LinkedIn company URL.
+
+**Common causes:**
+
+-   **Null or empty domain values** — Rows imported without a domain, or where a domain lookup returned no result, cannot be processed by enrichments that require a domain input.
+-   **Invalid domain format** — Domains with extra characters, trailing paths, or protocols (e.g., `https://example.com/about`) may not be accepted by enrichments that expect a bare domain (e.g., `example.com`).
+-   **Wrong input column mapped** — If the enrichment column's input is mapped to a column that is empty for some rows, those rows show "Missing input."
+
+**To fix:**
+
+1.  **Check the column's input mapping.** Click the column header → **Edit column** and confirm the input fields point to the correct columns in your table — typically the domain or company name column.
+2.  **Identify and fill rows with missing values.** Add a view filter showing only rows where the domain column is empty, then populate the missing domains or other required identifiers.
+3.  **Re-run the enrichment.** Right-click the column header → **Run column** → **Run empty or out-of-date rows** once inputs are populated.
+
+**If a recent column configuration change caused the error**, use [Table Version History](table-versions.md) to revert to a working setup: click **History** (bottom-right of the table) → **All configuration versions**, then restore a version from before the change. Restoring a version reverts column configurations without affecting your row data.
+
 ### Company Table Data doesn't include company enrichment data
 
 The **Company Table Data** column retrieves basic field types from the linked company row — text, long text, number, boolean, date, email, URL, image, JSON, and formula columns. **Enrichment columns (action-type columns such as Clearbit Company, Apollo, Enrich Company, or any other Clay integration enrichment) are not included** in what Company Table Data returns.
