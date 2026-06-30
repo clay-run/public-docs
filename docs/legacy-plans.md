@@ -59,6 +59,30 @@ No. New features (Ads, new integrations, advanced orchestration) are only availa
 
 After April 10, 2026 11:59pm PDT, any plan change forces migration to modern plans. Legacy customers cannot switch between legacy plans or return to legacy plans once they leave.
 
+**What specifically changes if I move from Explorer (Legacy) to the Launch plan?**
+
+Here is a breakdown of what you gain, lose, and what changes when migrating from Explorer (Legacy) to the modern Launch plan.
+
+**Features you will lose:**
+
+- **Webhooks (automate any signal via webhook):** Explorer (Legacy) includes webhooks. On modern plans, webhooks require **Growth or higher** — they are not included on Launch.
+- **HTTP API integrations:** Explorer (Legacy) includes HTTP API access. On modern plans, HTTP API requires **Growth or higher** — Launch does not include it.
+
+**Features you will gain:**
+
+- **Access to all new Clay features:** Modern plans receive new features and integrations going forward; legacy plans do not.
+- **~50% cheaper enrichments:** Data from 70+ providers costs approximately 50% less on modern plans, so your credits go further.
+- **Better credit top-up pricing:** One-time credit top-ups cost a 30% premium on modern plans, compared to 50% on your current Explorer (Legacy) plan.
+- **Better annual discount:** Annual plans on modern plans carry a 20% discount, compared to 10% on Explorer (Legacy).
+
+**What changes:**
+
+- **You are now charged for Actions:** Modern plans introduce action charges — each enrichment, AI run, or GTM export counts as one Action. Explorer (Legacy) does not charge for actions. The Launch plan starts at 15,000 actions per month.
+- **Credit volume:** The Launch plan starts at 2,500 credits per month. Because enrichment costs are ~50% lower on modern plans, your credits typically cover more records than the same nominal credit count on a legacy plan.
+- **Credit rollover:** Unused Data Credits on Launch roll over up to 2× your monthly credit limit at renewal (for example, a 2,500/mo plan can carry up to 5,000 credits). On an annual Launch plan, up to 15% of unused annual credits roll over when you renew.
+
+For a full side-by-side comparison, see the [Pricing mechanics comparison](#pricing-mechanics-comparison) and [Feature access comparison](#feature-access-comparison) tables above.
+
 **Do legacy customers benefit from the 50% credit price reduction?**
 
 No. Only customers on modern plans see the data cost savings in-product. Rule of thumb: If you're charged for actions, you're on new pricing and see credit savings. If you're NOT charged for actions, you're on legacy pricing and do NOT see credit savings.
