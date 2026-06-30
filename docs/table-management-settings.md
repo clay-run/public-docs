@@ -177,7 +177,7 @@ For tables with scheduled source imports, the `Update existing rows` toggle cont
 **To configure Update Existing:**
 
 1.  Open your source column → `Edit column` → `Sources`.
-2.  Toggle `Update Existing` on or off based on any needs.
+2.  Toggle `Update Existing` on or off based on your needs.
 
 ### Common scenarios
 
