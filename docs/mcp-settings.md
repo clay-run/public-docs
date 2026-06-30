@@ -18,7 +18,7 @@ Navigate to it from the Clay homepage by clicking `MCP` in the side nav. The MCP
 
 Credit controls and usage monitoring are available on all modern paid plans (Launch, Growth, Enterprise) and Legacy Enterprise.  
 
-Audiences controls are available to workspaces with Clay Audiences enabled — contact support if you're unsure whether your workspace qualifies.  
+Audiences controls are available to Launch, Growth, and Enterprise customers with Clay Audiences enabled.  
 
 The `Enable for MCP` option on Functions is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans.
 
@@ -51,7 +51,7 @@ The `MCP users` table gives a live view of every rep who has connected Clay to a
 -   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, Glean, or a combination)
 -   **Credit limit** — the rep's current limit, either the workspace default or a per-user override
 -   **Credits used** — live usage tracked against the rep's limit
--   **Salesforce ID** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
+-   **Salesforce ID** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise. Requires a connected Salesforce integration (available on Growth and Enterprise plans).
 
 Use the search bar at the top of the table to find a specific rep by name or email.
 
@@ -59,12 +59,14 @@ MCP credit usage also appears in the main credit usage dashboard at `Settings �
 
 ## Audiences controls
 
+**Note:** Audiences controls are available on Launch, Growth, and Enterprise plans with Clay Audiences enabled. Salesforce-backed controls additionally require a connected Salesforce integration.
+
 If your workspace uses Clay Audiences, two additional workspace-level toggles appear on the `MCP users` page:
 
 -   **Sync user IDs from audiences** — continuously syncs audience data to match MCP users to the Salesforce accounts they own. Updates run incrementally every 15 minutes, with a full sync once a week.
--   **Restrict account querying by Salesforce owner** — when enabled (the default when Salesforce is connected), reps can only query accounts they own in Salesforce. When disabled, reps can query any account in the synced audience.
+-   **Restrict account querying by Salesforce owner** — when enabled, reps can only query accounts they own in Salesforce. When disabled, reps can query any account in the synced audience.
 
-**Troubleshooting — error: "Contact queries are not available in this workspace":** If a rep using Clay through Claude or ChatGPT sees the error `Contact queries are not available when account ownership restriction is enabled. Disable "Restrict account querying by Salesforce owner" in workspace MCP settings to use contact queries`, the **Restrict account querying by Salesforce owner** toggle is on. Click `MCP` in the workspace sidebar and disable it. The MCP page is only visible to workspace admins — if you don't see it in the sidebar, ask your workspace admin to make the change.
+**Troubleshooting — error: "Contact queries are not available when account ownership restriction is enabled":** If a rep using Clay through Claude or ChatGPT sees the error `Contact queries are not available when account ownership restriction is enabled. Disable "Restrict account querying by Salesforce owner" in workspace MCP settings to use contact queries`, the **Restrict account querying by Salesforce owner** toggle is on. Click `MCP` in the workspace sidebar and disable it. The MCP page is only visible to workspace admins — if you don't see it in the sidebar, ask your workspace admin to make the change.
 
 **Troubleshooting — rep sees no results when querying Audiences:** When `Restrict account querying by Salesforce owner` is on, results are scoped to accounts the rep owns in Salesforce. A rep who owns no accounts (or whose Salesforce ownership hasn't synced yet) will receive empty results — which can look like the feature isn't working. To resolve: either disable `Restrict account querying by Salesforce owner` so the rep can see all workspace accounts, or ensure `Sync user IDs from audiences` is on and the rep's Salesforce account ownership is correctly mapped.
 

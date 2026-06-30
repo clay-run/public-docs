@@ -114,7 +114,7 @@ Company search is not currently supported. However, you can research companies b
 
 **Can I query my Audiences data or run analytical queries like "group by seller"?**
 
-If your workspace has Clay Audiences enabled (available on Growth and Enterprise plans), you can use natural language to filter and look up accounts — for example, `@Clay Show me my open-pipeline accounts in the northeast` or `@Clay Tell me about [Account]`. Results are scoped to accounts you own in Salesforce by default; your admin can allow access to all accounts from [MCP settings](https://university.clay.com/docs/mcp-settings).
+If your workspace has Clay Audiences enabled (available on Launch, Growth, and Enterprise plans), you can use natural language to filter and look up accounts — for example, `@Clay Show me my open-pipeline accounts in the northeast` or `@Clay Tell me about [Account]`. Results are scoped to accounts you own in Salesforce by default; your admin can allow access to all accounts from [MCP settings](https://university.clay.com/docs/mcp-settings).
 
 The integration is designed for targeted, individual account research — not bulk data exports or analytical operations. SQL-style queries such as grouping accounts by owner or aggregating pipeline by territory are not supported. For complex analysis across your full Audiences dataset, use the Clay platform directly at [app.clay.com](http://app.clay.com).
 
@@ -143,7 +143,7 @@ Credit pricing matches standard Clay plans. ChatGPT serves as an alternative int
 
 **Do I need to invoke Clay manually, or will ChatGPT know to use it?**
 
-In ChatGPT, type `@Clay` (browser) or `/Clay` (desktop app) at the start of your prompt to invoke Clay. Once connected, Clay activates and pulls the relevant data immediately.
+In ChatGPT, type `@Clay` (browser) or `/Clay` (desktop) at the start of your prompt to invoke Clay. Once connected, Clay activates and pulls the relevant data immediately.
 
 **Can I ask which functions are available to me?**
 
