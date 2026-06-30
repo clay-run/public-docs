@@ -79,3 +79,17 @@ Find the financing events for a company using the company domain.
 
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
+
+## Troubleshooting
+
+### Authentication errors
+
+If a PredictLeads enrichment fails with an authentication error, your API credentials may be incorrect or expired. PredictLeads connections use your PredictLeads email address and API key.
+
+To update your credentials in Clay:
+
+1.  Go to `Settings` → `Connections`.
+2.  Find your PredictLeads connection and click `…` → `Edit`.
+3.  Re-enter your PredictLeads email address and API key, then save.
+
+To confirm your credentials are valid, log in to your PredictLeads account and check that your API key is active. If the issue persists, contact PredictLeads support.
