@@ -305,7 +305,15 @@ A cold lead is someone who doesn't already know about your business and you. A w
 
 ### What exact Gmail permissions does sequencer require?
 
-These are disclosed when you add your account via OAuth. We request: full Gmail email access, basic Gmail settings access, OpenID, user email address and profile picture. Additionally, you will need to have a Google Workspace admin authorize our app to request these permissions for the domain(s) you want to add to the sequencer.
+These are disclosed when you add your account via OAuth. Clay requests the following scopes:
+
+-   `openid` — OpenID Connect identity token
+-   `https://www.googleapis.com/auth/userinfo.email` — read the user's email address
+-   `https://www.googleapis.com/auth/userinfo.profile` — read the user's basic profile (name, avatar)
+-   `https://mail.google.com/` — full Gmail access (read, send, delete, manage)
+-   `https://www.googleapis.com/auth/gmail.settings.basic` — read/manage Gmail settings (filters, send-as aliases, etc.)
+
+Additionally, you will need to have a Google Workspace admin authorize our app to request these permissions for the domain(s) you want to add to the sequencer.
 
 ### I'm seeing "Access blocked: clay.com has not completed the Google verification process" when I try to connect my Google account. What does this mean?
 
