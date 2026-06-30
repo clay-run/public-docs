@@ -58,9 +58,11 @@ Use the **Budget** filter on the workspace homepage to quickly see all workbooks
 Each budget has an access rule that controls which workspace members can assign their workbooks to it:
 
 -   **All workspace members (default):** Any member can use this budget. Useful for shared cost pools.
--   **Only specific users or groups:** Only the users or user groups listed on the budget can assign resources to it. Useful for team-specific budgets.
+-   **Only specific users or groups:** Only the users or user groups listed on the budget can assign resources to it. Members not on the list will see "You don't have access to any budgets" when they try to assign a workbook. Useful for team-specific budgets.
 
 To update access for an existing budget, open it from `Settings` → `Budgets`, click **Edit**, and adjust the access settings.
+
+**Adding a member to a budget's access list only grants them permission to assign workbooks to that budget — it does not move any of their existing workbooks into it.** Workbook budget assignments are always an explicit, per-workbook action.
 
 ## Email alerts for budget usage
 
