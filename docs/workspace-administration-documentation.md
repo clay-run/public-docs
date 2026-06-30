@@ -31,6 +31,16 @@ To update your account name:
 -   Under the `Your details` tab, edit your name in the `Name` field.
 -   Click `Save` to ensure your changes are updated.
 
+## **Change your account email address**
+
+The email address field in `Settings` > `Account` is read-only and cannot be changed directly in the UI. To change the email associated with your Clay account, contact Clay support via the in-app chat.
+
+**Who can request this change:** Email address changes are processed by Clay's support team and handled internally. Support will only honor requests that originate from the workspace admin's registered email address — if you are not the workspace admin, coordinate with them to submit the request.
+
+**If the new email address is already linked to another Clay account:** That existing account must be resolved (for example, deleted) before the change can be made.
+
+Changing your email address does not affect your workspace data or your password.
+
 ## **Change your password**
 
 _If you sign in with Google, the **Change password** option will not appear on your Security tab — it is only visible for email + password accounts. See [Switch from Google login to email and password](#switch-from-google-login-to-email-and-password) below instead._
@@ -167,8 +177,7 @@ To update your workspace picture:
 To update your workspace name:
 
 -   Go to `Settings` > `Workspace settings`.
--   Update the `Workspace name` field with your desired name.
-    -   This name will be displayed across your workspace and should be accessible for team identification.
+-   Update the `Workspace name` field with your desired name.\n    -   This name will be displayed across your workspace and should be accessible for team identification.
 -   Click `Save` to confirm your changes.
 
 ## **Billing email**
