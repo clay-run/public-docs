@@ -115,21 +115,6 @@ Check out the `Email accounts` tab to manage your fleet of sender accounts and `
 
 To duplicate a campaign — for example, to reuse your message sequence and settings for a new persona or messaging variant — open the campaign you want to copy and click its name in the breadcrumb at the top. Select **Duplicate campaign** from the dropdown. Clay creates a new draft campaign named "<original name> (copy)" with the same message sequence, settings, and AI context, then opens it immediately for editing.
 
-## Update sender signatures
-
-You can add or update email signatures for any connected sender account.
-
-**From a specific campaign:**
-
-1.  Go to `Campaigns` from your home screen.
-2.  Click on the name of your campaign under `Sequences`.
-3.  Navigate to the `Settings` tab.
-4.  Scroll to the `Sender accounts` section.
-5.  Under `Email accounts`, locate the sender you want to edit.
-6.  Click the three-dot (⋯) menu on the right side of that sender's row.
-7.  Select `Update sender variables`.
-    -   You can also access this via the `Email accounts` tab.
-
 ## Best practices
 
 The golden rule of outreach: send emails the way you'd want to receive them. Your ultimate goal is to land in the prospect's main inbox—if your message goes to Spam or Promotions, it's unlikely to be read. Deliverability (your ability to reach that primary inbox) depends on both the quality of your messaging and the way you send it.
@@ -252,20 +237,6 @@ To avoid losing leads this way, deduplicate your source table before launching. 
 ### My sender account got disconnected. What happened?
 
 Email providers like Google and Microsoft occasionally revoke access due to inactivity, security checks, or suspicious activity detection. To fix this, delete the disconnected account from your sequencer settings and re-authenticate it.
-
-### How do I add an email signature or sign-off?
-
-Email signatures are configured at the **sender account level**, not per individual email. A signature set for an account is automatically appended to every email sent from that account.
-
-To set or update a signature:
-
-1.  Open your campaign and go to `Sender accounts`.
-2.  Click the three-dot menu (⋯) next to the sending account.
-3.  Select `Update sender variables`.
-4.  Enter your text in the `Signature` field.
-5.  Click `Update sender variables` to save.
-
-You can also update the `From name` (the display name recipients see in their inbox) from the same dialog. Only plaintext signatures are currently supported.
 
 ### What is email account warmup?
 
