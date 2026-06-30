@@ -191,3 +191,14 @@ If you later edit the prompt of an upstream column (for example, an AI column th
 -   **Regenerate the formula with examples from your updated data.** Click a preview cell showing a wrong result, enter the correct output in **Edit expected output**, and click **Regenerate** to rebuild the formula around your new data structure (see **Improve formula accuracy** above).
 
 Also note: after changing any column, rows that have already run will not update automatically. Select those rows and click **Run column** to re-process them.
+
+### **Why does my formula column show `[object Object]`?**
+
+This appears when a formula references an entire enrichment or AI column — such as the full output of a Use AI, Claygent, or integration column — rather than a specific field within it. Clay formula columns run JavaScript, and when JavaScript coerces a plain object to a string (for example, in a text expression or concatenation), it produces the literal text `[object Object]` instead of the expected value.
+
+**To fix it**, update the formula to reference a specific key within the structured output rather than the whole column:
+
+-   **Using the `/` picker:** In the formula input, type `/` to open the column menu, select the enrichment column, then drill down to the specific sub-field you need — for example, `response` for a Use AI or Claygent column, or a named output field like `City`.
+-   **Using dot notation:** Access the field directly in the expression — for example, `{{My AI Column}}.response` or `{{My Enrichment Column}}?.fieldName`.
+
+For Use AI and Claygent columns specifically, the main text output is stored in the `.response` field. See [AI column output shows as a JSON object](use-ai-integration-overview.md#troubleshooting) for more on navigating AI column fields.
