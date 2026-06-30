@@ -21,7 +21,7 @@ In March 2026, Clay introduced a new pricing model to give you more flexibility 
 | Usage Meters | Credits only | Actions + Data Credits |
 | Action Charges | ❌ No action charges | ✅ Actions charged (~15% cost of a credit) |
 | Data Costs (in Credits) | Higher (old pricing) | 50% cheaper on 70+ enrichments |
-| Annual Discount | 10% | 20% |
+| Annual Discount | 10% | 10% |
 | Credit Top-up Premium | 50% | 30% |
 | Cost Per Credit (Launch/Starter tier) | ~$0.07–0.08 | ~$0.05 |
 | Cost Per Credit (Pro/Growth tier) | ~$0.012–0.016 | Lower with enrichment discounts |
