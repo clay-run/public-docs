@@ -85,7 +85,7 @@ To create a new system user token, you first need to create an app:
      -   Ensure the `ads_management` permission is selected.
      -   Click `Generate token`.
 11.  Copy the generated token immediately — Meta won't store it, so consider saving it in a secure password vault.
-12.  In Clay, when connecting your Meta account for ad syncs, select `Use system user token` as the authentication method and paste your token.
+12.  In Clay, navigate to **Settings > Connections > Meta**. You can either add a new connection or use the **Reconnect** option on your existing account — in both cases, select the **System User Token** tab and paste your token.
 
 ### Why use a system user token?
 
@@ -193,6 +193,15 @@ A second factor: if Enhanced Matching is enabled, it uses a professional profile
 ### **How do I connect my LinkedIn, Meta, or Google Ads account?**
 
 When you create your first ad audience, you'll be prompted to authenticate with LinkedIn Campaign Manager, Meta Business Manager, or your Google Ads account via OAuth. Make sure you have admin access to the ad account you want to use. Note that Google Ads syncing is currently in closed beta — contact [Clay support](https://www.clay.com/contact) to request access.
+
+### **Why did I receive an email saying my Meta account will disconnect soon?**
+
+This is expected behavior. Meta enforces a 60-day expiry on OAuth tokens — when you connect your Meta account to Clay using "Sign in with Facebook," the connection stays active for 60 days before it needs to be renewed. Clay sends a warning email 7 days before expiry and again 1 day before expiry so you can take action before any Ad Syncs are interrupted.
+
+**To resolve this, you have two options:**
+
+-   **Reconnect your Meta account** — navigate to **Settings > Connections > Meta** in Clay and click to reconnect using "Sign in with Facebook." This resets the 60-day timer.
+-   **Switch to a System User Token** — system user tokens can be configured to never expire, avoiding the need to reconnect every 60 days. This is the recommended approach for production Ad Sync workflows. See [Meta system user token authentication](#meta-system-user-token-authentication) for setup instructions.
 
 ### **Can I sync to multiple ad accounts?**
 
