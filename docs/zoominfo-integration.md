@@ -83,3 +83,41 @@ If you see a mix of successful enrichments and "out of credits" errors across ro
 When a table run starts with enough remaining enrichment headroom to fulfill some rows but not all, you'll see partial results: earlier rows succeed and later rows fail with this error. Re-running the column will continue to return the same error until your enrichment limit is raised or reset by ZoomInfo.
 
 **What to do:** Contact your ZoomInfo Account Manager or representative and ask them to check your **enrichment limit** and usage. They can see your enrichment usage in their system and can request an increase to your allocation if needed.
+
+### **How do I stamp a "ZoomInfo Last Updated Date" and "ZoomInfo Enriched Status" on records to prevent double-enrichment downstream?**
+
+When syncing ZoomInfo-enriched records to a CRM, you may want to stamp the enrichment date and a status label so that downstream tools (such as a deduplication or enrichment platform) can detect records Clay already enriched and skip re-enriching them. Use two formula columns whose formulas return a value only when ZoomInfo returned data, and empty otherwise.
+
+**Step 1: Add a formula column for the enrichment date**
+
+1.  Add a formula column to your table and name it something like **ZoomInfo Last Updated Date**.
+2.  Reference a ZoomInfo output field that is only populated on a successful enrichment (e.g., `{{ZoomInfo Email}}`). Use a conditional expression to return today's date when that field has a value, and nothing when it doesn't:
+    ```javascript
+    {{ZoomInfo Email}} ? moment().format("YYYY-MM-DD") : null
+    ```
+    If ZoomInfo returned data, the formula stamps today's date. If the ZoomInfo enrichment returned nothing, the formula outputs nothing.
+
+**Step 2: Add a formula column for the enrichment status**
+
+1.  Add a second formula column and name it something like **ZoomInfo Enriched Status**.
+2.  Use the same conditional pattern to return a static label when ZoomInfo returned data:
+    ```javascript
+    {{ZoomInfo Email}} ? "Clay Enriched" : null
+    ```
+
+**Step 3: Map both columns to your CRM**
+
+In your CRM update action (e.g., a Salesforce update), map the date and status formula columns to the corresponding fields on the record. Your downstream enrichment tool can then read these fields and skip records where they are already populated.
+
+**Distinguishing Clay-enriched vs. records enriched by another tool**
+
+If you need to tell apart records that Clay enriched from those enriched by a different platform (e.g., another tool that also enriches via ZoomInfo), use a shared source field in your CRM that each tool writes to:
+
+1.  Pull the existing enrichment source field from your CRM into your Clay table (e.g., a field that the other tool populates with its own label when it enriches a record).
+2.  On your ZoomInfo enrichment column, open **Run Settings → Only run if** and enter a JavaScript formula expression that skips records where the source field already indicates another tool enriched it — for example:
+    `{{Enrichment Source}} !== "Ringlead Enriched"`
+3.  When Clay enriches a record, write a value like **"Clay Enriched"** back to that same source field in your CRM update action.
+
+This way, each tool's label in the shared source field tells the other tool to leave the record alone.
+
+For more on conditional formula expressions in formula columns, see [Formulas](formula-generator.md). For run conditions on enrichment columns, see [Conditional runs](conditional-runs.md).
