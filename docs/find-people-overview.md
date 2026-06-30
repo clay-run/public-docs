@@ -88,9 +88,39 @@ If you have a saved Sales Navigator search and want to pull those results into C
 5.  Optionally set a **Max Count** (default and maximum is 2,500 — this is a Sales Navigator limit).
 6.  Click **Import to new table**.
 
-**Note:** This source requires a Sales Navigator **people search URL** (`https://www.linkedin.com/sales/search/people/...`), not a saved lead list URL (`linkedin.com/sales/lists/people`) or a saved search URL (those containing `savedSearchId`). If you have a saved Sales Navigator lead list, recreate the equivalent filters as a fresh people search on Sales Navigator and copy that URL instead. Each imported result costs 1 Clay credit.
+**Note:** This source requires a Sales Navigator **people search URL** (`https://www.linkedin.com/sales/search/people/...`). URLs containing `savedSearchId` or `recentSearchId`, paths like `/sales/lists/people`, or personal/account-based filters will not work and produce a **"You must include a valid People Search URL"** error. Each imported result costs 1 Clay credit.
 
 If the list was manually curated and cannot be recreated from search filters, export it from Sales Navigator as a CSV and [import it into Clay](csv-import-overview.md) instead.
+
+### "You must include a valid People Search URL" error
+
+This error means the URL you pasted references a search that Clay's data providers cannot interpret. Common causes and fixes:
+
+**Saved or recent search URLs**
+
+If the URL contains a `savedSearchId` or `recentSearchId` parameter, it points to a stored search session rather than a live search. Start a new, live search in Sales Navigator and copy that URL instead.
+
+**Saved lead list or account list URLs**
+
+URLs with a path like `/sales/lists/people` or containing `type:lead_list,values` or `type:account_list,values` reference lists tied to your personal Sales Navigator login and cannot be parsed. Build an equivalent search using the `/sales/search/people` path and copy that URL instead.
+
+**Personal or account-based filters**
+
+The following Sales Navigator filters are specific to your login and cannot be accessed by Clay's data providers:
+
+-   Lead Lists (`type:lead_list,values` in the URL)
+-   Account Lists (`type:account_list,values` in the URL)
+-   Following your company
+-   Viewed your profile recently
+-   Connection / Connections of
+-   Past colleague
+-   Shared experiences
+-   People in CRM
+-   People you interacted with
+-   Saved leads and accounts
+-   Persona
+
+Remove these filters and re-run the search using only standard demographic and company filters before copying the URL into Clay.
 
 ## Finding LinkedIn posts by keyword
 
