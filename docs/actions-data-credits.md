@@ -12,9 +12,9 @@ Learn about credits, the virtual currency system used for running actions in Cla
 Clay uses two separate metrics to track your usage: **Actions** and **Data Credits**.
 
 -   **Actions** measure the orchestration you do in Clay: enriching data, running AI research, and sending data to other tools. Each Action costs a few tenths of a penny.
--   **Data Credits** are used to buy data or AI from 3rd party vendors in Clay's data marketplace—costs vary by data type. Each Data Credit costs a few pennies.
+-   **Data Credits** are used to buy data or AI from 3rd party vendors in Clay’s data marketplace—costs vary by data type. Each Data Credit costs a few pennies.
 
-This separation gives you transparency and control—you know exactly what you're paying for.
+This separation gives you transparency and control—you know exactly what you’re paying for.
 
 ## Quick comparison
 
@@ -40,13 +40,13 @@ This separation gives you transparency and control—you know exactly what you'r
 
 ### What are Actions?
 
-Actions measure when you use Clay to either enrich accounts/contacts with net-new data (e.g., enrichments from Clay's data marketplace, AI web research, signals) or execute GTM work (e.g., send emails, sync to CRM, export ads audiences, write copy with AI). Each record enriched or exported counts as 1 Action—regardless of data source or provider.
+Actions measure when you use Clay to either enrich accounts/contacts with net-new data (e.g., enrichments from Clay’s data marketplace, AI web research, signals) or execute GTM work (e.g., send emails, sync to CRM, export ads audiences, write copy with AI). Each record enriched or exported counts as 1 Action—regardless of data source or provider.
 
 ### What consumes Actions?
 
 Features that use an Action:
 
--   Each enrichment from any provider (e.g., "Find email via Hunter").
+-   Each enrichment from any provider (e.g., “Find email via Hunter”).
 -   Using your own API keys (still counts as platform usage).
 -   AI uses
 -   Signals
@@ -58,7 +58,7 @@ Features that use an Action:
 -   HTTP API calls.
 -   Ads audience exports (e.g., LinkedIn, Facebook).
 
-**Features that don't use an Action:**
+**Features that don’t use an Action:**
 
 -   Sourcing lists of accounts or contacts (e.g., Find People returns 100 contacts).
 -   CRM imports and lookup operations (reading data from your CRM into Clay, including **Lookup Record** actions like `Salesforce > Lookup Record`).
@@ -90,27 +90,27 @@ Actions cannot be purchased as one-time top-ups because they represent fixed pla
 
 ### What are Data Credits?
 
-Clay connects to 150+ data and AI providers. When you purchase data from these providers through Clay's marketplace, you spend Data Credits.
+Clay connects to 150+ data and AI providers. When you purchase data from these providers through Clay’s marketplace, you spend Data Credits.
 
 **Think of Data Credits as:**
 
 -   API call credits for data enrichments or AI use.
 -   A currency for buying data from the marketplace.
--   The "fuel" that powers enrichments (when not using your own keys).
+-   The “fuel” that powers enrichments (when not using your own keys).
 
 ### Using your own API keys
 
 If you already subscribe to data providers (ZoomInfo, Apollo, Clearbit, etc.) or AI providers (Anthropic, Claude, ChatGPT), connecting your API keys to Clay will eliminate the **Data Credit** cost. Note that an Action will still be consumed.
 
-When you use your own external API key in Clay, the AI usage and costs are billed directly by that external provider — not through Clay credits. To track your API spending, you'll need to check your console or dashboard in that AI provider's platform. Clay will only show the Actions used (our orchestration layer), but not the AI token costs themselves.
+When you use your own external API key in Clay, the AI usage and costs are billed directly by that external provider — not through Clay credits. To track your API spending, you’ll need to check your console or dashboard in that AI provider’s platform. Clay will only show the Actions used (our orchestration layer), but not the AI token costs themselves.
 
 #### Clay-managed providers vs. accounts you must bring
 
-Not all providers in Clay's marketplace can be accessed via Clay Data Credits. There are two types:
+Not all providers in Clay’s marketplace can be accessed via Clay Data Credits. There are two types:
 
--   **Clay-managed key**: Clay holds a shared key for the provider, so you can run enrichments directly using Data Credits—no personal subscription required. When setting up these enrichments, you'll see a **"Clay provided key"** option in the account selector. You can also connect your own key to avoid spending Data Credits. Examples: SMARTe, BetterContact, FullEnrich, ContactOut.
+-   **Clay-managed key**: Clay holds a shared key for the provider, so you can run enrichments directly using Data Credits—no personal subscription required. When setting up these enrichments, you’ll see a **“Clay provided key”** option in the account selector. You can also connect your own key to avoid spending Data Credits. Examples: SMARTe, BetterContact, FullEnrich, ContactOut.
 
--   **Bring Your Own Account (BYOA)**: Clay does not hold a managed key for these providers. You must have your own subscription or API credentials—there is no Clay Data Credit option. The account selector shows only **"Add account"** with no Clay-provided fallback. Example: ZoomInfo.
+-   **Bring Your Own Account (BYOA)**: Clay does not hold a managed key for these providers. You must have your own subscription or API credentials—there is no Clay Data Credit option. The account selector shows only **“Add account”** with no Clay-provided fallback. Example: ZoomInfo.
 
 **Tip for mobile number enrichment without a provider subscription:** The built-in **Mobile Phone Waterfall** enrichment routes through multiple Clay-managed providers in sequence using your Data Credits—no individual provider account needed.
 
@@ -120,7 +120,7 @@ Each fully enriched record typically costs **6–20 Data Credits**, depending on
 
 -   The data types you enrich (emails are cheap, phone numbers are expensive).
 -   How many of your own API keys you use.
--   Whether you're using waterfalls with multiple providers.
+-   Whether you’re using waterfalls with multiple providers.
 
 ‍**General guidelines:**
 
@@ -130,13 +130,13 @@ Each fully enriched record typically costs **6–20 Data Credits**, depending on
 | Growth | 6,000–100,000 | 1,000–10,000 records/month |
 | Enterprise | 100,000+ | 10,000+ records/month |
 
-**Note:** The more API keys you connect, the fewer Data Credits you'll need.
+**Note:** The more API keys you connect, the fewer Data Credits you’ll need.
 
 ### Example: Data Credits in practice
 
 **Scenario:** You want to enrich 100 contacts with LinkedIn profiles and emails.
 
-**Using Clay's data marketplace:**
+**Using Clay’s data marketplace:**
 
 1.  Find 100 people (Clay database) → **0 Data Credits**
 2.  Enrich LinkedIn profiles → **50 Data Credits** (0.5 per profile)
@@ -195,7 +195,7 @@ Admins can set **Data Credit spend limits** for individual workbooks to control 
 2.  Toggle `Enabled credit spend limit` and add a number to `Workbook limit`.
 3.  Click `Save changes`.
 
-Once enabled, all Actions run within that workbook will contribute to the workbook's Data Credit spend. When the limit is reached, you'll see an error message preventing further Actions from running.
+Once enabled, all Actions run within that workbook will contribute to the workbook’s Data Credit spend. When the limit is reached, you’ll see an error message preventing further Actions from running.
 
 **Note:** Only workspace admins can modify workbook Data Credit limits. Editors and Viewers cannot manage Data Credit limits, even if they have editing access to the workbook.
 
@@ -211,7 +211,7 @@ Actions represent your fixed monthly capacity. Unused Actions expire at the end 
 
 ### Data Credits: Yes, with limits
 
-If you are on a **monthly plan**, unused Data Credits will roll over and accumulate in your account. The maximum accumulation is capped at **2× your plan's monthly credit limit**. This cap is enforced at every renewal: when new monthly credits are added, your **total balance** (existing credits + new credits) cannot exceed 2× your monthly limit. Any credits that would push you over the cap are dropped.
+If you are on a **monthly plan**, unused Data Credits will roll over and accumulate in your account. The maximum accumulation is capped at **2× your plan’s monthly credit limit**. This cap is enforced at every renewal: when new monthly credits are added, your **total balance** (existing credits + new credits) cannot exceed 2× your monthly limit. Any credits that would push you over the cap are dropped.
 
 -   For example, if your plan includes 50,000 credits per month, your maximum balance is 100,000. If you already have 82,000 credits when your plan renews, your balance becomes 100,000 — not 132,000. The 32,000 excess is dropped.
 -   If you cancel or downgrade, you can use any excess Data Credits until your current billing cycle ends. After the billing cycle ends, your balance will be reduced to the **Data Credit rollover limit** of your new plan.
@@ -244,29 +244,29 @@ For emergency Data Credit needs during your billing cycle (not available for Act
 3.  Select the amount you need (subject to rollover limits).
 4.  Confirm your purchase.
 
-**Note:** One-time top-ups have a **30% premium** on modern plans (**50% premium** on legacy plans). Top-up credits are subject to the 2× rollover cap: at your next renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap are dropped — including credits you purchased. For example, on a plan with 2,500 credits/month, your maximum balance at renewal is 5,000; if you buy a 15,000-credit top-up and don't spend it all before renewal, only up to 5,000 credits carry over. Check your current balance and upcoming renewal date before purchasing a large top-up. For regular needs, upgrading your Data Credits tier is more cost-effective.
+**Note:** One-time top-ups have a **30% premium** on modern plans (**50% premium** on legacy plans). Top-up credits are subject to the 2× rollover cap: at your next renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap are dropped — including credits you purchased. For example, on a plan with 2,500 credits/month, your maximum balance at renewal is 5,000; if you buy a 15,000-credit top-up and don’t spend it all before renewal, only up to 5,000 credits carry over. Check your current balance and upcoming renewal date before purchasing a large top-up. For regular needs, upgrading your Data Credits tier is more cost-effective.
 
 ### Downgrade or cancel your plan
 
 To downgrade your Clay workspace plan:
 
 1.  Click your profile picture in the top-right corner and select `Settings`.
-2.  Navigate to `Plan & billing` and click `Switch plan` (or `Upgrade` if you're currently on a free plan).
-3.  Choose the plan you'd like to downgrade to and confirm your selection.
+2.  Navigate to `Plan & billing` and click `Switch plan` (or `Upgrade` if you’re currently on a free plan).
+3.  Choose the plan you’d like to downgrade to and confirm your selection.
 
 **If you downgrade:**
 
 -   Your account remains active on a lower-tier or free plan.
 -   All of your data—including tables, flows, and configurations—stays intact.
--   You'll have limited access to features based on your new plan's capabilities.
+-   You’ll have limited access to features based on your new plan’s capabilities.
 -   You can upgrade again at any time to restore full access.
 
 **If you cancel fully:**
 
 -   After a full cancellation, your workspace transitions to a free plan temporarily.
--   Your data remains stored, but long-term retention isn't guaranteed after extended inactivity.
+-   Your data remains stored, but long-term retention isn’t guaranteed after extended inactivity.
 -   To ensure your data is preserved, we recommend downgrading instead of fully canceling.
--   Your Data Credit balance is capped at 200 credits (the free plan's rollover limit) at the end of your billing cycle — any credits above 200 are forfeited.
+-   Your Data Credit balance is capped at 200 credits (the free plan’s rollover limit) at the end of your billing cycle — any credits above 200 are forfeited.
 
 **During your current billing cycle:**
 
@@ -275,10 +275,10 @@ To downgrade your Clay workspace plan:
 
 **After your billing cycle ends:**
 
--   Your monthly Actions and Data Credit allocation resets to the new plan's level.
--   Your balance is capped at 2× the new plan's monthly Data Credit limit.
+-   Your monthly Actions and Data Credit allocation resets to the new plan’s level.
+-   Your balance is capped at 2× the new plan’s monthly Data Credit limit.
 -   Your data remains intact.
--   Features are limited to the new plan's capabilities.
+-   Features are limited to the new plan’s capabilities.
 
 **Downgrading to the free plan:** The free plan includes only 100 Data Credits per month (rollover cap: 200 credits). Credits at or below 200 carry over; any credits above 200 are forfeited at the end of your billing cycle. If you have a large credit balance, spend it down before your cycle ends or contact support before downgrading to explore your options.
 
@@ -290,7 +290,7 @@ Connect your existing data provider keys (ZoomInfo, Apollo, Clearbit, etc.) to s
 
 ### Filter before enriching
 
-Narrow down your dataset to only relevant records before running enrichments to avoid wasting Actions and Data Credits on data you won't use.
+Narrow down your dataset to only relevant records before running enrichments to avoid wasting Actions and Data Credits on data you won’t use.
 
 ### Use conditional logic
 
@@ -302,15 +302,15 @@ Run new workflows on 10–20 records to validate results before scaling to avoid
 
 ## FAQs
 
-### What's the difference between Actions and Data Credits?
+### What’s the difference between Actions and Data Credits?
 
 Actions measure platform work (what you do). Data Credits measure data purchases (what you buy). Every enrichment typically consumes both—1 Action for the platform work, plus variable Data Credits for the data itself.
 
 ### Why do Data Credits cost different amounts?
 
-Unlike Actions (always 1 per enrichment), Data Credits reflect the real-world value of each data point. You'll see the exact cost displayed next to each enrichment option in the product.
+Unlike Actions (always 1 per enrichment), Data Credits reflect the real-world value of each data point. You’ll see the exact cost displayed next to each enrichment option in the product.
 
-### Why do I see lower enrichment prices in my account but I'm still being charged the old rate?
+### Why do I see lower enrichment prices in my account but I’m still being charged the old rate?
 
 If you see an in-product pricing summary comparing old and new enrichment costs (for example, ZeroBounce Validate Email showing 1 → 0.1 credits), those reduced rates apply to modern plans (Launch, Growth, or Enterprise) only. Customers on legacy plans continue to pay the original credit costs. To start benefiting from the lower data credit prices, go to `Settings` → `Plan & billing` and switch to a current plan. See [Legacy plans](./legacy-plans.md) for a full comparison of what changes when you migrate.
 
@@ -325,33 +325,33 @@ You can either:
 1.  Upgrade your Data Credits tier (no premium).
 2.  Purchase a one-time top-up (30% premium on modern plans; 50% on legacy plans).
 
-You don't need to change your Actions tier.
+You don’t need to change your Actions tier.
 
 ### What happens if I run out of Actions but not Data Credits?
 
-You must upgrade to a higher action tier. Actions cannot be topped up separately because they're tied to your action tier's capacity.
+You must upgrade to a higher action tier. Actions cannot be topped up separately because they’re tied to your action tier’s capacity.
 
 If your billing cycle resets soon, waiting is also an option — your full Actions allotment replenishes automatically at your next renewal. You can check your exact renewal date in `Settings` → `Plan & billing`.
 
-### Why can't I top up Actions?
+### Why can’t I top up Actions?
 
 Actions represent fixed platform capacity tied to your action tier. To get more Actions, you must upgrade to a higher action tier. Data Credits, however, are consumption-based and can be purchased as one-time top-ups or by upgrading your Data Credits tier.
 
 ### Do unused Data Credits or Actions roll over?
 
-Actions reset each billing cycle and don't roll over, since they reflect the platform capacity your plan includes. Each plan includes enough Actions to cover 90% of customer usage, and if you need more, you can increase your Action tier.
+Actions reset each billing cycle and don’t roll over, since they reflect the platform capacity your plan includes. Each plan includes enough Actions to cover 90% of customer usage, and if you need more, you can increase your Action tier.
 
-Data Credits work more like a currency and do roll over. On Launch and Growth plans, unused credits can accumulate up to 2x your monthly credit amount (e.g., a 10,000 credit plan can bank up to 20,000 total). Enterprise customers can roll over up to 15% of their prior year's purchased credits, provided they renew at an equal or higher commitment.
+Data Credits work more like a currency and do roll over. On Launch and Growth plans, unused credits can accumulate up to 2x your monthly credit amount (e.g., a 10,000 credit plan can bank up to 20,000 total). Enterprise customers can roll over up to 15% of their prior year’s purchased credits, provided they renew at an equal or higher commitment.
 
 **Trial plans:** Trial Data Credits are handled differently — see the [*I have a trial, when do the Data Credits expire?*](#i-have-a-trial-when-do-the-data-credits-expire) section below for details.
 
-### Why do I see a warning that credits are "over the rollover limit" when my current balance is below the 2× cap?
+### Why do I see a warning that credits are “over the rollover limit” when my current balance is below the 2× cap?
 
 The warning appears when your current balance is already high enough that adding your next monthly renewal would push the total over the 2× rollover cap — not because you are over it right now.
 
 When your plan renews, your credit balance is capped at 2× your monthly allotment. If your current balance plus the credits you will receive at renewal would exceed that cap, you will see a warning showing how many credits are projected to fall above the cap at renewal.
 
-**Example:** On a 10,000 credits/month plan (2× cap = 20,000), if your current balance is 17,150 credits, adding 10,000 at renewal would reach 27,150 — 7,150 above the cap. The warning shows: *"7,150 credits are over the rollover limit. Use them by [renewal date] or they will expire."* At renewal, your balance is set to 20,000.
+**Example:** On a 10,000 credits/month plan (2× cap = 20,000), if your current balance is 17,150 credits, adding 10,000 at renewal would reach 27,150 — 7,150 above the cap. The warning shows: *“7,150 credits are over the rollover limit. Use them by [renewal date] or they will expire.”* At renewal, your balance is set to 20,000.
 
 No credits are affected before your renewal date — you can use them freely until then. To preserve more credits, spend down your balance before the renewal date shown in the warning.
 
@@ -374,23 +374,31 @@ It depends on whether the data provider refunds Clay. If the provider refunds Cl
 
 Use the in-app chat (the icon in the bottom-right corner of the Clay interface) to contact support and start a refund request. Include the workbook, table, and column details where the issue occurred to help the support team investigate.
 
-**Accidental enrichments:** If you ran an enrichment by mistake, the support team typically issues a one-time 50% Data Credit refund per account as standard policy. To avoid accidental enrichments, turn off `Auto-run` in column settings when you're not actively running enrichments, and test new workflows on a small batch first.
+**Accidental enrichments:** If you ran an enrichment by mistake, the support team typically issues a one-time 50% Data Credit refund per account as standard policy. To avoid accidental enrichments, turn off `Auto-run` in column settings when you’re not actively running enrichments, and test new workflows on a small batch first.
 
-Note that credits are not refunded for enrichments where the system operated as intended — for example, an email validation that returns "invalid" is a valid result, not an error. The exception is AI columns (see below).
+Note that credits are not refunded for enrichments where the system operated as intended — for example, an email validation that returns “invalid” is a valid result, not an error. The exception is AI columns (see below).
 
 ### Are Data Credits charged when a provider finds no result?
 
-It depends on the provider's billing model. Some providers charge Clay only when data is successfully found, so credits are refunded if no result is returned. Others charge Clay for the API call regardless of whether data is found, so credits are deducted either way. You can see the exact credit cost for each enrichment in the enrichment panel before running.
+It depends on the provider’s billing model. Some providers charge Clay only when data is successfully found, so credits are refunded if no result is returned. Others charge Clay for the API call regardless of whether data is found, so credits are deducted either way. You can see the exact credit cost for each enrichment in the enrichment panel before running.
+
+### What happens to credits if an enriched email fails validation or turns out to be undeliverable?
+
+Credits are charged when a provider returns a result — including email addresses that later fail a validation step or turn out to be undeliverable. There is no automatic credit refund when a returned email fails validation or bounces after sending; credits are deducted at the point the provider returns data, regardless of what happens to that address downstream.
+
+For system errors (such as a timeout or infrastructure failure during enrichment), credits are automatically refunded.
+
+**To limit credit spend on invalid emails:** Add an email validation step immediately after your waterfall enrichment. This won’t recover credits already spent on the waterfall lookup, but it lets you filter out invalid addresses before running further enrichments — preventing additional credit spend on contacts with unusable email addresses. See [Waterfalls](building-a-data-waterfall.md) for how to configure validation in your waterfall workflow.
 
 ### Can I request a credit refund for poor AI column results?
 
-AI columns complete with a success status even when the output quality is low or the column returns empty content, so no automatic credit refund fires for poor results. If an AI column produced consistently poor output due to a prompt misconfiguration or unexpected model behavior, you can contact [Clay support](https://app.clay.com) to request a review — a one-time credit exception may be granted at Clay's discretion. This is not an automated policy and is not guaranteed for future requests on the same column.
+AI columns complete with a success status even when the output quality is low or the column returns empty content, so no automatic credit refund fires for poor results. If an AI column produced consistently poor output due to a prompt misconfiguration or unexpected model behavior, you can contact [Clay support](https://app.clay.com) to request a review — a one-time credit exception may be granted at Clay’s discretion. This is not an automated policy and is not guaranteed for future requests on the same column.
 
 To minimize the risk of this situation: use the **Generate** button in the prompt cell to test your prompt on a single row before running at scale, and write clear, specific instructions with example inputs and outputs.
 
 ### How long does it take for Data Credits to renew?
 
-When your plan renews, Data Credits are updated via a payment-processor webhook and typically appear within a few minutes of your renewal timestamp. If credits haven't updated shortly after the renewal time shown in your billing settings, wait a few minutes and refresh the page.
+When your plan renews, Data Credits are updated via a payment-processor webhook and typically appear within a few minutes of your renewal timestamp. If credits haven’t updated shortly after the renewal time shown in your billing settings, wait a few minutes and refresh the page.
 
 ### Why are Data Credits being deducted unexpectedly?
 
@@ -404,7 +412,7 @@ Common causes:
 **Prevention tips:**
 
 -   Turn off `Auto-run` when not needed.
--   Pause AI columns that aren't providing value.
+-   Pause AI columns that aren’t providing value.
 -   Check table settings before re-running enrichments.
 
 ### What happens when I downgrade or cancel my plan?
@@ -416,16 +424,16 @@ Common causes:
 
 **After your billing cycle ends:**
 
--   Your monthly Actions and Data Credit allocation resets to the new plan's level.
--   Your balance is capped at 2× the new plan's monthly Data Credit limit.
+-   Your monthly Actions and Data Credit allocation resets to the new plan’s level.
+-   Your balance is capped at 2× the new plan’s monthly Data Credit limit.
 -   Your data remains intact.
--   Features are limited to the new plan's capabilities.
+-   Features are limited to the new plan’s capabilities.
 
 **Downgrading to the free plan:** The free plan includes only 100 Data Credits per month (rollover cap: 200 credits). Credits at or below 200 carry over; any credits above 200 are forfeited at the end of your billing cycle. If you have a large credit balance, spend it down before your cycle ends or contact support before downgrading to explore your options.
 
 ### Can Data Credits be restored after an unexpected loss?
 
-In some situations, Clay's support team can manually restore Data Credits that were unexpectedly lost. Credit restoration is discretionary, handled case-by-case, and is not guaranteed. The following scenarios are worth contacting support about:
+In some situations, Clay’s support team can manually restore Data Credits that were unexpectedly lost. Credit restoration is discretionary, handled case-by-case, and is not guaranteed. The following scenarios are worth contacting support about:
 
 -   **Accidental usage**: If credits were consumed unintentionally (for example, by a run you did not mean to trigger), support may grant a one-time exception.
 -   **Reactivating a paid plan after a lapse**: If you let a subscription lapse and then reactivate a paid plan, credits forfeited during the lapse may be eligible for restoration. Contact support after reactivating to request a review.
