@@ -21,7 +21,7 @@ In March 2026, Clay introduced a new pricing model to give you more flexibility 
 | Usage Meters | Credits only | Actions + Data Credits |
 | Action Charges | ❌ No action charges | ✅ Actions charged (~15% cost of a credit) |
 | Data Costs (in Credits) | Higher (old pricing) | 50% cheaper on 70+ enrichments |
-| Annual Discount | 10% | 10% |
+| Annual Discount | 10% | 20% |
 | Credit Top-up Premium | 50% | 30% |
 | Cost Per Credit (Launch/Starter tier) | ~$0.07–0.08 | ~$0.05 |
 | Cost Per Credit (Pro/Growth tier) | ~$0.012–0.016 | Lower with enrichment discounts |
@@ -85,14 +85,14 @@ Legacy Pro plan economics (higher CPC, no action charges) cannot support the sam
 
 Moving from Pro (Legacy) to Enterprise involves three categories of change.
 
-**Important:** Moving to a modern plan means you begin paying for Actions in addition to Data Credits. You will benefit from ~50% cheaper enrichments on 70+ data providers, a lower credit top-up premium (30% vs. 50% on legacy), and access to all new features Clay launches going forward.
+**Important:** Moving to a modern plan means you begin paying for Actions in addition to Data Credits. You will also benefit from ~50% cheaper enrichments on 70+ data providers, a lower credit top-up premium (30% vs. 50% on legacy), a 20% annual discount (vs. 10% on legacy), and access to all new features Clay launches going forward.
 
 **Features you gain on Enterprise:**
 
 These features are not available on Pro (Legacy) but are included on Enterprise:
 
 - **Run enrichment in bulk:** Yes
-- **Sync to Ad Platforms:** Up to 2 ad syncs
+- **Sync to Ad Platforms:** Yes (not available on Pro Legacy)
 - **Connect to data warehouses:** Yes
 - **Build Audiences:** Available (see [Audiences](./audiences.md) for plan details)
 - **Advanced RBAC:** Yes
@@ -111,8 +111,8 @@ You will not lose any features by moving from Pro (Legacy) to Enterprise.
 These features exist on both plans but work differently on Enterprise:
 
 - **Credit top-up premium:** Improves from 50% to 30%
-- **SSO:** Changes from a paid add-on to included at no extra cost
-- **Row limit per table:** 50,000 rows; auto-deletion (passthrough mode) is available on Enterprise to process rows continuously without hitting the cap
+- **SSO:** Changes from a paid add-on (~$6,000/year, annual plans only) to included at no extra cost
+- **Row limit per table:** 50,000 rows; passthrough mode (auto-deletion) is available on Enterprise to process rows continuously without hitting the cap
 - **Table version history:** Extends from 30 days to 180 days (6 months)
 - **Rollover credits:** Changes from standard rollover (up to 2× monthly; 15% annual on renewal) to a custom rollover percentage
 - **Support level:** Enterprise receives a dedicated Slack channel; Pro (Legacy) does not qualify for priority queue support
