@@ -128,6 +128,44 @@ WHERE AccountId = '/Account ID'
 
 Replace `/Account ID` with the relevant column from your Clay table using the `/` picker in the query editor. You can use an AI assistant to help write the query — for example: "write a SOQL query to return all contacts for a given Salesforce account ID." For SOQL syntax reference, see [Salesforce SOQL](salesforce-soql.md).
 
+## Why does the Lookup Record action return "Error: Bad Request"?
+
+The standard **Lookup record** action uses `FIELDS(ALL)` to fetch every field from the matched Salesforce record. If the object's schema contains more than 15 fields that reference related objects — such as owner, parent account, engagement manager, or other relationship fields — Salesforce rejects the query with a 400 error, which appears in Clay as **"Error: Bad Request"**.
+
+This is a Salesforce constraint: a single SOQL query can reference at most 15 cross-object fields. The error occurs regardless of which field you are searching on, and before any matching logic runs.
+
+**Fix:** Switch to the **Lookup records via SOQL** action and explicitly select only the fields you need:
+
+```sql
+SELECT Id, Name, Website
+FROM Account
+WHERE Name LIKE '%/Company Name%'
+LIMIT 5
+```
+
+By requesting only the fields you actually use, the query stays under the 15-reference limit and the error goes away. For tips on writing SOQL queries in Clay, see the [Lookup records via SOQL](salesforce-integration-overview.md) section of the Salesforce integration overview.
+
+## Why is my Lookup Records via SOQL action returning "Invalid SOQL Query" for some rows?
+
+If only certain rows fail with **"Invalid SOQL Query. Please check your query syntax and try again."** while others succeed, the most likely cause is **special characters in the input value** for those rows. Two characters that commonly appear in company names and break SOQL string literals are:
+
+-   **Apostrophes (`'`)** — a company name like `Peterson's Nuts` contains an apostrophe that Salesforce interprets as the end of the string literal, making the rest of the query invalid.
+-   **Pipe characters (`|`)** — these can cause Clay's query substitution to produce a malformed SOQL string.
+
+**Fix:** Add a formula column that cleans the input value before passing it to the SOQL query, then use that cleaned column in your query instead of the raw column. For example:
+
+```javascript
+#{{Company Name}}.replace(/'/g, "\\'").replace(/\|/g, "")
+```
+
+Only rows with those characters in the matched column will fail — rows with clean values run normally.
+
+## Why does a Salesforce Lookup return "no records found" when searching by phone number?
+
+If the column holding phone numbers is set to **Number** type, Clay alters the value before passing it to Salesforce. A phone number in plain E.164 format — for example, `+12345678900` — stored in a Number column loses its leading `+`, becoming `12345678900`. If Salesforce stores the number as `+12345678900`, the lookup finds no match. Phone numbers that contain spaces or dashes (for example, `+1 234-567-8900`) produce a coercion error in the cell rather than a silently altered value.
+
+**To fix:** Click the phone number column header, hover over the current data type, and switch it to **Text**. Text columns preserve the exact phone number string — including the leading `+` and any separators — so the value Clay sends to Salesforce matches what Salesforce has stored.
+
 ## Will Clay create duplicate records in Salesforce?
 
 No. By default, Clay prevents duplicate records. However, you can allow duplicates by enabling the "Duplicate Rule Override" in the Create Record enrichment.
@@ -351,6 +389,27 @@ Assignment rules in Salesforce fire on every record save — not just when a rec
 **To prevent this**, open the settings for your **Update Record** column and enable the **Disable auto-assignment rules** option. This tells Salesforce to skip assignment rules when Clay saves the record.
 
 **Note:** If your Update Record column was created before this option was added, the toggle may be off. Check your column settings if you are seeing unexpected owner changes after Clay updates a record.
+
+## Why am I seeing a "Retried but failed: Failed to lock row" error when updating Salesforce records?
+
+This error means Salesforce returned an `UNABLE_TO_LOCK_ROW` response — it could not get exclusive write access to a record because another process was writing to it (or a related record) at the same time.
+
+**Why it happens with Clay**
+
+Clay runs enrichment rows in parallel. When a **Create record**, **Update record**, or **Upsert object** action fires on many rows at once, multiple API calls reach Salesforce simultaneously. If those rows write to records that share a common parent — for example, contacts all mapped to the same placeholder Account — Salesforce locks that parent Account record on each update. When many rows try to lock it simultaneously, some are blocked and the error occurs.
+
+A frequent amplifier is **Declarative Lookup Rollup Summaries (DLRS)** — a Salesforce automation that recalculates a rollup value on a parent record whenever any child record is saved. DLRS holds a write lock on the parent while the rollup runs, which causes concurrent saves on sibling child records to fail with `UNABLE_TO_LOCK_ROW`.
+
+Manual retries succeed because running one cell at a time eliminates the simultaneous lock competition.
+
+**Workarounds**
+
+-   **Enable "Run in batches":** In the action column's **Run settings**, enable **Run in batches**. This sends rows through Salesforce's Composite API in sequential groups rather than all at once, reducing concurrent writes and lowering the chance of lock collisions.
+-   **Add a run delay:** In the action column's **Run settings**, set **Delay run** to **Run after delay** and enter a delay in seconds. This staggers when each row fires, giving Salesforce time for in-flight automations (such as DLRS rollups) to finish before the next write arrives.
+-   **Map records to real parent objects:** If many rows share the same placeholder Account (or other shared parent), map them to their actual parent records instead. Each write then locks a different record, eliminating the collision.
+-   **Ask your Salesforce admin to review automations:** If your org uses DLRS or other triggers on shared parent records, your admin can investigate switching those rollups to scheduled mode — this decouples the rollup write from the original save and eliminates the lock contention entirely.
+
+**Note:** `UNABLE_TO_LOCK_ROW` is a Salesforce-side limitation, not a Clay bug. Clay automatically retries when this error occurs, but surfaces "Retried but failed: Failed to lock row" after exhausting its retry budget.
 
 ## Why do records created or updated by Clay show my name (or another user's name) in Salesforce's Created By or Last Modified By field?
 
