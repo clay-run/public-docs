@@ -133,6 +133,20 @@ To call a custom or additional LLM from Clay, use the [HTTP API enrichment](http
 
 ## Troubleshooting
 
+### How do I change the prompt on an AI column after it has already run?
+
+You can update an AI column's prompt at any time without losing the existing results. To reopen the configuration:
+
+1.  Click the column name → **Edit column** to open the settings panel.
+2.  In the **Configure** tab, update the **Prompt** field with your changes.
+3.  Click **Save** and choose how the change takes effect:
+    -   **Save and don't run** — keeps existing row results unchanged; new rows will use the updated prompt if auto-run is enabled.
+    -   **Save and run _N_ rows** — queues all rows to re-run with the updated prompt.
+
+To test the updated prompt on a small sample before committing to a full re-run, select a few rows, right-click, and choose **Run [N] rows**. This lets you validate the new output before spending credits on every row.
+
+**If web search is enabled (Claygent) or you're using the web research use case (Use AI):** the web search toggle and use case setting are stored separately from the prompt. Changing the prompt does not reset them — you can update what the AI is asked to do without turning off web search or changing the use case.
+
 ### Cells showing "Some inputs missing"
 
 When a cell shows **"Some inputs missing"**, one or more column references in your prompt are marked as required but the underlying column is blank for that row. The cell will not run for affected rows.
