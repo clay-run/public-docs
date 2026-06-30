@@ -372,6 +372,14 @@ If a provider refunds us due to invalid data, we'll refund those Data Credits ba
 
 It depends on the provider's billing model. Some providers charge Clay only when data is successfully found, so credits are refunded if no result is returned. Others charge Clay for the API call regardless of whether data is found, so credits are deducted either way. You can see the exact credit cost for each enrichment in the enrichment panel before running.
 
+### What happens to credits if an enriched email fails validation or turns out to be undeliverable?
+
+Credits are charged when a provider returns a result — including email addresses that later fail a validation step or turn out to be undeliverable. There is no automatic credit refund when a returned email fails validation or bounces after sending; credits are deducted at the point the provider returns data, regardless of what happens to that address downstream.
+
+For system errors (such as a timeout or infrastructure failure during enrichment), credits are automatically refunded.
+
+**To limit credit spend on invalid emails:** Add an email validation step immediately after your waterfall enrichment. This won't recover credits already spent on the waterfall lookup, but it lets you filter out invalid addresses before running further enrichments — preventing additional credit spend on contacts with unusable email addresses. See [Waterfalls](building-a-data-waterfall.md) for how to configure validation in your waterfall workflow.
+
 ### How long does it take for Data Credits to renew?
 
 When your plan renews, Data Credits are updated via a payment-processor webhook and typically appear within a few minutes of your renewal timestamp. If credits haven't updated shortly after the renewal time shown in your billing settings, wait a few minutes and refresh the page.
