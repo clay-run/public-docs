@@ -487,7 +487,7 @@ Most APIs nest their data within a specific field rather than returning an array
 -   **Use static IP**: Route requests through Clay's fixed egress IPs for firewall allow-listing. See [IP allowlisting](#ip-allowlisting) below.
 -   **Remove empty values**: Exclude null or empty fields
 -   **Follow redirects**: Set max redirects if needed
--   **Response timeout**: Specify timeout in milliseconds
+-   **Response timeout**: Specify timeout in milliseconds (minimum 1,000 ms; maximum 100,000 ms). Clay rejects values above 100,000 ms with the error **"Response timeout must be less than 100000ms."**
 -   **Retry on failure**: Configure retry attempts and conditions
 
 **Step 6: Preview and import**
@@ -770,6 +770,14 @@ If you encounter errors, use Sculptor to help:
 -   Paste error messages for suggested fixes.
 -   Share API docs to verify configuration.
 -   Get help interpreting unexpected responses.
+
+### "Response timeout must be less than 100000ms" error
+
+This error appears when you set the **Response timeout** field to a value above its maximum of 100,000 ms (100 seconds). Clay enforces a hard limit on this field and rejects higher values before the request is sent.
+
+**How to fix:** Lower the response timeout to 100,000 ms or below.
+
+**If your API routinely takes longer than 100 seconds to respond:** Design your endpoint to acknowledge the request quickly — within the timeout window — and offload the heavy processing to an asynchronous job. Write the results back to Clay via a [webhook](webhook-integration-guide.md) or a follow-up API call once processing completes.
 
 ## FAQs
 
