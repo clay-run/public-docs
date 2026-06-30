@@ -156,6 +156,32 @@ To manage multiple sorts:
 3.  **Drag** sort items up or down to change their priority — the topmost item always has the highest priority.
 4.  Click the **×** on a sort item to remove it.
 
+## Filter rows
+
+You can filter your table to show only rows that match specific criteria. Filters are view-specific — each view of a table can have its own independent filter configuration.
+
+**Filters are display-only.** They control which rows appear in the current view; they do not delete, move, or modify any rows. Every row remains in your table regardless of the active filter — rows that don't match are hidden from the view but are still stored.
+
+### Apply a filter
+
+1.  Click the **Filter** button in the table toolbar.
+2.  Click **Add filter** and select a column to filter by.
+3.  Choose a comparison operator (e.g., **is**, **contains**, **is not empty**) and enter a value.
+4.  To add more conditions, click **Add filter** again. Multiple filters are applied together — a row must match all active filters to appear.
+5.  To remove a single filter, click the **×** next to it. To remove all filters, click **Clear filters**.
+
+### Check whether a filter is active
+
+When a filter is active, the **Filter** button in the toolbar shows a number badge, and the row count displays as **X / Y rows** — X is the number of rows passing the filter, Y is the total. If Y is higher than X, some rows are being hidden by the active filter.
+
+### Filters and source row limits
+
+A source's row limit controls how many records Clay fetches from the external system **before** any view filter is applied. If your source fetches 10 rows and all 10 happen to be filtered out by your view filter, the table shows 0 / 10 rows — Clay does not automatically fetch more rows to compensate for filtered-out ones. To see more matching rows in this situation, increase the source limit so Clay retrieves a larger pool of records.
+
+### Source filter changes and existing rows
+
+Changing a source's import filter (the filter configured in the source setup) does **not** retroactively remove rows already in your table — those rows remain as-is, and only future source runs apply the updated criteria. See [Sources](sources.md#will-rows-already-in-my-table-be-removed-if-they-no-longer-match-the-source-filter) for full details.
+
 ## Hiding columns
 
 You can hide a column to help simplify your table view. This is helpful when you want to hide parent columns.
