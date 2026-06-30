@@ -177,7 +177,8 @@ To update your workspace picture:
 To update your workspace name:
 
 -   Go to `Settings` > `Workspace settings`.
--   Update the `Workspace name` field with your desired name.\n    -   This name will be displayed across your workspace and should be accessible for team identification.
+-   Update the `Workspace name` field with your desired name.
+    -   This name will be displayed across your workspace and should be accessible for team identification.
 -   Click `Save` to confirm your changes.
 
 ## **Billing email**
