@@ -308,6 +308,18 @@ These two values are sometimes identical and sometimes different. Passing a user
 
 Also, keep the column storing the owner ID as a **Text** type in Clay, not a **Number** type. HubSpot's API expects owner IDs as strings — passing a numeric value can cause type-mismatch errors.
 
+### Why is my HubSpot Owner ID column blank in Clay?
+
+A blank Owner ID column in Clay means the corresponding contact (or other object) in HubSpot does not have an owner assigned. Clay reflects the data present in HubSpot at the time of import — if no owner is set on the record in HubSpot, the Owner ID field will be empty in Clay.
+
+**To resolve:**
+
+1. Open the record in HubSpot and confirm whether an owner is set on the contact.
+2. If no owner is assigned, set the owner directly in HubSpot.
+3. Once updated in HubSpot, re-run the relevant column in Clay (for example, your **Import objects** source column or a **Lookup object** enrichment) to pull in the updated value.
+
+**Note:** This is different from the `INVALID_OWNER_ID` error, which occurs when an owner *is* set but the wrong identifier type is passed when writing back to HubSpot. See [Why do I get an `INVALID_OWNER_ID` error?](#why-do-i-get-an-invalid_owner_id-error-when-setting-hubspot_owner_id) for that scenario.
+
 ### Why does my HubSpot column still show "Missing authentication" after I reconnect my account?
 
 Each HubSpot column stores a reference to the specific connection it was configured with at creation time. If you **delete** your HubSpot connection and **add a brand-new one**, the new connection gets a new internal ID — but your existing columns still reference the old (now deleted) connection ID. The columns continue to show "Missing authentication" even though the new connection shows **Success** in Settings.
