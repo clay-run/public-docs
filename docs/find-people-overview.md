@@ -79,7 +79,7 @@ After importing Find People results, use Clay's enrichments to add contact infor
 
 ## Importing from a Sales Navigator search URL
 
-If you have a Sales Navigator search and want to pull those results into Clay, use the **Find people from external search** source — not the standard Find People source described above.
+If you have a saved Sales Navigator search and want to pull those results into Clay, use the **Find people from external search** source — not the standard Find People source described above.
 
 1.  In a workbook, click `+ Add` at the bottom.
 2.  Search for `external search`.
@@ -88,7 +88,7 @@ If you have a Sales Navigator search and want to pull those results into Clay, u
 5.  Optionally set a **Max Count** (default and maximum is 2,500 — this is a Sales Navigator limit).
 6.  Click **Import to new table**.
 
-**Note:** This source requires a Sales Navigator **people search URL** (`https://www.linkedin.com/sales/search/people/...`). URLs containing `savedSearchId` or `recentSearchId`, paths like `/sales/lists/people`, or personal/account-based filters are not supported and produce an error. Each imported result costs 1 Clay credit.
+**Note:** This source requires a Sales Navigator **people search URL** (`https://www.linkedin.com/sales/search/people/...`), not a saved lead list URL (`linkedin.com/sales/lists/people`) or a saved search URL (those containing `savedSearchId`). If you have a saved Sales Navigator lead list, recreate the equivalent filters as a fresh people search on Sales Navigator and copy that URL instead. Each imported result costs 1 Clay credit.
 
 If the list was manually curated and cannot be recreated from search filters, export it from Sales Navigator as a CSV and [import it into Clay](csv-import-overview.md) instead.
 
