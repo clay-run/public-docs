@@ -21,7 +21,7 @@ In March 2026, Clay introduced a new pricing model to give you more flexibility 
 | Usage Meters | Credits only | Actions + Data Credits |
 | Action Charges | ❌ No action charges | ✅ Actions charged (~15% cost of a credit) |
 | Data Costs (in Credits) | Higher (old pricing) | 50% cheaper on 70+ enrichments |
-| Annual Discount | 10% | 10% |
+| Annual Discount | 10% | 20% |
 | Credit Top-up Premium | 50% | 30% |
 | Cost Per Credit (Launch/Starter tier) | ~$0.07–0.08 | ~$0.05 |
 | Cost Per Credit (Pro/Growth tier) | ~$0.012–0.016 | Lower with enrichment discounts |
@@ -40,6 +40,53 @@ In March 2026, Clay introduced a new pricing model to give you more flexibility 
 | CRM Integrations | Pro+ | Growth+ |
 | Webhooks | Explorer+ | Growth+ |
 | Priority Support | ❌ Legacy Pro does not qualify | ✅ Growth+ (priority queue), Enterprise (dedicated Slack) |
+
+## **Migrating from Starter (Legacy) to Enterprise**
+
+If you are on the Starter (Legacy) plan and considering moving to Enterprise, here is a breakdown of what changes.
+
+**Key trade-off:** Enterprise introduces charges for **Actions** (enrichments and workflow executions), which Starter (Legacy) does not charge for. In return, you benefit from ~50% cheaper enrichments on 70+ data providers, a 30% credit top-up premium (vs. 50% on legacy), a 20% annual discount (vs. 10% on legacy), and access to all new features Clay launches going forward.
+
+### **Features you gain**
+
+These features are not available on Starter (Legacy) but are included on Enterprise:
+
+- **Exclude companies/people from search**
+- **Bulk enrichment** — process large datasets without storing rows in Clay; results are sent directly to your destination
+- **Web intent signals**
+- **Automate any signal via webhook**
+- **Launch email campaigns** — Clay Sequencer plus Customer.io, LaGrowthMachine, Heyreach, Instantly, Reply.io, Lemlist, Smartlead, Salesloft, and Za-zu
+- **HTTP API integrations**
+- **CRM integrations** — including Marketo
+- **Sync to ad platforms** — up to 2 ad audience syncs
+- **Connect to data warehouses**
+- **Audiences** — available on Growth and Enterprise (not available on legacy non-Enterprise plans)
+- **SSO**
+- **Advanced RBAC**
+- **Custom CSA and DPA**
+- **Workbook-level credit budgets**
+- **Dedicated Growth Strategist (CSM)**
+- **Onboarding and co-building support**
+- **Bi-annual business review**
+
+### **Features you lose**
+
+None. Moving from Starter (Legacy) to Enterprise does not remove any of your existing features.
+
+### **What changes**
+
+| Feature | Starter (Legacy) | Enterprise |
+| --- | --- | --- |
+| Credit volume | 2,000–3,000 / mo | 100,000+ / mo (custom, annual) |
+| Action charges | ❌ Not charged | ✅ Charged (metered separately) |
+| Source contacts/accounts per source | 5,000 (cumulative) | 50,000 (cumulative) |
+| Row limit per table | 50,000 rows | 50,000 rows |
+| Source sync frequency | 1 day minimum | 1 hour minimum (15-min available on request) |
+| Table version history | 30 days | 180 days |
+| Rollover credits | Up to 2× monthly; 15% annual on renewal | Custom rollover % |
+| Credit top-up premium | 50% | 30% |
+| Annual discount | 10% | 20% |
+| Support | Standard queue | Dedicated Slack channel |
 
 ## **FAQs**
 
