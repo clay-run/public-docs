@@ -368,7 +368,13 @@ For complex workflows, run a small test batch (10–50 records) to understand fu
 
 ### What happens to my Data Credits if I get invalid data?
 
-If a provider refunds us due to invalid data, we'll refund those Data Credits back to you.
+It depends on whether the data provider refunds Clay. If the provider refunds Clay due to invalid data, those credits are passed back to your account. However, if the provider returned any data — even data that turns out to be invalid — credits are still charged because Clay incurs a cost for any data that was returned.
+
+### How do I request a Data Credit refund?
+
+Use the in-app chat (the icon in the bottom-right corner of the Clay interface) to contact support and start a refund request. Include the workbook, table, and column details where the issue occurred to help the support team investigate.
+
+Note that credits are not refunded for enrichments where the system operated as intended — for example, an email validation that returns "invalid" is a valid result, not an error.
 
 ### Are Data Credits charged when a provider finds no result?
 
