@@ -114,3 +114,10 @@ Each option has different benefits and considerations in terms of cost, convenie
 -   **Switch to Clay credits** — Clay automatically manages Gemini rate limits, tier access, and scaling on your behalf (see "Clay credits" above).
 -   **Upgrade your Google Cloud API tier** — higher tiers provide increased rate limits. See [Gemini rate limits](https://ai.google.dev/gemini-api/docs/rate-limits) for tier details.
 -   **Monitor your current consumption** — use the [Gemini API usage dashboard](https://cloud.google.com/gemini/docs/monitor-gemini) to review rate limits and identify caps or reset windows.
+
+**If you see "The model provider's rate limits are low" with a private Gemini API key:** AI columns using a personal Google Gemini API key can show the error **"The model provider's rate limits are low. Please try again later or increase your limits."** even when your own account's TPM quota has not been reached. This happens because personal Gemini keys use the Google AI Studio API, which runs on shared infrastructure — Google pools AI Studio requests from all customers into shared capacity provisioning. When that shared pool is under heavy load from other users, requests can be rejected regardless of your individual quota.
+
+**Clay's managed Gemini account (Clay credits) routes requests through Google Vertex AI with dedicated GCP capacity**, which is not subject to the same shared-capacity constraints. To resolve this error:
+
+-   **Switch to Clay credits** — open the column settings, click the **Account** dropdown, and select the default Clay-managed account. This routes your requests through Vertex AI's dedicated capacity.
+-   **Retry the affected rows** — if you need to keep your personal key, the error is typically intermittent. Re-running failed cells usually succeeds once Google's shared capacity pressure eases.
