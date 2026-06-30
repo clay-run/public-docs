@@ -91,3 +91,23 @@ Use the **Formula Generator** to create a formula that matches your scoring crit
 ### **Step 3: Verify and save**
 
 Review your lead scores within Clay and save the formula.
+
+## Setting up lead scoring with Claygent
+
+Claygent — Clay's built-in AI agent — evaluates ICP fit through judgment-based reasoning. Use it when your scoring criteria require contextual assessment that keywords or formulas can't capture: for example, evaluating whether a company's business model aligns with your ICP, or combining multiple data signals into a single score with a written rationale.
+
+### **Step 1: Add a Claygent column**
+
+In your table, click **+ Enrichment**, search for **Claygent**, and add it.
+
+### **Step 2: Write your ICP evaluation prompt**
+
+Describe your ICP and the output format you want. For example: *"Evaluate this company against our ICP: B2B SaaS, 50–500 employees, North America, uses Salesforce. Return a score from 0–100 and a one-sentence rationale."*
+
+Enable **web search** if the agent needs to research the company live. Disable it when all required data is already in your table.
+
+### **Step 3: Define output fields**
+
+In the **Configure** tab, add named output fields — for example, a numeric `score` field and a text `rationale` field. Explicit fields make results more consistent and easier to filter or reference in downstream columns.
+
+For templates, Sculptor-assisted agent building, and advanced configuration, see [Claygent builder](claygent-builder.md).
