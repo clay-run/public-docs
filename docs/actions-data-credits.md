@@ -372,6 +372,12 @@ If a provider refunds us due to invalid data, we'll refund those Data Credits ba
 
 It depends on the provider's billing model. Some providers charge Clay only when data is successfully found, so credits are refunded if no result is returned. Others charge Clay for the API call regardless of whether data is found, so credits are deducted either way. You can see the exact credit cost for each enrichment in the enrichment panel before running.
 
+### Can I request a credit refund for poor AI column results?
+
+AI columns complete with a success status even when the output quality is low or the column returns empty content, so no automatic credit refund fires for poor results. If an AI column produced consistently poor output due to a prompt misconfiguration or unexpected model behavior, you can contact [Clay support](https://app.clay.com) to request a review — a one-time credit exception may be granted at Clay's discretion. This is not an automated policy and is not guaranteed for future requests on the same column.
+
+To minimize the risk of this situation: use the **Generate** button in the prompt cell to test your prompt on a single row before running at scale, and write clear, specific instructions with example inputs and outputs.
+
 ### How long does it take for Data Credits to renew?
 
 When your plan renews, Data Credits are updated via a payment-processor webhook and typically appear within a few minutes of your renewal timestamp. If credits haven't updated shortly after the renewal time shown in your billing settings, wait a few minutes and refresh the page.
