@@ -48,7 +48,7 @@ After generating a setup, you can easily edit your original description and rege
     1.  **Web research:** Scrape and analyze websites. Provide a website URL in your prompt and Use AI will fetch the page content for the model to analyze.
     2.  **Content creation, manipulation:** Create and manipulate data in your table. **This mode does not access the web** — if your prompt references a website URL, the model will not visit it; it only processes data that is already in your table columns.
 
-    **Note:** If you want to analyze website content using a Content creation column, first use the **Scrape Website** enrichment to pull the page text into a table column, then reference that column in your AI prompt. For more complex web research — visiting multiple pages, following links, or multi-step browsing — a **Claygent** agent column (accessible via **Add column → [AI section]**) is the most reliable option; it has web browsing built in and supports a range of models including Clay's parallel models, Claude, and GPT.
+    **Note:** If you want to analyze website content using a Content creation column, first use the **Scrape Website** enrichment to pull the page text into a table column, then reference that column in your AI prompt. For more complex web research — visiting multiple pages, following links, or multi-step browsing — a **Claygent** agent column (accessible via **Add column → [AI section]**) is the most reliable option; it has web browsing built in and supports a range of models including Clay's parallel models, Claude, GPT, Gemini, Grok, Mistral, and others.
 4.  Select a `Model` from the dropdown.
     1.  Click `Compare models` to get more detailed information about each model.
     2.  _(Optional)_ Set the **Temperature** to control how creative or consistent the model's output is. Options are **Very Low**, **Low**, **Medium** (default), **High**, and **Very High** — lower values produce more predictable, repeatable results; higher values produce more varied responses. The underlying numeric value varies by model. For tasks requiring consistency — such as structured data extraction, scoring, or categorization — start with **Low** or **Very Low**.
@@ -96,7 +96,7 @@ After generating a setup, you can easily edit your original description and rege
 
 Clay's Use AI feature supports multiple AI providers, including GPT (OpenAI), Claude (Anthropic), Gemini (Google), and DeepSeek.
 
-**Note:** The models listed in this section are available in the **Use AI** action. Claygent uses a separate set of models — Clay's parallel models (Argon, Neon, Helium), Claude, and GPT — and DeepSeek is not available in Claygent. If you want to use DeepSeek in Clay, add a **Use AI** column and select **DeepSeek V3.2** from the model dropdown.
+**Note:** The models listed in this section are available in the **Use AI** action. Claygent supports a broad set of models — including Clay's parallel models (Argon, Neon, Helium), Claude, GPT, Gemini, xAI/Grok, Mistral, and others. **DeepSeek V4 Pro** is available in both Use AI and Claygent (currently in beta — contact support to enable); to use it, select **DeepSeek V4 Pro** from the model dropdown.
 
 To learn more about each model's capabilities and prompting best practices, refer to their official documentation:
 
