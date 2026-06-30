@@ -118,3 +118,26 @@ To retrieve actual contact data, add a dedicated enrichment column instead:
 -   **Work email addresses** — click `Add enrichment` and select `Work Email`. This pre-built waterfall cascades through multiple email providers in sequence. See [Work Email waterfall](work-email-waterfall.md) for full setup details.
 -   **Phone numbers** — click `Add enrichment`, search for `Phone`, and select the waterfall option for your region under **Waterfalls** — `Mobile Phone (US and Canada)`, `Mobile Phone (EMEA)`, `Mobile Phone (APAC)`, or `Mobile Phone (Global)`. See [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md) for provider recommendations by region.
 -   **Full profile data (job title, company, professional profile URL, and more)** — click `Add enrichment` and search for `Enrich Person` to browse provider-specific integrations. Each provider connects to a different data source — choose the one that fits your needs, or stack several as a [waterfall](building-a-data-waterfall.md) for broader coverage.
+
+### "Enrich Company shows 'missing input' or 'No valid company identifiers were provided'"
+
+**Enrich Company** requires at least one of these inputs per row:
+
+-   **Domain** — the company's website URL (e.g., `example.com`). This is the primary identifier and produces the most complete results.
+-   **Company name** — used as a fallback when no domain is available.
+
+**"Missing input"** appears on individual rows when the column's input field is mapped but the cell value for that row is blank or invalid (null, an empty string, or a non-URL value). **"No valid company identifiers were provided"** appears when neither a domain nor a company name is supplied to the enrichment at all.
+
+**To fix "missing input" on specific rows:**
+
+1.  Check the column mapped to the **Domain** input field. Look for rows where the domain cell is blank or contains a non-URL value.
+2.  Add a valid website domain for the affected rows (e.g., `example.com` — the protocol is not required).
+3.  Right-click the **Enrich Company** column header → **Run column** → **Run N empty or out-of-date rows** to re-run only the affected rows.
+
+**To fix "No valid company identifiers were provided":**
+
+1.  Open the **Enrich Company** column settings.
+2.  Confirm that the **Domain** or **Company name** input field (or both) is mapped to a column in your table. If the field is unmapped, use the column picker (type `/`) to select the correct column.
+3.  Save and re-run the column.
+
+To prevent these errors going forward, ensure your table has a populated domain or company name column before running **Enrich Company**. If some rows genuinely lack both, use an [Only run if](enrichments.md#only-run-if) condition to skip those rows rather than letting them fail.
