@@ -246,7 +246,7 @@ Clay's standard DPA is fully binding for all customers regardless of plan, ensur
 -   **Which AI features you use**: All AI features are opt-in through your actions.
 -   **What data AI sees**: You choose which table columns to include in AI requests.
 -   **API keys**: Option to bring your own API keys for supported providers.
--   **Data deletion**: Delete individual records, tables, or entire workspaces at any time.
+-   **Data deletion**: Delete individual records, tables, or entire workspaces at any time. To request deletion of your personal data under privacy regulations such as CCPA, contact the Clay support team via the in-app chat — select **Talk to a person** and a team member will process your request and delete all data Clay holds for you.
 -   **Access permissions**: Control who in your organization can use AI features.
 
 ### What Clay guarantees:
