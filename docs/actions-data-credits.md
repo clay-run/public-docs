@@ -409,7 +409,12 @@ Common causes:
 
 ### **I have a trial, when do the Data Credits expire?**
 
-When your trial ends, your workspace moves to the Free plan and your existing Data Credit balance is preserved — no credits are removed at the moment of transition. The Free plan's rollover cap of 200 credits (2× the 100 monthly credit limit) then applies: at your first monthly renewal on the Free plan, any balance above 200 is forfeited when your new monthly credits are added. If you have significant trial credits remaining, use them before your first Free plan renewal to avoid losing them.
+Unused trial Data Credits do not roll over. What happens to them depends on whether you convert to a paid plan:
+
+-   **If you convert to a paid plan:** Your trial Data Credits do not carry over to the paid plan. At conversion, your balance is set to the Data Credits included with your new paid plan.
+-   **If your trial ends without converting:** Your workspace moves to the Free plan, which includes 100 Data Credits per month with a rollover cap of 200 credits. Any trial balance above that cap is forfeited at your first monthly renewal on the Free plan.
+
+To get the most out of your trial credits, use them before your trial ends.
 
 ### Does CSV export consume an Action?
 
