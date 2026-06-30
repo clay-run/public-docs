@@ -39,7 +39,7 @@ Use this action to create an object in HubSpot.
 -   **Object type:** The type of HubSpot object to create (Contact, Company, Deal, Lead, or a custom object type).
 -   **Properties:** After selecting an object type, HubSpot's writable properties load dynamically. Map each Clay column to the HubSpot property you want to populate (for example, map your company name column to `name` and your domain column to `domain`).
 
-**Note:** For Contact, Company, Deal, and custom object types, associating a created record with another HubSpot object (for example, linking a contact to a company) is not part of the Create Object step — it requires a separate **Create association** action. See [How do I create a contact-to-company association in HubSpot from Clay?](#how-do-i-create-a-contact-to-company-association-in-hubspot-from-clay) for a step-by-step workflow. For **Lead** objects, association fields (to object type, association type, and to object ID) are built directly into the Create Object step and appear inline after you select Lead as the object type.
+**Note:** For Contact, Company, Deal, and custom objects, associating a created record with another HubSpot object (for example, linking a contact to a company) is not part of the Create Object step — it requires a separate **Create association** action. See [How do I create a contact-to-company association in HubSpot from Clay?](#how-do-i-create-a-contact-to-company-association-in-hubspot-from-clay) for a step-by-step workflow. **Lead is an exception:** when **Object type** is set to Lead, the Create Object step includes required association fields (**Association Object Type**, **Association Type**, and **To Object ID**) directly, so a Lead is always created with an association in the same step.
 
 ### `Action` Lookup object
 
@@ -184,7 +184,7 @@ For more on additive source behavior across all source types, see [Will rows alr
 
 ### My HubSpot list has more than 50,000 records — how do I process all of them?
 
-The **Import objects from HubSpot** source is limited to 50,000 records. Enabling auto-delete does not bypass this limit for HubSpot imports — the 50,000-record ceiling is enforced by the import's pagination cap, so deleting rows after the fact does not allow the source to pull additional records beyond what was paginated.
+The **Import objects from HubSpot** source is limited to 50,000 records. Enabling auto-delete does not bypass this limit for HubSpot imports — auto-delete only resets the record count for webhook and send-table-data sources, not for CRM imports.
 
 For large, one-time batch processing (for example, 100k companies), use [Bulk Enrichment](bulk-enrichment.md) instead of a standard table:
 
@@ -232,7 +232,7 @@ If your use case requires storing free-form industry values that don't map to a 
 
 If a property exists in HubSpot but doesn't get updated when you run the Update Object action, two things are worth checking:
 
-**Blank values are silently skipped.** The **Ignore blank values** setting is enabled by default. When enabled, any property field that is empty or null in your Clay table is not sent to HubSpot — existing HubSpot values are left unchanged with no error shown. If the column you are mapping has no value for a given row, the update for that property is skipped. To override this, open the column settings and disable **Ignore blank values** — but note that doing so will overwrite existing HubSpot data with blank values from Clay. **Note:** If *every* property mapped in that column is blank for a row, the column shows a "No properties found to update" error rather than silently skipping — see the FAQ below for how to address this with a run condition.
+**Blank values are silently skipped.** The **Update Object** action has an **Ignore blank values** setting that is enabled by default. When enabled, any property field that is empty or null in your Clay table is not sent to HubSpot — existing HubSpot values are left unchanged with no error shown. If the column you are mapping has no value for a given row, the update for that property is skipped. To override this, open the column settings and disable **Ignore blank values** — but note that doing so will overwrite existing HubSpot data with blank values from Clay. (This setting applies only to the Update Object action; the Create Object action does not have an equivalent option.) **Note:** If *every* property mapped in that column is blank for a row, the column shows a "No properties found to update" error rather than silently skipping — see the FAQ below for how to address this with a run condition.
 
 **A different HubSpot account is selected.** If multiple HubSpot accounts are connected to your workspace (for example, if teammates each added their own HubSpot connection), the Update Object action may be authenticating against a different instance than the one you intend to update. Open the column settings and confirm the HubSpot account shown is the correct one. You can verify by running a **Lookup object** action on the same record — if the property appears updated there, the write reached the right account.
 
@@ -247,6 +247,17 @@ If the column that was previously mapped to the **HubSpot Object ID** field has 
 3.  Clear the existing value, then type `/` to open the column picker and select the column that contains your HubSpot Record IDs.
 
 **Tip:** The most reliable source for the HubSpot Object ID is the `hs_object_id` value returned by a HubSpot **Import source** or **Lookup object** action on the same table. If you are using a plain text column of IDs (for example, values imported from a CSV), the column type does not matter — but the values must exactly match the HubSpot Object IDs of the records you want to update.
+
+### Why do I get "Missing input: Please provide at least one filterable field" when setting up Lookup Object?
+
+This error means you've selected a field to filter by but haven't mapped a value to it yet. The **Lookup Object** setup requires two steps:
+
+1. Under **Fields to filter by**, select a HubSpot property to search against (e.g., **Domain Name** to find a company by domain, or **Email** to find a contact by email address).
+2. After you select a field, a new value input appears for that field. Map it to the column in your table that contains the value you want to search for (e.g., your domain column or email column).
+
+Both steps are required — the action needs to know which field to search AND what value to look for. If you select a filter field but leave its value input unmapped, the action can't run and shows this error.
+
+**Tip:** For contacts, **Email** is the most reliable filter field because it's the primary identifier HubSpot uses for contact lookups.
 
 ### How do I create a contact-to-company association in HubSpot from Clay?
 
