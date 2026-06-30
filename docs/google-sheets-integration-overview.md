@@ -2,7 +2,8 @@
 title: Google Sheets integration
 description: Cloud-based spreadsheet for real-time collaboration. Covers using
   Google Sheets as a Clay table source (including dedup fields and import
-  history) as well as enrichment actions.
+  history), enrichment actions, and pushing rows from Google Sheets into Clay
+  using Apps Script.
 last_synced: 2026-04-26T01:40:04.431Z
 ---
 
@@ -54,6 +55,67 @@ Clay's Google Sheets source tracks every record it has imported by storing its u
 -   **Duplicate the table:** Creates a new table with a fresh source definition that has no prior import history.
 
 **Note:** If you want to refresh data in existing rows, enable **Update existing rows** in the source's Run settings (under the source column → `Edit source` → `Run settings`). When enabled, re-running the source will update matching rows with the latest values from the sheet.
+
+## Pushing rows from Google Sheets into Clay
+
+To automatically send new rows from a Google Sheet to a Clay table — for example, when a form response arrives or a row is added manually — use Clay's **Webhook source** combined with a **Google Apps Script** that POSTs each new row to your webhook URL.
+
+**Plan requirement:** The Webhook source requires an Explorer plan or above. Free-plan workspaces cannot use webhook sources.
+
+### Step 1: Create a webhook table in Clay
+
+1.  In a workbook, click `+ Add` at the bottom.
+2.  Search for `Webhooks` and select **Monitor webhook**.
+3.  Copy the webhook URL Clay generates — you'll paste it into the script in the next step.
+
+### Step 2: Add the Apps Script to your Google Sheet
+
+1.  Open your Google Sheet.
+2.  Go to **Extensions → Apps Script**.
+3.  Replace the default code with the following script:
+
+```javascript
+var CLAY_WEBHOOK_URL = 'YOUR_CLAY_WEBHOOK_URL'; // replace with your webhook URL
+
+function sendNewRowsToClay() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = sheet.getDataRange().getValues();
+  var headers = data[0];
+  var props = PropertiesService.getScriptProperties();
+  var lastProcessedRow = parseInt(props.getProperty('lastProcessedRow') || 1);
+
+  for (var i = lastProcessedRow; i < data.length; i++) {
+    var rowData = {};
+    for (var j = 0; j < headers.length; j++) {
+      rowData[headers[j]] = data[i][j];
+    }
+    UrlFetchApp.fetch(CLAY_WEBHOOK_URL, {
+      method: 'post',
+      contentType: 'application/json',
+      payload: JSON.stringify(rowData)
+    });
+  }
+
+  props.setProperty('lastProcessedRow', data.length);
+}
+```
+
+4.  Replace `YOUR_CLAY_WEBHOOK_URL` with the URL from Step 1.
+5.  Click **Save**.
+
+The script uses script properties to track how many rows have been sent, so only new rows are pushed on each run. Each POST creates exactly one new row in your Clay table.
+
+### Step 3: Set a time-based trigger
+
+To run the script automatically on a schedule:
+
+1.  In Apps Script, click **Triggers** (clock icon in the left sidebar) → **Add Trigger**.
+2.  Set **Choose which function to run** to `sendNewRowsToClay`.
+3.  Set **Select event source** to **Time-driven**.
+4.  Choose your preferred interval (for example, every hour or every 15 minutes).
+5.  Click **Save**.
+
+For full details on webhook request format, rate limits, and troubleshooting, see [Webhooks in Clay](webhook-integration-guide.md).
 
 ## Enriching data with Google Sheets
 
