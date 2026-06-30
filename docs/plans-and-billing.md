@@ -97,6 +97,8 @@ If your team wants to do a trial, each team member can create their own trial ac
 
 Trial tables can hold up to **1,000 rows each**. The table view also displays only the first **50 rows** — rows beyond that are blurred in the UI until you upgrade to a paid plan.
 
+When your trial ends, your account automatically moves to the free plan — you won't be charged unless you actively choose to upgrade to a paid plan. Clay does not auto-upgrade you. For details on what happens to your trial data credits at that point, see [Actions and data credits](actions-data-credits.md).
+
 ## FAQs
 
 ### How do I track my actions and data credits usage?
@@ -146,3 +148,14 @@ Payment refunds take up to **10 business days** to appear in your account after 
 2.  Contact [Clay support](https://app.clay.com) and share any available transaction details — an Acquirer Reference Number (ARN) is especially helpful for tracing the payment.
 
 Clay Data Credit refunds (for enrichment actions that return no data) are applied to your account balance immediately after processing.
+
+### What happens if my payment fails?
+
+If a payment fails, Clay retries the charge automatically before canceling your subscription:
+
+-   **Credit card billing (Launch, Growth):** Clay retries for up to **14 days**. If the payment is not resolved within that window, your workspace is downgraded to the Free plan.
+-   **Invoice billing (Enterprise):** Clay retries for up to **30 days** before canceling.
+
+Once downgraded to the Free plan, your Data Credit balance is capped at **200 credits** (the Free plan's rollover limit) — any credits above that cap are forfeited at the end of your billing cycle.
+
+To avoid an interruption, keep your payment information current in `Settings` → `Plan & billing`.
