@@ -145,7 +145,7 @@ You can update an AI column's prompt at any time without losing the existing res
 
 To test the updated prompt on a small sample before committing to a full re-run, select a few rows, right-click, and choose **Run [N] rows**. This lets you validate the new output before spending credits on every row.
 
-**If web search is enabled (Claygent) or you're using the web research use case (Use AI):** the web search toggle and use case setting are stored separately from the prompt. Changing the prompt does not reset them — you can update what the AI is asked to do without turning off web search or changing the use case.
+**If the Prompt field appears read-only:** the column is linked to a standalone agent managed in Claygent Builder. Click the **Edit** button in the settings panel to open the agent in Claygent Builder, update the prompt there, and save. The change applies to all tables using that agent. See [Claygent Builder](claygent-builder.md) for details.
 
 ### Cells showing "Some inputs missing"
 
