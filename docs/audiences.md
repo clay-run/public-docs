@@ -341,6 +341,10 @@ To add a missing field:
 
 The field will be available for filtering after the next incremental sync (typically within 15 minutes). Read-only Salesforce fields — fields shown with a lock icon in the mapping because Salesforce does not allow Clay to write them — can still be imported and used as filters. They will show a **Never write (Read-only)** export rule.
 
+**Note:** Completing the Settings mapping flow (saving CRM sync settings) requires a **Growth or Enterprise** plan. Trial and Launch workspaces can navigate into Audiences and open the field-mapping UI, but attempting to save will surface an upgrade prompt — CRM/DWH syncs are disabled on plans below Growth. Workspaces on Free, Basic, Explorer, Pro, or Starter plans won't see the Settings mapping dropdown at all. Contact your Growth Strategist about upgrading if you need access.
+
+**If a field doesn't appear in the Settings mapping dropdown** (not just in the filter options), the Salesforce account connected to Clay may lack the permissions required to read it. Verify that your Salesforce connection has the required OAuth permissions — see [Salesforce integration FAQs](https://university.clay.com/docs/salesforce-integration-faqs) for the permissions listed under "What permissions and scope do I need for the Salesforce enrichment?" After permissions are updated, return to **Settings** to add the field.
+
 ### Why does "Company LinkedIn URL" appear in my audience filters when I mapped the field as "LinkedIn URL"?
 
 These refer to the same field. In the Salesforce import field mapping, the LinkedIn URL for accounts is labeled **"LinkedIn URL"**. In the audience filter builder, that same field appears as **"Company LinkedIn URL"** — Audiences automatically adds the "Company" prefix to distinguish it from the equivalent person-level field, which appears as **"Person LinkedIn URL"** in People audiences.
