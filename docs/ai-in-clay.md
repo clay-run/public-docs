@@ -227,6 +227,18 @@ Full subprocessor list: [trust.clay.com](http://trust.clay.com)
 -   **Data deletion**: You can delete your data at any time; workspace deletion removes all data after 30 days.
 -   **Data access**: Only you and authorized users in your workspace can access your data.
 
+### Data Processing Agreements (DPAs)
+
+Clay provides Data Processing Agreements (DPAs) to support compliance with data protection regulations such as GDPR. Eligibility for a signed DPA depends on your plan:
+
+-   **Enterprise plan:** Eligible for a signed DPA that can be customized or redlined to meet your specific requirements. Contact your account manager or [Clay support](https://app.clay.com) to request one.
+-   **Annual plans totaling $10,000 or more per year:** Eligible for a signed DPA provided as-is, without customization or redlines.
+-   **Monthly plans and lower-spend annual plans:** Not eligible for a signed DPA. To access a signed DPA, upgrade to a qualifying annual plan.
+
+EU-based customers on non-qualifying plans may be able to receive a DPA to meet GDPR obligations. These requests are evaluated case-by-case — contact [Clay support](https://app.clay.com) to inquire.
+
+Clay's standard DPA is fully binding for all customers regardless of plan, ensuring consistent data protection commitments across all tiers. To view Clay's standard DPA and Standard Contractual Clauses (SCCs), visit the [Clay Trust Center](https://trust.clay.com).
+
 ## Your Rights and Controls
 
 ### What you control:
