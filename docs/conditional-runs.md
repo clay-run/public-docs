@@ -125,7 +125,7 @@ The `!!` prefix coerces a value to boolean: `!!value` returns `true` for truthy 
 This means a condition like `!!{{DNC}} && {{DNC}} == 0` is **always false** and will never trigger the enrichment — because:
 
 - When `{{DNC}}` is `0`, `!!0` evaluates to `false`, which immediately short-circuits the entire `&&` chain.
-- When `{{DNC}}` is any non-zero value, `{{DNC}} == 0` is `false`.
+- When `{{DNC}}` is any non-zero value`, `{{DNC}} == 0` is `false`.
 
 No value of `{{DNC}}` can satisfy both clauses simultaneously.
 
@@ -162,6 +162,14 @@ When a run condition is not met, Clay skips the enrichment and stores **no outpu
 **This is why downstream columns that depend on this data will show empty results for those rows.** The row itself still appears in any downstream column, but the value fed into it from the skipped enrichment is empty — so any formula, waterfall step, or output that requires this data will produce no result for that row.
 
 **Note:** If a row previously ran and produced output, that output is preserved when the condition is not met on a subsequent run — the run condition only gates new executions and does not clear existing cell data.
+
+### Using the "Explain" button to diagnose a skipped run condition
+
+When a cell shows **"Run condition not met"**, an **Explain** button appears next to the status message in the cell details panel. Clicking it triggers an AI analysis of your run condition formula and the current row's values, then returns a plain-language explanation of exactly why the condition evaluated to false for that row.
+
+**To use it:** Click the cell showing "Run condition not met," then click the **Explain** button in the status area. The explanation appears inline below the message.
+
+This is particularly useful when the formula looks correct but the condition still isn't met — for example, when a value appears populated in the table but the comparison fails due to type mismatches, unexpected whitespace, or a nested formula that resolves differently at runtime than it previews.
 
 ### Running an action only once per row (new rows only)
 
