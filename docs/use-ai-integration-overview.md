@@ -142,6 +142,22 @@ There are two ways to resolve this:
 -   **Fill in the missing data.** Ensure that the columns referenced in your prompt have values for the rows you want to run.
 -   **Make the inputs optional.** In the column prompt, hover your cursor over a `{{Column Name}}` reference token — a **Required to run** toggle appears inline on that token. Switch it off for any input you want to be optional. When toggled off, the cell will still run even if that column is blank — the empty field is simply omitted from the prompt for that row.
 
+### AI column running but producing unexpected output
+
+If an AI column runs without errors but produces output that doesn't match what you expected — for example, a name-normalization column returning a value from the wrong source, or any column that seems to ignore the data you're looking at — the most likely cause is that the prompt's `{{Column Name}}` references point to a different column than you intended.
+
+**The AI only receives data from the columns explicitly referenced in its prompt.** It does not automatically read all columns in a row — it sees only the values you inject via `{{Column Name}}` tokens. If a reference points to the wrong column, the AI processes that column's data and returns a result that is correct for *that* data, even though it's not what you expected.
+
+**To verify which column the AI is reading:**
+
+1.  Open the column settings (click the column name → **Edit column**).
+2.  In the **Prompt** field, look at each `{{Column Name}}` token — these are the only columns the AI reads per row.
+3.  Confirm each reference points to the column containing the data you want processed. For example, if your goal is to normalize raw names like "Eng. Sami" and strip the honorific, the reference must point to the column that contains the full raw name — not a separate column (such as "First Name") that may already hold a clean value.
+4.  To fix a reference, delete the incorrect `{{Column Name}}` token and re-insert the correct column by typing `/` in the prompt and selecting it from the menu.
+5.  Save the updated column and re-run the affected rows.
+
+**Tip:** Adding concrete input/output examples in the **Examples** section (Configure tab → **Examples** → **Add examples**) helps the AI handle edge cases specific to your data — for instance, names with honorifics, middle initials, or unusual formatting not covered by your initial prompt.
+
 ### AI column output shows as a JSON object (response, reasoning, confidence, stepsTaken)
 
 When a Use AI web research column or Claygent column runs, the result is stored as a structured JSON object. This object automatically includes these fields:
