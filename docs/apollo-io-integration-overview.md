@@ -298,6 +298,18 @@ Returns confirmation of whether the contact's status was successfully updated, i
 
 ## Troubleshooting
 
+### Authentication errors
+
+If an Apollo enrichment fails with an authentication or authorization error, your Apollo.io OAuth connection may have expired or been revoked. Clay does not manage Apollo subscriptions — you must connect your own Apollo.io account.
+
+To reconnect:
+
+1.  Go to `Settings` → `Connections`.
+2.  Find your Apollo.io connection and click `…` → `Edit`, or remove it and click `+ Add account`.
+3.  Complete Apollo's OAuth flow to re-establish the connection.
+
+If authentication errors only affect some workspace members, each member who runs Apollo enrichments must have their own valid Apollo.io connection.
+
 ### Placeholder email addresses: `email_not_unlocked@domain.com`
 
 When retrieving contacts via **Find People from Apollo**, the email field may contain `email_not_unlocked@domain.com` instead of a real address. Apollo only provides verified email addresses for contacts that have been unlocked using Apollo credits. If a contact hasn't been unlocked, Apollo returns this placeholder.
