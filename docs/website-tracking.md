@@ -124,6 +124,12 @@ This usually means:
 
 Check your browser console for errors. Note that verification only checks if the script exists — a failed verification can still coexist with working data flow. Your Clay table is the ultimate proof of success.
 
+To verify the script is loading at the browser level:
+
+-   **Network tab** — search for `claydar`. Look for `init.v1.js` and `radar.min.js` with a 200 status. If they're missing, the script isn't loading.
+-   **Console tab** — type `window.Claydar`. It should return an object, not `undefined`. If it returns `undefined`, the script failed to load or was blocked.
+-   **Application tab** — under `Local storage` and `Cookies`, look for entries starting with `claydar_`. If present, the script is running and storing session data correctly.
+
 ### Tracking filters not working as expected
 
 URL paths are exact-match, so `/blog` and `/blog/` are different. Also, filter changes only apply to new data — existing rows aren't affected. Make sure you haven't accidentally excluded important pages.
@@ -252,3 +258,22 @@ Two approaches work well for cross-session analysis:
 
 -   **Use Sculptor.** Open Sculptor from the bottom-right chat in your table and describe what you want to analyze. As long as the UTM Term values are visible in the table, Sculptor can read and analyze them across all rows and help you create a new column or structure the data.
 -   **Flatten nested fields into columns.** Add explicit columns pulling out each session's value (for example, Session 1 UTM Term, Session 2 UTM Term). Once those values are in dedicated top-level columns, both Sculptor and AI columns can reference them directly.
+
+### How should I set up web intent for multiple domains?
+
+For completely separate root domains, you can create a dedicated signal per domain. Note that using the same signal across different root domains does **not** merge a visitor's journey across those sites. Because the tracking relies on first-party cookies scoped to each domain, visitors on `company-a.com` and `company-b.com` will have separate session and visitor IDs even if they are the same person.
+
+For subdomain tracking questions (for example, `shop.company.com` and `blog.company.com`), contact Clay support to confirm how your configuration handles cross-subdomain sessions.
+
+### What do I need to know about GDPR and cookie consent for web intent?
+
+The tracking script captures IP address data, which may be considered personally identifiable information in some jurisdictions. Work with your legal and web teams to confirm that your consent and privacy setup supports your intended use. In particular, make sure your Content Security Policy and any cookie consent tooling allow the Clay tracking scripts to run — if they block the script, tracking will stop working.
+
+### What cookies and local storage items does the tracking script use?
+
+All storage keys are prefixed with `claydar_`. The script uses `localStorage` by default and falls back to cookies if `localStorage` is unavailable.
+
+| Key | Storage | Expires | Purpose |
+|-----|---------|---------|---------|
+| `claydar_device_id` | localStorage / Cookie | 365 days | Unique device identifier across sessions |
+| `claydar_session` | localStorage | 60 min of inactivity | Current session data (id, start time, engagement) |
