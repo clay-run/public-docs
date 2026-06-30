@@ -85,7 +85,7 @@ To create a new system user token, you first need to create an app:
      -   Ensure the `ads_management` permission is selected.
      -   Click `Generate token`.
 11.  Copy the generated token immediately — Meta won't store it, so consider saving it in a secure password vault.
-12.  In Clay, when connecting your Meta account for ad syncs, select `Use system user token` as the authentication method and paste your token.
+12.  In Clay, navigate to **Settings > Connections > Meta**. You can either add a new connection or use the **Reconnect** option on your existing account — in both cases, select the **System User Token** tab and paste your token.
 
 ### Why use a system user token?
 
@@ -200,7 +200,7 @@ This is expected behavior. Meta enforces a 60-day expiry on OAuth tokens — whe
 
 **To resolve this, you have two options:**
 
--   **Reconnect your Meta account** — go to your Meta connections in Clay and click to reconnect using "Sign in with Facebook." This resets the 60-day timer.
+-   **Reconnect your Meta account** — navigate to **Settings > Connections > Meta** in Clay and click to reconnect using "Sign in with Facebook." This resets the 60-day timer.
 -   **Switch to a System User Token** — system user tokens can be configured to never expire, avoiding the need to reconnect every 60 days. This is the recommended approach for production Ad Sync workflows. See [Meta system user token authentication](#meta-system-user-token-authentication) for setup instructions.
 
 ### **Can I sync to multiple ad accounts?**
