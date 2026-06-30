@@ -282,6 +282,18 @@ There is no per-row force-stop for cells in Awaiting Callback. To halt all proce
 -   Add a **run condition** on downstream columns in the calling table so they only run once the function column has returned a value (e.g., only run if `{{Function Column}}` is not empty).
 -   Use `Clay.getCellStatus({{field_name}})` in a formula column to check the function column's status, then use that formula as a run condition on dependent columns.
 
+### My enrichment data appears missing after a function ran against those columns — where did it go?
+
+The data hasn't been deleted. When a function column runs, it receives data from any Claygent or enrichment columns wired as its inputs, processes it, and stores the results in the **function result column** in your main table. The original Claygent or enrichment column cells may appear empty or replaced — the processed data now lives in the function result column.
+
+To find your data:
+
+1.  **Filter the function column by "has results."** Click the filter button in the table toolbar, select the function column as the field, and choose **has results** from the status dropdown. This surfaces every row where the function ran and returned data successfully.
+2.  **Click into any row marked success** to open the cell details panel on the right, where you can see the full data the function returned for that row.
+3.  **Adjust what data comes back to your table.** Click the function column header to open its settings. Under **Configure → Choose output data to send**, check or uncheck which fields are returned to your main table. After saving, re-run the function on those rows for the changes to take effect.
+
+Other useful column status filters you can apply to any function or enrichment column: **has no results** (ran but returned nothing), **has not run** (not yet processed), **is queued** (waiting to be processed), **is retrying** (a retry is in progress), and **is awaiting callback** (waiting for the function to finish and return results).
+
 ### Can I share a function with someone outside my workspace?
 
 Yes. Enable "share as template" on the function to generate a shareable link. Anyone with the link can view the function's columns and create a table in their workspace using it.
