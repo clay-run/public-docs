@@ -140,6 +140,7 @@ If cells remain Queued for an extended period, common causes include:
 2.  **Hard refresh the page** — Press `Ctrl+Shift+R` (Windows/Linux) or `Cmd+Shift+R` (Mac) to reload and clear any stale browser state.
 3.  **Force-run the column** — Right-click the column header and select **Run column** → **Force run all [N] rows**. This re-queues and processes every row in the column regardless of its current status.
 4.  **Check your API quotas** — If the column calls an external API (OpenAI, Google, etc.), verify you haven't exhausted a quota in that provider's dashboard.
+5.  **Check the Clay status page** — If the issue persists and you suspect a platform-wide problem, visit [status.clay.com](https://status.clay.com/) for real-time updates on any active incidents.
 
 ## Troubleshooting: table appears stopped at a partial percentage with no credits consumed
 
