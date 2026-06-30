@@ -93,11 +93,14 @@ Each option has different benefits and considerations in terms of cost, convenie
 -   Pricing varies by model (fixed or variable depending on which model you select)
 -   Cost visibility in Clay UI shows data credit consumption
 
+**Output token limit with Clay's managed key:** When using Clay's shared key (Clay credits), output tokens are capped at **4,000 per request**. If your column's maximum output length exceeds this, you'll see the error: **"Maximum tokens is too large. Please use a private key or contact support."** To resolve this, lower your column's maximum output setting to 4,000 or fewer, or connect your own API key (which removes this cap—see "Personal API Keys" below).
+
 ### Personal API Keys
 
 -   Can reduce data credit costs (you only pay Actions, not Data Credits)
 -   Requires **meeting provider-specific tier requirements**
 -   You manage your own API billing directly with the provider
+-   No output token cap from Clay's side (the model's own context length still applies)
 
 **Note:** When using a personal API key, price breakdowns won't appear in the Clay UI. You'll need to monitor your usage and upgrade tiers manually.
 
