@@ -23,6 +23,7 @@ This keeps your data current without manual updates by pulling in new informatio
     2.  Day
     3.  Week
     4.  Month
+-   **Setting a custom start time or day of the week** (for example, every Sunday at 6:00 AM) is an Enterprise-only feature. Contact support if you don't see this option.
 -   Toggle **Update existing rows**: When the source is re-run, any record **returned by that run** will have its existing row updated with the latest data. Records that are not returned by the source query — even if they were previously imported — will not be updated.
 
 **For any existing sources:**
@@ -35,6 +36,7 @@ This keeps your data current without manual updates by pulling in new informatio
     2.  Day
     3.  Week
     4.  Month
+-   **Setting a custom start time or day of the week** (for example, every Sunday at 6:00 AM) is an Enterprise-only feature. Contact support if you don't see this option.
 -   Toggle **Update existing rows**: When the source is re-run, any record **returned by that run** will have its existing row updated with the latest data. Records that are not returned by the source query — even if they were previously imported — will not be updated.
 
 **Scheduled source runs are additive.** Each run adds new records from the source to your table. Records that are no longer in the source — for example, contacts removed from a HubSpot list since the last run — remain in your Clay table and are not deleted. To remove rows that are no longer in the source, delete them manually or start fresh with a new table.
