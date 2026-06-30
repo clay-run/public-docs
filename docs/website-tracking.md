@@ -259,11 +259,11 @@ Two approaches work well for cross-session analysis:
 -   **Use Sculptor.** Open Sculptor from the bottom-right chat in your table and describe what you want to analyze. As long as the UTM Term values are visible in the table, Sculptor can read and analyze them across all rows and help you create a new column or structure the data.
 -   **Flatten nested fields into columns.** Add explicit columns pulling out each session's value (for example, Session 1 UTM Term, Session 2 UTM Term). Once those values are in dedicated top-level columns, both Sculptor and AI columns can reference them directly.
 
-### How should I set up web intent for subdomains or multiple domains?
+### How should I set up web intent for multiple domains?
 
-If your tracked properties share a root domain (for example, `shop.company.com` and `blog.company.com`), a single web intent signal covers all subdomains automatically — no additional configuration is needed.
+For completely separate root domains, you can create a dedicated signal per domain. Note that using the same signal across different root domains does **not** merge a visitor's journey across those sites. Because the tracking relies on first-party cookies scoped to each domain, visitors on `company-a.com` and `company-b.com` will have separate session and visitor IDs even if they are the same person.
 
-If you track completely separate root domains, you can create a dedicated signal per domain, or use the same signal across both. Note that using the same signal on different root domains does **not** merge a visitor's journey across those sites. Because the tracking relies on first-party cookies scoped to each domain, visitors on `company-a.com` and `company-b.com` will have separate session and visitor IDs even if they are the same person.
+For subdomain tracking questions (for example, `shop.company.com` and `blog.company.com`), contact Clay support to confirm how your configuration handles cross-subdomain sessions.
 
 ### What do I need to know about GDPR and cookie consent for web intent?
 
@@ -276,5 +276,4 @@ All storage keys are prefixed with `claydar_`. The script uses `localStorage` by
 | Key | Storage | Expires | Purpose |
 |-----|---------|---------|---------|
 | `claydar_device_id` | localStorage / Cookie | 365 days | Unique device identifier across sessions |
-| `claydar_user_traits` | localStorage | 365 days | User attributes and traits |
-| `claydar_session` | localStorage | ~60 minutes | Current session data (id, start time, engagement) |
+| `claydar_session` | localStorage | 60 min of inactivity | Current session data (id, start time, engagement) |
