@@ -20,18 +20,6 @@ Note that when sharing as a template, only the table structure and one row of sa
 
 **Table limit:** By default, workbooks with more than 10 tables cannot be duplicated or shared as templates. If your workbook exceeds this limit, contact Clay support to have the limit raised for your workspace.
 
-## Use a shared template
-
-When someone shares a template link with you, opening it creates a **new table or workbook** — you cannot apply a template to an existing empty table or sheet.
-
-To create a table or workbook from a template:
-
-1. Open the template link in your browser.
-2. If you have access to multiple workspaces, Clay will prompt you to choose which workspace to create the table or workbook in. Select the workspace and confirm.
-3. Clay creates a fresh table or workbook containing the template's structure and sample data.
-
-You can then rename it, clear the sample row, and start adding your own data.
-
 ## Move a workbook to a different workspace
 
 You can use Share as Template to copy a workbook into any workspace you have access to — including a different workspace under the same login.
