@@ -35,8 +35,8 @@ When working with AI models, you'll encounter two types:
 
 ### ClayGent Web Research
 
--   **OpenAI**: Requires **Tier 2 or higher** (≥390,000 TPM)
--   **Anthropic**: Requires **Tier 4 or higher** (≥390,000 TPM)
+-   **OpenAI**: Requires **Tier 2 or higher** (≥450,000 TPM)
+-   **Anthropic**: Requires **Tier 4 or higher** (≥450,000 TPM)
 -   **Gemini**:
     -   Requires **Tier 2**, but only works with the **Gemini 2.0 Flash model**
     -   **Gemini 1.5 models** may require additional access through **Vertex AI** or custom tiers
@@ -93,7 +93,7 @@ Each option has different benefits and considerations in terms of cost, convenie
 -   Pricing varies by model (fixed or variable depending on which model you select)
 -   Cost visibility in Clay UI shows data credit consumption
 
-**Output token limit with Clay's managed key:** When using Clay's shared key (Clay credits), output tokens are capped at **4,000 per request**. If your column's maximum output length exceeds this, you'll see the error: **"Maximum tokens is too large. Please use a private key or contact support."** To resolve this, lower your column's maximum output setting to 4,000 or fewer, or connect your own API key (which removes this cap—see "Personal API Keys" below).
+**Output token limit with Clay's managed key:** When using Clay's shared key (Clay credits) with a **premium model** (such as GPT-4o, Claude Sonnet, or Gemini 2.5 Pro), output tokens are capped at **4,000 per request**. If your column's maximum output length exceeds this, you'll see the error: **"Maximum tokens is too large. Please use a private key or contact support."** This cap does not apply to compact or budget models (such as GPT-4o mini or Claude Haiku). To work around this limit when using premium models, lower your column's maximum output setting to 4,000 or fewer, or connect your own API key (see "Personal API Keys" below).
 
 ### Personal API Keys
 
