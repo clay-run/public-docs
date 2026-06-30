@@ -21,7 +21,7 @@ In March 2026, Clay introduced a new pricing model to give you more flexibility 
 | Usage Meters | Credits only | Actions + Data Credits |
 | Action Charges | ❌ No action charges | ✅ Actions charged (~15% cost of a credit) |
 | Data Costs (in Credits) | Higher (old pricing) | 50% cheaper on 70+ enrichments |
-| Annual Discount | 10% | 10% |
+| Annual Discount | 10% | 20% |
 | Credit Top-up Premium | 50% | 30% |
 | Cost Per Credit (Launch/Starter tier) | ~$0.07–0.08 | ~$0.05 |
 | Cost Per Credit (Pro/Growth tier) | ~$0.012–0.016 | Lower with enrichment discounts |
@@ -80,3 +80,37 @@ Yes for Starter and Explorer annual plans. No for Pro annual plans — requires 
 **What's the difference between priority support on Growth vs. legacy Pro?**
 
 Legacy Pro plan economics (higher CPC, no action charges) cannot support the same level of priority support investment as modern Growth plans. Only modern Growth+ plans qualify for priority queue support.
+
+**What changes when I migrate from Explorer (Legacy) to Enterprise?**
+
+If you're on Explorer (Legacy) and considering a move to Enterprise, here is a summary of what changes.
+
+**Features you gain on Enterprise** (not available on Explorer Legacy):
+
+-   **Bulk enrichment** — process large datasets in rolling batches with no cumulative row cap; see [Bulk enrichment](./bulk-enrichment.md)
+-   **Web intent signals** — access website visitor activity data
+-   **CRM integrations** — connect to Salesforce, HubSpot, Marketo, and other CRMs
+-   **Data warehouse connections** — sync with Snowflake and other data warehouses
+-   **Audiences** — build and sync contact and account segments to CRMs and ad platforms
+-   **SSO and advanced user group controls (RBAC)**
+-   **Workbook-level credit budgets**
+-   **Ads platform syncs**
+-   **Dedicated Growth Strategist, managed onboarding, and bi-annual business reviews**
+-   **Dedicated Slack support channel**
+
+**Features you lose:** None. All capabilities available on Explorer (Legacy) continue to work on Enterprise.
+
+**What changes:**
+
+| Feature | Explorer (Legacy) | Enterprise |
+| --- | --- | --- |
+| Monthly data credits | 10,000 / mo (up to 20,000 with rollover) | 100,000+ / mo (custom, annual only) |
+| Actions billing | Not charged | Charged (~15% cost of a credit per enrichment or execution) |
+| Credit top-up premium | 50% | 30% |
+| Annual discount | 10% | 20% |
+| Source search limit | 25,000 contacts / accounts per search | 50,000 contacts / accounts per search |
+| Scheduled source frequency | Daily | Up to hourly |
+| Table version history | 30 days | 180 days (see [Table versions](./table-versions.md)) |
+| Support | Standard support queue | Dedicated Slack channel |
+
+Modern plans also include ~50% cheaper data costs on 70+ enrichments compared to legacy pricing — your data credits go further on Enterprise.
