@@ -77,6 +77,16 @@ To view or edit the expression without regenerating:
 
 **Tip:** If you inherited a formula and want to understand what it does before modifying it, copy the expression text and paste it into an AI assistant (like ChatGPT or Claude) with the prompt: *"Explain what this formula does."* The assistant can walk through the logic step by step and suggest modifications in plain language. Once you have an updated expression you're happy with, paste it back into Clay's formula editor.
 
+### **Can I use formula columns for text matching and string operations without consuming credits?**
+
+Yes. Formula columns run JavaScript and **do not consume data credits** — they run row-by-row at no per-row cost. This makes them the right tool for deterministic text operations that don't need AI: checking whether a field contains a keyword, matching a value against a predefined list, applying regex patterns, or normalizing text.
+
+For example, to check whether any competitor name from a known list appears in a call transcript, describe your intent in the formula generator:
+
+> Check if any of the words ["CompetitorA", "CompetitorB", "CompetitorC"] appear in {{Call Notes}} and return matching names as a comma-separated list
+
+The formula generator will produce a JavaScript expression that performs the match row-by-row without any credit cost, regardless of how many rows your table has. For a full list of features that don't consume credits, see [Actions and data credits](actions-data-credits.md).
+
 ### **How do I use today's date in a formula?**
 
 Use `moment()` with no arguments to get the current date and time at the moment the formula evaluates. For example, to return `"Yes"` if an event date is more than 6 months in the future from today:

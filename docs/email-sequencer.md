@@ -59,7 +59,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
         -   `Restrict access`: Limit the account to your use only (e.g., for a personal business address). Otherwise, accounts are available to anyone with edit access in your workspace.
         -   `Update send limit`: Change the daily number of emails the account can send per day
         -   `Update sender variables`: Change the sender variable values for the account
-    -   **Searching and bulk actions:** Use the **search bar** and **Filter** control in `Sender setup` to quickly find accounts by email address or name. Filter by account type (Google OAuth, Outlook, or SMTP) or status (Ready, Warming up, Not warming, or Auth error). Select multiple accounts to bulk-enable warmup or remove them from the campaign at once.
+    -   **Searching and bulk actions:** Use the **search bar** and **Filter** control in `Sender accounts` to quickly find accounts by email address or name. Filter by account type (Google OAuth, Outlook, or SMTP) or status (Ready, Warming up, Not warming, or Auth error). Select multiple accounts to bulk-enable warmup or remove them from the campaign at once.
 6.  Adjust your `Schedule settings`:
     -   `Timezone`: Select the timezone to send from (we recommend matching your prospects').
     -   `Days of the week`: Choose which days emails are sent.
@@ -113,6 +113,8 @@ In the Campaigns homepage, you can access the `Global inbox` which centralizes r
 
 Check out the `Email accounts` tab to manage your fleet of sender accounts and `Global blocklist` to add or remove entries.
 
+To duplicate a campaign — for example, to reuse your message sequence and settings for a new persona or messaging variant — open the campaign you want to copy and click its name in the breadcrumb at the top. Select **Duplicate campaign** from the dropdown. Clay creates a new draft campaign named "<original name> (copy)" with the same message sequence, settings, and AI context, then opens it immediately for editing.
+
 ## Update sender signatures
 
 You can add or update email signatures for any connected sender account.
@@ -122,7 +124,7 @@ You can add or update email signatures for any connected sender account.
 1.  Go to `Campaigns` from your home screen.
 2.  Click on the name of your campaign under `Sequences`.
 3.  Navigate to the `Settings` tab.
-4.  Scroll to the `Sender setup` section.
+4.  Scroll to the `Sender accounts` section.
 5.  Under `Email accounts`, locate the sender you want to edit.
 6.  Click the three-dot (⋯) menu on the right side of that sender's row.
 7.  Select `Update sender variables`.
@@ -161,15 +163,31 @@ The daily send limit is set at the **email account level**, not per campaign. If
 
 To increase your total daily sending capacity:
 -   **Add more email accounts** — each additional account has its own independent daily budget. With two accounts you can send up to twice as many emails per day.
--   **Increase the send limit** on an existing account — open the campaign's `Sender setup`, click the three-dot (⋯) menu next to the account, and select `Update send limit`.
+-   **Increase the send limit** on an existing account — open the campaign's `Sender accounts` section, click the three-dot (⋯) menu next to the account, and select `Update send limit`.
 
 Keep in mind that sending high volumes of cold email from a single inbox puts your domain at risk. Starting near the default (20 emails/day) and scaling by adding accounts rather than increasing individual limits is safer for deliverability.
+
+### Why are my emails queued up but not sending yet?
+
+Several factors work together to pace delivery over multiple days rather than sending all at once:
+
+-   **Daily send caps**: Each sender account has a configurable daily sending limit. Once an account reaches that limit, it pauses and resumes only when the next sending window opens (typically the next day). If most of your sender accounts are already at their daily limit when new leads are added, those emails won't go out until the following day.
+-   **Sending window**: Your campaign's schedule settings restrict when emails can go out (timezone, start/end times, and days of the week). A narrow window — like 9 AM to 5 PM in one timezone — caps how many emails can be sent per day across all accounts.
+-   **Multiple campaigns sharing sender accounts**: If the same sender accounts are used across multiple active campaigns, all those campaigns share the same daily sending budget. Adding leads to a new campaign doesn't create additional capacity — it competes for the same pool.
+
+**To speed up delivery, you can:**
+
+-   **Increase the send limit on existing accounts** — open the campaign's `Sender accounts` section, click the three-dot (⋯) menu next to the account, and select `Update send limit`. Keep in mind that raising individual limits aggressively can hurt deliverability; adding more accounts is generally safer for long-term inbox health.
+-   **Add more sender accounts** — each additional account has its own independent daily budget.
+-   **Widen your sending window** — a broader time range gives more hours per day for sends to go out.
+
+If all your sender accounts have hit their daily limit, the campaign resumes automatically when the next sending window opens.
 
 ### How many emails can I send per day, and is the sequencer right for large-volume campaigns?
 
 The daily send limit is set at the **email account level** and varies by account type:
 
--   **Self-connected accounts** (Google Workspace OAuth, Microsoft Outlook OAuth, or SMTP) default to 20 emails per day and can be adjusted from 10 to 500. Go to your campaign's `Sender setup`, click the three-dot (⋯) menu next to an account, and select `Update send limit`.
+-   **Self-connected accounts** (Google Workspace OAuth, Microsoft Outlook OAuth, or SMTP) default to 20 emails per day and can be adjusted from 10 to 500. Go to your campaign's `Sender accounts` section, click the three-dot (⋯) menu next to an account, and select `Update send limit`.
 -   **SmartSenders accounts** purchased through Clay (currently in beta; available on Growth and Enterprise plans) have a maximum of 30 emails per day. Newly provisioned accounts start at a lower send limit and can be increased up to 30 via `Update send limit`. See [Buying email accounts](buying-email-accounts.md).
 
 Total daily throughput scales with the number of connected accounts — each account has its own independent daily budget.
@@ -189,7 +207,7 @@ For example: an 08:00 AM–07:00 PM window is 660 minutes. With the minimum set 
 To shorten the estimated time:
 -   **Lower the min time between emails** — a smaller gap increases daily sends per account. Shorter intervals can raise spam risk; the [Best practices](#best-practices) section recommends pacing sends throughout the day.
 -   **Add more sender accounts** — each account adds its own independent daily capacity.
--   **Increase the account send limit** — in `Sender setup`, click the three-dot (⋯) menu next to an account and select `Update send limit`.
+-   **Increase the account send limit** — in `Sender accounts`, click the three-dot (⋯) menu next to an account and select `Update send limit`.
 
 ### My "Sync lead data to campaign" column is showing a warning. What does it mean?
 
@@ -241,7 +259,7 @@ Email signatures are configured at the **sender account level**, not per individ
 
 To set or update a signature:
 
-1.  Open your campaign and go to `Sender setup`.
+1.  Open your campaign and go to `Sender accounts`.
 2.  Click the three-dot menu (⋯) next to the sending account.
 3.  Select `Update sender variables`.
 4.  Enter your text in the `Signature` field.
