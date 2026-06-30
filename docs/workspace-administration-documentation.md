@@ -521,7 +521,7 @@ To update your billing and payment information:
 
 Clay offers a 14-day free trial with 1,000 data credits, giving you access to key features like webhooks, CRM integrations, email sequencers, and HTTP API capabilities.
 
-**Note:** Phone number enrichments are not available during the trial period. To access this feature, upgrade to a paid plan.
+**Note:** Phone number enrichments are not available on free or trial plans — this restriction applies even if you have unused data credits. To access this feature, upgrade to a paid plan.
 
 If your team wants to do a trial, each team member can create their own trial account to explore Clay independently.
 
