@@ -21,6 +21,17 @@ This tool is ideal for building targeted sales prospect lists, identifying poten
 
 **Note:** The search wizard shows a preview of up to 50 results so you can check your criteria before importing. When you click **Import**, all matching results — up to the **Limit results** value you configure — are added to the table.
 
+## Adding more profiles to an existing people table
+
+To add more profiles from the same search to an existing people table without creating a new table:
+
+1.  In your people table, click **+ Add** at the bottom and select **Find more people**.
+2.  Choose the existing search whose results you want to expand.
+3.  Enter the number of additional profiles to import in the **Number of profiles to add** field. The modal shows how many profiles have already been imported from that search and how many are still available.
+4.  Click **Add people**.
+
+**Note:** Each Find People source has a cumulative profile limit that varies by billing plan. The modal displays your plan's maximum and the number of profiles still available in the selected search. See [your source has exceeded your plan's limit](finding-companies-and-people-in-clay.md#your-source-has-exceeded-your-plans-limit-error-on-find-companies-or-find-people) for troubleshooting.
+
 ## `Source` **Find People**
 
 **Inputs:**
@@ -160,7 +171,7 @@ The enrichment returns a single `posts` array. Each item in that array can be an
 
 **Extracting post text:**
 
-For original posts, the text is in `posts[N].text`. For reposts, `posts[N].text` is `null` when the person shared without adding their own comment — in that case, the text of the original content being shared is in `posts[N].shared_post.text`.
+For original posts, the text is in `posts[N].text`. For reposts, `posts[N].text` is `null` when the person shared without adding their own comment — in that case, the text of the original content being sharing is in `posts[N].shared_post.text`.
 
 > **Note:** Use `shared_post` (snake_case) in formulas. The Cell details panel displays this field as "Shared Post," but formula references must use `shared_post`.
 
