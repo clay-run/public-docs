@@ -1,6 +1,6 @@
 ---
 title: Lemlist integration
-description: Automated multichannel outreach tool.
+description: Automated multichannel outreach tool, with troubleshooting for duplicate leads and campaign push errors.
 last_synced: 2026-04-26T01:40:15.254Z
 ---
 
@@ -70,3 +70,23 @@ Check if lead exists in a campaign in Lemlist via email.
 
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
+
+## Troubleshooting
+
+### Leads not being added to a campaign
+
+By default, a lead will not be added to a campaign if they already exist in **other Lemlist campaigns**. To allow the same lead to appear in multiple campaigns, enable the **Allow Duplicates?** toggle in the column settings:
+
+1. Open the **Add Lead to Campaign** column settings.
+2. Select **Edit Column**.
+3. Enable the **Allow Duplicates?** option.
+
+Also verify that your **Only run if** condition is met for the rows in question — if the condition evaluates to false, the action will not execute for those rows.
+
+### Errors when pushing leads to a campaign
+
+Push errors typically occur when a lead already exists in another Lemlist campaign. Follow the steps above to enable **Allow Duplicates?** in the column settings.
+
+### New leads not appearing after deleting existing values
+
+Deleting values from a column does not automatically allow new leads to appear in the same table. To re-run enrichment after a deletion, create a new table and rerun the enrichment process.
