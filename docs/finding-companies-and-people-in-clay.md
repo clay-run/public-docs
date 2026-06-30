@@ -112,7 +112,7 @@ Clay gives you three ways to get contacts from a company list. Here's how they d
 **Find People at These Companies — as a source (returns a new table):**
 
 -   Returns all results in a separate people table with one row per contact.
--   When re-run, searches across all companies in the linked table — including any newly added ones. New people are appended and deduplicated against rows already in the table.
+-   When re-run, searches across all companies in the linked table — including any newly added ones. New people are appended and deduplicated against all previously imported contacts — including contacts that have since been deleted from the table. Manually deleting rows does not reset the import history; see [Re-running Find People returns 0 new results](#re-running-find-people-returns-0-new-results) if previously deleted contacts are not reappearing.
 -   Subject to a per-source cumulative limit that varies by billing plan — once that limit is hit, the source stops returning new records even if new companies are added. See [the troubleshooting section](#your-source-has-exceeded-your-plans-limit-error-on-find-companies-or-find-people) for details.
 -   Best when you don't need to rank or further filter contacts before saving them.
 -   **Update People Table column:** When this source is created from a company table, Clay automatically adds an **Update People Table** column to the company table. That column is the link between the two tables — when it runs, it triggers a full re-run of the Find People search across all companies currently in the table, including any newly added ones. It does not run incrementally for only new rows; it re-runs the full search. With **Enable Automatic People Search Updates** toggled on, the column fires automatically when new company rows enter the table; turn it off to trigger refreshes manually.
@@ -135,7 +135,7 @@ Clay gives you three ways to get contacts from a company list. Here's how they d
 
 ### Check headcounts before running a full people search
 
-Use **Find Employee Headcount by Criteria** as an enrichment column in your company table to get a contact count matching your criteria before committing to a full people search. It takes the same filters as people search — job title keywords, seniority levels, location, and more — but returns only a `Role Count` number per company row rather than pulling full profiles. Add it as a column in your company table and pass a company profile URL or domain as the company identifier. Once the counts are populated, filter your table for companies above (or below) your threshold before running `Find Contacts at Company` or `Find People at These Companies` — this avoids spending credits on companies with too few matching contacts.
+Use **Find Employee Headcount by Criteria** as an enrichment column in your company table to get a contact count matching your criteria before committing to a full people search. It takes the same filters as people search — job title keywords, seniority levels, location, and more — but returns only a `Role Count` number per company row rather than pulling full profiles. Add it as a column in your company table and pass a company LinkedIn URL or domain as the company identifier. Once the counts are populated, filter your table for companies above (or below) your threshold before running `Find Contacts at Company` or `Find People at These Companies` — this avoids spending credits on companies with too few matching contacts.
 
 ### Use dynamic location filtering with in-table actions
 
@@ -301,21 +301,31 @@ If profiles still appear to be missing after switching to LinkedIn URLs, use **C
 
 ### Re-running Find Companies shows far fewer results than my original run
 
-This is expected behavior. The Find Companies source deduplicates new results against rows already in your table — re-running returns only the net-new companies not yet present in the table.
+This is expected behavior. The Find Companies source tracks all previously imported companies internally — re-running returns only net-new companies that have never been imported by this source. By default, deleting rows from your table **does** allow those companies to reappear on a subsequent re-run: company exclusions are driven by the source records currently present in the table, so removing a row removes that company from the exclusion list for future runs.
 
 **Example:** If your table already has 29,000 companies from a previous import, re-running with the same filters returns only the companies genuinely new since the last run — for example, 32 new companies. The existing 29,000 remain in your table; they are not replaced or removed.
 
-Deduplication is based on each company's unique profile ID, not your filter configuration. A company already in the table is skipped on re-run regardless of whether your filters changed.
+Deduplication is based on each company's unique profile ID, not your filter configuration. As long as a company's row is still present in the table, it is skipped on re-run regardless of whether your filters changed.
 
-**To re-import the full result set** (for example, when testing): delete the existing rows from your table first, then re-run the source. Once the rows are cleared, the search re-imports all matching companies from scratch.
+**To re-import the full result set** (for example, when testing): use the **Replace existing results in table** option. Open the source (click the source column header → **Edit column**), click the **Import** button dropdown, and select **Replace existing results in table**. This clears the existing rows and re-imports all matching companies from scratch.
 
 ### Re-running Find People returns 0 new results
 
-This is expected behavior. The Find People source deduplicates results against rows already in the table — re-running the same source on a table that already contains those contacts returns 0 new records. There is no setting to disable this: deduplication is always on for the Find People source.
+This is expected behavior. The Find People source tracks all previously imported contacts internally — re-running returns 0 new records because those contacts are already in the import history. **Deleting rows from the People table does not reset this history**: if you delete contacts and re-run the search, those same contacts will not reappear. The import history persists independently of what is currently in the table.
 
-**To get the same contacts back** (for example, when testing your table setup): delete the existing rows from your People table first, then re-run the source. Once the rows are cleared, the search will import the same contacts as before.
+**To import the same contacts again**, use the **Replace existing results in table** option: open the source (click the source column header in your People table → **Edit column**), click the **Import** button dropdown, and select **Replace existing results in table**. This deletes the current rows and resets the import history in one step, so the next run re-imports all contacts matching your current filters from scratch.
 
-**Note:** Deduplication is based on each person's unique profile ID, not your search filters. If the data source returns genuinely new profiles matching your criteria that aren't already in the table, those will still come through on re-run. Only contacts already in the table are filtered out.
+**Note:** Deduplication is based on each person's unique profile ID, not your search filters. If the search finds genuinely new profiles that have never been imported before, those will still come through on re-run.
+
+**If repeated runs continue to return 0 new rows and your table is well below its limits** (no "source has exceeded your plan's limit" error is shown), the source has already found all available people matching your current criteria — there are no new contacts in the dataset that fit your filters. To source more contacts, widen your search: add more job title keywords, include additional industries or geographies, or expand your company size range.
+
+### Update People Table shows contacts were found but they don't appear in the People table
+
+If the **Update People Table** column in your Accounts table shows a found count (for example, "10 found") for a specific company but the People table has no rows for that company after re-running, the most likely cause is that those contacts were previously imported and then deleted. Clay's import history persists independently of the table's contents — the search finds those contacts in the data source but does not write them back because they are already tracked as previously imported, even though they no longer exist in the table.
+
+**To bring those contacts back**, use **Replace existing results in table** from the source settings: open the People table, click the source column header → **Edit column**, click the **Import** button dropdown, and select **Replace existing results in table**. This resets the import history and deletes all current rows, then re-imports all contacts matching your filters — including previously deleted ones.
+
+If you want to keep the People table's existing rows intact, create a new source pointing to a fresh copy of the table instead. Because that table has no import history, all matching contacts come through on the first run.
 
 ### The preview count drops dramatically when editing an existing Find People source
 
@@ -349,11 +359,12 @@ When Clay resolves a domain to a company, it expands the search to include all c
 
 After running Find People from a company list, some rows in the resulting people table may show **Missing Input** in the **Company Table Data** column. This happens when a person's current employer uses a different domain than the company you searched — for example, searching on `broadcom.com` returns someone whose current employer resolves to `vmware.com`. Because the domains don't match, Clay can't link that person back to the original company row, leaving the company record ID blank.
 
-This mismatch most commonly occurs with subsidiaries, acquired companies, and organizations that operate under multiple domains.
+This mismatch most commonly occurs with subsidiaries, acquired companies, and organizations that operate under multiple domains. It can also be caused by domain format differences: Find People results typically return domains without the `www.` prefix or protocol (for example, `plantitgeo.com` rather than `www.plantitgeo.com`). If your company table stores domains with a `www.` prefix or a protocol, the automatic link can break even when both tables refer to the same company.
 
 **To fix this:**
 
 -   **Switch to LinkedIn company URLs as your company identifier** (recommended). When you provide a LinkedIn company URL instead of a domain, Clay uses the LinkedIn company slug for matching — which handles subsidiary and acquisition relationships more reliably. See [Use LinkedIn URLs, not domains, as company identifiers](#use-linkedin-urls-not-domains-as-company-identifiers).
+-   **Normalize domain formats in your company table.** Find People results typically return domains in shortened format — no protocol, no `www.` prefix (e.g., `example.com`). If your company table stores domains in full-URL format (e.g., `www.example.com`), this mismatch breaks the automatic link. Store company domains without the `www.` prefix; if you already have full-URL format domains, add a formula column in your people table to strip the prefix before using it as a lookup key.
 -   **Add a Lookup Rows fallback.** In your people table, add a **Lookup single row in other table** column. Set `Table to search` to your original companies table and match on `domain`. For rows where the person's current company domain is populated, this retrieves company fields directly — even when the automatic Company Table Data link is missing. See [Lookup Rows](lookup-rows.md).
 
 ### Company Table Data doesn't include company enrichment data
@@ -478,6 +489,14 @@ The answer depends on which feature you're using:
 
 Across both, high-importance profiles (frequently accessed records, decision-makers, active companies) refresh more often than long-tail profiles.
 
+### Why does the same search return different results than last time?
+
+This is expected behavior. Clay's search index is continuously updated from multiple sources — new profiles and companies are added, others are removed, and contact information changes as people switch jobs. Running the same search with identical criteria days or weeks later can therefore return a different set of results.
+
+This is distinct from individual record freshness (see [How often is company and people data updated?](#how-often-is-company-and-people-data-updated) above): even if a person's profile is already in the index, their job title or employer may not reflect their most recent profile update. For the most current information on specific contacts, run **Enrich Person** after importing — it fetches live data at the time of the run.
+
+**If you need a stable list to work from:** save your results to a table once you're satisfied with them. Rows in your table are a snapshot you control and don't change automatically as the index refreshes. Use that saved table as the foundation for downstream enrichments and outreach.
+
 ### Can I run a people search only on companies that meet certain criteria?
 
 Company and people search sources don't support run conditions. The workaround is to create a **filtered view** of your company table (showing only the rows you want), then run **Find People at These Companies** from that view. The source will only process the companies visible in that view.
@@ -491,11 +510,11 @@ The source returns results in a new table and is subject to a per-source cumulat
 ### I added new companies to my company table — how do I get them through my Find People searches?
 
 **If using Find People as a source (a separate people table):**
-Re-running the source is all that's needed. It searches across all companies in the linked table — including any you just added — and appends new people while deduplicating against rows already in the table. To re-run: click the source column header in the people table and select **Run**.
+Re-running the source is all that's needed. It searches across all companies in the linked table — including any you just added — and appends new people while deduplicating against all previously imported contacts. To re-run: click the source column header in the people table and select **Run**.
 
 **If your company table has an Update People Table column:** That column is the mechanism that triggers Find People refreshes. Despite the UI warning ("does NOT perform incremental Find People searches for new companies"), the column *does* include newly added companies in the refresh — it re-runs the entire Find People search across all companies currently in the table and appends new contacts to the people table. The warning means the refresh runs the full search rather than an isolated search for just the new rows. With **Enable Automatic People Search Updates** toggled on, the column runs automatically when new company rows are added. If you prefer to trigger it manually, turn that toggle off and run the column on demand.
 
-If you want to add contacts from only the newly added companies without re-searching the entire list, the simple re-run above is usually sufficient: deduplication means only genuinely new contacts are added — contacts already in your people table are not duplicated regardless of how many companies were searched. You pay credits for searching all companies in the table, but only new contacts appear as new rows.
+If you want to add contacts from only the newly added companies without re-searching the entire list, the simple re-run above is usually sufficient: deduplication means only genuinely new contacts are added — contacts previously imported into your people table are not duplicated regardless of how many companies were searched. You pay credits for searching all companies in the table, but only new contacts appear as new rows.
 
 If you want to avoid searching the full company list entirely (to save credits), create a **filtered view** of your company table showing just the new rows, then set up a new **Find People at These Companies** search from that view — this creates a *separate* people table with contacts for only those companies. To reuse your existing search criteria, open the Find People source column (right-click → **Edit column**), click **Save search** at the top of the filter panel, and use that saved search when setting up the new search. See [Saved searches](saved-searches.md) for full details.
 
