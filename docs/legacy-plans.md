@@ -73,6 +73,7 @@ Here is a breakdown of what you gain, lose, and what changes when migrating from
 - **Access to all new Clay features:** Modern plans receive new features and integrations going forward; legacy plans do not.
 - **~50% cheaper enrichments:** Data from 70+ providers costs approximately 50% less on modern plans, so your credits go further.
 - **Better credit top-up pricing:** One-time credit top-ups cost a 30% premium on modern plans, compared to 50% on your current Explorer (Legacy) plan.
+- **Better annual discount:** Annual plans on modern plans carry a 20% discount, compared to 10% on Explorer (Legacy).
 
 **What changes:**
 
