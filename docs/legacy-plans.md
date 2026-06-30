@@ -41,6 +41,41 @@ In March 2026, Clay introduced a new pricing model to give you more flexibility 
 | Webhooks | Explorer+ | Growth+ |
 | Priority Support | ❌ Legacy Pro does not qualify | ✅ Growth+ (priority queue), Enterprise (dedicated Slack) |
 
+## Migrating from Starter (Legacy) to Growth
+
+If you are on Starter (Legacy) and considering switching to Growth, here is a breakdown of what changes.
+
+### Features you gain on Growth
+
+These features are available on Growth but not on Starter (Legacy):
+
+-   **Exclude company/people from search** — filter out known contacts when building lists
+-   **Web intent signals** — website visitor intelligence data
+-   **Automate any signal via webhook** — trigger Clay workflows from external systems
+-   **Email campaign integrations** — Clay Sequencer and supported sending tools (Customer.io, LaGrowthMachine, Heyreach, Instantly, Reply.io, Lemlist, Smartlead, Salesloft, Za-zu)
+-   **HTTP API integrations**
+-   **CRM integrations** — Salesforce, HubSpot, Dynamics 365, Pipedrive, Close, Loxo
+-   **Clay Ads** — up to 1 ads audience sync
+-   **SSO** — available as a paid add-on on annual Growth plans
+
+### No features are removed
+
+Moving from Starter (Legacy) to Growth does not remove any features you currently use.
+
+### What changes
+
+| Feature | Starter (Legacy) | Growth |
+| --- | --- | --- |
+| Data credits | 2,000–3,000 / month | Starts at 6,000 / month |
+| Actions | Not charged | Starts at 40,000 / month |
+| Source contacts/accounts per search | 5,000 | 50,000 |
+| Credit top-up premium | 50% | 30% |
+| Support | Standard queue | Priority queue |
+
+### Key pricing note
+
+Growth charges for **Actions** in addition to Data Credits. Your Starter (Legacy) plan does not charge for actions. However, 70+ enrichments are approximately 50% cheaper on modern plans, meaning your credits go further per enrichment. For a full comparison of all pricing differences between legacy and modern plans, see the tables above.
+
 ## **FAQs**
 
 **Can I subscribe to or rejoin a legacy plan if I'm not currently on one?**
