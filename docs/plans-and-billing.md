@@ -151,6 +151,17 @@ Payment refunds take up to **10 business days** to appear in your account after 
 
 Clay Data Credit refunds (for enrichment actions that return no data) are applied to your account balance immediately after processing.
 
+### Why might my payment fail?
+
+Several common issues can prevent a payment from going through:
+
+-   **Card issuer block:** Your card issuer may flag or decline the transaction due to security concerns. Contact your card issuer to authorize the charge, or try a different payment method.
+-   **3D Secure authentication:** Some cards require an additional authentication step when completing a purchase. If you don't complete this step when prompted, the payment won't process. Retry the payment and complete the 3D Secure prompt when it appears, or try a card that doesn't require it.
+-   **Card velocity limit:** If your card has been charged too frequently in a short window, your card provider may block further charges. Wait before retrying, or contact your card provider to increase or reset the limit.
+-   **Mismatched card details:** Even after updating your payment method, the details you entered may not match what's on file with your card issuer. Double-check the information you entered under `Settings` → `Plans & billing` and verify with your issuer if the problem persists.
+
+If your payment continues to fail after addressing these issues, contact [Clay support](https://app.clay.com).
+
 ### What happens if my payment fails?
 
 If a payment fails, Clay retries the charge automatically before canceling your subscription:
