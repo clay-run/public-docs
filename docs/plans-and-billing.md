@@ -142,6 +142,18 @@ If you're unsure whether you need a higher tier, check your current usage in `Se
 
 Each fully enriched record typically costs 6-20 data credits (including company and person profile, email, phone number, and custom AI enrichments). The more private API keys you use, the fewer data credits you'll spend per record.
 
+### How do I cancel my subscription?
+
+There is no minimum contract commitment — you can cancel at any time. To cancel:
+
+1.  Click your profile picture in the top-right corner and select `Settings`.
+2.  Navigate to `Plans & billing`.
+3.  Click `Cancel plan` and follow the prompts to confirm.
+
+Cancellations take effect at the end of your current billing cycle. Until then, you retain access to your paid plan's features and credit allocation. At the end of the cycle, your workspace moves to the Free plan and your Data Credit balance is reduced to the Free plan's rollover cap (200 credits — see [Do credits roll over?](#do-credits-roll-over) for how the credit cap works). Any credits above that cap are forfeited.
+
+For information on payment refunds after canceling, see [How long does a refund take?](#how-long-does-a-refund-take) below.
+
 ### How long does a refund take?
 
 Payment refunds take up to **10 business days** to appear in your account after Clay initiates them. If 10 business days have passed and the refund still hasn't appeared:
