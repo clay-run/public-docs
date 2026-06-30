@@ -161,3 +161,9 @@ If a payment fails, Clay retries the charge automatically before canceling your 
 Once downgraded to the Free plan, your Data Credit balance is capped at **200 credits** (the Free plan's rollover limit) — any credits above that cap are forfeited at the end of your billing cycle.
 
 To avoid an interruption, keep your payment information current in `Settings` → `Plan & billing`.
+
+### I see a $20/month charge labeled "Clay Software" — is this from Clay?
+
+No. Clay does not offer any subscription plan priced at $20/month. Our paid plans start at $185/month (Launch plan). If you see a recurring $20/month charge labeled "Clay Software," it is not from us.
+
+This charge most commonly comes from a separately operated, unaffiliated company with a similar name. To resolve it, check the email address and subscription history associated with that service, or review your bank statement descriptor for additional details. If you need help managing that subscription, contact that company's support directly.
