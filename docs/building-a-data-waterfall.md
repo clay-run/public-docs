@@ -198,7 +198,7 @@ This is the most common cause of unexpected results from the Company Domain wate
 
 **To reduce incorrect results:**
 
--   **Use the Excluded Domains field on the Google step** — In the Google provider's settings within the waterfall, expand the **Excluded Domains** optional field and enter specific domains you want to block from results (for example, `proff.no`, `tracxn.com`, `rocketreach.co`).
+-   **Use the Excluded Domains field on the Google step** — In the Google provider's settings within the waterfall, expand the **Excluded Domains** optional field and enter specific domains you want to block from results (for example, `proff.no`, `tracxn.com`, `rocketreach.co`). Note: due to a known issue, this filtering may not work reliably in all cases.
 -   **Skip the Google step** — In the waterfall's **Waterfall sequence** configuration, toggle off the Google provider. The waterfall then only queries Clearbit and HG Insights, which draw from structured company databases rather than live web search. You'll get fewer overall matches but higher accuracy on the ones you do find.
 -   **Use Claygent instead** — For the most reliable domain finding, set up a Claygent column that searches for the company name and verifies the found URL belongs to the right company before returning a domain. Claygent uses AI credits rather than standard waterfall credits.
 
@@ -225,7 +225,7 @@ Each provider detects technology using different methods:
 -   **SimilarWeb** — Identifies technologies installed on a domain, including installation and uninstallation dates and technology categorization. Draws from web analytics and crawl data.
 -   **Predict Leads** — Sources technology data from historical job descriptions, website script tags, and DNS records. Surfaces tools that appear in hiring descriptions, including software not visible in website source code.
 -   **BuiltWith** — Scans a company's public website source code to find client-side technologies: marketing pixels, JavaScript libraries, and front-end software embedded in the site.
--   **Apollo** — Returns technology data as part of its company profile enrichment. Note: the Apollo step requires your own Apollo account connected in Clay via OAuth (**Settings → Connections**). If no Apollo account is connected, this step is skipped.
+-   **Apollo** — Returns technology data as part of its company profile enrichment. Note: the Apollo step requires your own Apollo account connected to Clay via Apollo's OAuth flow (**Settings → Connections** → connect Apollo and authorize access). If no Apollo account is connected, the waterfall cannot be saved — you'll need to either connect an Apollo account or manually toggle the Apollo step off (skipped) in the waterfall sequence before saving.
 
 ### Verifying whether a company uses a specific product
 
@@ -239,3 +239,9 @@ To set up Verify Product Usage:
 4.  Click `Save`.
 
 See [HG Insights integration](hg-insights-integration-overview.md) for more details on HG Insights' detection methodology and what types of technologies it covers best.
+
+### Other providers for tech stack enrichment
+
+**Sumble** is available as a standalone enrichment action (not part of a pre-built waterfall). It validates whether a company uses specific technologies you select, charging 6 credits per technology found. Use it when you need targeted confirmation of named tools rather than a broad technology scan. See [Sumble integration](sumble-integration.md).
+
+**Note:** 6sense is not available as a waterfall provider in Clay. Store Leads enriches e-commerce site traffic data and is not part of any technographic waterfall.
