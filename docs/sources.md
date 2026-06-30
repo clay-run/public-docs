@@ -189,8 +189,6 @@ When dedup blocks all records on a re-run, that run's **Rows Added** count in So
 
 Duplicate the table (or delete and re-add the source). A new source definition starts with a clean record history, allowing the same records to be imported again. Before doing this, enable [auto-dedupe](table-management-settings.md) on a unique identifier column to avoid creating duplicates of rows still present in your table.
 
-**Can I turn off source record tracking?** No — source-level deduplication for CRM and database sources cannot be disabled. The only path to re-import records a source has already seen is a fresh source definition (delete and re-add the source, or duplicate the table). If you want to disable the *table-level* deduplication that removes rows with duplicate column values, that is a separate setting — see [Auto-dedupe](table-management-settings.md#auto-dedupe) to toggle it on or off.
-
 **Note:** This tracking behavior applies to CRM, database, Google Sheets, Google Maps, and Find People sources (Salesforce, HubSpot, Snowflake, Google Sheets, Find local businesses using Google Maps, Find People, and similar). Find Companies does not track records this way — deleting rows and re-running will re-import matching records, subject to your table's auto-dedupe settings.
 
 ### I am trying to add a source to an existing table, but I get an error
