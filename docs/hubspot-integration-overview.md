@@ -248,6 +248,22 @@ If the column that was previously mapped to the **HubSpot Object ID** field has 
 
 **Tip:** The most reliable source for the HubSpot Object ID is the `hs_object_id` value returned by a HubSpot **Import source** or **Lookup object** action on the same table. If you are using a plain text column of IDs (for example, values imported from a CSV), the column type does not matter — but the values must exactly match the HubSpot Object IDs of the records you want to update.
 
+### Why does my HubSpot Update Object show "Object not found"?
+
+This error means the value mapped to the **HubSpot Object ID** field is not a valid HubSpot record ID. The most common cause is mapping an email address (or another non-ID value such as a domain or name) to this field. HubSpot's API expects a numeric internal record ID and responds with *"Object not found. objectId are usually numeric"* when any other value is passed.
+
+**To fix:**
+
+1. Open the **Update object** column's settings.
+2. Click the **HubSpot Object ID** field and replace the current mapping with a column containing the numeric `hs_object_id` value.
+
+**Where to get `hs_object_id`:**
+
+- **If you imported contacts via Import objects from HubSpot:** The `hs_object_id` field is included in the import result. Select that column.
+- **If you don't have the ID yet:** Add a **HubSpot → Lookup object** column before your update step — filter by **Email**, then map the `hs_object_id` from the Lookup result to the **HubSpot Object ID** input in the Update object column.
+
+**Note:** Email addresses cannot be used as a HubSpot Object ID. Use **Lookup object** to find a record by email and retrieve its `hs_object_id`, then pass that value to **Update object**.
+
 ### Why do I get "Missing input: Please provide at least one filterable field" when setting up Lookup Object?
 
 This error means you've selected a field to filter by but haven't mapped a value to it yet. The **Lookup Object** setup requires two steps:
