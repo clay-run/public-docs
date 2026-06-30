@@ -33,9 +33,7 @@ To upgrade your Clay workspace plan:
 1.  Click your profile picture in the top-right corner and select `Settings`.
 2.  In the left sidebar, navigate to `Plans & billing`, then click `Switch plan`.
 3.  Select the plan you want to upgrade to and review the details.
-4.  Confirm your selection by clicking `Review change → Continue to payment`.
-
-Your new plan will activate immediately, and any applicable charges will be applied.
+4.  Confirm your selection by clicking `Review change → Continue to payment`.\n\nYour new plan will activate immediately, and any applicable charges will be applied.
 
 **How upgrade billing works:** Plan upgrades are **not prorated** — you pay the full price of the new tier immediately, not a partial amount for remaining days in your current cycle. In return, you receive the **full** Actions and Data Credits for your new plan right away. Unused Actions from your previous plan are not carried over (Actions reset each billing cycle and do not roll over). Your existing unused Data Credits are preserved when you upgrade.
 
@@ -148,3 +146,14 @@ Payment refunds take up to **10 business days** to appear in your account after 
 2.  Contact [Clay support](https://app.clay.com) and share any available transaction details — an Acquirer Reference Number (ARN) is especially helpful for tracing the payment.
 
 Clay Data Credit refunds (for enrichment actions that return no data) are applied to your account balance immediately after processing.
+
+### What happens if my payment fails?
+
+If a payment fails, Clay retries the charge automatically before canceling your subscription:
+
+-   **Credit card billing (Launch, Growth):** Clay retries for up to **14 days**. If the payment is not resolved within that window, your workspace is downgraded to the Free plan.
+-   **Invoice billing (Enterprise):** Clay retries for up to **30 days** before canceling.
+
+Once downgraded to the Free plan, your Data Credit balance is capped at **200 credits** (the Free plan's rollover limit) — any credits above that cap are forfeited at the end of your billing cycle.
+
+To avoid an interruption, keep your payment information current in `Settings` → `Plan & billing`.
