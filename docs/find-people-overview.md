@@ -66,7 +66,7 @@ Each result includes a **Structured Location** object in the cell details with g
 
 ## Enriching your results
 
-**Note on data freshness:** Find People results come from a periodically refreshed index — not a live lookup at search time. A person's job title or company in the results may not reflect their most recent profile update. To get current employment data, run **Enrich Person** after importing — this fetches the live profile and returns the most up-to-date job title and company information.
+**Note on data freshness:** Find People results come from a periodically refreshed index — not a live LinkedIn lookup at search time. A person's job title or company in the results may not reflect their most recent LinkedIn update. To get current employment data, run **Enrich Person** after importing — this fetches the live profile and returns the most up-to-date job title and company information.
 
 After importing Find People results, use Clay's enrichments to add contact information such as work email and mobile phone numbers.
 
@@ -89,9 +89,9 @@ If you have a saved Sales Navigator search and want to pull those results into C
 
 If the list was manually curated and cannot be recreated from search filters, export it from Sales Navigator as a CSV and [import it into Clay](csv-import-overview.md) instead.
 
-## Finding professional posts by keyword
+## Finding LinkedIn posts by keyword
 
-To find posts containing a specific keyword or hashtag on the professional network, use the **Find professional posts** source — a separate source from Find People that returns posts rather than people profiles.
+To find LinkedIn posts containing a specific keyword or hashtag, use the **Find professional posts** source — a separate source from Find People that returns posts rather than people profiles.
 
 **To create a table with Find professional posts:**
 
@@ -109,13 +109,13 @@ To find posts containing a specific keyword or hashtag on the professional netwo
 
 **Outputs:**
 
-Each row includes the post URL, post text, author name, author profile URL, author title, reaction counts, comment count, and share count.
+Each row includes the post URL, post text, author name, author LinkedIn URL, author title, reaction counts, comment count, and share count.
 
-**To enrich post authors:** After importing results, add an **Enrich Person** column and map it to the author profile URL. This returns full contact data — work email, company, and more — for each post author.
+**To enrich post authors:** After importing results, add an **Enrich Person** column and map it to the author LinkedIn URL. This returns full contact data — work email, company, and more — for each post author.
 
 **To get comments, reactions, or shares on a specific post:** Click `Add enrichment`, search for **Get comments on a professional post**, **Get reactions on a professional post**, or **Get shares on a professional post**, and map **Post URL** to the post URL column from your import.
 
-> **Important:** These actions require the original post URL — a URL containing `-activity-` in the path (e.g., `https://www.linkedin.com/posts/clay-hq_...-activity-7212099008951975937-ezPv`). Share URLs containing `-share-` are not valid and return an error. To get the original URL for any post: open the post on the network, click **•••** (three dots) at the top right of the post, and select **Copy link to post**. If the post is a repost of someone else's content, open the original underlying post first and copy its link.
+> **Important:** These actions require the original post URL — a URL containing `-activity-` in the path (e.g., `https://www.linkedin.com/posts/clay-hq_...-activity-7212099008951975937-ezPv`). Share URLs containing `-share-` are not valid and return an error. To get the original URL for any post: open the post on LinkedIn, click **•••** (three dots) at the top right of the post, and select **Copy link to post**. If the post is a repost of someone else's content, open the original underlying post first and copy its link.
 
 ## Getting people who interacted with a post
 
