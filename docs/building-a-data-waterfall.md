@@ -198,7 +198,7 @@ This is the most common cause of unexpected results from the Company Domain wate
 
 **To reduce incorrect results:**
 
--   **Use the Excluded Domains field on the Google step** — In the Google provider's settings within the waterfall, expand the **Excluded Domains** optional field and enter specific domains you want to block from results (for example, `proff.no`, `tracxn.com`, `rocketreach.co`). Note: due to a known issue, this filtering may not work reliably in all cases.
+-   **Use the Excluded Domains field on the Google step** — In the Google provider's settings within the waterfall, expand the **Excluded Domains** optional field and enter specific domains you want to block from results (for example, `proff.no`, `tracxn.com`, `rocketreach.co`).
 -   **Skip the Google step** — In the waterfall's **Waterfall sequence** configuration, toggle off the Google provider. The waterfall then only queries Clearbit and HG Insights, which draw from structured company databases rather than live web search. You'll get fewer overall matches but higher accuracy on the ones you do find.
 -   **Use Claygent instead** — For the most reliable domain finding, set up a Claygent column that searches for the company name and verifies the found URL belongs to the right company before returning a domain. Claygent uses AI credits rather than standard waterfall credits.
 
