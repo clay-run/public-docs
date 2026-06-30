@@ -61,7 +61,7 @@ To download your table data as a CSV:
 2.  In the table toolbar, click `Tools` → `Export`.
 3.  Click `Download CSV`. Clay processes the export in the background and the file downloads automatically.
 
-**Why can't I see Export?** The most common cause is having one or more rows checked. The toolbar shows different options depending on row selection state: when no rows are selected, you see table-level functions such as Export and Import; when rows are selected, the same button shows bulk row operations instead. Uncheck all rows to restore access to Export.
+**Why can't I see Export?** The most common cause is having one or more rows checked. The toolbar shows different options depending on row selection state: when no rows are selected, you see the `Tools` button with table-level functions such as Export and Import; when rows are selected, an `Actions` button appears instead with bulk row operations (Run rows, Debug, Delete rows). Uncheck all rows to restore access to Export.
 
 **Long text or AI column data appears truncated in the export.** If a column stores enrichment or AI-generated output as nested structured data — such as the output of a Use AI, Claygent, or enrichment integration column — the CSV export may show only a short preview ending in "..." rather than the full text value.
 
@@ -189,7 +189,25 @@ When dedup blocks all records on a re-run, that run's **Rows Added** count in So
 
 Duplicate the table (or delete and re-add the source). A new source definition starts with a clean record history, allowing the same records to be imported again. Before doing this, enable [auto-dedupe](table-management-settings.md) on a unique identifier column to avoid creating duplicates of rows still present in your table.
 
-**Note:** This tracking behavior applies to CRM, database, Google Sheets, Google Maps, and Find People sources (Salesforce, HubSpot, Snowflake, Google Sheets, Find local businesses using Google Maps, Find People, and similar). Find Companies does not track records this way — deleting rows and re-running will re-import matching records, subject to your table's auto-dedupe settings.
+**Can I turn off source record tracking?** No — source-level deduplication for CRM and database sources cannot be disabled. The only path to re-import records a source has already seen is a fresh source definition (delete and re-add the source, or duplicate the table). If you want to disable the *table-level* deduplication that removes rows with duplicate column values, that is a separate setting — see [Auto-dedupe](table-management-settings.md#auto-dedupe) to toggle it on or off.
+
+**Note:** This tracking behavior applies to **CRM and database sources** (Salesforce, HubSpot, Snowflake, and similar), to **Google Sheets sources** (which generate a unique ID per row by hashing the **"Fields to deduplicate by"** fields configured on the source), to **Google Maps sources** (Find local businesses using Google Maps), and to the **Find People** list builder source (which tracks previously-seen profiles and skips them on subsequent runs). **Find Companies** does not track records this way — deleting rows and re-running will re-import matching companies, subject to your table's auto-dedupe settings.
+
+### My Google Sheets source found rows but fewer rows appear in my table than expected
+
+Two separate behaviors can cause a Google Sheets source to report finding rows while fewer (or none) land in your table:
+
+**Source-level deduplication: deleted rows not re-added**
+
+The Google Sheets source generates a unique ID for each row by hashing the **"Fields to deduplicate by"** fields you configured when setting up the source. Clay tracks which IDs it has already imported, and subsequent runs — including runs after you delete rows from the table — skip any row whose hash was seen in a previous import. Deleting rows from the table does not clear this tracking.
+
+To re-import the same rows after deleting them: delete the existing Google Sheets source and re-add it. A fresh source has no import history and will treat every matching row as new. Before re-adding, enable [auto-dedupe](table-management-settings.md) on a unique column (such as Email) to prevent duplicate rows if some rows are still in the table.
+
+**Non-unique deduplication fields: rows collapsing into one**
+
+If the fields you selected under **"Fields to deduplicate by"** are not unique per row — for example, if you selected **Company** and multiple rows in your sheet share the same company name — those rows produce identical hashes and collapse into a single record. The run history may report *N* rows found while only one row appears in your table per unique hash value.
+
+To get one Clay row per sheet row, set **"Fields to deduplicate by"** to a field that is genuinely unique per record, such as **Email**, **LinkedIn Profile URL**, or a dedicated ID column. Avoid fields like Company or Title that many rows may share.
 
 ### I am trying to add a source to an existing table, but I get an error
 
