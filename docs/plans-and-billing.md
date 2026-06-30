@@ -97,6 +97,8 @@ If your team wants to do a trial, each team member can create their own trial ac
 
 Trial tables can hold up to **1,000 rows each**. The table view also displays only the first **50 rows** — rows beyond that are blurred in the UI until you upgrade to a paid plan.
 
+When your trial ends, your account automatically moves to the free plan — you won't be charged unless you actively choose to upgrade to a paid plan. Clay does not auto-upgrade you. For details on what happens to your trial data credits at that point, see [Actions and data credits](actions-data-credits.md).
+
 ## FAQs
 
 ### How do I track my actions and data credits usage?
