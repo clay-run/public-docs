@@ -70,7 +70,7 @@ To normalize a domain:
 - **Remove prefix** — strips the protocol and www prefix but keeps the path. For example, `https://apple.com/products` → `apple.com/products`.
 - **Include www.** — adds a www. prefix. For example, `apple.com` → `www.apple.com`.
 - **Include https://** — adds the https:// protocol. For example, `www.apple.com` → `https://www.apple.com`.
-- **Isolate the domain** — extracts only the root domain and top-level domain (TLD), stripping all subdomains and paths. For example, `https://corporate.apple.com/products` → `apple.com`. Use this option when you want to match or deduplicate records by primary domain.
+- **Isolate the domain** — extracts only the root domain and top-level domain (TLD), stripping all subdomains and paths. For example, `https://corporate.apple.com/products` → `apple.com`. Use this option when you want to match or deduplicate records by primary domain. This mode requires a recognized, publicly listed TLD (such as `.com`, `.org`, or `.io`) — domains with non-standard or reserved TLDs (for example, `.test` or `.local`) are not extracted and the action returns the original URL unchanged.
 
 **Step 3:** Configure run settings.
 
