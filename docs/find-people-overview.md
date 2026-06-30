@@ -1,7 +1,6 @@
 ---
 title: Find People in Clay
-source_url: https://university.clay.com/docs/find-people-overview
-description: Discover relevant contacts and LinkedIn posts using Clay's Find People and Find professional posts sources, then enrich results with work email and mobile phone waterfalls.
+description: Discover relevant contacts and professional posts using Clay's Find People and Find professional posts sources, then enrich results with work email, mobile phone, and a person's professional posts and shares.
 last_synced: 2026-04-26T01:39:58.803Z
 ---
 
@@ -36,7 +35,7 @@ This tool is ideal for building targeted sales prospect lists, identifying poten
     -   **Number of experiences:** Set a minimum and/or maximum count of separate job entries listed on a person's profile. **This counts individual roles, not total years of career experience.** For example, setting Max = 2 returns people with two or fewer job entries, which is a useful proxy for early-career candidates. To approximate total career experience without a direct filter, combine this with a cap on **Months in current role**, or import results and use a **Use AI** column to analyze each person's full work history.
     -   **Experience description keywords:** Return only people whose experience descriptions include specific keywords (e.g., "construction", "machine learning").
     -   **Years of experience** *(Advanced Search — currently in closed beta):* Set a minimum and/or maximum number of estimated full-time years of experience based on the person's profile. This filter is part of the Advanced Search (Search DSL) mode. Contact support to request access to the closed beta.
--   **Location:** Include or exclude specific regions, countries, or cities.
+-   **Location:** Include or exclude specific regions, countries, or cities. Distance-based filtering (for example, "within 35 miles of a location") is not available — location filters accept named regions, countries, and cities only.
 -   **Profile:** Filter by names, connection count, or follower count ranges.
 -   **Certifications:** Search for specific certifications (e.g., AWS, Google Cloud).
 -   **Languages:** Filter by specific languages spoken.
@@ -44,7 +43,10 @@ This tool is ideal for building targeted sales prospect lists, identifying poten
 -   **Companies:** Find people at specific companies using an existing Clay table or a custom list. By default, this matches people who **currently** work at those companies.
     -   **Locked after creation:** The filter type (Clay table vs. custom list) and which table is linked cannot be changed once the source exists — this is what the "Can only be changed during source creation" tooltip means. The table's row contents are not frozen, however: adding or removing rows from the linked table is reflected each time the source runs. When re-run after new companies are added, the source searches across all companies currently in the table, not just the newly added ones.
     -   **Run settings:** When this source is set up from a company table, Clay automatically adds an **Update People Table** column to the company table. With **Enable Automatic People Search Updates** toggled on (the default), that column fires a full re-run of the Find People search whenever new company rows are added — you don't need to manually trigger a run. The re-run covers all companies currently in the table, not just the newly added rows. To disable this auto-trigger, open the **Update People Table** column and turn off **Enable Automatic People Search Updates**. The source also has its own **Run settings** — **Manually** by default — which you can switch to **On a schedule** for time-based refreshes: click the source column header in your people table, expand **Run settings**, and choose a frequency (Daily is most common), then click **Save schedule**. You can also click **Run now** at any time for an immediate on-demand run.
--   **Exclude people:** Exclude up to 3 different sets of people from your search using Clay tables, CSVs, or manual lists. You can exclude up to 300,000 people total (100,000 per source). Exclusions require a LinkedIn URL.
+    -   **Company identifier type:** The identifier in your linked table or custom list determines how companies are resolved. **Domains** (e.g., `acme.com`) match at the root-domain level — useful for broader coverage, but may return people from a parent company or other entities that share that domain. **LinkedIn company URLs** (e.g., `https://www.linkedin.com/company/acme-corp`) match the exact company page, limiting results to that specific entity. LinkedIn URLs return fewer but more precise results; domains return more but may include unintended companies.
+-   **Exclude people:** Exclude up to 3 different sets of people from your search using Clay tables, CSVs, or manual lists. You can exclude up to 300,000 people total (100,000 per source). Exclusions match by individual professional profile URL — each row in your exclusion table must contain a person-level profile URL. Adding a company name, domain, or company page URL to the exclusion table will **not** suppress all people from that company.
+
+    **To exclude all people at a specific company**, use a post-import lookup instead: after importing your Find People results, add a **Lookup single row in other table** action that matches each person's company domain against your company blocklist. Set a run condition on downstream enrichments (for example, `{{Company Blocklist Lookup}} is not empty` → skip) to suppress anyone whose employer appears on your list. See [Excluding records during enrichment](finding-companies-and-people-in-clay.md#excluding-records-during-enrichment) for the full pattern.
 -   **Past experiences:** Enable the **Include past experiences** toggle to extend your company, job title, and experience description keyword filters to also match against a person's past roles — not just their current one.
     -   **Incompatible filters:** This toggle cannot be combined with **Limit per company** or any **Company attributes** filter (company size, company industries, or company description keywords). Selecting them together returns an error.
     -   **May return fewer results when enabled:** Because exclude keywords apply to a person's entire work history when this toggle is on, the result count can decrease rather than increase. For example, if "Manager" is an excluded title, anyone who has ever held a role containing that word is filtered out — not just people whose current role matches.
@@ -52,6 +54,8 @@ This tool is ideal for building targeted sales prospect lists, identifying poten
 -   **Limit per company:** Set the maximum number of people to return per company (up to 100). Note: the preview count shown before running the search reflects the total match universe across all companies and does not account for this limit — the actual number of imported rows will be lower.
 
 **Note:** If your Find People search imports only around 48–50 rows despite a much larger company list, this is a known issue: when **Limit per company** is configured, the initial import can exit early if the search preview returns fewer than 50 profiles due to how results are sampled across companies. **Workaround:** Re-open the source configuration (click the source and select **Edit**), make any minor change, and re-run — or create a new table with the same search settings. Either approach triggers the full import and returns all matching results.
+
+**Note:** If you delete rows that were previously imported by a Find People source and then re-run the source, those contacts will not be re-imported. The source tracks all previously returned results in an internal exclusion list; re-runs skip anyone already seen, regardless of whether their row was later deleted from the table. To retrieve the same contacts, create a new table with the same search settings — this starts with a fresh exclusion list.
 
 **Outputs:**
 
@@ -86,6 +90,8 @@ If you have a saved Sales Navigator search and want to pull those results into C
 
 **Note:** This source requires a Sales Navigator **people search URL** (`https://www.linkedin.com/sales/search/people/...`), not a saved lead list URL (`linkedin.com/sales/lists/people`) or a saved search URL (those containing `savedSearchId`). If you have a saved Sales Navigator lead list, recreate the equivalent filters as a fresh people search on Sales Navigator and copy that URL instead. Each imported result costs 1 Clay credit.
 
+If the list was manually curated and cannot be recreated from search filters, export it from Sales Navigator as a CSV and [import it into Clay](csv-import-overview.md) instead.
+
 ## Finding LinkedIn posts by keyword
 
 To find LinkedIn posts containing a specific keyword or hashtag, use the **Find professional posts** source — a separate source from Find People that returns posts rather than people profiles.
@@ -116,7 +122,11 @@ Each row includes the post URL, post text, author name, author LinkedIn URL, aut
 
 ## Getting people who interacted with a post
 
-To build a table of people who liked, commented on, or shared a specific post, use the **Get interactions with professional posts** source. Each row in the resulting table represents one person who interacted with that post.
+To build a table of people who liked, commented on, or shared a specific post, use the **Get interactions with professional posts** source. Each interaction is included as a separate row, and you choose how duplicate interactions are handled via the required **duplicate interaction behavior** setting:
+
+-   **One row per person globally** (`interactor`): a given person appears at most once across all results.
+-   **One row per person per post** (`post-interactor`): a given person appears at most once per post, but can appear across multiple posts.
+-   **Include all interactions** (`no-dedupe`): every interaction is returned as its own row, so the same person can appear in many rows.
 
 **To set up this source:**
 
@@ -127,3 +137,51 @@ To build a table of people who liked, commented on, or shared a specific post, u
 **URL format requirement:** This source only accepts `activity` and `ugcPost` type post URLs. Share URLs — those containing `-share-` between the author slug and the post ID — are not valid and return an invalid-URL error. To identify the URL type: valid post URLs contain either `-activity-` or `ugcPost` in the path; share post URLs contain `-share-` and are not accepted.
 
 To get the correct URL: open the post, click **•••** (three dots) at the top right of the post, and choose **Copy link to post**. If the post is a reshare, open the original underlying post first and copy its link from there.
+
+## Getting a person's posts and shares
+
+**Get a person's professional posts and shares** is an enrichment you add to an existing table of people. It fetches that person's most recent professional activity — both original posts and reposts.
+
+**Adding the enrichment:**
+
+1.  In a table with a professional profile URL column, click **Add enrichment**.
+2.  Search for `Get a person's professional posts and shares` and select it.
+3.  Map **Professional URL** to your profile URL column.
+4.  Click **Save**.
+
+**Output structure:**
+
+The enrichment returns a single `posts` array. Each item in that array can be an original post or a repost, distinguished by the `activity_type` field:
+
+-   `activity_type: "post"` — an original post the person authored
+-   `activity_type: "share"` — content the person shared from someone else
+
+**Important:** There is no separate `shares` array. Both original posts and reposts are stored together in the same `posts` array.
+
+**Extracting post text:**
+
+For original posts, the text is in `posts[N].text`. For reposts, `posts[N].text` is `null` when the person shared without adding their own comment — in that case, the text of the original content being shared is in `posts[N].shared_post.text`.
+
+> **Note:** Use `shared_post` (snake_case) in formulas. The Cell details panel displays this field as "Shared Post," but formula references must use `shared_post`.
+
+To pull text from all activity — both original posts and reposts — into a single column, add a formula column and paste:
+
+```
+{{Get a person's professional posts and shares}}?.posts?.map(p => p.text || p.shared_post?.text || "").filter(Boolean).join("\n")
+```
+
+This returns one entry per item, each on its own line, skipping items where no text is available.
+
+**Exporting to CSV:**
+
+CSV export does not include nested JSON from enrichment columns — only a short preview appears in the export. To get the full post text into a CSV:
+
+1.  Add a formula column using the formula above to extract the text into a flat text field.
+2.  Export via **Tools → Export → Download CSV**.
+
+**Note:** Formula and text columns have an 8KB cell limit. If a person has many posts, the joined text may exceed this. In that case, create separate columns for individual posts by index — for example:
+
+-   Post 1: `{{Get a person's professional posts and shares}}?.posts?.[0]?.text || {{Get a person's professional posts and shares}}?.posts?.[0]?.shared_post?.text`
+-   Post 2: `{{Get a person's professional posts and shares}}?.posts?.[1]?.text || {{Get a person's professional posts and shares}}?.posts?.[1]?.shared_post?.text`
+
+Repeat for as many posts as you need. Each column stays under the 8KB limit. See [Cell size limits](manage-cell-data.md#cell-size-limits) for more detail.
