@@ -37,6 +37,10 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 3.  In the `Setup` tab, you can set:
     -   `Lead email address`: We automatically detect email address columns, but confirm this before proceeding.
     -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links.
+
+    Once an audience segment is connected, an **Exclusions** card appears in the `Lead setup` panel on the left side of the sequence editor. Click the pencil icon to filter leads at enrollment time:
+    -   **Audience segments to exclude**: Select Clay contact audiences — leads belonging to those segments are skipped when the campaign runs. A live count shows how many leads each exclusion removes.
+    -   **Cooldown window**: Skip leads who completed another campaign within the last N days. Options: None (no filter), 30, 60, or 90 days, or a custom number of days.
 4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead replies (excluding out-of-office replies, which we detect and work around).
     -   Toggle `Preview` mode to see real data from your source table in the message template
     -   Within each message, use `/` to access features such as:
@@ -56,7 +60,6 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   You can also [buy email accounts directly in Clay](https://university.clay.com/docs/buying-email-accounts) if you want to increase your sending capacity.
     -   After setup, you can:
         -   `Enable warmup`: Sends and receives automated emails from the linked account to build reputation. Each account uses a unique two-word keyphrase (e.g., `clever-rocket`) to identify warmup emails. Follow the in-app instructions to set up a label and filter to easily ignore warmup messages.
-        -   `Restrict access`: Limit the account to your use only (e.g., for a personal business address). Otherwise, accounts are available to anyone with edit access in your workspace.
         -   `Update send limit`: Change the daily number of emails the account can send per day
         -   `Update sender variables`: Change the sender variable values for the account
 6.  Adjust your `Schedule settings`:
@@ -70,7 +73,9 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   `Webhooks`: Route campaign events to a specific Webhook destination instead of the default Campaign Events Clay table. Example: Send Smartlead metrics to tools like OutboundSync or Enrichley for downstream routing.
     -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled)
     -   `Pause leads at the same company on reply`: When a lead replies, automatically pause other leads with the same email domain. Off by default.
-8.  Go to `Leads` to preview the messages for all people in your campaign
+8.  Go to the `Settings` tab to configure campaign-wide options. This tab includes:
+    -   `Trigger cooldowns`: When enabled, enrolling a lead here marks them as ineligible for other campaigns for the duration of their cooldown window. On by default (takes effect only when a cooldown window is also set).
+9.  Go to `Leads` to preview the messages for all people in your campaign
     -   `Send test email` to verify your template looks right
     -   Click the `Pencil` icon to spot-edit a message for a specific lead
 
@@ -112,6 +117,20 @@ In the Campaigns homepage, you can access the `Global inbox` which centralizes r
 
 Check out the `Email accounts` tab to manage your fleet of sender accounts and `Global blocklist` to add or remove entries.
 
+### Managing sender accounts within a campaign
+
+Within each campaign's `Sender accounts` tab, you can view, filter, and take action on all sender accounts attached to that campaign. This is especially useful when managing campaigns with many email accounts.
+
+**Filtering your sender accounts:** Use the filter options to narrow by:
+
+-   **Type** — filter by account type (Gmail, Outlook, or SMTP).
+-   **Status** — filter by account status (Ready, Warming up, Not warming, or Auth error).
+-   **Search by email** — find a specific sender account by address.
+
+**Taking action:** Click the three-dot (⋯) menu on a specific row for per-account actions: enable or disable warming, update send limit, update sender variables, and remove the account from the campaign. Select multiple accounts to apply bulk actions; campaign-level bulk actions are limited to enabling warming and removing accounts from the campaign.
+
+**Note:** This sender accounts view is available in table campaigns. People campaigns — built on top of Audiences — are currently in closed beta; contact [Clay support](https://www.clay.com/contact) to request access.
+
 ## Update sender signatures
 
 You can add or update email signatures for any connected sender account.
@@ -120,11 +139,10 @@ You can add or update email signatures for any connected sender account.
 
 1.  Go to `Campaigns` from your home screen.
 2.  Click on the name of your campaign under `Sequences`.
-3.  Navigate to the `Settings` tab.
-4.  Scroll to the `Sender setup` section.
-5.  Under `Email accounts`, locate the sender you want to edit.
-6.  Click the three-dot (⋯) menu on the right side of that sender's row.
-7.  Select `Update sender variables`.
+3.  Navigate to the `Sender accounts` tab.
+4.  Locate the sender you want to edit.
+5.  Click the three-dot (⋯) menu on the right side of that sender's row.
+6.  Select `Update sender variables`.
     -   You can also access this via the `Email accounts` tab.
 
 ## Best practices
@@ -160,7 +178,7 @@ The daily send limit is set at the **email account level**, not per campaign. If
 
 To increase your total daily sending capacity:
 -   **Add more email accounts** — each additional account has its own independent daily budget. With two accounts you can send up to twice as many emails per day.
--   **Increase the send limit** on an existing account — open the campaign's `Sender setup`, click the three-dot (⋯) menu next to the account, and select `Update send limit`.
+-   **Increase the send limit** on an existing account — open the campaign's `Sender accounts` tab, click the three-dot (⋯) menu next to the account, and select `Update send limit`.
 
 Keep in mind that sending high volumes of cold email from a single inbox puts your domain at risk. Starting near the default (20 emails/day) and scaling by adding accounts rather than increasing individual limits is safer for deliverability.
 
@@ -177,7 +195,7 @@ For example: an 08:00 AM–07:00 PM window is 660 minutes. With the minimum set 
 To shorten the estimated time:
 -   **Lower the min time between emails** — a smaller gap increases daily sends per account. Shorter intervals can raise spam risk; the [Best practices](#best-practices) section recommends pacing sends throughout the day.
 -   **Add more sender accounts** — each account adds its own independent daily capacity.
--   **Increase the account send limit** — in `Sender setup`, click the three-dot (⋯) menu next to an account and select `Update send limit`.
+-   **Increase the account send limit** — in the `Sender accounts` tab, click the three-dot (⋯) menu next to an account and select `Update send limit`.
 
 ### My "Sync lead data to campaign" column is showing a warning. What does it mean?
 
@@ -223,7 +241,7 @@ Email signatures are configured at the **sender account level**, not per individ
 
 To set or update a signature:
 
-1.  Open your campaign and go to `Sender setup`.
+1.  Open your campaign and go to the `Sender accounts` tab.
 2.  Click the three-dot menu (⋯) next to the sending account.
 3.  Select `Update sender variables`.
 4.  Enter your text in the `Signature` field.
