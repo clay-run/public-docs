@@ -98,6 +98,14 @@ Founded year is not available as a filter when building a `Find Companies` searc
 
 However, `Find Companies` automatically includes a **Founded** column in your table showing the founding year for each company. Once you've imported your results, you can filter or sort that column to focus on companies founded within a specific range — for example, filtering to companies founded after 2020 to target early-stage startups.
 
+### What if the industry I'm looking for isn't in the dropdown?
+
+The **Industries** filter matches against categories companies have self-selected on their profiles, so niche subcategories may not appear as suggestions. If you can't find your specific industry, select the closest available broader category and use the **Description keywords to include** field to narrow results to companies that operate in your specific niche.
+
+For example, if you're targeting a specialized type of event company that doesn't have its own industry entry, select **Event Services** as the industry and enter keywords describing your target company type in **Description keywords to include**. The combination returns companies that fall under the broader industry AND mention those terms in their profile description.
+
+For more guidance on balancing industry and keyword filters, see [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md).
+
 ### Does importing from Find Companies cost credits?
 
 **No, unless you use technographics filters or select enrichments during import.** Importing companies using standard filters — industry, size, location, revenue, company type, AI filters — consumes no Actions and no Data Credits.
