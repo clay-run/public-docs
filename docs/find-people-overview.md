@@ -99,7 +99,7 @@ Any enrichments you add afterward (work email, phone number, profile enrichment)
 
 ### Can I see the total number of people that match my search before importing?
 
-**Yes.** Before clicking Import, the search wizard displays the total count of people matching your filters alongside how many rows will be imported based on your **Limit results** setting. This lets you see the full match universe and how many rows your table will receive before committing to an import.
+**Yes.** The search wizard shows a result count directly in the interface — you can see how many people match your filters before clicking Import. The count also shows how many rows will be imported based on your **Limit results** setting. For very large searches, the count may display as a capped number with a "+" indicator; hover over it to load the full exact total.
 
 ## Importing from a Sales Navigator search URL
 
