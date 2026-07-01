@@ -24,4 +24,5 @@ Templates are ready-to-use starting points that help you implement common workfl
 
 -   **Getting started video** — Watch a [quick overview of Clay](https://www.clay.com/learn/getting-started-with-clay) to see the product in action before diving in.
 -   **Clay University** — Browse in-depth guides, lessons, and tutorials at [clay.com/university](https://www.clay.com/university).
--   **Clay Open Studio** — Join live sessions three times a week where the Clay team walks through the product and answers questions in real time. [Register at lu.ma/claylive](https://lu.ma/claylive).
+-   **Clay Open Studio** — Join live Q&A sessions twice a week where the Clay team walks through the product and answers questions in real time. Sessions run on **Tuesdays at 3 PM ET** and **Thursdays at 8 AM ET**. No preparation needed — bring your questions. [Register at clay.com/webinar/clay-open-studio](https://www.clay.com/webinar/clay-open-studio).
+-   **Enterprise demo** — For a guided overview or enterprise needs, reach out to the sales team via the form at [clay.com/enterprise](https://www.clay.com/enterprise).
