@@ -359,4 +359,15 @@ Apollo's database sources phone numbers from business directories, professional 
 
 To find personal mobile phone numbers, use a dedicated mobile phone waterfall. Clay's pre-built mobile phone waterfall (available under **Tools → Enrich → Phone number**) cascades through providers that aggregate personal mobile data from multiple sources. For provider recommendations and coverage by region, see [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md).
 
+### Apollo API key connection errors
+
+These errors appear on legacy Apollo columns that use an API key–based connection, set up before Clay's current OAuth integration launched.
+
+-   **"Invalid Apollo API key. Please check the key and try again."** — The API key is incorrect or incomplete. Open your Apollo account settings, copy the API key, and re-enter it. Even a single missing character will trigger this error.
+-   **"Could not verify the Apollo API key. Please try again later."** — This is a temporary network or server error during key validation, not a problem with the API key itself. Try running the affected rows again; the error typically resolves on retry.
+
+To update your API key on an existing legacy Apollo connection, go to `Settings` → `Connections`, find your Apollo API key connection, and edit the credential.
+
+**Note:** New Apollo connections use OAuth by default. If you need to add a new Apollo connection, go to `Settings` → `Connections`, click `Add connection`, and search for Apollo to set up the current OAuth-based integration.
+
 ## ‍
