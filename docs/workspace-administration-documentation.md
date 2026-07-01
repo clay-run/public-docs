@@ -534,15 +534,16 @@ Your plan changes will be activated immediately, and any applicable charges will
 
 ## **Billing**
 
-### **Update your payment method and billing email**
+### **Update your billing address, payment method, and billing email**
 
 To update your billing and payment information:
 
 1.  Click on your profile picture in the top-right corner and select `Settings`.
 2.  In the sidebar, navigate to `Plans & billing`.
-3.  Click `Update credit card` to edit your payment method or `Update email` to change your billing email.
-4.  Enter the updated information for your payment method or billing email.
-5.  Confirm your changes and click `Update`.
+3.  Click the `Edit` dropdown.
+    -   Select `Edit billing info...` to update your name, billing email, country, address, and postal code.
+    -   Select `Edit payment method...` to update your credit card or payment method.
+4.  Enter the updated information and confirm your changes.
 
 ### **Trials**
 
