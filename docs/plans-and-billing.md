@@ -137,6 +137,10 @@ Trial tables can hold up to **1,000 rows each**. The table view also displays on
 
 When your trial ends, your account automatically moves to the free plan — you won't be charged unless you actively choose to upgrade to a paid plan. Clay does not auto-upgrade you. For details on what happens to your trial data credits at that point, see [Actions and data credits](actions-data-credits.md).
 
+If your trial has expired and you need more time to evaluate Clay, a one-time self-serve trial extension is available. While logged into your account, visit [https://app.clay.com/extend-my-trial/](https://app.clay.com/extend-my-trial/) to add two more weeks to your trial. If the updated trial period doesn't appear immediately, refresh the page.
+
+The self-serve extension can be used once per account. If the self-serve option isn't available for your account, contact [Clay support](https://app.clay.com) to ask about a manual extension.
+
 ## FAQs
 
 ### How do I track my actions and data credits usage?
