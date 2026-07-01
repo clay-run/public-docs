@@ -427,6 +427,13 @@ AI columns complete with a success status even when the output quality is low or
 
 To minimize the risk of this situation: use the **Generate** button in the prompt cell to test your prompt on a single row before running at scale, and write clear, specific instructions with example inputs and outputs.
 
+### How can I see when my credits will next renew?
+
+There are two ways to check your credit renewal date:
+
+-   **Credits button** — Click the **Credits** button in the top bar of your Clay workspace. The popover that opens shows your upcoming renewal date.
+-   **Settings** (workspace admins only) — Navigate to `Settings` → `Plan & billing` to view your plan renewal date.
+
 ### How long does it take for Data Credits to renew?
 
 When your plan renews, Data Credits are updated via a payment-processor webhook and typically appear within a few minutes of your renewal timestamp. If credits haven't updated shortly after the renewal time shown in your billing settings, wait a few minutes and refresh the page.
