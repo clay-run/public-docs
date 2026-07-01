@@ -12,6 +12,8 @@ Outreach is a sales engagement platform that helps sales teams automate and opti
 
 With this integration, you can create and update prospects, look up existing prospect data, add prospects to sequences, and find mailbox IDs in Outreach directly from Clay.
 
+**Availability:** The Outreach integration is available on Explorer and above plans.
+
 ## Enriching data with Outreach
 
 1.  While in a Clay table, click `Add enrichment` and search for `Outreach`.
