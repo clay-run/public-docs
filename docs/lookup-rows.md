@@ -153,6 +153,32 @@ You can also use `Lookup multiple rows` within the same table to find duplicates
 -   **Prevent duplicate enrichment for shared company data** — Enrichment columns run independently per row with no awareness of sibling rows. When multiple rows share the same company (e.g., several contacts who work at the same account), each row can trigger the same company-level enrichment separately. To run the enrichment only once per company: add a **Lookup single row** (same table, matching on company domain) that checks for any other row where the company-level enrichment result is already populated. Then add a [conditional run](conditional-runs.md) to your enrichment column that fires only when the lookup finds no existing result. The first row to process writes the company data; subsequent rows with the same domain find the existing result via lookup and skip the enrichment.
 -   Consolidate paired or related rows (e.g., pull a duplicate account's ID or attributes into the master record row) — run a self-lookup on the shared group key (such as a duplicate set number or shared parent ID) to find all rows in the group, then use `Add as column` or a formula column to extract the specific fields you need from the matched rows
 
+**Example: Enrich only one row per company group (without deleting duplicates)**
+
+When a table has multiple rows sharing the same company — for example, several contacts from the same organization — each row is processed independently. Because Clay's enrichment runs at the cell level, a row has no built-in awareness of whether another row with the same company domain has already been enriched. To run a company-level enrichment (such as firmographic data or a website scrape) on just one representative row per company while leaving all contact rows intact:
+
+1. Add a **Lookup single row in other table** column. Configure it to search the **same table** you're working in:
+   - `Table to search` → this table
+   - `Target column` → the company domain column
+   - `Filter operator` → `Equals`
+   - `Row value` → the current row's company domain column
+
+   Because this lookup returns the **first** matching row found in the table, the result will be the same "representative" row for every contact that shares a domain.
+
+2. Once the lookup runs, click **Add as column** on the returned `Clay Row ID` field. This creates a column (e.g., `Representative Row ID`) that contains the row ID of the first match for each domain.
+
+3. Add a **Formula** column (e.g., `Is Representative Row`) with the expression:
+
+   `{{Representative Row ID}} == {{Clay Row ID}}`
+
+   This evaluates to `true` only for the row whose own ID matches the first-match ID — i.e., the representative row for that domain.
+
+4. On the company-level enrichment column, open **Run settings → Only run if** and set the condition:
+
+   `/Is Representative Row is true`
+
+   The enrichment now fires only for one row per company. All other rows are skipped with **"Run condition not met"** — their contact-level data is preserved and no credits are consumed for the skipped rows.
+
 **Best practices**
 
 -   Use a clean, consistent match key (domain is usually more reliable than company name)
