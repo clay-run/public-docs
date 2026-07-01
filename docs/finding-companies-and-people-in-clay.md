@@ -585,3 +585,9 @@ If you need professional profile photos in your workflow, the alternative is to 
 -   **Apify** — offers profile scrapers with authentication.
 
 When using third-party scrapers, ensure your usage complies with the platform's Terms of Service and your organization's data privacy policies.
+
+### Why is "Find Employee Headcount by Country" data sometimes inaccurate?
+
+The enrichment sources data from a pre-indexed snapshot maintained by Clay's data providers — it does not query LinkedIn in real time and does not use your LinkedIn session or cookies. Because some LinkedIn fields are only visible to authenticated users, data that requires a logged-in view may not be fully captured in the provider index. Privacy settings applied by a company or individual employees can further limit what providers are able to index.
+
+For more current data, you can connect a third-party scraping tool such as Phantombuster or Apify to Clay via HTTP API, using your own LinkedIn session credentials for authenticated lookups. Ensure your usage complies with the platform's Terms of Service and your organization's data privacy policies.
