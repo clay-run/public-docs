@@ -103,10 +103,10 @@ The **Write to Other Table** action has two main constraints that you might come
 
 ### **I received an "Invalid credentials" error, what can I do?**
 
-This error generally means your API key is incorrect or missing. To Fix:
+This error means your Clay API key is incorrect or missing. To fix:
 
-1.  Copy your API key. Refer to this guide for instructions: [Find Your Clay API Key](https://www.clay.com/university/guide/guide-find-clay-api-key).
-2.  Add the API key to your integration account in Clay under the **Integrations** section.
+1.  Go to **Settings** → **Connections** and search for **Clay**.
+2.  Update or re-enter your Clay API key. See [Find Your Clay API Key](https://www.clay.com/university/guide/guide-find-clay-api-key) if you need to locate it.
 3.  Save your changes and retry the action.
 
 ### **Why am I seeing the error "You cannot write to the selected table because the sequence of Write to Other Table integrations is misconfigured"?**
