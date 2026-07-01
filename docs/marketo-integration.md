@@ -92,6 +92,16 @@ Use webhooks to send data from Marketo to Clay for real-time lead enrichment. Th
 
 ## Troubleshooting
 
+### Custom fields are missing from Lookup object results
+
+Clay builds the field list for the Lookup object action from Marketo's schema API, which only returns fields that have **API access** enabled. If a custom field doesn't appear in the lookup results, it likely isn't exposed through Marketo's API:
+
+1.  In Marketo, go to **Admin** → **Field Management**.
+2.  Find the missing field and open its settings.
+3.  Confirm that **API access** is enabled for that field.
+
+Once API access is enabled, the field will be included in Marketo's schema response and returned in future Clay lookup results.
+
 ### Field values containing special characters are split incorrectly in Clay
 
 If a lead field value contains an ampersand (`&`) — such as a job title like "VP & Head of Sales" — and you're using a form-encoded payload template in Marketo, the `&` will be interpreted as a field separator, causing the value to be split across multiple fields in Clay. To avoid this, use a JSON-formatted payload template (as shown in step 5 above). JSON handles special characters correctly and will not split values on `&`.
