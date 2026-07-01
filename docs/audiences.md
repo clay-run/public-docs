@@ -596,6 +596,21 @@ Three things to check:
 -   **The default 5-result count was reached.** `Lookup in Audiences` returns 5 signal results per record by default. If a company has more active signals than that, some may not appear — increase the result limit in the column settings (up to 50), or use `Get Audiences Activity` to retrieve a larger set of signal data.
 -   **The signal hasn't fired for that record yet.** Signal results are written asynchronously and may not appear immediately after a signal run completes. If a signal should be recent but is still missing, open the signal's column header → `Edit column` and re-run the signal to refresh the data for that record.
 
+### How do I bulk archive records from my audience?
+
+To remove a group of records from your People or Companies audience — for example, to clear all companies from your Companies view — use **Archive records** via a saved audience segment:
+
+1. Click **People** or **Companies** in the left sidebar.
+2. Click **+** next to "My Audiences" (or **New audience** in the top-right) to create a new audience segment.
+3. Add a filter targeting the records you want to archive. To archive all records, use a broadly matching filter — for example, **Name → is not empty**.
+4. Save the audience, then select it from the sidebar.
+5. Click the **⋮** (three-dot) menu next to the audience name in the sidebar.
+6. Click **Archive records**.
+
+Archived records move to the **Archived** section in the left sidebar, where they can be viewed or restored at any time. See [What happens when I archive a record in Audiences?](#what-happens-when-i-archive-a-record-in-audiences) for details on archiving behavior.
+
+**Note:** The **Archive records** option is only available to **WorkspaceAdmin** users. If you don't see it in the ⋮ menu, ask a workspace admin to perform this action.
+
 ### What happens when I archive a record in Audiences?
 
 Archiving a record is a **soft delete** — the record is not permanently removed from your Audiences workspace. When you archive a record:
