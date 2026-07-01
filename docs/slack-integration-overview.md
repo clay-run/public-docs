@@ -242,3 +242,11 @@ The reconnect flow in Clay starts a fresh OAuth authorization — it does not re
 2. If it was removed or restricted by a workspace admin, reinstall it from Slack. If you're not a Slack workspace admin, ask whoever manages apps in your workspace to reinstall the Clay app.
 3. Once the Clay app is reinstalled, go to **Settings → Connections** in Clay and reconnect your Slack account.
 4. Re-run your Slack action.
+
+### Slack message text shows formatting characters as plain text
+
+If your message content appears with raw formatting syntax — for example, `**Company Name**` displays literally as `**Company Name**` in Slack instead of rendering as bold text — the cause is a syntax mismatch between standard Markdown and Slack's formatting language.
+
+**Why this happens:** Clay sends message text to Slack using Slack's own format, called mrkdwn. Standard Markdown and mrkdwn look similar but differ in important ways. The most common difference is bold text: standard Markdown uses double asterisks (`**bold**`), while Slack's mrkdwn uses a single asterisk on each side (`*bold*`). When you use standard Markdown syntax in a Slack message, Slack renders the literal characters as plain text rather than applying the formatting.
+
+**To fix it:** Use Slack's mrkdwn syntax in your messages. See the [Formatting Slack messages](#formatting-slack-messages) section above for the full reference, or consult the [Slack formatting guide](https://api.slack.com/reference/surfaces/formatting#visual-styles) for the complete specification.
