@@ -75,10 +75,12 @@ In this scenario, the variable model's withholding mechanism protects both the c
 
 ## **Using your own API keys**
 
-You can always use your own API keys instead of Clay data credits. That said, many customers prefer Clay's built-in AI for two reasons:
+For models from OpenAI, Anthropic, Google, and other third-party providers, you can use your own API keys instead of Clay data credits. That said, many customers prefer Clay's built-in AI for two reasons:
 
 -   **Model selection.** Clay gives you access to a broader set of models than any single provider.
 -   **Speed.** Actual usage data shows that AI tasks run through Clay's APIs run up to 2× faster than tasks run through customers' own API keys because Clay has negotiated significantly higher rate limits than most customers have independently.
+
+**Note:** Clay's proprietary models—Neon, Helium, and Argon—run on Clay's own infrastructure and are only available via Clay credits. Because they don't have an external provider API, there is no personal API key option for these models.
 
 ## **FAQs**
 
