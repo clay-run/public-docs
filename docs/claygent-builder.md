@@ -242,6 +242,16 @@ Claygents handle judgment-based, nondeterministic work in your GTM stack — wor
 -   **Outbound copywriting** — write personalized emails using your ICP and enriched data.
 -   **Persona classification** — categorize contacts by tier, role, or buying persona.
 
+### How do I add a seniority level column to a people table?
+
+To populate a column with each contact's seniority tier (such as Junior, Mid-level, or Senior), add a **Claygent** or **Use AI** column, reference your job title column, and prompt the AI to return one of your defined labels. Example prompt:
+
+*"Based on the job title {{Job Title}}, classify this person's seniority as one of: Junior, Mid-level, Senior. Return only the label."*
+
+For this type of classification task — assigning a contact to a fixed set of labels from data already in your table — use a lighter model (**clay-helium**, **GPT-4o mini**, or **Claude Haiku**). These models follow single-value output instructions more reliably than Argon and cost less per row. Switching to GPT-4o mini or Claude Haiku also disables web search automatically, keeping runs faster and more consistent when all the data you need is already in your table. Define a single `string` output field in your output schema to receive the label.
+
+If you prefer a numeric score instead of a text label, use the **Score Row in Clay** enrichment (see [Lead scoring overview](lead-scoring-overview.md)). Add a criterion that maps seniority-related title keywords (for example, VP, Director, Head, Senior, Lead) to point values — higher values for more senior roles. The output is a numeric score you can sort or filter by.
+
 ### Who can create or edit agents?
 
 Agent access follows your workspace permissions. Editors can create and modify agents, while viewers can reference approved agents in tables.
