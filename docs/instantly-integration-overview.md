@@ -45,11 +45,11 @@ Use this action to find new leads.
 
 ### `Action` Verify Email
 
-Determine if an email address is a valid inbox and whether it’s a catch-all domain.
+Determine if an email address is a valid inbox and whether it's a catch-all domain.
 
 **Inputs**
 
--   **Person’s Email**
+-   **Person's Email**
 
 **Run settings**
 
@@ -63,8 +63,15 @@ Add leads to an Instantly campaign.
 **Inputs**
 
 -   **Campaign ID**
--   **Skip if Lead is in Workspace (Optional):** Will skip if the lead already exists in any campaigns in the workspace.
--   **Email:** The lead’s email.
+-   **Skip if Lead is in Workspace (Optional):** Will skip if the lead already exists in any campaigns or lists in the workspace. Enabled by default.
+-   **Email:** The lead's email.
+-   **First Name (Optional)**
+-   **Last Name (Optional)**
+-   **Company Name (Optional)**
+-   **Website (Optional)**
+-   **Phone Number (Optional)**
+-   **Personalization (Optional):** Free-text field Instantly provides by default for adding personalized content to a lead.
+-   **Custom Variables (Optional):** Key-value pairs for any additional fields your Instantly campaign uses — for example, `subject_line` or `custom_body`. Variable names should match those defined in your Instantly campaign; refer to the [Instantly API documentation](https://developer.instantly.ai/api/v2/lead/createlead) for details.
 
 **Run settings**
 
