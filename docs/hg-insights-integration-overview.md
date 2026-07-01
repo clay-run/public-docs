@@ -121,14 +121,14 @@ To verify a technology detected by HG Insights, you can search the company's web
 
 The `Source Companies by product usage` action returns up to **100 companies by default**. If your target accounts aren't all appearing, increase the **Max companies** input to capture more results. Keep in mind that a higher limit will consume more enrichment credits.
 
-### Missing input error when filtering by product categories
+### "Required inputs missing" error in the Verify Product Usage waterfall
 
-When using **Verify technology usage** or the **Verify Product Usage** waterfall, a "Missing input" error can appear if HG Insights does not have data about the specific tech stack products you specified for a given company. This happens when the product categories or products you filtered by are not indexed by HG Insights for that company.
+Unlike other tech stack providers that scan all technologies on a domain, the HG Insights **Verify technology usage** action requires you to specify exactly which products to check for — the **Products** field is required. If HG Insights is added to the **Verify Product Usage** waterfall without this field configured, a "Required inputs missing" error appears.
 
-To resolve this:
+This typically happens when the products you want to look up don't appear in HG Insights' product catalog. To resolve this:
 
--   **Check HG Insights' data directory.** If you're unsure whether HG Insights covers the products or categories you're looking for, browse the [HG Data Discovery](https://discovery.hgdata.com/) tool to confirm coverage before configuring the enrichment.
--   **Remove the HG Insights step from the waterfall.** If you're running a broad tech stack enrichment and aren't targeting a specific vendor, click the **delete icon** next to HG Insights in the waterfall sequence to skip it. This clears the error and lets the remaining providers run normally.
+-   **Check HG Insights' data directory.** Browse [HG Data Discovery](https://discovery.hgdata.com/) to see what products and categories HG Insights has indexed, then configure the **Products** field using a product from that catalog.
+-   **Remove HG Insights from the waterfall.** If you're running a broad tech stack enrichment and aren't targeting specific named products, click the **delete icon** next to HG Insights in the waterfall sequence to remove it. The remaining providers will run normally without requiring a product selection.
 
 ### Technology not found in HG Insights
 
