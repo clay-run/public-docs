@@ -75,11 +75,11 @@ To stop a running table, click the **Stop** button in the run summary panel at t
 
 **Important: clicking Stop does not immediately cancel enrichments that are already in progress.** When you click Stop, Clay cancels all queued cells that haven't been dispatched yet — but any enrichment calls already sent to an external data provider will run to completion and **will still consume credits**. You may see a short delay between clicking Stop and the table fully halting while these in-flight calls finish.
 
-To prevent unintended credit usage before it starts, turn off [auto-run](table-management-settings.md) before importing large batches of rows. This prevents enrichments from triggering automatically on new data.
+To prevent unintended credit usage before it starts, turn off [auto-run](auto-run.md) before importing large batches of rows. This prevents enrichments from triggering automatically on new data.
 
 ## Manually running unrun cells
 
-The progress tooltip shows **"X% left to run"** — this figure represents enrichment cells that have not yet completed, including cells currently in progress and cells that haven't started at all. If [auto-run](table-management-settings.md) is disabled, cells won't start automatically; you'll need to trigger them manually.
+The progress tooltip shows **"X% left to run"** — this figure represents enrichment cells that have not yet completed, including cells currently in progress and cells that haven't started at all. If [auto-run](auto-run.md) is disabled, cells won't start automatically; you'll need to trigger them manually.
 
 To manually run the remaining cells for a specific column:
 
@@ -89,13 +89,13 @@ To manually run the remaining cells for a specific column:
     This triggers all cells in that column that are:
     -   **Empty** — never been run
     -   **Errored** — previously ran but encountered an error
-    -   **Out-of-date** (also referred to as **stale**) — the cell ran before but is no longer current. In the UI, out-of-date cells show a clock icon with the tooltip "This cell is out of date." A cell becomes out of date when its inputs have changed since it last ran, or when auto-run is disabled and the cell hasn't been re-triggered. For a full explanation, see the **Understanding the out-of-date indicator** section in [Table management settings](table-management-settings.md).
+    -   **Out-of-date** (also referred to as **stale**) — the cell ran before but is no longer current. In the UI, out-of-date cells show a clock icon with the tooltip "This cell is out of date." A cell becomes out of date when its inputs have changed since it last ran, or when auto-run is disabled and the cell hasn't been re-triggered. For a full explanation, see the **Understanding the out-of-date indicator** section in [Auto-run](auto-run.md).
 
 3.  Repeat for each enrichment column you want to run.
 
 > **Note:** There is no single button to run all columns at once — this option must be used column by column.
 
-**Alternative — enable auto-run:** Turn on `Auto-run` in your [table settings](table-management-settings.md) and choose `Update cells` to immediately queue any out-of-date cells.
+**Alternative — enable auto-run:** Turn on `Auto-run` in your [run settings](auto-run.md) and choose `Update cells` to immediately queue any out-of-date cells.
 
 ## Running enrichments on specific rows
 
@@ -132,7 +132,7 @@ If cells remain Queued for an extended period, common causes include:
 -   **High concurrency in progress** — Clay runs many rows at once; if a large number are queued simultaneously, later rows wait while earlier ones complete. The queue will clear on its own.
 -   **External API rate limits** — Integrations such as OpenAI or HubSpot enforce per-minute request limits. For Clay's managed integrations (where Clay provides the API key), Clay handles this automatically and the queue resumes once the rate-limit window resets. If you are using your own API key, Clay may send requests faster than your account's tier allows — rows that exhaust the retry window return a **"Rate limit wait time exceeded"** error. To prevent this on enrichment columns that support it (such as HTTP API), configure the **Custom rate limit** setting on the column to match your provider's tier; see [Enrichments](enrichments.md) for details. For AI enrichments using a personal API key, see [AI tokens](ai-tokens.md).
 -   **API quota exhausted** — If you've hit a quota ceiling (e.g., OpenAI, Google), new runs are blocked until the quota resets or is increased in the provider's dashboard.
--   **Auto-run settings** — If auto-run is enabled and triggering repeated re-runs, rows may accumulate in the queue unexpectedly. See [Table management settings](table-management-settings.md) for how to adjust auto-run and scheduled run behavior.
+-   **Auto-run settings** — If auto-run is enabled and triggering repeated re-runs, rows may accumulate in the queue unexpectedly. See [Auto-run](auto-run.md) for how to adjust auto-run and scheduled run behavior.
 -   **Column edited or stopped mid-run** — If a column's settings were changed while a run was in progress, or if a run was stopped partway through, some rows may remain stuck in Queued status and not resume on their own.
 
 > **Note on CPJ source previews:** When previewing a CPJ source column (Companies, People, or Jobs search) in the Sculptor column builder, previews are capped at **50 per hour** on trial and free plans, and **5,000 per hour** on paid plans. This cap applies only to interactive previews in the column builder — it does not apply to "Run column" or right-click → "Run [N] rows" on table rows.
@@ -191,7 +191,7 @@ To re-enable automatic enrichment:
 
 After enabling table-level auto-run, column-level settings take effect: columns with auto-run on will trigger automatically; columns with auto-run off will still require a manual trigger.
 
-For the full auto-run decision tree and advanced options (conditional runs, "Keep existing results"), see [Table management settings](table-management-settings.md).
+For the full auto-run decision tree and advanced options (conditional runs, "Keep existing results"), see [Auto-run](auto-run.md).
 
 ## Troubleshooting: identifying rows that errored vs. rows with no data
 
