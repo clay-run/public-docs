@@ -139,6 +139,12 @@ When your trial ends, your account automatically moves to the free plan — you 
 
 ## FAQs
 
+### Why was my account temporarily locked?
+
+Clay applies fraud detection at signup to protect free trial credits from spam and abuse. If your account is flagged — for example, due to bot-like signup signals or activity linked to multiple accounts — it may be temporarily locked. When this happens, you'll see a message that reads: *"Your account has been temporarily locked for fraud protection."*
+
+To request a review and restore access, email **verification@clay.com**. Clay's team will review your account and follow up with next steps.
+
 ### How do I track my actions and data credits usage?
 
 You can track both actions and data credits usage in the `Usage Dashboard`, which you can access from the `Settings` menu in the app. You can also track usage at the table level via `Table history`.
