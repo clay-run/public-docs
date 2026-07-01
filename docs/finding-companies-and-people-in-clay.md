@@ -159,7 +159,7 @@ When your goal is to reach your ideal customer profile (ICP) at each company —
 
 1. **ICP search column** — Add `Find Contacts at Company` as an enrichment column in your company table. Filter **Job title keywords** to your ICP titles (for example, "Head of Ecommerce" or "VP of Marketing"). This column runs for every company row.
 2. **Senior fallback column** — Add a second `Find Contacts at Company` column filtered to high **Seniority** levels (C-level, VP, Director). In **Run settings → Only run if**, add a condition so this column only fires when the ICP search returned no contacts — for example, `{{ICP search column}} is empty`. See [Conditional runs](conditional-runs.md).
-3. **AI selection column** — Add a `Use AI` column. Reference both result lists (ICP column and fallback column) and prompt the AI to return the best N candidates, prioritising ICP title match and then seniority. For example: *"Review these candidates and return the best 10 contacts, prioritising ICP title match, then seniority level."*
+3. **AI selection column** — Add a `Use AI` column. Reference both result lists (ICP column and fallback column) and prompt the AI to return the best N candidates, prioritising ICP title match and then seniority level. For example: *"Review these candidates and return the best 10 contacts, prioritising ICP title match, then seniority level."*
 4. **Send to people table** — In the company table, click a populated AI-result cell, then **Take action on list → Write each item to new row in other table** to push selected contacts into a dedicated people table. See [Send table data](send-table-data.md).
 5. **Enrich in the people table** — Add **Work Email waterfall** and **Phone waterfall** enrichments to the people table. See [Enriching your results](#enriching-your-results).
 
@@ -536,6 +536,17 @@ When you run a people search across a company list and route results to a downst
 For example: if your original company list has 3,818 companies and people were found at 2,694 of them, your downstream company table shows 2,694 rows. The remaining 1,124 companies had no contacts found — this is expected behavior, not missing data. The downstream table is a filtered view of only the companies you can reach.
 
 To identify which companies had no people found, add a **Lookup Rows** column to your original company table (searching your people table, matched on company domain) and filter for rows where the count is zero.
+
+### How do I get a unique list of companies from my people table?
+
+If your people table has a **Company Table Data** column (created automatically when you run a people search from a company table), you can extract the company name into its own column and deduplicate it to get a list of unique companies:
+
+1.  **Extract the company name:** Click a cell in the **Company Table Data** column to open the cell details panel. Hover over the **Name** field and click **Add as column**. This creates a new column in your people table containing each person's company name.
+2.  **Deduplicate:** Click the header of the new company name column and select **Dedupe** from the dropdown. Review the flagged duplicates and click **Delete** to remove them, leaving only one row per unique company name.
+
+**To work with the deduplicated list in a separate table:** Use [Send Table Data](send-table-data.md) to push the company name column to a destination table, then run **Dedupe** on that column's header in the destination table.
+
+**Note:** Column deduplication removes entire rows from your table based on matching values — deleted rows cannot be recovered. For full rules and caveats, see [Dedupe columns](table-columns-overview.md).
 
 ### Why do "Picture URL Copy" and "Picture URL Orig" return null in Enrich Person?
 
