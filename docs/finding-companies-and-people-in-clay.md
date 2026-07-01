@@ -289,7 +289,7 @@ If you already have a populated Find People table and want to suppress contacts 
 -   Agencies
 -   Companies with minimal online presence
 
-**For local businesses with limited or no LinkedIn presence** — such as small service businesses in a specific city or area — use the **Find local businesses using Google Maps** source instead of Find Companies. After importing, add the **Work Email waterfall** enrichment to find contact emails. See [Work Email waterfall](work-email-waterfall.md) for setup details.
+**For local businesses with little online professional presence** — such as small service businesses in a specific city or area — use the **Find local businesses using Google Maps** source instead of Find Companies. After importing, add the **Work Email waterfall** enrichment to find contact emails. See [Work Email waterfall](work-email-waterfall.md) for setup details.
 
 ## Troubleshooting
 
