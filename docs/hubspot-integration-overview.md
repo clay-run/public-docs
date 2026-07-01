@@ -169,6 +169,12 @@ Changing a HubSpot list's membership criteria (for example, tightening segment f
 
 To refresh your table to reflect the updated list, see [Why doesn't my Clay table update when I change the source filters?](https://www.clay.com/university/guide/sources#faqs) in the Sources guide.
 
+### How often does my HubSpot source update, and how do I refresh it immediately?
+
+The update frequency is set by the run schedule you configure in Clay — not by any schedule within HubSpot itself. Options include daily, weekly, and monthly; hourly is available on some plans. To view or change the schedule, click the source column title, select your source, and check the **Run settings** section.
+
+To pull the latest HubSpot data immediately without waiting for the next scheduled run, click the source column title, select your source, and click **Run now**. This triggers a fresh source execution and updates your table with the current state of the HubSpot list.
+
 ### When I schedule my HubSpot list source to refresh, does it pick up removals from the list?
 
 **No — scheduled refreshes are additive only.** When a HubSpot list source runs on a schedule, it adds new records from the list to your Clay table but does not remove records that have since been dropped from the list. Records stay in your table even after they are no longer members of the HubSpot list in HubSpot.
