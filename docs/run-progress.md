@@ -144,14 +144,13 @@ If cells remain Queued for an extended period, common causes include:
 4.  **Check your API quotas** — If the column calls an external API (OpenAI, Google, etc.), verify you haven't exhausted a quota in that provider's dashboard.
 5.  **Check the Clay status page** — If the issue persists and you suspect a platform-wide problem, visit [status.clay.com](https://status.clay.com/) for real-time updates on any active incidents.
 
-**If rows remain Queued after a mid-run stop or column edit:** To process only the stuck rows without re-running the ones that already completed, use the "is queued" filter to isolate them first:
+**If rows remain Queued after a mid-run stop or column edit:** To process only the stuck rows without re-running ones that already completed, use the "is queued" filter to scope the run:
 
 1.  Click **Filter** in the table toolbar, select the affected column, and set the condition to **is queued**. Only the stuck rows are now visible.
-2.  Click the first visible row number, then **Shift+click** the last to select all filtered rows.
-3.  Right-click the selection and choose **Run [N] rows**. Only the selected (queued) rows are processed — rows that already completed are not re-run.
-4.  Remove the filter when the run finishes.
+2.  Right-click the column header and select **Run column** → **Force run all [N] rows**. With the "is queued" filter active, this re-runs only the visible queued rows — completed rows are not re-run.
+3.  Remove the filter when the run finishes.
 
-> **Note:** Using the column header dropdown **Run column → Run [N] empty or out-of-date rows** does not respect the active view filter — it processes the whole column. To run only the visible filtered rows, you must select them first and use the row right-click menu as shown above.
+> **Note:** **Run column → Run [N] empty or out-of-date rows** will not work here — queued rows are classified as "running," not as empty or stale, so that option shows 0 eligible rows and does nothing for this scenario. Use **Force run all [N] rows** instead.
 
 ## Troubleshooting: table appears stopped at a partial percentage with no credits consumed
 
