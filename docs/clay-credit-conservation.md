@@ -39,7 +39,7 @@ With table-level auto-run off, no columns will run automatically when rows are a
 
 To turn off auto-run for a single column instead of the whole table, click the column name → **Edit column** → toggle **Auto-run** off under **Run settings** → **Save**.
 
-See [Table management settings](table-management-settings.md) for full details on table-level and column-level auto-run controls.
+See [Auto-run](auto-run.md) for full details on table-level and column-level auto-run controls.
 
 ## Leveraging your API Keys
 
