@@ -19,7 +19,7 @@ Clay provides multiple ways to track and monitor **run progress** across your ta
 The progress bar gives you a snapshot of a column's current state. It shows:
 
 -   Whether the column is actively running
--   The percentage of all rows in the table that have run (including rows not within the current view)
+-   The percentage of all rows in the table that have run (including rows not currently visible)
 -   A breakdown of rows by status:
     -   🟢 **`Successful`** — The cell completed successfully.
         -   _Note: "Run condition not met" is also treated as a successful run_
