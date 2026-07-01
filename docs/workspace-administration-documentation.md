@@ -254,6 +254,8 @@ Clay offers three user roles with different permission levels to help manage you
 
 ## **Add a team member to your workspace**
 
+Workspace access in Clay is invitation-only. When a new user signs up for Clay, they are automatically placed in their own workspace — they will not join yours unless you explicitly invite them. Your workspace remains private to you until you send an invite.
+
 To invite a new member to your workspace:
 
 -   Go to `Settings` > `Team`.
