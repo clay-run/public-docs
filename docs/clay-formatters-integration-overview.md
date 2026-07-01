@@ -39,6 +39,8 @@ To run enrichment only under specific conditions, use formulas that trigger the 
 
 **Step 5:** Run your enrichment to format date/time.
 
+**Tip — CRM date compatibility:** To push a date to a CRM or other system that requires a numeric timestamp, select **Unix Timestamp** from the Format dropdown in Step 1. After running the formatter, keep the output column type set to **Text** (not Date) — storing a Unix timestamp in a Date-type column can cause formatting issues because Clay's Date column type expects a date-formatted string, not a number.
+
 ### `Action` Normalize Company Name
 
 Normalize your company names by removing terms like Inc., LLC, and other suffixes for a cleaner format.
