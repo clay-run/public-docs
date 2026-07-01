@@ -8,7 +8,7 @@ last_synced: 2026-06-04T00:00:00.000Z
 
 Use Serper.dev to perform Google searches and scrape Google Maps data in Clay.
 
-Serper.dev is a Google Search API that powers Clay's **Search Google** enrichment. For advanced use cases such as Google Maps scraping with custom pagination, you can also call Serper directly via the [HTTP API](http-api-integration-overview.md) integration.
+Serper.dev is a Google Search API that powers Clay's **Search Google** enrichment. For advanced use cases — such as using your own Serper API key or scraping Google Maps with custom pagination — you can also call Serper directly via the [HTTP API](http-api-integration-overview.md) integration.
 
 ## Available actions
 
@@ -28,6 +28,22 @@ Perform any Google search query and return results, including organic results, a
 **Outputs**
 
 -   **Search Results**: An array of results, each containing position, title, link, redirect link, displayed link, and thumbnail.
+
+## Using Serper with your own API key
+
+Clay's built-in **Search Google** enrichment runs through Clay's managed Serper account. If you have your own Serper API key — for example, to run higher volumes or access additional Serper endpoints — you can call Serper's API directly using the [HTTP API](http-api-integration-overview.md) integration.
+
+**Requirement:** HTTP API is available on Growth plan and above. See [plans and billing](plans-and-billing.md) for details.
+
+To set this up:
+
+1.  Create an account at [serper.dev](https://serper.dev/) and copy your API key.
+2.  In the Serper dashboard, select **Playground** → **Code** → **cURL** to view the endpoint URL, request headers, and JSON body structure for the endpoint you want to use (e.g., `https://google.serper.dev/search`).
+3.  Add an **HTTP API** column to your Clay table. Configure it with the same endpoint URL, headers (add your Serper API key as the value for the `X-API-KEY` header), and body structure from the cURL output.
+4.  Build your Google search query using a formula — Serper's `q` parameter expects a single query string, so use a formula to combine any dynamic inputs into one string.
+5.  Save and run the column to execute the search and return results.
+
+For **Google Maps** use cases, see [Using Serper for Google Maps scraping](#using-serper-for-google-maps-scraping) below.
 
 ## Using Serper for Google Maps scraping
 
