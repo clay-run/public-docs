@@ -6,7 +6,7 @@ last_synced: 2026-04-26T01:40:17.543Z
 
 # Lookup Rows
 
-Bring in data into your table from other tables.
+Bring in data into your table from other tables — similar to VLOOKUP or INDEX-MATCH in a spreadsheet.
 
 The Lookup Rows feature allows you to search and retrieve data from other tables in your workspace, enabling connections between tables and filtering data based on specific criteria.
 
