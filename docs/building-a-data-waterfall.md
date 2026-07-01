@@ -35,6 +35,20 @@ To add, remove, or reorder providers in a waterfall you've already saved:
     -   Click the delete icon next to a provider to remove it.
 5.  Click **Save**.
 
+### Preserving existing data when reorganizing providers
+
+When you reorder, add, or remove providers in a waterfall, Clay marks existing rows as out-of-date. With table-level auto-run enabled (the default), those rows can be automatically re-run — which may overwrite data you want to keep.
+
+To reorganize a waterfall without overwriting existing results:
+
+1.  In the save dialog, choose **Save and don't run**. This saves your updated configuration without immediately re-running any rows.
+2.  Add an **Only run if** condition to the waterfall column — for example, `[Output column] is empty` — so the waterfall skips rows that already have a result. This protects existing data even if rows are later re-queued.
+
+**To apply the updated waterfall to new or empty rows only:**
+
+1.  Filter your table view to show only the target rows — for example, by filtering where the waterfall output column is empty.
+2.  Right-click the waterfall column header and choose **Run column** → **Run [N] empty or out-of-date rows**. Clay runs the waterfall only on rows visible in the filtered view.
+
 ## Creating a waterfall
 
 Use this when you want to chain multiple enrichment providers for the same data point — for example, enriching company details from Clearbit, then Apollo, then PDL in sequence, stopping as soon as one returns a result.
@@ -204,7 +218,7 @@ This is the most common cause of unexpected results from the Company Domain wate
 
 ## Tech Stack waterfall
 
-The **Tech Stack** waterfall finds which technologies a company has installed by cascading across four providers — stopping as soon as one returns a result.
+The **Tech Stack** waterfall finds which technologies a company has installed by cascading across four providers — stopping as soon as one extends a result.
 
 Provider order: **SimilarWeb → Predict Leads → BuiltWith → Apollo**
 
