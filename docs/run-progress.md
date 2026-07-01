@@ -4,8 +4,9 @@ description: Clay provides multiple ways to track and monitor run progress
   across your tables, including how to set a row limit to control which rows are
   processed, manually trigger unrun enrichment cells, run enrichments on a
   specific subset of rows, troubleshoot cells stuck in Queued status, diagnose
-  enrichments that aren't triggering automatically, and resolve persistent error
-  messages by clearing the browser cache.
+  enrichments that aren't triggering automatically, resolve persistent error
+  messages by clearing the browser cache, and troubleshoot slow cell loading
+  when using multiple tables in a workbook.
 last_synced: 2026-04-26T01:40:34.620Z
 ---
 
@@ -207,3 +208,11 @@ If an error message stays visible after the underlying issue has been resolved �
 2.  **Refresh the page** — Press `Ctrl+R` (Windows/Linux) or `Cmd+R` (Mac) after clearing, or use a hard refresh (`Ctrl+Shift+R` / `Cmd+Shift+R`) to bypass the cache without clearing it entirely.
 
 If the error persists after clearing the cache and refreshing, visit [status.clay.com](https://status.clay.com/) to check for any active platform incidents.
+
+## Troubleshooting: slow cell loading with multiple workbook tables
+
+Cell data may take longer to appear when a workbook contains large tables and multiple enrichments are running at the same time. Enrichment runs share a fixed pool of concurrency slots across your workspace — when many enrichments are active simultaneously, incoming requests queue behind earlier ones, which manifests as visible latency in loading cell data.
+
+Performance impact is more pronounced with larger tables and more complex workflows, such as workbooks where tables are linked together (for example, a companies table feeding into a people table).
+
+**To troubleshoot:** Hard refresh the page — press `Ctrl+Shift+R` (Windows/Linux) or `Cmd+Shift+R` (Mac) to reload and clear any stale browser state.
