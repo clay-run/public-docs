@@ -36,7 +36,7 @@ Every Clay table starts with a source. You can import customer data from a CSV f
 3.  Configure the source settings.
 4.  Review the preview and click `Import`.
 
-**Note:** When importing a source into an existing table, Clay automatically runs enrichments on only the **first 10 imported rows**. The remaining rows are added to the table but do not trigger auto-run. This is intentional behavior to prevent large, unintended credit burns — importing a large source into a table with many enrichment columns could otherwise trigger a significant spend all at once. To process the remaining rows after import, manually run them: select all rows, right-click, and choose **Run [N] rows** — or right-click the first column in your workflow and select **Run column**. This same behavior applies to tables created by duplicating a workbook and then adding a source to the duplicate.
+**Note:** When adding a People, Companies, or Jobs list-builder search source to an existing table, Clay automatically runs enrichments on only the **first 10 imported rows**. The remaining rows are added to the table but do not trigger auto-run. This is intentional behavior to prevent large, unintended credit burns. To process the remaining rows after import, manually run them: select all rows, right-click, and choose **Run [N] rows** — or right-click the first column in your workflow and select **Run column**. This limit applies only to the initial source setup; subsequent scheduled runs of the same source run enrichments on all newly imported rows.
 
 ### Importing CSV
 
@@ -227,7 +227,7 @@ To re-import the same rows after deleting them: delete the existing Google Sheet
 
 If the fields you selected under **"Fields to deduplicate by"** are not unique per row — for example, if you selected **Company** and multiple rows in your sheet share the same company name — those rows produce identical hashes and collapse into a single record. The run history may report *N* rows found while only one row appears in your table per unique hash value.
 
-To get one Clay row per sheet row, set **"Fields to deduplicate by"** to a field that is genuinely unique per record, such as **Email**, **LinkedIn Profile URL**, or a dedicated ID column. Avoid fields like Company or Title that many rows may share.
+To get one Clay row per sheet row, set **"Fields to deduplicate by"** to a field that is genuinely unique per record, such as **Email**, **Profile URL**, or a dedicated ID column. Avoid fields like Company or Title that many rows may share.
 
 ### I am trying to add a source to an existing table, but I get an error
 
