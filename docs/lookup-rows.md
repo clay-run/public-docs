@@ -101,6 +101,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 
 **Best practices**
 
+-   **One filter column only**: The lookup matches on a single `Target column` at a time — you cannot apply multiple columns as simultaneous filter criteria. To filter by multiple attributes at once (for example, domain and industry), create a formula column in both tables that combines those values into a single string (for example, `{{Domain}} + "-" + {{Industry}}`), then use that combined column as your match key.
 -   **Match on domain, not company name**: Company names vary across tables (e.g., "Zoom" vs "Zoom Video Communications"), so using company name as the match key often returns unexpectedly low counts — sometimes just 1 match per company even when many records exist. Use a company domain (e.g., `zoom.us`) as your match key on both sides for accurate, reliable counts.
 -   **Avoid Number-type columns as lookup keys — convert to text first**: A **Number**-type `Target column` produces unreliable results. The lookup may return no matches even when identical values exist in both tables, or silently return incorrect rows when the `Row value` input cannot be parsed as a number. **Workaround:** In both tables, add a formula column that converts the number to a text string — for example, `String({{Clay Company Id}})` — then match on those text columns instead.
 -   Remember the UI shows up to 10 matches, but the count reflects all matches found
