@@ -224,6 +224,12 @@ To fix this:
 -   **Lower the Temperature.** In the column settings, set **Temperature** to **Low** or **Very Low**. Lower values make output more consistent and help the model follow format instructions reliably.
 -   **Add a downstream formula column as a safeguard.** For rows where the fields have already swapped, add a formula column that checks whether `response` looks like explanation text — for example, by detecting whether it reads as a full sentence — and falls back to the `reasoning` field when it does. This cleans up already-run data; the fixes above prevent the problem for future runs.
 
+### AI column runs but a named output field stays empty
+
+If a Use AI or Claygent column completes without error — and the cell shows a confidence icon indicating the AI processed the row — but a specific named output field is blank, the most common cause is that the field is not defined in the column's **Outputs** section. If a field name is not listed there, the AI's result for that field is discarded even when the AI found and processed the data.
+
+**To fix:** Open the column settings (click the column header → **Edit column**), go to the **Configure** tab, and check the **Outputs** section. Add any fields you want to populate with the correct name and data type. For example, if you set up a column to identify a CEO's name and want it in a field called `ceo_name`, that field must be listed in **Outputs** — otherwise the value won't be captured. See [Claygent builder](claygent-builder.md) for output schema details and common configuration errors.
+
 ### Cells showing "Budget Credit Limit Reached"
 
 For AI columns using variable-priced models (such as GPT-4.1, Claude Sonnet, or Gemini 2.5 Pro) with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. This sets the maximum number of Clay credits that can be spent on a single row. If the estimated cost of running a row exceeds this limit, the cell shows **"Budget Credit Limit Reached"** and does not complete. Clicking the cell reveals the full message with the estimated cost and your current budget.
