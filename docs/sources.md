@@ -72,6 +72,8 @@ To export the complete text, extract the specific field into a dedicated column 
 3.  Run the new column to populate it with the full text values.
 4.  Export the table — the new column will contain the untruncated text in the CSV download.
 
+**Export fails with an unexpected error.** If you encounter an unexpected error while exporting, your session may have expired. Log out of Clay and log back in, then retry the export. For full troubleshooting steps, see [Your session has expired error](workspace-administration-documentation.md#your-session-has-expired-error).
+
 ### Exporting a specific subset of contacts
 
 To export only specific contacts from a table — for example, contacts at a particular company or contacts matching a custom condition — first narrow the view to those rows, then export.
