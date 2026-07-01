@@ -457,7 +457,7 @@ If cells in your **Enrich person** column show this error, the value in the **Pr
 
 **Common cause — wrong column mapped to Professional URL:**
 
-This most often happens when a column containing emails, names, company names, or other non-LinkedIn data is accidentally mapped to the **Professional URL** field in the column mapping panel. Open the **Enrich person** column, expand the column mapping, and confirm that the Professional URL field is either left empty or points to a column that contains actual LinkedIn URLs.
+This most often happens when a column containing emails, company names, or other non-LinkedIn data is accidentally mapped to the **Professional URL** field in the column mapping panel. Open the **Enrich person** column, expand the column mapping, and confirm that the Professional URL field is either left empty or points to a column that contains actual LinkedIn URLs.
 
 **If you only have email addresses:** Leave the **Professional URL** field empty and map only the **Email** field. The action accepts either input. Email-only lookups do not produce this error — if no matching profile exists for the email, the cell shows **"No profile found"** rather than an error.
 
@@ -585,3 +585,14 @@ If you need professional profile photos in your workflow, the alternative is to 
 -   **Apify** — offers profile scrapers with authentication.
 
 When using third-party scrapers, ensure your usage complies with the platform's Terms of Service and your organization's data privacy policies.
+
+### What enrichment options do I have if I already have a LinkedIn profile URL?
+
+If you already have a person's LinkedIn profile URL, several enrichments in Clay accept it directly as input:
+
+-   **Enrich person** — Clay's native enrichment. Pass the LinkedIn URL into the **Professional URL** field to retrieve comprehensive profile data: name, title, current company, full employment history, education, and more. Also accepts a LinkedIn user ID or an email address as alternative inputs.
+-   **Prospeo — Find work email and enrich person from professional profile** — uses the LinkedIn URL to find a work email and return enriched profile data (name, title, company). Credits are charged for each lookup regardless of whether a work email is found. See [Prospeo integration overview](prospeo-integration-overview.md) for setup.
+-   **Findymail — Find work email from profile URL** — uses the LinkedIn URL to find a work email (returns email and validation status only, not broader profile data). Credits are refunded if no email is found. See [Findymail integration](findymail-integration-overview.md) for setup.
+-   **Claygent** — use an AI agent column to ask specific research questions about a person's background, such as whether they work at a B2B or B2C company. Best for qualitative questions that structured enrichment fields don't capture. See [Claygent builder](claygent-builder.md) for setup.
+
+For email discovery specifically, a **Work Email waterfall** sequences multiple providers in a single pass for broader coverage. See [Work Email waterfall](work-email-waterfall.md) for details.
