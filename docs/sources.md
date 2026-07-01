@@ -59,7 +59,7 @@ To download your table data as a CSV:
 
 1.  **Uncheck all rows.** If any row checkboxes are selected, the toolbar switches to row-level bulk action mode — run, delete, debug — and table-level functions including Export are not shown. Uncheck all rows first.
 2.  In the table toolbar, click `Tools` → `Export`.
-3.  Click `Download CSV`. Clay processes the export in the background and the file downloads automatically.
+3.  Click `Download CSV`. Clay processes the export in the background and the file downloads automatically. The completed export is also saved to the **Exports** tab on your workspace homepage — select **Exports** from the left sidebar of your homepage to view and re-download recent exports.
 
 **Why can't I see Export?** The most common cause is having one or more rows checked. The toolbar shows different options depending on row selection state: when no rows are selected, you see the `Tools` button with table-level functions such as Export and Import; when rows are selected, an `Actions` button appears instead with bulk row operations (Run rows, Debug, Delete rows). Uncheck all rows to restore access to Export.
 
