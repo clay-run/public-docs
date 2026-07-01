@@ -131,7 +131,7 @@ Add conditional logic to control when an enrichment executes. The enrichment onl
 
 **Common use cases:**
 
--   Only run if LinkedIn URL exists: `LinkedIn URL is not empty`
+-   Only run if profile URL exists: `Profile URL is not empty`
 -   Only run if company size > 50: `Company Size > 50`
 -   Only run if email is missing: `Email is empty`
 -   Only run for specific industries: `Industry = "Technology"`
@@ -187,8 +187,8 @@ For tables with scheduled source imports, the `Update existing rows` toggle cont
 
 -   Table-level: ✅ ON
 -   Column-level: ✅ ON
--   Conditional run: "Only if LinkedIn URL exists"
--   **Result**: Rows with LinkedIn URL → Enrichment runs; Rows without → Skipped
+-   Conditional run: "Only if profile URL exists"
+-   **Result**: Rows with a profile URL → Enrichment runs; Rows without → Skipped
 
 ## Best practices
 
