@@ -51,7 +51,17 @@ After generating a setup, you can easily edit your original description and rege
     **Note:** If you want to analyze website content using a Content creation column, first use the **Scrape Website** enrichment to pull the page text into a table column, then reference that column in your AI prompt. For more complex web research — visiting multiple pages, following links, or multi-step browsing — a **Claygent** agent column (accessible via **Add column → [AI section]**) is the most reliable option; it has web browsing built in and supports a range of models including Clay's parallel models, Claude, GPT, Gemini, Grok, Mistral, and others.
 4.  Select a `Model` from the dropdown.
     1.  Click `Compare models` to get more detailed information about each model.
-    2.  _(Optional)_ Set the **Temperature** to control how creative or consistent the model's output is. Options are **Very Low**, **Low**, **Medium** (default), **High**, and **Very High** — lower values produce more predictable, repeatable results; higher values produce more varied responses. The underlying numeric value varies by model. For tasks requiring consistency — such as structured data extraction, scoring, or categorization — start with **Low** or **Very Low**.
+    2.  _(Optional)_ Set the **Temperature** to control how creative or consistent the model's output is. Options are **Very Low**, **Low**, **Medium** (default), **High**, and **Very High** — lower values produce more predictable, repeatable results; higher values produce more varied responses. The underlying numeric value sent to the model's API varies by provider:
+
+        | Temperature | OpenAI / Gemini / DeepSeek | Anthropic (Claude) |
+        | --- | --- | --- |
+        | Very Low | 0.2 | 0.1 |
+        | Low | 0.4 | 0.2 |
+        | Medium | 0.7 | 0.5 |
+        | High | 0.8 | 0.7 |
+        | Very High | 1.0 | 1.0 |
+
+        For tasks requiring consistency — such as structured data extraction, scoring, or categorization — start with **Low** or **Very Low**.
 5.  Write a `Prompt`.
     -   For guidance on writing effective prompts, see our doc on [writing prompts](https://www.clay.com/university/guide/ai-metaprompter-guide).
     -   **Tip:** You can mix static text and column references in the same prompt. To reference a column, type `/` in the prompt editor and select the column from the menu — it will appear as `{{Column Name}}` in your prompt. **Do not type `{{Column Name}}` as literal text** — only references inserted via the `/` shortcut are substituted with actual row data when the column runs; text you type in `{{...}}` form is treated as a plain string and will not be filled in. Use column references for values that differ from row to row (like a website URL or LinkedIn profile unique to each contact). Criteria that stay the same for every row — like a specific industry, keyword, or criterion you're screening for — can be typed directly in the prompt. For example, to check whether each person has ever worked in consulting, write: *"Based on {{Profile URL}}, has this person ever worked in consulting? Return Yes or No."* No "consulting" column needed.
