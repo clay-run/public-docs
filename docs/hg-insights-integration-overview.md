@@ -121,6 +121,15 @@ To verify a technology detected by HG Insights, you can search the company's web
 
 The `Source Companies by product usage` action returns up to **100 companies by default**. If your target accounts aren't all appearing, increase the **Max companies** input to capture more results. Keep in mind that a higher limit will consume more enrichment credits.
 
+### "Required inputs missing" error in the Verify Product Usage waterfall
+
+Unlike other tech stack providers that scan all technologies on a domain, the HG Insights **Verify technology usage** action requires you to specify exactly which products to check for — the **Products** field is required. If HG Insights is added to the **Verify Product Usage** waterfall without this field configured, a "Required inputs missing" error appears.
+
+This typically happens when the products you want to look up don't appear in HG Insights' product catalog. To resolve this:
+
+-   **Check HG Insights' data directory.** Browse [HG Data Discovery](https://discovery.hgdata.com/) to see what products and categories HG Insights has indexed, then configure the **Products** field using a product from that catalog.
+-   **Remove HG Insights from the waterfall.** If you're running a broad tech stack enrichment and aren't targeting specific named products, click the **delete icon** next to HG Insights in the waterfall sequence to remove it. The remaining providers will run normally without requiring a product selection.
+
 ### Technology not found in HG Insights
 
 HG Insights has strong coverage for widely-adopted enterprise technologies, but niche, newer, or less-tracked tools may not appear in its database. If a technology you're looking for returns no results, two fallback approaches work well in Clay:
