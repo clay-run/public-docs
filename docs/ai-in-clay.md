@@ -237,6 +237,10 @@ Clay provides Data Processing Agreements (DPAs) to support compliance with data 
 
 Clay's standard DPA is fully binding for all customers regardless of plan, ensuring consistent data protection commitments across all tiers. To view Clay's standard DPA and Standard Contractual Clauses (SCCs), visit the [Clay Trust Center](https://trust.clay.com).
 
+### Vulnerability Reporting
+
+To report a security vulnerability, email [security@clay.com](mailto:security@clay.com). Clay's security team will investigate every report and take any necessary corrective action.
+
 ## Your Rights and Controls
 
 ### What you control:
