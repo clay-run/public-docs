@@ -3,8 +3,9 @@ title: Run progress
 description: Clay provides multiple ways to track and monitor run progress
   across your tables, including how to set a row limit to control which rows are
   processed, manually trigger unrun enrichment cells, run enrichments on a
-  specific subset of rows, troubleshoot cells stuck in Queued status, and
-  diagnose enrichments that aren't triggering automatically.
+  specific subset of rows, troubleshoot cells stuck in Queued status, diagnose
+  enrichments that aren't triggering automatically, and resolve persistent error
+  messages by clearing the browser cache.
 last_synced: 2026-04-26T01:40:34.620Z
 ---
 
@@ -195,3 +196,14 @@ Clay.getCellStatus({{Your Column}})
 This returns a status string for each cell. Cells that hit the cell size limit return `"ERROR_ACTION_OUTPUT_DATA_SIZE_LIMIT_EXCEEDED"`; cells that ran successfully but found nothing return `"SUCCESS_NO_DATA"`; cells with data return `"SUCCESS"`. Filter or sort the table on this formula column to isolate the error rows without catching legitimate empty results.
 
 For the full list of `getCellStatus()` return values, see [Formulas](formula-generator.md).
+
+## Troubleshooting: persistent error messages
+
+If an error message stays visible after the underlying issue has been resolved — for example, after reauthorizing a connection, correcting a run setting, or confirming that a run has completed — the cause is usually stale browser state. Clearing your browser cache and refreshing the page resolves this in most cases.
+
+**To clear cache and refresh:**
+
+1.  **Clear your browser cache** — Open your browser settings, navigate to the Privacy or History section, and select **Clear browsing data**. Check **Cached images and files**, then clear. In Chrome, you can navigate directly to `chrome://settings/clearBrowserData`.
+2.  **Refresh the page** — Press `Ctrl+R` (Windows/Linux) or `Cmd+R` (Mac) after clearing, or use a hard refresh (`Ctrl+Shift+R` / `Cmd+Shift+R`) to bypass the cache without clearing it entirely.
+
+If the error persists after clearing the cache and refreshing, visit [status.clay.com](https://status.clay.com/) to check for any active platform incidents.
