@@ -114,6 +114,18 @@ If the count still doesn't match after the import finishes, the **preview count*
 
 Also check your **Limit results** setting: the import won't exceed whatever limit you've configured (default 10,000).
 
+### My search preview shows more than 10,000 results — how do I import all of them?
+
+Find Companies caps imports at 10,000 results per search. When your filters match more than 10,000 companies, the import stops at that limit — there is no way to raise it within a single search.
+
+To capture the full universe, split your search into smaller segments so each import stays under the cap. Use any filter dimension to divide the space:
+
+-   **By location** — Run separate searches for each region, country, or group of states.
+-   **By industry** — Run one search per industry category or group of categories.
+-   **By company size** — Split across size bands (for example, 1–50 employees, 51–200 employees, and so on).
+
+Each segmented search imports into its own table.
+
 ### What does the Estimated employee count filter measure?
 
 The **Estimated employee count** filter reflects the number of professional profiles associated with a company. Because this can include profiles from people who are no longer current employees — as well as anyone who has listed the company in their profile — the count may run higher than the company's actual active headcount.
