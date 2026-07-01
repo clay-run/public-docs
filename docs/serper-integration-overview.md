@@ -28,18 +28,18 @@ Pull Google Search results into a Clay table as rows. Use this source to seed a 
 
 The query field accepts standard Google search operators, which let you narrow results precisely:
 
--   **`site:`** — restrict results to a specific domain. Example: `site:linkedin.com`
--   **`intitle:`** — match pages with specific words in the title. Example: `intitle:"VP of Sales"`
+-   **`site:`** — restrict results to a specific domain. Example: `site:crunchbase.com`
+-   **`intitle:`** — match pages with specific words in the title. Example: `intitle:"Series A"`
 -   **`inurl:`** — match pages with specific terms in the URL. Example: `inurl:company`
 -   **`" "`** — exact phrase match. Example: `"software company"`
 -   **`AND` / `OR`** — combine or broaden terms. Example: `"SaaS" OR "software startup"`
 -   **`-`** — exclude a term. Example: `-jobs -careers`
 
-**Example** — to find technology company executives listed on LinkedIn:
+**Example** — to find technology company executives on a professional network:
 
-`site:linkedin.com intitle:"CEO" AND ("software company" OR "tech startup")`
+`site:[professional-network-domain] intitle:"CEO" AND ("software company" OR "tech startup")`
 
-Combine operators to build highly targeted queries. For help constructing LinkedIn profile searches, [recruitin.net](https://recruitin.net/) can generate a Google query you can copy directly into this field.
+Combine operators to build highly targeted queries. For help constructing professional network profile searches, [recruitin.net](https://recruitin.net/) can generate a Google query you can copy directly into this field.
 
 ## Available actions
 
