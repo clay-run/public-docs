@@ -225,6 +225,12 @@ Once downgraded to the Free plan, your Data Credit balance is capped at **200 cr
 
 To avoid an interruption, keep your payment information current in `Settings` → `Plan & billing`.
 
+### Why was my account locked?
+
+Clay automatically flags accounts suspected of fraud or abuse of free trial credits. If your account has been locked, you'll see a message on the sign-in screen indicating your account has been temporarily locked for fraud protection.
+
+To request a review and have your account unlocked, email [verification@clay.com](mailto:verification@clay.com).
+
 ### Why am I being charged sales tax?
 
 For customers in the United States, Clay is required to charge and collect taxes in jurisdictions that have laws taxing our products and where Clay has either a physical presence or has met certain economic thresholds — such as sales volume or number of customers in a region. These taxes vary by jurisdiction and include sales taxes and excise or privilege taxes.
