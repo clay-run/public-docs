@@ -72,6 +72,24 @@ To export the complete text, extract the specific field into a dedicated column 
 3.  Run the new column to populate it with the full text values.
 4.  Export the table — the new column will contain the untruncated text in the CSV download.
 
+### Exporting a specific subset of contacts
+
+To export only specific contacts from a table — for example, contacts at a particular company or contacts matching a custom condition — first narrow the view to those rows, then export.
+
+**Step 1: Identify the contacts**
+
+Use any of the following to target the rows you want:
+
+-   **View filter:** Click **Filter** in the table toolbar and add conditions (for example, Company Name equals "Acme"). Only rows that match all conditions remain visible. See [Filter rows](table-columns-overview.md#filter-rows) for full syntax.
+-   **Checkbox column:** Add a checkbox column (`+ Add column` → **Checkbox**), mark the rows you want, then filter where that column equals `true`.
+-   **Formula column:** Add a formula column that evaluates to `true` for qualifying rows (for example, `{{Company Name}} === "Acme"`), then filter where that column is `true`.
+
+**Step 2: Export the filtered contacts**
+
+-   **Download as CSV:** With the filter active, click `Tools` → `Export` → `Download CSV`. The export uses the active view, so only the rows currently visible are included in the download.
+-   **Route to another Clay table:** Add a [Send Table Data](send-table-data.md) column and set a run condition that targets the rows to export (for example, where a checkbox column is `true` or a formula column evaluates to `true`). Only matching rows are sent; others show "Run condition not met."
+-   **Push to Google Sheets, Airtable, or a CRM:** Add the corresponding integration column with the same run condition. Only matching rows are pushed to the external destination.
+
 ## Importing accounts and contacts together
 
 The recommended setup for working with both companies and people in Clay is two linked tables in the same workbook — one for accounts/companies and one for contacts/people.
