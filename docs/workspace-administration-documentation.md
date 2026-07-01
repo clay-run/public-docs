@@ -36,7 +36,7 @@ Clay supports three display themes that you can switch at any time:
 
 -   **Standard** — the default light theme.
 -   **System** — follows your device or operating system's appearance setting, switching between light and dark automatically.
--   **Dark** — a dark color scheme for the entire Clay interface. The Dark option is labeled **beta** in the UI, indicating the color system is still being refined and visual details may change over time.
+-   **Dark** — a dark color scheme for the entire Clay interface.
 
 To change your theme:
 
