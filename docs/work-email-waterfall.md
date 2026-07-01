@@ -206,7 +206,7 @@ To have validation run automatically right after an email is found:
 
 Once auto-run is enabled at the table level, the waterfall will flow through to the validation step on its own as soon as an email is found.
 
-**Note:** Table-level auto-run is the master switch — even if a column's own auto-run is enabled, it won't fire if the table-level setting is off. See [Table management settings](table-management-settings.md) for a full breakdown of how table-level and column-level auto-run interact.
+**Note:** Table-level auto-run is the master switch — even if a column's own auto-run is enabled, it won't fire if the table-level setting is off. See [Auto-run](auto-run.md) for a full breakdown of how table-level and column-level auto-run interact.
 
 ### Can I use both Infer Email and a validation strategy together?
 
