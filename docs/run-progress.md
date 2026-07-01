@@ -155,9 +155,9 @@ If cells remain Queued for an extended period, common causes include:
 
 ## Troubleshooting: table appears stopped at a partial percentage with no credits consumed
 
-If your table completes at a partial percentage — for example, 20–40% — and no credits are being consumed, enrichment cells have likely failed with `ERROR_MISSING_INPUT`. This error means a required input field is blank for those rows.
+If your table completes at a partial percentage — for example, 20–40% — and no credits are being consumed, enrichment cells have likely failed with `ERROR_MISSING_INPUT`. This error means a required input field is blank for those rows. In the cell UI, this status appears as **"Some inputs missing"**.
 
-**`ERROR_MISSING_INPUT` cells are counted as Failed (🔴)** in the progress bar — the table has already processed those cells, just without a result. Clay does not charge credits for these cells, because the enrichment aborts before calling the external data provider.
+**`ERROR_MISSING_INPUT` cells are counted as Failed (🔴)** in the progress bar and appear in filtered views of errored rows — the table has already processed those cells, just without a result. Clay does not charge credits for these cells, because the enrichment aborts before calling the external data provider.
 
 **Most common cause: source data not yet populated**
 
@@ -174,6 +174,13 @@ This frequently happens when using a template or pre-built workflow where enrich
 3.  Once the required input data is in place, right-click the enrichment column header → **Run column** → **Run [N] empty or out-of-date rows** to re-process those cells.
 
 > **Tip:** Clay's [Sculptor](sculptor.md) can analyze your table structure and identify what's missing. Click **Chat with Sculptor** in the top-right corner of your table.
+
+**When only some rows are missing the required input**
+
+If the required input is intentionally blank for certain rows — for example, a column references "Company Revenue" but only some companies have that data populated — those rows will show "Some inputs missing" indefinitely. Two options to resolve this:
+
+-   **Make the input optional.** Open the column settings and find the input field that is blank for those rows. Turn off its **Required to run** toggle. The column will run for all rows; for rows where that input is blank, the column proceeds without it.
+-   **Add a run condition.** Add a [run condition](conditional-runs.md) so the column only fires when the required input has a value. Rows without that input will show **"Run condition not met"** instead — and unlike "Some inputs missing," that status is treated as a successful skip (🟢), so those rows no longer appear in errored row views.
 
 ## Troubleshooting: enrichments not triggering automatically despite auto-run being enabled
 
