@@ -173,7 +173,7 @@ To identify what triggered a specific run, use the **Run view** in the [table cr
 
 Clicking **Stop** on a running table or canceling a column run does not immediately halt all enrichments. Clay cancels cells that are still queued (not yet dispatched), but any requests already sent to an external data provider will run to completion and consume credits. You may see a brief delay before the table fully halts while these in-progress calls finish.
 
-To avoid unexpected spend before it starts, disable [auto-run](table-management-settings.md) before importing large batches of rows. See [Stopping a run](run-progress.md) for full details on stop and cancel behavior.
+To avoid unexpected spend before it starts, disable [auto-run](auto-run.md) before importing large batches of rows. See [Stopping a run](run-progress.md) for full details on stop and cancel behavior.
 
 ### Credits spiked after editing a formula or upstream column
 
@@ -188,7 +188,7 @@ With **Keep existing results** on, auto-run only fires on cells that are empty o
 
 Alternatively, turn auto-run **off** entirely before editing (`⛭` → toggle **Auto-run** off), make your changes, then manually run only the specific rows or columns you need.
 
-See [Table management settings](table-management-settings.md) for full details on **Keep existing results** and how the auto-run mode affects which cells run.
+See [Auto-run](auto-run.md) for full details on **Keep existing results** and how the auto-run mode affects which cells run.
 
 ### Requesting a goodwill credit refund
 
