@@ -91,6 +91,18 @@ After importing Find People results, use Clay's enrichments to add contact infor
 
 **Mobile phone:** To find mobile phone numbers, click `Add enrichment`, search for `Phone number`, and select the waterfall option under **Waterfalls**. The phone number waterfall cascades through multiple providers in sequence — providers that return no result are skipped at no credit cost, so you only pay when a provider finds a number. For provider recommendations by region, see [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md).
 
+## FAQs
+
+### Does importing from Find People cost credits?
+
+**No.** Importing people from Clay's database using the Find People source consumes no Data Credits. The same applies to the Find Companies and Find Jobs sources — pulling records from Clay's dataset is free.
+
+Any enrichments you add afterward (work email, phone number, profile enrichment) consume their own Data Credits as usual. Each Find People source also has a cumulative profile limit that varies by billing plan — see [your source has exceeded your plan's limit](finding-companies-and-people-in-clay.md#your-source-has-exceeded-your-plans-limit-error-on-find-companies-or-find-people) for troubleshooting.
+
+### Can I see the total number of people that match my search before importing?
+
+**Yes.** The search wizard shows a result count directly in the interface — you can see how many people match your filters before clicking Import. The count also shows how many rows will be imported based on your **Limit results** setting. For very large searches, the count may display as a capped number with a "+" indicator; hover over it to load the full exact total.
+
 ## Importing from a Sales Navigator search URL
 
 If you have a saved Sales Navigator search and want to pull those results into Clay, use the **Find people from external search** source — not the standard Find People source described above.
