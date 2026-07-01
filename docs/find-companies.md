@@ -114,6 +114,12 @@ If the count still doesn't match after the import finishes, the **preview count*
 
 Also check your **Limit results** setting: the import won't exceed whatever limit you've configured (default 10,000).
 
+### What does the Estimated employee count filter measure?
+
+The **Estimated employee count** filter reflects the number of LinkedIn profiles associated with a company. Because this can include profiles from people who are no longer current employees — as well as anyone who has listed the company in their profile — the count may run higher than the company's actual active headcount.
+
+Use it as a directional signal for company size rather than a precise figure. For a second data point, compare with **Company size** (the self-reported size band the company has set on its own profile), which measures something different — see [Why do Company sizes and Estimated employee count return different results for the same range?](#why-do-company-sizes-and-estimated-employee-count-return-different-results-for-the-same-range).
+
 ### Why do Company sizes and Estimated employee count return different results for the same range?
 
 These two filters measure different things:
