@@ -35,7 +35,7 @@ Pull Google search results as rows into a Clay table. Use this source when you w
 
 **Inputs**
 
--   **Google search query**: The query to run. Supports Google search operators (e.g., `site:linkedin.com intitle:"CEO"`). See [Using Google search operators](#using-google-search-operators) below.
+-   **Google search query**: The query to run. Supports Google search operators (e.g., `site:crunchbase.com intitle:"CEO"`). See [Using Google search operators](#using-google-search-operators) below.
 -   **Number of results** (Optional): Number of results to return. Maximum is 300.
 -   **Language** (Optional): Language for the search. Defaults to English.
 -   **Country** (Optional): Country to scope the search to. Defaults to United States.
@@ -48,20 +48,18 @@ Each result row contains: Title, Link, Displayed link, Snippet, Position, Thumbn
 
 The **Google search query** field in both **Find with a Google Search** and **Search Google (Perform Search)** accepts standard Google search operators for precision targeting:
 
--   `site:` — restrict results to a specific domain (e.g., `site:linkedin.com`)
+-   `site:` — restrict results to a specific domain (e.g., `site:crunchbase.com`)
 -   `intitle:` — match pages with a specific word in the title (e.g., `intitle:"CEO"`)
 -   `inurl:` — match pages with a specific word in the URL (e.g., `inurl:about`)
 -   `" "` — exact phrase match (e.g., `"software company"`)
 -   `AND` / `OR` — combine or broaden search terms
 -   `-` — exclude pages containing a specific term
 
-**Example:** To find LinkedIn profiles of technology company executives:
+**Example:** To find technology company executive profiles on a professional directory:
 
 ```
-site:linkedin.com intitle:"CEO" AND ("software company" OR "tech startup")
+site:crunchbase.com intitle:"CEO" AND ("software company" OR "tech startup")
 ```
-
-**Tip:** For LinkedIn-specific queries, use [recruitin.net](https://recruitin.net/) to build your search, open it in Google, and copy the resulting query string into Clay.
 
 ## Using Serper with your own API key
 
