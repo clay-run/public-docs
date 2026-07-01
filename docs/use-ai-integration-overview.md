@@ -141,6 +141,20 @@ To call a custom or additional LLM from Clay, use the [HTTP API enrichment](http
 -   You will not have access to Use AI's built-in features such as structured output configuration, model comparison, or web research (Claygent) mode.
 -   Each table row generates one API call to your LLM endpoint.
 
+## AI confidence indicators
+
+When a Use AI or Claygent column completes successfully, a small colored icon appears inside each result cell to indicate the AI's confidence level in its output:
+
+-   **Green circle** — `high` or `very high` confidence. The AI completed the task and the result aligns well with the prompt's intent.
+-   **Orange triangle** — `medium` confidence. The AI returned a result but encountered some uncertainty during processing. Review these cells to confirm the output meets your needs.
+-   **Red square** — `low` confidence. The AI returned a result but was not confident in the output quality. These cells warrant closer inspection before use.
+
+These icons only appear on cells that ran and returned data successfully. A cell that failed with an error shows a status message instead of a confidence icon.
+
+The underlying value is stored in the `confidence` sub-field of each cell (`low`, `medium`, `high`, or `very high`). You can reference it in a formula column — for example, `{{Your AI Column}}.confidence` — to filter or flag rows that need review. For details on how the `confidence` field interacts with custom output schemas, see [Claygent builder](claygent-builder.md).
+
+> **Note:** For the keyboard icon (⌨️) that appears above basic columns with no formulas, see [Run progress](run-progress.md).
+
 ## Troubleshooting
 
 ### How do I change the prompt on an AI column after it has already run?
