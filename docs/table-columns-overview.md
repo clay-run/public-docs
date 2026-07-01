@@ -189,7 +189,7 @@ You can filter your table to show only rows that match specific criteria. Filter
 
 ### Check whether a filter is active
 
-When a filter is active, the **Filter** button in the toolbar shows a number badge, and the row count displays as **X / Y rows** — X is the number of rows passing the filter, Y is the total. If Y is higher than X, some rows are being hidden by the active filter.
+When a filter is active, the **Filter** button in the toolbar shows a number badge, and the row count displays as **X / Y rows** — X is the number of rows passing the filter, Y is the total. If Y is higher than X, some rows are being filtered by the active filter.
 
 ### Filters and source row limits
 
@@ -241,7 +241,7 @@ If you need to collect **all values** from multiple columns into a list — for 
 
 ### Troubleshooting merge columns
 
-**The merge column stays empty even though upstream columns have data.** The most common cause is stale upstream columns. A Merge column returns the first non-empty value from the columns in its formula, but only reflects current data. If an upstream column shows the out-of-date indicator (the clock icon), re-run it first: right-click the column header and select **Run column → Run [N] empty or out-of-date rows**. Once the upstream column refreshes, the merge column will pick up the new value.
+**The merge column stays empty even though upstream columns have data.** The most common cause is stale upstream columns. A Merge column returns the first non-empty value from the columns in its formula, but only reflects current data. If an upstream column shows the out-of-date indicator (the clock icon), re-run it first: click the column header and select **Run column → Run [N] empty or out-of-date rows**. Once the upstream column refreshes, the merge column will pick up the new value.
 
 **The merge column doesn't update after new upstream data arrives.** If auto-run is disabled at the table level, downstream columns — including Merge columns — won't update automatically when upstream data changes. To re-enable: click the `⛭` icon in the top toolbar → toggle **Auto-run** on, then choose **Update cells** to immediately process rows that are out of date. See [Table management settings](table-management-settings.md#auto-run) for details on table-level and column-level auto-run.
 
