@@ -298,6 +298,18 @@ Pulling properties directly from the enrichment column gives you access to the f
 
 **Skipping rows where scraped data is missing:** If you want the AI column to skip rows where the Scrape Website column returned no data, add a run condition. Open the AI column's **Run Settings**, click **Add run condition**, and set it to `/Scrape Website is not empty`. See [Conditional runs](conditional-runs.md) for full details.
 
+### Column header shows a warning icon when using your own OpenAI API key
+
+If a Use AI column header displays a **yellow warning icon** after you connect your own OpenAI API key, Clay has detected that the rate limits on your OpenAI account for the selected model are low. The column will still run but may process rows slowly, because Clay throttles requests to stay within your key's token-per-minute (TPM) limits.
+
+**Resolution options:**
+
+1. **Switch to Clay's managed OpenAI account (recommended).** Open the column settings, click the **Account** dropdown, and select the default Clay-managed account. Clay's managed account handles rate limits automatically — no tier upgrade needed on your end.
+
+2. **Upgrade your OpenAI API usage tier.** In your OpenAI account, increase your usage tier to raise your TPM limits. You can review your current limits and request a tier increase at [Limits](https://platform.openai.com/settings/organization/limits). See [OpenAI usage tiers](https://platform.openai.com/docs/guides/rate-limits#usage-tiers) for details on each tier.
+
+**Note:** If the column header shows a **red warning icon** instead of yellow, the rate limits on your key are too low to run the column at all — not just slow. Switching to Clay's managed account or upgrading to a higher OpenAI tier is required before the column can run. See [AI tokens](ai-tokens.md) for minimum TPM requirements by model.
+
 ### Cells showing "Rate limit wait time exceeded" with your own OpenAI API key
 
 If cells in a **Use AI** column show a **"Rate limit wait time exceeded"** error and you have your own OpenAI API key connected, the error means Clay has hit the token-per-minute (TPM) rate limits on your key. Clay automatically waits for the rate-limit window to reset before retrying, but if your key's TPM limits are persistently below what the operation requires, rows will remain stuck.
