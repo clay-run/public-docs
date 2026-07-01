@@ -140,7 +140,7 @@ Lists are optional. You can write individual values or entire lists depending on
 
 ### **What should I do if my Write to Other Table column isn't processing correctly?**
 
-If the column isn't running, force-run it: right-click the column header and select **Run column** → **Force run all [N] rows**. This re-queues every row regardless of its current status. Credits are charged for every row re-run; the UI shows the estimated cost before you confirm.
+If the column isn't running, force-run it: right-click the column header and select **Run column** → **Force run all [N] rows**. This re-queues every row regardless of its current status.
 
 If the issue persists, rebuild the column:
 
