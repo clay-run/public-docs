@@ -137,3 +137,13 @@ Once complete, you can send the newly created list to the desired column or tabl
 ### **Can I write individual values to another table, or does it have to be a list?**
 
 Lists are optional. You can write individual values or entire lists depending on your column setup.
+
+### **What should I do if my Write to Other Table column isn't processing correctly?**
+
+If the column isn't running, force-run it: right-click the column header and select **Run column** → **Force run all [N] rows**. This re-queues every row regardless of its current status.
+
+If the issue persists, rebuild the column:
+
+1.  Delete the affected Write to Other Table column.
+2.  Create a new Write to Other Table column and reconfigure the mapping.
+3.  Re-map your data to the destination table. Ensure **auto-dedupe** is enabled in the destination table (see [Auto-dedupe](table-management-settings.md#auto-dedupe)) to prevent duplicate rows.
