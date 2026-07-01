@@ -144,10 +144,10 @@ This prevents unexpected credit usage when you add new data to tables with exist
 
 ### Enrichments ran on all rows when setting up a new table
 
-The import warning and the first-10-rows auto-run limit both protect you when **adding a source to an existing table** — but neither applies when you create a **brand-new table** with a source and enrichment columns for the first time.
+The import warning and the first-10-rows auto-run limit both protect you when **adding a People, Companies, or Jobs search source to an existing table** — but neither applies when you create a **brand-new table** with a source and enrichment columns for the first time.
 
 -   **No import warning**: Clay shows the confirmation modal only when a source is added to a table that already has enrichment columns. A new table has no action columns at the moment the source first runs, so no credit-spend warning appears.
--   **Enrichments fire on all imported rows**: The first-10-rows auto-run limit only applies when importing into an existing table. For a new table, enrichments with auto-run enabled queue on every row the source imports — not just the first 10.
+-   **Enrichments fire on all imported rows**: The first-10-rows auto-run limit only applies to People, Companies, and Jobs search sources when first added to an existing table. For a new table, enrichments with auto-run enabled queue on every row the source imports — not just the first 10.
 
 To safely test a new table before committing credits at scale:
 
@@ -177,12 +177,12 @@ To avoid unexpected spend before it starts, disable [auto-run](auto-run.md) befo
 
 ### Credits spiked after editing a formula or upstream column
 
-When you edit a formula in a column that other enrichments reference, Clay marks all downstream cells as stale. With auto-run in its default **run all cells** mode, this queues a re-run for every stale cell across all rows — which can trigger every dependent enrichment column at once and produce a large, unexpected credit charge.
+When you edit a formula in a column that other enrichments reference, Clay marks all downstream cells as stale. If **Keep existing results** is off, this triggers a re-run for every stale cell across all rows — which can fire every dependent enrichment column at once and produce a large, unexpected credit charge.
 
-To avoid this, enable **Keep existing results** before making formula or configuration changes:
+Before making formula or configuration changes, verify that **Keep existing results** is on:
 
 1.  Click `⛭` in the top toolbar to open Run Settings.
-2.  Check **Keep existing results**.
+2.  Confirm **Keep existing results** is checked. (It is on by default for new tables — turn it off only when you explicitly want all cells to re-run.)
 
 With **Keep existing results** on, auto-run only fires on cells that are empty or errored — cells that already have a result are skipped, even when their upstream formula changes. This lets you update formulas without re-running (and re-charging) your entire table.
 
