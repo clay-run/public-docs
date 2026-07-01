@@ -200,8 +200,8 @@ Repeat for as many posts as you need. Each column stays under the 8KB limit. See
 
 **If the enrichment returns no data or fewer posts than expected:**
 
-This enrichment uses a third-party data provider authenticated with its own credentials — not your LinkedIn session. As a result, the provider may not see all posts that are visible to you when browsing LinkedIn while signed in, and some recent posts can be missed.
+This enrichment uses a third-party data provider authenticated with its own credentials — not your professional network session. As a result, the provider may not see all posts that are visible to you when browsing the platform while signed in, and some recent posts can be missed.
 
 If a row returns empty or incomplete results, re-running the enrichment on that row may return more complete data on a subsequent attempt.
 
-For more control over LinkedIn post retrieval, you can connect a tool like Phantombuster or Apify to Clay and run lookups using your own LinkedIn session cookie, which can improve coverage for profiles whose activity is not fully visible to unauthenticated providers.
+For more control over post retrieval, you can connect a tool like Phantombuster or Apify to Clay and run lookups using your own session cookie, which can improve coverage for profiles whose activity is not fully visible to unauthenticated providers.
