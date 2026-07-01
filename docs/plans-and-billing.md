@@ -82,6 +82,12 @@ When your 14-day trial ends, your workspace automatically moves to the Free plan
 -   **Table limit:** 50,000 rows per standard table (this limit applies by default and is not automatically removed on Enterprise); use [bulk enrichment](bulk-enrichment.md) to process larger datasets — rows are enriched in rolling batches and sent to your destination with no cumulative row cap
 -   **Benefits:** Volume discounts on data credits at higher tiers, dedicated Growth Strategist, managed onboarding, data warehouse integrations, bulk enrichment, SSO, RBAC
 
+### Requesting a demo
+
+To explore Clay's Enterprise plan or get a guided overview for your team's use case, submit the inquiry form at [clay.com/enterprise](https://www.clay.com/enterprise).
+
+Clay also offers regular live demo sessions open to all customers. Each session is hosted by a Clay team member and covers common use cases, workflows, and live Q&A — no preparation required. To see upcoming sessions and register, visit [clay.com/webinar/clay-open-studio](https://www.clay.com/webinar/clay-open-studio).
+
 ### Downgrade your plan
 
 To downgrade your Clay workspace plan:
