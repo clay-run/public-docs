@@ -197,6 +197,18 @@ Clay does not automatically detect which concurrent role is the "main" job. To i
     -   `primary_company` (Text) — the company for that role
 
 Using the **Generate tab** (describe what you want in plain English) is the fastest way to configure this — Clay will set up the prompt and output fields automatically.
+
+### Calculate how long a contact has been in their current role
+
+To find out how long people on an existing list have been in their current positions, run **Enrich person** and combine the returned start date with a **Use AI** column:
+
+1.  In your people table, click **Add enrichment**, search for **Enrich person**, and add the enrichment. Map the **Professional URL** input to your LinkedIn URL column.
+2.  Add a **Use AI** column. Reference the current position's start date with `{{Enrich person}}?.current_experience?.[0]?.start_date` and use a prompt like: *"How long ago was [start date] from today? Return as a decimal number of years, rounded to one decimal place."*
+
+The enrichment returns a `start_date` for each active role. The AI column converts that date into a tenure figure you can sort, filter, or use in downstream formulas.
+
+**Note:** If you want to filter contacts at the search stage rather than enriching afterward, use the **Months in current role** filter in **Find People** — it returns only people whose current role duration falls within a range you set. See [Find People in Clay](find-people-overview.md) for details.
+
 ### Find people who previously worked at a specific company
 
 The **Companies** filter targets people who **currently** work at the companies you specify. Enabling the main **Include past experiences** toggle alongside a Companies filter extends that filter to past roles too — returning both current and former employees of those companies, which is not useful if you want alumni who are now elsewhere.
