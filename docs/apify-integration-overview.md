@@ -1,8 +1,8 @@
 ---
 title: Apify integration
 description: Web scraping and automation platform providing data for AI and
-  custom solutions, with troubleshooting for incomplete imports, duplicates,
-  and data overwrites.
+  custom solutions, with troubleshooting for delayed imports, incomplete
+  imports, duplicates, and data overwrites.
 last_synced: 2026-04-26T01:39:40.957Z
 ---
 
@@ -88,6 +88,18 @@ To reliably pull a specific type of value regardless of where it appears in the 
 **Tip:** For output that varies too unpredictably for a regex pattern, use an [AI formula column](https://www.clay.com/university/lesson/how-to-use-ai-formulas) and prompt it to find the specific value — for example: *"Find the Instagram URL in {{Apify Results}}"*.
 
 ## Troubleshooting
+
+### No new data or delayed imports
+
+If your Apify source table has not received new data, the source's refresh schedule is the most likely cause. By default, the source refreshes once daily. If the last scheduled run hasn't fired yet, new rows won't appear until the next refresh window.
+
+To see when the next update is due or to trigger an import immediately:
+
+1. Click the **database icon** in the Apify column header.
+2. Select your source to open the source details sidebar.
+3. Click **Run now** to pull in the latest data right away.
+
+To change the refresh frequency, open the source settings from the same sidebar and update the schedule. Available options include daily, weekly, monthly, and quarterly; hourly is available on supported workspaces.
 
 ### Incomplete imports
 
