@@ -385,3 +385,22 @@ When you open an **Update Object** column and select an **Object type**, the ava
 **The HubSpot connection may be missing required OAuth scopes.** Clay uses the `crm.schemas.companies.read` and `crm.schemas.contacts.read` scopes to load property lists for Company and Contact objects (for deals, `crm.schemas.deals.read` is also required). If these scopes were not granted when you first connected HubSpot, the field picker returns no properties. To fix this, open **Settings → Integrations → HubSpot**, click the `···` menu next to your connection, and choose **Re-authenticate** — this re-requests the full scope set without changing your connection ID or breaking existing columns.
 
 **The connection may be broken or expired.** If Clay cannot reach HubSpot with a valid access token, the field picker silently returns no properties. Open the column settings and verify the selected account shows **Success** in Settings. If it shows an error, see the FAQ above ("Why does my HubSpot column still show 'Missing authentication' after I reconnect my account?") for how to restore the credential without losing your column configurations.
+
+### How can I create HubSpot notes from Clay?
+
+Clay's HubSpot integration does not include a native action for creating Notes. To create notes from Clay, use the **HTTP API** integration with a HubSpot Private App token to call HubSpot's CRM objects endpoint directly.
+
+**Setup:**
+
+1. In your Clay table, add an **HTTP API** column.
+2. Set the **Method** to `POST` and the **URL** to `https://api.hubapi.com/crm/v3/objects/notes`.
+3. Add an `Authorization` header set to `Bearer <your-private-app-token>`.
+4. In the request body, include a `properties` object with the fields you want to populate:
+   - `hs_timestamp` — the date and time of the note in ISO 8601 format (e.g. `2024-01-15T10:00:00Z`)
+   - `hs_note_body` — the text content of the note
+   - `hubspot_owner_id` — optional; the HubSpot owner to assign the note to. Use Clay's **Find owner** action to get the correct owner ID.
+5. To associate the note with an existing contact, deal, or other HubSpot object, include an `associations` array in the request body. For a note-to-contact link, use HubSpot association type `202`.
+
+**Tip:** Use the `hs_object_id` returned by a HubSpot **Lookup object** column to get the correct object ID for the association target.
+
+If a note you created does not appear in HubSpot, confirm that your HubSpot role has permission to view unassigned notes and that your HubSpot view filter includes notes.
