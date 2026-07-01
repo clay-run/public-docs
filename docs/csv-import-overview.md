@@ -79,3 +79,15 @@ Fields can end up in the wrong columns when:
 -   **Data values contain the separator character without quoting.** If your separator is a comma and a field value also contains a comma — for example, a company name like `Smith, Jones & Co.` — the parser may split that value into two separate fields. Wrap such values in double quotes (`"Smith, Jones & Co."`) or remove the separator character from the value before importing.
 
 To confirm which separator your file uses, open it in a plain text editor. Once you've identified it, check that no data values contain that same character without surrounding double quotes.
+
+**If your upload is blocked because the file is too large:**
+
+Clay's CSV import supports a maximum of **100 columns** and **50,000 rows** per file by default. Uploads that exceed either limit are rejected before the import can proceed. If your file exceeds the column limit, remove any columns you don't need before uploading; if it exceeds the row limit, split it into smaller batches. If your workspace has a lower column limit configured by Clay support, the error will appear at that threshold instead.
+
+**If your upload fails with an encoding error:**
+
+Clay requires **UTF-8 encoded** CSV files. Files saved with other encodings (such as Latin-1 or Windows-1252) will produce garbled output or fail to import. When exporting from a spreadsheet tool, look for a "UTF-8" or "CSV UTF-8" save option. If you are unsure of your file's encoding — or if the upload fails for no obvious reason — paste your data into a Google Sheet and download it as a CSV (`File → Download → Comma-separated values`). Google Sheets exports UTF-8 by default and also strips hidden formatting artifacts and inconsistent line endings that can cause upload failures. After downloading the cleaned file, try the import again.
+
+**If the upload still fails after the steps above:**
+
+Make sure your CSV file name is short. Long file names can interfere with the upload process. Rename the file to a brief descriptive name and try again.
