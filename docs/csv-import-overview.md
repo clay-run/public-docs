@@ -63,6 +63,19 @@ CSV import cannot update rows that already exist in Clay — there is no upsert 
 1.  Import the enriched CSV as a **new** Clay table (choose `Create new table` at step 3 above).
 2.  In your original table, click **Add enrichment** and search for **Lookup Single Row in Other Table**.
 3.  Set the matching column (e.g., LinkedIn Profile URL) so Clay finds the right row in the new table.
-4.  Map the column you want to populate (e.g., "Keep/Remove") as an output.
+4.  Map the column you want to populate (e.g., "Keep/Remove\") as an output.
 
 Each existing Clay row fetches the matching value from the new table without creating duplicates.
+
+## Troubleshooting CSV field issues
+
+**If columns appear mixed up or data lands in the wrong fields:**
+
+Clay auto-detects the separator character (delimiter) used in your CSV. Supported separators are comma (`,`), semicolon (`;`), tab, and pipe (`|`). Clay samples the file and picks the separator that appears most consistently across rows.
+
+Fields can end up in the wrong columns when:
+
+-   **The file mixes separator characters.** If some rows use commas and others use semicolons as the separator, Clay picks one for the whole file and the rows using the other separator will misparse. Each CSV should use a single, consistent separator throughout.
+-   **Data values contain the separator character without quoting.** If your separator is a comma and a field value also contains a comma — for example, a company name like `Smith, Jones & Co.` — the parser may split that value into two separate fields. Wrap such values in double quotes (`"Smith, Jones & Co."`) or remove the separator character from the value before importing.
+
+To confirm which separator your file uses, open it in a plain text editor. Once you've identified it, check that no data values contain that same character without surrounding double quotes.
