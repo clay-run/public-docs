@@ -56,7 +56,7 @@ Viewers can be granted Editor access to specific tables or workbooks, or added a
 **To add a Viewer as a workbook collaborator:**
 
 1.  In the workbook, go to workbook settings on the right side.
-2.  Under `Access permissions`, change `Edit access` to `Admin and invited collaborators only`.
+2.  Under `Access permissions`, change `Edit access` to `Admins and invited collaborators only`.
 3.  Click `+ Add collaborator` and select the Viewer.
 
 ## Sales rep _(Beta)_
@@ -122,8 +122,10 @@ To remove a member from your workspace:
 Workspace admins can edit access levels for specific workbooks. This helps prevent accidental changes to important tables.
 
 1.  In a workbook, click the title → `Edit workbook settings`.
-2.  Under `Edit Access`, select the desired access level.
-3.  If `Workspace admins and specific collaborators` is selected, an option to `+ Add collaborators` will appear.
+2.  Under `Edit Access`, select one of the following access levels:
+    -   **Admins and editors in this workspace** — all admins and editors in the workspace can access the workbook.
+    -   **Admins and invited collaborators only** — restricts access to admins and any collaborators you explicitly invite.
+3.  If `Admins and invited collaborators only` is selected, an option to `+ Add collaborators` will appear.
 
 ## Related access controls
 
