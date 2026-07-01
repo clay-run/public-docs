@@ -93,11 +93,13 @@ To reliably pull a specific type of value regardless of where it appears in the 
 
 If you added rows to a table that uses Apify as a source but no new data has appeared, the delay may be due to the import refresh schedule. The Apify source refreshes every 24 hours by default.
 
-To see when the next refresh is scheduled or to trigger an update immediately:
+To trigger an update immediately:
 
 1. Click the **Apify** source column header.
 2. Select **Sources**.
-3. The source settings panel shows when the next scheduled run will occur. To refresh immediately, click **Run now**.
+3. Click **Run now** in the source settings panel.
+
+To check when the next scheduled run is due, open the table toolbar's scheduled runs panel.
 
 ### Incomplete imports
 
