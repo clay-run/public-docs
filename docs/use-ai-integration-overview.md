@@ -177,6 +177,22 @@ To test the updated prompt on a small sample before committing to a full re-run,
 
 **If the Prompt field appears read-only:** the column is linked to a standalone agent managed in Claygent Builder. Click the **Edit** button in the settings panel to open the agent in Claygent Builder, update the prompt there, and save. The change applies to all tables using that agent. See [Claygent Builder](claygent-builder.md) for details.
 
+### How do I edit the output of a single AI cell, or fix a cell that won't rerun correctly?
+
+If an AI column produced the wrong result for one row, you have a few options to fix just that cell without rerunning the entire column:
+
+**Rerun a single cell**
+
+Hover over the cell in the table. A **▶ Run cell** button appears in the top-right corner of the cell. Click it to force-rerun that individual cell without touching any others.
+
+**Paste the correct value into the response column**
+
+If you have the `response` output extracted as a separate column (a basic field that references the AI column's output), you can paste the correct value directly into that column for the affected row. This sets a manual override without consuming credits. Note: pasting directly into the main AI action cell itself is not supported — the paste target must be the extracted `response` field column.
+
+**Run the AI only for that row (workaround for persistent issues)**
+
+If rerunning the AI column for that row continues to return incorrect results and a direct paste isn't suitable, add a new AI column with a [run condition](conditional-runs.md) that targets only the specific row. In the new column's **Run Settings**, click **Add run condition** and write a formula that evaluates to `true` only for that row — for example, matching a unique identifier or a value specific to that contact. This isolates the AI prompt for the edge case without affecting the rest of your table.
+
 ### Cells showing "Some inputs missing"
 
 When a cell shows **"Some inputs missing"**, one or more column references in your prompt are marked as required but the underlying column is blank for that row. The cell will not run for affected rows.
