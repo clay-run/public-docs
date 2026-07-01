@@ -27,9 +27,13 @@ From the `Campaigns` homepage, go to the `Email Accounts` tab and click `Add Ema
 
 ![](https://cdn.prod.website-files.com/687e604972375496b891fe58/69c6b5ea48b4f4c966867201_Buying%20Email%20Accounts%20in%20Clay%20\(1\).png)
 
-**Note:** After confirming your purchase, email accounts typically arrive within hours of your purchase, but may take up to 72 hours to be provisioned. Once they appear in your `Email Accounts` tab, warm them up for approximately two weeks before use — purchased domains are not pre-warmed.
+**Note:** After confirming your purchase, your order appears in the `Account orders` tab (`Campaigns → Account orders`) with a **Pending fulfillment** status — this is expected and means the order is being processed. Email accounts typically arrive within a few hours but may take up to 72 hours to be provisioned. Once they appear in your `Email Accounts` tab, warm them up for approximately two weeks before use — purchased domains are not pre-warmed.
 
 ## **FAQs**
+
+### **What does "Pending fulfillment" mean?**
+
+After placing an order, you can track its progress in the `Account orders` tab (`Campaigns → Account orders`). **Pending fulfillment** is the expected status shown while your accounts are being provisioned — it means your payment was processed and Clay is working to set up your accounts. Once complete, the status changes to **Active** and the accounts appear in your `Email Accounts` tab.
 
 ### **Can I add more email accounts to a domain after I've purchased it?**
 
