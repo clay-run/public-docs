@@ -152,6 +152,14 @@ For additional strategies — including connecting your own provider API keys (w
 
 If the inferred email fails validation, the waterfall moves on to the next provider as normal. No credits are charged for the failed `Infer Email` step.
 
+### Why did multiple providers run in a row?
+
+The step-by-step conditional logic that controls which provider runs next is built into the waterfall — you do not need to add a conditional formula between individual provider steps, and you cannot configure the inter-step logic directly.
+
+Each provider in the sequence runs only when no valid email has been found yet: if the previous provider returned nothing, the next provider runs; if the previous provider returned an email that failed validation, the next provider also runs. This continues until a valid email is found (the waterfall stops) or all providers have run without returning a valid result.
+
+**If multiple providers keep returning the same invalid email:** use the **Threshold for duplicate results** setting to stop the waterfall early when the same address appears repeatedly. Set it to `2` to stop after the same email has failed validation twice in a row. See [Additional column settings](#additional-column-settings) for details.
+
 ### When should I adjust the Threshold for duplicate results?
 
 Consider setting it to `2` when you're using `Conservative` validation and noticing that multiple providers are all returning the same email that keeps failing. Left at `0`, the waterfall will continue through every provider, spending credits on a result it's already decided to reject.
