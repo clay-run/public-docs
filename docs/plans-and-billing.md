@@ -63,7 +63,7 @@ When your 14-day trial ends, your workspace automatically moves to the Free plan
 -   **Data credits:** 2,500 to 10,000 per month
 -   **Monthly pricing:** Starting at $185/month (includes 2,500 credits and 15,000 actions)
 -   **Table limit:** 50,000 rows per table
--   **Features:** Basic enrichment, list building
+-   **Features:** Basic enrichment, list building, custom API keys for data enrichment integrations
 
 ### Growth plan
 
