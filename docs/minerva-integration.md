@@ -71,6 +71,26 @@ Uses email addresses or phone numbers to automatically find and validate LinkedI
 -   **Match status:** Whether a profile was successfully matched
 -   **Validation status:** Indicates if the provided information is valid and processable
 
+### `Action` Enrich person wealth & income
+
+Finds a person's estimated income tier and net worth tier based on their professional profile or contact details. Available on all paid plans (10 credits per enriched row).
+
+**Inputs** (one of the following combinations is required)
+
+-   **Professional profile URL:** The person's professional profile URL
+-   **Full name + Email:** The person's full name and personal or work email address
+-   **Full name + Phone number:** The person's full name and phone number
+
+**Output**
+
+-   **Estimated income flag:** Income tier — High Earner ($250k–$500k annual income), Very High Earner ($500k–$1M), or Ultra High Earner ($1M+)
+-   **Estimated wealth flag:** Net worth tier — High Net Worth Individual ($2M–$5M wealth), Very High Net Worth Individual ($5M–$20M), or Ultra High Net Worth Individual ($20M+)
+-   **Match score:** Confidence level of the match (`0–100`)
+-   **Social profiles:** Professional profile URL, Facebook URL, and other social profile URLs
+-   **Professional details:** Professional title and industry
+-   **Location:** Current city and state
+-   **Contact information:** Personal and professional email addresses, phone numbers
+
 ### **Run settings**
 
 -   **Auto-update**
