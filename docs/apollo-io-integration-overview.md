@@ -298,6 +298,14 @@ Returns confirmation of whether the contact's status was successfully updated, i
 
 ## Troubleshooting
 
+### General API errors and import failures
+
+If Apollo enrichments fail with unexpected errors — cells marked as errored without a clear credits, rate-limit, or configuration cause — try these steps in order:
+
+1. **Hard-refresh the page** — press `Cmd+Shift+R` (Mac) or `Ctrl+Shift+R` (Windows/Linux) to clear stale browser state and reload the current run status.
+2. **Re-run only the affected rows** — right-click any errored row and choose **Run [N] rows**, or open the enrichment column's run dropdown and select **Run [N] empty or out-of-date rows** to re-queue all errored and unrun cells in that column.
+3. **Use Clay's native search as a temporary alternative** — Clay's built-in **Find People** and **Find Companies** sources draw from Clay's own data index and are not affected by Apollo API issues. You can use them to locate companies and people while the Apollo API is unavailable. For setup details, see [Finding companies and people in Clay](finding-companies-and-people-in-clay.md).
+
 ### Placeholder email addresses: `email_not_unlocked@domain.com`
 
 When retrieving contacts via **Find People from Apollo**, the email field may contain `email_not_unlocked@domain.com` instead of a real address. Apollo only provides verified email addresses for contacts that have been unlocked using Apollo credits. If a contact hasn't been unlocked, Apollo returns this placeholder.
