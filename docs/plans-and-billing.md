@@ -223,3 +223,21 @@ If a payment fails, Clay retries the charge automatically before canceling your 
 Once downgraded to the Free plan, your Data Credit balance is capped at **200 credits** (the Free plan's rollover limit) — any credits above that cap are forfeited at the end of your billing cycle.
 
 To avoid an interruption, keep your payment information current in `Settings` → `Plan & billing`.
+
+### Why am I being charged sales tax?
+
+For customers in the United States, Clay is required to charge and collect taxes in jurisdictions that have laws taxing our products and where Clay has either a physical presence or has met certain economic thresholds — such as sales volume or number of customers in a region. These taxes vary by jurisdiction and include sales taxes and excise or privilege taxes.
+
+If you are in a US jurisdiction where Clay's products are taxable but Clay has not yet established a presence or met the relevant thresholds, no sales tax will be charged — though this may change as Clay continues to grow and establish a presence in additional states.
+
+As Clay's revenue grows, it establishes a tax nexus in additional states. A tax nexus means Clay has a sufficient business presence in a state — based on sales volume, customers, or other economic thresholds — that requires it to collect and remit sales tax. If you were a customer before Clay started collecting sales tax in your state, Clay has accounted for any prior tax obligations on your behalf.
+
+### What address does Clay use to calculate my sales tax?
+
+Clay uses the shipping address saved on your account to determine your tax jurisdiction. If no shipping address is on file, it falls back to the billing address saved on your account.
+
+Sales tax is calculated based on the taxability of the products you purchased, your address on file, and the tax rate of the applicable jurisdiction. To update your address, contact [support@clay.com](mailto:support@clay.com).
+
+### What if my business is tax-exempt?
+
+Certain organizations — such as non-profits and educational institutions — may qualify for sales tax exemptions. If your organization has an exemption certificate, contact [support@clay.com](mailto:support@clay.com) and provide a copy of the certificate.
