@@ -18,6 +18,19 @@ To delete a column:
 
 **Note:** Once deleted, a column is permanently removed from your table and from the columns panel — deleted columns do not go to Trash. If you still see a column in the columns panel after trying to delete it, it is likely **hidden** rather than deleted. Hidden columns appear in the columns panel with a closed-eye icon next to their name. To delete a hidden column, temporarily unhide it first, then delete it from the column header dropdown. If you need to recover a deleted column, you can restore an earlier [table version](table-versions.md) that includes it.
 
+## Delete rows
+
+To delete a single row, right-click anywhere on that row and choose **Delete 1 row**.
+
+To delete multiple rows at once:
+
+1. Click the row selector (the small checkbox on the left side of the row) to select the first row you want to delete.
+2. Scroll to the last row in the range, hold **Shift**, and click its row selector. All rows between your first click and this one are selected.
+3. Right-click anywhere on the selected rows and choose **Delete [N] rows**.
+4. Confirm the deletion in the dialog that appears.
+
+**Note:** Deleted rows do not go to Trash. A brief **Undo** alert appears immediately after deletion — click it to restore the rows before the alert closes. See [Recover deleted rows](#recover-deleted-rows) for options after the alert has closed.
+
 ## Delete tables and workbooks
 
 ### Within table or workbook
