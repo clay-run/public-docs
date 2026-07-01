@@ -2,7 +2,7 @@
 title: Minerva integration
 description: Automatically acquire LinkedIn URLs using professional identifiers
   and validate them with confidence scores.
-last_synced: 2026-04-26T01:40:22.452Z
+last_synced: 2026-04-26T01:40:22.462Z
 ---
 
 # Minerva integration
