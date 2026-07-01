@@ -457,7 +457,7 @@ If cells in your **Enrich person** column show this error, the value in the **Pr
 
 **Common cause — wrong column mapped to Professional URL:**
 
-This most often happens when a column containing emails, company names, or other non-LinkedIn data is accidentally mapped to the **Professional URL** field in the column mapping panel. Open the **Enrich person** column, expand the column mapping, and confirm that the Professional URL field is either left empty or points to a column that contains actual LinkedIn URLs.
+This most often happens when a column containing emails, names, company names, or other non-LinkedIn data is accidentally mapped to the **Professional URL** field in the column mapping panel. Open the **Enrich person** column, expand the column mapping, and confirm that the Professional URL field is either left empty or points to a column that contains actual LinkedIn URLs.
 
 **If you only have email addresses:** Leave the **Professional URL** field empty and map only the **Email** field. The action accepts either input. Email-only lookups do not produce this error — if no matching profile exists for the email, the cell shows **"No profile found"** rather than an error.
 
