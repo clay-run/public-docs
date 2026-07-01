@@ -189,7 +189,7 @@ You can filter your table to show only rows that match specific criteria. Filter
 
 ### Check whether a filter is active
 
-When a filter is active, the **Filter** button in the toolbar shows a number badge, and the row count displays as **X / Y rows** — X is the number of rows passing the filter, Y is the total. If Y is higher than X, some rows are being filtered by the active filter.
+When a filter is active, the **Filter** button in the toolbar shows a number badge, and the row count displays as **X / Y rows** — X is the number of rows passing the filter, Y is the total. If Y is higher than X, some rows are being hidden by the active filter.
 
 ### Filters and source row limits
 
