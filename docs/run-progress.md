@@ -122,9 +122,7 @@ To remove the limit and return to the full table, click **Show all rows** in the
 
 > **Note:** The column and table-level progress bars always count _all_ rows in the table — including rows outside your current row limit. The limit controls which rows are visible and eligible to run, but the progress percentages reflect the full table.
 
-**For Find People, Find Companies, and Find Contacts at Company (CPJ) source columns:** The table toolbar's row limit and starting row apply to enrichment columns only — they do not control which rows a source column fetches. To run a CPJ source column starting from a specific row, right-click the source column header, hover over **Run column**, and select **Choose Number of Rows to Run**. A dialog lets you enter both the starting row number and the number of rows to include in that run.
-
-**Filtering rows by position:** To scope which rows are processed before running any column, add a **Row Number** column (add a new column and select the **Row Number Generator** type — Clay assigns a sequential integer to each row automatically), then apply a table filter such as Row Number ≥ 500. Only rows matching the filter will be visible and eligible to run.
+**For Find People, Find Companies, and Find Contacts at Company (CPJ) source columns:** The table toolbar's row limit and starting row apply to enrichment columns only — they do not control which rows a source column fetches. To run a CPJ source column starting from a specific row, right-click the source column header, hover over **Run column**, and select **Choose number of rows to run**. A dialog lets you enter both the starting row number and the number of rows to include in that run.
 
 ## Troubleshooting cells stuck in Queued status
 
