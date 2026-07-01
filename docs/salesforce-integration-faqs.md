@@ -413,6 +413,16 @@ Assignment rules in Salesforce fire on every record save — not just when a rec
 
 **Note:** If your Update Record column was created before this option was added, the toggle may be off. Check your column settings if you are seeing unexpected owner changes after Clay updates a record.
 
+## Why is the owner on a new Salesforce lead or contact set to the Clay integration user?
+
+When Clay creates a record using the **Create Record** action, Salesforce sets the new record's owner to the Salesforce user Clay is authenticated as — typically the Clay integration user — because Clay does not set an Owner ID by default.
+
+If your Salesforce org has assignment rules that specifically fire on records owned by integration users (a common pattern for automated lead routing), those rules can trigger at creation time and re-assign the record to a queue or different owner.
+
+**To control the owner at creation time**, add the **Owner ID** field in the **Map fields** section of your **Create Record** column and set it to the Salesforce User ID of the intended owner. When the record is created with the correct owner already set, assignment rules that specifically target integration-user-owned records will not match.
+
+**Note:** Unlike the **Update Record** action — which has a **Disable auto-assignment rules** toggle for leads, cases, and accounts — the **Create Record** action does not have a built-in option to suppress assignment rules entirely. If your org has assignment rules that fire on all new records regardless of owner, you will need to adjust those rules on the Salesforce side.
+
 ## Why am I seeing a "Retried but failed: Failed to lock row" error when updating Salesforce records?
 
 This error means Salesforce returned an `UNABLE_TO_LOCK_ROW` response — it could not get exclusive write access to a record because another process was writing to it (or a related record) at the same time.
