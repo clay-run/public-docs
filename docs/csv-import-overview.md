@@ -82,7 +82,7 @@ To confirm which separator your file uses, open it in a plain text editor. Once 
 
 **If your upload is blocked because the file is too large:**
 
-Clay's CSV import supports a maximum of **100 columns** and **50,000 rows** per file. Uploads that exceed either limit are rejected before the import can proceed. Reduce the number of columns or split the file into smaller batches to stay within these limits.
+Clay's CSV import supports a maximum of **100 columns** and **50,000 rows** per file by default. Uploads that exceed either limit are rejected before the import can proceed. If your file exceeds the column limit, remove any columns you don't need before uploading; if it exceeds the row limit, split it into smaller batches. If your workspace has a lower column limit configured by Clay support, the error will appear at that threshold instead.
 
 **If your upload fails with an encoding error:**
 
