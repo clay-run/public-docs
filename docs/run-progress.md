@@ -69,7 +69,7 @@ The table-level progress bar, shown at the bottom right of a table, provides a s
 
 ## Stopping a run
 
-To stop a running table, click the **Stop** button in the run summary panel at the bottom-right of the table.
+To stop a running table, click the **Stop** button in the run summary panel at the bottom-right of the table. A confirmation dialog appears — click **Confirm and stop** to proceed.
 
 **Important: clicking Stop does not immediately cancel enrichments that are already in progress.** When you click Stop, Clay cancels all queued cells that haven't been dispatched yet — but any enrichment calls already sent to an external data provider will run to completion and **will still consume credits**. You may see a short delay between clicking Stop and the table fully halting while these in-flight calls finish.
 
