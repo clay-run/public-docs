@@ -81,6 +81,20 @@ Individual Clay accounts support two login methods only: **Sign in with Google**
 
 If your company wants all Clay users to authenticate through a corporate IdP, a workspace admin must contact Clay support to set up workspace-wide SSO. See [Single Sign-On (SSO)](#single-sign-on-sso) for details on eligibility (Enterprise plan or SSO add-on) and the setup process.
 
+## **"Your session has expired" error**
+
+If you see a **"Your session has expired"** message when trying to access Clay, follow these steps:
+
+1.  **Log out of your account.**
+2.  **Hard refresh your browser:**
+    -   Mac: `Cmd + Shift + R` (Chrome/Firefox) or `Cmd + Option + R` (Safari)
+    -   PC: `Ctrl + F5` (Chrome/Firefox/Microsoft Edge)
+3.  **Log back in.**
+4.  **If the issue persists, try an incognito or private browsing window** — this rules out cached session data or conflicting cookies.
+5.  **If you use a Clay Chrome extension (Clay for Chrome or Clip to Clay), restart it** — close and reopen the extension, or disable and re-enable it from your browser's extensions page.
+
+If none of these steps resolve the error, contact Clay support via the in-app chat icon in the bottom-right corner of Clay.
+
 ## **Clay API key access**
 
 Your Clay API key enables Clay-specific integrations and external connections. To manage your API key:
