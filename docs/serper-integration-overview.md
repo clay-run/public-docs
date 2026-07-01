@@ -1,6 +1,6 @@
 ---
 title: Serper integration overview
-description: Use Serper.dev to perform Google searches and scrape Google Maps data at scale in Clay, including performance limits and batch recommendations.
+description: Use Clay's Google Search source to build tables from search results, or add a Search Google enrichment column — including search operators, performance tips, Google Maps scraping, and using your own Serper API key.
 last_synced: 2026-06-04T00:00:00.000Z
 ---
 
@@ -9,6 +9,37 @@ last_synced: 2026-06-04T00:00:00.000Z
 Use Serper.dev to perform Google searches and scrape Google Maps data in Clay.
 
 Serper.dev is a Google Search API that powers Clay's **Search Google** enrichment. For advanced use cases — such as using your own Serper API key or scraping Google Maps with custom pagination — you can also call Serper directly via the [HTTP API](http-api-integration-overview.md) integration.
+
+## `Source` Find with a Google Search
+
+Pull Google Search results into a Clay table as rows. Use this source to seed a table from any Google query — including operator-based searches — and then enrich the results with other Clay columns.
+
+**To add the source:**
+
+1.  In a workbook, click `+ Add` at the bottom.
+2.  Search for `Find with a Google Search` and select it.
+3.  Enter your **Google search query**.
+4.  (Optional) Set the **Number of results** (up to 300), **Language**, and **Country**.
+5.  Click `Import to new table`.
+
+**Outputs:** Each result row includes position, title, link, redirect link, displayed link, snippet, and thumbnail.
+
+### Using search operators
+
+The query field accepts standard Google search operators, which let you narrow results precisely:
+
+-   **`site:`** — restrict results to a specific domain. Example: `site:linkedin.com`
+-   **`intitle:`** — match pages with specific words in the title. Example: `intitle:"VP of Sales"`
+-   **`inurl:`** — match pages with specific terms in the URL. Example: `inurl:company`
+-   **`" "`** — exact phrase match. Example: `"software company"`
+-   **`AND` / `OR`** — combine or broaden terms. Example: `"SaaS" OR "software startup"`
+-   **`-`** — exclude a term. Example: `-jobs -careers`
+
+**Example** — to find technology company executives listed on LinkedIn:
+
+`site:linkedin.com intitle:"CEO" AND ("software company" OR "tech startup")`
+
+Combine operators to build highly targeted queries. For help constructing LinkedIn profile searches, [recruitin.net](https://recruitin.net/) can generate a Google query you can copy directly into this field.
 
 ## Available actions
 
