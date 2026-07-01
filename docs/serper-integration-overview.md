@@ -29,6 +29,38 @@ Perform any Google search query and return results, including organic results, a
 
 -   **Search Results**: An array of results, each containing position, title, link, redirect link, displayed link, and thumbnail.
 
+### `Source` Find with a Google Search
+
+Pull Google search results as rows into a Clay table. Use this source when you want to seed a list from a Google search query — for example, finding companies, websites, or people matching a specific pattern.
+
+**Inputs**
+
+-   **Google search query**: The query to run. Supports Google search operators (e.g., `site:crunchbase.com intitle:"CEO"`). See [Using Google search operators](#using-google-search-operators) below.
+-   **Number of results** (Optional): Number of results to return. Maximum is 300.
+-   **Language** (Optional): Language for the search. Defaults to English.
+-   **Country** (Optional): Country to scope the search to. Defaults to United States.
+
+**Outputs**
+
+Each result row contains: Title, Link, Displayed link, Snippet, Position, Thumbnail, Favicon, and Source.
+
+## Using Google search operators
+
+The **Google search query** field in both **Find with a Google Search** and **Search Google (Perform Search)** accepts standard Google search operators for precision targeting:
+
+-   `site:` — restrict results to a specific domain (e.g., `site:crunchbase.com`)
+-   `intitle:` — match pages with a specific word in the title (e.g., `intitle:"CEO"`)
+-   `inurl:` — match pages with a specific word in the URL (e.g., `inurl:about`)
+-   `" "` — exact phrase match (e.g., `"software company"`)
+-   `AND` / `OR` — combine or broaden search terms
+-   `-` — exclude pages containing a specific term
+
+**Example:** To find technology company executive profiles on a professional directory:
+
+```
+site:crunchbase.com intitle:"CEO" AND ("software company" OR "tech startup")
+```
+
 ## Using Serper with your own API key
 
 Clay's built-in **Search Google** enrichment runs through Clay's managed Serper account. If you have your own Serper API key — for example, to run higher volumes or access additional Serper endpoints — you can call Serper's API directly using the [HTTP API](http-api-integration-overview.md) integration.
