@@ -118,7 +118,13 @@ If you have a saved Sales Navigator search and want to pull those results into C
 
 If the list was manually curated and cannot be recreated from search filters, export it from Sales Navigator as a CSV and [import it into Clay](csv-import-overview.md) instead.
 
-**If your search exceeds 2,500 results:** Sales Navigator limits any single search view to 2,500 leads, so a larger list cannot be imported in one step. To work around this, split your search into multiple narrower segments using filters such as headcount range, seniority level, or location — each segment should return 2,500 or fewer results. Add each segment's Sales Navigator URL as a separate **Find people from external search** source in Clay.
+If your Sales Navigator search matches more than 2,500 leads, the 2,500 cap is enforced by LinkedIn — there is no way to raise it within a single import. To bring in a larger set, split your search into smaller segments so each stays under the limit. Use any filter dimension to divide the results:
+
+-   **By seniority level** — Run a separate import for each seniority tier (for example, Director+, Manager, Individual Contributor).
+-   **By headcount** — Filter by company size to separate results from small, mid-size, and enterprise companies.
+-   **By location** — Run separate searches for each country or region.
+
+Collect the resulting Sales Navigator URLs and add them to your Clay table one at a time.
 
 ## Finding LinkedIn posts by keyword
 
