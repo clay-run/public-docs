@@ -218,7 +218,7 @@ This is the most common cause of unexpected results from the Company Domain wate
 
 ## Tech Stack waterfall
 
-The **Tech Stack** waterfall finds which technologies a company has installed by cascading across four providers — stopping as soon as one extends a result.
+The **Tech Stack** waterfall finds which technologies a company has installed by cascading across four providers — stopping as soon as one returns a result.
 
 Provider order: **SimilarWeb → Predict Leads → BuiltWith → Apollo**
 
