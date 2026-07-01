@@ -58,6 +58,13 @@ If you don't have a company list, use **People search as a source** — a standa
 
 **Note:** The standalone **Find People source** does not run per row — it imports results at creation time and is not retriggered by new incoming webhook rows. For automated per-row people searches triggered by incoming data, use **Find Contacts at Company** (enrichment column) instead.
 
+**If you already have a list of LinkedIn profile URLs**, Clay's enrichment actions let you pull additional data from each profile directly — no people search needed:
+
+-   **Enrich person** — Add this as an enrichment column in your table and map the **Professional URL** input to your LinkedIn URL column. It returns comprehensive profile data: current job title, company, location, full work history, and education. See [Getting "Invalid input: Invalid person identifier" from Enrich person](#getting-invalid-input-invalid-person-identifier-from-enrich-person) if your URLs aren't being recognized.
+-   **Prospeo: Find Work Email and Enrich Person from LinkedIn URL** — Finds the work email and enriches person data from a LinkedIn profile URL. Credits are charged for each query even when no email is found.
+-   **Findymail: Find Work Email from Profile URL** — Finds a work email from a LinkedIn profile URL. This action returns the email address and validation status only; it does not return additional profile data.
+-   **Claygent** — Ask open-ended questions about the LinkedIn profile, such as whether the person's company is B2B or B2C, what products their team uses, or a summary of their career focus. Claygent researches profiles live on the web.
+
 ### Enriching your results
 
 **Find People at These Companies** returns basic profile data for each contact: name, title, current company, LinkedIn URL, and location. **Work emails and phone numbers are not included** — add them as separate enrichments after your people table is created:
