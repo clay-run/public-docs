@@ -10,7 +10,7 @@ News aggregator delivering current events and information.
 
 ## Google News Overview
 
-Google News in Clay allows users to find news results for a given query.
+Google News in Clay allows users to find news results for a given query, or pull a stream of news articles as rows in a Clay table.
 
 ## **Available Actions with the Google News Integration**
 
@@ -35,3 +35,28 @@ By default, new rows within your Clay table will automatically run the Google Ne
 To run enrichment only under specific conditions, use formulas that trigger the column when the formula is true. Learn more about AI formulas in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101).
 
 **Step 5:** Run your enrichment to find results from Google News.
+
+## `Source` Pull Google News RSS Feed
+
+The **Pull Google News RSS Feed** source imports Google News articles into a Clay table as rows. Use it to monitor ongoing topics — such as business expansions, facility relocations, or company announcements — and enrich, filter, or route the results with other Clay columns.
+
+**Step 1:** Add the source to your table.
+
+In a workbook, click `+ Add` at the bottom. Search for `Google News RSS` and select **Pull Google News RSS Feed**.
+
+**Step 2:** Configure your search.
+
+-   **Has words** — Articles must contain these words (e.g., `warehouse expansion relocation`).
+-   **Exact phrase** (optional) — Articles must include this phrase verbatim (e.g., `distribution center opening`).
+-   **Exclude words** (optional) — Filter out articles that contain these words.
+-   **Website** (optional) — Restrict results to a specific domain (e.g., `businesswire.com`).
+
+**Step 3:** Set the date range.
+
+Filter by recency: **Past hour**, **Past 24 hours**, **Past week**, or **Past 30 days**.
+
+**Step 4:** Set a result limit (optional).
+
+Specify the maximum number of articles to return, up to 100.
+
+**Step 5:** Click `Import to new table` to load matching articles as rows.
