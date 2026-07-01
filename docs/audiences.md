@@ -95,6 +95,8 @@ Clay pulls data from Salesforce on two schedules:
 
 **Sync timing and behavior**
 
+HubSpot data sync in Audiences is currently in open beta — contact your Growth Strategist to enable it for your workspace.
+
 Clay syncs data from HubSpot automatically on the following schedules:
 
 -   **Incremental sync:** Runs every **15 minutes** on Enterprise workspaces, or **once daily** on Growth workspaces. Picks up new and changed HubSpot records since the last sync.
