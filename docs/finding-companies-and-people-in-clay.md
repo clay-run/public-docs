@@ -508,6 +508,13 @@ Company and people search sources don't support run conditions. The workaround i
 
 The source returns results in a new table and is subject to a per-source cumulative limit that varies by billing plan (see [the troubleshooting section](#your-source-has-exceeded-your-plans-limit-error-on-find-companies-or-find-people) if you hit that limit). The enrichment action saves results to your existing table, returns 10 people by default with full profile data, and supports a **Reduce data for more results** option that returns up to 500 people (name, job title, and professional profile URL only). Use the action when you need to rank or filter contacts before saving them, or when you need more records than a single source allows.
 
+**When you select "Find Contacts at Company," Clay prompts you to choose how to save results:**
+
+-   **Save results in this table** — adds Find Contacts at Company as an enrichment column in your company table. Contacts are stored as a list within each company row. This option costs credits (0.5 credits per row on current plans; 1 credit per row on legacy plans).
+-   **Save results in new table** — opens the Find People search instead, which creates a new table with one row per contact. Find People draws from Clay's regularly-ingested people index and does not cost credits.
+
+The outputs are similar. If you want contacts as individual rows without spending credits on the lookup, choose **Save results in new table** to use Find People. Choose **Save results in this table** when you need contacts stored inline with their parent company row.
+
 ### I added new companies to my company table — how do I get them through my Find People searches?
 
 **If using Find People as a source (a separate people table):**
