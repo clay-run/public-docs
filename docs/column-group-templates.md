@@ -1,7 +1,7 @@
 ---
 title: Column group templates
 description: Create, apply, and edit column group templates to reuse related column sets across your workspace.
-last_synced: 2026-04-26T01:39:46.810Z
+last_synced: 2026-04-26T01:39:46.520Z
 ---
 
 # Column group templates
@@ -11,6 +11,20 @@ Save columns into templates to easily reuse them.
 Column group templates let you save and reuse related column sets across tables in your workspace. This eliminates the need to recreate complex column configurations repeatedly, saving time and maintaining consistency.
 
 Instead of rebuilding multi-column setups manually, you can apply saved templates quickly, helping you focus on your data rather than table structure.
+
+## Grouping columns
+
+You can group related columns together in a table to keep your workspace organized. Grouped columns appear under a shared header that you can collapse or expand to show or hide the columns within.
+
+To group columns:
+
+1.  While in a table, select multiple columns by clicking their header while holding `⌘` (Mac) or `ctrl` (Windows) on your keyboard.
+2.  Right-click one of the selected headers.
+3.  Select **Group X columns** from the menu.
+
+Once grouped, click the arrow on the group header to collapse or expand the columns in the group. To ungroup columns or rename the group, click the group header to open the group settings panel.
+
+To save a group of columns so you can reuse it in other tables, see [Creating a column group template](#creating-a-column-group-template) below.
 
 ## Creating a column group template
 
