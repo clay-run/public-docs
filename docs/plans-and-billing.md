@@ -63,7 +63,7 @@ When your 14-day trial ends, your workspace automatically moves to the Free plan
 -   **Data credits:** 2,500 to 10,000 per month
 -   **Monthly pricing:** Starting at $185/month (includes 2,500 credits and 15,000 actions)
 -   **Table limit:** 50,000 rows per table
--   **Features:** Basic enrichment, list building
+-   **Features:** Basic enrichment, list building, custom API keys for data enrichment integrations
 
 ### Growth plan
 
@@ -136,6 +136,8 @@ If your team wants to do a trial, each team member can create their own trial ac
 Trial tables can hold up to **1,000 rows each**. The table view also displays only the first **50 rows** — rows beyond that are blurred in the UI until you upgrade to a paid plan. When you export to CSV, only these first 50 rows are included in the download. Sending data through third-party integrations (such as Google Sheets) is not subject to this row limit.
 
 When your trial ends, your account automatically moves to the free plan — you won't be charged unless you actively choose to upgrade to a paid plan. Clay does not auto-upgrade you. For details on what happens to your trial data credits at that point, see [Actions and data credits](actions-data-credits.md).
+
+**Trial extension:** Clay offers a one-time self-serve extension for workspaces on a trial or free plan. While logged in, visit [https://app.clay.com/extend-my-trial/](https://app.clay.com/extend-my-trial/) to add 14 more days to your trial. If your workspace doesn't immediately reflect the extension, refresh your browser. Each workspace can use this self-serve extension once — if you've already used it and need additional time, contact [Clay support](https://app.clay.com).
 
 ## FAQs
 
@@ -224,6 +226,12 @@ If a payment fails, Clay retries the charge automatically before canceling your 
 Once downgraded to the Free plan, your Data Credit balance is capped at **200 credits** (the Free plan's rollover limit) — any credits above that cap are forfeited at the end of your billing cycle.
 
 To avoid an interruption, keep your payment information current in `Settings` → `Plan & billing`.
+
+### Why was my account locked?
+
+Clay automatically flags accounts suspected of fraud or abuse of free trial credits. If your account has been locked, you'll see a message on the sign-in screen indicating your account has been temporarily locked for fraud protection.
+
+To request a review and have your account unlocked, email [verification@clay.com](mailto:verification@clay.com).
 
 ### Why am I being charged sales tax?
 

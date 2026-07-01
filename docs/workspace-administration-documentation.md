@@ -51,6 +51,10 @@ To change your account password:
 -   Click `Change password`. A magic link will be sent to your registered email address.
 -   Follow the instructions in the email to securely update your password.
 
+If you cannot log in because you have forgotten your password, use the **Forgot password?** link on the Clay login page, or go directly to [app.clay.com/forgot](https://app.clay.com/forgot). Enter your email address and follow the link in the email to set a new password.
+
+If you do not receive a reset email, you likely signed up with Google rather than with email and password — there is no password on your account to reset. See [Switch from Google login to email and password](#switch-from-google-login-to-email-and-password) below if you want to create a password for your account.
+
 ## **Switch from Google login to email and password**
 
 If you signed up with Google and want to create a password so you can log in with your email and password instead, this cannot be done through your account settings — it requires a support action.
