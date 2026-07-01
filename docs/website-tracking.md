@@ -63,6 +63,21 @@ Once your visitor table is populated, you can enrich those companies to find con
 3.  **Create an email campaign** — from your enriched table, create a Clay email campaign (see the [Email sequencer](https://university.clay.com/docs/email-sequencer) doc for setup steps). Map the email column and draft your message sequence.
 4.  **Launch and let it run** — new visitors matching your tracking filters will flow into the table automatically, keeping your outreach loop always-on.
 
+## Using a third-party website visitor identification tool
+
+If you already use a separate website visitor identification tool to track and identify your visitors, you can route that data into Clay for enrichment and outreach without setting up Clay's native tracking.
+
+**Bring visitor data into Clay via a webhook table:**
+
+1.  In a Clay workbook, click `+ Add`, search for `Webhooks`, and select **Monitor webhook** to create a table with a webhook source.
+2.  Copy the webhook URL Clay generates.
+3.  In your visitor identification tool, configure it to POST visitor data to that URL whenever a new visitor is identified.
+4.  Once records arrive in your Clay table, add enrichment columns — for example, **Find People** to find contacts at visiting companies — and set up a [Clay email campaign](https://university.clay.com/docs/email-sequencer) for personalized outreach.
+
+See [Webhooks in Clay](webhook-integration-guide.md) for plan availability, payload format requirements, and throughput limits.
+
+**If your visitor tool doesn't support webhooks natively**, use an automation platform such as Zapier to bridge the connection: configure a trigger on new identified visitors in your tool, add a **Webhooks by Zapier** POST action pointing to your Clay webhook URL, and map the visitor data fields in JSON. See [Send Clay data to Zapier](clay-to-zapier.md) for step-by-step instructions on routing data into Clay via a Zapier webhook.
+
 # Best practices
 
 ### Snippet placement
@@ -274,6 +289,6 @@ The tracking script captures IP address data, which may be considered personally
 All storage keys are prefixed with `claydar_`. The script uses `localStorage` by default and falls back to cookies if `localStorage` is unavailable.
 
 | Key | Storage | Expires | Purpose |
-|-----|---------|---------|---------|
+|-----|---------|---------|---------| 
 | `claydar_device_id` | localStorage / Cookie | 365 days | Unique device identifier across sessions |
 | `claydar_session` | localStorage | 60 min of inactivity | Current session data (id, start time, engagement) |
