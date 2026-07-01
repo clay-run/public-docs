@@ -56,6 +56,13 @@ Clay offers a fast API for searching its proprietary People and Company data. Yo
 
 [Contact our GTM engineers for more information.](https://www.clay.com/contact-form)
 
+**The same beta access also unlocks two additional endpoints in Clay's Public HTTP API (`api.clay.com`):**
+
+-   **Tables query** (`POST /tables/query`): Run a structured query against your Clay tables and read rows programmatically, with field metadata included in the response.
+-   **Routines** (`POST /routines/:routine_id/run`): Submit up to 100 input records to a Clay enrichment tool and retrieve the results asynchronously. A batch upload path is also available for larger data sets.
+
+All three capabilities — searches, tables query, and routines — use the same workspace-scoped API key (distinct from your personal API key). See [Find your Clay API key](guide-find-clay-api-key.md) for setup instructions.
+
 **Note:** If you're using Clay as an API, **Auto-delete** helps keep things fast and lightweight. It automatically enriches incoming webhook data, sends results to your destination (like Salesforce or Google Sheets), then deletes the rows—so Clay streams data through rather than storing it. Perfect for high-volume or continuous enrichment jobs. [Learn more](https://www.clay.com/university/guide/auto-delete).
 
 ### 4\. **MCP / AI tool integration** (Best for AI assistants and agent workflows)
