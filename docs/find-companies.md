@@ -26,7 +26,7 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
     -   **Industries** to include and exclude
     -   **Company size** — The self-reported size band on the company's profile (e.g., 11–50, 51–200). Select one or more bands from the dropdown.
     -   **Annual revenue ranges** — Filter by revenue brackets from $0–$500K up to $100B+.
-    -   **Funding amount**
+    -   **Funding raised** — Filter by total funding raised. Select one or more brackets from Under $1M up to $250M+, or select **Funding unknown** to include companies with no recorded funding data.
     -   **Company types** — Privately Held, Public Company, Partnership, Self Employed, Non Profit, Educational, Self Owned, or Government Agency.
     -   **Keywords** to include or exclude
         -   **Exact phrase matching:** Wrap multi-word terms in single or double quotes to search for that exact phrase. For example, searching for "Google Cloud" finds companies with "Google Cloud" in their description — not just companies that mention Google and cloud separately. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are stripped out even with quoted phrases.
