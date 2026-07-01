@@ -564,6 +564,17 @@ For example: if your original company list has 3,818 companies and people were f
 
 To identify which companies had no people found, add a **Lookup Rows** column to your original company table (searching your people table, matched on company domain) and filter for rows where the count is zero.
 
+### How do I get a unique list of companies from my people table?
+
+If your people table has a **Company Table Data** column (created automatically when you run a people search from a company table), you can extract the company name into its own column and deduplicate it to get a list of unique companies:
+
+1.  **Extract the company name:** Click a cell in the **Company Table Data** column to open the cell details panel. Hover over the **Name** field and click **Add as column**. This creates a new column in your people table containing each person's company name.
+2.  **Deduplicate:** Click the header of the new company name column and select **Dedupe** from the dropdown. Review the flagged duplicates and click **Delete** to remove them, leaving only one row per unique company name.
+
+**To work with the deduplicated list in a separate table:** Use [Send Table Data](send-table-data.md) to push the company name column to a destination table, then run **Dedupe** on that column's header in the destination table.
+
+**Note:** Column deduplication removes entire rows from your table based on matching values — deleted rows cannot be recovered. For full rules and caveats, see [Dedupe columns](table-columns-overview.md).
+
 ### Why do "Picture URL Copy" and "Picture URL Orig" return null in Enrich Person?
 
 This is expected behavior. Clay stopped returning professional profile picture URLs through the Enrich Person enrichment for privacy and compliance reasons. Both the **Picture URL Copy** and **Picture URL Orig** output fields are present but always return null for all customer workspaces — this is not a bug and is not plan-specific (Growth, Pro, and Enterprise plans are all affected equally).
