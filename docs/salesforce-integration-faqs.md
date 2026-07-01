@@ -166,6 +166,16 @@ If the column holding phone numbers is set to **Number** type, Clay alters the v
 
 **To fix:** Click the phone number column header, hover over the current data type, and switch it to **Text**. Text columns preserve the exact phone number string — including the leading `+` and any separators — so the value Clay sends to Salesforce matches what Salesforce has stored.
 
+## Why is my Salesforce report data not populating in Clay?
+
+The most likely cause is the report's format. Clay's **Import records from a Salesforce report** source only supports **Tabular** and **Matrix** report formats. Reports in **Summary** or **Joined** format are not supported and will return an error when Clay tries to run them.
+
+Clay's report picker automatically filters to show only Tabular and Matrix reports, so if a report is missing from the picker, it is likely in an unsupported format.
+
+**To fix:** In Salesforce, open the report, click **Edit**, then change the report format to **Tabular** (a flat list without row groupings) or **Matrix** (rows and columns both grouped). Save the report, then re-run your Clay source.
+
+For an overview of Salesforce report formats, see Salesforce's [Report Formats documentation](https://trailhead.salesforce.com/content/learn/modules/lex_implementation_reports_dashboards/lex_implementation_reports_dashboards_report_formats).
+
 ## Will Clay create duplicate records in Salesforce?
 
 No. By default, Clay prevents duplicate records. However, you can allow duplicates by enabling the "Duplicate Rule Override" in the Create Record enrichment.
@@ -454,7 +464,7 @@ Make sure the connecting user has **API Enabled** and the correct object and fie
 
 ## Why can't I set a Salesforce connection as the default, or change which connection is the default?
 
-Setting or changing the default Salesforce connection is restricted to **workspace admins**. Non-admin members do not see the **Set as default** option in the connection menu.
+Setting or changing the default Salesforce connection is restricted to **workspace admins**. Non-admin workspace members do not see the **Set as default** option in the connection menu.
 
 If you need to change the default connection, ask a workspace admin to:
 
