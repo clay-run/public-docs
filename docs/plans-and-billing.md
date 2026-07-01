@@ -167,7 +167,7 @@ If you're unsure whether you need a higher tier, check your current usage in `Se
 **Data Credits:** You have two options:
 
 -   **Upgrade your Data Credits tier** (recommended for ongoing needs) — no premium charged.
--   **Purchase a one-time top-up** — available for emergency needs during your billing cycle at a 30% premium (50% on legacy plans), subject to rollover limits. Go to `Settings` → `Usage` and click `Add one-time data credits`.
+-   **Purchase a one-time top-up** — available on paid plans only; not available on the free plan. For emergency needs during your billing cycle at a 30% premium (50% on legacy plans), subject to rollover limits. Go to `Settings` → `Usage` and click `Add one-time data credits`.
 
 ### How many actions and data credits do I need?
 

@@ -162,6 +162,7 @@ Two options:
 
 **2\\. One-time top-up**
 
+-   Requires a paid plan — not available on the free plan.
 -   Go to `Settings` → `Usage` and click `Add one-time data credits`.
 -   Available for emergency needs during your billing cycle.
 -   **30% premium** applies (on modern plans; **50% premium** on legacy plans).
@@ -262,6 +263,8 @@ If you need ongoing increases in capacity:
 Your new plan or credit limits will activate immediately, and any applicable charges will be applied to your billing cycle.
 
 ### Purchase one-time Data Credit top-ups
+
+One-time top-ups are only available on paid plans. If you are on the free plan, you cannot purchase additional Data Credits — upgrade to a paid plan to access this feature.
 
 For emergency Data Credit needs during your billing cycle (not available for Actions):
 
