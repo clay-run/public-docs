@@ -177,3 +177,9 @@ If you see a **401 error** from Google when connecting your Google account to Cl
 If you open a Google Sheets action or source and the **Sheet ID** or column mapping fields do not appear, the most likely cause is that the connected Google account does not have access to the spreadsheet — for example, if you connected a different Google account than the one that owns or was shared on the sheet.
 
 **To fix:** In Clay, go to your workspace `Settings` → `Connections`, remove the Google Sheets connection, and reconnect with the Google account that has access to the spreadsheet. Once reconnected, the Sheet ID and column mapping fields will appear.
+
+### Lookup rows are slow or return errors
+
+If rows using a **Lookup row** or **Lookup, add, or update row** enrichment run slowly or fail with errors, the Google Sheets API rate limit is the most likely cause. According to Google's published API documentation, the Google Sheets API enforces a default limit of 300 read requests per minute per project. When Clay's integration exceeds this limit, Google temporarily blocks further requests until the quota resets — typically after one minute.
+
+Clay automatically retries rate-limited requests using exponential backoff, so most quota errors resolve without manual intervention. If rows remain in an error state after automatic retries are exhausted, re-running them after a brief pause will usually succeed once the quota window has reset.
