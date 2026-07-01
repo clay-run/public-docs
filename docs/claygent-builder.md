@@ -242,7 +242,7 @@ Claygents handle judgment-based, nondeterministic work in your GTM stack — wor
 -   **Outbound copywriting** — write personalized emails using your ICP and enriched data.
 -   **Persona classification** — categorize contacts by tier, role, or buying persona.
 
-### How do I find contact information for people who don't have LinkedIn profiles?
+### How do I find contact information for people who don't have professional networking profiles?
 
 Use Claygent with web search enabled to pull publicly available contact details directly from a company's website. Many organizations — especially smaller businesses — list staff contacts on a `/contact` page or in a site directory. Point Claygent at those URLs and instruct it to extract names, titles, email addresses, or phone numbers it finds there.
 
