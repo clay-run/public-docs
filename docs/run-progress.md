@@ -133,6 +133,7 @@ If cells remain Queued for an extended period, common causes include:
 -   **External API rate limits** — Integrations such as OpenAI or HubSpot enforce per-minute request limits. For Clay's managed integrations (where Clay provides the API key), Clay handles this automatically and the queue resumes once the rate-limit window resets. If you are using your own API key, Clay may send requests faster than your account's tier allows — rows that exhaust the retry window return a **"Rate limit wait time exceeded"** error. To prevent this on enrichment columns that support it (such as HTTP API), configure the **Custom rate limit** setting on the column to match your provider's tier; see [Enrichments](enrichments.md) for details. For AI enrichments using a personal API key, see [AI tokens](ai-tokens.md).
 -   **API quota exhausted** — If you've hit a quota ceiling (e.g., OpenAI, Google), new runs are blocked until the quota resets or is increased in the provider's dashboard.
 -   **Auto-run settings** — If auto-run is enabled and triggering repeated re-runs, rows may accumulate in the queue unexpectedly. See [Table management settings](table-management-settings.md) for how to adjust auto-run and scheduled run behavior.
+-   **Column edited or stopped mid-run** — If a column's settings were changed while a run was in progress, or if a run was stopped partway through, some rows may remain stuck in Queued status and not resume on their own.
 
 > **Note on CPJ source previews:** When previewing a CPJ source column (Companies, People, or Jobs search) in the Sculptor column builder, previews are capped at **50 per hour** on trial and free plans, and **5,000 per hour** on paid plans. This cap applies only to interactive previews in the column builder — it does not apply to "Run column" or right-click → "Run [N] rows" on table rows.
 
@@ -143,6 +144,14 @@ If cells remain Queued for an extended period, common causes include:
 3.  **Force-run the column** — Right-click the column header and select **Run column** → **Force run all [N] rows**. This re-queues and processes every row in the column regardless of its current status. Credits are charged for every row re-run at the standard rate; the UI displays the estimated cost before you confirm.
 4.  **Check your API quotas** — If the column calls an external API (OpenAI, Google, etc.), verify you haven't exhausted a quota in that provider's dashboard.
 5.  **Check the Clay status page** — If the issue persists and you suspect a platform-wide problem, visit [status.clay.com](https://status.clay.com/) for real-time updates on any active incidents.
+
+**If rows remain Queued after a mid-run stop or column edit:** To process only the stuck rows without re-running ones that already completed, use the "is queued" filter to scope the run:
+
+1.  Click **Filter** in the table toolbar, select the affected column, and set the condition to **is queued**. Only the stuck rows are now visible.
+2.  Right-click the column header and select **Run column** → **Force run all [N] rows**. With the "is queued" filter active, this re-runs only the visible queued rows — completed rows are not re-run.
+3.  Remove the filter when the run finishes.
+
+> **Note:** **Run column → Run [N] empty or out-of-date rows** will not work here — queued rows are classified as "running," not as empty or stale, so that option shows 0 eligible rows and does nothing for this scenario. Use **Force run all [N] rows** instead.
 
 ## Troubleshooting: table appears stopped at a partial percentage with no credits consumed
 
