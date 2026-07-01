@@ -58,3 +58,20 @@ Scheduled sources are not available on the Free plan. For paid plans, the limit 
 -   Launch: 100 sources
 -   Growth: 100 sources
 -   Enterprise: 1,000 sources
+
+## Troubleshooting
+
+### Why isn't my Find Jobs table (or any source table) pulling new entries?
+
+By default, sources — including Find Jobs — are configured to run **Manually**, meaning they perform a one-time import when first set up. New entries that match your filters are not pulled in automatically after that initial run.
+
+To have your table automatically import new matching entries on a recurring basis, switch the source to run on a schedule:
+
+1.  Click the source column title in your table.
+2.  Under **Sources**, select your source.
+3.  Under **Run this source**, select **On a schedule**.
+4.  Choose a frequency (Daily, Weekly, or Monthly) and click **Update Source Schedule**.
+
+Each subsequent run appends newly matched entries to your table without removing existing rows (see [Scheduled source runs are additive](#scheduling-source-runs) above).
+
+**Note:** Scheduled sources are not available on the Free plan.
