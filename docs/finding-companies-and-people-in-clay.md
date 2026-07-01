@@ -585,3 +585,25 @@ If you need professional profile photos in your workflow, the alternative is to 
 -   **Apify** — offers profile scrapers with authentication.
 
 When using third-party scrapers, ensure your usage complies with the platform's Terms of Service and your organization's data privacy policies.
+
+### How can I find a LinkedIn profile URL if I only have a name and an old email address?
+
+Several enrichment providers can match a person's LinkedIn profile using a name and an email address — even if the email is personal or from a former employer — though match rates vary depending on how current the data is in each provider's system.
+
+**Step 1: Combine first and last name into a full name**
+
+Add a formula column to concatenate your first and last name columns into a single full name value (for example, `{{First Name}} + " " + {{Last Name}}`).
+
+**Step 2: Run a LinkedIn profile enrichment using email and full name**
+
+Add a LinkedIn profile enrichment — such as [LiveData Find Professional Profile](livedata-integration.md) or [Minerva Find professional profile](minerva-integration.md) — and map both the **Email** and **Full Name** inputs. These providers accept an email address as a matching signal and return a LinkedIn profile URL if the data is present in their systems.
+
+Before running on your full dataset, test on 5–10 rows to gauge match rates and accuracy.
+
+**Step 3 (optional): Improve match rates by adding company name**
+
+If initial results are unsatisfactory, extracting the company name from the email domain can improve matching:
+
+1.  Add the **Identify Email Type and Extract Company Domain from Email** enrichment and map your email column. This extracts the company domain from the address (for example, `jane@acme.com` → `acme.com`).
+2.  Use a company enrichment (such as Apollo, ZoomInfo, or Clearbit) to look up the company name from the extracted domain.
+3.  Re-run your LinkedIn profile enrichment with **Full Name**, **Email**, and **Company Name** all mapped as inputs. The additional company context can improve the match rate.
