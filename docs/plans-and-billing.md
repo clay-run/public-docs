@@ -130,7 +130,7 @@ If phone number enrichment doesn't appear immediately after upgrading, refresh t
 
 If your team wants to do a trial, each team member can create their own trial account to explore Clay independently.
 
-Trial tables can hold up to **1,000 rows each**. The table view also displays only the first **50 rows** — rows beyond that are blurred in the UI until you upgrade to a paid plan.
+Trial tables can hold up to **1,000 rows each**. The table view also displays only the first **50 rows** — rows beyond that are blurred in the UI until you upgrade to a paid plan. When you export to CSV, only these first 50 rows are included in the download. Sending data through third-party integrations (such as Google Sheets) is not subject to this row limit.
 
 When your trial ends, your account automatically moves to the free plan — you won't be charged unless you actively choose to upgrade to a paid plan. Clay does not auto-upgrade you. For details on what happens to your trial data credits at that point, see [Actions and data credits](actions-data-credits.md).
 
