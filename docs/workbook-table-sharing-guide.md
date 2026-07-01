@@ -1,6 +1,6 @@
 ---
 title: Share workbooks and tables as templates
-description: Share Clay workbooks and tables as templates, create personal reusable templates, and move workbooks between workspaces.
+description: Share Clay workbooks and tables as templates, keep reusable table structures, and move workbooks between workspaces.
 last_synced: 2026-04-26T01:40:56.186Z
 ---
 
@@ -20,18 +20,16 @@ Note that when sharing as a template, only the table structure and one row of sa
 
 **Table limit:** By default, workbooks with more than 10 tables cannot be duplicated or shared as templates. If your workbook exceeds this limit, contact Clay support to have the limit raised for your workspace.
 
-## Create a personal template for reuse
+## Keep a reusable table structure
 
-**Share as Template** generates a public link that anyone can use to copy your table structure into their workspace. If you want a reusable starting point for your own use — without publishing a shareable link — duplicate the table and move it to a dedicated workbook instead.
-
-To create a personal template:
+**Share as Template** generates a public link that anyone can use to copy your table structure into their workspace. If you want a private, reusable starting point without creating a public link, you can duplicate the table and move the copy to a dedicated workbook:
 
 1. Right-click the table on the workspace homepage (or open the table's title menu) and select **Duplicate table**.
-2. In the duplicate, click the table title and select **Move to workbook** to place it in a separate workbook you keep as your template library.
+2. Click the duplicate's title and select **Move to workbook** to place it in a separate workbook you use as a template library.
 
-Duplicating copies the table structure and run settings but not enriched row data, so the copy starts empty and ready to use. Whenever you need a fresh working copy, duplicate the template table again.
+Duplicating copies the table structure, column definitions, and run settings but not enriched row data, so the copy starts empty and ready to use. Whenever you need a fresh working copy, duplicate from this table.
 
-**Tip:** Add `[Template — Do Not Delete]` to the table name to make it clear which table is the template and should be duplicated rather than edited directly.
+**Tip:** Add `[Template — Do Not Delete]` to the table name to make it clear which table should be duplicated rather than edited directly.
 
 ## Move a workbook to a different workspace
 
