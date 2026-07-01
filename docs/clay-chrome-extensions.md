@@ -63,6 +63,26 @@ To create a recipe for scraping structured data from profile or detail pages:
     -   Replace specific URL components with variables (e.g., `:company_name`).
 5.  Name and save your recipe.
 
+## Applying recipes at scale with Find Data from Page
+
+After creating a recipe with the Clay for Chrome extension, you can run it automatically against a column of URLs in a Clay table using the **Find Data from Page** integration (listed under **Clay Scrapers** when adding a column). This scales web scraping to large lists of structurally similar pages without manual effort.
+
+### Scraping a directory and its sub-pages
+
+A common workflow is scraping a directory listing to collect entry URLs, then extracting detailed data from each entry's sub-page:
+
+1.  **Scrape the directory page.** Use the Clay for Chrome extension to extract the list of entries (including their sub-page URLs) and import the results into a Clay table.
+
+2.  **Create an individual page recipe.** Open the extension on one of the sub-pages and build a recipe that maps the fields you need (see [Creating an individual page recipe](#creating-an-individual-page-recipe)).
+
+3.  **Add a Find Data from Page column.** In your Clay table, click **+ Add column** and select **Find Data from Page** under Clay Scrapers. Map the input to the sub-page URL column in your table.
+
+4.  **Run the integration.** Clay applies your recipe to every URL in the column and returns the scraped data for each row.
+
+### Consolidating data from multiple tables
+
+If the scraper saves results into separate tables, use [Send Table Data](send-table-data.md) to route all records into a single table. New rows from future scrapes are sent automatically, keeping all data in one place.
+
 ## Third party Clay tools
 
 -   [**Exportly.ai**](https://www.exportly.ai/) is a Chrome extension that brings Clay's data and AI tools right into your browser. You can find verified contact details, add prospects to your Clay tables, and write personalized outreach without leaving the page you're on.
