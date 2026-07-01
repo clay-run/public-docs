@@ -150,7 +150,7 @@ You can also use `Lookup multiple rows` within the same table to find duplicates
 
 -   Detect duplicates or repeat submissions (e.g., multiple form fills from the same company)
 -   Count related records inside one table (e.g., "how many people share this domain?")
--   Prevent duplicate enrichment (e.g., only enrich a company the first time it appears; skip repeats)
+-   **Prevent duplicate enrichment for shared company data** — Enrichment columns run independently per row with no awareness of sibling rows. When multiple rows share the same company (e.g., several contacts who work at the same account), each row can trigger the same company-level enrichment separately. To run the enrichment only once per company: add a **Lookup single row** (same table, matching on company domain) that checks for any other row where the company-level enrichment result is already populated. Then add a [conditional run](conditional-runs.md) to your enrichment column that fires only when the lookup finds no existing result. The first row to process writes the company data; subsequent rows with the same domain find the existing result via lookup and skip the enrichment.
 -   Consolidate paired or related rows (e.g., pull a duplicate account's ID or attributes into the master record row) — run a self-lookup on the shared group key (such as a duplicate set number or shared parent ID) to find all rows in the group, then use `Add as column` or a formula column to extract the specific fields you need from the matched rows
 
 **Best practices**
