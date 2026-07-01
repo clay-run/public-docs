@@ -234,7 +234,8 @@ Updates an existing contact's information in [Apollo.io](http://Apollo.io).
 -   Account ID (Optional): Apollo ID of organization contact belongs to
 -   Direct Phone (Optional): Primary phone number for contact
 -   Mobile Phone (Optional): Mobile phone number of contact
--   Present Raw Address (Optional): Personal location for contact (city, US state, country)\n-   Contact Stage ID (Optional): Current stage of contact in sales process
+-   Present Raw Address (Optional): Personal location for contact (city, US state, country)
+-   Contact Stage ID (Optional): Current stage of contact in sales process
 -   Custom Fields (Optional): Custom fields defined in Apollo account settings
 
 **Output:**
