@@ -130,6 +130,19 @@ If a cell **keeps** showing as out of date even after you re-run it, check wheth
 -   **Run from the column header**: right-click the enrichment column header → **Run column** → **Run [N] empty or out-of-date rows**.
 -   **Re-trigger auto-run**: toggle Auto-run off, then back on, and choose **Update cells** to queue all currently stale cells.
 
+**Understanding the manually-overwritten indicator**
+
+When you type a value directly into a cell that has a formula — or paste values in bulk into a formula column — Clay treats each entered value as an intentional override and suspends the column's formula for those cells. Affected cells display a pencil icon; hovering over it shows the tooltip "This cell's value has been manually overwritten."
+
+While a cell is in this state:
+
+-   **The formula is suspended for that cell.** Auto-run skips overwritten cells — they are not queued to run, do not consume credits, and do not trigger downstream columns.
+-   **The manually entered value is treated as the row's authoritative value.** Other columns can still reference it, but the formula that drives this column will not re-evaluate for that row.
+
+**To restore a cell to its formula-driven state:** hover over the cell and click the ↺ **Reset to original value** button. This clears the overwrite state and allows the formula to re-run on the next auto-run trigger.
+
+**Why this commonly appears:** When you paste data in bulk into a formula column — for example, pasting email addresses into a waterfall lookup column — Clay marks each pasted cell as overwritten to preserve your input. If enrichments stop running for pasted rows, look for the pencil icon and use the ↺ **Reset to original value** button to resume formula-driven behavior for those cells.
+
 ### Column-level auto-run (individual control)
 
 Column-level auto-run controls whether a specific enrichment runs automatically. This setting only works when table-level auto-run is enabled.
