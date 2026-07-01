@@ -85,6 +85,29 @@ Find the mailbox ID for a given email address in Outreach.
 
 -   **Email address**
 
+## Troubleshooting
+
+### Why am I getting "Unauthorized Request" on the Create prospect column?
+
+If a row in your **Create prospect** column fails with **"Unauthorized Request - You are not authorized to access that resource,"** this typically means one of two things:
+
+-   **The record already exists in Outreach** and the account you're using doesn't have permission to modify it.
+-   **The record is not visible or accessible** to the Outreach account connected to Clay.
+
+Check that the connected Outreach account has the appropriate permissions to create prospects, and verify that no existing record is blocking the create operation.
+
+### Why am I getting "Relationship Resource Not Found" on the Add to sequence column?
+
+The **Add to sequence** action requires a **Prospect ID** — not an email address. If you see the error **"Relationship Resource Not Found,"** the **Prospect ID** input is likely receiving an email address or is empty.
+
+To resolve this:
+
+1.  Edit the **Add to sequence** column.
+2.  In the **Prospect ID** field, clear any existing value and type `/` to open the column picker.
+3.  Search for `id` and select the **ID** output from your **Create prospect** or **Lookup prospect** column.
+
+This ensures you're passing the Outreach Prospect ID, which is what the sequence API requires.
+
 ## OAuth scopes
 
 When connecting your Outreach account, Clay uses optional OAuth scopes to give you fine-grained control over permissions. Learn more about [optional scopes](https://university.clay.com/docs/oauth-optional-scopes).
