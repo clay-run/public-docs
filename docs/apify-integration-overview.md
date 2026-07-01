@@ -91,7 +91,7 @@ To reliably pull a specific type of value regardless of where it appears in the 
 
 ### No new data after adding rows — import refresh schedule
 
-If you added rows to a table that uses Apify as a source but no new data has appeared, the delay may be due to the import refresh schedule. The Apify source refreshes every 24 hours by default.
+If you added rows to a table that uses Apify as a source but no new data has appeared, the delay may be due to the import refresh schedule. The Apify source refreshes every 24 hours by default (Enterprise plans refresh hourly).
 
 To trigger an update immediately:
 
