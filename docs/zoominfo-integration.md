@@ -42,6 +42,24 @@ Use ZoomInfo's contact-level data to enhance data coverage in your Clay workbook
 -   **Last name:** Contact's last name
 -   **Company name:** Contact's company name
 
+### **`Action` Search contacts**
+
+Search ZoomInfo's database for contacts matching specific criteria. Use this action to build targeted lists of people at a specific company or to filter by role, department, or seniority level.
+
+**Inputs**
+
+-   **Company website:** Domain of the company whose contacts you want to search (e.g., `acme.com`). Supply this to narrow results to contacts at a specific company.
+-   **Include title keywords:** Comma-separated job title keywords to include (e.g., `Sales, Marketing`). ZoomInfo limits this field to 500 characters.
+-   **Exclude title keywords:** Comma-separated job title keywords to exclude (e.g., `Intern, Assistant`). ZoomInfo limits this field to 500 characters.
+-   **Departments:** ZoomInfo department categories to filter by.
+-   **Management level:** Comma-separated management levels to filter by (e.g., `C Level Exec, VP Level Exec, Director, Board Member`).
+-   **Country:** One or more countries to filter contacts by. ZoomInfo limits this field to 500 characters.
+-   **Location search type:** Whether to match on the contact's personal location, their company HQ, or a combination. Options: Person or HQ, Person and HQ, Person, HQ, Person then HQ.
+-   **Minimum contact accuracy score:** Minimum accuracy score for returned contacts (e.g., `85`).
+-   **Required fields:** Comma-separated fields a contact must have to be returned (e.g., `email`).
+-   **Sort by:** How to sort results. Defaults to relevance (most to least).
+-   **Page size:** Number of contacts to return per page, from 1 to 100. Defaults to 25.
+
 ### **Run settings**
 
 -   **Auto-update**
