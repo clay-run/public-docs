@@ -84,6 +84,15 @@ The `Validation` section in `Full configuration` controls how the waterfall eval
 
 Make sure the contact's row has the required input data (full name and company domain at minimum). Then select the Work Email cell on that row, right-click, and choose **Run 1 cell**. The waterfall checks providers in sequence and stops as soon as one returns a valid email. For more ways to run enrichments on a subset of rows, see [Run progress](run-progress.md).
 
+### How do I run the Work Email waterfall on a specific set of rows?
+
+To run the waterfall on multiple contacts at once — without running the full table — you have two options:
+
+- **Select and run specific cells:** Click the Work Email cell for the first row you want to run, then drag (or **Shift+click**) to extend the selection across additional rows in that column. Right-click the selection and choose **Run [N] cells**. The waterfall runs only on the selected rows.
+- **Run all empty or out-of-date rows:** Click the ▶ button in the Work Email waterfall column header and select **Run empty or out-of-date rows**. This processes every row in the column that hasn't yet returned a result or is marked as out-of-date.
+
+For a full reference on run options — including a row limit and starting row — see [Run progress](run-progress.md).
+
 ### What does it mean if no email is found?
 
 If the cell shows no result, click into it to see which providers were tried and what each returned. Common reasons no email surfaces:
