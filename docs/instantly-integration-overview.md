@@ -54,7 +54,7 @@ Determine if an email address is a valid inbox and whether it's a catch-all doma
 **Run settings**
 
 -   **Auto-update**
--   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
+-   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-query-runs-clay-101))\)
 
 ### `Action` Add Lead to Campaign
 
@@ -77,19 +77,13 @@ Add leads to an Instantly campaign.
 
 ### Campaign not appearing in the dropdown
 
-If a newly created Instantly campaign doesn't appear in the **Campaign ID** dropdown, do a hard refresh to clear stale browser state:
+If a campaign you recently created in Instantly doesn't appear in the **Campaign ID** dropdown in Clay, do a hard refresh to clear stale browser state:
 
 -   **Mac** — Chrome or Firefox: `Cmd + Shift + R` · Safari: `Cmd + Option + R`
 -   **Windows/Linux** — Chrome, Firefox, or Microsoft Edge: `Ctrl + F5`
 
-### "Failed" or "Skipped" results when adding leads
+### "Skipped, already in Campaign" results when adding leads
 
-If the **Add Lead to Campaign** action returns a failure or "Skipped" result, the leads may already exist in your Instantly workspace. The action adds leads as new entries via Instantly's create endpoint — it does not update existing records. When a lead already exists in the workspace, the action skips or marks the row as failed rather than overwriting the existing entry.
+If the **Add Lead to Campaign** action shows a **❌ Skipped, already in Campaign** result, the lead already exists in your Instantly workspace. The action uses Instantly's create endpoint — it adds leads as new records and cannot update existing ones. Leads already present in the workspace are skipped entirely.
 
-To resolve this:
-
-1.  Check your Instantly account to confirm whether the leads are already present there.
-2.  In your Clay column settings, toggle **Skip if Lead is in Workspace** off.
-3.  Re-run the integration.
-
-With **Skip if Lead is in Workspace** disabled, the action will attempt to send the lead to Instantly regardless of whether it already exists in the workspace.
+To update a lead that already exists in Instantly, use the **Update Lead** action instead. This action calls Instantly's update endpoint and can modify data on existing lead records.
