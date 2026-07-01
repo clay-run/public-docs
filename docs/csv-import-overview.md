@@ -44,12 +44,6 @@ Once your data is in Clay, you can enrich rows to pull in additional information
 
 Importing a company list does not automatically add contact rows or email addresses — you need to run these two steps explicitly. For full setup instructions, see [Finding companies and people in Clay](finding-companies-and-people-in-clay.md) and [Work Email waterfall](work-email-waterfall.md).
 
-**If you want enrichment or AI columns to automatically fill in a field for every imported record:**
-
-When mapping your CSV at step 4, leave unmapped any column you want an enrichment or AI column to populate. Cells that are not mapped during import stay empty, which allows auto-run to fire the enrichment for those cells when the import completes. If you map an imported value to a column that also has an enrichment configured, the imported value is written directly to the cell and auto-run skips it — treating the imported data as the authoritative result for that row.
-
-For example, if your table has an enrichment column that looks up company domains, do not map a domain field from your CSV to that column during import. The cells stay empty, the enrichment runs automatically on the new rows, and fills in each domain. If you do map a domain value during import, that static value is preserved and the enrichment column does not re-run for those rows (unless you turn off **Keep existing results** in [table settings](table-management-settings.md#auto-run)).
-
 **If your CSV already has partial data and you want to verify or fill in only what's missing:**
 
 When you import a CSV that already contains some fields — such as email addresses, LinkedIn URLs, or company names — you do not need to re-enrich everything from scratch. Use **run conditions** on each enrichment column to skip rows that already have data, so you only spend credits on rows that actually need it.
