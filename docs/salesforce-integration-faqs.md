@@ -265,7 +265,20 @@ By default, Clay syncs Salesforce imports every 24 hours. When new records or up
 
 **How do I turn on or off autoupdate?**
 
-To modify this setting, click your table name in the top bar. From the dropdown menu, select `Disable` or `Enable auto-update`.
+Auto-update can be controlled at two levels:
+
+-   **Table level:** Click your table name in the top bar and select `Disable` or `Enable auto-update`. You can also access run settings via the ⚙️ icon in the bottom-right corner of the table.
+-   **Column level:** Open an enrichment column, scroll to **Run settings** at the bottom of the column editor, and toggle **Auto-update** on or off. Column-level auto-update only applies when table-level auto-update is enabled.
+
+## Why does enriching a Salesforce timestamp field cause records to keep re-running?
+
+Salesforce system-managed fields such as `LastModifiedDate` and `SystemModstamp` are automatically updated by Salesforce on every record write — including writes triggered by Clay. If you reference one of these fields as an input in an enrichment that also writes back to Salesforce, you can inadvertently create an ongoing loop: Clay updates a record → Salesforce refreshes `LastModifiedDate` → Clay detects the change and re-runs the enrichment → cycle continues.
+
+The same risk applies to any custom "last enriched" timestamp field that Clay itself populates. If that field is also used as a trigger or input for the same enrichment, the enrichment will keep re-running after every update.
+
+**Workaround:** Instead of sending a Salesforce system-managed timestamp back to Salesforce, create a **formula column** in Clay that generates a timestamp based on a stable field — for example, a formula that returns the current date whenever the record's `Id` field is present. Use this formula column as the value you write back to Salesforce, rather than reading `LastModifiedDate` directly.
+
+For general guidance on identifying and stopping automation loops, see [Infinite loops](infinite-loops.md).
 
 ## Is there a way I can test Salesforce enrichments?
 
