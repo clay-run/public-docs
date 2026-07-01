@@ -43,7 +43,7 @@ Once your data is in Clay, you can enrich rows to pull in additional information
 2.  **Find contacts at each company.** Click **Tools**, switch to the **Import** tab, and select **Find People at These Companies** to search for people at each company by job title, seniority, or other criteria. Each match is returned as a separate contact row.
 3.  **Add email and phone enrichments to the contacts table:**
     -   **Work email:** Click **Add enrichment**, search for **Work Email**, and select the waterfall. It requires each person's full name and company domain.
-    -   **Mobile phone:** Click **Add enrichment**, search for **Phone number**, and select the waterfall under **Waterfalls**. It requires the person's LinkedIn URL, which is returned by the people search.
+    -   **Mobile phone:** Click **Add enrichment**, search for **Phone number**, and select the waterfall under **Waterfalls**. It requires the person's professional profile URL, which is returned by the people search.
 
 Importing a company list does not automatically add contact rows, emails, or phone numbers — you need to run these steps explicitly. Once enrichments are configured, Clay auto-runs them on any new records added to your table. For full setup instructions, see [Finding companies and people in Clay](finding-companies-and-people-in-clay.md), [Work Email waterfall](work-email-waterfall.md), and [Waterfalls](building-a-data-waterfall.md).
 
