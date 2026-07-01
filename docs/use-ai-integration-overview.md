@@ -87,6 +87,10 @@ After generating a setup, you can easily edit your original description and rege
         -   To skip writing schema by hand, click **Generate from prompt** to let Clay generate a valid schema from your prompt automatically.
 8.  _(Optional – Create or modify content only)_ Click `Examples` and `Add examples` to show AI what responses should look like.
 
+### Browsing pre-built templates
+
+The **Templates** dropdown at the top of the Use AI panel lets you explore pre-configured setups for common use cases. Click **Templates** → **Browse templates** to open the template browser and apply a ready-made configuration to your column—useful when you want to start from a working example rather than writing a prompt from scratch.
+
 **Tip — testing prompt changes on a sample:** To iterate on a prompt without running your entire table, select a few rows, right-click, and choose **Run [N] rows** (or select specific cells and choose **Run [N] cells**). This lets you validate results before spending credits on every row. Note that when an AI column produces new output, any downstream columns that reference it will automatically re-run — this is expected behavior. To prevent downstream columns from triggering while you refine a prompt, use [Sandbox mode](sandbox-mode.md), which isolates your changes to a test copy of the table. See [Run progress and row management](run-progress.md) for full details on running specific rows.
 
 ## Generating images with Use AI
