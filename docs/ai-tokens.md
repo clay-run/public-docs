@@ -128,7 +128,7 @@ Each option has different benefits and considerations in terms of cost, convenie
 -   **Upgrade your Anthropic API tier** — higher tiers provide significantly more TPM and RPM capacity, which reduces retry frequency when running large tables.
 -   **Switch to Clay credits** — Clay manages Anthropic rate limits, tier access, and scaling on your behalf, so individual key limits don't apply (see "Clay credits" above).
 
-**If AI column cells fail with "Your Anthropic account does not have enough credits" when using a personal Anthropic API key:** This error means the Anthropic account associated with your API key has run out of credits. Even though you've connected your own Anthropic key in Clay, the credit balance is managed entirely on Anthropic's side — it is separate from your Clay data credits. To resolve this:
+**If AI column cells fail with "Your anthropic API key has insufficient credits" when using a personal Anthropic API key:** This error means the Anthropic account associated with your API key has run out of credits. Even though you've connected your own Anthropic key in Clay, the credit balance is managed entirely on Anthropic's side — it is separate from your Clay data credits. To resolve this:
 
 -   **Add credits to your Anthropic account** — go to [console.anthropic.com](https://console.anthropic.com/settings/billing) to top up your balance or upgrade your Anthropic plan.
 -   **Rerun the affected rows** — once your Anthropic balance is restored, return to your Clay table and rerun the rows that failed. The column should run normally.
