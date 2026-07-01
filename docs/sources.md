@@ -326,7 +326,7 @@ The **Run this source** setting in the source panel controls the schedule:
 
 Beyond the schedule, sources can also run in response to other events. For example, if your Find People source uses a Clay companies table as its input (via the **Companies** filter), adding new rows to that input table can trigger the source to re-run for those new entries. This input-update trigger fires independently of the source's schedule setting.
 
-**Note:** The table's **auto-run** setting is a separate control. It determines whether enrichment columns (action fields) run automatically when new rows arrive — it does not trigger sources. See [Auto-run](table-management-settings.md#auto-run) for more.
+**Note:** The table's **auto-run** setting is a separate control. It determines whether enrichment columns (action fields) run automatically when new rows arrive — it does not trigger sources. See [Auto-run](auto-run.md) for more.
 
 To investigate why a source ran unexpectedly, click the source column title and select **View Run History**.
 
