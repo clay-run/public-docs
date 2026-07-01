@@ -95,6 +95,26 @@ Use `moment()` with no arguments to get the current date and time at the moment 
 moment({{Event Date}}).isAfter(moment().add(6, 'months')) ? "Yes" : ""
 ```
 
+**Displaying the current date directly**
+
+To output the current date as the formula column's value — rather than using it inside a comparison — call `moment().format()` directly. You can pass a [Moment.js format string](https://momentjs.com/docs/#/displaying/format/) to control how the date is displayed:
+
+```javascript
+moment().format("MMMM, D YYYY")   // e.g. "March, 11 2024"
+moment().format("YYYY-MM-DD")     // e.g. "2024-03-11"
+moment().format()                  // ISO timestamp, e.g. "2024-03-11T14:23:00+00:00"
+```
+
+To stamp a timestamp only when a specific column has a value — for example, to record when a deal stage was filled in — use a conditional:
+
+```javascript
+!!{{COLUMN_NAME}} ? moment().format() : ""
+```
+
+This returns the current timestamp when `{{COLUMN_NAME}}` is non-empty, and an empty string otherwise.
+
+If you only need the date a row was originally added to the table, use the built-in **Created At** system column instead. See [Table columns](table-columns-overview.md#system-columns-created-at-and-updated-at) for how to reveal it.
+
 **Keeping the comparison current automatically**
 
 Formula columns only re-evaluate when they are re-run (and the table's **Auto-run** is on). `moment()` will return the correct date each time the formula runs, but if your table sits idle the formula won't refresh on its own.
