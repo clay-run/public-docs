@@ -1,6 +1,6 @@
 ---
 title: Table columns
-description: Learn how to navigate columns in your Clay table, including column types, limits, child column mapping, and how to resolve circular dependency errors.
+description: Learn how to navigate columns in your Clay table, including column types, system columns (Created At and Updated At), limits, child column mapping, and how to resolve circular dependency errors.
 last_synced: 2026-04-26T01:40:46.052Z
 ---
 
@@ -24,6 +24,23 @@ There are a data types you can specify for your column. Here's a high level over
 -   **Assigned To:** Tag anyone in your Clay workspace.
 -   **Email:** Accepts any email address input.
 -   **Image from URL:** Upload image URLs for easy retrieval.
+
+## System columns: Created At and Updated At
+
+Every Clay table includes two automatically maintained system columns: **Created At** and **Updated At**. These columns are hidden by default — to show them, open the columns panel (click the column count button in the toolbar) and toggle them on.
+
+-   **Created At**: Records when a row was first added to the table.
+-   **Updated At**: Records the most recent time any cell in the row changed. Clay automatically stamps a new value here whenever any column in the row is modified.
+
+Both fields are system-managed: you cannot delete them, edit their settings, or manually change their values.
+
+### Integration mapping limitation
+
+**Updated At** and **Created At** are not available in the column picker when mapping Clay columns to an external integration — this applies to all integrations, including Google Sheets, Salesforce, and others. The mapping UI removes them from the selectable field list.
+
+This is by design. Because Clay automatically overwrites **Updated At** on every record change, using it as an outbound mapping target creates an infinite loop risk: any column change updates **Updated At**, which re-triggers the outbound sync, which modifies more columns, which changes **Updated At** again — and the cycle repeats. See [Infinite loops](infinite-loops.md) for how to recognize and stop loop patterns.
+
+If you need to push a timestamp to an external platform that reflects when a record was processed, create a separate column to hold that value — for example, a formula column or a manually set date column — and map that column to your destination instead.
 
 ## Add columns
 
