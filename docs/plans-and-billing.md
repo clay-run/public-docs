@@ -9,7 +9,7 @@ last_synced: 2026-04-26T01:40:29.319Z
 
 We'll walk through each of our pricing plans and information around billing your workspace.
 
-Clay offers three plan tiers that differ by features, capacity, and pricing. For a detailed comparison of all plans, visit our [pricing page](https://www.clay.com/pricing).
+Clay offers plan tiers that differ by features, capacity, and pricing. For a detailed comparison of all plans, visit our [pricing page](https://www.clay.com/pricing).
 
 You can adjust your yearly or monthly credit limits on most plans to match your usage needs, either during sign-up or by contacting our team.
 
@@ -38,6 +38,23 @@ To upgrade your Clay workspace plan:
 Your new plan will activate immediately, and any applicable charges will be applied.
 
 **How upgrade billing works:** Plan upgrades are **not prorated** — you pay the full price of the new tier immediately, not a partial amount for remaining days in your current cycle. In return, you receive the **full** Actions and Data Credits for your new plan right away. Unused Actions from your previous plan are not carried over (Actions reset each billing cycle and do not roll over). Your existing unused Data Credits are preserved when you upgrade.
+
+### Free plan
+
+-   **Best for:** Exploring the platform and experimenting with small-scale workflows
+-   **Data credits:** 100 per month (rollover cap: 200 credits)
+-   **Monthly pricing:** $0
+-   **Table limit:** 200 rows per table
+-   **Key limitations:**
+    -   Source record limit: up to **100 records total** per source across all runs (compared to 15,000+ on paid plans). Once a source reaches this limit, it stops adding new records — create a new source to continue.
+    -   Scheduled source runs are not available
+    -   Phone number enrichments are not available (see [Trials](#trials) for details)
+    -   CRM integrations (e.g., HubSpot, Salesforce, Pipedrive) require Growth plan or higher
+    -   Email sequencing tools (e.g., Outreach, Salesloft) require Launch plan or higher
+    -   HTTP API and webhooks require Growth plan or higher
+    -   Custom API keys for certain third-party providers require a paid plan; the Free plan uses Clay-managed accounts for those providers
+
+When your 14-day trial ends, your workspace automatically moves to the Free plan — you won't be charged unless you upgrade. See [Trials](#trials) for what happens to your trial data credits at that point.
 
 ### Launch plan
 
