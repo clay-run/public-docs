@@ -139,3 +139,15 @@ To automatically import data for multiple companies or URLs without overwriting 
 Clay's native **Run Apify Actor** integration enforces a fixed limit of **4 concurrent requests**, regardless of your Apify plan. This limit applies to all workspaces and cannot be raised on a per-workspace basis — it is set to match the concurrency cap on Apify's lowest plan.
 
 If rows are sitting in **Queued** status and you are on a higher-tier Apify plan, you can bypass this cap by calling Apify's API through an **HTTP API column** instead of the native integration. The HTTP API column does not apply this fixed limit, so Clay will dispatch requests at the rate your Apify plan supports. See the [HTTP API](http-api-integration-overview.md) guide for setup instructions.
+
+### Actor column stuck in Queued — upstream column dependency
+
+If your Apify actor column uses input data from another column (for example, a URL fetched by a preceding enrichment), it can sit in **Queued** status when that upstream column has not yet produced a value for that row.
+
+**Fix:** Open the actor column's **Run Settings → Only run if** and add a run condition that gates execution on the required input being present. For example, if your actor reads from a column named "Website URL":
+
+`/Website URL is not empty`
+
+This ensures the actor only fires once the required data is available. If an existing run condition is already set and causing the issue, remove it and replace it with this one.
+
+For full run condition syntax and examples, see [Conditional runs](conditional-runs.md). For other general steps when cells are stuck in Queued — including a hard refresh (`Ctrl+Shift+R` on Windows/Linux, `Cmd+Shift+R` on Mac) — see [Run progress](run-progress.md#troubleshooting-cells-stuck-in-queued-status).
