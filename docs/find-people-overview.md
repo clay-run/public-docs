@@ -69,6 +69,8 @@ To add more profiles from the same search to an existing people table without cr
 
 **Note:** If you delete rows that were previously imported by a Find People source and then re-run the source, those contacts will not be re-imported. The source tracks all previously returned results in an internal exclusion list; re-runs skip anyone already seen, regardless of whether their row was later deleted from the table. To retrieve the same contacts, create a new table with the same search settings — this starts with a fresh exclusion list.
 
+**Note:** Deleting rows from a Find People table — including rows removed automatically by auto-delete — does not reset the per-company limit counter. If a company has already reached its **Limit per company** cap, the source will not import additional contacts from that company on future runs, even after those rows are deleted. The source tracks how many contacts have been processed per company independently of what rows currently exist in the table. To get additional contacts from companies that have already hit their limit, create a new table with the same search settings.
+
 **Outputs:**
 
 Each result includes a **Structured Location** object in the cell details with geocoded, normalized fields — so you don't need additional AI columns to parse or reformat location data. These fields work with informal location names like "Greater Chicago Area."
