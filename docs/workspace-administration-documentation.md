@@ -30,6 +30,19 @@ To update your account name:
 -   Under the `Your details` tab, edit your name in the `Name` field.
 -   Click `Save` to ensure your changes are updated.
 
+## **Change your display theme**
+
+Clay supports three display themes that you can switch at any time:
+
+-   **Standard** — the default light theme.
+-   **System** — follows your device or operating system's appearance setting, switching between light and dark automatically.
+-   **Dark** — a dark color scheme for the entire Clay interface.
+
+To change your theme:
+
+-   Go to `Settings` and select `Appearance` from the left-hand menu.
+-   Under **Theme**, select your preferred option. Your selection takes effect immediately.
+
 ## **Change your account email address**
 
 The email address field in `Settings` > `Account` is read-only and cannot be changed directly in the UI. To change the email associated with your Clay account, contact Clay support via the in-app chat.
