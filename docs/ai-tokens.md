@@ -121,3 +121,9 @@ Each option has different benefits and considerations in terms of cost, convenie
 
 -   **Switch to Clay credits** — open the column settings, click the **Account** dropdown, and select the default Clay-managed account. This routes your requests through Vertex AI's dedicated capacity.
 -   **Retry the affected rows** — if you need to keep your personal key, the error is typically intermittent. Re-running failed cells usually succeeds once Google's shared capacity pressure eases.
+
+**If enrichment cells show "Retrying" when using a personal Anthropic API key:** Clay runs rows in parallel, which can quickly exhaust Anthropic API rate limits — especially on lower tiers. When Clay receives a rate-limit response from Anthropic, it sets the affected cells to a "Retrying" state and waits before attempting again. If the rate limit persists, cells may remain in this state for an extended period or ultimately fail. To resolve this:
+
+-   **Run fewer rows at a time** — lower-tier Anthropic accounts have lower requests-per-minute (RPM) and tokens-per-minute (TPM) limits. Running smaller batches reduces the chance of hitting these limits. See [Anthropic API rate limits](https://docs.anthropic.com/en/api/rate-limits) for your tier's specific limits, and [Anthropic API settings](https://console.anthropic.com/settings/limits) to check your current tier.
+-   **Upgrade your Anthropic API tier** — higher tiers provide significantly more TPM and RPM capacity, which reduces retry frequency when running large tables.
+-   **Switch to Clay credits** — Clay manages Anthropic rate limits, tier access, and scaling on your behalf, so individual key limits don't apply (see "Clay credits" above).
