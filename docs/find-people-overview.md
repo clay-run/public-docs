@@ -48,6 +48,7 @@ To add more profiles from the same search to an existing people table without cr
     -   **Years of experience** *(Advanced Search — currently in closed beta):* Set a minimum and/or maximum number of estimated full-time years of experience based on the person's profile. This filter is part of the Advanced Search (Search DSL) mode. Contact support to request access to the closed beta.
 -   **Location:** Include or exclude specific regions, countries, or cities. Distance-based filtering (for example, "within 35 miles of a location") is not available — location filters accept named regions, countries, and cities only.
 -   **Profile:** Filter by names, connection count, or follower count ranges.
+    -   **Bio keywords:** Return only people whose profile mentions at least one of your keywords (searches across headline, bio, experience descriptions, and languages). Multiple keywords use OR logic — entering `Python, CPA` returns profiles mentioning either term, not only profiles that mention both.
 -   **Certifications:** Search for specific certifications (e.g., AWS, Google Cloud).
 -   **Languages:** Filter by specific languages spoken.
 -   **Education:** Search for specific school names.
