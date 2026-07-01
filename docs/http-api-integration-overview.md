@@ -729,7 +729,7 @@ If clicking **Run** on your HTTP API column produces no loading indicator, no re
 3.  Re-insert each column value by typing `/` inside the body editor and selecting the column from the picker — this saves each reference as an internal field ID rather than a display name.
 4.  Save and test on a single row.
 
-**Note:** If the column was working before and stopped responding, try a hard refresh first (**Mac:** Cmd + Shift + R · **Windows:** Ctrl + Shift + R) to rule out a browser display glitch. If clicking Run still produces nothing after the refresh, use the body fix above.
+**Note:** If the column was working before and stopped responding, try a hard refresh first (**Mac Chrome/Firefox:** Cmd + Shift + R · **Mac Safari:** Cmd + Option + R · **Windows:** Ctrl + Shift + R) to rule out a browser display glitch. If clicking Run still produces nothing after the refresh, use the body fix above.
 
 ### Column value appears as `[object Object]` in the request body
 
