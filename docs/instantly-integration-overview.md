@@ -54,7 +54,7 @@ Determine if an email address is a valid inbox and whether it's a catch-all doma
 **Run settings**
 
 -   **Auto-update**
--   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-query-runs-clay-101))\)
+-   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
 
 ### `Action` Add Lead to Campaign
 
