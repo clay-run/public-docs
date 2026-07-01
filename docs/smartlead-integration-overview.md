@@ -170,3 +170,17 @@ By default, Smartlead will not add a lead to a campaign if that lead already exi
 ### I don't have a Lead ID to use the Update or Remove actions
 
 The `Lead ID` required by `Update lead in campaign`, `Update lead category`, and `Remove lead from campaign` is Smartlead's internal identifier for a lead — it is not the same as a row ID in Clay. Run the `Lookup lead in campaign` action for the relevant lead first, then map the `Id` output into the `Lead ID` field of your update or remove action.
+
+### Custom variables appear empty in Smartlead campaign emails
+
+This typically happens when the **Add lead to campaign** action runs before all the columns that supply your custom field values have finished populating in Clay. Smartlead receives the lead with incomplete data, and your campaign emails display the variable placeholders unfilled.
+
+**To update existing leads:** Re-run the enrichment columns that supply your custom fields first, then re-run **Add lead to campaign** to push the updated values to Smartlead.
+
+**To prevent this going forward:** In the **Add lead to campaign** column's **Run settings**, open the **Only run if** condition and write a formula that checks all required custom field columns are non-empty before the action fires. For example, if your campaign uses First Name and Company Name as variables:
+
+`/First Name is not empty AND /Company Name is not empty`
+
+Rows that fail the condition show **"Run condition not met"** and are skipped without consuming credits. See [Conditional runs](conditional-runs.md) for full syntax and examples.
+
+**If you're uploading leads manually:** Before exporting from Clay, use the table **Filter** (in the toolbar) to find rows where any required column **is empty**. Fill in or remove those rows before exporting so no incomplete leads enter your Smartlead campaign. See [Filtering](table-columns-overview.md) for instructions.
