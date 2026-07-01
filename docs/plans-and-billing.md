@@ -108,6 +108,8 @@ To cancel your Clay subscription:
 
 **What happens to your Data Credits:** Your credit balance is capped at the free plan's rollover limit — 200 credits. Any credits above 200 are forfeited. If you have a large balance, spend it down before the cancellation takes effect.
 
+**What happens to your tables and data:** Cancelling does not delete your tables or the data you've previously enriched — everything in your workspace remains visible. Your saved connections and credentials are preserved as well. However, connections that require a paid plan — such as CRM integrations (e.g., HubSpot, Salesforce) and certain provider-specific API keys — cannot be used to run enrichments on the free plan. They become available again when you upgrade to a plan that includes those features.
+
 To request a refund for a recent charge, contact [Clay support](https://app.clay.com). For refund timing, see the FAQs section below.
 
 ## Billing
@@ -186,6 +188,8 @@ There is no minimum contract commitment — you can cancel at any time. To cance
 3.  Click `Cancel plan` and follow the prompts to confirm.
 
 Cancellations take effect at the end of your current billing cycle. Until then, you retain access to your paid plan's features and credit allocation. At the end of the cycle, your workspace moves to the Free plan and your Data Credit balance is reduced to the Free plan's rollover cap (200 credits — see [Do credits roll over?](#do-credits-roll-over) for how the credit cap works). Any credits above that cap are forfeited.
+
+Your tables and previously enriched data are not deleted when you cancel — see [Cancel your plan](#cancel-your-plan) for details on what changes.
 
 For information on payment refunds after canceling, see [How long does a refund take?](#how-long-does-a-refund-take) below.
 
