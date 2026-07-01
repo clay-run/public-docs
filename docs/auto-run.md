@@ -12,33 +12,28 @@ Auto-run automatically runs enrichments whenever rows are added or edited, keepi
 
 Every time a source runs or re-runs, Clay walks through a short decision tree before executing any enrichment cell. Understanding this flow helps you predict exactly which cells will fire — and which will be skipped.
 
-**Step 1 — New or existing row?**
+**Note on existing rows:** Whether an existing row re-enters this pipeline at all depends on the **Update existing rows** toggle in your source column settings (covered in the [Update Existing Rows toggle](#update-existing-rows-toggle-for-scheduled-source-imports) section below). When that toggle is off — the default for most source types — source re-runs only introduce new rows; existing rows are not re-evaluated.
 
--   **New row** (no matching ID in the table): Clay skips ahead to step 2.
--   **Existing row** (matching ID already present):
-    -   If **"Update existing rows"** is **off**: the row is untouched. Existing data is preserved and no action columns are triggered.
-    -   If **"Update existing rows"** is **on**: the source column is updated with the latest source data, then Clay proceeds to step 2.
-
-**Step 2 — Table-level auto-run**
+**Step 1 — Table-level auto-run**
 
 -   If the table's **Auto-run toggle is off** (shows "Manual"): the cell is marked stale and skipped. It will only run on a manual click.
--   If the table's **Auto-run toggle is on** (shows "Auto-run"): Clay checks the **"Keep existing results"** checkbox.
-    -   **"Keep existing results" checked**: only cells that are new, empty, or errored are eligible to run. Cells with an existing successful result are preserved and skipped.
-    -   **"Keep existing results" unchecked** (default): all cells are eligible; Clay proceeds to step 3.
+-   If the table's **Auto-run toggle is on** (shows "Auto-run"): Clay checks the **"Keep existing results"** setting.
+    -   **"Keep existing results" on (default for new tables)**: only cells that are new, empty, or errored are eligible to run. Cells with an existing successful result are preserved and skipped.
+    -   **"Keep existing results" off**: all cells are eligible; Clay proceeds to step 2.
 
-**Step 3 — Column-level auto-run**
+**Step 2 — Column-level auto-run**
 
 -   If the **column's Auto-run toggle is off**: the cell is marked stale and skipped (only runs on a manual click).
 -   If the **column's Auto-run toggle is on** (default): **the cell runs**.
 
-**Note: Adding a new source to an existing table auto-runs enrichments on the first 10 rows only.** When you add a data source to a table that already exists — including tables created by duplicating a workbook and then adding a source afterward — Clay automatically queues enrichments for only the **first 10 imported rows**. The remaining rows are added to the table but do not trigger auto-run. This is intentional behavior to prevent unexpected credit burns: importing a large source into a table with many enrichment columns could otherwise trigger a significant spend all at once. This 10-row cap applies only to the initial source setup; subsequent scheduled runs of the same source run enrichments on all newly imported rows. To process the remaining rows, manually run them: select all rows in the table, right-click, and choose **Run [N] rows** — or right-click the first column in your workflow and select **Run column**.
+**Note: Adding a People, Companies, or Jobs list-builder source to an existing table auto-runs enrichments on the first 10 rows only.** When you use a People, Companies, or Jobs search source to add rows to an existing table — including tables created by duplicating a workbook and then adding a source afterward — Clay automatically queues enrichments for only the **first 10 imported rows**. The remaining rows are added to the table but do not trigger auto-run. This is intentional behavior to prevent unexpected credit burns. This 10-row cap applies only to the initial source setup; subsequent scheduled runs of the same source run enrichments on all newly imported rows. To process the remaining rows, manually run them: select all rows in the table, right-click, and choose **Run [N] rows** — or right-click the first column in your workflow and select **Run column**.
 
 ## Table-level auto-run (master control)
 
 Table-level auto-run acts as the master switch that controls automatic enrichment for the entire table.
 
 -   When **enabled**: Enrichments run automatically whenever rows are added or edited.
-    -   When the "**Keep existing results**" option is enabled, only errored, empty, or new cells can run automatically. Cells that already have existing data **will not** run automatically.
+    -   New tables use **"Keep existing results" on** by default — only errored, empty, or new cells run automatically. Cells that already have existing data **will not** run automatically unless you turn off Keep existing results.
 -   When **disabled**: You must manually click cells to trigger enrichments.
 -   **Default setting**: Enabled by default — Clay is designed to automatically enrich data as soon as it arrives.
 
@@ -58,22 +53,22 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
 
 ### Keep existing results
 
-"Keep existing results" is only available when Auto-run is turned on.
+"Keep existing results" is only available when Auto-run is turned on. **This setting is on by default** for new tables — Clay skips cells that already have a successful result rather than re-running them on every source sync.
 
--   With this **checked**: only empty, errored, or new cells run automatically — cells with existing successful results are skipped.
--   With this **unchecked** (default): all cells are eligible to run, including ones that already have results.
+-   With this **on (default)**: only empty, errored, or new cells run automatically — cells with existing successful results are skipped.
+-   With this **off**: all cells are eligible to run, including ones that already have results.
 
-**To enable "Keep existing results":**
+**To change "Keep existing results":**
 
 1.  Click the `⛭` icon in the top toolbar (or click the table name → **Run Settings**).
 2.  Make sure the `Auto-run` toggle is **on**.
-3.  Check the **"Keep existing results"** checkbox.
+3.  Check or uncheck the **"Keep existing results"** checkbox as needed.
 
-**Tip:** Enable "Keep existing results" before uploading new rows to an existing table if you don't want to re-run enrichments on rows that are already complete. This prevents accidental full-table re-runs and protects your credits.
+**Tip:** Keep "Keep existing results" on (the default) to protect credits from being spent re-running enrichments on rows that are already complete. Turn it off when you explicitly want enrichments to re-run on all rows — for example, after updating an enrichment prompt or adding a new provider to a waterfall.
 
 **Note:** Changing "Keep existing results" does **not** automatically re-run cells already showing the out-of-date indicator — the new setting only applies to future auto-run triggers. To refresh currently stale cells:
 
--   **Disable "Keep existing results"** (uncheck it): a prompt appears asking whether you'd like to update out-of-date cells — click **Update cells** to immediately queue all stale cells.
+-   **Turn off "Keep existing results"**: a prompt appears asking whether you'd like to update out-of-date cells — click **Update cells** to immediately queue all stale cells.
 -   **Run from the column header**: right-click the enrichment column header → **Run column** → **Run [N] empty or out-of-date rows**.
 -   **Re-trigger auto-run**: toggle Auto-run off, then back on, and choose **Update cells** to queue all currently stale cells.
 
@@ -148,18 +143,16 @@ For full documentation on conditional run syntax, operators, and advanced patter
 
 ## Update Existing Rows toggle (for scheduled source imports)
 
-For tables with scheduled source imports, the `Update existing rows` toggle controls whether scheduled source runs will overwrite existing records with the same identifier.
+The **Update existing rows** toggle in your source column settings controls whether source re-runs update records that already exist in the table (matched by their unique identifier). This is a source-level setting, separate from the enrichment cell decision tree above — it determines whether existing rows even re-enter the auto-run pipeline.
 
-**Two options:**
+-   **Update existing rows: ON** — When the source re-runs, existing rows are updated with the latest source data and re-enter the auto-run pipeline. Use for ongoing data hygiene and backfills.
+    -   **Note**: To allow enrichments to re-run on updated existing rows, also turn **"Keep existing results" off** — otherwise, cells that already have a result will be skipped even though the source data was refreshed.
+-   **Update existing rows: OFF** (default for most source types) — Source re-runs only add new records. Existing rows with matching identifiers are not touched. More credit-efficient for workflows where you only need to enrich newly added records.
 
--   **Update Existing Rows: ON** ("All") — Re-runs enrichments on all rows with each scheduled run. Use for ongoing data hygiene and backfills. Higher credit usage.
-    -   **Note**: You likely will want to turn off the "**Keep existing results**" auto-run option for this scenario so that enrichments will re-run for existing rows that receive an update from your source.
--   **Update Existing: OFF** ("Net New") — Only runs enrichments on newly added records. Skips existing records. Lower credit usage — more cost-efficient.
+**To configure:**
 
-**To configure Update Existing:**
-
-1.  Open your source column → `Edit column` → `Sources`.
-2.  Toggle `Update Existing` on or off based on your needs.
+1.  Click the source column header → `Edit column`.
+2.  Toggle **Update existing rows** on or off based on your needs.
 
 ## Common scenarios
 
@@ -212,4 +205,4 @@ For tables with scheduled source imports, the `Update existing rows` toggle cont
 -   Use `Only run if` conditions extensively.
     -   Example: `Email is empty` — only find email when missing.
     -   Example: `Company Size > 50` — only enrich companies in your ICP.
--   For table auto-run, we recommend having the "Keep existing results" option checked to avoid accidentally overwriting data and wasting credits.
+-   For table auto-run, we recommend keeping "Keep existing results" on (the default) to avoid accidentally overwriting data and wasting credits.
