@@ -12,7 +12,7 @@ HubSpot is a customer relationship management (CRM) platform that helps business
 
 With this integration, you can import, create, update, and manage HubSpot objects directly in Clay.
 
-This integration requires a Growth plan or higher. See [Plans and billing](plans-and-billing.md) for details.
+**Heads up!** The HubSpot integration requires a **Growth plan** or higher. See [Plans & billing](plans-and-billing.md) for details.
 
 ## Enriching data with HubSpot
 
