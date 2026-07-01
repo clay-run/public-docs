@@ -171,3 +171,9 @@ If you see a **401 error** from Google when connecting your Google account to Cl
     6.  Review the summary and click `Finish`.
 
     **Note:** Changes in Google Admin can take up to 24 hours to apply. Once complete, return to Clay and reconnect your Google account.
+
+### Sheet ID and column mapping fields are not visible
+
+If you open a Google Sheets action or source and the **Sheet ID** or column mapping fields do not appear, the most likely cause is that the connected Google account does not have access to the spreadsheet — for example, if you connected a different Google account than the one that owns or was shared on the sheet.
+
+**To fix:** In Clay, go to your workspace `Settings` → `Connections`, remove the Google Sheets connection, and reconnect with the Google account that has access to the spreadsheet. Once reconnected, the Sheet ID and column mapping fields will appear.
