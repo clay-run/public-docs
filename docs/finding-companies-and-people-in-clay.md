@@ -504,6 +504,19 @@ Company and people search sources don't support run conditions. The workaround i
 
 **Note:** The row limit, starting row, and "Run [N] rows" controls available for enrichment columns do **not** control which companies a Find People source processes — the source always reads from the view it was configured with at setup. Only a filtered view limits which companies are included.
 
+### Can I process a large company list in segments without creating multiple tables?
+
+Yes — use the **Row limit** and **Starting row** settings in the table toolbar to work through a large list in chunks. This is useful when you have a table with tens of thousands of company rows and want to run enrichment-type operations (such as **Find Contacts at Company**) on segments of the list without splitting the data across multiple tables.
+
+Click the **rows** button in the toolbar (it shows the visible row count, for example **50,000/50,000 rows**). A popover opens with two fields:
+
+-   **Starting row** — the row to begin from. Leave blank to start at row 1, or enter a number to skip ahead (for example, enter `10,001` to begin the second batch of 10,000).
+-   **Row limit** — the maximum number of rows to include. Enter `10,000` to cap the view to rows 1–10,000.
+
+Click **Save changes**, run your enrichment columns on that segment, then update **Starting row** to advance to the next batch and repeat until you've processed the full list.
+
+**Important:** The row limit and starting row apply to enrichment columns (such as **Find Contacts at Company**). They do **not** control which companies a Find People *source* processes — a source always reads from the view it was configured with at setup. To limit which companies a source processes, use a filtered view instead (see [Can I run a people search only on companies that meet certain criteria?](#can-i-run-a-people-search-only-on-companies-that-meet-certain-criteria) above).
+
 ### What's the difference between the people search source and the enrichment action?
 
 The source returns results in a new table and is subject to a per-source cumulative limit that varies by billing plan (see [the troubleshooting section](#your-source-has-exceeded-your-plans-limit-error-on-find-companies-or-find-people) if you hit that limit). The enrichment action saves results to your existing table, returns 10 people by default with full profile data, and supports a **Reduce data for more results** option that returns up to 500 people (name, job title, and professional profile URL only). Use the action when you need to rank or filter contacts before saving them, or when you need more records than a single source allows.
