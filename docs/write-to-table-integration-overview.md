@@ -137,3 +137,7 @@ Once complete, you can send the newly created list to the desired column or tabl
 ### **Can I write individual values to another table, or does it have to be a list?**
 
 Lists are optional. You can write individual values or entire lists depending on your column setup.
+
+### **Why am I seeing a "Please add a valid list here" error when trying to write a list to another table?**
+
+This error fires when the value in the main list field isn't recognized as an array. Instead of using the main value field, select your list column directly from the **"Add other data from this table"** section in the action settings — that section maps the column without going through the formula-based validation, which avoids the error.
