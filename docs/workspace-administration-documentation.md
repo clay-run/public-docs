@@ -278,6 +278,7 @@ Clay offers three user roles with different permission levels to help manage you
 -   Modify billing settings or purchase credits.
 -   Set a connection as the default in `Settings` → `Connections` — this is a workspace admin–only action.
 -   Delete connections added by other workspace members — editors can only delete connections they personally added.
+-   Create new **Workflows** _(currently in limited access)_ — creating workflows requires workspace admin access.
 
 ### **Viewer**
 
