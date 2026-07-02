@@ -173,6 +173,19 @@ If you are running trigger campaigns please make sure to turn Auto-update on.
 
 ![](https://cdn.prod.website-files.com/687e604972375496b891fe58/691e659fa1b8cb9cc1ee32da_672aeddc0616d6a7ef69234a_672aec9c4163926064f940bf_CleanShot%2525202024-10-31%252520at%25252002.14.57%2525402x%252520\(1\).png)
 
+## Passing personalized copy to Salesloft cadences
+
+Salesloft cadences reference personalized copy through variable tokens that pull values from custom Person fields on the contact record. Custom Person fields are the only way to pass Clay-generated content — such as AI-written email snippets — into a cadence email template.
+
+To send copy from Clay to Salesloft, map your Clay columns to Salesloft custom Person fields using the **Custom Person Fields** input in the **Upsert Person** or **Create Person** action. Once those fields are populated on the Person record, you can insert them as variable tokens inside each cadence email step.
+
+**For multi-step email sequences, use one custom Person field per email step:**
+
+1. In Salesloft, create a custom Person field for each email step — for example, *Email 1 Copy*, *Email 2 Copy*, and so on.
+2. In Clay, generate each email's copy in a separate column (for example, using a Claygent or AI enrichment column).
+3. In the Clay **Upsert Person** or **Create Person** action, open the **Custom Person Fields** input and map each Clay column to the corresponding Salesloft custom field name.
+4. In each cadence email step in Salesloft, insert the matching custom field as a variable token.
+
 ## Avoiding duplicate Salesloft person records
 
 When you use both **Upsert Person** and **Add Person to Cadence** in the same Clay table, both columns may run at the same time. If Add Person to Cadence fires before Upsert Person finishes, Salesloft may create a second person record for the cadence enrollment instead of attaching to the upserted record — leaving you with two duplicate person records for the same contact.
