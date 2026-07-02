@@ -198,6 +198,8 @@ Clay does not automatically detect which concurrent role is the "main" job. To i
 
 Using the **Generate tab** (describe what you want in plain English) is the fastest way to configure this — Clay will set up the prompt and output fields automatically.
 
+**For a one-off correction on specific rows:** If you only need to fix the primary role for a handful of rows rather than building an automated selection workflow, you can type directly into the extracted field column for that specific row — for example, a formula column pulling `{{Enrich person}}?.current_experience?.[0]?.company_domain`. Clay treats the typed value as a manual override and marks the cell with a pencil icon (tooltip: "This cell's value has been manually overwritten"). Auto-run and upstream-triggered re-evaluation both skip cells in this state, so re-running Enrich Person does not reset your edit. To restore the enrichment-driven value, hover over the cell and click **↺ Reset to original value**. See [Table management settings](table-management-settings.md#auto-run) for full details on this behavior.
+
 ### Calculate how long a contact has been in their current role
 
 To find out how long people on an existing list have been in their current positions, run **Enrich person** and combine the returned start date with a **Use AI** column:
