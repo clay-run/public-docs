@@ -56,6 +56,15 @@ There are two types of record matching in Clay Audiences:
 
 Both work together to ensure you have a single, unified record per person or company in your Audiences.
 
+### Does syncing my CRM to Audiences cost credits?
+
+No. Importing and syncing CRM records into Audiences — including the ongoing automatic refreshes — does not consume credits. Credit costs apply only when you run enrichments on those records.
+
+-   **CRM sync (import):** Free. Clay reads your CRM and imports or refreshes records in your Audience at no credit cost. Connecting a CRM or data warehouse as a source requires Growth plan or above.
+-   **Enrichment:** Costs credits. Running an enrichment on Audience records (for example, to update job titles or find contact data) uses 1 Action per record enriched plus Data Credits that vary by provider and data type — the same billing as enriching in a regular Clay table.
+
+For a full breakdown of how Actions and Data Credits work together, see [Actions & Data Credits](./actions-data-credits.md).
+
 ## **Best practices**
 
 ### **Start with RevOps, not marketing or sales**
