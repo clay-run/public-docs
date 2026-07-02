@@ -211,7 +211,7 @@ With **Auto-run** enabled, Clay re-evaluates an action column's "Only run if" co
 
 **Consequence for webhook and HTTP API export columns**: If you gate a webhook on upstream enrichments being done, it can fire more than once per row. To ensure the action fires only once, use the guard-column pattern from [Running an action only once per row](#running-an-action-only-once-per-row-new-rows-only): gate the action on a formula column that only becomes non-empty once all required upstream work is finished.
 
-**When upstream enrichments have their own run conditions**: If an upstream enrichment was skipped because its own "Only run if" condition wasn't met, `Clay.getCellStatus()` returns `"ERROR_RUN_CONDITION_NOT_MET"` for that cell — not `"SUCCESS"` or `"SUCCESS_NO_DATA"`. To gate a downstream action on "enrichment finished, whether it ran or was skipped,&quot; check for each possible final state explicitly. See [Formulas](formula-generator.md) for the full list of `getCellStatus()` return values.
+**When upstream enrichments have their own run conditions**: If an upstream enrichment was skipped because its own "Only run if" condition wasn't met, `Clay.getCellStatus()` returns `"ERROR_RUN_CONDITION_NOT_MET"` for that cell — not `"SUCCESS"` or `"SUCCESS_NO_DATA"`. To gate a downstream action on "enrichment finished, whether it ran or was skipped," check for each possible final state explicitly. See [Formulas](formula-generator.md) for the full list of `getCellStatus()` return values.
 
 ### Gating a run on data from another table
 
