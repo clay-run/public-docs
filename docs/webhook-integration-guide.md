@@ -131,6 +131,18 @@ curl -X POST YOUR_CLAY_WEBHOOK_URL \
 
 If a row appears in your table, the issue is in your original request's formatting, headers, or auth token. If no row appears on a brand-new webhook, contact support.
 
+### How can I tell which webhook source a row came from?
+
+Clay records which webhook source sent each row at ingestion time, so you can filter the table by source without any extra setup.
+
+**To filter by webhook source:**
+
+1. Open the filter panel (click the filter icon in the table toolbar).
+2. Set the field to **Webhook**, the condition to **is from source**, then pick a source from the dropdown. The dropdown lists every webhook source connected to this table by name.
+3. The table now shows only the rows that arrived from that source. Switch the dropdown to a different source to see its rows instead.
+
+**To show the source on each row as a column (optional):** Add a field to the payloads you send — for example, `"source": "webhook_a"`. That field will arrive as its own column in the table, so you can see the source directly on every row without needing to filter.
+
 ### How do I find which table a webhook URL belongs to?
 
 There is no customer-facing search to look up a Clay table by its webhook URL. If you have a webhook URL from an external system and need to identify which Clay table it's connected to, contact Clay support with the URL — the team can look it up on your behalf.
