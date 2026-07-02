@@ -23,6 +23,8 @@ To check the credit usage in your workspace:
 
 **Tip:** The credit indicator in the top navigation bar shows your **remaining** balance, labeled **"X credits available"** — this is how many credits you have left to spend this period, not how many you have already consumed. To see your credit consumption (how much you've spent), use the credit usage dashboard at `Settings → Usage`.
 
+**Tip:** To check your remaining credit balance programmatically, use the `clay credits` CLI command — it returns the current remaining balance as JSON. Useful for scripts or CI checks that need to verify available credits before running a large batch. **Note:** The Clay CLI is currently in beta — open beta launches July 9, 2026. Contact [Clay support](https://app.clay.com) to request early access.
+
 Sort the content by `Name` (alphabetically) or by number of `Credits used` by clicking the column titles. You can `Export` this content as a CSV.
 
 ### Filter and sort credit usage
