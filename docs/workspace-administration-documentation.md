@@ -389,7 +389,7 @@ SSO only applies to users whose email address matches your verified domain. Team
 1.  Invite them to your Clay workspace first via `Settings` > `Team` > `+ Invite`.
 2.  Have them sign in using SSO — they will be authenticated and placed into the correct workspace.
 
-**Important:** Always invite users to your workspace before they sign in with SSO. If a user signs in via SSO before receiving their workspace invite, they will be placed into a new standalone personal workspace instead of your enterprise workspace — creating a messy state that requires support to resolve.
+**Important:** Always invite users to your workspace before they sign in with SSO. If a user signs in via SSO before receiving their workspace invite, they will be placed into a new standalone personal workspace instead of your enterprise workspace. If this happens, the workspace admin can resolve it without contacting support: go to **Settings** > **Team**, find the user's pending entry (shown with a **Pending** badge), click the **…** menu, and select **Remove member** to cancel the pending invite — then re-invite the user. Once they accept the new invite, they will be routed into the correct workspace.
 
 SCIM directory sync is on Clay's roadmap — contact Clay support or your Growth Strategist for the latest status on this feature.
 
