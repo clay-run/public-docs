@@ -409,6 +409,14 @@ Yes, with an important limitation. Claygent fetches page content using third-par
 
 **Alternative**: The **BuiltWith** integration (**Find Technology Stack** action) can confirm whether a particular technology is present on a site, but it does not return specific pixel IDs or tracking codes.
 
+### Why does my Claygent cell return no data when the input is a LinkedIn profile URL?
+
+When Claygent encounters a LinkedIn profile URL (`linkedin.com/in/...`) or company URL (`linkedin.com/company/...`), it automatically routes to a dedicated LinkedIn data tool backed by the Mixrank API — rather than using Claygent's general web scraping service. This means Claygent does not browser-scrape LinkedIn directly.
+
+The Mixrank API has a request timeout (approximately 30 seconds for person profiles, 60 seconds for company profiles). If the API does not respond within that window for a given row, the Claygent cell returns no data for that row.
+
+**To retry:** Right-click the column header → **Run column** → **Run [N] empty or out-of-date rows**. The LinkedIn data tool often succeeds on a subsequent attempt.
+
 ### Why does a column referencing my Claygent output show "Cell data size exceeds limit (8 kB)"?
 
 Clay enforces two different cell size limits: Claygent action columns hold up to **200 kB**, while basic columns — text fields and formula columns that reference or extract from those action columns — are limited to **8 kB**. When a Claygent produces verbose output (such as detailed research logs or step-by-step notes) and that value is extracted into a standalone text column or referenced by a formula column, the result must fit within the 8 kB limit for that basic column.
