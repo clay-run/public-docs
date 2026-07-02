@@ -34,9 +34,10 @@ When enabled, the enrichment will automatically re-run whenever its input values
 
 Use conditional logic to control when an enrichment runs. The enrichment only executes if your specified conditions are met.
 
-1.  Enter a formula in the `Only run if` field.
-2.  The enrichment runs when the formula evaluates to `true`.
-3.  Click `Use AI` to generate conditional formulas automatically.
+1.  Check the **Add run condition** checkbox in Run settings.
+2.  Type your condition in plain language — for example, `{{Company Domain}} is not empty`.
+3.  Click **Generate** to convert it to a formula automatically.
+4.  The enrichment runs when the formula evaluates to `true`.
 
 ### Saving configuration changes
 

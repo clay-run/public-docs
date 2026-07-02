@@ -73,9 +73,9 @@ To create a conditional statement within the **Conditional formula generator**:
 
 ## How do I use conditional runs?
 
-**Step 1: Open the Conditional runs editor**
+**Step 1: Open the run condition editor**
 
-Navigate to the **Run Settings** of the action you want to configure and click on "Use AI".
+Navigate to the **Run Settings** of the action you want to configure and check the **Add run condition** checkbox.
 
 **Step 2: Define the conditional logic**
 
@@ -83,7 +83,7 @@ Define the logic that determines how the condition will evaluate.
 
 **Step 3: Generate the Formula**
 
-Click **"Generate formula"** to automatically translate your condition into a formula.
+Click **Generate** to automatically translate your condition into a formula.
 
 **Step 4: Verify the Output**
 
