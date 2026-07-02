@@ -212,6 +212,26 @@ If you later edit the prompt of an upstream column (for example, an AI column th
 
 Also note: after changing any column, rows that have already run will not update automatically. Select those rows and click **Run column** to re-process them.
 
+### **Why does my formula return blank for some rows when I expect a value?**
+
+When a formula's final branch evaluates to a column that has no value for a given row, Clay returns blank — there is nothing to return. The formula is correct; the source data for that row is empty.
+
+**Common scenario**: a conditional formula like `{{A}}?.toLowerCase() === "former" ? "Disqualified" : {{Lead Status}}` returns blank for rows where `{{A}}` is not "former" AND `{{Lead Status}}` is empty. Rows that were skipped or filtered by an earlier enrichment step often have no value in downstream columns.
+
+**Fix — use `||` to add a fallback value**. The `||` operator returns the right side when the left side is empty, null, or undefined:
+
+```javascript
+{{Lead Status}} || "Recycled"
+```
+
+Returns `"Recycled"` when Lead Status is blank, and the actual Lead Status value otherwise. You can chain multiple fallbacks — Clay evaluates left to right and returns the first non-empty value:
+
+```javascript
+{{Lead Status}} || {{Firmographic Classification}} || "Disqualified"
+```
+
+**Note**: `||` considers `0` and `false` as empty (they are "falsy" in JavaScript). If your column can legitimately hold the value `0` or `false` and you don't want those to trigger the fallback, write an explicit check instead: `{{Column}} !== null && {{Column}} !== "" ? {{Column}} : "fallback"`.
+
 ### **Why does my formula column show `[object Object]`?**
 
 This appears when a formula references an entire enrichment or AI column — such as the full output of a Use AI, Claygent, or integration column — rather than a specific field within it. Clay formula columns run JavaScript, and when JavaScript coerces a plain object to a string (for example, in a text expression or concatenation), it produces the literal text `[object Object]` instead of the expected value.
