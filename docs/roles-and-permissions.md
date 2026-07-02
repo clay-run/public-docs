@@ -34,6 +34,7 @@ _They cannot:_
 
 -   Add, remove, or change team members' roles.
 -   Modify billing settings or purchase credits.
+-   Create new **Workflows** _(currently in limited access)_ — creating workflows requires workspace admin access. If you see Workflows in your left navigation and need to create one, ask your workspace admin.
 
 ## Viewers (Enterprise only)
 
