@@ -1,7 +1,7 @@
 ---
 title: Audiences
 description: "Clay Audiences is available on Growth and Enterprise plans. Launch and Trial workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above."
-last_synced: 2026-04-27T18:09:16.275Z
+last_synced: 2026-07-02T20:01:45.311Z
 ---
 
 # Audiences
