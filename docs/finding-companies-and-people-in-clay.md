@@ -293,7 +293,7 @@ To suppress job postings from specific companies (such as existing customers, pa
 
 **Option 1 — Exclude companies upfront using Find Companies**
 
-Use a **Find Companies** source with its **Exclude companies** filter to build a pre-filtered company list first — this filter accepts any Clay table, CSV, or comma-separated list of domains or LinkedIn URLs. Once you have a clean list of target companies, use the **Find Active Job Openings** enrichment column to pull open postings for each company individually. Companies you excluded from the Find Companies table are never in your list to begin with.
+Use a **Find Companies** source with its **Exclude companies** filter to build a pre-filtered company list first — this filter accepts any Clay table, CSV, or comma-separated list of domains or company profile URLs. Once you have a clean list of target companies, use the **Find Active Job Openings** enrichment column to pull open postings for each company individually. Companies you excluded from the Find Companies table are never in your list to begin with.
 
 **Option 2 — Filter your Find Jobs results with a lookup column**
 
