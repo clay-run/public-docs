@@ -30,6 +30,9 @@ Functions are built for workflows you'd otherwise rebuild from scratch in every 
     -   **Range selection (recommended for waterfall sequences):** Click the first column header, then hold `Shift` and click the last column header to select the full contiguous range. For waterfall enrichments, selecting the full range ensures only the entry-point inputs appear in the function dialog — not every internal provider or validation step.
 3.  **With your columns highlighted**, right click on a column and select `Save as function`.
 4.  In the dialog that appears:
+    -   **Confirm function name/description** — We've auto-filled these fields using AI given the selected workflow. Please audit this to make sure there is a descriptive name/description that you can use to find this function dialog — not every internal provider or validation step.
+3.  **With your columns highlighted**, right click on a column and select `Save as function`.
+4.  In the dialog that appears:
     -   **Confirm function name/description** — We've auto-filled these fields using AI given the selected workflow. Please audit this to make sure there is a descriptive name/description that you can use to find this function later.
     -   **Define your inputs** — the values that will change from table to table (e.g., `Domain`). Everything else is fixed logic that stays the same.
     -   **Define your outputs** — the value that you will return from the function.
@@ -349,3 +352,9 @@ To fix it:
 4.  Save the column.
 
 If you haven't renamed or deleted any columns recently, the reference may have become stale after a table update — the remap will resolve it either way.
+
+### Can I list my functions from the command line?
+
+Yes. The Clay CLI includes a `clay functions list` command that returns all functions in your workspace as JSON. Each result includes the function's id, name, and description. Pagination is supported via `--limit` and `--cursor` flags.
+
+**Note:** The Clay CLI is currently in beta — open beta launches July 9, 2026. Contact [Clay support](https://app.clay.com) to request early access.
