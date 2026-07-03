@@ -174,8 +174,8 @@ Sculptor can be helpful throughout the building process, and you can freely turn
 
 **🟡 Partial Support (Read / Recommend only)**
 
--   **Enrichments** — Read & recommend (configuration coming soon
--   **Waterfalls** — Read & recommend (configuration coming soon).
+-   **Enrichments** — Read & recommend (configuration coming soon)
+-   **Waterfalls** — Read, recommend, and configure when building new tables; cannot edit existing waterfall configurations after creation.
 -   **Credits Estimation** — Tracks spend
 -   **CRM / Webhook Sources** — Read only
 -   **Signals** — Read only
@@ -183,7 +183,7 @@ Sculptor can be helpful throughout the building process, and you can freely turn
 **🔜 Limited or Coming Soon**
 
 -   **Sources (CPJ, Google Maps, CSV)** — Config reading only; full support coming soon
--   **Run Conditions** — Very limited; more functionality on the way
+-   **Run Conditions** — Read and configure on new columns; when Sculptor sets a run condition automatically, review it in column settings before running at scale to ensure it matches your data.
 -   **Message Drafting** — Not yet supported
 -   **Filters & Sorting** — Not yet supported
 
