@@ -153,8 +153,11 @@ No. Field mapping is configured when you create the Ad Sync and cannot be change
 
 Yes. After your initial sync is active, an **Expand your reach** section appears below your current platform destinations. Click **Add** next to any available platform to configure field mappings for that provider — it will sync on the same schedule as your existing provider.
 
+**Credits:** Adding a second platform does not charge additional credits. Credits are billed per audience, not per destination — syncing to LinkedIn and Meta costs the same as syncing to LinkedIn alone.
+
 **Notes:**
 
+-   Each ad sync supports a maximum of **2 ad platforms**. If you already have two platforms connected (for example, LinkedIn and Meta), the **Expand your reach** option will not appear for a third platform. To sync to a third platform, deactivate the current sync and create a new Ad Sync that includes all three platforms from the start, or create a separate Ad Sync for the third platform.
 -   You cannot add a platform while a sync is currently in progress — wait for the active sync to complete first.
 -   Google Ads is only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience includes contacts from Clay's company/people search data, Google Ads will appear disabled. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) for details.
 
