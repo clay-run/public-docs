@@ -366,6 +366,21 @@ Each HubSpot column stores a reference to the specific connection it was configu
 1. Open each affected column's settings and change the **Account** dropdown to select the new connection. This updates the column to use the new connection ID.
 2. If re-selecting the account in the existing column doesn't resolve the error, create a new column with the same HubSpot action and configuration. New columns automatically pick up the currently active connection and will run successfully.
 
+### Why do I get "Authorization failed because your account lacks access to the required scopes [automation.sequences.enrollments.write, automation.sequences.read]"?
+
+This error comes from HubSpot when you attempt to connect an account with Sequences permissions that your HubSpot plan doesn't include. The two scopes listed — `automation.sequences.read` and `automation.sequences.enrollments.write` — are only needed to enroll contacts in HubSpot Sequences, and they are **disabled by default** in Clay's connection flow.
+
+If these scopes were checked during setup and your HubSpot subscription doesn't include the Sequences feature, HubSpot rejects the entire OAuth connection with this error.
+
+**To fix:**
+
+1. Go to **Settings → Connected accounts**.
+2. Find your HubSpot account and click **Reconnect**.
+3. In the scopes screen, make sure the **Sequences** permissions (`automation.sequences.read` and `automation.sequences.enrollments.write`) are **unchecked** — they are unchecked by default.
+4. Complete the reconnection flow.
+
+You only need to enable these scopes if you're specifically using Clay to enroll contacts in HubSpot Sequences. For standard CRM syncing, contact and company management, or Audiences setup, leave them unchecked.
+
 ### Why does my HubSpot Create Object show "Invalid input" on some rows?
 
 When a row is missing a required input — for example, the company ID needed to associate a new Lead with a company — Clay shows an **"Invalid input"** error for that row (e.g., *"Invalid input: Please provide all association fields"*). This error is separate from authentication errors: it means the row does not have the data needed to complete the create request.
