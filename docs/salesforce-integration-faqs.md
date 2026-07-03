@@ -280,6 +280,24 @@ Auto-update can be controlled at two levels:
 -   **Table level:** Click your table name in the top bar and select `Disable` or `Enable auto-update`. You can also access run settings via the ⚙️ icon in the bottom-right corner of the table.
 -   **Column level:** Open an enrichment column, scroll to **Run settings** at the bottom of the column editor, and toggle **Auto-update** on or off. Column-level auto-update only applies when table-level auto-update is enabled.
 
+## How can I reduce the Salesforce CPU utilization caused by Clay's queries?
+
+The queries you see from Clay come from two sources: **Lookup Record columns** reading data from Salesforce on your behalf, and **scheduled imports** (such as a Lead import). Here are five adjustments that reduce the query load on your org:
+
+1.  **Enable Exact match in your Lookup Record columns (biggest win).** By default, the **Lookup Record** action searches Salesforce using a wildcard query (`field LIKE '%value%'`), which performs a full-table scan — the primary driver of high CPU spikes. Enabling **Exact match** switches the query to an indexed equality lookup (`field = 'value'`), which is far lighter. For the biggest reduction, also match on an indexed field such as record ID, email, or an external ID. To enable: open the Lookup Record column, scroll to the search-field settings, and turn on **Exact match**.
+
+2.  **Request only the fields you need.** The standard **Lookup Record** action fetches every field from the matched record using `FIELDS(ALL)`. Replacing it with a **Lookup records via SOQL** column lets you write a `SELECT` statement with only the specific fields you use and add a `LIMIT` clause, making each query much lighter. See the [Lookup records via SOQL](salesforce-integration-overview.md) section of the Salesforce integration overview for setup details.
+
+3.  **Query fewer rows, less often.** Add [run conditions](https://university.clay.com/docs/conditional-runs) to your Lookup columns so they only fire on rows that actually need them. Turn off **auto-update** on columns that don't require continuous refresh (open the column → **Run settings** → toggle **Auto-update** off). Keep your object import on its default daily schedule rather than a more frequent one.
+
+4.  **Stagger when rows run.** In a column's **Run settings**, set **Delay run** to **Run after delay** and enter a delay in seconds. This spreads queries out over time instead of firing them all at once, smoothing out CPU spikes on your org.
+
+5.  **Narrow your import.** If you import records via a Salesforce list view, filter that list view so Clay scans fewer records each sync.
+
+**Note:** The **Run in batches** setting is not available on the standard **Lookup Record** or **Lookup records via SOQL** columns, so it cannot be used to throttle these read queries. The adjustments above are the levers for reducing read-query load.
+
+On the Salesforce side, asking your admin to add custom indexes on the fields Clay filters against will also help those queries run more efficiently.
+
 ## Why does enriching a Salesforce timestamp field cause records to keep re-running?
 
 Salesforce system-managed fields such as `LastModifiedDate` and `SystemModstamp` are automatically updated by Salesforce on every record write — including writes triggered by Clay. If you reference one of these fields as an input in an enrichment that also writes back to Salesforce, you can inadvertently create an ongoing loop: Clay updates a record → Salesforce refreshes `LastModifiedDate` → Clay detects the change and re-runs the enrichment → cycle continues.
