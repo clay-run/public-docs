@@ -346,9 +346,18 @@ If the error persists more than 24 hours after your admin marked the app as `Tru
 
 These are disclosed when you add your account via OAuth. We request: offline\_access, openid, email, profile, Mail.Send, Mail.Send.Shared, Mail.ReadWrite, Mail.ReadWrite.Shared, [User.Read](http://User.Read), MailboxSettings.ReadWrite.
 
+### How can I tell if a lead has finished a campaign sequence?
+
+Clay's campaign events table doesn't include a dedicated "sequence completed" event type. You can infer whether a lead has finished the sequence using two signals:
+
+-   **They replied** — when a lead replies to any email, an `EMAIL_REPLY` event is recorded and the sequence automatically stops for that lead. Check whether any row in the campaign events table for that lead has `Event type = EMAIL_REPLY`.
+-   **They received all emails** — each `EMAIL_SENT` event includes a `sequence_number` value nested inside the Campaign event data. When this number equals the total steps in your campaign, the lead has received all emails without replying. Click a Campaign event cell, find the `sequence_number` field in the Cell details panel, and click **Add as column** to extract it into a standalone column you can filter on.
+
+To check this from your leads table, add a **Lookup rows in other table** column pointing to your campaign events table, matching on email address. You can then use a formula column to evaluate whether any matched event has `Event type = EMAIL_REPLY`, or whether the extracted sequence number equals your campaign's total step count.
+
 ### How are replies categorized in the Campaign Events table?
 
-Smartlead assigns leads into one of the following categories:
+When a lead replies, Smartlead analyzes the content and assigns the lead one of the following categories. Each categorization fires a `LEAD_CATEGORY_UPDATED` event in the campaign events table:
 
 1.  Interested
 2.  Meeting Request
