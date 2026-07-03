@@ -1,6 +1,6 @@
 ---
 title: Managing integration accounts
-description: Manage your Clay-managed and personal integration accounts.
+description: Manage your Clay-managed and personal integration accounts, including how to add, edit, delete, and verify the health of connections.
 last_synced: 2026-04-26T01:40:19.493Z
 ---
 
@@ -30,6 +30,25 @@ To add an integration account:
 4.  Configure your integration connection through an API key or by signing in via SSO.
 5.  Name your integration account.
 6.  (Optional) Set it as the default account. Enrichments using this integration will default to this account in your workspace.
+
+## Verify connection health
+
+If you are unsure whether a connected account is still working — for example, after a team member who set it up has left, or after a period of inactivity — you can check its status directly from Settings.
+
+1.  Click your profile picture in the top-right and select `Settings`.
+2.  In the sidebar, select the `Connections` tab.
+3.  Click into the integration you want to check.
+4.  Click **Verify** next to any account.
+
+Clay tests the connection and shows a status badge:
+
+-   **Connected** (green) — The credential is valid and the connection is working normally.
+-   **Warning** (orange) — The connection is working but something may need attention, such as approaching a quota limit.
+-   **Error** (red) — The credential is invalid or expired and needs to be re-authenticated.
+
+If the status shows **Warning** or **Error**, click the badge and select **Reconnect** to re-authenticate the account.
+
+> **Note:** Clay-managed accounts (integrations where Clay provides the API key) always show a static **Connected** badge — these are maintained by Clay and do not need manual verification.
 
 ## Edit an integration account
 
