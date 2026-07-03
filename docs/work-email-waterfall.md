@@ -103,6 +103,23 @@ If the cell shows no result, click into it to see which providers were tried and
 -   The providers ran but returned results that failed validation. Try a less strict validation strategy, or check the individual provider columns (enable them in waterfall settings) to see what was returned.
 -   Your workspace ran out of credits mid-waterfall. When credit limits are hit, remaining providers in the sequence don't execute — click into the cell to see how far the waterfall got before stopping. See [Actions and data credits](actions-data-credits.md) to add more credits.
 
+### Why do all the provider steps in my waterfall show "Run condition not met"?
+
+When every individual provider step — Findymail, Hunter, Prospeo, Kitt, and so on — shows **"Run condition not met"** across all rows (and the final Work Email merge column shows **"Success"** with no email value), the provider steps themselves have a run condition that is preventing them from executing.
+
+This is different from an *upstream column* being skipped due to a run condition (which causes **"Missing input"** errors on the provider steps). Here, each provider step has its own **Only run if** setting that is evaluating to false for every row.
+
+**Common cause:** If Sculptor built or modified your waterfall, it may have automatically set a run condition on each provider step. That condition may not match the data present in your table — for example, requiring a field to be non-empty when it is actually empty for all rows, or vice versa.
+
+**How to fix it:**
+
+1. Click into one of the affected provider cells (e.g., Findymail) and click the **Explain** button next to the "Run condition not met" status. This shows exactly why the condition evaluated to false for that row.
+2. Open the settings for that provider step (click the column header → **Edit column**) and review its **Only run if** condition.
+3. Adjust the condition so it matches the data in your table — or clear it entirely if no run condition is needed for that step.
+4. Repeat for each provider step in the waterfall that has a restrictive condition set.
+
+See [Conditional runs](conditional-runs.md) for a full reference on how run conditions work and how to use the **Explain** button to diagnose them.
+
 ### What match rate should I expect from the Work Email waterfall?
 
 For a well-configured Work Email waterfall with good input data, a match rate of **60–75%** is typical across most B2B contact lists. Results vary based on:
