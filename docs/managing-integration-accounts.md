@@ -1,7 +1,7 @@
 ---
 title: Managing integration accounts
 description: Manage your Clay-managed and personal integration accounts, including how to add, edit, delete, and verify the health of connections.
-last_synced: 2026-04-26T01:40:19.453Z
+last_synced: 2026-04-26T01:40:19.493Z
 ---
 
 # Managing integration accounts
