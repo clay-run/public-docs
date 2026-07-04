@@ -345,7 +345,7 @@ Once removed, you can re-invite the same email address if needed. Only workspace
 
 # **Single Sign-On (SSO)**
 
-Single Sign-On (SSO) is available to **Enterprise plan** customers at no additional cost. It is also available as a paid add-on for customers on an **annual Pro plan** or **annual Growth plan** — contact Clay support or your Growth Strategist to add it to your plan. SSO is not available on monthly plans, Launch plans, or free/trial plans. SSO lets your organization authenticate Clay users through your existing identity provider (IdP). Clay uses WorkOS to manage SSO and supports any IdP that uses SAML or OIDC protocols — including Okta, Azure AD (Entra ID), JumpCloud, Google Workspace, and others.
+Single Sign-On (SSO) is available to **Enterprise plan** customers at no additional cost. It is also available as a paid add-on for customers on an **annual Pro plan** or **annual Growth plan** — contact Clay support or your Growth Strategist to add it to your plan. SSO is not available on monthly plans, Launch plans, or free/trial plans. SSO lets your organization authenticate Clay users through your existing identity provider (IdP). Clay uses WorkOS to manage SSO and supports any IdP that uses SAML or OIDC protocols — including Okta (both SAML and OIDC), Azure AD (Entra ID), JumpCloud, Google Workspace, and others.
 
 ## **Setting up SSO**
 
