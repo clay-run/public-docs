@@ -88,6 +88,17 @@ After generating a setup, you can easily edit your original description and rege
         -   To skip writing schema by hand, click **Generate from prompt** to let Clay generate a valid schema from your prompt automatically.
 8.  _(Optional – Create or modify content only)_ Click `Examples` and `Add examples` to show AI what responses should look like.
 
+### Document context (Beta)
+
+The **Document context** section in the column configuration lets you upload PDF files that the AI will use as reference material when processing each row. This feature is currently in beta.
+
+**Limits:**
+-   Maximum 10 PDF files per column
+-   Maximum 50 MB per file
+-   PDFs must be at most 1,000 pages
+
+**Important:** After uploading a file, wait until its status shows **Completed** before clicking **Save**. If you save the column before the upload finishes processing, the file will not be attached to the column — the column will run without any document context, with no indication in the results that the PDF is missing. Once the file shows **Completed**, it is safe to save and run.
+
 ### Browsing pre-built templates
 
 The **Templates** dropdown at the top of the Use AI panel lets you explore pre-configured setups for common use cases. Click **Templates** → **Browse templates** to open the template browser and apply a ready-made configuration to your column—useful when you want to start from a working example rather than writing a prompt from scratch.
@@ -377,3 +388,17 @@ Clay's Scrape Website action runs on one URL at a time. If the content you need 
 3.  The enrichment will run against every row, scraping each page in parallel.
 
 This approach works well when each page URL loads its content directly and does not require a login. For pages behind authentication walls, see [Scrape Website returns empty results on login-required pages](#scrape-website-returns-empty-results-on-login-required-pages) above.
+
+### AI column runs but Document context PDF is not referenced
+
+If your AI column runs without using the PDF you uploaded to **Document context**, the most likely cause is that the column was saved before the file finished uploading.
+
+**What happens:** After adding a PDF to Document context, the file goes through a processing step. If you click **Save** before the file shows **Completed** status, the file is not attached to the column — the column runs without any document context, and no error is shown indicating the PDF is missing.
+
+**To fix:**
+
+1.  Open the column settings (**click the column name → Edit column**).
+2.  In the **Document context** section, remove the existing file.
+3.  Re-upload the PDF.
+4.  Wait until the file status shows **Completed**.
+5.  Click **Save**, then re-run the column.
