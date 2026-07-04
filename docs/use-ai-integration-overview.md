@@ -90,14 +90,7 @@ After generating a setup, you can easily edit your original description and rege
 
 ### Document context (Beta)
 
-The **Document context** section in the column configuration lets you upload PDF files that the AI will use as reference material when processing each row. This feature is currently in beta.
-
-**Limits:**
--   Maximum 10 PDF files per column
--   Maximum 50 MB per file
--   PDFs must be at most 1,000 pages
-
-**Important:** After uploading a file, wait until its status shows **Completed** before clicking **Save**. If you save the column before the upload finishes processing, the file will not be attached to the column — the column will run without any document context, with no indication in the results that the PDF is missing. Once the file shows **Completed**, it is safe to save and run.
+**Important:** After uploading a PDF to **Document context**, wait until its status shows **Completed** before clicking **Save**. If you save the column before the upload finishes processing, the file will not be attached to the column — the column will run without any document context, with no indication in the results that the PDF is missing. Once the file shows **Completed**, it is safe to save and run.
 
 ### Browsing pre-built templates
 
