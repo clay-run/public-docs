@@ -64,6 +64,8 @@ Use this action to retrieve the transcript of a Gong call.
 
 Use this action to add a prospect to a Gong Engage flow.
 
+**Requirements:** The Prospect Owner must have a Gong Engage seat — a standard Gong license is not sufficient to enroll prospects in flows.
+
 **Inputs**
 
 -   **Prospect Owner email:** Email of the Gong Engage user who owns the flow instance. Once this is selected, you'll be able to assign the prospect.

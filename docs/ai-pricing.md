@@ -21,6 +21,8 @@ You can always see which pricing structure applies when selecting a model in the
 
 ## **Select model pricing reference**
 
+The table below lists the data credit cost per task for select AI models available in Clay, organized by provider and use case (Content Generation or Web Research).
+
 | Provider | Model | Content Generation | Web Research |
 | --- | --- | --- | --- |
 | Clay | Helium | — | 1 |

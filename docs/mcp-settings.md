@@ -20,7 +20,7 @@ Credit controls and usage monitoring are available on all modern paid plans (Lau
 
 Audiences controls are available to workspaces with Clay Audiences enabled — contact support if you're unsure whether your workspace qualifies.  
 
-The `Enable for MCP` option on Functions is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans.
+The `Enable for MCP` option on [Functions](#enabling-a-function-for-mcp) (reusable enrichment workflows built in Clay) is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans.
 
 Glean integration is available on Enterprise plans only.
 

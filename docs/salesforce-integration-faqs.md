@@ -78,7 +78,7 @@ The test confirms the connection is valid and shows the SFDC user's email addres
 
 ## How do I change or delete the default Salesforce connection?
 
-**Changing the default:** Setting a connection as default is a **workspace admin–only** action — non-admin workspace members do not see the **Set as default** option in the `…` menu. To update the default, ask a workspace admin to change it in `Settings` → `Connections`, or have an admin update your user role. For details on connection management permissions, see [Workspace administration](https://university.clay.com/docs/workspace-administration-documentation).
+**Changing the default:** Setting a connection as default is a **workspace admin–only** action — non-admin workspace members do not see the **Set as default** option in the `…` menu. To update the default, ask a workspace admin to change it in `Settings` → `Connections`, or have an admin update your user role. For details on connection management permissions, see [Connections and integration accounts](./connections-and-integration-accounts.md).
 
 **Deleting the default connection:** You can delete a connection that is currently set as default. When you do, Clay automatically reassigns the default to the next available Salesforce connection. If no other connection exists, the default is cleared. Note that deleting any connection requires you to be either the person who originally added it or a workspace admin — you cannot delete a connection added by someone else unless you are an admin.
 
@@ -176,9 +176,23 @@ Clay's report picker automatically filters to show only Tabular and Matrix repor
 
 For an overview of Salesforce report formats, see Salesforce's [Report Formats documentation](https://trailhead.salesforce.com/content/learn/modules/lex_implementation_reports_dashboards/lex_implementation_reports_dashboards_report_formats).
 
+## Why did my scheduled "Import records from a Salesforce list" stop running?
+
+The most common cause is that the source reached the 50,000 total records processed limit. Each "Import records from a Salesforce list" source tracks the cumulative number of records it has ever pulled over its entire lifetime — not the number of rows currently visible in the table. Once that running total reaches 50,000, scheduled refreshes stop importing new records, even if the table appears to have space.
+
+**Why auto-delete does not prevent this.** If auto-delete is enabled and you see the banner "Auto-delete is on with a source that isn't compatible," the source's processed-record counter is still accumulating even as deleted rows are cleared from the table. Deleting rows from the table — whether by auto-delete or manually — does not reset the source's processed count. The table may show far fewer than 50,000 visible rows while the source has already reached the 50,000 lifetime limit.
+
+**Options to continue importing records:**
+
+- **Audiences with bulk enrichment (recommended for ongoing syncs).** Import your Salesforce records into a Clay Audience and run bulk enrichment on a schedule. Audiences are not subject to the 50,000-record source limit. For details, see [Audiences](audiences.md).
+- **Webhook source.** If you can configure Salesforce to push record changes to Clay via a webhook — for example, using a Salesforce Flow that triggers a callout when a record is saved — webhook sources do not accumulate toward the 50,000-record limit when auto-delete is enabled. This works well for event-driven workflows where Salesforce fires updates as they happen.
+- **Create a new source.** Deleting the existing source and adding a new "Import records from a Salesforce list" source on the same table resets the processed-record counter to zero, giving you a fresh 50,000 records. This is a short-term workaround — the new source will eventually reach the limit again as it processes records.
+
+For a full explanation of which source types are compatible with auto-delete's continuous passthrough mode, see [Auto-delete in tables](auto-delete.md).
+
 ## Will Clay create duplicate records in Salesforce?
 
-No. By default, Clay prevents duplicate records. However, you can allow duplicates by enabling the "Duplicate Rule Override" in the Create Record enrichment.
+Clay does not create duplicate records by default. However, you can allow duplicates by enabling the "Duplicate Rule Override" in the Create Record enrichment.
 
 To avoid creating duplicates from your Clay table, first look up an object to check if it exists, then create it only if it doesn't. Here's how to set that up:
 
@@ -269,6 +283,24 @@ This three-step pattern ensures new leads and contacts are added to the campaign
 
 For details on writing conditional runs, see [Conditional runs](https://university.clay.com/docs/conditional-runs). For SOQL tips and syntax, see the [Lookup records via SOQL](https://university.clay.com/docs/salesforce-integration-overview) action in the Salesforce integration overview.
 
+## Why does my Campaign Member creation fail with a `DUPLICATE_VALUE` error for some rows?
+
+This error means the contact or lead is already a member of that Salesforce campaign. While a contact can belong to multiple campaigns simultaneously, they cannot be added to the same campaign twice — Salesforce enforces this and rejects the creation with a `DUPLICATE_VALUE` error. This is expected Salesforce behavior, not a Clay issue.
+
+The most common cause is that your **Create Record** column (set to the `CampaignMember` object) runs for every row in your table — including rows for contacts who were already in that campaign before your workflow ran.
+
+**Option 1 — Gate on contact creation (simpler)**
+
+If your table creates new contacts or leads in Salesforce before adding them to a campaign, add a run condition to your Campaign Member Create Record column so it only fires when the contact creation step succeeded. Brand-new contacts cannot already be campaign members, so the error won't occur.
+
+In your Campaign Member **Create Record** column, open **Run settings** and add a conditional run. Set the condition to check that your contact creation column returned a result — for example, `/Create Contact is not empty`, replacing `Create Contact` with the actual name of your contact creation column. For details on writing run conditions, see [Conditional runs](conditional-runs.md).
+
+**Option 2 — Look up campaign membership first (more precise)**
+
+Add a **Lookup Record** or **Lookup records via SOQL** column to check whether the contact is already a member of the target campaign. Set a run condition on your Campaign Member Create Record column to only fire when that lookup returns no result. This approach works regardless of whether the contact was just created or already existed in Salesforce.
+
+For step-by-step instructions and SOQL query examples, see [How do I add leads or contacts to a Salesforce campaign and update the status of existing campaign members?](#how-do-i-add-leads-or-contacts-to-a-salesforce-campaign-and-update-the-status-of-existing-campaign-members). That workflow also covers how to update the status of existing campaign members in the same pass.
+
 ## What are the default sync settings for CRM integrations?
 
 By default, Clay syncs Salesforce imports every 24 hours. When new records or updates occur, this triggers action runs that enrich and export the updated fields.
@@ -279,6 +311,24 @@ Auto-update can be controlled at two levels:
 
 -   **Table level:** Click your table name in the top bar and select `Disable` or `Enable auto-update`. You can also access run settings via the ⚙️ icon in the bottom-right corner of the table.
 -   **Column level:** Open an enrichment column, scroll to **Run settings** at the bottom of the column editor, and toggle **Auto-update** on or off. Column-level auto-update only applies when table-level auto-update is enabled.
+
+## How can I reduce the Salesforce CPU utilization caused by Clay's queries?
+
+The queries you see from Clay come from two sources: **Lookup Record columns** reading data from Salesforce on your behalf, and **scheduled imports** (such as a Lead import). Here are five adjustments that reduce the query load on your org:
+
+1.  **Enable Exact match in your Lookup Record columns (biggest win).** By default, the **Lookup Record** action searches Salesforce using a wildcard query (`field LIKE '%value%'`), which performs a full-table scan — the primary driver of high CPU spikes. Enabling **Exact match** switches the query to an indexed equality lookup (`field = 'value'`), which is far lighter. For the biggest reduction, also match on an indexed field such as record ID, email, or an external ID. To enable: open the Lookup Record column, scroll to the search-field settings, and turn on **Exact match**.
+
+2.  **Request only the fields you need.** The standard **Lookup Record** action fetches every field from the matched record using `FIELDS(ALL)`. Replacing it with a **Lookup records via SOQL** column lets you write a `SELECT` statement with only the specific fields you use and add a `LIMIT` clause, making each query much lighter. See the [Lookup records via SOQL](salesforce-integration-overview.md) section of the Salesforce integration overview for setup details.
+
+3.  **Query fewer rows, less often.** Add [run conditions](https://university.clay.com/docs/conditional-runs) to your Lookup columns so they only fire on rows that actually need them. Turn off **auto-update** on columns that don't require continuous refresh (open the column → **Run settings** → toggle **Auto-update** off). Keep your object import on its default daily schedule rather than a more frequent one.
+
+4.  **Stagger when rows run.** In a column's **Run settings**, set **Delay run** to **Run after delay** and enter a delay in seconds. This spreads queries out over time instead of firing them all at once, smoothing out CPU spikes on your org.
+
+5.  **Narrow your import.** If you import records via a Salesforce list view, filter that list view so Clay scans fewer records each sync.
+
+**Note:** The **Run in batches** setting is not available on the standard **Lookup Record** or **Lookup records via SOQL** columns, so it cannot be used to throttle these read queries. The adjustments above are the levers for reducing read-query load.
+
+On the Salesforce side, asking your admin to add custom indexes on the fields Clay filters against will also help those queries run more efficiently.
 
 ## Why does enriching a Salesforce timestamp field cause records to keep re-running?
 
@@ -292,7 +342,7 @@ For general guidance on identifying and stopping automation loops, see [Infinite
 
 ## Is there a way I can test Salesforce enrichments?
 
-Yes. Connect Clay to your Salesforce sandbox org and use that connection when configuring enrichments or sources. This lets you test your Clay workflows with non-production data before running them against your live Salesforce instance.
+Yes, you can test Salesforce enrichments by connecting Clay to your Salesforce sandbox org and using that connection when configuring enrichments or sources. This lets you test your Clay workflows with non-production data before running them against your live Salesforce instance.
 
 To connect to a Salesforce sandbox:
 

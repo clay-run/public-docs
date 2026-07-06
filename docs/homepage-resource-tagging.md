@@ -122,6 +122,8 @@ To delete a tag:
 
 ## Permissions
 
+The table below shows which tag actions are available to User and Admin roles in a Clay workspace.
+
 | Action | User | Admin |
 | --- | --- | --- |
 | View tags | ✅ | ✅ |

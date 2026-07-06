@@ -16,6 +16,8 @@ In March 2026, Clay introduced a new pricing model to give you more flexibility 
 
 ### **Pricing mechanics comparison**
 
+The table below compares specific pricing mechanics between legacy plans and modern plans.
+
 | Feature | Legacy Plans | Modern Plans |
 | --- | --- | --- |
 | Usage Meters | Credits only | Actions + Data Credits |
@@ -28,6 +30,8 @@ In March 2026, Clay introduced a new pricing model to give you more flexibility 
 | Claygent Pricing | Variable | Variable |
 
 ### **Feature access comparison**
+
+The table below compares feature availability between legacy plans and modern plans.
 
 | Feature Category | Legacy Plans | Modern Plans |
 | --- | --- | --- |

@@ -98,6 +98,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 -   Count related records (e.g., how many people map to each company)
 -   Detect interest/volume (e.g., multiple inbound form submissions tied to one company)
 -   Trigger follow-ups based on count (e.g., 0 → run a "find people" search; 3+ → prioritize outreach)
+-   Use lookup results as input for an AI column — pull matching records from another table with Lookup Multiple Rows (e.g., your existing clients matched by a shared attribute like industry), then reference those results in a Use AI column prompt to compare, rank, or identify the best match (e.g., find the most similar existing client to use as social proof in outreach)
 
 **Best practices**
 

@@ -103,6 +103,23 @@ If the cell shows no result, click into it to see which providers were tried and
 -   The providers ran but returned results that failed validation. Try a less strict validation strategy, or check the individual provider columns (enable them in waterfall settings) to see what was returned.
 -   Your workspace ran out of credits mid-waterfall. When credit limits are hit, remaining providers in the sequence don't execute — click into the cell to see how far the waterfall got before stopping. See [Actions and data credits](actions-data-credits.md) to add more credits.
 
+### Why do all the provider steps in my waterfall show "Run condition not met"?
+
+When every individual provider step — Findymail, Hunter, Prospeo, Kitt, and so on — shows **"Run condition not met"** across all rows (and the final Work Email merge column shows **"Success"** with no email value), the provider steps themselves have a run condition that is preventing them from executing.
+
+This is different from an *upstream column* being skipped due to a run condition (which causes **"Missing input"** errors on the provider steps). Here, each provider step has its own **Only run if** setting that is evaluating to false for every row.
+
+**Common cause:** If Sculptor built or modified your waterfall, it may have automatically set a run condition on each provider step. That condition may not match the data present in your table — for example, requiring a field to be non-empty when it is actually empty for all rows, or vice versa.
+
+**How to fix it:**
+
+1. Click into one of the affected provider cells (e.g., Findymail) and click the **Explain** button next to the "Run condition not met" status. This shows exactly why the condition evaluated to false for that row.
+2. Open the settings for that provider step (click the column header → **Edit column**) and review its **Only run if** condition.
+3. Adjust the condition so it matches the data in your table — or clear it entirely if no run condition is needed for that step.
+4. Repeat for each provider step in the waterfall that has a restrictive condition set.
+
+See [Conditional runs](conditional-runs.md) for a full reference on how run conditions work and how to use the **Explain** button to diagnose them.
+
 ### What match rate should I expect from the Work Email waterfall?
 
 For a well-configured Work Email waterfall with good input data, a match rate of **60–75%** is typical across most B2B contact lists. Results vary based on:
@@ -177,7 +194,9 @@ Consider setting it to `2` when you're using `Conservative` validation and notic
 
 The most common cause is validation: when `Require validation success?` is enabled, an email only reaches the final output column if the validation provider confirms it as valid. If validation marks the email as invalid, the final output column stays blank — even though a provider did find an email. The waterfall continues running remaining providers in case a later one returns a different, valid email address.
 
-To confirm this is what happened: in the waterfall's `Full configuration`, turn off `Hide provider columns?` and re-run. The individual validation columns will show you what each provider returned and whether the email passed or failed validation.
+The validation columns are hidden by default to keep your table clean. To review each email's validation status without re-running, click the **columns button** in the toolbar (shown as "N/N columns") and use **Show/Hide columns by color → All columns** to reveal all hidden columns. Each validation column shows what the provider returned and whether the email passed or failed.
+
+To permanently show provider and validation columns going forward, open the waterfall's `Full configuration`, turn off `Hide provider columns?`, and re-run.
 
 **If validation is rejecting emails you want to keep:**
 
@@ -206,7 +225,7 @@ To have validation run automatically right after an email is found:
 
 Once auto-run is enabled at the table level, the waterfall will flow through to the validation step on its own as soon as an email is found.
 
-**Note:** Table-level auto-run is the master switch — even if a column's own auto-run is enabled, it won't fire if the table-level setting is off. See [Table management settings](table-management-settings.md) for a full breakdown of how table-level and column-level auto-run interact.
+**Note:** Table-level auto-run is the master switch — even if a column's own auto-run is enabled, it won't fire if the table-level setting is off. See [Auto-run](auto-run.md) for a full breakdown of how table-level and column-level auto-run interact.
 
 ### Can I use both Infer Email and a validation strategy together?
 
