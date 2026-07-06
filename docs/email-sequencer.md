@@ -194,6 +194,15 @@ To shorten the estimated time:
 -   **Add more sender accounts** — each account adds its own independent daily capacity.
 -   **Increase the account send limit** — in `Sender accounts`, click the three-dot (⋯) menu next to an account and select `Update send limit`.
 
+### How do I tell if a lead has received all emails in my campaign?
+
+Clay's campaign events table does not include a dedicated "sequence completed" event per lead. To identify leads that have finished the campaign, check for either of these two conditions in the campaign events table:
+
+-   **The lead replied** — `Event type` = `EMAIL_REPLY` for that lead. Sequences automatically stop when a lead replies, so this means the lead is no longer active in the campaign.
+-   **The lead received the last email** — `Sequence Number` equals the total number of emails in your campaign (for example, `3` for a 3-email sequence). When this is true, the lead has received every email.
+
+Use **Lookup rows in other table** from your lead table to find matching rows in the campaign events table, then add a formula column to evaluate either condition.
+
 ### My "Sync lead data to campaign" column is showing a warning. What does it mean?
 
 This usually means the Clay table that the column points to was deleted. Hover over the warning icon to confirm — the error reads *"Destination table was deleted. Please either restore that table from the trash, or create a new Send table data column."*
@@ -347,6 +356,8 @@ If the error persists more than 24 hours after your admin marked the app as `Tru
 These are disclosed when you add your account via OAuth. We request: offline\_access, openid, email, profile, Mail.Send, Mail.Send.Shared, Mail.ReadWrite, Mail.ReadWrite.Shared, [User.Read](http://User.Read), MailboxSettings.ReadWrite.
 
 ### How are replies categorized in the Campaign Events table?
+
+Each time a reply is categorized, a `LEAD_CATEGORY_UPDATED` event is written to the campaign events table. Categorization happens two ways: a user or teammate selects a category from the dropdown in the campaign's **Replies** tab or global inbox, or AI auto-categorization assigns a label automatically (enabled for all campaigns by default). Sends and sequence steps do not trigger this event — it only fires when a reply's category is set or changed.
 
 Smartlead assigns leads into one of the following categories:
 
