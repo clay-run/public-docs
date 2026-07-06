@@ -51,6 +51,10 @@ The email address field in `Settings` > `Account` is read-only and cannot be cha
 
 Changing your email address does not affect your workspace data or your password.
 
+## Update your country
+
+Clay's account profile settings don't include a country field — there is no country selector in `Settings` > `Account`. If you need to update the country associated with your billing information, see [Update your billing address, payment method, and billing email](./plans-and-billing.md#update-your-billing-address-payment-method-and-billing-email) and select `Edit billing info...`, which lets you update your country, address, postal code, and billing email.
+
 ## Change your password
 
 _If you sign in with Google, the **Change password** option will not appear on your Security tab — it is only visible for email + password accounts. See [Switch from Google login to email and password](#switch-from-google-login-to-email-and-password) below instead._
