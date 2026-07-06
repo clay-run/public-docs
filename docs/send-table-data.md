@@ -1,7 +1,7 @@
 ---
 title: Send table data
 description: Send data between tables to create simple multi-table setups.
-last_synced: 2026-04-26T01:40:38.918Z
+last_synced: 2026-04-26T01:40:38.278Z
 ---
 
 # Send table data
@@ -184,6 +184,11 @@ When merging data from multiple source tables into a single destination table, f
     -   This limit applies across all plans.
 -   **A Send Table Data column fails with "Destination table already has the maximum number of routing sources (20)":** Each destination table can receive data from at most **20 source tables**. When a new Send Table Data connection is attempted and the destination is already at 20, Clay rejects the registration and the column fails to save. To free up a slot, open the destination table, right-click the **"Rows from: \[source table name\]"** column header, select **Edit source**, and remove any old or unused sources. Alternatively, point this workflow at a fresh destination table, which starts with zero sources.
 -   **A Send Table Data column shows "Missing source id for routing action with destination \[table\_id\]":** This error means the column has no valid source registration linking it to the destination. The most common cause is **duplicating a table** that already contains a Send Table Data column — the copy loses its source-destination link and cannot run. The fix is to delete the broken Send Table Data column and create a new one from scratch: click **+ Add column → Send table data** and reselect your destination table. Avoid using table duplication as a shortcut to pre-configure a Send Table Data column — duplicated columns always need to be fully reconfigured.
+-   **A Send Table Data column shows "Destination table '[table\_id]' was deleted. Please either restore that table from the trash, or create a new Send table data column.":** The destination table this column was configured to write to has been deleted. To fix it:
+    -   **Restore from Trash:** Open **Trash** from the bottom-left of your workspace sidebar, browse the list of recently deleted items by name, find the deleted table, and click **Restore**. The Send Table Data column will reconnect automatically once the table is back. Deleted items remain in Trash for **30 days** before being permanently removed.
+    -   **Create a new column:** If the table was permanently deleted from Trash or you no longer need that destination, delete this Send Table Data column and add a new one pointing to a different table: click **+ Add column → Send table data** and select your new destination.
+
+    **Note:** The table ID shown in the error (e.g., `t_0tbdt...`) is an internal identifier — you cannot search for it in Trash. Browse the list of recently deleted items by name to find the right table.
 -   **Data can only be sent in a linear direction** (A → B → C). In other words, loops are not possible (A → B → C → A).
     -   If you want to receive data in the table you're also sending data from, use one of these other actions:
         -   `Lookup Multiple Rows in Other Table`
