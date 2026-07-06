@@ -46,7 +46,7 @@ In the bulk enrichment settings, you can adjust several options:
 -   `Deletion criteria`: Choose when a row is considered complete and automatically deleted. This setting is required — leaving it unconfigured shows an **Incomplete configuration** error that prevents the run from starting.
     -   **Single column** — Deletes the row once a selected column has run, or if any conditional rules determine the column doesn't need to run. After selecting this option, use the **Select field** dropdown to pick the specific column that signals a row is complete and ready to be deleted or archived. Typically this is your export action column — for example, the column that adds a row to Google Sheets.
     -   **Conditional rules** — Combine multiple rules or columns to trigger deletion.
-    -   `Archive deleted rows` — When enabled, deleted rows are stored for up to 30 days and can be downloaded as a CSV. This toggle is off by default.
+    -   `Archive deleted rows` — When enabled, deleted rows are stored for up to 30 days and can be exported as a CSV from the Archive view. Archived rows are read-only — they cannot be moved back into the live table for re-processing. This toggle is off by default.
 -   `Run starting point`: Choose how to handle rows already in the table when the run begins.
     -   **Continue where you left off** — Finishes enriching rows already in the table, then continues with the rest of the source.
     -   **Start from the beginning** — Clears rows already in the table and reruns everything from the source. Note: restarting will cost credits again for previously enriched rows.
@@ -57,6 +57,14 @@ Bulk enrichment tables include two built-in tabs at the top of the view to help 
 
 -   **Queued rows** — rows that are waiting to be processed or are currently running.
 -   **Errored rows** — rows where the action column tied to your deletion criterion did not complete successfully.
+
+Unlike standard Clay tables, the bulk enrich view does not include a custom filter builder — the **Queued rows** and **Errored rows** tabs are the only built-in views. Completed rows are automatically deleted based on your deletion criteria and are no longer visible in the bulk enrich view.
+
+To inspect specific records before or after processing, here are some alternatives:
+
+-   **Filter at the source** — Narrow your data before it enters bulk enrichment. For example, use a filtered list view in Salesforce, or pre-filter your CSV before importing.
+-   **Use test data** — Use the **Test data** option in your bulk enrichment settings to add a small subset of rows and verify output before running the full source.
+-   **Review results at the destination** — Once enriched rows are exported to your destination (Salesforce, Google Sheets, Snowflake, etc.), filter and review them there.
 
 ### Understanding Run Stopped
 

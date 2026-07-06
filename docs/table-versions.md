@@ -82,6 +82,8 @@ Clay also creates versions automatically — a snapshot is taken after approxima
 
 ## Version retention by plan
 
+The table below shows the version history retention period available on each Clay plan.
+
 | Plan | Version history |
 | --- | --- |
 | Free / Trial | Not enabled |

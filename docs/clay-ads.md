@@ -35,11 +35,12 @@ _Note: Personal email addresses significantly improve match rates when syncing t
     -   **For accounts:** Company name + company website (required for optimal matching)
     -   **Note:** When syncing a LinkedIn **Account list**, a **Company URL** field is also available in the mapping step and can improve match rates. This field does not appear for Contact list audiences — LinkedIn does not support company URL matching for contacts.
     -   **Important:** Email is the primary field ad platforms use to match contacts. If no email column is mapped, the platform will process the sync but return an audience size of 0 — even for tens of thousands of contacts. This appears as a "too small for use in campaigns" status. Because field mapping cannot be changed after an Ad Sync is created, verify at least one email column is mapped before sending your audience.
-4.  **Review your audience insights and quality summary**.
-    -   Check your estimated match rate and audience size before syncing.
-    -   Make adjustments to your table if needed (for example, narrowing down to specific job titles or industries) and re-run your export.
-5.  **Send your audience** to the selected platform.
-    -   Your audience will be created within **24 hours for Meta** and **48 hours for LinkedIn**. You can then attach your audience to campaigns in LinkedIn Campaign Manager or Meta Ads Manager.
+4.  **Review enrichment and sync status** in the Sync panel. Your audience starts syncing automatically after you complete field mapping.
+    -   If Enhanced Matching is configured, the Sync panel shows enrichment progress while personal email addresses are being found for your contacts.
+    -   **Sync destinations** shows a status card for each connected ad platform with details from the most recent and previous sync runs.
+    -   Your audience will be available in your ad platform's campaign manager within **48 hours** of the first sync.
+
+**Note:** The Sync panel is currently in beta and rolling out progressively to Growth and Enterprise workspaces. Contact [Clay support](https://www.clay.com/contact) if you'd like early access.
 
 Once synced, your audience updates automatically as data changes in your Clay table. Contacts and accounts are added or removed based on your criteria, keeping your ad targeting aligned with your latest data.
 
@@ -155,6 +156,7 @@ Yes. After your initial sync is active, an **Expand your reach** section appears
 
 **Notes:**
 
+-   If the **Expand your reach** section is not visible, no additional platforms are currently available to add for your workspace. Google Ads requires a separate access request (currently in closed beta) — if your workspace hasn't been granted access, Google Ads will not appear as an option even if you're already syncing to LinkedIn and Meta. Contact [Clay support](https://www.clay.com/contact) to request Google Ads access.
 -   You cannot add a platform while a sync is currently in progress — wait for the active sync to complete first.
 -   Google Ads is only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience includes contacts from Clay's company/people search data, Google Ads will appear disabled. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) for details.
 

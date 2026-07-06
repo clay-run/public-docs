@@ -296,6 +296,8 @@ Because the campaign events table is a standard Clay table, you can add CRM enri
 
 When HTML is enabled, you can turn on an unsubscribe link in `Advanced` settings. This adds a hyperlinked phrase at the bottom of every email (default text: "Not interested? Click here to unsubscribe."). You can customize this text in the `Advanced` section.
 
+**Note on test emails:** When you use `Send test email` to preview your campaign, the unsubscribe link text appears at the bottom of the email but is not an active link — the real unsubscribe URL is only injected when an actual campaign email is sent to a recipient. This is expected behavior. To confirm the unsubscribe link works, send a live campaign email to a test address you control rather than using the test email feature.
+
 **What happens when a recipient clicks unsubscribe:**
 
 -   Their email address is automatically added to your workspace's global blocklist.
@@ -357,7 +359,9 @@ To check this from your leads table, add a **Lookup rows in other table** column
 
 ### How are replies categorized in the Campaign Events table?
 
-When a lead replies, Smartlead analyzes the content and assigns the lead one of the following categories. Each categorization fires a `LEAD_CATEGORY_UPDATED` event in the campaign events table:
+Each time a reply is categorized, a `LEAD_CATEGORY_UPDATED` event is written to the campaign events table. Categorization happens two ways: a user or teammate selects a category from the dropdown in the campaign's **Replies** tab or global inbox, or AI auto-categorization assigns a label automatically (enabled for all campaigns by default). Sends and sequence steps do not trigger this event — it only fires when a reply's category is set or changed.
+
+Smartlead assigns leads into one of the following categories:
 
 1.  Interested
 2.  Meeting Request

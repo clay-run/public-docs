@@ -83,6 +83,8 @@ You can switch the data type of your column within your table. To do this:
 
 ## Column limits
 
+Each Clay table enforces two independent column limits — one for the total number of columns and one specifically for enrichment columns.
+
 -   Clay tables have a default column limit of **100** (all column types combined).
 -   Clay tables have a default enrichment column limit of **40**. This is a separate, independent cap — your table's enrichment column count is tracked on its own, regardless of how high the total column limit is.
 -   Tables using phone or email waterfalls can have this limit raised to a maximum of **60** (for that table only).
@@ -243,7 +245,7 @@ If you need to collect **all values** from multiple columns into a list — for 
 
 **The merge column stays empty even though upstream columns have data.** The most common cause is stale upstream columns. A Merge column returns the first non-empty value from the columns in its formula, but only reflects current data. If an upstream column shows the out-of-date indicator (the clock icon), re-run it first: click the column header and select **Run column → Run [N] empty or out-of-date rows**. Once the upstream column refreshes, the merge column will pick up the new value.
 
-**The merge column doesn't update after new upstream data arrives.** If auto-run is disabled at the table level, downstream columns — including Merge columns — won't update automatically when upstream data changes. To re-enable: click the `⛭` icon in the top toolbar → toggle **Auto-run** on, then choose **Update cells** to immediately process rows that are out of date. See [Table management settings](table-management-settings.md#auto-run) for details on table-level and column-level auto-run.
+**The merge column doesn't update after new upstream data arrives.** If auto-run is disabled at the table level, downstream columns — including Merge columns — won't update automatically when upstream data changes. To re-enable: click the `⛭` icon in the top toolbar → toggle **Auto-run** on, then choose **Update cells** to immediately process rows that are out of date. See [Auto-run](auto-run.md) for details on table-level and column-level auto-run.
 
 **The merge column is only partially populated.** If some rows have a value but others don't, check that all upstream columns have finished running. A Merge column that depends on an incomplete enrichment or waterfall column stays empty on those rows until the upstream column produces a result.
 
