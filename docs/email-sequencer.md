@@ -296,6 +296,8 @@ Because the campaign events table is a standard Clay table, you can add CRM enri
 
 When HTML is enabled, you can turn on an unsubscribe link in `Advanced` settings. This adds a hyperlinked phrase at the bottom of every email (default text: "Not interested? Click here to unsubscribe."). You can customize this text in the `Advanced` section.
 
+**Note on test emails:** When you use `Send test email` to preview your campaign, the unsubscribe link text appears at the bottom of the email but is not an active link — the real unsubscribe URL is only injected when an actual campaign email is sent to a recipient. This is expected behavior. To confirm the unsubscribe link works, send a live campaign email to a test address you control rather than using the test email feature.
+
 **What happens when a recipient clicks unsubscribe:**
 
 -   Their email address is automatically added to your workspace's global blocklist.
