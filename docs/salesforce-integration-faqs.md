@@ -176,6 +176,20 @@ Clay's report picker automatically filters to show only Tabular and Matrix repor
 
 For an overview of Salesforce report formats, see Salesforce's [Report Formats documentation](https://trailhead.salesforce.com/content/learn/modules/lex_implementation_reports_dashboards/lex_implementation_reports_dashboards_report_formats).
 
+## Why did my scheduled "Import records from a Salesforce list" stop running?
+
+The most common cause is that the source reached the 50,000 total records processed limit. Each "Import records from a Salesforce list" source tracks the cumulative number of records it has ever pulled over its entire lifetime — not the number of rows currently visible in the table. Once that running total reaches 50,000, scheduled refreshes stop importing new records, even if the table appears to have space.
+
+**Why auto-delete does not prevent this.** If auto-delete is enabled and you see the banner "Auto-delete is on with a source that isn't compatible," the source's processed-record counter is still accumulating even as deleted rows are cleared from the table. Deleting rows from the table — whether by auto-delete or manually — does not reset the source's processed count. The table may show far fewer than 50,000 visible rows while the source has already reached the 50,000 lifetime limit.
+
+**Options to continue importing records:**
+
+- **Audiences with bulk enrichment (recommended for ongoing syncs).** Import your Salesforce records into a Clay Audience and run bulk enrichment on a schedule. Audiences are not subject to the 50,000-record source limit. For details, see [Audiences](audiences.md).
+- **Webhook source.** If you can configure Salesforce to push record changes to Clay via a webhook — for example, using a Salesforce Flow that triggers a callout when a record is saved — webhook sources do not accumulate toward the 50,000-record limit when auto-delete is enabled. This works well for event-driven workflows where Salesforce fires updates as they happen.
+- **Create a new source.** Deleting the existing source and adding a new "Import records from a Salesforce list" source on the same table resets the processed-record counter to zero, giving you a fresh 50,000 records. This is a short-term workaround — the new source will eventually reach the limit again as it processes records.
+
+For a full explanation of which source types are compatible with auto-delete's continuous passthrough mode, see [Auto-delete in tables](auto-delete.md).
+
 ## Will Clay create duplicate records in Salesforce?
 
 No. By default, Clay prevents duplicate records. However, you can allow duplicates by enabling the "Duplicate Rule Override" in the Create Record enrichment.
