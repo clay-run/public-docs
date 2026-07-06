@@ -21,7 +21,7 @@ For example, you could:
 1.  **Launch Sculptor.** You can do this in two ways:
     -   From the **homepage** of [app.clay.com](http://app.clay.com/) using the large open text box.
     -   From **within any table** using the `Chat with Sculptor` button.
-2.  **State your problem clearly.** Enter the type of table you want Sculptor to create (e.g., "I want to source a TAM for franchisors in Canada").
+2.  **State your problem clearly.** Enter the type of table you want Sculptor to create (e.g., "I want to source a total addressable market (TAM) for franchisors in Canada").
     -   Adding details such as geography, industry, or company size helps Sculptor generate better results.
 3.  **Iterate and review.** Sculptor will propose a workflow with integrations, enrichments, and conditions.
     -   You can reply directly in the chat to adjust or refine the table instantly.
@@ -75,6 +75,8 @@ Analyst mode lets you query any Clay table using natural language to uncover tre
 4.  Export your findings to Notion or as a PDF.
 
 ## Use cases and examples
+
+The following table covers common Sculptor use cases and key notes for each.
 
 | Use case | Notes and caveats |
 | --- | --- |
