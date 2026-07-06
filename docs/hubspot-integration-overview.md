@@ -330,14 +330,14 @@ To handle both new and existing contacts without hitting duplicate errors:
 
 For full details on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
 
-### Why do I get an `INVALID_OWNER_ID` error when setting `hubspot_owner_id`?
+### Why do I get an `INVALID_OWNER_ID` or `INVALID_INTEGER` error when setting `hubspot_owner_id`?
 
 HubSpot uses two separate identifiers for each user who can own a contact:
 
 -   **Owner ID** — the value used for the `hubspot_owner_id` contact property. This is the `id` field returned by HubSpot's Owners API (`/crm/v3/owners`).
 -   **User ID** — HubSpot's internal account ID for the same person, which appears in contexts like HubSpot's Settings → Users & Teams.
 
-These two values are sometimes identical and sometimes different. Passing a user ID where an owner ID is expected returns an `INVALID_OWNER_ID` error, even though the ID appears valid in HubSpot.
+These two values are sometimes identical and sometimes different. Passing a user ID where an owner ID is expected returns an `INVALID_OWNER_ID` error — or an `INVALID_INTEGER` error with the message "*X* was not a valid integer (for owner ID)" — even though the ID appears valid in HubSpot.
 
 **Fix:** Use Clay's **Find owner** action to look up the owner by email address. The `id` field in the returned result is the correct owner ID to pass as `hubspot_owner_id` in an Update Object action.
 
@@ -353,7 +353,7 @@ A blank Owner ID column in Clay means the corresponding contact (or other object
 2. If no owner is assigned, set the owner directly in HubSpot.
 3. Once updated in HubSpot, re-run the relevant column in Clay (for example, your **Import objects** source column or a **Lookup object** enrichment) to pull in the updated value.
 
-**Note:** This is different from the `INVALID_OWNER_ID` error, which occurs when an owner *is* set but the wrong identifier type is passed when writing back to HubSpot. See [Why do I get an `INVALID_OWNER_ID` error?](#why-do-i-get-an-invalid_owner_id-error-when-setting-hubspot_owner_id) for that scenario.
+**Note:** This is different from the `INVALID_OWNER_ID` error, which occurs when an owner *is* set but the wrong identifier type is passed when writing back to HubSpot. See [Why do I get an `INVALID_OWNER_ID` or `INVALID_INTEGER` error?](#why-do-i-get-an-invalid_owner_id-or-invalid_integer-error-when-setting-hubspot_owner_id) for that scenario.
 
 ### Why does my HubSpot column still show "Missing authentication" after I reconnect my account?
 
