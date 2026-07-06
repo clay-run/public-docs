@@ -40,21 +40,23 @@ Build lists of companies based on their intent activities.
 
 ## TrustRadius glossary
 
+The table below defines each TrustRadius activity type that can be returned by the integration.
+
 | Activity Type | Description |
 | --- | --- |
 | Comparison view | When a buyer views a product comparison page (can contain 1–3 products). |
-| Features scorecard click | When a buyer clicks the “Features Scorecard” navigation. |
-| Product details click | When a buyer clicks the “Product Details” navigation on a product listing. |
-| Product overview click | When a buyer clicks the “Product Overview” navigation on a product listing. |
-| Product paid CTA click | When a buyer clicks a paid CTA to visit the vendor’s website. |
-| Product pricing click | When a buyer clicks the “Pricing” navigation on a product listing. |
-| Product reviews click | When a buyer clicks the “Reviews” navigation on a product listing. |
+| Features scorecard click | When a buyer clicks the "Features Scorecard" navigation. |
+| Product details click | When a buyer clicks the "Product Details" navigation on a product listing. |
+| Product overview click | When a buyer clicks the "Product Overview" navigation on a product listing. |
+| Product paid CTA click | When a buyer clicks a paid CTA to visit the vendor's website. |
+| Product pricing click | When a buyer clicks the "Pricing" navigation on a product listing. |
+| Product reviews click | When a buyer clicks the "Reviews" navigation on a product listing. |
 | Security click | When a user clicks on a link to a Whistic security profile. |
-| Service offering details click | When a buyer clicks the “Service Offering” navigation on a listing. |
+| Service offering details click | When a buyer clicks the "Service Offering" navigation on a listing. |
 | Category view | When a buyer views a category page. |
-| Comparison click | When a buyer clicks the “Comparisons” navigation on a product listing. |
-| Competitors view | When a buyer views the “Alternatives” (Competitors) page. |
+| Comparison click | When a buyer clicks the "Comparisons" navigation on a product listing. |
+| Competitors view | When a buyer views the "Alternatives" (Competitors) page. |
 | Product listing view | When a buyer views a product listing page. |
-| Product pricing view | When a buyer views the “Pricing” page for a product. |
+| Product pricing view | When a buyer views the "Pricing" page for a product. |
 | Review view | When a buyer views a specific review page for a product. |
 | Reviews and ratings view | When a buyer views the "Reviews and Ratings" page for a product. |

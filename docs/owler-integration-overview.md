@@ -24,7 +24,7 @@ You can connect and pay for your Owler actions with two options.
 
 ### `Action` Find Company Updates
 
-Use this action to retrieve recent company updates, including news, press releases, funding, acquisitions, personnel changes, blogs, or videos, using Owler’s Public Timeline API.
+Use this action to retrieve recent company updates, including news, press releases, funding, acquisitions, personnel changes, blogs, or videos, using Owler's Public Timeline API.
 
 **Setup Inputs**
 
@@ -34,15 +34,15 @@ Use this action to retrieve recent company updates, including news, press releas
 
 ### `Action` Enrich Company
 
-Use this action to convert a given location into standardized geographical data using Owler’s Geocoding API.
+Use this action to retrieve firmographic data about a company — including revenue, employee count, and funding — given its domain, using Owler's business intelligence data.
 
 **Setup Inputs**
 
--   **Location**: Enter or select a column containing the location to be normalized.
+-   **Company Domain**: Enter or select a column containing the company domain (e.g., [google.com](http://google.com)).
 
 ### `Action` Find Company Competitors
 
-Use this action to retrieve information about a company’s competitors using Owler’s competitive intelligence data.
+Use this action to retrieve information about a company's competitors using Owler's competitive intelligence data.
 
 **Setup Inputs**
 

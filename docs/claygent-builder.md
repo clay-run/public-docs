@@ -82,6 +82,10 @@ If you haven't filled yours in yet, go to `Settings`, enter your domain, and Cla
 
 Attach tone guides, messaging docs, PDFs, or CSVs directly into your agent. For copywriting agents, this ensures the Claygent writes in your voice, not a generic AI voice.
 
+**Limits (PDF files):** Maximum 10 files, 50 MB per file, and 1,000 pages per PDF.
+
+**Important:** After uploading a file, wait until its status shows **Completed** before saving. If you save before the upload finishes, the file will not be attached and your agent will run without that document.
+
 ### Web search
 
 Enable web search when your agent needs live research (recent company news, hiring signals, etc.). Disable it when working from data already in your table to keep runs faster and more consistent.
@@ -121,6 +125,8 @@ You can also add MCP server connections workspace-wide from `Settings` → `Conn
 ### Model selection
 
 Swap between different AI models in the configuration panel to test output quality without touching your prompt.
+
+**Auto model (currently in beta — contact support to enable):** If the Auto toggle is available in your workspace, it appears at the top of the model selector. Switching **Auto** on lets Clay automatically select the right model for your task — balanced quality and speed, recommended for most tasks. When Auto is on, the model list is hidden; toggle it off to choose a specific model manually. New Claygent columns default to Auto when it is available in your workspace.
 
 Clay's parallel models differ in power and cost:
 
@@ -260,6 +266,8 @@ No. You can have up to 10 test cases per Claygent at a time for free. You can de
 
 Credit cost depends on the AI model you select. Claygent defaults to **Argon** for web research — Clay's model for open-ended web lookups — which costs **3 credits per row**. Switching to **Helium** (1 credit per row) is a cost-effective alternative for simpler web research tasks. For a full model pricing reference, see [How AI is priced](ai-pricing.md).
 
+**Note:** If your workspace has the **Auto model** beta enabled, new Claygent columns default to Auto instead of Argon. Auto runs on a third-party model and is priced differently from Clay's fixed parallel models — see [How AI is priced](ai-pricing.md) for details once Auto is generally available, or contact support to confirm current pricing.
+
 If your goal is to find people associated with companies at scale — rather than open-ended web research — **Find People** is significantly more cost-effective: the **Find Contacts at Company** action costs 0.5 credits per row on current pricing plans (1 credit per row on legacy plans), versus 3 credits per row for Argon-based Claygent. Use Claygent when you need judgment-based research (summarizing company news, scoring leads, writing personalized outreach). Use Find People when you need structured contact lookups at scale.
 
 When selecting a third-party model (Claude, GPT-4o, Gemini, etc.) in Claygent, the **Account** dropdown in your column settings or workflow node configuration controls how billing works. Selecting the default **Clay-managed account** means Clay's API key handles the request, and the run deducts **Data Credits** at the variable rate for that model — the `~` prefix on the cost estimate shown in the column sidebar (for example, `~4.8`) indicates a variable charge that is reconciled after each row completes. To avoid spending Data Credits on AI, click **Account** → **+ Add account** to connect your own Anthropic, OpenAI, or Gemini API key; with your own key, each Claygent row counts as **1 Action** but no Data Credits are charged. For a full model-by-model credit reference, see [How AI is priced](ai-pricing.md).
@@ -309,6 +317,14 @@ To use tools with your Claygent:
 3.  Click the **Account** dropdown and connect your own Anthropic, OpenAI, or Gemini API key.
 
 Once you're on a supported model with a private API key, the tools in the **Tools** section will become active.
+
+### My Claygent isn't working with my connected OpenAI API key
+
+Your connected OpenAI API key will always appear as a selectable option in the Claygent model picker. However, Claygent requires a high token-per-minute (TPM) rate to handle web browsing and multi-step research — in practice, **OpenAI Usage Tier 2 or higher**. On Tier 1, the key's TPM limit is too low and Claygent runs will fail with rate-limit errors.
+
+To check your current tier: go to **platform.openai.com → Settings → Limits**.
+
+Until your key is on Tier 2 or higher, use **Clay's managed account** (the default selection in the model picker) — Claygent runs as normal and deducts Data Credits instead of charging your API key.
 
 ### How do I mark a Claygent input as optional?
 

@@ -1,7 +1,7 @@
 ---
 title: Audiences
 description: "Clay Audiences is available on Growth and Enterprise plans. Launch and Trial workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above."
-last_synced: 2026-04-27T18:09:16.275Z
+last_synced: 2026-07-02T20:01:45.311Z
 ---
 
 # Audiences
@@ -93,6 +93,15 @@ Clay pulls data from Salesforce on two schedules:
 
 **Troubleshooting — "Export permission required":** If the HubSpot account you select is missing the **Export CRM data** permission, Clay displays a warning and disables the Connect button. Click **Re-authorize HubSpot** in the warning to reconnect your account with the required permission enabled, then continue setup.
 
+**Sync timing and behavior**
+
+HubSpot data sync in Audiences is currently in open beta — contact your Growth Strategist to enable it for your workspace.
+
+Clay syncs data from HubSpot automatically on the following schedules:
+
+-   **Incremental sync:** Runs every **15 minutes** on Enterprise workspaces, or **once daily** on Growth workspaces. Picks up new and changed HubSpot records since the last sync.
+-   **Full sync (every 7 days):** Re-reads all records from HubSpot and reconciles deleted records — catching anything the incremental sync may have missed.
+
 ### Importing from Snowflake
 
 1.  Click `Add data` → `Import from Snowflake`.
@@ -160,6 +169,7 @@ You can also send contacts from any existing Clay table directly to your Audienc
 1.  Open any table with contacts you want to save to your Audience.
 2.  Click `Continue` at the bottom of the table.
 3.  Select `Save to People` or `Save to Companies` depending on the record type.
+4.  Map your table columns to Audience fields in the field mapping step. Click **Auto-map** to automatically suggest mappings based on column names — Clay matches existing Audience fields and creates new ones where necessary.
 
 Records saved from tables are automatically deduplicated and merged with your existing audience data.
 
@@ -300,6 +310,12 @@ After you add a signal:
 -   Multiple signals each get their own column; the `Signal Summary` column aggregates all results. Click any row to see per-signal detail.
 -   Any other segment that filters on this signal type will also surface these results.
 
+**Monitoring signal progress**
+
+While the signal is processing its initial run, its status shows **Running**. Once the initial run completes, the status flips to **Monitoring** and displays a **Last run** timestamp. To see how many records were detected, go to **Data Hub** → **Signals** — the **Signals fired (30d)** column shows the count of events the signal emitted over the past 30 days.
+
+To see which specific records in your audience were picked up by the signal, add a filter on your audience for the **Job change results** field (or the equivalent results field for other signal types). You can save that filtered view as a separate segment — or use the auto-created companion segment, which already has this filter applied.
+
 ### Connecting a workflow to a segment
 
 Connect a Clay workflow to an audience segment to automatically run it on every new member that enters. When a contact or company matches the segment's filters, the connected workflow starts within minutes.
@@ -394,9 +410,19 @@ To estimate API calls for initial export, divide record count by 10,000 and comp
 
 Use Audiences by default for anything you want to reuse, segment on, or build automations on top of. Use tables for one-off workflows, integrations Audiences doesn't yet support natively, or cases where data doesn't need to persist beyond a single run.
 
+The simplest framing: Tables are how you _work on_ data. Audiences is where your data _lives_. They work together — you still build and run workflows in Tables, they just pull from a cleaner, richer, always-current foundation.
+
+|  | Clay Tables | Audiences |
+| --- | --- | --- |
+| Best for | One-off, one-time workflows | "Always-on" workflows that keep running |
+| Role | How you work on data | Where your data lives |
+| Scope | A specific working set you build and run | A slice across your entire dataset |
+| Connections | Built per workflow | Continuously synced to your CRM, warehouse, and other sources |
+| Scale | Up to 50,000 rows | Millions of records |
+
 ### What if my integration isn't supported yet?
 
-Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data into a Clay table from any source, then use `Upsert Audiences Record` to push those records permanently into your audience. This works for any source Audiences doesn't yet natively support.
+Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data into a Clay table from any source, then use Upsert to push those records permanently into your Audience. This works for any source Audiences doesn't yet natively support.
 
 ### How do I create a custom Audience field that isn't tied to Salesforce?
 
@@ -471,11 +497,16 @@ If your table still doesn't appear in the dropdown, the records may have been pu
 
 ### My CRM is messy. Should I clean it up before setting up Audiences?
 
-You don't need a clean CRM to get started — CRM cleanup is often the first use case Audiences enables. A common approach: sync your existing CRM, run LinkedIn enrichments to refresh contact data, use the enriched identifiers to surface duplicates, then build further enrichments from there.
+You don't need a clean CRM to get started — CRM cleanup is often the first use case Audiences enables. A common approach: sync your existing CRM, run professional network enrichments to refresh contact data, use the enriched identifiers to surface duplicates, then build further enrichments from there.
 
 ### Does Audiences update automatically?
 
-Yes. Segments update in real time as records enter or change, typically within 15 minutes. Enrichments and actions trigger automatically for new records when the autoenrich toggle is enabled. No manual runs required after initial setup.
+Yes. Segments update in real time as records enter or exit your filter criteria. The refresh frequency depends on your plan:
+
+-   **Enterprise plan:** CRM and data warehouse syncs run every 15 minutes, and segments update continuously.
+-   **Growth plan:** CRM and data warehouse syncs run daily, and segments update based on that daily refresh.
+
+Enrichments configured with `Continuous Enrichment` enabled automatically process new records entering a segment, typically within 15 minutes. No manual runs are required after initial setup.
 
 ### Why didn't my audience count change after I tightened my search filters?
 
@@ -603,7 +634,7 @@ Three things to check:
 To remove a specific set of records from your audience, filter a segment down to just those records and then archive the group. **Admin access is required** — the option is not visible to Members or Viewers.
 
 1.  Navigate to **People** or **Companies** in the left sidebar.
-2.  Create or open a segment with a filter that isolates only the records you want to remove — for example, filter by **Company name** to target a single company.
+2.  Create or open a segment with a filter that isolates only the records you want to remove — for example, filter by **Company name** to target a single company. To archive all records in the view, use a broadly matching filter — for example, **Name → is not empty**.
 3.  Once the segment shows the correct records, click the **⋮** (three-dot) menu next to the segment name.
 4.  Select **Archive records**.
 
@@ -630,3 +661,71 @@ This "0 fields updated" result comes from the `Update Audiences Record` action t
 **To fix it, use an explicit placeholder value instead of null.** Rework your formula so it always returns a meaningful non-null value. For example, if you use a timestamp to mark when a contact becomes eligible, have the formula return the eligible date when it applies and a text value like `"Not Eligible"` when it doesn't. Both are real values, so `Update Audiences Record` writes an update on every run — and you can route off the result (process the row when the field contains a date; skip when it says `"Not Eligible"`).
 
 **Note:** The **Ignore blank values** toggle does exist, but on the `Upsert Audiences Record` action (and on the variant of `Update Audiences Record` that is configured via the Upsert config panel). It is on by default; when disabled, null values are passed through and will clear existing values on the target Audience field. These actions report `✅ Success` (or `✅ Upserting...` / `✅ Updating...`) rather than `0 fields updated`, so the toggle is not what controls the "0 fields updated" message described above.
+
+### How does Clay handle Salesforce Lead-to-Contact conversions?
+
+When a Salesforce Lead is converted into a Contact in Salesforce, Clay automatically merges the Lead record with the Contact record in Audiences. The data from both records is combined into a single person record, and all historical data is preserved. This merging happens automatically and is not user-configurable.
+
+### What's the difference between automatic Lead/Contact merging and deterministic matching?
+
+There are two types of record matching in Clay Audiences:
+
+-   **Automatic Lead/Contact merging** — When Salesforce converts a Lead to a Contact, Clay automatically merges these records. This is Salesforce-specific and not user-configurable.
+-   **Deterministic matching** — User-configurable matching across different data sources. You choose which field to match on (email, domain, profile URL, etc.) when importing a new source. This allows you to merge the same person or company across Salesforce, Snowflake, HubSpot, and other sources.
+
+Both work together to ensure you have a single, unified record per person or company in your Audiences.
+
+### Does syncing my CRM to Audiences cost credits?
+
+No. Importing and syncing CRM records into Audiences — including the ongoing automatic refreshes — does not consume credits. Credit costs apply only when you run enrichments on those records.
+
+-   **CRM sync (import):** Free. Clay reads your CRM and imports or refreshes records in your Audience at no credit cost. Connecting a CRM or data warehouse as a source requires Growth plan or above.
+-   **Enrichment:** Costs credits. Running an enrichment on Audience records (for example, to update job titles or find contact data) uses 1 Action per record enriched plus Data Credits that vary by provider and data type — the same billing as enriching in a regular Clay table.
+
+For a full breakdown of how Actions and Data Credits work together, see [Actions & Data Credits](./actions-data-credits.md).
+
+## Best practices
+
+### Start with RevOps, not marketing or sales
+
+The fastest path to a working setup runs through whoever owns the CRM keys — typically a RevOps lead or manager. Starting with another team means going back to RevOps for CRM authorization, which can take days. Starting with RevOps means a live CRM sync in under 20 minutes.
+
+### Import before you export
+
+Turn on import first, validate Clay's data quality, then enable write-back once you trust what you're seeing.
+
+### Import more fields than you think you need
+
+You can hide fields you don't use, but adding fields not imported at setup requires reconfiguring your sync. Fields that weren't imported can't be used as segment filters. When in doubt, include it.
+
+### Filter before enriching
+
+Define your audience filters before running Bulk Enrich. Credits are charged per record enriched — if you enrich `All People` instead of a filtered segment, you pay for every record in your database. The narrower your audience, the more targeted and cost-efficient your enrichment run.
+
+### Test enrichments on 10 rows before running at scale
+
+Before running across your full segment, click `Run on 10 rows` and confirm the output is correct and field mapping is configured as intended. Given the credit implications of a misconfigured enrichment across millions of records, treat this as a standard step every time.
+
+### Check your field mapping intent before hitting `Start Run`
+
+Field mapping is on by default. If you want enriched data to write back to Audiences, confirm your column mappings are configured. If you're running an enrichment purely to trigger an action without saving data, explicitly disable field mapping so the run behaves as expected.
+
+### Work backwards from the use case when building segments
+
+Don't start with the data and ask what to filter. Start with the finish line: what action will be taken on this segment, and by whom? Segment by rep assignment for outbound, by product signals for PLG, by deal stage for pipeline plays.
+
+### Use CPJ draft mode to qualify records before committing
+
+Records from People Search land in draft state before entering `All People`. Use this window to apply additional filters, run a quick enrichment, and verify quality before clicking `Commit` — credits for downstream enrichments and actions are not spent until records are live.
+
+### Schedule large initial syncs at end of day
+
+For enterprise customers where Salesforce is live and operational, start large initial syncs near end of business EST. If the sync generates high load, it won't interfere with critical business functions.
+
+### Do the API math with nervous admins
+
+Divide your total record count by 50,000 (import batch size) to estimate import API calls, or by 10,000 for export. For most enterprise customers, the math makes this a non-issue — a 5M-record CRM generates only 100 import API calls against a Salesforce limit typically around 150 million records per day.
+
+### Start narrow, then expand
+
+Start with one scoped use case, demonstrate value, then expand. Customers who see one use case working naturally discover the next — signals lead to TAM sourcing, TAM sourcing leads to account matching. Trying to configure everything at once often stalls progress.

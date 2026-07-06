@@ -15,9 +15,9 @@ This integration lets you enrich your Clay tables with company intelligence data
 ## **Creating a table with Intellizence**
 
 1.  In a workbook, click `+ Add` at the bottom.
-2.  Search for `XXX` and select from the results.
-3.  In the modal, you will be asked to `Select XXX account`.
-    -   If you haven't already connected your XXX account, click `+ Add account` and go through authentication.
+2.  Search for `Intellizence` and select from the results.
+3.  In the modal, you will be asked to `Select Intellizence account`.
+    -   If you haven't already connected your Intellizence account, click `+ Add account` and go through authentication.
 
 ### `Source` **Find news for companies with Intellizence**
 

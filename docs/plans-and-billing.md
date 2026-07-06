@@ -117,6 +117,21 @@ To cancel your Clay subscription:
 
 To request a refund for a recent charge, contact [Clay support](https://app.clay.com). For refund timing, see the FAQs section below.
 
+## Workspace row limit
+
+All workspaces have a global row limit of **10 million rows** across all tables. This cap counts rows in every table in your workspace, regardless of plan. If you reach this limit, you may see the error **"Your Subscription Does Not Allow Any More Records."**
+
+Deleting a table removes its rows from your workspace row count immediately — rows are freed as soon as the table is moved to Trash, without requiring permanent deletion from Trash.
+
+**Finding tables to delete**
+
+If you are approaching the workspace row limit, take stock of tables that are no longer needed:
+
+-   On the Home page, sort by **Created at** or **Last opened by me** to surface older or less-recently-accessed tables that may no longer be in use.
+-   Open `Settings` > `Usage` to view the credit usage dashboard. Filter by a recent time period and sort by `Credits used` ascending to identify tables with little or no recent credit activity — these are often good candidates for deletion.
+
+For instructions on deleting tables and permanently removing them from Trash, see [Delete content within your workspace](delete-content-within-your-workspace.md).
+
 ## Billing
 
 To update your billing address, payment method, or billing email:
@@ -154,7 +169,7 @@ You can track both actions and data credits usage in the `Usage Dashboard`, whic
 
 **Monthly plans:** When your plan refreshes, unused data credits will roll over and accumulate. The maximum accumulation is capped at 2× your plan's monthly credit limit — and this cap includes the newly added renewal credits. For example, if your plan includes 50,000 credits per month, your maximum balance is 100,000. If you already have 82,000 credits when your plan renews, you will end up with 100,000 credits, not 132,000.
 
-**Annual plans:** When your plan refreshes, you can roll over up to 15% of your annual data credits in addition to the new credits you receive, provided you renew on the same or a higher-tier plan.
+**Annual plans:** On annual plans, your full year's Data Credits are deposited into your account immediately at purchase — they are not distributed in monthly installments. You can run a bulk enrichment right away without waiting for credits to accumulate. When your plan renews, you can roll over up to 15% of your annual data credits in addition to the new credits you receive, provided you renew on the same or a higher-tier plan.
 
 **If you cancel or downgrade your plan:** When the plan change takes effect, your Data Credit balance is reduced to the rollover cap of your new plan — 2× that plan's monthly credit limit. For example, canceling to the free plan (100 credits/month) caps your balance at 200 credits; any credits above 200 are forfeited. You can continue spending your existing credits up until the plan change takes effect.
 

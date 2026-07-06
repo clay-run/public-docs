@@ -16,7 +16,7 @@ Send data between tables in Clay lets you route records between tables, making m
 
 ### When to use Lookup Rows vs. Send Table Data
 
-Both Lookup Rows and Send Table Data move information between tables, but they work in opposite directions and serve different purposes.
+Both Lookup Rows and Send Table Data move information between tables, but they work in opposite directions and serve different purposes. Use Lookup Rows to pull data into your current table; use Send Table Data to push data from your current table to another.
 
 **Use Lookup Rows when...**
 
