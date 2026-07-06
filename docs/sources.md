@@ -7,7 +7,7 @@ last_synced: 2026-04-26T01:40:43.486Z
 
 # Sources
 
-Use sources to bring records into your Clay tables — from a CSV file, your CRM, a webhook, or a list-building search — so you can enrich, filter, and act on that data.
+Every Clay table begins with a source. Sources are the foundation of how data gets into your tables.
 
 Sources are the foundation of Clay and determine how data flows into your table—think of them as the roots of a tree feeding information into your database. Just like a tree needs strong roots to grow and thrive, every Clay table needs well-configured sources to function effectively.
 
