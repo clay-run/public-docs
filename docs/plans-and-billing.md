@@ -37,7 +37,12 @@ To upgrade your Clay workspace plan:
 
 Your new plan will activate immediately, and any applicable charges will be applied.
 
-**How upgrade billing works:** Plan upgrades are **not prorated** — you pay the full price of the new tier immediately, not a partial amount for remaining days in your current cycle. In return, you receive the **full** Actions and Data Credits for your new plan right away. Unused Actions from your previous plan are not carried over (Actions reset each billing cycle and do not roll over). Your existing unused Data Credits are preserved when you upgrade.
+**How upgrade billing works:**
+
+-   Plan upgrades are **not prorated** — you pay the full price of the new tier immediately, not a partial amount for remaining days in your current cycle.
+-   You receive the **full** Actions and Data Credits for your new plan right away.
+-   Unused Actions from your previous plan are not carried over (Actions reset each billing cycle and do not roll over).
+-   Your existing unused Data Credits are preserved when you upgrade.
 
 ### Free plan
 

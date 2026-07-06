@@ -8,9 +8,17 @@ last_synced: 2026-04-26T01:39:56.840Z
 
 Learn how to run an enrichment within Clay.
 
-Enrichments in Clay transform your data by pulling in additional information from various sources. Whether you need to verify email addresses, gather company details, or find social media profiles, Clay's enrichment tools enhance your data quickly and efficiently.
+Enrichments in Clay transform your data by pulling in additional information from various sources. Clay's enrichment tools enhance your data quickly and efficiently. Use them to:
 
-You can run enrichments individually, use pre-built templates, or create powerful recipes to automate complex workflows.
+-   Verify email addresses
+-   Gather company details
+-   Find social media profiles
+
+You can run enrichments in several ways:
+
+-   Individually
+-   Using pre-built templates
+-   Creating powerful recipes to automate complex workflows
 
 ## Running an enrichment
 

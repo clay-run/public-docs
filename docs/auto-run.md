@@ -6,7 +6,11 @@ last_synced: 2026-07-01T00:00:00.000Z
 
 # Auto-run
 
-Auto-run automatically runs enrichments whenever rows are added or edited, keeping your table current. You can control this feature at multiple levels: table-level (master control), column-level (individual control), and through conditional logic.
+Auto-run automatically runs enrichments whenever rows are added or edited, keeping your table current. You can control this feature at multiple levels:
+
+-   **Table-level** (master control)
+-   **Column-level** (individual control)
+-   **Conditional logic**
 
 ## How Clay decides whether a cell runs
 
