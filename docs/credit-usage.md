@@ -41,6 +41,8 @@ Filter any of the content on this page by:
 3.  Specific integrations being used.
 4.  **Recurring runs only:** Toggle `Recurring` to show only credits from recurring or scheduled runs. By default (toggle off), the dashboard shows all credit consumption — both one-time manual runs and recurring automated runs. When this filter is on, only workbooks and tables with recurring usage are shown in the expanded list — but folder and workbook `Credits used` totals always reflect the complete spend for all their contents, including non-recurring workbooks. If a folder's total appears higher than the sum of the workbooks visible when you expand it, the difference comes from non-recurring workbooks hidden by the filter. Toggle the filter off to see all workbooks and their individual credits.
 
+**Tip:** To review your credit usage for a specific past month, use `Custom range` in the `When` dropdown and enter that month's start and end dates. Workspace usage data is available going back to **December 18, 2024**. The workspace dashboard shows an aggregate total for the selected period — it does not automatically break the window down month-by-month. For a month-by-month graph of credit spend over time, open the [table credit usage dashboard](#understanding-table-specific-credit-usage) and use the Time view with monthly aggregation (table-level data is available from November 5th, 2025).
+
 **Note:** The Workbooks tab does not show per-user credit attribution — it groups spend by workbook or table, not by which team member ran the enrichments. If you need per-user credit tracking, see the **MCP** and **API** tabs, which attribute spend to individual users for those access methods.
 
 ### Understanding table-specific credit usage
