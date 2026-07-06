@@ -348,6 +348,8 @@ These are disclosed when you add your account via OAuth. We request: offline\_ac
 
 ### How are replies categorized in the Campaign Events table?
 
+Each time a reply is categorized, a `LEAD_CATEGORY_UPDATED` event is written to the campaign events table. Categorization happens two ways: a user or teammate selects a category from the dropdown in the campaign's **Replies** tab or global inbox, or AI auto-categorization assigns a label automatically (enabled for all campaigns by default). Sends and sequence steps do not trigger this event — it only fires when a reply's category is set or changed.
+
 Smartlead assigns leads into one of the following categories:
 
 1.  Interested
