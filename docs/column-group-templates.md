@@ -1,6 +1,6 @@
 ---
 title: Column group templates
-description: Create, apply, and edit column group templates to reuse related column sets across your workspace.
+description: Create, apply, edit, and delete column group templates to reuse related column sets across your workspace.
 last_synced: 2026-04-26T01:39:46.520Z
 ---
 
@@ -58,3 +58,13 @@ To update the columns in a template, you need to recreate it:
 3.  Select the updated columns by holding `⌘` (Mac) or `ctrl` (Windows) and clicking each column title.
 4.  `Right-click` on one of the selected titles and select `Save as template`.
 5.  Enter a name and click `Create template`.
+
+## Deleting a column group template
+
+1.  While in a table, click `Add enrichment`.
+2.  Select `Templates` and find the template you want to delete.
+3.  Click the `...` menu next to the template.
+4.  Select **Delete**.
+5.  Click **Delete template** to confirm.
+
+Deletion is permanent and cannot be undone.
