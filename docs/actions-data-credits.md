@@ -18,6 +18,8 @@ This separation gives you transparency and control—you know exactly what you'r
 
 ## Quick comparison
 
+The table below summarizes the key differences between Actions and Data Credits.
+
 |  | Actions | Data credits |
 | --- | --- | --- |
 | What it measures | Platform usage capacity | Data marketplace purchases |
@@ -26,6 +28,8 @@ This separation gives you transparency and control—you know exactly what you'r
 | Rollover | No | Yes (up to 2× monthly limit) |
 
 ## How Actions and Data Credits work together
+
+The table below shows which activities in Clay consume Actions, Data Credits, or both.
 
 | Activity | Actions | Data credits |
 | --- | --- | --- |
