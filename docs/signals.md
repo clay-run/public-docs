@@ -70,7 +70,7 @@ The signal runs on its scheduled cadence and checks all rows in the destination 
 
 ### What plans are Signals available on?
 
-Most Signals are available on any paid plan.
+Most Signals — Clay's automated monitors for events like job changes, promotions, and news and fundraising — are available on any paid plan.
 
 ### Why is my Signal returning 0 results?
 
