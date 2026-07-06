@@ -82,6 +82,10 @@ If you haven't filled yours in yet, go to `Settings`, enter your domain, and Cla
 
 Attach tone guides, messaging docs, PDFs, or CSVs directly into your agent. For copywriting agents, this ensures the Claygent writes in your voice, not a generic AI voice.
 
+**Limits (PDF files):** Maximum 10 files, 50 MB per file, and 1,000 pages per PDF.
+
+**Important:** After uploading a file, wait until its status shows **Completed** before saving. If you save before the upload finishes, the file will not be attached and your agent will run without that document.
+
 ### Web search
 
 Enable web search when your agent needs live research (recent company news, hiring signals, etc.). Disable it when working from data already in your table to keep runs faster and more consistent.
