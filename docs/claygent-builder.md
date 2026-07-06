@@ -94,7 +94,7 @@ Give your Claygent access to find people and jobs data directly. This enables pr
 
 ### Custom MCP server
 
-Connect any external MCP (Model Context Protocol) server to your Claygent as a tool. This lets your agent interact with services like Salesforce, HubSpot, Gmail, or Google Calendar, and gives you access to thousands of connectors through catalogs like [Smithery](https://smithery.ai/) and [Pipedream](https://mcp.pipedream.com/).
+Connect any external MCP (Model Context Protocol) server to your Claygent as a tool — including servers you host yourself to give Claygent access to your organization's first-party data. This lets your agent interact with your own internal systems as well as third-party services like Salesforce, HubSpot, Gmail, or Google Calendar, and gives you access to thousands of connectors through catalogs like [Smithery](https://smithery.ai/) and [Pipedream](https://mcp.pipedream.com/).
 
 **Note:** Custom MCP server connections are available on Enterprise plans. Self-serve customers can request access by contacting support to join the beta.
 
@@ -285,6 +285,12 @@ When Sculptor rewrites your prompt, it saves the new prompt text and shows a "Pr
 ### The web search toggle is greyed out — why?
 
 For Clay parallel models (Argon, Neon, Helium, and similar), web search is always on and cannot be toggled off — it's a required part of how these models work. The greyed-out toggle is expected; web search is active. If you want to turn web search off, switch to a non-parallel model in the model selector.
+
+### Can I connect my own self-hosted MCP server to give Claygent access to my first-party data?
+
+Yes. Custom MCP server connections accept any MCP-compatible endpoint — including servers you host yourself. To connect your own self-hosted MCP server, open your Claygent's **Configuration** panel, scroll to the **Tools** section, click **Add custom MCP server**, and enter your server's URL and API key (if required). Claygent can then call your server as a tool to read from your organization's proprietary systems and data.
+
+This feature is available on Enterprise plans; self-serve customers can contact support to request beta access.
 
 ### Can I connect a custom MCP server to a standalone Claygent (created outside a table)?
 

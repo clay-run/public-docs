@@ -46,7 +46,7 @@ In the bulk enrichment settings, you can adjust several options:
 -   `Deletion criteria`: Choose when a row is considered complete and automatically deleted. This setting is required — leaving it unconfigured shows an **Incomplete configuration** error that prevents the run from starting.
     -   **Single column** — Deletes the row once a selected column has run, or if any conditional rules determine the column doesn't need to run. After selecting this option, use the **Select field** dropdown to pick the specific column that signals a row is complete and ready to be deleted or archived. Typically this is your export action column — for example, the column that adds a row to Google Sheets.
     -   **Conditional rules** — Combine multiple rules or columns to trigger deletion.
-    -   `Archive deleted rows` — When enabled, deleted rows are stored for up to 30 days and can be downloaded as a CSV. This toggle is off by default.
+    -   `Archive deleted rows` — When enabled, deleted rows are stored for up to 30 days and can be exported as a CSV from the Archive view. Archived rows are read-only — they cannot be moved back into the live table for re-processing. This toggle is off by default.
 -   `Run starting point`: Choose how to handle rows already in the table when the run begins.
     -   **Continue where you left off** — Finishes enriching rows already in the table, then continues with the rest of the source.
     -   **Start from the beginning** — Clears rows already in the table and reruns everything from the source. Note: restarting will cost credits again for previously enriched rows.

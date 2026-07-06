@@ -364,6 +364,8 @@ Toggle **ON** to automatically strip fields with empty, null, or undefined value
 -   Avoids sending unexpected null values to APIs that reject them.
 -   Keeps requests clean and efficient.
 
+**Note:** Intentionally empty objects (`{}`) in the request body are **not** removed by this toggle — they are treated as valid values and preserved in the outgoing request. Only `null`, `undefined`, and empty string values are stripped. This matters for APIs that require empty objects as valid configuration values, for example `"urlContext": {}` in Gemini API requests.
+
 **Note:** This toggle operates on the outgoing payload at execution time. It does **not** prevent the **"Some inputs missing"** error — that error fires before the action runs when a body field's per-field toggle is ON but the referenced column has no value. To suppress "Some inputs missing" for optional fields, turn off the per-field toggle for that field in the body editor (see Step 4 above).
 
 ### Step 9: Retry on failure
