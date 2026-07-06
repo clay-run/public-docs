@@ -83,6 +83,8 @@ You can switch the data type of your column within your table. To do this:
 
 ## Column limits
 
+Each Clay table enforces two independent column limits — one for the total number of columns and one specifically for enrichment columns.
+
 -   Clay tables have a default column limit of **100** (all column types combined).
 -   Clay tables have a default enrichment column limit of **40**. This is a separate, independent cap — your table's enrichment column count is tracked on its own, regardless of how high the total column limit is.
 -   Tables using phone or email waterfalls can have this limit raised to a maximum of **60** (for that table only).
