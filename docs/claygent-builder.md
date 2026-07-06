@@ -126,6 +126,8 @@ You can also add MCP server connections workspace-wide from `Settings` → `Conn
 
 Swap between different AI models in the configuration panel to test output quality without touching your prompt.
 
+**Auto model (currently in beta — contact support to enable):** If the Auto toggle is available in your workspace, it appears at the top of the model selector. Switching **Auto** on lets Clay automatically select the right model for your task — balanced quality and speed, recommended for most tasks. When Auto is on, the model list is hidden; toggle it off to choose a specific model manually. New Claygent columns default to Auto when it is available in your workspace.
+
 Clay's parallel models differ in power and cost:
 
 -   **clay-argon** — Strongest model for deep research and complex multi-step analysis.
@@ -263,6 +265,8 @@ No. You can have up to 10 test cases per Claygent at a time for free. You can de
 ### How much does it cost to run a Claygent in production?
 
 Credit cost depends on the AI model you select. Claygent defaults to **Argon** for web research — Clay's model for open-ended web lookups — which costs **3 credits per row**. Switching to **Helium** (1 credit per row) is a cost-effective alternative for simpler web research tasks. For a full model pricing reference, see [How AI is priced](ai-pricing.md).
+
+**Note:** If your workspace has the **Auto model** beta enabled, new Claygent columns default to Auto instead of Argon. Auto runs on a third-party model and is priced differently from Clay's fixed parallel models — see [How AI is priced](ai-pricing.md) for details once Auto is generally available, or contact support to confirm current pricing.
 
 If your goal is to find people associated with companies at scale — rather than open-ended web research — **Find People** is significantly more cost-effective: the **Find Contacts at Company** action costs 0.5 credits per row on current pricing plans (1 credit per row on legacy plans), versus 3 credits per row for Argon-based Claygent. Use Claygent when you need judgment-based research (summarizing company news, scoring leads, writing personalized outreach). Use Find People when you need structured contact lookups at scale.
 
