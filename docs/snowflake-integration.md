@@ -12,6 +12,8 @@ Snowflake is a cloud data platform that enables organizations to store, analyze,
 
 With this integration, you can connect to your Snowflake data warehouse and import data directly into Clay.
 
+**Plan availability:** Available on all paid Clay plans. Adding a new Snowflake connection requires workspace admin permissions — if you don't see the option to add a connection, ask your workspace admin.
+
 ## Connecting to Snowflake
 
 When connecting your Snowflake account to Clay, you can choose between two authentication methods:
