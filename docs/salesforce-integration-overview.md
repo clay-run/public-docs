@@ -359,6 +359,8 @@ Clay Value: `Technology;Healthcare;Finance`
 
 ### Common picklist errors
 
+The table below lists common Salesforce picklist errors, their causes, and how to resolve them.
+
 | Error | Cause | Solution |
 | --- | --- | --- |
 | Bad value for restricted picklist | Text doesn't match picklist | Check exact spelling & case in Salesforce |
