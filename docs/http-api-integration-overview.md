@@ -6,7 +6,7 @@ last_synced: 2026-04-26T01:40:08.701Z
 
 # HTTP API
 
-Facilitate seamless integration and connectivity with any APIs.
+Use the HTTP API integration to call any external API from within Clay — pulling data into your table or pushing records out, even for tools without a native Clay integration.
 
 HTTP API helps you send or retrieve data from any tool or database using an API endpoint. From pulling Gong transcripts into your Clay table to referencing Marketo's API, you can call any API, even if Clay does not offer a native integration.
 
