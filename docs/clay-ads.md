@@ -155,6 +155,7 @@ Yes. After your initial sync is active, an **Expand your reach** section appears
 
 **Notes:**
 
+-   If the **Expand your reach** section is not visible, no additional platforms are currently available to add for your workspace. Google Ads requires a separate access request (currently in closed beta) — if your workspace hasn't been granted access, Google Ads will not appear as an option even if you're already syncing to LinkedIn and Meta. Contact [Clay support](https://www.clay.com/contact) to request Google Ads access.
 -   You cannot add a platform while a sync is currently in progress — wait for the active sync to complete first.
 -   Google Ads is only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience includes contacts from Clay's company/people search data, Google Ads will appear disabled. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) for details.
 
