@@ -144,6 +144,8 @@ This gives you account-level attributes (company name, industry, revenue, etc.) 
 2.  Click `Sources` and the name of the source.
 3.  Click `Delete source`.
 
+**Note:** CSV Import sources cannot be deleted directly from the workbook canvas — there is no delete option when you right-click a CSV node in the workbook overview. To remove a CSV Import source from a workbook, delete the table it feeds into. Deleting the table also removes the associated CSV source.
+
 ## Scheduled sources
 
 Scheduling source runs is one of the most powerful features, as it keeps your information automatically up to date. To learn more, check out [scheduled sources](https://www.clay.com/university/guide/scheduled-sources).
