@@ -57,7 +57,7 @@ Check if a phone number appears in National Do Not Call registries. Currently su
 
 -   **"Invalid input"** — the phone number could not be parsed. Make sure the number includes a country code prefix (e.g., `+19199463022`). If your numbers don't already include a country code, add a **Clay Formatters → Normalize Phone Number** step first — then update the Meer column's **Phone Number** input to reference that step's output (e.g., the **E164** field), not the original phone number column. Simply adding the normalize step without re-mapping the input will not fix the error.
 -   **"Missing input"** — the Phone Number field is empty or references a column with no value. Check that the Meer action's **Phone Number** input is mapped to a column that contains data, and that any upstream normalization step completed successfully.
--   **"Error: Failed to enrich phone number"** — the phone number is valid but its country is not currently supported by Meer. To avoid errors and unnecessary credit charges, add an **Only run if** conditional on this action to restrict it to supported country codes (e.g., `+1` for US, `+44` for UK, `+49` for Germany, `+353` for Ireland, `+34` for Spain).
+-   **"Error: Failed to enrich phone number"** — the phone number is valid but its country is not currently supported by Meer. Credits are not charged for this error. To avoid it entirely, add an **Only run if** conditional on this action to restrict it to supported country codes (e.g., `+1` for US, `+44` for UK, `+49` for Germany, `+353` for Ireland, `+34` for Spain).
 
 ## Compliance notes
 
