@@ -24,7 +24,7 @@ Within Clay you can import CSV as a source to an existing or new table.
     -   `Create new table` — creates a new table populated with your CSV data.
     -   `Replace current table` — overwrites the current table's rows with the CSV data.
 
-    > **Note:** None of the three destination options above — Add to current table, Create new table, or Replace current table — update existing rows. `Add to current table` always appends each CSV row as a new row — it does not match records by a column value or update rows that already exist in your table. If you need to add a column's values to rows that are already in Clay (for example, a "Keep/Remove" status matched on LinkedIn URL), see [Adding a new column to existing rows](#adding-a-new-column-to-existing-rows) below.
+    > **Note:** None of the three destination options above — Add to current table, Create new table, or Replace current table — update existing rows. `Add to current table` always appends each CSV row as a new row — it does not match records by a column value or update rows that already exist in your table. If you need to add a column's values to rows that are already in Clay (for example, a "Keep/Remove" status matched on a profile URL), see [Adding a new column to existing rows](#adding-a-new-column-to-existing-rows) below.
 
 4.  Map your CSV columns to the correct Clay table fields.
 5.  Choose how to handle the imported rows:
