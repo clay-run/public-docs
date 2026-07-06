@@ -609,3 +609,21 @@ If initial results are unsatisfactory, extracting the company name from the emai
 1.  Add the **Identify Email Type and Extract Company Domain from Email** enrichment and map your email column. This extracts the company domain from the address (for example, `jane@acme.com` → `acme.com`).
 2.  Use a company enrichment (such as Apollo, ZoomInfo, or Clearbit) to look up the company name from the extracted domain.
 3.  Re-run your professional profile enrichment with **Full Name**, **Email**, and **Company Name** all mapped as inputs. The additional company context can improve the match rate.
+
+### How do I convert a Sales Navigator profile URL to a standard LinkedIn profile URL?
+
+There is no one-click conversion in Clay. If you have Sales Navigator person profile URLs (`https://www.linkedin.com/sales/people/...`) and need standard LinkedIn profile URLs (`https://www.linkedin.com/in/<slug>`), two approaches work:
+
+**Option 1 — Claygent (AI web research)**
+
+Add a **Use AI** column with **Web search** enabled. In the prompt, reference your Sales Navigator URL column and ask Claygent to find the standard LinkedIn profile URL:
+
+*"Given the Sales Navigator profile URL {{Sales Navigator URL}}, find and return the standard LinkedIn profile URL in the format https://www.linkedin.com/in/[slug]."*
+
+Claygent visits the Sales Navigator page and extracts the standard profile URL from the page content. This works for most profiles — if a run fails, re-running the affected rows resolves most transient errors.
+
+**Option 2 — Formula (when URL format is consistent)**
+
+Sales Navigator person profile URLs sometimes follow the pattern `.../sales/people/[ID],[slug],[NAME]`. If your URLs include this slug segment, you can extract it with a formula column and prepend `https://www.linkedin.com/in/` to construct the standard URL.
+
+**Note:** This approach works inconsistently — not all Sales Navigator URLs include an extractable slug. Test on a sample before running at scale, and use Claygent (Option 1) as a fallback on rows where the formula returns no valid result.
