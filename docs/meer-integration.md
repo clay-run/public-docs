@@ -9,8 +9,6 @@ last_synced: 2026-05-11T17:47:40.000Z
 
 Screen phone numbers against national do-not-call registries before initiating outbound calls.
 
-**Plan availability:** Available on all Clay plans.
-
 **Important:** Meer does not appear in the enrichment search panel until you accept its compliance terms. If you cannot find Meer when adding enrichments to your table, follow these steps to unlock it:
 
 1. Click your workspace name or the **Settings** icon
