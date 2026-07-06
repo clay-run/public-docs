@@ -16,7 +16,7 @@ With this integration, you can utilize SimilarWeb's powerful market intelligence
 ## Setting up the SimilarWeb integration
 
 1.  While in a Clay table, click`Add enrichment` and search for `SimilarWeb`.
-2.  Under `Integrations`, select one of the Notion options.
+2.  Under `Integrations`, select one of the SimilarWeb options.
 3.  By default, you will be using your Clay-managed SimilarWeb account, but you can also select `+ Add Account` if you have your own SimilarWeb account.
 
 ## Using the SimilarWeb integration

@@ -15,7 +15,7 @@ Automated sales outreach platform.
 
 Instantly is an automated sales outreach platform that allows users to efficiently add leads to campaigns.
 
-The Instantly integration in Clay allows users Instantly in Clay allows users to efficiently add leads to campaigns within the app.
+The Instantly integration in Clay allows users to efficiently add leads to campaigns within the app.
 
 ## **Setting up the Instantly integration**
 

@@ -18,6 +18,8 @@ This separation gives you transparency and control—you know exactly what you'r
 
 ## Quick comparison
 
+The table below summarizes the key differences between Actions and Data Credits.
+
 |  | Actions | Data credits |
 | --- | --- | --- |
 | What it measures | Platform usage capacity | Data marketplace purchases |
@@ -26,6 +28,8 @@ This separation gives you transparency and control—you know exactly what you'r
 | Rollover | No | Yes (up to 2× monthly limit) |
 
 ## How Actions and Data Credits work together
+
+The table below shows which activities in Clay consume Actions, Data Credits, or both.
 
 | Activity | Actions | Data credits |
 | --- | --- | --- |
@@ -243,7 +247,7 @@ If you are on a **monthly plan**, unused Data Credits will roll over and accumul
 -   For example, if your plan includes 50,000 credits per month, your maximum balance is 100,000. If you already have 82,000 credits when your plan renews, your balance becomes 100,000 — not 132,000. The 32,000 excess is dropped.
 -   If you cancel or downgrade, you can use any excess Data Credits until your current billing cycle ends. After the billing cycle ends, your balance will be reduced to the **Data Credit rollover limit** of your new plan.
 
-If you are on an **annual plan**, you are eligible for a **15% Data Credit rollover** of unused Data Credits, provided you renew on the same or a higher-tier plan.
+If you are on an **annual plan**, your full year's Data Credits are deposited into your account immediately at purchase — they are not distributed in monthly installments. You can run a bulk enrichment right away without waiting for credits to accumulate. You are also eligible for a **15% Data Credit rollover** of unused Data Credits when you renew, provided you renew on the same or a higher-tier plan.
 
 _Note: Your rollover and renewal happen on the same day and at the same time you originally subscribed (this timestamp is now shown in your billing details). Credits are updated via a payment-processor webhook and typically appear within a few minutes of that timestamp._
 

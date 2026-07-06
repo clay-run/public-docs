@@ -34,6 +34,7 @@ _They cannot:_
 
 -   Add, remove, or change team members' roles.
 -   Modify billing settings or purchase credits.
+-   Create new **Workflows** _(currently in limited access)_ — creating workflows requires workspace admin access. If you see Workflows in your left navigation and need to create one, ask your workspace admin.
 
 ## Viewers (Enterprise only)
 
@@ -63,7 +64,7 @@ Viewers can be granted Editor access to specific tables or workbooks, or added a
 
 **Note:** The Sales Rep role is currently in beta — contact support to request access for your workspace.
 
-The sales rep role is designed for team members who need to set up email accounts for the Clay Sequencer and/or access Clay through AI tools (Claude, ChatGPT, or xAI) via the Clay MCP integration. Users with this role **cannot access the standard Clay workspace** — they have no access to tables, workbooks, or other workspace resources.
+The sales rep role is designed for team members who need to set up email accounts for the Clay Sequencer and/or access Clay through AI tools (Claude, ChatGPT, or Microsoft Copilot) via the Clay MCP integration. Users with this role **cannot access the standard Clay workspace** — they have no access to tables, workbooks, or other workspace resources. When a Sales Rep user logs in, they see a setup page prompting them to connect an AI platform (Claude, ChatGPT, or Microsoft Copilot) and manage their email accounts for the Sequencer. This is the expected experience — the page does not include navigation to the standard Clay interface.
 
 **Sales reps can:**
 

@@ -27,6 +27,8 @@ Your table updates instantly with new data, eliminating manual entry. This featu
 
 ## Limits
 
+The following limits apply to all webhook sources in your workspace:
+
 | Limit | Value |
 |---|---|
 | Throughput | 10 requests/second, burst up to 20 requests |
@@ -46,9 +48,7 @@ Your table updates instantly with new data, eliminating manual entry. This featu
 
 ## Request body format
 
-Each HTTP POST to Clay's webhook endpoint creates **exactly one new row** in your table.
-
-**One record per POST:** Clay does not split array payloads into multiple rows. If you send a JSON array (`[{...}, {...}]`), the entire array becomes the data for a single row rather than creating one row per element. For one row per record, send one POST per record.
+**One record per POST:** Each HTTP POST to Clay's webhook endpoint creates exactly one new row in your table — Clay does not split array payloads. If you send a JSON array (`[{...}, {...}]`), the entire array becomes the data for a single row rather than one row per element.
 
 **JSON shape:** Any valid JSON object structure is accepted. Both nested objects and flat key structures work — Clay creates columns based on whatever top-level keys you send:
 
