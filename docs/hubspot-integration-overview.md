@@ -1,7 +1,7 @@
 ---
 title: HubSpot integration
 description: All-in-one CRM platform for marketing, sales, and customer service.
-last_synced: 2026-04-26T01:40:09.362Z
+last_synced: 2026-04-26T01:40:09.372Z
 ---
 
 # HubSpot integration
@@ -190,7 +190,7 @@ To pull the latest HubSpot data immediately without waiting for the next schedul
 
 For more on additive source behavior across all source types, see [Will rows already in my table be removed if they no longer match the source filter?](https://www.clay.com/university/guide/sources#will-rows-already-in-my-table-be-removed-if-they-no-longer-match-the-source-filter) in the Sources guide.
 
-**If you need companies to exit automatically when they leave the HubSpot list** — for example, to keep a Signal running only on current list members — use [Clay Audiences](audiences.md) instead (Growth and Enterprise plans). With Audiences, you connect HubSpot directly as a live, continuously-syncing source and build a segment using the same criteria as your HubSpot list. When a company is no longer returned by that source, it is automatically removed from the segment — so any Signal on that segment evaluates only companies that are currently in the list. See [Importing from HubSpot](audiences.md#importing-from-hubspot) for setup.
+**If you need companies to exit automatically when they leave the HubSpot list** — for example, to keep a Signal running only on current list members — use [Clay Audiences](audiences.md) instead (currently in beta on Growth and Enterprise plans — contact your Growth Strategist to enable). With Audiences, you connect HubSpot directly as a live, continuously-syncing source and build a segment using the same criteria as your HubSpot list. When a company is no longer returned by that source, it is automatically removed from the segment — so any Signal on that segment evaluates only companies that are currently in the list. See [Importing from HubSpot](audiences.md#importing-from-hubspot) for setup.
 
 ### My HubSpot list has more than 50,000 records — how do I process all of them?
 
