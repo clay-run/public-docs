@@ -58,6 +58,14 @@ Bulk enrichment tables include two built-in tabs at the top of the view to help 
 -   **Queued rows** — rows that are waiting to be processed or are currently running.
 -   **Errored rows** — rows where the action column tied to your deletion criterion did not complete successfully.
 
+Unlike standard Clay tables, the bulk enrich view does not include a custom filter builder — the **Queued rows** and **Errored rows** tabs are the only built-in views. Completed rows are automatically deleted based on your deletion criteria and are no longer visible in the bulk enrich view.
+
+To inspect specific records before or after processing, here are some alternatives:
+
+-   **Filter at the source** — Narrow your data before it enters bulk enrichment. For example, use a filtered list view in Salesforce, or pre-filter your CSV before importing.
+-   **Use test data** — Use the **Test data** option in your bulk enrichment settings to add a small subset of rows and verify output before running the full source.
+-   **Review results at the destination** — Once enriched rows are exported to your destination (Salesforce, Google Sheets, Snowflake, etc.), filter and review them there.
+
 ### Understanding Run Stopped
 
 **Run Stopped** appears on a cell when the run was manually paused or stopped before that action had a chance to execute for that row. Because the action never ran, the row stays in the Queued rows or Errored rows tab (depending on your deletion criteria configuration) rather than completing normally.
