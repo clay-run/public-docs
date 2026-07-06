@@ -304,6 +304,14 @@ To use tools with your Claygent:
 
 Once you're on a supported model with a private API key, the tools in the **Tools** section will become active.
 
+### My Claygent isn't working with my connected OpenAI API key
+
+Your connected OpenAI API key will always appear as a selectable option in the Claygent model picker. However, Claygent requires a high token-per-minute (TPM) rate to handle web browsing and multi-step research — in practice, **OpenAI Usage Tier 2 or higher**. On Tier 1, the key's TPM limit is too low and Claygent runs will fail with rate-limit errors.
+
+To check your current tier: go to **platform.openai.com → Settings → Limits**.
+
+Until your key is on Tier 2 or higher, use **Clay's managed account** (the default selection in the model picker) — Claygent runs as normal and deducts Data Credits instead of charging your API key.
+
 ### How do I mark a Claygent input as optional?
 
 Each input in the Claygent builder shows **(required)** or **(optional)** next to its name. To change whether an input is required:
