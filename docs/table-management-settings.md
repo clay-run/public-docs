@@ -41,15 +41,7 @@ To enable or disable auto-dedupe:
 
 ## Auto-run
 
-<<<<<<< HEAD
-Auto-run automatically runs enrichments whenever rows are added or edited, keeping your table current. You can control this feature at multiple levels:
-
--   **Table-level** (master control)
--   **Column-level** (individual control)
--   **Conditional logic**
-=======
 Auto-run controls whether enrichments fire automatically when rows are added or edited, keeping your table current. For complete documentation — including the run decision tree, table-level and column-level controls, "Keep existing results," the out-of-date indicator, the Update Existing Rows toggle, common scenarios, and best practices — see **[Auto-run](auto-run.md)**.
->>>>>>> origin/main
 
 To quickly toggle auto-run: click the `⛭` icon in the top toolbar → toggle **Auto-run** on or off, then choose:
 
