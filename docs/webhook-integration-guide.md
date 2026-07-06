@@ -27,6 +27,8 @@ Your table updates instantly with new data, eliminating manual entry. This featu
 
 ## Limits
 
+The following limits apply to all webhook sources in your workspace:
+
 | Limit | Value |
 |---|---|
 | Throughput | 10 requests/second, burst up to 20 requests |
@@ -46,9 +48,7 @@ Your table updates instantly with new data, eliminating manual entry. This featu
 
 ## Request body format
 
-Each HTTP POST to Clay's webhook endpoint creates **exactly one new row** in your table.
-
-**One record per POST:** Clay does not split array payloads into multiple rows. If you send a JSON array (`[{...}, {...}]`), the entire array becomes the data for a single row rather than creating one row per element. For one row per record, send one POST per record.
+**One record per POST:** Each HTTP POST to Clay's webhook endpoint creates exactly one new row in your table — Clay does not split array payloads. If you send a JSON array (`[{...}, {...}]`), the entire array becomes the data for a single row rather than one row per element.
 
 **JSON shape:** Any valid JSON object structure is accepted. Both nested objects and flat key structures work — Clay creates columns based on whatever top-level keys you send:
 
@@ -130,6 +130,18 @@ curl -X POST YOUR_CLAY_WEBHOOK_URL \
 ```
 
 If a row appears in your table, the issue is in your original request's formatting, headers, or auth token. If no row appears on a brand-new webhook, contact support.
+
+### How can I tell which webhook source a row came from?
+
+Clay records which webhook source sent each row at ingestion time, so you can filter the table by source without any extra setup.
+
+**To filter by webhook source:**
+
+1. Open the filter panel (click the filter icon in the table toolbar).
+2. Set the field to **Webhook**, the condition to **is from source**, then pick a source from the dropdown. The dropdown lists every webhook source connected to this table by name.
+3. The table now shows only the rows that arrived from that source. Switch the dropdown to a different source to see its rows instead.
+
+**To show the source on each row as a column (optional):** Add a field to the payloads you send — for example, `"source": "webhook_a"`. That field will arrive as its own column in the table, so you can see the source directly on every row without needing to filter.
 
 ### How do I find which table a webhook URL belongs to?
 

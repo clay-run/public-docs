@@ -37,7 +37,7 @@ The platform automatically updates LinkedIn connections every week, ensuring you
     -   If you have your own account, click `+ Add account` and complete authentication. Otherwise, use the Clay provided key
         -   When using the Clay key, network mapping will be based on the company domain you provide.
 
-**Note:** When connecting to a company domain that no Clay user has previously connected to, it may take a few hours to establish the connection. During this time, you may see an "awaiting callback" status.
+**Note:** When connecting to a company domain that no Clay user has previously connected to, it may take up to 8 hours to establish the connection. During this time, you may see an "awaiting callback" status.
 
 ### `Action` Find warm intros to person
 

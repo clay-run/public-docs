@@ -190,6 +190,8 @@ To pull the latest HubSpot data immediately without waiting for the next schedul
 
 For more on additive source behavior across all source types, see [Will rows already in my table be removed if they no longer match the source filter?](https://www.clay.com/university/guide/sources#will-rows-already-in-my-table-be-removed-if-they-no-longer-match-the-source-filter) in the Sources guide.
 
+**If you need companies to exit automatically when they leave the HubSpot list** — for example, to keep a Signal running only on current list members — use [Clay Audiences](audiences.md) instead (currently in beta on Growth and Enterprise plans — contact your Growth Strategist to enable). With Audiences, you connect HubSpot directly as a live, continuously-syncing source and build a segment using the same criteria as your HubSpot list. When a company is no longer returned by that source, it is automatically removed from the segment — so any Signal on that segment evaluates only companies that are currently in the list. See [Importing from HubSpot](audiences.md#importing-from-hubspot) for setup.
+
 ### My HubSpot list has more than 50,000 records — how do I process all of them?
 
 The **Import objects from HubSpot** source is limited to 50,000 records. Enabling auto-delete does not bypass this limit for HubSpot imports — auto-delete only resets the record count for webhook and send-table-data sources, not for CRM imports.
@@ -330,14 +332,14 @@ To handle both new and existing contacts without hitting duplicate errors:
 
 For full details on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
 
-### Why do I get an `INVALID_OWNER_ID` error when setting `hubspot_owner_id`?
+### Why do I get an `INVALID_OWNER_ID` or `INVALID_INTEGER` error when setting `hubspot_owner_id`?
 
 HubSpot uses two separate identifiers for each user who can own a contact:
 
 -   **Owner ID** — the value used for the `hubspot_owner_id` contact property. This is the `id` field returned by HubSpot's Owners API (`/crm/v3/owners`).
 -   **User ID** — HubSpot's internal account ID for the same person, which appears in contexts like HubSpot's Settings → Users & Teams.
 
-These two values are sometimes identical and sometimes different. Passing a user ID where an owner ID is expected returns an `INVALID_OWNER_ID` error, even though the ID appears valid in HubSpot.
+These two values are sometimes identical and sometimes different. Passing a user ID where an owner ID is expected returns an `INVALID_OWNER_ID` error — or an `INVALID_INTEGER` error with the message "*X* was not a valid integer (for owner ID)" — even though the ID appears valid in HubSpot.
 
 **Fix:** Use Clay's **Find owner** action to look up the owner by email address. The `id` field in the returned result is the correct owner ID to pass as `hubspot_owner_id` in an Update Object action.
 
@@ -353,7 +355,7 @@ A blank Owner ID column in Clay means the corresponding contact (or other object
 2. If no owner is assigned, set the owner directly in HubSpot.
 3. Once updated in HubSpot, re-run the relevant column in Clay (for example, your **Import objects** source column or a **Lookup object** enrichment) to pull in the updated value.
 
-**Note:** This is different from the `INVALID_OWNER_ID` error, which occurs when an owner *is* set but the wrong identifier type is passed when writing back to HubSpot. See [Why do I get an `INVALID_OWNER_ID` error?](#why-do-i-get-an-invalid_owner_id-error-when-setting-hubspot_owner_id) for that scenario.
+**Note:** This is different from the `INVALID_OWNER_ID` error, which occurs when an owner *is* set but the wrong identifier type is passed when writing back to HubSpot. See [Why do I get an `INVALID_OWNER_ID` or `INVALID_INTEGER` error?](#why-do-i-get-an-invalid_owner_id-or-invalid_integer-error-when-setting-hubspot_owner_id) for that scenario.
 
 ### Why does my HubSpot column still show "Missing authentication" after I reconnect my account?
 
@@ -365,6 +367,21 @@ Each HubSpot column stores a reference to the specific connection it was configu
 
 1. Open each affected column's settings and change the **Account** dropdown to select the new connection. This updates the column to use the new connection ID.
 2. If re-selecting the account in the existing column doesn't resolve the error, create a new column with the same HubSpot action and configuration. New columns automatically pick up the currently active connection and will run successfully.
+
+### Why do I get "Authorization failed because your account lacks access to the required scopes [automation.sequences.enrollments.write, automation.sequences.read]"?
+
+This error comes from HubSpot when you attempt to connect an account with Sequences permissions that your HubSpot plan doesn't include. The two scopes listed — `automation.sequences.read` and `automation.sequences.enrollments.write` — are only needed to enroll contacts in HubSpot Sequences, and they are **disabled by default** in Clay's connection flow.
+
+If these scopes were checked during setup and your HubSpot subscription doesn't include the Sequences feature, HubSpot rejects the entire OAuth connection with this error.
+
+**To fix:**
+
+1. Go to **Settings → Connected accounts**.
+2. Find your HubSpot account and click **Reconnect**.
+3. In the scopes screen, make sure the **Sequences** permissions (`automation.sequences.read` and `automation.sequences.enrollments.write`) are **unchecked** — they are unchecked by default.
+4. Complete the reconnection flow.
+
+You only need to enable these scopes if you're specifically using Clay to enroll contacts in HubSpot Sequences. For standard CRM syncing, contact and company management, or Audiences setup, leave them unchecked.
 
 ### Why does my HubSpot Create Object show "Invalid input" on some rows?
 

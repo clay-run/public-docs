@@ -1,13 +1,12 @@
 ---
 title: Table management settings
-description: Manage table settings like rename, auto-dedupe, auto-run,
-  auto-delete, and table descriptions.
+description: Manage table settings including auto-dedupe, duplicate table, view graph, rename, edit description, view history, and auto-delete.
 last_synced: 2026-04-26T01:40:46.622Z
 ---
 
 # Table management settings
 
-Manage table settings like rename, auto-dedupe, auto-run, auto-delete, and table descriptions.
+Manage table settings including auto-dedupe, duplicate table, view graph, rename, edit description, view history, and auto-delete.
 
 ## Access table management settings
 
@@ -42,10 +41,11 @@ To enable or disable auto-dedupe:
 
 ## Auto-run
 
-Auto-run automatically runs enrichments whenever rows are added or edited, keeping your table current. You can control this feature at multiple levels: table-level (master control), column-level (individual control), and through conditional logic.
+Auto-run controls whether enrichments fire automatically when rows are added or edited, keeping your table current. For complete documentation — including the run decision tree, table-level and column-level controls, "Keep existing results," the out-of-date indicator, the Update Existing Rows toggle, common scenarios, and best practices — see **[Auto-run](auto-run.md)**.
 
-### How Clay decides whether a cell runs
+To quickly toggle auto-run: click the `⛭` icon in the top toolbar → toggle **Auto-run** on or off, then choose:
 
+<<<<<<< HEAD
 Every time a source runs or re-runs, Clay walks through a short decision tree before executing any enrichment cell. Understanding this flow helps you predict exactly which cells will fire — and which will be skipped.
 
 **Step 1 — New or existing row?**
@@ -246,6 +246,10 @@ For tables with scheduled source imports, the `Update existing rows` toggle cont
     -   Example: `Email is empty` — only find email when missing.
     -   Example: `Company Size > 50` — only enrich companies in your ICP.
 -   For table auto-run, we recommend having the "Keep existing results" option checked to avoid accidentally overwriting data and wasting credits.
+=======
+-   `Continue without running` — don't run existing stale cells right now.
+-   `Update cells` — immediately queue all out-of-date cells to run.
+>>>>>>> origin/main
 
 ## Duplicate table
 
@@ -262,7 +266,7 @@ When you duplicate a table, Clay copies the table structure and run settings —
 
 **To copy existing enriched data without re-running enrichments:** Use [Send Table Data](send-table-data.md) to transfer rows from the original table to the duplicate. Add a Send Table Data column to the original table, select the columns you want to copy, and set the destination to the duplicate. This moves the already-computed cell values directly — the Send Table Data action itself consumes no credits. **Important:** Because auto-run carries over to the duplicate (see below), enrichment columns in the destination (such as Claygent) will automatically re-fire on incoming rows and consume credits unless you turn off auto-run in the duplicate — or disable it on individual enrichment columns you don't want to re-run — before sending data.
 
-**Auto-run carries over:** Because run settings are preserved, if Auto-run was enabled in the original table, the duplicate will also have Auto-run enabled. To create a copy that starts in manual mode (useful for demos or templates), turn off Auto-run in the original table **before** duplicating — or turn it off in the duplicate immediately after creating it. See [Auto-run](#auto-run) for how to toggle this setting.
+**Auto-run carries over:** Because run settings are preserved, if Auto-run was enabled in the original table, the duplicate will also have Auto-run enabled. To create a copy that starts in manual mode (useful for demos or templates), turn off Auto-run in the original table **before** duplicating — or turn it off in the duplicate immediately after creating it. See [Auto-run](auto-run.md) for how to toggle this setting.
 
 **Connected sources (Salesforce, SOQL queries, and similar):** If a table has a Salesforce report, SOQL query, or other import source configured, duplicating copies the source configuration but does **not** automatically start the import. You will need to manually trigger the source in the duplicated table when you're ready to populate it with data.
 

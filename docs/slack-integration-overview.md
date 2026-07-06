@@ -36,7 +36,7 @@ Use this action to send messages to Slack channels through a bot directly from C
 
 -   **Bot name (Optional):** Specify the name of the bot that will post the message.
 -   **Emoji (Optional)**
--   **Slack channel**: Enter the name of the Slack channel where you want to post the message.
+-   **Slack channel**: Select the Slack channel where you want to post the message. Both public channels and private channels the Clay bot has been invited to appear in the list. To post to a private channel, first invite the Clay bot in Slack (type `/invite @Clay` in the channel) — the private channel will then appear in the list automatically.
 -   **Message (Optional):** The text body of the Slack notification (e.g., "A new lead has submitted a form"). Supports [Slack markdown](https://api.slack.com/reference/surfaces/formatting#basic-formatting).
 -   **Form information (Optional):** Add structured form data to the message (e.g., "First Name → Kareem"). The form will be sorted alphabetically by field name.
 
@@ -195,11 +195,11 @@ Clay fetches your Slack channel list live each time you open the **Slack channel
 
 ### `channel_not_found` error when posting to a private channel
 
-If a Slack action returns `{"ok":false,"error":"channel_not_found"}` when targeting a private channel:
+Two Slack error codes can appear when a Clay action can't reach a private channel — they have different causes:
 
-1. **Invite the Clay bot to the channel.** In Slack, open the private channel and type `/invite @Clay`, or add the Clay app through the channel's member settings. The Clay bot must be a member of any private channel it posts to.
+**`{"ok":false,"error":"channel_not_found"}`** — the channel ID is wrong or does not exist. Verify the ID you provided. A valid channel ID starts with `C` and looks like `C04F8AWK44T`. To find a channel's ID: right-click the channel name in Slack → **Copy link** — the ID is the final segment of the copied URL.
 
-2. **Use the channel ID, not the channel name.** The Slack API requires a channel **ID** for private channels — display names are not accepted. A channel ID starts with `C` and looks like `C04F8AWK44T`. To find it: right-click the channel name in Slack → **Copy link** — the ID is the segment at the end of the copied URL.
+**`{"ok":false,"error":"not_in_channel"}`** — the Clay bot has not been invited to the channel. Open the private channel in Slack and type `/invite @Clay`, or add the Clay app through the channel's member settings. The Clay bot must be a member of any private channel it posts to.
 
 > **Note for "Send for approval":** The channel dropdown for this action shows only public channels. For a private channel, switch the **Slack channel** input to text mode and enter the channel ID directly.
 

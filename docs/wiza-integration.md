@@ -16,7 +16,7 @@ With this integration, you can streamline contact enrichment workflows, reducing
 
 1.  While in a Clay table, click `Add enrichment` and search for `Wiza`.
 2.  Under `Integrations`, select one of the Wiza options.
-3.  Under `Integrations`, select one of the Wiza options.
+3.  In the modal, select or add your Wiza account.
     -   If you have your own account, click `+ Add account` and go through authentication. Otherwise, use the Clay provided key.
 
 ### `Action` Find email

@@ -6,9 +6,9 @@ description: Create and manage named credit budgets to organize spend, prevent
 
 # Credit budgets
 
-**Note:** Credit Budgets is currently in open beta for Enterprise plan workspaces. Contact your Clay account team to enable it.
+**Note:** Credit Budgets is currently in beta and automatically available to all Enterprise plan workspaces.
 
-Credit budgets give workspace admins a way to organize credit spend across teams and workflows — think company cards for GTM infrastructure. Instead of a single workspace-wide credit pool with no visibility, admins create named budgets (for example, "Sales Team" or "Marketing Ops"), assign workbooks and other resources to each budget, and set credit limits per budget. This helps prevent overspend, makes it easy to attribute costs to the right team or project, and gives enterprises the governance controls they need to expand Clay usage with confidence.
+If you need to allocate credits to specific workbooks, teams, or projects — tracking and capping each group's spend separately — credit budgets is the feature you need. Credit budgets give workspace admins a way to organize credit spend across teams and workflows — think company cards for GTM infrastructure. Instead of a single workspace-wide credit pool with no visibility, admins create named budgets (for example, "Sales Team" or "Marketing Ops"), assign workbooks and other resources to each budget, and set credit limits per budget. This helps prevent overspend, makes it easy to attribute costs to the right team or project, and gives enterprises the governance controls they need to expand Clay usage with confidence.
 
 Credit budgets appear at `Settings` → `Budgets`. Only workspace admins can create and manage budgets.
 

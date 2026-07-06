@@ -48,7 +48,7 @@ After generating a setup, you can easily edit your original description and rege
     1.  **Web research (Claygent):** Scrape and analyze websites. Provide a website URL in your prompt and Use AI will fetch the page content for the model to analyze.
     2.  **Create or modify content:** Create and manipulate data in your table. **This mode does not access the web** — if your prompt references a website URL, the model will not visit it; it only processes data that is already in your table columns.
 
-    **Note:** If you want to analyze website content using a **Create or modify content** column, first use the **Scrape Website** enrichment to pull the page text into a table column, then reference that column in your AI prompt. For more complex web research — visiting multiple pages, following links, or multi-step browsing — a **Claygent** agent column (accessible via **Add column → [AI section]**) is the most reliable option; it has web browsing built in and supports a range of models including Clay's parallel models, Claude, GPT, Gemini, Grok, Mistral, and others.
+    **Note:** If you want to analyze website content using a **Create or modify content** column, first add a **Scrape Website** column (click **Add column**, search for "Scrape Website", and select it) to pull the page text into a table column, then reference that column in your AI prompt. The scraped content lives in that column only — it is not globally available to other AI columns unless you explicitly reference it. For more complex web research — visiting multiple pages, following links, or multi-step browsing — a **Claygent** agent column (accessible via **Add column → [AI section]**) is the most reliable option; it has web browsing built in and supports a range of models including Clay's parallel models, Claude, GPT, Gemini, Grok, Mistral, and others.
 4.  Select a `Model` from the dropdown.
     1.  Click `Compare models` to get more detailed information about each model.
     2.  _(Optional)_ Set the **Temperature** to control how creative or consistent the model's output is. Options are **Very Low**, **Low**, **Medium** (default), **High**, and **Very High** — lower values produce more predictable, repeatable results; higher values produce more varied responses. The underlying numeric value sent to the model's API varies by provider:
@@ -68,7 +68,7 @@ After generating a setup, you can easily edit your original description and rege
     -   **Tip — optional column references:** Every `{{Column Name}}` reference you add is **required to run** by default. If that column is blank for a row, the cell will show **"Some inputs missing"** and skip that row. To allow the column to run when a field is empty, hover over the `{{Column Name}}` token in the prompt — a **Required to run** toggle appears inline on that token. Switch it off for any input that doesn't always have data.
     -   **Tip — cleaning and formatting text:** To standardize or clean text columns — for example, removing regional gender indicators such as *(H/F)*, *(M/F)*, or *- F/H* from European job titles — select **Create or modify content** as the use case and state your formatting rules directly in the prompt. For example: *"Remove any gender indicators such as (H/F), (M/F), or - F/H from the following job title: {{Job Title}}. Return only the cleaned title."*
     -   **Tip — reusing the same content across all rows:** To use a large block of text — such as a personal bio, resume section, or product description — consistently across every row, create a **Text** column (click **Add column** and select the **Text** data type), enter the content there, and reference it in your AI prompt using `/`. Because the column value is read per row at run time, each row's AI output automatically incorporates the text without you copying and pasting it into every prompt individually. You can organize related content into multiple labeled Text columns (for example, a "Summary" column, an "Experience" column, and a "Skills" column) and reference different sections in different AI prompts.
-6.  _(Optional – Create or modify content only)_ Provide context for task.
+6.  _(Optional – Create or modify content only)_ **Provide context for task (Document Context).** In the **Document Context** section (currently in beta), you can upload up to 10 PDF documents to give the AI additional background for this column — for example, ICP definitions, persona guides, tone guidelines, or internal documentation. Each PDF can be up to 50 MB and 1,000 pages. The AI uses these documents as reference when generating content for every row. Documents are stored per column, not globally: they apply only to this Use AI column and do not carry over to other AI columns in your table.
 7.  Add and define outputs.
     -   **Fields**
         -   In the text field, enter the field names where you want the output to appear.
@@ -87,6 +87,10 @@ After generating a setup, you can easily edit your original description and rege
         -   **Keywords such as `minimum`, `maximum`, `minLength`, `maxLength`, `pattern`, `minItems`, `maxItems`, and `uniqueItems` are not supported and will prevent the column from running.** Remove them from your schema if present. To document a constraint, add it to the field's `"description"` instead — for example, `"description": "Confidence score from 0 to 1"` rather than `"minimum": 0, "maximum": 1`.
         -   To skip writing schema by hand, click **Generate from prompt** to let Clay generate a valid schema from your prompt automatically.
 8.  _(Optional – Create or modify content only)_ Click `Examples` and `Add examples` to show AI what responses should look like.
+
+### Document context (Beta)
+
+**Important:** After uploading a PDF to **Document context**, wait until its status shows **Completed** before clicking **Save**. If you save the column before the upload finishes processing, the file will not be attached to the column — the column will run without any document context, with no indication in the results that the PDF is missing. Once the file shows **Completed**, it is safe to save and run.
 
 ### Browsing pre-built templates
 
@@ -377,3 +381,17 @@ Clay's Scrape Website action runs on one URL at a time. If the content you need 
 3.  The enrichment will run against every row, scraping each page in parallel.
 
 This approach works well when each page URL loads its content directly and does not require a login. For pages behind authentication walls, see [Scrape Website returns empty results on login-required pages](#scrape-website-returns-empty-results-on-login-required-pages) above.
+
+### AI column runs but Document context PDF is not referenced
+
+If your AI column runs without using the PDF you uploaded to **Document context**, the most likely cause is that the column was saved before the file finished uploading.
+
+**What happens:** After adding a PDF to Document context, the file goes through a processing step. If you click **Save** before the file shows **Completed** status, the file is not attached to the column — the column runs without any document context, and no error is shown indicating the PDF is missing.
+
+**To fix:**
+
+1.  Open the column settings (**click the column name → Edit column**).
+2.  In the **Document context** section, remove the existing file.
+3.  Re-upload the PDF.
+4.  Wait until the file status shows **Completed**.
+5.  Click **Save**, then re-run the column.

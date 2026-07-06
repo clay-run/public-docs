@@ -41,6 +41,8 @@ Filter any of the content on this page by:
 3.  Specific integrations being used.
 4.  **Recurring runs only:** Toggle `Recurring` to show only credits from recurring or scheduled runs. By default (toggle off), the dashboard shows all credit consumption — both one-time manual runs and recurring automated runs. When this filter is on, only workbooks and tables with recurring usage are shown in the expanded list — but folder and workbook `Credits used` totals always reflect the complete spend for all their contents, including non-recurring workbooks. If a folder's total appears higher than the sum of the workbooks visible when you expand it, the difference comes from non-recurring workbooks hidden by the filter. Toggle the filter off to see all workbooks and their individual credits.
 
+**Tip:** To review your credit usage for a specific past month, use `Custom range` in the `When` dropdown and enter that month's start and end dates. Workspace usage data is available going back to **December 18, 2024**. The workspace dashboard shows an aggregate total for the selected period — it does not automatically break the window down month-by-month. For a month-by-month graph of credit spend over time, open the [table credit usage dashboard](#understanding-table-specific-credit-usage) and use the Time view with monthly aggregation (table-level data is available from November 5th, 2025).
+
 **Note:** The Workbooks tab does not show per-user credit attribution — it groups spend by workbook or table, not by which team member ran the enrichments. If you need per-user credit tracking, see the **MCP** and **API** tabs, which attribute spend to individual users for those access methods.
 
 ### Understanding table-specific credit usage
@@ -144,10 +146,10 @@ This prevents unexpected credit usage when you add new data to tables with exist
 
 ### Enrichments ran on all rows when setting up a new table
 
-The import warning and the first-10-rows auto-run limit both protect you when **adding a source to an existing table** — but neither applies when you create a **brand-new table** with a source and enrichment columns for the first time.
+The import warning and the first-10-rows auto-run limit both protect you when **adding a People, Companies, or Jobs search source to an existing table** — but neither applies when you create a **brand-new table** with a source and enrichment columns for the first time.
 
 -   **No import warning**: Clay shows the confirmation modal only when a source is added to a table that already has enrichment columns. A new table has no action columns at the moment the source first runs, so no credit-spend warning appears.
--   **Enrichments fire on all imported rows**: The first-10-rows auto-run limit only applies when importing into an existing table. For a new table, enrichments with auto-run enabled queue on every row the source imports — not just the first 10.
+-   **Enrichments fire on all imported rows**: The first-10-rows auto-run limit only applies to People, Companies, and Jobs search sources when first added to an existing table. For a new table, enrichments with auto-run enabled queue on every row the source imports — not just the first 10.
 
 To safely test a new table before committing credits at scale:
 
@@ -173,22 +175,22 @@ To identify what triggered a specific run, use the **Run view** in the [table cr
 
 Clicking **Stop** on a running table or canceling a column run does not immediately halt all enrichments. Clay cancels cells that are still queued (not yet dispatched), but any requests already sent to an external data provider will run to completion and consume credits. You may see a brief delay before the table fully halts while these in-progress calls finish.
 
-To avoid unexpected spend before it starts, disable [auto-run](table-management-settings.md) before importing large batches of rows. See [Stopping a run](run-progress.md) for full details on stop and cancel behavior.
+To avoid unexpected spend before it starts, disable [auto-run](auto-run.md) before importing large batches of rows. See [Stopping a run](run-progress.md) for full details on stop and cancel behavior.
 
 ### Credits spiked after editing a formula or upstream column
 
-When you edit a formula in a column that other enrichments reference, Clay marks all downstream cells as stale. With auto-run in its default **run all cells** mode, this queues a re-run for every stale cell across all rows — which can trigger every dependent enrichment column at once and produce a large, unexpected credit charge.
+When you edit a formula in a column that other enrichments reference, Clay marks all downstream cells as stale. If **Keep existing results** is off, this triggers a re-run for every stale cell across all rows — which can fire every dependent enrichment column at once and produce a large, unexpected credit charge.
 
-To avoid this, enable **Keep existing results** before making formula or configuration changes:
+Before making formula or configuration changes, verify that **Keep existing results** is on:
 
 1.  Click `⛭` in the top toolbar to open Run Settings.
-2.  Check **Keep existing results**.
+2.  Confirm **Keep existing results** is checked. (It is on by default for new tables — turn it off only when you explicitly want all cells to re-run.)
 
 With **Keep existing results** on, auto-run only fires on cells that are empty or errored — cells that already have a result are skipped, even when their upstream formula changes. This lets you update formulas without re-running (and re-charging) your entire table.
 
 Alternatively, turn auto-run **off** entirely before editing (`⛭` → toggle **Auto-run** off), make your changes, then manually run only the specific rows or columns you need.
 
-See [Table management settings](table-management-settings.md) for full details on **Keep existing results** and how the auto-run mode affects which cells run.
+See [Auto-run](auto-run.md) for full details on **Keep existing results** and how the auto-run mode affects which cells run.
 
 ### Requesting a goodwill credit refund
 

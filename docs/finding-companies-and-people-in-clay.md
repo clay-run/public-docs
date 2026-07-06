@@ -50,7 +50,7 @@ If you need results that meet _either_ of two different filter combinations, set
 -   **Find People at These Companies** — sends the matched contacts to an **Audiences draft segment** (one contact per match, linked back to the company). **To access:** In your company table, click **Tools** (top right) → **Import** tab → **Find People at These Companies**. The setup panel includes full filters for job title, seniority, location, experience, and more — set your criteria, preview the results, then click **Continue** to send the contacts to an Audiences draft. To cap results to a specific number per company (for example, 5 contacts per company), use the **Number of people per company** field in the setup panel before clicking Continue. On large company lists, the in-table **Find People at These Companies** enrichment action gives you the most predictable per-company control, since it processes each company row individually.
 -   **Find Contacts at Company** (add as a column in your company table) — stores contacts as a list within each company row. Best when you want contacts to stay in your company table, or when you're adding companies one at a time and don't want a single search to re-run across all rows. Use **Send Table Data** afterward to push individual contacts to another table if needed.
 
-    **Note:** Formula columns you add to your company table (for example, a "Contact Title" or "Contact Profile URL" column) extract data for **one contact per row** — they reference a single indexed position in the list, such as the first person found. To get every found contact as its own row — each with their own name, title, and profile URL — use **Send Table Data** with **Send row for each item in a list**. The quickest way is to click a populated result cell and select **Take action on list → Write each item to new row in other table**. See [Send table data](send-table-data.md) for full setup details.
+    **Note:** Formula columns you add to your company table (for example, a "Contact Title" or "Contact Profile URL" column) extract data for **one contact per row** — they reference a single indexed position in the list, such as the first person found. To get every found contact as its own row — each with their own name, title, and profile URL — use **Send Table Data** with **Send row for each item in a list**. The quickest way is to click a populated result cell and select **Take action on list → Write each item to new row in other table**. Note that this method sends up to 20 contacts per run — see [Send table data](send-table-data.md) for full details.
 
 If you don't have a company list, use **People search as a source** — a standalone search by title or other criteria that returns a new table.
 
@@ -198,6 +198,8 @@ Clay does not automatically detect which concurrent role is the "main" job. To i
 
 Using the **Generate tab** (describe what you want in plain English) is the fastest way to configure this — Clay will set up the prompt and output fields automatically.
 
+**For a one-off correction on specific rows:** If you only need to fix the primary role for a handful of rows rather than building an automated selection workflow, you can type directly into the extracted field column for that specific row — for example, a formula column pulling `{{Enrich person}}?.current_experience?.[0]?.company_domain`. Clay treats the typed value as a manual override and marks the cell with a pencil icon (tooltip: "This cell's value has been manually overwritten"). Auto-run and upstream-triggered re-evaluation both skip cells in this state, so re-running Enrich Person does not reset your edit. To restore the enrichment-driven value, hover over the cell and click **↺ Reset to original value**. See [Table management settings](table-management-settings.md#auto-run) for full details on this behavior.
+
 ### Calculate how long a contact has been in their current role
 
 To find out how long people on an existing list have been in their current positions, run **Enrich person** and combine the returned start date with a **Use AI** column:
@@ -282,6 +284,20 @@ If you already have a populated Find People table and want to suppress contacts 
 1.  Make sure your customers exist in a Clay table with at least a company domain column.
 2.  In your people table, add a **Lookup single row in other table** column. Set `Table to search` to your customers table, `Target column` to the customer domain column, and `Row value` to the person's current company domain.
 3.  Add a **view filter** showing only rows where the lookup returned no match (the lookup column is empty). Contacts at customer companies are hidden from view without being deleted — your enrichment data is preserved.
+
+### Excluding companies from a Find Jobs search
+
+The **Exclude jobs** filter in a Find Jobs source is for **deduplication only** — it removes job postings that already exist in another Find Jobs table in your workspace. It does not accept a company list, CSV of domains, or any other company-based input. If you select a company table as the exclusion source, Clay shows the error: *"This table does not contain a jobs search."*
+
+To suppress job postings from specific companies (such as existing customers, partners, or competitors), use one of these approaches instead:
+
+**Option 1 — Exclude companies upfront using Find Companies**
+
+Use a **Find Companies** source with its **Exclude companies** filter to build a pre-filtered company list first — this filter accepts any Clay table, CSV, or comma-separated list of domains or company profile URLs. Once you have a clean list of target companies, use the **Find Active Job Openings** enrichment column to pull open postings for each company individually. Companies you excluded from the Find Companies table are never in your list to begin with.
+
+**Option 2 — Filter your Find Jobs results with a lookup column**
+
+After running your Find Jobs search, add a **Lookup single row in other table** column. Set `Table to search` to your exclusion list (a Clay table with a company domain column) and match on the company domain from your Find Jobs results. Then add a **view filter** showing only rows where the lookup returned no match. Job postings from your excluded companies are hidden from view without being deleted.
 
 ## Limitations
 

@@ -6,15 +6,15 @@ last_synced: 2026-04-27T18:09:30.751Z
 
 # Capterra integration overview
 
-Compare software solutions with user reviews to find best fit.
+Enrich company data in Clay by pulling detailed software listings and user reviews from Capterra.
 
 ### What is Capterra?
 
-This the integration allows users to enrich company data by accessing Capterra’s extensive software and service listings directly through Clay’s platform.
+This the integration allows users to enrich company data by accessing Capterra's extensive software and service listings directly through Clay's platform.
 
 Using the Zenrows API, the action retrieves detailed company information from Capterra based on a specified domain.
 
-## How do you use Capterra?
+## Enriching company data with Capterra
 
 To use Capterra, simply access it through the integration panel. Each enriched cell will automatically use 1 credit, managed directly through your Clay account.
 
@@ -35,7 +35,7 @@ Input the URL you are trying to scrape. Additionally, you can also toggle the fo
 -   **Render Javascript**: Enable for pages needing JavaScript.
 -   **Premium Proxy**: Use a premium proxy for privacy.
 -   **Anti-Bot**: Enable anti-bot measures for protected sites.
--   **Proxy Country**: Specify proxy’s country with a two-letter code.
+-   **Proxy Country**: Specify proxy's country with a two-letter code.
 
 **Step 4: Configure run settings**
 
