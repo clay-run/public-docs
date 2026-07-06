@@ -479,12 +479,14 @@ Yes. Segments update in real time as records enter or change, typically within 1
 
 ### Why didn't my audience count change after I tightened my search filters?
 
-Audience searches (Find People and Find Companies sources) are **additive** — the search only adds net-new contacts going forward and never removes contacts already in your audience. If your original search pulled in a large set of contacts, tightening the filters afterward won't reduce that count. Contacts added by the earlier, broader search remain.
+By default, audience searches (Find People and Find Companies sources) use **Add new results** mode — the search only adds net-new contacts going forward and never removes contacts from an earlier, broader search. To narrow your results, use the **Replace existing results** option when saving.
 
-To work with a strictly smaller set:
+When you edit a search's criteria and click **Save**, a dropdown appears with two options:
 
-1.  Create a new search with the narrower filters — click `Add data` → `Find people` or `Find companies` and set your tighter criteria.
-2.  You don't need to rebuild your enrichment setup from scratch. In your existing enrichment table's **Run setup** panel, update the source to point at the new segment. If the enrichment has already started running, pause and reset it first to return to setup state before editing the source.
+-   **Add new results**: keeps the current results and adds contacts that match the updated criteria.
+-   **Replace existing results**: discards the current results and rebuilds the segment using only contacts that match the updated criteria (contacts previously imported are excluded to avoid re-importing them).
+
+To work with only the narrower set, open the search, tighten your filters, click **Save**, and select **Replace existing results**.
 
 ### Can I sync an audience to multiple ad platforms?
 
