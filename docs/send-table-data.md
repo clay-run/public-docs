@@ -1,7 +1,7 @@
 ---
 title: Send table data
 description: Send data between tables to create simple multi-table setups.
-last_synced: 2026-04-26T01:40:38.278Z
+last_synced: 2026-04-26T01:40:38.918Z
 ---
 
 # Send table data
