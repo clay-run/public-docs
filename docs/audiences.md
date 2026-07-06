@@ -618,7 +618,7 @@ Three things to check:
 To remove a specific set of records from your audience, filter a segment down to just those records and then archive the group. **Admin access is required** — the option is not visible to Members or Viewers.
 
 1.  Navigate to **People** or **Companies** in the left sidebar.
-2.  Create or open a segment with a filter that isolates only the records you want to remove — for example, filter by **Company name** to target a single company.
+2.  Create or open a segment with a filter that isolates only the records you want to remove — for example, filter by **Company name** to target a single company. To archive all records in the view, use a broadly matching filter — for example, **Name → is not empty**.
 3.  Once the segment shows the correct records, click the **⋮** (three-dot) menu next to the segment name.
 4.  Select **Archive records**.
 
