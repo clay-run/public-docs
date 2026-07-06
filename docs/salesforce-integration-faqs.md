@@ -192,7 +192,7 @@ For a full explanation of which source types are compatible with auto-delete's c
 
 ## Will Clay create duplicate records in Salesforce?
 
-No. By default, Clay prevents duplicate records. However, you can allow duplicates by enabling the "Duplicate Rule Override" in the Create Record enrichment.
+Clay does not create duplicate records by default. However, you can allow duplicates by enabling the "Duplicate Rule Override" in the Create Record enrichment.
 
 To avoid creating duplicates from your Clay table, first look up an object to check if it exists, then create it only if it doesn't. Here's how to set that up:
 
@@ -342,7 +342,7 @@ For general guidance on identifying and stopping automation loops, see [Infinite
 
 ## Is there a way I can test Salesforce enrichments?
 
-Yes. Connect Clay to your Salesforce sandbox org and use that connection when configuring enrichments or sources. This lets you test your Clay workflows with non-production data before running them against your live Salesforce instance.
+Yes, you can test Salesforce enrichments by connecting Clay to your Salesforce sandbox org and using that connection when configuring enrichments or sources. This lets you test your Clay workflows with non-production data before running them against your live Salesforce instance.
 
 To connect to a Salesforce sandbox:
 
