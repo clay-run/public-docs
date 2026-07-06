@@ -177,7 +177,9 @@ Consider setting it to `2` when you're using `Conservative` validation and notic
 
 The most common cause is validation: when `Require validation success?` is enabled, an email only reaches the final output column if the validation provider confirms it as valid. If validation marks the email as invalid, the final output column stays blank — even though a provider did find an email. The waterfall continues running remaining providers in case a later one returns a different, valid email address.
 
-To confirm this is what happened: in the waterfall's `Full configuration`, turn off `Hide provider columns?` and re-run. The individual validation columns will show you what each provider returned and whether the email passed or failed validation.
+The validation columns are hidden by default to keep your table clean. To review each email's validation status without re-running, click the **columns button** in the toolbar (shown as "N/N columns") and use **Show/Hide columns by color → All columns** to reveal all hidden columns. Each validation column shows what the provider returned and whether the email passed or failed.
+
+To permanently show provider and validation columns going forward, open the waterfall's `Full configuration`, turn off `Hide provider columns?`, and re-run.
 
 **If validation is rejecting emails you want to keep:**
 
