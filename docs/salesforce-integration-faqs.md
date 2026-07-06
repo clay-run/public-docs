@@ -269,6 +269,24 @@ This three-step pattern ensures new leads and contacts are added to the campaign
 
 For details on writing conditional runs, see [Conditional runs](https://university.clay.com/docs/conditional-runs). For SOQL tips and syntax, see the [Lookup records via SOQL](https://university.clay.com/docs/salesforce-integration-overview) action in the Salesforce integration overview.
 
+## Why does my Campaign Member creation fail with a `DUPLICATE_VALUE` error for some rows?
+
+This error means the contact or lead is already a member of that Salesforce campaign. While a contact can belong to multiple campaigns simultaneously, they cannot be added to the same campaign twice — Salesforce enforces this and rejects the creation with a `DUPLICATE_VALUE` error. This is expected Salesforce behavior, not a Clay issue.
+
+The most common cause is that your **Create Record** column (set to the `CampaignMember` object) runs for every row in your table — including rows for contacts who were already in that campaign before your workflow ran.
+
+**Option 1 — Gate on contact creation (simpler)**
+
+If your table creates new contacts or leads in Salesforce before adding them to a campaign, add a run condition to your Campaign Member Create Record column so it only fires when the contact creation step succeeded. Brand-new contacts cannot already be campaign members, so the error won't occur.
+
+In your Campaign Member **Create Record** column, open **Run settings** and add a conditional run. Set the condition to check that your contact creation column returned a result — for example, `/Create Contact is not empty`, replacing `Create Contact` with the actual name of your contact creation column. For details on writing run conditions, see [Conditional runs](conditional-runs.md).
+
+**Option 2 — Look up campaign membership first (more precise)**
+
+Add a **Lookup Record** or **Lookup records via SOQL** column to check whether the contact is already a member of the target campaign. Set a run condition on your Campaign Member Create Record column to only fire when that lookup returns no result. This approach works regardless of whether the contact was just created or already existed in Salesforce.
+
+For step-by-step instructions and SOQL query examples, see [How do I add leads or contacts to a Salesforce campaign and update the status of existing campaign members?](#how-do-i-add-leads-or-contacts-to-a-salesforce-campaign-and-update-the-status-of-existing-campaign-members). That workflow also covers how to update the status of existing campaign members in the same pass.
+
 ## What are the default sync settings for CRM integrations?
 
 By default, Clay syncs Salesforce imports every 24 hours. When new records or updates occur, this triggers action runs that enrich and export the updated fields.
