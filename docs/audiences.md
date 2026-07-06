@@ -192,11 +192,13 @@ Records need a high-confidence identifier to match. Auto-enrichment adds `Linked
 
 When importing from Salesforce or Snowflake, you can configure **Import record matching** to deduplicate records at ingestion time. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
 
+**Example:** If you're importing from both Snowflake and Salesforce, setting `domain` as your alias field ensures that a single company row in your Audiences reflects data from both sources — rather than creating two separate records for the same company.
+
 To configure:
 
-1. In your import settings, click **Import record matching**.
-2. Choose an **alias field** — typically `Domain` for Companies or `Email` for People (additional options include LinkedIn URL, phone number, and others).
-3. Map the alias field to the corresponding field in each source.
+1. In your import settings, find `Import record matching` and click `Edit`.
+2. Under `When`, choose an **alias field** — typically `Domain` for Companies or `Email` for People (additional options include LinkedIn URL, phone number, and others).
+3. Under `In`, map the alias field to the corresponding field in each connected source.
 4. When a new record arrives, Audiences checks whether the alias value already exists. If it does, the new data is merged with the existing record instead of creating a duplicate.
 
 You can configure one alias field per entity type (one for People, one for Companies). This setting applies to records imported *after* it is enabled — it does not retroactively merge records already in Audiences.
