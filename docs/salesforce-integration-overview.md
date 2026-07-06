@@ -430,6 +430,94 @@ When **Run in batches** is enabled, Clay groups rows and sends them through Sale
 -   **Qualify early:** Use **conditional runs** and free enrichment actions to qualify leads before spending credits on deeper enrichment.
 -   **Mind your relationships:** Pay attention to contact-company relationships and duplicates. Plan how to handle unassociated contacts and merge duplicate records to maintain data quality and efficiency.
 
+## Pardot
+
+> **Currently in closed Beta.** To request access, reach out to your account team or contact support.
+
+Pardot (Salesforce Account Engagement) is Salesforce's B2B marketing automation platform. Clay's Pardot integration uses your existing Salesforce connection — no separate authentication is required.
+
+Each Pardot action requires selecting a **Pardot Business Unit**. Clay fetches your available business units automatically from your connected Salesforce org via the Tooling API. Standard and custom prospect fields are loaded dynamically from your Pardot instance when you configure an action.
+
+### Prospect operations
+
+#### `Action` Create Pardot prospect
+
+Create a new Pardot prospect.
+
+**Required inputs:**
+-   **Pardot Business Unit**
+-   **Email address**
+
+**Optional inputs:** Standard fields (first name, last name, company, job title, phone, address, industry, etc.) and any custom fields defined in your Pardot instance are available as optional inputs.
+
+#### `Action` Update Pardot prospect
+
+Update an existing Pardot prospect by prospect ID.
+
+**Required inputs:**
+-   **Pardot Business Unit**
+-   **Prospect ID**
+
+#### `Action` Upsert Pardot prospect
+
+Create or update a Pardot prospect by email address. If a prospect with the given email already exists, it is updated; otherwise a new prospect is created.
+
+**Required inputs:**
+-   **Pardot Business Unit**
+-   **Email address**
+
+#### `Action` Look up Pardot prospect
+
+Look up a Pardot prospect by email address or prospect ID.
+
+**Required inputs:**
+-   **Pardot Business Unit**
+-   **Email address** or **Prospect ID** (Prospect ID takes priority if both are provided)
+
+### List operations
+
+#### `Action` Create Pardot list
+
+Create a new Pardot list.
+
+**Required inputs:**
+-   **Pardot Business Unit**
+-   **List name**
+
+**Optional inputs:** Description, public flag, folder ID.
+
+#### `Action` Update Pardot list
+
+Update an existing Pardot list by list ID.
+
+#### `Action` Get Pardot list
+
+Look up a Pardot list by list ID or list name.
+
+### List membership operations
+
+#### `Action` Add Pardot prospect to list
+
+Add a prospect to a Pardot list.
+
+**Required inputs:**
+-   **Pardot Business Unit**
+-   **Prospect ID**
+-   **List ID**
+
+#### `Action` Look up Pardot list membership
+
+Check whether a prospect is on a Pardot list.
+
+**Required inputs:**
+-   **Pardot Business Unit**
+-   **Prospect ID**
+-   **List ID**
+
+#### `Action` Remove Pardot prospect from list
+
+Remove a prospect from a Pardot list by membership ID.
+
 ## FAQs
 
 For troubleshooting connection issues, permissions, OAuth errors, and other common questions, see [Salesforce integration FAQs](https://university.clay.com/docs/salesforce-integration-faqs).
