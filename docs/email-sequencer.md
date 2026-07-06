@@ -124,7 +124,7 @@ The golden rule of outreach: send emails the way you'd want to receive them. You
 Key practices to follow:
 
 -   Don't spam. Spam is high-volume, low-quality, and generic. Instead, use Clay to research leads at scale and send hyper-targeted, personalized offers.
--   Don't deceive. Tricks may get you a click once, but they damage trust. Instead, be upfront about your value and what you're offering.
+-   Don't deceive. Tricks may get you a click once, but they damage truth. Instead, be upfront about your value and what you're offering.
 -   Send plaintext for cold outreach. Bold text, fonts, inline images, and hyperlinks rely on HTML, which ESPs often block to fight phishing. Unless you already have an email history with the recipient, stick to plaintext.
 -   Warm up your inbox. ESPs flag sudden spikes in email volume as suspicious. Gradual inbox warmup builds trust and reputation before you scale.
 -   Vary your copy. Avoid sending the same message repeatedly. Use AI, Spintax, and lead-specific variables to keep your outreach fresh and personal.
@@ -295,6 +295,8 @@ Because the campaign events table is a standard Clay table, you can add CRM enri
 ### How do unsubscribes work in the sequencer?
 
 When HTML is enabled, you can turn on an unsubscribe link in `Advanced` settings. This adds a hyperlinked phrase at the bottom of every email (default text: "Not interested? Click here to unsubscribe."). You can customize this text in the `Advanced` section.
+
+**Note on test emails:** When you use `Send test email` to preview your campaign, the unsubscribe link text appears at the bottom of the email but is not an active link — the real unsubscribe URL is only injected when an actual campaign email is sent to a recipient. This is expected behavior. To confirm the unsubscribe link works, send a live campaign email to a test address you control rather than using the test email feature.
 
 **What happens when a recipient clicks unsubscribe:**
 
