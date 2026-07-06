@@ -92,7 +92,7 @@ Running an individual sub-column triggers only that provider. Other providers an
 
 By default, auto-run is **on** for every table — waterfall columns (such as a work email waterfall) fire automatically on every new row as it arrives. If rows are added to your table before your waterfall setup is finalized, all steps in the waterfall trigger immediately and consume credits.
 
-**Best practice while building or testing:** Turn off table-level auto-run before adding rows. This prevents the waterfall from firing until your configuration is ready. See [Table management settings](table-management-settings.md) for how to enable and disable auto-run at the table level and per column.
+**Best practice while building or testing:** Turn off table-level auto-run before adding rows. This prevents the waterfall from firing until your configuration is ready. See [Auto-run](auto-run.md) for how to enable and disable auto-run at the table level and per column.
 
 **To prevent a waterfall from re-running on rows that already have a result**, add an **"Only run if"** condition to the waterfall column — for example, `Email is empty`. Clay skips the waterfall for any row where the output field is already populated, preventing duplicate enrichment and unnecessary credit spend.
 
