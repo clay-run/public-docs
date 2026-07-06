@@ -169,6 +169,7 @@ You can also send contacts from any existing Clay table directly to your Audienc
 1.  Open any table with contacts you want to save to your Audience.
 2.  Click `Continue` at the bottom of the table.
 3.  Select `Save to People` or `Save to Companies` depending on the record type.
+4.  Map your table columns to Audience fields in the field mapping step. Click **Auto-map** to automatically suggest mappings based on column names — Clay matches existing Audience fields and creates new ones where necessary.
 
 Records saved from tables are automatically deduplicated and merged with your existing audience data.
 
