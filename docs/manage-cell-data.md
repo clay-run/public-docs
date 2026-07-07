@@ -55,16 +55,16 @@ In the **Cell details** panel, click **Take action on list** to access the follo
 
 Clay has two types of cell size limits:
 
--   **Basic columns** (text and formula columns): 8KB limit
--   **Action columns** (enrichment outputs): 200KB limit
+-   **Basic columns** (text and formula columns): 8 kB limit
+-   **Action columns** (enrichment outputs): 200 kB limit
 
-The final step of a waterfall returns a basic column with an 8KB limit. If your waterfall contains large amounts of data, it may exceed this limit.
+When a basic column's data exceeds the 8 kB limit, the cell shows **"Cell data size exceeds limit (8 kB)"**. The final step of a waterfall returns a basic column with an 8 kB limit. If your waterfall contains large amounts of data, it may exceed this limit.
 
 **Common scenarios where cell size limits are encountered:**
 
--   **Gong transcripts:** Often exceed the 200KB limit.
--   **Technology waterfall (BuiltWith):** Can output over 200KB; use keywords to filter.
--   **HTTP-API and webhooks:** May bring in over 200KB; use field-path filters.
+-   **Gong transcripts:** Often exceed the 200 kB limit.
+-   **Technology waterfall (BuiltWith):** Can output over 200 kB; use keywords to filter.
+-   **HTTP-API and webhooks:** May bring in over 200 kB; use field-path filters.
 -   **Snowflake Lookup:** Large query results can exceed the 200 kB limit. Select only the columns you need instead of `SELECT *`, and avoid broad wildcard patterns (e.g., a leading `%` in an `ILIKE` clause) that match far more rows than intended. See the [Snowflake integration](snowflake-integration.md) page for additional tips.
--   **Extracting to basic columns:** May hit the 8KB limit when extracting large action fields.
--   **Email reply content:** Long email replies (e.g., from the campaign events table) can exceed the 8KB limit when written to a text column. To work around this, reference the reply field in a formula column and use a text function such as `LEFT({{Reply Body}}, 7000)` to extract just the first portion of the content.
+-   **Extracting to basic columns:** May hit the 8 kB limit when extracting large action fields.
+-   **Long text in text columns:** Long email replies (e.g., from the campaign events table) and AI-generated text such as personalized outreach messages or reply drafts can exceed the 8 kB limit when stored in a text column, showing **"Cell data size exceeds limit (8 kB)"**. To work around this, add a formula column with `LEFT({{Column Name}}, 7000)` to extract the first 7,000 characters, then use that formula column as input to downstream AI columns or exports.
