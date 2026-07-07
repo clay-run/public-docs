@@ -10,7 +10,7 @@ AgentMail is a third-party service that gives AI agents real email inboxes. The 
 **What this integration enables:**
 
 - **Inbox as a source:** Incoming emails flow into a Clay table as rows the moment they land.
-- **Enrich and qualify:** Run any Clay enrichment on the sender (company, title, LinkedIn profile, etc.) directly from the row.
+- **Enrich and qualify:** Run any Clay enrichment on the sender (company, title, professional profile, etc.) directly from the row.
 - **Draft and send replies:** Use Claygent to compose a response and send it from the same inbox — with or without human review.
 
 ## Prerequisites
