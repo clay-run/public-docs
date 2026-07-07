@@ -37,6 +37,7 @@ _Note: Personal email addresses significantly improve match rates when syncing t
     -   **Important:** Email is the primary field ad platforms use to match contacts. If no email column is mapped, the platform will process the sync but return an audience size of 0 — even for tens of thousands of contacts. This appears as a "too small for use in campaigns" status. Because field mapping cannot be changed after an Ad Sync is created, verify at least one email column is mapped before sending your audience.
 4.  **Review enrichment and sync status** in the Sync panel. Your audience starts syncing automatically after you complete field mapping.
     -   If Enhanced Matching is configured, the Sync panel shows enrichment progress while personal email addresses are being found for your contacts.
+    -   If Enhanced Matching encounters an error, the Sync panel shows **Enhanced Match could not be completed.** Click **Open bulk enrichment** to open the underlying enrichment table and review errors.
     -   **Sync destinations** shows a status card for each connected ad platform with details from the most recent and previous sync runs.
     -   Your audience will be available in your ad platform's campaign manager within **48 hours** of the first sync.
 
