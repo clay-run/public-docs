@@ -12,6 +12,8 @@ Snowflake is a cloud data platform that enables organizations to store, analyze,
 
 With this integration, you can connect to your Snowflake data warehouse and import data directly into Clay.
 
+**How Clay reads from Snowflake:** Clay connects to your Snowflake instance and runs SQL `SELECT` queries directly — there is no `UNLOAD` step and no S3 staging involved. All query execution happens on your Snowflake warehouse, meaning compute costs run against your Snowflake account rather than Clay's infrastructure.
+
 **Plan availability:** Snowflake enrichment actions and sources in Clay tables require an Enterprise plan. Importing Snowflake data into Audiences requires a Growth or Enterprise plan.
 
 ## Connecting to Snowflake
