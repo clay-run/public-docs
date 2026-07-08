@@ -67,6 +67,18 @@ To add a new account for an integration:
 -   Toggle `Set as Default` to make this account the default.
 -   Click `Save` to apply changes.
 
+### Rotating or updating credentials
+
+Use **Reconnect** to replace the credentials on an existing connection — for example, to rotate an API key, swap a private key file, or update authentication details when your security team requires it. Every workflow, column, and source already using that connection will automatically pick up the new credentials on their next run. You do not need to delete or recreate the connection, or update any individual tables or columns.
+
+To rotate or update credentials:
+
+-   Navigate to `Settings` > `Connections` and select the service.
+-   Click the `…` menu next to the account and choose **Reconnect**.
+-   Enter the new credentials in the modal and click **Save**.
+
+The connection updates in place — the same connection is preserved with the new credentials.
+
 ### Verify connection health
 
 If you are unsure whether a connected account is still working — for example, after a team member who set it up has left, or after a period of inactivity — you can check its status directly from Settings.
