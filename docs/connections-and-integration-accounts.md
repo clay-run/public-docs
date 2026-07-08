@@ -69,7 +69,9 @@ To add a new account for an integration:
 
 ### Rotating or updating credentials
 
-Use **Reconnect** to replace the credentials on an existing connection — for example, to rotate an API key, swap a private key file, or update authentication details when your security team requires it. Every workflow, column, and source already using that connection will automatically pick up the new credentials on their next run. You do not need to delete or recreate the connection, or update any individual tables or columns.
+Use **Reconnect** to replace the credentials on an existing connection — for example, to rotate an API key, swap a private key file, or update authentication details when your security team requires it. You do not need to delete or recreate the connection, or re-point individual tables or columns to a new account — the same connection is preserved, and all existing columns, workflows, and sources will automatically use the updated credentials on their next run.
+
+> **Note:** If the new credentials have different permissions or API scopes than the original ones, some workflows may be affected. Before reconnecting, verify that the new credentials grant the same level of access as the existing ones.
 
 To rotate or update credentials:
 
@@ -77,7 +79,7 @@ To rotate or update credentials:
 -   Click the `…` menu next to the account and choose **Reconnect**.
 -   Enter the new credentials in the modal and click **Save**.
 
-The connection updates in place — the same connection is preserved with the new credentials.
+The connection updates in place — the same connection is preserved with the new credentials. Existing data values already enriched and stored in your table rows are not affected — Reconnect does not clear or overwrite previously enriched cell values. Only actively re-running an enrichment column on existing rows would change those stored values.
 
 ### Verify connection health
 
