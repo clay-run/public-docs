@@ -208,7 +208,7 @@ For the full auto-run decision tree and advanced options (conditional runs, "Kee
 
 When a cell shows a 🔴 Failed status, clicking the cell opens the **Cell Details** panel, which displays the specific error message for that row. Reading the error message is the fastest way to understand what went wrong — for example, a missing required input, an invalid configuration, or an upstream column that hasn't run yet.
 
-For additional help interpreting the error and getting step-by-step fix instructions, click the **Troubleshoot with AI** button at the bottom of the Cell Details panel. Currently in beta — available to all users. Clay sends the error context to an AI that returns concise, numbered suggestions for resolving the issue — typically pointing to a missing input, a column configuration change, or an upstream column that needs to run first.
+For additional help interpreting the error and getting step-by-step fix instructions, click the **Troubleshoot with AI** button at the bottom of the Cell Details panel. Clay sends the error context to an AI that returns concise, numbered suggestions for resolving the issue — typically pointing to a missing input, a column configuration change, or an upstream column that needs to run first. Available to all users on all plans.
 
 **Troubleshoot with AI** is available for most error types. It does not appear for credit limit errors or compliance errors, which have dedicated resolution paths shown in the panel instead.
 
