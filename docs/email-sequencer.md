@@ -336,6 +336,8 @@ This error is expected — Clay's sequencer uses automated warmup sends, which p
 
 To resolve it, have your admin follow the steps in [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth). Changes can take up to 24 hours to apply.
 
+If you need to start sending right away while waiting for the admin change to take effect, you can connect your email account via **SMTP** instead — go to your campaign's `Settings` → `Add email accounts` → `SMTP`.
+
 If your admin has already completed those steps and you still see the error, see [I followed the admin setup steps but still see "Access blocked"](#i-followed-the-admin-setup-steps-but-still-see-access-blocked-claycoms-has-not-completed-the-google-verification-process-what-should-i-do).
 
 ### How do I authorize Clay's app in the Google Admin panel?
