@@ -403,7 +403,7 @@ Export sync behavior:
 
 -   **Export frequency:** Once every 24 hours. Clay assigns each workspace a stable export time automatically — the schedule is not user-configurable.
 -   **First export:** After you enable Export Sync, the first export fires at your workspace's next scheduled export time — this may take up to 24 hours. The Exports panel shows **Not set up** until the first export completes successfully.
--   **Export batch size:** ~10,000 records per batch.
+-   **Export batch size:** ~10,000 records per sync.
 -   **Subsequent syncs:** Incremental — only changed records are processed.
 
 To estimate API calls for initial export, divide record count by 10,000 and compare against your Salesforce limit.
