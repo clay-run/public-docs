@@ -24,6 +24,8 @@ To group columns:
 
 Once grouped, click the arrow on the group header to collapse or expand the columns in the group. To ungroup columns or rename the group, click the group header to open the group settings panel.
 
+To add a new column to an existing group, open the dropdown menu for any column already inside the group and choose **Insert right** or **Insert left**. The new column is added to the same group, adjacent to the column you selected. If the group is collapsed when you insert, the new column is placed outside the group instead.
+
 To save a group of columns so you can reuse it in other tables, see [Creating a column group template](#creating-a-column-group-template) below.
 
 ## Creating a column group template
