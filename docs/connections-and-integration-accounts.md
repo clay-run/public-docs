@@ -77,7 +77,7 @@ To rotate or update credentials:
 -   Click the `…` menu next to the account and choose **Reconnect**.
 -   Enter the new credentials in the modal and click **Save**.
 
-The connection updates in place — the same connection is preserved with the new credentials.
+The connection updates in place — the same connection is preserved with the new credentials. Existing data values already enriched and stored in your table rows are not affected — Reconnect does not clear or overwrite previously enriched cell values. Only actively re-running an enrichment column on existing rows would change those stored values.
 
 ### Verify connection health
 
