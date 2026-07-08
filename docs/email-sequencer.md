@@ -177,6 +177,8 @@ The daily send limit is set at the **email account level** and varies by account
 
 Total daily throughput scales with the number of connected accounts — each account has its own independent daily budget.
 
+To estimate how many inboxes you need, divide your target daily send count by 20–30 — the recommended per-inbox range for cold outreach. For example, to send 200–300 emails per day, connect roughly 8–15 inboxes, each sending 20–30 emails per day. While self-connected accounts can technically be raised up to 500 emails per day, distributing volume across multiple inboxes at 20–30 each is safer for long-term deliverability than maxing out a single inbox. If you are adding new inboxes to increase capacity, [warm them up first](#what-is-email-account-warmup) — warmup typically takes 2–3 weeks before a new account reaches full sending capacity.
+
 Clay's sequencer is built for **targeted, personalized sales outbound** — high-quality sequences to well-researched lists. For very large-scale sends (e.g., 1M+ contacts), a dedicated bulk or marketing email platform is generally a better fit for delivery volume. Clay works well as the enrichment and list-building layer in that setup.
 
 ### Why is the expected campaign completion time so long?
