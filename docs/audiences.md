@@ -403,7 +403,7 @@ Export sync behavior:
 
 -   **Export frequency:** Once every 24 hours. Clay assigns each workspace a stable export time automatically — the schedule is not user-configurable.
 -   **First export:** After you enable Export Sync, the first export fires at your workspace's next scheduled export time — this may take up to 24 hours. The Exports panel shows **Not set up** until the first export completes successfully.
--   **Export batch size:** ~10,000 records per sync.
+-   **Export batch size:** ~10,000 records per batch.
 -   **Subsequent syncs:** Incremental — only changed records are processed.
 
 To estimate API calls for initial export, divide record count by 10,000 and compare against your Salesforce limit.
@@ -500,6 +500,17 @@ The underlying field and data are identical. If you mapped Salesforce's Account 
 The **Person source** filter lists each source by its display name, not by the raw source ID shown in the **Source** column. If you sent records from a Clay table to Audiences using **Continue → Save to People**, look for the table's display name in the Person source dropdown — the raw ID string visible in the Source column (such as `t_0tfg3qav6HC2a54Cdpx`) won't appear there.
 
 If your table still doesn't appear in the dropdown, the records may have been pushed via the `Upsert Audiences Record` table action, which doesn't create a named source entry. In that case, type a plain-language description into the filter search box (for example, "Filter people by source id: t_0tfg3qav6HC2a54Cdpx") — a **Create filters with AI** option may appear as you type. Click it and Clay will build the Person source filter automatically. If the option doesn't appear, contact Clay support.
+
+### How do I find which Clay table a lead in Audiences came from?
+
+Each record in Audiences has a **Source** column that shows where the record originated. If the record was sent to Audiences from a Clay table (via **Continue → Save to People** or **Save to Companies**), the Source column displays a table ID in the format `t_0te9r3dnnoyf8n5rcPf`.
+
+To open that originating table:
+
+1. Find your workspace ID in your browser's address bar while in Clay — it appears after `/workspaces/` (for example, `https://app.clay.com/workspaces/12345/tables/...` means your workspace ID is `12345`).
+2. Navigate to `https://app.clay.com/workspaces/<your-workspace-id>/tables/<table-id-from-source>`, replacing `<your-workspace-id>` with your workspace ID and `<table-id-from-source>` with the ID shown in the Source column.
+
+**Note:** To filter your audience to show only records that came from a specific table, use the **Person source** filter — see [Why doesn't my Clay table appear in the Person source filter?](#why-doesnt-my-clay-table-appear-in-the-person-source-filter) above.
 
 ### My CRM is messy. Should I clean it up before setting up Audiences?
 
