@@ -47,6 +47,8 @@ History is scoped to the surface you're currently working in:
 
 ## Sandbox mode
 
+**Available on:** Pro and Enterprise plans. Rollout to all plans is in progress — contact support if you don't see sandbox mode yet.
+
 When Sculptor builds new columns for your table, it automatically puts the table into [sandbox mode](https://www.clay.com/university/guide/sandbox-mode) first. This gives you a chance to review and validate the new columns before they go live—reducing unintended credit burn and giving you more control over changes.
 
 > **Important:** To save Sculptor's proposed columns to your live table, use the **Review changes** button — do _not_ click **Exit Sandbox**. Clicking **Exit Sandbox** will discard all of Sculptor's proposed changes without publishing them.
@@ -154,7 +156,7 @@ To apply the proposed column to your table:
 2. Click **Review changes** (visible in the tab bar above your table, to the right of the "Test data" / "All data" switcher) to see a summary of the column updates.
 3. Click **Publish and run** or **Publish and don't run** to apply the changes to your full table.
 
-> **Tip:** Sculptor re-enters sandbox mode each time it adds a new column. If you're building several columns one at a time, you'll need to publish after each one. To avoid multiple publish cycles, ask Sculptor to build all the columns you need in a single conversation before clicking **Review changes** to publish them all at once.
+> **Tip:** Sculptor creates one sandbox when it first adds a column to your table, then reuses that same sandbox for any additional columns you request in the **same conversation** — so everything built in one session is bundled into a single publish step. If you start a **new** Sculptor conversation after publishing, a fresh sandbox is created for that session. To keep things to a single publish cycle, ask Sculptor to build all the columns you need within one conversation before clicking **Review changes**.
 
 If you'd prefer to add a column directly without going through sandbox, use the **Add enrichment** or **+** button in your table toolbar instead.
 
