@@ -127,6 +127,8 @@ To remove the limit and return to the full table, click **Show all rows** in the
 
 Cells show a **Queued** status when they are waiting to be processed. This is normal when running large tables — Clay processes many rows concurrently, but rows still queue when the system is handling prior requests or when an external API is rate-limiting responses. In most cases the queue resolves automatically.
 
+**If enrichments across multiple tables or workbooks appear stuck at the same time**, check **[status.clay.com](https://status.clay.com/)** before troubleshooting individual tables — simultaneous stalling across tables is often caused by a platform-wide incident. If an incident is active, the Clay team is already working on a fix and no further action is needed on your end.
+
 If cells remain Queued for an extended period, common causes include:
 
 -   **High concurrency in progress** — Clay runs many rows at once; if a large number are queued simultaneously, later rows wait while earlier ones complete. The queue will clear on its own.
