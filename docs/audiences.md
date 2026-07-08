@@ -173,6 +173,8 @@ You can also send contacts from any existing Clay table directly to your Audienc
 
 Records saved from tables are automatically deduplicated and merged with your existing audience data.
 
+**To add enriched data to existing Audience records:** If you enriched companies or people in a Clay table — for example, adding website traffic, technographic data, or any other enrichment — and want those values to appear on records already in your Audience, use `Upsert Audiences Record` as an action column in the table instead. In the table, click `Add enrichment` and search for `Upsert Audiences Record` — it creates a new record in Audiences if no match is found, or updates the matching record's fields if one is found. See [Using Audiences from a Clay table](#adding-enrichments) below for the full list of table ↔ Audience actions.
+
 ### Entity resolution and deduplication
 
 Audiences uses two systems to prevent duplicate records:
