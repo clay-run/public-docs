@@ -265,6 +265,18 @@ To reduce this to a single **Send table data** action that covers all columns at
 
 **Why this is needed:** Referencing multiple list-valued outputs side by side without a formula does not merge them — Clay receives separate arrays rather than a single list, and the column will fail at runtime with a list error. The `.concat()` formula produces one unified array from all the sources.
 
+### Why is my function column stuck in "Queued" status?
+
+A function column shows **Queued** status when it is waiting to be processed. This is normal during large runs — Clay processes many rows concurrently, and rows queue when the system is handling prior requests. In most cases the queue clears on its own within a few minutes.
+
+If the function column remains stuck in Queued status:
+
+1.  **Hard refresh the page** — Press `Cmd+Shift+R` (Mac) or `Ctrl+Shift+R` (Windows/Linux) to clear any stale browser state.
+2.  **Force-run the column** — Right-click the function column header in your table and select **Run column** → **Force run all [N] rows**. This re-queues and processes every row regardless of its current status. Credits are charged for every row re-run; the UI shows the estimated cost before you confirm.
+3.  **Check the Clay status page** — If the issue persists across multiple tables or columns, visit [status.clay.com](https://status.clay.com/) to check for any active platform incidents. Platform-wide queue disruptions can cause function columns to appear stuck until the incident is resolved.
+
+For a full breakdown of queued status causes and additional troubleshooting steps, see [Run progress — Troubleshooting cells stuck in Queued status](run-progress.md).
+
 ### What does "Awaiting Callback" mean on a function column?
 
 When you call a function from a table, that column shows **Awaiting Callback** while the calling table waits for the function to finish processing and return results. The status resolves once the function's **"Send data back"** column runs successfully and sends results back.
