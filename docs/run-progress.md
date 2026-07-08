@@ -127,6 +127,8 @@ To remove the limit and return to the full table, click **Show all rows** in the
 
 Cells show a **Queued** status when they are waiting to be processed. This is normal when running large tables — Clay processes many rows concurrently, but rows still queue when the system is handling prior requests or when an external API is rate-limiting responses. In most cases the queue resolves automatically.
 
+> **If Queued cells appear across multiple tables or all columns in your workspace simultaneously**, check [status.clay.com](https://status.clay.com/) first — this pattern typically indicates a platform-wide incident or delay rather than a table-specific issue. The queue will resume automatically once the incident resolves; no further steps are needed on your end.
+
 If cells remain Queued for an extended period, common causes include:
 
 -   **High concurrency in progress** — Clay runs many rows at once; if a large number are queued simultaneously, later rows wait while earlier ones complete. The queue will clear on its own.
