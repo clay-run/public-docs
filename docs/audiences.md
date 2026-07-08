@@ -25,7 +25,7 @@ To view your full audience, click `People` or `Companies` in the left sidebar.
 
 To add a data source for the first time, click the `Add data` button in the top right, then click `Add Source`.
 
-**Note:** Adding a data source requires Admin access. The `Add data` button and most source options are visible to all workspace members, but only Admins can complete source setup — Editors receive an error when attempting to connect a source. If you're an Editor, ask a workspace Admin to connect the source, or have your role changed.
+**Note:** Non-admin workspace members can freely view, browse, and filter Audiences — browsing People, Companies, and existing audience segments is available to everyone in the workspace. Admin access is required only to add or configure data sources. The `Add data` button is visible to all workspace members, but only Admins can complete source setup or make changes to source configuration — Editors receive an error when attempting to connect or configure a source. If you're an Editor who needs to connect or update a source, ask a workspace Admin to do it, or have your role changed.
 
 You can import data from:
 
@@ -403,7 +403,7 @@ Export sync behavior:
 
 -   **Export frequency:** Once every 24 hours. Clay assigns each workspace a stable export time automatically — the schedule is not user-configurable.
 -   **First export:** After you enable Export Sync, the first export fires at your workspace's next scheduled export time — this may take up to 24 hours. The Exports panel shows **Not set up** until the first export completes successfully.
--   **Export batch size:** ~10,000 records per sync.
+-   **Export batch size:** ~10,000 records per batch.
 -   **Subsequent syncs:** Incremental — only changed records are processed.
 
 To estimate API calls for initial export, divide record count by 10,000 and compare against your Salesforce limit.
