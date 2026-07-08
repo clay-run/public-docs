@@ -154,6 +154,8 @@ To apply the proposed column to your table:
 2. Click **Review changes** (visible in the tab bar above your table, to the right of the "Test data" / "All data" switcher) to see a summary of the column updates.
 3. Click **Publish and run** or **Publish and don't run** to apply the changes to your full table.
 
+> **Tip:** Sculptor re-enters sandbox mode each time it adds a new column. If you're building several columns one at a time, you'll need to publish after each one. To avoid multiple publish cycles, ask Sculptor to build all the columns you need in a single conversation before clicking **Review changes** to publish them all at once.
+
 If you'd prefer to add a column directly without going through sandbox, use the **Add enrichment** or **+** button in your table toolbar instead.
 
 ## FAQs
