@@ -57,11 +57,13 @@ Every Clay table starts with a source. You can import customer data from a CSV f
 
 To download your table data as a CSV:
 
-1.  **Uncheck all rows.** If any row checkboxes are selected, the toolbar switches to row-level bulk action mode — run, delete, debug — and table-level functions including Export are not shown. Uncheck all rows first.
+1.  **Uncheck all rows.** If any row checkboxes are selected, the toolbar switches to row-level bulk action mode — run, delete — and table-level functions including Export are not shown. Uncheck all rows first.
 2.  Click **Tools** in the top-right corner of your table, then click `Export`.
 3.  Click `Download CSV`. Clay processes the export in the background and the file downloads automatically. The completed export is also saved to the **Exports** tab on your workspace homepage — select **Exports** from the left sidebar of your homepage to view and re-download recent exports.
 
-**Why can't I see Export?** The most common cause is having one or more rows checked. The toolbar shows different options depending on row selection state: when no rows are selected, you see the `Tools` button with table-level functions such as Export and Import; when rows are selected, an `Actions` button appears instead with bulk row operations (Run rows, Debug, Delete rows). Uncheck all rows to restore access to Export.
+**Why can't I see Export?** The most common cause is having one or more rows checked. The toolbar shows different options depending on row selection state: when no rows are selected, you see the `Tools` button with table-level functions such as Export and Import; when rows are selected, an `Actions` button appears instead with bulk row operations (Run rows, Delete rows). Uncheck all rows to restore access to Export.
+
+**Export is unavailable on trial workspaces.** CSV export requires a paid plan. If you see an error when trying to export and you are on a trial workspace, [upgrading your plan](plans-and-billing.md) will enable it.
 
 **Long text or AI column data appears truncated or shows `[object Object]` in the export.** If a column stores enrichment or AI-generated output as nested structured data — such as the output of a Use AI, Claygent, or enrichment integration column — the CSV export may show only a short preview ending in "..." or the text `[object Object]` rather than the full value. Both occur when the export encounters a structured object rather than a plain extracted field.
 
