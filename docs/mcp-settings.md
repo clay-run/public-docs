@@ -84,7 +84,7 @@ No. Clay's MCP integrations are pre-built apps within each supported platform's 
 
 -   **Claude:** [claude.com/connectors/clay](https://claude.com/connectors/clay)
 -   **ChatGPT:** Type `@Clay` (browser) or `/Clay` (desktop) in a prompt
--   **Codex:** Add the `clay-run/agent-plugins` marketplace in Codex, then install the `clay` plugin
+-   **Codex:** Add the `clay-run/agent-plugins` marketplace in Codex, then install the `clay` plugin. The setup signs you in via `clay login` — after sign-in completes, restart Codex so its MCP server picks up the new session.
 -   **Glean:** Your Glean admin connects Clay through Glean's MCP Apps directory (Enterprise plans only)
 
 Each connector uses Clay's OAuth flow for authentication — when you click through to connect, you're redirected to log in to your Clay workspace to complete the authorization.
