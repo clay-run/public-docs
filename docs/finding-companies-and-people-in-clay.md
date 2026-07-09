@@ -91,7 +91,13 @@ The company identifier field accepts these LinkedIn URL formats:
 
 ### Run conditional people searches with table views
 
-Company and people search sources don't have run conditions the way enrichment actions do. If you only want to find people at companies that meet specific criteria (e.g., only public companies), the workaround is to **create a filtered view** of your company table first, then run **Find People at These Companies** from that view. The source will only pull from the rows visible in the view.
+Company and people search sources — including **Find People at These Companies** and the **Update People Table** action — don't support the "Only run if" run condition that enrichment columns use. To search only companies that meet specific criteria (for example, companies where a lead qualification column equals "yes"), use a **filtered view** as the source:
+
+1. In your company table, apply a filter to the view you want to use — for example, add a filter where your qualification column equals the value you need. You can filter the **Default view** directly, or right-click any view tab and select **Duplicate view** to create a named copy, then apply filters to the copy.
+2. When setting up (or editing) a **Find People at These Companies** search, go to the **Companies** section and use the **View** dropdown to select the filtered view.
+3. Save. The search will only process companies visible in that view.
+
+Any new company rows added to the table that match the view's filter conditions will automatically be included the next time the search runs.
 
 ### Disable auto-run on the people table when running Find People selectively
 
@@ -530,7 +536,11 @@ Across both, high-importance profiles (frequently accessed records, decision-mak
 
 ### Can I run a people search only on companies that meet certain criteria?
 
-Company and people search sources don't support run conditions. The workaround is to create a **filtered view** of your company table (showing only the rows you want), then run **Find People at These Companies** from that view. The source will only process the companies visible in that view.
+Company and people search sources don't support run conditions. The workaround is to create a **filtered view** of your company table (showing only the rows you want), then select that view in the Find People search configuration:
+
+1. In your company table, filter the view you want to use. You can filter the **Default view** directly, or right-click a view tab and select **Duplicate view** to create a named copy, then apply your filters to the copy.
+2. Open the **Find People at These Companies** source setup (or right-click the source column → **Edit column**), go to the **Companies** section, and use the **View** dropdown to select your filtered view.
+3. Save. The source will only process companies visible in that view — including any future rows added that match the filter.
 
 **Note:** The row limit, starting row, and "Run [N] rows" controls available for enrichment columns do **not** control which companies a Find People source processes — the source always reads from the view it was configured with at setup. Only a filtered view limits which companies are included.
 

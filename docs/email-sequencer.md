@@ -177,6 +177,8 @@ The daily send limit is set at the **email account level** and varies by account
 
 Total daily throughput scales with the number of connected accounts — each account has its own independent daily budget.
 
+To estimate how many inboxes you need, divide your target daily send count by 20–30 — the recommended per-inbox range for cold outreach. For example, to send 200–300 emails per day, connect roughly 8–15 inboxes, each sending 20–30 emails per day. While self-connected accounts can technically be raised up to 500 emails per day, distributing volume across multiple inboxes at 20–30 each is safer for long-term deliverability than maxing out a single inbox. If you are adding new inboxes to increase capacity, [warm them up first](#what-is-email-account-warmup) — warmup typically takes 2–3 weeks before a new account reaches full sending capacity.
+
 Clay's sequencer is built for **targeted, personalized sales outbound** — high-quality sequences to well-researched lists. For very large-scale sends (e.g., 1M+ contacts), a dedicated bulk or marketing email platform is generally a better fit for delivery volume. Clay works well as the enrichment and list-building layer in that setup.
 
 ### Why is the expected campaign completion time so long?
@@ -242,7 +244,11 @@ Email providers like Google and Microsoft occasionally revoke access due to inac
 
 Warmup is the process of automatically sending and receiving emails from other inboxes in Smartlead's warmup pool so your actual campaign traffic looks similar to the emails you're already sending. We recommend you keep warmup on at all times for email accounts in the sequencer to maximize deliverability.
 
+The initial warmup phase typically takes **2–3 weeks**, during which the account's status shows as **Warming up** in Campaigns → Email Accounts. Once the initial phase completes, the status switches to **Ready**. Warmup emails continue to run in the background even after the status shows **Ready** — the Ready label means the account has been warming for at least 2 weeks and is ready for campaigns, not that warmup has stopped.
+
 When you add accounts via OAuth, we will automatically set up labels and filters to make it clear what emails are warmups and reduce clutter in your inbox. Your workspace has a unique two-word filter key (e.g., `clever-rocket`) that marks all warmup emails so you can apply these labels and filters.
+
+During warmup, your inbox will receive emails from other accounts in Smartlead's warmup pool. These emails often look random or spam-like in content — this is intentional, as the warmup engine simulates natural human email activity. They are automatically filed under your warmup label (named **Clay sequencer warmup email**), so they won't clutter your main inbox. Receiving them is not a sign of unauthorized account access or phishing activity.
 
 Warmup is enabled during the account connection flow: after connecting your email account, Clay shows a prompt with all newly added accounts pre-selected for warmup. Clicking **Enable warming** activates it — warmup emails will then appear in your inbox (filed under your warmup label/filter) even if you haven't launched a campaign yet. If you enabled warmup by accident or want to stop it, go to `Campaigns` → `Email Accounts`, find the account, click the ⋯ options menu, and select **Disable warming**.
 
@@ -331,6 +337,8 @@ Additionally, you will need to have a Google Workspace admin authorize our app t
 This error is expected — Clay's sequencer uses automated warmup sends, which prevents it from passing Google's standard app verification process. It does not mean Clay is broken or untrustworthy. The fix is for your **Google Workspace admin** to authorize Clay Sequencer as a Trusted app in your Google Admin panel. Until they do, all users in your domain will see this error when attempting to connect via OAuth.
 
 To resolve it, have your admin follow the steps in [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth). Changes can take up to 24 hours to apply.
+
+If you need to start sending right away while waiting for the admin change to take effect, you can connect your email account via **SMTP** instead — go to your campaign's `Settings` → `Add email accounts` → `SMTP`.
 
 If your admin has already completed those steps and you still see the error, see [I followed the admin setup steps but still see "Access blocked"](#i-followed-the-admin-setup-steps-but-still-see-access-blocked-claycoms-has-not-completed-the-google-verification-process-what-should-i-do).
 

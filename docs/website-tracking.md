@@ -166,6 +166,7 @@ Content-Security-Policy:
 
 Common causes:
 
+-   **A returning company visited** — By default, Web Intent creates one row per company domain. When a company that has previously visited returns, Clay updates the existing row with new session data (including the `lastSeen` date) rather than creating a new row. If your recent visitors are companies already in your table, no new rows will appear. Check the `lastSeen` field on your existing rows to confirm recent activity.
 -   The connection is disabled or was just enabled (allow 30 minutes for data to appear).
 -   The snippet isn't installed on the relevant pages.\
 -   Connection-level or table-level filters are too restrictive.

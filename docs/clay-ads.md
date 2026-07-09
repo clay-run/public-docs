@@ -37,6 +37,7 @@ _Note: Personal email addresses significantly improve match rates when syncing t
     -   **Important:** Email is the primary field ad platforms use to match contacts. If no email column is mapped, the platform will process the sync but return an audience size of 0 — even for tens of thousands of contacts. This appears as a "too small for use in campaigns" status. Because field mapping cannot be changed after an Ad Sync is created, verify at least one email column is mapped before sending your audience.
 4.  **Review enrichment and sync status** in the Sync panel. Your audience starts syncing automatically after you complete field mapping.
     -   If Enhanced Matching is configured, the Sync panel shows enrichment progress while personal email addresses are being found for your contacts.
+    -   If Enhanced Matching encounters an error, the Sync panel shows **Enhanced Match could not be completed.** Click **Open bulk enrichment** to open the underlying enrichment table and review errors.
     -   **Sync destinations** shows a status card for each connected ad platform with details from the most recent and previous sync runs.
     -   Your audience will be available in your ad platform's campaign manager within **48 hours** of the first sync.
 
@@ -150,15 +151,21 @@ The 50,000 row limit applies to ad audiences exported from tables. For larger au
 
 No. Field mapping is configured when you create the Ad Sync and cannot be changed afterward. Deactivating an Ad Sync places it in read-only history — it does not unlock the mapping for editing. To use a different field mapping, deactivate the current sync and create a new Ad Sync with your updated configuration.
 
-### **Can I add a second ad platform to an existing Ad Sync?**
+### **Can I add another ad platform to an existing Ad Sync?**
 
 Yes. After your initial sync is active, an **Expand your reach** section appears below your current platform destinations. Click **Add** next to any available platform to configure field mappings for that provider — it will sync on the same schedule as your existing provider.
 
 **Notes:**
 
--   If the **Expand your reach** section is not visible, no additional platforms are currently available to add for your workspace. Google Ads requires a separate access request (currently in closed beta) — if your workspace hasn't been granted access, Google Ads will not appear as an option even if you're already syncing to LinkedIn and Meta. Contact [Clay support](https://www.clay.com/contact) to request Google Ads access.
+-   If the **Expand your reach** section is not visible, no additional platforms are currently available to add for your workspace. Which platforms appear depends on which ones your workspace has been granted access to — Google Ads requires a separate access request (currently in closed beta) and will not appear as an option even if you are already actively syncing to other ad platforms. Contact [Clay support](https://www.clay.com/contact) to request Google Ads access. If you need to add a platform that is not yet available in **Expand your reach**, the workaround is to deactivate the current sync and create a new Ad Sync with all desired destinations configured from the start. See [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for credit implications.
 -   You cannot add a platform while a sync is currently in progress — wait for the active sync to complete first.
 -   Google Ads is only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience includes contacts from Clay's company/people search data, Google Ads will appear disabled. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) for details.
+
+### **Will I be charged again if I deactivate and recreate an Ad Sync?**
+
+If you used Enhanced Match, no additional data credits are charged for contacts that were already enriched. Clay stores the hashed email results on your audience records and automatically skips re-enriching records that already have that data when you create a new sync from the same source. Contacts that have not been enriched yet will be processed as normal.
+
+For costs related to the export itself, see [How much does it cost to sync audiences?](#how-much-does-it-cost-to-sync-audiences).
 
 ### **How long does it take for audiences to be created?**
 

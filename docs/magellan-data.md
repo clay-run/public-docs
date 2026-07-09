@@ -1,10 +1,10 @@
 ---
 title: magellan-data
 description: Enrich company records in Clay with corporate ownership, parent company details, and private equity relationships using Magellan Data.
-last_synced: 2026-06-29T22:02:41.924Z
+last_synced: 2026-07-07T19:31:05.801Z
 ---
 
-# Magellan Data
+# Magellan Data integration
 
 Discover corporate ownership and private equity relationships.
 

@@ -1,104 +1,171 @@
 ---
 title: AgentMail integration
-description: Connect an email inbox to a Clay table using AgentMail's Inbox-as-a-source integration — receive, enrich, and reply to emails entirely within Clay.
+description: Use AgentMail with Clay to capture inbound emails as table rows in real time and draft or send replies directly from your workflows.
+last_synced: 2026-07-07T19:36:40.211Z
 ---
 
 # AgentMail integration
 
-AgentMail is a third-party service that gives AI agents real email inboxes. The Clay–AgentMail integration lets you use an email inbox as a Clay table source, so incoming emails arrive as rows in real time. Once a message is a row, you can enrich the sender, run Claygent to classify or draft a response, and send a reply — all from the same table.
+Use AgentMail with Clay to capture inbound emails as table rows in real time and draft or send replies directly from your workflows.
 
-**What this integration enables:**
+AgentMail is a programmable email infrastructure tool that gives AI agents and workflows a real, dedicated inbox — a live email address that can receive, draft, and send mail through an API. With this integration, you can use an AgentMail inbox as a real-time source in Clay and run actions to create drafts or send replies directly from your table.
 
-- **Inbox as a source:** Incoming emails flow into a Clay table as rows the moment they land.
-- **Enrich and qualify:** Run any Clay enrichment on the sender (company, title, professional profile, etc.) directly from the row.
-- **Draft and send replies:** Use Claygent to compose a response and send it from the same inbox — with or without human review.
+**Note:** This integration is bring-your-own-API-key. Before connecting AgentMail to Clay, you need an AgentMail account with a verified domain, at least one inbox, and an API key. See the setup steps below.
 
-## Prerequisites
+## **Setting up AgentMail**
 
-Before connecting AgentMail to Clay, you need:
+Complete the following steps in your AgentMail account before connecting to Clay.
 
-1. An **AgentMail account** — sign up at [agentmail.to](https://www.agentmail.to).
-2. A **domain or subdomain pointed at AgentMail** (via DNS MX records). If your root domain already runs Gmail or Outlook, use a subdomain like `inbox.yourdomain.com` to avoid disrupting existing mail.
-3. At least one **inbox created** in your AgentMail dashboard.
-4. An **AgentMail API key** generated from your AgentMail dashboard.
+1.  Sign up at [**agentmail.to**](https://agentmail.to/) and open the dashboard.
+2.  **Add a domain.** In the AgentMail dashboard, add the domain or subdomain you want to send and receive from. AgentMail will generate DNS records (MX, SPF, DKIM, DMARC) for you to add to your domain manager.
+    -   If your root domain already receives mail through Gmail (Google Workspace) or Outlook (Microsoft 365), its MX records already point to that provider. A domain's MX records can only point to one mail server, so you cannot also route it to AgentMail. Use a dedicated subdomain instead (e.g., `inbox.yourdomain.com`).
+3.  **Add the DNS records.** Copy the records AgentMail generates into your domain manager exactly as shown — type, name/host, and value. DNS propagation can take a few minutes to a few hours. Once the records are in place, click `Verify Domain` in the AgentMail dashboard.
+4.  **Create an inbox.** Once your domain is verified, create one or more inboxes (e.g., `sales@inbox.yourdomain.com`). This is the live address Clay will listen to.
+5.  **Generate an API key.** In the AgentMail dashboard, generate an API key. This is the only credential you need to connect AgentMail to Clay.
 
-## Setting up AgentMail (one-time)
+For more detail on domain configuration, see [**AgentMail's custom domains guide**](https://docs.agentmail.to/custom-domains).
 
-### Step 1: Point a domain at AgentMail
+## **Creating a table with AgentMail**
 
-In your AgentMail dashboard, add your domain or subdomain. AgentMail generates the DNS records for you — paste them into your DNS provider and click **Verify**. AgentMail manages the MX records to get real-time access to incoming and outgoing mail on that domain.
+1.  In a workbook, click `+ Add` at the bottom.
+2.  Search for **AgentMail** and select it from the results.
+3.  In the modal, you will be asked to `Select AgentMail account`.
+    -   If you haven't already connected your AgentMail account, click `+ Add account` and enter the API key you generated.
 
-**Use an isolated domain or subdomain.** Because AgentMail manages MX records, it is best to give it a dedicated domain or subdomain rather than your primary business domain, to avoid interfering with your existing email setup.
+### `Source` Import AgentMail message events
 
-### Step 2: Create an inbox
+Imports a new row into your Clay table each time a selected message event fires in one of your AgentMail inboxes.
 
-Once the domain is verified, create an inbox address (for example, `sales@inbox.yourdomain.com`) in your AgentMail dashboard. You can create multiple inboxes for different workflows. Clay can listen to up to 10 inboxes per source.
+**Note:** Adding this source automatically creates a webhook in your AgentMail account — you don't need to configure one manually. The webhook will appear in your AgentMail dashboard subscribed to the inboxes and events you selected.
 
-### Step 3: Generate an API key
+**Inputs**
 
-From your AgentMail dashboard, generate an API key. Copy it — you will need it when adding the source in Clay.
+-   **Forward messy GTM signals into Clay:** Forward newsletters, funding alerts, event attendee lists, or job-change emails to an AgentMail inbox. Each email lands as a new row, where Clay can enrich the people or companies and route them into the right workflow.
+-   **Capture inbound replies from outbound campaigns:** When a prospect replies to an outbound sequence, AgentMail captures the response as a new row so Clay can classify it (positive, not interested, OOO, referral) and trigger next steps.
+-   **CC an agent on live deal threads:** CC an AgentMail inbox on an active prospect or customer thread. Incoming messages appear as rows in Clay, where you can track context, surface relevant signals, or prepare follow-ups.
+-   **Email-native meeting prep:** Forward a prospect or customer thread to an AgentMail inbox and have Clay generate an enriched account brief — company context, stakeholders, recent signals, and suggested talking points.
+-   **Lightweight GTM command inbox:** A rep or operator emails a simple request (e.g., "enrich these companies" or "find similar accounts") to an AgentMail inbox. The message lands in Clay as a new row to kick off the enrichment workflow.
 
-## Connecting AgentMail to Clay
+**Note:** Adding this source automatically creates a webhook in your AgentMail account — you don't need to configure one manually. The webhook will appear in your AgentMail dashboard subscribed to the inboxes and events you selected.
 
-1. In a Clay workbook, click **+ Add** to create a new table, or open an existing table and click **Tools → Import**.
-2. Search for **AgentMail** and select **Import AgentMail message events**.
-3. Paste your AgentMail API key and authenticate.
-4. Select the inboxes you want Clay to listen to (up to 10 per source).
-5. Choose which event types to capture — at minimum, select incoming mail events.
-6. Click **Submit**. Clay creates the webhook on the AgentMail side automatically.
-7. Send a test email to your inbox and watch a new row appear in real time.
+**Inputs**
 
-Each incoming email becomes one row in the table, with the sender address, subject, body, and timestamps available as columns.
+-   Inboxes: The AgentMail inbox or inboxes to subscribe to. Displays as a dropdown populated from your AgentMail account. A single source can subscribe to up to 10 inboxes.
+-   Message events: The event types that will trigger a new row. You can select a single event type or all of them. See [**AgentMail's webhook events reference**](https://docs.agentmail.to/api-reference/webhooks/create) for the full list of available events.
 
-## Available actions
+Each new row includes the full message payload from AgentMail — including fields such as subject, body text, sender, recipient, and timestamp. See [**AgentMail's events reference**](https://docs.agentmail.to/events) for the complete payload structure.
 
-After connecting AgentMail as a source, you can add action columns to respond to emails from within the same table.
+## **Enriching data with AgentMail**
 
-### Create draft
+1.  While in a Clay table, click `Add enrichment` and search for **AgentMail**.
+2.  Under `Integrations`, select one of the AgentMail actions.
+3.  In the modal, you will be asked to `Select AgentMail account`.
+    -   If you haven't already connected your AgentMail account, click `+ Add account` and enter your API key.
 
-Stages a reply in the AgentMail inbox for human review before sending. Use this when you want a person to approve the response — for example, when Claygent has drafted a reply and you want a rep to confirm before it goes out.
+### `Action` Create draft
 
-**Inputs:**
+Creates a draft email in an AgentMail inbox without sending it.
 
-- **Thread ID** — the thread to reply to (available from the source row data).
-- **Body** — the reply text. Reference a Claygent or Use AI column to populate this dynamically.
+**Use cases:**
 
-### Reply
+-   **Human-in-the-loop reply review:** After Clay classifies an inbound reply or generates a personalized response, stage it as a draft in AgentMail so a rep can review and send it manually — keeping a person in the loop before anything goes out.
+-   **Email-native meeting prep:** Have Clay draft an enriched account brief reply and stage it as a draft so the rep can send it when ready.
+-   **GTM command inbox responses:** When a rep emails a request to the inbox, use Clay to run the enrichment and draft the response back to them for review.
 
-Sends a reply immediately from the same inbox, without a draft review step. Use this for fully automated responses — for example, an out-of-office acknowledgement or a routing confirmation.
+**Inputs**
 
-**Inputs:**
+Required:
 
-- **Thread ID** — the thread to reply to.
-- **Body** — the reply text (plain text or HTML).
+-   Inbox ID: The AgentMail inbox where the draft should be created. At least one of the following optional fields must also be provided: To, CC, BCC, Subject, Plain text body, or HTML body.
 
-Both actions run per row, so you can trigger them manually for individual rows or set them to fire automatically using run conditions.
+Optional:
 
-## Example workflows
+-   To: Comma-separated recipient email address or addresses.
+-   CC: Comma-separated CC recipient address or addresses.
+-   BCC: Comma-separated BCC recipient address or addresses.
+-   Reply-to: Comma-separated reply-to address or addresses.
+-   Subject: Subject line for the draft.
+-   Plain text body: Plain text body for the draft. (Required if HTML body is not provided.)
+-   HTML body: HTML body for the draft. (Required if Plain text body is not provided.)
+-   In reply to: AgentMail message ID that this draft replies to, used to thread the draft into an existing conversation.
+-   Send at: Scheduled send time for the draft, in ISO 8601 format.
+-   Client ID: A client-defined identifier for the draft.
+-   Labels: Comma-separated labels to apply to the draft.
 
-### Reply-based outbound qualification
+**Outputs**
 
-A prospect replies to an outbound campaign. AgentMail captures the reply as a new row in Clay. Claygent reads the body, classifies it (interested, not interested, out of office, referral), enriches the account, and drafts a response. A rep approves the draft and sends it using the **Create draft** action.
+-   Draft ID: The unique ID of the created draft.
+-   Thread ID: The ID of the thread the draft belongs to.
+-   Inbox ID: The ID of the inbox where the draft was created.
+-   Send status: The current send status of the draft (e.g., `scheduled`).
+-   Send at: The scheduled send time, if set.
+-   Created at: Timestamp when the draft was created.
+-   Updated at: Timestamp when the draft was last updated.
+-   Preview: A short preview of the draft body.
+-   Subject: The subject line of the draft.
+-   Plain text body: The plain text body of the draft.
+-   HTML body: The HTML body of the draft.
+-   Client ID: The client-defined identifier, if set.
+-   In reply to: The message ID this draft is threaded to, if set.
+-   Labels: Labels applied to the draft.
 
-### Speed-to-lead from inbound forms
+### `Action` Reply to message
 
-A lead submits a web form that sends an email to your AgentMail inbox. The email arrives as a row in Clay. Clay enriches the sender's company, scores the lead, and — if they meet your ICP criteria — Claygent drafts a personalized reply that is sent automatically using the **Reply** action.
+Sends a reply to an existing message in an AgentMail inbox.
 
-### CC an agent into a live deal thread
+**Use cases:**
 
-Add an AgentMail inbox address as a CC on an active customer email thread. AgentMail routes each message into Clay as a row, where Claygent can track context, suggest follow-up actions, or draft a reply for rep review.
+-   **Automated reply routing:** After Clay classifies an inbound reply as positive, an OOO, or a referral, automatically send the appropriate follow-up response without manual intervention.
+-   **Agent-assisted deal threads:** When an AgentMail inbox is CC'd on a live prospect thread, use Clay to enrich context and have the agent send a reply with suggested next steps or a meeting link.
+-   **GTM command inbox responses:** Automatically send enrichment results back to the rep who emailed the request — closing the loop without anyone leaving their inbox.
 
-## Limits
+**Inputs**
 
-| Limit | Value |
-|---|---|
-| Inboxes per source | 10 |
+Required:
 
-You can create multiple AgentMail sources in the same table (subject to Clay's 20-source-per-table limit) to listen to more than 10 inboxes.
+-   Inbox ID: The AgentMail inbox that contains the message to reply to.
+-   Message ID: The ID of the AgentMail message to reply to.
+-   Plain text body: Plain text body for the reply. (Required if HTML body is not provided.)
+-   HTML body: HTML body for the reply. (Required if Plain text body is not provided.)
 
-## Further reading
+Optional:
 
-- AgentMail setup docs: [docs.agentmail.to](https://docs.agentmail.to)
-- AgentMail blog post on the Clay integration: [agentmail.to/blog/email-is-now-a-column-in-clay](https://www.agentmail.to/blog/email-is-now-a-column-in-clay)
-- Clay sources overview: [Sources](sources.md)
-- Sending automated responses: [Claygent](ai-in-clay.md)
+-   Reply all: Toggle to reply to all recipients of the original message.
+-   To: Comma-separated recipient address or addresses.
+-   CC: Comma-separated CC recipient address or addresses.
+-   BCC: Comma-separated BCC recipient address or addresses.
+-   Reply-to: Comma-separated reply-to address or addresses.
+-   Labels: Comma-separated labels to apply to the reply.
+-   Headers: Custom headers for the reply.
+
+**Outputs**
+
+-   Message ID: The ID of the sent reply message.
+-   Thread ID: The ID of the thread the reply belongs to.
+
+### **Run settings**
+
+-   **Auto-update:** When enabled, the action re-runs automatically whenever its input values change.
+-   **Only run if:** The enrichment will only run if conditions are met. [**Learn more about conditional formulas here.**](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101)
+
+## **Troubleshooting**
+
+### **Domain won't verify**
+
+Double-check each DNS record against what AgentMail shows in the dashboard. A common mistake is entering the full subdomain in the host field when your domain manager auto-appends the domain (e.g., entering `inbox.yourdomain.com` instead of just `inbox`). DNS propagation can take a few minutes to a few hours. Once records are in place, click `Verify Domain` again in the AgentMail dashboard. See [**AgentMail's custom domains guide**](https://docs.agentmail.to/custom-domains) for step-by-step instructions.
+
+### **Can't add my root domain — mail conflict**
+
+If your root domain already receives mail through Gmail (Google Workspace) or Outlook (Microsoft 365), its MX records point to that provider exclusively. A domain's MX records can only route incoming mail to one server, so you can't simultaneously route it to AgentMail. Use a dedicated subdomain (e.g., `inbox.yourdomain.com`) or a separate domain instead.
+
+### **No rows appearing in Clay**
+
+Confirm the source is subscribed to the correct inbox and to the expected event types. Send a test email to the inbox to trigger a new event. Also check that your API key is valid — if it was regenerated in AgentMail, re-authenticate in Clay by removing the existing account connection and adding it again.
+
+### **Sent or delivered events not appearing**
+
+Ensure the source is configured to listen to those event types — selecting all events is the simplest option. Also confirm the reply action ran successfully before expecting delivery events, since those events only surface after a message has actually been sent.
+
+### **API key connection failure**
+
+If the connection fails, verify the key is current in your AgentMail dashboard. If you've regenerated your key since first connecting, remove the existing AgentMail account in Clay and re-authenticate with the new key.

@@ -82,6 +82,8 @@ The test confirms the connection is valid and shows the SFDC user's email addres
 
 **Deleting the default connection:** You can delete a connection that is currently set as default. When you do, Clay automatically reassigns the default to the next available Salesforce connection. If no other connection exists, the default is cleared. Note that deleting any connection requires you to be either the person who originally added it or a workspace admin — you cannot delete a connection added by someone else unless you are an admin.
 
+**What changing the default affects:** Setting a new default applies only to Salesforce columns you create after making the change. Existing columns and workflows continue to use the connection they were originally configured with — changing the default does not update them. To have all existing columns switch to a different Salesforce account, use **Reconnect** on the connection those columns already reference: this updates the credentials in place, so every column referencing that connection picks up the new account on its next run. See [Connections and integration accounts](./connections-and-integration-accounts.md) for the full reconnect walkthrough.
+
 ## Why is a Salesforce object (such as Account) not appearing in Clay?
 
 The objects available in Clay are determined entirely by the permissions of the Salesforce user whose credentials were used to authenticate the integration. Clay queries Salesforce's API for the full list of accessible objects — it does not maintain its own allowlist or blocklist. If an object like Account is missing from the dropdown, it means the connected Salesforce user does not have access to it in Salesforce.
@@ -229,6 +231,20 @@ This way, new records are created and existing records are updated — without e
 On the Salesforce side, modify the duplicate rule to exclude records coming from Clay's integration user. For example, add a condition such as "Current User not equal to \[the Salesforce user Clay authenticates as\]". This prevents the rule from firing when Clay creates records, while still protecting your org from duplicates created by other users.
 
 For details on Clay's Create Record settings, see [Salesforce integration](https://university.clay.com/docs/salesforce-integration-overview). For more on Salesforce duplicate rules, see [Salesforce's documentation](https://help.salesforce.com/s/articleView?id=sales.duplicate_rules_map_of_reference.htm&type=5).
+
+## Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?
+
+The `MALFORMED_ID` error means Salesforce received a value it cannot interpret as a valid record ID for a reference (lookup) field — such as **OwnerId**, **AccountId**, **ContactId**, or **CampaignId**. Reference fields require the actual Salesforce record ID (an 18-character alphanumeric string, for example `005Pk000008CnYDIA0`), not a display name or label. Passing a person's name — for example, `Matt Bagshaw` — to the **OwnerId** field causes Salesforce to return a `MALFORMED_ID` error, which Clay surfaces as-is.
+
+Clay does not transform field values before sending them to Salesforce — whatever value is in your Clay column is passed directly to the Salesforce API.
+
+**To fix this**, add a **Lookup Record** step before your Create or Update Record action to retrieve the actual Salesforce ID:
+
+1.  **Add a Lookup Record column.** Set the Salesforce object to the type that corresponds to the reference field — for example, **User** for **OwnerId**, **Account** for **AccountId**, or **Contact** for **ContactId**.
+2.  **Search by the identifier you have.** Use the person's name, email address, or another field available in your Clay table. Enable **Exact match** to avoid partial-name collisions.
+3.  **Map the returned ID into the reference field.** In your **Create Record** or **Update Record** column's **Map fields** section, reference the `Id` field from your Lookup Record result and map it to the reference field (for example, **Owner ID**).
+
+The same fix applies to any reference field that returns a `MALFORMED_ID` error — not just **OwnerId**.
 
 ## How do I prevent Salesforce records from being created or updated when there is no valid email?
 
@@ -469,7 +485,7 @@ When Clay creates a record using the **Create Record** action, Salesforce sets t
 
 If your Salesforce org has assignment rules that specifically fire on records owned by integration users (a common pattern for automated lead routing), those rules can trigger at creation time and re-assign the record to a queue or different owner.
 
-**To control the owner at creation time**, add the **Owner ID** field in the **Map fields** section of your **Create Record** column and set it to the Salesforce User ID of the intended owner. When the record is created with the correct owner already set, assignment rules that specifically target integration-user-owned records will not match.
+**To control the owner at creation time**, add the **Owner ID** field in the **Map fields** section of your **Create Record** column and set it to the Salesforce User ID of the intended owner. If your Clay table has the owner's name rather than their Salesforce User ID, add a **Lookup Record** column (set the Salesforce object to **User** and search by name) to retrieve the ID first — see [Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?](#why-am-i-seeing-a-malformed_id-error-when-creating-or-updating-a-salesforce-record) for the step-by-step workflow. When the record is created with the correct owner already set, assignment rules that specifically target integration-user-owned records will not match.
 
 **Note:** Unlike the **Update Record** action — which has a **Disable auto-assignment rules** toggle for leads, cases, and accounts — the **Create Record** action does not have a built-in option to suppress assignment rules entirely. If your org has assignment rules that fire on all new records regardless of owner, you will need to adjust those rules on the Salesforce side.
 

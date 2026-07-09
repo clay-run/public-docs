@@ -50,6 +50,7 @@ To add a new account for an integration:
 **Note:** Some connection management actions are restricted by role:
 
 -   **Set as Default** is a **workspace admin–only** action — only admins see this option in the `…` menu.
+-   **Reconnect** is available to the member who added the connection and to workspace admins. If you don't see a Reconnect option for a connection, it was likely added by another team member — ask a workspace admin to update the credentials.
 -   **Delete** is available to the member who added the connection and to workspace admins. If you need to delete a connection that was added by someone else, ask a workspace admin.
 
 ### View your integration accounts
@@ -66,6 +67,22 @@ To add a new account for an integration:
     -   Modify or re-enter credentials.
 -   Toggle `Set as Default` to make this account the default.
 -   Click `Save` to apply changes.
+
+### Rotating or updating credentials
+
+Use **Reconnect** to replace the credentials on an existing connection — for example, to rotate an API key, swap a private key file, or update authentication details when your security team requires it. You do not need to delete or recreate the connection, or re-point individual tables or columns to a new account — the same connection is preserved, and all existing columns, workflows, and sources will automatically use the updated credentials on their next run.
+
+> **Note:** If the new credentials have different permissions or API scopes than the original ones, some workflows may be affected. Before reconnecting, verify that the new credentials grant the same level of access as the existing ones.
+
+> **Who can reconnect:** The Reconnect option is only available to the workspace member who originally added the connection and to workspace admins. If you don't see the `…` menu or the Reconnect option for a connection, it was added by another team member — ask a workspace admin to update the credentials on your behalf.
+
+To rotate or update credentials:
+
+-   Navigate to `Settings` > `Connections` and select the service.
+-   Click the `…` menu next to the account and choose **Reconnect**.
+-   Enter the new credentials in the modal and click **Save**.
+
+The connection updates in place — the same connection is preserved with the new credentials. Existing data values already enriched and stored in your table rows are not affected — Reconnect does not clear or overwrite previously enriched cell values. Only actively re-running an enrichment column on existing rows would change those stored values.
 
 ### Verify connection health
 
@@ -103,6 +120,8 @@ A **default account** is automatically selected for workflows or integrations wh
 -   Locate the account you wish to set as the default.
 -   Click the `…` menu next to the account, and select `Set as Default`.
 -   The account will now display a `default` label to indicate its status.
+
+**Note:** The default account is used when creating new columns and workflows going forward — it does not retroactively update existing columns or workflows. Columns already configured to use a specific connection continue to reference that connection regardless of which account is set as default. To update all existing columns to use a different account's credentials, use **Reconnect** on the connection those columns already reference (see [Rotating or updating credentials](#rotating-or-updating-credentials) above). Reconnecting updates the credentials in place so every column referencing that connection automatically uses the updated account on its next run.
 
 ### Deleting accounts
 

@@ -50,6 +50,17 @@ When setting up key-pair authentication, you'll need to provide:
 
 If your organization uses Okta, enter your Okta URL (e.g., [example.okta.com](http://example.okta.com)) to ensure the integration functions correctly.
 
+### Rotating or updating your Snowflake credentials
+
+You can update or rotate your Snowflake credentials — for example, when your security team requires key rotation — without deleting and recreating the connection. All tables, columns, and sources already using the connection will automatically use the new credentials on their next run.
+
+1.  Navigate to `Settings` > `Connections` and select **Snowflake Key-Pair** (or **Snowflake** for username and password connections).
+2.  Click the `…` menu next to your connection and select **Reconnect**.
+3.  In the Reconnect modal, enter your updated credentials. For key-pair connections, upload the new `.p8` private key file, enter the new passphrase if applicable, and confirm the other fields.
+4.  Click **Save**.
+
+The connection updates in place — the same connection ID is preserved, so no columns or sources need to be reconfigured.
+
 ## Creating a table with Snowflake
 
 1.  In a workbook, click `+ Add` at the bottom.

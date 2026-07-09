@@ -34,6 +34,10 @@ Every Clay table includes two automatically maintained system columns: **Created
 
 Both fields are system-managed: you cannot delete them, edit their settings, or manually change their values.
 
+### Tracking who created a row
+
+Clay's system columns record *when* rows were created and modified, but there is no built-in column that records *who* added a row to the table. If you need to track which team member or process created each record, add a **Text** column (click **Add column** → select **Text**) and manually enter the creator's name for each row as records are added.
+
 ### Integration mapping limitation
 
 **Updated At** and **Created At** are not available in the column picker when mapping Clay columns to an external integration — this applies to all integrations, including Google Sheets, Salesforce, and others. The mapping UI removes them from the selectable field list.
