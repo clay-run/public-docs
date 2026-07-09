@@ -72,6 +72,34 @@ Optional:
 -   Run in batches: When enabled, groups up to 300 rows into a single API request instead of sending one request per row. This reduces the total number of API calls Clay makes to Marketo and is recommended if you are hitting Marketo's 606 rate limit error. Available for the Create object and Update object actions.
 -   Only run if: The enrichment will only run if conditions are met. ([**Learn more about conditional formulas here!**](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
 
+## Common workflows
+
+### Check prior Marketo outreach before adding leads to a new cadence
+
+Use the Marketo **Lookup object** action to check a lead's existing Marketo record — including any status, campaign, or custom outreach fields your Marketo instance tracks — before adding them to a new email sequence.
+
+1.  Add a Marketo enrichment to your Clay table and select **Lookup object**.
+2.  Set **Object type** to `Person`.
+3.  Set **Filter type** to `Email`.
+4.  Set **Filter values** to the email column in your table.
+
+The action returns the lead's full Marketo record. You can use the returned fields — such as a lead status or last-contacted date — in a Clay formula or an **Only run if** condition to skip leads who have already been reached out to.
+
+If expected custom fields are missing from the results, see [Custom fields are missing from Lookup object results](#custom-fields-are-missing-from-lookup-object-results) below.
+
+### Write outreach results back to a Marketo lead after a cadence
+
+Use the Marketo **Update object** action to stamp a lead as contacted or update a field in Marketo once emails have gone out from your cadence tool.
+
+The Update object action matches on the Marketo internal ID (not email). If your table does not already have Marketo IDs, run a **Lookup object** (filtered by email) first to retrieve them.
+
+1.  Add a Marketo **Lookup object** enrichment filtered by email to get each lead's Marketo ID, if you don't already have it.
+2.  Add a Marketo **Update object** enrichment.
+3.  Set **Object type** to `Person`.
+4.  Set **Marketo object ID** to the Marketo ID column from step 1.
+5.  Under **Fields**, select the field to update — for example, a lead status field or a custom "Contacted" field — and map the value from your table.
+6.  Enable **Auto-update** in Run settings so that rows are pushed back to Marketo automatically as cadence results come in.
+
 ## Connecting Marketo via webhook
 
 Use webhooks to send data from Marketo to Clay for real-time lead enrichment. This is ideal for capturing inbound leads as they arrive — such as form fills, demo requests, or other lead events. After enrichment, you can use the Marketo enrichment actions above to write the enriched data back to Marketo.
@@ -94,13 +122,13 @@ Use webhooks to send data from Marketo to Clay for real-time lead enrichment. Th
 
 ### Custom fields are missing from Lookup object results
 
-Clay builds the field list for the Lookup object action from Marketo's schema API, which only returns fields that have **API access** enabled. If a custom field doesn't appear in the lookup results, it likely isn't exposed through Marketo's API:
+Clay builds the field list for the Lookup object action from Marketo's schema API. The schema API only returns fields that your API user's role has permission to read. If custom fields are missing from the lookup results, the API user's Marketo role likely lacks the required schema permissions:
 
-1.  In Marketo, go to **Admin** → **Field Management**.
-2.  Find the missing field and open its settings.
-3.  Confirm that **API access** is enabled for that field.
+1.  In Marketo, go to **Admin** → **Users & Roles**.
+2.  Open the role assigned to your API user.
+3.  Confirm that both **Read-Write Schema Standard Field** and **Read-Write Schema Custom Field** are enabled for that role.
 
-Once API access is enabled, the field will be included in Marketo's schema response and returned in future Clay lookup results.
+Once the role permissions are updated, the schema API will return the accessible fields and they will appear in future Clay lookup results.
 
 ### Field values containing special characters are split incorrectly in Clay
 
