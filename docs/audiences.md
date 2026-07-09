@@ -14,7 +14,7 @@ Use it to build dynamic segments across millions of records, run automated enric
 
 Setting up Audiences is four major steps:
 
-1.  **Import your data** — connect Salesforce, HubSpot, Snowflake, or Google BigQuery and bring your records into Audiences.
+1.  **Import your data** — connect Salesforce, HubSpot, Snowflake, Google BigQuery, or Databricks and bring your records into Audiences.
 2.  **Create audiences** — build dynamic segments using filters to target the right contacts and accounts.
 3.  **Enrich and monitor** — run bulk enrichments and signals that write data permanently back to each record.
 4.  **Write back to your CRM** — sync enriched data and segment membership back to Salesforce.
@@ -32,6 +32,7 @@ You can import data from:
 -   A new people or companies search
 -   Snowflake
 -   Google BigQuery
+-   Databricks
 -   Salesforce
 -   HubSpot
 
@@ -150,6 +151,32 @@ Clay syncs data from Google BigQuery on the following schedules:
 -   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured, importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
 -   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
 
+### Importing from Databricks
+
+**Note:** Databricks import is currently in beta — contact your Growth Strategist to enable it for your workspace.
+
+1.  Click `Add data` → `Import from Databricks`.
+2.  Select your Databricks account and SQL warehouse.
+    -   If you haven't connected your Databricks account yet, click `+ Add account`. See the [Databricks integration](https://university.clay.com/docs/databricks-integration) for setup instructions.
+3.  Enter a SQL `SELECT` query to define which records to import.
+    -   Click `Test` to preview your data before continuing.
+4.  Confirm the preview looks correct, then click `Continue`.
+5.  Define the `Unique Identifier`:
+    -   For People: `email` or `user_id`.
+    -   For Companies: `company_id` or `domain`.
+6.  (Optional) Configure a `Timestamp Field` for incremental syncing:
+    -   With a timestamp: syncs run every **15 minutes** and only import new/changed records.
+    -   Without a timestamp: the full query reruns every **12 hours**.
+7.  Map your Databricks columns to Audience fields.
+8.  Review and click `Confirm` — Clay begins importing immediately.
+
+**Sync timing and behavior**
+
+Clay syncs data from Databricks on the following schedules:
+
+-   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured, importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
+-   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
+
 ### Importing from people and companies search
 
 1.  Click `Add data` → `Find people` or `Find companies` to open a search.
@@ -160,7 +187,7 @@ Clay syncs data from Google BigQuery on the following schedules:
 4.  In your draft, click `Enrich` to bulk enrich and refine your data, keeping only high-quality leads.
 5.  When your search data looks good, click `All people` to merge.
 
-**Note:** When you save a search to your Audience, only basic identity fields are carried over as columns — additional data fields visible in the search preview (such as Company Size or Annual Revenue for companies, or Job Title for people) are not automatically added to your Audience. To add one of these fields, create it as a custom Audience field first: see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
+**Note:** When you save a search to your Audience, only basic identity fields are carried over as columns — additional data fields visible in the search preview (such as Company Size or Annual Revenue for companies, or Job Title for people) are not automatically added to your Audience. To add one of these field, create it as a custom Audience field first: see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
 
 ### Sending data from Clay table
 
@@ -407,7 +434,7 @@ Export sync behavior:
 
 -   **Export frequency:** Once every 24 hours. Clay assigns each workspace a stable export time automatically — the schedule is not user-configurable.
 -   **First export:** After you enable Export Sync, the first export fires at your workspace's next scheduled export time — this may take up to 24 hours. The Exports panel shows **Not set up** until the first export completes successfully.
--   **Export batch size:** ~10,000 records per sync.
+-   **Export batch size:** ~10,000 records per batch.
 -   **Subsequent syncs:** Incremental — only changed records are processed.
 
 To estimate API calls for initial export, divide record count by 10,000 and compare against your Salesforce limit.
