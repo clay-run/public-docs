@@ -139,8 +139,8 @@ To update your billing address, payment method, or billing email:
 1.  Click your profile picture in the top-right corner and select `Settings`.
 2.  In the sidebar, navigate to `Plans & billing`.
 3.  Click the `Edit` dropdown.
-    -   Select `Edit billing info...` to update your name, billing email, country, address, and postal code.
-    -   Select `Edit payment method...` to update your credit card or payment method.
+    -   Select `Edit billing info...` to update your name, billing email, and country. If your billing address is in the United States, this modal also lets you edit your address, city, state, and ZIP code.
+    -   Select `Edit payment method...` to update your credit card or payment method. If you are outside the United States and need to update your billing address, use this option — it opens a Stripe-hosted page where you can enter your updated details.
 4.  Enter the updated information and confirm your changes.
 
 ### Trials

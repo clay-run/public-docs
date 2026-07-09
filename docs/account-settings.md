@@ -53,7 +53,7 @@ Changing your email address does not affect your workspace data or your password
 
 ## Update your country
 
-Clay's account profile settings don't include a country field — there is no country selector in `Settings` > `Account`. If you need to update the country associated with your billing information, see [Update your billing address, payment method, and billing email](./plans-and-billing.md#update-your-billing-address-payment-method-and-billing-email) and select `Edit billing info...`, which lets you update your country, address, postal code, and billing email.
+Clay's account profile settings don't include a country field — there is no country selector in `Settings` > `Account`. If you need to update the country associated with your billing information, go to `Settings` > `Plans & billing`, click `Edit`, and select `Edit billing info...` — this lets you update your name, billing email, and country. US-based accounts can also update their address, city, state, and ZIP code there.
 
 ## Change your password
 
