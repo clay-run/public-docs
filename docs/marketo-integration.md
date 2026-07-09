@@ -72,6 +72,34 @@ Optional:
 -   Run in batches: When enabled, groups up to 300 rows into a single API request instead of sending one request per row. This reduces the total number of API calls Clay makes to Marketo and is recommended if you are hitting Marketo's 606 rate limit error. Available for the Create object and Update object actions.
 -   Only run if: The enrichment will only run if conditions are met. ([**Learn more about conditional formulas here!**](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
 
+## Common workflows
+
+### Check prior Marketo outreach before adding leads to a new cadence
+
+Use the Marketo **Lookup object** action to check a lead's existing Marketo record — including their lead status, campaign membership, or any custom outreach fields — before adding them to a new email sequence.
+
+1.  Add a Marketo enrichment to your Clay table and select **Lookup object**.
+2.  Set **Object type** to `Person`.
+3.  Set **Filter type** to `Email`.
+4.  Set **Filter values** to the email column in your table.
+
+The action returns the lead's full Marketo record. You can use the returned fields — such as a lead status or last-contacted date — in a Clay formula or an **Only run if** condition to skip leads who have already been reached out to.
+
+If expected custom fields (for example, a campaign status field) are missing from the results, see [Custom fields are missing from Lookup object results](#custom-fields-are-missing-from-lookup-object-results) below.
+
+### Write outreach results back to a Marketo lead after a cadence
+
+Use the Marketo **Update object** action to stamp a lead as contacted or update a field in Marketo once emails have gone out from your cadence tool.
+
+The Update object action requires a Marketo ID for each lead. If your table does not already have Marketo IDs, run a **Lookup object** (filtered by email) first to retrieve them.
+
+1.  Add a Marketo **Lookup object** enrichment filtered by email to get each lead's Marketo ID, if you don't already have it.
+2.  Add a Marketo **Update object** enrichment.
+3.  Set **Object type** to `Person`.
+4.  Set **Marketo object ID** to the Marketo ID column from step 1.
+5.  Under **Fields**, select the field to update — for example, a lead status field or a custom "Contacted" field — and map the value from your table.
+6.  Enable **Auto-update** in Run settings so that rows are pushed back to Marketo automatically as cadence results come in.
+
 ## Connecting Marketo via webhook
 
 Use webhooks to send data from Marketo to Clay for real-time lead enrichment. This is ideal for capturing inbound leads as they arrive — such as form fills, demo requests, or other lead events. After enrichment, you can use the Marketo enrichment actions above to write the enriched data back to Marketo.
