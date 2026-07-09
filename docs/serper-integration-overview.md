@@ -84,7 +84,7 @@ This runs one Google search per row — for example, `Acme Corp hiring for RevOp
 You can combine column references with Google search operators:
 
 ```
-site:linkedin.com/in {{"Company Name"}} CEO
+site:crunchbase.com {{"Company Name"}} CEO
 ```
 
 ## Using Serper with your own API key
