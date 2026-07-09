@@ -134,6 +134,38 @@ Once the role permissions are updated, the schema API will return the accessible
 
 If a lead field value contains an ampersand (`&`) — such as a job title like "VP & Head of Sales" — and you're using a form-encoded payload template in Marketo, the `&` will be interpreted as a field separator, causing the value to be split across multiple fields in Clay. To avoid this, use a JSON-formatted payload template (as shown in step 5 above). JSON handles special characters correctly and will not split values on `&`.
 
+### Webhook records containing multi-line text aren't arriving in Clay
+
+If a Marketo lead field contains paragraph-style text with line breaks — such as a "Webform Comments" or "Notes" field from a form submission — those records may not arrive in Clay at all even though Marketo reports a successful delivery. The cause is that a literal newline character inside a JSON string value produces invalid JSON. Clay's webhook requires a valid JSON payload; a malformed request is rejected and the record is dropped.
+
+**Solution: use Marketo's JSON token encoding**
+
+In your Marketo webhook settings, set `Request Token Encoding` to **JSON**. When JSON encoding is selected, Marketo automatically quotes and escapes each token value before building the payload — turning line breaks into `\n`, escaping internal quotes, and handling other characters — so the resulting JSON is always valid regardless of what the contact typed.
+
+**Important:** When `Request Token Encoding` is set to JSON, Marketo adds the surrounding double quotes around each string value automatically. Do **not** also wrap token values in manual quotes in your template — doing so produces double-quoted strings (`""value""`) that break the JSON. Keep quotes only around the field keys, not the token values:
+
+Correct (no manual quotes around token values — JSON encoding adds them):
+
+```
+{
+  "id": {{lead.Id}},
+  "email": {{lead.EmailAddress}},
+  "form_comments": {{lead.WebformComments}}
+}
+```
+
+Incorrect (manual quotes combined with JSON encoding produces invalid JSON):
+
+```
+{
+  "id": "{{lead.Id}}",
+  "email": "{{lead.EmailAddress}}",
+  "form_comments": "{{lead.WebformComments}}"
+}
+```
+
+Keep `Response type` set to JSON. With JSON encoding enabled, Marketo handles all escaping — multi-line comments, embedded quotes, ampersands, and line breaks all come through as valid JSON string values.
+
 ### Marketo 606 rate limit error
 
 Error 606 (`Max rate limit '100' exceeded with in '20' secs`) means Marketo received more than 100 API calls within a 20-second window. To reduce call volume, enable **Run in batches** in the affected action's Run settings. With batching enabled, Clay groups up to 300 rows into a single POST request instead of one call per row, significantly reducing the number of API calls and helping avoid this error.
