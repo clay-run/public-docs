@@ -242,7 +242,7 @@ Email providers like Google and Microsoft occasionally revoke access due to inac
 
 Warmup is the process of automatically sending and receiving emails from other inboxes in Smartlead's warmup pool so your actual campaign traffic looks similar to the emails you're already sending. We recommend you keep warmup on at all times for email accounts in the sequencer to maximize deliverability.
 
-The warmup process typically takes **2–3 weeks**. While in progress, the account's status shows as **Warming up** in Campaigns → Email Accounts. Once complete, the status automatically switches to **Ready** — no action is needed on your end.
+The initial warmup phase typically takes **2–3 weeks**, during which the account's status shows as **Warming up** in Campaigns → Email Accounts. Once the initial phase completes, the status switches to **Ready**. Warmup emails continue to run in the background even after the status shows **Ready** — the Ready label means the account has been warming for at least 2 weeks and is ready for campaigns, not that warmup has stopped.
 
 When you add accounts via OAuth, we will automatically set up labels and filters to make it clear what emails are warmups and reduce clutter in your inbox. Your workspace has a unique two-word filter key (e.g., `clever-rocket`) that marks all warmup emails so you can apply these labels and filters.
 
