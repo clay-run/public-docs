@@ -25,7 +25,7 @@ To view your full audience, click `People` or `Companies` in the left sidebar.
 
 To add a data source for the first time, click the `Add data` button in the top right, then click `Add Source`.
 
-**Note:** Adding a data source requires Admin access. The `Add data` button and most source options are visible to all workspace members, but only Admins can complete source setup — Editors receive an error when attempting to connect a source. If you're an Editor, ask a workspace Admin to connect the source, or have your role changed.
+**Note:** Non-admin workspace members (Editors and Viewers) can freely view, browse, and filter Audiences — browsing People, Companies, and existing audience segments is available to everyone in the workspace. Admin access is required only to add or configure data sources. Non-admins do not see source setup or configuration controls — those controls are hidden for Editors and Viewers, who instead see a prompt to contact a workspace Admin. If you need to connect or update a source, ask a workspace Admin to do it, or have your role changed.
 
 You can import data from:
 
