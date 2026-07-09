@@ -146,7 +146,7 @@ If you are the sole admin of a workspace with other members or pending invites, 
 
 -   Your deletion request is processed and logged for audit purposes.
 -   Your API keys are deleted.
--   Your account email is updated to a deleted variant.
+-   Your account email, display name, and username are anonymized.
 -   For any workspaces affected by your account deletion, workspace admins will receive email notifications.
 -   Your private app account and Stripe customer information are deleted to prevent unexpected charges.
 -   You will receive an email confirmation once your account has been deleted.
