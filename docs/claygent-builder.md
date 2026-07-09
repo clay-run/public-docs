@@ -258,6 +258,12 @@ To get started, enable **Web search** in your Claygent's **Configuration** panel
 
 Agent access follows your workspace permissions. Editors can create and modify agents, while viewers can reference approved agents in tables.
 
+### Can I move a Claygent to a different workspace or account?
+
+No. Claygents are scoped to the workspace they are created in, and there is no built-in export, import, or transfer feature.
+
+To use a Claygent in a different workspace, manually recreate it using Claygent Builder in the destination workspace — copy over the prompt, model settings, any uploaded context documents, and the output schema from the original.
+
 ### Does testing cost credits?
 
 No. You can have up to 10 test cases per Claygent at a time for free. You can delete and add new test inputs to keep testing. Once you deploy and run your agent in a table, standard runs follow your normal billing.
