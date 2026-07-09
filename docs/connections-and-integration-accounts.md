@@ -121,6 +121,8 @@ A **default account** is automatically selected for workflows or integrations wh
 -   Click the `…` menu next to the account, and select `Set as Default`.
 -   The account will now display a `default` label to indicate its status.
 
+**Note:** The default account is used when creating new columns and workflows going forward — it does not retroactively update existing columns or workflows. Columns already configured to use a specific connection continue to reference that connection regardless of which account is set as default. To update all existing columns to use a different account's credentials, use **Reconnect** on the connection those columns already reference (see [Rotating or updating credentials](#rotating-or-updating-credentials) above). Reconnecting updates the credentials in place so every column referencing that connection automatically uses the updated account on its next run.
+
 ### Deleting accounts
 
 -   Navigate to the service in the `Connections` section.
