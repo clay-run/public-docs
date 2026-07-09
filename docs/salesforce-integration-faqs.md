@@ -82,6 +82,8 @@ The test confirms the connection is valid and shows the SFDC user's email addres
 
 **Deleting the default connection:** You can delete a connection that is currently set as default. When you do, Clay automatically reassigns the default to the next available Salesforce connection. If no other connection exists, the default is cleared. Note that deleting any connection requires you to be either the person who originally added it or a workspace admin — you cannot delete a connection added by someone else unless you are an admin.
 
+**What changing the default affects:** Setting a new default applies only to Salesforce columns you create after making the change. Existing columns and workflows continue to use the connection they were originally configured with — changing the default does not update them. To have all existing columns switch to a different Salesforce account, use **Reconnect** on the connection those columns already reference: this updates the credentials in place, so every column referencing that connection picks up the new account on its next run. See [Connections and integration accounts](./connections-and-integration-accounts.md) for the full reconnect walkthrough.
+
 ## Why is a Salesforce object (such as Account) not appearing in Clay?
 
 The objects available in Clay are determined entirely by the permissions of the Salesforce user whose credentials were used to authenticate the integration. Clay queries Salesforce's API for the full list of accessible objects — it does not maintain its own allowlist or blocklist. If an object like Account is missing from the dropdown, it means the connected Salesforce user does not have access to it in Salesforce.
