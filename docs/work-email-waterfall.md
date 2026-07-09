@@ -120,6 +120,18 @@ This is different from an *upstream column* being skipped due to a run condition
 
 See [Conditional runs](conditional-runs.md) for a full reference on how run conditions work and how to use the **Explain** button to diagnose them.
 
+### Why do some rows in my waterfall show "Run condition not met" on provider or validation columns?
+
+This is expected behavior when the waterfall is working correctly. **"Run condition not met"** appearing on a subset of rows — not all rows — means the waterfall's built-in sequencing logic skipped that step for those rows. There are two common reasons:
+
+- **An earlier provider already found a valid email for that row.** The Work Email waterfall runs providers in sequence and stops as soon as one returns a valid result. Once an earlier provider succeeds for a row, all subsequent provider columns are skipped for that row — they show "Run condition not met" because the built-in condition ("only run if no valid email has been found yet") is no longer true. This is the waterfall stopping early as intended, saving credits by not running additional providers once a match is found.
+
+- **The corresponding provider returned no email, so the validation step was skipped.** Each validation column is configured to run only when the provider step before it actually returned an email. If a provider found nothing for a row, the paired validation column shows "Run condition not met" — there is no email to check. No credits are charged for skipped validation steps.
+
+In both cases, "Run condition not met" on some rows is not an error — it means the waterfall is operating as designed. You only pay credits for provider steps that run and for the validation step that checks a found email.
+
+**This is different from the case where all rows on every provider step show "Run condition not met"**, which typically indicates a misconfigured run condition rather than normal waterfall sequencing. See [Why do all the provider steps in my waterfall show "Run condition not met"?](#why-do-all-the-provider-steps-in-my-waterfall-show-run-condition-not-met) for that scenario.
+
 ### What match rate should I expect from the Work Email waterfall?
 
 For a well-configured Work Email waterfall with good input data, a match rate of **60–75%** is typical across most B2B contact lists. Results vary based on:
