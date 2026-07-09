@@ -61,6 +61,32 @@ The **Google search query** field in both **Find with a Google Search** and **Se
 site:crunchbase.com intitle:"CEO" AND ("software company" OR "tech startup")
 ```
 
+## Using column references in the query
+
+The **Google search query** field in both **Find with a Google Search** and **Search Google (Perform Search)** supports dynamic references to other columns in your Clay table. This lets you build a personalized search query for each row — for example, one search per company.
+
+To insert a column reference:
+
+1.  Click in the **Google search query** field.
+2.  Type `/` to open the column picker.
+3.  Select the column you want to reference.
+
+The column is inserted as `{{"Column Name"}}`. Clay replaces this token with each row's value when the search runs. Do not type the `{{"..."}}` syntax manually — use the `/` picker so the token is inserted correctly.
+
+**Example:** To search for job postings at each company in your table:
+
+```
+{{"Company Name"}} hiring for RevOps
+```
+
+This runs one Google search per row — for example, `Acme Corp hiring for RevOps` — using the value from the **Company Name** column.
+
+You can combine column references with Google search operators:
+
+```
+site:linkedin.com/in {{"Company Name"}} CEO
+```
+
 ## Using Serper with your own API key
 
 Clay's built-in **Search Google** enrichment runs through Clay's managed Serper account. If you have your own Serper API key — for example, to run higher volumes or access additional Serper endpoints — you can call Serper's API directly using the [HTTP API](http-api-integration-overview.md) integration.
