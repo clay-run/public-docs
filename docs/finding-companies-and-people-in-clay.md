@@ -153,6 +153,8 @@ For example, if you have a "Headquarters Location" column in your company table,
 
 **Note:** Location filtering accepts named regions, countries, and cities — distance-based filtering (for example, "within 35 miles of a location") is not available in Find People or Find Contacts at Company.
 
+**Note:** If the location column you're referencing contains a combined city/state/country string — for example, "Chicago, Illinois, United States" — `Find Contacts at Company` interprets each comma-separated value as a separate OR condition. Passing "Chicago, Illinois, United States" to the **Locations** input returns contacts from Chicago OR Illinois OR the United States, not only Chicago. To filter by a specific city, use a formula to extract just the city name and map that single, clean value to the **Include cities** input. Map the state to **Include states, provinces, or municipalities** and the country to **Include countries** — each as a separate, comma-free value.
+
 ### Target ICP contacts first with a senior fallback
 
 When your goal is to reach your ideal customer profile (ICP) at each company — but fall back to the most senior people available if no ICP match is found — run two separate `Find Contacts at Company` enrichment columns in your company table, then use AI to select the best contacts before routing them to a people table.
