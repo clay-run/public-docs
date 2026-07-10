@@ -95,6 +95,14 @@ So if your source displays more rows than your table (for example, 162 vs. 92), 
 
 **Note:** Records that Clay rejected with a `429` rate limit error were never stored and do not appear in either count. See the [Limits](#limits) section above for guidance on keeping requests within the 10/second throughput limit to avoid dropped records.
 
+### I deleted rows from my webhook table — will new submissions start coming in again?
+
+No. Deleting rows does not reset the 50,000 submission count. The limit is cumulative — it counts every submission accepted since the webhook was created, and that counter does not decrease when you delete rows from the table.
+
+To continue receiving new submissions after reaching the limit, create a new webhook: open your workbook, add a new **Monitor webhook** source, and update your sending system to POST to the new webhook URL. New records will start flowing in immediately.
+
+**Enterprise plan:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) (passthrough mode) to bypass the 50,000 cap entirely — a single webhook URL can keep accepting data indefinitely without ever hitting the limit.
+
 ### My webhook is sending data successfully but new rows aren't visible in my table
 
 If your external tool reports a successful delivery (for example, a `200 OK` response from Clay's webhook endpoint) but new rows aren't showing up in your table view, the most likely cause is an **active view filter** hiding the incoming rows.
