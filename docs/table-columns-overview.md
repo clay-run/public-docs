@@ -189,7 +189,7 @@ You can filter your table to show only rows that match specific criteria. Filter
 
 1.  Click the **Filter** button in the table toolbar.
 2.  Click **Add filter** and select a column to filter by.
-3.  Choose a comparison operator (e.g., **is**, **contains**, **is not empty**) and enter a value.
+3.  Choose a comparison operator (e.g., **is**, **contains**, **is not empty**) and enter a value. The operators shown depend on the column's data type: Number (#) columns include numeric operators such as **is greater than** and **is less than**, while Text columns include string operators such as **contains**. If an expected numeric operator isn't visible, check that the column is set to the **Number** type. See [Comparison operators](comparison-operators.md) for a full reference.
 4.  To add more conditions, click **Add filter** again. Multiple filters are applied together — a row must match all active filters to appear.
 5.  To remove a single filter, click the **×** next to it. To remove all filters, click **Clear filters**.
 
