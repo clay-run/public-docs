@@ -57,6 +57,14 @@ Filter where `date.created > "2024-01-01"`.
 
 Exclude records where `status == "Inactive"`.
 
+**Available operators depend on the column's data type.** Clay shows only the operators that match how a column is typed:
+
+-   **Number (#) columns** show numeric operators: equals, does not equal, is greater than, is greater than or equal to, is less than, is less than or equal to, is empty, is not empty.
+-   **Text columns** show string operators: is, is not, contains, contains any of, does not contain, does not contain any of, is empty, is not empty.
+-   **Date columns** show date operators: is before, is after, on or before, on or after, is empty, is not empty.
+
+If an expected operator isn't visible — for example, **is greater than or equal to** doesn't appear when filtering a column that contains numbers — the column is likely stored as **Text (T)** rather than **Number (#)**. Check the icon in the column header: a **T** icon means Text; a **#** icon means Number. A column created from a CSV import or added manually uses Text by default unless Number was explicitly selected when the column was created.
+
 ### **Lead Scoring**
 
 Implement scoring rules based on multiple criteria.
