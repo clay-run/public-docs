@@ -192,6 +192,14 @@ Alternatively, turn auto-run **off** entirely before editing (`⛭` → toggle *
 
 See [Auto-run](auto-run.md) for full details on **Keep existing results** and how the auto-run mode affects which cells run.
 
+### Credits used total doesn't match my available balance
+
+The **Credits used** figure shown on each tab (Workbooks, Integrations, Signals, MCP, API) reflects credit spend attributed to that specific category. Your **available balance** — the "X credits available" indicator in the top navigation bar and on the Total Balance tab — is drawn from your workspace's credit ledger, which tracks all credit movements: tab-level spend, refunds, and any account credits applied to your balance.
+
+Because the available balance accounts for all credit movements while each tab's Credits used reflects only spend in that category, subtracting Credits used from your yearly allotment will not always equal your available balance exactly. A small gap between the two figures is expected and does not indicate an error — your available balance is the accurate reflection of credits remaining in your account.
+
+To get the closest view of your total credit spend for a period, add up the Credits used totals across all tabs (Workbooks, Integrations, Signals, MCP, and API) for the same time range. If that sum still doesn't reconcile exactly with your allotment minus your available balance, the remaining difference is typically accounted for by refunds or account credits applied to your workspace outside of the per-tab spend tracking.
+
 ### Requesting a goodwill credit refund
 
 If credits were accidentally consumed — for example, from a misconfigured scheduled run or an unintended large batch — you can contact [Clay support](https://app.clay.com) to request a one-time goodwill credit refund. When submitting a request, include:
