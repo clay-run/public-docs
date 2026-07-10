@@ -116,6 +116,20 @@ To use a Long Text Area (or other non-filterable) field as a lookup key in Clay,
 
 Once the value is in a filterable Text field, it will appear in the Clay Lookup Record dropdown and can be used as a match key.
 
+## Why are some Salesforce fields missing from the Object Field(s) selector in the Lookup Record action?
+
+If a Salesforce field is visible in your Salesforce UI but doesn't appear in the **Object Field(s)** list in Clay's Lookup Record action — the list of fields you can select to *return* from the lookup — the most common cause is **field-level security (FLS)**.
+
+Clay populates the Object Field(s) list by calling Salesforce's object describe API with the connected Salesforce user's credentials. Salesforce's describe API respects FLS: fields that the connected user does not have **Read** access to are not returned, so they never appear as selectable options in Clay. This is distinct from the [search-field picker issue above](#why-is-a-salesforce-field-not-appearing-in-the-lookup-record-field-picker), which is a data-type restriction; the Object Field(s) selector is filtered by what the connected user can actually access.
+
+**How to fix it:**
+
+1. **Update field-level security in Salesforce.** Ask a Salesforce admin to go to `Setup` → `Profiles` (or `Permission Sets`) → find the profile or permission set assigned to the connected Salesforce user → `Object Settings` → select the relevant object (for example, `Contact`) → `Field Permissions`. Enable **Read** access for each field that should appear in Clay.
+2. **Refresh the field list in Clay.** After the permission change is saved, open the Lookup Record column in your Clay table and click **Refresh fields**. This re-fetches the object's field definitions from Salesforce and adds the newly accessible fields to the Object Field(s) selector.
+3. **Add the fields to your lookup.** Once the fields appear in the **Object Field(s)** dropdown, select each one you want returned. Fields not added here are not returned by the lookup, even if the connected user now has access to them.
+
+**To confirm which Salesforce user your connection is authenticated as**, go to `Settings` → `Connections` → `Salesforce`, click `…` next to your connection, and select `Test Connection`. Clay displays that user's email address — confirm the user has the correct FLS permissions for the fields you need.
+
 ## Why does the Lookup Record action return a maximum of 5 results?
 
 The standard **Lookup Record** action returns a maximum of 5 records per run. This is by design — it is optimized for finding a single matching record and returns up to 5 results when multiple matches exist.
