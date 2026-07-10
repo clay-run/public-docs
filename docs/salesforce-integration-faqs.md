@@ -503,6 +503,30 @@ If your Salesforce org has assignment rules that specifically fire on records ow
 
 **Note:** Unlike the **Update Record** action — which has a **Disable auto-assignment rules** toggle for leads, cases, and accounts — the **Create Record** action does not have a built-in option to suppress assignment rules entirely. If your org has assignment rules that fire on all new records regardless of owner, you will need to adjust those rules on the Salesforce side.
 
+## Why am I seeing an `INACTIVE_OWNER_OR_USER` error when creating records in Salesforce?
+
+This error means Salesforce tried to assign the new record to a deactivated user. Clay's **Create Record** action does not set an Owner ID by default — when no owner is explicitly mapped, Salesforce applies its own ownership logic, which can include inheriting the Account owner as the Contact owner, running assignment rules, or triggering owner-routing flows. If that logic points to a deactivated user, Salesforce rejects the record creation with `INACTIVE_OWNER_OR_USER`.
+
+Because the assignment happens on the Salesforce side, some rows may succeed (for accounts whose owner is active) while others fail (for accounts whose owner has been deactivated).
+
+**Clay-side workaround: explicitly map an Owner ID**
+
+You can bypass Salesforce's automatic owner assignment by mapping the **Owner ID** field in your **Create Record** column to a valid, active Salesforce User ID:
+
+1.  In your **Create Record** column, click **+ Add field** in the **Map fields** section and select **Owner ID**.
+2.  Map it to a Clay column containing valid Salesforce User IDs, or type a static User ID directly.
+3.  If your Clay table has the owner's name rather than their Salesforce User ID, add a **Lookup Record** column (set the Salesforce object to **User** and search by name or email) to retrieve the ID first. See [Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?](#why-am-i-seeing-a-malformed_id-error-when-creating-or-updating-a-salesforce-record) for the step-by-step lookup workflow.
+
+When the Owner ID is explicitly set to an active user, Salesforce does not fall back to its default assignment logic for that field.
+
+**Salesforce-side fixes**
+
+If you prefer to resolve the issue on the Salesforce side, ask your Salesforce admin to:
+
+-   **Reactivate the user.** If the deactivated user should still own the records, reactivate their account in Salesforce.
+-   **Reassign the Account to an active user.** If new contacts are inheriting their owner from a deactivated Account owner, reassigning the Account to an active user — and bulk-updating the existing contacts on that Account — allows new contacts to be created without the error.
+-   **Review assignment rules and owner-routing flows.** Check which assignment rule, Flow, or routing automation is pointing records at the deactivated user and update it to route to active users only.
+
 ## Why am I seeing a "Retried but failed: Failed to lock row" error when updating Salesforce records?
 
 This error means Salesforce returned an `UNABLE_TO_LOCK_ROW` response — it could not get exclusive write access to a record because another process was writing to it (or a related record) at the same time.
