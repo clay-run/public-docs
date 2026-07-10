@@ -63,7 +63,7 @@ Exclude records where `status == "Inactive"`.
 -   **Text columns** show string operators: is, is not, contains, contains any of, does not contain, does not contain any of, is empty, is not empty.
 -   **Date columns** show date operators: is before, is after, on or before, on or after, is empty, is not empty.
 
-If an expected operator isn't visible — for example, **is greater than or equal to** doesn't appear when filtering a column that contains numbers — the column is likely stored as **Text (T)** rather than **Number (#)**. Check the icon in the column header: a **T** icon means Text; a **#** icon means Number. A column created from a CSV import or added manually uses Text by default unless Number was explicitly selected when the column was created.
+If an expected operator isn't visible — for example, **is greater than or equal to** doesn't appear when filtering a column that contains numbers — the column is likely stored as **Text (T)** rather than **Number (#)**. Check the icon in the column header: a **T** icon means Text; a **#** icon means Number. To access numeric operators, the column must be set to the **Number (#)** type (see [Table columns](table-columns-overview.md#switching-column-data-type) for how to switch a column's type).
 
 ### **Lead Scoring**
 
