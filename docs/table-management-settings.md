@@ -1,6 +1,6 @@
 ---
 title: Table management settings
-description: Manage table settings including auto-dedupe, duplicate table, view graph, rename, edit description, view history, and auto-delete.
+description: Manage table settings including auto-dedupe, duplicate table, view graph, rename, edit description, view history, auto-delete, and navigating to a table by ID.
 last_synced: 2026-04-26T01:40:46.622Z
 ---
 
@@ -179,3 +179,22 @@ Track changes to your table, including who made them and when. View updates to s
 4.  Click `View details` to get more information.
 
 For restoring your table to a previous configuration, see [Table versions](table-versions.md).
+
+## Navigate to a table by ID
+
+Every Clay table has a unique **table ID** (starting with `t_`). If you have a table's ID, you can open it directly in the Clay app by constructing a URL in this format:
+
+```
+https://app.clay.com/workspaces/<workspace_id>/tables/<table_id>
+```
+
+Replace `<workspace_id>` with your workspace ID and `<table_id>` with the table's ID. Paste the completed URL into your browser and you'll land directly on that table.
+
+**Where to find your workspace ID:** Your workspace ID appears in the URL bar whenever you're inside Clay — for example, the `12345` in `https://app.clay.com/workspaces/12345/tables/...`.
+
+**Where table IDs appear:**
+
+-   In the browser URL bar when you're viewing the table — for example, the `t_abc123` in `https://app.clay.com/workspaces/12345/tables/t_abc123`.
+-   In the **Origin** metadata field of a Clay record when that record was written to the table from another table. The `Origin` object contains a `Table Id` field (and `Originating Table Id`) that lets you trace a row back to the table that produced it.
+
+**Note:** If the table is inside a workbook, the URL includes the workbook ID: `https://app.clay.com/workspaces/<workspace_id>/workbooks/<workbook_id>/tables/<table_id>`. Use whichever format matches the URL structure already visible in your browser when you are on that table.
