@@ -1,6 +1,6 @@
 ---
 title: Table management settings
-description: Manage table settings including auto-dedupe, duplicate table, view graph, rename, edit description, view history, and auto-delete.
+description: Manage table settings including auto-dedupe, duplicate table, view graph, rename, edit description, view history, auto-delete, and how to navigate to a table by its ID.
 last_synced: 2026-04-26T01:40:46.622Z
 ---
 
@@ -179,3 +179,16 @@ Track changes to your table, including who made them and when. View updates to s
 4.  Click `View details` to get more information.
 
 For restoring your table to a previous configuration, see [Table versions](table-versions.md).
+
+## Navigate to a table by its ID
+
+Every Clay table has a unique table ID (a string beginning with `t_`) that you can use to open that table directly. This is useful when you have a table ID but can't locate the table by name — for example, when you see a table ID in the **Origin** metadata on a row that was sent from another table.
+
+To navigate to a table by its ID, enter the following URL in your browser:
+
+`https://app.clay.com/workspaces/{workspace_id}/tables/{table_id}`
+
+-   **workspace_id** — a numeric ID (for example, `201578`). Find it in the browser address bar when you're viewing any table or workbook in that workspace.
+-   **table_id** — the table's unique identifier, starting with `t_` (for example, `t_0tht6jsYy69mybXwJzB`). Find it in the address bar when you're viewing the table. It also appears in the **Origin** metadata on rows that were sent from another table — look for **Table Id** or **Originating Table Id** in that object.
+
+**Note:** If the table belongs to a workbook, this URL redirects automatically to the full workbook URL. You need to be a member of the workspace that owns the table to view it.
