@@ -98,6 +98,29 @@ Use this action to find a HubSpot owner by ID or email address.
 -   **Owner ID (Optional):** The HubSpot owner ID to search for. If both ID and email are provided, the email will be validated against the owner found by ID.
 -   **Email (Optional):** The email address to search for. If both ID and email are provided, the email will be validated against the owner found by ID.
 
+### `Action` Enroll a contact in a sequence
+
+Use this action to enroll a HubSpot contact into a sequence for automated follow-up.
+
+**Prerequisite:** The HubSpot connection must have the `automation.sequences.read` and `automation.sequences.enrollments.write` scopes enabled — these are disabled by default. Enable them during connection setup (see [Why do I get "Authorization failed because your account lacks access to the required scopes"?](#why-do-i-get-authorization-failed-because-your-account-lacks-access-to-the-required-scopes-automationsequencesenrollmentswrite-automationsequencesread)).
+
+**Inputs**
+
+-   **Contact ID:** The `hs_object_id` of the HubSpot contact to enroll. Use a **Lookup object** or **Import objects from HubSpot** source column to obtain this value.
+-   **Sequence:** The sequence to enroll the contact in. Available sequences are loaded dynamically from the connected HubSpot account — only sequences accessible to the connected account are shown.
+-   **Sender email:** The email address from which the sequence emails will be sent. This must be a mailbox connected and enabled for HubSpot Sequences within the connected HubSpot account.
+-   **Sender alias address (Optional):** An alternate address from which sequence emails will appear to be sent. Alternate addresses must be configured in HubSpot before use.
+
+**Note:** The sender identity is determined by the HubSpot account used in the connection — not by who configures the action in Clay. If multiple team members need to send from their own identities, each must connect their own HubSpot account with sequences scopes enabled. See [Why does each team member need their own HubSpot connection to enroll contacts in sequences?](#why-does-each-team-member-need-their-own-hubspot-connection-to-enroll-contacts-in-sequences).
+
+### `Action` Retrieve enrollment status of a contact
+
+Use this action to check whether a HubSpot contact is enrolled in any sequences and retrieve enrollment details.
+
+**Inputs**
+
+-   **Contact ID:** The `hs_object_id` of the HubSpot contact to check.
+
 ## OAuth scopes
 
 When connecting your HubSpot account, Clay uses optional OAuth scopes to give you fine-grained control over permissions.
@@ -382,6 +405,16 @@ If these scopes were checked during setup and your HubSpot subscription doesn't 
 4. Complete the reconnection flow.
 
 You only need to enable these scopes if you're specifically using Clay to enroll contacts in HubSpot Sequences. For standard CRM syncing, contact and company management, or Audiences setup, leave them unchecked.
+
+### Why does each team member need their own HubSpot connection to enroll contacts in sequences?
+
+When Clay enrolls a contact in a HubSpot sequence, it uses the OAuth token from the connected HubSpot account to call HubSpot's API. HubSpot derives the sender identity — the HubSpot user ID and associated inbox — directly from that token. This means:
+
+-   Enrollments made using a given connection always come from that **connection owner's HubSpot inbox**, regardless of which Clay user configured the action.
+-   If you want to enroll contacts from your own sender identity, you must connect your own HubSpot account in Clay with the sequences scopes (`automation.sequences.read` and `automation.sequences.enrollments.write`) enabled.
+-   The sequences shown in the **Sequence** dropdown are those accessible to the connected HubSpot account — you will only see sequences from the connected account, not a colleague's.
+
+**For Enterprise workspaces:** A connection owner can grant other workspace members the ability to configure the enrollment action using their connection (via **Settings → Connections** — see [Access settings for connections](access-settings-for-connections.md)). However, enrollments run through a shared connection still come from the connection owner's HubSpot inbox. To send sequences from a different sender identity, each team member must connect their own HubSpot account with sequences scopes enabled.
 
 ### Why does my HubSpot Create Object show "Invalid input" on some rows?
 
