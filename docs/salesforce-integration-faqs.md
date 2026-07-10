@@ -130,6 +130,19 @@ Clay populates the Object Field(s) list by calling Salesforce's object describe 
 
 **To confirm which Salesforce user your connection is authenticated as**, go to `Settings` → `Connections` → `Salesforce`, click `…` next to your connection, and select `Test Connection`. Clay displays that user's email address — confirm the user has the correct FLS permissions for the fields you need.
 
+## Why are some Salesforce fields missing from the Map fields panel in the Update Record or Create Record action?
+
+If a Salesforce field exists in your org but doesn't appear when you click **+ Add field** in the **Map fields** panel of an Update Record or Create Record action, the most common cause is **field-level security (FLS)**.
+
+Clay populates the Map fields picker by calling Salesforce's object describe API with the connected Salesforce user's credentials. Salesforce's describe API respects FLS: fields that the connected user does not have **Edit** access to (for Update Record) or **Create** access to (for Create Record) are excluded from the response and never appear as options in Clay. Unlike the Object Field(s) selector in the Lookup Record action — which only requires **Read** access — the Map fields panel for write actions requires the appropriate write permission on each field.
+
+**How to fix it:**
+
+1. **Update field-level security in Salesforce.** Ask a Salesforce admin to go to `Setup` → `Profiles` (or `Permission Sets`) → find the profile or permission set assigned to the connected Salesforce user → `Object Settings` → select the relevant object (for example, `Lead`) → `Field Permissions`. Enable **Read** and **Edit** access for each field that should appear in the Map fields panel.
+2. **Refresh the field list in Clay.** After the permission change is saved, open the Update Record or Create Record column in your Clay table, scroll to the **Map fields** section, and click **Refresh**. This re-fetches the object's field definitions from Salesforce and adds the newly accessible fields to the picker. The same refresh is also needed when fields were recently created in your Salesforce org — Clay works from a cached copy of field definitions and does not pick up new fields automatically.
+
+**To confirm which Salesforce user your connection is authenticated as**, go to `Settings` → `Connections` → `Salesforce`, click `…` next to your connection, and select `Test Connection`. Clay displays that user's email address — confirm the user has the correct FLS permissions for the fields you need.
+
 ## Why does the Lookup Record action return a maximum of 5 results?
 
 The standard **Lookup Record** action returns a maximum of 5 records per run. This is by design — it is optimized for finding a single matching record and returns up to 5 results when multiple matches exist.
