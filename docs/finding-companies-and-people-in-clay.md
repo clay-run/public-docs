@@ -387,14 +387,30 @@ When Clay resolves a domain to a company, it expands the search to include all c
 
 ### "Company Table Data" shows "Missing Input" in the people table
 
-After running Find People from a company list, some rows in the resulting people table may show **Missing Input** in the **Company Table Data** column. This happens when a person's current employer uses a different domain than the company you searched — for example, searching on `broadcom.com` returns someone whose current employer resolves to `vmware.com`. Because the domains don't match, Clay can't link that person back to the original company row, leaving the company record ID blank.
+The **Company Table Data** column can show **Missing Input** for two distinct reasons. Identify which applies before choosing a fix.
 
-This mismatch most commonly occurs with subsidiaries, acquired companies, and organizations that operate under multiple domains.
+**Cause 1: Domain mismatch after a Find People search**
 
-**To fix this:**
+After running Find People from a company list, some rows in the resulting people table may show **Missing Input**. This happens when a person's current employer uses a different domain than the company you searched — for example, searching on `broadcom.com` returns someone whose current employer resolves to `vmware.com`. Because the domains don't match, Clay can't link that person back to the original company row, leaving the company record ID blank. This mismatch most commonly occurs with subsidiaries, acquired companies, and organizations that operate under multiple domains.
+
+**To fix:**
 
 -   **Switch to LinkedIn company URLs as your company identifier** (recommended). When you provide a LinkedIn company URL instead of a domain, Clay uses the LinkedIn company slug for matching — which handles subsidiary and acquisition relationships more reliably. See [Use LinkedIn URLs, not domains, as company identifiers](#use-linkedin-urls-not-domains-as-company-identifiers).
 -   **Add a Lookup Rows fallback.** In your people table, add a **Lookup single row in other table** column. Set `Table to search` to your original companies table and match on `domain`. For rows where the person's current company domain is populated, this retrieves company fields directly — even when the automatic Company Table Data link is missing. See [Lookup Rows](lookup-rows.md).
+
+**Cause 2: "Clay Company Id" cannot be used as the Company Record ID**
+
+If you see Missing Input and tried to fix it by looking up the **Clay Company Id** from your company table's cell details panel (a numeric value like `34308049`) and mapping it to the Company Record ID input in Company Table Data — that won't resolve the error. The **Clay Company Id** is an internal data profile identifier from Clay's company graph; it is a completely different type of value than the **Company Record ID** that Company Table Data requires. Company Record ID is a table row record ID that Clay writes automatically when it links a person row to a company row during the **Find People at These Companies** flow. It cannot be supplied manually.
+
+**To fix:** Use **Lookup Rows** instead — it retrieves the same company fields by matching on a shared value like domain, with no Company Record ID required:
+
+1.  In your people table, click **Add enrichment** and search for **Lookup single row in other table**.
+2.  Set **Table to search** to your company table.
+3.  Set **Target column** to the domain column in the company table.
+4.  Set **Row value** to the domain column in your people table.
+5.  Run the lookup. From any populated result cell, hover over a company field and click **Add as column** to promote it.
+
+See [Lookup Rows](lookup-rows.md) for full configuration details and tips on normalizing match keys.
 
 ### Enrichment columns show "Missing input" for company rows
 
