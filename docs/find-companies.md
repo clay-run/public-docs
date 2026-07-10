@@ -27,7 +27,7 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
     -   **Company size** — The self-reported size band on the company's profile (e.g., 11–50, 51–200). Select one or more bands from the dropdown.
     -   **Annual revenue ranges** — Filter by revenue brackets from $0–$500K up to $100B+.
     -   **Funding raised** — Filter by total funding raised. Select one or more brackets from Under $1M up to $250M+, or select **Funding unknown** to include companies with no recorded funding data.
-    -   **Company types** — Privately Held, Public Company, Partnership, Self Employed, Non Profit, Educational, Self Owned, or Government Agency.
+    -   **Company types** — Privately Held, Public Company, Partnership, Self Employed, Non Profit, Educational, Self Owned, or Government Agency. These values reflect how companies self-classify on their profiles.
     -   **Keywords** to include or exclude
         -   **Exact phrase matching:** Wrap multi-word terms in single or double quotes to search for that exact phrase. For example, searching for "Google Cloud" finds companies with "Google Cloud" in their description — not just companies that mention Google and cloud separately. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are stripped out even with quoted phrases.
     -   **Semantic company description** — Enter a free-text description to help rank results based on how closely they match your ideal company profile (e.g., "B2B fintech company selling to mid-market banks").
@@ -147,6 +147,14 @@ These two filters measure different things:
 -   **Estimated employee count** is a numeric min/max filter based on a separately computed count of estimated employees derived from profile data.
 
 Because the two values are sourced independently, a company whose reported size band is "51–200" may have a computed employee count of 250 — or vice versa. Filtering on one versus the other can return a different set of companies even when the numbers appear to overlap.
+
+### Why do companies sourced with a revenue filter have different enriched revenue values?
+
+The **Annual revenue ranges** filter in Find Companies uses estimated revenue from third-party sources stored in Clay's company database — the figure on file at search time.
+
+When you enrich revenue afterward — using Clay's built-in enrichments, Clearbit, Owler, or other providers — those values come from each provider's own methodology and data pipeline, which is completely independent from Clay's search index. Because revenue for private companies is not publicly disclosed and must be estimated, different providers can reach materially different figures for the same company.
+
+As a result, filtering for revenue above a threshold (for example, above $500M) and then enriching can surface a significant share of companies where the enriched value falls below that threshold — this is expected behavior, not a data error. Treat **Annual revenue ranges** as a broad directional signal for initial scoping and use your post-enrichment provider's figures as the source of truth for final qualification.
 
 ### Re-running Find Companies shows far fewer results than my original run
 
