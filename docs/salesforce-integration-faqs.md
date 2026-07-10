@@ -130,6 +130,27 @@ Clay populates the Object Field(s) list by calling Salesforce's object describe 
 
 **To confirm which Salesforce user your connection is authenticated as**, go to `Settings` → `Connections` → `Salesforce`, click `…` next to your connection, and select `Test Connection`. Clay displays that user's email address — confirm the user has the correct FLS permissions for the fields you need.
 
+## Why does a Salesforce picklist field show unexpected values when I map it in Clay?
+
+If a Salesforce picklist field shows values you don't expect in a Create Record or Update Record column mapping — for example, "Hot," "Warm," and "Cold" when you expect "Tier 1," "Tier 2," and "Tier 3" — you've likely selected a different field than you intended.
+
+Clay displays Salesforce fields by their **label** in the mapping dropdown. If your Salesforce org has two fields with similar labels — such as a standard "Rating" field and a custom "Account Rating" field (API name: `Account_Rating__c`) — both appear in the dropdown under their respective labels. Selecting the wrong one shows that field's picklist values. Clay resolves each label to the correct Salesforce API name automatically, so the picklist values shown always correspond to the specific field you selected.
+
+**To map the correct field:**
+
+1. In your Create Record or Update Record column, open the **Column mapping** section and search for the field.
+2. Compare field labels carefully. Standard Salesforce fields have shorter, generic labels (for example, "Rating"), while custom fields often have descriptive labels that can look similar (for example, "Account Rating"). Select the label that matches the specific field you want.
+3. Confirm the picklist values in the dropdown match what you expect. If they don't, deselect and try the other similarly-named field.
+
+**If your expected picklist values don't appear at all:**
+
+Clay fetches the latest field and picklist schema from Salesforce automatically each time you open the column configuration — no manual connection refresh is needed. New picklist values added to Salesforce after your connection was set up are reflected the next time you open the column config. If values are still missing after confirming you've selected the right field, check in Salesforce that:
+
+- The picklist values are **active** (not deactivated). Go to `Setup` → the object → **Fields & Relationships** → select the field → confirm each value is active.
+- The connected Salesforce user's **profile** has access to those picklist values, and the relevant **record type** includes them. Record type restrictions can limit which picklist values are available even when the values are globally active.
+
+For guidance on which Salesforce user Clay is connected as, see [How do I verify which Salesforce user is associated with my connection?](#how-do-i-verify-which-salesforce-user-is-associated-with-my-connection).
+
 ## Why does the Lookup Record action return a maximum of 5 results?
 
 The standard **Lookup Record** action returns a maximum of 5 records per run. This is by design — it is optimized for finding a single matching record and returns up to 5 results when multiple matches exist.
