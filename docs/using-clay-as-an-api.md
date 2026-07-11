@@ -56,6 +56,17 @@ Clay offers a fast API for searching its proprietary People and Company data. Yo
 
 [Contact our GTM engineers for more information.](https://www.clay.com/contact-form)
 
+**Public HTTP API — Routines (same beta access)**
+
+The same workspace-level beta access also unlocks a Routines endpoint for triggering Clay enrichment functions programmatically:
+
+-   `POST /routines/{routine_id}/run` — submit input records to a Clay function and start an enrichment run.
+-   `GET /routines/run/{routine_run_id}/results` — poll for results once the run completes.
+
+Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is under **Settings → Account → API keys** and is distinct from the personal API key on your profile page.
+
+**Note:** A 401 (`Authentication required`) from `api.clay.com/public/v0` means your workspace hasn't been provisioned for the Public HTTP API — this applies even if your API key is visible in settings. Regenerating the key will not fix a provisioning 401. [Contact Clay support](https://www.clay.com/contact-form) to request workspace enablement.
+
 **Note:** If you're using Clay as an API, **Auto-delete** helps keep things fast and lightweight. It automatically enriches incoming webhook data, sends results to your destination (like Salesforce or Google Sheets), then deletes the rows—so Clay streams data through rather than storing it. Perfect for high-volume or continuous enrichment jobs. [Learn more](https://www.clay.com/university/guide/auto-delete).
 
 ### 4\. **MCP / AI tool integration** (Best for AI assistants and agent workflows)
