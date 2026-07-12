@@ -27,3 +27,5 @@ Your Clay API key enables you to:
 This personal API key is designed for use **within Clay** — specifically for Clay-native integrations such as cross-table lookups. It is not supported for use with external CLI tools, custom MCP clients, or direct REST API calls made from outside of Clay. If you attempt to use it in those contexts, you will receive an authentication error; this is expected behavior.
 
 If you need programmatic access to Clay from an external tool or CLI, Clay offers a Public HTTP API (`api.clay.com`) that uses a separate workspace-scoped API key — this is distinct from the personal key described above. The Public HTTP API is currently in beta. To request access for your workspace, contact Clay support.
+
+Once beta access is enabled for your workspace, an **API keys (beta)** tab will appear under `Settings → Account`. From there you can create a workspace-scoped API key with the **Public API** scope — this is the key to pass in the `clay-api-key` request header for all calls to `api.clay.com`. Your personal API key (from the **API key** tab) will not work with the Public HTTP API and will always return a 401 error.
