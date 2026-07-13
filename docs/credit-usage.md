@@ -19,6 +19,8 @@ To check the credit usage in your workspace:
 2.  Go to `Settings` and then `Usage` in the sidebar.
 3.  Within `Workspace`, you can view folders, workbooks, and tables sorted by their usage.
 
+**Note:** Credit spend data in the dashboard is updated in near-real-time — spend typically appears within seconds of being consumed.
+
 **Tip:** If your workspace is approaching or has reached its monthly credit limit, Clay displays an orange banner at the top of every page. Click **See usage** in that banner to go directly to the credit usage dashboard.
 
 **Tip:** The credit indicator in the top navigation bar shows your **remaining** balance, labeled **"X credits available"** — this is how many credits you have left to spend this period, not how many you have already consumed. To see your credit consumption (how much you've spent), use the credit usage dashboard at `Settings → Usage`.
