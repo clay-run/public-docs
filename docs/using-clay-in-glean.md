@@ -21,7 +21,7 @@ Glean is an enterprise AI search and assistant platform for workplace knowledge.
     -   Toggle to view the list of people as a table
     -   Add filters (e.g., only people in the US or people who have been there for less than 6 months)
     -   Enrich contacts with additional data points (email address, work history summary, thought leadership)
-    -   Click `View info` next to a person's name to `View on LinkedIn` or `Draft email`
+    -   Click `View info` next to a person's name to view their professional network profile or `Draft email`
         -   **Note:** You'll need to enrich and find a person's email address before you can draft an outreach email.
 5.  Results are returned in groups of 20. Click `Load more` to see additional pages — up to 100 results total.
 6.  At any time, click `Open in Clay` in the top right corner to unlock more powerful enrichment and workflow capabilities directly in your Clay table.
