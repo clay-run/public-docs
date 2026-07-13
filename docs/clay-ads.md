@@ -199,6 +199,16 @@ A second factor: if Enhanced Matching is enabled, it uses a professional profile
 
 **To fix this:** Because field mapping cannot be changed after an Ad Sync is created, you'll need to deactivate the current sync and create a new one. Map at least one email column, and configure Enhanced Matching inputs if using that feature. See [Why should I use personal emails instead of work emails?](#why-should-i-use-personal-emails-instead-of-work-emails) for guidance on which email type gives the best results.
 
+### **Why is my Google Ads audience sync showing a "Failed to update audience" error?**
+
+This error typically means Google's API rejected the request. The most common cause is that **Customer Match** is not enabled on your Google Ads account. Clay creates and updates contact lists using Google's Customer Match API — if Customer Match is disabled or not yet approved for your account, the sync cannot proceed.
+
+**To verify Customer Match is enabled:**
+In your Google Ads account, go to **Tools & Settings → Audience Manager**. If Customer Match is not available there, contact your Google account manager or Google Ads support to request access before retrying the sync.
+
+**If Customer Match is enabled and the error still appears:**
+Reauthenticate your Google Ads connection in Clay: disconnect the Google Ads account in your Clay connections settings, reconnect it via OAuth, then run the sync again.
+
 ### **How do I connect my LinkedIn, Meta, or Google Ads account?**
 
 When you create your first ad audience, you'll be prompted to authenticate with LinkedIn Campaign Manager, Meta Business Manager, or your Google Ads account via OAuth. Make sure you have admin access to the ad account you want to use. Note that Google Ads syncing is currently in closed beta — contact [Clay support](https://www.clay.com/contact) to request access.
