@@ -2,14 +2,14 @@
 title: Using Clay in ChatGPT
 description: Find people, enrich contacts, and draft personalized outreach — all
   within a regular ChatGPT conversation.
-last_synced: 2026-04-26T01:40:52.599Z
+last_synced: 2026-07-13T21:39:45.462Z
 ---
 
 # Using Clay in ChatGPT
 
 Find people, enrich contacts, and draft personalized outreach — all within a regular ChatGPT conversation.
 
-Clay in ChatGPT lets you find people, enrich contacts, and draft personalized outreach — all within a regular ChatGPT conversation. Clay pulls data from a subset of its 150+ providers and AI-powered research agents directly into ChatGPT, so you can move from research to action in seconds.
+Clay in ChatGPT lets you find people, enrich contacts, and draft personalized outreach — all within a regular ChatGPT conversation. Clay pulls data from a subset of its 200+ providers and AI-powered research agents directly into ChatGPT, so you can move from research to action in seconds.
 
 ## Getting started
 
@@ -100,7 +100,7 @@ Workspace admins can set credit limits and monitor rep usage from `Settings → 
 
 **What data sources does Clay use in ChatGPT?**
 
-Clay in ChatGPT pulls from a subset of its 150+ third-party data providers to give you comprehensive coverage across contact data, company intelligence, and web research. If you want to enable additional enrichments, add a function for them and enable it for MCP.
+Clay in ChatGPT pulls from a subset of its 200+ third-party data providers to give you comprehensive coverage across contact data, company intelligence, and web research. If you want to enable additional enrichments, add a function for them and enable it for MCP.
 
 **What if I need data that isn't available?**
 
