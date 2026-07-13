@@ -60,6 +60,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
         -   `Update send limit`: Change the daily number of emails the account can send per day
         -   `Update sender variables`: Change the sender variable values for the account
     -   **Searching and bulk actions:** Use the **search bar** and **Filter** control in `Sender accounts` to quickly find accounts by email address or name. Filter by account type (Google OAuth, Outlook, or SMTP) or status (Ready, Warming up, Not warming, or Auth error). Select multiple accounts to bulk-enable warmup or remove them from the campaign at once.
+    -   **Assign sender account field to lead (optional):** By default, leads are distributed evenly across all configured sender accounts. To route each lead through a specific sender account, use the **Assign sender account field to lead** selector at the bottom of the `Sender accounts` tab and choose the source column that holds each lead's assigned sender email address. That column must contain email addresses of accounts already configured as senders in this campaign — if it contains lead contact emails instead, those leads will fail validation and be skipped. Leave this selector blank to use automatic even distribution across all accounts.
 6.  Adjust your `Schedule settings`:
     -   `Timezone`: Select the timezone to send from (we recommend matching your prospects').
     -   `Days of the week`: Choose which days emails are sent.
@@ -151,6 +152,21 @@ To increase your total daily sending capacity:
 -   **Increase the send limit** on an existing account — open the campaign's `Sender accounts` section, click the three-dot (⋯) menu next to the account, and select `Update send limit`.
 
 Keep in mind that sending high volumes of cold email from a single inbox puts your domain at risk. Starting near the default (20 emails/day) and scaling by adding accounts rather than increasing individual limits is safer for deliverability.
+
+### I'm seeing "Sender email address is not a configured sender account in this campaign." Why were some leads skipped?
+
+This error occurs when the **Assign sender account field to lead** selector in your campaign's `Sender accounts` tab is set to a column that contains your leads' contact email addresses rather than the email addresses of your configured sender accounts.
+
+When this selector is set, Clay validates each lead's assigned sender against the sender accounts registered in the campaign. If the email in that column doesn't match any configured sender account, the lead fails validation, is skipped immediately during sync, and never receives an email — which is why a campaign can show as completed while some leads were never contacted.
+
+**To fix it:**
+
+1. Open the campaign and click the `Sender accounts` tab.
+2. Scroll to the **Assign sender account field to lead (optional)** section at the bottom.
+3. Remove the currently assigned column and leave the selector blank.
+4. Return to your source table and re-run the `Sync lead data to campaign` column — only previously skipped leads will be re-processed; leads already contacted will not receive duplicate emails.
+
+When the selector is left blank, leads are distributed evenly across all configured sender accounts.
 
 ### Why are my emails queued up but not sending yet?
 
