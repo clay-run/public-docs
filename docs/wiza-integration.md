@@ -86,14 +86,15 @@ Use this action to locate and enrich contact records with phone numbers using Li
 
 ### Wiza times out on large batches, causing waterfall fallthrough and extra credits
 
-Wiza processes work-email lookups asynchronously. When you run many rows at once, multiple concurrent Wiza calls can queue up, causing Clay's requests to time out. In a waterfall enrichment, a timeout is treated as a failed step: Clay falls through to the next provider and charges credits, even though Wiza did not have a chance to return a result.
+Wiza processes work-email lookups asynchronously, which can take several minutes per lookup — Clay waits up to 5 minutes for a Wiza response before timing out. When you run many rows at once, multiple concurrent Wiza lookups can queue up and exhaust the concurrency limit on your Wiza API key, causing requests to stall and time out. In a waterfall enrichment, a timed-out step is treated as a non-result: Clay falls through to the next provider in the sequence and charges that provider's credits — even though Wiza did not have a chance to return a genuine match. Wiza's own credits are automatically refunded on timeout.
 
 **To prevent unintended credit spend from Wiza timeouts:**
 
 **Option 1 — Run Wiza in smaller batches (native integration):**
 
-The native Wiza integration does not include a built-in rate-limit setting, so controlling how many rows run concurrently is the primary lever.
+The native Wiza integration does not include a built-in rate-limit setting, so controlling how many rows run concurrently is the primary lever. Several approaches:
 
+-   **Right-click the Wiza column header** and choose **Run column** → **Choose number of rows to run**, then enter how many rows to process at once. Starting with a small number lets you stay within your API key's concurrency limit.
 -   **Set a row limit.** Click the **rows** button in the table toolbar (e.g., **6,236/6,236 rows**) and enter a value in the **Row limit** field to cap how many rows are eligible to run at a time. See [Run progress](run-progress.md#setting-a-row-limit) for details.
 -   **Run a subset of rows.** Select a range of rows by clicking the first row number and Shift-clicking the last, then right-click and choose **Run [N] rows**. This runs only those rows, leaving the rest untouched until you are ready.
 
