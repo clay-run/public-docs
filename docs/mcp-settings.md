@@ -36,7 +36,7 @@ _For more information about functions, check out our_ [_full doc_](https://unive
 
 ## Setting credit limits
 
-Credit limits cap how many Clay credits a rep can spend through ChatGPT, Claude, or Glean in a given month. Credit spend resets on the 1st of each month at midnight UTC.
+Credit limits cap how many Clay credits a rep can spend through ChatGPT, Claude, or Glean in a given month. Credit spend automatically resets on the 1st of each month at midnight UTC.
 
 There are two levels of control:
 
@@ -143,7 +143,7 @@ Yes, by removing them from your workspace. While admins cannot directly revoke a
 
 ### When do credits reset?
 
-Credit spend resets on the 1st of each month at midnight UTC.
+The MCP user credit limit is a rolling monthly limit. Credit spend automatically resets on the 1st of each month at midnight UTC.
 
 ### What happens when a rep hits their credit limit?
 
