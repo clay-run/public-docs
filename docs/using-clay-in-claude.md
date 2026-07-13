@@ -2,7 +2,7 @@
 title: Using Clay in Claude
 description: Find people, enrich contacts, and draft personalized outreach—all
   within a Claude conversation
-last_synced: 2026-04-26T01:40:52.929Z
+last_synced: 2026-07-13T21:18:15.656Z
 ---
 
 # Using Clay in Claude
@@ -13,7 +13,9 @@ The Clay connector in Claude lets you find people, enrich contacts, and draft pe
 
 ## Getting started
 
-1.  Go to the [Claude Connectors page](https://claude.com/connectors/clay) to connect Clay to your account. _Note: If you're on a Claude Enterprise plan, an admin must add the Clay connector before you can use it._
+**Note:** If you're on a Claude Enterprise plan, an admin must add the Clay connector before you can use it. If your Clay workspace admin has already enabled MCP access, try asking Claude about an account or contact — it will activate automatically if you're already connected.
+
+1.  Go to the [Claude Connectors page](https://claude.com/connectors/clay) to connect Clay to your account.
     -   If you have an existing Clay account, you'll connect immediately. If you're new to Clay, an account will be created for you during setup.
     -   If your admin has invited you to a team workspace, accept the invite email first before connecting here — connecting before accepting the invite will create a personal workspace instead of routing you into the team workspace.
 2.  In any Claude conversation, ask Claude to find people or companies—the Clay connector will activate automatically.
@@ -25,7 +27,8 @@ The Clay connector in Claude lets you find people, enrich contacts, and draft pe
     -   Add filters (e.g., only people in the US or people who have been there for less than 6 months)
     -   Enrich contacts with additional data points (email address, work history summary, thought leadership)
     -   Draft personalized emails based on the research
-5.  At any time, you can open your results directly in Clay at [app.clay.com](http://app.clay.com) to access more powerful enrichment and workflow capabilities.
+5.  Results are returned in groups of 20. Click `Load more` to see additional pages — up to 100 results total.
+6.  At any time, you can open your results directly in Clay at [app.clay.com](http://app.clay.com) to access more powerful enrichment and workflow capabilities.
 
 ## Use cases for Clay in Claude
 
@@ -39,7 +42,7 @@ Once you've researched an account, Clay helps you find the right people to reach
 
 -   `Find VP- and Director-level RevOps leaders at [Company] who started in the last 9 months.`
 -   `Find the contact information for [Company]'s Head of Partnerships.`
--   `Who are the engineering leaders at [Company] and what are their emails?`
+-   `Find B2B SaaS companies in New York with 200–500 employees.`
 
 ### Research any account
 
@@ -48,7 +51,7 @@ Use Clay to gather deep intelligence on target companies—tech stack, funding, 
 **Example prompts:**
 
 -   `What are [Company]'s top go-to-market priorities this year? Any recent executive changes or expansion signals?`
--   `Show me recent public posts from sales or product leaders at [Company] that mention automation or AI automation.`
+-   `Show me recent public posts from sales or product leaders at [Company] that mention automation or AI adoption.`
 -   `What new markets has [Company] expanded into recently? How has headcount changed over the last year? What tools power their partner GTM motion?`
 
 ### Draft personalized outbound
@@ -68,7 +71,6 @@ After gathering context on companies and contacts, use Clay to draft personalize
 To get the best results when using Clay in Claude:
 
 -   Include the company domain (e.g., "[rippling.com](http://rippling.com)"), not just the company name
--   Limit your search to one company at a time for more accurate results
 -   Be specific with criteria: job titles, locations, seniority, keywords
 -   If you aren't sure what job title you're looking for, try asking "who manages X at company"
 -   Avoid broad queries or general web searches
@@ -104,7 +106,7 @@ If you need additional data points or more advanced workflows, access the full C
 
 **Can I search for companies?**
 
-Company search is not currently supported. However, you can research companies by asking Clay questions about target accounts—tech stack, funding, hiring trends, leadership changes, and more. Clay surfaces information that's otherwise hard to find: org charts, job changes, funding history, social context, and tech stack signals.
+Yes — you can search for companies by criteria like location, headcount, and industry. For example: `Find B2B SaaS companies in New York with 200–500 employees.` You can also research any company by asking Clay about it directly — tech stack, funding, hiring trends, leadership changes, and more.
 
 **Can I query my Audiences data or run analytical queries like "group by seller"?**
 
@@ -125,7 +127,7 @@ Clay in Claude draws from your standard Clay workspace credit balance — there 
 
 **Do I need a paid Claude plan?**
 
-No.
+No, a free Claude account is sufficient to connect Clay and start searching. Some Claude features (like extended context or Projects) may require a paid plan, but Clay search and enrichment works on any plan.
 
 **Will this use credits from my account?**
 
