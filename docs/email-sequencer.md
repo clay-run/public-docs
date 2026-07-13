@@ -60,6 +60,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
         -   `Update send limit`: Change the daily number of emails the account can send per day
         -   `Update sender variables`: Change the sender variable values for the account
     -   **Searching and bulk actions:** Use the **search bar** and **Filter** control in `Sender accounts` to quickly find accounts by email address or name. Filter by account type (Google OAuth, Outlook, or SMTP) or status (Ready, Warming up, Not warming, or Auth error). Select multiple accounts to bulk-enable warmup or remove them from the campaign at once.
+    -   **Assign sender account column to lead (optional):** At the bottom of the `Sender accounts` section, you can optionally select an email column to assign a specific sending account to each lead. When this field is set, Clay uses the email address in that column as the sender for each lead — that address must exactly match one of the sender accounts already configured in the campaign. If the email value in the column does not match a configured sender account, that lead fails with the error: *"Sender email address '[email]' is not a configured sender account in this campaign."* Leads where the column is blank (no value) are distributed evenly across all configured sender accounts. If you are not deliberately routing leads to specific senders, leave this field empty.
 6.  Adjust your `Schedule settings`:
     -   `Timezone`: Select the timezone to send from (we recommend matching your prospects').
     -   `Days of the week`: Choose which days emails are sent.
@@ -259,6 +260,17 @@ Warmup automatically disables when your emails are being throttled by your email
 ### I'm getting an error that my email account is already in use. What does this mean?
 
 Clay's email sequencer runs on shared Smartlead infrastructure, and Smartlead only allows each email address to be connected once across the entire system. This error most commonly appears when the email was already connected to the sequencer in **another Clay workspace** — you don't need a separate Smartlead account for this to occur. To fix it, check your other Clay workspaces: go to `Campaigns` → `Email Accounts`, locate the address, and delete it there. Once removed from the other workspace, you can add it to the current one. If you can't identify which workspace has it, contact Clay support with the email address and we'll remove it from our end.
+
+### Why are some leads failing with "Sender email address is not a configured sender account in this campaign"?
+
+This error occurs when the **Assign sender account column to lead** field (in the `Sender accounts` tab) is set to an email column, and the email address in that column for a lead does not match any of the sender accounts configured in your campaign.
+
+A common cause: setting this field to a column that contains your leads' own email addresses (such as a "Personal Email" column) rather than a column containing one of your sending account addresses. Clay treats each value in that column as the sender identity — when the address isn't a connected sender account in the campaign, the lead fails enrollment with this error.
+
+**To fix it:**
+
+-   **If you do not intend to route specific leads to specific senders:** Remove the column assignment — open the `Sender accounts` tab, scroll to the `Assign sender account column to lead` section, and clear the selection. Leads will then be distributed evenly across all your configured sender accounts. After clearing it, re-run the `Sync lead data to campaign` column for the affected rows to re-enroll them.
+-   **If you do want to route specific leads to specific senders:** Make sure the column you selected contains one of your configured sending account email addresses — not the lead's own email. Add those sender accounts to the campaign first if they are not already there, then re-run the `Sync lead data to campaign` column.
 
 ### How do I add multiple email accounts at once?
 
