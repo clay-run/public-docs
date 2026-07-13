@@ -205,6 +205,15 @@ Clay's report picker automatically filters to show only Tabular and Matrix repor
 
 For an overview of Salesforce report formats, see Salesforce's [Report Formats documentation](https://trailhead.salesforce.com/content/learn/modules/lex_implementation_reports_dashboards/lex_implementation_reports_dashboards_report_formats).
 
+## Why did my Salesforce report import only bring in 2,000 rows when my report has more?
+
+This is expected behavior. The Salesforce Analytics API caps the number of records returned when running a report at **2,000 rows**. Clay's **Import records from a Salesforce report** source fetches a single page of results from this API — if your report contains more than 2,000 records, only the first 2,000 are imported into Clay. This is a Salesforce API restriction, not a Clay bug.
+
+**To import more than 2,000 records from Salesforce, use one of these alternatives:**
+
+- **Salesforce List source (recommended):** Create a Salesforce list view that matches your report criteria and use Clay's **Import records from a Salesforce list** source instead. SOQL-compatible list views support up to 50,000 records per import. See the [Salesforce integration overview](salesforce-integration-overview.md) for setup steps.
+- **Salesforce SOQL source:** Write a custom SOQL query that pulls the exact records you need. The SOQL source also supports up to 50,000 records per import and gives you full control over filtering and field selection. See [Salesforce SOQL](salesforce-soql.md) for details.
+
 ## Why did my scheduled "Import records from a Salesforce list" stop running?
 
 The most common cause is that the source reached the 50,000 total records processed limit. Each "Import records from a Salesforce list" source tracks the cumulative number of records it has ever pulled over its entire lifetime — not the number of rows currently visible in the table. Once that running total reaches 50,000, scheduled refreshes stop importing new records, even if the table appears to have space.
