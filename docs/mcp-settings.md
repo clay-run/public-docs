@@ -119,6 +119,10 @@ If this happens: have the rep disconnect Clay in their AI tool (remove and re-ad
 
 For a full breakdown of all roles, see [Roles and permissions](https://university.clay.com/docs/roles-and-permissions).
 
+### Can I disable Clay Sequencer access for Sales Rep users?
+
+No. The Sales Rep role bundles MCP access (invoking Clay through Claude, ChatGPT, or Glean) and Sequencer email account setup together — there is no way to enable MCP access without also allowing the rep to set up email accounts in the Clay Sequencer. If you need to remove Sequencer access for a specific rep, remove them from the workspace entirely (`Settings` → `Team` → three-dot menu → `Remove member`).
+
 ### Does MCP work with SSO-enabled workspaces?
 
 Yes. Workspace membership is the access gate for MCP — SSO determines how users authenticate, not whether they can access MCP. Users on an SSO-enabled workspace must still be explicitly added to your Clay workspace via `Settings` → `Team` → `+ Invite` before they can use Clay through Claude, ChatGPT, or Glean. SSO does not automatically grant workspace access.
