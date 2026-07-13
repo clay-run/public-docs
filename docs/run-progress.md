@@ -228,6 +228,14 @@ This returns a status string for each cell. Cells that hit the cell size limit r
 
 For the full list of `getCellStatus()` return values, see [Formulas](formula-generator.md).
 
+To capture the error message text itself — for example, to forward the exact failure reason to a Slack notification or surface it in another column — use `Clay.getCellErrorMessagePreview()` in a formula column pointed at the failing enrichment:
+
+```
+Clay.getCellErrorMessagePreview({{Your Column}})
+```
+
+This returns up to 300 characters of the error text from a failed cell — the same message visible in the Cell Details panel when you click a red cell. `Clay.getCellStatus()` tells you *that* a cell errored and which error code; `Clay.getCellErrorMessagePreview()` tells you *why* — the human-readable error text. For full details and limitations, see [Formulas](formula-generator.md).
+
 ## Troubleshooting: persistent error messages
 
 If an error message stays visible after the underlying issue has been resolved — for example, after reauthorizing a connection, correcting a run setting, or confirming that a run has completed — the cause is usually stale browser state. Clearing your browser cache and refreshing the page resolves this in most cases.
