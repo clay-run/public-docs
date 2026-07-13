@@ -593,6 +593,18 @@ The 24-hour export schedule is fixed and cannot be triggered manually. Two optio
 -   **Export a single record on demand (admin-only):** Open any record in Audiences and click **Export** in the top right of the record panel. This sends that record to Salesforce immediately, without waiting for the next scheduled sync. The button appears only when the record has a Salesforce export configured.
 -   **Export many records immediately:** Add a **Salesforce Update Record** action column to a bulk enrichment table — see [How do I write enriched fields back to existing Salesforce records from a bulk enrichment?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-bulk-enrichment) above.
 
+### Can I export signal data from Audiences to a Salesforce custom object?
+
+Not directly. Audiences' Salesforce export sync supports only standard Salesforce objects — **People** (Contacts and Leads) and **Companies** (Accounts). Salesforce custom objects are not currently supported as export targets from Audiences. This means signal events stored in Audiences (such as job postings or hiring alerts associated with an account) cannot be pushed to a Salesforce custom object directly from Audiences.
+
+To write signal data to a Salesforce custom object, use a standard Clay signals table:
+
+1. Set up your signal in a Clay table (see [Signals in Clay](signals.md)) targeting the accounts or contacts you want to monitor.
+2. In the same table, add a **Salesforce Create Record** or **Salesforce Update Record** action column and set the target object to your custom Salesforce object API name.
+3. Map signal output fields to your custom object fields.
+
+Each row in the table represents one account or contact, making it straightforward to push account-level signal data to Salesforce. If you need one custom object record *per individual signal event* — for example, a separate record for each job posting rather than one record per company — that requires additional table configuration. Contact Clay support for guidance on that setup.
+
 ### How do I access Account-level fields (like Company Name or Company Domain) from a People audience?
 
 When you import Salesforce Contacts into a People audience, only fields from the **Contact object** are available as columns — Account-level fields (Company Name, Company Domain, and any custom Account object fields) are not included automatically, even if the Contact has a linked Salesforce Account.
