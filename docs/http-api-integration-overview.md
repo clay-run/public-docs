@@ -12,7 +12,14 @@ HTTP API helps you send or retrieve data from any tool or database using an API 
 
 An **HTTP API** uses HTTP methods (GET, POST, PUT, DELETE) to enable communication between different systems. An API is a set of defined rules that allow applications to interact with each other, while HTTP is the protocol that defines how these requests and responses are formatted and transmitted.
 
-**Tip:** Looking for Clay's API? Try [this guide](https://university.clay.com/docs/using-clay-as-an-api).
+## HTTP API is not Clay's API
+
+These are two different things that are easy to mix up:
+
+-   **HTTP API integration (this page)** — a column or source *inside a Clay table* that calls **other tools' APIs**. Requests go **from Clay to an external service** (your CRM, a data provider, your own endpoint). You bring the external API's endpoint URL and credentials.
+-   **Calling Clay programmatically** — sending data **into Clay from your own systems**, searching Clay's data, or triggering Clay from code. Clay doesn't have a traditional REST API for this, but there are several supported patterns (webhooks, the People & Company Search API, MCP). See [Does Clay have an API?](https://university.clay.com/docs/using-clay-as-an-api).
+
+If you were told to "use Clay's API" to push leads into Clay or query Clay from your app, you do **not** want the HTTP API integration — start with [Does Clay have an API?](https://university.clay.com/docs/using-clay-as-an-api) instead.
 
 ### Common use cases
 
@@ -782,6 +789,12 @@ This error appears when you set the **Response timeout** field to a value above 
 **If your API routinely takes longer than 100 seconds to respond:** Design your endpoint to acknowledge the request quickly — within the timeout window — and offload the heavy processing to an asynchronous job. Write the results back to Clay via a [webhook](webhook-integration-guide.md) or a follow-up API call once processing completes.
 
 ## FAQs
+
+### Is the HTTP API integration the same as Clay's API?
+
+No. The HTTP API integration sends requests **from your Clay table to external services** — it's how Clay calls someone else's API. It is not an API for Clay itself, and it doesn't let outside systems read or write your Clay data.
+
+If you want to call Clay from your own systems — push records into a table, search Clay's people and company data, or trigger enrichments from code — see [Does Clay have an API?](https://university.clay.com/docs/using-clay-as-an-api) That guide covers webhooks (send data into a table), the People & Company Search API (beta), and MCP for AI tools.
 
 ### Does using HTTP API consume Data Credits?
 
