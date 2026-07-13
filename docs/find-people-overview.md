@@ -103,6 +103,10 @@ Any enrichments you add afterward (work email, phone number, profile enrichment)
 
 **Yes.** The search wizard shows a result count directly in the interface — you can see how many people match your filters before clicking Import. The count also shows how many rows will be imported based on your **Limit results** setting. For very large searches, the count may display as a capped number with a "+" indicator; hover over it to load the full exact total.
 
+### Does Find People return contacts who don't have a professional profile?
+
+**No.** Find People draws from a LinkedIn-based dataset. Because the underlying data is sourced from LinkedIn, you cannot use Find People to discover contacts who don't have a presence on the network — the search is limited to people indexed from LinkedIn. There is no filter or option to return contacts who have never been on LinkedIn.
+
 ## Importing from a Sales Navigator search URL
 
 If you have a saved Sales Navigator search and want to pull those results into Clay, use the **Find people from external search** source — not the standard Find People source described above.
