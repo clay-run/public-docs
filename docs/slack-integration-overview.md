@@ -64,14 +64,14 @@ Use this action to retrieve a list of members from a specified Slack channel.
 
 ## Build a Slack-triggered enrichment workflow
 
-Clay's Slack integration actions are outbound-only — Clay can send messages to Slack channels but cannot natively listen for or read Slack messages. To build a workflow where posting a LinkedIn URL in a Slack channel triggers Clay to enrich the contact and reply with their email and phone number, you need an automation tool like Zapier to act as the Slack listener.
+Clay's Slack integration actions are outbound-only — Clay can send messages to Slack channels but cannot natively listen for or read Slack messages. To build a workflow where posting a professional profile URL in a Slack channel triggers Clay to enrich the contact and reply with their email and phone number, you need an automation tool like Zapier to act as the Slack listener.
 
 **Plan requirement:** This workflow uses Clay's webhook source, which requires a **Growth plan or above**. See [Webhooks in Clay](webhook-integration-guide.md) for details.
 
 The workflow has three stages:
 
-1. **Zapier detects the LinkedIn URL** posted in your Slack channel and sends it to a Clay webhook.
-2. **Clay enriches the contact** — finding their mobile phone number and work email using the LinkedIn URL.
+1. **Zapier detects the profile URL** posted in your Slack channel and sends it to a Clay webhook.
+2. **Clay enriches the contact** — finding their mobile phone number and work email using the profile URL.
 3. **Clay posts the results** back to your Slack channel using the **Send message to channel** action.
 
 ### Step 1: Create a Clay webhook table
@@ -81,10 +81,10 @@ The workflow has three stages:
 
 ### Step 2: Add enrichment columns
 
-Add enrichment columns that use the LinkedIn URL from the webhook payload as their input:
+Add enrichment columns that use the profile URL from the webhook payload as their input:
 
--   **Mobile phone**: Add a **ContactOut — Find Phone**, **LeadMagic — Find Mobile Number**, or **Findymail — Find Mobile** enrichment. Each accepts a LinkedIn URL as its only required input. Map the input to the column that holds the webhook's LinkedIn URL field.
--   **Work email**: Add a **Prospeo — Find Work Email** enrichment and map the **Professional URL** input to the LinkedIn URL column. Alternatively, use **ContactOut — Find Personal Email from LinkedIn** if you prefer a personal email address.
+-   **Mobile phone**: Add a **ContactOut — Find Phone**, **LeadMagic — Find Mobile Number**, or **Findymail — Find Mobile** enrichment. Each accepts a professional profile URL as its only required input. Map the input to the column that holds the webhook's profile URL field.
+-   **Work email**: Add a **Prospeo — Find Work Email** enrichment and map the **Professional URL** input to the profile URL column. Alternatively, use **ContactOut — Find Personal Email** if you prefer a personal email address.
 
 ### Step 3: Add a Send message to channel action
 
@@ -97,16 +97,16 @@ For message formatting syntax, see [Formatting Slack messages](#formatting-slack
 ### Step 4: Set up Zapier
 
 1. In Zapier, create a new Zap with a **Slack — New Message Posted to Channel** trigger. Select the channel you want to monitor.
-2. Add a **Filter** step with the condition **Message Text → Contains → `linkedin.com/in/`** to process only messages that include a LinkedIn URL.
-3. Add a **Webhooks by Zapier — POST** action. Paste your Clay webhook URL and configure the JSON payload with the LinkedIn URL:
+2. Add a **Filter** step to process only messages that contain a professional profile URL. Set the condition on **Message Text** to check that it contains the expected URL pattern for professional profiles.
+3. Add a **Webhooks by Zapier — POST** action. Paste your Clay webhook URL and configure the JSON payload with the profile URL:
 
    ```json
-   { "linkedin_url": "{{1. Message Text}}" }
+   { "profile_url": "{{1. Message Text}}" }
    ```
 
 4. Publish the Zap.
 
-When a team member posts a LinkedIn URL in the monitored Slack channel, Zapier forwards it to Clay, Clay enriches the contact, and Clay sends the results back to the same channel.
+When a team member posts a professional profile URL in the monitored Slack channel, Zapier forwards it to Clay, Clay enriches the contact, and Clay sends the results back to the same channel.
 
 ## Permissions & security
 
