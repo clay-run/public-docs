@@ -14,6 +14,8 @@ It's one of the most common questions we get — and the honest answer is: not i
 
 But that doesn't mean you're stuck. Depending on what you're trying to do, there are several ways to interact with Clay programmatically and get results that feel a lot like working with an API. You can pipe data into Clay automatically via webhooks, wrap Clay's functionality using tools like Make or Zapier, connect AI tools like Claude or ChatGPT directly to your Clay workspace via MCP, or — if you have beta access enabled — access Clay's native People and Company API directly.
 
+**Don't confuse this with the HTTP API integration.** Clay's [HTTP API integration](https://university.clay.com/docs/http-api-integration-overview) is an enrichment column (or table source) that your Clay table uses to call **external** APIs — requests go from Clay out to another service. This page covers the opposite direction: calling **Clay** from your own systems — sending data in, searching Clay's data, or triggering Clay from code. If you want a Clay table to hit your CRM, data provider, or custom endpoint, use the HTTP API integration; if you want your app to talk to Clay, keep reading here.
+
 Below, we'll walk through each approach, when to use it, and how to get started.
 
 **Note:** If you purchase credits from us ("Clay Credits"), you agree not to sell or transfer your Clay Credits to any other user without our prior written approval. You also agree not to re-sell any data you obtain from Clay. [Learn more in our terms of service](https://www.clay.com/terms-of-service#:~:text=4.%20User%20Responsibilities).
