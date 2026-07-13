@@ -34,7 +34,7 @@ In the WorkOS setup portal, look for the **Service Provider Details** section, w
 -   **SP Entity ID** — the unique identifier for your Clay organization in SAML communications
 -   **SP Metadata URL** — an optional metadata file URL for automated IdP configuration
 
-**Required SAML attribute:** The user's email address is the only required attribute, sent as the NameID with format `emailAddress`. The optional attributes are `firstName`, `lastName`, and `id` — these are not required for authentication to work.
+**Required SAML attribute:** The user's email address is the only required attribute. The optional attributes are `firstName` and `lastName` — these are not required for authentication to work.
 
 ## What happens when SSO is enabled
 
