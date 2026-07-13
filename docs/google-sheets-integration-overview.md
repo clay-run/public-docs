@@ -134,11 +134,43 @@ Add a row to a Google Sheet via its URL.
 
 ### `Action` Lookup row
 
-Lookup a row in a Google Sheet using a column and a value.
+Lookup rows in a Google Sheet using a column and a value. This is a **case-insensitive** lookup that works with any Google Sheet your connected account has read access to, including public ones.
+
+**How to set it up**
+
+1.  In your Clay table, click **Add Enrichment** and search for **Google Sheets**.
+2.  Select **Lookup row**.
+3.  Connect your Google account if you haven't already.
+4.  Paste your **Google Spreadsheet URL** and select the **Sheet ID** (tab) to search.
+5.  Set the **Lookup Column** — the column in the sheet to compare against.
+6.  Map the **Lookup value** to a column in your Clay table (for example, a domain or email field).
+7.  Optionally, select **Fields to return** to pull back only specific columns from the matched row. If left empty, all columns are returned.
+8.  Optionally, set a **Limit** on the number of matching rows returned. Defaults to 10, maximum 1,000.
+9.  Click **Save** and run the enrichment.
 
 **Inputs**
 
--   **Google Spreadsheet URL**
+-   **Google Spreadsheet URL** — The URL of any Google Sheet your connected account can read (including public sheets).
+-   **Sheet ID** — The specific tab within the spreadsheet to search.
+-   **Lookup Column** — The column in the sheet to compare against your Lookup value.
+-   **Lookup value** — The value to search for, mapped from a column in your Clay table.
+-   **Fields to return** *(Optional)* — One or more columns to return from the matched row. If not selected, all fields are returned.
+-   **Limit** *(Optional)* — Maximum number of matching rows to return. Defaults to 10, maximum 1,000.
+
+**Matching behavior**
+
+The lookup is **case-insensitive** — `Example.com` and `example.com` both match. However, the value must otherwise match exactly: extra spaces, different formatting (for example, `example.com` vs. `www.example.com`), or extra/missing characters will cause the lookup to miss a valid match. Normalize your lookup values to the same format on both sides before running.
+
+**Example: cross-reference new leads against your existing Google Sheets database**
+
+To avoid re-building contacts already in your Google Sheets master sheet, use **Lookup row** to check each row in Clay before running further enrichment:
+
+1.  Make sure your Google Sheet has a column with a unique identifier (for example, a **Domain** or **Email** column).
+2.  Add a **Lookup row** enrichment to your Clay table.
+3.  Set **Lookup Column** to the matching column in your sheet (for example, `Domain`).
+4.  Map **Lookup value** to the corresponding column in your Clay table.
+5.  Under **Fields to return**, select the fields you want pulled from the matched row (for example, lead names or contact details).
+6.  If a match is found, the selected fields are returned. If no match is found, the cell is empty — use this as a [run condition](conditional-runs.md) to skip enrichment for rows already in your database.
 
 ### `Action` Lookup, add, or update row
 

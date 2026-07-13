@@ -100,7 +100,7 @@ Admins can see which connections a given group has access to use. However, edito
 
 **Are groups synced from Okta, Azure AD, or other identity providers?**
 
-Not yet. User groups in Clay are managed manually within the workspace. There is no SCIM or SSO sync with external identity providers at this time.
+Not yet. User groups in Clay are managed manually within the workspace — there is no SCIM provisioning or group sync from external identity providers at this time. This is separate from workspace SSO authentication: Clay does support SSO login via WorkOS for Enterprise customers (and as a paid add-on for annual Pro and Growth plans). See [Single Sign-On (SSO)](./single-sign-on.md) for setup details.
 
 **Can groups be nested inside other groups?**
 

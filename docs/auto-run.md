@@ -6,7 +6,11 @@ last_synced: 2026-07-01T00:00:00.000Z
 
 # Auto-run
 
-Auto-run automatically runs enrichments whenever rows are added or edited, keeping your table current. You can control this feature at multiple levels: table-level (master control), column-level (individual control), and through conditional logic.
+Auto-run automatically runs enrichments whenever rows are added or edited, keeping your table current. You can control this feature at multiple levels:
+
+-   **Table-level** (master control)
+-   **Column-level** (individual control)
+-   **Conditional logic**
 
 ## How Clay decides whether a cell runs
 
@@ -85,6 +89,8 @@ Since the table is in Manual mode, these indicators won't auto-clear. A few opti
 -   **Ignore the icons** if the values look correct — the clock icon in this context is a workflow indicator, not a data quality signal.
 -   **Run all columns in order** — right-click each column header from left to right and select **Run column → Run [N] empty or out-of-date rows** to clear all stale indicators in one pass.
 -   **Switch to auto-run with "Keep existing results"** — turn on Auto-run and check **Keep existing results**. The table will then automatically queue only empty, errored, or new cells when dependencies change, without re-running (and spending credits on) cells that already have results.
+
+**"Keep existing results" with unexpected out-of-date indicators:** If you're using "Keep existing results" and notice cells marked as out of date — even though you haven't made any changes to the table — this is expected behavior, not a bug. When an upstream column re-runs and updates its output (for example, because a scheduled source refresh ran, or an upstream enrichment recomputed), Clay marks dependent downstream cells as out of date because their inputs have changed. With "Keep existing results" enabled, Clay preserves those existing cell values instead of automatically re-running them. **Your data is not lost**: the existing values are still intact and usable downstream. If the current values look correct, you can ignore the clock icons. To get updated results, force-run the flagged columns manually — right-click the column header → **Run column** → **Run [N] empty or out-of-date rows** — since "Keep existing results" mode will not refresh them automatically.
 
 If a cell **keeps** showing as out of date even after you re-run it, check whether an upstream column has auto-run enabled. Each time that upstream column runs and updates its output, Clay marks any column referencing it as out of date again — even one you just re-ran. To resolve this:
 

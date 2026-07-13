@@ -91,7 +91,13 @@ The company identifier field accepts these LinkedIn URL formats:
 
 ### Run conditional people searches with table views
 
-Company and people search sources don't have run conditions the way enrichment actions do. If you only want to find people at companies that meet specific criteria (e.g., only public companies), the workaround is to **create a filtered view** of your company table first, then run **Find People at These Companies** from that view. The source will only pull from the rows visible in the view.
+Company and people search sources — including **Find People at These Companies** and the **Update People Table** action — don't support the "Only run if" run condition that enrichment columns use. To search only companies that meet specific criteria (for example, companies where a lead qualification column equals "yes"), use a **filtered view** as the source:
+
+1. In your company table, apply a filter to the view you want to use — for example, add a filter where your qualification column equals the value you need. You can filter the **Default view** directly, or right-click any view tab and select **Duplicate view** to create a named copy, then apply filters to the copy.
+2. When setting up (or editing) a **Find People at These Companies** search, go to the **Companies** section and use the **View** dropdown to select the filtered view.
+3. Save. The search will only process companies visible in that view.
+
+Any new company rows added to the table that match the view's filter conditions will automatically be included the next time the search runs.
 
 ### Disable auto-run on the people table when running Find People selectively
 
@@ -146,6 +152,8 @@ When you run `Find People at These Companies` as an in-table action (rather than
 For example, if you have a "Headquarters Location" column in your company table, you can reference that column in the location filter when setting up the in-table action. Each company will then be searched using its specific location, rather than applying a single static location filter across all companies.
 
 **Note:** Location filtering accepts named regions, countries, and cities — distance-based filtering (for example, "within 35 miles of a location") is not available in Find People or Find Contacts at Company.
+
+**Note:** If the location column you're referencing contains a combined city/state/country string — for example, "Chicago, Illinois, United States" — `Find Contacts at Company` interprets each comma-separated value as a separate OR condition. Passing "Chicago, Illinois, United States" to the **Locations** input returns contacts from Chicago OR Illinois OR the United States, not only Chicago. To filter by a specific city, use a formula to extract just the city name and map that single, clean value to the **Include cities** input. Map the state to **Include states, provinces, or municipalities** and the country to **Include countries** — each as a separate, comma-free value.
 
 ### Target ICP contacts first with a senior fallback
 
@@ -379,14 +387,30 @@ When Clay resolves a domain to a company, it expands the search to include all c
 
 ### "Company Table Data" shows "Missing Input" in the people table
 
-After running Find People from a company list, some rows in the resulting people table may show **Missing Input** in the **Company Table Data** column. This happens when a person's current employer uses a different domain than the company you searched — for example, searching on `broadcom.com` returns someone whose current employer resolves to `vmware.com`. Because the domains don't match, Clay can't link that person back to the original company row, leaving the company record ID blank.
+The **Company Table Data** column can show **Missing Input** for two distinct reasons. Identify which applies before choosing a fix.
 
-This mismatch most commonly occurs with subsidiaries, acquired companies, and organizations that operate under multiple domains.
+**Cause 1: Domain mismatch after a Find People search**
 
-**To fix this:**
+After running Find People from a company list, some rows in the resulting people table may show **Missing Input**. This happens when a person's current employer uses a different domain than the company you searched — for example, searching on `broadcom.com` returns someone whose current employer resolves to `vmware.com`. Because the domains don't match, Clay can't link that person back to the original company row, leaving the company record ID blank. This mismatch most commonly occurs with subsidiaries, acquired companies, and organizations that operate under multiple domains.
+
+**To fix:**
 
 -   **Switch to LinkedIn company URLs as your company identifier** (recommended). When you provide a LinkedIn company URL instead of a domain, Clay uses the LinkedIn company slug for matching — which handles subsidiary and acquisition relationships more reliably. See [Use LinkedIn URLs, not domains, as company identifiers](#use-linkedin-urls-not-domains-as-company-identifiers).
 -   **Add a Lookup Rows fallback.** In your people table, add a **Lookup single row in other table** column. Set `Table to search` to your original companies table and match on `domain`. For rows where the person's current company domain is populated, this retrieves company fields directly — even when the automatic Company Table Data link is missing. See [Lookup Rows](lookup-rows.md).
+
+**Cause 2: "Clay Company Id" cannot be used as the Company Record ID**
+
+If you see Missing Input and tried to fix it by looking up the **Clay Company Id** from your company table's cell details panel (a numeric value like `34308049`) and mapping it to the Company Record ID input in Company Table Data — that won't resolve the error. The **Clay Company Id** is an internal data profile identifier from Clay's company graph; it is a completely different type of value than the **Company Record ID** that Company Table Data requires. Company Record ID is a table row record ID that Clay writes automatically when it links a person row to a company row during the **Find People at These Companies** flow. It cannot be supplied manually.
+
+**To fix:** Use **Lookup Rows** instead — it retrieves the same company fields by matching on a shared value like domain, with no Company Record ID required:
+
+1.  In your people table, click **Add enrichment** and search for **Lookup single row in other table**.
+2.  Set **Table to search** to your company table.
+3.  Set **Target column** to the domain column in the company table.
+4.  Set **Row value** to the domain column in your people table.
+5.  Run the lookup. From any populated result cell, hover over a company field and click **Add as column** to promote it.
+
+See [Lookup Rows](lookup-rows.md) for full configuration details and tips on normalizing match keys.
 
 ### Enrichment columns show "Missing input" for company rows
 
@@ -530,7 +554,11 @@ Across both, high-importance profiles (frequently accessed records, decision-mak
 
 ### Can I run a people search only on companies that meet certain criteria?
 
-Company and people search sources don't support run conditions. The workaround is to create a **filtered view** of your company table (showing only the rows you want), then run **Find People at These Companies** from that view. The source will only process the companies visible in that view.
+Company and people search sources don't support run conditions. The workaround is to create a **filtered view** of your company table (showing only the rows you want), then select that view in the Find People search configuration:
+
+1. In your company table, filter the view you want to use. You can filter the **Default view** directly, or right-click a view tab and select **Duplicate view** to create a named copy, then apply your filters to the copy.
+2. Open the **Find People at These Companies** source setup (or right-click the source column → **Edit column**), go to the **Companies** section, and use the **View** dropdown to select your filtered view.
+3. Save. The source will only process companies visible in that view — including any future rows added that match the filter.
 
 **Note:** The row limit, starting row, and "Run [N] rows" controls available for enrichment columns do **not** control which companies a Find People source processes — the source always reads from the view it was configured with at setup. Only a filtered view limits which companies are included.
 

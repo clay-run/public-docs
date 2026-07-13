@@ -34,6 +34,10 @@ Every Clay table includes two automatically maintained system columns: **Created
 
 Both fields are system-managed: you cannot delete them, edit their settings, or manually change their values.
 
+### Tracking who created a row
+
+Clay's system columns record *when* rows were created and modified, but there is no built-in column that records *who* added a row to the table. If you need to track which team member or process created each record, add a **Text** column (click **Add column** → select **Text**) and manually enter the creator's name for each row as records are added.
+
 ### Integration mapping limitation
 
 **Updated At** and **Created At** are not available in the column picker when mapping Clay columns to an external integration — this applies to all integrations, including Google Sheets, Salesforce, and others. The mapping UI removes them from the selectable field list.
@@ -185,7 +189,7 @@ You can filter your table to show only rows that match specific criteria. Filter
 
 1.  Click the **Filter** button in the table toolbar.
 2.  Click **Add filter** and select a column to filter by.
-3.  Choose a comparison operator (e.g., **is**, **contains**, **is not empty**) and enter a value.
+3.  Choose a comparison operator (e.g., **is**, **contains**, **is not empty**) and enter a value. The operators shown depend on the column's data type: Number (#) columns include numeric operators such as **is greater than** and **is less than**, while Text columns include string operators such as **contains**. If an expected numeric operator isn't visible, check that the column is set to the **Number** type. See [Comparison operators](comparison-operators.md) for a full reference.
 4.  To add more conditions, click **Add filter** again. Multiple filters are applied together — a row must match all active filters to appear.
 5.  To remove a single filter, click the **×** next to it. To remove all filters, click **Clear filters**.
 

@@ -37,7 +37,12 @@ To upgrade your Clay workspace plan:
 
 Your new plan will activate immediately, and any applicable charges will be applied.
 
-**How upgrade billing works:** Plan upgrades are **not prorated** — you pay the full price of the new tier immediately, not a partial amount for remaining days in your current cycle. In return, you receive the **full** Actions and Data Credits for your new plan right away. Unused Actions from your previous plan are not carried over (Actions reset each billing cycle and do not roll over). Your existing unused Data Credits are preserved when you upgrade.
+**How upgrade billing works:**
+
+-   Plan upgrades are **not prorated** — you pay the full price of the new tier immediately, not a partial amount for remaining days in your current cycle.
+-   You receive the **full** Actions and Data Credits for your new plan right away.
+-   Unused Actions from your previous plan are not carried over (Actions reset each billing cycle and do not roll over).
+-   Your existing unused Data Credits are preserved when you upgrade.
 
 ### Free plan
 
@@ -134,8 +139,8 @@ To update your billing address, payment method, or billing email:
 1.  Click your profile picture in the top-right corner and select `Settings`.
 2.  In the sidebar, navigate to `Plans & billing`.
 3.  Click the `Edit` dropdown.
-    -   Select `Edit billing info...` to update your name, billing email, country, address, and postal code.
-    -   Select `Edit payment method...` to update your credit card or payment method.
+    -   Select `Edit billing info...` to update your name, billing email, and country. If your billing address is in the United States, this modal also lets you edit your address, city, state, and ZIP code.
+    -   Select `Edit payment method...` to update your credit card or payment method. If you are outside the United States and need to update your billing address, use this option — it opens a Stripe-hosted page where you can enter your updated details.
 4.  Enter the updated information and confirm your changes.
 
 ### Trials

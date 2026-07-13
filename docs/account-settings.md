@@ -53,7 +53,7 @@ Changing your email address does not affect your workspace data or your password
 
 ## Update your country
 
-Clay's account profile settings don't include a country field — there is no country selector in `Settings` > `Account`. If you need to update the country associated with your billing information, see [Update your billing address, payment method, and billing email](./plans-and-billing.md#update-your-billing-address-payment-method-and-billing-email) and select `Edit billing info...`, which lets you update your country, address, postal code, and billing email.
+Clay's account profile settings don't include a country field — there is no country selector in `Settings` > `Account`. If you need to update the country associated with your billing information, go to `Settings` > `Plans & billing`, click `Edit`, and select `Edit billing info...` — this lets you update your name, billing email, and country. US-based accounts can also update their address, city, state, and ZIP code there.
 
 ## Change your password
 
@@ -146,7 +146,7 @@ If you are the sole admin of a workspace with other members or pending invites, 
 
 -   Your deletion request is processed and logged for audit purposes.
 -   Your API keys are deleted.
--   Your account email is updated to a deleted variant.
+-   Your account email, display name, and username are anonymized.
 -   For any workspaces affected by your account deletion, workspace admins will receive email notifications.
 -   Your private app account and Stripe customer information are deleted to prevent unexpected charges.
 -   You will receive an email confirmation once your account has been deleted.

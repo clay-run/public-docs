@@ -12,6 +12,11 @@ Snowflake is a cloud data platform that enables organizations to store, analyze,
 
 With this integration, you can connect to your Snowflake data warehouse and import data directly into Clay.
 
+**How Clay reads from Snowflake:** The transfer mechanism depends on the import type:
+
+-   **Table source imports** (*Import from Snowflake* in a workbook): Clay queries your warehouse directly with a `SELECT` statement — no staging step involved.
+-   **Audience imports**: Clay uses Snowflake's `COPY INTO` command to export data to Snowflake's internal user stage, then streams those staged files into Clay for processing. You don't need to configure an external S3 bucket or manage an UNLOAD process.
+
 **Plan availability:** Snowflake enrichment actions and sources in Clay tables require an Enterprise plan. Importing Snowflake data into Audiences requires a Growth or Enterprise plan.
 
 ## Connecting to Snowflake
@@ -44,6 +49,17 @@ When setting up key-pair authentication, you'll need to provide:
 ### Setting up username and password authentication
 
 If your organization uses Okta, enter your Okta URL (e.g., [example.okta.com](http://example.okta.com)) to ensure the integration functions correctly.
+
+### Rotating or updating your Snowflake credentials
+
+You can update or rotate your Snowflake credentials — for example, when your security team requires key rotation — without deleting and recreating the connection. All tables, columns, and sources already using the connection will automatically use the new credentials on their next run.
+
+1.  Navigate to `Settings` > `Connections` and select **Snowflake Key-Pair** (or **Snowflake** for username and password connections).
+2.  Click the `…` menu next to your connection and select **Reconnect**.
+3.  In the Reconnect modal, enter your updated credentials. For key-pair connections, upload the new `.p8` private key file, enter the new passphrase if applicable, and confirm the other fields.
+4.  Click **Save**.
+
+The connection updates in place — the same connection ID is preserved, so no columns or sources need to be reconfigured.
 
 ## Creating a table with Snowflake
 
