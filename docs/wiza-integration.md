@@ -81,3 +81,26 @@ Use this action to locate and enrich contact records with phone numbers using Li
 
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
+
+## Troubleshooting
+
+### Wiza times out on large batches, causing waterfall fallthrough and extra credits
+
+Wiza processes work-email lookups asynchronously. When you run many rows at once, multiple concurrent Wiza calls can queue up, causing Clay's requests to time out. In a waterfall enrichment, a timeout is treated as a failed step: Clay falls through to the next provider and charges credits, even though Wiza did not have a chance to return a result.
+
+**To prevent unintended credit spend from Wiza timeouts:**
+
+**Option 1 — Run Wiza in smaller batches (native integration):**
+
+The native Wiza integration does not include a built-in rate-limit setting, so controlling how many rows run concurrently is the primary lever.
+
+-   **Set a row limit.** Click the **rows** button in the table toolbar (e.g., **6,236/6,236 rows**) and enter a value in the **Row limit** field to cap how many rows are eligible to run at a time. See [Run progress](run-progress.md#setting-a-row-limit) for details.
+-   **Run a subset of rows.** Select a range of rows by clicking the first row number and Shift-clicking the last, then right-click and choose **Run [N] rows**. This runs only those rows, leaving the rest untouched until you are ready.
+
+**Option 2 — Split Wiza into its own column and add a run condition on downstream providers:**
+
+Run Wiza as a standalone enrichment column instead of placing it inside a waterfall. Then add an **Only run if** condition to the next provider or waterfall in your sequence — for example, `[Wiza column] is empty` — so downstream providers only fire when Wiza genuinely returned no result. A timed-out Wiza cell shows as an error rather than as blank, so the downstream provider is skipped on timeouts and only runs when Wiza had no match. See [Conditional runs](conditional-runs.md) for setup steps.
+
+**Option 3 — Rebuild Wiza as a custom HTTP API column:**
+
+If you configure Wiza via an [HTTP API](http-api-integration-overview.md) column instead of the native integration, you can enable the **Custom rate limit** setting to automatically throttle how many Wiza requests Clay sends per time window. Set **Request Limit** (the maximum number of calls per window) and **Duration (in ms)** (the length of the window in milliseconds) in the **Configure** tab to match your Wiza plan's concurrency limits. This prevents timeouts without requiring manual batch management. See [HTTP API: Custom rate limit](http-api-integration-overview.md#step-7-custom-rate-limit) for details.
