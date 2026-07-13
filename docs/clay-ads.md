@@ -138,7 +138,7 @@ These restrictions exist for compliance reasons, as third-party sourced contact 
 
 Ad audiences are available on **Growth** and **Enterprise** plans:
 
--   **Growth**: Includes 1 ads platform sync
+-   **Growth**: Includes 1 ads platform sync. **Currently in beta:** Growth workspaces with Audience Ads V2 enabled can create additional Audience Ads for people lists beyond the 1 included sync — company list syncs remain limited to 1 per workspace. Contact [Clay support](https://www.clay.com/contact) to request early access.
 -   **Enterprise**: Includes unlimited audiences and additional ads platform syncs
 
 Each record exported or synced consumes 1 action. Data credits apply for any enrichments used in the table to build the audience.
