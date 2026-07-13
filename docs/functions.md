@@ -302,6 +302,18 @@ Yes. Enable "share as template" on the function to generate a shareable link. An
 
 Yes, on supported plans. The `Enable for MCP` option in the function editor panel is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans. On other legacy plans (such as legacy Pro), the toggle does not appear in the function settings — if you do not see it, your workspace plan does not include this capability. Upgrading to a modern plan is required to enable custom Functions for MCP. For setup instructions, see [MCP settings](https://university.clay.com/docs/mcp-settings).
 
+### Can I call a function programmatically via the API?
+
+Yes — currently in beta. Clay's public API lets you invoke a function against input data without opening the app, making it useful for agent workflows, CI pipelines, and system-to-system integrations. To get access, contact your GTM engineer or [our team](https://www.clay.com/contact-form) to have the public API beta enabled for your workspace.
+
+**Rate limits and batch sizes:**
+
+-   **Rate limit:** 300 requests per minute across all public API endpoints in your workspace.
+-   **Inline run (single request):** Up to 100 items per call. Submit your items as a JSON array and Clay returns results asynchronously — poll the run ID to retrieve them.
+-   **File upload batch:** Up to 100,000 items per batch. Upload a JSONL file, start the batch run, then poll for a downloadable results file when processing is complete.
+
+**Note:** Processing speed is subject to workspace-level throttling. If you upload several large batches at once, expect slower completion rates as Clay distributes the workload across your workspace.
+
 ### How can I limit who can edit my functions?
 
 1.  Click on the function.
