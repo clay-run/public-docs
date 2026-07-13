@@ -45,7 +45,7 @@ There are two levels of control:
 
 ## Monitoring usage
 
-The `MCP users` table gives a live view of every rep who has connected Clay to an external platform:
+The `MCP users` table gives a live view of every rep who has connected Clay to an external platform. Users appear here only after they complete the OAuth connection flow in their AI tool — invited team members who have not yet connected through Claude, ChatGPT, or Glean will not appear in this table.
 
 -   **Name** — rep's name and email address
 -   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, Glean, or a combination)
@@ -109,7 +109,7 @@ Any team member who needs to use Clay through an AI tool (Claude, ChatGPT, Glean
 
 The Sales Rep role restricts access to the main Clay workspace: users can invoke functions and run enrichments from within their AI tool, but they cannot open or interact with the Clay interface (tables, workbooks, etc.). This makes it the right choice for team members who should use Clay through AI tools only — not build workflows directly in Clay.
 
-To invite them: go to `Settings` → `Team`, click `+ Invite`, enter their email address, and select **Sales Rep** from the role dropdown.
+To invite them: go to `Settings` → `Team`, click `+ Invite`, enter their email address, and select **Sales Rep** from the role dropdown. You can also invite reps directly from the MCP settings page — click `Invite users`, enter the rep's email address, and submit (the Sales Rep role is pre-selected).
 
 **Important:** Team members must accept their workspace invite email *before* connecting Clay to Claude, ChatGPT, or Glean. If a rep goes through the Clay MCP connection flow before accepting the invite, they'll be routed into a new personal workspace instead of your team workspace — and they won't appear in your `MCP users` table or be eligible for credit allocation.
 
@@ -121,7 +121,7 @@ For a full breakdown of all roles, see [Roles and permissions](https://universit
 
 ### Does MCP work with SSO-enabled workspaces?
 
-Yes. Workspace membership is the access gate for MCP — SSO determines how users authenticate, not whether they can access MCP. Users on an SSO-enabled workspace must still be explicitly added to your Clay workspace via `Settings` → `Team` → `+ Invite` before they can use Clay through Claude, ChatGPT, or Glean. SSO does not automatically grant workspace access.
+Yes. Workspace membership is the access gate for MCP — SSO determines how they authenticate, not whether they can access MCP. Users on an SSO-enabled workspace must still be explicitly added to your Clay workspace via `Settings` → `Team` → `+ Invite` before they can use Clay through Claude, ChatGPT, or Glean. SSO does not automatically grant workspace access.
 
 When a user connects their AI tool to Clay, they go through Clay's OAuth flow, which redirects to the standard Clay login page. If SSO is configured for their email domain, they'll authenticate through your SSO provider during this step.
 
