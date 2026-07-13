@@ -27,7 +27,7 @@ The Clay connector in Claude lets you find people, enrich contacts, and draft pe
     -   Add filters (e.g., only people in the US or people who have been there for less than 6 months)
     -   Enrich contacts with additional data points (email address, work history summary, thought leadership)
     -   Draft personalized emails based on the research
-5.  Results are returned in groups of 20. Click `Load more` to see additional pages — up to 100 results total.
+5.  Results are returned in groups of 20. Click `Load more` to see additional pages.
 6.  At any time, you can open your results directly in Clay at [app.clay.com](http://app.clay.com) to access more powerful enrichment and workflow capabilities.
 
 ## Use cases for Clay in Claude
