@@ -189,6 +189,39 @@ If only certain rows fail with **"Invalid SOQL Query. Please check your query sy
 
 Only rows with those characters in the matched column will fail — rows with clean values run normally.
 
+## How do I look up activity records (Tasks or Events) for a Salesforce contact?
+
+In Salesforce, activity records — Tasks and Events — are stored as separate objects, not directly on the Contact record. Because of this, the standard **Lookup Record** action (which retrieves the Contact object) won't return a contact's activities. You need to query the Task or Event object directly.
+
+Use the **Lookup records via SOQL** action and filter on the `WhoId` field, which links each Task or Event to its associated contact or lead.
+
+**For Tasks (calls, to-dos, logged emails):**
+
+```sql
+SELECT Id, Subject, ActivityDate, Status, Description
+FROM Task
+WHERE WhoId = '/Salesforce Contact ID'
+```
+
+**For Events (meetings, appointments):**
+
+```sql
+SELECT Id, Subject, ActivityDate, StartDateTime, EndDateTime, Description
+FROM Event
+WHERE WhoId = '/Salesforce Contact ID'
+```
+
+Replace `/Salesforce Contact ID` with the contact's Salesforce ID column from your Clay table, inserted using the `/` picker in the query editor.
+
+**Tips:**
+
+-   **Select only the fields you need.** Fetching fewer fields keeps queries fast and avoids hitting Salesforce's response-size limits.
+-   **Add a `LIMIT` clause** to control how many activity records are returned per contact row (for example, `LIMIT 10`).
+-   **Sort by most recent first** using `ORDER BY ActivityDate DESC` so the newest activities appear at the top of the result.
+-   **Run two separate SOQL columns** if you need both Tasks and Events — one column querying `Task` and one querying `Event` — then use a formula column to combine or compare the results.
+
+For SOQL syntax reference, see Salesforce's [SOQL documentation](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql.htm) or the [Lookup records via SOQL](salesforce-integration-overview.md) section of the Salesforce integration overview.
+
 ## Why does a Salesforce Lookup return "no records found" when searching by phone number?
 
 If the column holding phone numbers is set to **Number** type, Clay alters the value before passing it to Salesforce. A phone number in plain E.164 format — for example, `+12345678900` — stored in a Number column loses its leading `+`, becoming `12345678900`. If Salesforce stores the number as `+12345678900`, the lookup finds no match. Phone numbers that contain spaces or dashes (for example, `+1 234-567-8900`) produce a coercion error in the cell rather than a silently altered value.
