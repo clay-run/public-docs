@@ -46,6 +46,8 @@ Once you've researched an account, Clay can help you find the right people to re
 -   `@Clay Find Product execs who joined [Company] in the last 6 months.`
 -   `@Clay Find healthcare technology companies in the US with 100–500 employees that have raised a Series B or later.`
 
+**Note:** Company search is currently rolling out — contact support to enable if it's not yet available in your workspace.
+
 ### Research any account
 
 Use Clay to gather deep intelligence on target companies—tech stack, funding, hiring trends, website traffic, and more. Clay pulls from multiple data sources to give you a complete picture of any account.
