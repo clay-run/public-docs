@@ -85,6 +85,23 @@ If Clay reports a successful enrollment but the prospect isn't visible in the fl
 5.  **Flow is active:** Confirm the flow is published and active in Gong Engage.
 6.  **Already enrolled:** If the contact was previously added to the same flow, Gong may skip re-enrolling them.
 
+**Common "Add Prospect to Flow" error messages**
+
+When the action fails, Clay displays an error in the cell. The error text comes directly from Gong's API. Common messages include:
+
+-   **"Prospect opted out"** — the prospect has opted out of Gong Engage outreach and cannot be enrolled in flows. The prospect must opt back in through Gong before re-enrollment is possible.
+-   **"Prospect is already assigned to the same flow"** — the prospect is already enrolled in this specific flow. To re-enroll them (for example, after reassigning to a new owner), first remove them using the **Remove Prospect from Flow** action, then run **Add Prospect to Flow** again.
+
+**Capturing error text in a formula column**
+
+To route rows based on whether an enrollment failed and why — for example, to skip opted-out prospects in a downstream step — you can pull the error text from the **Add Prospect to Flow** column into a formula column using `Clay.getCellErrorMessagePreview()`:
+
+```javascript
+Clay.getCellErrorMessagePreview({{Add prospect to flow}})
+```
+
+See [Formulas — How do I pull an error message from an action column into another column?](formula-generator.md) for full usage details, including limitations on preview behavior and which cells are supported.
+
 ### `Action` Get Assigned Flows for Prospect
 
 Use this action to retrieve the Gong Engage flows assigned to a prospect.
