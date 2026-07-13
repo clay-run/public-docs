@@ -205,6 +205,15 @@ Clay blocks this and lists Status (or the intermediate column completing the cyc
 
 Alternatively, restructure so the condition-determining step happens fully upstream using only pre-enrichment data as inputs, with no dependency on the gated column.
 
+**If the error appears but the column you are configuring does not visibly depend on the gated column**: The circular dependency check traverses the full column graph of your entire table at save time. If another column in the table has accumulated stale dependency information — for example, from a prior column deletion or recreation — the traversal can flag an apparent cycle in those other columns and block your save, even though your run condition itself is not the source of the cycle. In this case, the error modal may not name any specific column completing the loop.
+
+**How to fix a false positive caused by stale column dependencies**:
+
+1. Look for other columns in the table that reference a column which has been deleted or recreated. Formula columns and prompt columns are the most common source of stale references.
+2. Open **Edit Column** on each suspect column. If the formula or prompt references a column name that no longer exists, replace that reference with the correct current column name.
+3. Save those columns — re-saving recompiles the formula into an up-to-date dependency record, clearing the stale cycle.
+4. Return to your original column and try saving the run condition again.
+
 ### "Only run if" re-evaluates each time an upstream column changes
 
 With **Auto-run** enabled, Clay re-evaluates an action column's "Only run if" condition each time a value in the current row changes — including each time an upstream enrichment column finishes running. The condition is **not a one-time gate**: if it evaluates to `true` on multiple occasions as different enrichments complete, the action column can run multiple times on the same row.
