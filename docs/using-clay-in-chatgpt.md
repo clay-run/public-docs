@@ -2,7 +2,7 @@
 title: Using Clay in ChatGPT
 description: Find people, enrich contacts, and draft personalized outreach — all
   within a regular ChatGPT conversation.
-last_synced: 2026-04-26T01:40:52.599Z
+last_synced: 2026-07-13T18:40:02.248Z
 ---
 
 # Using Clay in ChatGPT
@@ -24,7 +24,8 @@ Clay in ChatGPT lets you find people, enrich contacts, and draft personalized ou
     -   Enrich the data with different data points (email address, work history summary, thought leadership)
     -   Click `View Info` next to a person's name to view more professional information or `Draft Email`
         -   **Note:** You'll need to enrich and find a person's email address before you can draft an outreach email.
-5.  At any time, you can click `Open in Clay` in the top right corner to unlock even more powerful enrichment and workflow capabilities directly in your Clay table.
+5.  Results are returned in groups of 20. Click `Load more` to see additional pages.
+6.  At any time, you can click `Open in Clay` in the top right corner to unlock even more powerful enrichment and workflow capabilities directly in your Clay table.
 
  Your browser does not support the video tag.
 
@@ -43,7 +44,7 @@ Once you've researched an account, Clay can help you find the right people to re
 
 -   `@Clay find VP-level finance leaders at [Company] who joined in the last 6 months.`
 -   `@Clay Find Product execs who joined [Company] in the last 6 months.`
--   `@Clay Who are the engineering leaders at [Company] and what are their emails?`
+-   `@Clay Find healthcare technology companies in the US with 100–500 employees that have raised a Series B or later.`
 
 ### Research any account
 
@@ -71,8 +72,7 @@ After gathering context on companies and contacts, use Clay to draft personalize
 
 To get the best results when using Clay in ChatGPT:
 
--   Include the company domain (e.g., "rippling.com"), not just the company name
--   Limit your search to one company at a time for more accurate results
+-   Include the company domain (e.g., `rippling.com`), not just the company name
 -   Be specific with criteria: job titles, locations, seniority, keywords
 -   If you aren't sure what job title you're looking for, try asking "who manages X at company"
 -   Use declarative language and keep prompts direct
@@ -129,7 +129,7 @@ When you first connect Clay to ChatGPT, you receive 500 bonus credits to try the
 
 **Do I need a paid ChatGPT plan?**
 
-No, you only need to be logged in to ChatGPT.
+No, a free ChatGPT account is sufficient to connect Clay and start searching. Some ChatGPT features may require a paid plan, but Clay search and enrichment works on any plan.
 
 **Will this use credits from my account?**
 
