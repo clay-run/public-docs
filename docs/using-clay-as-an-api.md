@@ -70,7 +70,7 @@ Authenticate by passing your workspace-scoped API key in the `clay-api-key` requ
 
 **Note:** A 401 (`Authentication required`) from `api.clay.com/public/v0` means your workspace hasn't been provisioned for the Public HTTP API — this applies even if your API key is visible in settings. Regenerating the key will not fix a provisioning 401. [Contact Clay support](https://www.clay.com/contact-form) to request workspace enablement.
 
-**Note:** If you're using Clay as an API, **Auto-delete** helps keep things fast and lightweight. It automatically enriches incoming webhook data, sends results to your destination (like Salesforce or Google Sheets), then deletes the rows—so Clay streams data through rather than storing it. Perfect for high-volume or continuous enrichment jobs. [Learn more](https://www.clay.com/university/guide/auto-delete).
+**Note:** If you're using Clay as an API, **Auto-delete** helps keep things fast and lightweight. It automatically enriches incoming webhook data, sends results to your destination (like Salesforce or Google Sheets), then deletes the rows—so Clay streams data through rather than stopping it. Perfect for high-volume or continuous enrichment jobs. [Learn more](https://www.clay.com/university/guide/auto-delete).
 
 ### 4\. **MCP / AI tool integration** (Best for AI assistants and agent workflows)
 
@@ -85,3 +85,5 @@ Clay offers pre-built MCP connectors within each supported platform's app or con
 The Clay CLI is part of the Clay Agent Plugin — a developer tool that lets coding agents (Claude Code, Codex, or any terminal environment) build and run Clay workflows without opening the Clay UI. Install it from the [agent-plugins repository](https://github.com/clay-run/agent-plugins) and follow the setup instructions there.
 
 **System requirements:** The Clay CLI runs on **macOS and Linux only**. Windows is not currently supported — if you're on Windows you'll see an error like "no native windows binary in the plugin." There is no workaround at this time; Windows support is not yet available.
+
+When you run `clay routines list` or `clay routines get`, each function-type routine in the response includes a `source` field and a `createdBy` field. `source` is `"managed"` for Clay-built default functions and `"custom"` for functions built in your workspace. `createdBy` is an object with `id`, `name`, and `email` for custom functions, and `null` for managed defaults. Both fields are omitted for workflow-type routines.
