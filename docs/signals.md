@@ -129,7 +129,7 @@ To search for open job postings by location, job title, or other criteria, use t
 
 ### What data does the Find Jobs source pull from?
 
-The Find Jobs source draws from a dataset of job postings that can normally be found on LinkedIn. When you search by job title, location, seniority, posting date, or other filters in the Find Jobs panel, you are searching across that dataset — results reflect jobs publicly listed on LinkedIn at the time the data was indexed. The **Find Active Job Openings** enrichment column uses the same data source, so its results are also LinkedIn-based.
+The Find Jobs source draws from a dataset of job postings that can normally be found on the professional network. When you search by job title, location, seniority, posting date, or other filters in the Find Jobs panel, you are searching across that dataset — results reflect jobs that were publicly listed on the professional network at the time the data was indexed. The **Find Active Job Openings** enrichment column uses the same data source, so its results draw from the same professional network dataset.
 
 To pull job postings sourced from company career pages or other job boards, use one of these enrichment integrations in your company table instead:
 
