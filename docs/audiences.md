@@ -1,12 +1,12 @@
 ---
 title: Audiences
-description: "Clay Audiences is available on Growth and Enterprise plans. Launch and Trial workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above."
+description: "Clay Audiences is available on Growth and Enterprise plans. Launch workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above. Trial workspaces do not have access to Audiences."
 last_synced: 2026-07-02T20:01:45.311Z
 ---
 
 # Audiences
 
-**Plan availability:** Clay Audiences is available on **Growth** and **Enterprise** plans (including legacy Enterprise). Launch and Trial workspaces have access to core Audiences features — importing via CSV, people/company search, and Clay table sends — but connecting a CRM or data warehouse as a data source requires **Growth or above**. Trial workspaces can create up to 250 audience segments; there is no row cap on CSV imports to Audiences on any plan. Free workspaces and legacy non-Enterprise plans do not have access to Audiences. Growth plans can sync up to 250,000 CRM/DWH records; Enterprise plans support up to 25,000,000 records.
+**Plan availability:** Clay Audiences is available on **Growth** and **Enterprise** plans (including legacy Enterprise). Launch workspaces have access to core Audiences features — importing via CSV, people/company search, and Clay table sends — but connecting a CRM or data warehouse as a data source requires **Growth or above**. Free, Trial, and legacy non-Enterprise plan workspaces do not have access to Audiences. Growth plans can sync up to 250,000 CRM/DWH records; Enterprise plans support up to 25,000,000 records.
 
 Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
 
@@ -407,7 +407,7 @@ Export sync behavior:
 
 -   **Export frequency:** Once every 24 hours. Clay assigns each workspace a stable export time automatically — the schedule is not user-configurable.
 -   **First export:** After you enable Export Sync, the first export fires at your workspace's next scheduled export time — this may take up to 24 hours. The Exports panel shows **Not set up** until the first export completes successfully.
--   **Export batch size:** ~10,000 records per sync.
+-   **Export batch size:** ~10,000 records per batch.
 -   **Subsequent syncs:** Incremental — only changed records are processed.
 
 To estimate API calls for initial export, divide record count by 10,000 and compare against your Salesforce limit.
