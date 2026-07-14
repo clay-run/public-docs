@@ -119,9 +119,11 @@ To request a refund for a recent charge, contact [Clay support](https://app.clay
 
 ## Workspace row limit
 
-All workspaces have a global row limit of **10 million rows** across all tables. This cap counts rows in every table in your workspace, regardless of plan. If you reach this limit, you may see the error **"Your Subscription Does Not Allow Any More Records."**
+All workspaces have a global row limit of **15 million rows** across all tables. This cap counts rows in every table in your workspace, regardless of plan. If you reach this limit, you may see the error **"Your Subscription Does Not Allow Any More Records."**
 
 Deleting a table removes its rows from your workspace row count immediately — rows are freed as soon as the table is moved to Trash, without requiring permanent deletion from Trash.
+
+**Note:** Records stored in [Audiences](audiences.md) have their own separate row limit and do not count toward the workspace row limit.
 
 **Finding tables to delete**
 
@@ -129,6 +131,7 @@ If you are approaching the workspace row limit, take stock of tables that are no
 
 -   On the Home page, sort by **Created at** or **Last opened by me** to surface older or less-recently-accessed tables that may no longer be in use.
 -   Open `Settings` > `Usage` to view the credit usage dashboard. Filter by a recent time period and sort by `Credits used` ascending to identify tables with little or no recent credit activity — these are often good candidates for deletion.
+-   To check the row count of a specific table, open it — the total row count is displayed in the table toolbar. Clay does not provide a workspace-wide view ranking all tables by row count.
 
 For instructions on deleting tables and permanently removing them from Trash, see [Delete content within your workspace](delete-content-within-your-workspace.md).
 
