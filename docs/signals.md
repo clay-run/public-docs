@@ -85,7 +85,7 @@ Signal columns reference their source table by its internal ID, not its name. Re
 The safest approach is to replace the data inside your existing source table so its ID stays the same:
 
 1.  In your existing master source table, delete the old rows.
-2.  Re-import your updated account list into the same table (via CSV, CRM sync, or any source).
+2.  Re-import your updated account list into the same table (via CSV, CRM sync, or any source).\
 3.  In each signal table, re-run the signal column (click the 📡 column header → run) so it picks up the new account list on its next cycle.
 
 Because the table ID hasn't changed, all downstream signal workflows remain connected automatically.
@@ -126,6 +126,16 @@ You can then delete the old signal. Rebuilding does not reprocess previously see
 No. Signals monitor changes at companies or contacts already in your data source (new hires joining, contacts getting promoted, contacts changing jobs, etc.). They are not a way to search for job postings from scratch.
 
 To search for open job postings by location, job title, or other criteria, use the **Find Jobs** source when creating a new table. You can also [schedule it to run on a recurring basis](https://www.clay.com/university/guide/scheduled-sources) (daily, weekly, etc.) so your table stays up to date with the latest postings.
+
+### What data does the Find Jobs source pull from?
+
+The Find Jobs source draws from a dataset of job postings that can normally be found on LinkedIn. When you search by job title, location, seniority, posting date, or other filters in the Find Jobs panel, you are searching across that dataset — results reflect jobs publicly listed on LinkedIn at the time the data was indexed.
+
+If you need job postings from other sources, use one of the enrichment-based options in your company table instead:
+
+-   **Find Active Job Openings** — an enrichment column that pulls job openings per company. Supports filtering by location, job title keywords, job description keywords, and days since posted.
+-   **PredictLeads Find open jobs** — a separate enrichment integration available under **Add enrichment → PredictLeads**.
+-   **TheirStack** — another enrichment integration for job postings, available under **Add enrichment → TheirStack**.
 
 ### How do I check for job openings at each company in my table?
 
