@@ -33,7 +33,7 @@ Follow these steps to set up auto-delete:
         -   Optionally, select a **Success column** from the dropdown. When set, a row will only become eligible for deletion after that specific column has run successfully. If no column is selected, rows are deleted as soon as all actions finish.
     -   **Delete based on conditional rules** — Deletes rows that match a set of custom filter conditions you define. Use this mode to trigger deletion based on more complex logic, such as time created or updated, values in a column, or column run status.
         -   Click `Add filter` to build your conditions. At least one filter rule is required to save this mode.
-5.  Optionally, enter a value in the **Number of rows to keep** field. This sets how many of the most recent rows are retained in the table when auto-delete runs. Leave the field empty to use the default of 100 rows.
+5.  Optionally, enter a value in the **Number of rows to keep** field. This sets how many of the most recent rows are retained in the table when auto-delete runs. Leave the field empty to use the default of 100 rows. **This value does not block new inserts** — the table continues accepting new rows until it reaches the 50,000-row hard ceiling, regardless of the keep-limit setting.
 6.  Click `Save changes`.
 
 **Warning:** Deleted rows are not recoverable.
@@ -41,6 +41,8 @@ Follow these steps to set up auto-delete:
 ## Keeping space for incoming records
 
 Auto-delete runs after records are written to the table, not before. When records arrive, Clay checks whether the table is below the 50,000-row limit and creates the records first — the auto-delete cleanup job then runs separately, typically about a minute later. This means that if records keep arriving faster than auto-delete can clear space, the table can temporarily reach the 50,000-row limit and new records will be rejected.
+
+**The "Number of rows to keep" setting is not an insert barrier.** Setting it to, for example, 30,000 does not stop new rows from being created once the table contains 30,000 rows. New records continue to enter the table up to the 50,000-row hard ceiling. Auto-delete then trims completed rows back down to your keep-limit each time it runs. The table will temporarily hold more rows than the keep-limit between auto-delete runs — this is expected behavior, not a sign that something is broken.
 
 **Rejected records are not queued or retried.** If a record is turned away because the table is full, it is permanently lost — it will not be created once auto-delete runs and frees up space. For webhook sources, the sending system receives an error response (not a `200` status code), so you can detect the failure on the sending side and re-send if needed.
 
