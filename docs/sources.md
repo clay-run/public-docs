@@ -63,7 +63,7 @@ To download your table data as a CSV:
 
 **Why can't I see Export?** The most common cause is having one or more rows checked. The toolbar shows different options depending on row selection state: when no rows are selected, you see the `Tools` button with table-level functions such as Export and Import; when rows are selected, an `Actions` button appears instead with bulk row operations (Run rows, Delete rows). Uncheck all rows to restore access to Export.
 
-**Export is unavailable on trial workspaces.** CSV export requires a paid plan. If you see an error when trying to export and you are on a trial workspace, [upgrading your plan](plans-and-billing.md) will enable it.
+**On trial workspaces, CSV export may be limited to 50 rows per download.** If you see an error when trying to export, [upgrading your plan](plans-and-billing.md) may resolve it.
 
 **Long text or AI column data appears truncated or shows `[object Object]` in the export.** If a column stores enrichment or AI-generated output as nested structured data — such as the output of a Use AI, Claygent, or enrichment integration column — the CSV export may show only a short preview ending in "..." or the text `[object Object]` rather than the full value. Both occur when the export encounters a structured object rather than a plain extracted field.
 
