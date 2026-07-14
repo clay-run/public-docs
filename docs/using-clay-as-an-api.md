@@ -58,6 +58,36 @@ Clay offers a fast API for searching its proprietary People and Company data. Yo
 
 [Contact our GTM engineers for more information.](https://www.clay.com/contact-form)
 
+**People Search — Structured filter mode**
+
+In addition to natural-language search, the people and company search API supports a structured filter mode that gives you explicit, field-level control over your search — equivalent to the filters available in Clay's Find People UI, including time in current role.
+
+-   `GET /search/filters-mode/fields?source_type=people` — returns every available filter field with its name, type, description, and allowed values. Call this first to discover valid fields before building your search request. The same endpoint accepts `source_type=companies` for company searches.
+-   `POST /search/filters-mode` — submits a structured search using named filter fields and returns a `search_id` to retrieve results from.
+
+**Filtering by time in current role:**
+
+Use these two fields to filter by how long a person has been in their current position:
+
+-   `current_role_min_months_since_start_date` — minimum number of months since the start of the current role (e.g., `12` to find people who have been in role for at least 1 year)
+-   `current_role_max_months_since_start_date` — maximum number of months since the start of the current role (e.g., `3` to find people who joined their role in the last 3 months)
+
+Example — find new hires at a company in the last 3 months:
+
+```json
+{
+  "source_type": "people",
+  "filters": {
+    "company_identifier": "https://www.linkedin.com/company/stripe",
+    "current_role_max_months_since_start_date": 3
+  }
+}
+```
+
+**Deduplication:** The structured filter mode does not support exclusion lists. If you want to exclude people already in your own database from the results, you must handle deduplication after receiving the API response.
+
+For the full list of available filter fields, their descriptions, and additional examples, see the [API reference](https://developers.clay.com/api-reference/search/list-the-filter-fields-available-for-a-search-source-type).
+
 **Public HTTP API — Routines (same beta access)**
 
 The same workspace-level beta access also unlocks a Routines endpoint for triggering Clay enrichment functions programmatically:
