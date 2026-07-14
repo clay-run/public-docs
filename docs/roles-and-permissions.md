@@ -127,6 +127,8 @@ Workspace admins can edit access levels for specific workbooks. This helps preve
     -   **Admins and invited collaborators only** — restricts access to admins and any collaborators you explicitly invite.
 3.  If `Admins and invited collaborators only` is selected, an option to `+ Add collaborators` will appear.
 
+**These settings control edit access only, not visibility.** All workspace members can see every workbook once they are invited to the workspace — there is no way to hide specific workbooks from specific users. If your goal is to prevent certain users from seeing a workbook entirely, that is not currently supported in Clay.
+
 ## Related access controls
 
 Beyond roles, workspace admins have additional tools to control what users can do:
