@@ -78,7 +78,7 @@ Example — find new hires at a company in the last 3 months:
 {
   "source_type": "people",
   "filters": {
-    "company_identifier": "https://www.linkedin.com/company/stripe",
+    "company_identifier": "stripe.com",
     "current_role_max_months_since_start_date": 3
   }
 }
