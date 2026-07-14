@@ -127,6 +127,15 @@ No. Signals monitor changes at companies or contacts already in your data source
 
 To search for open job postings by location, job title, or other criteria, use the **Find Jobs** source when creating a new table. You can also [schedule it to run on a recurring basis](https://www.clay.com/university/guide/scheduled-sources) (daily, weekly, etc.) so your table stays up to date with the latest postings.
 
+### What data does the Find Jobs source pull from?
+
+The Find Jobs source draws from a dataset of job postings that can normally be found on the professional network. When you search by job title, location, seniority, posting date, or other filters in the Find Jobs panel, you are searching across that dataset — results reflect jobs that were publicly listed on the professional network at the time the data was indexed. The **Find Active Job Openings** enrichment column uses the same data source, so its results draw from the same professional network dataset.
+
+To pull job postings sourced from company career pages or other job boards, use one of these enrichment integrations in your company table instead:
+
+-   **TheirStack** — aggregates postings from thousands of job posting sources. Available under **Add enrichment → TheirStack**.
+-   **PredictLeads Find open jobs** — sources from company career pages and professional networking platforms. Available under **Add enrichment → PredictLeads**.
+
 ### How do I check for job openings at each company in my table?
 
 If you have a table of company domains or names and want to pull active job openings for each one, use the **Find Active Job Openings** enrichment column — not a Signal.
