@@ -552,7 +552,7 @@ To get audience records into a CSV file, use **Add to workbook** to send the aud
 3.  Enter a name for the new table and click **Continue**. Clay creates a regular Clay table populated with your audience records (up to 50,000 rows).
 4.  In the new table, make sure no rows are checked, then click **Tools** → **Export** → **Download CSV**. The file processes in the background and downloads automatically.
 
-**Note:** CSV export from a Clay table requires a paid plan — it is not available on trial workspaces.
+**Note:** On trial workspaces, CSV export from a Clay table may be capped to 50 rows per download. If you encounter an error when trying to export, [upgrading your plan](plans-and-billing.md) may resolve it.
 
 **Note:** **Add to workbook** is currently rolling out to Growth and Enterprise workspaces. If you don't see it in the **Send** dropdown, contact your Growth Strategist or Clay support to enable it.
 
