@@ -123,8 +123,6 @@ All workspaces have a global row limit of **15 million rows** across all tables.
 
 Deleting a table removes its rows from your workspace row count immediately — rows are freed as soon as the table is moved to Trash, without requiring permanent deletion from Trash.
 
-**Note:** Records stored in [Audiences](audiences.md) have their own separate row limit and do not count toward the workspace row limit.
-
 **Finding tables to delete**
 
 If you are approaching the workspace row limit, take stock of tables that are no longer needed:
