@@ -254,6 +254,7 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
 3.  Test on a small batch first — click `Run on 10 rows` to verify output before running at scale.
 4.  Open `Field Mapping` and map each column you want to save back to Audiences:
     -   Enable the auto-enrich toggle so that any new record entering this segment is automatically passed through the enrichment — typically within 15 minutes.
+    -   **Mapping nested sub-fields:** When a column returns structured output (for example, a function that returns both a phone number and an email address), you can expand it in the field mapping panel and select individual sub-fields — each mapping to a separate Audience field without creating extra intermediate columns. For integration enrichments, sub-fields are available immediately; for function-based columns, run at least one row in the bulk enrichment table first to populate the available sub-field list. Only scalar values (text, number, or boolean) can be mapped — objects and arrays are not selectable.
 5.  Click `Start Run`.
 
 **Note:** Clay does not impose rate limits on Audiences bulk enrichments — the system is built to handle large lists at scale. Third-party data providers (such as Clearbit or Apollo) apply their own rate limits, but Clay queues requests and manages these automatically in the background. If you supply personal API keys for a provider, those keys' own rate limits apply.
