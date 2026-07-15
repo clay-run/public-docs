@@ -20,6 +20,20 @@ Functions are built for workflows you'd otherwise rebuild from scratch in every 
 -   ICP scoring: Enrich sourced accounts against a pre-defined scoring methodology and update your CRM with the result — governed centrally so logic never drifts between tables.
 -   Inbound qualification & routing: Run enrichments to identify and score inbound leads, apply routing logic, and update your CRM — all from a single function column.
 
+## Clay managed functions
+
+In addition to building your own functions, you can add **Clay managed functions** — pre-built enrichment workflows maintained by Clay that are ready to install directly in your workspace.
+
+**To browse and install managed functions:**
+
+1.  From your Clay homepage, click **Functions** in the sidebar.
+2.  Click **New** in the top-right corner. If Clay managed functions are available in your workspace, the **Browse Clay managed functions** modal opens instead of a blank editor.
+3.  Browse available functions by category or search by name. Select a function to preview its inputs, outputs, and description.
+4.  By default, the modal shows only functions not yet installed in your workspace. To see all managed functions — including ones already added — click the filter icon (funnel) in the modal header to toggle off the workspace filter.
+5.  Click **Add to workspace** to install the function.
+
+Installed managed functions appear under the **Clay managed** tab on your Functions homepage. Once installed, they behave like any other function — you can call them from a table, monitor runs, and configure any integrations the function requires.
+
 ## Creating a function
 
 **Create from existing workflow:**
