@@ -122,6 +122,14 @@ Each option has different benefits and considerations in terms of cost, convenie
 -   **Switch to Clay credits** — open the column settings, click the **Account** dropdown, and select the default Clay-managed account. This routes your requests through Vertex AI's dedicated capacity.
 -   **Retry the affected rows** — if you need to keep your personal key, the error is typically intermittent. Re-running failed cells usually succeeds once Google's shared capacity pressure eases.
 
+**If you need to restrict your Gemini API key for security or compliance reasons:** When connecting your own Google Gemini or Vertex AI API key in Clay, you can safely restrict the key to specific Google Cloud services — but you cannot restrict it by IP address or application.
+
+-   **API service restriction (safe to apply):** In Google Cloud Console, go to **APIs & Services → Credentials**, open your API key, and under **API restrictions**, limit it to only the APIs Clay needs:
+    -   **Generative Language API** (`generativelanguage.googleapis.com`) — for keys generated in Google AI Studio
+    -   **Vertex AI API** (`aiplatform.googleapis.com`) — for keys generated in Google Cloud under Vertex AI
+    This prevents the key from being used for unrelated Google services and works regardless of where the API calls originate.
+-   **IP restriction (not supported):** Clay's native Gemini integration makes outbound calls from dynamic IP addresses — there is no fixed IP range to allowlist for Gemini API connections. Adding an application or IP restriction to your API key will block Clay's requests and produce a `PERMISSION_DENIED` error. Leave IP restrictions off for any API key used with Clay's Gemini integration.
+
 **If enrichment cells show "Retrying" when using a personal Anthropic API key:** Clay runs rows in parallel, which can quickly exhaust Anthropic API rate limits — especially on lower tiers. When Clay receives a rate-limit response from Anthropic, it sets the affected cells to a "Retrying" state and waits before attempting again. If the rate limit persists, cells may remain in this state for an extended period or ultimately fail. To resolve this:
 
 -   **Run fewer rows at a time** — lower-tier Anthropic accounts have lower requests-per-minute (RPM) and tokens-per-minute (TPM) limits. Running smaller batches reduces the chance of hitting these limits. See [Anthropic API rate limits](https://docs.anthropic.com/en/api/rate-limits) for your tier's specific limits, and [Anthropic API settings](https://console.anthropic.com/settings/limits) to check your current tier.
