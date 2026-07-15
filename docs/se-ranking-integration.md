@@ -38,7 +38,7 @@ Optional:
 **Outputs**
 
 -   Brand presence: Number of times the brand appears in AI responses.
--   Link presence: Number of times the domain is linked in AI responses.
+-   Link presence: Number of times the domain is cited as a link in AI responses.
 -   Average position: Mean ranking position across AI results.
 -   Share of voice: Percentage of visibility compared to competitors.
 -   Time series data: Historical visibility trends (when Time Series view is selected).
