@@ -220,7 +220,7 @@ When your ICP changes or you need to adjust agent logic:
 
 1.  Update the agent once in Claygent builder.
 2.  Changes propagate everywhere it's deployed.
-3.  No need.find and update each column individually.
+3.  No need to find and update each column individually.
 
 This is the difference between managing duplicate prompts across multiple tables versus having a single source of truth.
 
