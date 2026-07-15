@@ -44,7 +44,7 @@ When setting up key-pair authentication, you'll need to provide:
 -   **Schema** (optional): The schema to connect to in Snowflake. If not specified, you'll be prompted to enter it when setting up a Snowflake enrichment.
 -   **Warehouse** (optional): The warehouse to use for queries in Snowflake. If not specified, you'll be prompted to enter it when setting up a Snowflake enrichment.
 
-**Static IP routing:** Snowflake Key Pair connections always route through Clay's fixed IP addresses — no toggle is required. If your Snowflake network policy restricts connections by IP address — or if you've verified your username, private key, and account identifier are correct but still see a connection error — contact Clay support for the current list of IPs to allowlist.
+**Static IP routing:** Snowflake Key Pair connections always route through Clay's fixed IP addresses — no toggle is required. If your Snowflake network policy restricts connections by IP address, contact Clay support for the current list of IPs to allowlist in Snowflake.
 
 ### Setting up username and password authentication
 
@@ -93,8 +93,7 @@ Daily is the fastest schedule available on non-Enterprise plans; Enterprise cust
 ## Enriching data with Snowflake
 
 1.  While in a Clay table, click `Add enrichment` and search for `Snowflake`.
-2.  Under `Integrations`, select one of the Snowflake options.
-3.  In the modal, you will be asked to `Select Snowflake account`.
+2.  Under `Integrations`, select one of the Snowflake options.\n3.  In the modal, you will be asked to `Select Snowflake account`.
     -   If you haven't already connected your Snowflake account, click `+ Add account` and select your authentication method.
 
 ### `Action` Insert row
