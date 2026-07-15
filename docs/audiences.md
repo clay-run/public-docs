@@ -326,6 +326,10 @@ While the signal is processing its initial run, its status shows **Running**. On
 
 To see which specific records in your audience were picked up by the signal, add a filter on your audience for the **Job change results** field (or the equivalent results field for other signal types). You can save that filtered view as a separate segment — or use the auto-created companion segment, which already has this filter applied.
 
+### Claygent-managed columns
+
+In a **Companies** audience, columns written by a Claygent display a four-diamond icon in the column header. Workspace admins and members can click the column header and select **View Claygent** from the dropdown to open the configuration for the Claygent that populates that column. This option does not appear in People audiences or in archived audiences.
+
 ### Connecting a workflow to a segment
 
 Connect a Clay workflow to an audience segment to automatically run it on every new member that enters. When a contact or company matches the segment's filters, the connected workflow starts within minutes.
