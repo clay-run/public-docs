@@ -301,7 +301,7 @@ To resolve errored rows:
 -   **Remove non-critical provider columns** — if a provider consistently fails to match your records and the data isn't essential, removing that column from the bulk enrichment table means its failures will no longer mark rows as errored.
 -   **Add a run condition** — if rows are errored because a required input field is missing (for example, Domain), open the column settings, go to **Run settings → Only run if**, and add a condition that checks the input field is not empty. Rows where the condition is not met show **"Run condition not met"** instead — a successful skip (🟢) — so they no longer appear in the Errored rows tab. See [Conditional runs](conditional-runs.md) for details.
 
-**Deleting rows from the bulk enrichment:** Checking the checkbox and deleting a row removes it from the enrichment queue only — the corresponding record in your People or Companies Audience is not affected. If the **Auto-enrich new records** toggle is enabled in the Run Setup panel, a deleted record will be automatically picked up again on the next sync if it still matches the segment.
+**Deleting rows from the bulk enrichment:** Checking the checkbox and deleting a row removes it from the enrichment queue only — the corresponding record in your People or Companies Audience is not affected.
 
 ### Signals
 
