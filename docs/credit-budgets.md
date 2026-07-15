@@ -23,6 +23,8 @@ A **budget** is a named credit pool with:
 
 When a workbook (or other resource) is assigned to a budget, all credit-consuming actions in that resource count against the budget's balance. If a budget runs out of credits, processing in assigned resources stops until an admin increases the limit or resets the spend.
 
+**Note:** The Budgets tab in `Settings` → `Usage` shows credit spend aggregated by budget — it does not break down spend by individual user within the budget. To see which specific Sales Rep or MCP user consumed credits, use the **MCP** tab in `Settings` → `Usage`, which shows per-user spend for anyone accessing Clay through Claude, ChatGPT, or Glean. To set or adjust individual credit limits for those users, see [MCP settings](https://university.clay.com/docs/mcp-settings).
+
 ## Creating a budget
 
 1.  Go to `Settings` → `Budgets`.
