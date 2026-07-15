@@ -23,6 +23,8 @@ A **budget** is a named credit pool with:
 
 When a workbook (or other resource) is assigned to a budget, all credit-consuming actions in that resource count against the budget's balance. If a budget runs out of credits, processing in assigned resources stops until an admin increases the limit or resets the spend.
 
+**Function calls and budget attribution:** When a workbook assigned to a budget calls a Function, the credits consumed by that Function run count against the **calling workbook's budget** — not against the Function itself or the Function creator's workbook. For example, if a marketing team's workbook calls a Function built by RevOps, those credits count against the marketing workbook's budget. This means that assigning a user's workbook to a budget automatically captures all spend from that workbook, including any Function calls it makes.
+
 ## Creating a budget
 
 1.  Go to `Settings` → `Budgets`.
@@ -90,3 +92,5 @@ Clay has two distinct credit governance features for Enterprise workspaces:
 | **Credit spend limits** | Per-workbook credit caps — set a maximum spend for a single workbook or table. | `Settings` → `Usage` → `Workbook limits` |
 
 These features are complementary. You can use spend limits to cap individual workbooks while also assigning them to a budget for team-level cost attribution.
+
+**Note:** Neither credit budgets nor credit spend limits can be applied directly to a Function. Credit limits apply to a workbook as a whole — including all Function calls that workbook makes. There is no per-Function credit cap. To limit how much a specific workbook spends (including its Function calls), assign it to a budget with a credit limit or set a per-workbook credit spend limit on it.
