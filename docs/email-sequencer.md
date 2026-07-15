@@ -51,7 +51,9 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
         -   ⚠️ Note: You or your Workspace admin must authorize the Clay sequencer app for your domain, or you'll see an access error.
     -   `Microsoft Outlook OAuth` (recommended): Connect your Outlook account via OAuth.
         -   ℹ️ Note: Unlike Google OAuth, no Clay-side admin setup is required upfront. If your Microsoft 365 / Entra tenant requires admin approval for third-party apps, your admin may need to grant consent for "Clay Sequencer – Smartlead" in the [Microsoft Entra Admin Center](https://entra.microsoft.com).
-    -   `SMTP`: Connect a single account via SMTP credentials directly.
+    -   `SMTP`: Connect a single account via SMTP credentials directly. The form has two sections:
+        -   **SMTP settings** (for sending): Sender name, Sender email, Username, Password, SMTP host, and SMTP type — SSL (auto-sets port 465), TLS (auto-sets port 587), or None (auto-sets port 25).
+        -   **IMAP settings** (for tracking replies): IMAP host and IMAP type — SSL or TLS (auto-sets port 993), or None (auto-sets port 143). Leave the IMAP fields blank if you only need outbound sending without reply tracking.
     -   `Bulk CSV upload`: Add multiple accounts at once by uploading a CSV. Download the example template from the modal and fill in the following eight columns for each account: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`. For Google Workspace accounts, generate an app password for each account (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` value.
     -   You can also [buy email accounts directly in Clay](https://university.clay.com/docs/buying-email-accounts) if you want to increase your sending capacity.
     -   After setup, you can:
@@ -283,6 +285,21 @@ For Google Workspace accounts on adjacent or alternate domains, you'll need to:
 ### Are personal email accounts supported (e.g., Gmail, Hotmail)?
 
 No, only business accounts (Google Workspace, Microsoft Outlook) are supported for OAuth. Personal Gmail accounts can be connected through a legacy SMTP method (see [these docs](https://helpcenter.smartlead.ai/en/articles/4-connect-gmail-with-smtp)), but this workaround may stop working if Google discontinues it.
+
+### Can I connect a third-party SMTP relay service (like SendGrid) as a sending account?
+
+Yes — use the **SMTP** option in `Campaigns` → `Email Accounts` → `Add email accounts`. There is no separate connector for relay services; the manual SMTP form accepts any SMTP-compatible provider.
+
+**Connecting SendGrid:**
+
+1. In `Campaigns` → `Email Accounts`, click `Add email accounts` and choose **Manual SMTP setup**.
+2. Enter your SMTP settings:
+    -   **SMTP host**: `smtp.sendgrid.net`, **SMTP type**: `TLS` (port 587 is set automatically)
+    -   **Username**: `apikey` (enter the literal word `apikey` — not your SendGrid account name)
+    -   **Password**: your SendGrid API key with **Mail Send** permission
+    -   **Sender name** and **Sender email**: the display name and `From` address that will appear on sent emails
+3. For **IMAP settings**: SendGrid is a send-only service and does not support IMAP. Leave the IMAP fields blank if you only need outbound sending. If you want replies tracked in Clay's sequencer, enter the IMAP credentials for the mailbox that will receive replies — for example, `outlook.office365.com` for Microsoft 365 or `imap.gmail.com` for Google Workspace — using the same email address you set as Sender email.
+4. Click **Add account**.
 
 ### I saw an error toast pop up. What should I do?
 
