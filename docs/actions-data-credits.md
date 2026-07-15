@@ -511,6 +511,15 @@ No. **Lookup Record** operations — such as `Salesforce > Lookup Record` — re
 
 Only CRM **write** operations consume Actions: Create Record, Update Record, Upsert Object, and other actions that push data from Clay to your CRM.
 
+### Do Public HTTP API and CLI calls consume Actions?
+
+Yes, for enrichment runs — no, for read operations. API and CLI calls consume the same Actions and Data Credits as equivalent operations performed in the Clay app:
+
+-   **Enrichment runs** — submitting records to a routine via the Public HTTP API or triggering a workflow via the CLI consumes 1 Action per record (plus any applicable Data Credits), exactly as it would in the Clay table UI.
+-   **Read operations** — such as polling for run results, listing routines, or calling search endpoints — do not consume Action credits.
+
+The Public HTTP API is currently in beta and requires per-workspace enablement. See [Does Clay have an API?](./using-clay-as-an-api.md) to learn how to request access.
+
 ### Does enriching the same person in two separate tables charge me credits twice?
 
 Yes. Clay charges **1 Action** (and the associated Data Credits) per enrichment row run, regardless of whether that person has been enriched in another table. There is no cross-table deduplication — each row runs independently. If the same contact appears in two tables and you run an enrichment such as Enrich Person in both, you will be charged for each run separately.
