@@ -75,6 +75,8 @@ To stop a running table, click the **Stop** button in the run summary panel at t
 
 **Important: clicking Stop does not immediately cancel enrichments that are already in progress.** When you click Stop, Clay cancels all queued cells that haven't been dispatched yet — but any enrichment calls already sent to an external data provider will run to completion and **will still consume credits**. You may see a short delay between clicking Stop and the table fully halting while these in-flight calls finish.
 
+**If the Stop button appears greyed out with the tooltip "No runs are in progress for this table" while cells still show Running or Synthesizing status, this is expected during AI column runs.** The Stop button only becomes active when requests are actively in-flight (already dispatched to a data provider). During large Claygent or AI column runs, Clay dispatches rows in small concurrent batches through a rate limiter. Between batches, no requests are in-flight, so the button temporarily deactivates even though queued cells remain. The run will continue automatically — to stop it, wait for the Stop button to become active between batches and click it then.
+
 To prevent unintended credit usage before it starts, turn off [auto-run](auto-run.md) before importing large batches of rows. This prevents enrichments from triggering automatically on new data.
 
 ## Manually running unrun cells
