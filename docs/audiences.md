@@ -330,6 +330,15 @@ To see which specific records in your audience were picked up by the signal, add
 
 In a **Companies** audience, columns written by a Claygent display a four-diamond icon in the column header. Workspace admins and members can click the column header and select **View Claygent** from the dropdown to open the configuration for the Claygent that populates that column. This option does not appear in People audiences or in archived audiences.
 
+**Intelligence tab on company records (currently in beta — contact support to enable for your workspace)**
+
+When Claygent intelligence is enabled for your workspace, opening a company record in Audiences adds an **Intelligence** tab to the detail panel alongside Overview, Activity, People, and Deals. The Intelligence tab has two sections:
+
+-   **Active Claygents** — lists all Claygents currently configured for this company.
+-   **Claygent fields** — shows the field values on this company record that were written by a Claygent. Click any field row to open the agent run detail for that field.
+
+If no Claygents are configured for the company and no Claygent-written fields exist on the record, the tab shows "No intelligence yet."
+
 ### Connecting a workflow to a segment
 
 Connect a Clay workflow to an audience segment to automatically run it on every new member that enters. When a contact or company matches the segment's filters, the connected workflow starts within minutes.
