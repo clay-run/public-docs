@@ -87,3 +87,7 @@ The Clay CLI is part of the Clay Agent Plugin — a developer tool that lets cod
 **System requirements:** The Clay CLI runs on **macOS and Linux only**. Windows is not currently supported — if you're on Windows you'll see an error like "no native windows binary in the plugin." There is no workaround at this time; Windows support is not yet available.
 
 When you run `clay routines list` or `clay routines get`, each function-type routine in the response includes a `source` field and a `createdBy` field. `source` is `"managed"` for Clay-built default functions and `"custom"` for functions built in your workspace. `createdBy` is an object with `id`, `name`, and `email` for custom functions, and `null` for managed defaults. Both fields are omitted for workflow-type routines.
+
+**Note: The public developer platform does not include a list-tables endpoint.** To query a table via the API or CLI, you need to reference the table's ID directly — there is no command to enumerate all tables in your workspace. Find the table ID in the table's URL in the app: it is the segment after `/tables/` (for example, `t_0te5b6rGsW6WAJW22cD` in a URL like `app.clay.com/workspaces/.../tables/t_0te5b6rGsW6WAJW22cD/views/...`).
+
+**Note: The Tables API is read-only.** You can query and read structured data from a table you have the ID for, but making changes — adding rows, updating cells, or deleting records — is not supported through the public developer platform. The CLI is designed for building and running enrichment logic via Workflows, not for direct table manipulation.
