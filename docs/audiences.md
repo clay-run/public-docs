@@ -30,6 +30,7 @@ To add a data source for the first time, click the `Add data` button in the top 
 You can import data from:
 
 -   A new people or companies search
+-   CSV
 -   Snowflake
 -   Google BigQuery
 -   Salesforce
@@ -161,6 +162,18 @@ Clay syncs data from Google BigQuery on the following schedules:
 5.  When your search data looks good, click `All people` to merge.
 
 **Note:** When you save a search to your Audience, only basic identity fields are carried over as columns — additional data fields visible in the search preview (such as Company Size or Annual Revenue for companies, or Job Title for people) are not automatically added to your Audience. To add one of these fields, create it as a custom Audience field first: see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
+
+### Importing from CSV
+
+You can import a CSV file of people or companies as a one-time import into Audiences.
+
+1.  Click `Add data` → `Add Source` → select **CSV**.
+2.  Name your import, select whether you're importing **People** or **Companies**, and upload your CSV file.
+3.  On the mapping screen, set the **Unique identifier** — the CSV column that uniquely identifies each record (such as email for People or domain for Companies). This determines whether an incoming row updates an existing record or creates a new one.
+4.  Map your remaining CSV columns to Audience fields. Click **Auto-map** to automatically suggest mappings based on column names — Clay matches existing Audience fields and creates new ones where necessary.
+5.  Click **Save** to complete the import.
+
+CSV imports are one-time — they do not re-sync automatically. To update your Audience with new CSV data, repeat the import process with an updated file.
 
 ### Sending data from Clay table
 
