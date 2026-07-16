@@ -117,7 +117,12 @@ For more information on Instantly's actions, refer to the [Instantly documentati
 
 ## Outreach
 
-Outreach's custom fields fully support HTML and newline characters.
+Outreach sequence emails are rendered as HTML, so plain newlines in custom field values collapse into spaces when the email displays. Use `<br>` tags to produce visible line breaks.
+
+To add `<br>` tags to AI-generated email bodies, choose one of the following approaches:
+
+-   **Claygent or AI column prompt**: add formatting instructions to your prompt, for example: *"Use `<br>` at the end of each line and `<br><br>` between paragraphs. Do not use plain line breaks."* Apply this to the email body field only — a `<br>` tag inside a subject line appears as literal text, so keep the subject plain.
+-   **Formula column**: add a Formula column after your AI column that replaces each `\n` with `<br>`, then map that formula column to the Outreach custom field in the Update Prospect enrichment instead of the raw AI output.
 
 We recommend reserving specific Prospect custom fields (e.g. custom10 to custom15) for Clay usage to avoid conflicts with other custom field data. You will have to manually map your messages to these custom fields.
 
