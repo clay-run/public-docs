@@ -147,7 +147,7 @@ Click **Generate API connection**.
 Sculptor will automatically:
 
 -   Map your table columns to API parameters.
--   Select the correct endpoint and function fields.
+-   Select the correct endpoint and method.
 -   Configure query parameters and optional fields.
 -   Set up authentication headers.
 -   Structure the request body for POST/PUT requests.
