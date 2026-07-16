@@ -328,6 +328,14 @@ To view and manually manage your blocklist—including adding individual email a
 
 If a lead *replies* to your email — rather than clicking an HTML unsubscribe link — their response is categorized by Smartlead (e.g., as `Do Not Contact` or `Not Interested`), but they are **not** automatically added to the blocklist. The `Add email to blocklist` column in the campaign events table is a button by default: you can click it manually for a specific row, or automate it by setting an `Only run if` condition on the column. To trigger the blocklist action for reply-based opt-outs, set the condition to run when `Event type` equals `LEAD_CATEGORY_UPDATED` — this event fires whenever Smartlead categorizes a lead's reply. See [How are replies categorized in the Campaign Events table?](#how-are-replies-categorized-in-the-campaign-events-table) for the full list of reply categories.
 
+### What happens when an email to a lead bounces?
+
+A bounce is recorded as an `EMAIL_BOUNCE` event in your campaign events table, but the sequence does **not** automatically stop or pause for that lead — bounces do not trigger the same auto-stop behavior as replies. Remaining emails in the sequence continue to send unless you take action.
+
+To handle bounces automatically, add an `Only run if` condition to the relevant enrichment columns in your campaign events table:
+- **Pause lead in campaign** — set the condition to `Event type = EMAIL_BOUNCE` to automatically pause a bounced lead's remaining sequence steps.
+- **Add email to blocklist** — use the same condition to prevent future emails to that address across all campaigns in your workspace.
+
 ### What is a cold lead? What is a warm lead?
 
 A cold lead is someone who doesn't already know about your business and you. A warm lead is someone who has already responded to your email or expressed interest in some other way. The kinds of emails you send to each type are completely different—you can send a lot more emails from your main domain to warm leads than you can to cold leads.
