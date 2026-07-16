@@ -256,6 +256,8 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
     -   Enable the auto-enrich toggle so that any new record entering this segment is automatically passed through the enrichment — typically within 15 minutes.
 5.  Click `Start Run`.
 
+**Note:** To run a bulk enrichment on Audience data, always start from within the Audience — click `Enrich` → `Add bulk enrich` from any segment view. When creating a new Bulk Enrichment from the Clay homepage (`New` → `Bulk enrichment`), the source type options are CSV and Salesforce CRM only — there is no "Audiences" source type in that dialog. The Audience segment serves as the source when you add the enrichment from within Audiences.
+
 **Note:** Clay does not impose rate limits on Audiences bulk enrichments — the system is built to handle large lists at scale. Third-party data providers (such as Clearbit or Apollo) apply their own rate limits, but Clay queues requests and manages these automatically in the background. If you supply personal API keys for a provider, those keys' own rate limits apply.
 
 **Using Audiences from a Clay table:**
@@ -304,10 +306,19 @@ To resolve errored rows:
 
 Signals monitor your audience for key changes and write results permanently to each matching record so you can segment on them.
 
+For **Companies** audiences, four built-in signal types are available:
+
+-   **Web Intent** — track which companies are visiting your website.
+-   **New Hire** — detect new hires at monitored companies within the last three months.
+-   **News & Fundraising** — monitor funding rounds, mergers and acquisitions, strategic partnerships, product launches, and leadership changes.
+-   **Job Posting** — alert when a monitored company posts a new job opening; Clay analyzes job descriptions for urgency indicators and geographic expansion signals.
+
+**Custom signals are not available within Audiences.** To track a more specific or custom signal (for example, website changes, RSS feed mentions, or technology adoption), build that logic in a bulk enrichment on the audience segment using Claygent or scheduled enrichment columns — see [Adding enrichments](#adding-enrichments) above.
+
 **To add a signal to a segment:**
 
 1.  Navigate to an audience and click `Enrich`.
-2.  Click `Signals` → select a signal type (e.g., `Job Change`).
+2.  Click `Signals` → select a signal type (e.g., `New Hire`).
 3.  Set the `look-back period` for the initial run: `3 months`, `6 months`, or `1 year`.
 4.  Set the `recurrence frequency` — how often it re-runs going forward.
 5.  Review the `cost preview per record` shown before the run begins.
@@ -354,6 +365,14 @@ After a workflow is live, open the options menu (⋮) on the workflow card to ma
 
 -   **Run all members that haven't run** — runs the workflow on segment members who joined before the trigger was published or who were otherwise skipped.
 -   **Force run all members** — re-runs the workflow on every current segment member, including those that already ran. A confirmation prompt appears before this action runs, since it may use credits.
+
+### Sending records to a Clay table
+
+To push audience records to a standalone Clay table, use `Send` → **Send to table** from any audience segment view. New records joining the segment automatically sync to the table within approximately 15 minutes.
+
+**Important:** Clay tables that receive Audience records this way are **append-only**. When a record exits your segment — for example, because an account no longer meets your filter criteria after a CRM update — that record is **not** automatically removed from the destination Clay table. The row stays in the table, so disqualified records can continue to be enriched or processed there.
+
+For enrichment and signal workflows where you want to process only current qualifying segment members, the recommended approach is to run the enrichment directly on the Audience segment using Bulk Enrich (see [Adding enrichments](#adding-enrichments)). The segment is always current — records that exit the segment are excluded from new enrichment runs automatically. You can write results back to Audience fields using `Update Audiences Record` and export to Salesforce from there.
 
 ### **Syncing audiences to ad platforms**
 
