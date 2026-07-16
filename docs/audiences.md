@@ -670,9 +670,27 @@ Archiving a record is a **soft delete** — the record is not permanently remove
 -   It can be viewed in the **Archived** section in the left sidebar.
 -   It can be **restored at any time** from the Archived section.
 
+**What happens when a connected source re-syncs:** Archiving does not disconnect a record from its data source. When Snowflake, Salesforce, or any connected source re-syncs, Clay's record matching system identifies the record by its unique identifier and associates the incoming data with the existing archived record — it does not create a new active record in its place. The archived record stays archived until you manually restore it from the **Archived** section. If you want to prevent a record from appearing in future syncs entirely, exclude it from your source query or filters before the next sync runs.
+
 **Note on lookup timing:** After archiving a record, there is a brief processing delay before the change is reflected in `Lookup in Audiences` results. Running a lookup immediately after archiving may still return the archived record — lookups typically update within a short time as changes propagate.
 
 To exclude Salesforce-deleted records from your audience lookups, filter on **Sync status → Deleted in source** to identify them, then archive the records you no longer want matched against.
+
+### Can I delete or remove a field from Audiences?
+
+Non-system fields can be permanently deleted from Audiences via the **Data Hub** tab. System fields — such as `Name`, `Email`, and other built-in identity fields — cannot be deleted.
+
+To delete a field:
+
+1.  Navigate to **People** or **Companies** in the left sidebar.
+2.  Click the **Data Hub** tab.
+3.  Find the field you want to remove in the fields list.
+4.  Click the field to open it.
+5.  Select the delete option at the top to permanently remove it.
+
+**Note:** Deleting a field removes both the field definition and all values stored in it — this cannot be undone. Before deleting, remove the field from any active segment filters or enrichment field mappings that reference it.
+
+To temporarily hide a field without deleting it, use the column visibility controls in the audience table view instead.
 
 ### Why did Update Audiences Record report 0 fields updated?
 
@@ -718,7 +736,7 @@ Turn on import first, validate Clay's data quality, then enable write-back once 
 
 ### Import more fields than you think you need
 
-You can hide fields you don't use, but adding fields not imported at setup requires reconfiguring your sync. Fields that weren't imported can't be used as segment filters. When in doubt, include it.
+You can hide fields you don't use, or permanently delete non-system fields via the **Data Hub** tab if you no longer need them. Adding fields not imported at setup requires reconfiguring your sync. Fields that weren't imported can't be used as segment filters. When in doubt, include it.
 
 ### Filter before enriching
 
