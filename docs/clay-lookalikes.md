@@ -30,8 +30,8 @@ Build a new table of lookalike companies from a seed list. Results are organized
 3.  Choose your seed input:
     -   **Table** — a Clay table of companies (up to 15,000 companies)
     -   **Audience** — a Clay Audiences segment (up to 15,000 companies)
-    -   **List of URLs** — enter company domains or LinkedIn company URLs manually
-4.  Review the generated lookalike groups. Each group represents a cluster of similar companies. Use Sculptor to edit a group's filters — you can add or remove industries, company sizes, countries, and description keywords.
+    -   **List of URLs** — enter up to 10 company domains or LinkedIn company URLs
+4.  Review the generated lookalike groups. Each group represents a cluster of similar companies. Click **See more** on a group to open its filter editor, where you can narrow results by country, company size, industry, or description keywords. **See more** is only available when multiple groups have been returned — a single seed URL provides too few data points for the clustering engine to generate distinct groups. To access per-group filtering, provide multiple diverse seed companies.
 5.  Click **Continue** to import results into a new Clay table.
 
 **Credits:**
