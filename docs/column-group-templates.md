@@ -61,6 +61,8 @@ To update the columns in a template, you need to recreate it:
 4.  `Right-click` on one of the selected titles and select `Save as template`.
 5.  Enter a name and click `Create template`.
 
+Saving always creates a new template — it does not replace or overwrite the original. If you want to remove the old version, delete it from the template list after saving the corrected one (see [Deleting a column group template](#deleting-a-column-group-template)).
+
 ## Deleting a column group template
 
 1.  While in a table, click `Add enrichment`.
