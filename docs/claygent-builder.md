@@ -288,6 +288,17 @@ Yes. Switch models in the configuration panel and rerun tests to compare output 
 
 In-flight runs finish on the version that started them. New runs pick up the latest version automatically.
 
+### What happens when the AI model my Claygent uses is deprecated?
+
+When a model is deprecated, Clay does not automatically swap it out for another model or send a notification. Here is what changes:
+
+-   **Existing deployed columns continue to run.** Table columns already using the deprecated model keep running until you update them.
+-   **You cannot save further changes to the Claygent.** Any edits in Claygent builder are blocked until you select a supported model. The configuration panel shows: **"Selected model is deprecated. Please choose a different model."**
+-   **You cannot add the Claygent to new tables.** Deploying the agent to a new table is blocked while it uses the deprecated model.
+-   **The model remains visible in the selector with a "Deprecated" badge.** Deprecated models are not removed from the model picker — they appear with a deprecation indicator and can still be referenced by existing configurations, but cannot be selected for new ones.
+
+**To resolve it:** Open the affected Claygent in Claygent builder, click the **Model** dropdown in the **Configuration** panel, select a currently supported model, and click **Save**.
+
 ### Can I still edit prompts directly in tables?
 
 Yes, but centralizing in Claygent builder gives you version control, free testing, and the ability to update once and deploy everywhere. It's the better choice for agents you'll reuse or iterate on.
@@ -399,7 +410,7 @@ You need to recreate each affected column using the current Claygent action. Her
 
 Repeat for each affected column in your table. After recreating, update any downstream formula columns that reference the old column's outputs to point to the new column instead. Once everything is running correctly, delete the old Claygent column.
 
-**Note:** This error is distinct from the model deprecation warning. If you see an orange **"Deprecated"** badge next to a model name in your column settings, that is a separate indicator — it does not stop the column from running immediately. In that case, simply open the column settings, click the **Model** dropdown, and select a currently supported model to clear the warning.
+**Note:** This error is distinct from the model deprecation warning. If you see the **"Selected model is deprecated. Please choose a different model."** warning in your Claygent configuration, existing table columns will continue running, but you will not be able to save further changes or add the Claygent to new tables until you select a supported model. See [**What happens when the AI model my Claygent uses is deprecated?**](#what-happens-when-the-ai-model-my-claygent-uses-is-deprecated) for the full explanation and fix.
 
 ### My Claygent column shows "Failed to parse formula for 'prompt'" or "Unable to parse the output schema for the column" — what do these mean?
 
