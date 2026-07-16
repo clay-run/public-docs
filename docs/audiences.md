@@ -676,22 +676,6 @@ Archiving a record is a **soft delete** — the record is not permanently remove
 
 To exclude Salesforce-deleted records from your audience lookups, filter on **Sync status → Deleted in source** to identify them, then archive the records you no longer want matched against.
 
-### Can I delete or remove a field from Audiences?
-
-Non-system fields can be permanently deleted from Audiences via the **Data Hub** tab. System fields — such as `Name`, `Email`, and other built-in identity fields — cannot be deleted.
-
-To delete a field:
-
-1.  Navigate to **People** or **Companies** in the left sidebar.
-2.  Click the **Data Hub** tab.
-3.  Find the field you want to remove in the fields list.
-4.  Click the field to open it.
-5.  Select the delete option at the top to permanently remove it.
-
-**Note:** Deleting a field removes both the field definition and all values stored in it — this cannot be undone. Before deleting, remove the field from any active segment filters or enrichment field mappings that reference it.
-
-To temporarily hide a field without deleting it, use the column visibility controls in the audience table view instead.
-
 ### Why did Update Audiences Record report 0 fields updated?
 
 This "0 fields updated" result comes from the `Update Audiences Record` action that pushes data into your Audience from a Clay table. The most common cause is that all mapped fields had null values in the source row. This action filters out any field whose value is `null`, `undefined`, or empty before writing to the Audience — when every mapped field is empty, there is nothing to write, so the action completes successfully but reports 0 fields updated. This null-filtering is built into the action and is not user-configurable.
@@ -736,7 +720,7 @@ Turn on import first, validate Clay's data quality, then enable write-back once 
 
 ### Import more fields than you think you need
 
-You can hide fields you don't use, or permanently delete non-system fields via the **Data Hub** tab if you no longer need them. Adding fields not imported at setup requires reconfiguring your sync. Fields that weren't imported can't be used as segment filters. When in doubt, include it.
+You can hide fields you don't use, but adding fields not imported at setup requires reconfiguring your sync. Fields that weren't imported can't be used as segment filters. When in doubt, include it.
 
 ### Filter before enriching
 
