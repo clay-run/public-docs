@@ -462,7 +462,7 @@ To add a missing field:
 4.  In the field mapping section, add the Salesforce field you want and name the corresponding Clay column.
 5.  Click **Save and review** → **Confirm**.
 
-The filter option for the field becomes available after the next incremental sync (typically within 15 minutes). However, if you added this field to the mapping after your initial import, records that haven't been modified in Salesforce since the mapping was saved won't have data for the new field yet — see [I added a new Salesforce field to my mapping but some records are missing data for it](#i-added-a-new-salesforce-field-to-my-mapping-but-some-records-are-missing-data-for-it) below. Read-only Salesforce fields — fields shown with a lock icon in the mapping because Salesforce does not allow Clay to write them — can still be imported and used as filters. They will show a **Never write (Read-only)** export rule.
+The filter option for the field becomes available after the next incremental sync (typically within 15 minutes). However, if you added this field to the mapping after your initial import, records that haven't been modified in Salesforce since the mapping was saved won't have data for the new field yet — see [I added a new Salesforce field to my mapping but some records are missing data for it](#i-added-a-new-salesforce-field-to-my-mapping-but-some-records-are-missing-data-for-it) below. Read-only Salesforce fields — fields shown with a lock icon in the mapping because Salesforce does not allow Clay to write them — can still be imported and used as filters. They will show a **Never write (Read-only)** export rule. Fields are marked read-only when Salesforce itself does not allow writes to them — common examples include **formula fields** (values calculated dynamically by a Salesforce formula), **roll-up summary fields** (aggregated values computed from child records), and **system fields** auto-managed by Salesforce (such as `CreatedDate` and `LastModifiedDate`). These fields can be imported and used as Audience filters, but cannot be used as export targets for write-back.
 
 **If a field doesn't appear in the Settings mapping dropdown** (not just in the filter options), the Salesforce account connected to Clay may lack the permissions required to read it. Verify that your Salesforce connection has the required OAuth permissions — see [Salesforce integration FAQs](https://university.clay.com/docs/salesforce-integration-faqs) for the permissions listed under "What permissions and scope do I need for the Salesforce enrichment?" After permissions are updated, return to **Settings** to add the field.
 
@@ -609,6 +609,21 @@ To pull Account-level data into a Clay table:
 4. Set the filter field to **Company ID** and map it to the Account IDs value from step 1.
 
 The lookup returns the matching Company record from your Audiences, including all Account-level fields configured when you imported Salesforce Accounts into the Companies audience (for example, Company Name, Company Domain, and custom Account fields).
+
+### How do I filter my audience using fields from a different Salesforce object?
+
+When importing from Salesforce, you can only add fields from the object you are importing — Contacts, Accounts, Leads, or Opportunities. If you want to segment your Audience using data from a related Salesforce object (for example, filtering Accounts by a field stored on a custom Salesforce object), use a Bulk Enrichment to bring that data in and make it available as a filter.
+
+**Recommended workflow for cross-object Salesforce field segmentation:**
+
+1. **Import your base object** — Connect Salesforce and import the object you want to segment (for example, Accounts).
+2. **Add a Bulk Enrichment** — Navigate to your audience and click `Enrich` → `Add bulk enrich`. Add enrichment columns that retrieve data from the related Salesforce object — for example, a Salesforce enrichment, a SOQL query, or any action that returns the values you need.
+3. **Create a custom Audience field and map the enriched output** — In the bulk enrichment's `Field Mapping`, map the enriched output to a new custom Audience field. To create a new field, click `+ Add field` in the `Column mapping` dropdown. See [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) for details.
+4. **Run the enrichment** — Click `Start Run`. Once complete, the custom field is immediately available as a filter in any audience segment.
+5. **Filter on the enriched field** — Add a filter to your audience and select the custom field. You can combine it with any other filter criteria.
+6. **Optionally export back to Salesforce** — Map the enriched field to a Salesforce field in your export settings to write the data back to your Salesforce records.
+
+Enrichment-derived fields behave exactly like any other Audience field — they can be combined with other filters, used in nested filter groups, and targeted by subsequent enrichments.
 
 ### Why does filtering my People audience by deal attributes return fewer contacts than expected?
 
