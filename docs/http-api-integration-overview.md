@@ -644,6 +644,30 @@ This error means the API credentials in your HTTP API action are no longer valid
 
 **Tip:** Saving credentials in a header account (`Settings → Connections`) is the easiest way to manage token rotation — when a token expires, you only need to update it in one place instead of editing every column individually.
 
+### "Missing authentication" — saved account deleted or unavailable
+
+This error appears on HTTP API column cells when the **HTTP API (Headers) account** previously configured for the column has been deleted from the workspace or is otherwise unavailable. The Account section at the top of the column panel will show only an **+ Add account** button, with no account selected.
+
+**Why this happens:**
+
+HTTP API (Headers) accounts are stored at the **workspace level** — all workspace members share the same account pool. This means:
+
+-   If a colleague originally set up the credentials on your behalf, you may not have seen the Account setup step — it was configured once, workspace-wide.
+-   If that account is later deleted, every HTTP API column in the workspace that referenced it will show "Missing authentication."
+
+**How to fix:**
+
+1.  Open the HTTP API column settings and look at the **Account** section at the top of the configuration panel.
+2.  Go to `Settings → Connections` to check whether your HTTP API (Headers) account still exists. If it does, return to the column settings and select it from the **Account** dropdown.
+3.  If the account no longer exists, click **+ Add account** in the Account section.
+4.  Under **API Request Headers**, enter your API credentials as key-value pairs — for example:
+    -   **Key:** `Authorization` | **Value:** `Bearer YOUR_TOKEN`
+    -   **Key:** `X-API-KEY` | **Value:** `YOUR_API_KEY`
+5.  Name the account and click **Save**. Then select the new account from the dropdown.
+6.  Test with a single row to confirm the connection is restored before re-running the full table.
+
+**Note:** Because HTTP API (Headers) accounts are workspace-scoped, saving a new account makes it available to all workspace members. If multiple HTTP API columns referenced the deleted account, you will need to re-select the new account in each column's settings individually.
+
 ### "Clay received a 429 error from the API" (Too Many Requests)
 
 A 429 error means the external API is rejecting requests because Clay is sending them faster than the API's rate limit allows. To fix this:
