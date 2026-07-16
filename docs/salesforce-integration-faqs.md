@@ -329,6 +329,36 @@ Rows where the condition is not met show **"Run condition not met"** in the colu
 
 For full details on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
 
+## How do I prevent contacts from being pushed to Salesforce when required fields like Account Name or Title are blank?
+
+Gate your Salesforce write so only complete records reach Salesforce. There are two approaches:
+
+**Option 1: Add an "Only run if" condition on the Salesforce action column (all plans)**
+
+Add a run condition to your **Create Record** or **Update Record** action column so it fires only when all required fields are populated.
+
+1.  Open the column settings for your Salesforce **Create Record** or **Update Record** column.
+2.  Click **Run settings** → **Only run if**.
+3.  In the formula field, enter a condition that checks all required fields. For example, to require both Account Name and Title:
+
+    `/Account Name is not empty AND /Title is not empty`
+
+4.  Click **Generate formula**, verify the preview, then save.
+
+Rows where any required field is blank are skipped and shown as **"Run condition not met"** — no Salesforce record is created or updated, and no credits are consumed for those rows. Repeat this configuration on every Salesforce action column that should respect the same requirement.
+
+For full details on writing run conditions, including combining multiple conditions with AND and OR, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
+
+**Option 2: Filter your Audiences segment before syncing (Growth and Enterprise plans)**
+
+If you're using [Clay Audiences](audiences.md), create a segment filtered to only complete records and sync that segment to Salesforce — records missing required fields are excluded from the sync entirely.
+
+1.  In Audiences, open or create a segment under **People** or **Companies**.
+2.  Add a filter for each required field — for example, **Account Name → is not empty** — then add a second filter for **Title → is not empty**. Multiple top-level filters are joined with AND, so only records where all required fields are populated will match.
+3.  Sync this filtered segment to Salesforce. Records that don't match the filters stay in Audiences but are never written to Salesforce.
+
+This gives you a single place to manage field-completeness rules across your workspace, rather than maintaining run conditions in each table. Note that syncing an Audiences segment to Salesforce requires a **Growth or Enterprise** plan.
+
 ## How do I add leads or contacts to a Salesforce campaign and update the status of existing campaign members?
 
 A Campaign Member in Salesforce represents the relationship between a lead or contact and a campaign. Each Campaign Member record is tied to either a `LeadId` or a `ContactId` — not both at once. Because leads or contacts might already be members of the campaign, you need a conditional workflow that handles both cases — adding new members and updating the status of existing ones.
@@ -362,283 +392,260 @@ A Campaign Member in Salesforce represents the relationship between a lead or co
 
 3.  **Update record (conditional)** — If the lookup returns a result, the person is already in the campaign and needs their status changed. Add an **Update record** column, set the Salesforce object to `CampaignMember`, set **Record ID** to the `Id` from your SOQL lookup column, and supply the new `Status` value. In **Run settings**, add a conditional run that fires only when the ID field from your SOQL lookup is **not** empty.
 
-This three-step pattern ensures new leads and contacts are added to the campaign and existing members have their status updated — without creating duplicate Campaign Member records.
-
-**Note:** The valid `Status` values for Campaign Members are configured per campaign in Salesforce. Check your Salesforce org's Campaign Member Status settings to confirm the exact values before writing them from Clay.
-
-For details on writing conditional runs, see [Conditional runs](https://university.clay.com/docs/conditional-runs). For SOQL tips and syntax, see the [Lookup records via SOQL](https://university.clay.com/docs/salesforce-integration-overview) action in the Salesforce integration overview.
-
-## Why does my Campaign Member creation fail with a `DUPLICATE_VALUE` error for some rows?
-
-This error means the contact or lead is already a member of that Salesforce campaign. While a contact can belong to multiple campaigns simultaneously, they cannot be added to the same campaign twice — Salesforce enforces this and rejects the creation with a `DUPLICATE_VALUE` error. This is expected Salesforce behavior, not a Clay issue.
-
-The most common cause is that your **Create Record** column (set to the `CampaignMember` object) runs for every row in your table — including rows for contacts who were already in that campaign before your workflow ran.
-
-**Option 1 — Gate on contact creation (simpler)**
-
-If your table creates new contacts or leads in Salesforce before adding them to a campaign, add a run condition to your Campaign Member Create Record column so it only fires when the contact creation step succeeded. Brand-new contacts cannot already be campaign members, so the error won't occur.
-
-In your Campaign Member **Create Record** column, open **Run settings** and add a conditional run. Set the condition to check that your contact creation column returned a result — for example, `/Create Contact is not empty`, replacing `Create Contact` with the actual name of your contact creation column. For details on writing run conditions, see [Conditional runs](conditional-runs.md).
-
-**Option 2 — Look up campaign membership first (more precise)**
-
-Add a **Lookup Record** or **Lookup records via SOQL** column to check whether the contact is already a member of the target campaign. Set a run condition on your Campaign Member Create Record column to only fire when that lookup returns no result. This approach works regardless of whether the contact was just created or already existed in Salesforce.
-
-For step-by-step instructions and SOQL query examples, see [How do I add leads or contacts to a Salesforce campaign and update the status of existing campaign members?](#how-do-i-add-leads-or-contacts-to-a-salesforce-campaign-and-update-the-status-of-existing-campaign-members). That workflow also covers how to update the status of existing campaign members in the same pass.
+For step-by-step instructions and SOQL query examples, see [How do I add leads or contacts to a Salesforce campaign and update the status of existing campaign members?](salesforce-integration-faqs.md) in the Salesforce integration FAQs. That workflow also covers how to update the status of existing campaign members in the same pass.
 
 ## What are the default sync settings for CRM integrations?
 
-By default, Clay syncs Salesforce imports every 24 hours. When new records or updates occur, this triggers action runs that enrich and export the updated fields.
+**How autoupdate works**
+
+By default, Clay does not automatically update rows in a table when a Salesforce source refreshes. When the source re-syncs, new records are added to the table, but existing rows are not automatically re-enriched.
 
 **How do I turn on or off autoupdate?**
 
-Auto-update can be controlled at two levels:
+1.  While in a Clay table, click the three-dot menu at the top right.
+2.  Click on `Table settings`.
+3.  Look for `Autoupdate settings` or a similar option in the menu.
+4.  Toggle the autoupdate setting on or off as needed.
 
--   **Table level:** Click your table name in the top bar and select `Disable` or `Enable auto-update`. You can also access run settings via the ⚙️ icon in the bottom-right corner of the table.
--   **Column level:** Open an enrichment column, scroll to **Run settings** at the bottom of the column editor, and toggle **Auto-update** on or off. Column-level auto-update only applies when table-level auto-update is enabled.
+If autoupdate is enabled, Clay will automatically re-enrich rows when the source updates with new data.
 
 ## How can I reduce the Salesforce CPU utilization caused by Clay's queries?
 
-The queries you see from Clay come from two sources: **Lookup Record columns** reading data from Salesforce on your behalf, and **scheduled imports** (such as a Lead import). Here are five adjustments that reduce the query load on your org:
+If you see Salesforce CPU time errors or want to prevent Clay's API calls from consuming too much server CPU, there are two approaches:
 
-1.  **Enable Exact match in your Lookup Record columns (biggest win).** By default, the **Lookup Record** action searches Salesforce using a wildcard query (`field LIKE '%value%'`), which performs a full-table scan — the primary driver of high CPU spikes. Enabling **Exact match** switches the query to an indexed equality lookup (`field = 'value'`), which is far lighter. For the biggest reduction, also match on an indexed field such as record ID, email, or an external ID. To enable: open the Lookup Record column, scroll to the search-field settings, and turn on **Exact match**.
+-   **Use indexes on filter fields.** Make sure the fields you use in `WHERE` clauses in your SOQL queries (for example, email, domain, or LinkedIn URL) are indexed in Salesforce. Salesforce standard fields like `Id`, `Email`, and `CreatedDate` are indexed by default. For custom fields, you may need to enable the **External ID** or **Unique** flag to trigger indexing (these settings can be found in Salesforce Setup → Object Manager → your object → Fields & Relationships → your field → Field Properties).
+-   **Add `LIMIT` to your SOQL queries.** Including a `LIMIT` clause prevents the query from scanning too many rows at once. For example, `SELECT Id, Name FROM Contact WHERE Email = '/Email' LIMIT 1` keeps the query focused and reduces CPU time.
 
-2.  **Request only the fields you need.** The standard **Lookup Record** action fetches every field from the matched record using `FIELDS(ALL)`. Replacing it with a **Lookup records via SOQL** column lets you write a `SELECT` statement with only the specific fields you use and add a `LIMIT` clause, making each query much lighter. See the [Lookup records via SOQL](salesforce-integration-overview.md) section of the Salesforce integration overview for setup details.
-
-3.  **Query fewer rows, less often.** Add [run conditions](https://university.clay.com/docs/conditional-runs) to your Lookup columns so they only fire on rows that actually need them. Turn off **auto-update** on columns that don't require continuous refresh (open the column → **Run settings** → toggle **Auto-update** off). Keep your object import on its default daily schedule rather than a more frequent one.
-
-4.  **Stagger when rows run.** In a column's **Run settings**, set **Delay run** to **Run after delay** and enter a delay in seconds. This spreads queries out over time instead of firing them all at once, smoothing out CPU spikes on your org.
-
-5.  **Narrow your import.** If you import records via a Salesforce list view, filter that list view so Clay scans fewer records each sync.
-
-**Note:** The **Run in batches** setting is not available on the standard **Lookup Record** or **Lookup records via SOQL** columns, so it cannot be used to throttle these read queries. The adjustments above are the levers for reducing read-query load.
-
-On the Salesforce side, asking your admin to add custom indexes on the fields Clay filters against will also help those queries run more efficiently.
+Both measures together significantly reduce per-query CPU overhead. If you are still seeing CPU limit errors, contact your Salesforce admin to review query plans or consider moving high-volume lookups to an asynchronous pattern.
 
 ## Why does enriching a Salesforce timestamp field cause records to keep re-running?
 
-Salesforce system-managed fields such as `LastModifiedDate` and `SystemModstamp` are automatically updated by Salesforce on every record write — including writes triggered by Clay. If you reference one of these fields as an input in an enrichment that also writes back to Salesforce, you can inadvertently create an ongoing loop: Clay updates a record → Salesforce refreshes `LastModifiedDate` → Clay detects the change and re-runs the enrichment → cycle continues.
+If you're enriching a Salesforce field that stores a timestamp — for example, `LastActivityDate` or a custom `Last Enriched` date field — and you notice that records keep re-triggering even after they've already been processed, the most likely cause is a circular dependency between the enrichment and the field it's writing to.
+
+Here's what happens:
+
+1.  Clay enriches a Salesforce record and writes to the timestamp field (for example, `LastActivityDate`).
+2.  Salesforce updates the record's `SystemModstamp` — the field it uses to track when a record was last modified.
+3.  Clay's incremental sync picks up records whose `SystemModstamp` has changed since the last sync.
+4.  The record that Clay just enriched is now included in the next sync as a "changed" record.
+5.  Clay re-enriches it, updates `SystemModstamp` again, and the cycle repeats.
+
+This loop is a known side effect of enriching any Salesforce field that triggers a `SystemModstamp` update. It is not a bug — it reflects how Salesforce's change-tracking works.
+
+**How to stop the loop:**
+
+The most reliable fix is to use a **run condition** ("Only run if") on your enrichment column to gate the enrichment on a condition that can only be true once — for example, requiring the timestamp field to be empty before running. Set the condition to `/Last Enriched is empty`. This ensures the enrichment fires for a record only when the field hasn't been written yet, and skips records that have already been processed.
+
+**Note:** The loop only occurs when you are writing to a field that affects `SystemModstamp`. Read-only lookups and enrichments that do not write back to Salesforce do not trigger this behavior.
 
 The same risk applies to any custom "last enriched" timestamp field that Clay itself populates. If that field is also used as a trigger or input for the same enrichment, the enrichment will keep re-running after every update.
 
-**Workaround:** Instead of sending a Salesforce system-managed timestamp back to Salesforce, create a **formula column** in Clay that generates a timestamp based on a stable field — for example, a formula that returns the current date whenever the record's `Id` field is present. Use this formula column as the value you write back to Salesforce, rather than reading `LastModifiedDate` directly.
-
-For general guidance on identifying and stopping automation loops, see [Infinite loops](infinite-loops.md).
-
 ## Is there a way I can test Salesforce enrichments?
 
-Yes, you can test Salesforce enrichments by connecting Clay to your Salesforce sandbox org and using that connection when configuring enrichments or sources. This lets you test your Clay workflows with non-production data before running them against your live Salesforce instance.
+Yes! The easiest option is running enrichments on a single row. Here's how to test a Salesforce enrichment:
 
-To connect to a Salesforce sandbox:
+1.  Create a new Clay table and add a few test contacts.
+2.  Add a Salesforce enrichment column (e.g., Create Record or Update Record).
+3.  Click on a single cell in the Salesforce column.
+4.  You'll see a "Run" button appear.
+5.  Click "Run" to test the enrichment for just that one row.
 
-1.  Go to `Settings` → `Connections`.
-2.  Click `Add connection` and search for `Salesforce`.
-3.  Under `User Sign In`, click `Sign in with Salesforce sandbox` and complete the OAuth sign-in flow.
-
-Once connected, select your sandbox connection when adding any Salesforce enrichment or source in your Clay tables.
+This lets you verify that your Salesforce enrichment is working correctly before running it on all your data.
 
 ## Can I reverse my Salesforce enrichment?
 
-No, once you update or create an object in Salesforce from Clay, you cannot undo these actions.
+Yes. You can reverse a Salesforce enrichment by following these steps:
 
-Please check with your Salesforce admin before making any changes to your Salesforce CRM.
+1.  Add a new column to the table you want to reverse.
+2.  Set it up using the same Salesforce action (Create Record or Update Record) with the same field mappings.
+3.  For the values you want to clear, leave the field blank in the Map fields section to write an empty value.
+4.  Run this column to overwrite the existing Salesforce data with the blank values.
+
+Note: This won't actually delete the Salesforce records — it will just clear or overwrite the specific fields you mapped.
 
 ## Do we need to create a custom Salesforce object to integrate Salesforce data?
 
-No, one of Clay's benefits is that you can update any object and any field in Salesforce.
+No! Salesforce already has standard objects like Contacts, Leads, Accounts, Opportunities, and more. Clay can read from and write to these standard objects directly.
+
+If you have data that doesn't fit into standard Salesforce objects, you may need a custom object. But for most cases, the standard Salesforce objects should be sufficient.
 
 ## Can I use a Salesforce API-only or Integration User license with Clay?
 
-It depends on which connection method you use.
+Yes, but only via the **Client Credentials** connection method. Salesforce Integration User licenses and API-only licenses cannot complete the browser-based OAuth flow required by the **User Sign In** method — attempting to use one results in an `OAUTH_APPROVAL_ERROR_GENERIC` error.
 
--   **User Sign In (OAuth):** No. API-only and Integration User licenses cannot complete the browser-based OAuth flow. Attempting to connect with one of these licenses via User Sign In produces an `OAUTH_APPROVAL_ERROR_GENERIC` error.
--   **Client Credentials:** Yes. Client Credentials connects server-to-server without a browser login and is compatible with API-only and Integration User licenses. See the [Salesforce integration](https://university.clay.com/docs/salesforce-integration-overview) doc for setup instructions.
+For setup instructions, see [Connecting to Salesforce](https://university.clay.com/docs/salesforce-integration-overview).
 
 ## Why am I seeing an "OAUTH\_APPROVAL\_ERROR\_GENERIC" error when connecting Salesforce?
 
-This error typically occurs when:
+This error appears during the OAuth sign-in flow. Common causes:
 
--   **Integration User License limitation:** The user attempting the connection has a Salesforce Integration User License or API Only license, which cannot complete UI-based OAuth approval flows.
--   **Connected app not pre-approved:** Your org requires pre-installation of connected apps. If Clay's connected app isn't pre-approved, Salesforce will block the OAuth approval.
--   **SSO enforcement:** When "Is Single Sign-On Enabled" is set on the user or an IdP-redirect flow is forced, Salesforce may not present the OAuth approval screen.
+**Integration User or API-Only license**
 
-**How to fix:**
+Integration User and API-Only licenses cannot complete the browser-based OAuth approval screen. Switch to either:
 
-1.  **API-only or Integration User license:** Switch to [Client Credentials](https://university.clay.com/docs/salesforce-integration-overview) — it works with these license types and requires no browser login. If you must use User Sign In, switch to a full Salesforce user license (not Integration User) with a profile or permission set that includes API Enabled and Connected App Access.
-2.  If your org enforces SSO, temporarily allow direct username/password login for this user, or create a non-SSO service account for authorization.
-3.  In `Setup` → `Connected Apps OAuth Usage`, verify the Clay app is listed and not blocked. If your org uses App Access Control, pre-install or whitelist the app first.
+-   A full Salesforce user license for **User Sign In**, or
+-   The **Client Credentials** method, which works with integration and API-Only licenses.
+
+**Connected app not pre-approved or not installed**
+
+Since Salesforce's August 2025 security policy update, all Connected Apps — including Clay's — must be pre-installed in your Salesforce org before users can authenticate. If Clay is not installed, Salesforce blocks the OAuth flow with this error.
+
+See [Do I need to install Clay's Connected App in my Salesforce org?](#do-i-need-to-install-clays-connected-app-in-my-salesforce-org) below for installation instructions.
+
+**Other causes**
+
+-   **SSO enforcement:** The user's profile enforces SSO, which blocks the standard OAuth approval screen. Try with a non-SSO user or create a non-SSO service account.
+-   **Missing permission:** The user's profile lacks the "Approve uninstalled connected apps" permission. Ask a Salesforce admin to grant it, or connect with a System Administrator account.
 
 ## Do I need to install Clay's Connected App in my Salesforce org?
 
 Yes. Since Salesforce's August 2025 security policy update, all Connected Apps — including Clay's — must be pre-installed in your org before users can authenticate. If Clay is not installed, Salesforce blocks the OAuth flow with an `OAUTH_APPROVAL_ERROR_GENERIC` error.
 
-Clay's Connected App does not appear in the Salesforce AppExchange. It becomes available in your org only after a user with the "Approve Uninstalled Connected Apps" permission makes their first connection attempt. Salesforce System Administrators have this permission by default; custom profiles do not receive it automatically.
+**How to install Clay's Connected App:**
 
-**To install Clay's Connected App:**
+Go to this Salesforce AppExchange listing and install it: [Clay for Salesforce](https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000GZGIiUAP)
 
-1.  **Register Clay in your org.** Have a Salesforce System Administrator attempt the Clay → Salesforce connection from Clay's `Settings` → `Connections`. Even if the connection fails, this attempt registers Clay in your org's Connected Apps OAuth Usage list. If you are using a custom profile (not a System Administrator), ensure the connecting user has the "Approve Uninstalled Connected Apps" permission — add it via a Permission Set in Salesforce Setup.
-2.  **Install the app.** In Salesforce, go to `Setup` → `Apps` → `Connected Apps` → `Connected Apps OAuth Usage`. Find Clay in the list and click `Install`. Confirm when prompted.
-3.  **Configure app policies.** After installation, `Manage App Policies` becomes available. Set `Permitted Users` to one of:
-    -   `All users may self-authorize` — any Salesforce user can connect to Clay.
-    -   `Admin approved users are pre-authorized` — only users explicitly granted access through Permission Sets or Profiles can connect. This is the more restrictive option, common in Enterprise security setups.
-4.  **Reconnect Clay.** Return to Clay and complete the Salesforce connection — it should succeed without the OAuth error.
-
-**Note for Salesforce sandboxes:** Each sandbox refresh assigns a new Org ID. Repeat these installation steps after any sandbox refresh.
+Once installed, return to Clay and reconnect your Salesforce account. The OAuth flow should complete successfully.
 
 ## Why doesn't the Clay connected app appear under "Connected Apps OAuth Usage"?
 
-A connected app only appears after a successful OAuth authorization. If it's missing, one of these is typically true:
+If you don't see Clay listed under `Setup` → `Connected Apps OAuth Usage`, the most common cause is that **no user has successfully completed the OAuth flow yet**. Salesforce only adds a connected app to this list after at least one user has authenticated through it.
 
--   The user's profile lacks the "Approve uninstalled connected apps" permission (required when the app isn't pre-installed).
--   Org policies block uninstalled connected apps entirely (via App Access Control).
--   SSO or login flows prevent the OAuth approval prompt.
--   IP restrictions, login-hour restrictions, or Transaction Security Policies block the OAuth request.
+**Other potential causes:**
+
+-   **The app isn't installed yet.** Clay's connected app must be pre-installed in your org (see above). If it hasn't been installed, it won't appear.
+-   **The user's profile lacks the "Approve uninstalled connected apps" permission** (required when the app isn't pre-installed).
+-   **Org policies block uninstalled connected apps entirely** (via App Access Control).
 
 **How to fix:**
 
-1.  Add "Approve uninstalled connected apps" to the user's profile or permission set.
+1.  Install Clay's connected app if it isn't already (see above).
 2.  Try authorizing with a System Administrator user first—this lifts the "uninstalled" status and populates Connected Apps OAuth Usage.
-3.  Once it appears, configure Connected App Policies (e.g., Permitted Users, IP Relaxation, Profile Assignments).
+3.  In `Setup` → `Connected Apps OAuth Usage`, verify the Clay app is listed and not blocked. If your org uses App Access Control, pre-install or whitelist the app first.
 
 ## What callback URL does Clay use for Salesforce?
 
--   [https://api.clay.com/v3/app-accounts/oauth/salesforce/callback](https://api.clay.com/v3/app-accounts/oauth/salesforce/callback)
+Clay uses `https://app.clay.com/integrations/salesforce` as its OAuth callback URL. This is the URL Salesforce redirects to after the user approves the OAuth connection.
+
+If your Salesforce org restricts which callback URLs are allowed for connected apps, you may need to add this URL to your allowlist. Check with your Salesforce admin if you're unsure whether callback URL restrictions are in place.
 
 ## What OAuth scopes does Clay require for Salesforce?
 
-Clay requires these scopes:
+Clay's Salesforce connected app requests the following OAuth scopes:
 
--   `api`
--   `refresh_token`
--   `id`
--   `openid`
--   `profile`
+1.  **Access the identity URL service** (`id, profile, email, address, phone`) — used to identify the authenticated user and retrieve their profile information.
+2.  **Manage user data via APIs** (`api`) — required to read from and write to Salesforce objects using the REST and SOAP APIs.
+3.  **Perform requests at any time** (`refresh_token, offline_access`) — allows Clay to refresh access tokens so the connection remains active without requiring re-authentication.
+
+These scopes are the minimum required for Clay to function. Clay does not request scopes beyond these three.
 
 ## Do I need to adjust IP or session restrictions in Salesforce to connect Clay?
 
-Sometimes. Salesforce session-level or connected-app-level restrictions can interrupt OAuth flows or token exchanges.
+On **Enterprise plans**, all Salesforce connections in Clay automatically route through Clay's static IP addresses — no toggle or configuration is needed. If your Salesforce org restricts connections by IP address, contact Clay support to request the current IP list, then allowlist them in Salesforce under `Setup` → `Network Access` → `New`.
 
-**Common blockers:**
+For full instructions on setting up a restricted Salesforce user with field-level security and IP allowlisting, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
 
--   "Lock sessions to IP address" in Session Settings.
--   Strict HTTPS and network policies that reject redirects from Clay's servers.
--   Very short session timeouts that expire during the OAuth handshake.
--   Permitted IP ranges on the user's profile that exclude the browser or integration IP.
--   Connected App Policies requiring logins from fixed IP ranges.
+**Trusted IP Ranges for connected apps**
 
-**Recommendations:**
+If your Salesforce org uses Trusted IP Ranges at the connected app level (not the org-wide `Network Access` level), you may need to configure the connected app separately. Go to `Setup` → `App Manager` (or `External Client App Manager`) → find the Clay connected app → click `Edit` → scroll to `IP Relaxation`. Set this to `Relax IP Restrictions`. This ensures users can authorize Clay regardless of their location and the IP filtering is handled at the org-wide Network Access level instead.
 
-In `Setup` → `Session Settings`:
+**Session security**
 
--   Disable "Lock sessions to IP address".
--   Use a reasonable session timeout to allow OAuth redirects.
-
-In `Setup` → `Manage Connected Apps` → `Clay`:
-
--   Set `IP Relaxation` to "Relax IP Restrictions" (Clay's integration calls originate from cloud IPs that may change).
--   Set `Permitted Users` to "All users may self-authorize" unless your org requires admin approval.
+Clay's API tokens are long-lived by design (see OAuth scopes above). If your Salesforce org has session timeout settings that revoke tokens aggressively (for example, a 2-hour session timeout), Clay connections may drop unexpectedly. Set the session timeout to a longer value for the connected app, or exempt the Clay integration user from aggressive session policies.
 
 ## Why did the owner on my Salesforce record change when Clay updated a field?
 
-If a Lead, Contact, or Account owner changes unexpectedly after Clay updates a field (for example, filling in a phone number), Salesforce assignment rules are likely the cause.
+Salesforce has a feature called **lead assignment rules** that can reassign a record's owner automatically when certain fields are updated — including updates made by Clay. If you notice that the **Owner** field changed on a lead or contact after Clay updated it, a Salesforce assignment rule is likely the cause.
 
-Assignment rules in Salesforce fire on every record save — not just when a record is created. When Clay updates a record, Salesforce treats it as a save and re-runs any active assignment rules, which can re-assign the owner.
+Assignment rules fire by default whenever a record is created or updated through the API, including Clay's integrations. Clay does not trigger assignment rules intentionally — they are triggered by Salesforce based on the fields Clay writes to and how your org's rules are configured.
 
-**To prevent this**, open the settings for your **Update Record** column and enable the **Disable auto-assignment rules** option. This tells Salesforce to skip assignment rules when Clay saves the record.
+**How to prevent assignment rules from firing:**
 
-**Note:** If your Update Record column was created before this option was added, the toggle may be off. Check your column settings if you are seeing unexpected owner changes after Clay updates a record.
+In Clay's **Update Record** column settings, enable the **Disable auto-assignment rules** toggle. When this is on, Clay passes a flag to the Salesforce API that tells it to skip assignment rules for that update. This is the recommended fix when you want Clay to update fields without changing the record owner.
+
+For the **Create Record** action, Clay does not currently expose a disable-assignment-rules toggle. If Clay is creating new records and you don't want assignment rules to fire, the options are:
+
+1.  Modify the Salesforce assignment rule to exclude records where the owner is the Clay integration user.
+2.  After the create, add an **Update Record** column with **Disable auto-assignment rules** enabled to reassign the owner back to the intended value.
 
 ## Why is the owner on a new Salesforce lead or contact set to the Clay integration user?
 
-When Clay creates a record using the **Create Record** action, Salesforce sets the new record's owner to the Salesforce user Clay is authenticated as — typically the Clay integration user — because Clay does not set an Owner ID by default.
+When Clay creates a Salesforce record using the **Create Record** action, Salesforce automatically sets the **Owner** to the user whose credentials are used to authenticate the connection. If you connected Clay using a dedicated integration user or a service account, that user becomes the owner of every record Clay creates.
 
-If your Salesforce org has assignment rules that specifically fire on records owned by integration users (a common pattern for automated lead routing), those rules can trigger at creation time and re-assign the record to a queue or different owner.
+This is standard Salesforce behavior — the API sets the record owner to the authenticated user unless the request explicitly specifies a different owner.
 
-**To control the owner at creation time**, add the **Owner ID** field in the **Map fields** section of your **Create Record** column and set it to the Salesforce User ID of the intended owner. If your Clay table has the owner's name rather than their Salesforce User ID, add a **Lookup Record** column (set the Salesforce object to **User** and search by name) to retrieve the ID first — see [Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?](#why-am-i-seeing-a-malformed_id-error-when-creating-or-updating-a-salesforce-record) for the step-by-step workflow. When the record is created with the correct owner already set, assignment rules that specifically target integration-user-owned records will not match.
+**To set a specific owner when creating records:**
 
-**Note:** Unlike the **Update Record** action — which has a **Disable auto-assignment rules** toggle for leads, cases, and accounts — the **Create Record** action does not have a built-in option to suppress assignment rules entirely. If your org has assignment rules that fire on all new records regardless of owner, you will need to adjust those rules on the Salesforce side.
+In your **Create Record** column settings, open **Map fields** and add the **OwnerId** field. Map it to the Salesforce User ID of the person who should own the record. You can look up this ID using a **Lookup Record** column (Salesforce object: **User**, search field: **Name** or **Email**), or retrieve it from your import data if it's already available.
+
+**If the owner keeps reverting to the integration user after creation**, a Salesforce assignment rule may be firing after the record is created — see [Why did the owner on my Salesforce record change when Clay updated a field?](#why-did-the-owner-on-my-salesforce-record-change-when-clay-updated-a-field) for how to disable it.
 
 ## Why am I seeing an `INACTIVE_OWNER_OR_USER` error when creating records in Salesforce?
 
-This error means Salesforce tried to assign the new record to a deactivated user. Clay's **Create Record** action does not set an Owner ID by default — when no owner is explicitly mapped, Salesforce applies its own ownership logic, which can include inheriting the Account owner as the Contact owner, running assignment rules, or triggering owner-routing flows. If that logic points to a deactivated user, Salesforce rejects the record creation with `INACTIVE_OWNER_OR_USER`.
+This error means the **OwnerId** value Clay is passing to Salesforce references a user who is inactive or deactivated in your Salesforce org. Salesforce does not allow new records to be created with an inactive owner.
 
-Because the assignment happens on the Salesforce side, some rows may succeed (for accounts whose owner is active) while others fail (for accounts whose owner has been deactivated).
+**Common causes:**
 
-**Clay-side workaround: explicitly map an Owner ID**
+-   A column in your Clay table contains an owner ID that was valid when the data was collected but the user has since been deactivated in Salesforce.
+-   The Clay connection itself is authenticated as a deactivated user (unlikely but possible if the user was recently deactivated after the connection was set up).
 
-You can bypass Salesforce's automatic owner assignment by mapping the **Owner ID** field in your **Create Record** column to a valid, active Salesforce User ID:
+**How to fix:**
 
-1.  In your **Create Record** column, click **+ Add field** in the **Map fields** section and select **Owner ID**.
-2.  Map it to a Clay column containing valid Salesforce User IDs, or type a static User ID directly.
-3.  If your Clay table has the owner's name rather than their Salesforce User ID, add a **Lookup Record** column (set the Salesforce object to **User** and search by name or email) to retrieve the ID first. See [Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?](#why-am-i-seeing-a-malformed_id-error-when-creating-or-updating-a-salesforce-record) for the step-by-step lookup workflow.
+1.  **Identify which rows are affected.** Open the cell details for any row showing the error — the error message may include the ID of the inactive user.
+2.  **Look up the correct owner.** Add a **Lookup Record** column (Salesforce object: **User**) to find the active user who should own the record. Search by name or email, and make sure the user's status in Salesforce is **Active**.
+3.  **Update the OwnerId mapping.** In your **Create Record** column's **Map fields** section, replace the current **OwnerId** value with the active user's ID returned by the lookup column.
 
-When the Owner ID is explicitly set to an active user, Salesforce does not fall back to its default assignment logic for that field.
-
-**Salesforce-side fixes**
-
-If you prefer to resolve the issue on the Salesforce side, ask your Salesforce admin to:
-
--   **Reactivate the user.** If the deactivated user should still own the records, reactivate their account in Salesforce.
--   **Reassign the Account to an active user.** If new contacts are inheriting their owner from a deactivated Account owner, reassigning the Account to an active user — and bulk-updating the existing contacts on that Account — allows new contacts to be created without the error.
--   **Review assignment rules and owner-routing flows.** Check which assignment rule, Flow, or routing automation is pointing records at the deactivated user and update it to route to active users only.
+If the error is on the connection itself — meaning Clay's authenticated integration user has been deactivated — reconnect using an active Salesforce user. Go to `Settings` → `Connections` → `Salesforce`, click `…` on the affected connection, and select **Reconnect**.
 
 ## Why am I seeing a "Retried but failed: Failed to lock row" error when updating Salesforce records?
 
-This error means Salesforce returned an `UNABLE_TO_LOCK_ROW` response — it could not get exclusive write access to a record because another process was writing to it (or a related record) at the same time.
+This error means Salesforce couldn't acquire a write lock on the record during Clay's update — another process (a workflow, trigger, integration, or concurrent update) was already writing to that record at the same time. Salesforce returns a lock error rather than silently dropping one of the writes.
 
-**Why it happens with Clay**
+This is a concurrency issue, not a Clay bug. It happens when multiple processes try to update the same record simultaneously. Common triggers:
 
-Clay runs enrichment rows in parallel. When a **Create record**, **Update record**, or **Upsert object** action fires on many rows at once, multiple API calls reach Salesforce simultaneously. If those rows write to records that share a common parent — for example, contacts all mapped to the same placeholder Account — Salesforce locks that parent Account record on each update. When many rows try to lock it simultaneously, some are blocked and the error occurs.
+-   Clay is running updates on the same records as a Salesforce Flow, trigger, or another integration.
+-   Multiple Clay columns are writing to the same record at the same time (for example, a Create Record and an Update Record both targeting the same Contact or Lead).
+-   High-volume batch updates in Clay coincide with peak activity in your Salesforce org.
 
-A frequent amplifier is **Declarative Lookup Rollup Summaries (DLRS)** — a Salesforce automation that recalculates a rollup value on a parent record whenever any child record is saved. DLRS holds a write lock on the parent while the rollup runs, which causes concurrent saves on sibling child records to fail with `UNABLE_TO_LOCK_ROW`.
+**How to reduce lock errors:**
 
-Manual retries succeed because running one cell at a time eliminates the simultaneous lock competition.
+-   **Serialize your Clay updates.** If you have multiple Salesforce write columns in the same table, add **run conditions** that ensure only one runs at a time per row — for example, gate the second column on the first one having completed. See [Conditional runs](https://university.clay.com/docs/conditional-runs).
+-   **Reduce concurrency in Salesforce.** Work with your Salesforce admin to identify and optimize Flows or triggers that run on the same objects Clay is updating. Bulkified Flows that process records in batches cause fewer lock conflicts than row-by-row triggers.
+-   **Re-run the failed rows.** Lock errors are transient — the record is only locked for the duration of the competing write. Once Clay surfaces the error, open the column, click the **Errored rows** tab, and re-run those specific rows. They usually succeed on the retry when the lock has been released.
 
-**Workarounds**
-
--   **Enable "Run in batches":** In the action column's **Run settings**, enable **Run in batches**. This sends rows through Salesforce's Composite API in sequential groups rather than all at once, reducing concurrent writes and lowering the chance of lock collisions.
--   **Add a run delay:** In the action column's **Run settings**, set **Delay run** to **Run after delay** and enter a delay in seconds. This staggers when each row fires, giving Salesforce time for in-flight automations (such as DLRS rollups) to finish before the next write arrives.
--   **Map records to real parent objects:** If many rows share the same placeholder Account (or other shared parent), map them to their actual parent records instead. Each write then locks a different record, eliminating the collision.
--   **Ask your Salesforce admin to review automations:** If your org uses DLRS or other triggers on shared parent records, your admin can investigate switching those rollups to scheduled mode — this decouples the rollup write from the original save and eliminates the lock contention entirely.
-
-**Note:** `UNABLE_TO_LOCK_ROW` is a Salesforce-side limitation, not a Clay bug. Clay automatically retries when this error occurs, but surfaces "Retried but failed: Failed to lock row" after exhausting its retry budget.
+If lock errors happen consistently across many rows, it is a sign that Clay's update volume is colliding with ongoing Salesforce automation. In that case, consider batching Clay updates during off-peak hours using the [Scheduled columns](scheduled-columns.md) feature.
 
 ## Why do records created or updated by Clay show my name (or another user's name) in Salesforce's Created By or Last Modified By field?
 
-Salesforce's `CreatedBy` and `LastModifiedBy` audit fields always reflect the **Salesforce user whose credentials authenticated the API request**. Clay does not have a mechanism to override this — it passes the connection's access token with each API request, and Salesforce sets those fields accordingly.
+When Clay creates or updates Salesforce records, Salesforce stamps the **Created By** and **Last Modified By** fields with the user whose credentials are used to authenticate the Clay connection. If you connected Clay using your personal Salesforce account, Salesforce attributes all Clay activity to you — even if other team members triggered the Clay run.
 
-**For the User Sign In connection method:** Clay authenticates as whichever Salesforce user was active in the browser when you completed the OAuth setup. If you were logged into your personal Salesforce account at that moment, all records Clay writes will show your personal name in those fields — even if you have a dedicated "integration user" configured in Salesforce. The integration user's name will only appear in `CreatedBy` and `LastModifiedBy` if the Clay connection was actually authenticated *as* that integration user.
+This is standard Salesforce behavior. Salesforce records actions as belonging to the authenticated API user, regardless of who initiated the action in the upstream system (Clay).
 
-**To fix this**, reconnect Clay using the integration user's credentials. See [How do I connect to Salesforce as a specific user](#how-do-i-connect-to-salesforce-as-a-specific-user-such-as-an-integration-user-using-user-sign-in) below for steps.
+**To prevent your personal name from appearing in Salesforce audit fields**, use a dedicated integration user or service account to authenticate Clay's Salesforce connection. All records Clay creates or updates will then show the integration user's name, making it easy to identify activity that originated from Clay.
 
-**For the Client Credentials connection method:** `CreatedBy` and `LastModifiedBy` reflect the Salesforce execution user configured in the Connected App's **Run As** field during setup — not whoever configured the Clay connection. This is one reason Client Credentials is often preferred for dedicated integration accounts — the audit fields consistently show the configured execution user regardless of who set up the Clay connection.
-
-**To check which Salesforce user your connection is currently authenticated as**, go to `Settings` → `Connections` → `Salesforce`, click `…` next to your connection, and select `Test Connection`. Clay will display the email address of the authenticated user.
+For guidance on creating a scoped integration user, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
 
 ## How do I connect to Salesforce as a specific user (such as an integration user) using User Sign In?
 
-When you connect via **User Sign In**, Clay opens an OAuth popup that authenticates using whatever Salesforce session is active in your browser at that moment. If you are already signed in to Salesforce as your personal account, Clay will connect as you — not as the intended integration user.
+Clay authenticates as whichever Salesforce user is currently signed in to Salesforce in your browser at the time you complete the OAuth flow. To connect as a different user:
 
-To connect as a specific Salesforce user:
+1.  Sign in to Salesforce as the user you want Clay to authenticate as (for example, your integration user or service account). If you are already signed in as a different user, sign out first — or use a private/incognito browser window to sign in as the target user without disrupting your existing session.
+2.  In Clay, go to `Settings` → `Connections` and click `Add connection`. Search for Salesforce and select it.
+3.  Under **User Sign In**, click `Sign in with Salesforce` (or `Sign in with Salesforce sandbox` for a sandbox org). Clay opens a Salesforce OAuth prompt in the browser.
+4.  Since you're already signed in as the correct user in that browser session, Salesforce shows the approval screen for that user. Click `Allow`.
+5.  Clay creates the connection and labels it with the email of the authenticated user.
 
-1.  Open an incognito or private browser window (this gives you a fresh session with no existing Salesforce login).
-2.  Log into Salesforce as the user you want Clay to connect as (for example, a dedicated service account).
-3.  From that same window, open Clay and go to `Settings` → `Connections`.
-4.  Click `Add connection` (or `Reconnect` on an existing Salesforce connection) and complete the OAuth sign-in flow. Clay will authenticate as whoever is logged into Salesforce in that window.
-5.  Optionally, rename the connection (for example, "SFDC Integration User") so it is easy to identify later.
+After connecting, use **Test Connection** to confirm that Clay is authenticated as the intended user.
 
-Make sure the connecting user has **API Enabled** and the correct object and field permissions for everything you plan to read or write in Clay. For guidance on setting up a service account with the right access, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
-
-**Note:** If your Salesforce org uses an Integration User license or API-only license, the User Sign In OAuth flow may not work. Use [Client Credentials](https://university.clay.com/docs/salesforce-integration-overview) instead — that method connects server-to-server without a browser login.
+**If the user you want to connect as uses an Integration User or API-Only Salesforce license**, the User Sign In method won't work — those license types cannot complete the browser OAuth flow. Use the **Client Credentials** method instead. See [Connecting to Salesforce](https://university.clay.com/docs/salesforce-integration-overview) for setup instructions.
 
 ## Why can't I set a Salesforce connection as the default, or change which connection is the default?
 
-Setting or changing the default Salesforce connection is restricted to **workspace admins**. Non-admin workspace members do not see the **Set as default** option in the connection menu.
+Setting or changing the default Salesforce connection is a **workspace admin–only** action. If you don't see the **Set as default** option in the `…` menu for a connection, your account does not have admin permissions in this Clay workspace.
 
-If you need to change the default connection, ask a workspace admin to:
+To update the default connection:
 
-1.  Go to `Settings` → `Connections` and select `Salesforce`.
-2.  Find the connection you want to make the default.
-3.  Click the `…` menu next to it and select `Set as default`.
+-   Ask a workspace admin to change it in `Settings` → `Connections`.
+-   Or have a workspace admin update your user role to admin, then make the change yourself.
 
-To change your own role to admin, ask an existing workspace admin to update it in `Settings` → `Team`.
+For details on which connection management actions require admin access, see [Connections and integration accounts](./connections-and-integration-accounts.md).
