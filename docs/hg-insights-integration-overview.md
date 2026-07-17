@@ -130,6 +130,12 @@ This typically happens when the products you want to look up don't appear in HG 
 -   **Check HG Insights' data directory.** Browse [HG Data Discovery](https://discovery.hgdata.com/) to see what products and categories HG Insights has indexed, then configure the **Products** field using a product from that catalog.
 -   **Remove HG Insights from the waterfall.** If you're running a broad tech stack enrichment and aren't targeting specific named products, click the **delete icon** next to HG Insights in the waterfall sequence to remove it. The remaining providers will run normally without requiring a product selection.
 
+### "Company domain or HG company ID is blank" error
+
+This error appears in an HG Insights enrichment cell — including as a provider step in the **Company Revenue** waterfall — when the row's domain column is empty. The HG Insights **Enrich company** action requires a company domain or HG company ID as its input; if both are blank for a row, the cell fails before making any external API call and no credits are charged.
+
+If your source data doesn't include a domain for every row, use the **Company Domain waterfall** to find missing domains before running the HG Insights enrichment. See [Fixing "Missing input" errors in a domain-dependent waterfall](building-a-data-waterfall.md#fixing-missing-input-errors-in-a-domain-dependent-waterfall) for the three-step setup.
+
 ### Technology not found in HG Insights
 
 HG Insights has strong coverage for widely-adopted enterprise technologies, but niche, newer, or less-tracked tools may not appear in its database. If a technology you're looking for returns no results, two fallback approaches work well in Clay:
