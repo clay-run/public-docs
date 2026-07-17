@@ -170,7 +170,9 @@ To build a table of people who liked, commented on, or shared a specific post, u
 
 **URL format requirement:** This source only accepts `activity` and `ugcPost` type post URLs. Share URLs — those containing `-share-` between the author slug and the post ID — are not valid and return an invalid-URL error. To identify the URL type: valid post URLs contain either `-activity-` or `ugcPost` in the path; share post URLs contain `-share-` and are not accepted.
 
-To get the correct URL: open the post, click **•••** (three dots) at the top right of the post, and choose **Copy link to post**. If the post is a reshare, open the original underlying post first and copy its link from there.
+To get the correct URL manually: open the post, click **•••** (three dots) at the top right of the post, and choose **Copy link to post**. If the post is a reshare, open the original underlying post first and copy its link from there.
+
+If post URLs are flowing in from another Clay source — such as **Find professional posts** or **Get a person's professional posts and shares** — some rows may return share-type URLs for reshared content. To convert those share URLs to the required activity format automatically, add an **Enrich professional post** enrichment column and map your post URL column to it. The enrichment's **Post URL** output contains an activity-type URL that you can then pass to **Get interactions with professional posts**.
 
 ## Getting a person's posts and shares
 
