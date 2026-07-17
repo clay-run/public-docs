@@ -420,14 +420,21 @@ With **Premium** or **Standard**, Clay queries its provider network to find and 
 
 ## Writing back to your CRM
 
-Audiences supports **bidirectional sync** with Salesforce. Enriched data and segment changes write back automatically.
+Audiences supports **bidirectional sync** with Salesforce. To push data from Audiences back to Salesforce, you must first enable the **Export sync** toggle in your Salesforce source settings — this is the master switch for all outbound writes. Even if individual fields are configured with an "Always write" rule, no data flows to Salesforce until Export sync is turned on.
+
+**To enable Export sync (admin-only):**
+
+1.  Go to **Settings** → **Sources / Destinations** and click your Salesforce connection.
+2.  Select the object tab you want to export (for example, **Accounts**).
+3.  Under **Export [Object] data**, toggle on **Export sync**.
+4.  Confirm your field mappings and click **Save and review** → **Confirm**.
 
 Map any Clay data or segment membership to Salesforce fields. Examples:
 
 -   Personal email → SFDC `Personal Email` field.
 -   Segment membership → CRM status, campaign enrollment, lead score, or owner assignment.
 
-Export settings control whether Clay **creates new Salesforce records** for net-new contacts or **only updates existing ones**.
+Export settings also control whether Clay **creates new Salesforce records** for net-new contacts or **only updates existing ones**.
 
 The **`Create new Salesforce records`** toggle is in your Salesforce source settings under the export section. It is **off by default** — when off, Clay only updates Salesforce records that already have a matching entry in your Audience. Turn it on to allow Clay to create new Contacts or Leads in Salesforce for Audience records that don't yet exist in SFDC. This toggle is admin-only.
 
@@ -587,6 +594,19 @@ For this to work, you need both:
 -   Web intent configured as a signal in your Audiences workspace.
 
 **If visitors arrived before your Salesforce sync was connected:** Web intent records added to Audiences before you connected Salesforce may not automatically merge with existing SFDC records. To resolve this, use the **Import record matching** option in your Salesforce import settings and select domain as the match key (this feature is currently in beta — contact your Growth Strategist to enable it). This matching applies to records coming in after the setting is enabled — it does not retroactively merge records already in Audiences.
+
+### I've mapped fields to Salesforce but the data isn't syncing — why?
+
+The most common cause is that the **Export sync toggle is off**. Even if your field mappings are fully configured and individual fields are set to "Always write," no data flows to Salesforce until Export sync is enabled. This toggle is off by default.
+
+To enable it (admin-only):
+
+1.  Go to **Settings** → **Sources / Destinations** and click your Salesforce connection.
+2.  Select the object tab you want to export (for example, **Accounts**).
+3.  Under **Export [Object] data**, toggle on **Export sync**.
+4.  Click **Save and review** → **Confirm**.
+
+Once enabled, the first export fires at your workspace's next scheduled export time — this may take up to 24 hours. See [Writing back to your CRM](#writing-back-to-your-crm) for the full schedule and behavior details.
 
 ### How do I create new Salesforce contacts or leads from an Audience enrichment?
 
