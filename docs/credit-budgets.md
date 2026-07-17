@@ -12,6 +12,8 @@ If you need to allocate credits to specific workbooks, teams, or projects — tr
 
 Credit budgets appear at `Settings` → `Budgets`. Only workspace admins can create and manage budgets.
 
+Credit budgets operate within a single workspace — they do not span or combine credits across multiple workspaces. If your organization wants to track spend by team or department, add all team members to a shared workspace and create a separate named budget for each group.
+
 ## How credit budgets work
 
 A **budget** is a named credit pool with:
@@ -65,6 +67,8 @@ Each budget has an access rule that controls which workspace members can assign 
 To update access for an existing budget, open it from `Settings` → `Budgets`, click **Edit**, and adjust the access settings.
 
 **Adding a member to a budget's access list only grants them permission to assign workbooks to that budget — it does not move any of their existing workbooks into it.** Workbook budget assignments are always an explicit, per-workbook action.
+
+**Viewing member budget access from the Team page:** To see each member's budget access at a glance, go to `Settings` → **Team** → **Members** tab. The **Budgets** column shows which budgets each member can assign workbooks to. Members with no budget access appear with a **No budget assigned** warning — open the relevant budget from `Settings` → `Budgets`, click **Edit**, and add the member to the access list.
 
 ## Email alerts for budget usage
 
