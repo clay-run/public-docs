@@ -258,6 +258,22 @@ The operators available when building a filter depend on the field's data type, 
 
 **Note:** A field that appears numeric may have been imported as text (shown by a T icon rather than #). Text fields — such as "Annual revenue range" synced from Salesforce as a string — will not show range operators. To use range filtering on a field, contact Clay support to have the field's type changed to Number (#). Range operators will then appear when you add a filter on that field.
 
+## Finding people from a Companies Audience
+
+Once you have a Companies Audience segment, you can run a people search scoped strictly to the companies in that segment — without needing a separate company table.
+
+**To find people from a Companies Audience segment:**
+
+1.  Click **Companies** in the left sidebar and open the segment you want to search.
+2.  Click the **⋮** (three-dot) menu at the top right of the audience view — or click the **⋮** menu next to the segment name in the sidebar.
+3.  Select **Find people from this list**.
+4.  In the setup panel, apply filters for job title, seniority, location, and experience.
+5.  Click **Continue**. Clay searches for matching contacts at the companies currently in that segment.
+
+The search is scoped to the exact companies in the segment at run time. After the contacts are added to your People audience, you can run bulk enrichments (for example, work email or phone) and export them to an ad platform — see [Syncing audiences to ad platforms](#syncing-audiences-to-ad-platforms).
+
+**Note:** **Find people from this list** is available only on Companies Audience segments — it does not appear on People Audience segments.
+
 ## Enriching and monitoring
 
 ### Adding enrichments
