@@ -23,12 +23,12 @@ To set up Job Change Signals in your workbook:
 
 1.  Click `+ Add` in the bottom navigation bar of your workbook, then under **Signals** select **Job change**. This opens the "Track people for job changes" setup wizard.
 2.  In **Step 1 (Select a source)**, choose how to provide the contacts you want to monitor:
-    -   **Use existing Clay table** (most common): select the Clay table and view containing your contacts, then under **Select LinkedIn profiles** choose the column that holds each contact's LinkedIn URL.
+    -   **Use existing Clay table** (most common): select the Clay table and view containing your contacts, then choose the column that holds each contact's professional profile URL.
     -   **Import from CRM**: import contacts directly from your connected CRM.
-    -   **Import CSV**: upload a CSV file containing LinkedIn URLs.
+    -   **Import CSV**: upload a CSV file containing professional profile URLs.
 
-    The source must include a LinkedIn URL for each contact you want to monitor.
-    -   **LinkedIn URL stored in Salesforce?** If the LinkedIn URL exists in Salesforce but isn't yet a column in your Clay table, add a [Salesforce Lookup Record](salesforce-integration-overview.md) column first — it returns all fields on the Contact record, including custom LinkedIn URL fields.
+    The source must include a professional profile URL for each contact you want to monitor.
+    -   **Professional profile URL stored in Salesforce?** If the professional profile URL exists in Salesforce but isn't yet a column in your Clay table, add a [Salesforce Lookup Record](salesforce-integration-overview.md) column first — it returns all fields on the Contact record, including any profile URL fields.
 3.  Optionally, enable `Initial check`.
     1.  The Job Change Signal monitors for new changes **going forward** from when you set it up — it will not automatically surface contacts who had already changed jobs before monitoring started. Enable Initial check to also scan for recent past job changes. It checks each contact's **work history** for role changes within your chosen lookback window: **3 months**, **6 months**, or **1 year**.
 4.  Set how often the Signal should run.
