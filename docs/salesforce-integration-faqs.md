@@ -329,6 +329,36 @@ Rows where the condition is not met show **"Run condition not met"** in the colu
 
 For full details on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
 
+## How do I prevent contacts from being pushed to Salesforce when required fields like Account Name or Title are blank?
+
+Gate your Salesforce write so only complete records reach Salesforce. There are two approaches:
+
+**Option 1: Add an "Only run if" condition on the Salesforce action column (all plans)**
+
+Add a run condition to your **Create Record** or **Update Record** action column so it fires only when all required fields are populated.
+
+1.  Open the column settings for your Salesforce **Create Record** or **Update Record** column.
+2.  Click **Run settings** → **Only run if**.
+3.  In the formula field, enter a condition that checks all required fields. For example, to require both Account Name and Title:
+
+    `/Account Name is not empty AND /Title is not empty`
+
+4.  Click **Generate formula**, verify the preview, then save.
+
+Rows where any required field is blank are skipped and shown as **"Run condition not met"** — no Salesforce record is created or updated, and no credits are consumed for those rows. Repeat this configuration on every Salesforce action column that should respect the same requirement.
+
+For full details on writing run conditions, including combining multiple conditions with AND and OR, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
+
+**Option 2: Filter your Audiences segment before syncing (Growth and Enterprise plans)**
+
+If you're using [Clay Audiences](audiences.md), create a segment filtered to only complete records and sync that segment to Salesforce — records missing required fields are excluded from the sync entirely.
+
+1.  In Audiences, open or create a segment under **People** or **Companies**.
+2.  Add a filter for each required field — for example, **Account Name → is not empty** — then add a second filter for **Title → is not empty**. Multiple top-level filters are joined with AND, so only records where all required fields are populated will match.
+3.  Sync this filtered segment to Salesforce. Records that don't match the filters stay in Audiences but are never written to Salesforce.
+
+This gives you a single place to manage field-completeness rules across your workspace, rather than maintaining run conditions in each table. Note that syncing an Audiences segment to Salesforce requires a **Growth or Enterprise** plan.
+
 ## How do I add leads or contacts to a Salesforce campaign and update the status of existing campaign members?
 
 A Campaign Member in Salesforce represents the relationship between a lead or contact and a campaign. Each Campaign Member record is tied to either a `LeadId` or a `ContactId` — not both at once. Because leads or contacts might already be members of the campaign, you need a conditional workflow that handles both cases — adding new members and updating the status of existing ones.
