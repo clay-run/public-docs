@@ -116,6 +116,17 @@ For full instructions on setting up a restricted Salesforce user with field-leve
 -   **List view:** The view to sync into Clay.
     -   Views that are not SOQL-compatible (those that cannot be generated from a SOQL query) have a 2,000-record limit.
 
+**Re-syncing does not remove rows from your Clay table**
+
+When you re-sync (or when a scheduled run fires), records removed from the Salesforce list remain in your Clay table — they are not deleted automatically. Clay's list source is additive only: each sync adds new matching records and optionally updates existing ones, but never removes rows for records that have left the Salesforce list.
+
+To remove records that no longer belong in your table, you have two options:
+
+-   **Delete the stale rows manually** — filter to isolate the rows you no longer need, select them, and delete them.
+-   **Delete the source and re-add it** — this re-imports only records currently in the Salesforce list. Alternatively, duplicate the table with the updated source to start fresh.
+
+If you need your Clay list to stay in sync with Salesforce automatically — with records added *and* removed as they enter and leave the Salesforce list — use [Clay Audiences](audiences.md) instead. An Audiences segment is a live filter: records are added when they match your criteria and removed automatically when they no longer qualify, without any manual cleanup.
+
 **Fields not in your Salesforce list view**
 
 Clay imports exactly the fields that are columns in your selected Salesforce list view. Any field not included in that list view will not appear in your Clay table, even if the data exists in Salesforce. Two types of fields commonly go missing this way:
