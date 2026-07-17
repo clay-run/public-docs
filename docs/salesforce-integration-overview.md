@@ -36,7 +36,7 @@ Connect to Salesforce via Client Credentials for server-to-server access. No bro
 **Setting up in Salesforce**
 
 1.  In Salesforce Setup, search for `External Client App Manager` in Quick Find and select it. Create a new external client app — see [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&language=en_US&type=5) for full creation steps. Set **Distribution State** to `Local`. When configuring the app's OAuth settings:
-    -   **Callback URL:** Salesforce requires this field to be populated even for server-to-server flows. You can enter `https://login.salesforce.com/services/oauth/callback`.
+    -   **Callback URL:** Salesforce requires this field to be populated even for server-to-server flows. You can enter `https://login.salesforce.com/services/oauth2/callback`.
     -   **OAuth Scopes:** Add the following scopes:
         -   **Manage user data via APIs (`api`)** — required; without it, Salesforce returns `invalid_grant: no valid scopes defined` when Clay tries to connect.
         -   **Perform requests at any time (`refresh_token, offline_access`)** — add this scope to allow the External Client App to complete the Client Credentials token exchange.
@@ -115,6 +115,17 @@ For full instructions on setting up a restricted Salesforce user with field-leve
 -   **Salesforce object:** The type of object to look for in Salesforce.
 -   **List view:** The view to sync into Clay.
     -   Views that are not SOQL-compatible (those that cannot be generated from a SOQL query) have a 2,000-record limit.
+
+**Re-syncing does not remove rows from your Clay table**
+
+When you re-sync (or when a scheduled run fires), records removed from the Salesforce list remain in your Clay table — they are not deleted automatically. Clay's list source is additive only: each sync adds new matching records and optionally updates existing ones, but never removes rows for records that have left the Salesforce list.
+
+To remove records that no longer belong in your table, you have two options:
+
+-   **Delete the stale rows manually** — filter to isolate the rows you no longer need, select them, and delete them.
+-   **Delete the source and re-add it** — this re-imports only records currently in the Salesforce list. Alternatively, duplicate the table with the updated source to start fresh.
+
+If you need your Clay list to stay in sync with Salesforce automatically — with records added *and* removed as they enter and leave the Salesforce list — use [Clay Audiences](audiences.md) instead. An Audiences segment is a live filter: records are added when they match your criteria and removed automatically when they no longer qualify, without any manual cleanup.
 
 **Fields not in your Salesforce list view**
 
