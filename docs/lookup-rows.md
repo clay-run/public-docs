@@ -62,6 +62,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 -   Re-use standard messaging stored in a central table
 -   Check against a static reference database, like a list of users
 -   Check a Do Not Contact list or verify whether a record has already been enriched, then branch actions based on yes/no
+-   Check whether a company already exists in your CRM account list — import your Salesforce or CRM export as a Clay table, then look up any company domain against it to verify whether the account is already there. Using a Clay table for this also lets you add it as an exclusion source in Find Companies searches to prevent re-importing existing CRM accounts — see [Excluding companies and people](finding-companies-and-people-in-clay.md#excluding-companies-and-people)
 -   Validate that a contact's email domain matches their company's domain — use a formula column to extract the domain from an enriched email address, then look it up against a table of company-level domains
 
 **Best practices**
