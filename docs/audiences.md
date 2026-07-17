@@ -459,7 +459,7 @@ The **`Create new Salesforce records`** toggle is in your Salesforce source sett
 Export sync behavior:
 
 -   **Export frequency:** Once every 24 hours. Clay assigns each workspace a stable export time automatically — the schedule is not user-configurable.
--   **First export:** After you enable Export Sync, the first export fires at your workspace's next scheduled export time — this may take up to 24 hours. The Exports panel shows **Not set up** until the first export completes successfully.
+-   **First export:** After you enable Export Sync, the first export does not run immediately — it fires at your workspace's next scheduled export time, which may be up to 24 hours away. The Exports panel shows **Not set up** until the first export completes successfully.
 -   **Export batch size:** ~10,000 records per batch.
 -   **Subsequent syncs:** Incremental — only changed records are processed.
 
@@ -624,7 +624,7 @@ To enable it (admin-only):
 3.  Under **Export [Object] data**, toggle on **Export sync**.
 4.  Click **Save and review** → **Confirm**.
 
-Once enabled, the first export fires at your workspace's next scheduled export time — this may take up to 24 hours. See [Writing back to your CRM](#writing-back-to-your-crm) for the full schedule and behavior details.
+Once enabled, the first export does not run immediately — it fires at your workspace's next scheduled export time, which may be up to 24 hours away. See [Writing back to your CRM](#writing-back-to-your-crm) for the full schedule and behavior details.
 
 ### How do I create new Salesforce contacts or leads from an Audience enrichment?
 
