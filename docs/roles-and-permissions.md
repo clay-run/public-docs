@@ -157,7 +157,7 @@ There are currently no configurable workspace-level access controls specific to 
 
 -   View all audiences and their data (People, Companies, and existing segments)
 -   Filter audience records
--   Create ad syncs from a segment (**Send → Create ad sync**) to push contacts or companies to LinkedIn, Meta, or Google Ads
+-   Create ad syncs from a segment (**Send → Create ad sync**) to push contacts or companies to connected ad platforms
 
 **Admin-only actions in Audiences:**
 
