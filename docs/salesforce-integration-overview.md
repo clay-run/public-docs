@@ -269,6 +269,10 @@ Salesforce processes the upsert by placing the external ID value directly in the
 
 -   **Handling a fallback key:** The cleanest approach is to enrich blank domains before your upsert runs — use Clay's enrichment columns (for example, find domain from LinkedIn URL or company name) so every row has a domain value before the action fires. If enrichment isn't possible for all rows, a two-step approach works: use a **Lookup record** column to find the account by domain, fall back to a second **Lookup record** by LinkedIn URL (with the URL sanitized per the format above), then use conditional **Create record** or **Update record** columns based on which lookup succeeded.
 
+-   **Batching:** Clay automatically groups upsert calls for rows that share the same Salesforce object type and external ID field, sending them to Salesforce as a single batch (up to 200 records per call). You do not need to configure a batch limit. Each record in the batch is processed independently — if one fails, the others are not affected. To further control write concurrency and avoid row-lock errors when many rows share a common parent record, see [Batch processing](#batch-processing).
+
+-   **Run timing:** Run Upsert Object immediately (the default) if all earlier enrichment columns have already finished by the time this action fires. If your workflow includes slower external API calls or enrichment steps earlier in the table, add a **Run after delay** of at least 60 seconds so the upsert waits for upstream data to settle before sending records to Salesforce. To configure a delay, open the column's **Run settings**, select **Run after delay**, and enter the number of seconds to wait (up to 600 seconds). See [Delay run](enrichments.md#delay-run) for details.
+
 **Inputs:**
 
 -   **Salesforce object:** The object type to look for in your Salesforce.
