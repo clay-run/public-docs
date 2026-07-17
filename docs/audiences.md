@@ -344,7 +344,7 @@ After you add a signal:
 -   Multiple signals each get their own column; the `Signal Summary` column aggregates all results. Click any row to see per-signal detail.
 -   Any other segment that filters on this signal type will also surface these results.
 
-**Signals are a detection layer — taking action on results happens in the companion segment.** Signals identify matching records and write results to each record's profile, but do not trigger automated actions on their own. To act on the records a signal detected, navigate to the auto-created companion segment and click `Send` to enroll them in a workflow or CRM export, or click `Enrich` to run a bulk enrichment on the matching records. To enroll new members automatically as the signal continues to fire over time, publish a workflow trigger on the companion segment — see [Connecting a workflow to a segment](#connecting-a-workflow-to-a-segment) below.
+**Signals are a detection layer — taking action on results happens in the companion segment.** Signals identify matching records and write results to each record's profile, but do not trigger automated actions on their own. To act on the records a signal detected, navigate to the auto-created companion segment and click `Send` to enroll them in a workflow or CRM export, or click `Enrich` to run a bulk enrichment on the matching records. To enroll new members automatically as the signal continues to fire over time, publish a workflow trigger on the companion segment — see [Connecting a workflow to a segment](#connecting-a-workflow-to-a-segment) below. Available on Growth and Enterprise plans — if Audiences is not yet enabled in your workspace, contact your Growth Strategist.
 
 **Monitoring signal progress**
 
@@ -678,6 +678,8 @@ Three things to check:
 -   **The signal hasn't fired for that record yet.** Signal results are written asynchronously and may not appear immediately after a signal run completes. If a signal should be recent but is still missing, open the signal's column header → `Edit column` and re-run the signal to refresh the data for that record.
 
 ### A signal I created in a table isn't showing up when I try to add it to an audience — why?
+
+Available on Growth and Enterprise plans. If Audiences is not yet enabled in your workspace, contact your Growth Strategist.
 
 Signals created inside a Clay workbook table write results back to that table and are scoped to it — they cannot be applied to or reassigned to an Audiences segment. When you click `Enrich` → `Signals` on an audience segment, only signals that were originally created through Audiences appear in the list.
 
