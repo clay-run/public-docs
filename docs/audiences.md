@@ -598,6 +598,22 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 The Audiences screen does not have a direct CSV download button, and there is currently no built-in path to download audience data as a CSV file directly from the Audiences screen.
 
+### Why do I only see "Sync to ad platforms" when I click Send on my audience segment?
+
+Two things can limit what you see when you click **Send** on an audience segment.
+
+**CRM destinations with Export sync off** — If you have Salesforce or HubSpot connected as a destination, those options only appear in the Send menu when Export sync is enabled. When Export sync is off, those CRM destinations are hidden, leaving "Sync to ad platforms" as the only visible option. To enable CRM write-back, go to **Settings** → **Sources / Destinations**, click your Salesforce or HubSpot connection, and toggle on **Export sync**. See [Writing back to your CRM](#writing-back-to-your-crm) for the full setup steps.
+
+**Getting audience data into a Clay table** — There is no direct "Send to table" option in the Send menu. To get audience data into a Clay table for downstream workflows (actions, sequences, or outbound orchestration), use **Bulk Enrich → Send to Table**:
+
+1. From your audience segment, click **Enrich** → **Add bulk enrich**.
+2. Add your enrichment columns (for example, **Enrich Person** to find email, title, or phone).
+3. Test on 10 rows first before running at scale.
+4. In **Field mapping**, map the columns you want saved back to your Audience permanently.
+5. Click **Start Run**. Once enrichment completes, click **Send to table** from within the bulk enrichment to route results to a Clay table for any downstream actions or orchestration.
+
+This approach handles large volumes, keeps data fresh as your audience updates, and gives you full control over conditional logic before taking action.
+
 ### What happens to a contact's ad targeting when they become a customer?
 
 If your segment has an exclusion condition (e.g., Account Type ≠ "Customer"), the contact is automatically **removed** from the synced ad audience as soon as that condition is met. See [Clay Ads](https://university.clay.com/docs/clay-ads) for platform-specific guidance.
