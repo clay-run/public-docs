@@ -438,6 +438,20 @@ Map any Clay data or segment membership to Salesforce fields. Examples:
 -   Personal email → SFDC `Personal Email` field.
 -   Segment membership → CRM status, campaign enrollment, lead score, or owner assignment.
 
+**Field-level write rules**
+
+Each mapped field has a write rule that controls whether and how Clay pushes its value to Salesforce during an export:
+
+| Rule | Behavior |
+|------|----------|
+| **Never write** | Clay never exports this field to Salesforce. This is the **default** for all newly added field mappings. |
+| **Always write** | Clay writes the current Audiences value to Salesforce on every export cycle, overwriting whatever is in the Salesforce field. |
+| **Write if empty** | Clay writes the value only if the corresponding Salesforce field is currently empty. Existing Salesforce values are preserved. |
+
+To change a field's write rule, click the **pencil (edit) icon** next to any mapped field in your Salesforce source settings.
+
+**Important:** Because **Never write** is the default, a newly mapped field will not export data until you explicitly change its write rule. If a specific field isn't showing up in Salesforce after enabling Export sync, confirm its write rule is set to **Always write** or **Write if empty**.
+
 Export settings also control whether Clay **creates new Salesforce records** for net-new contacts or **only updates existing ones**.
 
 The **`Create new Salesforce records`** toggle is in your Salesforce source settings under the export section. It is **off by default** — when off, Clay only updates Salesforce records that already have a matching entry in your Audience. Turn it on to allow Clay to create new Contacts or Leads in Salesforce for Audience records that don't yet exist in SFDC. This toggle is admin-only.
