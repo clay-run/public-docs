@@ -56,6 +56,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   You can also [buy email accounts directly in Clay](https://university.clay.com/docs/buying-email-accounts) if you want to increase your sending capacity.
     -   After setup, you can:
         -   `Enable warmup`: Sends and receives automated emails from the linked account to build reputation. Each account uses a unique two-word keyphrase (e.g., `clever-rocket`) to identify warmup emails. Follow the in-app instructions to set up a label and filter to easily ignore warmup messages.
+        -   `Edit warmup frequency`: Adjusts how many warmup emails an account sends per day (1–30). Available only while warmup is active — click the three-dot (⋯) menu next to the account and select **Edit warmup frequency**. You can also select multiple accounts with active warmup and update the frequency in bulk.
         -   `Restrict access`: Limit the account to your use only (e.g., for a personal business address). Otherwise, accounts are available to anyone with edit access in your workspace.
         -   `Update send limit`: Change the daily number of emails the account can send per day
         -   `Update sender variables`: Change the sender variable values for the account
