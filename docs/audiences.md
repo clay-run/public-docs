@@ -241,7 +241,7 @@ To create a new audience:
 2.  Click **New audience** in the top-right corner of the list, or click the `+` next to `My Audiences` in the sidebar.
 3.  Select `Criteria` and then add a `Filter` or `Filter group`.
     -   **Filters** evaluate a single condition at a time. All top-level filters are joined with AND — a record must match every one.
-    -   **Filter groups** combine multiple conditions using their own AND/OR logic. Within a single filter group, all conditions share the same operator — all AND or all OR; changing the operator in the group header switches all conditions at once. To mix AND and OR, use a nested filter group. For example, to build `A AND B AND (C OR D)`: add A and B as top-level filters, click **`+ Filter group`**, then add C and D inside the group. Once the group contains two or more conditions, a small **`and`** button appears between them — click it to switch to **`or`**.
+    -   **Filter groups** combine multiple conditions using their own AND/OR logic. Within a single filter group, all conditions share the same operator — all AND or all OR; changing the operator in the group header switches all conditions at once. To mix AND and OR, use a nested filter group. For example, to build `A AND B AND (C OR D)`: add A and B as top-level filters, click **`+ Filter group`**, then add C and D inside the group. Once the group contains two or more conditions, a small **`and`** button appears between them — click it to switch to **`or`**.\
 
 ### Filter operators by field type
 
@@ -343,6 +343,8 @@ After you add a signal:
 -   Clay **automatically creates a companion segment** combining your original filters plus a filter for the new signal result — this is expected, not an error.
 -   Multiple signals each get their own column; the `Signal Summary` column aggregates all results. Click any row to see per-signal detail.
 -   Any other segment that filters on this signal type will also surface these results.
+
+**Signals are a detection layer — taking action on results happens in the companion segment.** Signals identify matching records and write results to each record's profile, but do not trigger automated actions on their own. To act on the records a signal detected, navigate to the auto-created companion segment and click `Send` to enroll them in a workflow or CRM export, or click `Enrich` to run a bulk enrichment on the matching records. To enroll new members automatically as the signal continues to fire over time, publish a workflow trigger on the companion segment — see [Connecting a workflow to a segment](#connecting-a-workflow-to-a-segment) below.
 
 **Monitoring signal progress**
 
@@ -674,6 +676,17 @@ Three things to check:
 -   **The signal falls outside the default lookback window.** `Lookup in Audiences` returns signal data for the past **90 days** by default via the **Signal data to include (days)** column setting. This lookback is independent of your audience's filter criteria — a contact can be correctly included in a "job change results" audience yet still show empty signal data in a lookup if the job-change event falls outside the configured window. To retrieve older signals, open the column settings and increase **Signal data to include (days)** to cover the relevant time range.
 -   **The default 5-result count was reached.** `Lookup in Audiences` returns 5 signal results per record by default. If a company has more active signals than that, some may not appear — increase the result limit in the column settings (up to 50), or use `Get Audiences Activity` to retrieve a larger set of signal data.
 -   **The signal hasn't fired for that record yet.** Signal results are written asynchronously and may not appear immediately after a signal run completes. If a signal should be recent but is still missing, open the signal's column header → `Edit column` and re-run the signal to refresh the data for that record.
+
+### A signal I created in a table isn't showing up when I try to add it to an audience — why?
+
+Signals created inside a Clay workbook table write results back to that table and are scoped to it — they cannot be applied to or reassigned to an Audiences segment. When you click `Enrich` → `Signals` on an audience segment, only signals that were originally created through Audiences appear in the list.
+
+To add a signal to your Audiences, create it from within Audiences in one of two ways:
+
+-   **From a segment:** Navigate to an audience segment → click `Enrich` → `Signals` → select a signal type and configure it.
+-   **From the Data Hub:** Navigate to **People** or **Companies** → **Data Hub** → **Signals** tab → click `+ Add signal`.
+
+Signals created either way are stored in the **Data Hub** and can be applied to multiple audience segments. If you have an existing signal configured in a table that you want to use in Audiences, recreate it using either path above — your table-based signal can continue running independently alongside the new Audiences signal.
 
 ### How do I remove records from an audience?
 
