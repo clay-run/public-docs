@@ -74,7 +74,9 @@ If you do not receive a reset email, you likely signed up with Google rather tha
 
 If you signed up with Google and want to create a password so you can log in with your email and password instead, this cannot be done through your account settings — it requires a support action.
 
-To request the change:
+_**Coming soon:** A self-service option to change your login method directly in Account Settings is targeted for rollout in late July 2026. Once live, you will be able to switch between Google and email + password login without contacting support._
+
+To request the change in the meantime:
 
 -   Open the in-app chat and ask the support team to switch your login method from Google to password.
 -   Once the change is made, go to [app.clay.com/forgot](https://app.clay.com/forgot), enter your email address, and follow the link in the email to set your new password.
