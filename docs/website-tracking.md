@@ -19,7 +19,7 @@ This tracking provides insights into how visitors engage with your content and h
 
 ### **Creating the connection**
 
-1.  Click on your account name → `Settings` → `Website tracking`.
+1.  Click on your account name → `Settings` → `Web intent`.
 2.  Click `Add connection` and give the connection a unique name – you'll need this later.
 3.  Copy the code under `Install tracking snippet` and install with one of the two methods.
     -   **Directly installing a tracking snippet (Recommended):**
@@ -38,7 +38,7 @@ This tracking provides insights into how visitors engage with your content and h
     -   **Installing via** [**Twilio Segment**](https://segment.com/docs/connections/destinations/catalog/actions-clay/)**:**
         1.  Visit [this link](https://app.segment.com/goto-my-workspace/destinations/catalog/actions-clay) to add the Clay integration as a new destination in Segment.
         2.  Select the website data source in Segment you want to connect to Clay.
-        3.  From your Clay website connection page, copy both your `Connection key` and `Secret key` to the Segment settings page.
+        3.  In your Clay website connection, click the **Twilio Segment** tab. Your `Connection key` is shown there automatically. If you haven't generated a `Secret key` yet, click **Create secret key** to generate one. Copy both keys and paste them into the Segment destination settings.
         4.  Enable your Clay destination to begin sending events.
 4.  Configure which de-anonymization providers you'd like to use. Clay provides a recommended selection or you can manually choose your own provider settings.
     -   **Note:** Pricing is based on unique IP addresses that successfully retrieve data. You'll be charged at most once per 30-day period for each visitor with the same IP address who visits your website.
@@ -212,6 +212,19 @@ Other common causes: adding new pages to tracking, removing exclusions, loosenin
 No. The script runs in the visitor's browser and loads asynchronously, so it won't affect page performance. Website issues after installation are usually due to other simultaneous changes.
 
 # FAQ
+
+### Does Clay connect natively to Segment?
+
+Yes. Clay has a native destination in Segment's catalog. If you already have the Segment JavaScript tag on your site, you can route your website event data directly into Clay's web intent tracking without installing a separate Clay snippet.
+
+To connect Segment to Clay web intent:
+
+1.  In Segment's destination catalog, search for **Clay** (or use [this direct link](https://app.segment.com/goto-my-workspace/destinations/catalog/actions-clay)), add it, and connect the website source you want to send from.
+2.  In Clay, go to **Settings → Web intent** and open your website connection. If you don't have one yet, click **Add connection** first.
+3.  Click the **Twilio Segment** tab. Your `Connection key` is shown automatically. If you haven't generated a `Secret key` yet, click **Create secret key**. Copy both keys.
+4.  Paste the `Connection key` and `Secret key` into the Clay destination settings in Segment, then enable the destination.
+
+Using the Segment tag and Clay's own JavaScript snippet are equivalent — you get the same web intent data and features either way.
 
 ### Is visitor tracking data shown in real-time?
 
