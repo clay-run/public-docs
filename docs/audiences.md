@@ -427,6 +427,15 @@ Map any Clay data or segment membership to Salesforce fields. Examples:
 -   Personal email → SFDC `Personal Email` field.
 -   Segment membership → CRM status, campaign enrollment, lead score, or owner assignment.
 
+**Before data can sync to Salesforce, you must enable the Export sync toggle.** This is the master switch for all Salesforce exports from Audiences — even if individual field mappings are set to **Always write**, no data will push to Salesforce until Export sync is on. To enable it:
+
+1. Go to **Settings → Sources / Destinations** and find your Salesforce integration.
+2. Select the object type at the top (**Accounts**, **Contacts**, **Leads**, or **Opportunities**).
+3. Under **Export [object type] data**, enable the **Export sync** toggle.
+4. Click **Save and review** to apply.
+
+Repeat for each object type you want to export.
+
 Export settings control whether Clay **creates new Salesforce records** for net-new contacts or **only updates existing ones**.
 
 The **`Create new Salesforce records`** toggle is in your Salesforce source settings under the export section. It is **off by default** — when off, Clay only updates Salesforce records that already have a matching entry in your Audience. Turn it on to allow Clay to create new Contacts or Leads in Salesforce for Audience records that don't yet exist in SFDC. This toggle is admin-only.
@@ -613,6 +622,19 @@ Add a **Salesforce Update Record** action column directly inside your bulk enric
 5.  Click `Start Run` — the Update Record column fires alongside your enrichment columns and writes the enriched values directly to Salesforce.
 
 If you have the Audiences Salesforce export enabled, enriched fields also sync back to Salesforce automatically on the next 24-hour export cycle (see [Writing back to your CRM](#writing-back-to-your-crm)). Adding Update Record directly in the enrichment table is useful when you need immediate write-back or when you are not using the native Audiences Salesforce import.
+
+### My field mappings are set to 'Always write' but data isn't syncing to Salesforce — what do I need to do?
+
+Field-level write rules (**Always write**, **Write if empty**, **Never write**) control *which fields* get pushed to Salesforce, but they don't activate the sync on their own. Data will not push to Salesforce unless the **Export sync** toggle is also enabled — it is the master switch for all Salesforce exports from Audiences.
+
+To enable it:
+
+1. Go to **Settings → Sources / Destinations** and find your Salesforce integration.
+2. Select the object type (**Accounts**, **Contacts**, **Leads**, or **Opportunities**) at the top.
+3. Under **Export [object type] data**, enable the **Export sync** toggle.
+4. Click **Save and review** to apply.
+
+After Export sync is enabled, data will push to Salesforce at your workspace's next scheduled export time — this may take up to 24 hours. The Exports panel shows **Not set up** until the first export completes successfully.
 
 ### How can I export records to Salesforce immediately without waiting for the 24-hour sync?
 
