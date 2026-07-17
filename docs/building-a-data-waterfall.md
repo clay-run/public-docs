@@ -204,6 +204,16 @@ Each provider step that runs costs 1 credit. The waterfall stops at the first pr
 
 **Tip:** To avoid running the waterfall on rows that already have a domain, add an **Only run if** condition — for example, `Domain is empty` — in the waterfall's run settings.
 
+### Fixing "Missing input" errors in a domain-dependent waterfall
+
+If a downstream waterfall — such as **Company Revenue** — shows **Missing input** for certain rows, and clicking a failing cell reveals a message like *"Company domain or HG company ID is blank"*, the domain column is empty for those rows. Domain-dependent waterfalls require a company domain to run; rows where the domain is blank are skipped before any external API call is made, so no credits are charged for those rows.
+
+To resolve this without losing those rows, use this three-step pattern:
+
+1. **Add a Company Domain waterfall column and run it conditionally.** In its run settings, add an **Only run if** condition — for example, `[Domain column] is empty` — so the Company Domain waterfall only runs on rows that are missing a domain. Rows that already have a domain are skipped.
+2. **Add a formula column that merges the two domain sources.** Use the `||` operator: `{{Domain}} || {{Company Domain}}`. This returns the original domain when it is present, and the Company Domain waterfall result when it isn't. The result is a single resolved-domain column that is populated for every row where a domain could be found.
+3. **Update the downstream waterfall's domain input to use the merged column.** Open the Company Revenue waterfall (or any other domain-required enrichment), change its domain input to point to the merged formula column, and save.
+
 ### Google step: accuracy and workarounds
 
 The Google step finds a domain by running a web search for the company name. Because it relies on search engine rankings rather than a curated database, it can return an incorrect domain when the company name appears prominently on another site — for example, a business-listing directory, a credit-check platform, or any other site that has indexed the company's profile.
