@@ -175,6 +175,10 @@ You can import a CSV file of people or companies as a one-time import into Audie
 
 CSV imports are one-time — they do not re-sync automatically. To update your Audience with new CSV data, repeat the import process with an updated file.
 
+**To replace a CSV import with corrected data:** If the imported CSV contained errors and you want to start fresh, archive the old records before importing the updated file — see [How do I replace a CSV import with updated data?](#how-do-i-replace-a-csv-import-with-updated-data) in the FAQs below.
+
+**Note:** CSV source entries remain listed in the Sources tab after import. There is no self-serve option to remove or disconnect a CSV source listing — it is retained for filtering and audit purposes.
+
 ### Sending data from Clay table
 
 You can also send contacts from any existing Clay table directly to your Audience:
@@ -697,6 +701,19 @@ Archiving a record is a **soft delete** — the record is not permanently remove
 **Note on lookup timing:** After archiving a record, there is a brief processing delay before the change is reflected in `Lookup in Audiences` results. Running a lookup immediately after archiving may still return the archived record — lookups typically update within a short time as changes propagate.
 
 To exclude Salesforce-deleted records from your audience lookups, filter on **Sync status → Deleted in source** to identify them, then archive the records you no longer want matched against.
+
+### How do I replace a CSV import with updated data?
+
+If you imported a CSV and need to correct the data — for example, because account records changed — archive the old records first, then import the updated file. **Admin access is required** — the Archive records option is not visible to Members or Viewers.
+
+1.  Navigate to **People** or **Companies** in the left sidebar.
+2.  Click **New audience** and add a filter: **Origin source** → **=** → select the name of your original CSV file. This targets only records that came from that specific import.
+3.  Once the segment shows the correct records, click the **⋮** (three-dot) menu next to the segment name and select **Archive records**.
+4.  Import the updated CSV using **Add data** → **Add Source** → **CSV**.
+
+Audiences deduplicates on import using the unique identifier you configure — any incoming record whose identifier matches an existing (non-archived) record will update that record rather than create a duplicate.
+
+**Note:** After archiving, the original CSV source entry remains visible in the Sources tab. There is no self-serve option to remove a CSV source listing — the entry is retained for filtering and audit purposes. To permanently remove the source entry, contact Clay support.
 
 ### Why did Update Audiences Record report 0 fields updated?
 
