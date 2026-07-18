@@ -34,6 +34,10 @@ Conditional runs allow you to execute specific actions or enrichments in a workf
 
 -   **Condition**: `/Upstream Column is not empty`
 
+**Skip rows that already have data (avoid re-enriching)**: You cannot reference an enrichment column's own output in its run condition — Clay blocks this as a circular dependency error. To process only blank rows, right-click the column header → **Run column** → **Run [N] empty or out-of-date rows** (no run condition needed). To gate the enrichment conditionally, reference a different upstream identifier that exists before the enrichment runs — not the enrichment output itself.
+
+-   **Example condition**: `/Company Domain is not empty` (gates the enrichment on the input identifier, not on the enrichment output)
+
 ## How do they work?
 
 Conditional runs are built on **Conditional statements** and evaluate a condition as true or false to determine whether to execute or skip an action.
