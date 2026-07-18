@@ -59,6 +59,15 @@ Viewers can be granted Editor access to specific tables or workbooks, or added a
 2.  Under `Access permissions`, change `Edit access` to `Admins and invited collaborators only`.
 3.  Click `+ Add collaborator` and select the Viewer.
 
+### Troubleshooting: "You do not have the proper access to this workspace"
+
+If you see this error when trying to add a source such as **Find People** or **Find Companies**, it is because the Viewer role does not allow creating new tables. Adding a new source always creates a new table in the workspace — that write operation requires at least Editor access or workbook collaborator access for the specific workbook.
+
+**To resolve this:**
+
+-   Ask a workspace admin to update your role to **Editor** at `Settings` → `Team`, or
+-   Ask a workspace admin to add you as a **workbook collaborator** for the workbook containing the table (see [Granting Viewers additional access](#granting-viewers-additional-access) above).
+
 ## Sales rep _(Beta)_
 
 **Note:** The Sales Rep role is currently in beta — contact support to request access for your workspace.
