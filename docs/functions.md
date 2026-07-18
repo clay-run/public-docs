@@ -171,6 +171,12 @@ Use **Pause** when you want to temporarily suspend new work (for example, while 
 
 No. Previously processed rows remain unchanged and won't be marked as stale. Only new rows processed after you publish your changes will use the updated logic.
 
+### Do changes to a function apply to rows that have already run?
+
+No. Changes to a function don't backfill — they won't reapply to rows that have already been processed. Past outputs stay exactly as they were. Only rows that run after you publish your changes will use the new version of the function.
+
+To apply the updated logic to a row that already ran, re-run that row's function column in the calling table. This dispatches a fresh invocation against the current function configuration.
+
 ### What columns should I include when building a function?
 
 Include action columns (enrichments, Claygents, waterfalls) — not static input columns like company name or domain. Action columns contain the reusable logic you want to apply across tables.
