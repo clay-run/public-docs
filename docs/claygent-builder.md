@@ -134,6 +134,8 @@ Clay's parallel models differ in power and cost:
 -   **clay-neon** — Good balance of capability and speed for moderately complex tasks.
 -   **clay-helium** — Fastest and most cost-effective among Clay parallel models.
 
+**For multi-step web research tasks** — such as finding contacts by searching Google and then visiting each profile page to verify details — prefer **clay-argon** or **clay-neon**. Clay's parallel models route to a dedicated research engine; within that engine, Argon handles the most thorough research and Neon covers moderately complex tasks. If a Claygent output explains that it could not complete all required research steps within its available budget, switching from Helium or a lightweight third-party model to Argon resolves the issue.
+
 **For classification and categorization tasks** (assigning a contact or record to a fixed list of labels using data already in your table), lighter models such as **clay-helium**, **GPT-4o mini**, or **Claude Haiku** work better than Argon. Argon is designed for deep research and complex reasoning — on a simple "pick one label from this list" task, it tends to return multi-sentence explanations and reasoning traces rather than a clean single-value response. Lighter models follow concise output instructions more reliably and cost less per run.
 
 To get a clean single-value response (for example, "Sales" rather than "This contact is best categorized as Sales because their title indicates..."):
