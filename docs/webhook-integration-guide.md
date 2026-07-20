@@ -44,8 +44,6 @@ The following limits apply to all webhook sources in your workspace:
 
 **Submission limit:** Each webhook source accepts up to 50,000 active source records. The enforcement counter decrements when you delete rows from the table — so after rows are deleted, the webhook can accept new records again. Once you reach this limit, Clay returns a `403 Record limit reached for webhook` error and stops accepting new payloads until the active source record count drops below 50,000.
 
-**Note:** The count shown on the source node in the workbook view is a separate permanent total that counts every accepted payload since the webhook was created and does not decrease when you delete rows. This display count is different from the enforcement counter — see [Why does my webhook source show a higher row count than my table?](#why-does-my-webhook-source-show-a-higher-row-count-than-my-table).
-
 **Enterprise Plan — run a webhook indefinitely:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) (also called passthrough tables). When auto-delete is active, Clay automatically deletes each row once its enrichments complete — this continuously decrements the active source record counter and keeps it below 50,000, so the webhook can accept data indefinitely without hitting the cap. This is the recommended approach for automated enrichment pipelines. Auto-delete is available on Enterprise plans and only works for webhook, send-table-data, and signal sources. Learn more in [table management settings](https://www.clay.com/university/guide/table-management-settings).
 
 ## Request body format
@@ -86,14 +84,11 @@ For a complete example using Zapier, see [Send Clay data to Zapier](https://www.
 
 ### Why does my webhook source show a higher row count than my table?
 
-The webhook source node in the workbook view shows the **total number of records stored by the source** since it was created. This count increases with every accepted payload and does not decrease when you delete rows from the table.
+The webhook source node in the workbook view shows the **current number of active source records**. This count increases when a payload is accepted and decreases when rows are deleted from the table.
 
-The table node shows the **current number of rows** in your table.
+The table node shows the **number of rows currently visible** in your table view.
 
-So if your source displays more rows than your table (for example, 162 vs. 92), the difference is typically caused by one or both of the following:
-
--   **Deleted rows.** Rows that were ingested at some point but later deleted from the table are still counted by the source. Deleting a row from the table does not reduce the source count.
--   **Table filters.** If a filter is active on your table, only the rows matching that filter are shown in the table count. The source count always reflects all stored records, regardless of any filters.
+If your source displays more rows than your table, the most likely cause is an **active view filter** hiding some rows. Filters control which rows appear in the current view but do not affect the source record count. To see every row, open the filter panel and click **Clear filters**.
 
 **Note:** Records that Clay rejected with a `429` rate limit error were never stored and do not appear in either count. See the [Limits](#limits) section above for guidance on keeping requests within the 10/second throughput limit to avoid dropped records.
 
