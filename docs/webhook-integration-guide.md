@@ -42,9 +42,11 @@ The following limits apply to all webhook sources in your workspace:
 
 **Payload size:** Each HTTP POST to Clay's webhook endpoint must be 100 KB or smaller.
 
-**Submission limit:** Each webhook source accepts up to 50,000 submissions. This is a cumulative lifetime count — every accepted submission increments the counter, and deleting rows from the table does **not** reduce it. Once you reach this limit, Clay returns a `403 Record limit reached for webhook` error and you'll need to create a new webhook to continue receiving data.
+**Submission limit:** Each webhook source accepts up to 50,000 active source records. The enforcement counter decrements when you delete rows from the table — so after rows are deleted, the webhook can accept new records again. Once you reach this limit, Clay returns a `403 Record limit reached for webhook` error and stops accepting new payloads until the active source record count drops below 50,000.
 
-**Enterprise Plan — run a webhook indefinitely:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) (also called passthrough tables). When passthrough mode is active, the webhook source takes a separate code path that **bypasses the 50,000 submission limit entirely** — a single webhook URL can keep accepting data indefinitely without ever hitting the cap. This is the recommended approach for automated enrichment pipelines. Auto-delete is available on Enterprise plans and only works for webhook, send-table-data, and signal sources. Learn more in [table management settings](https://www.clay.com/university/guide/table-management-settings).
+**Note:** The count shown on the source node in the workbook view is a separate permanent total that counts every accepted payload since the webhook was created and does not decrease when you delete rows. This display count is different from the enforcement counter — see [Why does my webhook source show a higher row count than my table?](#why-does-my-webhook-source-show-a-higher-row-count-than-my-table).
+
+**Enterprise Plan — run a webhook indefinitely:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) (also called passthrough tables). When auto-delete is active, Clay automatically deletes each row once its enrichments complete — this continuously decrements the active source record counter and keeps it below 50,000, so the webhook can accept data indefinitely without hitting the cap. This is the recommended approach for automated enrichment pipelines. Auto-delete is available on Enterprise plans and only works for webhook, send-table-data, and signal sources. Learn more in [table management settings](https://www.clay.com/university/guide/table-management-settings).
 
 ## Request body format
 
@@ -119,7 +121,7 @@ If your webhook isn't creating rows — even on a brand-new webhook that has nev
 
 3. **Missing or wrong authentication token** — If you added an auth token when creating the webhook, it must be included in every request as a header. The token is only displayed once at creation — if you didn't copy it, you'll need to delete and recreate the webhook to generate a new one.
 
-4. **Submission limit reached** — See the [Limits](#limits) section. Once a webhook source hits 50,000 submissions, Clay returns a `403 Record limit reached for webhook` error and stops creating rows. This limit is cumulative — it counts all submissions since the webhook was created, and deleting rows does not reset it. **Enterprise plan:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) to bypass this limit entirely — when passthrough mode is active, the 50,000 cap is skipped and the webhook can accept data indefinitely.
+4. **Submission limit reached** — See the [Limits](#limits) section. Once a webhook source hits 50,000 active source records, Clay returns a `403 Record limit reached for webhook` error and stops creating rows. Deleting rows from the table reduces the active source record count, allowing the webhook to accept new records again. To continue receiving data, you can delete existing rows, create a new webhook source, or enable [auto-delete](https://www.clay.com/university/guide/auto-delete). When auto-delete is active, processed rows are deleted automatically after enrichment, keeping the count below 50,000 so the webhook can run indefinitely.
 
 **Quick isolation test:** To confirm whether the issue is in your request or on Clay's side, try the simplest possible payload:
 
