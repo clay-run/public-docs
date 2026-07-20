@@ -315,6 +315,39 @@ Clay does not transform field values before sending them to Salesforce — whate
 
 The same fix applies to any reference field that returns a `MALFORMED_ID` error — not just **OwnerId**.
 
+## Why does Clay show "✅ Record created" but the record doesn't appear in Salesforce?
+
+When Clay's Create Record action receives a valid record ID back from Salesforce, it marks the action as successful and displays **"✅ Record created"** with a link to the new record. Clay does not perform a follow-up check to verify the record still exists in Salesforce — so if Salesforce discards or removes the record after the initial creation response, the cell still shows success with the original URL.
+
+If you click the URL from a successfully created cell and see **"We couldn't find the record you're trying to access"** in Salesforce, the record was created but then became inaccessible. The most common causes, in rough order of likelihood:
+
+**1. A Salesforce automation removed the record after creation**
+
+Clay creates the record and receives a valid Salesforce ID back — but a workflow rule, Flow, trigger, or Process Builder on the object fires on record creation and deletes or converts the record right after. Check your Salesforce automations on the object for anything that runs on creation.
+
+**2. Required fields weren't mapped**
+
+Salesforce may allow a record to be created in an incomplete state and then discard it if required relationship fields are missing. For Tasks specifically, the `WhoId` (the associated contact or lead) and `WhatId` (the associated account or opportunity) fields are commonly required. Confirm all required fields — including lookup relationship fields — are mapped in your **Create Record** column's **Map fields** section.
+
+If you have a name but not the Salesforce ID for a relationship field, add a **Lookup Record** column before your Create Record step to retrieve the ID first. For a step-by-step example, see [Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?](#why-am-i-seeing-a-malformed_id-error-when-creating-or-updating-a-salesforce-record).
+
+**3. A field type mismatch**
+
+If a mapped value doesn't match the expected Salesforce field type — for example, text sent where a boolean or lookup ID is expected — the record can fail validation after creation. Review your **Map fields** configuration for type alignment.
+
+**4. Duplicate rules on the object**
+
+If your Salesforce org has duplicate rules configured on the object (or related objects), those rules may be blocking or discarding the record post-creation.
+
+**5. Integration user has write but not read access**
+
+If the Salesforce user connected to Clay has write access but not read access to the object, the record is created successfully but appears "not found" when accessed. Confirm the integration user has full read/write access to the object in Salesforce Setup.
+
+**To narrow it down:**
+
+-   Search your **Salesforce Recycle Bin** — if the record was auto-deleted by an automation, it may still be recoverable there.
+-   In Salesforce Setup, review active **Flows** and **triggers** on the object to see if any run on record creation.
+
 ## How do I prevent Salesforce records from being created or updated when there is no valid email?
 
 Use conditional runs on your **Create Record** and **Update Record** action columns to gate them on a passing email validation result. Rows where email validation fails are skipped automatically and do not consume credits.
