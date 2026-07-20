@@ -88,10 +88,17 @@ Install the tracking snippet before the closing `</body>` tag, not in the `<head
 
 Use relative URL paths starting from the root domain:
 
--   ✅ `/pricing` or `/blog/*`
+-   ✅ `/pricing` or `/blog*`
 -   ❌ `https://www.example.com/pricing`
 
-For wildcards, use `*` to match all child pages (e.g., `/resources/*`). Note that URL paths are exact-match, so `/blog` and `/blog/` are treated as different paths.
+URL path filters use exact matching with optional `*` wildcards:
+
+-   `/advertise` matches only the page at `/advertise` exactly — it does not match `/advertise/`, `/advertise/en`, or any sub-path.
+-   `/advertise*` matches `/advertise`, `/advertise/`, `/advertise/en`, and every page whose path starts with `/advertise`.
+-   `/blog/` and `/blog` are treated as different paths because the match is exact.
+-   `/blog/*` matches pages under `/blog/` (e.g., `/blog/post-title`) but not `/blog` itself.
+
+To track a section of your site and all pages within it, use `*` at the end (e.g., `/resources*`). To track a single exact page, omit the wildcard.
 
 ### Reducing credit usage
 
@@ -147,7 +154,11 @@ To verify the script is loading at the browser level:
 
 ### Tracking filters not working as expected
 
-URL paths are exact-match, so `/blog` and `/blog/` are different. Also, filter changes only apply to new data — existing rows aren't affected. Make sure you haven't accidentally excluded important pages.
+**Include filter not matching pages you expect:** URL paths use exact matching, so `/blog` only matches `/blog` exactly — not `/blog/`, `/blog/post-title`, or any sub-path. To include a section of your site and all pages under it, append a wildcard: `/blog*` matches `/blog`, `/blog/`, and every page whose path starts with `/blog`.
+
+**Exclude filter not working as expected:** Exclude filters apply at the session level. A session is blocked only if every page the visitor viewed during that session matches at least one exclude pattern. If a visitor toured multiple pages and only some of them match your exclude filter, the session will still appear in your table.
+
+Filter changes only apply to new data — existing rows aren't affected. Make sure you haven't accidentally omitted wildcards on paths you want to include.
 
 ### Content Security Policy blocking the script
 
@@ -297,6 +308,14 @@ For subdomain tracking questions (for example, `shop.company.com` and `blog.comp
 ### What do I need to know about GDPR and cookie consent for web intent?
 
 The tracking script captures IP address data, which may be considered personally identifiable information in some jurisdictions. Work with your legal and web teams to confirm that your consent and privacy setup supports your intended use. In particular, make sure your Content Security Policy and any cookie consent tooling allow the Clay tracking scripts to run — if they block the script, tracking will stop working.
+
+### Can I exclude just the homepage?
+
+Yes — add `/` to **URL paths to exclude** in your tracking settings. Because URL paths use exact matching, `/` matches only the root path and not every page on your site.
+
+Keep in mind that exclude filters are session-level: a session is blocked only if every page the visitor viewed during that session matches an exclude pattern. A visitor who lands on the homepage and then browses to `/pricing` in the same session will still appear in your table, because not all pages they viewed match the `/` filter.
+
+To remove homepage visits from your results without changing your tracking settings, add a view filter in your Clay table that excludes rows where the page URL is `/`. Configure table filters using the **page paths** field under your table's filter options.
 
 ### What cookies and local storage items does the tracking script use?
 
