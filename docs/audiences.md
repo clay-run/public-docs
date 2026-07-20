@@ -374,6 +374,14 @@ To see which specific records in your audience were picked up by the signal, add
 
 In a **Companies** audience, columns written by a Claygent display a four-diamond icon in the column header. Workspace admins and members can click the column header and select **View Claygent** from the dropdown to open the configuration for the Claygent that populates that column. This option does not appear in People audiences or in archived audiences.
 
+### Managing column visibility and ordering
+
+Use the **Columns** button in the Audiences topbar to control which fields are visible in the table and in what order they appear. Check or uncheck a field to show or hide it; drag rows to reorder them. **Reset to defaults** restores the original column layout for the current view.
+
+To apply your column layout to every audience of the same type in the workspace, open the **Columns** panel from the global **People** or **Companies** view (not from inside a specific audience segment), then click **Apply to all audiences**. A confirmation dialog appears before any changes are applied. This copies the current column visibility and ordering settings across all people or companies audiences in your workspace.
+
+**Note:** **Apply to all audiences** is only available from the global People or Companies view. The option does not appear when you are viewing a specific audience segment.
+
 ### Connecting a workflow to a segment
 
 Connect a Clay workflow to an audience segment to automatically run it on every new member that enters. When a contact or company matches the segment's filters, the connected workflow starts within minutes.
