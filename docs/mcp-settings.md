@@ -95,7 +95,7 @@ There is no generic Clay MCP server URL to enter manually. The "Add MCP server" 
 
 ### Can I connect Clay's MCP server through a third-party MCP gateway or client?
 
-Yes, via Dynamic Client Registration (DCR). Once DCR is enabled for your workspace, register an OAuth client by `POST`ing to `https://api.clay.com/oauth/register` with the `redirect_uris` your platform uses. Any HTTPS URI or HTTP loopback (`http://127.0.0.1:<port>/callback`) is accepted. The response returns your `client_id` and `client_secret`.
+Yes, via Dynamic Client Registration (DCR). Once DCR is enabled for your workspace, register an OAuth client by `POST`ing to `https://api.clay.com/oauth/register` with the `redirect_uris` your platform uses. Any HTTPS URI or HTTP loopback (`http://localhost:<port>/callback`) is accepted. The response returns your `client_id` and `client_secret`.
 
 DCR access is not enabled by default. Contact [Clay support](https://www.clay.com/contact-form) to request access for your workspace.
 
