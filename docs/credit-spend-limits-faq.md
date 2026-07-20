@@ -12,6 +12,8 @@ Answering questions about the credit spend limits feature.
 
 **Note:** This feature is only available for Enterprise Plan.
 
+**Note:** This article covers workbook-level credit spend limits (Enterprise plans only). If you're seeing an "out of monthly credits" error while using Clay through an AI tool like Claude or ChatGPT, that error comes from a separate per-user MCP credit limit — available on all modern paid plans (Launch, Growth, Enterprise). See [MCP settings](/docs/mcp-settings#setting-credit-limits) for how to view and adjust those limits.
+
 ## Who can set and manage credit limits?
 
 **Who can create and modify credit spend limits?**
