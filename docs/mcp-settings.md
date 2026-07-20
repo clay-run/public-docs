@@ -40,7 +40,7 @@ Credit limits cap how many Clay credits a rep can spend through ChatGPT, Claude,
 
 There are two levels of control:
 
--   **Default credit limit** — applies automatically to all new MCP users when they first connect ChatGPT, Claude, or Glean. The factory default is 1,000 credits per month; click `Set default limit` to change it. Reps without an individual override inherit this limit.
+-   **Default credit limit** — applies automatically to all new MCP users when they first connect ChatGPT, Claude, or Glean. Click `Set default limit` to configure. Reps without an individual override inherit this limit.
 -   **Per-user override** — find the rep in the user table and click the pencil icon next to their `Credit limit` to set an individual amount. Their current usage tracks against this limit in real time (e.g., `0 / 1,000`). Reps showing `No limit` have no cap applied.
 
 ## Monitoring usage
