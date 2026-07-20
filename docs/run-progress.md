@@ -3,10 +3,10 @@ title: Run progress
 description: Clay provides multiple ways to track and monitor run progress
   across your tables, including how to set a row limit to control which rows are
   processed, manually trigger unrun enrichment cells, run enrichments on a
-  specific subset of rows, troubleshoot cells stuck in Queued status, diagnose
-  enrichments that aren't triggering automatically, resolve persistent error
-  messages by clearing the browser cache, and troubleshoot slow cell loading
-  when using multiple tables in a workbook.
+  specific subset of rows, troubleshoot cells stuck in Queued or Awaiting
+  callback status, diagnose enrichments that aren't triggering automatically,
+  resolve persistent error messages by clearing the browser cache, and
+  troubleshoot slow cell loading when using multiple tables in a workbook.
 last_synced: 2026-04-26T01:40:34.620Z
 ---
 
@@ -156,6 +156,20 @@ If cells remain Queued for an extended period, common causes include:
 3.  Remove the filter when the run finishes.
 
 > **Note:** **Run column → Run [N] empty or out-of-date rows** will not work here — queued rows are classified as "running," not as empty or stale, so that option shows 0 eligible rows and does nothing for this scenario. Use **Force run all [N] rows** instead.
+
+## Troubleshooting: cells stuck in Awaiting callback status
+
+An **Awaiting callback** cell has dispatched its request to an external data provider and is waiting for the response. This is a normal intermediate state for asynchronous enrichments — the cell moves to Successful (🟢) or Failed (🔴) once the provider replies.
+
+**The table can show "No runs are in progress" while cells are still in Awaiting callback.** The table-level run indicator only counts cells that are queued or actively being processed inside Clay's internal pipeline. Cells already handed off to an external provider are intentionally excluded from this count — so the table can display "No runs are in progress" even while rows are still waiting for responses in the background. This is expected behavior, not a bug.
+
+**Clicking Stop sends an abort signal to Awaiting callback cells**, in addition to any still-queued cells. For queued cells that haven't been dispatched yet, Stop reliably cancels them. For cells already in Awaiting callback, the abort is dispatched but may not interrupt the external provider's call if it has already been received — those cells may still finish and consume credits.
+
+**What to do:**
+
+1. **Wait for the provider to respond.** Most asynchronous enrichments finish within a few minutes to a couple of hours. Hard-refresh the page (`Ctrl+Shift+R` / `Cmd+Shift+R`) to update the displayed cell statuses.
+2. **If cells fail with "cell data size exceeds limit," the provider returned more data than the 200 kB enrichment cell limit.** Use the column's built-in filters to narrow the request — for example, the Adyntel Get Meta Ads enrichment supports **Country**, **Media type**, and **Active status** filters in its column settings that reduce how many ads are returned per row. After applying filters, re-run the failed rows.
+3. **To re-run failed or empty cells**, right-click the column header → **Run column** → **Run [N] empty or out-of-date rows**.
 
 ## Troubleshooting: table appears stopped at a partial percentage with no credits consumed
 
