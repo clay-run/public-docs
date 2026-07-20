@@ -25,7 +25,7 @@ To view your full audience, click `People` or `Companies` in the left sidebar.
 
 To add a data source for the first time, click the `Add data` button in the top right, then click `Add Source`.
 
-**Note:** Non-admin workspace members (Editors and Viewers) can freely view, browse, and filter Audiences — browsing People, Companies, and existing audience segments is available to everyone in the workspace. Admin access is required only to add or configure data sources. Non-admins do not see source setup or configuration controls — those controls are hidden for Editors and Viewers, who instead see a prompt to contact a workspace Admin. If you need to connect or update a source, ask a workspace Admin to do it, or have your role changed.
+**Roles in Audiences:** Access varies by workspace role. Editors can view all audiences and their data, filter audience records, and create ad syncs from a segment (**Send → Create ad sync**) to push contacts or companies to connected ad platforms. The following require Admin access: adding or configuring data sources (Salesforce, HubSpot, BigQuery, Snowflake, etc.), creating or editing enrichments, adding or editing signals, creating new audience segments, and exporting individual records to CRM on demand. Editors do not see data source configuration controls — those are hidden for Editors and Viewers, who instead see a prompt to contact a workspace Admin. If you need to connect a source, create an audience segment, or configure enrichments and signals, ask a workspace Admin to do it, or have your role changed.
 
 You can import data from:
 
@@ -239,6 +239,8 @@ Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs �
 
 After importing, you will want to create new audiences, so you can appropriately target the right contacts.
 
+**Note:** Creating new audience segments requires Admin access. If you're an Editor, you can view and filter existing segments but cannot create new ones — ask a workspace Admin to create the segment, or have your role changed.
+
 To create a new audience:
 
 1.  Click `People` or `Companies` in the left sidebar.
@@ -313,7 +315,7 @@ Click `Enrich` in the top-right toolbar to open the enrichments sidebar. The **B
 
 If you're viewing a specific segment, use the dropdown at the top of the list to toggle between enrichments on this segment and enrichments across all audiences.
 
-To inspect row-level results, click `⋮` on any enrichment card and select **Open bulk enrichment**. This opens the underlying bulk enrichment table where you can see each row's output and status.
+To inspect row-level results, click `⋯` on any enrichment card and select **Open bulk enrichment**. This opens the underlying bulk enrichment table where you can see each row's output and status.
 
 The bulk enrichment table has two tabs at the top — **Queued rows** and **Errored rows** — that let you switch between rows waiting to process and rows that encountered an error. It is not possible to filter within the bulk enrichment by specific error type; the Errored rows tab shows all rows with errors together. To see the error message for a specific row, open the bulk enrichment, click the **Errored rows** tab, and hover over the relevant cell.
 
@@ -394,7 +396,7 @@ Once connected, click **Publish** to activate the trigger. Publish is a dropdown
 
 **Running a published workflow on existing members**
 
-After a workflow is live, open the options menu (⋮) on the workflow card to manually run or re-run it on existing members:
+After a workflow is live, open the options menu (⋯) on the workflow card to manually run or re-run it on existing members:
 
 -   **Run all members that haven't run** — runs the workflow on segment members who joined before the trigger was published or who were otherwise skipped.
 -   **Force run all members** — re-runs the workflow on every current segment member, including those that already ran. A confirmation prompt appears before this action runs, since it may use credits.
@@ -522,7 +524,7 @@ Only fields explicitly included in the Salesforce import field mapping are broug
 To add a missing field:
 
 1.  Click **Add data** in the top toolbar.
-2.  Find your Salesforce integration and click the **⋮** (three-dot) menu next to it.
+2.  Find your Salesforce integration and click the **⋯** (three-dot) menu next to it.
 3.  Select **Settings**.
 4.  In the field mapping section, add the Salesforce field you want and name the corresponding Clay column.
 5.  Click **Save and review** → **Confirm**.
@@ -735,7 +737,7 @@ To remove a specific set of records from your audience, filter a segment down to
 
 1.  Navigate to **People** or **Companies** in the left sidebar.
 2.  Create or open a segment with a filter that isolates only the records you want to remove — for example, filter by **Company name** to target a single company. To archive all records in the view, use a broadly matching filter — for example, **Name → is not empty**.
-3.  Once the segment shows the correct records, click the **⋮** (three-dot) menu next to the segment name.
+3.  Once the segment shows the correct records, click the **⋯** (three-dot) menu next to the segment name.
 4.  Select **Archive records**.
 
 Archived records are removed from all audience segments and excluded from future enrichments and workflows. The records are not permanently deleted — they can be viewed and restored at any time from the **Archived** section in the left sidebar. See [What happens when I archive a record in Audiences?](#what-happens-when-i-archive-a-record-in-audiences) for full details.
@@ -758,7 +760,7 @@ If you imported a CSV and need to correct the data — for example, because acco
 
 1.  Navigate to **People** or **Companies** in the left sidebar.
 2.  Click **New audience** and add a filter: **Origin source** → **=** → select the name of your original CSV file. This targets only records that came from that specific import.
-3.  Once the segment shows the correct records, click the **⋮** (three-dot) menu next to the segment name and select **Archive records**.
+3.  Once the segment shows the correct records, click the **⋯** (three-dot) menu next to the segment name and select **Archive records**.
 4.  Import the updated CSV using **Add data** → **Add Source** → **CSV**.
 
 Audiences deduplicates on import using the unique identifier you configure — any incoming record whose identifier matches an existing (non-archived) record will update that record rather than create a duplicate.
