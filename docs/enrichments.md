@@ -76,6 +76,8 @@ To configure a delay:
 
 **Need a delay longer than 10 minutes?** Chain multiple enrichment columns — each set to `Run after delay` (up to 600 seconds) — and use [conditional runs](conditional-runs.md) to gate each step on the previous column completing. For example, six chained delay columns each set to 600 seconds creates a 60-minute total delay.
 
+**Need a delay of multiple hours, days, or weeks?** The chaining approach above maxes out at around 60 minutes. For longer waits — such as holding columns until a set number of days or weeks after a row was processed — use a date-based run condition instead: add a formula column that compares a timestamp in the current row against today's date plus your desired interval, then gate your downstream enrichments on that formula column using **Only run if → is not empty**. To keep the formula re-evaluating automatically each day, pair the formula column with a scheduled HTTP API column that fetches the current date once per day; the formula column updates automatically whenever the HTTP API column runs. For step-by-step instructions and example formulas, see [How do I use today's date in a formula?](formula-generator.md#how-do-i-use-todays-date-in-a-formula).
+
 ## Custom rate limit
 
 Limit how many requests Clay sends to an external service within a given time window. This is useful when you need to stay within an API provider's rate limits while running enrichments at scale.
