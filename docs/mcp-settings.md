@@ -40,7 +40,7 @@ Credit limits cap how many Clay credits a rep can spend through ChatGPT, Claude,
 
 There are two levels of control:
 
--   **Default credit limit** — applies automatically to all new MCP users when they first connect ChatGPT, Claude, or Glean. Click `Set default limit` to configure. Reps without an individual override inherit this limit.
+-   **Default credit limit** — applies automatically to all new MCP users when they first connect ChatGPT, Claude, or Glean. The factory default is 1,000 credits per month; click `Set default limit` to change it. Reps without an individual override inherit this limit.
 -   **Per-user override** — find the rep in the user table and click the pencil icon next to their `Credit limit` to set an individual amount. Their current usage tracks against this limit in real time (e.g., `0 / 1,000`). Reps showing `No limit` have no cap applied.
 
 ## Monitoring usage
@@ -148,6 +148,14 @@ The MCP user credit limit is a rolling monthly limit. Credit spend automatically
 ### What happens when a rep hits their credit limit?
 
 Further actions through ChatGPT, Claude, or Glean are hard-blocked until the monthly reset — the rep won't be able to run enrichments or invoke Functions. Admins can increase the per-user limit at any time from the `MCP users` table to restore access immediately.
+
+### Why does Clay show "out of monthly credits" when my workspace credit balance is fine?
+
+The workspace credit balance shown in `Settings → Usage` is your total remaining Data Credits — it is separate from per-user MCP credit limits. Each MCP user has their own monthly credit allocation that tracks independently of the workspace balance.
+
+When an MCP user exhausts their monthly allocation, Clay blocks further MCP enrichments and function calls with an "out of monthly credits" error — even if the workspace still has plenty of credits remaining.
+
+To resolve: click `MCP` in the left nav, find the user in the `MCP users` table, and click the pencil icon next to their `Credit limit` to raise or remove the cap. To prevent this for future new users, raise the workspace default via `Set default limit`. Changes take effect immediately.
 
 ### Where else can I see MCP credit usage?
 
