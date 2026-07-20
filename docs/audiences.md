@@ -346,6 +346,8 @@ For **Companies** audiences, four built-in signal types are available:
 -   **News & Fundraising** — monitor funding rounds, mergers and acquisitions, strategic partnerships, product launches, and leadership changes.
 -   **Job Posting** — alert when a monitored company posts a new job opening; Clay analyzes job descriptions for urgency indicators and geographic expansion signals.
 
+**Topic Intent (closed beta)** — monitor when companies (Companies audiences) or people (People audiences) show buying intent for topics you care about, so you can reach out while they are actively researching. Currently in closed beta — contact your Growth Strategist to enable it for your workspace.
+
 **Custom signals are not available within Audiences.** To track a more specific or custom signal (for example, website changes, RSS feed mentions, or technology adoption), build that logic in a bulk enrichment on the audience segment using Claygent or scheduled enrichment columns — see [Adding enrichments](#adding-enrichments) above.
 
 **To add a signal to a segment:**
