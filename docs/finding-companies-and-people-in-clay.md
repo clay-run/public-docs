@@ -651,3 +651,14 @@ If initial results are unsatisfactory, extracting the company name from the emai
 1.  Add the **Identify Email Type and Extract Company Domain from Email** enrichment and map your email column. This extracts the company domain from the address (for example, `jane@acme.com` → `acme.com`).
 2.  Use a company enrichment (such as Apollo, ZoomInfo, or Clearbit) to look up the company name from the extracted domain.
 3.  Re-run your professional profile enrichment with **Full Name**, **Email**, and **Company Name** all mapped as inputs. The additional company context can improve the match rate.
+
+### I don't see a Tools button — I only see Actions, or my instructions say to click Actions
+
+The top-right toolbar button in a Clay table is labeled **Tools** in all workspaces — this is the button you need for table-level functions like **Find People at These Companies**, Export, and Import.
+
+If you see **Actions** in the top right instead of **Tools**, one or more rows are checked. Clay's toolbar switches based on row selection state:
+
+-   **No rows selected**: **Tools** is visible, providing table-level functions including Find People at These Companies, Export, and Import.
+-   **Rows selected**: **Tools** is replaced by **Actions**, which provides bulk row operations (Run rows, Delete rows). Uncheck all rows to restore **Tools**.
+
+**Note:** If you're following older instructions — such as some Clay University videos — that refer to an **Actions** button for finding people, **Tools** is the renamed version. The rename applies to all workspaces.
