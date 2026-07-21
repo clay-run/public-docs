@@ -280,6 +280,19 @@ For Google Workspace accounts on adjacent or alternate domains, you'll need to:
 1. Enable SMTP access for each domain in your Google Workspace Admin panel (Apps → Google Workspace → Gmail → End User Access → Enable IMAP and SMTP).
 2. Generate an app password for each email alias (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` column value.
 
+### Does connecting via OAuth automatically add my email aliases?
+
+No — connecting a mailbox via OAuth only adds the specific email account you authenticate with. Email aliases associated with that account are **not** automatically connected as separate sender accounts. Warmup and campaign rotation apply per connected account, so aliases you haven't explicitly added do not participate in sending or warmup.
+
+To use an alias as a distinct sender, connect it as its own account:
+
+-   **SMTP:** Go to `Settings` → `Add email accounts` → `SMTP`. Set the "From" email to the alias address and enter your primary account's server credentials (username, password, SMTP host, and port).
+-   **Bulk CSV upload:** Use the `Bulk CSV upload` option to add multiple aliases at once. Set each row's `from_email` to the alias address and fill in the remaining SMTP and IMAP fields using your primary account's server settings.
+
+**For Microsoft 365 aliases:** The SMTP and bulk CSV paths work with Microsoft 365, provided your tenant has SMTP AUTH enabled and the alias has "Send As" permissions configured in your Microsoft 365 admin settings.
+
+**Note:** If your aliases are simple forwarding addresses that route to the same underlying mailbox (rather than independent inboxes with their own SMTP access), connecting them separately does not increase your total daily sending capacity — they share the same inbox. To scale sending volume, add accounts that each have a dedicated inbox. See [Buying email accounts](buying-email-accounts.md) for a faster path to additional inboxes.
+
 ### Are personal email accounts supported (e.g., Gmail, Hotmail)?
 
 No, only business accounts (Google Workspace, Microsoft Outlook) are supported for OAuth. Personal Gmail accounts can be connected through a legacy SMTP method (see [these docs](https://helpcenter.smartlead.ai/en/articles/4-connect-gmail-with-smtp)), but this workaround may stop working if Google discontinues it.
