@@ -89,11 +89,11 @@ The company identifier field accepts these LinkedIn URL formats:
 
 **Important:** Person profile URLs (`https://www.linkedin.com/in/<name>`) are not valid as company identifiers. Passing a person LinkedIn URL produces a confusing "Invalid companies provided" error even though the URL is real and correctly formatted — the field only accepts company or school page URLs, not individual profiles. See the [troubleshooting section](#getting-invalid-companies-provided-error-despite-having-a-valid-linkedin-url) below if you hit this error.
 
-### Run conditional people searches with table views
+### Run Find People on a subset of companies using a filtered view
 
-Company and people search sources — including **Find People at These Companies** and the **Update People Table** action — don't support the "Only run if" run condition that enrichment columns use. To search only companies that meet specific criteria (for example, companies where a lead qualification column equals "yes"), use a **filtered view** as the source:
+Company and people search sources — including **Find People at These Companies** and the **Update People Table** action — don't support the "Only run if" run condition that enrichment columns use. To search only a subset of companies — whether by qualification criteria or to process a specific batch (for example, 100 companies at a time from a 500-company table) — use a **filtered view** as the source:
 
-1. In your company table, apply a filter to the view you want to use — for example, add a filter where your qualification column equals the value you need. You can filter the **Default view** directly, or right-click any view tab and select **Duplicate view** to create a named copy, then apply filters to the copy.
+1. In your company table, apply a filter to the view you want to use. You can filter the **Default view** directly, or right-click any view tab and select **Duplicate view** to create a named copy with its own filters. To build more complex filter logic, click **+ Add filter group** to add a nested group with its own AND/OR conditions. View filters save automatically — there is no separate Save button.
 2. When setting up (or editing) a **Find People at These Companies** search, go to the **Companies** section and use the **View** dropdown to select the filtered view.
 3. Save. The search will only process companies visible in that view.
 
