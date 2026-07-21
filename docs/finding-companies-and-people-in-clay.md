@@ -652,6 +652,10 @@ If initial results are unsatisfactory, extracting the company name from the emai
 2.  Use a company enrichment (such as Apollo, ZoomInfo, or Clearbit) to look up the company name from the extracted domain.
 3.  Re-run your professional profile enrichment with **Full Name**, **Email**, and **Company Name** all mapped as inputs. The additional company context can improve the match rate.
 
+### How do I see what filters I used in a Find People at These Companies search?
+
+Click the **Edit source** icon on the column header of your search column in your company table — it appears as a small database (stack) icon in the column header bar. A panel opens listing all the inputs you configured — job title keywords, seniority, location, exclusions, and more. To update the filters before re-running the search, click **Edit inputs** in that panel.
+
 ### I don't see a Tools button — I only see Actions, or my instructions say to click Actions
 
 The top-right toolbar button in a Clay table is labeled **Tools** in all workspaces — this is the button you need for table-level functions like **Find People at These Companies**, Export, and Import.
