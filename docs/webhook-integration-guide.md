@@ -135,6 +135,8 @@ If a row appears in your table, the issue is in your original request's formatti
 
 Clay records which webhook source sent each row at ingestion time, so you can filter the table by source without any extra setup.
 
+**Note:** The **Webhook** filter field only appears in the filter panel if this table has at least one webhook source directly connected to it. If you open the filter panel and don't see a Webhook field, this table has no webhook source attached — rows may be arriving from another Clay table (via Send Table Data) that itself has a webhook source.
+
 **To filter by webhook source:**
 
 1. Open the filter panel (click the filter icon in the table toolbar).
