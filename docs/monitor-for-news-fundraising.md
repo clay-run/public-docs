@@ -34,16 +34,6 @@ Follow these steps to set up News & Fundraising Signals in your table:
 
 ## FAQs
 
-### Can I use Clay to find companies that are actively seeking capital or funding?
-
-Yes. Clay offers several approaches for identifying companies that may be in fundraising mode:
-
--   **News & Fundraising signal** — Monitors your target company list and alerts you when those companies appear in fundraising-related news. When setting up the signal, select **Fundraising** as the news topic to focus results on funding rounds, capital raises, and related announcements. Available on all paid plans.
--   **Crunchbase funding predictions** — The Crunchbase integration includes an **Enrich a company's funding predictions** enrichment that surfaces Crunchbase's statistical predictions of a company's likelihood of receiving funding, along with the factors influencing those predictions. Add it to any company table under `Add enrichment → Crunchbase → Enrich a company's funding predictions`. Requires a Crunchbase API key.
--   **Job posting signals as a proxy** — Companies preparing for a fundraising round often post finance-related roles (CFO, VP Finance, Head of FP&A) in advance. Use a Job Posting signal on your target company list and filter by those job titles to surface companies showing these hiring patterns before a public announcement.
-
-You can combine these approaches — for example, pair this signal (with the **Fundraising** topic selected) with the Crunchbase funding predictions enrichment to both catch public announcements and pre-score companies by their statistical likelihood of raising next.
-
 ### Why is my signal returning articles where my target company isn't the main subject?
 
 This is expected behavior. When a News & Fundraising signal is configured with a company domain (e.g., `santander.com`), the signal fires any time that domain appears among the article's associated companies — not only when your company is the **primary subject** of the article.
