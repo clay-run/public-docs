@@ -139,3 +139,48 @@ If you need to tell apart records that Clay enriched from those enriched by a di
 This way, each tool's label in the shared source field tells the other tool to leave the record alone.
 
 For more on conditional formula expressions in formula columns, see [Formulas](formula-generator.md). For run conditions on enrichment columns, see [Conditional runs](conditional-runs.md).
+
+### **How do I call ZoomInfo's Company Enrich or Company Search API directly using the HTTP API column?**
+
+If you need to look up companies by ZoomInfo Company ID or use ZoomInfo endpoints that Clay's native integration doesn't expose, you can call ZoomInfo's API directly using the **HTTP API column**.
+
+ZoomInfo's API uses a **JSON:API** format, which requires all request parameters to be nested inside a `data` → `attributes` wrapper. Sending fields like `matchCompanyInput` or `outputFields` at the top level of the request body causes ZoomInfo to return an `"invalid field(s) in the request"` 400 error.
+
+**Company Enrich endpoint**
+
+To look up companies by ZoomInfo Company ID and return specific fields, use this JSON body in the HTTP API column:
+
+```json
+{
+  "data": {
+    "type": "CompanyEnrich",
+    "attributes": {
+      "matchCompanyInput": [
+        { "companyId": "YOUR_COMPANY_ID_COLUMN" }
+      ],
+      "outputFields": ["name", "website"]
+    }
+  }
+}
+```
+
+Replace `YOUR_COMPANY_ID_COLUMN` with a `/` chip reference to your ZoomInfo Company ID column. Values in `outputFields` must be **lowercase** (e.g., `name`, `website`) — capitalized variants cause a 400 error.
+
+**Company Search endpoint**
+
+The Company Search endpoint uses a different structure and does **not** support `matchCompanyInput` or `outputFields`. Using those fields on the Search endpoint causes a 400 error.
+
+```json
+{
+  "data": {
+    "type": "CompanySearch",
+    "attributes": {
+      "companyId": "YOUR_COMPANY_ID_COLUMN"
+    }
+  }
+}
+```
+
+**ZoomInfo API tokens are short-lived**
+
+ZoomInfo API tokens expire after a short window. Once a token expires, your HTTP API column will return authentication errors until you update the token in the column's header configuration. Plan to refresh the token periodically — go to the HTTP API column's **Headers** section (or **Settings → Connections** if you saved the token as a header account) and replace the expired token with a new one.
