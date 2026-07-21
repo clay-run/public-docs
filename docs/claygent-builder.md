@@ -146,6 +146,8 @@ To get a clean single-value response (for example, "Sales" rather than "This con
 
 **Note:** Switching to a non-parallel model (GPT-4o mini, Claude Haiku, etc.) also disables mandatory web search, which keeps runs faster and more consistent when classifying from data already in your table.
 
+**Reasoning effort**: Claygent runs all model calls with a fixed **low** reasoning effort level. This applies to all models — including third-party OpenAI models you connect with your own API key — and is not configurable in the Claygent interface. There is no option to set the reasoning level to medium or high. When comparing models for research or analysis tasks, the primary control over reasoning depth is the model you select.
+
 ### Output schema
 
 When you need a Claygent to return structured data — multiple typed fields instead of free text — define a **JSON Schema** in **Define column outputs** in the column settings.
