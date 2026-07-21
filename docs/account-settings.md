@@ -114,6 +114,14 @@ If you see a **"Your session has expired"** message when trying to access Clay, 
 
 If none of these steps resolve the error, contact Clay support via the in-app chat icon in the bottom-right corner of Clay.
 
+## "Access blocked: clay.com has not completed the Google verification process"
+
+If you see this error while connecting a Google Workspace email as a **sender account in Clay Campaigns**, this is expected — not a problem with Clay or your account. Clay's email sequencer uses a separate Google OAuth app ("Clay Sequencer") with broad Gmail scopes, which prevents it from passing Google's standard app verification process. This error does **not** appear on the Clay login page; it only appears during the Campaigns email sender connection flow.
+
+To resolve it, your **Google Workspace admin** must authorize Clay Sequencer as a Trusted app in your Google Admin panel. For step-by-step instructions, see [Connecting Google Workspace via OAuth](./email-sequencer.md#connecting-google-workspace-via-oauth) in the email sequencer guide. Changes can take up to 24 hours to apply.
+
+If you need to start sending before the admin change takes effect, you can connect your email account via **SMTP** instead — go to your campaign's `Settings` → `Add email accounts` → `SMTP`.
+
 ## Clay API key access
 
 Your Clay API key enables Clay-specific integrations and external connections. To manage your API key:
