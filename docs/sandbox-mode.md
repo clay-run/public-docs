@@ -39,8 +39,7 @@ Sandbox mode is a special table mode that lets you safely build, test, and publi
 In sandbox mode, you can test formulas, waterfalls, and enrichments. **Here are some other helpful notes:**
 
 -   You cannot add or edit sources in sandbox mode. To make these changes, first return to your normal table, then re-enable sandbox mode.
--   To prevent accidental updates, all outbound actions (actions that send data such as exporting or [Write to Other Table](https://www.clay.com/university/guide/write-to-table-integration-overview)) are automatically disabled in sandbox mode.
-    -   However, you can still manually run individual cells or columns if needed.
+-   To prevent accidental updates, all outbound actions (actions that send data such as exporting or [Write to Other Table](https://www.clay.com/university/guide/write-to-table-integration-overview)) are automatically set to manual-only in sandbox mode — they won't execute automatically, but you can still trigger them individually by clicking the run button on a specific cell or column.
 
 **Credits:** Sandbox mode is not free — enrichments and integrations consume credits normally. Because sandbox execution is limited to at most 50 rows (10 by default), credit consumption is much lower than a full-table run, but it is not zero. Think of sandbox as a credit-conservative testing environment rather than a zero-cost one.
 
