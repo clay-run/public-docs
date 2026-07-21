@@ -442,7 +442,7 @@ When **Run in batches** is enabled, Clay groups rows and sends them through Sale
 
 ## Clay Salesforce App
 
-The Clay Salesforce App is a native Salesforce component that lets your team trigger Clay enrichment workflows directly from within a Salesforce record — without switching to the Clay web app. Once configured, a **Launch Enrichment** button or action appears on Salesforce records, giving users a dropdown to select and run a Clay enrichment workflow.
+Available on Enterprise plans. The Clay Salesforce App is a native Salesforce component that lets your team trigger Clay enrichment workflows directly from within a Salesforce record — without switching to the Clay web app. Once configured, a **Launch Enrichment** button or action appears on Salesforce records, giving users a dropdown to select and run a Clay enrichment workflow.
 
 Each option in the **Launch Enrichment** dropdown corresponds to one workflow you have configured in the Clay Salesforce App. The label users see for each option is the **Friendly Name** you set when creating the workflow.
 
