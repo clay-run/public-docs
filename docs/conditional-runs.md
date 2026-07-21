@@ -34,6 +34,13 @@ Conditional runs allow you to execute specific actions or enrichments in a workf
 
 -   **Condition**: `/Upstream Column is not empty`
 
+**Skip enrichment for personal or free email addresses**: Prevent an enrichment from running on rows where the email address belongs to a free-provider domain — Gmail, Yahoo, Outlook, Hotmail, and similar. This ensures credits are spent only on rows that carry a work or professional email.
+
+1.  Add a **Formula column** — for example, named "Is Personal Email" — that checks whether the email domain is a free provider and returns `true` for personal addresses and `false` for work addresses. See [Conditional statements](conditional-statements.md) for an example formula using `contains` to match domains like `gmail.com` or `yahoo.com`.
+2.  On each enrichment column that uses email as an input, open **Run settings → Only run if** and set a condition referencing the formula column: `/Is Personal Email == false`. Clay runs the enrichment only for rows where the formula confirmed the address is not personal.
+
+Rows where the formula flags the address as personal show **"Run condition not met"** — no credits are consumed for those rows.
+
 ## How do they work?
 
 Conditional runs are built on **Conditional statements** and evaluate a condition as true or false to determine whether to execute or skip an action.
