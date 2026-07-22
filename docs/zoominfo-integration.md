@@ -88,11 +88,27 @@ If issues persist, reach out to ZoomInfo support to resolve any remaining accoun
 
 ### **I'm seeing a ZI0001 "The token provided is invalid" or "Unauthorized access" error. Why?**
 
-The ZI0001 error (*"The token provided is invalid. Please provide a valid token and try again."*, shown under the title "Unauthorized access") is a **transient issue**, not a credential setup problem. It occurs because of how ZoomInfo handles OAuth token refresh cycles: there can be a brief window after a token is issued or refreshed when the new token hasn't fully propagated on ZoomInfo's end, causing enrichments to temporarily return a 401 rejection.
+The ZI0001 error (*"The token provided is invalid. Please provide a valid bearer token and try again."*, shown under the title "Unauthorized access") appears when ZoomInfo rejects Clay's authentication token. There are two distinct causes with different fixes:
+
+**Cause 1 — Transient token propagation (retry fixes it)**
+
+ZoomInfo's OAuth tokens can take a moment to propagate after a refresh. There may be a brief window where a new token hasn't fully registered on ZoomInfo's end, causing enrichments to temporarily return a 401 rejection.
 
 **Fix:** Re-run the affected cells. In most cases they succeed immediately on retry.
 
-If ZI0001 persists across multiple cells after retrying, or if you see it consistently on every run, contact Clay support so we can investigate your ZoomInfo connection.
+**Cause 2 — Expired or revoked OAuth connection (reconnect required)**
+
+ZoomInfo's OAuth tokens and sessions expire and must be periodically renewed. This can happen when the connected user's ZoomInfo password changes, their session is invalidated, or the OAuth session reaches its expiration. When this is the cause, retrying will keep returning ZI0001 on every attempt — retrying alone will not resolve it.
+
+**Fix:**
+
+1.  Go to **Settings → Connections** and find your ZoomInfo OAuth connection.
+2.  Reconnect it by clicking to re-authenticate and signing in to ZoomInfo again.
+3.  Re-run a single row first to confirm the enrichment returns data, then run the rest of your table.
+
+**Tip:** If your ZoomInfo connection is shared across multiple tables or team members, consider using a **ZoomInfo service account** (a shared login not tied to an individual user) rather than a personal account. This prevents one person's password change or session expiry from interrupting enrichments for the whole team.
+
+If ZI0001 persists after reconnecting, contact Clay support to investigate your ZoomInfo account configuration.
 
 ### **Why are some rows returning "out of credits" errors when I still have ZoomInfo credits?**
 
