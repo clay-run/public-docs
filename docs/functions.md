@@ -339,7 +339,7 @@ To find your Routine ID:
 
 ### How do I debug specific rows while editing a function?
 
-![](https://cdn.prod.website-files.com/687e604972375496b891fe58/69debe23823b4f78eeda763e_Functions%20Notion%20(1).webp)
+![](https://cdn.prod.website-files.com/687e604972375496b891fe58/69debe23823b4f78eeda763e_Functions%20Notion%20\(1\).webp)
 
 You can test your function changes against real-world inputs by debugging selected rows:
 
