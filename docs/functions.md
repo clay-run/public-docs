@@ -312,6 +312,17 @@ Yes, on supported plans. The `Enable for MCP` option in the function editor pane
 
 Yes — currently in beta. Clay's public API lets you invoke a function against input data without opening the app, making it useful for agent workflows, CI pipelines, and system-to-system integrations. To get access, contact your GTM engineer or [our team](https://www.clay.com/contact-form) to have the public API beta enabled for your workspace.
 
+**Finding your function's Routine ID:**
+
+Each function has a unique **Routine ID** (format: `function:...`) that identifies it in API calls. The Routine ID appears in the **Integrations** section of the function's settings panel — but this section is only visible when you are **not** in edit mode.
+
+To find your Routine ID:
+
+1.  Go to **Functions** on your Clay homepage and open the function.
+2.  If you see an "Editing function" toolbar or an orange banner reading "Changes in Edit Mode will not go live until you review and publish," click **Exit edit mode** at the bottom of the editor.
+3.  In the settings panel on the right, scroll to the **Integrations** section.
+4.  Copy the **Routine ID** — it has the format `function:...`. Use this value when calling the API, for example: `POST /routines/<Routine ID>/run`.
+
 **Rate limits and batch sizes:**
 
 -   **Rate limit:** 300 requests per minute across all public API endpoints in your workspace.
@@ -328,7 +339,7 @@ Yes — currently in beta. Clay's public API lets you invoke a function against 
 
 ### How do I debug specific rows while editing a function?
 
-![](https://cdn.prod.website-files.com/687e604972375496b891fe58/69debe23823b4f78eeda763e_Functions%20Notion%20\(1\).webp)
+![](https://cdn.prod.website-files.com/687e604972375496b891fe58/69debe23823b4f78eeda763e_Functions%20Notion%20(1).webp)
 
 You can test your function changes against real-world inputs by debugging selected rows:
 
