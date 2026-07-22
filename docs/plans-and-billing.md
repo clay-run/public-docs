@@ -151,6 +151,8 @@ Phone number enrichments aren't available on free or trial plans — this restri
 
 If phone number enrichment doesn't appear immediately after upgrading, refresh the page and re-add the phone-number enrichment column to reload the available providers.
 
+**Audiences** is not available on trial accounts created on or after July 16, 2026 — if you navigate to Audiences, you will see an upgrade prompt. Trial accounts created before that date retain access through the end of their trial. To use Audiences, upgrade to a paid Launch, Growth, or Enterprise plan.
+
 If your team wants to do a trial, each team member can create their own trial account to explore Clay independently.
 
 Trial tables can hold up to **1,000 rows each**. The table view also displays only the first **50 rows** — rows beyond that are blurred in the UI until you upgrade to a paid plan. When you export to CSV, only these first 50 rows are included in the download. Sending data through third-party integrations (such as Google Sheets) is not subject to this row limit.
