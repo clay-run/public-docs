@@ -51,7 +51,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
         -   ⚠️ Note: You or your Workspace admin must authorize the Clay sequencer app for your domain, or you'll see an access error.
     -   `Microsoft Outlook OAuth` (recommended): Connect your Outlook account via OAuth.
         -   ℹ️ Note: Unlike Google OAuth, no Clay-side admin setup is required upfront. If your Microsoft 365 / Entra tenant requires admin approval for third-party apps, your admin may need to grant consent for "Clay Sequencer – Smartlead" in the [Microsoft Entra Admin Center](https://entra.microsoft.com).
-    -   `SMTP`: Connect a single account via SMTP credentials directly.
+    -   `SMTP`: Connect a single account via SMTP credentials directly. The form requires both SMTP settings (host, port, username, password) and IMAP settings (host, port) — Clay does not provide a built-in inbox, so your IMAP credentials must come from an existing IMAP-capable mailbox under your domain (such as Google Workspace, Microsoft 365, Zoho, or Fastmail). If your sending service is send-only (for example, SendGrid or another transactional email relay), you must pair it with a separate IMAP-enabled mailbox.
     -   `Bulk CSV upload`: Add multiple accounts at once by uploading a CSV. Download the example template from the modal and fill in the following eight columns for each account: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`. For Google Workspace accounts, generate an app password for each account (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` value.
     -   You can also [buy email accounts directly in Clay](https://university.clay.com/docs/buying-email-accounts) if you want to increase your sending capacity.
     -   After setup, you can:
@@ -271,6 +271,29 @@ A common cause: mapping this field to a column that contains your leads' own ema
 
 -   **If you do not intend to route specific leads to specific senders:** Remove the field mapping — open the `Sender accounts` tab, scroll to the `Assign sender account field to lead` section, and clear the selection. Leads will then be distributed evenly across all your configured sender accounts. After clearing it, re-run the `Sync lead data to campaign` column for the affected rows to re-enroll them.
 -   **If you do want to route specific leads to specific senders:** Make sure the column you selected contains one of your configured sending account email addresses — not the lead's own email. Add those sender accounts to the campaign first if they are not already there, then re-run the `Sync lead data to campaign` column.
+
+### What fields does the SMTP connection form require?
+
+The manual SMTP form requires credentials in two sections:
+
+-   **SMTP settings** (for sending): SMTP host, port, username, password, and encryption type (SSL, TLS, or None).
+-   **IMAP settings** (for receiving): IMAP host, port, and encryption type.
+
+Both sections must be filled in before you can add the account. Clay does not provide a built-in inbox — IMAP credentials must come from an IMAP-capable mailbox you already have with a provider such as Google Workspace, Microsoft 365, Zoho, or Fastmail. Clay uses the IMAP connection to surface replies from recipients inside the platform, but the inbox itself stays with your email provider.
+
+If your sending service is SMTP-only and does not include IMAP (for example, SendGrid or another transactional email relay), you must pair it with a separate IMAP-enabled mailbox under your domain.
+
+### Can I use SendGrid as a sending account?
+
+Yes. SendGrid provides an SMTP relay that works with Clay's manual SMTP connection. In the manual SMTP form, enter:
+
+1.  **SMTP host**: `smtp.sendgrid.net`
+2.  **SMTP port**: `587`
+3.  **SMTP type**: TLS
+4.  **Username**: `apikey` — type this literally; it is not your SendGrid account name or email address.
+5.  **Password**: your SendGrid API key with the **Mail Send** permission enabled.
+
+Because SendGrid is a send-only relay, you must also fill in the **IMAP section** with credentials from a separate IMAP-capable mailbox under your domain (for example, a Google Workspace or Microsoft 365 inbox). Without an IMAP connection, Clay cannot track replies from your recipients.
 
 ### How do I add multiple email accounts at once?
 
