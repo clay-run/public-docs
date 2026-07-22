@@ -343,6 +343,14 @@ Run new workflows on 10–20 records to validate results before scaling to avoid
 
 Actions measure platform work (what you do). Data Credits measure data purchases (what you buy). Every enrichment typically consumes both—1 Action for the platform work, plus variable Data Credits for the data itself.
 
+### What does my plan's action and data credit allowance mean in practice?
+
+Your plan includes two separate monthly limits — Actions and Data Credits — that cover different types of platform work:
+
+**Actions** are consumed by every individual operation Clay runs: each enrichment, AI column call, CRM sync, and HTTP API call counts as 1 action. A multi-step workflow processing one contact — for example, finding their email, running AI research, then syncing the result to HubSpot — uses 3 actions for that record. On the Growth plan, 40,000 monthly actions support roughly 50,000 enrichment and export operations per year across typical workflows.
+
+**Data credits** are spent when Clay purchases data on your behalf from its 150+ provider marketplace: emails, phone numbers, company firmographics, AI model calls, and similar enrichments. A fully enriched contact (company profile + email + phone + AI) typically costs 6–20 data credits. On the Growth plan, the base 6,000 credits per month supports enriching 1,000–10,000 records per month, depending on enrichment depth and how many of your own API keys you connect. Unused data credits roll over each month and can accumulate up to 2× your monthly allowance (for example, up to 12,000 credits on the base Growth plan) before any excess is dropped at renewal.
+
 ### Why do Data Credits cost different amounts?
 
 Unlike Actions (always 1 per enrichment), Data Credits reflect the real-world value of each data point. You'll see the exact cost displayed next to each enrichment option in the product.
