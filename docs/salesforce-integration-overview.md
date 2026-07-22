@@ -12,14 +12,14 @@ Salesforce is a customer relationship management (CRM) platform that helps busin
 
 ## Connecting to Salesforce
 
-Clay supports two methods for authenticating your Salesforce account. You can choose the one that fits your organization's setup when adding a new connection or when reconnecting an existing one.
+Clay uses OAuth 2.0 for all Salesforce authentication. Two methods are available — you can choose the one that fits your organization's setup when adding a new connection or when reconnecting an existing one.
 
--   **User Sign In** — the default method. You sign in as a Salesforce user via an OAuth browser prompt.
--   **Client Credentials** — a server-to-server method. No browser sign-in is required; instead, you supply credentials from an external client app configured in your Salesforce org.
+-   **User Sign In** — the default method. A standard OAuth 2.0 browser-based flow where you authenticate as a Salesforce user via a browser prompt.
+-   **Client Credentials** — an OAuth 2.0 server-to-server flow. No browser sign-in is required; instead, you supply credentials from an external client app configured in your Salesforce org.
 
 ### User Sign In
 
-Connect via OAuth as a Salesforce user.
+Connect via OAuth 2.0 as a Salesforce user.
 
 1.  In the home sidebar, click `Settings` → `Connections`.
 2.  Click `Add connection` and search for `Salesforce`.
