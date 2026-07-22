@@ -44,7 +44,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 
 To send data from one table to another:
 
-1.  While in a table, click **+ Add column** at the end of the column headers and select **Send table data** (listed under Exports). You can also reach it by opening the **Exports** tab in the command center sidebar.
+1.  While in a table, click **Tools** in the top toolbar to open the tools panel. Search for **Send table data** (listed under Export) and select it. You can also go directly to the **Export** tab in the tools panel to browse export options.
 2.  Select the destination table.
 3.  Choose the method:
     -   `Send row`: Choose which columns to send as a row to the other table.
@@ -104,7 +104,7 @@ A common pattern with people-finding enrichments is to route contacts down one o
 -   **When few contacts are found (e.g., fewer than 3):** A "Send table data" column with a run condition like `{{Find Contacts at Company}}?.peopleCount < 3` sends the raw `People` list directly to the destination table using **Send row for each item in a list**.
 -   **When many contacts are found (e.g., 3 or more):** A second "Send table data" column with the inverse condition (`{{Find Contacts at Company}}?.peopleCount >= 3`) only fires when there are more contacts than needed. An upstream AI column first filters the full list down to the top picks — the AI column's prompt should ask for a **JSON array** of the selected contacts — and that AI column's output becomes the list source for this second Send table data column.
 
-To add a second Send table data column, click **+ Add column** and select **Send table data** again. Each column is configured and named independently (Clay auto-names them "Send table data", "Send table data (2)", etc.).
+To add a second Send table data column, click **Tools** in the toolbar, search for **Send table data**, and select it again. Each column is configured and named independently (Clay auto-names them "Send table data", "Send table data (2)", etc.).
 
 **Setting up run conditions:** In the column configuration panel, scroll to **Run settings**, enable **Only run if**, and enter the condition formula.
 
@@ -183,10 +183,10 @@ When merging data from multiple source tables into a single destination table, f
     -   If multiple workbooks all write to the **same destination table**, that table counts as only **one** connection regardless of how many workbooks or columns point to it. Centralizing writes into a small number of shared destination tables can significantly reduce your connection count.
     -   This limit applies across all plans.
 -   **A Send Table Data column fails with "Destination table already has the maximum number of routing sources (20)":** Each destination table can receive data from at most **20 source tables**. When a new Send Table Data connection is attempted and the destination is already at 20, Clay rejects the registration and the column fails to save. To free up a slot, open the destination table, right-click the **"Rows from: \[source table name\]"** column header, select **Edit source**, and remove any old or unused sources. Alternatively, point this workflow at a fresh destination table, which starts with zero sources.
--   **A Send Table Data column shows "Missing source id for routing action with destination \[table\_id\]":** This error means the column has no valid source registration linking it to the destination. The most common cause is **duplicating a table** that already contains a Send Table Data column — the copy loses its source-destination link and cannot run. The fix is to delete the broken Send Table Data column and create a new one from scratch: click **+ Add column → Send table data** and reselect your destination table. Avoid using table duplication as a shortcut to pre-configure a Send Table Data column — duplicated columns always need to be fully reconfigured.
+-   **A Send Table Data column shows "Missing source id for routing action with destination \[table\_id\]":** This error means the column has no valid source registration linking it to the destination. The most common cause is **duplicating a table** that already contains a Send Table Data column — the copy loses its source-destination link and cannot run. The fix is to delete the broken Send Table Data column and create a new one from scratch: click **Tools** in the toolbar, search for **Send table data**, and reselect your destination table. Avoid using table duplication as a shortcut to pre-configure a Send Table Data column — duplicated columns always need to be fully reconfigured.
 -   **A Send Table Data column shows "Destination table '[table\_id]' was deleted. Please either restore that table from the trash, or create a new Send table data column.":** The destination table this column was configured to write to has been deleted. To fix it:
     -   **Restore from Trash:** Open **Trash** from the bottom-left of your workspace sidebar, browse the list of recently deleted items by name, find the deleted table, and click **Restore**. The Send Table Data column will reconnect automatically once the table is back. Deleted items remain in Trash for **30 days** before being permanently removed.
-    -   **Create a new column:** If the table was permanently deleted from Trash or you no longer need that destination, delete this Send Table Data column and add a new one pointing to a different table: click **+ Add column → Send table data** and select your new destination.
+    -   **Create a new column:** If the table was permanently deleted from Trash or you no longer need that destination, delete this Send Table Data column and add a new one pointing to a different table: click **Tools** in the toolbar, search for **Send table data**, and select your new destination.
 
     **Note:** The table ID shown in the error (e.g., `t_0tbdt...`) is an internal identifier — you cannot search for it in Trash. Browse the list of recently deleted items by name to find the right table.
 -   **Data can only be sent in a linear direction** (A → B → C). In other words, loops are not possible (A → B → C → A).

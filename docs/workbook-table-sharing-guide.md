@@ -25,7 +25,7 @@ Note that when sharing as a template, only the table structure and one row of sa
 **Share as Template** generates a public link that anyone can use to copy your table structure into their workspace. If you want a private, reusable starting point without creating a public link, you can duplicate the table and move the copy to a dedicated workbook:
 
 1. Right-click the table on the workspace homepage (or open the table's title menu) and select **Duplicate table**.
-2. Click the duplicate's title and select **Move to workbook** to place it in a separate workbook you use as a template library.
+2. Open the duplicated table, click its title (top left), and select **Move table** to place it in a separate workbook you use as a template library.
 
 Duplicating copies the table structure, column definitions, and run settings but not enriched row data, so the copy starts empty and ready to use. Whenever you need a fresh working copy, duplicate from this table.
 
