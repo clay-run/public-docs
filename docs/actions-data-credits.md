@@ -188,7 +188,7 @@ To see detailed Data Credit consumption across your workspace, workbooks, and ta
 
 For a complete guide on tracking and analyzing your Data Credit spend, see [this doc](https://www.clay.com/university/guide/credit-usage).
 
-**Viewing your Action usage:** The Actions usage bar in `Settings` → `Usage` is available on paid plans (Launch, Growth, and Enterprise) only. If you are on a free trial, you will not see an Actions column in your usage dashboard — the free trial does not bill for Actions, so the tracker is not displayed there. To check how many Actions your workspace has consumed during a free trial, contact [Clay support](https://app.clay.com).
+**Viewing your Action usage:** The Actions usage bar in `Settings` → `Usage` is available on Clay's current (2026) pricing plans — Launch, Growth, Enterprise, and current free and trial tiers. Workspaces on older legacy plans will not see an Actions column in their usage dashboard, since those plans do not track Action usage. If you are on a legacy plan and need to check your action spend, contact [Clay support](https://app.clay.com).
 
 ### Workbook credit limits (Enterprise only)
 
