@@ -78,7 +78,7 @@ Authenticate by passing your workspace-scoped API key in the `clay-api-key` requ
 
 If you're using an AI tool like Claude or ChatGPT and want it to run Clay enrichments on your behalf, Clay supports MCP (Model Context Protocol). MCP lets AI assistants look up contacts, enrich data, and invoke custom Clay Functions — without anyone opening Clay directly.
 
-Clay offers pre-built MCP connectors within each supported platform's app or connector directory (Claude, ChatGPT, Copilot, Gemini, Grok, Cursor). See the [MCP settings guide](https://university.clay.com/docs/mcp-settings) for the full list of supported platforms and setup instructions.
+Clay offers pre-built MCP connectors within each supported platform's app or connector directory — see the [MCP settings guide](https://university.clay.com/docs/mcp-settings) for the full list of supported platforms and setup instructions.
 
 **Note:** Clay's MCP endpoint also supports Dynamic Client Registration (DCR), which lets third-party MCP clients not on the pre-built list connect to Clay's MCP server. Connections from unrecognized clients will appear as "Unknown" in OAuth. If you'd like to connect Clay through a third-party agent framework or MCP client via DCR, reach out to [Clay support](https://www.clay.com/contact-form) for the DCR setup guide.
 
