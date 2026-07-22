@@ -133,7 +133,13 @@ Yes. Credits are drawn directly from your Clay workspace credit balance — ther
 
 **How does pricing work?**
 
-Credit pricing matches standard Clay plans. Claude serves as an alternative interface for using your Clay credits — usage draws from the same balance as the Clay platform.
+Credit pricing matches standard Clay plans. Claude serves as an alternative interface for using your Clay credits — usage draws from the same balance as the Clay platform. Pricing is the same whether you run enrichments through Claude or directly in the Clay app.
+
+Every enrichment costs 1 action plus data credits. The three built-in contact enrichments cost the following per contact:
+
+-   **Email**: data credit cost varies by provider in the email waterfall.
+-   **Summarize Work History**: 1 data credit.
+-   **Find Thought Leadership**: 1 data credit.
 
 **Do I need to invoke Clay manually, or will Claude know to use it?**
 
