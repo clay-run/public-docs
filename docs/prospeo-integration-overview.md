@@ -10,11 +10,12 @@ Find work emails and enrich person details using name, domain, or LinkedIn.
 
 ## Getting started with Prospeo
 
-[Prospeo](https://www.clay.com/integrations/data-provider/prospeo) in Clay allows you to find work email addresses and enrich person details using a person's name, company domain, or LinkedIn URL.
+[Prospeo](https://www.clay.com/integrations/data-provider/prospeo) in Clay allows you to find work email addresses, find mobile numbers, and enrich person details using a person's name, company domain, or LinkedIn URL.
 
 Clay's Prospeo integration includes the following actions:
 
 -   Find Work Email
+-   Find Mobile Number
 -   Find Email Addresses Associated with a Domain
 -   Find Work Email and Enrich Person from LinkedIn URL
 -   Find people at company
@@ -62,6 +63,25 @@ If you use the Clay-managed Prospeo account you will be charged at 2 credits per
 **Step 2: Select Required and Optional Setup Inputs**  
 You will need to enter the Full Name and Company Domain of person you want to find the Work Email for.  
 Optionally, you are also able to include catch-all emails.
+
+**Step 3 (Optional): Select Auto-update**  
+By default, Prospeo will auto-update the integration every 24 hours. Make sure to toggle this step off if you do not want to auto-update. However if you do so, you might run into stale data problems.
+
+**Step 4 (Optional): Select Conditional Run Criteria**  
+If you want to only run this enrichment under set circumstances, you are able to input formulas where the column runs only if the formula is true. Learn more about conditional runs in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101#:~:text=Conditional%20runs%20\(which%20make%20use,personal%20emails%20for%20all%20rows\).).
+
+## `Action` Find Mobile Number
+
+The **Find Mobile Number** action lets you find mobile numbers associated with a professional profile URL.
+
+**Note:** This action charges you credits even if a number is not found.
+
+**Step 1: Choose the Prospeo account you want to use**  
+You can use either the Clay-managed Prospeo account or bring your own key.  
+If you use the Clay-managed Prospeo account you will be charged at 5 credits per enriched cell.
+
+**Step 2: Enter Professional URL as setup input**  
+Please input the **Professional URL** (the contact's LinkedIn profile URL) to find their mobile number.
 
 **Step 3 (Optional): Select Auto-update**  
 By default, Prospeo will auto-update the integration every 24 hours. Make sure to toggle this step off if you do not want to auto-update. However if you do so, you might run into stale data problems.
