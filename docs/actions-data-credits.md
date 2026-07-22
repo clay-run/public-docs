@@ -188,6 +188,8 @@ To see detailed Data Credit consumption across your workspace, workbooks, and ta
 
 For a complete guide on tracking and analyzing your Data Credit spend, see [this doc](https://www.clay.com/university/guide/credit-usage).
 
+**Viewing your Action usage:** The Actions usage bar in `Settings` → `Usage` is available on paid plans (Launch, Growth, and Enterprise) only. If you are on a free trial, you will not see an Actions column in your usage dashboard — the free trial does not bill for Actions, so the tracker is not displayed there. To check how many Actions your workspace has consumed during a free trial, contact [Clay support](https://app.clay.com).
+
 ### Workbook credit limits (Enterprise only)
 
 _This feature is for users on the Enterprise Plan._
@@ -342,6 +344,10 @@ Run new workflows on 10–20 records to validate results before scaling to avoid
 ### What's the difference between Actions and Data Credits?
 
 Actions measure platform work (what you do). Data Credits measure data purchases (what you buy). Every enrichment typically consumes both—1 Action for the platform work, plus variable Data Credits for the data itself.
+
+### Are Actions charged per record or per bulk run?
+
+Actions are counted per record — each contact or company that an enrichment or export runs on consumes 1 Action. Running an enrichment on 100 contacts uses 100 Actions in total, not 1 Action for the entire bulk run. This applies whether you trigger enrichments manually or through auto-run.
 
 ### Why do Data Credits cost different amounts?
 
