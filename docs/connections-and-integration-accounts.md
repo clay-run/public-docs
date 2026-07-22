@@ -45,6 +45,14 @@ To add a new account for an integration:
 -   (Optional) Set it as the default account. Enrichments using this integration will default to this account in your workspace.
 -   Once completed, the account will appear under the corresponding service in the `Connections` list.
 
+## What if my provider isn't listed?
+
+Not all third-party APIs are natively integrated with Clay. If you search `Settings > Connections` and can't find your provider, you can still call that API from your table using the **HTTP API** enrichment.
+
+The HTTP API enrichment lets you reach any API endpoint by configuring the HTTP method, endpoint URL, authentication headers (including your API key), and query or body parameters — no native Clay integration required. It is available on **Explorer and above** plans.
+
+For step-by-step setup instructions, see [HTTP API](./http-api-integration-overview.md).
+
 ## Managing existing accounts
 
 **Note:** Some connection management actions are restricted by role:
