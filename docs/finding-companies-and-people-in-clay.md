@@ -658,7 +658,7 @@ Click the **Edit source** icon on the column header of your search column in you
 
 ### I don't see a Tools button — I only see Actions, or my instructions say to click Actions
 
-The top-right toolbar button in a Clay table is labeled **Tools** in all workspaces — this is the button you need for table-level functions like **Find People at These Companies**, Export, and Import.
+The top-right toolbar button in a Clay table is labeled **Tools** in all workspaces — this is the button you need for table-level functions like **Find People at These Companies**, Export, and Import. The Tools button appears whether you open the table directly or access it through a workbook.
 
 If you see **Actions** in the top right instead of **Tools**, one or more rows are checked. Clay's toolbar switches based on row selection state:
 
