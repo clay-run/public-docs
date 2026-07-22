@@ -14,6 +14,8 @@ Salesforce is a customer relationship management (CRM) platform that helps busin
 
 Clay supports two methods for authenticating your Salesforce account. You can choose the one that fits your organization's setup when adding a new connection or when reconnecting an existing one.
 
+**Available on Growth and Enterprise plans.** Connecting Clay to Salesforce is a CRM integration — adding a Salesforce account requires a Growth or Enterprise plan. Workspaces on Free or Launch plans will see an upgrade prompt when trying to connect. To upgrade, contact your account team or visit `Settings` → `Plan & billing`.
+
 -   **User Sign In** — the default method. You sign in as a Salesforce user via an OAuth browser prompt.
 -   **Client Credentials** — a server-to-server method. No browser sign-in is required; instead, you supply credentials from an external client app configured in your Salesforce org.
 
