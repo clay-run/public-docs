@@ -37,8 +37,8 @@ To save a group of columns so you can reuse it in other tables, see [Creating a 
 
 ## Using a column group template
 
-1.  While in a table, click `Add enrichment`.
-2.  Select `Templates` and search for your template.
+1.  While in a table, click `Tools`.
+2.  Search for your template by name, or click **View all enrichments** and select the **Templates** tab.
 3.  Click the template to open the configuration panel.
 4.  Under **Configure**, map the template's required inputs to your existing table columns.
 5.  Under **Providers**, connect any integrations the template requires.
@@ -48,8 +48,8 @@ To save a group of columns so you can reuse it in other tables, see [Creating a 
 
 You can update a template's name, description, and category from the template library:
 
-1.  While in a table, click `Add enrichment`.
-2.  Select `Templates` and find your template.
+1.  While in a table, click `Tools`.
+2.  Search for your template by name or click **View all enrichments** and select the **Templates** tab to find your template.
 3.  Click the `...` menu next to the template and select **Edit template settings...**.
 4.  Update the details and click **Save**.
 
@@ -65,8 +65,8 @@ Saving always creates a new template — it does not replace or overwrite the or
 
 ## Deleting a column group template
 
-1.  While in a table, click `Add enrichment`.
-2.  Select `Templates` and find the template you want to delete.
+1.  While in a table, click `Tools`.
+2.  Search for the template name or click **View all enrichments** and select the **Templates** tab to find the template you want to delete.
 3.  Click the `...` menu next to the template.
 4.  Select **Delete**.
 5.  Click **Delete template** to confirm.
