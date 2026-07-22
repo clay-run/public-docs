@@ -53,9 +53,10 @@ In the **Cell details** panel, click **Take action on list** to access the follo
 
 ## Cell size limits
 
-Clay has two types of cell size limits:
+Clay enforces three types of cell size limits:
 
 -   **Basic columns** (text and formula columns): 8 kB limit
+-   **Source columns** (the **"Rows from: [source table name]"** column in destination tables that receives data via Send Table Data): 100 kB limit
 -   **Action columns** (enrichment outputs): 200 kB limit
 
 When a basic column's data exceeds the 8 kB limit, the cell shows **"Cell data size exceeds limit (8 kB)"**. The final step of a waterfall returns a basic column with an 8 kB limit. If your waterfall contains large amounts of data, it may exceed this limit.
