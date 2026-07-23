@@ -20,6 +20,24 @@ You can run enrichments in several ways:
 -   Using pre-built templates
 -   Creating powerful recipes to automate complex workflows
 
+## Enrichment search
+
+When you click **Add enrichment** in a Clay table, the enrichment search panel opens. Each result row shows the enrichment type (enrichment, waterfall, template, and so on) and who created it — for example, **By you** for enrichments you built, or the creator's name for Clay-built integrations and team-shared resources.
+
+### Provider badges
+
+Many enrichment rows carry **provider badges** — labels curated by Clay's Solutions and Partnerships teams that capture collective knowledge about a provider's strengths and fit. Examples include:
+
+-   **Best for EMEA** — strong coverage for European, Middle Eastern, and African contacts
+-   **SMB coverage** — reliable results for small and mid-sized business data
+-   **Cost** — notes on credit cost relative to alternative providers
+
+Badges surface the kind of guidance that previously lived in Slack threads and team knowledge, so you can choose the right provider without asking around.
+
+### Filtering by badge
+
+To filter search results by a badge, click the badge directly on any result row. The badge is added as a chip in the search bar and results immediately narrow to enrichments that carry that attribute. You can combine multiple badge filters to further narrow your options.
+
 ## Running an enrichment
 
 1.  In a Clay table, click `Add enrichment` and search for an enrichment.
