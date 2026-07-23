@@ -1,7 +1,7 @@
 ---
 title: AI in Clay
 description: A comprehensive guide to how Clay uses AI across its features.
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-07-23T22:54:22.711Z
 ---
 
 # AI in Clay
@@ -264,13 +264,11 @@ Clay provides access to a wide range of AI models from multiple providers. Below
 
 | Provider | Models |
 | --- | --- |
-| Clay | HeliumNeonArgonXenonRadonClay ConductorClay Navigator |
-| OpenAI | GPT 4o, 4.1, 4o MiniGPT 4.1 Mini, 4.1 NanoGPT 5.1, 5.4, 5.4 Mini, 5.4 Nano, 5.5, 5 Mini, 5 Nanoo1, o1 Pro, o1 Minio3, o3 Mini, o3 Deep Researcho4 MiniDALL·E 3 (Standard, HD)GPT Image 1 (Low, Medium, High) |
-| Anthropic | Claude 4.5 SonnetClaude 4.5 HaikuClaude 4.6 OpusClaude 4.6 SonnetClaude 4.7 OpusClaude 4.8 Opus *(Claude 4 Sonnet, Claude 4 Opus, and Claude 4.5 Opus are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them.)* |
-| Gemini | 2.0 Flash, Flash Lite2.5 Flash, Flash Lite2.5 Pro, 3 Flash, 3 ProImagen 3.0, 3.0 Fast |
-| xAI | Grok 4Grok 4.1 Fast Reasoning |
+| Clay | HeliumNeonArgonClay Navigator |
+| OpenAI | GPT 4o, 4.1, 4o MiniGPT 4.1 Mini, 4.1 NanoGPT 5.1, 5.4, 5.4 Mini, 5.4 Nano, 5.5, 5 Mini, 5 Nanoo3, o3 Mini, o3 Deep Researcho4 MiniGPT Image 1 (Low, Medium, High) |
+| Anthropic | Claude 4.5 HaikuClaude 4.6 SonnetClaude 4.6 OpusClaude 4.7 OpusClaude 4.8 OpusClaude Sonnet 5 *(Claude 4 Sonnet, Claude 4 Opus, Claude 4.5 Opus, and Claude 4.5 Sonnet are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them.)* |
+| Gemini | 2.0 Flash, Flash Lite2.5 Flash, Flash Lite2.5 Pro, 3 Flash, 3 Pro, 3.1 Pro3.5 Flash, 3.1 Flash LiteImagen 4, 4 Ultra, 4 Fast |
 | DeepSeek | *(DeepSeek V4 Pro is deprecated and no longer available for new configurations; existing configurations that use this model remain unaffected.)* |
-| Mistral | Mistral Medium 3Mistral Large 2.1Mistral Large 3Magistral MediumDevstral 2 |
 | BlackForestLabs | Flux 1 SchnellFlux 1 Dev |
 | Playground | Playground V2Playground V2.5 |
 | Segmind | SSD 1B |
