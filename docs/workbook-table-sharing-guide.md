@@ -1,6 +1,6 @@
 ---
 title: Share workbooks and tables as templates
-description: Share Clay workbooks and tables as templates, keep reusable table structures, and move workbooks between workspaces.
+description: Share Clay workbooks and tables as templates, keep reusable table structures, and move or consolidate workbooks between workspaces.
 last_synced: 2026-04-26T01:40:56.186Z
 ---
 
@@ -33,7 +33,7 @@ Duplicating copies the table structure, column definitions, and run settings but
 
 ## Move a workbook to a different workspace
 
-You can use Share as Template to copy a workbook into any workspace you have access to — including a different workspace under the same login.
+You can use Share as Template to copy a workbook into any workspace you have access to — including a different workspace under the same login. There is no automated merge between two workspaces; consolidation is done manually by moving workbooks one at a time using templates.
 
 ### Same login, different workspaces
 
@@ -48,6 +48,8 @@ Tables, columns, formulas, and enrichment column configurations all copy over. A
 
 **Clay Lookup Rows columns:** After the workbook is created in the new workspace, any Lookup Rows columns in those tables will have no valid target table — the column's internal table reference points to a table ID in the original workspace that does not exist in the new workspace. Open each Lookup Rows column and repoint it to the correct table in the new workspace. One reconnection is required per lookup target table.
 
+**Send Table Data columns:** Send Table Data columns store a reference to the target table they write rows to. When the workbook is created in the new workspace, those references point to table IDs in the original workspace that do not exist in the new workspace. After setting up all tables in the destination workspace, open each Send Table Data column and reselect the correct target table in the new workspace.
+
 ### Separate Clay accounts (different logins)
 
 There is no native one-click migration between two unrelated Clay accounts. The recommended approach:
@@ -58,3 +60,5 @@ There is no native one-click migration between two unrelated Clay accounts. The 
 4. Reconnect any integrations and reconfigure enrichment columns that reference connections from the source workspace.
 
 **Clay Lookup Rows columns:** Lookup Rows columns store a reference to a specific table ID within a workspace. That reference does not carry over to the new account — in the new workspace, each Lookup Rows column has no target table configured. After rebuilding all tables in the destination account, open each Lookup Rows column and repoint it at the correct migrated table. One reconnection is required per lookup target table.
+
+**Send Table Data columns:** Send Table Data columns store a reference to a target table ID within a workspace. That reference does not carry over to the new account — in the new workspace, each Send Table Data column has no target table configured. After rebuilding all tables in the destination account, open each Send Table Data column and reselect the correct migrated table.
