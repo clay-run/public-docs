@@ -33,9 +33,7 @@ Each result row in enrichment search shows:
 
 -   **Type** — whether the result is an enrichment, waterfall, or template.
 -   **Creator** — who built it (for example, "By you" or "By Clay").
--   **Knowledge badges** — labels such as "Best for EMEA," "Low cost," or "SMB coverage," curated from Clay's Solutions and Partnerships teams. These badges surface the provider knowledge that used to live only in Slack threads and team conversations.
-
-Click any badge to add it as a filter chip in the search bar and narrow results to providers tagged with that attribute. This makes it faster to find the right provider for your region, budget, or use case without having to ask around.
+-   **Knowledge badges** — labels such as "Best for EMEA," "Low cost," or "SMB coverage," curated from Clay's Solutions and Partnerships teams. These badges surface provider context — regional strengths, cost tier, and business segment fit — so you can compare options at a glance without having to ask around.
 
 ## Run settings
 
