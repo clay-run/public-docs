@@ -141,6 +141,8 @@ Our sequencer is powered by Smartlead, but everything runs on Clay credits. You 
 
 When a campaign is created, the `Sync lead data to campaign` column pushes 10 rows so you can preview and configure your messages. After launching, the rest of your source table is not pushed automatically. To add all remaining rows, open your source table (the table where you created the campaign — not the campaign events table) and run the `Sync lead data to campaign` column manually — click the run button in the column header.
 
+If you have already increased your email account's daily sending limit but the campaign is still sending only 10 emails, the daily limit is not the bottleneck — only 10 leads are enrolled. The daily sending limit and the number of leads enrolled in the campaign are separate settings: the limit caps how many emails can go out per day, but if only 10 leads are synced to the campaign, the campaign sends at most 10 emails total regardless of the limit.
+
 ### Why did my campaign stop sending before reaching all my leads?
 
 The daily send limit is set at the **email account level**, not per campaign. If you have multiple active campaigns using the same email account, they all share that account's daily sending budget.
