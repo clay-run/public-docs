@@ -339,6 +339,11 @@ To resolve errored rows:
 
 Signals monitor your audience for key changes and write results permanently to each matching record so you can segment on them.
 
+For **People** audiences, two built-in signal types are available:
+
+-   **Job Change** — alerts you when a monitored contact changes jobs or companies.
+-   **Promotion** — alerts you when a monitored contact is promoted within the same company.
+
 For **Companies** audiences, four built-in signal types are available:
 
 -   **Web Intent** — track which companies are visiting your website.
@@ -360,7 +365,7 @@ For **Companies** audiences, four built-in signal types are available:
 After you add a signal:
 
 -   Results write to a `dedicated signal column` on each matching record — stored permanently and globally (not scoped to this segment).
--   Clay **automatically creates a companion segment** combining your original filters plus a filter for the new signal result — this is expected, not an error.
+-   For some signal types, Clay **automatically creates a companion segment** in your sidebar — for example, the Job Change signal on a People audience creates a "Companies of job changers" Companies segment, and the New Hire signal on a Companies audience creates a "New hires" People segment. This is expected, not an error.
 -   Multiple signals each get their own column; the `Signal Summary` column aggregates all results. Click any row to see per-signal detail.
 -   Any other segment that filters on this signal type will also surface these results.
 
@@ -368,7 +373,7 @@ After you add a signal:
 
 While the signal is processing its initial run, its status shows **Running**. Once the initial run completes, the status flips to **Monitoring** and displays a **Last run** timestamp. To see how many records were detected, go to **Data Hub** → **Signals** — the **Signals fired (30d)** column shows the count of events the signal emitted over the past 30 days.
 
-To see which specific records in your audience were picked up by the signal, add a filter on your audience for the **Job change results** field (or the equivalent results field for other signal types). You can save that filtered view as a separate segment — or use the auto-created companion segment, which already has this filter applied.
+To see which specific records in your audience were picked up by the signal, add a filter on your audience for the relevant signal results field — for example, **Job change results** on a People audience. You can save that filtered view as a new segment to run enrichments on.
 
 ### Claygent-managed columns
 
