@@ -27,6 +27,14 @@ You can run enrichments in several ways:
 3.  In the modal, select your account.
     -   Clay provides API keys for certain enrichments, but you can save [credits](https://www.clay.com/university/guide/credits) by using your own account—click `+ Add account` to set it up.
 
+### Enrichment search results
+
+Each result in the enrichment search shows information to help you compare providers at a glance:
+
+-   **Type** — A label on each row indicates what kind of result it is: an individual enrichment, a waterfall, a template, and so on.
+-   **Creator** — Results show who built the enrichment — for example, "By Clay" for built-in integrations or a teammate's name for custom templates.
+-   **Badges** — Some results carry badges like "Best for EMEA," "SMB coverage," or cost indicators that reflect expert recommendations about when each provider is the right fit. Use the filter bar above the results to filter by badge and narrow down to providers suited to your use case.
+
 ## Run settings
 
 Run settings give you control over when and how your enrichments execute. Access these settings by clicking into any enrichment column.
@@ -51,7 +59,7 @@ Use conditional logic to control when an enrichment runs. The enrichment only ex
 When you click **Save** after editing an enrichment column, a dropdown lets you choose how the change takes effect:
 
 -   **Save and don't run** — Saves your updated settings without re-running existing rows. If [auto-run](table-management-settings.md) is enabled, new rows added after saving will still trigger this enrichment automatically; historical rows remain unchanged until you manually trigger a run.
--   **Save and run _N_ rows** — Saves your settings and immediately queues all rows in the table for a run using the updated configuration.
+-   **Save and run _N_ rows** — Saves your settings and immediately queues all rows for a run using the updated configuration.
 
 ## Delay run
 
