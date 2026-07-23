@@ -128,7 +128,7 @@ No. Only customers on modern plans see the data cost savings in-product. Rule of
 
 **How do I purchase additional credits on a legacy plan?**
 
-To buy a one-time credit top-up:
+You do not need to migrate to a modern plan to add more Data Credits — the one-time top-up is available on all paid legacy plans. To buy a one-time credit top-up:
 
 1.  Go to `Settings` → `Usage`.
 2.  Click **Add one-time data credits**.
