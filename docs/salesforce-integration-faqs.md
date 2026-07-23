@@ -315,6 +315,12 @@ Clay does not transform field values before sending them to Salesforce — whate
 
 The same fix applies to any reference field that returns a `MALFORMED_ID` error — not just **OwnerId**.
 
+## When creating a Salesforce contact, do I need to map Account Name in addition to Account ID?
+
+No. Mapping the **Account ID** field in the **Map fields** panel is sufficient to associate the new contact with an account. The Account Name you see displayed in Salesforce is not a separate field to create — Salesforce derives it from the Account ID relationship and shows it as a label in the record form. Because Account Name is a read-only derived field, it does not appear as an option in Clay's **Map fields** panel and cannot be mapped directly.
+
+To set the correct Account ID, use a **Lookup Record** column (with the **Account** object) to find the account by name, domain, or another identifier, then map the returned `Id` field to the **Account ID** field in your **Create Record** column. For a step-by-step example of retrieving a Salesforce ID for a reference field, see [Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?](#why-am-i-seeing-a-malformed_id-error-when-creating-or-updating-a-salesforce-record).
+
 ## Why does Clay show "✅ Record created" but the record doesn't appear in Salesforce?
 
 When Clay's Create Record action receives a valid record ID back from Salesforce, it marks the action as successful and displays **"✅ Record created"** with a link to the new record. Clay does not perform a follow-up check to verify the record still exists in Salesforce — so if Salesforce discards or removes the record after the initial creation response, the cell still shows success with the original URL.
@@ -361,6 +367,14 @@ Here's how to set it up:
 Rows where the condition is not met show **"Run condition not met"** in the column cell — no Salesforce record is created or updated, and no credits are consumed for those rows.
 
 For full details on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
+
+## Does Salesforce enforce its required fields when Clay creates a record?
+
+Yes. Clay does not validate required fields before sending data to Salesforce — all fields in the **Map fields** panel are optional from Clay's perspective. Salesforce enforces required fields at the API level: if a required field is missing from your mapping, Salesforce rejects the record creation and Clay displays the error from Salesforce (for example, `REQUIRED_FIELD_MISSING: Last Name`).
+
+To avoid this, map all required fields for your Salesforce object in the **Map fields** section of your **Create Record** column. Which fields Salesforce marks as required depends on your org's configuration — check the object's field settings in Salesforce Setup, or look for the asterisk (\*) next to field labels in Salesforce's record creation form. Common required fields for the Contact object include **Last Name** and, depending on your org, **Account ID** (required when contacts must be associated with an account).
+
+To skip rows where a required field is blank — rather than letting Salesforce reject them — add a run condition to your **Create Record** column. See [How do I prevent contacts from being pushed to Salesforce when required fields are blank?](#how-do-i-prevent-contacts-from-being-pushed-to-salesforce-when-required-fields-like-account-name-or-title-are-blank) for instructions.
 
 ## How do I prevent contacts from being pushed to Salesforce when required fields like Account Name or Title are blank?
 
