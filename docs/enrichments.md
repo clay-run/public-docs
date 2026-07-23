@@ -1,6 +1,6 @@
 ---
 title: Enrichments
-description: Learn how to run enrichments in Clay, including run settings, delay options, and custom rate limits.
+description: Learn how to find and run enrichments in Clay — including provider badges, filtering search results, run settings, delay options, and custom rate limits.
 last_synced: 2026-04-26T01:39:56.840Z
 ---
 
@@ -26,6 +26,28 @@ You can run enrichments in several ways:
 2.  Under `Integrations`, select an option.
 3.  In the modal, select your account.
     -   Clay provides API keys for certain enrichments, but you can save [credits](https://www.clay.com/university/guide/credits) by using your own account—click `+ Add account` to set it up.
+
+## Enrichment search panel
+
+When you click **Add enrichment**, the enrichment search panel opens. You can type a name, use case, or data category to find the right provider for your workflow.
+
+### Row details and provider badges
+
+Each enrichment row now displays additional context to help you choose the right option:
+
+-   **Type** — shows what kind of item it is: enrichment, template, waterfall, and so on.
+-   **Attribution** — shows who created it: "By Clay" for built-in integrations, the provider name (for example, "Apollo.io") for third-party enrichments, or a teammate's name for workspace-created items.
+-   **Provider badges** — short labels curated based on real usage patterns, such as "Best for EMEA," "SMB coverage," or cost guidance. These surface insights about when each provider performs best, so you can choose the right source for your use case without needing to ask around.
+
+### Filtering by badges
+
+You can narrow search results by clicking any provider badge displayed on a result row. Clicking a badge re-runs your search filtered to enrichments with that label — for example, clicking "Best for EMEA" shows all providers tagged for that region.
+
+### Curated results for popular queries
+
+For common searches like "email," "phone," or "salesforce," Clay returns hand-picked results with the most relevant options ranked first. This replaces a generic keyword match for frequently used queries, so the right provider appears at the top instead of a wall of results.
+
+**Note:** Curated results for popular queries are currently rolling out to users.
 
 ## Run settings
 
