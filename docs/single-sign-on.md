@@ -14,6 +14,8 @@ Single Sign-On (SSO) is available to **Enterprise plan** customers at no additio
 
 SSO setup is managed by Clay's support team — there is no self-serve configuration in the Clay UI. To get started, contact Clay support.
 
+**Note:** SSO in Clay is for authentication only — Clay does not automatically add users to your workspace when they sign in via SSO. For new team members to land in your organization's workspace (rather than a standalone personal workspace), invite them to your Clay workspace first, then have them sign in via SSO. See [User provisioning](#user-provisioning) for the step-by-step onboarding flow.
+
 The typical setup process:
 
 1.  Contact Clay support to initiate SSO setup.
