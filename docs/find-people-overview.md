@@ -63,7 +63,7 @@ To add more profiles from the same search to an existing people table without cr
     -   **Incompatible filters:** This toggle cannot be combined with **Limit per company** or any **Company attributes** filter (company size, company industries, or company description keywords). Selecting them together returns an error.
     -   **May return fewer results when enabled:** Because exclude keywords apply to a person's entire work history when this toggle is on, the result count can decrease rather than increase. For example, if "Manager" is an excluded title, anyone who has ever held a role containing that word is filtered out — not just people whose current role matches.
 -   **Limit results:** Set a maximum number of results per search (up to 50,000 records).
-    -   **Free plan note:** The free plan limits each table to 200 rows. A Find People source with **Limit results** set above 200 will still run, but row insertion stops once the table reaches 200 — no additional people are added on re-runs. Set **Limit results** to 200 or fewer to match the table's actual capacity.
+    -   **Free plan note:** The free plan limits each table to 200 rows. Once the table reaches capacity, subsequent Find People runs will not add more contacts — new rows are silently rejected until existing rows are deleted. Keep this in mind when configuring **Limit results**, and delete rows to free space before re-running if your search stops adding contacts.
 -   **Limit per company:** Set the maximum number of people to return per company (up to 100). Note: the preview count shown before running the search reflects the total match universe across all companies and does not account for this limit — the actual number of imported rows will be lower.
 
 **Note:** If a Find People search with **Limit per company** configured imports fewer rows than you expect from a large company list, re-running the source triggers a full import. Re-open the source configuration (click the source and select **Edit**), make any minor change, and re-run — or create a new table with the same search settings. Either approach returns all matching results.
@@ -197,7 +197,7 @@ The enrichment returns a single `posts` array. Each item in that array can be an
 
 **Extracting post text:**
 
-For original posts, the text is in `posts[N].text`. For reposts, `posts[N].text` is `null` when the person shared without adding their own comment — in that case, the text of the original content being shared is in `posts[N].shared_post.text`.
+For original posts, the text is in `posts[N].text`. For reposts, `posts[N].text` is `null` when the person shared without adding their own comment — in that case, the text of the original content being sharing is in `posts[N].shared_post.text`.
 
 > **Note:** Use `shared_post` (snake_case) in formulas. The Cell details panel displays this field as "Shared Post," but formula references must use `shared_post`.
 
