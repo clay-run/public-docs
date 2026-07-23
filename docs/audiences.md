@@ -434,6 +434,8 @@ Modern plans include Launch, Growth, and post-2026-pricing-change Enterprise. Le
 
 With **Premium** or **Standard**, Clay queries its provider network to find and hash personal emails for each contact automatically. With **None**, you manually map up to three existing hashed email columns from your Audience under **Include emails**.
 
+Each Enhanced Matching run scans your full ad audience but skips contacts that already have hashed email results — only contacts without a match consume credits. This means that if contacts gain new identifiers (such as a LinkedIn URL added via a HubSpot sync) after your initial sync, running your ad sync again will pick up those previously unmatched contacts without re-charging for contacts already matched.
+
 **Hashed email limit:** All tiers support a maximum of **3 hashed email fields** per contact. If a contact has more than 3 personal email addresses available, only the first three are sent to the ad platform — there is no way to include additional emails beyond this limit.
 
 **Professional network behavior:** The professional network creates a separate audience entry per hashed email address, so your audience size on that platform may exceed your contact count after a sync. This is expected — it means one contact was matched via multiple email addresses.
@@ -594,6 +596,19 @@ Yes. Segments update in real time as records enter or exit your filter criteria.
 -   **Growth plan:** CRM and data warehouse syncs run daily, and segments update based on that daily refresh.
 
 Enrichments configured with `Continuous Enrichment` enabled automatically process new records entering a segment, typically within 15 minutes. No manual runs are required after initial setup.
+
+### Will bulk enrichment automatically re-run when data is updated on an existing audience member?
+
+No. The **Auto-enrich new records** setting fires only when a record **first enters** the segment — it does not re-run when a field is updated on a contact who is already present in the segment. For example, if a contact is already in a segment and a LinkedIn URL is added via a HubSpot sync, the existing bulk enrichment will not automatically re-process that contact.
+
+**Exception:** If your segment filter is based on the updated field — for example, a segment filtered to contacts where "LinkedIn URL is not empty" — then adding a LinkedIn URL causes the record to newly qualify for and enter that segment, which does trigger auto-enrichment.
+
+To re-enrich a specific set of existing audience members with updated data:
+
+-   **Use a Clay table:** Pull those records into a Clay table, run your enrichment (for example, a hashed-email lookup using the new LinkedIn URL), then write results back using `Update Audiences Record` or `Upsert Audiences Record`.
+-   **Use a Recurring enrichment:** In the bulk enrichment's Run Setup panel, configure a **Recurring enrichment** schedule to re-run on all segment members on a fixed cadence. Combine with a run condition (for example, "skip if hashed email is already present") to avoid spending credits on contacts that were already matched.
+
+For ad audience contacts who now have new data available, see [Enhanced Matching (Beta)](#enhanced-matching-beta) — it automatically picks up previously unmatched contacts in your next sync without re-charging for contacts already matched.
 
 ### Why didn't my audience count change after I tightened my search filters?
 
