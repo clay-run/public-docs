@@ -20,6 +20,15 @@ You can run enrichments in several ways:
 -   Using pre-built templates
 -   Creating powerful recipes to automate complex workflows
 
+## Searching for enrichments
+
+When you click **Add enrichment** in a table, the enrichment search panel opens. Each result row shows contextual information to help you pick the right provider:
+
+-   **Result type and creator** — The row identifies what you're looking at (enrichment, template, recipe, etc.) and who built it (for example, "By Clay" or a specific team member's name).
+-   **Institutional knowledge badges** — Labels like "Best for EMEA," "SMB coverage," and cost indicators appear on enrichment result rows. These badges are contributed by Clay's Solutions and Partnerships teams based on real-world usage across customer use cases.
+
+To filter the search results by a badge, click the badge on any enrichment row. This narrows the list to enrichments that share that attribute — for example, clicking "Best for EMEA" surfaces only providers with strong EMEA coverage.
+
 ## Running an enrichment
 
 1.  In a Clay table, click `Add enrichment` and search for an enrichment.
