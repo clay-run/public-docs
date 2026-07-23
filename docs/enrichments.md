@@ -1,6 +1,6 @@
 ---
 title: Enrichments
-description: Learn how to run enrichments in Clay, including run settings, delay options, and custom rate limits.
+description: Learn how to find and run enrichments in Clay, including knowledge labels, run settings, delay options, and custom rate limits.
 last_synced: 2026-04-26T01:39:56.840Z
 ---
 
@@ -19,6 +19,19 @@ You can run enrichments in several ways:
 -   Individually
 -   Using pre-built templates
 -   Creating powerful recipes to automate complex workflows
+
+## Finding the right enrichment
+
+When you click **Add enrichment** and type a query, each search result shows what type of result it is — enrichment, template, or waterfall — and who created it (Clay, the integration provider, or a teammate in your workspace).
+
+Some results also display **knowledge labels** — short tags such as "best for EMEA," "SMB coverage," or "cost" — curated by Clay's Solutions and Partnerships teams based on real-world usage. These labels help you compare providers for the same data point without having to ask around.
+
+To filter results by a knowledge label:
+
+1.  Click any label on a result row. The label is added as a filter chip to the search bar, and results narrow to enrichments that carry that label.
+2.  To clear the filter, remove the chip from the search bar.
+
+You can also type a label name directly in the search bar and select it from the filter suggestions that appear.
 
 ## Running an enrichment
 
