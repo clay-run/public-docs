@@ -59,7 +59,7 @@ Use conditional logic to control when an enrichment runs. The enrichment only ex
 When you click **Save** after editing an enrichment column, a dropdown lets you choose how the change takes effect:
 
 -   **Save and don't run** — Saves your updated settings without re-running existing rows. If [auto-run](table-management-settings.md) is enabled, new rows added after saving will still trigger this enrichment automatically; historical rows remain unchanged until you manually trigger a run.
--   **Save and run _N_ rows** — Saves your settings and immediately queues all rows for a run using the updated configuration.
+-   **Save and run _N_ rows** — Saves your settings and immediately queues all rows in the table for a run using the updated configuration.
 
 ## Delay run
 
