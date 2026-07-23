@@ -36,7 +36,7 @@ Badges surface the kind of guidance that previously lived in Slack threads and t
 
 ### Filtering by badge
 
-To filter search results by a badge, click the badge directly on any result row. The badge is added as a chip in the search bar and results immediately narrow to enrichments that carry that attribute. You can combine multiple badge filters to further narrow your options.
+Click any badge on a result row to add it as a filter chip in the search bar. Results narrow immediately to enrichments that carry that attribute, and you can combine multiple badge filters to further narrow your options. Badge filtering is part of the updated enrichment search experience, which is rolling out to all users.
 
 ## Running an enrichment
 
