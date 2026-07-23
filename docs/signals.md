@@ -237,6 +237,28 @@ If you had a brand mentions signal set up before the deprecation, it will show a
 -   **Google News alerts** — Integrate through Clay to track brand mentions across news and web content.
 -   **Third-party social listening tools** — Many social listening platforms can connect to Clay through API integrations, letting you route mention data into your Clay tables.
 
+### How do I configure the Monitor Professional Posts signal?
+
+The **Monitor Professional Posts** signal discovers professional posts matching your criteria and adds new results to your table on a recurring schedule. It is a custom signal available under **Tools → Monitor for... → Professional Posts**.
+
+**Signal inputs:**
+
+-   **Companies filter (optional):** Choose how posts relate to the companies you provide:
+    -   **Mentions companies** — Posts that mention those companies by name or tag. Use this to track when people mention a brand.
+    -   **Posted by companies** — Posts published from those companies' official pages.
+    -   **Posted by companies' employees** — Posts written by people who currently work at those companies. Use this option to find posts from employees of specific organizations.
+-   **Company domains or profile URLs:** When a Companies filter is selected, provide the domains (e.g., `acme.com`) or professional profile URLs for the companies you want to monitor. Up to 5 identifiers are supported per run.
+-   **People filter (optional):** Limit results to posts mentioning specific individuals ("Mentions individuals") or written by them ("Posted by individuals"). Up to 5 person profile URLs are supported.
+-   **Keyword (optional):** Enter a **single** keyword or hashtag to filter by post content (e.g., `AI` or `#machinelearning`). Only one keyword is supported per signal — phrases like "AI security" and comma-separated lists are not valid. To track multiple topics, create a separate signal for each keyword.
+-   **Time frame:** Last 24 hours or last week (default).
+-   **Sort by:** Most recent (default) or Top match.
+
+**If the Monitor Professional Posts signal is returning 0 results:**
+
+-   **Check your keyword.** The keyword field accepts only a single word or hashtag. A multi-word phrase such as "agentic AI security" is not valid — use a single term like `AI` or `security` instead.
+-   **Confirm your identifiers.** At least one Companies or People filter must be configured with valid domains or profile URLs if you have selected a filter type.
+-   **Check the Companies filter option.** If you want posts *written by* employees at specific companies (not posts that merely *mention* those companies), set the Companies filter to **Posted by companies' employees**, not **Mentions companies**.
+
 ### Why did my job description keyword search return unexpected results?
 
 Job description keywords use phrase matching — your search term must appear as a contiguous sequence of words in the job description. Hyphens in your search terms are treated as word separators, so "K-12" and "K 12" produce the same search (both look for the phrase "k 12" in the description). If you want to search for a compound term as a single unbroken token, enter it without separators (for example, use "k12" instead of "K-12").
