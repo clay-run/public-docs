@@ -272,6 +272,20 @@ A common cause: mapping this field to a column that contains your leads' own ema
 -   **If you do not intend to route specific leads to specific senders:** Remove the field mapping — open the `Sender accounts` tab, scroll to the `Assign sender account field to lead` section, and clear the selection. Leads will then be distributed evenly across all your configured sender accounts. After clearing it, re-run the `Sync lead data to campaign` column for the affected rows to re-enroll them.
 -   **If you do want to route specific leads to specific senders:** Make sure the column you selected contains one of your configured sending account email addresses — not the lead's own email. Add those sender accounts to the campaign first if they are not already there, then re-run the `Sync lead data to campaign` column.
 
+### Can I connect a third-party email provider (such as LiteMail) as a sender account?
+
+Yes — Clay's email sequencer sends campaigns directly and supports any email provider that supplies SMTP credentials, not just Google Workspace or Microsoft Outlook. The **Sender accounts** tab in your campaign is where you add all sending inboxes.
+
+To connect a provider like LiteMail:
+
+1.  In your campaign, go to the **Sender accounts** tab (or `Campaigns → Email Accounts` globally).
+2.  Click **Add email accounts** and select **SMTP**.
+3.  Enter the SMTP credentials your provider supplies: host, port, username, and password.
+4.  Enter your **IMAP credentials** (host and port) — Clay uses these to surface replies from recipients inside the platform. Most business email providers include IMAP access alongside SMTP.
+5.  Click **Add account**. The inbox appears in your Sender accounts list with its own independent daily sending limit.
+
+Use **SMTP** for any provider that isn't Google Workspace (use Google OAuth) or Microsoft Outlook (use Outlook OAuth). See [What fields does the SMTP connection form require?](#what-fields-does-the-smtp-connection-form-require) for the full list of required fields.
+
 ### What fields does the SMTP connection form require?
 
 The manual SMTP form requires credentials in two sections:
