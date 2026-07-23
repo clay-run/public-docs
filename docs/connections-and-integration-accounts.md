@@ -123,6 +123,8 @@ A **default account** is automatically selected for workflows or integrations wh
 
 **Note:** The default account is used when creating new columns and workflows going forward — it does not retroactively update existing columns or workflows. Columns already configured to use a specific connection continue to reference that connection regardless of which account is set as default. To update all existing columns to use a different account's credentials, use **Reconnect** on the connection those columns already reference (see [Rotating or updating credentials](#rotating-or-updating-credentials) above). Reconnecting updates the credentials in place so every column referencing that connection automatically uses the updated account on its next run.
 
+**Note:** Workspace connection defaults apply per provider — there is no single setting that routes all AI usage to one API key. For Claygent columns (including those using custom MCP servers), you also need to manually select a non-Clay model (such as Claude Sonnet or GPT) in the model picker, since Claygent defaults to Clay's parallel models and does not automatically switch to a third-party model when you set a connection as default.
+
 ### Deleting accounts
 
 -   Navigate to the service in the `Connections` section.
