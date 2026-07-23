@@ -1,6 +1,6 @@
 ---
 title: Enrichments
-description: Learn how to run enrichments in Clay, including run settings, delay options, and custom rate limits.
+description: Learn how to run enrichments in Clay, including how to use knowledge badges in search results, run settings, delay options, and custom rate limits.
 last_synced: 2026-04-26T01:39:56.840Z
 ---
 
@@ -26,6 +26,20 @@ You can run enrichments in several ways:
 2.  Under `Integrations`, select an option.
 3.  In the modal, select your account.
     -   Clay provides API keys for certain enrichments, but you can save [credits](https://www.clay.com/university/guide/credits) by using your own account—click `+ Add account` to set it up.
+
+## Understanding enrichment search results
+
+When you click `Add enrichment` and search, each result row shows additional context to help you choose the right enrichment for your use case.
+
+### Knowledge badges
+
+Enrichment rows display knowledge badges — short labels such as **Best for EMEA**, **SMB coverage**, or **cost** — that surface curated guidance from Clay's Solutions and Partnerships teams. These badges capture real-world insights about when a provider performs best, bringing knowledge that previously lived in internal conversations directly into the product.
+
+To filter enrichment search results by a badge, click it. Clay adds the badge as a chip in the search bar and narrows the results to enrichments carrying that label. Click the chip again to remove the filter.
+
+### Row type and attribution
+
+Each result shows what type of result it is — **Enrichment**, **Waterfall**, **Template**, or **Send & export** — so you can tell at a glance whether you are looking at an individual provider integration, a pre-built multi-provider sequence, or a reusable template. Results also show who created them: **By Clay** for built-in options, your own name for items you built, or a collaborator's name for shared work.
 
 ## Run settings
 
