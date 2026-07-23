@@ -1,6 +1,6 @@
 ---
 title: Enrichments
-description: Learn how to run enrichments in Clay, including run settings, delay options, and custom rate limits.
+description: Learn how to run enrichments in Clay, navigate enrichment search results with knowledge labels and filters, and configure run settings, delay options, and custom rate limits.
 last_synced: 2026-04-26T01:39:56.840Z
 ---
 
@@ -26,6 +26,22 @@ You can run enrichments in several ways:
 2.  Under `Integrations`, select an option.
 3.  In the modal, select your account.
     -   Clay provides API keys for certain enrichments, but you can save [credits](https://www.clay.com/university/guide/credits) by using your own account—click `+ Add account` to set it up.
+
+## Navigating enrichment search results
+
+Each result in the **Add enrichment** search panel shows additional context to help you pick the right provider:
+
+-   **Type** — the kind of result (Enrichment, Waterfall, Template, and others), so you know what you're selecting before you click.
+-   **Attribution** — who created it: **By Clay** for built-in integrations, **By [user name]** for templates or presets your team created, or a provider name for third-party integrations.
+-   **Knowledge labels** — short tags like "best for EMEA," "SMB coverage," or "cost" that surface expertise from Clay's solutions and partnerships teams. Labels only appear on results where they apply.
+
+### Filtering by knowledge label
+
+Click any knowledge label on a search result to add it as a filter chip. The search updates to show only enrichments that carry that label. For example, clicking "EMEA" narrows results to providers flagged for EMEA coverage, making it faster to find the right fit for your region or use case. Remove the chip from the search bar to clear the filter.
+
+### Popular search shortcuts
+
+For common queries like "email," "phone," or "salesforce," enrichment search may surface hand-picked recommendations at the top of the results. These curated suggestions are based on real usage data and put the most-used option for each data point front and center. This feature is rolling out gradually and may not yet be visible to all users.
 
 ## Run settings
 
