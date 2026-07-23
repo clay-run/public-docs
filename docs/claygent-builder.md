@@ -268,6 +268,22 @@ No. Claygents are scoped to the workspace they are created in, and there is no b
 
 To use a Claygent in a different workspace, manually recreate it using Claygent Builder in the destination workspace — copy over the prompt, model settings, any uploaded context documents, and the output schema from the original.
 
+### Can Claygent access data from another table in my workspace?
+
+Claygent works at the row level — it receives only the inputs you explicitly pass to it for the current row. It cannot query other tables, loop through records, or check whether a value exists elsewhere in your workspace on its own.
+
+**Workaround: use Lookup Multiple Rows in Other Table before Claygent**
+
+To give a Claygent access to data from another table — for example, to check whether a prospected account has a relationship (subsidiary, affiliate, or existing account) with records in a separate reference table — use a two-step column sequence:
+
+1. Add a **Lookup Multiple Rows in Other Table** column that searches your reference table based on a shared attribute (such as company domain or account name).
+2. Reference the lookup results as an input in your Claygent prompt — the matched records are passed to the agent row by row.
+3. Instruct Claygent to evaluate, compare, or flag based on those returned records.
+
+**Hard cap: 100 matching records returned per row**
+
+The Lookup Multiple Rows action returns at most 100 matching records per row — this is a cap on results returned per lookup, not on the total size of the referenced table. You can reference a table with thousands of rows; only the first 100 records that match the filter criteria are returned. For use cases requiring comparison against more than 100 potential matches per row, split the reference table into segments, add a lookup column per segment, and combine the results in a formula or Claygent prompt. See [Lookup Rows](lookup-rows.md) for full details.
+
 ### Does testing cost credits?
 
 No. You can have up to 10 test cases per Claygent at a time for free. You can delete and add new test inputs to keep testing. Once you deploy and run your agent in a table, standard runs follow your normal billing.
