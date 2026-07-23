@@ -434,7 +434,7 @@ Modern plans include Launch, Growth, and post-2026-pricing-change Enterprise. Le
 
 With **Premium** or **Standard**, Clay queries its provider network to find and hash personal emails for each contact automatically. With **None**, you manually map up to three existing hashed email columns from your Audience under **Include emails**.
 
-Each Enhanced Matching run scans your full ad audience but skips contacts that already have hashed email results — only contacts without a match consume credits. This means that if contacts gain new identifiers (such as a LinkedIn URL added via a HubSpot sync) after your initial sync, running your ad sync again will pick up those previously unmatched contacts without re-charging for contacts already matched.
+By default, Enhanced Matching is configured to skip contacts that already have a result from a previous Enhanced Matching run — only contacts not yet processed consume credits. This means contacts who join your audience after the initial sync, or who gain new identifiers (such as a LinkedIn URL added via a HubSpot sync), are picked up in subsequent runs. You can adjust the skip behavior in the Enhanced Matching settings when configuring your ad sync.
 
 **Hashed email limit:** All tiers support a maximum of **3 hashed email fields** per contact. If a contact has more than 3 personal email addresses available, only the first three are sent to the ad platform — there is no way to include additional emails beyond this limit.
 
@@ -608,7 +608,7 @@ To re-enrich a specific set of existing audience members with updated data:
 -   **Use a Clay table:** Pull those records into a Clay table, run your enrichment (for example, a hashed-email lookup using the new LinkedIn URL), then write results back using `Update Audiences Record` or `Upsert Audiences Record`.
 -   **Use a Recurring enrichment:** In the bulk enrichment's Run Setup panel, configure a **Recurring enrichment** schedule to re-run on all segment members on a fixed cadence. Combine with a run condition (for example, "skip if hashed email is already present") to avoid spending credits on contacts that were already matched.
 
-For ad audience contacts who now have new data available, see [Enhanced Matching (Beta)](#enhanced-matching-beta) — it automatically picks up previously unmatched contacts in your next sync without re-charging for contacts already matched.
+For ad audience contacts who now have new data available, see [Enhanced Matching (Beta)](#enhanced-matching-beta) — by default, it skips contacts already processed and picks up previously unprocessed contacts in your next sync.
 
 ### Why didn't my audience count change after I tightened my search filters?
 
