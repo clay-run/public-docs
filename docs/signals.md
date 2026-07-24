@@ -261,13 +261,13 @@ The **Monitor Professional Posts** signal discovers professional posts matching 
 
 ### Why does my "Get interactions with professional posts" Signal fail with "Invalid input"?
 
-The **Get interactions with professional posts** source only accepts original post URLs from the professional network — specifically those containing `-activity-` or `ugcPost` in the URL path. Share URLs — those containing `-share-` before the numeric post ID (for example, `https://www.linkedin.com/posts/example-slug-share-7468708383462797312-LxbK`) — are not valid and cause the "Invalid input" error.
+The **Get interactions with professional posts** source only accepts original post URLs from the professional network — specifically those containing `-activity-` or `ugcPost` in the URL path. Share URLs — those containing `-share-` before the numeric post ID — are not valid and cause the "Invalid input" error.
 
 **How to identify the URL type:**
 
--   **Valid (activity):** `https://www.linkedin.com/posts/clay-hq_today-is-a-moment-activity-7212099008951975937-ezPv`
--   **Valid (ugcPost):** `https://www.linkedin.com/feed/update/urn:li:ugcPost:7264751670859911168`
--   **Invalid (share):** `https://www.linkedin.com/posts/example-slug-share-7468708383462797312-LxbK`
+-   **Valid (activity):** the path contains `-activity-` before the post ID, e.g. `…/posts/author-slug-activity-7212099008951975937-xxxx`
+-   **Valid (ugcPost):** the path contains `ugcPost`, e.g. `…/feed/update/urn:li:ugcPost:7264751670859911168`
+-   **Invalid (share):** the path contains `-share-` before the post ID, e.g. `…/posts/author-slug-share-7468708383462797312-LxbK`
 
 To get a valid URL manually: open the post on the professional network, click **•••** (three dots) at the top right of the post, and select **Copy link to post**. If the post is a reshare of someone else's content, open the original underlying post first and copy its link from there.
 
