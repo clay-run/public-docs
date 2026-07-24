@@ -308,6 +308,19 @@ Yes. Switch models in the configuration panel and rerun tests to compare output 
 
 In-flight runs finish on the version that started them. New runs pick up the latest version automatically.
 
+### I switched to a cheaper model in my Claygent column but new runs still charge the old price — why?
+
+When you change the model in a Claygent column's settings, the change does not take effect until you explicitly save the column. If you selected a new model but closed the settings panel without clicking **Save**, the change was discarded and new runs continue using the previous model and its credit cost.
+
+To apply the change:
+
+1.  Open the column settings (click the column name → **Edit column**).
+2.  Check that the **Model** picker shows the model you want.
+3.  If it still shows the old model, re-select your target model.
+4.  Click **Save** to save the column settings, then close and reopen the settings to confirm the new model is still selected.
+
+To verify which model was used for a specific row and how many credits it charged, click any completed cell in the Claygent column to open the **cell details** panel on the right. The run metadata there shows the model used and the credit cost for that individual run.
+
 ### Can I still edit prompts directly in tables?
 
 Yes, but centralizing in Claygent builder gives you version control, free testing, and the ability to update once and deploy everywhere. It's the better choice for agents you'll reuse or iterate on.
