@@ -725,7 +725,7 @@ Ensure keys are separated by commas. Watch for extra spaces, colons, and bracket
 
 **4\. Verify correct API key**
 
-Some providers have multiple API keys for different endpoints. Example: Apollo has separate keys for different APIs.
+Some providers have multiple API keys for different endpoints. Example: Apollo has several APIs you can create keys for.
 
 **5\. Formula expression entered in token mode**
 
@@ -752,6 +752,8 @@ Under **Advanced options → Conditional run**, add a formula that only runs the
 ### "Settings contains deleted column" error — clicking Run produces no response
 
 If clicking **Run** on your HTTP API column produces no loading indicator, no response, and no cell update — whether via the column header dropdown or the Play icon on individual cells — the body likely has column chip references that can't be resolved.
+
+**Note:** Column chips in the HTTP body editor look identical whether they reference a valid column or a deleted one — there is no warning icon or visual indicator on the chip itself when a referenced column has been deleted. If you see a warning icon (⚠️) next to a chip in the body editor, that indicates the per-field toggle is set to optional (the field won't block execution even if its column is empty at run time), not that the column has been deleted. See the per-field toggle in [Step 4](#step-4-json-body) for details.
 
 **How to confirm:** Right-click the column header and choose **Edit column**. If you see a red error inside the body editor — for example, `Settings contains deleted column for "body" input` — one or more column chip references in the body point to a column that no longer exists. This typically happens when a column used as a body reference was deleted after the body was configured, or when column references were not properly inserted via the `/` picker. Clay silently blocks all execution when this settings error is present: the Run option may be absent from the column header dropdown entirely, and clicking the cell-level Play icon produces no result.
 
