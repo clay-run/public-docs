@@ -97,13 +97,14 @@ Use the drag-fill handle (small square in the bottom-right corner of a selected 
 -   Cut, copy, and paste operations
 -   Table and column width, order, and color changes
 -   Column setting edits (restores draft settings)
--   Row deletions
 
 ### What you cannot undo or redo
 
 -   Enrichment cell runs (because they consume credits)
 -   Column deletions
 -   CSV imports
+
+**Note:** Row deletions are not covered by Cmd/Ctrl+Z. Instead, a brief **Undo** toast appears immediately after rows are deleted — click it to restore the rows before the toast closes. See [Recover deleted rows](delete-content-within-your-workspace.md#recover-deleted-rows).
 
 ## FAQs
 
