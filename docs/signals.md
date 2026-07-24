@@ -261,7 +261,7 @@ The **Monitor Professional Posts** signal discovers professional posts matching 
 
 ### Why does my "Get interactions with professional posts" Signal fail with "Invalid input"?
 
-The **Get interactions with professional posts** source only accepts original LinkedIn post URLs — specifically those containing `-activity-` or `ugcPost` in the URL path. LinkedIn share URLs — those containing `-share-` before the numeric post ID (for example, `https://www.linkedin.com/posts/example-slug-share-7468708383462797312-LxbK`) — are not valid and cause the "Invalid input" error.
+The **Get interactions with professional posts** source only accepts original post URLs from the professional network — specifically those containing `-activity-` or `ugcPost` in the URL path. Share URLs — those containing `-share-` before the numeric post ID (for example, `https://www.linkedin.com/posts/example-slug-share-7468708383462797312-LxbK`) — are not valid and cause the "Invalid input" error.
 
 **How to identify the URL type:**
 
@@ -269,7 +269,7 @@ The **Get interactions with professional posts** source only accepts original Li
 -   **Valid (ugcPost):** `https://www.linkedin.com/feed/update/urn:li:ugcPost:7264751670859911168`
 -   **Invalid (share):** `https://www.linkedin.com/posts/example-slug-share-7468708383462797312-LxbK`
 
-To get a valid URL manually: open the post on LinkedIn, click **•••** (three dots) at the top right of the post, and select **Copy link to post**. If the post is a reshare of someone else's content, open the original underlying post first and copy its link from there.
+To get a valid URL manually: open the post on the professional network, click **•••** (three dots) at the top right of the post, and select **Copy link to post**. If the post is a reshare of someone else's content, open the original underlying post first and copy its link from there.
 
 If post URLs are flowing in from another Clay source — such as **Find professional posts** or **Get a person's professional posts and shares** — some rows may contain share-type URLs for reshared content. To convert those automatically, add an **Enrich professional post** enrichment column and map your post URL column to it. The enrichment's **Post URL** output contains an activity-type URL that you can then pass to **Get interactions with professional posts**.
 
