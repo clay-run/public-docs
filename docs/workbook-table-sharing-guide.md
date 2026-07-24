@@ -1,6 +1,6 @@
 ---
 title: Share workbooks and tables as templates
-description: Share Clay workbooks and tables as templates, keep reusable table structures, and move workbooks between workspaces.
+description: Share Clay workbooks and tables as templates, keep reusable table structures, and move or consolidate workbooks between workspaces.
 last_synced: 2026-04-26T01:40:56.186Z
 ---
 
@@ -12,8 +12,8 @@ In Clay, you can share tables and workbooks via a public link or specific emails
 
 ## Share a workbook or table
 
-1.  Click on your workbook's title to access workbook settings. If you're sharing a table, click on the table's title or locate the table settings icon in the bottom right corner.
-2.  Scroll to the bottom and toggle on `Share as Template`.
+1.  Click on your workbook's title, then select **Edit workbook settings** to open the settings sidebar. If you're sharing a table, click on the table's title or locate the table settings icon in the bottom right corner.
+2.  Scroll to the **Share as template** section and toggle it on.
 3.  Copy the public link to share the template with anyone or share with specific emails.
 
 Note that when sharing as a template, only the table structure and one row of sample data are shared. If you need to share your table data, you can export the table as a CSV file.
@@ -33,12 +33,12 @@ Duplicating copies the table structure, column definitions, and run settings but
 
 ## Move a workbook to a different workspace
 
-You can use Share as Template to copy a workbook into any workspace you have access to — including a different workspace under the same login.
+You can use Share as Template to copy a workbook into any workspace you have access to — including a different workspace under the same login. There is no automated merge between two workspaces; consolidation is done manually by moving workbooks one at a time using templates.
 
 ### Same login, different workspaces
 
 1. Open the workbook in the source workspace.
-2. Click the workbook title, scroll to **Share as Template**, toggle it on, and copy the link.
+2. Click the workbook title, select **Edit workbook settings**, scroll to the **Share as template** section, toggle it on, and copy the link.
 3. Make sure your account is already a member of the destination workspace. If not, add yourself via the workspace's member settings first.
 4. Open the template link in your browser. If you have access to multiple workspaces, Clay will prompt you to choose which workspace to create the workbook in. Select the destination workspace and create the workbook.
 
@@ -47,6 +47,8 @@ Tables, columns, formulas, and enrichment column configurations all copy over. A
 **Row data does not transfer.** The template link copies only the table structure and one row of sample data — your existing rows are not included. To bring your row data to the new workspace, export each table as a CSV from the source workspace, then import those CSVs into the corresponding new tables. When prompted during import, choose **Save and don't run** to avoid re-triggering enrichments on the imported rows.
 
 **Clay Lookup Rows columns:** After the workbook is created in the new workspace, any Lookup Rows columns in those tables will have no valid target table — the column's internal table reference points to a table ID in the original workspace that does not exist in the new workspace. Open each Lookup Rows column and repoint it to the correct table in the new workspace. One reconnection is required per lookup target table.
+
+**Send Table Data columns:** Send Table Data columns store a reference to the target table they write rows to. When the workbook is created in the new workspace, those references point to table IDs in the original workspace that do not exist in the new workspace. After setting up all tables in the destination workspace, open each Send Table Data column and reselect the correct target table in the new workspace.
 
 ### Separate Clay accounts (different logins)
 
@@ -58,3 +60,5 @@ There is no native one-click migration between two unrelated Clay accounts. The 
 4. Reconnect any integrations and reconfigure enrichment columns that reference connections from the source workspace.
 
 **Clay Lookup Rows columns:** Lookup Rows columns store a reference to a specific table ID within a workspace. That reference does not carry over to the new account — in the new workspace, each Lookup Rows column has no target table configured. After rebuilding all tables in the destination account, open each Lookup Rows column and repoint it at the correct migrated table. One reconnection is required per lookup target table.
+
+**Send Table Data columns:** Send Table Data columns store a reference to a target table ID within a workspace. That reference does not carry over to the new account — in the new workspace, each Send Table Data column has no target table configured. After rebuilding all tables in the destination account, open each Send Table Data column and reselect the correct migrated table.
