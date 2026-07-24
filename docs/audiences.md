@@ -542,6 +542,14 @@ If an existing record had a value for the field in Salesforce before you added t
 
 **To fill in missing data immediately for specific records:** In Salesforce, make a small change to any field on the affected accounts or contacts (for example, add and remove a space in a text field). This updates `SystemModstamp` and Clay will pick up those records — with all their current field values including the newly mapped field — on the next incremental sync.
 
+### Can I see when the weekly full sync is scheduled, or trigger it manually?
+
+No. The Clay UI shows only that the Salesforce full sync runs weekly — it does not display the exact day or time the next full sync is scheduled for your workspace. The timing is assigned automatically per workspace and is not shown in the interface.
+
+There is no self-serve option to trigger a full sync manually. If you need an expedited full sync — for example, to pick up formula field updates that are not captured by incremental syncs — contact Clay support.
+
+**Workaround for specific records:** The incremental sync (every 15 minutes for Enterprise, once daily for Growth) picks up any Salesforce record whose `SystemModstamp` has been updated. To re-sync specific records sooner, make a small edit to those records in Salesforce — for example, add and remove a space in any field. This updates `SystemModstamp` and Clay will pick up those records on the next incremental sync, without waiting for the weekly full sync.
+
 ### Why do some of my Salesforce Lead records not appear as separate person records in Clay?
 
 When Salesforce data syncs into Audiences, Leads and Contacts are not always separate Clay person records. Clay applies a built-in record-matching rule using the `ConvertedContactId` field on Lead records.
