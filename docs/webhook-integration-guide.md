@@ -2,7 +2,7 @@
 title: Webhooks in Clay
 description: Real-time data updates enabling application integrations and
   automated workflows.
-last_synced: 2026-04-26T01:40:54.241Z
+last_synced: 2026-04-26T01:40:54.622Z
 ---
 
 # Webhooks in Clay
@@ -130,6 +130,16 @@ curl -X POST YOUR_CLAY_WEBHOOK_URL \
 ```
 
 If a row appears in your table, the issue is in your original request's formatting, headers, or auth token. If no row appears on a brand-new webhook, contact support.
+
+### My webhook was working fine but has suddenly stopped receiving data
+
+This symptom — a webhook that ran correctly for weeks or months and then stopped with no change on your side — is almost always caused by the webhook source reaching its **50,000 submission limit**. The limit counts every record accepted since the webhook was created. When it is reached, the sending system starts receiving a `403 Record limit reached for webhook` error and no new rows are created in Clay.
+
+**To confirm this is the cause:** Open your workbook view and look at the source node for your webhook. The number shown there is your cumulative submission count. If it reads 50,000 (or very close), that is why your data stopped.
+
+**To resume receiving data:** See the [Limits](#limits) section for the two options — creating a new webhook with a fresh counter, or enabling auto-delete (Enterprise plan) to keep the same URL accepting data indefinitely.
+
+**If your data comes from Salesforce, Zapier, Make, or another external system:** the Clay source type is still **webhook**, because data enters Clay through a Clay webhook URL. Auto-delete applies to your table the same way it would for any webhook source — there is no special restriction based on what external system is sending the data.
 
 ### How can I tell which webhook source a row came from?
 
