@@ -151,7 +151,7 @@ A function being "Live" in Clay is not sufficient for it to appear in Claude. Ea
 2.  Click the function to open its settings and toggle **Enable for MCP** on.
 3.  Set a name and description for the function — both are required before Claude can see it.
 
-Once all three steps are complete, the function will appear when you ask Claude what functions are available. For full admin instructions, see [MCP settings — Enabling a function for MCP](https://university.clay.com/docs/mcp-settings#enabling-a-function-for-mcp).
+Once all three steps are complete, the function will appear when you ask Claude what functions are available. The **Enable for MCP** toggle is available on Launch, Growth, Enterprise, and Legacy Enterprise plans — if the toggle is locked or not visible in your workspace settings, contact Clay support. For full admin instructions, see [MCP settings — Enabling a function for MCP](https://university.clay.com/docs/mcp-settings#enabling-a-function-for-mcp).
 
 **Does Clay work with Claude Code?**
 
