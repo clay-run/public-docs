@@ -72,6 +72,17 @@ Authenticate by passing your workspace-scoped API key in the `clay-api-key` requ
 
 **Note:** A `413` (`Payload Too Large`) from `POST /search/filters-mode/{search_id}/run` means the requested page of results exceeds the API's internal output cap. Reduce the `limit` parameter in your request and retry — the error is deterministic, so retrying at the same `limit` will always fail.
 
+**Note:** Clay caps how many search results your workspace can return through the Public API, CLI, and MCP server per billing period. These quotas apply to Clay's People & Company Search API — they do not apply to in-app table enrichments or Routines API runs.
+
+| Plan | Results per period | Period window |
+| ---- | ------------------ | ------------- |
+| Free | 100 | Monthly (resets on the 1st of each month, UTC) |
+| Trial | 10,000 | 14 days from plan start |
+| Paid | 1,000,000 | Annual (resets January 1 UTC) |
+| Enterprise | 10,000,000 | Annual (resets January 1 UTC) |
+
+When you exceed the period limit, Clay returns `400` with a message naming the limit and when it resets — for example: `"This request would exceed your workspace's annual limit of 1,000,000 results. You have already requested X results during the current period, which resets on January 1, [year] (UTC). Contact support to raise this limit."` There is no in-product usage meter for this quota — your workspace will not receive a warning before hitting it. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
+
 **Note:** Credits consumed by Routines API runs appear in the **Workbooks** tab of the credit usage dashboard — not the **API** tab. Each run processes records in the function's table, and those credits are attributed to that table, the same as any other table enrichment. To see this credit spend, go to `Settings → Usage → Workbooks` and find the table associated with your routine. The **API** tab in the credit usage dashboard covers only direct People & Company Search API and Exportly calls — not Routines API enrichments.
 
 **Note:** If you're using Clay as an API, **Auto-delete** helps keep things fast and lightweight. It automatically enriches incoming webhook data, sends results to your destination (like Salesforce or Google Sheets), then deletes the rows—so Clay streams data through rather than storing it. Perfect for high-volume or continuous enrichment jobs. [Learn more](https://www.clay.com/university/guide/auto-delete).
