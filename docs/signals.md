@@ -259,6 +259,20 @@ The **Monitor Professional Posts** signal discovers professional posts matching 
 -   **Confirm your identifiers.** At least one Companies or People filter must be configured with valid domains or profile URLs if you have selected a filter type.
 -   **Check the Companies filter option.** If you want posts *written by* employees at specific companies (not posts that merely *mention* those companies), set the Companies filter to **Posted by companies' employees**, not **Mentions companies**.
 
+### Why does my "Get interactions with professional posts" Signal fail with "Invalid input"?
+
+The **Get interactions with professional posts** source only accepts original post URLs from the professional network — specifically those containing `-activity-` or `ugcPost` in the URL path. Share URLs — those containing `-share-` before the numeric post ID — are not valid and cause the "Invalid input" error.
+
+**How to identify the URL type:**
+
+-   **Valid (activity):** the path contains `-activity-` before the post ID, e.g. `…/posts/author-slug-activity-7212099008951975937-xxxx`
+-   **Valid (ugcPost):** the path contains `ugcPost`, e.g. `…/feed/update/urn:li:ugcPost:7264751670859911168`
+-   **Invalid (share):** the path contains `-share-` before the post ID, e.g. `…/posts/author-slug-share-7468708383462797312-LxbK`
+
+To get a valid URL manually: open the post on the professional network, click **•••** (three dots) at the top right of the post, and select **Copy link to post**. If the post is a reshare of someone else's content, open the original underlying post first and copy its link from there.
+
+If post URLs are flowing in from another Clay source — such as **Find professional posts** or **Get a person's professional posts and shares** — some rows may contain share-type URLs for reshared content. To convert those automatically, add an **Enrich professional post** enrichment column and map your post URL column to it. The enrichment's **Post URL** output contains an activity-type URL that you can then pass to **Get interactions with professional posts**.
+
 ### Why did my job description keyword search return unexpected results?
 
 Job description keywords use phrase matching — your search term must appear as a contiguous sequence of words in the job description. Hyphens in your search terms are treated as word separators, so "K-12" and "K 12" produce the same search (both look for the phrase "k 12" in the description). If you want to search for a compound term as a single unbroken token, enter it without separators (for example, use "k12" instead of "K-12").
