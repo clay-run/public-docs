@@ -44,7 +44,9 @@ When setting up key-pair authentication, you'll need to provide:
 -   **Schema** (optional): The schema to connect to in Snowflake. If not specified, you'll be prompted to enter it when setting up a Snowflake enrichment.
 -   **Warehouse** (optional): The warehouse to use for queries in Snowflake. If not specified, you'll be prompted to enter it when setting up a Snowflake enrichment.
 
-**Static IP routing:** Snowflake Key Pair connections always route through Clay's fixed IP addresses — no toggle or configuration is needed on the Clay side. If your Snowflake account has a network policy restricting incoming connections by IP address, you may see the error "The provided account has IP allow-listing enabled, which is preventing the connection." To resolve this, add Clay's static IP addresses to your Snowflake network policy. Contact [Clay support](https://www.clay.com/support) to get the current list of IP addresses to allowlist.
+**Static IP routing:** Snowflake Key Pair connections always route through Clay's fixed IP addresses — no toggle or configuration is needed on the Clay side. Clay's static IP addresses are stable and do not rotate, so once you add them to your Snowflake network policy, you will not need to update them again.
+
+If your Snowflake account has a network policy restricting incoming connections by IP address, you may see the error "The provided account has IP allow-listing enabled, which is preventing the connection." To resolve this, add Clay's static IP addresses to your Snowflake network policy. To get the list of IP addresses to allowlist, contact [Clay support](https://www.clay.com/support) — a support team member will provide them directly.
 
 ### Setting up username and password authentication
 
@@ -211,6 +213,8 @@ Move the private key somewhere easy to find for the next step:
 3.  Click `+ Add account` and fill in the connection fields.
 4.  **Finding your Account Identifier:** In Snowflake, click your name or initials in the bottom-left corner, then click `View account details`. Copy the Account Identifier — it will look something like `ABCDEFG-XYZ12345`.
 5.  Click `Test Account and Save`.
+
+**Static IP routing:** Snowflake connections in Audiences also route through Clay's fixed IP addresses automatically — no toggle is needed. Clay's static IP addresses are stable and do not rotate. If your Snowflake instance has a network policy restricting incoming connections by IP address, contact [Clay support](https://www.clay.com/support) before connecting — a support team member will provide the IP addresses to add to your Snowflake network policy.
 
 ### Writing your SQL query
 
