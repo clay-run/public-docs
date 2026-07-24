@@ -46,6 +46,8 @@ To save a group of columns so you can reuse it in other tables, see [Creating a 
 
 ## Editing a column group template
 
+A column group template stores a snapshot of your column configuration at the time it was saved. If you later change a column's prompt, model, or other settings, those changes do not automatically update the template.
+
 You can update a template's name, description, and category from the template library:
 
 1.  While in a table, click `Tools`.
