@@ -27,6 +27,12 @@ You can run enrichments in several ways:
 3.  In the modal, select your account.
     -   Clay provides API keys for certain enrichments, but you can save [credits](https://www.clay.com/university/guide/credits) by using your own account—click `+ Add account` to set it up.
 
+### Finding the right provider
+
+When you search for an enrichment, each result in the search panel shows **institutional knowledge badges** — labels like **Best for EMEA**, **SMB coverage**, or **cost** — compiled from real-world usage by Clay's Solutions and Partnerships teams. Rows also show the enrichment type (template, enrichment, or waterfall) and who created it.
+
+To narrow results to providers that fit your use case, click any badge label to filter the search by that attribute.
+
 ## Run settings
 
 Run settings give you control over when and how your enrichments execute. Access these settings by clicking into any enrichment column.
