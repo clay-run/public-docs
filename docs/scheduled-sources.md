@@ -75,3 +75,11 @@ To have your table automatically import new matching entries on a recurring basi
 Each subsequent run appends newly matched entries to your table without removing existing rows (see [Scheduled source runs are additive](#scheduling-source-runs) above).
 
 **Note:** Scheduled sources are not available on the Free plan.
+
+### I see "You have exceeded the maximum number of scheduled sources on your plan"
+
+This error appears when your workspace has reached its scheduled source limit (Launch and Growth plans: 100 sources; Enterprise: 1,000 sources). To free up slots:
+
+1.  **Switch unneeded sources to Manual** — click the source column title, select the source under **Sources**, change **Run this source** to **Manually**, and click **Update Source Schedule**. Switching a source to Manual immediately frees one slot.
+2.  **Delete tables you no longer use** — deleting a table frees all of its scheduled source slots immediately. You do not need to permanently remove the table from Trash; the count updates as soon as the table is moved there.
+3.  **Contact support if the error persists** — if you still see this error after reducing your scheduled sources, reach out to support with your workspace URL. The team can verify your current usage count and raise your workspace limit if needed.
