@@ -143,6 +143,16 @@ Claude will automatically activate Clay based on context when you ask about find
 
 Yes. Ask _"What functions do you have?"_ or _"What workflows has RevOps built for me?"_ and Claude will list any Functions your ops team has enabled for your account.
 
+**Troubleshooting: My custom functions don't appear in Claude**
+
+A function being "Live" in Clay is not sufficient for it to appear in Claude. Each function must be explicitly enabled for MCP by a workspace admin before Claude can see it. If you ask `What functions do you have?` and Claude returns nothing, or a function you expect is missing, ask your admin to do the following for each affected function:
+
+1.  Open the **Functions** tab in your Clay workspace.
+2.  Click the function to open its settings and toggle **Enable for MCP** on.
+3.  Set a name and description for the function — both are required before Claude can see it.
+
+Once all three steps are complete, the function will appear when you ask Claude what functions are available. For full admin instructions, see [MCP settings — Enabling a function for MCP](https://university.clay.com/docs/mcp-settings#enabling-a-function-for-mcp).
+
 **Does Clay work with Claude Code?**
 
 Yes. Once you connect Clay via Claude's connector system at `claude.com/connectors/clay`, it will also work in Claude Code.
