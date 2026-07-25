@@ -125,6 +125,8 @@ To remove the limit and return to the full table, click **Show all rows** in the
 
 > **Note:** The column and table-level progress bars always count _all_ rows in the table — including rows outside your current row limit. The limit controls which rows are visible and eligible to run, but the progress percentages reflect the full table.
 
+> **Note for function tables:** If you're viewing a function's live view and see a count like **1,000/1,000 rows**, this is a different behavior from the user-set row limit described above. Function tables automatically move older processed rows to an **Archive** section when the live view reaches 1,000 rows — this is intentional and not a limit you configured. To view or export those rows, click the **Archive** button in the function table's toolbar. See [Is there a row limit for functions?](functions.md#is-there-a-row-limit-for-functions) for full details.
+
 ## Troubleshooting cells stuck in Queued status
 
 Cells show a **Queued** status when they are waiting to be processed. This is normal when running large tables — Clay processes many rows concurrently, but rows still queue when the system is handling prior requests or when an external API is rate-limiting responses. In most cases the queue resolves automatically.
