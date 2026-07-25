@@ -411,7 +411,7 @@ When you open an **Update Object** column and select an **Object type**, the ava
 
 **The HubSpot connection may be missing required OAuth scopes.** Clay uses the `crm.schemas.companies.read` and `crm.schemas.contacts.read` scopes to load property lists for Company and Contact objects (for deals, `crm.schemas.deals.read` is also required). If these scopes were not granted when you first connected HubSpot, the field picker returns no properties. To fix this, open **Settings → Integrations → HubSpot**, click the `···` menu next to your connection, and choose **Re-authenticate** — this re-requests the full scope set without changing your connection ID or breaking existing columns.
 
-**The connection may be broken or expired.** If Clay cannot reach HubSpot with a valid access token, the field picker silently returns no properties. Open the column settings and verify the selected account shows **Success** in Settings. If it shows an error, see the FAQ above ("Why does my HubSpot column still show 'Missing authentication' after I reconnect my account?") for how to restore the credential without losing your column configurations.
+**The connection may be broken or expired.** If Clay cannot reach HubSpot with a valid access token, the field picker silently returns no properties. Open the column settings and verify the selected account shows **Success** in Settings. If it shows an error, see the FAQ above (\"Why does my HubSpot column still show 'Missing authentication' after I reconnect my account?\") for how to restore the credential without losing your column configurations.
 
 ### How can I create HubSpot notes from Clay?
 
@@ -431,6 +431,30 @@ Clay's HubSpot integration does not include a native action for creating Notes. 
 **Tip:** Use the `hs_object_id` returned by a HubSpot **Lookup object** column to get the correct object ID for the association target.
 
 If a note you created does not appear in HubSpot, confirm that your HubSpot role has permission to view unassigned notes and that your HubSpot view filter includes notes.
+
+### How do I add contacts to a HubSpot static list from Clay?
+
+Clay's native HubSpot integration does not include an "add to list" action. To add contacts to a HubSpot static (MANUAL) list row by row, use an **HTTP API** column with a HubSpot private app token.
+
+**Why the body keeps failing:** HubSpot's list membership endpoint expects a raw JSON array of record IDs — not an object. The body must look like `[123456789]`, with square brackets and nothing else. Adding curly braces (`{"ids": 123456789}`) or wrapping the value in a formula column causes a body formatting error.
+
+**Setup:**
+
+1. In your Clay table, add an **HTTP API** column.
+2. Set the **Method** to `PUT` and the **URL** to:
+   `https://api.hubapi.com/crm/v3/lists/YOUR_LIST_ID/memberships/add`
+   Replace `YOUR_LIST_ID` with your list's ILS ID — visible in the HubSpot URL when you open the list (for example, `https://app.hubspot.com/contacts/YOUR_PORTAL/lists/611`).
+3. Add these headers:
+   - `Authorization`: `Bearer <your-private-app-token>`
+   - `Content-Type`: `application/json`
+4. In the **Body** editor (token mode), type `[`, then type `/` to open the column picker and select your HubSpot Object ID column, then type `]`. The body field should display `[/Your HubSpot Object ID Column]` — nothing else. No curly braces, no field name.
+5. Do **not** wrap the ID in a formula column. Clay serializes the column chip automatically; wrapping it as a string (e.g., using a formula to convert it) breaks the array format.
+
+**Required scope:** Your HubSpot private app or service key must have `crm.lists.write` enabled. Without it, the API returns a 403 error even when the body is correctly formatted. Check and update your app's scopes in HubSpot under **Settings → Private Apps → [your app] → Scopes**.
+
+**Tip:** To make the list ID dynamic — for example, when you want to add each contact to a different list based on a column value — you can reference a column in the URL instead of hardcoding the list ID. Set the URL to `https://api.hubapi.com/crm/v3/lists/` and then insert a `/List ID Column` chip followed by `/memberships/add`.
+
+**Note:** This endpoint works only with `MANUAL` (static) lists. You cannot use it to add records to `DYNAMIC` (active) lists — those are managed entirely by HubSpot's filter criteria.
 
 ### Why does "Retrieve associated objects" return at most 20 results, even when HubSpot shows more?
 
