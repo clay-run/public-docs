@@ -92,7 +92,11 @@ No. As of General Availability, functions support unlimited rows via passthrough
 
 **Note:** The function's live view displays only the most recent **1,000 rows** at a time. This limit is intentional: functions are passthrough tables, and keeping the active row count low ensures there is enough space for new incoming records to be processed. All rows are fully processed and their results returned to the calling table regardless of this limit.
 
-To review rows beyond the 1,000 shown in the live view, click the **Archive** button in the function table's toolbar. The Archive section shows historically processed rows organized by timeline, and you can export the full set as a CSV. If you need to retain more active rows in the live view (for example, for easier auditing of recent runs), open the auto-delete settings for the function table and update the **Number of rows to keep** field — though increasing this limit on high-volume functions can slow processing.
+By default, rows pruned from the live view are permanently deleted. To preserve historical rows, open the function table's **auto-delete settings** and enable **Archive** — when enabled, rows beyond the live view limit are stored in an Archive section rather than deleted. The Archive view shows up to 1,000 rows at a time; an export button in the Archive's top-right corner downloads the full archive as a CSV and shows the actual total count of archived rows.
+
+> **Note:** The Archive feature must be enabled for your workspace. If you don't see an **Archive** button in the function table's toolbar or an Archive toggle in the auto-delete settings, contact Clay support.
+
+To increase the number of rows kept in the live view itself, update the **Number of rows to keep** field in the auto-delete settings — though increasing this limit on high-volume functions can slow processing.
 
 ### What's the difference between an input and a column in a function?
 
