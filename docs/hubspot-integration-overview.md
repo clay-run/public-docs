@@ -411,7 +411,7 @@ When you open an **Update Object** column and select an **Object type**, the ava
 
 **The HubSpot connection may be missing required OAuth scopes.** Clay uses the `crm.schemas.companies.read` and `crm.schemas.contacts.read` scopes to load property lists for Company and Contact objects (for deals, `crm.schemas.deals.read` is also required). If these scopes were not granted when you first connected HubSpot, the field picker returns no properties. To fix this, open **Settings → Integrations → HubSpot**, click the `···` menu next to your connection, and choose **Re-authenticate** — this re-requests the full scope set without changing your connection ID or breaking existing columns.
 
-**The connection may be broken or expired.** If Clay cannot reach HubSpot with a valid access token, the field picker silently returns no properties. Open the column settings and verify the selected account shows **Success** in Settings. If it shows an error, see the FAQ above ("Why does my HubSpot column still show 'Missing authentication' after I reconnect my account?") for how to restore the credential without losing your column configurations.
+**The connection may be broken or expired.** If Clay cannot reach HubSpot with a valid access token, the field picker silently returns no properties. Open the column settings and verify the selected account shows **Success** in Settings. If it shows an error, see the FAQ above (\"Why does my HubSpot column still show 'Missing authentication' after I reconnect my account?\") for how to restore the credential without losing your column configurations.
 
 ### How can I create HubSpot notes from Clay?
 
@@ -435,3 +435,9 @@ If a note you created does not appear in HubSpot, confirm that your HubSpot role
 ### Why does "Retrieve associated objects" return at most 20 results, even when HubSpot shows more?
 
 The "Retrieve associated objects" action has a maximum result count of 20 per run, enforced in Clay's code. The **Limit** field accepts values between 1 and 20 — entering a higher value is not possible. The action also performs a single API call and does not paginate automatically: if an object has more than 20 associated records in HubSpot, only up to 20 are returned in a single run. There is no built-in way to retrieve more than 20 associated objects through this action in a single run.
+
+### Why can't I import HubSpot Activities (calls, emails, meetings, notes, or tasks) into Clay?
+
+HubSpot Activities — including calls, emails, meetings, notes, and tasks — are not available as importable object types through Clay's HubSpot integration. This is a HubSpot API-level limitation: Activities are not exposed as standard CRM objects through HubSpot's API, so they cannot be imported regardless of your HubSpot settings or permissions. Clay's HubSpot integration supports importing **Company**, **Contact**, **Deal**, **Lead**, and any **custom objects** configured in your HubSpot account — but Activities are not in the supported object type list.
+
+**Workaround:** Create HubSpot rollup properties on your Contact or Company objects to capture the activity data you need. For example, to track completed meetings for a contact, create a Contact property in HubSpot that stores the most recent completed meeting date — populated by a HubSpot workflow or rollup. Once those properties are in place, import the Contact or Company into Clay using the **Import objects from HubSpot** source or a **Lookup object** action; Clay reads the rollup property like any other contact or company field. Using date-based rollup properties (rather than booleans) lets you compute recency-based values in Clay with a formula, such as the number of days since the last completed meeting.
