@@ -381,7 +381,8 @@ Connect a Clay workflow to an audience segment to automatically run it on every 
 **To connect a workflow:**
 
 1.  Navigate to an audience segment and click `Send` → **Send to workflow**.
-2.  In the modal, choose **New workflow** (to create one) or **Existing workflow** (to select from your workspace).\n3.  The workflow appears as a card in the **Workflows** section of the sidebar with a **Draft** status.
+2.  In the modal, choose **New workflow** (to create one) or **Existing workflow** (to select from your workspace).
+3.  The workflow appears as a card in the **Workflows** section of the sidebar with a **Draft** status.
 
 **Publishing the workflow trigger**
 
