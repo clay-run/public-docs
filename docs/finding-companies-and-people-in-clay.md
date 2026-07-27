@@ -552,6 +552,21 @@ The answer depends on which feature you're using:
 
 Across both, high-importance profiles (frequently accessed records, decision-makers, active companies) refresh more often than long-tail profiles.
 
+### Why did my company enrichment return a match for a company whose website is down, or match to the wrong company?
+
+**The database does not verify site liveness**
+
+When you enrich a domain using Clay's company database (the **Enrich Company** enrichment or **Find Companies** source), Clay matches the domain against a cached company graph. At the time of matching, Clay does not check whether the company's website is currently live. A company whose website has gone offline, filed for bankruptcy, or transitioned to a different entity can still return a database match as long as Clay has a cached record for that domain.
+
+**Brand-token matching can produce cross-country false matches**
+
+Clay's domain-to-company matching extracts brand tokens from the domain — stripping TLDs, country-code suffixes, and common business suffixes like "ltd" or "inc" — and scores them against companies that share those tokens. Country of origin is used as a secondary scoring signal but does not exclude cross-country candidates. As a result, a domain like `brand.mx` can occasionally match a cached record whose canonical domain is `brand.co.in` if their extracted brand tokens are similar. When this happens, the **Country** or **Location** field in the result reflects the matched company's country rather than the domain's country — which is the signal to look for when auditing results.
+
+**What to do**
+
+-   **For sourcing (Find Companies):** Use the **Domain is live** filter in the Find Companies setup to restrict results to companies with currently active domains before importing.
+-   **For specific rows that returned the wrong company:** Try a different enrichment provider (such as Clearbit or Apollo) as a second lookup for that domain. Alternatively, if you have the company's LinkedIn URL, use it as the input to people-search enrichments — LinkedIn URLs map directly to a specific company profile and bypass the domain-to-company resolution step entirely.
+
 ### Can I run a people search only on companies that meet certain criteria?
 
 Company and people search sources don't support run conditions. The workaround is to create a **filtered view** of your company table (showing only the rows you want), then select that view in the Find People search configuration:
