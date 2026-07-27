@@ -75,6 +75,8 @@ Clay pulls data from Salesforce on two schedules:
 
 **Salesforce activities:** To import Salesforce Tasks and Events associated with your Accounts, go to your Salesforce source settings, select `Accounts`, and enable the **Also import activities (tasks and events) associated with these accounts** toggle. Accounts are associated automatically in the background. The Activity tab on each record's detail view then shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp. This toggle is only available for Accounts — there is no equivalent option for Contacts, Leads, or the People object. Even if your Salesforce CRM has Tasks or Events associated with contacts or leads, those activities will not appear in the People Activity tab in Audiences.
 
+**Salesforce custom object import (early access):** If your workspace has this feature enabled, an **Objects** option appears in the Salesforce source setup alongside the standard record types (People, Accounts, Leads, and Opportunities). You can map any Salesforce custom object type to a Clay Activity type — the imported records appear in the **Activity** tab on each entity's detail view in Audiences. Custom object import is currently in early access — contact your Growth Strategist to enable it for your workspace.
+
 ### Importing from HubSpot
 
 **Note:** Setup must be completed separately for Contacts, Companies, and Deals. HubSpot Deal import is currently in early access — contact your Growth Strategist to enable it for your workspace.
