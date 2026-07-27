@@ -10,7 +10,9 @@ description: Create and manage named credit budgets to organize spend, prevent
 
 If you need to allocate credits to specific workbooks, teams, or projects — tracking and capping each group's spend separately — credit budgets is the feature you need. Credit budgets give workspace admins a way to organize credit spend across teams and workflows — think company cards for GTM infrastructure. Instead of a single workspace-wide credit pool with no visibility, admins create named budgets (for example, "Sales Team" or "Marketing Ops"), assign workbooks and other resources to each budget, and set credit limits per budget. This helps prevent overspend, makes it easy to attribute costs to the right team or project, and gives enterprises the governance controls they need to expand Clay usage with confidence.
 
-Credit budgets appear at `Settings` → `Budgets`. Only workspace admins can create and manage budgets.
+Credit budgets appear at `Settings` → `Budgets`. Only workspace admins on Enterprise plan workspaces can create and manage budgets. The **Budgets** page is not visible to non-admin members or to workspaces on plans other than Enterprise — if you don't see it in Settings, you are either not a workspace admin or not on the Enterprise plan.
+
+**Seeing a "Budget Credit Limit Reached" error in an AI column?** That error comes from a separate per-row credit cap inside the AI column's settings, not from a workspace budget. To fix it, open the AI column's settings and increase the **Clay Credit Budget** value. See [Use AI](./use-ai-integration-overview.md) for step-by-step instructions. Any workspace member who can edit the column can adjust this setting.
 
 ## How credit budgets work
 
@@ -84,13 +86,14 @@ When a budget is deleted, you can reassign all of its resources to a different b
 
 ## Credit budgets vs. credit spend limits
 
-Clay has two distinct credit governance features for Enterprise workspaces:
+Clay has two distinct credit governance features for Enterprise workspaces, plus a per-column setting available to all workspace members:
 
 | Feature | What it does | Where to find it |
 |---|---|---|
-| **Credit budgets** | Named credit pools — assign workbooks to a budget and track spend across teams. | `Settings` → `Budgets` |
-| **Credit spend limits** | Per-workbook credit caps — set a maximum spend for a single workbook or table. | `Settings` → `Usage` → `Workbook limits` |
+| **Credit budgets** | Named credit pools — assign workbooks to a budget and track spend across teams. Enterprise workspace admins only. | `Settings` → `Budgets` |
+| **Credit spend limits** | Per-workbook credit caps — set a maximum spend for a single workbook or table. Enterprise workspace admins only. | `Settings` → `Usage` → `Workbook limits` |
+| **Clay Credit Budget (per AI column)** | Per-row credit cap on a single AI column — limits how many credits a single row can spend. Available to all workspace members who can edit the column. | AI column settings → **Clay Credit Budget** |
 
-These features are complementary. You can use spend limits to cap individual workbooks while also assigning them to a budget for team-level cost attribution.
+The first two features are complementary for Enterprise admins: use spend limits to cap individual workbooks while also assigning them to a budget for team-level cost attribution. The per-column Clay Credit Budget is independent and available regardless of plan or role — it prevents any single row from consuming more credits than the set limit.
 
 **Note:** Neither credit budgets nor credit spend limits can be applied directly to a Function. Credit limits apply to a workbook as a whole — including all Function calls that workbook makes. There is no per-Function credit cap. To limit how much a specific workbook spends (including its Function calls), assign it to a budget with a credit limit or set a per-workbook credit spend limit on it.
