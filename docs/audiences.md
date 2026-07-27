@@ -440,7 +440,7 @@ With **Premium** or **Standard**, Clay queries its provider network to find and 
 
 ## Writing back to your CRM
 
-**Note:** Salesforce is currently the only native export destination in Audiences. HubSpot export from Audiences is not yet available — to write data to HubSpot, see [Can I write enriched data from Audiences back to HubSpot?](#can-i-write-enriched-data-from-audiences-back-to-hubspot) in the FAQs below.
+**Note:** Salesforce is currently the only native export destination in Audiences. HubSpot export from Audiences is not yet available — to write data to HubSpot, see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
 
 Audiences supports **bidirectional sync** with Salesforce. To push data from Audiences back to Salesforce, you must first enable the **Export sync** toggle in your Salesforce source settings — this is the master switch for all outbound writes. Even if individual fields are configured with an "Always write" rule, no data flows to Salesforce until Export sync is turned on.
 
@@ -623,21 +623,6 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 ### How do I export my audience data to CSV?
 
 The Audiences screen does not have a direct CSV download button, and there is currently no built-in path to download audience data as a CSV file directly from the Audiences screen.
-
-### Can I write enriched data from Audiences back to HubSpot?
-
-HubSpot is not yet available as a native export destination in Audiences. The **Destinations** tab under **Settings** → **Audiences** currently only supports Salesforce — the empty state reads "Connect Salesforce to automatically sync your data back."
-
-HubSpot IS supported as an **import source** (you can sync records from HubSpot into Audiences), but writing data back to HubSpot from Audiences is not yet built.
-
-To push enriched Audience data to HubSpot today, use the **`Update/Upsert to HubSpot`** action inside an Audiences bulk enrichment:
-
-1. Navigate to a segment and click `Enrich` → `Add bulk enrich`.
-2. In the bulk enrichment table, click `Add enrichment` and search for **Update/Upsert to HubSpot**.
-3. Select your HubSpot connection and map the fields you want to write (contacts, companies, or deals).
-4. Click `Start Run`.
-
-The `Update/Upsert to HubSpot` action supports batch processing, which keeps HubSpot API consumption efficient for large audiences. Native HubSpot export from Audiences is on the roadmap.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
