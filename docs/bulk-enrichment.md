@@ -83,6 +83,27 @@ Check both the **Queued rows** and **Errored rows** tabs for rows with **Run Sto
 
 For more options on re-running specific rows or cells, see [Run progress](run-progress.md).
 
+### Understanding count differences between Clay and your destination
+
+When a bulk enrichment contains multiple enrichment steps, the record count shown in Clay and the count in your downstream destination (Snowflake, Salesforce, Google Sheets, etc.) will often differ while a run is in progress. **This is expected behavior, not a bug.**
+
+Each enrichment step processes independently with its own queue and latency. Clay's processed count increments when a row exits the bulk enrichment table — but the final write to your destination only completes after all upstream enrichment steps for that row have finished. As the work drains through the chain, the two counts catch up to each other.
+
+For example, if your bulk enrichment runs several function-based enrichment steps before a Snowflake export, you may see Clay reporting 46,000 records processed while Snowflake shows only 14,000 rows — because thousands of rows are still working through the intermediate steps.
+
+**Why destination counts keep climbing after you pause a run**
+
+Pausing a bulk enrichment stops new rows from entering the processing queue. However, rows that were already dispatched to enrichment steps continue running to completion. This means your downstream destination (Snowflake, Salesforce, etc.) may keep receiving new writes for some time after the table is paused — the in-flight work is still finishing. Once those rows complete, the destination count stabilizes.
+
+**How to reconcile counts**
+
+To understand where rows are in the pipeline:
+
+1.  Start from your final write action (for example, your Snowflake or Salesforce export column) and check its progress bar.
+2.  Work backwards through the enrichment chain, checking the progress of each step.
+
+Each enrichment column shows a progress bar you can hover over to see how many rows have completed, are queued, or have errored at that step. Comparing the counts across steps shows exactly where rows are still in flight.
+
 ## Run Setup settings (Audiences)
 
 When a bulk enrichment is attached to an [Audiences](https://university.clay.com/docs/audiences) segment (available on Growth and Enterprise plans), clicking the enrichment card opens a **Run Setup** panel with additional settings for ongoing enrichment behavior.
