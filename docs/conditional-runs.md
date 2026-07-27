@@ -190,6 +190,38 @@ On new rows, the upstream column hasn't run yet, so the condition is false and t
 
 **Simpler alternative for scheduled re-run tables**: If the root cause is that your action column is included in a scheduled re-run, the easiest fix is to uncheck it from the scheduled re-run list (Table Settings → Run Settings → Re-run columns on a schedule). Table-level Auto-run still fires the column for genuinely new rows. See [Scheduled columns](scheduled-columns.md).
 
+### Running a downstream action only after all upstream columns have finished
+
+Clay columns execute based on a dependency graph — each column fires as soon as its own declared inputs are ready — not in a strict left-to-right sequence. A column with no declared dependency on a sibling column will not wait for that sibling to finish. This means a downstream action column (such as one that sends data to a CRM or webhook) can run before sibling enrichment columns finish, even if those columns appear to the left of it in the table.
+
+To prevent a downstream action from running before all required upstream enrichments are complete, use one of these approaches:
+
+**Option 1 — Multi-column condition in "Only run if"**
+
+In the action column's **Run settings → Only run if**, require every upstream column to have a value:
+
+`/Column A is not empty AND /Column B is not empty AND /Column C is not empty`
+
+The action fires only once all referenced columns have results for that row. Replace `/Column A`, `/Column B`, `/Column C` with the actual column names in your table.
+
+**Option 2 — Guard formula column**
+
+Create a dedicated **Formula column** (for example, named "All Done") that returns a non-empty value only when all required upstream columns have results:
+
+`{{Column A}} && {{Column B}} && {{Column C}}`
+
+This returns a truthy value only when all referenced columns are populated. Then set the action column's **Only run if** condition to:
+
+`/All Done is not empty`
+
+This keeps the run condition simple and is easier to maintain when checking many columns.
+
+**Note:** With Auto-run enabled, the "Only run if" condition is re-evaluated each time an upstream value changes for that row. The action fires as soon as the condition first becomes true — meaning as soon as all referenced columns are non-empty. If you need to gate on columns that are not otherwise in the action column's dependency chain, include them explicitly in your guard condition or formula.
+
+**Option 3 — Disable Auto-run and run the action manually**
+
+Turn off Auto-run on the action column (Edit column → Run settings → toggle Auto-run off). Once all other enrichments have finished, manually trigger the column: right-click its column header → **Run column** → **Run all rows**. This gives you complete control over when the action fires and is the simplest option when your workflow does not need to run automatically.
+
 ### "Circular dependency error" when setting a run condition
 
 When you save a run condition, Clay validates that the column referenced in the condition does not depend — directly or through a chain of other columns — on the column being gated. If a cycle is detected, Clay shows a **"Circular dependency error"** modal and prevents saving. The modal lists the specific column(s) that complete the loop.
@@ -225,7 +257,7 @@ Alternatively, restructure so the condition-determining step happens fully upstr
 
 With **Auto-run** enabled, Clay re-evaluates an action column's "Only run if" condition each time a value in the current row changes — including each time an upstream enrichment column finishes running. The condition is **not a one-time gate**: if it evaluates to `true` on multiple occasions as different enrichments complete, the action column can run multiple times on the same row.
 
-**Consequence for webhook and HTTP API export columns**: If you gate a webhook on upstream enrichments being done, it can fire more than once per row. To ensure the action fires only once, use the guard-column pattern from [Running an action only once per row](#running-an-action-only-once-per-row-new-rows-only): gate the action on a formula column that only becomes non-empty once all required upstream work is finished.
+**Consequence for webhook and HTTP API export columns**: If you gate a webhook on upstream enrichments being done, it can fire more than once per row. To ensure the action fires only once, use the guard-column pattern described in [Running a downstream action only after all upstream columns have finished](#running-a-downstream-action-only-after-all-upstream-columns-have-finished): gate the action on a formula column or multi-column condition that only becomes true once all required upstream work is finished.
 
 **When upstream enrichments have their own run conditions**: If an upstream enrichment was skipped because its own "Only run if" condition wasn't met, `Clay.getCellStatus()` returns `"ERROR_RUN_CONDITION_NOT_MET"` for that cell — not `"SUCCESS"` or `"SUCCESS_NO_DATA"`. To gate a downstream action on "enrichment finished, whether it ran or was skipped," check for each possible final state explicitly. See [Formulas](formula-generator.md) for the full list of `getCellStatus()` return values.
 
