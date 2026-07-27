@@ -139,6 +139,18 @@ When you check **Replace columns with function** during function creation, Clay 
 2.  Select **Edit function** to open the function editor.
 3.  Your original columns appear inside the function exactly as they were — click any column header to see its full configuration, prompt text, and settings. From here you can copy any prompt out to reuse elsewhere.
 
+**What about my existing enrichment data (cell values)?**
+
+Your enrichment data is not deleted either. Clay backfills the existing cell values into the new function result column. The data is still there — it's just now nested inside the function column rather than shown as separate expanded columns in the table.
+
+To access your existing enrichment results:
+
+1.  Click on any cell in the function column that shows **✅ Success**.
+2.  In the **cell details panel** that opens on the right, you'll see all of the enrichment data for that row, organized by field.
+3.  Alternatively, hover over the cell and click **View full results** to expand the data inline.
+
+If some rows appear to be missing data, re-run the function column for those rows to pull the data back in.
+
 **To restore the original separate columns:**
 
 There's no one-click way to split a function back into standalone columns. If you need the original column layout back, use [table version history](table-versions.md):
