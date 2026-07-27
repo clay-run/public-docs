@@ -384,20 +384,18 @@ Connect a Clay workflow to an audience segment to automatically run it on every 
 2.  In the modal, choose **New workflow** (to create one) or **Existing workflow** (to select from your workspace).
 3.  The workflow appears as a card in the **Workflows** section of the sidebar with a **Draft** status.
 
-**Publishing the workflow trigger**
+**Activating the workflow**
 
-Once connected, click **Publish** to activate the trigger. Publish is a dropdown with three options:
+The workflow card shows the current status — **Draft**, **Live**, or **Paused**. To activate it, click the **⋮** (three-dot) menu on the workflow card and select **Open in Workflows**, then click **Publish** in the top toolbar of the workflow editor. Publishing the workflow activates all connected triggers — new segment members will run through the workflow automatically once it is live.
 
--   **Publish and run [member count]** — publishes the trigger and immediately runs the workflow on all current segment members. New members added later run automatically.
--   **Publish and run 10 [members]** — publishes the trigger and runs the workflow on a sample of 10 members to test behavior before committing to a full run. (Shown only when the segment has more than 10 members.)
--   **Publish and don't run** — publishes the trigger so future members run automatically, but does not run on any existing members.
+**Running a workflow on existing segment members**
 
-**Running a published workflow on existing members**
+To manually run the workflow on segment members already in the segment, open the workflow in the editor and use the **Run** dropdown on the trigger card:
 
-After a workflow is live, open the options menu (⋮) on the workflow card to manually run or re-run it on existing members:
+-   **Run [X] [members]** — runs the workflow on a sample of up to 10 current segment members. Shown only when the segment has more than 10 members.
+-   **Run all [X] [members]** — runs the workflow on all current segment members.
 
--   **Run all members that haven't run** — runs the workflow on segment members who joined before the trigger was published or who were otherwise skipped.
--   **Force run all members** — re-runs the workflow on every current segment member, including those that already ran. A confirmation prompt appears before this action runs, since it may use credits.
+The **Run** button is available in any trigger state — draft, live, or paused — so you can run the workflow on existing members before or after publishing.
 
 ### **Syncing audiences to ad platforms**
 
@@ -732,7 +730,7 @@ This means the filter answers "find me everyone who is a contact role on these s
 **To pull all contacts at accounts with matching deals:**
 
 1.  Build a **Companies** audience filtered by your deal criteria (for example, Stage, Amount, or deal name).
-2.  Connect a workflow to that Companies audience (**Send** → **Send to workflow**) that writes a flag value to a custom Salesforce field on each matching account — for example, a **Salesforce Update Record** action that sets a text field to `"target-campaign-q2"`. Publish and run it on all current segment members.
+2.  Connect a workflow to that Companies audience (**Send** → **Send to workflow**) that writes a flag value to a custom Salesforce field on each matching account — for example, a **Salesforce Update Record** action that sets a text field to `"target-campaign-q2"`. Publish the workflow, then use the **Run** dropdown in the workflow editor to run it on all current segment members.
 3.  In your **People** audience, add a filter on **Account → [your flag field] equals your flag value**.
 
 This pulls every contact tied to those accounts, regardless of their OpportunityContactRole status.
