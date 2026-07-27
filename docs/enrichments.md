@@ -27,6 +27,18 @@ You can run enrichments in several ways:
 3.  In the modal, select your account.
     -   Clay provides API keys for certain enrichments, but you can save [credits](https://www.clay.com/university/guide/credits) by using your own account—click `+ Add account` to set it up.
 
+## Enrichment search
+
+Click **Add enrichment** to open the enrichment search panel. Each result row displays three types of metadata to help you choose the right provider:
+
+-   **Type** — indicates what kind of result it is, for example Enrichment, Waterfall, or Template.
+-   **Attribution** — shows who created it: **By Clay** for Clay-built integrations, **By me** for enrichments you created, or a teammate's name (for example, **By Jane Smith**) for enrichments a colleague built.
+-   **Knowledge badges** — labels curated by Clay's internal teams that capture collective knowledge about each provider, such as coverage region ("best for EMEA"), company-size fit ("SMB coverage"), cost notes, and more.
+
+### Filtering by knowledge badges
+
+To narrow results to providers with a specific attribute, click any knowledge badge on a result row. Clay runs a filtered search showing only enrichments tagged with that badge. You can also type the badge name into the search bar — it appears as a filter suggestion you can apply as a chip.
+
 ## Run settings
 
 Run settings give you control over when and how your enrichments execute. Access these settings by clicking into any enrichment column.
