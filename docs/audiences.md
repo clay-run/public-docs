@@ -652,6 +652,18 @@ To enable it (admin-only):
 
 Once enabled, the first export does not run immediately — it fires at your workspace's next scheduled export time, which may be up to 24 hours away. See [Writing back to your CRM](#writing-back-to-your-crm) for the full schedule and behavior details.
 
+If Export sync is enabled but **specific fields** are still not updating in Salesforce — and you see no export errors — check each field's **write rule**. A field set to **Write if empty** only sends its value to Salesforce when the corresponding Salesforce field is blank. If that Salesforce field already contains a value, Clay skips the update silently without recording an error. Your data may look correct in Audiences while those fields remain unchanged in Salesforce.
+
+To allow Clay to overwrite existing Salesforce values for a field:
+
+1.  Go to **Settings** → **Sources / Destinations** and click your Salesforce connection.
+2.  Select the object tab (for example, **Accounts**).
+3.  Find the field that isn't updating and click the **pencil (edit) icon** next to it.
+4.  Change the write rule from **Write if empty** to **Always write**.
+5.  Click **Save and review** → **Confirm**.
+
+The updated value will be pushed to Salesforce on the next export cycle (within 24 hours).
+
 ### How do I create new Salesforce contacts or leads from an Audience enrichment?
 
 New Salesforce records are not created automatically when you run a bulk enrichment. Record creation is not driven by a Create Contact or Create Lead action inside the enrichment table — it is controlled by the **`Create new Salesforce records`** toggle in your Audiences Salesforce export settings.
