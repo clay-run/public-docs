@@ -213,6 +213,17 @@ Be sure to press `Save settings` after making edits. Note: deleting a campaign s
 
 If you added or edited a **Clean variable** and it is not appearing in your message, check that the **Fallback** field ("Simple text to display if variable is empty") is filled in — this field is required, and the variable will not save if left blank.
 
+### How many email steps can I add per campaign?
+
+Each campaign supports a maximum of 4 email steps. This limit is intentional — keeping sequences short helps protect your sender reputation and reduces the likelihood of your outreach being flagged as spam.
+
+If you need more than 4 touchpoints, two approaches work well alongside Clay:
+
+-   **Chain campaigns in Clay**: After your first campaign ends (or targets contacts who didn't reply to the first sequence), create a follow-up campaign targeting those same contacts with a new message sequence.
+-   **Third-party sequencers**: Export your enriched Clay data to a tool like Smartlead, Instantly, Outreach, or Salesloft — these platforms support longer email sequences and can receive leads directly from Clay.
+
+Note: You cannot change the number of steps in a campaign once it moves past draft status, even after pausing. To add or remove steps, complete the existing campaign and create a new one.
+
 ### Why can't I see or edit the Message sequence section?
 
 If your campaign is active, all settings — including the Message sequence — are locked. To make edits, open the campaign's `Setup` tab and click `Pause`. Once paused, you can edit message copy and campaign settings. Note that you cannot change the total number of messages while paused — to add or remove messages, complete the campaign and create a new one.
