@@ -698,6 +698,15 @@ The 24-hour export schedule is fixed and cannot be triggered manually. Two optio
 -   **Export a single record on demand (admin-only):** Open any record in Audiences and click **Export** in the top right of the record panel. This sends that record to Salesforce immediately, without waiting for the next scheduled sync. The button appears only when the record has a Salesforce export configured.
 -   **Export many records immediately:** Add a **Salesforce Update Record** action column to a bulk enrichment table — see [How do I write enriched fields back to existing Salesforce records from a bulk enrichment?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-bulk-enrichment) above.
 
+### How do I write enriched data back to HubSpot from Audiences?
+
+Salesforce is currently the only native export destination in Audiences — HubSpot export as a native destination is not yet available. To write data from Audiences to HubSpot, use a HubSpot enrichment action inside a bulk enrichment table in Audiences:
+
+1.  In your Audiences segment, click **Enrich** → **Add bulk enrich**.
+2.  In the bulk enrichment table, click **Add enrichment** and search for **HubSpot** → select **Create or Update Contact** (for People audiences) or **Create or Update Company** (for Companies audiences).
+3.  Map your Audience fields to the corresponding HubSpot fields.
+4.  Click **Start Run** — the HubSpot enrichment runs alongside any other action columns and writes your Audience data directly to HubSpot records.
+
 ### How do I access Account-level fields (like Company Name or Company Domain) from a People audience?
 
 When you import Salesforce Contacts into a People audience, only fields from the **Contact object** are available as columns — Account-level fields (Company Name, Company Domain, and any custom Account object fields) are not included automatically, even if the Contact has a linked Salesforce Account.
