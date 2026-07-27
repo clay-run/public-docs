@@ -313,9 +313,9 @@ Headers provide authentication and specify data formats. Add them as key-value p
 
 **⚠️ Common mistake**: Some data providers (like Apollo) have different API keys for different endpoints. Make sure you're using the correct key for your specific endpoint.
 
-### Step 6: Response values to return
+### Step 6: Field paths to return
 
-Use the **Response values to return** field to specify which parts of the API response you want Clay to store. This filters out unnecessary data and prevents large API responses from exceeding the 200 kB action column limit.
+Specify which parts of the API response you want to retrieve. Use this to filter out unnecessary data.
 
 **Example API response:**
 
