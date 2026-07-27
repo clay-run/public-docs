@@ -754,10 +754,12 @@ Three things to check:
 
 ### How do I remove records from an audience?
 
-To remove a specific set of records from your audience, filter a segment down to just those records and then archive the group. **Admin access is required** — the option is not visible to Members or Viewers.
+The People and Companies views in Audiences do not have per-row checkboxes or a Delete button for individual records. To remove people or companies from your audience, you archive them through a segment filter. **Admin access is required** — the option is not visible to Members or Viewers.
 
 1.  Navigate to **People** or **Companies** in the left sidebar.
-2.  Create or open a segment with a filter that isolates only the records you want to remove — for example, filter by **Company name** to target a single company. To archive all records in the view, use a broadly matching filter — for example, **Name → is not empty**.
+2.  Open or create a segment that isolates only the records you want to remove:
+    -   **From All People or All Companies:** click **Criteria**, apply a filter (for example, **Origin source** to target a specific import, or **Name → is not empty** to target all records), then click **+ Create Audience** in the toolbar to save the filtered set as a new named segment.
+    -   **From an existing audience:** open the segment, apply or update its filters, and click **Save filters** to make sure the segment reflects exactly the records you want to remove.
 3.  Once the segment shows the correct records, click the **⋮** (three-dot) menu next to the segment name.
 4.  Select **Archive records**.
 
