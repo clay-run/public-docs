@@ -166,6 +166,12 @@ Deduplication is based on each company's unique profile ID, not your filter conf
 
 **To re-import the full result set** (for example, when testing): delete the existing rows from your table first, then re-run the source. Once the rows are cleared, the search re-imports all matching companies from scratch.
 
+### Where does the Industry value come from in company data?
+
+The **`Industry`** field in Clay's company data — returned by the Companies, People, Jobs enrichment and present in Find Companies results — reflects what the company has set on its LinkedIn profile. Clay's underlying data provider scrapes LinkedIn company profiles; the industry values conform to LinkedIn's industry taxonomy naming system (for example: *Software Development*, *Financial Services*, *Technology, Information and Internet*).
+
+Because companies self-select their industry on LinkedIn, the values are open-ended text names rather than a fixed coded list. Clay recognizes approximately 457 common values. If a company has not set an industry on LinkedIn, the field returns empty.
+
 ### What are the available AI Subindustry filter values?
 
 The **Industries** filter (the standard one at the top of the filter panel) and the **`Industry` output column** use a standardized industry taxonomy drawn from company profile data. Clay recognizes approximately 457 common values (examples: *Software Development, Financial Services, Insurance, Healthcare and Life Sciences, Information Technology and Services, Marketing and Advertising, Non-profit Organization Management*). Because these come from what companies set on their professional profiles, the list is open-ended rather than a fixed picklist.
