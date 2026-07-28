@@ -60,6 +60,15 @@ Search ZoomInfo's database for contacts matching specific criteria. Use this act
 -   **Sort by:** How to sort results. Defaults to relevance (most to least).
 -   **Page size:** Number of contacts to return per page, from 1 to 100. Defaults to 25.
 
+### **`Action` Enrich contact(s) by ID**
+
+Enrich up to 25 contacts at once using their ZoomInfo contact IDs. Use this action when you already have ZoomInfo contact IDs and want to bulk-retrieve full contact details in a single run.
+
+**Inputs**
+
+-   **Contact IDs:** ZoomInfo contact IDs to enrich, entered as a comma-separated list. Only the first 25 IDs are enriched per call.
+-   **Output fields (optional):** The contact fields to return. Defaults to all available fields if none are selected.
+
 ### **Run settings**
 
 -   **Auto-update**
@@ -155,3 +164,28 @@ If you need to tell apart records that Clay enriched from those enriched by a di
 This way, each tool's label in the shared source field tells the other tool to leave the record alone.
 
 For more on conditional formula expressions in formula columns, see [Formulas](formula-generator.md). For run conditions on enrichment columns, see [Conditional runs](conditional-runs.md).
+
+### **What is the difference between the built-in ZoomInfo integration and using the ZoomInfo API directly in Clay?**
+
+Clay offers two ways to use ZoomInfo data, and the right choice depends on your use case.
+
+**ZoomInfo enrichment (built-in Clay integration)**
+
+The built-in ZoomInfo integration is the easiest way to use ZoomInfo inside Clay. When you add a ZoomInfo action to a Clay table, you get a set of pre-built actions powered by your connected ZoomInfo credentials:
+
+-   **Enrich Contact** — Pull contact details using a name, email address, or company name
+-   **Enrich Company** — Get firmographic data like revenue, employee count, and competitors
+-   **Search contacts** — Find contacts using filters like job title, department, or country
+-   **Enrich contact(s) by ID** — Bulk enrich up to 25 contacts at once using their ZoomInfo contact IDs
+
+These actions handle authentication, rate limiting, and error handling automatically. Each run costs 1 Clay credit and draws on your connected ZoomInfo account. For most enrichment needs — contact data, company data, and prospecting searches — the built-in integration is the quickest path.
+
+**ZoomInfo API via Clay's HTTP Connector**
+
+If you have direct API access provisioned from ZoomInfo, you can also call the ZoomInfo API via Clay's [HTTP API integration](http-api-integration-overview.md). This approach is better suited for advanced use cases that go beyond what the pre-built actions support — for example, calling ZoomInfo endpoints not covered by the built-in actions (such as intent data or custom field selections).
+
+For most use cases, start with the built-in integration. Use the HTTP Connector path only when you need a specific ZoomInfo endpoint or data type not available through the four built-in actions.
+
+### **Does using the ZoomInfo API via Clay's HTTP Connector require a ZoomInfo subscription?**
+
+Yes. To call the ZoomInfo API directly via Clay's HTTP Connector, you need an active ZoomInfo plan that includes API access. ZoomInfo's API access is a separate entitlement from a standard ZoomInfo subscription — even if you have ZoomInfo credits available, you may need API access specifically provisioned or purchased through your ZoomInfo Account Manager. Contact your ZoomInfo Account Manager to confirm whether your plan includes API access before setting up an HTTP API connection to ZoomInfo in Clay.
