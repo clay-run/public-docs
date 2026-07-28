@@ -173,7 +173,14 @@ After sending your audience to LinkedIn or Meta, it will be created within **48 
 
 ### **Why should I use personal emails instead of work emails?**
 
-Personal emails are essential for better match rates because most users sign up for LinkedIn and Meta with personal email addresses rather than work emails. Match rates depend on your audience data quality. To maximize results, use the `Hashed Email for Ads` waterfall to find contact email addresses.
+Personal emails give much higher match rates because most people sign up for Meta and Google using personal email addresses (Gmail, Yahoo, Outlook) rather than their work address. When building your audience, pass all available signals — ad platforms try to match on each signal independently, so more data typically improves your overall match rate. The general priority order is:
+
+1.  **Personal email** — highest match rate
+2.  **Phone number** — very high match rate when available
+3.  **First name + Last name + Country** — supplemental
+4.  **Work email** — use as a fallback
+
+To find personal emails for your contacts, use the `Personal Email` waterfall or the `Hashed Email for Ads` waterfall in a regular Clay table before syncing.
 
 ### **How does the `Hashed Email for Ads` waterfall work?**
 
@@ -182,6 +189,14 @@ The `Hashed Email for Ads` waterfall uses professional profile URL as the primar
 If the waterfall prompts for work email as input, that is normal. One or more providers in the waterfall will use the work email to look up the contact and retrieve their personal email for hashing. Providing work email as input does not cause the work email itself to be hashed, and your match rates are not affected.
 
 The waterfall queries multiple providers and returns a **single hashed email** per contact from the first provider that finds a result.
+
+### **What if my contacts don't have work emails? Can I still use the Personal Email waterfall?**
+
+Yes. Not all providers in the Personal Email waterfall require a work email as input. Many providers — including Forager, Wiza, Limadata, ContactOut, and Aviato — can look up personal emails using only a LinkedIn profile URL, with no work email needed.
+
+Clay's Quick Setup shows all available input fields for the waterfall (including Work Email) to simplify mapping, but each provider uses only the inputs it accepts and ignores the rest. If you map a LinkedIn URL column and leave Work Email empty, providers that accept only LinkedIn URL will still run and find results.
+
+To see exactly what each provider requires: open the waterfall setup panel, click **Full configuration**, and expand each provider in the **Waterfall sequence** section.
 
 ### **Do audiences automatically update?**
 
