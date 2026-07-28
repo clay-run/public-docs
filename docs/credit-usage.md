@@ -106,6 +106,14 @@ The credit usage dashboard is organized into tabs, each covering a different sli
 
 Clay provides transparent cost estimates before you run enrichments or actions in your tables. This helps you understand and manage your credit usage.
 
+### Per-row credit estimate on table cards
+
+Each table card in the workbook canvas displays an estimated credit cost per row — shown as a `~X / row` pill beneath the table name. This gives you a quick way to estimate how many credits enriching your remaining rows will cost, without needing to initiate a run first.
+
+To estimate your total enrichment cost for a table, multiply the per-row figure by the number of rows you still need to enrich.
+
+**Note:** The `~` prefix means this is an approximation. The estimate is calculated from the configured credit cost of all active enrichment columns — actual costs are often lower, since some enrichments return no data for certain rows and conditional logic may skip columns based on existing values.
+
 ### Run cost breakdown
 
 When you run a column that has dependent columns (downstream enrichments that will automatically trigger), you'll see:
