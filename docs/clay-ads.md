@@ -213,7 +213,7 @@ Reauthenticate your Google Ads connection in Clay: disconnect the Google Ads acc
 
 When you create your first ad audience, you'll be prompted to authenticate with LinkedIn Campaign Manager, Meta Business Manager, or your Google Ads account via OAuth. Make sure you have admin access to the ad account you want to use. Note that Google Ads syncing is currently in closed beta — contact [Clay support](https://www.clay.com/contact) to request access.
 
-For LinkedIn specifically: the connecting user needs **Account Manager** access or higher on the LinkedIn Campaign Manager ad account. No IP whitelisting or additional network configuration is required — the connection is OAuth only.
+For the professional network specifically: the connecting user needs **Account Manager** access or higher on the Campaign Manager ad account. No IP whitelisting or additional network configuration is required — the connection is OAuth only.
 
 ### **Why did I receive an email saying my Meta account will disconnect soon?**
 
