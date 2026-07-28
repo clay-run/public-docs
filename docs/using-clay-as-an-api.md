@@ -72,16 +72,18 @@ Authenticate by passing your workspace-scoped API key in the `clay-api-key` requ
 
 **Note:** A `413` (`Payload Too Large`) from `POST /search/filters-mode/{search_id}/run` means the requested page of results exceeds the API's internal output cap. Reduce the `limit` parameter in your request and retry — the error is deterministic, so retrying at the same `limit` will always fail.
 
-**Note:** Clay caps how many search results your workspace can return through the Public API, CLI, and MCP server per billing period. These quotas apply to Clay's People & Company Search API — they do not apply to in-app table enrichments or Routines API runs.
+**Note:** Clay caps how many search results your workspace can return through the Public API, CLI, and MCP server. Two separate limits apply — a **per-request cap** on the number of results returned in a single call, and a **per-period cap** on the total results your workspace can return in the current window. These quotas apply to Clay's People & Company Search API — they do not apply to in-app table enrichments or Routines API runs. Public API searches also consume Actions and Data Credits from your plan, the same as table-based enrichments; usage appears in the **API** tab under Settings → Usage.
 
-| Plan | Results per period | Period window |
-| ---- | ------------------ | ------------- |
-| Free | 100 | Monthly (resets on the 1st of each month, UTC) |
-| Trial | 10,000 | 14 days from plan start |
-| Paid | 1,000,000 | Annual (resets January 1 UTC) |
-| Enterprise | 10,000,000 | Annual (resets January 1 UTC) |
+| Plan | Results per request | Results per period | Period window |
+| ---- | ------------------- | ------------------ | ------------- |
+| Free | 50 | 100 | Monthly (resets on the 1st of each month, UTC) |
+| Trial | 50 | 10,000 | 14 days from plan start |
+| Paid | 500 | 1,000,000 | Annual (resets January 1 UTC) |
+| Enterprise | 500 | 10,000,000 | Annual (resets January 1 UTC) |
 
-When you exceed the period limit, Clay returns `400` with a message naming the limit and when it resets — for example: `"This request would exceed your workspace's annual limit of 1,000,000 results. You have already requested X results during the current period, which resets on January 1, [year] (UTC). Contact support to raise this limit."` There is no in-product usage meter for this quota — your workspace will not receive a warning before hitting it. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
+"Paid" covers all paid plan tiers (Launch, Growth, and others) — there is no difference in search result limits between Launch and Growth. The 14-day rolling window applies only to Trial workspaces; paid plans use an annual window that resets on January 1 UTC.
+
+When you exceed either limit, Clay returns `400` with a message identifying the specific limit hit. Per-request limit exceeded: `"This request would exceed your plan's limit of 50 results per request. Upgrade to a paid plan for up to 500 results per request."` Period limit exceeded: `"This request would exceed your workspace's annual limit of 1,000,000 results. You have already requested X results during the current period, which resets on January 1, [year] (UTC). Contact support to raise this limit."` There is no in-product usage meter for the period quota — your workspace will not receive a warning before hitting it. If you need a higher period limit, [contact Clay support](https://www.clay.com/contact-form).
 
 **Note:** Credits consumed by Routines API runs appear in the **Workbooks** tab of the credit usage dashboard — not the **API** tab. Each run processes records in the function's table, and those credits are attributed to that table, the same as any other table enrichment. To see this credit spend, go to `Settings → Usage → Workbooks` and find the table associated with your routine. The **API** tab in the credit usage dashboard covers only direct People & Company Search API and Exportly calls — not Routines API enrichments.
 
