@@ -149,7 +149,15 @@ The 50,000 row limit applies to ad audiences exported from tables. For larger au
 
 ### **Can I edit the field mapping after setting up an Ad Sync?**
 
-No. Field mapping is configured when you create the Ad Sync and cannot be changed afterward. Deactivating an Ad Sync places it in read-only history — it does not unlock the mapping for editing. To use a different field mapping, deactivate the current sync and create a new Ad Sync with your updated configuration.
+No. Field mapping is configured when you create the Ad Sync and cannot be changed afterward. Deactivating an Ad Sync places it in read-only history — it does not unlock the mapping for editing. To use a different field mapping, deactivate or permanently delete the current sync and create a new Ad Sync with your updated configuration. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for details on the delete option.
+
+### **Can I permanently delete an Ad Sync?**
+
+Yes. Workspace admins can permanently delete an Ad Sync from the **Ads** homepage by clicking the **⋮** (three-dot) menu next to a sync and selecting **Delete**. Deleting permanently stops all enrichment and syncing and cannot be undone — there is no way to restore a deleted Ad Sync.
+
+This is different from deactivating: deactivating places the sync in read-only history (and can be referenced later), while deleting removes it entirely. If you want to preserve the sync history, use **Deactivate** instead.
+
+**Note:** Deleting an Audiences segment that is the source for an Ad Sync will automatically delete the associated Ad Sync as well.
 
 ### **Can I add another ad platform to an existing Ad Sync?**
 
