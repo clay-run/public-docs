@@ -66,6 +66,8 @@ The same workspace-level beta access also unlocks a Routines endpoint for trigge
 -   `POST /routines/{routine_id}/run` — submit input records to a Clay function and start an enrichment run.
 -   `GET /routines/run/{routine_run_id}/results` — poll for results once the run completes.
 
+**Finding your Routine ID:** Each Clay function has a unique Routine ID (format: `function:...`) that you pass as `{routine_id}` in API calls. To find it: go to **Functions** on your Clay homepage, open the function, exit edit mode if active (click **Exit edit mode** at the bottom of the editor if you see an edit-mode banner), and scroll to the **Integrations** section in the settings panel on the right — your Routine ID appears there. For full step-by-step instructions, see [Can I call a function programmatically via the API?](https://university.clay.com/docs/functions).
+
 Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is under **Settings → Account → API keys** and is distinct from the personal API key on your profile page.
 
 **Note:** A 401 (`Authentication required`) from `api.clay.com/public/v0` means your workspace hasn't been provisioned for the Public HTTP API — this applies even if your API key is visible in settings. Regenerating the key will not fix a provisioning 401. [Contact Clay support](https://www.clay.com/contact-form) to request workspace enablement.
