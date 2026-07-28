@@ -19,13 +19,29 @@ Setting up Audiences is four major steps:
 3.  **Enrich and monitor** — run bulk enrichments and signals that write data permanently back to each record.
 4.  **Write back to your CRM** — sync enriched data and segment membership back to Salesforce.
 
+## Roles and permissions
+
+Viewing and filtering audience data is available to all workspace roles. Most write operations require workspace **Admin** access. The table below shows the full breakdown:
+
+| Action | Admin | Editor | Viewer |
+|---|---|---|---|
+| View, browse, and filter audience data | ✓ | ✓ | ✓ |
+| Create and edit audience segments | ✓ | — | — |
+| Run bulk enrichments | ✓ | — | — |
+| Add or configure data sources | ✓ | — | — |
+| Export individual records to Salesforce | ✓ | — | — |
+| Upsert or update records from a Clay table into Audiences | ✓ | — | — |
+| Export a segment to a Clay workbook or campaign | ✓ | ✓ | — |
+
+To change someone's role, go to **Settings** → **Team** and use the dropdown next to their name. Changes apply immediately. Editors and Viewers who need to create segments, run bulk enrichments, or manage data sources should have their role upgraded to Admin, or ask a workspace Admin to perform those actions on their behalf.
+
 ## Importing your data
 
 To view your full audience, click `People` or `Companies` in the left sidebar.
 
 To add a data source for the first time, click the `Add data` button in the top right, then click `Add Source`.
 
-**Note:** Non-admin workspace members (Editors and Viewers) can freely view, browse, and filter Audiences — browsing People, Companies, and existing audience segments is available to everyone in the workspace. Admin access is required only to add or configure data sources. Non-admins do not see source setup or configuration controls — those controls are hidden for Editors and Viewers, who instead see a prompt to contact a workspace Admin. If you need to connect or update a source, ask a workspace Admin to do it, or have your role changed.
+**Note:** Non-admin workspace members (Editors and Viewers) can view, browse, and filter audience data, but adding or configuring data sources requires Admin access. Non-admins do not see source setup or configuration controls — those controls are hidden for Editors and Viewers, who instead see a prompt to contact a workspace Admin. If you need to add a data source, ask a workspace Admin to do it, or have your role upgraded to Admin.
 
 You can import data from:
 
@@ -239,6 +255,8 @@ Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs �
 
 After importing, you will want to create new audiences, so you can appropriately target the right contacts.
 
+**Admin access required.** Creating, editing, and deleting audience segments is available to workspace Admins only. Editors and Viewers can view and filter existing segments but cannot create new ones.
+
 To create a new audience:
 
 1.  Click `People` or `Companies` in the left sidebar.
@@ -279,6 +297,8 @@ The search is scoped to the exact companies in the segment at run time. After th
 ### Adding enrichments
 
 Bulk enrichments add contact data, firmographics, technographics, and more to your audience records at scale. They run on an audience and write results permanently back to All People — not just the segment you ran them from. This means any enriched field is immediately available as a filter in any other segment.
+
+**Admin access required.** Adding and managing bulk enrichments requires workspace Admin access.
 
 **To add an enrichment:**
 
