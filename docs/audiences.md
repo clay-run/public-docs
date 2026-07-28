@@ -296,7 +296,7 @@ The search is scoped to the exact companies in the segment at run time. After th
 
 ### Adding enrichments
 
-Bulk enrichments add contact data, firmographics, technographics, and more to your audience records at scale. They run on an audience and write results permanently back to All People — not just the segment you ran them from. This means any enriched field is immediately available as a filter in any other segment.
+Bulk enrichments add contact data, firmographics, technographics, and more to your audience records at scale. They run on an audience and write results permanently back to All People — not just the segment you ran them from. This means any enriched field is immediately available as a filter in any other segment. **Only records that were processed in the enrichment run will have values populated for the enriched field** — records not included in the run will have blank values for that field, even though the field itself is visible across all segments.
 
 **Admin access required.** Adding and managing bulk enrichments requires workspace Admin access.
 
@@ -640,7 +640,13 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 ### How do I export my audience data to CSV?
 
-The Audiences screen does not have a direct CSV download button, and there is currently no built-in path to download audience data as a CSV file directly from the Audiences screen.
+The Audiences screen does not have a direct CSV download button. To export audience data as a CSV, use the **Send to workbook** option (currently in beta — contact your Growth Strategist to enable it for your workspace):
+
+1. Open the segment you want to export.
+2. Click **Send** → **Add to workbook**. Name the new table and click **Continue** — Clay creates a Clay table populated with up to 50,000 records from your segment.
+3. Open the new table and use the standard table CSV export.
+
+**Note:** Only the first 50,000 records from your segment are exported to the workbook. If your segment is larger, apply additional filters to create smaller sub-segments and export each separately.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
