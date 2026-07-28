@@ -59,6 +59,10 @@ To add a new account for an integration:
 -   Select a service (e.g., HubSpot or Anthropic) to see all associated accounts.
 -   Use the search bar to quickly locate a specific account.
 
+### Viewing which assets use a connection
+
+Each connection in the `Connections` list displays a **Resources** count showing how many workbooks, tables, functions, audiences, and other workspace assets reference it. Click the count to open a panel with the full list. Use this to confirm the scope of impact before rotating credentials or deciding which columns to update.
+
 ### Edit your integration accounts
 
 -   Select the service and click the `…` menu next to an account.
@@ -83,6 +87,8 @@ To rotate or update credentials:
 -   Enter the new credentials in the modal and click **Save**.
 
 The connection updates in place — the same connection is preserved with the new credentials. Existing data values already enriched and stored in your table rows are not affected — Reconnect does not clear or overwrite previously enriched cell values. Only actively re-running an enrichment column on existing rows would change those stored values.
+
+**Updating only some columns to a different connection:** Reconnect replaces credentials for every asset that references a given connection — there is no way to bulk-reassign only a selected subset of columns from one connection to a different connection. If you want specific columns to use a different set of credentials (for example, moving 5 of 10 Salesforce columns from one account to another), open each column individually and change the connection in the column settings. Use the **Resources** panel (see [Viewing which assets use a connection](#viewing-which-assets-use-a-connection) above) to identify which assets reference each connection before you begin.
 
 ### Verify connection health
 
