@@ -59,7 +59,7 @@ SSO only applies to users whose email address matches your verified domain. Team
 
 ## User provisioning
 
-**Clay does not currently support SCIM provisioning.** SSO (via WorkOS) is used for authentication only — Clay does not add users to your workspace automatically through SSO, and there is no JIT (Just-in-Time), SCIM, or domain-join provisioning for workspace membership. If an uninvited user with your email domain signs in via SSO, they will authenticate successfully and a Clay account will be created for them, but they will not be added to your enterprise workspace — instead, they will be placed into a new standalone personal workspace. To onboard a new team member:
+**Clay does not currently support SCIM provisioning.** SSO (via WorkOS) is used for authentication only — Clay does not add users to your workspace automatically through SSO, and there is no JIT (Just-in-Time), SCIM, or domain-join provisioning for workspace membership. Assigning the Clay app to a user in your identity provider (for example, adding them to the Clay tile in Okta) is an IdP-side configuration only — it does not create a Clay account or add them to your Clay workspace. If an uninvited user with your email domain signs in via SSO, they will authenticate successfully and a Clay account will be created for them, but they will not be added to your enterprise workspace — instead, they will be placed into a new standalone personal workspace. To onboard a new team member:
 
 1.  Invite them to your Clay workspace via `Settings` > `Team` > `+ Invite`.
 2.  Assign the Clay app to the user in your identity provider (for example, add them to the Clay tile in Okta).
