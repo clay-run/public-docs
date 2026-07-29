@@ -827,6 +827,8 @@ Archiving a record is a **soft delete** — the record is not permanently remove
 -   It can be viewed in the **Archived** section in the left sidebar.
 -   It can be **restored at any time** from the Archived section.
 
+**What happens when a connected source re-syncs:** Archiving does not disconnect a record from its data source. When Snowflake, Salesforce, or any connected source re-syncs, Clay's record matching system identifies the record by its unique identifier and associates the incoming data with the existing archived record — it does not create a new active record in its place. The archived record stays archived until you manually restore it from the **Archived** section. If you want to prevent a record from appearing in future syncs entirely, exclude it from your source query or filters before the next sync runs.
+
 **Note on lookup timing:** After archiving a record, there is a brief processing delay before the change is reflected in `Lookup in Audiences` results. Running a lookup immediately after archiving may still return the archived record — lookups typically update within a short time as changes propagate.
 
 To exclude Salesforce-deleted records from your audience lookups, filter on **Sync status → Deleted in source** to identify them, then archive the records you no longer want matched against.
