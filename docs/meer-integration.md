@@ -26,7 +26,7 @@ With this integration, you can check phone numbers against regularly updated DNC
 
 ### `Action` Screen phone number against DNC registries
 
-Check if a phone number appears in National Do Not Call registries. Currently supports US (National DNC Registry), UK (TPS/CTPS), Germany ([Robinsonliste.de](http://robinsonliste.de/)), Ireland ([comreg.ie](http://comreg.ie/)), Spain ([Lista Robinson](http://listarobinson.es)), Belgium (DNCM), Indiana (Indiana No-Call List), Florida (Florida Do Not Call Program), Massachusetts (Massachusetts DNC Registry), Colorado (Colorado No-Call List), Missouri (Missouri No-Call List), and Louisiana (Louisiana Do Not Call Program), refreshed weekly. Returns DNC status and source information if found.
+Check if a phone number appears in National Do Not Call registries. Currently supports US (National DNC Registry), UK (TPS/CTPS), Germany ([Robinsonliste.de](http://robinsonliste.de/)), Ireland ([comreg.ie](http://comreg.ie/)), Spain ([Lista Robinson](http://listarobinson.es)), Belgium ([DNCM](http://dncm.be/)), Indiana (Indiana No-Call List), Florida (Florida Do Not Call Program), Massachusetts (Massachusetts DNC Registry), Colorado (Colorado No-Call List), Missouri (Missouri No-Call List), and Louisiana (Louisiana Do Not Call Program), refreshed weekly. Returns DNC status and source information if found.
 
 **Inputs**
 
