@@ -357,6 +357,12 @@ This is expected behavior. The Find People source deduplicates results against r
 
 **Note:** Deduplication is based on each person's unique profile ID, not your search filters. If the data source returns genuinely new profiles matching your criteria that aren't already in the table, those will still come through on re-run. Only contacts already in the table are filtered out.
 
+**If each run adds only 0–1 new people (on a manual or scheduled run):** The search's total matching universe is likely nearly exhausted — the total number of people matching your criteria is small, and nearly all have already been imported. The **Limit results** setting is a ceiling on new additions per run, not a cap on results fetched before filtering. Clay passes already-imported contacts as exclusions to the search before fetching, so the search returns up to **Limit results** genuinely new people. When the pool of unimported matches is nearly empty, even a high limit will add only 0–1 new people per run — raising the limit won't change this.
+
+**To keep getting new people over time:**
+- **Broaden your search criteria** — expand job titles, seniority levels, locations, or the company list to increase the total matching universe.
+- **Use criteria that change over time** — add dynamic filters such as recent job changes or new hires at your target accounts. These produce a continuously refreshing pool of matches, so each run finds people who qualify now but didn't before.
+
 ### The preview count drops dramatically when editing an existing Find People source
 
 When you open and edit an existing Find People source — for example, to update your filters or add an exclusion list — the preview reflects only *net new* records: people who match your current search criteria and are not already in your table. Clay automatically excludes contacts already imported in previous runs, so the preview count can look far lower than the total universe of matching people.
