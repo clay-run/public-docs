@@ -127,6 +127,10 @@ This setting controls row-level behavior only. It is separate from the column-le
 
 Automatically creates new columns in the destination table for any that don't already exist.
 
+**Include column colors**
+
+When on (default), copies the source column's [view-level color](table-columns-overview.md#color-column-headers) to each new destination column created by **Auto-extract new columns**. Turn this off if you prefer auto-created destination columns to start without any color.
+
 **Auto-map existing columns**
 
 Automatically maps incoming fields to existing destination columns that share the same name. For columns that already have a formula, the new source is appended to the existing formula. For columns without a formula (e.g., manually entered or CSV-imported data), a new extraction formula is set — **this will overwrite any existing values in those columns**.
