@@ -110,6 +110,14 @@ Insert a row into a Snowflake database.
 -   **Snowflake warehouse**
 -   **Role** (optional)
 
+**Tips**
+
+-   **Inserting JSON into a Snowflake VARIANT column:** Snowflake's `VARIANT` data type stores semi-structured data such as JSON. To insert JSON into a VARIANT column using the Insert Row action, wrap your Clay column reference in Snowflake's `PARSE_JSON()` SQL function when mapping the field — this is Snowflake SQL entered directly in the action's mapping field, not a Clay formula. For example, if you have a formula column called `Account JSON` containing a JSON string, enter this as the mapped value for the VARIANT field:
+
+    `PARSE_JSON({{Account JSON}})`
+
+    Build the JSON string in a Clay formula column using `JSON.stringify()`. Make sure the formula column produces a **string** output — a formula that returns a JavaScript object instead of a stringified value will display `[object Object]` in the column and cannot be sent to Snowflake correctly.
+
 ### `Action` Lookup row
 
 Check if a row exists in your Snowflake database.
