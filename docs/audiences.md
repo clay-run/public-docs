@@ -251,6 +251,30 @@ When setting up a Snowflake or BigQuery import, you also define a `Unique Identi
 
 Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs — org duplicates carry over as-is.
 
+**Record persistence when a source is removed**
+
+When a record disappears from a source — for example, a row is deleted from a Clay table, or the table itself is removed — the corresponding Audience record is **not deleted**. Clay marks the record's association with that source as removed, but the record itself persists in Audiences. If the same record exists in multiple sources and disappears from one, it remains in Audiences as long as it is associated with at least one other source. Removing the entire source table does not remove those records from your Audience.
+
+To remove a record from Audiences entirely, archive it manually — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience).
+
+**Conflict resolution when sources provide different field values**
+
+When two data sources write different values to the same field on an Audience record, Clay resolves the conflict using a fixed priority order. Higher-priority source types win; within the same priority tier, the most recently updated value wins.
+
+| Priority | Source types |
+|---|---|
+| 1 (highest) | Upsert Audiences Record, Bulk Enrichments |
+| 2 | Salesforce (Account, Contact, Opportunity), HubSpot |
+| 3 | Salesforce (Lead) |
+| 4 | Snowflake, BigQuery |
+| 5 (lowest) | CSV |
+
+There is an optional **CSV-first override** that, when enabled for a workspace, promotes CSV to priority tier 2 — above Salesforce and HubSpot but below Upsert Audiences Record and Bulk Enrichments. Contact your Growth Strategist to enable it.
+
+**When merging happens**
+
+Merging two Audience records into one happens only at the time of a record upsert or import — not when an existing field is later updated with a matching value. For example, if one company record has a null domain and another has `mpsworks.com`, those two records are not automatically merged when a later enrichment fills the first record's domain with `mpsworks.com`. The two records stay separate. To merge them, re-import or re-upsert the record so that the matching identifier is present at ingestion time.
+
 ## Creating an audience
 
 After importing, you will want to create new audiences, so you can appropriately target the right contacts.
