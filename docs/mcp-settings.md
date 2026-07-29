@@ -1,14 +1,14 @@
 ---
 title: MCP settings
 description: Connect your Clay workspace to AI tools.
-last_synced: 2026-04-26T01:40:20.821Z
+last_synced: 2026-07-13T21:16:51.822Z
 ---
 
-# MCP settings
+# MCP in Clay
 
-Connect your Clay workspace to AI tools.
+Connect your Clay workspace to AI tools — and manage rep access, credit limits, and Functions from one place.
 
-MCP (Model Context Protocol) is how Clay connects your workspace to AI tools like ChatGPT, Claude, Codex, and Glean. Clay lets workspace admins set credit limits and monitor usage for team members who access Clay through these platforms.
+MCP (Model Context Protocol) is how Clay connects your workspace to AI tools like Claude, ChatGPT, and Glean. Clay lets workspace admins set credit limits and monitor usage for team members who access Clay through these platforms.
 
 Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory — not a generic server URL you configure manually.
 
@@ -24,13 +24,29 @@ The `Enable for MCP` option on [Functions](#enabling-a-function-for-mcp) (reusab
 
 Glean integration is available on Enterprise plans only.
 
+## **Getting started**
+
+The minimum setup to get reps running is an invite and a credit budget. Functions and Audiences are additive — they improve the experience but aren't required to start.
+
+1.  Go to `Settings → Team` and invite each rep. Assign them the **Sales Rep** permission type to give them MCP-only access — they won't be able to see the Clay UI, tables, API keys, or workflows.
+2.  Go to `Settings → MCP users` and click `Set default limit` to set a workspace-wide credit budget. This applies automatically to every rep who connects, so set it before reps start.
+3.  Enable any Functions you want reps to invoke from their AI tool (see **Enabling a function for MCP** below).
+4.  _(Enterprise only)_ If your workspace uses Clay Audiences, configure the Audiences controls to give reps access to first-party CRM data.
+5.  Share the relevant connection guide with your reps:
+    -   [**Using Clay in Claude**](https://university.clay.com/docs/using-clay-in-claude)
+    -   [**Using Clay in ChatGPT**](https://university.clay.com/docs/using-clay-in-chatgpt)
+    -   [**Using Clay in Glean**](https://university.clay.com/docs/using-clay-in-glean)
+    -   [**Using Clay in Microsoft 365 Copilot**](https://university.clay.com/docs/using-clay-in-microsoft-365-copilot) _(currently in beta — contact support to enable for your workspace)_
+
 ## **Enabling a function for MCP**
 
-Functions are reusable enrichment workflows built in Clay that reps can invoke directly from ChatGPT, Claude, or Glean with a single prompt. Admins build them once and enable them for MCP — reps never need to open Clay to use them.
+Functions are reusable enrichment workflows built in Clay that reps can invoke directly from their AI tool with a single prompt. Admins build them once and enable them for MCP — reps never need to open Clay to use them.
 
 1.  Go to the `Functions` tab in your workspace and find the function you want (or click `+ New function` to create a new one.)
-2.  Click the function to open it's settings and toggle `Enable for MCP`.
-    -   Set a name and description for the MCP app — this is what reps see when browsing available functions, so make it actionable (e.g., _"Company enrichment waterfall"_ or _"Outbound email generator"_).
+2.  Click the function to open its settings and toggle `Enable for MCP`.
+    -   Set a **name** and **description** for the function — this is what reps see when browsing available functions, so make it actionable (e.g., _"Company enrichment waterfall"_ or _"Outbound email generator"_).
+    -   Confirm the function has an enrichment or output column. Toggling MCP and setting inputs alone won't return data without a column that produces results.
+    -   Avoid function names that overlap with Clay's built-in tools (e.g., "find contacts" or "enrich company") — the AI tool may invoke the default instead.
 
 _For more information about functions, check out our_ [_full doc_](https://university.clay.com/docs/functions)_._
 
@@ -84,8 +100,8 @@ No. Clay's MCP integrations are pre-built apps within each supported platform's 
 
 -   **Claude:** [claude.com/connectors/clay](https://claude.com/connectors/clay)
 -   **ChatGPT:** Type `@Clay` (browser) or `/Clay` (desktop) in a prompt
--   **Codex:** Add the `clay-run/agent-plugins` marketplace in Codex, then install the `clay` plugin. The setup signs you in via `clay login` — after sign-in completes, restart Codex so its MCP server picks up the new session.
 -   **Glean:** Your Glean admin connects Clay through Glean's MCP Apps directory (Enterprise plans only)
+-   **Microsoft 365 Copilot (beta):** See [Using Clay in Microsoft 365 Copilot](https://university.clay.com/docs/using-clay-in-microsoft-365-copilot) — contact support to enable for your workspace.
 
 Each connector uses Clay's OAuth flow for authentication — when you click through to connect, you're redirected to log in to your Clay workspace to complete the authorization.
 
@@ -133,13 +149,13 @@ Clay doesn't manage the MCP connection from its side — each AI platform contro
 
 -   **ChatGPT:** Open ChatGPT **Settings → Connectors**, find Clay, and remove it.
 -   **Claude:** Go to [claude.com/connectors](https://claude.com/connectors/clay) and remove the Clay connector.
--   **Codex or other tools:** Find connected apps, MCP integrations, or connectors in that tool's settings and remove Clay from there.
+-   **Other tools:** Find connected apps, MCP integrations, or connectors in that tool's settings and remove Clay from there.
 
 Your Clay workspace data and workflows are unaffected — only the connection from that AI tool is removed.
 
 ### Can admins remove a rep's access to Clay in ChatGPT or Claude?
 
-Yes, by removing them from your workspace. While admins cannot directly revoke a rep's MCP connection from the `MCP users` page, they can remove the rep from the workspace entirely. If a rep is not added to your workspace, they won't have access to the data and workflows in your Clay instance. Alternatively, to limit usage without removing access, set their credit limit to a low value.
+Yes, by removing them from your workspace. While admins cannot directly revoke a rep's MCP connection from the `MCP users` page, they can remove the rep from the workspace entirely. If a rep is not added to your workspace, they won't have access to the data and workflows in your Clay instance. Alternatively, to limit usage without removing access, set their credit limit to 0, which hard-blocks further actions without removing them from the workspace.
 
 ### When do credits reset?
 
@@ -156,3 +172,35 @@ MCP usage appears in the main credit usage dashboard at `Settings → Credit Usa
 ### What's the difference between the default credit limit and a per-user override?
 
 The default limit is a workspace-wide setting that applies automatically to any new rep who connects ChatGPT, Claude, or Glean. A per-user override replaces the default for a specific rep. Reps showing `No limit` have neither a default nor an override applied.
+
+### If a rep isn't on Audiences, what value do they get from MCP?
+
+People and company search plus Functions. Without Audiences, reps can still find contacts at target accounts, research companies, and invoke any Functions your ops team has built — including Functions that pull first-party data from Salesforce or Snowflake directly. Audiences adds the ability to query owned accounts and opportunity data from the rep's CRM.
+
+### When a rep runs an action through Claude or ChatGPT, does it count as a Clay action?
+
+Yes. Credits work the same way via MCP as they do in Clay directly — there's no MCP surcharge. If a Function that finds someone's email and phone number costs 12 credits in a Clay table, it costs 12 credits when a rep triggers it from Claude or ChatGPT.
+
+### Does Clay's MCP use our data to train AI models?
+
+No. Both Anthropic (Claude) and OpenAI (ChatGPT) exclude commercial and API customer data from model training by default. Clay's MCP operates through their commercial APIs, so your workspace data is never used for training. Clay itself does not store customer table data for other customers and acts as a data processor under standard data protection agreements.
+
+### How do Anthropic and OpenAI handle data from MCP requests?
+
+-   **Anthropic (Claude):** Commercial and API data is excluded from model training. Data may be retained briefly for abuse monitoring only. For qualifying organizations, Zero Data Retention (ZDR) means data isn't stored at rest after the API response is returned.
+-   **OpenAI (ChatGPT):** API, Enterprise, and Business data is not used for training by default. Inputs and outputs may be retained up to 30 days to provide the service and detect abuse, then deleted unless legally required. ZDR is available for eligible endpoints.
+
+For the most current information, refer to [**Anthropic's privacy policy**](https://www.anthropic.com/legal/privacy) and [**OpenAI's usage policies**](https://openai.com/policies).
+
+### What can the AI tool access in our workspace when reps connect via MCP?
+
+The AI tool can only call Clay tools and Functions that a workspace admin has explicitly enabled — it cannot browse tables, view raw workspace data, or access anything outside of what enabled Functions return. Specifically:
+
+-   **Functions:** only those with `Enable for MCP` toggled on
+-   **Audiences data:** only if admin has enabled `Sync user IDs from audiences`
+-   **Account scope:** admins can restrict reps to only accounts they own in Salesforce
+-   **Credit controls:** admins set spending limits per user
+
+## **Troubleshooting**
+
+For a full guide to common issues — including connection errors, Function configuration problems, and platform-specific ChatGPT issues — see [**MCP — Troubleshooting & FAQ**](https://university.clay.com/docs/mcp-troubleshooting-and-faqs).
