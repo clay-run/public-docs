@@ -843,6 +843,31 @@ There are two types of record matching in Clay Audiences:
 
 Both work together to ensure you have a single, unified record per person or company in your Audiences.
 
+### If I delete a Clay table I used to send records to Audiences, will those records disappear from Audiences?
+
+No. Records you sent to Audiences from a Clay table — via **Continue → Save to Companies** / **Save to People**, or using `Upsert Audiences Record` — persist in Audiences even if the source table is later deleted. Clay marks that source's contribution as **Deleted in source** but does not remove the audience record. If the record has contributions from multiple sources and one source disappears, it remains associated with its other active sources.
+
+To remove those records from Audiences, you must explicitly archive them — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience)
+
+### When two sources have conflicting values for the same field, which value wins?
+
+When two sources write different values to the same field on the same Audience record, Clay applies these rules:
+
+- **Same source type:** The most recent write wins.
+- **Different source types:** The source type with higher priority wins, regardless of write time. From highest to lowest priority:
+  1. **Bulk enrichments** and **Clay table sends** (highest priority)
+  2. **Salesforce** and **HubSpot**
+  3. **Snowflake** and **BigQuery**
+  4. **CSV** (lowest priority — there is a CSV override setting that promotes CSV to the highest priority; contact Clay support to enable it)
+
+**Example:** If both a CSV import and a Salesforce sync write different values to the `Industry` field on the same company record, the Salesforce value wins — even if the CSV was imported more recently.
+
+### Will two records automatically merge if a dedup field is filled in after the initial import?
+
+No. Dedup matching runs only at the time a record is upserted or imported. If an existing record's dedup field — such as domain — is updated after its initial import (for example, by a bulk enrichment that fills in a previously null value), Clay does not re-check whether that updated value now matches another record. The two records stay separate even if they now share the same domain or email.
+
+To merge them, re-upsert or re-import the records so the dedup check runs again at ingestion time.
+
 ### Does syncing my CRM to Audiences cost credits?
 
 No. Importing and syncing CRM records into Audiences — including the ongoing automatic refreshes — does not consume credits. Credit costs apply only when you run enrichments on those records.
