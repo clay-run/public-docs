@@ -94,3 +94,12 @@ Clay requires **UTF-8 encoded** CSV files. Files saved with other encodings (suc
 **If the upload still fails after the steps above:**
 
 Make sure your CSV file name is short. Long file names can interfere with the upload process. Rename the file to a brief descriptive name and try again.
+
+**If the CSV import dialog shows "Row limit exceeded.":**
+
+This error means your CSV has more rows than your plan's per-table row limit allows. It is separate from the workspace-wide row limit — the per-table limit is enforced at import time based on your plan:
+
+-   **Free plan:** 200 rows per table
+-   **Launch, Growth, and Enterprise plans:** 50,000 rows per table
+
+To proceed, either upgrade your plan (click **Upgrade your plan** in the top right of your workspace), or split your CSV into smaller files — each containing fewer rows than your plan's per-table limit — and import them one at a time.
