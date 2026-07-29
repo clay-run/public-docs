@@ -153,6 +153,7 @@ You can also use `Lookup multiple rows` within the same table to find duplicates
 -   Count related records inside one table (e.g., "how many people share this domain?")
 -   **Prevent duplicate enrichment for shared company data** — Enrichment columns run independently per row with no awareness of sibling rows. When multiple rows share the same company (e.g., several contacts who work at the same account), each row can trigger the same company-level enrichment separately. To run the enrichment only once per company: add a **Lookup single row** (same table, matching on company domain) that checks for any other row where the company-level enrichment result is already populated. Then add a [conditional run](conditional-runs.md) to your enrichment column that fires only when the lookup finds no existing result. The first row to process writes the company data; subsequent rows with the same domain find the existing result via lookup and skip the enrichment.
 -   Consolidate paired or related rows (e.g., pull a duplicate account's ID or attributes into the master record row) — run a self-lookup on the shared group key (such as a duplicate set number or shared parent ID) to find all rows in the group, then use `Add as column` or a formula column to extract the specific fields you need from the matched rows
+-   **Rank or compare rows within a group** — find the highest-scoring row among rows sharing a value in a group column, or determine each row's position within its group. Add a self-lookup matched on the group column, then add a formula column that iterates over the returned records — for example, using `findIndex` to locate the current row by its Unique ID within the result list. The self-lookup always includes the current row itself, so account for that offset (position 0 = rank 1). To pick the highest scorer instead, sort the lookup by your score column and compare the first returned record's Unique ID against the current row's.
 
 **Example: Enrich only one row per company group (without deleting duplicates)**
 
@@ -185,6 +186,7 @@ When a table has multiple rows sharing the same company — for example, several
 -   Use a clean, consistent match key (domain is usually more reliable than company name)
 -   Remember a self-lookup will usually match the row to itself—account for that when interpreting counts (e.g., "other matches" vs "total matches")
 -   Use the lookup result as a gate to control downstream actions (enrich/send/route only when criteria are met)
+-   **Counts can be off when rows evaluate concurrently** — when many rows run at the same time, a self-lookup may return an inaccurate count for some rows (for example, showing 2 when the real count is 1). This happens because rows reading and writing the same table simultaneously can see partially updated data. For accurate counts after a full run, select the lookup column and click **Run column** once the table finishes processing.
 
 ### **Timing considerations in multi-step workflows**
 
