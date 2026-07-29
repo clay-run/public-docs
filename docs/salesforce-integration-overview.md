@@ -36,7 +36,7 @@ Connect to Salesforce via Client Credentials for server-to-server access. No bro
 **Setting up in Salesforce**
 
 1.  In Salesforce Setup, search for `External Client App Manager` in Quick Find and select it. Create a new external client app — see [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&language=en_US&type=5) for full creation steps. Set **Distribution State** to `Local`. When configuring the app's OAuth settings:
-    -   **Callback URL:** Salesforce requires this field to be populated even for server-to-server flows. You can enter `https://login.salesforce.com/services/oauth/callback`.
+    -   **Callback URL:** Salesforce requires this field to be populated even for server-to-server flows. You can enter `https://login.salesforce.com/services/oauth2/callback`.
     -   **OAuth Scopes:** Add the following scopes:
         -   **Manage user data via APIs (`api`)** — required; without it, Salesforce returns `invalid_grant: no valid scopes defined` when Clay tries to connect.
         -   **Perform requests at any time (`refresh_token, offline_access`)** — add this scope to allow the External Client App to complete the Client Credentials token exchange.
@@ -381,6 +381,19 @@ Clay Value: `Technology;Healthcare;Finance`
 | Bad value for restricted picklist | Text doesn't match picklist | Check exact spelling & case in Salesforce |
 | Values not updating | Wrong delimiter used | Use semicolons (;), not commas |
 | Field not accepting value | Using display label instead of API name | Verify API name in Salesforce Setup |
+
+### Clearing a picklist field
+
+Salesforce uses `--None--` as a UI label to indicate that a picklist field has no stored value. `--None--` is not an actual picklist API option — it does not appear as a selectable choice in Clay's **Map fields** dropdown, and there is no way to send an empty or null value to clear a picklist field through the **Update Record** action.
+
+To clear a picklist field (return it to empty in Salesforce), use a sentinel-value approach:
+
+1. Ask your Salesforce admin to add a dedicated picklist value to the field — for example, `Cleared` or `To Clear` — that will serve as a signal to clear the field.
+2. In your Clay **Update Record** column, map the picklist field to that sentinel value.
+3. Run the rows.
+4. Have your Salesforce admin create a Salesforce Flow on the object that detects the sentinel value and sets the field to null (clearing it).
+
+This approach works for both restricted and unrestricted Salesforce picklist fields.
 
 ### Writing AI-generated values to restricted picklist fields
 
