@@ -212,6 +212,12 @@ If you later edit the prompt of an upstream column (for example, an AI column th
 
 Also note: after changing any column, rows that have already run will not update automatically. Select those rows and click **Run column** to re-process them.
 
+### **Can formula columns compare values across rows or reference data in other rows?**
+
+No. Formula columns evaluate one row at a time — each row receives only its own column values as input, with no access to other rows in the table. Operations like COUNTIF across rows, ranking rows within a group, or finding the highest-scoring row per group cannot be done in a formula column alone.
+
+To compare values across rows, use a **Lookup Multiple Rows in Other Table** column pointed at the same table (called a self-lookup). The lookup returns all rows that share a value in a column you specify, giving a downstream formula column the group context it needs. See [Lookup Rows](lookup-rows.md#using-lookups-in-the-same-table) for setup and common use cases, including cross-row ranking.
+
 ### **Why does my formula return blank for some rows when I expect a value?**
 
 When a formula's final branch evaluates to a column that has no value for a given row, Clay returns blank — there is nothing to return. The formula is correct; the source data for that row is empty.
