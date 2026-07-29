@@ -126,6 +126,19 @@ Column-level auto-run controls whether a specific enrichment runs automatically.
 -   If table-level is **ON** + column-level is **OFF**: That specific column won't run automatically.
 -   If table-level is **ON** + column-level is **ON**: Column runs automatically. ✅
 
+## Scheduled column re-runs ("Re-run columns on a schedule")
+
+Separate from Auto-run, Clay lets you re-run selected action columns on a periodic schedule to keep existing data fresh. This is a distinct table-level setting from Auto-run and can be configured independently. For full setup instructions and usage limits, see [Scheduled columns](scheduled-columns.md).
+
+**Key difference from Auto-run:**
+
+-   **Auto-run** triggers when new rows are added or a row's inputs change — and requires the table-level Auto-run master switch to be on.
+-   **Scheduled column re-runs** trigger on a fixed cadence (daily, weekly, monthly, or hourly on Enterprise). They run regardless of whether table-level Auto-run is on or off — scheduled runs bypass the Auto-run master switch entirely.
+
+This means a table can have **Auto-run off** (new rows are not automatically enriched) while **Re-run columns on a schedule is on** (existing rows are refreshed on a cadence). The two settings are fully independent.
+
+**"Scheduled to run?" in column settings:** When a column is part of the table's scheduled re-run, its column **Run Settings** panel shows **"Scheduled to run: [frequency]"** with a green calendar icon. Click **Manage schedules** to open the table-level schedule configuration.
+
 ## Conditional runs ("Only run if")
 
 Add conditional logic to control when an enrichment executes. The enrichment only runs when the formula evaluates to true.
