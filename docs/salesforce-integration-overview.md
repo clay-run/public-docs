@@ -379,8 +379,27 @@ Clay Value: `Technology;Healthcare;Finance`
 | Error | Cause | Solution |
 | --- | --- | --- |
 | Bad value for restricted picklist | Text doesn't match picklist | Check exact spelling & case in Salesforce |
+| Bad value for restricted picklist | New value not assigned to Record Type | Assign the value to the Record Type in Salesforce: Setup → Object Manager → [Object] → Record Types |
 | Values not updating | Wrong delimiter used | Use semicolons (;), not commas |
 | Field not accepting value | Using display label instead of API name | Verify API name in Salesforce Setup |
+
+### New picklist value still rejected after being added to Salesforce
+
+If you added a new value to a Salesforce restricted picklist and are still seeing a "bad value for restricted picklist field" error when Clay tries to write that value, the cause is almost always a Salesforce Record Type configuration issue — not a Clay problem and not a timing delay.
+
+**What's happening:** Adding a value to a restricted picklist's global value list does not automatically make it available to your existing Record Types. The value shows up in the field's master list — which is why it appears to exist — but Salesforce enforces picklist values per Record Type for restricted fields. If the record being updated uses a Record Type that does not include the new value, Salesforce rejects the write regardless of how the value is spelled. Clay sends the value to Salesforce exactly as it appears in your table or AI column output — no character encoding or transformation is applied — so the rejection happens on the Salesforce side.
+
+**To fix this:** Assign the new value to the correct Record Type.
+
+1. In Salesforce, go to `Setup` → `Object Manager` → select the object (for example, `Lead`).
+2. Click `Record Types` in the left sidebar, then click the Record Type that applies to the records you are updating.
+3. Under the `Picklists Available in the Page Layout` section, find the restricted picklist field and click `Edit`.
+4. Move your new value from **Available Values** to **Selected Values**.
+5. Click `Save`.
+
+After saving, re-run the rows in Clay. The value will now be accepted for records that use that Record Type. If your org uses multiple Record Types for the same object, repeat these steps for each Record Type you write to.
+
+**Also verify the text matches exactly.** Whatever Clay sends must be character-for-character identical to the selected option in Salesforce — same spelling, capitalization, and spacing. If you renamed the value in either place after testing, confirm both sides match before re-running.
 
 ### Clearing a picklist field
 
