@@ -854,11 +854,12 @@ To remove those records from Audiences, you must explicitly archive them — see
 When two sources write different values to the same field on the same Audience record, Clay applies these rules:
 
 - **Same source type:** The most recent write wins.
-- **Different source types:** The source type with higher priority wins, regardless of write time. From highest to lowest priority:
-  1. **Bulk enrichments** and **Clay table sends** (highest priority)
-  2. **Salesforce** and **HubSpot**
-  3. **Snowflake** and **BigQuery**
-  4. **CSV** (lowest priority — there is a CSV override setting that promotes CSV to the highest priority; contact Clay support to enable it)
+- **Different source types:** The source type with higher priority wins, regardless of write time. The default priority order, from highest to lowest:
+  1. **Bulk enrichments** and **Upsert Audiences Record** (highest priority)
+  2. **Salesforce** Account, Contact, and Opportunity records; and **HubSpot**
+  3. **Salesforce Lead** records
+  4. **Snowflake** and **BigQuery**
+  5. **CSV** (lowest priority by default — a CSV override setting is available that promotes CSV above Salesforce and HubSpot to second-highest priority; bulk enrichments and Upsert Audiences Record remain at top regardless; contact Clay support to enable it)
 
 **Example:** If both a CSV import and a Salesforce sync write different values to the `Industry` field on the same company record, the Salesforce value wins — even if the CSV was imported more recently.
 
