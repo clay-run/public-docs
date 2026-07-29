@@ -26,7 +26,7 @@ With this integration, you can check phone numbers against regularly updated DNC
 
 ### `Action` Screen phone number against DNC registries
 
-Check if a phone number appears in National Do Not Call registries. Currently supports US (National DNC Registry), UK (TPS/CTPS), Germany ([Robinsonliste.de](http://robinsonliste.de/)), Ireland ([comreg.ie](http://comreg.ie/)), Spain ([Lista Robinson](http://listarobinson.es)), Indiana (Indiana No-Call List), Florida (Florida Do Not Call Program), Massachusetts (Massachusetts DNC Registry), and Colorado (Colorado No-Call List), refreshed weekly. Returns DNC status and source information if found.
+Check if a phone number appears in National Do Not Call registries. Currently supports US (National DNC Registry), UK (TPS/CTPS), Germany ([Robinsonliste.de](http://robinsonliste.de/)), Ireland ([comreg.ie](http://comreg.ie/)), Spain ([Lista Robinson](http://listarobinson.es)), Belgium (DNCM), Indiana (Indiana No-Call List), Florida (Florida Do Not Call Program), Massachusetts (Massachusetts DNC Registry), Colorado (Colorado No-Call List), Missouri (Missouri No-Call List), and Louisiana (Louisiana Do Not Call Program), refreshed weekly. Returns DNC status and source information if found.
 
 **Inputs**
 
@@ -51,7 +51,7 @@ Check if a phone number appears in National Do Not Call registries. Currently su
 
 -   **"Invalid input"** — the phone number could not be parsed. Make sure the number includes a country code prefix (e.g., `+19199463022`). If your numbers don't already include a country code, add a **Clay Formatters → Normalize Phone Number** step first — then update the Meer column's **Phone Number** input to reference that step's output (e.g., the **E164** field), not the original phone number column. Simply adding the normalize step without re-mapping the input will not fix the error.
 -   **"Missing input"** — the Phone Number field is empty or references a column with no value. Check that the Meer action's **Phone Number** input is mapped to a column that contains data, and that any upstream normalization step completed successfully.
--   **"Error: Failed to enrich phone number"** — the phone number is valid but its country is not currently supported by Meer. Credits are not charged for this error. To avoid it entirely, add an **Only run if** conditional on this action to restrict it to supported country codes (e.g., `+1` for US, `+44` for UK, `+49` for Germany, `+353` for Ireland, `+34` for Spain).
+-   **"Error: Failed to enrich phone number"** — the phone number is valid but its country is not currently supported by Meer. Credits are not charged for this error. To avoid it entirely, add an **Only run if** conditional on this action to restrict it to supported country codes (e.g., `+1` for US and US state registries, `+44` for UK, `+49` for Germany, `+353` for Ireland, `+34` for Spain, `+32` for Belgium).
 
 ## Compliance notes
 
