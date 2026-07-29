@@ -142,6 +142,8 @@ Clay syncs data from Snowflake on the following schedules:
 -   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured (for example, `updatedAt`), importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
 -   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
 
+**Deleted records:** When a record is no longer returned by your Snowflake import query — either because it was physically removed from the underlying Snowflake table, or because you updated your SQL to exclude it — Clay marks the record's Snowflake source association as **Deleted in source** during the next full sync. The audience record itself is **not removed**. To clean up these records, see [How do I archive records that no longer match my Snowflake import query?](#how-do-i-archive-records-that-no-longer-match-my-snowflake-import-query) below.
+
 ### Importing from Google BigQuery
 
 **Note:** Google BigQuery import is currently in early access — contact your Growth Strategist to enable it for your workspace.
@@ -827,6 +829,8 @@ Archiving a record is a **soft delete** — the record is not permanently remove
 -   It can be viewed in the **Archived** section in the left sidebar.
 -   It can be **restored at any time** from the Archived section.
 
+**There is no self-serve option to permanently delete records from Audiences.** Archiving is the only available removal method. If your use case requires permanent removal, contact Clay support.
+
 **Note on lookup timing:** After archiving a record, there is a brief processing delay before the change is reflected in `Lookup in Audiences` results. Running a lookup immediately after archiving may still return the archived record — lookups typically update within a short time as changes propagate.
 
 To exclude Salesforce-deleted records from your audience lookups, filter on **Sync status → Deleted in source** to identify them, then archive the records you no longer want matched against.
@@ -843,6 +847,21 @@ If you imported a CSV and need to correct the data — for example, because acco
 Audiences deduplicates on import using the unique identifier you configure — any incoming record whose identifier matches an existing (non-archived) record will update that record rather than create a duplicate.
 
 **Note:** After archiving, the original CSV source entry remains visible in the Sources tab. There is no self-serve option to remove a CSV source listing — the entry is retained for filtering and audit purposes. To permanently remove the source entry, contact Clay support.
+
+### How do I archive records that no longer match my Snowflake import query?
+
+When you update your Snowflake Import Sync with a more restrictive SQL query (returning fewer records than before), records from the previous import that no longer match the new query are not automatically removed from Audiences. After the next full sync, Clay marks those records as **Deleted in source** for that Snowflake sync — but the audience records remain active and continue to appear in segment filters and enrichments until you manually archive them.
+
+To identify and archive these orphaned records:
+
+1.  Navigate to **People** or **Companies** and click **New audience** to create a segment.
+2.  Use one of these filters to isolate the orphaned records:
+    -   **Sync status → Deleted in source** — surfaces records whose Snowflake source association was cleared by the most recent full sync.
+    -   **Sources → doesn't contain → [your Snowflake sync name]** — surfaces records not currently associated with the active sync.
+    -   **[Your custom field] → is empty** — if your updated import adds a new column (for example, an `inferred_updated_at` timestamp used for incremental loading), records where that field is empty were not touched by the new import and are the orphaned ones.
+3.  Once the segment shows the correct records, click **⋮** next to the segment name and select **Archive records**.
+
+**Admin access is required** — the Archive records option is not visible to Editors or Viewers.
 
 ### Why did Update Audiences Record report 0 fields updated?
 
