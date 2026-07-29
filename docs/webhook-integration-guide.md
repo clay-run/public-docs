@@ -82,6 +82,21 @@ For a complete example using Zapier, see [Send Clay data to Zapier](https://www.
 
 ## FAQs
 
+### How do I set up real-time inbound routing from form fills to Salesforce?
+
+The standard Clay pattern for routing form fills — or any event-triggered lead into a CRM in near real time — uses a Monitor webhook as the intake point:
+
+1. **Create a webhook table** — In a Clay workbook, create a table using **Monitor webhook** as the source and copy the webhook URL Clay generates (see [Creating a table with webhook](#creating-a-table-with-webhook)).
+2. **Point your form or trigger to Clay** — Configure your form platform (for example, HubSpot Forms, Typeform, or a Salesforce Flow) to POST each submission as a JSON payload to that webhook URL.
+3. **Add enrichment columns** — Add the data sources you need for routing decisions (firmographics, territory, lead score, or any other signal). With auto-run enabled, Clay processes each incoming row as soon as it arrives.
+4. **Write back to Salesforce** — Add a Salesforce **Upsert object**, **Create record**, or **Update record** action column. Once the upstream enrichments complete, this column fires automatically and writes the result back to your Salesforce org.
+
+**What latency should I expect?** There is no fixed end-to-end time. Processing begins the moment Clay receives the webhook payload, but total latency depends on how many enrichment steps run between the webhook intake and the Salesforce write-back. A table with a single enrichment step completes faster than one with several sequential lookups.
+
+**Error handling:** Use [Table alerts](table-alerts.md) (Enterprise plan) to monitor enrichment health — the **Column failure rate** alert notifies you when a column's error rate exceeds a threshold you configure. For the Salesforce write-back column specifically, check cell-level error details when a write fails; common causes include missing required Salesforce fields, permission mismatches, or duplicate-rule rejections in your org.
+
+**Submission limit for ongoing routing workflows:** Each webhook source accepts up to 50,000 submissions lifetime (see [Limits](#limits)). For a routing workflow that needs to run continuously, enable **auto-delete** (Enterprise plan) — processed rows are cleared automatically after they complete, and the 50,000 cap is bypassed entirely so the same webhook URL keeps accepting new submissions without limit. See [Auto-delete in tables](auto-delete.md) for setup steps.
+
 ### Why does my webhook source show a higher row count than my table?
 
 The webhook source node in the workbook view shows the **total number of records stored by the source** since it was created. This count increases with every accepted payload and does not decrease when you delete rows from the table.
