@@ -408,6 +408,8 @@ After you add a signal:
 -   Multiple signals each get their own column; the `Signal Summary` column aggregates all results. Click any row to see per-signal detail.
 -   Any other segment that filters on this signal type will also surface these results.
 
+**Signals are a detection layer — taking action on results happens in the companion segment.** Signals identify matching records and write results to each record's profile, but do not trigger automated actions on their own. To act on the records a signal detected, navigate to the auto-created companion segment and click `Send` to enroll them in a workflow or CRM export, or click `Enrich` to run a bulk enrichment on the matching records. To enroll new members automatically as the signal continues to fire over time, publish a workflow trigger on the companion segment — see [Connecting a workflow to a segment](#connecting-a-workflow-to-a-segment) below. Available on Growth and Enterprise plans — if Audiences is not yet enabled in your workspace, contact your Growth Strategist.
+
 **Monitoring signal progress**
 
 While the signal is processing its initial run, its status shows **Running**. Once the initial run completes, the status flips to **Monitoring** and displays a **Last run** timestamp. To see how many records were detected, go to **Data Hub** → **Signals** — the **Signals fired (30d)** column shows the count of events the signal emitted over the past 30 days.
@@ -805,6 +807,19 @@ Three things to check:
 -   **The signal falls outside the default lookback window.** `Lookup in Audiences` returns signal data for the past **90 days** by default via the **Signal data to include (days)** column setting. This lookback is independent of your audience's filter criteria — a contact can be correctly included in a "job change results" audience yet still show empty signal data in a lookup if the job-change event falls outside the configured window. To retrieve older signals, open the column settings and increase **Signal data to include (days)** to cover the relevant time range.
 -   **The default 5-result count was reached.** `Lookup in Audiences` returns 5 signal results per record by default. If a company has more active signals than that, some may not appear — increase the result limit in the column settings (up to 50), or use `Get Audiences Activity` to retrieve a larger set of signal data.
 -   **The signal hasn't fired for that record yet.** Signal results are written asynchronously and may not appear immediately after a signal run completes. If a signal should be recent but is still missing, open the signal's column header → `Edit column` and re-run the signal to refresh the data for that record.
+
+### A signal I created in a table isn't showing up when I try to add it to an audience — why?
+
+Available on Growth and Enterprise plans. If Audiences is not yet enabled in your workspace, contact your Growth Strategist.
+
+Signals created inside a Clay workbook table write results back to that table and are scoped to it — they cannot be applied to or reassigned to an Audiences segment. When you click `Enrich` → `Signals` on an audience segment, only signals that were originally created through Audiences appear in the list.
+
+To add a signal to your Audiences, create it from within Audiences in one of two ways:
+
+-   **From a segment:** Navigate to an audience segment → click `Enrich` → `Signals` → select a signal type and configure it.
+-   **From the Data Hub:** Navigate to **People** or **Companies** → **Data Hub** → **Signals** tab → click `+ Add signal`.
+
+Signals created either way are stored in the **Data Hub** and can be applied to multiple audience segments. If you have an existing signal configured in a table that you want to use in Audiences, recreate it using either path above — your table-based signal can continue running independently alongside the new Audiences signal.
 
 ### How do I remove records from an audience?
 
