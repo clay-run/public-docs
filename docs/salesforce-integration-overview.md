@@ -382,6 +382,19 @@ Clay Value: `Technology;Healthcare;Finance`
 | Values not updating | Wrong delimiter used | Use semicolons (;), not commas |
 | Field not accepting value | Using display label instead of API name | Verify API name in Salesforce Setup |
 
+### Clearing a picklist field
+
+Salesforce uses `--None--` as a UI label to indicate that a picklist field has no stored value. `--None--` is not an actual picklist API option — it does not appear as a selectable choice in Clay's **Map fields** dropdown, and there is no way to send an empty or null value to clear a picklist field through the **Update Record** action.
+
+To clear a picklist field (return it to empty in Salesforce), use a sentinel-value approach:
+
+1. Ask your Salesforce admin to add a dedicated picklist value to the field — for example, `Cleared` or `To Clear` — that will serve as a signal to clear the field.
+2. In your Clay **Update Record** column, map the picklist field to that sentinel value.
+3. Run the rows.
+4. Have your Salesforce admin create a Salesforce Flow on the object that detects the sentinel value and sets the field to null (clearing it).
+
+This approach works for both restricted and unrestricted Salesforce picklist fields.
+
 ### Writing AI-generated values to restricted picklist fields
 
 If you are using an AI column (Claygent or Use AI) to generate values that are then written to a Salesforce restricted picklist via **Update Record**, you may see "bad picklist value" errors even when the output appears correct. AI columns produce free text — a trailing space, different capitalization, or an invisible encoding character is enough for Salesforce to reject the value.
