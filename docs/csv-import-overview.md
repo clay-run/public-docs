@@ -97,9 +97,11 @@ Make sure your CSV file name is short. Long file names can interfere with the up
 
 **If the CSV import dialog shows "Row limit exceeded.":**
 
-This error means your CSV has more rows than your plan's per-table row limit allows. It is separate from the workspace-wide row limit — the per-table limit is enforced at import time based on your plan:
+This error means the destination table has already reached its per-plan row capacity — there are no remaining rows available to add. It appears when importing into a table that is already at its row ceiling, not when the CSV file itself is larger than the plan limit (a CSV larger than the table's remaining space shows an **"Import First N Rows"** button instead).
+
+Per-table row limits by plan:
 
 -   **Free plan:** 200 rows per table
 -   **Launch, Growth, and Enterprise plans:** 50,000 rows per table
 
-To proceed, either upgrade your plan (click **Upgrade your plan** in the top right of your workspace), or split your CSV into smaller files — each containing fewer rows than your plan's per-table limit — and import them one at a time.
+To proceed: delete some rows from the destination table to free up capacity, switch the destination to **Create new table** to import into a fresh table, or upgrade your plan to increase the per-table row limit (click **Upgrade your plan** in the top right of your workspace).
