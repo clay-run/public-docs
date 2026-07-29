@@ -543,6 +543,14 @@ The simplest framing: Tables are how you _work on_ data. Audiences is where your
 | Connections | Built per workflow | Continuously synced to your CRM, warehouse, and other sources |
 | Scale | Up to 50,000 rows | Millions of records |
 
+### Does Audiences Companies deduplication apply to my regular Clay tables?
+
+No. Deduplication in Audiences is scoped to the Audiences data layer only — it does not affect records in your regular Clay tables. Your Clay tables keep their own rows and are not touched by anything in Audiences.
+
+Domain-based deduplication within Audiences itself is also not automatic. Uploading a company list to Audiences Companies does not deduplicate records by domain on its own. To enable domain-based deduplication across sources, an admin must explicitly configure **deterministic matching** at import setup time and select domain as the match key — see [Entity resolution and deduplication](#entity-resolution-and-deduplication) above. Without that configuration, no domain-based deduplication occurs at upload time.
+
+To query Audiences data from a Clay table, use `Lookup in Audiences` or `Get Audiences Activity` in a table column — see [Using Audiences from a Clay table](#adding-enrichments) for the full list of table ↔ Audience actions.
+
 ### What if my integration isn't supported yet?
 
 Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data into a Clay table from any source, then use Upsert to push those records permanently into your Audience. This works for any source Audiences doesn't yet natively support.
