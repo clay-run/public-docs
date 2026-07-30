@@ -1,15 +1,15 @@
 ---
 title: Clay Ads
-description: Build and sync contact and account lists to LinkedIn, Meta, and Google Ads for
-  precise ad targeting.
+description: Build and sync contact and account lists to LinkedIn, Meta, Google Ads, and Bing
+  Ads for precise ad targeting.
 last_synced: 2026-05-11T17:47:40.000Z
 ---
 
 # Clay Ads
 
-Build and sync contact and account lists to LinkedIn, Meta, and Google Ads for precise ad targeting.
+Build and sync contact and account lists to LinkedIn, Meta, Google Ads, and Bing Ads for precise ad targeting.
 
-Build and sync contact and account lists to LinkedIn, Meta, and Google Ads for precise ad targeting. Import your target accounts and contacts into Clay, enrich them with personal emails for better match rates, then sync to ad platforms for campaigns and exclusions.
+Build and sync contact and account lists to LinkedIn, Meta, Google Ads, and Bing Ads (Microsoft Advertising) for precise ad targeting. Import your target accounts and contacts into Clay, enrich them with personal emails for better match rates, then sync to ad platforms for campaigns and exclusions.
 
 **Key use cases:**
 
@@ -113,7 +113,7 @@ Access control is enforced at the Google Ads account level — the person connec
 
 ### **What platforms are supported?**
 
-Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, and **Google Ads**.
+Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, **Google Ads**, and **Bing Ads** (Microsoft Advertising). Bing Ads is rolling out to all Growth and Enterprise workspaces starting August 4, 2026 — contact [Clay support](https://www.clay.com/contact) to request early access.
 
 Note that data source restrictions apply depending on the platform — see [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) below for details.
 
@@ -219,7 +219,7 @@ Reauthenticate your Google Ads connection in Clay: disconnect the Google Ads acc
 
 ### **How do I connect my LinkedIn, Meta, or Google Ads account?**
 
-When you create your first ad audience, you'll be prompted to authenticate with LinkedIn Campaign Manager, Meta Business Manager, or your Google Ads account via OAuth. Make sure you have admin access to the ad account you want to use. Note that Google Ads syncing is currently in closed beta — contact [Clay support](https://www.clay.com/contact) to request access.
+When you create your first ad audience, you'll be prompted to authenticate with LinkedIn Campaign Manager, Meta Business Manager, your Google Ads account, or your Bing Ads (Microsoft Advertising) account via OAuth. Make sure you have admin access to the ad account you want to use. Note that Google Ads syncing is currently in closed beta — contact [Clay support](https://www.clay.com/contact) to request access. Bing Ads is rolling out to all Growth and Enterprise workspaces starting August 4, 2026 — contact [Clay support](https://www.clay.com/contact) to request early access.
 
 ### **Why did I receive an email saying my Meta account will disconnect soon?**
 
