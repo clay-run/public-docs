@@ -97,6 +97,21 @@ Founded year is not available as a filter when building a `Find Companies` searc
 
 However, `Find Companies` automatically includes a **Founded** column in your table showing the founding year for each company. Once you've imported your results, you can filter or sort that column to focus on companies founded within a specific range — for example, filtering to companies founded after 2020 to target early-stage startups.
 
+### Which location field gives the most accurate headquarters address?
+
+Clay returns location data at two levels of detail — choose based on what you need:
+
+**For city/state/country-level headquarters identification (most reliable):**
+Use **Structured Locations** in the cell details. A company may have multiple Structured Location entries — one per known office. The **Is Headquarters** field is `true` for the company's primary office, so looking at entries where `Is Headquarters = true` pinpoints the HQ. These fields are geocoded and normalized (they handle informal names like "Greater Chicago Area") but do not include a full street address. The **Is Headquarters** filter in the Location section of Find Companies uses this same flag — enabling it restricts search results to companies whose HQ matches your location criteria.
+
+**For a raw street-level address:**
+Each company record also includes a **Locations** section in the cell details with a raw **Address** string per office (for example, "Brooklyn, NY 11222, US") and an **Is Primary** flag. When **Is Primary** is `true`, that entry is the designated primary office — the closest native field to a full street address. Two caveats:
+-   **Is Primary does not always equal HQ** — in some records, the primary flag doesn't perfectly map to the headquarters location.
+-   The address is an unparsed string; if you need city, zip, or country as separate values, you'll need a formula or AI column to extract them.
+
+**For confirmed street-level HQ address (highest accuracy):**
+None of Clay's native location fields return a verified street-level headquarters address on their own. For that level of precision, run a Claygent or AI research column that looks up the company's HQ from public sources. To reduce research cost, use **Structured Location where Is Headquarters = true** as a seed — it narrows the research to the right city and country without requiring a full web search from scratch.
+
 ### What if the industry I'm looking for isn't in the dropdown?
 
 The **Industries** filter matches against categories companies have self-selected on their profiles, so niche subcategories may not appear as suggestions. If you can't find your specific industry, select the closest available broader category and use the **Description keywords to include** field to narrow results to companies that operate in your specific niche.
