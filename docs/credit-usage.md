@@ -19,6 +19,8 @@ To check the credit usage in your workspace:
 2.  Go to `Settings` and then `Usage` in the sidebar.
 3.  Within `Workspace`, you can view folders, workbooks, and tables sorted by their usage.
 
+**Note:** What appears in your Usage dashboard depends on your plan. On **modern plans** (Launch, Growth, or Enterprise), the dashboard shows two usage meters — **Data Credits** and **Actions** — and an **Actions used** column appears in each breakdown tab alongside Credits used. On **legacy plans**, actions are not a metered resource, so the Actions section and the Actions used column do not appear; only Data Credits are tracked.
+
 **Tip:** If your workspace is approaching or has reached its monthly credit limit, Clay displays an orange banner at the top of every page. Click **See usage** in that banner to go directly to the credit usage dashboard.
 
 **Tip:** The credit indicator in the top navigation bar shows your **remaining** balance, labeled **"X credits available"** — this is how many credits you have left to spend this period, not how many you have already consumed. To see your credit consumption (how much you've spent), use the credit usage dashboard at `Settings → Usage`.
@@ -93,9 +95,9 @@ This is useful for spot-checking costs before scaling a workflow: run a small ba
 
 The credit usage dashboard is organized into tabs, each covering a different slice of your workspace spend. Use the `When` dropdown and `Apply filters` to scope each tab to a specific time period.
 
--   **Workbooks** — shows credit spend broken down by folder, workbook, and table. Click the dropdown next to any folder or workbook to drill into its contents. Sort by `Name` or `Credits used`. Click `Export` to download a CSV for offline analysis.
+-   **Workbooks** — shows credit spend broken down by folder, workbook, and table. Click the dropdown next to any folder or workbook to drill into its contents. Sort by `Name` or `Credits used`. On modern plans (Launch, Growth, or Enterprise), an **Actions used** column also appears, sortable alongside Credits used. Click `Export` to download a CSV for offline analysis.
 -   **Integrations** — shows credit spend grouped by integration across your entire workspace. Expand any integration row to see a breakdown by individual API key — useful when you have both Clay-managed and personal (BYOK) keys connected, or multiple keys for the same provider. If your workspace uses Audiences agent runs, credits for those runs appear as a **Clay Auto** row under the Artificial Intelligence integration. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
--   **Signals** — shows credit spend broken down by individual signal. A totals row (`All Signals`) appears at the top, followed by a per-signal breakdown of `Credits used` and `Actions used`.
+-   **Signals** — shows credit spend broken down by individual signal. A totals row (`All Signals`) appears at the top, followed by a per-signal breakdown of `Credits used` and, on modern plans (Launch, Growth, or Enterprise), `Actions used`.
 -   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
 -   **API** — shows programmatic spend from Clay's People & Company Search API and Exportly, broken down by user. Like MCP, unattributable spend appears as `Unattributed`. Credits from Routines API runs are not tracked here — those appear in the **Workbooks** tab, attributed to the function table that processed each run.
 -   **Budgets** — shows credit spend broken down by budget. Visible only on workspaces with Credit Budgets enabled (currently in open beta for Enterprise customers). See [Credit Budgets](/docs/credit-spend-limits-faq#credit-budgets-open-beta) for details.
