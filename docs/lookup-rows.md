@@ -189,6 +189,44 @@ When a table has multiple rows sharing the same company — for example, several
 -   Use the lookup result as a gate to control downstream actions (enrich/send/route only when criteria are met)
 -   **Counts can be off when rows evaluate concurrently** — when many rows run at the same time, a self-lookup may return an inaccurate count for some rows (for example, showing 2 when the real count is 1). This happens because rows reading and writing the same table simultaneously can see partially updated data. For accurate counts after a full run, select the lookup column and click **Run column** once the table finishes processing.
 
+### **Deduplication: cross-checking new imports against an existing leads table**
+
+When you upload a new batch of leads and want to identify which ones already exist in another table, add multiple **Lookup single row** columns — one per identifier — and a formula column that marks each row as new or existing.
+
+**Setup**
+
+1.  **Enrich your new leads table** to get consistent identifiers: a professional profile URL (e.g., LinkedIn URL) and a work email address. These become the match keys for your lookups.
+
+2.  **Add one Lookup single row column per identifier**, each pointing at your existing leads table but matching on a different column:
+    -   *Lookup by Profile URL* — `Table to search` → your existing leads table, `Target column` → the profile URL column, `Row value` → the profile URL from the new row
+    -   *Lookup by Email* — `Table to search` → your existing leads table, `Target column` → the email column, `Row value` → the email from the new row
+    -   *(Optional) Lookup by Name + Company* — in both tables, add a formula column that concatenates name and company into a single string (e.g., `{{First Name}} + " " + {{Last Name}} + " " + {{Company}}`), then add a third lookup matching on that combined column. Use this as a fallback when a profile URL or email is unavailable.
+
+3.  **Add a Formula column** (e.g., `Is Existing Lead`) that returns `"Existing"` if any lookup found a match, or `"New"` if all lookups returned null (no match):
+
+    `({{Lookup by Profile URL}} == null && {{Lookup by Email}} == null) ? "New" : "Existing"`
+
+    Add additional `&&` conditions for any extra lookup columns.
+
+4.  **Gate downstream enrichment** on this formula column. Open **Run settings → Only run if** on any enrichment column and set: `/Is Existing Lead equals "New"`. This skips enrichment for leads already in your existing table and avoids consuming credits on records you've already processed. See [Conditional runs](conditional-runs.md) for how to set this up.
+
+**Identifier priority**
+
+Match on the strongest identifier first:
+-   **Profile URL (e.g., LinkedIn URL)** — most reliable. Unique per person and doesn't change when someone switches jobs or updates their email. Use this as your primary match key.
+-   **Work email** — second-best option. Reliable for identifying a contact at their current company, but can change when someone changes employers.
+-   **Name + Company** — weakest fallback. Company names are often inconsistent across datasets (e.g., "Zoom" vs. "Zoom Video Communications"). Use only when neither a profile URL nor email is available.
+
+**Rolling log for ongoing ingestion**
+
+If you import new leads continuously over time, use a dedicated **log table** that accumulates every lead you've already processed, instead of checking against a static snapshot:
+
+1.  Create a separate **leads log table** with columns for the identifiers you match on (profile URL, email).
+2.  In your new-leads table, point your lookup columns at this log table instead of your original leads table.
+3.  Add a **Send Table Data** column that copies the new lead's identifier columns into the log table after enrichment completes. Set a [conditional run](conditional-runs.md) on this column so it only fires for rows where `Is Existing Lead equals "New"`.
+
+Each subsequent import is automatically checked against the cumulative log. Leads processed in any previous import will be caught as `"Existing"` on every future run.
+
 ### **Timing considerations in multi-step workflows**
 
 A lookup reads the target table at the exact moment it runs — it doesn't wait for other enrichments to finish and has no awareness of in-progress steps elsewhere. If your workflow populates a table in one step and then immediately looks up that same table in a dependent step, the lookup can execute before the first step has finished adding rows. When that happens, the lookup returns no results even though matching records will exist shortly.
