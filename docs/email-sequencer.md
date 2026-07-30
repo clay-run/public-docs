@@ -27,6 +27,24 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 9.  Review the summary and click `Finish`.
 10.  Back in Clay, click `Continue` in the modal, then click `Connect your Google account` and complete the OAuth sign-in.
 
+## Connecting Microsoft Outlook via OAuth
+
+Unlike Google OAuth, most Microsoft 365 tenants do not require a domain-wide admin pre-approval before individual users can connect their accounts. If your organization allows users to consent to third-party apps on their own, you can connect by going to `Campaigns` → `Email Accounts` → `Add email accounts` → `Microsoft Outlook OAuth` and completing the sign-in directly.
+
+**"Unverified app" warning:** If you see this warning during the OAuth sign-in flow, this is expected — click through it to proceed. It does not affect functionality.
+
+**If your Microsoft 365 / Entra tenant requires admin approval for third-party apps,** an admin consent URL will appear in the Clay modal during the connection flow, and a Microsoft 365 admin must approve it before individual users can connect their accounts. To grant admin consent:
+
+1.  Go to the [Microsoft Entra Admin Center](https://entra.microsoft.com) and sign in with your Microsoft 365 admin account.
+2.  Navigate to **Identity** → **Applications** → **Enterprise Applications** → **All applications**.
+3.  Search for **Clay Sequencer – Smartlead** and click the app.
+4.  In the left sidebar under **Security**, click **Permissions**.
+5.  If admin consent has not yet been granted, click **Grant admin consent for [your tenant name]**. A popup will appear asking you to sign in and confirm — make sure popups are not blocked in your browser.
+
+Once admin consent is granted, individual users in your tenant can go to `Campaigns` → `Email Accounts` → `Add email accounts` → `Microsoft Outlook OAuth` in Clay and complete the sign-in with their own Microsoft credentials — no admin account is needed for this step. The consent grant only needs to be done once per tenant.
+
+For the full list of permissions Clay requests when connecting a Microsoft account, see [What exact Microsoft permissions does sequencer require?](#what-exact-microsoft-permissions-does-sequencer-require).
+
 ## Create a new email campaign
 
 1.  Start in a table that contains the lead emails you want to contact.
@@ -50,7 +68,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   `Google OAuth` (recommended): Connect your Google Workspace account via OAuth.
         -   ⚠️ Note: You or your Google Workspace admin must authorize Clay Sequencer as a Trusted app for your domain before connecting. If you or a teammate sees **"Access blocked: clay.com has not completed the Google verification process" (Error 403: access_denied)** when connecting, follow [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth) for the required admin setup steps. Until this is done, all users in your domain will see this error.
     -   `Microsoft Outlook OAuth` (recommended): Connect your Outlook account via OAuth.
-        -   ℹ️ Note: Unlike Google OAuth, no Clay-side admin setup is required upfront. If your Microsoft 365 / Entra tenant requires admin approval for third-party apps, your admin may need to grant consent for "Clay Sequencer – Smartlead" in the [Microsoft Entra Admin Center](https://entra.microsoft.com).
+        -   ℹ️ Note: Unlike Google OAuth, no Clay-side admin setup is required upfront — most users can connect directly. If your Microsoft 365 / Entra tenant requires admin approval for third-party apps, your admin will need to grant consent for "Clay Sequencer – Smartlead" first. See [Connecting Microsoft Outlook via OAuth](#connecting-microsoft-outlook-via-oauth) for the admin steps and troubleshooting.
     -   `SMTP`: Connect a single account via SMTP credentials directly. The form requires both SMTP settings (host, port, username, password) and IMAP settings (host, port) — Clay does not provide a built-in inbox, so your IMAP credentials must come from an existing IMAP-capable mailbox under your domain (such as Google Workspace, Microsoft 365, Zoho, or Fastmail). If your sending service is send-only (for example, SendGrid or another transactional email relay), you must pair it with a separate IMAP-enabled mailbox.
     -   `Bulk CSV upload`: Add multiple accounts at once by uploading a CSV. Download the example template from the modal and fill in the following eight columns for each account: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`. For Google Workspace accounts, generate an app password for each account (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` value.
     -   You can also [buy email accounts directly in Clay](https://university.clay.com/docs/buying-email-accounts) if you want to increase your sending capacity.
