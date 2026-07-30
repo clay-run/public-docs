@@ -1,15 +1,15 @@
 ---
 title: Clay Ads
-description: Build and sync contact and account lists to LinkedIn, Meta, Google Ads, and Bing Ads
-  for precise ad targeting.
+description: Build and sync contact and account lists to the professional network, Meta, Google Ads,
+  and Bing Ads for precise ad targeting.
 last_synced: 2026-05-11T17:47:40.000Z
 ---
 
 # Clay Ads
 
-Build and sync contact and account lists to LinkedIn, Meta, Google Ads, and Bing Ads (Microsoft Advertising) for precise ad targeting.
+Build and sync contact and account lists to the professional network, Meta, Google Ads, and Bing Ads (Microsoft Advertising) for precise ad targeting.
 
-Build and sync contact and account lists to LinkedIn, Meta, Google Ads, and Bing Ads (Microsoft Advertising) for precise ad targeting. Import your target accounts and contacts into Clay, enrich them with personal emails for better match rates, then sync to ad platforms for campaigns and exclusions.
+Build and sync contact and account lists to the professional network, Meta, Google Ads, and Bing Ads (Microsoft Advertising) for precise ad targeting. Import your target accounts and contacts into Clay, enrich them with personal emails for better match rates, then sync to ad platforms for campaigns and exclusions.
 
 **Key use cases:**
 
@@ -26,7 +26,7 @@ _Note: Personal email addresses significantly improve match rates when syncing t
 1.  **To start, go to `Ads`** from the Clay homepage. Then click `New Ad Sync` and select a source type:
     -   **Best practice:** Sync lists from your CRM (Salesforce, HubSpot) or data warehouse for compliance
     -   Also available: CSV upload
-    -   Note: When using Clay's company/people search (CPJ) as a source, data source restrictions apply by platform — only US-origin contacts are eligible for LinkedIn and Meta; CPJ data cannot be used at all for Google Ads or Bing Ads. For Google Ads and Bing Ads syncs, use your CRM or data warehouse as the source.
+    -   Note: When using Clay's company/people search (CPJ) as a source, data source restrictions apply by platform — only US-origin contacts are eligible for the professional network and Meta; CPJ data cannot be used at all for Google Ads or Bing Ads. For Google Ads and Bing Ads syncs, use your CRM or data warehouse as the source.
 2.  **Choose your connected account** on LinkedIn or Meta and prepare your data before mapping:
     -   LinkedIn has character limits for certain fields. If needed, add a formula column to shorten longer job titles for better match rates.
     -   **Note:** Ad Sync tables have a more limited selection of enrichment providers and actions than regular Clay tables. For complex transformations (such as domain normalization), prepare the data upstream in a regular table first, then use that table or a Clay Audience as the source for your Ad Sync.
@@ -123,7 +123,7 @@ When you connect your Bing Ads account, you authenticate using **Sign in with Mi
 
 ### **What platforms are supported?**
 
-Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, **Google Ads**, and **Bing Ads (Microsoft Advertising)**.
+Clay currently supports syncing ad audiences to **the professional network**, **Meta**, **Google Ads**, and **Bing Ads (Microsoft Advertising)**.
 
 Bing Ads syncing is currently in beta — rolling out to all workspaces August 4, 2026. Contact [Clay support](https://www.clay.com/contact) to request early access.
 
@@ -229,9 +229,9 @@ In your Google Ads account, go to **Tools & Settings → Audience Manager**. If 
 **If Customer Match is enabled and the error still appears:**
 Reauthenticate your Google Ads connection in Clay: disconnect the Google Ads account in your Clay connections settings, reconnect it via OAuth, then run the sync again.
 
-### **How do I connect my LinkedIn, Meta, Google Ads, or Bing Ads account?**
+### **How do I connect my ad accounts?**
 
-When you create your first ad audience, you'll be prompted to authenticate with LinkedIn Campaign Manager, Meta Business Manager, your Google Ads account, or your Bing Ads account. Make sure you have admin access to the ad account you want to use. Note that Google Ads syncing is currently in closed beta — contact [Clay support](https://www.clay.com/contact) to request access. Bing Ads syncing is currently in beta, rolling out to all workspaces August 4, 2026 — contact [Clay support](https://www.clay.com/contact) to request early access.
+When you create your first ad audience, you'll be prompted to authenticate with Campaign Manager (professional network), Meta Business Manager, your Google Ads account, or your Bing Ads account. Make sure you have admin access to the ad account you want to use. Note that Google Ads syncing is currently in closed beta — contact [Clay support](https://www.clay.com/contact) to request access. Bing Ads syncing is currently in beta, rolling out to all workspaces August 4, 2026 — contact [Clay support](https://www.clay.com/contact) to request early access.
 
 ### **Why did I receive an email saying my Meta account will disconnect soon?**
 
