@@ -76,7 +76,7 @@ To create a new system user token, you first need to create an app:
 2.  Choose `Create a new app ID`.
 3.  Name your app.
 4.  Select the use case as `Other`.
-5.  Set the app type to `Business`.
+5.  Set the app type to `Business`
 6.  Click `Create app`.
 7.  Ensure the app has `Ads Management Standard Access` permissions. You can find this setting in `App Review` > `Permissions and Features`.
 8.  Navigate to `Business Settings` > `Users` > `System users` and add a new system user with `Admin` access.
@@ -198,6 +198,23 @@ Yes! Once synced, your audiences automatically update as data changes in your Cl
 ### **Can I see which contacts matched?**
 
 No, LinkedIn and Meta don't provide contact-level match visibility for privacy reasons. However, Clay shows aggregate match rates and total audience size after each sync.
+
+### **Why does the match rate shown in Clay differ from what LinkedIn or Meta reports?**
+
+If the match rate displayed in Clay is higher than what you see in LinkedIn Campaign Manager or Meta Ads Manager, duplicate rows in your Clay table are the most common cause.
+
+**How each side calculates match rate:**
+
+-   **Clay** sends every row in your table to the ad platform without deduplication. Clay's match rate is calculated as: matched rows ÷ total rows submitted.
+-   **LinkedIn and Meta** deduplicate the submitted list before matching. Their match rate is calculated against the number of unique contacts received — not the raw row count.
+
+The result: if two rows in your table represent the same person, Clay counts both rows in its denominator while the ad platform counts that person only once. Clay's percentage appears higher even though the actual number of matched people is the same.
+
+**The most common source of hidden duplicates — personal + work email in separate rows:** If your list contains both a personal email and a work email for the same contact as separate rows, both hashed emails are sent to LinkedIn or Meta. The platform matches both emails to the same member, collapses them to one unique person, and calculates its match rate on the unique count. Clay's match rate remains based on the original row count.
+
+**How to fix it:** Deduplicate your Clay table before syncing. Click any column heading and select **Dedupe** to identify and remove duplicate rows. Deduplicating before sync also conserves enrichment credits by avoiding enriching the same contact more than once.
+
+**Secondary factor — platform-side audience refinement:** LinkedIn and Meta may also adjust their reported audience size over time as members become inactive, change their privacy settings, or opt out of ad targeting. These platform-side changes happen independently of your list and can cause small shifts in the reported match rate or audience size after the initial sync completes.
 
 ### **Why does my ad audience show "too small for use in campaigns"?**
 
