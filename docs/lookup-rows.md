@@ -195,7 +195,7 @@ When you upload a new batch of leads and want to identify which ones already exi
 
 **Setup**
 
-1.  **Enrich your new leads table** to get consistent identifiers: a professional profile URL (e.g., LinkedIn URL) and a work email address. These become the match keys for your lookups.
+1.  **Enrich your new leads table** to get consistent identifiers: a professional profile URL (e.g., a social profile URL from a professional network) and a work email address. These become the match keys for your lookups.
 
 2.  **Add one Lookup single row column per identifier**, each pointing at your existing leads table but matching on a different column:
     -   *Lookup by Profile URL* — `Table to search` → your existing leads table, `Target column` → the profile URL column, `Row value` → the profile URL from the new row
@@ -213,7 +213,7 @@ When you upload a new batch of leads and want to identify which ones already exi
 **Identifier priority**
 
 Match on the strongest identifier first:
--   **Profile URL (e.g., LinkedIn URL)** — most reliable. Unique per person and doesn't change when someone switches jobs or updates their email. Use this as your primary match key.
+-   **Professional profile URL** — most reliable. Unique per person and doesn't change when someone switches jobs or updates their email. Use this as your primary match key.
 -   **Work email** — second-best option. Reliable for identifying a contact at their current company, but can change when someone changes employers.
 -   **Name + Company** — weakest fallback. Company names are often inconsistent across datasets (e.g., "Zoom" vs. "Zoom Video Communications"). Use only when neither a profile URL nor email is available.
 
