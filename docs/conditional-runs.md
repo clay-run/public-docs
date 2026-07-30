@@ -41,6 +41,16 @@ Conditional runs allow you to execute specific actions or enrichments in a workf
 
 Rows where the formula flags the address as personal show **"Run condition not met"** — no credits are consumed for those rows.
 
+**Sequential provider waterfall (run next enrichment only when the previous one found no result)**: In a multi-provider enrichment workflow, run provider B only when provider A has completed and explicitly returned no data — not when provider A was skipped by a run condition or has not yet run. When an enrichment finds no result, it shows a status label in the Clay UI (such as "No mobile found") but the underlying cell data is empty, which looks identical to a cell that never ran. A formula column using `Clay.getCellStatus()` can tell the two apart.
+
+1.  Add a **Formula column** — for example, named "Needs Provider B" — with the expression:
+    `Clay.getCellStatus({{Provider A Column}}) === "SUCCESS_NO_DATA"`
+    This formula returns a non-empty value when provider A ran and the provider found nothing. It evaluates to empty for rows where provider A was skipped by a run condition or has not yet run.
+2.  On provider B's action column, open **Run settings → Only run if** and set the condition to `/Needs Provider B is not empty`. Clay runs provider B only for rows where the formula confirmed provider A returned no result.
+3.  Repeat this pattern for each subsequent provider in the chain — one formula column per provider pair. Rows where any provider successfully returns data will stop the chain because subsequent providers' formula columns will evaluate empty for those rows.
+
+`Clay.getCellStatus()` returns `"SUCCESS_NO_DATA"` when an enrichment ran but the provider found nothing — distinct from `"ERROR_RUN_CONDITION_NOT_MET"` (skipped by a run condition) or `"UNKNOWN"` (never run). See [Formulas](formula-generator.md#what-does-claycellstatus-return) for all possible values.
+
 ## How do they work?
 
 Conditional runs are built on **Conditional statements** and evaluate a condition as true or false to determine whether to execute or skip an action.
