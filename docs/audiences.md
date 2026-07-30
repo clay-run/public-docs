@@ -337,10 +337,7 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
 
 **Recurring enrichments (scheduled re-runs)**
 
-After an initial run, you can configure the enrichment to re-run automatically on a fixed schedule. In the enrichment's **Run settings**, enable **Recurring enrichments** and choose a frequency: **daily**, **weekly**, or **monthly**. Each scheduled run processes:
-
--   **New records** — records that joined the segment since the last run.
--   **Updated records** — existing records whose data changed since the last run. A record is considered updated when a mapped CRM or warehouse field syncs in with a new value, or when a Clay enrichment writes a new value back to the record.
+After an initial run, you can configure the enrichment to re-run automatically on a fixed schedule. In the enrichment's **Run settings**, enable **Recurring enrichments** and choose a frequency: **daily**, **weekly**, **monthly**, **quarterly**, or **custom** (custom lets you specify an interval in days, weeks, or months). On each scheduled run, the enrichment re-processes all current segment members — every record in the segment at run time is re-queued and enriched from scratch.
 
 Scheduled enrichment runs are not SLA-guaranteed — monitor the first few runs to confirm timing and results meet your needs.
 
@@ -660,12 +657,9 @@ Enrichments configured with `Continuous Enrichment` enabled automatically proces
 
 ### Can I run a bulk enrichment on a recurring schedule?
 
-Yes. In the enrichment's **Run settings**, enable **Recurring enrichments** and choose a frequency: **daily**, **weekly**, or **monthly**.
+Yes. In the enrichment's **Run settings**, enable **Recurring enrichments** and choose a frequency: **daily**, **weekly**, **monthly**, **quarterly**, or **custom** (custom lets you specify an interval in days, weeks, or months).
 
-On each scheduled run, Clay automatically processes two groups of records:
-
--   **New records** — records that entered the segment since the last enrichment run.
--   **Updated records** — existing records whose data changed since the last enrichment run. A record is considered updated when a mapped CRM or warehouse field syncs in with a new value, or when a Clay enrichment writes a new value to the record.
+On each scheduled run, the enrichment re-processes all current segment members — every record in the segment at run time is re-queued and enriched from scratch. This makes recurring enrichments useful for keeping data fresh as your audience evolves over time, without manual re-runs.
 
 Recurring enrichments is an Audiences-specific feature — it is available only in bulk enrichments started from within an Audience segment (`Enrich` → `Add bulk enrich`), not in bulk enrichments created from the Clay homepage.
 
