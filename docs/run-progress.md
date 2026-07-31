@@ -77,6 +77,8 @@ To stop a running table, click the **Stop** button in the run summary panel at t
 
 **If the Stop button appears greyed out with the tooltip "No runs are in progress for this table" while cells still show Running or Synthesizing status, this is expected during AI column runs.** The Stop button only becomes active when requests are actively in-flight (already dispatched to a data provider). During large Claygent or AI column runs, Clay dispatches rows in small concurrent batches through a rate limiter. Between batches, no requests are in-flight, so the button temporarily deactivates even though queued cells remain. The run will continue automatically — to stop it, wait for the Stop button to become active between batches and click it then.
 
+**Deleting a running column is not the same as stopping the run.** If you delete a column while it is running, enrichment calls that have already been dispatched to a data provider will complete and the credits charged for those calls are not reversed — even though the column is no longer visible in your table. To stop a run, use the **Stop** button; deleting the column removes it from the table but does not cancel in-progress work.
+
 To prevent unintended credit usage before it starts, turn off [auto-run](auto-run.md) before importing large batches of rows. This prevents enrichments from triggering automatically on new data.
 
 ## Manually running unrun cells
