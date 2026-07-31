@@ -153,6 +153,20 @@ Restoring removes the function column (which was added after the snapshot) and b
 
 Yes. All workspace functions are available to use in your tables — no special permissions needed. Use them as-is, duplicate and modify for your needs, or request edit access from the owner to collaborate directly.
 
+### Why is the Functions list empty when I try to add a function column?
+
+If you click **Tools → Functions** in a table and see "No results found" even though you have saved functions in your workspace, there are two common causes:
+
+**The function has not been saved yet.** A function only appears in the list after it is fully created — either by selecting columns in a table, right-clicking, and choosing **Save as function**, or by clicking **+ New Function** on the Functions homepage. Partially configured functions do not appear in the list.
+
+**A stale browser cache is hiding saved functions.** If your functions are saved but the list still shows empty, try the following steps in order:
+
+1.  Close the current browser tab and fully quit your browser, then reopen it and try again.
+2.  Clear your browser's cache and reload the page.
+3.  If the problem persists, open the table in a different browser to confirm whether the issue is browser-specific.
+
+Clearing the browser cache resolves this in most cases, and your saved functions will appear in the list once the page reloads fresh.
+
 ### What is the difference between editing a function and pausing a function?
 
 **Editing** enters a sandbox mode where you can make changes while the function continues running live. Your edits only take effect when you publish them.
