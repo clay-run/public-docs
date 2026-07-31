@@ -20,6 +20,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 3.  Go to your [Google Workspace Admin Panel](https://admin.google.com/) and navigate to `Security` → `API Controls` → `App Access Control`.
 4.  Click `Configure new app`.
 5.  Paste the Client ID into the search bar and click `Search`.
+    -   **Important:** Search by Client ID only — do not type "Clay Sequencer" or any other name into the search box. Name-based searches return no results. When pasting, confirm there is no `http://` prefix and no trailing space — Google Admin returns no results for a modified string.
 6.  Select `Clay Sequencer (Web)` from the results.
 7.  Choose which org units should have access — either `All in [your org] (all users)` or specific org units — then click `Continue`.
 8.  Select `Trusted` under Access to Google Data and click `Continue`.
@@ -431,7 +432,9 @@ Follow the instructions in the modal and have your Google Workspace admin set ou
 
 This error is expected — Clay's sequencer uses automated warmup sends, which prevents the app from passing Google's standard verification process. Admin approval in your Google Workspace Admin panel is the intended workaround; Clay's app will not become Google-verified.
 
-If the error persists more than 24 hours after your admin marked the app as `Trusted`, confirm that they approved the app for the exact domain of the email account you're connecting (e.g., for `ryan@company.com`, the admin must approve for `company.com` specifically — not a different domain they manage). If you're connecting accounts from multiple domains, each domain requires its own separate Trusted configuration — having one domain approved does not automatically cover the others. Your admin can verify which org units are currently configured by going to Google Admin → Security → API Controls → App Access Control and checking the Clay Sequencer app's org unit count. If it's still blocked after verifying the domain, contact support.
+First, confirm that the correct app was authorized. There are other Clay-related OAuth apps in Google Admin that look similar. The app you need is named **Clay Sequencer (Web)** — if your admin searched by name instead of pasting the Client ID, they may have found and trusted a different Clay sign-in app, which will not fix this error. Go to Google Admin → Security → API Controls → App Access Control and check whether **Clay Sequencer (Web)** appears in the list of configured apps. If it does not, have your admin redo the setup using the Client ID from step 2 of [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth).
+
+If **Clay Sequencer (Web)** is already listed as Trusted and the error persists more than 24 hours, confirm that they approved the app for the exact domain of the email account you're connecting (e.g., for `ryan@company.com`, the admin must approve for `company.com` specifically — not a different domain they manage). If you're connecting accounts from multiple domains, each domain requires its own separate Trusted configuration — having one domain approved does not automatically cover the others. Your admin can verify which org units are currently configured by going to Google Admin → Security → API Controls → App Access Control and checking the Clay Sequencer app's org unit count. If it's still blocked after verifying the domain, contact support.
 
 ### What exact Microsoft permissions does sequencer require?
 
