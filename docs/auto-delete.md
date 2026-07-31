@@ -79,3 +79,13 @@ When archive is enabled, the **Archive deleted rows** toggle appears in your aut
 You can also select an **Indexed column** in the archive settings. Indexing a column lets you search for and retrieve specific deleted rows within the 30-day archive window.
 
 To view deletion activity, open the **History** modal and select the **Auto-deleted rows** tab. The tab shows a daily and monthly breakdown of how many rows auto-delete has removed, so you can track throughput over time.
+
+## FAQs
+
+### Is it safe to disable auto-delete on my webhook tables?
+
+Disabling auto-delete stops automatic row removal — rows stay in your table until you delete them manually. For most tables this is fine, but **high-volume webhook tables carry a specific risk**: webhook submissions count toward a cumulative 50,000-submission limit regardless of how many rows your table currently contains. Manually deleting rows does not reset this counter.
+
+Once a webhook source reaches 50,000 total submissions, Clay returns a `403 Record limit reached for webhook` error and stops accepting new data — even if your table has very few visible rows. At that point, you must create a new webhook source and update the sending system to use the new URL to resume receiving submissions.
+
+**To run a webhook indefinitely without hitting the 50,000-submission limit**, keep auto-delete enabled. With passthrough mode active, the webhook source bypasses the submission limit entirely. See [Webhooks in Clay](webhook-integration-guide.md) for details on the submission limit and how passthrough mode works.
