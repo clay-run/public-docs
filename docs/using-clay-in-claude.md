@@ -90,7 +90,7 @@ Claude will find the matching function, run it, and return the results directly 
 
 ## MCP settings for your team
 
-Workspace admins can set credit limits and monitor rep usage from `Settings → MCP users`. For a full walkthrough of the admin controls, see [MCP settings](https://university.clay.com/docs/mcp-settings).
+Workspace admins can set credit limits and monitor rep usage from the **MCP** page in the workspace sidebar, under the **MCP users** section. For a full walkthrough of the admin controls, see [MCP settings](https://university.clay.com/docs/mcp-settings). Note: the MCP admin page is currently in beta — contact Clay support to have it enabled for your workspace.
 
 ## FAQ
 
@@ -114,7 +114,7 @@ The integration is designed for targeted, individual account research — not bu
 
 **How many credits do I get?**
 
-Credits for Clay in Claude draw from your standard Clay workspace credit balance — there is no separate credit pool for Claude usage. If you run out of credits, you can continue searching for people without enrichments, or upgrade to a paid plan for full functionality.
+Credits for Clay in Claude draw from your standard Clay workspace credit balance. Additionally, workspace admins can set a per-user monthly spending cap on MCP usage — this is a spending limit on the shared workspace balance, not a separate credit pool. If you reach your per-user cap, you'll see the error "You ran out of monthly credits" even when your workspace still has Data Credits available. The cap resets on the 1st of each month at midnight UTC. If you see this error unexpectedly, contact your workspace admin to have your individual limit increased (see "How does my admin control my credit limit?" below). If your workspace runs out of Data Credits entirely, you can continue searching for people without enrichments, or upgrade to a paid plan for full functionality.
 
 **Can the app be used for free?**
 
@@ -182,4 +182,4 @@ For batch workflows like running an email-finder waterfall on a list of companie
 
 **How does my admin control my credit limit?**
 
-Your workspace admin can set a default credit limit for all reps, or a per-user override, from `Settings → MCP users`. If you hit your limit, further enrichments will be blocked until the monthly reset on the 1st of each month at midnight UTC. Contact your admin to have your limit adjusted.
+Your workspace admin can set a default credit limit for all reps, or a per-user override, from the **MCP** page in the workspace sidebar, under the **MCP users** section. If you hit your limit, further enrichments will be blocked until the monthly reset on the 1st of each month at midnight UTC. Contact your admin to have your limit adjusted.
