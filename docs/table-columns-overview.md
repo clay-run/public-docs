@@ -267,7 +267,7 @@ To dedupe a column:
 
 A few rules to keep in mind for column deduplication:
 
--   Deleted rows cannot be recovered, so proceed with caution.
+-   Deleted rows do not go to Trash, and there is no undo option once you confirm the dedupe — the confirmation modal warns that **this action cannot be undone**. However, the Clay support team can restore deleted rows within **30 days** of deletion (subject to your table's 50,000-row limit). To request restoration, contact support with your table URL and approximately when the rows were deleted.
 -   Duplicates are identified based on exact string matches.
     -   Deduplication is case-sensitive, meaning `Clay` and `clay` are treated as different.
     -   Extra whitespace is considered, so `Clay (with a space)` and `Clay` are not the same.

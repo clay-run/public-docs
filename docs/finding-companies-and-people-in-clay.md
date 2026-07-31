@@ -623,7 +623,7 @@ If your people table has a **Company Table Data** column (created automatically 
 
 **To work with the deduplicated list in a separate table:** Use [Send Table Data](send-table-data.md) to push the company name column to a destination table, then run **Dedupe** on that column's header in the destination table.
 
-**Note:** Column deduplication removes entire rows from your table based on matching values — deleted rows cannot be recovered. For full rules and caveats, see [Dedupe columns](table-columns-overview.md).
+**Note:** Column deduplication removes entire rows from your table based on matching values — once confirmed, there is no self-serve undo. Deleted rows do not go to Trash, but the Clay support team can restore them within 30 days of deletion. For full rules, caveats, and recovery options, see [Dedupe columns](table-columns-overview.md).
 
 ### Why do "Picture URL Copy" and "Picture URL Orig" return null in Enrich Person?
 
