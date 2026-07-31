@@ -14,14 +14,14 @@ Auto-delete is a powerful feature designed to help you process and enrich large 
 
 **Tip:** You can receive advance warning before your table reaches the row limit by enabling the **Row count limit** alert in [Table alerts](table-alerts.md). The default threshold is 45,000 rows, and notifications can be delivered via email or Slack. Table alerts are opt-in and configured per table — no notification is sent automatically when a table hits the 50,000-row limit.
 
-**Note that auto-delete does not apply to CSVs, including bulk uploads at high volumes.**
+**Note:** For CSV uploads and bulk uploads, auto-delete will delete rows from the table, but it does not clear the source record count — these sources continue accumulating toward the 50,000-record limit. Auto-delete will not help bypass the import limit for CSV or bulk upload sources. See [Source compatibility](#source-compatibility) for details.
 
 ## **Enable auto-delete**
 
 Follow these steps to set up auto-delete:
 
 1.  Open a table.
-    -   Note: To fully bypass the 50,000 record source limit, the table source must be **webhooks**, **send table data**, a **signal source**, or an **Audiences source**. For all other source types, the source will still accumulate rows toward the 50,000 limit even with auto-delete enabled. A warning appears during setup if your table includes incompatible sources.
+    -   Note: To fully bypass the 50,000 record source limit, the table source must be **webhooks** (including webhook subscriptions such as Typeform or Close CRM event subscriptions), **send table data**, a **signal source**, or an **Audiences source**. For all other source types, the source will still accumulate rows toward the 50,000 limit even with auto-delete enabled. A warning appears during setup if your table includes incompatible sources.
 2.  Open the auto-delete settings using either access path:
     -   Click the **table title** and select **Enable auto-delete** from the dropdown, or
     -   Click the **auto-delete icon** (archive icon) in the bottom toolbar of the table.
@@ -53,6 +53,7 @@ Auto-delete runs after records are written to the table, not before. When record
 Not all source types support fully bypassing the 50,000 record import limit. Only the following source types clear the source record count when rows are deleted, allowing unlimited imports:
 
 -   **Webhooks**
+-   **Webhook subscriptions** (e.g., event subscriptions from tools such as Typeform, Close CRM, AgentMail, and Sequel)
 -   **Send table data**
 -   **Signal sources** (e.g., web intent, job posts, news & fundraising, and other signal-based sources)
 -   **Audiences**
