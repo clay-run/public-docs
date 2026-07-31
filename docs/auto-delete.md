@@ -14,7 +14,7 @@ Auto-delete is a powerful feature designed to help you process and enrich large 
 
 **Tip:** You can receive advance warning before your table reaches the row limit by enabling the **Row count limit** alert in [Table alerts](table-alerts.md). The default threshold is 45,000 rows, and notifications can be delivered via email or Slack. Table alerts are opt-in and configured per table — no notification is sent automatically when a table hits the 50,000-row limit.
 
-**Note that auto-delete does not apply to CSVs, including bulk uploads at high volumes.**
+**Note:** For CSV uploads and bulk uploads, auto-delete will delete rows from the table, but it does not clear the source record count — these sources continue accumulating toward the 50,000-record limit. Auto-delete will not help bypass the import limit for CSV or bulk upload sources. See [Source compatibility](#source-compatibility) for details.
 
 ## **Enable auto-delete**
 
