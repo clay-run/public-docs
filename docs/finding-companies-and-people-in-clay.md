@@ -351,11 +351,15 @@ Deduplication is based on each company's unique profile ID, not your filter conf
 
 ### Re-running Find People returns 0 new results
 
-This is expected behavior. The Find People source deduplicates results against rows already in the table — re-running the same source on a table that already contains those contacts returns 0 new records. There is no setting to disable this: deduplication is always on for the Find People source.
+This is expected behavior. The Find People source tracks every profile it has ever imported in a persistent internal exclusion list — re-running the same source returns only profiles it has never returned before. There is no setting to disable this: deduplication is always on for the Find People source.
 
-**To get the same contacts back** (for example, when testing your table setup): delete the existing rows from your People table first, then re-run the source. Once the rows are cleared, the search will import the same contacts as before.
+**Why re-runs can show "Success" with 0 new rows:** The source ran correctly — it checked all matching profiles against its exclusion list and found none to import. This is not an error.
 
-**Note:** Deduplication is based on each person's unique profile ID, not your search filters. If the data source returns genuinely new profiles matching your criteria that aren't already in the table, those will still come through on re-run. Only contacts already in the table are filtered out.
+**Deleting rows and re-running does not bring contacts back.** The exclusion list is persistent and independent of which rows are currently in your table. Deleting rows does not clear the exclusion list — the source still recognizes and skips any profile it has previously returned, even if that profile's row no longer exists in the table. See [I deleted rows from my table and re-ran the source, but they didn't reappear](sources.md#i-deleted-rows-from-my-table-and-re-ran-the-source-but-they-didnt-reappear) for details.
+
+**To get a fresh import** (for example, when testing your table setup or starting over): create a new table with the same search settings, or delete and re-add the Find People source within the same table. Either approach starts with a clean exclusion list, so the same contacts become importable again.
+
+**Note:** Deduplication is based on each person's unique profile ID, not your search filters. If the source has genuinely new profiles matching your criteria that it has never returned before, those will still come through on re-run.
 
 **If each run adds only 0–1 new people (on a manual or scheduled run):** The search's total matching universe is likely nearly exhausted — the total number of people matching your criteria is small, and nearly all have already been imported. The **Limit results** setting is a ceiling on new additions per run, not a cap on results fetched before filtering. Clay passes already-imported contacts as exclusions to the search before fetching, so the search returns up to **Limit results** genuinely new people. When the pool of unimported matches is nearly empty, even a high limit will add only 0–1 new people per run — raising the limit won't change this.
 
