@@ -32,6 +32,8 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
         -   **Exact phrase matching:** Wrap multi-word terms in single or double quotes to search for that exact phrase. For example, searching for "Google Cloud" finds companies with "Google Cloud" in their description — not just companies that mention Google and cloud separately. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are stripped out even with quoted phrases.
     -   **Semantic company description** — Enter a free-text description to help rank results based on how closely they match your ideal company profile (e.g., "B2B fintech company selling to mid-market banks").
     -   **Location** — Filter by company office location. Sub-filters: **Country**, **City**, **State or province**, **Region** (EMEA, NAM, APAC, or LATAM), and **Postal code**. Use **Is Headquarters** to restrict results to companies whose primary office is in the specified location. All sub-filters support include and exclude.
+
+        Each location block evaluates as "at least one of this company's offices satisfies **all** sub-filters in this block." You can create multiple location blocks, and each block can be satisfied by a *different* office of the same company. **To require a headquarters in a specific country, place the Country sub-filter and Is Headquarters inside the same block** — not as two separate blocks. When Is Headquarters is in a separate block from your Country filter, it only checks that the company has a headquarters *somewhere*, not necessarily in the countries you specified. To add a sub-filter inside an existing location block: click the expand chevron (↓) on the right edge of the block, then select **Add filter** from the menu that appears.
     -   **Estimated employee count** — Filter by a numeric count of estimated employees (enter a minimum and/or maximum). This is a separate field from **Company size** — see the [FAQ below](#why-do-company-sizes-and-estimated-employee-count-return-different-results-for-the-same-range) for why the same numeric range can surface different companies.
     -   **AI filters** — Clay-generated attributes applied to company profiles:
         -   **Industries** and **Subindustries** (include or exclude) — see [the FAQ below](#what-are-the-available-ai-subindustry-filter-values) for the full list of AI Subindustry values
@@ -111,6 +113,16 @@ Each company record also includes a **Locations** section in the cell details wi
 
 **For confirmed street-level HQ address (highest accuracy):**
 None of Clay's native location fields return a verified street-level headquarters address on their own. For that level of precision, run a Claygent or AI research column that looks up the company's HQ from public sources. To reduce research cost, use **Structured Location where Is Headquarters = true** as a seed — it narrows the research to the right city and country without requiring a full web search from scratch.
+
+### Why do I see companies headquartered outside my selected countries when I use "Is Headquarters"?
+
+This happens when **Is Headquarters** is in a **separate location block** from your **Country** filter. Each location block evaluates independently — a company passes a block if *any single office* satisfies all sub-conditions within that block, and two separate blocks can each be satisfied by different offices of the same company.
+
+For example, if you set **Country = Netherlands, United Kingdom** in one location block and **Is Headquarters = true** in a second block, a company like Procter & Gamble (headquartered in Cincinnati) appears because one of its offices is in the UK (satisfying block 1) and its Cincinnati headquarters satisfies block 2 separately. Both blocks pass even though the UK office is not the headquarters.
+
+**Fix: put both conditions inside the same location block.** When Country and Is Headquarters are in the same block, a company only passes if a *single* office satisfies both — that office must be in your specified country *and* be the headquarters.
+
+To move Is Headquarters inside an existing Country block: click the expand chevron (↓) on the right edge of your Country location block, then select **Add filter** from the menu. Add **Is Headquarters = true** inside that block. The filter summary at the top of the panel will then show "≥ 1 location is all of: Country is [X] and Is headquarters? true" — confirming both conditions apply to the same office.
 
 ### What if the industry I'm looking for isn't in the dropdown?
 
