@@ -281,6 +281,8 @@ Merging two Audience records into one happens only at the time of a record upser
 
 After importing, you will want to create new audiences, so you can appropriately target the right contacts.
 
+All records imported into Audiences — from Salesforce, HubSpot, CSV, or other sources — are stored in a single shared dataset called **All Companies** (for account records) or **All People** (for contact records). An audience segment is a filtered view of that shared dataset, not a separate copy of your records. A new audience with no filters applied shows all records in the shared dataset — add at least one filter in step 3 to target only the records you want.
+
 **Admin access required.** Creating, editing, and deleting audience segments is available to workspace Admins only. Editors and Viewers can view and filter existing segments but cannot create new ones.
 
 To create a new audience:
