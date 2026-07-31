@@ -892,6 +892,18 @@ No. Records you sent to Audiences from a Clay table — via **Continue → Save 
 
 To remove those records from Audiences, you must explicitly archive them — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience)
 
+### Why are contacts or companies I deleted in Salesforce still showing in my Audiences?
+
+Clay does not remove records from Audiences immediately when they are deleted in Salesforce. The incremental sync (every 15 minutes on Enterprise plans, once daily on Growth plans) only detects new and updated records — it does not pick up hard deletes. Hard-deleted Salesforce records are reconciled only during the weekly full sync. After the full sync runs, the deleted record's **Sync status** is set to **Deleted in source** — the record is not removed from Audiences automatically.
+
+To clean up these records after the full sync has run:
+
+1. Navigate to **People** or **Companies** in the left sidebar.
+2. Create or open a segment and add a filter: **Sync status → Deleted in source** — this surfaces all records whose Salesforce source association was marked as deleted.
+3. Click **⋮** next to the segment name and select **Archive records** to remove them from your active Audiences.
+
+There is no self-serve option to trigger the full sync early. If you need deleted records reconciled before the next weekly run, contact Clay support.
+
 ### When two sources have conflicting values for the same field, which value wins?
 
 When two sources write different values to the same field on the same Audience record, Clay applies these rules:
