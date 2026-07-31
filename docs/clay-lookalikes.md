@@ -28,7 +28,9 @@ Build a new table of lookalike companies from a seed list. Results are organized
 1.  In a workbook, click `+ Add` at the bottom.
 2.  Search for `Lookalikes` and select **Find lookalike companies (grouped)**, or navigate to **Home → Find leads → Lookalikes**.
 3.  Choose your seed input:
-    -   **Table** — a Clay table of companies (up to 15,000 companies)
+    -   **Table** — a Clay table of companies (up to 15,000 companies). After selecting a table, configure two required settings:
+        -   **Company identifiers** — select a column that contains company website domains (e.g. `acme.com`) or full website URLs (e.g. `https://acme.com`). LinkedIn company profile URLs (`linkedin.com/company/…`) also work. Plain company names or other non-URL values cannot be resolved to a domain and are silently skipped — if all rows are skipped, the search returns no results.
+        -   **View** — select **All rows** or an unfiltered view. If you choose a filtered view, only the rows that pass the filter are used as seeds; rows excluded by the filter are not considered, which can cause the lookalike search to return fewer or no results.
     -   **Audience** — a Clay Audiences segment (up to 15,000 companies)
     -   **List of URLs** — enter up to 10 company domains or company profile URLs
 4.  Review the generated lookalike groups. Each group represents a cluster of similar companies. Click **See more** on a group to open its filter editor, where you can narrow results by country, company size, industry, or description keywords. **See more** is only available when multiple groups have been returned — a single seed URL provides too few data points for the clustering engine to generate distinct groups. To access per-group filtering, provide multiple diverse seed companies.
@@ -73,6 +75,13 @@ Find people similar to a seed person. In addition to the standalone **Find Peopl
 **Output:** An array of matching people, each with name, LinkedIn URL, job title, company domain, seniority levels, and country.
 
 **Credits:** 1 credit per result returned.
+
+## Troubleshooting: lookalike search returns no results
+
+If your Find Company Lookalikes source returns no results when using a table as the seed input, check the two most common causes:
+
+-   **Wrong identifier type.** The **Company identifiers** field must point to a column containing company website domains or URLs. Plain company names and other non-URL values are silently skipped. Open the lookalike setup, switch the identifier to a domain or website URL column, and rerun.
+-   **Filtered view selected.** If the **View** field is set to a filtered view, only rows that pass that view's filter are used as seeds. Switch the View to **All rows** to include all companies in the table and rerun.
 
 ## Migrating from Ocean.io
 
