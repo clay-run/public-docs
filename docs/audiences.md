@@ -87,7 +87,7 @@ Clay pulls data from Salesforce on two schedules:
 
 **Formula and calculated fields:** Salesforce formula and calculated fields do not update `SystemModstamp` when they recalculate. Changes to these fields are not captured during incremental syncs — they appear in Audiences only after the next weekly full sync.
 
-**Deleted records:** Clay does not remove deleted Salesforce records from Audiences immediately. Instead, the record is marked **Deleted in source**, which you can filter on in your audience. The weekly full sync reconciles hard-deleted records. If a Salesforce record is deleted and recreated (assigning it a new Salesforce ID), it will temporarily appear as a duplicate entry until the next weekly full sync resolves it. There is no self-serve option to trigger an early full sync — contact Clay support if you need an expedited cleanup.
+**Deleted records:** Clay does not remove deleted Salesforce records from Audiences — instead, the record is marked **Deleted in source**, which you can filter on in your audience. **Soft-deleted records** (moved to the Salesforce recycle bin, `IsDeleted = true`) are picked up by the incremental sync because Salesforce updates their `SystemModstamp` on deletion. **Hard-deleted records** (permanently purged from Salesforce, no longer visible even in the recycle bin) are reconciled only by the weekly full sync. If a Salesforce record is deleted and recreated (assigning it a new Salesforce ID), it will temporarily appear as a duplicate entry until the next full sync resolves it. There is no self-serve option to trigger an early full sync — contact Clay support if you need an expedited cleanup.
 
 **Salesforce activities:** To import Salesforce Tasks and Events associated with your Accounts, go to your Salesforce source settings, select `Accounts`, and enable the **Also import activities (tasks and events) associated with these accounts** toggle. Accounts are associated automatically in the background. The Activity tab on each record's detail view then shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp. This toggle is only available for Accounts — there is no equivalent option for Contacts, Leads, or the People object. Even if your Salesforce CRM has Tasks or Events associated with contacts or leads, those activities will not appear in the People Activity tab in Audiences.
 
@@ -894,15 +894,21 @@ To remove those records from Audiences, you must explicitly archive them — see
 
 ### Why are contacts or companies I deleted in Salesforce still showing in my Audiences?
 
-Clay does not remove records from Audiences immediately when they are deleted in Salesforce. The incremental sync (every 15 minutes on Enterprise plans, once daily on Growth plans) only detects new and updated records — it does not pick up hard deletes. Hard-deleted Salesforce records are reconciled only during the weekly full sync. After the full sync runs, the deleted record's **Sync status** is set to **Deleted in source** — the record is not removed from Audiences automatically.
+When a Salesforce record is deleted, how quickly Clay reflects the change depends on whether it was soft-deleted or hard-deleted:
 
-To clean up these records after the full sync has run:
+- **Soft delete (moved to Salesforce recycle bin, `IsDeleted = true`):** The incremental sync (every 15 minutes on Enterprise plans, once daily on Growth plans) picks up soft-deleted records because Salesforce updates their `SystemModstamp` on deletion. The record's **Sync status** is set to **Deleted in source** in your Audiences within the next incremental cycle.
+
+- **Hard delete (permanently purged from Salesforce — no longer visible even in the recycle bin):** Hard-deleted records are invisible to Salesforce's API, so the incremental sync cannot detect them. These are reconciled only during the weekly full sync, which marks them as **Deleted in source** in your Audiences.
+
+In both cases, the record is **not removed from Audiences automatically** — it remains visible with its **Sync status** set to **Deleted in source** until you manually archive it.
+
+To clean up these records:
 
 1. Navigate to **People** or **Companies** in the left sidebar.
 2. Create or open a segment and add a filter: **Sync status → Deleted in source** — this surfaces all records whose Salesforce source association was marked as deleted.
 3. Click **⋮** next to the segment name and select **Archive records** to remove them from your active Audiences.
 
-There is no self-serve option to trigger the full sync early. If you need deleted records reconciled before the next weekly run, contact Clay support.
+There is no self-serve option to trigger the full sync early. If you need hard-deleted records reconciled before the next weekly run, contact Clay support.
 
 ### When two sources have conflicting values for the same field, which value wins?
 
