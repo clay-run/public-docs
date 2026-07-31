@@ -79,3 +79,30 @@ Open the technology's page on BuiltWith (for example, `trends.builtwith.com/webs
 Bring the downloaded CSV into Clay as a new table (click **+ Add** → **Import CSV**). From there you can enrich company records, add contacts, and run your standard workflow.
 
 **If the technology isn't in BuiltWith**, use a [Claygent](https://university.clay.com/docs/claygent-builder) column to scan the web for evidence. Map the company domain as an input and prompt it to search for signs of the technology — for example: *"Does {{company_domain}} use [technology name]? Search the company's website, case studies, and press mentions. Return yes or no with the evidence you found."* Claygent returns structured output, so you can add a boolean field for the yes/no result and a text field for the supporting evidence.
+
+## Identifying which ATS platform a company uses
+
+To find out which applicant tracking system (ATS) a company uses to post jobs on their careers page — for example, Greenhouse, Lever, Ashby, or Workday — combine Claygent with Clay Navigator and BuiltWith technographics.
+
+**Claygent with Clay Navigator (visit the careers page directly)**
+
+Clay Navigator is Clay's browser-based model that can visit live URLs and extract information directly from web pages. To use it for ATS detection:
+
+1.  Add a **Claygent** column to your table and set the model to **Clay Navigator**.
+2.  Map the company domain as an input variable.
+3.  Write a prompt such as: *"Visit the careers page at {{company_domain}} and identify which ATS platform hosts their job listings — for example, Greenhouse, Lever, Ashby, Workday, or Rippling. Return the platform name and the URL where you found the job listings."*
+4.  Define a JSON output schema with a `string` field for the ATS name and a `string` field for the source URL.
+
+Clay Navigator costs 6 credits per row. See [Claygent builder](claygent-builder.md) for full setup details.
+
+**BuiltWith technographics (detect embedded ATS code)**
+
+Run the **Find Technology Stack** action on each company domain. Use the **Keyword or Category** filter to check for specific ATS tools — for example, enter "Greenhouse", "Lever", or "Ashby" as the keyword to detect whether that platform's tracking code is embedded on the page. This costs 2 credits per row and works well for ATS platforms that inject scripts or embed job widgets.
+
+**Normalizing results with an AI formula**
+
+For highest accuracy, run both approaches and add a **Use AI** column to normalize the two results into a single clean value:
+
+*"Given these two ATS signals — Claygent result: {{claygent_ats}}, BuiltWith result: {{builtwith_ats}} — return the most likely ATS platform name as a single clean category, or 'Unknown' if neither signal is conclusive."*
+
+This gives you a structured column per company showing exactly which platform they use to host jobs.
