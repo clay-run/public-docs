@@ -24,9 +24,9 @@ Looking to monitor a specific enrichment? [Learn how to create Custom Signals.](
 
 To start a signal, you'll **need a table with** companies or contacts you want to monitor. This **table should include** LinkedIn URLs for individuals or company identifiers (such as website or LinkedIn URLs).
 
-**While in your table:**
+**From your workbook:**
 
-1.  Click `Tools`, then select one of the `Monitor for...` options—new hires, job changes, or promotions.
+1.  Click `+ Add` in the bottom navigation bar of your workbook, then under **Signals** select the signal type you want to create (for example, **Job change**, **New hire**, or **Promotion**).
 2.  Select the **company table** you want to monitor, then select a **view** from that table — the signal will only check rows visible in that view (not the entire table). Identify the correct company identifiers (website, LinkedIn URL, etc.).
     -   **Note:** The table and view cannot be changed after the signal is saved. To monitor a different set of companies, create a new signal.
 3.  Configure filters for the Signal.
@@ -94,7 +94,7 @@ Because the table ID hasn't changed, all downstream signal workflows remain conn
 
 The signal's Company Table, View, and Company Identifier fields are locked after the signal is created and cannot be updated via **Edit signal**. If Option 1 is not feasible — for example, if you need to monitor a fundamentally different set of companies — you will need to rebuild each affected signal.
 
-**To preserve your enrichment columns when rebuilding**, save the existing signal results table as a template first: click the table title → scroll to **Share as template** → toggle it on and copy the link. Open the link to create a new table — the new table will include all your enrichment column configurations. Then set up your signal from scratch in your source company table (via **Tools** → the relevant signal type), targeting the new source table.
+**To preserve your enrichment columns when rebuilding**, save the existing signal results table as a template first: click the table title → scroll to **Share as template** → toggle it on and copy the link. Open the link to create a new table — the new table will include all your enrichment column configurations. Then set up your signal from scratch by clicking `+ Add` in the bottom navigation bar of your workbook, then under **Signals** selecting the relevant signal type, and targeting the new source table.
 
 ### How do I extend my signal to cover more companies?
 
@@ -113,7 +113,7 @@ When editing an existing company-based signal (New Hire, Job Posting, etc.), the
 
 Because these source fields cannot be re-pointed after creation, the fix is to rebuild the signal:
 
-1.  Open your current company table → click **Tools** → select the signal type (e.g., **Monitor for new hires**).
+1.  Click `+ Add` in the bottom navigation bar of your workbook, then under **Signals** select the signal type (e.g., **New hire**).
 2.  Configure your filters and set the desired run frequency.
 3.  Click **Save and run**.
 
@@ -209,7 +209,7 @@ You can review all active signals and their individual credit spend in the `Sign
 
 ### Why does my signal keep writing results to a new table instead of my existing one?
 
-Signals always write their matching events to a **new dedicated results table** — one row per event. Whether you start signal setup from inside an existing table (via `Tools` → `Monitor for...`) or from the Signals section / Workbook overview, the existing table you select is used as the **input source** that supplies the companies or contacts to monitor; it is not the destination for the events. Clay creates a fresh output table to capture matching events.
+Signals always write their matching events to a **new dedicated results table** — one row per event. Whether you start signal setup via `+ Add` in the bottom navigation bar of your workbook or from the Signals section / Workbook overview, the existing table you select is used as the **input source** that supplies the companies or contacts to monitor; it is not the destination for the events. Clay creates a fresh output table to capture matching events.
 
 Signals always add **new rows** for each matching event — one row per event, not a new column on existing rows. If your goal is to see signal data (such as a recent funding round) alongside your existing contacts, see the next FAQ.
 
