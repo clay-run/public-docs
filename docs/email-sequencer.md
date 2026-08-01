@@ -20,6 +20,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 3.  Go to your [Google Workspace Admin Panel](https://admin.google.com/) and navigate to `Security` → `API Controls` → `App Access Control`.
 4.  Click `Configure new app`.
 5.  Paste the Client ID into the search bar and click `Search`.
+    -   **Important:** Searching by app name (such as "Clay" or "Clay Sequencer") will return no results — the app only appears when you paste the exact Client ID from step 2. Make sure there is no `http://` prefix and no trailing space in the pasted value; either will cause the search to return no results.
 6.  Select `Clay Sequencer (Web)` from the results.
 7.  Choose which org units should have access — either `All in [your org] (all users)` or specific org units — then click `Continue`.
 8.  Select `Trusted` under Access to Google Data and click `Continue`.
@@ -425,7 +426,7 @@ If your admin has already completed those steps and you still see the error, see
 
 ### How do I authorize Clay's app in the Google Admin panel?
 
-Follow the instructions in the modal and have your Google Workspace admin set our Clay sequencer app to `Trusted` — not `Specific Google Data`. When searching in Google Admin, the app is listed as **Clay Sequencer (Web)** — the `(Web)` suffix indicates the web client type and refers to the same Clay Sequencer app. Selecting `Specific Google Data` will not grant all the permissions Clay needs, and the access error will persist. Despite its name, `Trusted` only allows Clay to request Gmail-specific permissions (full email access, basic email settings, OpenID, and your profile) — it does not grant access to Google Drive, Calendar, Docs, or any other Google service. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the Clay sequencer.
+Follow the instructions in the modal and have your Google Workspace admin set our Clay sequencer app to `Trusted` — not `Specific Google Data`. **Important:** Searching by app name (such as "Clay" or "Clay Sequencer") will return no results in Google Admin — the app only appears when you paste the full Client ID (copied from Clay's UI in the setup steps above) into the search box. Make sure there is no `http://` prefix and no trailing space in the pasted value. When the result appears, it is listed as **Clay Sequencer (Web)** — the `(Web)` suffix indicates the web client type and refers to the same Clay Sequencer app. Selecting `Specific Google Data` will not grant all the permissions Clay needs, and the access error will persist. Despite its name, `Trusted` only allows Clay to request Gmail-specific permissions (full email access, basic email settings, OpenID, and your profile) — it does not grant access to Google Drive, Calendar, Docs, or any other Google service. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the Clay sequencer.
 
 ### I followed the admin setup steps but still see "Access blocked: clay.com has not completed the Google verification process." What should I do?
 
