@@ -36,7 +36,7 @@ Use this action to send messages to Slack channels through a bot directly from C
 
 -   **Bot name (Optional):** Specify the name of the bot that will post the message.
 -   **Emoji (Optional)**
--   **Slack channel**: Select the Slack channel where you want to post the message. Both public channels and private channels the Clay bot has been invited to appear in the list. To post to a private channel, first invite the Clay bot in Slack (type `/invite @Clay` in the channel) — the private channel will then appear in the list automatically.
+-   **Slack channel**: Select the Slack channel where you want to post the message. The dropdown only shows channels — both public and private — that the Clay bot is a member of. To add a channel to the dropdown, invite the Clay bot to it first: open the channel in Slack and type `/invite @Clay`. If you need to send to a channel not shown in the dropdown, you can type the channel ID directly instead of selecting from the list.
 -   **Message (Optional):** The text body of the Slack notification (e.g., "A new lead has submitted a form"). Supports [Slack markdown](https://api.slack.com/reference/surfaces/formatting#basic-formatting).
 -   **Form information (Optional):** Add structured form data to the message (e.g., "First Name → Kareem"). The form will be sorted alphabetically by field name.
 
@@ -54,7 +54,7 @@ Use this action to retrieve a list of members from a specified Slack channel.
 
 **Inputs**
 
--   **Slack channel**: Select a public channel from the dropdown. The dropdown lists **public channels only** — private channels do not appear. For a private channel, switch the input to text mode and enter the channel **ID** (for example, `C04F8AWK44T`) instead of the channel name. To find a channel's ID: right-click the channel name in Slack → **Copy link** — the ID (starting with `C`) appears at the end of the copied URL.
+-   **Slack channel**: Select a channel from the dropdown. The dropdown shows channels — both public and private — that the Clay bot is a member of. To add a channel to the dropdown, invite the Clay bot to it in Slack (open the channel and type `/invite @Clay`). If the channel you need isn't in the dropdown, switch the input to text mode and enter the channel **ID** directly (for example, `C04F8AWK44T`). To find a channel's ID: right-click the channel name in Slack → **Copy link** — the ID (starting with `C`) appears at the end of the copied URL.
 -   **Message**
 
 ### **Run settings**
@@ -222,11 +222,9 @@ Clay uses these permissions only to execute the workflows you configure. Clay do
 
 ### New channels not appearing in the channel picker
 
-Clay fetches your Slack channel list live each time you open the **Slack channel** dropdown, so newly created channels should appear automatically. If they still don't show up:
+The **Slack channel** dropdown only shows channels the Clay bot is a member of. If a channel isn't appearing:
 
-1. **Check whether the channel is public or private.**
-   - **Public channels** are listed automatically as soon as they exist in your Slack workspace.
-   - **Private channels** only appear if the Clay integration bot has been explicitly invited to them. Open the private channel in Slack, go to its member settings, and invite the Clay bot — then reopen the channel dropdown in Clay.
+1. **Invite the Clay bot to the channel.** The dropdown lists only channels — public or private — that the Clay bot has joined. Open the channel in Slack and type `/invite @Clay`, or add the Clay app through the channel's member settings. Once the bot has been added, reopen the Clay dropdown — the channel will appear in the list.
 
 2. **Reconnect your Slack integration** to get a fresh OAuth token. This resolves cases where the token has become stale or lost permissions:
    - Go to **Settings → Connections** in Clay.
@@ -247,7 +245,7 @@ Two Slack error codes can appear when a Clay action can't reach a private channe
 
 **`{"ok":false,"error":"not_in_channel"}`** — the Clay bot has not been invited to the channel. Open the private channel in Slack and type `/invite @Clay`, or add the Clay app through the channel's member settings. The Clay bot must be a member of any private channel it posts to.
 
-> **Note for "Send for approval":** The channel dropdown for this action shows only public channels. For a private channel, switch the **Slack channel** input to text mode and enter the channel ID directly.
+> **Note for "Send for approval":** The channel dropdown for this action shows channels the Clay bot is a member of. For a channel not in the dropdown, switch the **Slack channel** input to text mode and enter the channel ID directly.
 
 ### My Slack workspace requires admin approval and the Slack Marketplace link shows an error
 
