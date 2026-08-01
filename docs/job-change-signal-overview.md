@@ -52,3 +52,9 @@ If you also want a stable custom contact ID that survives job changes, build a *
 -   **Professional profile URL** — follows the person across jobs (note: the URL's custom username portion can occasionally be edited by the user, so it is not fully immutable)
 
 Avoid basing a custom ID on work email, company name, or a CRM contact ID, since all of these can change when someone switches employers.
+
+### Will the signal detect contacts who retire or leave a company without starting a new role?
+
+Not necessarily. The Job Change Signal creates a row when Clay detects that a contact has started a new position at a different company. Merely leaving a job — retiring, taking a career break, or departing without moving to a new employer — does not count as a job change and will not create an event.
+
+If you need to know whether someone has left an organization regardless of what they do next, use a scheduled column to re-enrich each contact's profile on a regular cadence and compare their current employment status directly.
