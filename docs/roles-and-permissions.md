@@ -77,6 +77,10 @@ The sales rep role is designed for team members who need to set up email account
 -   Access tables, workbooks, or any other part of the standard Clay interface
 -   Create or edit workflows directly in Clay
 
+The Sales Rep role covers two Clay use cases: **MCP access** (using Clay through AI tools like Claude and ChatGPT) and **Sequencer access** (connecting email accounts so Ops-managed campaigns can send on their behalf). You can assign it to team members who need one or both.
+
+**Note:** If a team member needs MCP access AND also wants to open Clay's web app directly, assign them the **Viewer** role instead — Viewers can use Clay through AI tools and access the standard Clay interface. Use Sales Rep when you want to limit someone to AI tools and email account setup — they'll reach a Clay setup page for managing MCP connections and Sequencer email accounts, but cannot open tables, workbooks, or any other workspace resources.
+
 Admins control which Functions reps can access (via the Functions settings page) and can set per-user credit limits. See [MCP settings](https://university.clay.com/docs/mcp-settings) for details.
 **If you were assigned the Sales Rep role but need access to the standard Clay workspace**, contact your workspace admin and ask them to change your role. Admins can update roles at `Settings` → `Team`.
 
