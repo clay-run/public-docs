@@ -55,6 +55,8 @@ The `MCP users` table gives a live view of every rep who has connected Clay to a
 
 Use the search bar at the top of the table to find a specific rep by name or email.
 
+**Note:** A rep appears in this table only after they connect Clay from within their AI tool — not when they receive your invitation. If a rep you've invited is missing from the list, ask them to connect the Clay app through Claude, ChatGPT, or Glean (see [Using Clay in Claude](https://university.clay.com/docs/using-clay-in-claude) or [Using Clay in ChatGPT](https://university.clay.com/docs/using-clay-in-chatgpt)). Once they complete the OAuth sign-in and select your workspace, they'll appear automatically.
+
 MCP credit usage also appears in the main credit usage dashboard at `Settings → Credit Usage`, alongside all other workspace credit consumption.
 
 ## Audiences controls
@@ -109,7 +111,12 @@ Any team member who needs to use Clay through an AI tool (Claude, ChatGPT, Glean
 
 The Sales Rep role restricts access to the main Clay workspace: users can invoke functions and run enrichments from within their AI tool, but they cannot open or interact with the Clay interface (tables, workbooks, etc.). This makes it the right choice for team members who should use Clay through AI tools only — not build workflows directly in Clay.
 
-To invite them: go to `Settings` → `Team`, click `+ Invite`, enter their email address, and select **Sales Rep** from the role dropdown.
+There are two ways to invite them:
+
+-   **Via Settings → Team:** Go to `Settings` → `Team`, click `+ Invite`, enter their email address, and select **Sales Rep** from the role dropdown.
+-   **Via the MCP tab:** On the MCP page, click `Invite users`. Sales Rep is pre-selected by default — you can adjust the role per recipient if needed, but most admins leave it as-is. This is the faster path when adding users who will only access Clay through AI tools.
+
+Both paths send an invitation email and assign the same Sales Rep role. If you want the team member to have MCP access AND be able to open Clay's web app directly, assign them the **Viewer** role (via Settings → Team) instead — Viewers can use Clay through AI tools and also access the standard Clay interface.
 
 **Important:** Team members must accept their workspace invite email *before* connecting Clay to Claude, ChatGPT, or Glean. If a rep goes through the Clay MCP connection flow before accepting the invite, they'll be routed into a new personal workspace instead of your team workspace — and they won't appear in your `MCP users` table or be eligible for credit allocation.
 
