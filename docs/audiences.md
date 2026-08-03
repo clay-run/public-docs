@@ -666,13 +666,11 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 ### How do I export my audience data to CSV?
 
-The Audiences screen does not have a direct CSV download button. To export audience members as a CSV, first send them to a Clay table, then export from there:
+The Audiences screen does not have a direct CSV download button. Two paths get audience members into a CSV file:
 
-1. Open the audience segment you want to export.
-2. Click **Send** → **Export action** → **Add to workbook**. Clay creates a table containing up to **50,000** members from that segment.
-3. From the Clay table, click **Export → CSV** to download the data.
+-   **Add to workbook** (Admin or Editor access required): Click **Send** → **Export action** → **Add to workbook**. Clay creates a table containing up to **50,000** members from the segment; from that table, click **Export → CSV** to download. If you don't see **Add to workbook** in the **Export action** dropdown, contact Clay support to enable it for your workspace.
 
-Exporting a segment requires **Admin or Editor** access — Viewers do not see the **Send** menu option. If your segment has more than 50,000 members, only the first 50,000 rows are included in the workbook.
+-   **Bulk enrichment table** (Admin access required; available on all Audiences plans): From your segment, click `Enrich` → `Add bulk enrich`. Clay creates a table pre-populated with your segment members; from that table, click **Export → CSV** to download.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
