@@ -668,7 +668,7 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 The Audiences screen does not have a direct CSV download button. Two paths get audience members into a CSV file:
 
--   **Add to workbook** (Admin or Editor access required): Click **Send** → **Export action** → **Add to workbook**. Clay creates a table containing up to **50,000** members from the segment; from that table, click **Export → CSV** to download. If you don't see **Add to workbook** in the **Export action** dropdown, contact Clay support to enable it for your workspace.
+-   **Add to workbook** (currently in beta; Admin or Editor access required): Click **Send** → **Export action** → **Add to workbook**. Clay creates a table containing up to **50,000** members from the segment; from that table, click **Export → CSV** to download. Contact Clay support to enable this option for your workspace.
 
 -   **Bulk enrichment table** (Admin access required; available on all Audiences plans): From your segment, click `Enrich` → `Add bulk enrich`. Clay creates a table pre-populated with your segment members; from that table, click **Export → CSV** to download.
 
