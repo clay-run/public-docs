@@ -109,7 +109,7 @@ When you run `clay routines list` or `clay routines get`, each function-type rou
 
 ### Running Clay workflows on a recurring schedule
 
-Clay's API endpoints — including the Routines API and CLI — submit a single run each time they are called. There is no built-in scheduler in the Clay API itself. To run Clay automatically on a repeating cadence (daily, weekly, monthly, etc.), choose one of two paths:
+Clay's programmatic interfaces — webhooks, the CLI, and the People & Company Search API — each handle a single request at a time. There is no built-in scheduler in the Clay API itself. To run Clay automatically on a repeating cadence (daily, weekly, monthly, etc.), choose one of two paths:
 
 **Option A — Clay's built-in scheduling (best if your workflow runs inside a Clay table)**
 
@@ -118,10 +118,10 @@ Clay tables support native recurring automation with no external tooling needed:
 -   **Scheduled sources** — automatically re-import data from any source (Find People, Salesforce, HubSpot, and others) on a recurring schedule. Available daily, weekly, and monthly (hourly on Enterprise plans). See [Scheduled sources](https://university.clay.com/docs/scheduled-sources).
 -   **Scheduled columns** — automatically re-run enrichment columns on a set cadence. Available daily, weekly, monthly, and custom day/time (hourly on Enterprise plans). See [Scheduled columns](https://university.clay.com/docs/scheduled-columns).
 
-**Option B — External scheduler + Clay API (best if you're calling Clay from a script or coding agent)**
+**Option B — External scheduler + Clay (best if you're calling Clay from a script or coding agent)**
 
 If you're invoking Clay from external code (for example, from Claude Code, a Python script, or your own application), use an external scheduling tool to fire that code at the desired interval:
 
--   **Cron jobs** — a standard cron expression on any server or cloud VM triggers your script on a recurring schedule.
--   **Cloud schedulers** — services like AWS EventBridge, Google Cloud Scheduler, or Azure Logic Apps can call the Clay Routines API on a set cadence.
--   **Automation platforms** — tools like Make.com or Zapier can schedule calls to the Clay Routines API with no custom code required.
+-   **Cron jobs** — a cron expression on any server triggers your script on a recurring schedule. Your script can push data to a Clay table's webhook URL or use the Clay CLI to run workflows.
+-   **Cloud schedulers** — services like AWS EventBridge, Google Cloud Scheduler, or Azure Logic Apps can send scheduled HTTP POST requests to a Clay table's webhook endpoint, triggering Clay to process data at the desired interval.
+-   **Automation platforms** — tools like Make.com or Zapier have built-in scheduling that can trigger Clay at set intervals with no custom code required.
