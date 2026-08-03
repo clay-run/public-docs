@@ -359,7 +359,7 @@ Click `Enrich` in the top-right toolbar to open the enrichments sidebar. The **B
 
 If you're viewing a specific segment, use the dropdown at the top of the list to toggle between enrichments on this segment and enrichments across all audiences.
 
-To inspect row-level results, click `⋮` on any enrichment card and select **Open bulk enrichment**. This opens the underlying bulk enrichment table where you can see each row's output and status.
+To inspect row-level results, click `⋮` on any enrichment card and select **Open enrichment**. This opens the underlying bulk enrichment table where you can see each row's output and status. To export the enriched data as a CSV, use **Tools → Export → Download CSV** in that table.
 
 The bulk enrichment table has two tabs at the top — **Queued rows** and **Errored rows** — that let you switch between rows waiting to process and rows that encountered an error. It is not possible to filter within the bulk enrichment by specific error type; the Errored rows tab shows all rows with errors together. To see the error message for a specific row, open the bulk enrichment, click the **Errored rows** tab, and hover over the relevant cell.
 
