@@ -115,6 +115,8 @@ To invite them: go to `Settings` → `Team`, click `+ Invite`, enter their email
 
 If this happens: have the rep disconnect Clay in their AI tool (remove and re-add the connector), then during re-authorization select your team workspace instead of "Personal Workspace." If invite links have expired, remove the user from `Settings → Team` and resend the invite before they reconnect.
 
+**If a user is already in your workspace with the Sales Rep role:** They don't need a separate MCP invitation. Have them connect Clay directly through their AI tool — see [Using Clay in Claude](https://university.clay.com/docs/using-clay-in-claude) or [Using Clay in ChatGPT](https://university.clay.com/docs/using-clay-in-chatgpt). Once they complete the OAuth authorization and select your company workspace, they'll appear in your `MCP users` table automatically. If you see the error "already a member of this workspace" when using the Invite MCP users modal, that means the user already has the right access — the Invite MCP users flow is only for adding users who are not yet in your workspace.
+
 **Note:** The Sales Rep role is currently in beta — contact support to request access for your workspace.
 
 For a full breakdown of all roles, see [Roles and permissions](https://university.clay.com/docs/roles-and-permissions).
