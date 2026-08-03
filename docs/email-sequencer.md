@@ -413,6 +413,14 @@ These are disclosed when you add your account via OAuth. Clay requests the follo
 
 Additionally, you will need to have a Google Workspace admin authorize our app to request these permissions for the domain(s) you want to add to the sequencer.
 
+### Does Clay offer a Business Associate Agreement (BAA) for HIPAA compliance?
+
+Clay does not sign Business Associate Agreements (BAAs) and does not support workflows in which Protected Health Information (PHI) is sent to or accessible by Clay. This applies to all connected integrations, including Gmail. Clay's Terms of Service (Section 17.3.1) state that PHI may not be included in data processed through Clay unless separately permitted under a BAA.
+
+If your Google Workspace contains PHI and your organization operates under HIPAA, connect a **separate email address** that does not receive PHI to the sequencer — rather than your primary business inbox. Clay's Gmail integration requires full Gmail access (see the OAuth scopes listed above), so connecting an inbox where PHI may be present would be inconsistent with Clay's Terms of Service.
+
+For Clay's broader privacy and security practices, visit the [Trust Center](https://trust.clay.com/).
+
 ### I'm seeing "Access blocked: clay.com has not completed the Google verification process" when I try to connect my Google account. What does this mean?
 
 This error is expected — Clay's sequencer uses automated warmup sends, which prevents it from passing Google's standard app verification process. It does not mean Clay is broken or untrustworthy. The fix is for your **Google Workspace admin** to authorize Clay Sequencer as a Trusted app in your Google Admin panel. Until they do, all users in your domain will see this error when attempting to connect via OAuth.
