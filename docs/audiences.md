@@ -588,6 +588,16 @@ If an existing record had a value for the field in Salesforce before you added t
 
 **To fill in missing data immediately for specific records:** In Salesforce, make a small change to any field on the affected accounts or contacts (for example, add and remove a space in a text field). This updates `SystemModstamp` and Clay will pick up those records — with all their current field values including the newly mapped field — on the next incremental sync.
 
+### Why is my Salesforce sync showing far fewer records than exist in Salesforce?
+
+The most common cause is that the Salesforce integration user lacked access to some records when the initial full sync ran. Clay imports only the records the authenticated user can read at the time of the sync. If permissions were incomplete at setup — for example, because a sharing rule, profile permission, or field-level security setting was missing — the initial full sync imported only the accessible subset.
+
+Fixing permissions afterward does not automatically bring in the missed records. Incremental syncs (every 15 minutes on Enterprise, once daily on Growth) only pick up records whose `SystemModstamp` has changed since the last sync. Records that existed before permissions were corrected but haven't been modified in Salesforce since will not appear in incremental syncs — their `SystemModstamp` predates the last full sync, so Clay skips them.
+
+**To fix this:** Contact Clay support and request a manual full sync. The full sync re-reads all Salesforce records the integration user can currently access — including records that were inaccessible during the initial import.
+
+**Workaround for a small number of records:** If only a few records are missing, make a small edit to those records in Salesforce (for example, add and remove a space in a text field). This updates `SystemModstamp` and Clay picks up those records on the next incremental sync, without waiting for the weekly full sync.
+
 ### Can I see when the weekly full sync is scheduled, or trigger it manually?
 
 No. The Clay UI shows only that the Salesforce full sync runs weekly — it does not display the exact day or time the next full sync is scheduled for your workspace. The timing is assigned automatically per workspace and is not shown in the interface.
