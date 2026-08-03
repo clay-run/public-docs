@@ -106,3 +106,22 @@ When you run `clay routines list` or `clay routines get`, each function-type rou
 **Note: All `clay tables` read commands require an Enterprise plan.** The commands `clay tables list`, `clay tables get`, `clay tables rows list`, `clay tables rows get`, `clay tables columns list`, and `clay tables columns get` all require the public observability API — available on Enterprise plans only. On non-Enterprise workspaces, these commands exit with `auth_forbidden` (exit code 3) and the message: "The public observability API is not enabled for this workspace (available on Enterprise plans)." Routines, searches, and workflows via the CLI continue to work on non-Enterprise plans — only programmatic table reads require Enterprise. If you only need a table's ID and are on a non-Enterprise plan, find it in the table's URL: it is the segment after `/tables/` (for example, `t_0te5b6rGsW6WAJW22cD` in `app.clay.com/workspaces/.../tables/t_0te5b6rGsW6WAJW22cD/views/...`). To read table structure or row data programmatically, an Enterprise plan is required.
 
 **Note: The `clay tables` commands and v0 REST API do not support writing data.** The CLI's `clay tables` surface includes commands for listing, getting, and querying tables and rows (`clay tables list`, `clay tables get`, `clay tables rows list`, `clay tables rows get`, `clay tables query`). Adding rows, updating cells, or deleting records is not available through the public developer platform — neither via the CLI nor the v0 REST API. The `clay tables update` command can toggle a table's query-sync configuration (`--query-enabled`), but does not write row data.
+
+### Running Clay workflows on a recurring schedule
+
+Clay's API endpoints — including the Routines API and CLI — submit a single run each time they are called. There is no built-in scheduler in the Clay API itself. To run Clay automatically on a repeating cadence (daily, weekly, monthly, etc.), choose one of two paths:
+
+**Option A — Clay's built-in scheduling (best if your workflow runs inside a Clay table)**
+
+Clay tables support native recurring automation with no external tooling needed:
+
+-   **Scheduled sources** — automatically re-import data from any source (Find People, Salesforce, HubSpot, and others) on a recurring schedule. Available daily, weekly, and monthly (hourly on Enterprise plans). See [Scheduled sources](https://university.clay.com/docs/scheduled-sources).
+-   **Scheduled columns** — automatically re-run enrichment columns on a set cadence. Available daily, weekly, monthly, and custom day/time (hourly on Enterprise plans). See [Scheduled columns](https://university.clay.com/docs/scheduled-columns).
+
+**Option B — External scheduler + Clay API (best if you're calling Clay from a script or coding agent)**
+
+If you're invoking Clay from external code (for example, from Claude Code, a Python script, or your own application), use an external scheduling tool to fire that code at the desired interval:
+
+-   **Cron jobs** — a standard cron expression on any server or cloud VM triggers your script on a recurring schedule.
+-   **Cloud schedulers** — services like AWS EventBridge, Google Cloud Scheduler, or Azure Logic Apps can call the Clay Routines API on a set cadence.
+-   **Automation platforms** — tools like Make.com or Zapier can schedule calls to the Clay Routines API with no custom code required.
