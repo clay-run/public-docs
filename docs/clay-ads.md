@@ -2,7 +2,7 @@
 title: Clay Ads
 description: Build and sync contact and account lists to LinkedIn, Meta, and Google Ads for
   precise ad targeting.
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-08-04T04:58:29.416Z
 ---
 
 # Clay Ads
@@ -113,7 +113,9 @@ Access control is enforced at the Google Ads account level — the person connec
 
 ### **What platforms are supported?**
 
-Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, and **Google Ads**.
+Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, **Google Ads**, **Vibe.co**, and **Reddit Ads**.
+
+Vibe.co and Reddit Ads are rolling out as part of the Clay Ads GA release — contact [Clay support](https://www.clay.com/contact) if these destinations are not yet available in your workspace.
 
 Note that data source restrictions apply depending on the platform — see [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) below for details.
 
@@ -169,11 +171,19 @@ Yes. After your initial sync is active, an **Expand your reach** section appears
 -   You cannot add a platform while a sync is currently in progress — wait for the active sync to complete first.
 -   Google Ads is only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience includes contacts from Clay's company/people search data, Google Ads will appear disabled. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) for details.
 
+### **Can I run two ad syncs from the same segment?**
+
+No — one ad sync per segment. When a segment already has an active ad sync, the segment picker shows a `View ad sync` button instead of a create option, navigating you to the existing sync. If you want the same contacts going to different destinations or on different schedules, duplicate the segment with the same filters and create a new ad sync from each copy.
+
 ### **Will I be charged again if I deactivate and recreate an Ad Sync?**
 
 If you used Enhanced Match, no additional data credits are charged for contacts that were already enriched. Clay stores the hashed email results on your audience records and automatically skips re-enriching records that already have that data when you create a new sync from the same source. Contacts that have not been enriched yet will be processed as normal.
 
 For costs related to the export itself, see [How much does it cost to sync audiences?](#how-much-does-it-cost-to-sync-audiences).
+
+### **Can I change the Enhanced Matching tier later?**
+
+Not on an existing sync. The enrichment configuration locks when the match stage settings are first saved — once the enrichConfig record is created, the tier picker becomes read-only and the API rejects any attempt to change it. If you need a different tier, create a new ad sync. The confirmation screen shows the exact credit figure for your workspace before anything is charged, so check the estimate there before committing.
 
 ### **How long does it take for audiences to be created?**
 
@@ -237,3 +247,16 @@ Yes, you can connect multiple LinkedIn or Meta ad accounts and choose which acco
 ### **How much does it cost to sync audiences?**
 
 Each record exported or synced to an ad platform consumes 1 action (for the export/sync work). Data credits are consumed for any enrichments you run in the table to build your audience (e.g., finding emails, enriching profiles). The export itself does not consume additional data credits.
+
+## Legacy table ad syncs
+
+Earlier ad syncs were built from a Clay table rather than a segment. If your workspace has any, they appear under `Legacy ad syncs` on the `Ads` page. The `Table` option under `Create ad sync` is marked `Deprecated` — build new syncs from a segment instead.
+
+Any table you already have can be migrated: import it into Audiences, build a `People list` or `Company list` from it, then create a new ad sync from that segment. Enhanced Matching results save onto the contact in Audiences and get reused by later syncs, rather than being stranded in a single table.
+
+A segment that already has a legacy sync cannot take a new one — remove the legacy sync first, or build from a different segment.
+
+## Related
+
+-   [Audiences](https://university.clay.com/docs/audiences)
+-   [Clay Ads compliance best practices](https://university.clay.com/docs/clay-ads-compliance-best-practices)
