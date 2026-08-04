@@ -53,7 +53,7 @@ Synced audiences appear in the Microsoft Advertising audience library, where you
 
 ### Why is my Bing match rate lower than on other platforms?
 
-Other destinations can match on additional identifiers — Meta on phone and location, LinkedIn on company and title — so they have more than one route to a given contact. Bing works from email, which means email coverage is what sets the ceiling. If Bing is coming in below your other destinations on the same audience, `Enhanced matching` is the lever that will move it.
+Other destinations can match on additional identifiers — Meta on phone and location, the professional network on company and title — so they have more than one route to a given contact. Bing works from email, which means email coverage is what sets the ceiling. If Bing is coming in below your other destinations on the same audience, `Enhanced matching` is the lever that will move it.
 
 ### Should I run Bing alongside Google rather than instead of it?
 
