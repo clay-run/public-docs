@@ -4,8 +4,6 @@ description: How to sync contact and company audiences from Clay to Campaign Man
 last_synced: 2026-08-04T05:00:01.408Z
 ---
 
-# LinkedIn Ads in Clay
-
 Target B2B buyers by syncing people and account audiences from Clay to Campaign Manager.
 
 Sync contact and company audiences from Clay to Campaign Manager for B2B ad targeting. This is the only Clay Ads destination that supports both people and account audiences.
