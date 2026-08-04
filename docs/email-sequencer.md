@@ -264,6 +264,12 @@ During warmup, your inbox will receive emails from other accounts in Smartlead's
 
 Warmup is enabled during the account connection flow: after connecting your email account, Clay shows a prompt with all newly added accounts pre-selected for warmup. Clicking **Enable warming** activates it — warmup emails will then appear in your inbox (filed under your warmup label/filter) even if you haven't launched a campaign yet. If you enabled warmup by accident or want to stop it, go to `Campaigns` → `Email Accounts`, find the account, click the ⋯ options menu, and select **Disable warming**.
 
+### What does the Reputation percentage mean?
+
+The **Reputation** percentage shown next to each email account in `Campaigns → Email Accounts` is the percentage of warm-up emails from that mailbox that landed in the inbox — not in spam or promotions. It reflects how successfully that specific warmed mailbox is delivering warm-up emails through Smartlead's warmup pool.
+
+A high Reputation score (for example, 100%) means the vast majority of warm-up sends for that mailbox are reaching the inbox. This is a useful directional health signal for the warmup process itself. It is **not** an authoritative, provider-level domain-reputation score from Google Postmaster Tools, Microsoft SNDS, or similar services — those reflect your actual campaign traffic, not the simulated warmup activity.
+
 ### Why did warmup turn itself off?
 
 Warmup automatically disables when your emails are being throttled by your email provider. This protects your sender reputation. You can manually turn warmup back on from the `Sender Accounts` tab once the throttling issue is resolved.
