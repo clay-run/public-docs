@@ -149,12 +149,22 @@ This means if you updated your audience segment filters after creating a bulk en
 
 ### Resuming after changing segment filters
 
-If you pause a bulk enrichment and update your audience segment filters before resuming, the resume option you choose determines which records get processed:
+If you pause a bulk enrichment and update your audience segment before resuming, the resume option you choose determines which records are picked up next.
 
--   **Continue where you left off** — Records already in the queue (ingested before you changed your filters) finish processing first. Once the queue drains, the enrichment syncs against your updated segment filters and picks up any records that now qualify. Records from the old, larger audience that were not yet queued when you paused are not re-added — only records matching your current filters are brought in next.
--   **Run from the beginning** — All rows currently sitting in the bulk enrich table are cleared, and the enrichment restarts using only the records that match your current (new) segment filters. Previously archived rows from the completed portion of the run are not affected — they remain in the archive. Note: restarting costs credits again for the newly seeded rows.
+**Continue where you left off**
+
+Records already in the queue finish processing first. What happens to newly-qualifying records depends on how you changed your segment:
+
+-   If you **added a new segment** to the bulk enrichment while it was paused, members of the newly-added segment are enqueued automatically when you resume.
+-   If you **edited the filter conditions on an existing connected segment** (same segment, narrowed or changed the filters), records that newly match the updated filters are **not** automatically enqueued on resume. Clay tracks which segment IDs were connected at the time the run was paused — it does not re-evaluate membership changes from in-place filter edits when resuming.
+
+If you edited an existing segment's filters and want those newly-qualifying records to be enriched, use **Run from the beginning** instead. Alternatively, if **Auto-enrich new records** is enabled, newly-qualifying records will be picked up automatically in the background within 15 minutes of joining the segment.
+
+**Run from the beginning**
+
+All rows currently in the bulk enrich table are cleared, and the enrichment restarts fresh using your current segment configuration — including any filter changes you made to existing connected segments. Previously archived rows from the completed portion of the run are not affected — they remain in the archive. Note: restarting costs credits again for the newly seeded rows.
 
 **Which option to use:**
 
--   Choose **Continue where you left off** if you want to finish processing records already in the queue and then automatically pull in records matching your updated filters — without losing progress on the current batch.
--   Choose **Run from the beginning** if you want a clean start with only the records that match your new filters and are comfortable clearing the rows currently in the table.
+-   Choose **Continue where you left off** if you want to finish processing records already in the queue. Note that if you edited an existing segment's filter conditions (rather than adding a new segment), those newly-qualifying records will not be pulled in automatically on resume.
+-   Choose **Run from the beginning** if you edited the filter conditions on an existing connected segment and want the enrichment to start fresh using your updated filters. This clears the current queue and seeds the run from your current segment configuration.
