@@ -146,3 +146,15 @@ Here's what happens to setup-mode rows when you click **Start Run**:
 -   **Records that still match your current segment** — these are re-enriched from scratch. Credits are spent again for these rows.
 
 This means if you updated your audience segment filters after creating a bulk enrichment, you do not need to manually remove records that no longer match before running — clicking **Start Run** handles cleanup automatically.
+
+### Resuming after changing segment filters
+
+If you pause a bulk enrichment and update your audience segment filters before resuming, the resume option you choose determines which records get processed:
+
+-   **Continue where you left off** — Records already in the queue (ingested before you changed your filters) finish processing first. Once the queue drains, the enrichment syncs against your updated segment filters and picks up any records that now qualify. Records from the old, larger audience that were not yet queued when you paused are not re-added — only records matching your current filters are brought in next.
+-   **Run from the beginning** — All rows currently sitting in the bulk enrich table are cleared, and the enrichment restarts using only the records that match your current (new) segment filters. Previously archived rows from the completed portion of the run are not affected — they remain in the archive. Note: restarting costs credits again for the newly seeded rows.
+
+**Which option to use:**
+
+-   Choose **Continue where you left off** if you want to finish processing records already in the queue and then automatically pull in records matching your updated filters — without losing progress on the current batch.
+-   Choose **Run from the beginning** if you want a clean start with only the records that match your new filters and are comfortable clearing the rows currently in the table.
