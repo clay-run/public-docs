@@ -706,7 +706,7 @@ To connect as a specific Salesforce user:
 
 Make sure the connecting user has **API Enabled** and the correct object and field permissions for everything you plan to read or write in Clay. For guidance on setting up a service account with the right access, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
 
-**Note:** If your Salesforce org uses an Integration User license or API-only license, the User Sign In OAuth flow may not work. Use [Client Credentials](https://university.clay.com/docs/salesforce-integration-overview) instead — that method connects server-to-server without a browser login.
+**Note:** If your Salesforce org uses an Integration User license or API-only license, the User Sign In OAuth flow may not work. If your org enforces SSO (such as Okta, Azure AD, or Google Workspace), incognito may not resolve the issue either — SSO authenticates at the identity provider level, not the browser session level, so your personal account can be picked up automatically even in a fresh private window. In either case, use **Client Credentials** ([setup instructions](https://university.clay.com/docs/salesforce-integration-overview)) instead — it connects server-to-server with no browser login, so SSO cannot intercept it.
 
 ## Why can't I set a Salesforce connection as the default, or change which connection is the default?
 
