@@ -38,7 +38,7 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
 
 -   When **enabled**: Enrichments run automatically whenever rows are added or edited.
     -   New tables use **"Keep existing results" on** by default — only errored, empty, or new cells run automatically. Cells that already have existing data **will not** run automatically unless you turn off Keep existing results.
--   When **disabled**: You must manually click cells to trigger enrichments.
+-   When **disabled**: You must manually click cells to trigger enrichments. **Auto-run only controls enrichment columns — it does not affect your data sources.** Scheduled source imports (such as a Salesforce SOQL query or any source with an auto-update schedule) continue to add new rows to the table on their normal schedule even when Auto-run is off. To also pause row ingestion, disable the source's auto-update schedule separately in the source column settings.
 -   **Default setting**: Enabled by default — Clay is designed to automatically enrich data as soon as it arrives.
 
 **Note:** There is no workspace-wide setting to disable auto-run across all tables at once. Auto-run must be configured individually for each table.
@@ -181,6 +181,12 @@ The **Update existing rows** toggle in your source column settings controls whet
 -   Table-level: ❌ OFF
 -   Column-level: ✅ ON (doesn't matter)
 -   **Result**: New rows → Must manually click cells to run enrichments
+
+**Collect data without running enrichments (pause enrichments only):**
+
+-   Table-level: ❌ OFF (Manual mode)
+-   Source auto-update schedule: ✅ ON (source schedule is independent of Auto-run)
+-   **Result**: Scheduled source imports continue adding new rows to the table; enrichment columns are paused. When ready to process, turn Auto-run back on and choose `Update cells` to queue enrichments for all rows added during the pause — or choose `Continue without running` to leave those rows unprocessed for now. Review the table before choosing `Update cells` if a large batch of rows has accumulated, since this will queue all empty or out-of-date enrichment cells including any downstream write-backs.
 
 **Conditional execution:**
 
