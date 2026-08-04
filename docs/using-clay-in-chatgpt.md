@@ -71,7 +71,7 @@ After gathering context on companies and contacts, use Clay to draft personalize
 
 To get the best results when using Clay in ChatGPT:
 
--   Include the company domain (e.g., "rippling.com\"), not just the company name
+-   Include the company domain (e.g., "rippling.com\\"), not just the company name
 -   Limit your search to one company at a time for more accurate results
 -   Be specific with criteria: job titles, locations, seniority, keywords
 -   If you aren't sure what job title you're looking for, try asking "who manages X at company"
@@ -94,7 +94,7 @@ Clay will find the matching function, run it, and return the results directly in
 
 ## MCP settings for your team
 
-Workspace admins can set credit limits and monitor rep usage from `Settings → MCP users`. For a full walkthrough of the admin controls, see [MCP settings](https://university.clay.com/docs/mcp-settings).
+Workspace admins can set credit limits and monitor rep usage from the `MCP` page in the workspace sidebar. For a full walkthrough of the admin controls, see [MCP settings](https://university.clay.com/docs/mcp-settings).
 
 ## FAQ
 
@@ -161,4 +161,4 @@ If you click `Open in Clay`, a table is created in your Clay workspace. For one-
 
 **How does my admin control my credit limit?**
 
-Your workspace admin can set a default credit limit for all reps, or a per-user override, from `Settings → MCP users`. If you hit your limit, further enrichments will be blocked until the monthly reset on the 1st of each month at midnight UTC. Contact your admin to have your limit adjusted.
+Your workspace admin can set a default credit limit for all reps, or a per-user override, from the `MCP` page in the workspace sidebar. If you hit your limit, further enrichments will be blocked until the monthly reset on the 1st of each month at midnight UTC. Contact your admin to have your limit adjusted.
