@@ -8,6 +8,8 @@ Target B2B buyers by syncing people and account audiences from Clay to Campaign 
 
 Sync contact and company audiences from Clay to Campaign Manager for B2B ad targeting. This is the only Clay Ads destination that supports both people and account audiences.
 
+**Available on Growth and Enterprise plans.**
+
 **What you can do:**
 
 -   Target decision-makers at your priority accounts from CRM or warehouse data
