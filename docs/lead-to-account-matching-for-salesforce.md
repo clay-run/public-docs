@@ -1,7 +1,7 @@
 ---
 title: Lead-to-account matching for Salesforce
 description: Connect Salesforce leads with their corresponding Salesforce accounts.
-last_synced: 2026-04-26T01:40:13.000Z
+last_synced: 2026-04-26T01:40:13.950Z
 ---
 
 # Lead-to-account matching for Salesforce
