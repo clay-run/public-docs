@@ -109,6 +109,25 @@ When you connect your Google Ads account, Clay requests the following OAuth perm
 
 Access control is enforced at the Google Ads account level — the person connecting must have appropriate permissions on the ad account they link.
 
+## Where you can sync
+
+| Destination | What it reaches | Identifiers Clay can send | Minimum to activate |
+| --- | --- | --- | --- |
+| Professional network | B2B targeting on the professional network. The only destination that accepts account audiences. | Email, name, company, title, country — plus a full set of company fields for account audiences | 300 members |
+| Meta Ads | Facebook, Instagram, Messenger, and WhatsApp. Benefits most from Enhanced matching. | Email, name, gender, phone, mobile advertiser ID, country, city, state, zip | No stated minimum |
+| Google Ads | Search, YouTube, Gmail, and Display. First-party data only. | Email, phone, name, country, zip | 1,000 matched contacts |
+| Bing Ads | Microsoft's search network. First-party data only, and the most enrichment-dependent destination. | Email only | 1,000 members |
+| Vibe.co | Connected TV on streaming services. | Email and phone | No stated minimum |
+| Reddit Ads | Reddit. | Email and mobile advertiser ID | 1,000 matched users |
+
+## What to expect after your first sync
+
+-   **Match rates depend almost entirely on enrichment.** Work emails alone typically match 60–70% on the professional network and only 10–20% on Meta Ads. Adding hashed personal emails through Enhanced matching typically takes those to 90–95% and 50–70%+ respectively. If your first sync matches fewer people than you hoped, this is nearly always why — and it's the easiest thing to improve.
+-   **Allow up to 48 hours** before an audience is usable. The audience stays in `Building` until the platform confirms it's ready, so give yourself a buffer before a launch depends on it.
+-   **A recurring sync re-syncs your segment every three days.** Members who stop qualifying are removed and new ones added, without you touching anything.
+-   **A multi-destination sync is capped by its most restrictive platform.** The professional network takes up to 300,000 records; every other destination takes up to 1,000,000. Clay applies the smallest cap across the sync, so adding the professional network to a very large audience trims what reaches all destinations. Records are sent up to the cap — if that matters, give the larger audience its own sync.
+-   **Enhanced matching is strongest for US-based contacts.** Outside the US and Canada, expect lower coverage, and consider using your own region-specific first-party data.
+
 ## **FAQs**
 
 ### **What platforms are supported?**
@@ -207,7 +226,7 @@ Yes! Once synced, your audiences automatically update as data changes in your Cl
 
 ### **Can I see which contacts matched?**
 
-No, LinkedIn and Meta don't provide contact-level match visibility for privacy reasons. However, Clay shows aggregate match rates and total audience size after each sync.
+No — ad platforms don't provide contact-level match visibility for privacy reasons. However, Clay shows aggregate match rates and total audience size after each sync.
 
 ### **Why does my ad audience show "too small for use in campaigns"?**
 
