@@ -173,7 +173,7 @@ This warning means a required input on the node gets its value from a source nod
 3. Click the **⋮** (three-dot) menu to the right of that input.
 4. Select **Make optional**.
 
-Marking the input optional clears the "Incomplete configuration" flag. When the workflow runs along a path where the input's source node was bypassed, the node proceeds without that input's value. If both paths can supply an equivalent value — for example, a LinkedIn URL from either the Triggers node or an enrichment step — accept either source and mark the one that may be absent as optional.
+Marking the input optional clears the "Incomplete configuration" flag. When the workflow runs along a path where the input's source node was bypassed, the node proceeds without that input's value. If both paths can supply an equivalent value — for example, a profile URL from either the Triggers node or an enrichment step — accept either source and mark the one that may be absent as optional.
 
 ## FAQs
 
