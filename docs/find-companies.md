@@ -163,6 +163,18 @@ These two filters measure different things:
 
 Because the two values are sourced independently, a company whose reported size band is "51–200" may have a computed employee count of 250 — or vice versa. Filtering on one versus the other can return a different set of companies even when the numbers appear to overlap.
 
+### Why does enriched employee count differ from ZoomInfo, LinkedIn, or other sources?
+
+Large discrepancies between Clay's enriched employee count and another provider's figure typically have two causes.
+
+**The domain resolved to a subsidiary or child entity, not the global parent.** When you enrich a company by domain, Clay returns the specific company record registered to that domain — it does not automatically roll up to the global parent. A country-specific site, regional subsidiary, or careers domain resolves to a smaller child company. For example, enriching `bankofchina.com` returns Bank of China (UK) Limited (the London subsidiary), not the global group — which lives on a different domain entirely. The same pattern applies to individual hotel or franchise sites, shared careers domains, and any domain owned by a subsidiary rather than the parent. Clay's count is correct for the entity it matched; it may just not be the entity you intended.
+
+To match the intended entity, enrich from the company's LinkedIn URL or its confirmed primary corporate domain instead of a regional or careers domain. For guidance on LinkedIn URL formats, see [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md#use-linkedin-urls-not-domains-as-company-identifiers).
+
+**Clay's employee count methodology differs from compiled-headcount providers.** Clay's count reflects the number of professional network profiles discoverable for the matched company — the same measurement described in [What does the Estimated employee count filter measure?](#what-does-the-estimated-employee-count-filter-measure) above. Providers like ZoomInfo publish compiled or self-reported figures that may draw from regulatory filings, surveys, or other sources. For organizations with low professional-network presence — government agencies, military branches, educational institutions, and many non-Western companies — Clay's count will run substantially below a compiled headcount figure, and this is expected.
+
+For size-based segmentation (for example, filtering to companies with more than 1,000 employees), use the self-reported **Company size** band rather than an exact enriched count, or cross-validate against a second source — exact counts near a threshold are too sensitive to methodology differences to use as a reliable cut-off on their own.
+
 ### Why do companies sourced with a revenue filter have different enriched revenue values?
 
 The **Annual revenue ranges** filter in Find Companies uses estimated revenue from third-party sources stored in Clay's company database — the figure on file at search time.
