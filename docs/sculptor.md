@@ -1,7 +1,7 @@
 ---
 title: Sculptor
 description: Your go-to-market co-pilot
-last_synced: 2026-04-26T01:40:38.269Z
+last_synced: 2026-04-26T01:40:38.780Z
 ---
 
 # Sculptor
@@ -157,6 +157,23 @@ To apply the proposed column to your table:
 3. Click **Publish and run** or **Publish and don't run** to apply the changes to your full table.
 
 If you'd prefer to add a column directly without going through sandbox, use the **Add enrichment** or **+** button in your table toolbar instead.
+
+### Workflow node shows "Incomplete configuration"
+
+When a workflow node displays an **Incomplete configuration** warning, hover over the node to see the specific issue. A common message is:
+
+> Input "your_input_name": Some paths to this node skip this input's source node, so the input may be missing.
+
+This warning means a required input on the node gets its value from a source node that is not on every path through the workflow. For example, if a **Triggers** node provides `trigger_linkedin_url` but the workflow can also start from **Run manually** — bypassing the Triggers node — Clay cannot guarantee the input will have a value at runtime.
+
+**To resolve this:**
+
+1. Click the node to open its settings panel.
+2. Under **Inputs**, locate the input named in the warning.
+3. Click the **⋮** (three-dot) menu to the right of that input.
+4. Select **Make optional**.
+
+Marking the input optional clears the "Incomplete configuration" flag. When the workflow runs along a path where the input's source node was bypassed, the node proceeds without that input's value. If both paths can supply an equivalent value — for example, a LinkedIn URL from either the Triggers node or an enrichment step — accept either source and mark the one that may be absent as optional.
 
 ## FAQs
 
