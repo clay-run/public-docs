@@ -125,6 +125,8 @@ When checking whether a field has a value — in a run condition or a formula co
 - `/Email is not empty` — condition passes when the Email column has a value
 - `/Domain is empty` — condition passes when the Domain column is blank
 
+**You may also see `!{{column}}` syntax in existing run conditions.** The single `!` (negation operator) returns `true` when the column is empty or blank, and `false` when it has a value — making it equivalent to `/column is empty`. For example, a run condition of `!{{Email Address}}` means "only run when Email Address is blank." On rows where Email Address already contains data, the condition evaluates to `false` and the cell shows **"Run condition not met"** — this is expected behavior, not an error. To understand why a specific row was skipped, click the cell and use the **Explain** button in the cell details panel. To change the run condition, click the column header → **Edit column** → scroll to **Run settings** → update the **Only run if** formula → click **Save**.
+
 ### Avoid combining `!!` with equality checks on 0 or other falsy values
 
 The `!!` prefix coerces a value to boolean: `!!value` returns `true` for truthy values and `false` for falsy ones. Falsy values include `0`, `""` (empty string), `null`, and `false`.
