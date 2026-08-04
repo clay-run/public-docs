@@ -1,6 +1,6 @@
 ---
 title: Workspace settings
-description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, agency setups, and deletion.
+description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, agency setups, and deletion.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -68,6 +68,12 @@ To update your billing email:
 
 -   In `Workspace settings`, edit the `Billing email` field to update the email address used for all billing-related communication.
 -   Click `Save` to ensure the new email is recorded.
+
+## Single Sign-On (SSO)
+
+SSO is not configured through the Clay workspace settings UI — there is no self-serve configuration panel. To set up SSO for your workspace, contact Clay support. SSO is available on **Enterprise** plans at no additional cost, and as a paid add-on on annual Pro and annual Growth plans.
+
+See [Single Sign-On (SSO)](./single-sign-on.md) for full details on eligibility, the setup process (handled by Clay's support team via WorkOS), how login behavior changes once SSO is enabled, and important notes on user provisioning.
 
 ## Delete your workspace
 
