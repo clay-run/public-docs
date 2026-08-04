@@ -107,3 +107,7 @@ If a team member hasn't accepted their invite yet, they appear in `Settings` > `
 -   Select `Remove member`.
 
 Once removed, you can re-invite the same email address if needed. Only workspace admins can cancel pending invites.
+
+## Export your team member list
+
+Clay does not currently offer a built-in option to export your workspace team members as a CSV. Your team member list can only be viewed and managed directly in `Settings` > `Team`. To contact support for assistance with bulk user management tasks, reach out via the in-app chat.
