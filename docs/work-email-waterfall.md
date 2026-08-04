@@ -63,7 +63,7 @@ The `Validation` section in `Full configuration` controls how the waterfall eval
 
 `Validation strategy`: Controls your risk tolerance for what counts as a valid email. Select from:
 
--   `Conservative` — The safest approach, including all verified email types. Best when deliverability matters (e.g. cold outreach where bounce rates affect sender reputation).
+-   `Conservative` — The safest approach. Accepts only emails confirmed as fully deliverable to a real mailbox — **catch-all domain emails are excluded**, even when a validation provider reports them as "Valid." Best when deliverability matters (e.g. cold outreach where bounce rates affect sender reputation).
 -   `Balanced` — Moderate risk level, including catch-alls. A good middle ground when you want some coverage of catch-all domains.
 -   `Aggressive` — Higher risk level, good for casting a wide net. Best when volume and coverage take priority over precision.
 -   `Advanced` — Manual configuration for fine-grained control over validation behavior.
@@ -214,6 +214,8 @@ To permanently show provider and validation columns going forward, open the wate
 
 -   Switch to a less strict `Validation strategy` — for example, `Balanced` or `Aggressive` instead of `Conservative`.
 -   Remove the validation provider entirely — any email found will then flow directly to the final output column without being checked.
+
+**A common cause — catch-all domain emails with Conservative strategy:** If your contacts are on catch-all domains (domains configured to accept email sent to any address), the validation provider may report those emails as "Valid" — but the `Conservative` strategy still rejects catch-all results, keeps the waterfall running, and leaves the output column blank. The validation column appears to show success while the waterfall's strategy filter is rejecting the result. To accept catch-all emails, switch to `Balanced` or `Aggressive` in the waterfall's Full Configuration validation settings.
 
 **A related sub-case — same email found by multiple providers:** To avoid paying for validation twice, the waterfall skips re-validation for any email address that was already found and validated (as invalid) by an earlier provider step. If Provider 3 finds the same email address that Provider 1 already returned and confirmed as invalid, the validation column for Provider 3 will show **run conditions not met** and that email will not be written to the final output column. This is expected behavior — the waterfall continues searching because a later provider might still return a different, valid email.
 
