@@ -638,17 +638,16 @@ The Source column is plain text — there is no direct link from the Source colu
 
 ### I forgot to map some columns when I sent data from a Clay table to Audiences — how do I add them?
 
-Column mappings for a Clay table People (or Companies) Audience source cannot be edited after the initial send. To add the columns you missed:
+Column mappings in a Clay table's **Send to Audiences** column are editable after the initial setup. To add the columns you missed:
 
-1. Open the same Clay table.
-2. Click **Continue** at the bottom of the table.
-3. Select **Save to People** or **Save to Companies**.
-4. In the field mapping step, add the columns you missed — or click **Auto-map** to automatically suggest mappings based on column names.
-5. Click **Save**.
+1. Open the Clay table that sends data to your Audience.
+2. Click the **Send to Audiences** column header and select **Edit column**.
+3. In the settings panel, add the column mappings you missed — map each additional table column to the corresponding Audience field.
+4. After saving, choose **Run all rows in view** when prompted to push the new field values to your existing Audience records. Clay upserts each row, so existing records are updated with the new fields without creating duplicates.
 
-This re-sends your records to the audience. Clay deduplicates and merges them with your existing audience data, writing the new field values onto matching records without creating duplicates.
+**Note:** Only the column-to-field mappings are editable after setup — the entity type (People or Companies) and source object settings are locked.
 
-If you only need to update specific fields on records already in your audience — without re-sending all records — use the **Upsert Audiences Record** action in the table instead. In the table, click **Add enrichment** and search for `Upsert Audiences Record`. See [Using Audiences from a Clay table](#adding-enrichments) for the full list of table ↔ Audience actions.
+If you need to update specific fields on Audience records without re-running the full column, use the **Upsert Audiences Record** action instead — add it to your table, configure it to map the missing fields, and run it on the rows you want to update. See [Using Audiences from a Clay table](#adding-enrichments) for the full list of table ↔ Audience actions.
 
 ### My CRM is messy. Should I clean it up before setting up Audiences?
 
