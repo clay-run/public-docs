@@ -62,7 +62,7 @@ Google only accepts first-party data, so Clay filters out contacts whose only so
 
 ### Can I do account-based targeting on Google?
 
-No. Google Ads supports contact-level targeting only. If you need to target everyone at a set of companies, use LinkedIn Ads, which is the only destination offering account audiences.
+No. Google Ads supports contact-level targeting only. If you need to target everyone at a set of companies, use the professional network's ad platform, which is the only destination offering account audiences.
 
 ### My account isn't eligible for Customer Match
 
