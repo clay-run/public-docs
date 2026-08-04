@@ -33,7 +33,7 @@ Sync contact audiences from Clay to [Vibe.co](http://Vibe.co) to run connected T
 
 Clay can send email and phone only. Name, company, and location fields aren't supported, which makes this the second-narrowest destination after Bing Ads.
 
-Because the match surface is so narrow, identifier quality carries almost all the weight. People set up streaming services with personal accounts, so hashed personal emails from `Enhanced matching` matter here for the same reason they do on Meta Ads. Phone numbers are the only other lever.
+Because the match surface is so narrow, identifier quality carries almost all the weight. People set up streaming services with personal accounts, so hashed personal emails from `Enhanced matching` matter here for the same reason they do on paid social platforms. Phone numbers are the only other lever.
 
 [Vibe.co](http://Vibe.co) supports contact-level targeting only — there's no account-based option.
 
@@ -47,7 +47,7 @@ Synced audiences appear under custom audiences in your [Vibe.co](http://Vibe.co)
 
 Traditional TV is bought against programme demographics — a slot during a given show. [Vibe.co](http://Vibe.co) lets you target the specific contacts in your audience instead, so the same list you use for search and social can drive a TV campaign. That's the reason to run it from Clay rather than separately.
 
-### Should I expect the same match rates as LinkedIn or Meta?
+### Should I expect the same match rates as on major social platforms?
 
 Expect a lower share of your list to resolve here than on the major social platforms, and it's worth planning your budget around that from the start. What you get in return is placement quality — a full-screen, non-skippable impression rather than a feed unit.
 
