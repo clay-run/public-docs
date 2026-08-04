@@ -24,22 +24,6 @@ The `Enable for MCP` option on [Functions](#enabling-a-function-for-mcp) (reusab
 
 Glean integration is available on Enterprise plans only.
 
-## Setting up MCP for your team
-
-To give reps access to Clay through Claude, ChatGPT, or Glean, complete these steps in order:
-
-1.  **Invite reps to your workspace.** Click `Invite users` on this page — the form opens pre-set to the **Sales Rep** role. Alternatively, go to `Settings` → `Team` → `+ Invite` and select **Sales Rep** from the role dropdown. Sales Rep users can invoke Clay from their AI tool but cannot access the Clay workspace UI (tables, workflows, etc.).
-
-2.  **Set a default credit limit before reps connect.** Click `Set default limit` to cap how many credits each new MCP user can spend per month. Set this before reps start connecting their AI tools — the default applies at first connection and prevents uncontrolled spend during onboarding. See [Setting credit limits](#setting-credit-limits) for details.
-
-3.  **Have reps accept the invite email before connecting.** Reps must accept the workspace invite before going through the Clay connector setup in Claude, ChatGPT, or Glean. Connecting before accepting the invite routes them into a personal workspace instead of your team workspace — they won't appear in the MCP users table or be eligible for credit allocation. See the [FAQ below](#what-role-should-i-assign-to-team-members-who-will-only-use-clay-through-mcp) for how to recover from this if it happens.
-
-4.  **Optionally, share connection guides** with reps: [Using Clay in Claude](https://university.clay.com/docs/using-clay-in-claude) | [Using Clay in ChatGPT](https://university.clay.com/docs/using-clay-in-chatgpt).
-
-Once a rep connects their AI tool, they appear in the MCP users table automatically — you do not need to take any further action on this page to track them.
-
-**Note:** The Sales Rep role is currently in beta — contact support to request access for your workspace.
-
 ## **Enabling a function for MCP**
 
 Functions are reusable enrichment workflows built in Clay that reps can invoke directly from ChatGPT, Claude, or Glean with a single prompt. Admins build them once and enable them for MCP — reps never need to open Clay to use them.
@@ -125,7 +109,7 @@ Any team member who needs to use Clay through an AI tool (Claude, ChatGPT, Glean
 
 The Sales Rep role restricts access to the main Clay workspace: users can invoke functions and run enrichments from within their AI tool, but they cannot open or interact with the Clay interface (tables, workbooks, etc.). This makes it the right choice for team members who should use Clay through AI tools only — not build workflows directly in Clay.
 
-To invite them, click `Invite users` on the MCP page (the form opens pre-set to the Sales Rep role) or go to `Settings` → `Team`, click `+ Invite`, and select **Sales Rep** from the role dropdown.
+To invite them: go to `Settings` → `Team`, click `+ Invite`, enter their email address, and select **Sales Rep** from the role dropdown.
 
 **Important:** Team members must accept their workspace invite email *before* connecting Clay to Claude, ChatGPT, or Glean. If a rep goes through the Clay MCP connection flow before accepting the invite, they'll be routed into a new personal workspace instead of your team workspace — and they won't appear in your `MCP users` table or be eligible for credit allocation.
 
