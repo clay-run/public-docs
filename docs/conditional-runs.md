@@ -162,6 +162,8 @@ When a run condition is set, Clay only processes rows where the condition evalua
 
 This means clicking **"Run all rows"** with a condition in place is safe: Clay will only run (and charge credits for) the rows that actually match your condition.
 
+**The credit estimate shown before running is based on the full row count** — it does not account for how many rows your condition will skip. Treat it as a worst-case ceiling: if only a portion of your rows satisfy the condition, your actual credit spend will be proportionally lower.
+
 ### "Run condition not met" cells appear empty to downstream columns
 
 When a run condition is not met, Clay skips the enrichment and stores **no output** for that row — the cell value is empty. Any downstream columns that reference this cell (formula columns, waterfall columns, CRM push columns, etc.) will receive an empty value for those rows.
