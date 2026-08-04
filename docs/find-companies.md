@@ -171,6 +171,18 @@ When you enrich revenue afterward — using Clay's built-in enrichments, Clearbi
 
 As a result, filtering for revenue above a threshold (for example, above $500M) and then enriching can surface a significant share of companies where the enriched value falls below that threshold — this is expected behavior, not a data error. Treat **Annual revenue ranges** as a broad directional signal for initial scoping and use your post-enrichment provider's figures as the source of truth for final qualification.
 
+### Why does the Latest Funding Date filter return few or no results?
+
+The **Latest Funding Date** filter in Find Companies is a low-coverage field — most companies in Clay's sourcing dataset do not have a recorded funding date on file. If you apply a recent date window (for example, "on or after 90 days ago"), you will typically see very few or no results. A "This filter significantly reduces your results" warning appears in the filter UI for this reason.
+
+**To get up-to-date funding data for a company list:**
+
+1. Build your Find Companies search using other criteria — industry, size, location, keywords — and import without the Latest Funding Date filter.
+2. After importing, add an enrichment column using a funding data provider such as [Crunchbase](crunchbase-integration.md) or [Harmonic](harmonic-ai-integration-overview.md) to retrieve each company's latest funding round date and amount. Claygent can also look up recent funding via web research.
+3. Filter the table using the enriched funding date column to narrow down to companies that raised funding within your target window.
+
+This gives you more complete and current funding data than filtering by date during the initial search step.
+
 ### Re-running Find Companies shows far fewer results than my original run
 
 This is expected behavior. The Find Companies source deduplicates new results against rows already in your table — re-running returns only the net-new companies not yet present in the table.
