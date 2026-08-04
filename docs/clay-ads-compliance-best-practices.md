@@ -1,7 +1,7 @@
 ---
 title: Clay Ads compliance best practices
 description: Explains Clay Ads' automatic targeting controls for US and international audiences, including how Clay-sourced data is handled for Google Ads compliance.
-last_synced: 2026-08-04T05:12:16.770Z
+last_synced: 2026-08-04T05:12:16.763Z
 ---
 
 # Clay Ads compliance best practices
@@ -71,7 +71,7 @@ Rather than relying on filtering at sync time, you can stop non-compliant audien
 -   **Collect and store consent in your own systems.** For non-US audiences especially, build from first-party data (CSV, CRM or data warehouse) where consent has been captured.
 -   **Plan Google and Bing campaigns around first-party data.** Clay-sourced contacts never reach either platform, in any region, so build those audiences from your CRM, data warehouse, or CSV data. Read the excluded-contact count on the confirmation step before you create the sync so your delivered audience size isn't a surprise.
 -   **Fill in country data on contacts you own.** For platforms other than Google and Bing, a Clay-sourced contact with a country outside the US is dropped, while a blank country is allowed through. If you hold reliable country data in your own systems, sync it into Audiences so eligibility is decided on real values rather than gaps.
--   **Keep opt-outs current in your source systems.** We recommend you sync opt-out status into Audiences and filter out these users from your Ad Sync segments. Recurring syncs run every 3 days, so removing someone in your source will flow through to your connected ad account on the next sync cycle.
+-   **Keep opt-outs current in your source systems.** We recommend you sync opt-out status into Audiences and filter out these users from your Ad Sync segments. Syncs run on the schedule you configure, so removing someone in your source will flow through to your connected ad account on the next sync.
 
 ## Frequently asked questions
 
@@ -91,4 +91,4 @@ Only workspace admins. The `First-party only` toggle under `Ads settings` is vis
 No. The segment count is everyone matching your filters, while the synced count is only the contacts eligible for the destinations you picked. The difference is the excluded contacts, and the badge on the audience header tells you which rule accounts for them.
 
 **How quickly do opt-outs take effect?**  
-Recurring syncs run every 3 days. Opt-outs updated in your source system are reflected in your connected ad account on the next sync cycle.
+Opt-outs updated in your source system are reflected in your connected ad account on the next scheduled sync.
