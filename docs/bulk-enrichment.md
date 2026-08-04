@@ -146,3 +146,25 @@ Here's what happens to setup-mode rows when you click **Start Run**:
 -   **Records that still match your current segment** — these are re-enriched from scratch. Credits are spent again for these rows.
 
 This means if you updated your audience segment filters after creating a bulk enrichment, you do not need to manually remove records that no longer match before running — clicking **Start Run** handles cleanup automatically.
+
+### Resuming after changing segment filters
+
+If you pause a bulk enrichment and update your audience segment before resuming, the resume option you choose determines which records are picked up next.
+
+**Continue where you left off**
+
+Records already in the queue finish processing first. What happens to newly-qualifying records depends on how you changed your segment:
+
+-   If you **added a new segment** to the bulk enrichment while it was paused, members of the newly-added segment are enqueued automatically when you resume.
+-   If you **edited the filter conditions on an existing connected segment** (same segment, narrowed or changed the filters), records that newly match the updated filters are **not** automatically enqueued on resume. Clay tracks which segment IDs were connected at the time the run was paused — it does not re-evaluate membership changes from in-place filter edits when resuming.
+
+If you edited an existing segment's filters and want those newly-qualifying records to be enriched, use **Run from the beginning** instead. Alternatively, if **Auto-enrich new records** is enabled, newly-qualifying records will be picked up automatically in the background within 15 minutes of joining the segment.
+
+**Run from the beginning**
+
+All rows currently in the bulk enrich table are cleared, and the enrichment restarts fresh using your current segment configuration — including any filter changes you made to existing connected segments. Previously archived rows from the completed portion of the run are not affected — they remain in the archive. Note: restarting costs credits again for the newly seeded rows.
+
+**Which option to use:**
+
+-   Choose **Continue where you left off** if you want to finish processing records already in the queue. Note that if you edited an existing segment's filter conditions (rather than adding a new segment), those newly-qualifying records will not be pulled in automatically on resume.
+-   Choose **Run from the beginning** if you edited the filter conditions on an existing connected segment and want the enrichment to start fresh using your updated filters. This clears the current queue and seeds the run from your current segment configuration.
