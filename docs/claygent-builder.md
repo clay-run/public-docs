@@ -480,6 +480,25 @@ Changing the column data type will not bypass this limit — the constraint is o
 
 **Alternatively**, reference the Claygent action column directly in downstream formulas — using `/` to navigate into specific properties — rather than extracting large fields into standalone text columns. Accessing a property of the action column reads from its 200 kB store; only columns that *hold* a copy of the value as text are subject to the 8 kB limit.
 
+### My Claygent column shows an error about the prompt or output schema being too large — what are the limits?
+
+Clay Parallel models (clay-argon, clay-neon, clay-helium, clay-xenon, and clay-radon) enforce two hard character limits on every Claygent column:
+
+-   **Output schema alone**: up to 15,000 characters.
+-   **Prompt + output schema combined**: up to 25,000 characters total.
+
+When the output schema alone is too large, you'll see: *"The output schema is X characters, which is over the 15,000 character limit for this model. Shorten the output schema, then try again."*
+
+When the combined total is too large, you'll see: *"The prompt and output schema together are X characters, which is over the 25,000 character limit for this model. Shorten the prompt or the output schema, then try again."*
+
+These limits apply to all plans. Third-party models (Claude, GPT-4o, Gemini, and other non-Parallel models) do not enforce these character limits when used in Claygent — switching to a non-Parallel model is an option if you need a large prompt and schema.
+
+**Three ways to reduce the size:**
+
+1.  **Trim the prompt.** Remove redundant instructions, collapse multiple examples into one, and cut background context the model does not need per row. Large values passed in from input columns (such as long lookup results) also count toward the combined character total — consider summarizing or truncating them before passing as inputs.
+2.  **Simplify the output schema.** Reduce the number of output fields, shorten field descriptions, or remove fields you can derive later with a formula column.
+3.  **Split into two chained Claygent columns.** Use one lean column as a "search / gather" pass — focused only on pulling the raw data — and a second column as a "structure the result" pass — focused only on organizing what the first column returned. Each column individually stays within the 25,000 character limit. Reference the first column's output as an input to the second column using the `/` property picker in the Inputs section.
+
 ## Tips for success
 
 **Importing test cases**: Instead of manually creating test data, import real rows from your tables. Click `Import from table` in the test panel to pull actual data and see how your agent performs on real-world inputs.
