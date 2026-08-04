@@ -32,6 +32,20 @@ To add more profiles from the same search to an existing people table without cr
 
 **Note:** Each Find People source has a cumulative profile limit that varies by billing plan. The modal displays your plan's maximum and the number of profiles still available in the selected search. See [your source has exceeded your plan's limit](finding-companies-and-people-in-clay.md#your-source-has-exceeded-your-plans-limit-error-on-find-companies-or-find-people) for troubleshooting.
 
+## Upgraded search (Beta)
+
+Find People includes two search modes you can switch between at any time using the gear icon (⚙) in the panel header:
+
+-   **Upgraded search (Beta):** Describe your target criteria in plain English — for example, "Product directors or VPs at software companies with confirmed recent funding." Clay translates your description into structured filters. This mode can query across people, companies, and jobs data in a single search. **Results do not include company domain.** Results include name, job title, company name, location, and LinkedIn profile URL.
+
+-   **Classic filters:** The previous filter-based experience with individual fields for job title, company, location, experience, and more. Results include company domain alongside all standard output fields. See [Source Find People](#source-find-people) below for the full input and output reference.
+
+**To switch modes:** Click the gear icon (⚙) in the upper area of the Find People panel and toggle **Upgraded search** on or off.
+
+**If you need company domain in your results,** toggle off Upgraded search to use classic filters.
+
+**Note:** Upgraded search is currently in open beta. It is enabled by default in most workspaces. You can opt out by toggling it off at any time.
+
 ## `Source` **Find People**
 
 **Inputs:**
@@ -102,6 +116,10 @@ Any enrichments you add afterward (work email, phone number, profile enrichment)
 ### Can I see the total number of people that match my search before importing?
 
 **Yes.** The search wizard shows a result count directly in the interface — you can see how many people match your filters before clicking Import. The count also shows how many rows will be imported based on your **Limit results** setting. For very large searches, the count may display as a capped number with a "+" indicator; hover over it to load the full exact total.
+
+### Why don't I see company domain in my Find People results?
+
+If company domain is missing from your results, Upgraded search is likely enabled. Upgraded search results do not include company domain. To get company domain in results, click the gear icon (⚙) in the panel header and toggle off **Upgraded search** — classic filter results include company domain.
 
 ## Importing from a Sales Navigator search URL
 
