@@ -113,7 +113,7 @@ Access control is enforced at the Google Ads account level — the person connec
 
 ### **What platforms are supported?**
 
-Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, **Google Ads**, **Vibe.co**, and **Reddit Ads**.
+Clay currently supports syncing ad audiences to the **professional network**, **Meta**, **Google Ads**, **Vibe.co**, and **Reddit Ads**.
 
 Vibe.co and Reddit Ads are rolling out as part of the Clay Ads GA release — contact [Clay support](https://www.clay.com/contact) if these destinations are not yet available in your workspace.
 
