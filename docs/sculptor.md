@@ -1,7 +1,7 @@
 ---
 title: Sculptor
 description: Your go-to-market co-pilot
-last_synced: 2026-04-26T01:40:38.780Z
+last_synced: 2026-04-26T01:40:38.269Z
 ---
 
 # Sculptor
