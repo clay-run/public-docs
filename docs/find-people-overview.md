@@ -107,7 +107,7 @@ Any enrichments you add afterward (work email, phone number, profile enrichment)
 
 When you use domains (e.g., `acme.com`) as company identifiers, Clay maps each domain to internal company records at the root-domain level. This mapping can occasionally include people from a parent company, subsidiary, or other entity associated with that domain — resulting in contacts from companies you didn't explicitly target.
 
-To limit results to a specific company only, use **company profile URLs from the professional network** instead of domains as your identifier. Profile URLs map directly to a single company page, so only people from that exact company appear in your results. See [Use profile URLs, not domains, as company identifiers](finding-companies-and-people-in-clay.md#use-linkedin-urls-not-domains-as-company-identifiers) for the full guidance and valid URL formats.
+To limit results to a specific company only, use **company profile URLs from the professional network** instead of domains as your identifier. Profile URLs map directly to a single company page, so only people from that exact company appear in your results. See [Use profile URLs, not domains, as company identifiers](finding-companies-and-people-in-clay.md) for the full guidance and valid URL formats.
 
 ## Importing from a Sales Navigator search URL
 
