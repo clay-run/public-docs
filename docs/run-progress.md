@@ -3,10 +3,11 @@ title: Run progress
 description: Clay provides multiple ways to track and monitor run progress
   across your tables, including how to set a row limit to control which rows are
   processed, manually trigger unrun enrichment cells, run enrichments on a
-  specific subset of rows, troubleshoot cells stuck in Queued status, diagnose
-  enrichments that aren't triggering automatically, resolve persistent error
-  messages by clearing the browser cache, and troubleshoot slow cell loading
-  when using multiple tables in a workbook.
+  specific subset of rows, troubleshoot cells stuck in Queued status, recover
+  action column cells stuck in Queued status when the Stop button is grayed out,
+  diagnose enrichments that aren't triggering automatically, resolve persistent
+  error messages by clearing the browser cache, and troubleshoot slow cell
+  loading when using multiple tables in a workbook.
 last_synced: 2026-04-26T01:40:34.620Z
 ---
 
@@ -156,6 +157,15 @@ If cells remain Queued for an extended period, common causes include:
 3.  Remove the filter when the run finishes.
 
 > **Note:** **Run column → Run [N] empty or out-of-date rows** will not work here — queued rows are classified as "running," not as empty or stale, so that option shows 0 eligible rows and does nothing for this scenario. Use **Force run all [N] rows** instead.
+
+**If action column cells are stuck in Queued status and the Stop button is grayed out:** The Stop button becomes active when there are active run records in the queue. If an action column — a column that pushes data to an external system such as a CRM or marketing platform (for example, Update Marketo or Update HubSpot) — shows cells in "Queued..." status but the Stop button in the run summary panel is grayed out, those cells' run records are no longer present. There is nothing for Stop to cancel, and force-running the column will not clear these cells either.
+
+To recover from this state:
+
+1.  Right-click the action column header and select **Duplicate column**. The duplicate starts with a fresh queue state and no stuck entries.
+2.  Delete the original column. Deleting removes the stuck entries.
+
+The duplicate keeps your column settings. Once you have deleted the original, check the duplicate's auto-run setting before triggering it to confirm it is configured as expected.
 
 ## Troubleshooting: table appears stopped at a partial percentage with no credits consumed
 
