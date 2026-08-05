@@ -322,7 +322,7 @@ The search is scoped to the exact companies in the segment at run time. After th
 
 ### Adding enrichments
 
-Bulk enrichments add contact data, firmographics, technographics, and more to your audience records at scale. They run on an audience and write results permanently back to All People — not just the segment you ran them from. This means any enriched field is immediately available as a filter in any other segment.
+Bulk enrichments add contact data, firmographics, technographics, and more to your audience records at scale. You enrich companies and people directly within Audiences — there is no need to move records to a separate Clay table first. They run on an audience and write results permanently back to All People — not just the segment you ran them from. This means any enriched field is immediately available as a filter in any other segment.
 
 **Admin access required.** Adding and managing bulk enrichments requires workspace Admin access.
 
@@ -338,6 +338,8 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
 **Note:** To run a bulk enrichment on Audience data, always start from within the Audience — click `Enrich` → `Add bulk enrich` from any segment view. When creating a new Bulk Enrichment from the Clay homepage (`New` → `Bulk enrichment`), the source type options are CSV and Salesforce CRM only — there is no "Audiences" source type in that dialog. The Audience segment serves as the source when you add the enrichment from within Audiences.
 
 **Note:** Clay does not impose rate limits on Audiences bulk enrichments — the system is built to handle large lists at scale. Third-party data providers (such as Clearbit or Apollo) apply their own rate limits, but Clay queues requests and manages these automatically in the background. If you supply personal API keys for a provider, those keys' own rate limits apply.
+
+**If you need Audience data inside a Clay table** — for example, to reference enriched field values in a table-based workflow — use the `Lookup in Audiences` action column in the table instead of exporting records first. See [Using Audiences from a Clay table](#adding-enrichments) below for details.
 
 **Using Audiences from a Clay table:**
 
