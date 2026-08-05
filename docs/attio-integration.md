@@ -139,3 +139,16 @@ Any standard or custom object in your Attio workspace is supported. The `Object`
 ### What is the difference between the View and Filter inputs?
 
 `View` lets you select a saved view from your Attio workspace, which applies any filters and segments already configured in that view. `Filter` accepts a raw JSON filter query for custom filtering logic. If both are provided, the `View` takes precedence and the `Filter` is ignored.
+
+### How do I push data to an Attio multi-select field?
+
+Use the **Update record** or **Upsert record** action and map your Clay column to the Attio multi-select attribute in the Object Schema. Values must exactly match the option labels configured in Attio.
+
+Clay accepts the following value formats for multi-select fields:
+
+-   A Clay **multi-select column** mapped directly to the field.
+-   A **formula column** that returns a JSON-encoded list — for example, `["Option 1", "Option 2"]`.
+
+If your data is a comma-separated string (for example, `"Option 1, Option 2"`), use a formula to split it into a proper list before mapping — passing a plain string will write it as a single option rather than multiple selections.
+
+**Controlling append vs. overwrite:** The **Update record** action includes a **Multiselect Behavior** setting — choose `Append multiselect values` to add to the existing selections on the record, or `Overwrite multiselect values` to replace them entirely. The **Upsert record** action does not have this setting and always overwrites existing multi-select values when updating an existing record.
