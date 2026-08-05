@@ -158,6 +158,8 @@ To verify the script is loading at the browser level:
 
 **Exclude filter not working as expected:** Exclude filters apply at the session level. A session is blocked only if every page the visitor viewed during that session matches at least one exclude pattern. If a visitor toured multiple pages and only some of them match your exclude filter, the session will still appear in your table.
 
+**All rows show '/' as the page path:** This usually means the "URL paths to include" filter (Settings → Web intent → Tracker → Tracking filters) contains only `/`. Because URL paths use exact matching, a lone `/` restricts tracking to homepage visits only — no other pages are captured. To track all pages, remove the `/` entry from "URL paths to include". Leaving the field empty tracks all pages by default.
+
 Filter changes only apply to new data — existing rows aren't affected. Make sure you haven't accidentally omitted wildcards on paths you want to include.
 
 ### Content Security Policy blocking the script
