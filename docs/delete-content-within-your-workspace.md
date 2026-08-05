@@ -62,9 +62,13 @@ When you restore a workbook, all of its tables are automatically restored as wel
 
 If you accidentally delete a row within a table, a brief confirmation alert appears immediately after deletion — click **Undo** in that alert to restore the row before it disappears.
 
-After that alert closes, there is no self-serve way to recover deleted rows. However, the Clay support team can restore deleted rows within **30 days** of deletion. To request row restoration, reach out to support and share:
+After that alert closes, there is no self-serve way to recover deleted rows. The Clay support team may be able to restore deleted rows within **30 days** of deletion, but recovery is **not guaranteed** — whether the data can be restored depends on the situation, and support can only confirm after investigating your specific case. To request row restoration, reach out to support and share:
 
 -   Your table URL
 -   Approximately when the rows were deleted
 
 Note: rows cannot be restored if doing so would put your table over the 50,000-row limit.
+
+## Cell data cannot be recovered
+
+Recovery only applies to deleted rows — **individual cell data cannot be recovered**, by you or by Clay support. If a cell's value is cleared or overwritten (for example, by clearing a cell, editing its contents, or re-running an enrichment that returns a different result), the previous value is gone. [Table versions](table-versions.md) do not help here either: they capture your table's structure and configuration, not cell data.
