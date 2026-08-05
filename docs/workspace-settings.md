@@ -75,6 +75,22 @@ SSO is not configured through the Clay workspace settings UI — there is no sel
 
 See [Single Sign-On (SSO)](./single-sign-on.md) for full details on eligibility, the setup process (handled by Clay's support team via WorkOS), how login behavior changes once SSO is enabled, and important notes on user provisioning.
 
+## Beta Program
+
+The Clay Beta Program gives your workspace early access to experimental and cutting-edge features before they reach general availability. Beta features are marked throughout the app with a **Beta** tag.
+
+**Joining the Beta Program is self-serve and available to all workspaces.** Only a workspace admin can enroll or leave — non-admins can see the option but cannot toggle it.
+
+To join the Beta Program:
+
+-   Go to `Settings` > `Workspace settings`.
+-   In the **Beta program** section, click **Join beta program**.
+-   Your workspace immediately gains access to all current beta features.
+
+To leave the Beta Program, return to the same section and click **Leave beta program**.
+
+Once enrolled, beta feature announcements and discussions are shared in the [**#clay-beta-program**](https://clayrunhq.slack.com/archives/C08T0RDMBBR) channel in the Clay community Slack.
+
 ## Delete your workspace
 
 You can permanently delete your Clay workspace through workspace settings. This action is permanent and cannot be undone.
