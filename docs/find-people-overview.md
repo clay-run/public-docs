@@ -103,6 +103,12 @@ Any enrichments you add afterward (work email, phone number, profile enrichment)
 
 **Yes.** The search wizard shows a result count directly in the interface — you can see how many people match your filters before clicking Import. The count also shows how many rows will be imported based on your **Limit results** setting. For very large searches, the count may display as a capped number with a "+" indicator; hover over it to load the full exact total.
 
+### Why does my Find People search return people from companies I didn't add to my list?
+
+When you use domains (e.g., `acme.com`) as company identifiers, Clay maps each domain to internal company records at the root-domain level. This mapping can occasionally include people from a parent company, subsidiary, or other entity associated with that domain — resulting in contacts from companies you didn't explicitly target.
+
+To limit results to a specific company only, use **company profile URLs from the professional network** instead of domains as your identifier. Profile URLs map directly to a single company page, so only people from that exact company appear in your results. See [Use profile URLs, not domains, as company identifiers](finding-companies-and-people-in-clay.md) for the full guidance and valid URL formats.
+
 ## Importing from a Sales Navigator search URL
 
 If you have a saved Sales Navigator search and want to pull those results into Clay, use the **Find people from external search** source — not the standard Find People source described above.
