@@ -89,7 +89,7 @@ To join the Beta Program:
 
 To leave the Beta Program, return to the same section and click **Leave beta program**.
 
-Once enrolled, beta feature announcements and discussions are shared in the **#beta-announcements** channel in the [Clay community Slack](https://clayrunhq.slack.com/archives/C08T0RDMBBR).
+Once enrolled, beta feature announcements and discussions are shared in the [**#clay-beta-program**](https://clayrunhq.slack.com/archives/C08T0RDMBBR) channel in the Clay community Slack.
 
 ## Delete your workspace
 
