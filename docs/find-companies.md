@@ -26,7 +26,6 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
     -   **Industries** to include and exclude
     -   **Company size** — The self-reported size band on the company's profile (e.g., 11–50, 51–200). Select one or more bands from the dropdown.
     -   **Annual revenue ranges** — Filter by revenue brackets from $0–$500K up to $100B+.
-    -   **Funding raised** — Filter by total funding raised. Select one or more brackets from Under $1M up to $250M+, or select **Funding unknown** to include companies with no recorded funding data.
     -   **Company types** — Privately Held, Public Company, Partnership, Self Employed, Non Profit, Educational, Self Owned, or Government Agency. These values reflect how companies self-classify on their profiles.
     -   **Keywords** to include or exclude
         -   **Exact phrase matching:** Wrap multi-word terms in single or double quotes to search for that exact phrase. For example, searching for "Google Cloud" finds companies with "Google Cloud" in their description — not just companies that mention Google and cloud separately. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are stripped out even with quoted phrases.
@@ -170,18 +169,6 @@ The **Annual revenue ranges** filter in Find Companies uses estimated revenue fr
 When you enrich revenue afterward — using Clay's built-in enrichments, Clearbit, Owler, or other providers — those values come from each provider's own methodology and data pipeline, which is completely independent from Clay's search index. Because revenue for private companies is not publicly disclosed and must be estimated, different providers can reach materially different figures for the same company.
 
 As a result, filtering for revenue above a threshold (for example, above $500M) and then enriching can surface a significant share of companies where the enriched value falls below that threshold — this is expected behavior, not a data error. Treat **Annual revenue ranges** as a broad directional signal for initial scoping and use your post-enrichment provider's figures as the source of truth for final qualification.
-
-### Why does the Latest Funding Date filter return few or no results?
-
-The **Latest Funding Date** filter in Find Companies is a low-coverage field — most companies in Clay's sourcing dataset do not have a recorded funding date on file. If you apply a recent date window (for example, "on or after 90 days ago"), you will typically see very few or no results. A "This filter significantly reduces your results" warning appears in the filter UI for this reason.
-
-**To get up-to-date funding data for a company list:**
-
-1. Build your Find Companies search using other criteria — industry, size, location, keywords — and import without the Latest Funding Date filter.
-2. After importing, add an enrichment column using a funding data provider such as [Crunchbase](crunchbase-integration.md) or [Harmonic](harmonic-ai-integration-overview.md) to retrieve each company's latest funding round date and amount. Claygent can also look up recent funding via web research.
-3. Filter the table using the enriched funding date column to narrow down to companies that raised funding within your target window.
-
-This gives you more complete and current funding data than filtering by date during the initial search step.
 
 ### Re-running Find Companies shows far fewer results than my original run
 
