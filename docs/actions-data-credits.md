@@ -501,6 +501,15 @@ Unused trial Data Credits do not roll over. What happens to them depends on whet
 
 To get the most out of your trial credits, use them before your trial ends.
 
+### Why does my credit balance show more credits than my plan's monthly allotment?
+
+The credit display shows your **current available balance** — credits you can spend right now — alongside your **monthly plan allotment** — the new credits added at each billing renewal. Your balance can exceed your monthly allotment, and this is expected in two situations:
+
+-   **After a free trial:** When a trial ends and your workspace moves to the free plan without upgrading, your remaining trial credits stay available and are fully usable until your next billing renewal. For example, if you received 2,000 trial credits and spent 50, your balance after moving to the free plan would show 1,950 — even though the free plan only allocates 100 credits per month. At your next renewal, the balance is capped at 200 credits (the free plan's rollover limit of 2× the monthly allotment); any credits above 200 are forfeited.
+-   **After accumulating rollover credits:** Data Credits roll over across billing cycles up to 2× your monthly allotment. On a 100-credit/month plan, your balance can reach up to 200 total before the cap applies.
+
+All credits shown in your balance are available to spend before your renewal date. To check your renewal date and avoid losing excess credits, go to `Settings` → `Plan & billing`.
+
 ### Does CSV export consume an Action?
 
 No. Exporting data to CSV does not consume an Action or any Data Credits. CSV export is a simple data download operation and does not count as platform usage or GTM execution.
