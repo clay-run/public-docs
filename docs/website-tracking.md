@@ -158,6 +158,8 @@ To verify the script is loading at the browser level:
 
 **Exclude filter not working as expected:** Exclude filters apply at the session level. A session is blocked only if every page the visitor viewed during that session matches at least one exclude pattern. If a visitor toured multiple pages and only some of them match your exclude filter, the session will still appear in your table.
 
+**All rows show '/' as the page path, or fewer visitors than expected:** The "URL paths to include" filter operates at the session level — a session is tracked only if at least one page the visitor viewed matches an include pattern. If your include list contains only `/`, Clay tracks sessions where the visitor hit the homepage at any point, but sessions where the visitor never visited the homepage are excluded entirely. Visitors who entered your site directly on an interior page (for example, from a search result or ad) without navigating to `/` will not appear in your table, which can make it look like everyone only visited the homepage. To track all visitor sessions regardless of entry page, remove the `/` entry from "URL paths to include" (Settings → Web intent → Tracker → Tracking filters). Leaving the field empty tracks all sessions by default.
+
 Filter changes only apply to new data — existing rows aren't affected. Make sure you haven't accidentally omitted wildcards on paths you want to include.
 
 ### Content Security Policy blocking the script
