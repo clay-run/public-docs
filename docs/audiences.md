@@ -328,14 +328,14 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
 
 **To add an enrichment:**
 
-1.  Navigate to an audience and click `Enrich` → `Add bulk enrich`.
+1.  Navigate to an audience and click `Enrich` → `Add enrichment`.
 2.  Add enrichment columns as you normally would (e.g., `Enrich Person` for LinkedIn URL, title, phone).
 3.  Test on a small batch first — click `Run on 10 rows` to verify output before running at scale.
 4.  Open `Field Mapping` and map each column you want to save back to Audiences:
     -   Enable the auto-enrich toggle so that any new record entering this segment is automatically passed through the enrichment — typically within 15 minutes.
 5.  Click `Start Run`.
 
-**Note:** To run a bulk enrichment on Audience data, always start from within the Audience — click `Enrich` → `Add bulk enrich` from any segment view. When creating a new Bulk Enrichment from the Clay homepage (`New` → `Bulk enrichment`), the source type options are CSV and Salesforce CRM only — there is no "Audiences" source type in that dialog. The Audience segment serves as the source when you add the enrichment from within Audiences.
+**Note:** To run a bulk enrichment on Audience data, always start from within the Audience — click `Enrich` → `Add enrichment` from any segment view. When creating a new Bulk Enrichment from the Clay homepage (`New` → `Bulk enrichment`), the source type options are CSV and Salesforce CRM only — there is no "Audiences" source type in that dialog. The Audience segment serves as the source when you add the enrichment from within Audiences.
 
 **Note:** Clay does not impose rate limits on Audiences bulk enrichments — the system is built to handle large lists at scale. Third-party data providers (such as Clearbit or Apollo) apply their own rate limits, but Clay queues requests and manages these automatically in the background. If you supply personal API keys for a provider, those keys' own rate limits apply.
 
@@ -555,7 +555,7 @@ Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data 
 
 The `+ Add field` option is available in the `Update Audiences Record` column mapping inside a bulk enrichment table:
 
-1.  Navigate to a segment and click `Enrich` → `Add bulk enrich`.
+1.  Navigate to a segment and click `Enrich` → `Add enrichment`.
 2.  In the bulk enrich table, click the `Update Audiences Record` column header to open the Configure panel.
 3.  In the `Column mapping` dropdown, click `+ Add field`, name the new field, and save.
 
