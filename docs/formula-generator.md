@@ -248,3 +248,13 @@ This appears when a formula references an entire enrichment or AI column — suc
 -   **Using dot notation:** Access the field directly in the expression — for example, `{{My AI Column}}.response` or `{{My Enrichment Column}}?.fieldName`.
 
 For Use AI and Claygent columns specifically, the main text output is stored in the `.response` field. See [AI column output shows as a JSON object](use-ai-integration-overview.md#troubleshooting) for more on navigating AI column fields.
+
+### **Why does my formula column show "Cell data size exceeds limit (8 kB)"?**
+
+Formula, text, and number columns are limited to **8 kB** of data per cell. Enrichment and action columns (columns that call an external data source) can hold up to **200 kB** per cell. When you use a formula column to convert a large enrichment result to a string — for example, `JSON.stringify({{Enrich Person}})` on a full person enrichment profile — the output often exceeds the 8 kB ceiling, and Clay shows this error.
+
+There are three approaches to work around the limit:
+
+-   **Extract only the fields you need (no cost).** Instead of stringifying the entire enrichment object, reference the specific sub-fields your workflow requires — for example, `{{Enrich Person}}?.name`, `{{Enrich Person}}?.title`, or `{{Enrich Person}}?.summary`. Individual field values are almost always well under 8 kB. Formula columns have no credit or action cost.
+-   **Split across multiple formula columns (no cost).** If you need several nested sections of the data, create one formula column per section — for example, `JSON.stringify({{Enrich Person}}?.experience)` in one column and `JSON.stringify({{Enrich Person}}?.education)` in another. Each column stores its slice independently within the 8 kB limit.
+-   **Use an HTTP API column (1 action per row, no data credits).** An HTTP API column that echoes its request payload stores the full response as an action column cell — and action columns support up to 200 kB per cell. This uses 1 action per row but no data credits. Avoid this approach for sensitive or private data. For the full breakdown of what consumes actions vs. data credits, see [Actions and data credits](actions-data-credits.md).
