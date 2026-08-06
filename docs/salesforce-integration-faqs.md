@@ -719,3 +719,19 @@ If you need to change the default connection, ask a workspace admin to:
 3.  Click the `…` menu next to it and select `Set as default`.
 
 To change your own role to admin, ask an existing workspace admin to update it in `Settings` → `Team`.
+
+## Why aren't enrichment notifications being sent after I use the Launch Enrichment button in Salesforce?
+
+When using the Clay Salesforce package, the **Launch Enrichment** button on a Lead, Contact, or Account record sends that record to Clay for enrichment and writes the results back to Salesforce. For Salesforce users to receive a notification ("Your record has been enriched by Clay") after the enrichment completes, the **Get Enrichment Notifications** toggle must be enabled on the corresponding workflow.
+
+**To enable enrichment notifications:**
+
+1.  In Salesforce, open the **Clay** app and go to **Object and Field Mapping**.
+2.  Under **Select Object**, choose the object type the Launch Enrichment button lives on — Account, Contact, or Lead.
+3.  Under **Optional (Edit Existing Workflow)**, select the specific workflow tied to that button.
+4.  Confirm that **Get Enrichment Notifications** is toggled **Active** (blue with a checkmark). If it is inactive, toggle it on.
+5.  Save your changes.
+
+Once the toggle is active, Salesforce users will receive a notification in their Salesforce notification center after each successful enrichment run triggered by that button.
+
+**Enrichment notifications only fire on successful enrichments.** There is currently no built-in way to receive a notification when an enrichment fails or when an update or upsert action fails in Salesforce. Failures do not produce a notification — they fail silently from the Salesforce user's perspective. If you need visibility into failures, check the enrichment results directly in Clay.
