@@ -113,9 +113,9 @@ Yes. Functions can be nested — a function can call another function as part of
 
 While in edit mode, your function continues to process inputs it receives from production tables. When you publish an edit to your function, the changes apply to all inflight and future rows that the function processes. Note that you can pause your function before publishing changes to ensure that inflight rows are applied with the changes.
 
-### How are functions different from column templates?
+### How are functions different from column group templates?
 
-Column templates are saved configurations for a single column that you apply manually to new tables — they're useful for one-off enrichments but aren't synced across your workspace. Functions are live, centrally managed workflows: edit the function once and every table calling it updates automatically. Functions also run as single columns in your main table, reducing potential column-limit constraints from your workflows.
+Column group templates are saved snapshots of multiple column configurations that you apply manually to new tables — they're useful for reusing a set of enrichments, but changes to the original columns don't automatically update tables where the template has been applied. Functions are live, centrally managed workflows: edit the function once and every table calling it updates automatically. Functions also run as a single column in your main table, reducing potential column-limit constraints from your workflows. For full instructions on creating and applying column group templates, see [Column group templates](column-group-templates.md).
 
 ### Is there version history for functions?
 
