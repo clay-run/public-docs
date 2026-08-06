@@ -1,12 +1,10 @@
 ---
 title: Airtable integration overview
 description: Spreadsheet-like database for organizing information and building applications.
-last_synced: 2026-04-26T01:39:40.638Z
+last_synced: 2026-08-06T02:08:45.256Z
 ---
 
 # Airtable integration overview
-
-Spreadsheet-like database for organizing information and building applications.
 
 # Airtable Overview
 
