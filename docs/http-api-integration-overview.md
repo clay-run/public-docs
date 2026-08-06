@@ -644,6 +644,8 @@ This error means the API credentials in your HTTP API action are no longer valid
 
 **Tip:** Saving credentials in a header account (`Settings → Connections`) is the easiest way to manage token rotation — when a token expires, you only need to update it in one place instead of editing every column individually.
 
+If your API issues short-lived tokens that expire automatically, the **[HTTP API with JWT Authentication](https://university.clay.com/docs/http-api-with-jwt-authentication-integration-overview)** action may be a better fit — it fetches a fresh token from a configurable endpoint and refreshes it automatically approximately every 55 minutes (available on Explorer and above plans).
+
 ### "Missing authentication" — saved account deleted or unavailable
 
 This error appears on HTTP API column cells when the **HTTP API (Headers) account** previously configured for the column has been deleted from the workspace or is otherwise unavailable. The Account section at the top of the column panel will show only an **+ Add account** button, with no account selected.
