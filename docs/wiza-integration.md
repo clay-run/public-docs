@@ -92,7 +92,7 @@ If a cell has been in **Awaiting Callback** for more than 5 minutes, Clay's time
 
 ### Wiza times out on large batches, causing waterfall fallthrough and extra credits
 
-Wiza processes work-email lookups asynchronously, which can take several minutes per lookup — Clay waits up to 5 minutes for a Wiza response before timing out. When you run many rows at once, multiple concurrent Wiza lookups can queue up and exhaust the concurrency limit on your Wiza API key, causing requests to stall and time out. In a waterfall enrichment, a timed-out step is treated as a non-result: Clay falls through to the next provider in the sequence and charges that provider's credits — even though Wiza did not have a chance to return a genuine match. Wiza's own credits are automatically refunded on timeout.
+Wiza processes work-email lookups asynchronously, which can take several minutes per lookup — Clay waits up to 5 minutes for a Wiza response before timing out. When you run many rows at once, multiple concurrent Wiza lookups can queue up and exhaust the concurrency limit on your Wiza API key, causing requests to stall and time out. In a waterfall enrichment, a timed-out step is treated as a non-result: Clay falls through to the next provider in the sequence and charges that provider's credits — even though Wiza did not have a chance to return a genuine match. Wiza's own credits are not consumed on timeout.
 
 **To prevent unintended credit spend from Wiza timeouts:**
 

@@ -49,7 +49,7 @@ Use this action to access company ratings and employee sentiment data, including
 **Important notes:**
 
 -   This action costs 4 credits per successful enrichment.
--   If no data is found for a company, credits are automatically refunded.
+-   In some cases, a data provider may not charge when no data is found — in those cases, your credits will be refunded automatically.
 -   If the company is not found in Explorium's database, the enrichment will return an error.
 
 ### `Action` Enrich public company competitive landscape
@@ -82,7 +82,7 @@ Use this action to get insights into a company's market positioning, competitive
 **Important notes:**
 
 -   This action costs 4 credits per successful enrichment.
--   If no data is found for a company, credits are automatically refunded.
+-   In some cases, a data provider may not charge when no data is found — in those cases, your credits will be refunded automatically.
 
 ### `Action` Enrich public company strategic insights
 
@@ -100,7 +100,7 @@ Use this action to get in-depth information on target markets, value proposition
 **Important notes:**
 
 -   This action costs 4 credits per successful enrichment.
--   If no data is found for a company, credits are automatically refunded.
+-   In some cases, a data provider may not charge when no data is found — in those cases, your credits will be refunded automatically.
 
 ### `Action` Enrich public company business challenges
 
@@ -136,7 +136,7 @@ Use this action to get insights into a company's investment history, advisory bo
 **Important notes:**
 
 -   This action costs 4 credits per successful enrichment.
--   If no data is found for a company, credits are automatically refunded.
+-   In some cases, a data provider may not charge when no data is found — in those cases, your credits will be refunded automatically.
 
 ### `Action` Enrich company social media metrics
 
@@ -154,7 +154,7 @@ Use this action to track a company's professional social media activity, engagem
 **Important notes:**
 
 -   This action costs 4 credits per successful enrichment.
--   If no data is found for a company, credits are automatically refunded.
+-   In some cases, a data provider may not charge when no data is found — in those cases, your credits will be refunded automatically.
 
 ## Run settings
 

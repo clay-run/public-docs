@@ -52,4 +52,4 @@ Use this action to confirm whether target companies use specific technologies ba
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
 
-**Note:** This action charges 6 Clay credits per technology returned. If no technologies are found, credits will be refunded.
+**Note:** This action charges 6 Clay credits per technology returned. In some cases, a data provider may not charge when no data is found — in those cases, your credits will be refunded automatically.
