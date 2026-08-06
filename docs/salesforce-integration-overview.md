@@ -36,7 +36,7 @@ Connect to Salesforce via Client Credentials for server-to-server access. No bro
 **Setting up in Salesforce**
 
 1.  In Salesforce Setup, search for `External Client App Manager` in Quick Find and select it. Create a new external client app — see [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&language=en_US&type=5) for full creation steps. Set **Distribution State** to `Local`. When configuring the app's OAuth settings:
-    -   **Callback URL:** Salesforce requires this field to be populated even for server-to-server flows. You can enter `https://login.salesforce.com/services/oauth/callback`.
+    -   **Callback URL:** Salesforce requires this field to be populated even for server-to-server flows. Enter `https://api.clay.com/v3/app-accounts/oauth/salesforce/callback` — this is Clay's OAuth callback URL. It is not called during the Client Credentials flow, but entering it ensures consistency with Clay's User Sign In callback.
     -   **OAuth Scopes:** Add the following scopes:
         -   **Manage user data via APIs (`api`)** — required; without it, Salesforce returns `invalid_grant: no valid scopes defined` when Clay tries to connect.
         -   **Perform requests at any time (`refresh_token, offline_access`)** — add this scope to allow the External Client App to complete the Client Credentials token exchange.
@@ -82,6 +82,14 @@ This error means the Salesforce Connected App (or external client app) has no OA
 2.  Under **OAuth Settings**, add the **Access and manage your data** (`api`) scope.
 3.  Click `Save`. Salesforce can take up to 10 minutes to propagate scope changes.
 4.  Return to Clay and reconnect: `Settings` → `Connections` → add or reconnect your Salesforce `Client Credentials` connection.
+
+-   **Generic "An error occurred while creating the account. Please check your credentials and try again." error when connecting via Client Credentials**
+
+This generic error appears whenever Salesforce rejects Clay's token request — it does not indicate which specific setting is wrong. If you have followed the setup steps above and still see this error, check the following commonly missed items:
+
+-   **Missing Salesforce Integration permission set license:** If the "Run As" user has a Salesforce Integration User license, verify that the **Salesforce Integration** permission set license is also assigned to that user. In Salesforce, go to `Setup` → `Users`, find the integration user, and check their **Permission Set License Assignments**. Assign the `Salesforce Integration` license if it is missing.
+-   **Sandbox vs. production credentials mismatch:** The My Domain URL and the consumer key/secret must all belong to the same Salesforce environment. Using production credentials with a sandbox My Domain URL (ending in `.sandbox.my.salesforce.com`) — or vice versa — produces this error.
+-   **App not saved after changes:** After updating any setting — Callback URL, OAuth scopes, flow enablement, or `Run As` — click `Save` on the external client app in Salesforce before trying to authenticate again in Clay.
 
 ### Testing your connection
 
