@@ -405,25 +405,25 @@ For complex workflows, run a small test batch (10–50 records) to understand fu
 
 ### What happens to my Data Credits if I get invalid data?
 
-It depends on whether the data provider refunds Clay. If the provider refunds Clay due to invalid data, those credits are passed back to your account. However, if the provider returned any data — even data that turns out to be invalid — credits are still charged because Clay incurs a cost for any data that was returned.
+Clay generally does not offer credit refunds for invalid or inaccurate data. Credits are charged when a provider returns data — even data that turns out to be invalid — because Clay incurs a cost for any data that was returned. Data quality varies by provider, so test new workflows on a small batch of records to check result quality before running at scale.
 
 ### How do I request a Data Credit refund?
 
-Use the in-app chat (the icon in the bottom-right corner of the Clay interface) to contact support and start a refund request. Include the workbook, table, and column details where the issue occurred to help the support team investigate.
+Clay generally does not offer credit refunds — including for accidental credit spend (for example, an enrichment run by mistake) or bad data. If you believe something went wrong, use the in-app chat (the icon in the bottom-right corner of the Clay interface) to contact support; include the workbook, table, and column details where the issue occurred so the team can investigate.
 
-**Accidental enrichments:** If you ran an enrichment by mistake, the support team typically issues a one-time 50% Data Credit refund per account as standard policy. To avoid accidental enrichments, turn off `Auto-run` in column settings when you're not actively running enrichments, and test new workflows on a small batch first.
+To avoid accidental enrichments, turn off `Auto-run` in column settings when you're not actively running enrichments, and test new workflows on a small batch first.
 
-Note that credits are not refunded for enrichments where the system operated as intended — for example, an email validation that returns "invalid" is a valid result, not an error. The exception is AI columns (see below).
+Note that credits are not refunded for enrichments where the system operated as intended — for example, an email validation that returns "invalid" is a valid result, not an error.
 
 ### Are Data Credits charged when a provider finds no result?
 
-It depends on the provider's billing model. Some providers charge Clay only when data is successfully found, so credits are refunded if no result is returned. Others charge Clay for the API call regardless of whether data is found, so credits are deducted either way. You can see the exact credit cost for each enrichment in the enrichment panel before running.
+It depends on the provider's billing model. In some cases, a data provider may not charge when no data is found — in those cases, your credits will be refunded automatically. Other providers charge Clay for the API call regardless of whether data is found, so credits are deducted either way. You can see the exact credit cost for each enrichment in the enrichment panel before running.
 
 ### What happens to credits if an enriched email fails validation or turns out to be undeliverable?
 
 Credits are charged when a provider returns a result — including email addresses that later fail a validation step or turn out to be undeliverable. There is no automatic credit refund when a returned email fails validation or bounces after sending; credits are deducted at the point the provider returns data, regardless of what happens to that address downstream.
 
-For system errors (such as a timeout or infrastructure failure during enrichment), credits are automatically refunded.
+For system errors (such as a timeout or infrastructure failure during enrichment), credits are automatically returned to your balance.
 
 **To limit credit spend on invalid emails:** Add an email validation step immediately after your waterfall enrichment. This won't recover credits already spent on the waterfall lookup, but it lets you filter out invalid addresses before running further enrichments — preventing additional credit spend on contacts with unusable email addresses. See [Waterfalls](building-a-data-waterfall.md) for how to configure validation in your waterfall workflow.
 
