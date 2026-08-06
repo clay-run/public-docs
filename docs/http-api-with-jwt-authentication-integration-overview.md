@@ -106,6 +106,16 @@ Editing a saved JWT account will affect every enrichment column across your work
 
 The enrichment will fail with the message `Please fill out your auth fields.` If you see this error, double-check the `Location of JWT token in auth response` field against the actual JSON structure returned by your token endpoint.
 
+### Does HTTP API with JWT Authentication support OAuth 2.0 client_credentials?
+
+No. This action does not perform a formal OAuth 2.0 `client_credentials` grant. When Clay calls your token endpoint, the request body contains only `username` and `password` — it does not include `grant_type=client_credentials`. If your token endpoint requires `grant_type=client_credentials` as an explicit body parameter, authentication will fail.
+
+You can map your `client_id` to the **Username** field and your `client_secret` to the **Password** field, and toggle **Send as Form Data** on if your endpoint requires `application/x-www-form-urlencoded` encoding. However, without `grant_type=client_credentials` in the request body, endpoints that strictly validate this field will reject the request.
+
+**Workaround for OAuth 2.0 client_credentials endpoints:** Use a standard HTTP API column to call your token endpoint directly — POST with `grant_type=client_credentials`, `client_id`, and `client_secret` as body parameters. Store the returned access token in a column, then reference it as the `Authorization` header value in your subsequent HTTP API columns. Token refresh is manual with this pattern; re-run the token column when the token expires.
+
+For a formal security review: Clay does not natively support OAuth 2.0 `client_credentials` as a built-in authentication flow in either the standard HTTP API action or this JWT action.
+
 ### How do I call ZoomInfo API endpoints that the native integration doesn't support?
 
 The native ZoomInfo integration in Clay supports four actions: **Enrich Company**, **Enrich Contact**, **Enrich contact(s) by ID** (enrich up to 25 contacts at once using their ZoomInfo contact IDs), and **Search contacts**. For ZoomInfo API endpoints not covered by these native actions, use **HTTP API with JWT Authentication** with the following ZoomInfo-specific settings.
