@@ -113,7 +113,7 @@ Access control is enforced at the Google Ads account level — the person connec
 
 ### **What platforms are supported?**
 
-Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, and **Google Ads**.
+Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, **Google Ads**, and **Vibe.co**. Note that Vibe.co only accepts contact/people-level audiences — see [Why doesn't Vibe.co appear as a destination for my company audience?](#why-doesnt-vibeco-appear-as-a-destination-for-my-company-audience) below for details.
 
 Note that data source restrictions apply depending on the platform — see [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) below for details.
 
@@ -233,6 +233,17 @@ This is expected behavior. Meta enforces a 60-day expiry on OAuth tokens — whe
 ### **Can I sync to multiple ad accounts?**
 
 Yes, you can connect multiple LinkedIn or Meta ad accounts and choose which account to sync each audience to.
+
+### **Why doesn't Vibe.co appear as a destination for my company audience?**
+
+Vibe.co accepts contact/person-level inputs only. When you start an ad sync from a company (account) audience, Vibe.co does not appear as a destination — it is only available when your source audience contains people (contacts).
+
+To use Vibe.co when your target list is a company audience, build a people list from those companies first:
+
+1. Go to **Find Leads > People** in the left navigation.
+2. In the filters, select your company audience segment as the source.
+3. Save the resulting people list as a People audience.
+4. Create a new ad sync from that People audience — Vibe.co will appear as an available destination.
 
 ### **How much does it cost to sync audiences?**
 
