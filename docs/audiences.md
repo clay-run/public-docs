@@ -181,6 +181,8 @@ Clay syncs data from Google BigQuery on the following schedules:
 
 **Note:** When you save a search to your Audience, only basic identity fields are carried over as columns — additional data fields visible in the search preview (such as Company Size or Annual Revenue for companies, or Job Title for people) are not automatically added to your Audience. To add one of these fields, create it as a custom Audience field first: see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
 
+**Note:** A search import only populates field values for companies or people that are **new** to your Audience. Records already in your Audience from Salesforce, Snowflake, or another higher-priority source keep their existing field values — Clay's search data has lower precedence and will not overwrite them. To populate or update a field (such as Industry) on records that already exist in your Audience, bring the search results into a Clay table and use the `Upsert Audiences Record` action to push those values to matching records.
+
 ### Importing from CSV
 
 You can import a CSV file of people or companies as a one-time import into Audiences.
@@ -269,7 +271,8 @@ When two data sources write different values to the same field on an Audience re
 | 2 | Salesforce (Account, Contact, Opportunity), HubSpot |
 | 3 | Salesforce (Lead) |
 | 4 | Snowflake, BigQuery |
-| 5 (lowest) | CSV |
+| 5 | CSV |
+| 6 (lowest) | Find Companies / Find People search |
 
 There is an optional **CSV-first override** that, when enabled for a workspace, promotes CSV to priority tier 2 — above Salesforce and HubSpot but below Upsert Audiences Record and Bulk Enrichments. Contact your Growth Strategist to enable it.
 
@@ -902,7 +905,8 @@ When two sources write different values to the same field on the same Audience r
   2. **Salesforce** Account, Contact, and Opportunity records; and **HubSpot**
   3. **Salesforce Lead** records
   4. **Snowflake** and **BigQuery**
-  5. **CSV** (lowest priority by default — a CSV override setting is available that promotes CSV above Salesforce and HubSpot to second-highest priority; bulk enrichments and Upsert Audiences Record remain at top regardless; contact Clay support to enable it)
+  5. **CSV** (a CSV override setting is available that promotes CSV above Salesforce and HubSpot to second-highest priority; bulk enrichments and Upsert Audiences Record remain at top regardless; contact Clay support to enable it)
+  6. **Find Companies / Find People search** (lowest priority — Salesforce, Snowflake, and CSV values all take precedence when they exist on a record)
 
 **Example:** If both a CSV import and a Salesforce sync write different values to the `Industry` field on the same company record, the Salesforce value wins — even if the CSV was imported more recently.
 
