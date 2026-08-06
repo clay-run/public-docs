@@ -233,6 +233,24 @@ If the fields you selected under **"Fields to deduplicate by"** are not unique p
 
 To get one Clay row per sheet row, set **"Fields to deduplicate by"** to a field that is genuinely unique per record, such as **Email**, **Profile URL**, or a dedicated ID column. Avoid fields like Company or Title that many rows may share.
 
+### Can I change a table's source type?
+
+**You cannot replace a source type directly — sources are set at table creation and are preserved when you duplicate a table. To use your existing column structure with a different source type, duplicate the table, add the new source, and delete the old one.**
+
+Here's the full workflow:
+
+1. **Duplicate the table.** Open the table name dropdown and select `Duplicate table`. This copies your column headers, enrichment configuration, and run settings — but not enriched data. The duplicate starts empty.
+
+2. **Add the new source.** In the duplicated table, click `Tools` → `Import`. Search for and select your new source type (for example, **Webhook**, **CSV**, or a different CRM). Configure it and click `Import`.
+
+3. **Delete the old source.** Click the source column title, then click `Sources` → the old source name → `Delete source`. This removes the original source, leaving only your new source.
+
+4. **Re-map existing columns to the new source's fields.** Existing columns may reference fields from the original source. After new rows arrive, update those column formulas to pull from the new source instead.
+
+   **For webhook sources specifically:** Click a cell in the webhook source column to open **Cell details**. All fields Clay received from the webhook payload are listed there. Hover over any field and select **Add as column → Map to existing column** to reconnect it to one of your existing columns.
+
+**Tip:** If you're switching to a webhook source, the duplicated table gets a brand-new webhook URL — the original table's URL is unaffected. Click the webhook source column in the duplicate to copy the new URL, then update your sending system to POST to that URL before expecting rows to arrive.
+
 ### I am trying to add a source to an existing table, but I get an error
 
 When adding a new source to an existing table, you must have the appropriate columns set up. For example, to add a `Find company` source, you need professional social URLs or Company Domains columns.
