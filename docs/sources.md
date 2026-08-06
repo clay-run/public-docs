@@ -249,7 +249,7 @@ Here's the full workflow:
 
    **For webhook sources specifically:** Click a cell in the webhook source column to open **Cell details**. All fields Clay received from the webhook payload are listed there. Hover over any field and select **Add as column → Map to existing column** to reconnect it to one of your existing columns.
 
-**Tip:** If you're switching to a webhook source, the duplicated table gets a brand-new webhook URL — the original table's URL is unaffected. Click the webhook source column in the duplicate to copy the new URL, then update your sending system to POST to that URL before expecting rows to arrive.
+**Tip:** If you're switching to a webhook source, note that webhooks are not available on all plans — see [Webhooks in Clay](webhook-integration-guide.md) for plan details and setup instructions. The duplicated table gets a brand-new webhook URL — the original table's URL is unaffected. Click the webhook source column in the duplicate to copy the new URL, then update your sending system to POST to that URL before expecting rows to arrive.
 
 ### I am trying to add a source to an existing table, but I get an error
 
