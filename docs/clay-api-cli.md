@@ -61,7 +61,7 @@ The developer platform is available across all Clay plans, including free and tr
 
 Search result limits vary by plan:
 
-**PlanSearch results per requestTotal search results**Free50100/moTrial5010k per 14 daysPaid self-serve plans10,0001M/yrEnterprise10,00010M/yr
+**PlanSearch results per requestTotal search results**Free50100/moTrial5010k per 14 daysPaid self-serve plans5001M/yrEnterprise50010M/yr
 
 ## FAQs
 
