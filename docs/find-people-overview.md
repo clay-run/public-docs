@@ -113,9 +113,9 @@ To limit results to a specific company only, use **company profile URLs from the
 
 Your search filters are saved on the source, not on the table rows. To update them after initial setup:
 
-1. In your Find People table, click the source column header and select **Edit column**. The source configuration panel opens, showing all your current filters.
-2. Update any criteria — job title, seniority, location, company filters, exclusions, and so on.
-3. Click **Run** to re-import results using the updated criteria.
+1. In your Find People table, click the **database icon** in the source column header (tooltip: "Edit source") — or click the column header dropdown and select **Edit source**. A panel opens showing a read-only summary of your current inputs.
+2. Click **Edit inputs** in the panel. A wizard opens where you can update your criteria — job title, seniority, location, company filters, exclusions, and so on.
+3. Save your changes, then run the source from the panel to re-import results with the updated criteria.
 
 **Note:** Re-running after a filter change imports only *new* contacts that match your updated criteria and are not already in the table. Contacts that were previously imported remain in the table and are not re-evaluated against the new criteria. If you need to start fresh with the updated filters, create a new Find People table.
 
