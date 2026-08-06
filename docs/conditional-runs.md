@@ -198,6 +198,8 @@ On new rows, the upstream column hasn't run yet, so the condition is false and t
 
 Clay columns execute based on a dependency graph — each column fires as soon as its own declared inputs are ready — not in a strict left-to-right sequence. A column with no declared dependency on a sibling column will not wait for that sibling to finish. This means a downstream action column (such as one that sends data to a CRM or webhook) can run before sibling enrichment columns finish, even if those columns appear to the left of it in the table.
 
+**Note:** Dragging a column to a different position in the table view changes its display order only — it does not change execution order. Execution order is determined exclusively by column references (dependencies), not by visual position.
+
 To prevent a downstream action from running before all required upstream enrichments are complete, use one of these approaches:
 
 **Option 1 — Multi-column condition in "Only run if"**
@@ -207,6 +209,14 @@ In the action column's **Run settings → Only run if**, require every upstream 
 `/Column A is not empty AND /Column B is not empty AND /Column C is not empty`
 
 The action fires only once all referenced columns have results for that row. Replace `/Column A`, `/Column B`, `/Column C` with the actual column names in your table.
+
+**Important for CRM object lookups (HubSpot, Salesforce)**: When a Lookup Record column is still processing, its output fields are temporarily empty. A run condition that checks a *separate downstream column* populated by the lookup (for example, `{{HubSpot Contact ID}} is empty`) will not wait for the lookup to finish — Clay only registers a dependency on columns that are directly referenced in the run condition formula.
+
+To ensure the run condition evaluates only after the lookup has completed, reference the **lookup column's result object directly** using dot-notation:
+
+`{{My HubSpot Lookup}}?.id is not empty`
+
+When the run condition formula contains `{{My HubSpot Lookup}}`, Clay registers that lookup column as an upstream dependency and delays evaluation until the lookup finishes. A reference to a separate column that the lookup populates (rather than the lookup column itself) does not create this dependency.
 
 **Option 2 — Guard formula column**
 
