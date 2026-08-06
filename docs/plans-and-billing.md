@@ -155,6 +155,8 @@ If your team wants to do a trial, each team member can create their own trial ac
 
 Trial tables can hold up to **1,000 rows each**. The table view also displays only the first **50 rows** — rows beyond that are blurred in the UI until you upgrade to a paid plan. When you export to CSV, only these first 50 rows are included in the download. Sending data through third-party integrations (such as Google Sheets) is not subject to this row limit.
 
+If you have a paid plan but still see only 50 rows or an "Upgrade your plan" prompt on a table, the table is likely in a workspace that is still on a trial or free plan. Row limits in Clay apply per workspace — each workspace has its own plan and row limits, regardless of whether your account has a paid plan on a different workspace. To check, click your profile picture in the top-right corner and select **Workspaces** to confirm which workspace you are currently in.
+
 When your trial ends, your account automatically moves to the free plan — you won't be charged unless you actively choose to upgrade to a paid plan. Clay does not auto-upgrade you. For details on what happens to your trial data credits at that point, see [Actions and data credits](actions-data-credits.md).
 
 **Trial extension:** Clay offers a one-time self-serve extension for workspaces on a trial or free plan. While logged in, visit [https://app.clay.com/extend-my-trial/](https://app.clay.com/extend-my-trial/) to add 14 more days to your trial. If your workspace doesn't immediately reflect the extension, refresh your browser. Each workspace can use this self-serve extension once — if you've already used it and need additional time, contact [Clay support](https://app.clay.com).
