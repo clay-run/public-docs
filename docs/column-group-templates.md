@@ -44,6 +44,8 @@ To save a group of columns so you can reuse it in other tables, see [Creating a 
 5.  Under **Providers**, connect any integrations the template requires.
 6.  Click **Save** to add the columns to your table.
 
+**About integration accounts:** Column group templates do not include the template creator's integration credentials. When you apply a template, Clay automatically connects integration columns to an account you have already set up in your workspace. If your workspace does not yet have that integration connected, the columns are added but show a **Required auth account is missing** error. To fix this, open each affected column's settings, select or add your integration account in the account selector, and click **Save**.
+
 ## Editing a column group template
 
 A column group template stores a snapshot of your column configuration at the time it was saved. If you later change a column's prompt, model, or other settings, those changes do not automatically update the template.
