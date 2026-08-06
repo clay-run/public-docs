@@ -37,10 +37,10 @@ If you log in and find yourself in a blank new workspace with none of your table
 
 **To get back to your original workspace:**
 
-1.  **Use the workspace switcher:** Click your **profile picture or name in the top-right corner** and look for the **Workspaces** section in the dropdown. If your original workspace appears there, click it to switch directly.
-2.  **Navigate directly:** If you remember your workspace ID (visible in the URL when you were last in the correct workspace), go to `https://app.clay.com/workspaces/<your-workspace-id>` in the address bar.
+1.  **Sign out and sign back in with your original credentials:** Go to [app.clay.com](https://app.clay.com), sign out, and then sign in with the email address or Google account you originally used. Your workspace and tables will be there.
+2.  **Use the workspace switcher if you have multiple workspaces under the same account:** Click your **profile picture or name in the top-right corner** and look for the **Workspaces** section in the dropdown. The switcher shows all workspaces the currently-signed-in account belongs to — it cannot show workspaces from a different Clay account (different email or Google account).
 
-**If you cannot find your original workspace** or it does not appear in the switcher, contact Clay support via the in-app chat. Having the following details ready will help the team locate your account quickly: the email address you originally signed up with, the login method you used (Google or email and password), and anything you remember about the workspace — its name, roughly when you created it, or the names of tables in it.
+**If you cannot find your original workspace** or you are not sure which email address or Google account you originally used, contact Clay support via the in-app chat. Having the following details ready will help the team locate your account quickly: the email address you originally signed up with, the login method you used (Google or email and password), and anything you remember about the workspace — its name, roughly when you created it, or the names of tables in it.
 
 For step-by-step guidance on recovering access after signing in with the wrong Google account, see [Account settings](./account-settings.md).
 
