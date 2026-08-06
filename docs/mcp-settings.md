@@ -24,17 +24,6 @@ The `Enable for MCP` option on [Functions](#enabling-a-function-for-mcp) (reusab
 
 Glean integration is available on Enterprise plans only.
 
-## **Adding MCP-only users**
-
-There are two places to add someone who only needs MCP access, and both land them on the same permission type:
-
--   From `Settings → Team`, click `Invite` and set their permission type to `Sales Rep` in the `Invite members` dialog.
--   From `Settings → MCP users`, click `Invite users`. The `Invite MCP users` dialog opens with `Sales Rep` already selected, so this is the quicker path when everyone you're adding is MCP-only.
-
-The `MCP users` page isn't a separate kind of access — it's a shortcut to the same invite, pre-set to the right permission type. You can still change the type in that dialog before sending, so double-check it if you're adding someone who also needs the Clay web app.
-
-For the full breakdown of what this permission type can and can't reach, see [Roles and permissions](https://university.clay.com/docs/roles-and-permissions#sales-rep).
-
 ## **Enabling a function for MCP**
 
 Functions are reusable enrichment workflows built in Clay that reps can invoke directly from ChatGPT, Claude, or Glean with a single prompt. Admins build them once and enable them for MCP — reps never need to open Clay to use them.
