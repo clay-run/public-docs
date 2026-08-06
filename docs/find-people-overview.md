@@ -109,6 +109,16 @@ When you use domains (e.g., `acme.com`) as company identifiers, Clay maps each d
 
 To limit results to a specific company only, use **company profile URLs from the professional network** instead of domains as your identifier. Profile URLs map directly to a single company page, so only people from that exact company appear in your results. See [Use profile URLs, not domains, as company identifiers](finding-companies-and-people-in-clay.md) for the full guidance and valid URL formats.
 
+### How do I adjust or refine my search criteria on an existing Find People table?
+
+Your search filters are saved on the source, not on the table rows. To update them after initial setup:
+
+1. In your Find People table, click the source column header and select **Edit column**. The source configuration panel opens, showing all your current filters.
+2. Update any criteria — job title, seniority, location, company filters, exclusions, and so on.
+3. Click **Run** to re-import results using the updated criteria.
+
+**Note:** Re-running after a filter change imports only *new* contacts that match your updated criteria and are not already in the table. Contacts that were previously imported remain in the table and are not re-evaluated against the new criteria. If you need to start fresh with the updated filters, create a new Find People table.
+
 ## Importing from a Sales Navigator search URL
 
 If you have a saved Sales Navigator search and want to pull those results into Clay, use the **Find people from external search** source — not the standard Find People source described above.
