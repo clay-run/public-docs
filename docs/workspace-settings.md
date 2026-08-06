@@ -1,6 +1,6 @@
 ---
 title: Workspace settings
-description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, agency setups, and deletion.
+description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, agency setups, deletion, and recovering a previous workspace.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -27,6 +27,22 @@ To switch between workspaces:
 **If your tables seem to have disappeared** — for example, after upgrading your plan or returning to Clay after some time — check the workspace switcher first. Your data is not deleted; it's in the workspace where you originally created it.
 
 **Note:** When you upgrade a plan, the upgrade applies to the specific workspace you are currently in. If you upgrade while viewing a different workspace than the one where you created your tables, those tables remain in the original workspace. Use the workspace switcher to navigate between them.
+
+## Can't find a previous account or workspace
+
+If you log in and find yourself in a blank new workspace with none of your tables, or feel like Clay created a brand new account for you, this almost always means you signed in with a different identity than the one you used originally:
+
+-   **Different Google account:** Clicking **Continue with Google** while a different Google account was active in your browser (for example, a personal Gmail instead of a work account) signs you into that Google account and automatically creates a new workspace for it. Your original workspace is untouched.
+-   **Different email address:** Signing in with a different email address creates a separate Clay account and workspace. Each email address has its own account.
+
+**To get back to your original workspace:**
+
+1.  **Sign out and sign back in with your original credentials:** Go to [app.clay.com](https://app.clay.com), sign out, and then sign in with the email address or Google account you originally used. Your workspace and tables will be there.
+2.  **Use the workspace switcher if you have multiple workspaces under the same account:** Click your **profile picture or name in the top-right corner** and look for the **Workspaces** section in the dropdown. The switcher shows all workspaces the currently-signed-in account belongs to — it cannot show workspaces from a different Clay account (different email or Google account).
+
+**If you cannot find your original workspace** or you are not sure which email address or Google account you originally used, contact Clay support via the in-app chat. Having the following details ready will help the team locate your account quickly: the email address you originally signed up with, the login method you used (Google or email and password), and anything you remember about the workspace — its name, roughly when you created it, or the names of tables in it.
+
+For step-by-step guidance on recovering access after signing in with the wrong Google account, see [Account settings](./account-settings.md).
 
 ## Using Clay as an agency
 
