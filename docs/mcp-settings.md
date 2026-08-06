@@ -1,7 +1,7 @@
 ---
 title: MCP settings
 description: Connect your Clay workspace to AI tools.
-last_synced: 2026-04-26T01:40:20.821Z
+last_synced: 2026-08-06T01:50:18.648Z
 ---
 
 # MCP settings
@@ -18,11 +18,22 @@ Navigate to it from the Clay homepage by clicking `MCP` in the side nav. The MCP
 
 Credit controls and usage monitoring are available on all modern paid plans (Launch, Growth, Enterprise) and Legacy Enterprise.  
 
-Audiences controls are available to workspaces with Clay Audiences enabled — contact support if you're unsure whether your workspace qualifies.  
+Audiences controls are available on Launch, Growth, and Enterprise plans.  
 
 The `Enable for MCP` option on [Functions](#enabling-a-function-for-mcp) (reusable enrichment workflows built in Clay) is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans.
 
 Glean integration is available on Enterprise plans only.
+
+## **Adding MCP-only users**
+
+There are two places to add someone who only needs MCP access, and both land them on the same permission type:
+
+-   From `Settings → Team`, click `Invite` and set their permission type to `Sales Rep` in the `Invite members` dialog.
+-   From `Settings → MCP users`, click `Invite users`. The `Invite MCP users` dialog opens with `Sales Rep` already selected, so this is the quicker path when everyone you're adding is MCP-only.
+
+The `MCP users` page isn't a separate kind of access — it's a shortcut to the same invite, pre-set to the right permission type. You can still change the type in that dialog before sending, so double-check it if you're adding someone who also needs the Clay web app.
+
+For the full breakdown of what this permission type can and can't reach, see [Roles and permissions](https://university.clay.com/docs/roles-and-permissions#sales-rep).
 
 ## **Enabling a function for MCP**
 
