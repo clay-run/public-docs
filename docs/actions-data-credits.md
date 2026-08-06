@@ -349,11 +349,11 @@ For complex workflows, run a small test batch (10–50 records) to understand fu
 
 ### What happens to my Data Credits if I get invalid data?
 
-If a provider refunds us due to invalid data, we'll refund those Data Credits back to you.
+Clay generally does not offer credit refunds for things like invalid or inaccurate data, or accidental credit spend. Data quality varies by provider, and credits are consumed when an enrichment runs. Before running large jobs, test on a small batch of records to check result quality.
 
 ### Are Data Credits charged when a provider finds no result?
 
-It depends on the provider's billing model. Some providers charge Clay only when data is successfully found, so credits are refunded if no result is returned. Others charge Clay for the API call regardless of whether data is found, so credits are deducted either way. You can see the exact credit cost for each enrichment in the enrichment panel before running.
+It depends on the provider's billing model. In some cases, a data provider may not charge when no data is found — in those cases, your credits will be refunded automatically. Other providers charge Clay for the API call regardless of whether data is found, so credits are deducted either way. You can see the exact credit cost for each enrichment in the enrichment panel before running.
 
 ### How long does it take for Data Credits to renew?
 

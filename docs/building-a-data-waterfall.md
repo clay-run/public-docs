@@ -90,7 +90,7 @@ If two providers in a waterfall both return the same email address, and the firs
 
 Because the waterfall can't predict what any given provider will return, all providers in the sequence still run normally. Only the validation step is skipped when the returned value is already known to be invalid.
 
-Validation steps skipped with **Run condition not met** do not consume credits — Clay automatically refunds those steps.
+Validation steps skipped with **Run condition not met** do not consume credits.
 
 To limit the number of providers the waterfall calls when the same invalid email keeps appearing across multiple steps, use the **Threshold for duplicate results** setting in the Work Email waterfall's **Additional column settings**. Setting this to `2` or higher stops the waterfall from calling additional providers once the same email has appeared that many times consecutively. See [Work Email waterfall](work-email-waterfall.md) for full configuration details.
 
