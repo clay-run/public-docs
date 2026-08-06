@@ -12,6 +12,51 @@ The Openmart Integration helps users improve SMB outreach and lead management by
 
 This integration automates data gathering, verification, and updates across multiple channels, delivering accurate insights for targeted marketing campaigns.
 
+## **Finding local businesses with Openmart**
+
+Use the **Find local businesses using Openmart** source to populate a Clay table with small and medium business (SMB) data. This is a **source** — it adds new rows to your table rather than enriching existing ones. To use it, click **Add source** in a Clay table (or select it when creating a new table), then search for `Openmart` and select **Find local businesses using Openmart**.
+
+When the source runs, Clay automatically creates columns in your table for each business field returned, including structured location columns for City, State, and Postal Code. You do not need to add these columns manually — a "City" or "Zip" column added by hand is a blank text column that the Openmart source will not fill.
+
+**Inputs**
+
+-   **Business types (Required):** The type of businesses to search for (e.g., `pizza restaurant`, `auto repair`). You can provide up to 100 business types.
+-   **Locations (Required):** Postal codes, cities, states, or countries to search in (e.g., `10011`, `Oakland`, `New York State`). At least one location is required; up to 100 locations are supported.
+-   **Limit (Optional):** Maximum number of businesses to return. Defaults to 100.
+-   **Additional filters (Optional):**
+    -   Minimum/maximum number of parent company locations
+    -   Website presence and validity
+    -   Overall rating range
+    -   Review count range
+    -   Contact info presence
+    -   Business name phrases
+    -   Include or exclude keywords
+    -   Exclude specific root domains
+
+**Output**
+
+Each business row includes:
+
+-   **Company Name** — Business name
+-   **Company Domain** — Root domain of the business website
+-   **Company URL** — Full website URL
+-   **Google Maps URL / Yelp URL** — Links to the business's profiles on Google Maps and Yelp
+-   **Address** — Structured location data, including:
+    -   City
+    -   State
+    -   Postal Code
+    -   Street Address
+    -   Formatted Address (full address string)
+    -   Country
+    -   Latitude and Longitude
+-   **Business Info** — Business type, categories, description, specialty, price tier, open date, ownership type, parent company name, and number of parent company locations
+-   **Ratings and Reviews** — Google and Yelp ratings and review counts
+-   **Business Social Media Links** — Social media URLs (e.g., Facebook)
+-   **Business Contact Info** — Emails and phone numbers for this location and the parent company
+-   **Parent Company Decision Makers** — Names, roles, and source URLs for key contacts
+
+**City, State, or Postal Code not appearing?** These fields are part of the **Address** output and are added as columns automatically when the source runs. If the location columns are empty for a business, that business's record did not include that data. Do not add a City or Zip column manually — manually-added columns are not connected to the Openmart source output.
+
 ## **Enriching data with Openmart**
 
 1.  While in a Clay table, click `Add enrichment` and search for `Openmart`.
