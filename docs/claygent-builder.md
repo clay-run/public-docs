@@ -470,6 +470,25 @@ Yes, with an important limitation. Claygent fetches page content using third-par
 
 **Alternative**: The **BuiltWith** integration (**Find Technology Stack** action) can confirm whether a particular technology is present on a site, but it does not return specific pixel IDs or tracking codes.
 
+### My Claygent column shows "This Clay model supports output schemas up to 15,000 characters" — what does that mean?
+
+The full error reads: **"This Clay model supports output schemas up to 15,000 characters and combined prompts and output schemas up to 25,000 characters. Shorten your prompt, output schema, or referenced lookup data and try again."**
+
+Clay's parallel models (Argon, Neon, Helium, and similar) enforce two character limits:
+
+-   **Output schema limit — 15,000 characters.** The JSON schema in **Define column outputs** must stay under 15,000 characters.
+-   **Combined prompt + output schema limit — 25,000 characters.** The prompt text plus the output schema together must stay under 25,000 characters.
+
+The error fires on some rows and not others because these totals are calculated at run time, including any dynamic input data passed into the prompt. Rows with longer lookup values or richer reference payloads push the total past the limit; rows with shorter inputs stay under it.
+
+**Three ways to fix this:**
+
+1.  **Simplify your output schema.** Remove fields you don't need, shorten field descriptions, or split a single large schema into two separate AI columns.
+2.  **Shorten your prompt.** Cut redundant instructions or examples, and move static reference content into shorter form.
+3.  **Trim large inputs.** If you're passing lookup results or enrichment payloads as inputs, use a formula column to extract only the specific properties the agent needs rather than passing the full JSON object.
+
+**Note:** If a column that previously ran without errors started failing with this error, it is because Clay began actively enforcing these limits. Configurations that exceeded the thresholds before enforcement started will now return this error until adjusted.
+
 ### Why does a column referencing my Claygent output show "Cell data size exceeds limit (8 kB)"?
 
 Clay enforces two different cell size limits: Claygent action columns hold up to **200 kB**, while basic columns — text fields and formula columns that reference or extract from those action columns — are limited to **8 kB**. When a Claygent produces verbose output (such as detailed research logs or step-by-step notes) and that value is extracted into a standalone text column or referenced by a formula column, the result must fit within the 8 kB limit for that basic column.
