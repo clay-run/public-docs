@@ -210,13 +210,13 @@ In the action column's **Run settings → Only run if**, require every upstream 
 
 The action fires only once all referenced columns have results for that row. Replace `/Column A`, `/Column B`, `/Column C` with the actual column names in your table.
 
-**Important for CRM object lookups (HubSpot, Salesforce)**: When a Lookup Record column is still processing, its output fields are temporarily empty while the lookup runs. Checking whether a returned field `is not empty` — or using a returned field in a formula — can evaluate before the lookup completes, firing the action prematurely on rows where the field is empty only because the lookup hasn't finished yet.
+**Important for CRM object lookups (HubSpot, Salesforce)**: When a Lookup Record column is still processing, its output fields are temporarily empty. A run condition that checks a *separate downstream column* populated by the lookup (for example, `{{HubSpot Contact ID}} is empty`) will not wait for the lookup to finish — Clay only registers a dependency on columns that are directly referenced in the run condition formula.
 
-To ensure the action waits until the lookup has successfully completed, add a check on the lookup column's `.updateSuccess` property in your run condition:
+To ensure the run condition evaluates only after the lookup has completed, reference the **lookup column's result object directly** using dot-notation:
 
-`{{Your Lookup Column}}?.updateSuccess === true AND /Your Other Condition`
+`{{My HubSpot Lookup}}?.id is not empty`
 
-`.updateSuccess` is `true` only after the lookup has finished successfully — regardless of whether it returned data. Without this guard, a formula referencing the lookup's output fields can evaluate on a temporarily-empty value while the lookup is still in progress.
+When the run condition formula contains `{{My HubSpot Lookup}}`, Clay registers that lookup column as an upstream dependency and delays evaluation until the lookup finishes. A reference to a separate column that the lookup populates (rather than the lookup column itself) does not create this dependency.
 
 **Option 2 — Guard formula column**
 
