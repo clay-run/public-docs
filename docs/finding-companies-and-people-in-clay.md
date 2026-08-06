@@ -76,7 +76,7 @@ Always pair this with a **Job title keywords to exclude** list to filter out com
 
 -   **Is similar to** _(recommended default)_ — fuzzy match that finds synonyms and variations. "Chief executive officer" also returns "CEO." May occasionally return irrelevant titles. If results are too broad, see the tip below.
 -   **Contains** — returns titles that contain your full keyword phrase as a substring. "Chief executive officer" will not match "chief financial officer."
--   **Is** (also labeled **Is exactly** in some views) — exact match only. "Chief Financial Officer" will **not** match "Chief Global Financial Officer." Use when precision is critical; use Claude or ChatGPT to generate all title variations and enter each one explicitly.
+-   **Is exactly** — exact match only. "Chief Financial Officer" will **not** match "Chief Global Financial Officer." Use when precision is critical; use Claude or ChatGPT to generate all title variations and enter each one explicitly.
 
 **When "Is similar to" returns too many unrelated titles:** Combine **Contains** with a **Seniority** filter as a pre-import alternative. For example, set Job title **contains** "Financial Officer" and Seniority **is** "C-Suite" to produce more targeted results without relying on fuzzy matching or post-import filtering.
 
@@ -536,7 +536,7 @@ Clay's company and people search relies on snapshot data that may lag behind rea
 
 ### Why am I finding people with unexpected job titles?
 
-First, check that you're filtering on **Job title keywords** (not just function or seniority). If you're using **Is similar to** mode, you may get some fuzzy matches. To narrow results at the search stage instead of post-import, combine **Contains** with a **Seniority** filter — for example, Job title **contains** "Financial Officer" and Seniority **is** "C-Suite" produces more targeted results without relying on fuzzy matching. Alternatively, switch to the **Is** operator (also labeled **Is exactly** in some views) with an explicit list of all title variants, and use Claude or ChatGPT to generate that list.
+First, check that you're filtering on **Job title keywords** (not just function or seniority). If you're using **Is similar to** mode, you may get some fuzzy matches. To narrow results at the search stage instead of post-import, combine **Contains** with a **Seniority** filter — for example, Job title **contains** "Financial Officer" and Seniority **is** "C-Suite" produces more targeted results without relying on fuzzy matching. Alternatively, switch to **Is exactly** with an explicit list of all title variants, and use Claude or ChatGPT to generate that list.
 
 ### Why isn't someone I found on LinkedIn showing in Clay?
 
