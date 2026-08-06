@@ -106,7 +106,7 @@ Enrichment (action) columns include any column that runs an integration, waterfa
 
 -   **Delete unused enrichment columns.** Click the column header dropdown → `Delete column` for any enrichment columns you no longer need. Hidden enrichment columns still count toward the limit, so open the columns panel to check for any hidden ones.
 -   **Consolidate with Functions.** [Functions](https://university.clay.com/docs/functions) run multiple enrichment steps in a background mini-table and return a single column to your main table — collapsing 20–50 enrichment columns into one. This is the most effective way to stay within the limit while keeping your workflows intact.
--   **Split into multiple tables.** Use **Send table data** to forward key identifier columns (name, domain, LinkedIn URL) to a second table and run additional enrichments there. See [Send table data](send-table-data.md) for setup details.
+-   **Split into multiple tables.** Use **Send table data** to forward key identifier columns (name, domain, profile URL) to a second table and run additional enrichments there. See [Send table data](send-table-data.md) for setup details.
 -   **Request a higher limit.** For tables using email or phone waterfalls, the action column limit automatically extends up to 60 — no support request needed for that increase. For limits beyond 60, contact support.
 
 ## Create child columns from a parent column
