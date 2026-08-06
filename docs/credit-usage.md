@@ -1,15 +1,13 @@
 ---
 title: Credit usage
 description: Track credit consumption across your workspace.
-last_synced: 2026-05-04T00:00:00.000Z
+last_synced: 2026-08-06T02:07:56.356Z
 upstream_hash: 49adc53e477510baa3bbdef7bf19e66afe61d2d6471b8803966d822f686ba5a4
 ---
 
 # Credit usage
 
-Track credit consumption across your workspace.
-
-Track, analyze, and optimize your credit consumption by breaking down usage across workbooks, tables, and integrations.
+Track, analyze, and optimize your credit consumption by breaking down usage across workbooks, tables, and integrations
 
 ## Credit usage dashboard
 
