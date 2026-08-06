@@ -230,7 +230,7 @@ When a formula's final branch evaluates to a column that has no value for a give
 {{Lead Status}} || "Recycled"
 ```
 
-Returns `"Recycled\"` when Lead Status is blank, and the actual Lead Status value otherwise. You can chain multiple fallbacks — Clay evaluates left to right and returns the first non-empty value:
+Returns `"Recycled"` when Lead Status is blank, and the actual Lead Status value otherwise. You can chain multiple fallbacks — Clay evaluates left to right and returns the first non-empty value:
 
 ```javascript
 {{Lead Status}} || {{Firmographic Classification}} || "Disqualified"
@@ -251,7 +251,7 @@ For Use AI and Claygent columns specifically, the main text output is stored in 
 
 ### **Why does my formula column show "Cell data size exceeds limit (8 kB)"?**
 
-Formula, text, and number columns are limited to **8 kB** of data per cell. Enrichment and action columns (columns that call an external data source) can hold up to **200 kB** per cell. When you use a formula column to convert a large enrichment result to a string — for example, `JSON.stringify({{Enrich Person}})` on a full LinkedIn profile — the output often exceeds the 8 kB ceiling, and Clay shows this error.
+Formula, text, and number columns are limited to **8 kB** of data per cell. Enrichment and action columns (columns that call an external data source) can hold up to **200 kB** per cell. When you use a formula column to convert a large enrichment result to a string — for example, `JSON.stringify({{Enrich Person}})` on a full person enrichment profile — the output often exceeds the 8 kB ceiling, and Clay shows this error.
 
 There are three approaches to work around the limit:
 
