@@ -186,7 +186,7 @@ Deduplication is based on each company's unique profile ID, not your filter conf
 
 The **`Industry`** field in Clay's company data — returned by the Companies, People, Jobs enrichment and present in Find Companies results — reflects the industry category a company has set on its professional network profile. Clay's underlying data provider scrapes professional network company profiles; the industry values conform to the professional network's industry taxonomy naming system (for example: *Software Development*, *Financial Services*, *Technology, Information and Internet*).
 
-Clay recognizes 457 standard industry values drawn from LinkedIn's industry taxonomy; these are the values shown in the Industries filter dropdown and cover the vast majority of companies. If a company has not set an industry on its professional network profile, the field returns empty. In rare cases, an enriched company may return an industry value outside this list if it uses an uncommon LinkedIn category — but the 457 values below account for nearly all real-world cases.
+Clay recognizes 457 standard industry values drawn from the professional network's industry taxonomy; these are the values shown in the Industries filter dropdown and cover the vast majority of companies. If a company has not set an industry on its professional network profile, the field returns empty. In rare cases, an enriched company may return an industry value outside this list if it uses an uncommon professional network category — but the 457 values below account for nearly all real-world cases.
 
 The full list is useful when mapping the `Industry` field to a CRM picklist (for example, a Salesforce Industry field):
 
