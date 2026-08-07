@@ -37,8 +37,10 @@ To save a group of columns so you can reuse it in other tables, see [Creating a 
 
 ## Using a column group template
 
+Templates are available across your entire workspace — a template saved from any table can be added to any other table in the same workspace.
+
 1.  While in a table, click `Tools`.
-2.  Search for your template by name, or click **View all enrichments** and select the **Templates** tab.
+2.  Search for your template by name, or click **View all enrichments** and select the **Templates** tab. If you don't see your template listed, click **Saved by me** to filter to templates you created.
 3.  Click the template to open the configuration panel.
 4.  Under **Configure**, map the template's required inputs to your existing table columns.
 5.  Under **Providers**, connect any integrations the template requires.
