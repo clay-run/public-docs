@@ -436,6 +436,26 @@ If enrichment columns — such as **Enrich Company**, **Find Contacts at Company
 
 **If a recent column configuration change caused the error**, use [Table Version History](table-versions.md) to revert to a working setup: click **History** (bottom-right of the table) → **All configuration versions**, then restore a version from before the change. Restoring a version reverts column configurations without affecting your row data.
 
+### Enrich Company returns "Company Not Found" despite having a domain
+
+When **Enrich Company** returns **"❌ Company Not Found"**, it means the domain in your row doesn't map to a company record in Clay's database. A domain that looks correct — one that works in your browser, or that you've already normalized — may still return "Company Not Found" if Clay's database only recognizes a different domain variant for that company.
+
+**Example:** VRBO's site is `vrbo.net`, but Clay's database recognizes `vrbo.com`. Passing `vrbo.net` returns "Company Not Found"; passing `vrbo.com` returns the match.
+
+**Common causes:**
+- The domain in your CRM is a redirect origin rather than the redirect target
+- The company uses a non-primary TLD (e.g., `company.co.uk` instead of `company.com`)
+- The row is a subsidiary or child brand that doesn't have its own entry — Clay's database may only record the parent company's domain
+
+**To fix "Company Not Found" rows:**
+
+1. **Isolate the affected rows.** In your table, click **Filter** → select your Enrich Company column → set the condition to **has no results**. This scopes your work to only the rows that need fixing.
+2. **Find the domain variant Clay recognizes.** Two enrichments can help:
+   - **Find Domain from Company Name** — searches for a company's canonical website domain by name. Add it as a column, pass your company name column as input, and use the returned domain as the Enrich Company input.
+   - **Claygent** — add a Claygent column with a prompt like *"Find the primary website domain for {{Company Name}}"* to locate the correct domain via live web search.
+3. **For subsidiaries without their own entry:** use the parent company's LinkedIn URL or domain as the Enrich Company identifier instead.
+4. **Re-run Enrich Company** on those rows using the corrected domain or LinkedIn URL. Right-click the Enrich Company column header → **Run column** → **Run [N] empty or out-of-date rows**.
+
 ### Company Table Data doesn't include company enrichment data
 
 The **Company Table Data** column retrieves basic field types from the linked company row — text, long text, number, boolean, date, email, URL, image, JSON, and formula columns. **Enrichment columns (action-type columns such as Clearbit Company, Apollo, Enrich Company, or any other Clay integration enrichment) are not included** in what Company Table Data returns.
