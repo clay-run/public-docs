@@ -109,15 +109,17 @@ To monitor a completely different set of companies (using a different view), cre
 
 ### Why is the View field empty or locked when I open Edit Signal?
 
-When editing an existing company-based signal (New Hire, Job Posting, etc.), the **Company Table**, **View**, and **Company Identifier** fields are permanently locked — they cannot be changed after the signal is first created. If the **View** dropdown appears empty or unselectable, this typically means the source company table the signal was originally built on has since been deleted.
+When editing an existing company-based signal (New Hire, Job Posting, etc.), the **Company Table**, **View**, and **Company Identifier** fields are permanently locked — they cannot be changed after the signal is first created. If you see validation errors on these locked fields, what the dropdown shows tells you which situation you're in:
 
-Because these source fields cannot be re-pointed after creation, the fix is to rebuild the signal:
+**View dropdown is empty (shows no option):** The source company table the signal was originally built on has since been deleted. Because these source fields cannot be re-pointed after creation, you will need to rebuild the signal:
 
 1.  Open your current company table → click **Tools** → select the signal type (e.g., **Monitor for new hires**).
 2.  Configure your filters and set the desired run frequency.
 3.  Click **Save and run**.
 
 You can then delete the old signal. Rebuilding does not reprocess previously seen results.
+
+**View dropdown shows a value (e.g., "Default view") but is highlighted red as Required:** The signal form has loaded with stale state — this can happen if you open a signal to edit it, close the panel, and then reopen it without refreshing the page. Do a hard page refresh (Ctrl+Shift+R on Windows/Linux, ⌘+Shift+R on Mac), then reopen the signal to edit it. The form will reload cleanly and the validation error will clear.
 
 **Tip — preserve your enrichment columns during a rebuild:** If your existing signal results table has enrichment columns you've built out, save the table as a template before rebuilding. Click the table title → scroll to **Share as template** → toggle it on and copy the link. Open the link to create a new table — the new table will include all your enrichment column configurations, so you don't have to rebuild them from scratch.
 
