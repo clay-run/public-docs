@@ -737,6 +737,18 @@ Add a **Salesforce Update Record** action column directly inside your bulk enric
 
 If you have the Audiences Salesforce export enabled, enriched fields also sync back to Salesforce automatically on the next 24-hour export cycle (see [Writing back to your CRM](#writing-back-to-your-crm)). Adding Update Record directly in the enrichment table is useful when you need immediate write-back or when you are not using the native Audiences Salesforce import.
 
+### How do I write enriched data back to HubSpot from Audiences?
+
+Audiences does not have a native HubSpot export destination — Salesforce is currently the only built-in CRM export. To push enriched data to HubSpot, use a Bulk Enrichment with a HubSpot action column directly from within your audience segment:
+
+1.  Navigate to an audience segment and click **Enrich** → **Add bulk enrich**.
+2.  In the bulk enrichment table, add your data enrichment columns as usual (for example, `Enrich Person` to find phone numbers or professional profile URLs).
+3.  Click `Add enrichment` and search for **HubSpot** → select **HubSpot: Update Contact** (to update existing HubSpot contacts) or **HubSpot: Create records** (to create new contacts or companies in HubSpot).
+4.  Map each enriched field to the corresponding HubSpot property you want to populate.
+5.  Click **Start Run** — the HubSpot action column fires alongside your enrichment columns and writes the values directly to HubSpot.
+
+This approach supports batching and works for both contacts and companies. To automatically push data for new records entering the segment going forward, enable the **auto-enrich toggle** on the bulk enrichment.
+
 ### I enriched data in my Audience. Why hasn't it appeared in Salesforce yet?
 
 Clay Audiences syncs in two separate directions on different schedules:
@@ -831,6 +843,8 @@ Archiving a record is a **soft delete** — the record is not permanently remove
 -   It is **excluded from all audience segments and workflows** — it will not appear in segment filter results or trigger enrichment automations.
 -   It can be viewed in the **Archived** section in the left sidebar.
 -   It can be **restored at any time** from the Archived section.
+
+**Important:** Re-importing a record with the same identifiers (email, domain, or external IDs) **will not revive an archived record** — the incoming import is silently skipped and the record stays archived. To bring an archived record back, restore it manually: navigate to **People** or **Companies** in the left sidebar → click **Archived** → find the record → click **Restore**. You can then re-import or re-sync data for that record if needed.
 
 **There is no self-serve option to permanently delete records from Audiences.** Archiving is the only available removal method. If your use case requires permanent removal, contact Clay support.
 
