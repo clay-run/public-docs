@@ -125,6 +125,19 @@ A **default account** is automatically selected for workflows or integrations wh
 
 **Note:** Workspace connection defaults apply per provider — there is no single setting that routes all AI usage to one API key. For Claygent columns (including those using custom MCP servers), you also need to manually select a non-Clay model (such as Claude Sonnet or GPT) in the model picker, since Claygent defaults to Clay's parallel models and does not automatically switch to a third-party model when you set a connection as default.
 
+### See where a connection is used
+
+Each connection row in the `Connections` list includes a **Resources** column showing how many workbooks, tables, and functions reference that connection. This lets you identify the impact of changing or removing a connection — for example, to see which tables will be affected when you swap out an API key, or to confirm a connection is no longer referenced before deleting it.
+
+To see where a connection is used:
+
+1.  Navigate to `Settings` → `Connections`.
+2.  Find the connection in the list.
+3.  Check the **Resources** column. A number means that many resources reference the connection; a `—` means the connection is not used anywhere in the workspace.
+4.  Click the number to open a side panel listing every workbook, table, and function that uses the connection, each with a direct link.
+
+If the Resources column shows `—`, removing or replacing the connection will not break any active workflows.
+
 ### Deleting accounts
 
 -   Navigate to the service in the `Connections` section.
