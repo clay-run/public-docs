@@ -87,6 +87,20 @@ For example, to check whether any competitor name from a known list appears in a
 
 The formula generator will produce a JavaScript expression that performs the match row-by-row without any credit cost, regardless of how many rows your table has. For a full list of features that don't consume credits, see [Actions and data credits](actions-data-credits.md).
 
+### **How do I check if a number falls within a text-based size range, including open-ended patterns like "10,001+ employees"?**
+
+Data providers often return company size as a text range instead of an exact number — for example, `"51-200 employees"` or `"10,001+ employees"`. If you have a separate numeric column (such as an Employee Count column from CPJ or a data enrichment), you can add a formula column that returns `true` when the number falls inside the text range — including open-ended ranges that use a "+" suffix with no upper bound.
+
+**Using the formula generator:** Open the formula column editor and describe your intent, making sure to specify how to handle the open-ended case:
+
+> Return `true` if {{Employee Count}} falls within the range described in {{Size}}. {{Size}} contains strings like "51-200 employees" or "10,001+ employees". For values ending in "+", treat the number before it as a minimum with no upper bound — return `true` when {{Employee Count}} is greater than or equal to that number.
+
+The formula generator will produce a JavaScript expression that parses the range string, strips commas from numbers (so "10,001" is read as 10001), handles both bounded and open-ended patterns, and returns `true` or `false` for each row.
+
+**Using Sculptor:** You can also ask [Sculptor](sculptor.md) to build or fix the formula column directly. Describe the goal in the Sculptor chat — for example: *"Create a formula column that returns true when Employee Count falls within the range in the Size column, including rows where Size ends in '+' like '10,001+ employees'."* Sculptor will generate the formula and insert the column into [sandbox mode](sandbox-mode.md) so you can review results before running at scale.
+
+**Tip:** If your formula already works for bounded ranges (like "51-200 employees") but returns the wrong result for open-ended rows (like "10,001+ employees"), the formula wasn't built with the "+" case in mind. Use the **Improve formula accuracy** feature: click a cell that should return `true` for a "10,001+" row, enter `true` as the expected output, and click **Regenerate** to rebuild the formula with that example included.
+
 ### **How do I use today's date in a formula?**
 
 Use `moment()` with no arguments to get the current date and time at the moment the formula evaluates. For example, to return `"Yes"` if an event date is more than 6 months in the future from today:
