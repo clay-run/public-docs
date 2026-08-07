@@ -262,9 +262,9 @@ To fix this, open the column settings and increase the **Clay Credit Budget** va
 
 **Note:** This setting only applies to expensive variable-priced models when using Clay's managed account. Users who connect their own API key are billed directly by the AI provider and this cap does not apply.
 
-### Cells showing "API key is missing"
+### Cells showing "Invalid credentials: API key is missing"
 
-If your AI column cells show an **"API key is missing"** error, the column is configured to use a model that requires your own API key, but no key has been connected for that model.
+If your AI column cells show an **"Invalid credentials"** error with the message **"API key is missing."**, the column is configured to use a model that requires your own API key, but no key has been connected for that model.
 
 There are two ways to resolve this:
 
