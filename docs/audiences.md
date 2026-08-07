@@ -742,7 +742,7 @@ If you have the Audiences Salesforce export enabled, enriched fields also sync b
 Audiences does not have a native HubSpot export destination — Salesforce is currently the only built-in CRM export. To push enriched data to HubSpot, use a Bulk Enrichment with a HubSpot action column directly from within your audience segment:
 
 1.  Navigate to an audience segment and click **Enrich** → **Add bulk enrich**.
-2.  In the bulk enrichment table, add your data enrichment columns as usual (for example, `Enrich Person` to find phone numbers or LinkedIn URLs).
+2.  In the bulk enrichment table, add your data enrichment columns as usual (for example, `Enrich Person` to find phone numbers or professional profile URLs).
 3.  Click `Add enrichment` and search for **HubSpot** → select **HubSpot: Update Contact** (to update existing HubSpot contacts) or **HubSpot: Create records** (to create new contacts or companies in HubSpot).
 4.  Map each enriched field to the corresponding HubSpot property you want to populate.
 5.  Click **Start Run** — the HubSpot action column fires alongside your enrichment columns and writes the values directly to HubSpot.
