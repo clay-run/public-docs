@@ -453,8 +453,8 @@ When **Enrich Company** returns **"❌ Company Not Found"**, it means the domain
 2. **Find the domain variant Clay recognizes.** Two enrichments can help:
    - **Find Domain from Company Name** — searches for a company's canonical website domain by name. Add it as a column, pass your company name column as input, and use the returned domain as the Enrich Company input.
    - **Claygent** — add a Claygent column with a prompt like *"Find the primary website domain for {{Company Name}}"* to locate the correct domain via live web search.
-3. **For subsidiaries without their own entry:** use the parent company's LinkedIn URL or domain as the Enrich Company identifier instead.
-4. **Re-run Enrich Company** on those rows using the corrected domain or LinkedIn URL. Right-click the Enrich Company column header → **Run column** → **Run [N] empty or out-of-date rows**.
+3. **For subsidiaries without their own entry:** use the parent company's domain or company page URL as the Enrich Company identifier instead.
+4. **Re-run Enrich Company** on those rows using the corrected domain or company page URL. Right-click the Enrich Company column header → **Run column** → **Run [N] empty or out-of-date rows**.
 
 ### Company Table Data doesn't include company enrichment data
 
