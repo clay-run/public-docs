@@ -19,6 +19,8 @@ Build and sync contact and account lists to LinkedIn, Meta, and Google Ads for p
 -   Advertise to executives who recently changed jobs or got promoted
 -   Target leads that aren't in your CRM to expand total addressable market
 
+**Note:** Table ads (Ad Sync tables created directly from a Clay table) are being deprecated. All existing table-based ad syncs now show a deprecation notice, and creating new recurring table ad syncs is no longer supported. For new ad targeting workflows, use Audience Ads instead — see [Syncing audiences to ad platforms](https://university.clay.com/docs/audiences#syncing-audiences-to-ad-platforms).
+
 ## **Creating and syncing ad audiences**
 
 _Note: Personal email addresses significantly improve match rates when syncing to ad platforms. Use the `Hashed Email for Ads` waterfall to find contact email addresses._
