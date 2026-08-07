@@ -669,7 +669,26 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 ### How do I export my audience data to CSV?
 
-The Audiences screen does not have a direct CSV download button, and there is currently no built-in path to download audience data as a CSV file directly from the Audiences screen.
+The Audiences screen does not have a direct CSV download button. Two paths let you export audience records as a CSV.
+
+**Option 1 — Send to workbook (up to 50,000 rows):**
+
+1.  Open the audience segment you want to export.
+2.  Click **Send** → **Add to workbook**. Name the new table and click **Continue** — Clay creates a Clay table pre-populated with up to 50,000 records from the segment.
+3.  In the new table, click **Actions** → **Export** → **Download CSV** to download the data.
+
+**Note:** Only the first 50,000 records are exported to the workbook. If your segment is larger, use the archive export path below.
+
+**Option 2 — Archive export via bulk enrichment (unlimited rows):**
+
+1.  Open the audience segment and click `Enrich` in the top toolbar.
+2.  Click **Add bulk enrich** to create a new bulk enrichment, or open an existing one via `⋮` → **Open enrichment**.
+3.  In the bulk enrichment table, add a column with a **deletion criterion** — this is what moves rows into the archive after processing. A free option is the **Normalize Domain** action (under **Enrichment** → **By Clay**). In the bulk enrichment settings, set the deletion mode to delete rows once that column has run.
+4.  Click **Start Run** to process the rows. Processed rows move to the archive automatically.
+5.  Click **View Archive** in the toolbar to switch to the archive view.
+6.  Click **Export full archive** to download all archived rows as a CSV.
+
+**Note:** The archive export covers all processed rows with no row-count cap. Rows only move to the archive once the deletion criterion column has run — if no deletion criterion is configured, rows stay live and the archive remains empty.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
