@@ -82,6 +82,16 @@ For a complete example using Zapier, see [Send Clay data to Zapier](https://www.
 
 ## FAQs
 
+### How can I see webhook logs?
+
+Clay does not have a built-in webhook log UI. The two places to check webhook activity are:
+
+- **Your webhook table in Clay:** Every payload Clay successfully receives creates a row in your webhook table immediately. The row count in the table is your record of accepted deliveries — if a row exists, Clay received and stored that payload. To see all rows, make sure no filter is active (look for a number badge on the filter icon in the table toolbar).
+
+- **Your sending system's delivery logs:** For delivery history, retry records, or to investigate failed attempts, check the logs in the tool sending the webhook (for example, Zapier, Make, HubSpot, Salesforce, or a custom script). These systems typically maintain a delivery history where you can see each request's status code and optionally replay events that failed.
+
+**Note:** Clay does not queue or retry incoming webhook requests. If a payload was rejected (for example, because of a `429` rate limit error or a `400` bad request), it is not stored and no row appears in the table. See [Why aren't any rows arriving in my webhook table?](#why-arent-any-rows-arriving-in-my-webhook-table) for troubleshooting.
+
 ### Why does my webhook source show a higher row count than my table?
 
 The webhook source node in the workbook view shows the **total number of records stored by the source** since it was created. This count increases with every accepted payload and does not decrease when you delete rows from the table.
