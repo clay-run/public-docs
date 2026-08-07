@@ -1,6 +1,6 @@
 ---
 title: Single Sign-On (SSO)
-description: Set up SSO for your Clay workspace, understand login behavior once enabled, and learn about MFA, provisioning, and disabling SSO.
+description: Set up SSO for your Clay workspace, understand login behavior once enabled, and learn about MFA, provisioning, offboarding, and disabling SSO.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -68,7 +68,14 @@ SSO only applies to users whose email address matches your verified domain. Team
 
 **Important:** Always invite users to your workspace before they sign in with SSO. If a user signs in via SSO before receiving their workspace invite, they will be placed into a new standalone personal workspace instead of your enterprise workspace.
 
-**If a user has already landed in a personal workspace instead of the company workspace:** You can recover without contacting support. From your company workspace, go to `Settings` > `Team` > `+ Invite` and send them a workspace invite. Have them accept the Clay invite from their email first, then sign in through your IdP (for example, by clicking the Clay tile in Okta). SSO will match them to the workspace seat you created and place them in the correct workspace. The empty personal workspace they were initially placed in remains as an orphan but does not affect their access to the company workspace.
+**If a user has already landed in a personal workspace instead of the company workspace:** You can recover without contacting support. From your company workspace, go to `Settings` > `Team` > `+ Invite` and send them a workspace invite. Have them accept the Clay invite from their email first, then sign in through your IdP (for example, by clicking the Clay tile in Okta). SSO will match them to the workspace seat you created and place them in the correct workspace. Once the user has accepted the invite, they can also switch to the correct workspace immediately by clicking their **profile icon in the upper right corner** of Clay and selecting the workspace from the dropdown — without needing to sign out and re-authenticate. The empty personal workspace they were initially placed in remains as an orphan but does not affect their access to the company workspace. If you want it removed, contact Clay support — they can delete it on your behalf.
+
+**Removing a user's access when they leave your organization (offboarding):** Because Clay does not support automatic deprovisioning, you must take two manual steps when a team member leaves:
+
+1.  Remove or unassign the user from the Clay app in your identity provider (for example, remove their Okta assignment or unassign them in Entra ID). This prevents future SSO authentication for that user.
+2.  Manually remove the user from your Clay workspace: go to `Settings` > `Team`, find the user, and remove them from the workspace.
+
+Removing the user from your identity provider alone is not sufficient — their Clay workspace membership is not automatically revoked when SSO access is removed.
 
 SCIM directory sync is on Clay's roadmap — contact Clay support or your Growth Strategist for the latest status on this feature.
 
