@@ -75,6 +75,8 @@ A **custom table** (shown with the table icon in your workbook) is a blank canva
 
 **In short:** Choose **Find Companies** when you need to discover new companies from scratch; choose a **custom table** (or CSV import) when you're starting from a list you already own.
 
+**Already have a company list and want to find contacts at those companies?** Once your companies are in a custom table — whether imported from a CSV, CRM export, or any other source — you can run a people search directly from it: click **Tools** → **Import** → **Find People at These Companies**, set your title, seniority, and location filters, and send results to an Audiences draft. See [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md#choose-your-starting-point) for the full workflow.
+
 **Keeping related tables in the same workbook**
 
 In Clay, a workbook is a container for related tables. It's common to keep linked tables together in one workbook — for example, a Find Companies table and the Find People table created from it — so the workflow is easy to navigate and share as a template. Create a new workbook when you're working on a distinct project or campaign (for example, separate workbooks for different clients or different outbound plays).
