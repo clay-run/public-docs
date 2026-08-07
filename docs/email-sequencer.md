@@ -371,7 +371,7 @@ Because the campaign events table is a standard Clay table, you can add CRM enri
 
 4.  **Use Create record (not Update) when logging activity events.** Each event should become its own activity entry in your CRM — this preserves the full engagement history. Updating a single record would overwrite prior events.
 
-5.  **Account for reply delays.** Reply events can appear in the campaign events table with a [15–30 minute delay](#campaign-events-table), so avoid automations that depend on real-time reply data.
+5.  **Account for reply delays.** Reply events can appear in the campaign events table with a [15–30 minute delay](#campaign-events-table), so avoid automations that depend on real-time reply-data.
 
 6.  **Enable Auto-run for ongoing campaigns.** Turn on `Auto-run` on your CRM action column so new events continuously trigger write-backs as the campaign runs — otherwise, the column only processes rows that are manually triggered.
 
@@ -432,6 +432,10 @@ If your admin has already completed those steps and you still see the error, see
 ### How do I authorize Clay's app in the Google Admin panel?
 
 Follow the instructions in the modal and have your Google Workspace admin set our Clay sequencer app to `Trusted` — not `Specific Google Data`. When searching in Google Admin, the app is listed as **Clay Sequencer (Web)** — the `(Web)` suffix indicates the web client type and refers to the same Clay Sequencer app. Selecting `Specific Google Data` will not grant all the permissions Clay needs, and the access error will persist. Despite its name, `Trusted` only allows Clay to request Gmail-specific permissions (full email access, basic email settings, OpenID, and your profile) — it does not grant access to Google Drive, Calendar, Docs, or any other Google service. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the Clay sequencer.
+
+### Does the Trusted admin setting give Clay access to all Google accounts in my domain?
+
+No — the Trusted setting is not domain-wide delegation. Marking Clay Sequencer as Trusted in the Google Workspace Admin Console removes the verification block that would otherwise prevent users in your domain from connecting their accounts, but it does not give Clay access to any mailbox automatically. Each person who wants to use the sequencer must still connect their own Google account individually: go to `Campaigns` → `Email Accounts` → `Add email accounts` → `Google OAuth` and complete the OAuth flow for their own account. Clay can only access a mailbox after that individual user explicitly authorizes it.
 
 ### I followed the admin setup steps but still see "Access blocked: clay.com has not completed the Google verification process." What should I do?
 
