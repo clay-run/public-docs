@@ -1,6 +1,6 @@
 ---
 title: Connections and integration accounts
-description: Add, edit, test, and delete integration accounts in Clay's Connections settings, and set default accounts for your workspace.
+description: Add, edit, test, and delete integration accounts in Clay's Connections settings, set default accounts, and see which tables and workbooks use a specific connection.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -127,13 +127,15 @@ A **default account** is automatically selected for workflows or integrations wh
 
 ### See where a connection is used
 
-Each connection row in the `Connections` list includes a **Resources** column showing how many workbooks, tables, and functions reference that connection. This lets you identify the impact of changing or removing a connection — for example, to see which tables will be affected when you swap out an API key, or to confirm a connection is no longer referenced before deleting it.
+> **Note:** This feature is currently rolling out — it is confirmed available on Enterprise plans. If you do not see the Resources column described below, contact Clay support to enable it for your workspace.
+
+Each connection row in the `Connections` list includes a **Resources** column showing how many workbooks, tables, and functions reference that connection. This lets you identify the impact of changing or removing a connection — for example, to see which tables will be affected when you swap out a former team member's API key, or to confirm a connection is no longer referenced before deleting it.
 
 To see where a connection is used:
 
 1.  Navigate to `Settings` → `Connections`.
 2.  Find the connection in the list.
-3.  Check the **Resources** column. A number means that many resources reference the connection; a `—` means the connection is not used anywhere in the workspace.
+3.  Check the **Resources** column. A number means that many workbooks, tables, or functions reference the connection. A `—` means the connection is not used anywhere in the workspace.
 4.  Click the number to open a side panel listing every workbook, table, and function that uses the connection, each with a direct link.
 
 If the Resources column shows `—`, removing or replacing the connection will not break any active workflows.
