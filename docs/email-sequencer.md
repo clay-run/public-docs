@@ -223,6 +223,14 @@ If you've paused a campaign but the options to add or remove messages are still 
 
 **To add follow-up messages:** Create a new campaign and set up your full sequence — including all follow-up messages — from the start. You can include up to 4 messages per campaign.
 
+### What happens to my leads when I relaunch a paused campaign?
+
+When you relaunch a paused campaign, leads resume from where they left off in the sequence. Leads whose wait period between emails has elapsed during the pause become eligible for their next email when the campaign is relaunched — they are not pushed back further. For example: if you paused after the 1st email was sent to two batches of leads on consecutive days, and both batches' follow-up delay has passed by the time you relaunch, both batches become eligible for the 2nd email at once. Clay sends them according to your campaign's daily sending limits and pacing, so they may not all go out on the same day.
+
+You will not be charged additional credits for leads that were already sequenced before the pause.
+
+**Note:** Emails that were already queued in the underlying delivery system immediately before you paused may still go out. If a batch was in transit when the pause took effect, those sends may complete regardless.
+
 ### How much does the sequencer cost?
 
 The Clay email sequencer is available on all plans. Each lead sequenced consumes 1 Action (platform orchestration work). If you use AI snippets in your messages, those consume 1 Action per run and Data Credits for AI generation in addition to the Action for sending the email.
@@ -235,7 +243,7 @@ Each lead can only be sequenced once per campaign. To send multiple sequences to
 
 If two leads in the same campaign share a recipient email address, Clay automatically enrolls only one of them to prevent duplicate outreach. The other lead is permanently skipped and will not be retried in future enrollment runs. In the `Leads` view, skipped contacts show the status: "Another lead with this email address is already enrolled in this campaign, so we skipped this one." Leads without an email address are not affected — they pass through to standard enrollment validation.
 
-To avoid losing leads this way, deduplicate your source table before launching. Click any email column header → **Dedupe** to remove rows with identical email values before starting the campaign.
+To avoid losing losing leads this way, deduplicate your source table before launching. Click any email column header → **Dedupe** to remove rows with identical email values before starting the campaign.
 
 ### My sender account got disconnected. What happened?
 
