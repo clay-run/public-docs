@@ -143,6 +143,22 @@ Clay populates the Map fields picker by calling Salesforce's object describe API
 
 **To confirm which Salesforce user your connection is authenticated as**, go to `Settings` → `Connections` → `Salesforce`, click `…` next to your connection, and select `Test Connection`. Clay displays that user's email address — confirm the user has the correct FLS permissions for the fields you need.
 
+## How do I access address fields (street, city, state) from a Salesforce Lookup Record?
+
+When a **Lookup Record** action returns a Salesforce Account or Contact, the result includes Salesforce's compound address fields as nested objects in Clay's cell details panel. These appear as **Billing Address** and **Shipping Address**, each containing individual sub-fields: Street, City, State, Postal Code, Country, State Code, Country Code, Latitude, Longitude, and Geocode Accuracy.
+
+**To find and use these sub-fields:**
+
+1.  Click into any cell in your Lookup Record column to open the cell details panel on the right.
+2.  Type `address` in the search bar at the top of the panel. **Billing Address** and **Shipping Address** appear as expandable objects.
+3.  To pull a specific sub-field into its own column, add a **formula column** to the right of the Lookup Record column. In the formula input, type `/` to open the column picker, select your Lookup Record column, then drill down to the sub-field you need — for example, `Billing Address > Street`.
+4.  To combine sub-fields into a single address string, use a formula column and describe the logic in plain language — for example: *return the billing street, city, state, and postal code joined with commas; fall back to the shipping address fields when billing is empty*.
+
+**If Salesforce has no address for a row:**
+Add a Claygent column and prompt it to find the company's street address from the company domain or name. Use a [conditional run](conditional-runs.md) to run Claygent only on rows where the Lookup Record returned an empty billing and shipping street.
+
+**Note:** Clay's native location data — from **Find Companies** or location enrichment fields — returns city, state, and country only. It does not include a street address. For street-level data, the Salesforce Lookup Record address sub-fields are the primary source when your records are already in Salesforce.
+
 ## Why does the Lookup Record action return a maximum of 5 results?
 
 The standard **Lookup Record** action returns a maximum of 5 records per run. This is by design — it is optimized for finding a single matching record and returns up to 5 results when multiple matches exist.
