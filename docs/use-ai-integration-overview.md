@@ -75,7 +75,7 @@ After generating a setup, you can easily edit your original description and rege
         -   Use the dropdown menu to select the appropriate data type for each output field.
     -   **JSON Schema**
         -   Paste or type a JSON Schema object to tell the AI exactly how to structure its response. The root must be `"type": "object"` with a `"properties"` map.
-        -   **Every array field must include `"items"`.** A field with `"type": "array"` must also specify `"items"` to define what type of values the array contains. For example:
+        -   **Every array field must include `"items"`.** A field with `"type": "array"` must also specify `"items"` to define what type of values the array contains. Without `"items"`, affected rows fail at run time with a generic **`Error. Please retry or contact Clay support.`** error. For example:
             ```json
             "keyIndicators": {
               "type": "array",
@@ -296,7 +296,7 @@ If you used Sculptor to adjust an AI column and the column now shows an error or
 
 -   **A `{{column}}` variable pointing to a deleted or renamed column.** If Sculptor reorganized your prompt, or you renamed a column after setting up the AI column, any variable referencing the old column name will fail. Affected rows will show **"Missing input"** and be skipped. Open the column settings directly (click the column name → **Edit column**), review each variable reference in the prompt, and confirm every `{{column}}` maps to an existing column in your table.
 -   **A backtick or template literal accidentally added.** Sculptor can introduce backtick characters (`` ` ``) around values in prompts. This causes a formula parse error before the column runs. Check your prompt text for stray backticks and remove them.
--   **A malformed JSON output schema.** If your column uses a structured JSON output schema and Sculptor rewrote it, the schema may now be invalid — for example, an array field missing `items`, or a trailing comma. The column will show its own schema-specific error message. Click **Generate from prompt** in the column settings to regenerate a valid schema.
+-   **A malformed JSON output schema.** If your column uses a structured JSON output schema and Sculptor rewrote it, the schema may now be invalid — for example, an array field missing `items`, or a trailing comma. Affected rows may fail with a generic **`Error. Please retry or contact Clay support.`** error, or the column settings may show a schema-specific error message. Click **Generate from prompt** in the column settings to regenerate a valid schema.
 
 **Tip:** When troubleshooting, make changes directly in the column settings panel rather than through Sculptor. Test on a single row before running the full table.
 
