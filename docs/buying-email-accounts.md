@@ -41,6 +41,10 @@ After placing an order, you can track its progress in the `Account orders` tab (
 
 No. Once a domain is purchased, you cannot add additional email accounts to it. Select your desired number of accounts (up to 5 per domain) before confirming your order.
 
+### **Can I buy persona slots now and fill in the persona details later?**
+
+No. All persona details — first name, last name, and profile picture — must be entered for every account at the time of purchase. There is no way to reserve empty slots and configure them afterward. To scale gradually, start with one domain and fewer accounts for your first test, then buy additional domains as you onboard more senders — each domain supports up to 5 personas.
+
 ### **What happens if I cancel a domain before the year is up? Will I get a refund?**
 
 Clay does not offer partial refunds for domains cancelled before the end of their yearly billing period.
