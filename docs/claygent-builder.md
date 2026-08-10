@@ -154,7 +154,7 @@ When you need a Claygent to return structured data — multiple typed fields ins
 
 Common errors when writing schema by hand:
 
--   **Missing `items` on an array field.** Every field with `"type": "array"` must include an `"items"` object that specifies the element type. Without it, the AI provider rejects the schema and you will see: `Invalid schema for function 'returnData': In context=('properties', 'fieldName'), array schema missing items`. Fix it by adding `"items"`:
+-   **Missing `items` on an array field.** Every field with `"type": "array"` must include an `"items"` object that specifies the element type. Without it, the schema is rejected and one of two errors appears depending on when the problem is caught: the column settings may show `Invalid schema for function 'returnData': In context=('properties', 'fieldName'), array schema missing items` at save time, or — if the invalid schema is saved — individual rows will fail at run time with a generic **`Error. Please retry or contact Clay support.`** message. Fix it by adding `"items"`:
 
     ```json
     "keyIndicators": {
