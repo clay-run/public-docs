@@ -2,7 +2,7 @@
 title: Monitor for job changes
 description: Track job change trends and leverage timely insights for proactive
   decision-making.
-last_synced: 2026-04-26T01:40:12.595Z
+last_synced: 2026-04-26T01:40:12.599Z
 ---
 
 # Monitor for job changes
