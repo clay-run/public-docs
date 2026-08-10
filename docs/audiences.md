@@ -91,6 +91,21 @@ Clay pulls data from Salesforce on two schedules:
 
 **Salesforce activities:** To import Salesforce Tasks and Events associated with your Accounts, go to your Salesforce source settings, select `Accounts`, and enable the **Also import activities (tasks and events) associated with these accounts** toggle. Accounts are associated automatically in the background. The Activity tab on each record's detail view then shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp. This toggle is only available for Accounts — there is no equivalent option for Contacts, Leads, or the People object. Even if your Salesforce CRM has Tasks or Events associated with contacts or leads, those activities will not appear in the People Activity tab in Audiences.
 
+### Importing a Salesforce subset with a SOQL query
+
+**Available on Enterprise plans.** Enterprise customers can use a custom SOQL query to import exactly the Salesforce records they need into Audiences — without syncing their entire CRM. This is designed for organizations with privacy, compliance, billing, or data-ownership requirements where an all-or-nothing CRM import isn't practical.
+
+To add a SOQL-based Salesforce import:
+
+1.  Click `Add data` → `Add Source` → select your Salesforce integration.
+2.  In the import setup, choose the **SOQL query** import option.
+3.  Write a SOQL `SELECT` statement to define which records to import — for example: `SELECT Id, Name, Industry FROM Account WHERE Industry = 'Technology'`.
+4.  Configure your field mappings, then click `Save and Preview` and `Confirm`.
+
+For SOQL query syntax, examples, and best practices — including the 50,000-record limit per import and the requirement to name fields explicitly (no `SELECT *`) — see [Salesforce SOQL](salesforce-soql.md).
+
+**Sync behavior:** SOQL-based Salesforce sources use the same sync schedule as standard Salesforce imports — incremental syncs every **15 minutes** on Enterprise plans, with a full sync every 7 days.
+
 ### Importing from HubSpot
 
 **Note:** Setup must be completed separately for Contacts, Companies, and Deals. HubSpot Deal import is currently in early access — contact your Growth Strategist to enable it for your workspace.
