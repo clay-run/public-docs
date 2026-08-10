@@ -107,7 +107,7 @@ You can create multiple SOQL-based imports for the same Salesforce connection, e
     -   `Id`, `SystemModstamp`, `IsDeleted` — required for all object types.
     -   `AccountId` — required for Contact objects.
     -   `ConvertedContactId` — required for Lead objects.
-6.  Optionally, click **Generate with AI** and describe what records you want in plain language — Clay generates a valid SOQL query from your description.
+6.  Optionally, click **Generate SOQL** and describe what records you want in plain language — Clay generates a valid SOQL query from your description.
 7.  Click **Preview** to validate the query and review a sample of the matching records.
 8.  Map your Salesforce fields to Audience fields and click **Save**.
 
