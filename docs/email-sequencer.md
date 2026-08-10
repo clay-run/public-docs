@@ -419,6 +419,17 @@ These are disclosed when you add your account via OAuth. Clay requests the follo
 
 Additionally, you will need to have a Google Workspace admin authorize our app to request these permissions for the domain(s) you want to add to the sequencer.
 
+### Does Clay store email content? Where is it stored?
+
+Yes. While a campaign is active, email content is stored in two places:
+
+-   **Your Clay workspace**: The email body and event history (sends, opens, replies) are stored in your workspace and are visible in the campaign events table.
+-   **Smartlead**: Clay's sequencer runs on Smartlead infrastructure, which processes and retains email content to deliver your campaigns and handle replies.
+
+Clay does not access or store Gmail content outside of emails sent as part of a campaign, replies to campaign emails, and warmup-related emails. No other inbox content is read or stored.
+
+For details on Smartlead's data storage and security practices, see [Smartlead's privacy policy](https://www.smartlead.ai/new-privacy-policy).
+
 ### I'm seeing "Access blocked: clay.com has not completed the Google verification process" when I try to connect my Google account. What does this mean?
 
 This error is expected — Clay's sequencer uses automated warmup sends, which prevents it from passing Google's standard app verification process. It does not mean Clay is broken or untrustworthy. The fix is for your **Google Workspace admin** to authorize Clay Sequencer as a Trusted app in your Google Admin panel. Until they do, all users in your domain will see this error when attempting to connect via OAuth.
