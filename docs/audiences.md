@@ -54,29 +54,35 @@ You can import data from:
 
 ### Importing from Salesforce
 
-**Note:** Setup must be completed separately for People, Accounts, Leads, and Opportunities. Complete steps for `People` first, then repeat for `Accounts`, then `Leads`, then `Opportunities`.
+The Salesforce import flow in Audiences has been redesigned. You can import **all records** of a given Salesforce object type or use a **SOQL query** to bring in only the specific subset of records you need — useful when privacy, compliance, or data-ownership requirements make an all-or-nothing CRM import impractical. Multiple imports can be configured for the same Salesforce account — for example, an "All Accounts" import alongside a "West Coast Leads" SOQL subset.
+
+**Supported object types:** Contacts (appear in People), Accounts (appear in Companies), Leads (appear in People), Opportunities (appear in Companies), and Custom Objects.
+
+**Step 1: Connect your Salesforce account**
 
 1.  Click `Add data` → `Add Source` → select your [**Salesforce integration**](https://university.clay.com/docs/salesforce-integration-overview).
-    -   If you don't see an SFDC integration listed, contact your Growth Strategist.
-2.  Select `People` at the top of the sync panel.
-3.  Enable the `Import` toggle.
-4.  Leave `Export Sync` and `Create new Salesforce records` off for now.
-5.  Add any SFDC fields you frequently use or want to segment by — only fields included here will appear as columns and filter options in your Audience.
-    -   You can add more fields later. See [A Salesforce field isn't appearing in my audience filters](#a-salesforce-field-isnt-appearing-in-my-audience-filters--how-do-i-add-it) in the FAQs below.
-6.  Name the corresponding Clay fields — these become the column names in Audiences.
-7.  Select `Accounts` at the top and repeat steps 3–6 for accounts.
-8.  Select `Leads` at the top of the sync panel.
-9.  Enable the `Import` toggle.
-10.  Add any Lead fields you want to filter or segment by — common fields include `Lead Status`, `Lead Source`, `Title`, and `Company`.
-     -   Lead records are automatically merged with matching Contact records into a single person record in your People audience. Data from both sources is combined, and duplicates across Salesforce Leads, Contacts, and other sources count as one person. The primary matching key is the `ConvertedContactId` field — see [Why do some of my Salesforce Lead records not appear as separate person records in Clay?](#why-do-some-of-my-salesforce-lead-records-not-appear-as-separate-person-records-in-clay) for details.
-     -   After syncing, you can filter your People audience by **sync status** (whether a Lead record has been imported from Salesforce) and **record conversion status** (whether the Lead has been converted to a Contact in Salesforce).
-11.  Name the corresponding Clay fields.
-12.  Select `Opportunities` at the top of the sync panel.
-13.  Enable the `Import` toggle.
-14.  Add any Opportunity fields you want to filter or segment by — common fields include `Stage`, `Amount`, `Close Date`, and `Owner`.
-     -   Opportunity data is associated with your Companies records and becomes available as a filter in any Companies audience.
-15.  Name the corresponding Clay fields.
-16.  Click `Save and Preview`, then `Confirm`.
+    -   If you don't see a Salesforce integration listed, contact your Growth Strategist.
+2.  Select your Salesforce account from the dropdown — or click `+ Add account` to authenticate a new one.
+3.  Once connected, you land on the Salesforce source settings page.
+
+**Step 2: Add a Salesforce import**
+
+1.  Click **Add records** to open the import wizard.
+2.  Select the **object type** to import: Contact, Account, Lead, Opportunity, or Custom Object.
+3.  Choose the **record selection method**:
+    -   **All records** — imports every record of the selected object type from Salesforce.
+    -   **Record subset** — imports only the records returned by a custom SOQL query. Available for Contacts, Accounts, and Leads. Opportunities support "All records" only.
+4.  If you chose **Record subset**:
+    -   Enter a **Subset name** to identify this import (for example, "Enterprise Accounts" or "West US Leads").
+    -   Write your **SOQL query** in the query editor. To get help, click the wand icon and describe in plain English which records you want — Clay generates a valid SOQL query automatically. Click **Test** to preview matching records before confirming.
+5.  Click **Confirm** to start the import. Clay immediately begins syncing records.
+6.  To add another import (a different object type or a new SOQL subset), click **Add records** again and repeat.
+    -   Lead records are automatically merged with matching Contact records into a single person record in your People audience. The primary matching key is the `ConvertedContactId` field — see [Why do some of my Salesforce Lead records not appear as separate person records in Clay?](#why-do-some-of-my-salesforce-lead-records-not-appear-as-separate-person-records-in-clay) in the FAQs below for details.
+    -   Opportunity data is associated with your Companies records and becomes available as a filter in any Companies audience.
+
+**SOQL requirements for record subset imports**
+
+SOQL queries for Audiences must be valid SELECT statements and must include `Id`, `SystemModstamp`, and `IsDeleted`. Clay uses these fields to handle incremental syncing and soft-delete detection. For Contact queries, also include `AccountId`; for Lead queries, also include `ConvertedContactId`. The AI query generator includes these fields automatically.
 
 **Sync timing and behavior**
 
@@ -566,15 +572,19 @@ Once created, the field is immediately available as a filter in any segment and 
 
 ### A Salesforce field isn't appearing in my audience filters — how do I add it?
 
-Only fields explicitly included in the Salesforce import field mapping are brought into Audiences as columns and made available as filter options. If a Salesforce field — including custom fields like `Account_Record_ID__c` — doesn't appear in the filter dropdown, it was not included when the import was configured.
+The answer depends on which type of Salesforce import you are using:
 
-To add a missing field:
+**All records imports:** Only fields explicitly included in the Salesforce import field mapping are brought into Audiences as columns and made available as filter options. If a Salesforce field — including custom fields like `Account_Record_ID__c` — doesn't appear in the filter dropdown, it was not included when the import was configured.
+
+To add a missing field to an "All records" import:
 
 1.  Click **Add data** in the top toolbar.
 2.  Find your Salesforce integration and click the **⋮** (three-dot) menu next to it.
 3.  Select **Settings**.
 4.  In the field mapping section, add the Salesforce field you want and name the corresponding Clay column.
 5.  Click **Save and review** → **Confirm**.
+
+**Record subset (SOQL) imports:** Fields are determined by the `SELECT` clause of your SOQL query — only fields listed in the SELECT statement are imported. To add a new field, edit the SOQL query for that import to include the field in the SELECT clause, then reconfirm the import.
 
 The filter option for the field becomes available after the next incremental sync (typically within 15 minutes). However, if you added this field to the mapping after your initial import, records that haven't been modified in Salesforce since the mapping was saved won't have data for the new field yet — see [I added a new Salesforce field to my mapping but some records are missing data for it](#i-added-a-new-salesforce-field-to-my-mapping-but-some-records-are-missing-data-for-it) below. Read-only Salesforce fields — fields shown with a lock icon in the mapping because Salesforce does not allow Clay to write them — can still be imported and used as filters. They will show a **Never write (Read-only)** export rule.
 
