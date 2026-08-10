@@ -90,15 +90,15 @@ When you want to work only with contacts that are **not** already in a reference
    - `Filter operator` → `Equals`
    - `Row value` → the matching column from your current table (e.g., company domain)
 
-   When the lookup finds a match, the cell shows the matched record. When it finds no match, the cell shows **No Record Found** and stores `null` (empty).
+   When the lookup finds a match, the cell shows the matched record. When it finds no match, the cell shows **No Record Found**.
 
-3. Add a **view filter**: click the **Filter** button (funnel icon) in the table toolbar, select your lookup column, and set the operator to **is empty**.
+3. Add a **view filter**: click the **Filter** button (funnel icon) in the table toolbar, select your lookup column, and set the operator to **has no results**.
 
    This shows only rows where the lookup returned no match — contacts whose company is **not** in your reference table. Rows that matched are hidden from the view but remain stored in the table; removing the filter brings them back.
 
 **Why company domain works better than company name for matching:** Names like "Acme" and "Acme Corp" won't match with `Equals` even though they refer to the same company. Domain (e.g., `acme.com`) is stable and consistent across data sources, making it a much more reliable match key.
 
-**Using the result beyond the view:** If you need to enrich or route only the non-matching rows rather than just filter the display, use the lookup cell's null state as a run condition on downstream columns. In **Run settings → Only run if**, select your lookup column and set the condition to **is empty** (meaning: only run when no match was found). See [Conditional runs](conditional-runs.md) for details.
+**Using the result beyond the view:** If you need to enrich or route only the non-matching rows rather than just filter the display, you can gate downstream column runs on the lookup result. See the `== null` note in the best practices above, and [Conditional runs](conditional-runs.md) for how to set up a run condition.
 
 ### **Using `Lookup multiple rows in other table`**
 
