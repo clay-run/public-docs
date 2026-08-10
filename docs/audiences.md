@@ -54,7 +54,7 @@ You can import data from:
 
 ### Importing from Salesforce
 
-**Note:** Setup must be completed separately for People, Accounts, Leads, and Opportunities. Complete steps for `People` first, then repeat for `Accounts`, then `Leads`, then `Opportunities`.
+**Note:** Setup must be completed separately for People, Accounts, Leads, and Opportunities. Complete steps for `People` first, then repeat for `Accounts`, then `Leads`, then `Opportunities`. If you need to bring in only a specific subset of your Salesforce records — for example, only accounts in a particular region or leads matching certain criteria — see [Importing a Salesforce record subset using SOQL](#importing-a-salesforce-record-subset-using-soql) below.
 
 1.  Click `Add data` → `Add Source` → select your [**Salesforce integration**](https://university.clay.com/docs/salesforce-integration-overview).
     -   If you don't see an SFDC integration listed, contact your Growth Strategist.
@@ -90,6 +90,33 @@ Clay pulls data from Salesforce on two schedules:
 **Deleted records:** Clay does not remove deleted Salesforce records from Audiences immediately. Instead, the record is marked **Deleted in source**, which you can filter on in your audience. The weekly full sync reconciles hard-deleted records. If a Salesforce record is deleted and recreated (assigning it a new Salesforce ID), it will temporarily appear as a duplicate entry until the next weekly full sync resolves it. There is no self-serve option to trigger an early full sync — contact Clay support if you need an expedited cleanup.
 
 **Salesforce activities:** To import Salesforce Tasks and Events associated with your Accounts, go to your Salesforce source settings, select `Accounts`, and enable the **Also import activities (tasks and events) associated with these accounts** toggle. Accounts are associated automatically in the background. The Activity tab on each record's detail view then shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp. This toggle is only available for Accounts — there is no equivalent option for Contacts, Leads, or the People object. Even if your Salesforce CRM has Tasks or Events associated with contacts or leads, those activities will not appear in the People Activity tab in Audiences.
+
+### Importing a Salesforce record subset using SOQL
+
+**Available on Growth and Enterprise plans.** Instead of importing all records of a given Salesforce object type, you can write a SOQL query to bring exactly the records you need into Audiences — for example, only accounts in a specific region, contacts above a certain seniority level, or leads created in the past 90 days. This is useful when privacy, compliance, or data-ownership requirements make importing your entire CRM a non-starter.
+
+To set up a SOQL import in Audiences:
+
+1.  Click `Add data` → `Add Source` → select your Salesforce integration.
+2.  Select the **Object type** to import: Contact (People), Account (Companies), Lead, or Custom Object.
+3.  Under **Record selection**, choose **Record subset**.
+4.  Enter a **Subset name** to identify this import — for example, "West Coast Enterprise Accounts."
+5.  Write your **SOQL query**. Requirements:
+    -   Must be a valid `SELECT` statement with all fields explicitly named (no `SELECT *`).
+    -   Must include the required fields `Id`, `SystemModstamp`, and `IsDeleted`.
+    -   Contacts must also include `AccountId`; Leads must also include `ConvertedContactId`.
+    -   The root object in the `FROM` clause must match the object type selected in step 2.
+    -   Returns no more than **50,000 records** per import.
+
+    Use the **Generate with AI** option to describe your filter in plain English and let Clay write the query for you. Keep [Salesforce's SOQL documentation](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql.htm) open as a reference.
+
+6.  Preview the results to confirm the query returns the expected records.
+7.  Map the returned fields to Audience fields.
+8.  Enable **Import** and click **Save**.
+
+**Multiple subsets:** You can add more than one SOQL import per object type — for example, "West Coast Accounts" and "EMEA Accounts" as separate imports, each contributing records to the same Companies audience.
+
+**Sync timing:** SOQL imports run on the same schedule as standard Salesforce imports — incremental syncs every **15 minutes** on Enterprise plans or **once daily** on Growth plans, plus a full re-read every **7 days**. Records whose `SystemModstamp` changed since the last run are picked up by the incremental sync. Records that no longer match your `WHERE` clause are marked **Deleted in source** at the next full sync.
 
 ### Importing from HubSpot
 
