@@ -50,7 +50,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   `Google OAuth` (recommended): Connect your Google Workspace account via OAuth.
         -   ⚠️ Note: You or your Google Workspace admin must authorize Clay Sequencer as a Trusted app for your domain before connecting. If you or a teammate sees **"Access blocked: clay.com has not completed the Google verification process" (Error 403: access_denied)** when connecting, follow [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth) for the required admin setup steps. Until this is done, all users in your domain will see this error.
     -   `Microsoft Outlook OAuth` (recommended): Connect your Outlook account via OAuth.
-        -   ℹ️ Note: Unlike Google OAuth, no Clay-side admin setup is required upfront. If your Microsoft 365 / Entra tenant requires admin approval for third-party apps, your admin may need to grant consent for "Clay Sequencer – Smartlead" in the [Microsoft Entra Admin Center](https://entra.microsoft.com).
+        -   ℹ️ Note: Unlike Google OAuth, no Clay-side admin setup is required upfront. If your Microsoft 365 / Entra tenant requires admin approval for third-party apps, your admin may need to grant consent for "Clay Sequencer – Smartlead" in the [Microsoft Encom Admin Center](https://entra.microsoft.com).
     -   `SMTP`: Connect a single account via SMTP credentials directly. The form requires both SMTP settings (host, port, username, password) and IMAP settings (host, port) — Clay does not provide a built-in inbox, so your IMAP credentials must come from an existing IMAP-capable mailbox under your domain (such as Google Workspace, Microsoft 365, Zoho, or Fastmail). If your sending service is send-only (for example, SendGrid or another transactional email relay), you must pair it with a separate IMAP-enabled mailbox.
     -   `Bulk CSV upload`: Add multiple accounts at once by uploading a CSV. Download the example template from the modal and fill in the following eight columns for each account: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`. For Google Workspace accounts, generate an app password for each account (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` value.
     -   You can also [buy email accounts directly in Clay](https://university.clay.com/docs/buying-email-accounts) if you want to increase your sending capacity.
@@ -484,6 +484,13 @@ This is expected. When a lead replies using an HTML-capable email client like Mi
 -   `Text`: a plain text version of the same content
 
 To work with the reply as clean text — for example, when mapping it to a CRM note or passing it to an AI action — use the `Text` sub-field instead. If you prefer to use `Html` and strip the tags, add a formula column to do so.
+
+### I pasted HTML into my message but I'm only seeing raw code — how do I preview the rendered output?
+
+HTML content only renders in the message editor when **Enable HTML** is turned on for the campaign. Without it, anything you type or paste — including HTML markup — appears as plain text.
+
+1. Turn on `Enable HTML` in your campaign's **Setup** settings (it's off by default). If the option appears disabled or isn't visible, contact support to request access — this feature is currently in beta and not available in every workspace.
+2. Once HTML is enabled, switch to **Preview** mode using the toggle at the top of the message editor. Preview renders your HTML formatting and substitutes real lead data from your source table, so you can see how the email will appear in a recipient's inbox before sending. The other mode — **Template** — shows the raw content structure (markup and variable chips), which is useful for editing but does not show the final rendered output.
 
 ### Useful links
 
