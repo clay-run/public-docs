@@ -277,6 +277,19 @@ When you call a function from a table, that column shows **Awaiting Callback** w
 
 If the **"Send data back"** column has a **run condition** that is not met for a particular row, the function will not return data for that row. The calling table's cell will remain in **"Awaiting Callback"** until a 24-hour timeout expires, at which point it resolves to an error state. Downstream columns in the calling table that depend on the function output will not run until the cell resolves.
 
+**To check and fix a run condition on "Send data back":**
+
+If multiple rows are stuck and the function appears to have run (you can see values or "has no results" statuses in the enrichment columns inside the function), a restrictive **"Only run if..."** condition on the **"Send data back"** column is likely the cause. To fix it:
+
+1.  Open the function in edit mode (from your Clay homepage → **Functions**, or click the function column in your table and select **Edit function**).
+2.  Locate the **"Send data back"** column — the last column in the function.
+3.  Click the column header to open its settings, then check whether an **"Only run if..."** run condition is set.
+4.  If the condition requires a specific enrichment field to have a value, rows where that enrichment returned nothing will never trigger the callback — leaving the calling table stuck until the 24-hour timeout.
+5.  Remove the run condition, or loosen it so **"Send data back"** runs for every row — including rows where the enrichment returned nothing. Sending back an empty result still resolves the calling table's "Awaiting Callback" status immediately.
+6.  Click **Publish Changes** to apply.
+
+After fixing the condition, re-run the stuck rows in the calling table (see "To re-run rows stuck in Awaiting Callback" below).
+
 **To re-run rows stuck in Awaiting Callback:**
 
 Go back to the origin table and re-run the function column for those rows. Each row's pass through a function is a one-way trip — you cannot re-trigger processing from within the function itself. Re-running the function cell in the origin table dispatches a fresh invocation that runs on the latest function configuration.
