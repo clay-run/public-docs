@@ -172,7 +172,7 @@ Clay syncs data from Google BigQuery on the following schedules:
 
 ### Importing from Databricks
 
-Databricks is available as a native Audiences import source. The setup follows the same pattern as Snowflake: connect your Databricks workspace, write a SQL query, define a Unique Identifier, and optionally configure a Timestamp Field for incremental syncing. See **Importing from Snowflake** above for the full step-by-step instructions.
+Databricks is available as a native Audiences import source, currently in beta — contact your Growth Strategist to enable it for your workspace. The setup follows the same pattern as Snowflake: connect your Databricks workspace, write a SQL query, define a Unique Identifier, and optionally configure a Timestamp Field for incremental syncing. See **Importing from Snowflake** above for the full step-by-step instructions.
 
 ### Warehouse sync cadence
 
@@ -234,12 +234,12 @@ Audiences uses two systems to prevent duplicate records:
 
 Entity Resolution runs continuously in the background. It matches records by identifier strength:
 
--   **For People:** professional profile URL → Email → Probabilistic matching (name + company + location + role)
--   **For Companies:** professional profile URL → Domain → Probabilistic matching (name + location + industry)
+-   **For People:** LinkedIn URL → Email → Probabilistic matching (name + company + location + role)
+-   **For Companies:** LinkedIn URL → Domain → Probabilistic matching (name + location + industry)
 
 When a match is found, records merge into a single unified record in Audiences. **Deduplication happens in Clay only** — Audiences does not merge or alter records in your connected Salesforce org.
 
-Records need a high-confidence identifier to match. Auto-enrichment adds a professional profile URL and `CPJ ID` at no cost to improve matching.
+Records need a high-confidence identifier to match. Auto-enrichment adds `LinkedIn URL` and `CPJ ID` at no cost to improve matching.
 
 **Import record matching (beta)**
 
@@ -250,7 +250,7 @@ When importing from Salesforce or Snowflake, you can configure **Import record m
 To configure:
 
 1. In your import settings, find `Import record matching` and click `Edit`.
-2. Under `When`, choose an **alias field** — typically `Domain` for Companies or `Email` for People (additional options include a professional profile URL, phone number, and others).
+2. Under `When`, choose an **alias field** — typically `Domain` for Companies or `Email` for People (additional options include LinkedIn URL, phone number, and others).
 3. Under `In`, map the alias field to the corresponding field in each connected source.
 4. When a new record arrives, Audiences checks whether the alias value already exists. If it does, the new data is merged with the existing record instead of creating a duplicate.
 
@@ -557,7 +557,7 @@ Two summary cards appear at the top — total record count for the selected type
 -   **Signals** — how many signals fired and how many records have at least one signal, with a trend chart over time and a per-signal breakdown you can sort by Most fired or Most results.
 -   **Revenue impact** — Active pipeline and Closed-won revenue for deals linked to records Clay sourced, broken out by From companies and From people. Click a revenue figure to drill into the underlying deals, each with its stage and close date.
 
-**Note:** The Reporting tab is available on Enterprise plans. Revenue figures cover deals linked to records Clay **sourced** — deals where Clay only enriched or actioned an existing record are not attributed yet. Workspaces that use Audiences for a single use case may see Low data or No data in place of some metrics.
+**Note:** The Reporting tab is enabled per workspace — contact your Growth Strategist if you don't see it. Revenue figures cover deals linked to records Clay **sourced** — deals where Clay only enriched or actioned an existing record are not attributed yet. Workspaces that use Audiences for a single use case may see Low data or No data in place of some metrics.
 
 ## FAQs
 
