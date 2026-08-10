@@ -54,29 +54,46 @@ You can import data from:
 
 ### Importing from Salesforce
 
-**Note:** Setup must be completed separately for People, Accounts, Leads, and Opportunities. Complete steps for `People` first, then repeat for `Accounts`, then `Leads`, then `Opportunities`.
+Each import is set up separately through the Salesforce import wizard. You can add as many imports per object type as you need — including multiple filtered subsets for the same type.
+
+**To add a Salesforce import:**
 
 1.  Click `Add data` → `Add Source` → select your [**Salesforce integration**](https://university.clay.com/docs/salesforce-integration-overview).
-    -   If you don't see an SFDC integration listed, contact your Growth Strategist.
-2.  Select `People` at the top of the sync panel.
-3.  Enable the `Import` toggle.
-4.  Leave `Export Sync` and `Create new Salesforce records` off for now.
-5.  Add any SFDC fields you frequently use or want to segment by — only fields included here will appear as columns and filter options in your Audience.
+    -   If you don't see a Salesforce integration listed, contact your Growth Strategist.
+2.  Choose the object type to import: **Contacts**, **Accounts**, **Leads**, or **Opportunities**.
+3.  Under **Record selection**, choose how to import records:
+    -   **All records** — imports every record of the selected type from your Salesforce org.
+    -   **Record subset** — imports only the records returned by a custom SOQL query. See [Importing a record subset with SOQL](#importing-a-record-subset-with-soql) below.
+4.  Map Salesforce fields to Audience columns — only fields mapped here appear as columns and filter options in your Audience.
     -   You can add more fields later. See [A Salesforce field isn't appearing in my audience filters](#a-salesforce-field-isnt-appearing-in-my-audience-filters--how-do-i-add-it) in the FAQs below.
-6.  Name the corresponding Clay fields — these become the column names in Audiences.
-7.  Select `Accounts` at the top and repeat steps 3–6 for accounts.
-8.  Select `Leads` at the top of the sync panel.
-9.  Enable the `Import` toggle.
-10.  Add any Lead fields you want to filter or segment by — common fields include `Lead Status`, `Lead Source`, `Title`, and `Company`.
-     -   Lead records are automatically merged with matching Contact records into a single person record in your People audience. Data from both sources is combined, and duplicates across Salesforce Leads, Contacts, and other sources count as one person. The primary matching key is the `ConvertedContactId` field — see [Why do some of my Salesforce Lead records not appear as separate person records in Clay?](#why-do-some-of-my-salesforce-lead-records-not-appear-as-separate-person-records-in-clay) for details.
-     -   After syncing, you can filter your People audience by **sync status** (whether a Lead record has been imported from Salesforce) and **record conversion status** (whether the Lead has been converted to a Contact in Salesforce).
-11.  Name the corresponding Clay fields.
-12.  Select `Opportunities` at the top of the sync panel.
-13.  Enable the `Import` toggle.
-14.  Add any Opportunity fields you want to filter or segment by — common fields include `Stage`, `Amount`, `Close Date`, and `Owner`.
-     -   Opportunity data is associated with your Companies records and becomes available as a filter in any Companies audience.
-15.  Name the corresponding Clay fields.
-16.  Click `Save and Preview`, then `Confirm`.
+5.  Click **Save and review** → **Confirm**.
+
+Repeat this process to add imports for each additional object type or subset you need.
+
+**Lead records:** Lead records are automatically merged with matching Contact records into a single person record in your People audience. Data from both sources is combined, and duplicates across Salesforce Leads, Contacts, and other sources count as one person. The primary matching key is the `ConvertedContactId` field — see [Why do some of my Salesforce Lead records not appear as separate person records in Clay?](#why-do-some-of-my-salesforce-lead-records-not-appear-as-separate-person-records-in-clay) for details. After syncing, you can filter your People audience by **sync status** (whether a Lead record has been imported from Salesforce) and **record conversion status** (whether the Lead has been converted to a Contact in Salesforce).
+
+**Opportunity records:** Opportunity data is associated with your Companies records and becomes available as a filter in any Companies audience.
+
+#### Importing a record subset with SOQL
+
+Instead of importing all records of a given type, you can import only the records your business needs by writing a SOQL query. This is useful when you have complex privacy, compliance, or data-ownership requirements that make importing your entire CRM impractical — for example, bringing in only the Accounts owned by a specific region or revenue tier.
+
+SOQL record subset imports are available for Contacts, Accounts, and Leads. You can create multiple subsets per object type — for example, two Contact subsets targeting different regions or owner assignments.
+
+**To add a record subset import:**
+
+1.  Click `Add data` → `Add Source` → select your Salesforce integration.
+2.  Choose an object type (**Contacts**, **Accounts**, or **Leads**).
+3.  Under **Record selection**, choose **Record subset**.
+4.  Enter a **Subset name** to identify this import (for example, `West Coast Accounts`).
+5.  In the query editor, write a SELECT SOQL query. Your query must include the fields `Id`, `SystemModstamp`, and `IsDeleted`.
+    -   Example: `SELECT Id, SystemModstamp, IsDeleted, Name, Industry FROM Account WHERE Region__c = 'West'`
+    -   Click **Test** to preview the records your query returns before saving.
+    -   Click **Generate** to use Clay's AI-powered SOQL generator, which builds a query from a natural-language description.
+6.  Map Salesforce fields to Audience columns.
+7.  Click **Save and review** → **Confirm**.
+
+Each SOQL subset import syncs on the same schedule as standard Salesforce imports — see **Sync timing and behavior** below.
 
 **Sync timing and behavior**
 
