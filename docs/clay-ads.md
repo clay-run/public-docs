@@ -134,7 +134,7 @@ These restrictions exist for compliance reasons, as third-party sourced contact 
 
 **Why the filters are locked:** The filters remain applied to your segment for as long as an ad sync is active. This prevents credits from being spent enriching contacts that would be excluded from the sync anyway.
 
-**Note:** CPJ filtering during ad syncs is currently available for Enterprise workspaces. Contact Clay support if you'd like this enabled for your workspace.
+For a full explanation of how Clay applies geographic and platform-level compliance rules — including what to do when you need to target non-US audiences — see [Clay Ads compliance best practices](https://university.clay.com/docs/clay-ads-compliance-best-practices).
 
 ### **Is this feature available on all plans?**
 
