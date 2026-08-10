@@ -50,6 +50,7 @@ You can import data from:
 -   Snowflake
 -   Google BigQuery
 -   Salesforce
+-   Salesforce SOQL (Enterprise)
 -   HubSpot
 
 ### Importing from Salesforce
@@ -90,6 +91,30 @@ Clay pulls data from Salesforce on two schedules:
 **Deleted records:** Clay does not remove deleted Salesforce records from Audiences immediately. Instead, the record is marked **Deleted in source**, which you can filter on in your audience. The weekly full sync reconciles hard-deleted records. If a Salesforce record is deleted and recreated (assigning it a new Salesforce ID), it will temporarily appear as a duplicate entry until the next weekly full sync resolves it. There is no self-serve option to trigger an early full sync — contact Clay support if you need an expedited cleanup.
 
 **Salesforce activities:** To import Salesforce Tasks and Events associated with your Accounts, go to your Salesforce source settings, select `Accounts`, and enable the **Also import activities (tasks and events) associated with these accounts** toggle. Accounts are associated automatically in the background. The Activity tab on each record's detail view then shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp. This toggle is only available for Accounts — there is no equivalent option for Contacts, Leads, or the People object. Even if your Salesforce CRM has Tasks or Events associated with contacts or leads, those activities will not appear in the People Activity tab in Audiences.
+
+### Importing from Salesforce with SOQL (Enterprise)
+
+**Available on Enterprise plans.** Enterprise customers can import a specific subset of Salesforce records into Audiences using a SOQL query — without importing all records of an object type. This lets you bring in exactly the accounts, contacts, leads, or opportunities that meet your criteria, using complex filters expressed directly in Salesforce Object Query Language (SOQL). Use this when you have privacy, compliance, billing, or data-ownership requirements that make an all-or-nothing CRM import a non-starter.
+
+To set up a SOQL-based Salesforce import:
+
+1.  In your Audiences workspace, click `Add data` → `Add Source` → select your **Salesforce integration**.
+    -   If you haven't connected Salesforce yet, click `+ Add account` and complete authentication first.
+2.  Select the **Salesforce object type** you want to import (Contacts, Accounts, Leads, or Opportunities).
+3.  Under **Record selection**, choose **Record subset** ("Filter records with a SOQL query").
+4.  Enter a **Subset name** — a label for this particular import (for example, `West Coast enterprise accounts` or `Active open opps`).
+5.  Write your **SOQL query** — a `SELECT` statement that specifies the fields and filters for the records you want. For example:
+    -   `SELECT Id, Name, BillingState FROM Account WHERE Type = 'Customer' AND BillingState = 'CA'`
+    -   Click **Test** to preview the matching records before saving.
+6.  Map the returned Salesforce fields to Audience columns, then click **Save and Confirm**.
+
+You can create multiple SOQL imports for the same Salesforce object to bring in different subsets — for example, one import for U.S. accounts and a separate one for EMEA accounts. Each subset gets its own name and syncs independently.
+
+Salesforce data imported via SOQL syncs on the same schedule as a standard Salesforce import: every **15 minutes** on Enterprise plans.
+
+For SOQL syntax, field requirements, and query best practices, see the [Salesforce SOQL source](salesforce-soql.md) reference.
+
+**If you don't see the Record subset option:** Contact your Growth Strategist to confirm the SOQL import feature is enabled for your workspace.
 
 ### Importing from HubSpot
 
