@@ -78,6 +78,48 @@ You can import data from:
 15.  Name the corresponding Clay fields.
 16.  Click `Save and Preview`, then `Confirm`.
 
+#### Importing a record subset with SOQL
+
+If your organization has privacy, compliance, or data-ownership requirements that prevent a full Salesforce CRM import, you can import a **record subset** instead — bringing in only the specific records your SOQL query selects.
+
+When adding a new Salesforce source in Audiences, choose a **Record selection** mode for each object type:
+
+-   **All records** — imports every record of that object type (the behavior described in the steps above).
+-   **Record subset** — imports only the records returned by your SOQL query.
+
+**To set up a SOQL record subset:**
+
+1.  Click `Add data` → `Add Source` → select your Salesforce integration.
+2.  Select the object type: **Accounts**, **Contacts**, or **Leads**.
+    -   **Note:** SOQL filtering for **Opportunities** is not yet available — use **All records** when setting up an Opportunities import.
+3.  Under **Record selection**, choose **Record subset**.
+4.  Enter a **Subset name** — this becomes the display name for this import in your Sources list.
+5.  Write your SOQL query. For example:
+    -   Enterprise accounts: `SELECT Id, Name, Website, SystemModstamp, IsDeleted FROM Account WHERE Type = 'Enterprise'`
+    -   EMEA leads: `SELECT Id, Email, FirstName, LastName, SystemModstamp, IsDeleted, ConvertedContactId FROM Lead WHERE Region__c = 'EMEA'`
+6.  Optionally, click **Generate with AI** to describe your filtering criteria in plain language — Clay writes the SOQL for you.
+7.  Click **Preview** to see sample records, then click **Confirm** to start the import.
+
+**Required fields in your SOQL query**
+
+Your query must include these operational fields for Clay to sync and deduplicate records correctly:
+
+| Object type | Required fields |
+|---|---|
+| Accounts | `Id`, `SystemModstamp`, `IsDeleted` |
+| Contacts | `Id`, `SystemModstamp`, `IsDeleted`, `AccountId` |
+| Leads | `Id`, `SystemModstamp`, `IsDeleted`, `ConvertedContactId` |
+
+Clay will warn you if a required field is missing before you confirm the import.
+
+**Multiple subsets per object type**
+
+You can add more than one SOQL import for the same object type — for example, one subset for enterprise accounts and another for partner accounts. Each appears as a separate entry in your Sources list and syncs independently.
+
+**Sync schedule**
+
+SOQL record subsets follow the same sync schedule as standard Salesforce imports — see **Sync timing and behavior** below.
+
 **Sync timing and behavior**
 
 Clay pulls data from Salesforce on two schedules:
@@ -731,7 +773,7 @@ Add a **Salesforce Update Record** action column directly inside your bulk enric
 
 1.  In your bulk enrichment, add your data enrichment columns as usual (for example, `Enrich Person` to find LinkedIn URL, email, or industry).
 2.  Click `Add enrichment` and search for **Salesforce** → select **Update Record**.
-3.  Set **Record ID** to the Salesforce Contact, Lead, or Account ID already stored in your Audience (the field imported from Salesforce or from your original SOQL import).
+3.  Set **Record ID** to the Salesforce Contact, Lead, or Account ID already stored in your Audience (the field imported from Salesforce or from your original [SOQL import](#importing-a-record-subset-with-soql)).
 4.  Map each enriched field to the corresponding Salesforce field you want to populate.
 5.  Click `Start Run` — the Update Record column fires alongside your enrichment columns and writes the enriched values directly to Salesforce.
 
