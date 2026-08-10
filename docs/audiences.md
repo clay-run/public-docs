@@ -91,6 +91,31 @@ Clay pulls data from Salesforce on two schedules:
 
 **Salesforce activities:** To import Salesforce Tasks and Events associated with your Accounts, go to your Salesforce source settings, select `Accounts`, and enable the **Also import activities (tasks and events) associated with these accounts** toggle. Accounts are associated automatically in the background. The Activity tab on each record's detail view then shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp. This toggle is only available for Accounts — there is no equivalent option for Contacts, Leads, or the People object. Even if your Salesforce CRM has Tasks or Events associated with contacts or leads, those activities will not appear in the People Activity tab in Audiences.
 
+### Importing from Salesforce via SOQL
+
+**Plan availability:** Available on **Growth** and **Enterprise** plans. This feature is rolling out to qualifying workspaces — if the **Import from SOQL** option is not visible in your workspace, contact your Growth Strategist to enable it.
+
+Customers with complex privacy, compliance, or data-ownership requirements can import a filtered subset of their Salesforce data into Audiences using a SOQL query — rather than importing all records from an object. Use this when an all-or-nothing CRM import isn't an option: for example, when you need only accounts in a specific region, contacts with a particular record type, or opportunities above a certain deal stage.
+
+Use SOQL import when you need to filter which Salesforce records come into Audiences. Use the standard [Salesforce import](#importing-from-salesforce) when you want all records from a Salesforce object (People, Accounts, Leads, or Opportunities).
+
+**To set up a SOQL import:**
+
+1.  Click `Add data` → `Add Source` → select your Salesforce integration.
+2.  In the import wizard, select **Import from SOQL** (rather than the standard full-object import).
+3.  Write a SOQL `SELECT` query to define which records to import. Fields must be explicitly named — `SELECT *` is not supported.
+    -   Example: `SELECT Id, Name, Industry FROM Account WHERE Region__c = 'EMEA'`
+    -   Keep [Salesforce's SOQL documentation](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql.htm) open while building your query. You can also use AI tools to generate SOQL queries from natural language descriptions.
+4.  Preview the returned records and map the fields to Audience fields.
+5.  Click **Confirm** to begin importing.
+
+**Limitations**
+
+-   **No aggregate queries.** SOQL imports in Audiences use Salesforce's Bulk API V2, which does not support `GROUP BY`, `HAVING`, or aggregate functions such as `COUNT()`. Import raw records and use Audiences segment filters to slice and aggregate your data.
+-   **No Salesforce write-back.** The export/write-back toggle is not currently available for SOQL import sources. To write enriched data back to Salesforce, add a **Salesforce Update Record** action column inside a bulk enrichment table — see [How do I write enriched fields back to existing Salesforce records from a bulk enrichment?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-bulk-enrichment) in the FAQs.
+-   **List Views and Reports not supported.** SOQL queries target Salesforce objects directly — you cannot import a Salesforce List View or Report via SOQL. Workaround: export your List View as a CSV and use [CSV import](#importing-from-csv) instead.
+-   **Custom objects require the API name.** Use the object API name with the `__c` suffix (for example, `Custom_Object__c`). A "sObject type not supported" error means the object name in your query doesn't match Salesforce's naming — verify it in Salesforce's Object Manager.
+
 ### Importing from HubSpot
 
 **Note:** Setup must be completed separately for Contacts, Companies, and Deals. HubSpot Deal import is currently in early access — contact your Growth Strategist to enable it for your workspace.
