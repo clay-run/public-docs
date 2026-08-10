@@ -62,6 +62,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 -   Re-use standard messaging stored in a central table
 -   Check against a static reference database, like a list of users
 -   Check a Do Not Contact list or verify whether a record has already been enriched, then branch actions based on yes/no
+-   Exclude contacts that already exist in a CRM or other reference table — see the [view filter exclusion pattern](#excluding-contacts-that-exist-in-another-table-view-filter-pattern) below
 -   Validate that a contact's email domain matches their company's domain — use a formula column to extract the domain from an enriched email address, then look it up against a table of company-level domains
 
 **Best practices**
@@ -76,6 +77,28 @@ Send Table Data **pushes** data from your current table into another table. It c
 -   Use single row lookup instead of multiple row lookup when you only need one result — it's faster
 -   If an expected field isn't visible in the result panel, the matched row in the source table likely has an empty value for that field — the panel only shows fields that have a value for the specific matched row. To add that column anyway, find a row whose matched source record has the field populated, open that lookup cell, and click **Add as column**.
 -   **Lookup not auto-running for new rows?** If the **Row Value** is a static string with no column reference (no `/` pick), Clay sees no upstream dependency and won't trigger the column when new rows are added. Fix: in **Run settings → Only run if**, add a condition that references an upstream column — for example, `/[Your source column] is present`. This creates the dependency Clay needs to fire the lookup automatically for each incoming row.
+
+### **Excluding contacts that exist in another table (view filter pattern)**
+
+When you want to work only with contacts that are **not** already in a reference table — for example, contacts whose company is not among your active CRM deals — use a lookup with a view filter:
+
+1. **Set up a reference table** containing the records you want to exclude. If your data lives in an external system (e.g., a CRM), export it as a CSV and import it into a new Clay table via **Tools → Import → Import from CSV**. Make sure the reference table has a stable identifier column, such as company domain.
+
+2. In your working table, add a **Lookup single row in other table** column and configure it:
+   - `Table to search` → your reference table
+   - `Target column` → the identifier column in the reference table (e.g., company domain)
+   - `Filter operator` → `Equals`
+   - `Row value` → the matching column from your current table (e.g., company domain)
+
+   When the lookup finds a match, the cell shows the matched record. When it finds no match, the cell shows **No Record Found** and stores `null` (empty).
+
+3. Add a **view filter**: click the **Filter** button (funnel icon) in the table toolbar, select your lookup column, and set the operator to **is empty**.
+
+   This shows only rows where the lookup returned no match — contacts whose company is **not** in your reference table. Rows that matched are hidden from the view but remain stored in the table; removing the filter brings them back.
+
+**Why company domain works better than company name for matching:** Names like "Acme" and "Acme Corp" won't match with `Equals` even though they refer to the same company. Domain (e.g., `acme.com`) is stable and consistent across data sources, making it a much more reliable match key.
+
+**Using the result beyond the view:** If you need to enrich or route only the non-matching rows rather than just filter the display, use the lookup cell's null state as a run condition on downstream columns. In **Run settings → Only run if**, select your lookup column and set the condition to **is empty** (meaning: only run when no match was found). See [Conditional runs](conditional-runs.md) for details.
 
 ### **Using `Lookup multiple rows in other table`**
 
