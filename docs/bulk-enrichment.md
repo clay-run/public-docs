@@ -134,6 +134,21 @@ The **Auto-enrich new records** toggle determines whether records that newly qua
 
 To set a schedule, click **Recurring enrichments** in the Run Setup panel and select your desired frequency.
 
+### Adding another audience segment
+
+You can connect multiple audience segments to a single Audiences bulk enrichment — there is no need to create a separate enrichment table for each audience.
+
+To add an audience segment to a bulk enrichment that has already been started:
+
+1.  Click **Pause** if the enrichment is currently running. The **Audiences** configuration is locked while a run is active — hovering over the disabled button shows "Pause this bulk enrichment to edit audiences."
+2.  In the **Run Setup** panel, click **Set up** in the **Audiences** row.
+3.  In the dialog that opens, select the additional audience segment(s) and click **Save**.
+4.  Resume the enrichment. Members of the newly-added segment are automatically enqueued when you choose **Continue where you left off**.
+
+**What changes and what doesn't:** Only newly-added segments' members are enriched on resume. Removing an audience from the dialog does not remove records already enqueued from that audience — those rows continue processing.
+
+If you want to keep your enrichments in a completely separate table instead, save your column setup as a [column group template](column-group-templates.md) (select columns → right-click → **Save as template**) or a [function](functions.md) (right-click → **Save as function**) and apply it when setting up the new bulk enrichment. Use a column template for a one-off copy; use a function when you'll reuse the same enrichment logic across many tables throughout the workspace.
+
 ### What happens when you click Start Run
 
 When you click **Start Run** on an Audiences bulk enrichment, Clay recalculates your **live segment at that moment** using your current filters — not the member list baked in when the bulk enrichment was first created. The live segment is the source of truth for the run.
