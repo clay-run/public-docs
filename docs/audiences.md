@@ -14,7 +14,7 @@ Use it to build dynamic segments across millions of records, run automated enric
 
 Setting up Audiences is four major steps:
 
-1.  **Import your data** — connect Salesforce, HubSpot, Snowflake, Google BigQuery, or Databricks and bring your records into Audiences.
+1.  **Import your data** — connect Salesforce, HubSpot, Snowflake, Google BigQuery, or Databricks (beta) and bring your records into Audiences.
 2.  **Create audiences** — build dynamic segments using filters to target the right contacts and accounts.
 3.  **Enrich and monitor** — run bulk enrichments and signals that write data permanently back to each record.
 4.  **Write back to your CRM** — sync enriched data and segment membership back to Salesforce.
@@ -49,7 +49,7 @@ You can import data from:
 -   CSV
 -   Snowflake
 -   Google BigQuery
--   Databricks
+-   Databricks (beta — contact your Growth Strategist to enable)
 -   Salesforce
 -   HubSpot
 
@@ -221,12 +221,12 @@ Audiences uses two systems to prevent duplicate records:
 
 Entity Resolution runs continuously in the background. It matches records by identifier strength:
 
--   **For People:** Professional profile URL → Email → Probabilistic matching (name + company + location + role)
--   **For Companies:** Professional profile URL → Domain → Probabilistic matching (name + location + industry)
+-   **For People:** LinkedIn URL → Email → Probabilistic matching (name + company + location + role)
+-   **For Companies:** LinkedIn URL → Domain → Probabilistic matching (name + location + industry)
 
 When a match is found, records merge into a single unified record in Audiences. **Deduplication happens in Clay only** — Audiences does not merge or alter records in your connected Salesforce org.
 
-Records need a high-confidence identifier to match. Auto-enrichment adds a professional profile URL and `CPJ ID` at no cost to improve matching.
+Records need a high-confidence identifier to match. Auto-enrichment adds `LinkedIn URL` and `CPJ ID` at no cost to improve matching.
 
 **Import record matching (beta)**
 
@@ -237,7 +237,7 @@ When importing from Salesforce or Snowflake, you can configure **Import record m
 To configure:
 
 1. In your import settings, find `Import record matching` and click `Edit`.
-2. Under `When`, choose an **alias field** — typically `Domain` for Companies or `Email` for People (additional options include a professional profile URL, phone number, and others).
+2. Under `When`, choose an **alias field** — typically `Domain` for Companies or `Email` for People (additional options include LinkedIn URL, phone number, and others).
 3. Under `In`, map the alias field to the corresponding field in each connected source.
 4. When a new record arrives, Audiences checks whether the alias value already exists. If it does, the new data is merged with the existing record instead of creating a duplicate.
 
@@ -334,7 +334,7 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
 
 1.  Navigate to an audience and click `Enrich` → `Add bulk enrich`.
 2.  Add enrichment columns as you normally would (e.g., `Enrich Person` for LinkedIn URL, title, phone).
-3.  Test on a small batch first — click `Run 10 rows` to verify output before running at scale.
+3.  Test on a small batch first — click `Run on 10 rows` to verify output before running at scale.
 4.  Open `Field Mapping` and map each column you want to save back to Audiences:
     -   Enable the auto-enrich toggle so that any new record entering this segment is automatically passed through the enrichment — typically within 15 minutes.
 5.  Click `Finish setup and run`.
@@ -535,7 +535,7 @@ To estimate API calls for initial export, divide record count by 10,000 and comp
 
 ## Reporting
 
-**Note:** `Reporting` is available on Enterprise plans.
+**Note:** `Reporting` is available on Enterprise plans and is currently rolling out — contact your Growth Strategist to enable it for your workspace.
 
 The `Reporting` tab shows how Clay has contributed to your audience data, and what that data drove downstream. Switch between `People` and `Companies` to scope the whole tab to that record type.
 
@@ -976,7 +976,7 @@ Define your audience filters before running Bulk Enrich. Credits are charged per
 
 ### Test enrichments on 10 rows before running at scale
 
-Before running across your full segment, click `Run 10 rows` and confirm the output is correct and field mapping is configured as intended. Given the credit implications of a misconfigured enrichment across millions of records, treat this as a standard step every time.
+Before running across your full segment, click `Run on 10 rows` and confirm the output is correct and field mapping is configured as intended. Given the credit implications of a misconfigured enrichment across millions of records, treat this as a standard step every time.
 
 ### Check your field mapping intent before hitting `Finish setup and run`
 
