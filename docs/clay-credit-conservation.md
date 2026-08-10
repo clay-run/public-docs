@@ -16,9 +16,9 @@ Clay credits are valuable resources that help you save both time by automating m
 
 **How does this save credits?**
 
-By default, auto-run is **on** for every new table — Clay automatically enriches each row as soon as it arrives. While this is useful for production workflows, it can consume credits faster than expected when you're still building or testing: add a large batch of rows before your setup is finalized and all enrichments fire immediately.
+By default, auto-run is **on** for every table — Clay automatically enriches each row as soon as it arrives. While this keeps production workflows current, it can consume credits faster than expected in two common situations: when you're still building or testing a table, and when you paste or import a large batch of rows into an existing table that already has enrichments configured — enrichments fire immediately on every row as it lands.
 
-The best practice is to **turn off table-level auto-run while building your table**. Once your setup is finalized and tested, turn it back on when you're ready to process your full list.
+The best practice is to **turn off table-level auto-run before adding rows** — whether you're setting up a new table or bulk-loading contacts into an existing one. Once you've added the rows and confirmed the data looks right, turn auto-run back on and choose which rows to process.
 
 **How do you implement this?**
 
@@ -27,15 +27,17 @@ To disable auto-run for the entire table (the master switch):
 1.  Click the `⛭` icon in the top toolbar to open Run Settings.
 2.  Toggle **Auto-run** off. The toggle shows **"Manual"** when disabled.
 
+**Note:** The Auto-run toggle is disabled while the table is actively running. If the table is running when you want to turn off auto-run, click **Stop** in the run summary panel at the bottom-right first, then toggle auto-run off.
+
 With table-level auto-run off, no columns will run automatically when rows are added — regardless of individual column settings. You can still trigger enrichments manually by clicking individual cells.
 
-**Recommended testing workflow:**
+**Recommended workflow before adding a large batch:**
 
-1.  Turn table-level auto-run **OFF** before adding any rows.
-2.  Add a small sample (5–10 rows).
-3.  Manually click individual cells to test enrichments.
-4.  Refine your configuration until results look right.
-5.  Turn auto-run back **ON** when you're ready to process the full list.
+1.  If the table is actively running, click **Stop** in the bottom-right run summary panel.
+2.  Turn table-level auto-run **OFF** (click `⛭` → **Run Settings** → toggle off).
+3.  Paste or import your rows.
+4.  Review the table to confirm the data is aligned and complete.
+5.  Turn auto-run back **ON** and choose `Update cells` to process the new rows — or select specific rows and right-click → **Run [N] rows** to enrich only those you've verified.
 
 To turn off auto-run for a single column instead of the whole table, click the column name → **Edit column** → toggle **Auto-run** off under **Run settings** → **Save**.
 
