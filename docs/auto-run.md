@@ -195,6 +195,23 @@ The **Update existing rows** toggle in your source column settings controls whet
 -   Conditional run: "Only if profile URL exists"
 -   **Result**: Rows with a profile URL → Enrichment runs; Rows without → Skipped
 
+**Pasting or importing a large batch into an existing table:**
+
+-   Table-level: ❌ OFF (turn off **before** adding rows)
+-   **Result**: New rows are added to the table but enrichments do not fire automatically — you decide exactly when and which rows get enriched.
+
+**Before pasting or importing a large batch of rows into an existing table that has enrichments configured, turn off table-level auto-run first.** When auto-run is enabled, Clay queues enrichments on every new row the moment it lands — consuming credits before you can review the data.
+
+To add rows safely:
+
+1.  If the table is currently running, click **Stop** in the run summary panel at the bottom-right to cancel the active run. (The Auto-run toggle is disabled while a run is in progress — you must stop it first.)
+2.  Click the `⛭` icon → **Run Settings** → toggle **Auto-run** off.
+3.  Paste or import your rows.
+4.  Review the table to confirm the data is aligned correctly.
+5.  Re-enable Auto-run and choose `Update cells` to process all new rows — or select specific rows and right-click → **Run [N] rows** to enrich only the rows you've verified.
+
+**Note:** Clicking **Stop** is not the same as turning off Auto-run. Stop cancels cells currently in the run queue, but if Auto-run remains on, any rows you add after stopping will still trigger enrichments. Use the Auto-run toggle in Run Settings — not Stop — to prevent enrichments from running on newly added rows.
+
 ## Best practices
 
 **When building/testing tables:**
@@ -204,6 +221,13 @@ The **Update existing rows** toggle in your source column settings controls whet
 3.  Manually test enrichments by clicking cells.
 4.  Refine your setup.
 5.  Turn auto-run ON when ready for production.
+
+**When adding a large batch of rows to an existing table:**
+
+1.  If the table is actively running, click **Stop** first to cancel the current run.
+2.  Turn table-level auto-run OFF before pasting or importing rows.
+3.  Add your rows, then review the table to confirm the data is correct and columns are aligned.
+4.  Turn auto-run back ON and choose `Update cells` — or manually select rows and right-click → **Run [N] rows** to enrich only the rows you've verified.
 
 **When running production workflows:**
 
