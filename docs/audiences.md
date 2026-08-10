@@ -669,7 +669,14 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 ### How do I export my audience data to CSV?
 
-The Audiences screen does not have a direct CSV download button, and there is currently no built-in path to download audience data as a CSV file directly from the Audiences screen.
+The Audiences screen does not have a direct CSV download button. To download audience data as a CSV, first send the segment to a Clay table using **Add to workbook**, then export that table:
+
+1. Open the audience segment you want to export.
+2. Click **Send** → **Export action** → **Add to workbook**. Clay creates a Clay table containing up to 50,000 rows from that segment.
+3. Open the table. If any rows are checked, uncheck them first — the toolbar shows **Tools** only when no rows are selected.
+4. Click **Tools** → **Export** → **Download CSV**.
+
+For segments with more than 50,000 records, export in batches by applying filters to create smaller sub-segments and repeating steps 2–4 for each batch.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
