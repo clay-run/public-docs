@@ -39,6 +39,8 @@ _They cannot:_
 
 Viewers have limited access to protect sensitive data. By default, they can only view workspace content and **cannot create new tables or workbooks**.
 
+Viewers can also authorize and use Clay's MCP integration to access Clay through AI tools like Claude, ChatGPT, or Glean.
+
 ### Granting Viewers additional access
 
 Viewers can be granted Editor access to specific tables or workbooks, or added as workbook collaborators. When given this access, they can:
@@ -96,7 +98,7 @@ To invite a new member to your workspace:
 To update a member's role:
 
 -   Go to `Settings` → `Team`.
--   Find the member's name and use the dropdown menu next to their name to select the desired role.
+-   Find the member's name and use the dropdown menu next to their name to select the desired role.\
 -   Changes are applied immediately.
 
 ### **Remove a team member**
