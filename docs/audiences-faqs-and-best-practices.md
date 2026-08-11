@@ -39,7 +39,7 @@ You don't need a clean CRM to get started — CRM cleanup is often the first use
 Yes. Segments update in real time as records enter or exit your filter criteria. The refresh frequency depends on your plan:
 
 -   **Enterprise plan:** CRM and data warehouse syncs run every 15 minutes, and segments update every 15 minutes.
--   **Growth plan:** CRM and data warehouse syncs run daily, and segment membership is recalculated hourly.
+-   **Growth plan:** CRM and data warehouse syncs run daily, and segment membership is recalculated approximately every 20 minutes.
 
 Enrichments configured with `Auto-enrich new records` enabled automatically process new records entering a segment, typically within 15 minutes.
 
