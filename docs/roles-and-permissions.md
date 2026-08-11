@@ -98,7 +98,7 @@ To invite a new member to your workspace:
 To update a member's role:
 
 -   Go to `Settings` → `Team`.
--   Find the member's name and use the dropdown menu next to their name to select the desired role.\
+-   Find the member's name and use the dropdown menu next to their name to select the desired role.
 -   Changes are applied immediately.
 
 ### **Remove a team member**
