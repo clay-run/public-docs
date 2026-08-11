@@ -41,8 +41,6 @@ Build a new table of lookalike companies from a seed list. Results are organized
 | Table or Audience | 2 credits / result | 3 credits / result |
 | List of URLs | 1 credit / result | 1.5 credits / result |
 
-**Credit timing:** Reviewing and refining clusters (step 4) is free — no credits are charged during the preview. Credits are incurred when you click **Continue** (step 5) to import results into a table, as each result is fetched during source population.
-
 ## `Action` Find Company Lookalikes
 
 Add a column to an existing table to enrich each row with companies similar to that row's company.
