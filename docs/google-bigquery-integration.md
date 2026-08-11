@@ -2,7 +2,7 @@
 title: Google BigQuery integration
 description: Import records from BigQuery into Clay using SQL queries, and send
   enriched data back by inserting, looking up, updating, or upserting rows in
-  your BigQuery tables.
+  your BigQuery…
 last_synced: 2026-04-26T01:40:03.104Z
 ---
 
