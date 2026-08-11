@@ -932,10 +932,11 @@ To merge them, re-upsert or re-import the records so the dedup check runs again 
 
 ### Does syncing my CRM to Audiences cost credits?
 
-CRM import is free; writing data back to your CRM costs Actions. Here is the full breakdown:
+CRM import is free, and the Audiences native Salesforce export sync is also free. Here is the full breakdown:
 
 -   **CRM sync (import):** Free. Clay reads your CRM and imports or refreshes records in your Audience at no credit cost. Connecting a CRM or data warehouse as a source requires Growth plan or above.
--   **CRM write-back (export):** Costs 1 Action per record updated; no Data Credits are consumed. Updating a CRM record from Audiences — for example, syncing enriched fields back to Salesforce or updating a HubSpot contact via a workflow connected to a segment — falls under the "Exporting and executing GTM tasks" billing category.
+-   **Audiences native Salesforce export sync:** Free. The built-in daily sync that pushes Audiences data back to Salesforce does not charge Action credits per record — whether the record was updated once or many times before the sync ran, no Actions are consumed.
+-   **Direct Salesforce table actions (Update Record, Create Record, Upsert Object):** These Salesforce actions, when used as enrichment columns in a Clay table, cost 1 Action per record; no Data Credits are consumed. This is a separate path from the Audiences native export sync.
 -   **Enrichment:** Costs credits. Running an enrichment on Audience records (for example, to update job titles or find contact data) uses 1 Action per record enriched plus Data Credits that vary by provider and data type — the same billing as enriching in a regular Clay table.
 
 For a full breakdown of how Actions and Data Credits work together, see [Actions & Data Credits](./actions-data-credits.md).
