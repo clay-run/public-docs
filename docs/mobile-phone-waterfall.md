@@ -97,3 +97,27 @@ ClearoutPhone is available for every optimization option and runs on your own Cl
 
 **Will stricter validation cost more credits?**
 It can. Rejecting more numbers means the waterfall calls more providers per contact before it finds an acceptable result, which can increase spend and reduce fill rate — in exchange for higher-quality output.
+
+**Why do some rows show "Run condition not met" on provider or validation columns?**
+
+This is expected when the waterfall is working correctly. "Run condition not met" on a subset of rows — not all rows — means the waterfall's built-in logic skipped that step for those rows:
+
+- **An earlier provider already found a valid number for that row.** The Mobile Phone waterfall runs providers in sequence and stops as soon as one returns a result (or a validated result, if validation is enabled). Once an earlier provider succeeds for a row, all subsequent provider columns are skipped for that row — they show "Run condition not met" because the built-in condition "only run if no valid number has been found yet" is no longer true. This is the waterfall stopping early as intended, saving credits by not running additional providers once a match is found.
+
+- **The corresponding provider returned no number, so the validation step was skipped.** Each validation column runs only when the provider step before it returned a phone number. If a provider found nothing for a row, the paired validation column shows "Run condition not met" — there is no number to check. No credits are charged for skipped validation steps.
+
+In both cases, "Run condition not met" on some rows is not an error — it means the waterfall is operating as designed.
+
+**If all rows on every provider step show "Run condition not met"**, that indicates a run condition set on the waterfall column itself or on each provider step is blocking all rows from running. This is different from normal per-row skipping. To diagnose: click into one of the affected cells and use the **Explain** button next to the "Run condition not met" status to see why the condition evaluated to false for that row, then review and adjust the **Only run if** condition on the waterfall column or that provider step. See [Conditional runs](conditional-runs.md) for how run conditions work.
+
+**What match rate should I expect?**
+
+Individual phone providers typically cover only 20–40% of contacts — that low per-provider rate is why the waterfall exists. By stacking providers in sequence, each one checking contacts that previous providers missed, overall coverage rises substantially above what any single provider achieves.
+
+Match rates vary based on:
+
+- **Input data quality** — providing a LinkedIn or personal profile URL is the single strongest input; rows with only a name and company domain will have lower match rates.
+- **Your list composition** — coverage differs by geography, industry, and contact seniority. Select the regional waterfall option that matches where your contacts are based (for example, `US & Canada Mobile Phone` or `Europe Mobile Phones`).
+- **Number of providers** — a longer provider sequence gives more opportunities to find a number that earlier providers missed. If your current match rate is low and input data is populated, try expanding the waterfall sequence by adding more providers.
+
+If you're seeing unexpectedly low results after providing strong input data and using multiple providers, switch from `Mobile Phone (Global)` to a region-specific option if most of your contacts are in one geography.
