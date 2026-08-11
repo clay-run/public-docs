@@ -2,7 +2,7 @@
 title: Google BigQuery integration
 description: Import records from BigQuery into Clay using SQL queries, and send
   enriched data back by inserting, looking up, updating, or upserting rows in
-  your BigQuery…
+  your BigQuery tables.
 last_synced: 2026-04-26T01:40:03.104Z
 ---
 
@@ -81,8 +81,8 @@ Optional:
 
 **Things to keep in mind**
 
--   **Each Clay row runs its own live query.** The Lookup Row action runs once per row in your Clay table and queries BigQuery in real time each time. The 50,000-row cap described above applies only to the Import Data source — there is no Clay-side limit on the size of the BigQuery table you're looking up against.
--   **Performance and cost depend on your BigQuery table's indexing.** Because each Clay row issues a separate SELECT query, query speed and BigQuery-side scan costs are determined by how well your BigQuery table is clustered or partitioned on the lookup column(s). If the lookup column is not clustered or the table is not partitioned on it, BigQuery may scan the entire table for each row, which can be slow and expensive at scale. To minimize cost and latency, cluster or partition your BigQuery table on the column(s) you plan to look up by before running at large scale.
+-   **Queries always hit BigQuery live — results are not cached.** The Lookup Row action queries your BigQuery table directly every time it runs. The 50,000-row cap described above applies only to the Import Data source — there is no Clay-imposed limit on the size of the BigQuery table you're looking up against.
+-   **Performance and cost depend on your BigQuery table's clustering or partitioning.** Clay issues live SELECT queries against your BigQuery table for each enrichment run. If the lookup column is not clustered or the table is not partitioned on that column, BigQuery may scan the full table on each query, increasing both cost and latency at scale. To minimize scan costs and query time, cluster or partition your BigQuery table on the column(s) you plan to look up by before running at large scale.
 
 ### `Action` Update row in BigQuery
 
