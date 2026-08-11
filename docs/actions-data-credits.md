@@ -57,7 +57,7 @@ Features that use an Action:
 -   Executing GTM work: sending emails, posting to Slack, generating Notion briefs.
     -   **Clay sequencer**: 1 Action per lead added to campaign (not per email sent).
     -   **External sequencer**: 1 Action per record exported to the external sequencer.
--   Direct CRM write actions in Clay tables (Salesforce Update Record, Create Record, Upsert Object; HubSpot Update Contact; etc.). The Audiences native Salesforce export sync does not consume Actions — only direct CRM table actions do.
+-   CRM exports and syncs (Salesforce, HubSpot, etc.).
 -   Data warehouse exports and syncs.
 -   HTTP API calls.
 -   Ads audience exports (e.g., LinkedIn, Facebook).
@@ -72,7 +72,7 @@ Features that use an Action:
 -   Manual data entry.
 -   Using formulas for scoring and normalization.
 -   Sculptor.
--   Creating and managing audiences.
+-   Creating audiences (only the export counts).
 
 ### How many Actions do I need?
 
