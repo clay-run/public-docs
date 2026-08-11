@@ -1,7 +1,7 @@
 ---
 title: Audiences
 description: "Clay Audiences is available on Growth and Enterprise plans. Launch workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above. Trial workspaces do not have access to Audiences."
-last_synced: 2026-07-02T20:01:45.311Z
+last_synced: 2026-08-11T18:20:28.540Z
 ---
 
 # Audiences
@@ -529,6 +529,12 @@ Export sync behavior:
 -   **Subsequent syncs:** Incremental — only changed records are processed.
 
 To estimate API calls for initial export, divide record count by 10,000 and compare against your Salesforce limit.
+
+**Seeing your API usage in Clay:** Your Salesforce source settings in Audiences show an `API usage` card — a percentage of your daily quota, plus `Calls used` for the `Last 24 hours`. Clay reads these figures from Salesforce's Limits API.
+
+Reading that endpoint takes a permission beyond the one that authenticates the connection. The Salesforce user Clay runs as needs `View Setup and Configuration` in addition to `API Enabled`; `API Enabled` alone is enough to connect and make ordinary API calls, but not to read your quota.
+
+**Note:** An `API usage` card reading 0% with `0 / 0` calls used means Clay couldn't read your quota from Salesforce — not that nothing has run. Ask your Salesforce admin to open the connected app, go to Manage → Edit Policies, and confirm the Run As user. That user needs `View Setup and Configuration` through its profile or a permission set. Clay caches quota figures for 15 minutes, so allow that long before reloading.
 
 **Note:** CRM export is admin-only. Enrichments and signals follow standard Clay table pricing.
 
