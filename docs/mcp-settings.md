@@ -36,6 +36,8 @@ _For more information about functions, check out our_ [_full doc_](https://unive
 
 ## Hiding or showing default enrichment functions
 
+**Note:** This setting is currently in beta — if you don't see `MCP` in your workspace sidebar, contact support to request access.
+
 By default, Clay exposes a set of built-in enrichment tools through MCP — including email lookup, website traffic, tech stack, open jobs, and latest funding. These are the tools an AI client invokes when a rep asks for basic contact or company data.
 
 Workspace admins can hide all of these default tools from MCP at once using the **Hide default functions from MCP** toggle on the MCP settings page:
