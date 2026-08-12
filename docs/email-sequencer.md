@@ -213,6 +213,20 @@ Be sure to press `Save settings` after making edits. Note: deleting a campaign s
 
 If you added or edited a **Clean variable** and it is not appearing in your message, check that the **Fallback** field ("Simple text to display if variable is empty") is filled in — this field is required, and the variable will not save if left blank.
 
+### Why doesn't my Claygent or AI column appear as a variable in the email template?
+
+Claygent (web research AI) columns store their output as a structured object with multiple sub-fields — Response, Reasoning, Confidence, Steps Taken, and others. The email template's **Clean variable** picker only lists plain-text columns, so a Claygent column does not appear in the picker by default.
+
+To use the AI output as a personalization variable in your message sequence:
+
+1. In your source table, click a populated cell in the Claygent column to open the cell details panel.
+2. Hover over the **Response** value — an **Add to column** button appears.
+3. Click **Add to column** and give the new column a name (for example, "First Name").
+4. Re-run the `Sync lead data to campaign` column in your source table so the new column's data is pushed to the campaign.
+5. Open the campaign's **Message sequence**, type `/` where you want the personalization, select **Clean variable**, and pick the new column from the list.
+
+**Editing a live campaign:** If your campaign is already running, you must pause it before changing the message template — open the campaign's `Setup` tab and click **Pause**. Make your edits to the message sequence, then relaunch the campaign.
+
 ### Why can't I see or edit the Message sequence section?
 
 If your campaign is active, all settings — including the Message sequence — are locked. To make edits, open the campaign's `Setup` tab and click `Pause`. Once paused, you can edit message copy and campaign settings. Note that you cannot change the total number of messages while paused — to add or remove messages, complete the campaign and create a new one.
