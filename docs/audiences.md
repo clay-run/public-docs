@@ -78,6 +78,26 @@ You can import data from:
 15.  Name the corresponding Clay fields.
 16.  Click `Save and Preview`, then `Confirm`.
 
+#### Importing a record subset with SOQL
+
+The Salesforce import flow in Audiences also supports a **Record subset** option: instead of importing all records of an object type, you write a custom SOQL query to bring in only the specific records you need. This lets organizations with privacy, compliance, billing, or data-ownership requirements import exactly the Salesforce data they need — without an all-or-nothing CRM sync.
+
+You can create multiple subset imports for the same Salesforce object type — for example, separate subsets for APAC and EMEA accounts — each appearing as its own named import in your Audiences settings.
+
+**To add a record subset import:**
+
+1.  Click `Add data` → `Add Source` → select your **Salesforce** integration, then click **Add records**.
+2.  Select the Salesforce object type: **Contact**, **Account**, **Lead**, **Opportunity**, or **Custom Object**.
+3.  Under **Record selection**, choose **Record subset**.
+4.  Enter a **Subset name** to label this import (for example, `APAC Enterprise Accounts`).
+5.  Write a SOQL `SELECT` query to define which records to import:
+    -   Your query must include `Id`, `SystemModstamp`, and `IsDeleted` in the `SELECT` clause — Clay uses these fields to track changes and deletions during incremental syncs. For **Contact** imports, also include `AccountId`; for **Lead** imports, include `ConvertedContactId`; for **Opportunity** imports, include `AccountId`.
+    -   To generate a query from a plain-English description, click **Generate SOQL**, describe what you want, then click **Generate**. The AI writes a valid query with all required fields already included.
+    -   For SOQL syntax reference, see [Salesforce's SOQL documentation](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql.htm).
+6.  Preview the matching records, then click **Confirm**.
+
+Record subset imports sync on the same schedule as standard Salesforce imports — every **15 minutes** incrementally on Enterprise plans (once daily on Growth plans), with a full sync every 7 days.
+
 **Sync timing and behavior**
 
 Clay pulls data from Salesforce on two schedules:
