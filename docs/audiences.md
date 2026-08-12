@@ -78,6 +78,28 @@ You can import data from:
 15.  Name the corresponding Clay fields.
 16.  Click `Save and Preview`, then `Confirm`.
 
+**Importing a Salesforce record subset with SOQL**
+
+Available on **Growth and Enterprise plans**. When setting up a Salesforce import in Audiences, each object type offers a **Record selection** step with two options:
+
+-   **All records** — imports every record of the selected Salesforce object type.
+-   **Record subset** — uses a custom SOQL query to import only the records that match specific criteria.
+
+Record subsets let you bring exactly the Salesforce data you need without importing your entire CRM. This is especially useful when you have privacy, compliance, or data-ownership requirements that make an all-or-nothing import impractical.
+
+**To set up a SOQL-filtered record subset:**
+
+1.  In the Salesforce import setup, select the object type (People, Accounts, Leads, or Opportunities).
+2.  Under **Record selection**, choose **Record subset**.
+3.  Enter a **Subset name** — this label identifies the import in your Audiences sidebar.
+4.  Enter a SOQL `SELECT` query. The query must:
+    -   Use explicitly named fields (no `SELECT *`).
+    -   Include operational sync fields: `Id`, `SystemModstamp`, and `IsDeleted`. Contacts and Opportunities also require `AccountId`; Leads also require `ConvertedContactId`.
+5.  (Optional) Click **Generate with AI** to write a SOQL query from a plain-language description.
+6.  Click **Preview** to verify the query returns the expected records, then save.
+
+You can add multiple SOQL subsets per object type to bring in distinct groups of records from the same Salesforce org. Each subset syncs on the standard Audiences schedule — 15-minute incremental syncs on Enterprise plans, plus a weekly full sync.
+
 **Sync timing and behavior**
 
 Clay pulls data from Salesforce on two schedules:
