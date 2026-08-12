@@ -78,6 +78,25 @@ You can import data from:
 15.  Name the corresponding Clay fields.
 16.  Click `Save and Preview`, then `Confirm`.
 
+#### Importing a record subset using SOQL (Enterprise)
+
+**Available on Enterprise plans.** Enterprise workspaces can import exactly the Salesforce records they need — rather than all records for an entire object — by writing a SOQL query. Use this when privacy, compliance, billing, or data-ownership requirements make an all-or-nothing CRM import impractical.
+
+To import a Salesforce record subset:
+
+1.  Click `Add data` → `Add Source` → select your Salesforce connection.
+2.  Select the **Object type**: Contacts, Accounts, Leads, Opportunities, or a custom Salesforce object.
+3.  Under **Record selection**, choose **Record subset**.
+4.  Enter a **Subset name** — this becomes the display name for this import in your Sources list.
+5.  Write your **SOQL query** in the query editor. The query must be a valid `SELECT` statement with explicitly named fields. Include the required operational fields (`Id`, `SystemModstamp`, `IsDeleted`) and any relationship fields needed for record merging — for example, `AccountId` for Contacts and Opportunities, or `ConvertedContactId` for Leads. Clay validates and warns if any recommended fields are missing.
+    -   **Generate SOQL with AI:** Click **Generate SOQL**, describe in plain text what records you want — for example, *"Active contacts at enterprise accounts in North America with an open opportunity"* — and Clay generates a SOQL query from your description.
+6.  Click **Test** to preview matching records and confirm the query returns what you expect before committing.
+7.  Click **Confirm** to start the import.
+
+You can add multiple subset imports for the same object type — for example, two separate SOQL imports for Contacts targeting different account segments. Each subset appears as a separate entry in your Sources list with its own display name.
+
+SOQL subset imports follow the same incremental and full sync schedules as the all-records Salesforce import — see **Sync timing and behavior** below. For SOQL syntax guidance, see the [Salesforce SOQL source](salesforce-soql.md) documentation or the [Salesforce SOQL reference](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql.htm).
+
 **Sync timing and behavior**
 
 Clay pulls data from Salesforce on two schedules:
