@@ -66,6 +66,8 @@ The same workspace-level beta access also unlocks a Routines endpoint for trigge
 -   `POST /routines/{routine_id}/run` — submit input records to a Clay function and start an enrichment run.
 -   `GET /routines/run/{routine_run_id}/results` — poll for results once the run completes.
 
+**Note:** To stop an in-progress batch run from the UI, go to the **API & CLI** page in your workspace and click the stop icon next to the run in the routine runs table. The stop button appears only for batch runs that are currently `in_progress` — it is not available for inline runs or runs that have already completed. Workspace Admins and Members can stop runs; Viewers and SalesReps cannot. Currently in open beta — available on Enterprise, Growth, and Launch plans.
+
 Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is under **Settings → Account → API keys** and is distinct from the personal API key on your profile page.
 
 **Note:** A 401 (`Authentication required`) from `api.clay.com/public/v0` means your workspace hasn't been provisioned for the Public HTTP API — this applies even if your API key is visible in settings. Regenerating the key will not fix a provisioning 401. [Contact Clay support](https://www.clay.com/contact-form) to request workspace enablement.
