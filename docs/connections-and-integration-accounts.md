@@ -91,13 +91,14 @@ If you are unsure whether a connected account is still working — for example, 
 1.  Click your profile picture in the top-right and select `Settings`.
 2.  In the sidebar, select the `Connections` tab.
 3.  Click into the integration you want to check.
-4.  Click **Verify** next to any account.
+4.  Click **Verify** next to any account, if the button appears. Some integration types do not support automated verification and will show an **Unknown** status badge instead of a Verify button.
 
 Clay tests the connection and shows a status badge:
 
 -   **Connected** (green) — The credential is valid and the connection is working normally.
 -   **Warning** (orange) — The connection is working but something may need attention, such as approaching a quota limit.
 -   **Error** (red) — The credential is invalid or expired and needs to be re-authenticated.
+-   **Unknown** (neutral) — The connection type does not support automated health verification. Clay cannot test whether this integration's credential is still valid. This does not mean the connection is broken — it means no automated check is available for this integration type.
 
 If the status shows **Warning** or **Error**, click the badge and select **Reconnect** to re-authenticate the account.
 
