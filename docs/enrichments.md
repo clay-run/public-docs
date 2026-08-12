@@ -144,7 +144,7 @@ This error means Clay sent too many requests to the AI model provider (such as O
 
 **To rerun the rows that already errored**
 
-After saving the delay setting, right-click the column header and choose **Run column** → **Run [N] rows with errors or no result**. This queues all errored rows for a fresh pass using the updated, delayed configuration.
+After saving the delay setting, right-click the column header and choose **Run column** → **Run N empty or out-of-date rows**. This queues all errored rows for a fresh pass using the updated, delayed configuration.
 
 **If you are using your own AI provider API key**
 
