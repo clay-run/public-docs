@@ -1,6 +1,6 @@
 ---
 title: Workspace settings
-description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, agency setups, deletion, and recovering a previous workspace.
+description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, IP access restrictions, agency setups, deletion, and recovering a previous workspace.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -90,6 +90,31 @@ To update your billing email:
 SSO is not configured through the Clay workspace settings UI — there is no self-serve configuration panel. To set up SSO for your workspace, contact Clay support. SSO is available on **Enterprise** plans at no additional cost, and as a paid add-on on annual Pro and annual Growth plans.
 
 See [Single Sign-On (SSO)](./single-sign-on.md) for full details on eligibility, the setup process (handled by Clay's support team via WorkOS), how login behavior changes once SSO is enabled, and important notes on user provisioning.
+
+## IP access restrictions
+
+**Currently in alpha — contact Clay support to request access for your workspace.**
+
+Workspace admins can restrict which IP addresses are allowed to connect to the workspace. When enabled, Clay enforces separate allowlists for browser access and API access. Connection attempts from IP addresses not on an allowlist are blocked.
+
+**Who can use this:** Only workspace admins can view and configure IP access restrictions. The **Security** section only appears in workspace settings when this feature is enabled for your workspace.
+
+IP access restrictions can be applied to two channels independently:
+
+-   **Web app** — browser sign-in and table access.
+-   **API** — API keys, webhooks, and integrations.
+
+**To configure IP access restrictions:**
+
+1.  Go to `Settings` > `Workspace settings` and scroll to the **Security** section.
+2.  Enable the restriction toggle for **Web app**, **API**, or both.
+3.  Click **Add allowlist** to create a named allowlist of IP addresses or CIDR ranges. Each allowlist supports up to 50 entries.
+4.  Repeat to add additional allowlists — for example, one for your office network and one for your VPN.
+5.  Click **Save changes** to apply. All edits are staged as a draft and only take effect when saved.
+
+**Safety check:** If saving a configuration would block your own current IP address, Clay surfaces a warning before applying the change — you cannot accidentally lock yourself out of the workspace.
+
+**What blocked users see:** Users who attempt to access the workspace from a blocked IP address see: "You are not allowed to connect to this workspace from your current IP address. Please connect to your VPN or corporate network and try again, or contact a workspace admin if you believe this is a mistake."
 
 ## Beta Program
 
