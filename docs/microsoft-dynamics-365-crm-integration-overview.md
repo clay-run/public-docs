@@ -42,7 +42,7 @@ Optionally, you can set this account as the default for your workspace.
 
 ## Connecting with a service account
 
-For enterprise and team setups, we recommend connecting Dynamics 365 to Clay using a **dedicated service account** — a shared Microsoft account — rather than a personal user account. This prevents connection disruptions if an individual's credentials change or a team member leaves.
+For enterprise and team setups, we recommend connecting Dynamics 365 to Clay using a **dedicated service account** — a shared Microsoft account — rather than a personal user account. This prevents connection disruptions if an individual's credentials change or a team member leaves. It also keeps Clay's activity clearly distinguishable in your Dynamics audit trail: all changes made through Clay appear in Dynamics' audit history attributed to the connected account, so a dedicated integration account makes it easy to identify which changes came from Clay.
 
 **Requirements for the service account:**
 
@@ -52,9 +52,33 @@ For enterprise and team setups, we recommend connecting Dynamics 365 to Clay usi
 
 To connect with a service account, follow the same setup steps above and sign in with the service account credentials at Step 3.
 
-**Note on MFA re-authentication:** The OAuth connection requires re-authentication when your Azure AD Conditional Access policies enforce MFA or sign-in frequency limits (commonly every 7 days). If the service account is not re-authenticated within your organization's required window, the connection will stop working. To avoid disruptions, re-authenticate proactively on schedule or work with your Azure AD administrator to configure a sign-in frequency exemption for the service account used with Clay.
+**Note on MFA re-authentication:** The OAuth connection requires re-authentication when your Azure AD Conditional Access policies enforce MFA or sign-in frequency limits (commonly every 7 days). If the service account is not re-authenticated within your organization's required window, the connection will stop working. To avoid disruptions, re-authenticate proactively on schedule, or work with your Azure AD administrator to configure a sign-in frequency exemption for the service account used with Clay. If your organization cannot exempt a service account from MFA, consider using a Service Principal connection instead (see below), which has no MFA dependency.
 
-**Entra Service Principal (app-only) authentication is not currently supported.** The Dynamics 365 connection requires signing in with a Microsoft user account (personal or service account). If your organization requires app-only authentication without user account MFA dependencies, please reach out to Clay support to register your interest.
+## Connecting with an Entra Service Principal
+
+The Dynamics 365 integration also supports connecting via a **Microsoft Entra app registration (Service Principal)** using client credentials. This method authenticates as your registered Azure app rather than a named user, so it never requires MFA re-authentication and does not need a Dynamics 365 user license for the connecting account.
+
+Changes made through a Service Principal connection are attributed to the **Application User** registered in your Dynamics environment (configured in the Power Platform admin center), not a named individual account. This makes Clay's activity clearly identifiable in your Dynamics audit trail.
+
+**Requirements:**
+
+-   A Microsoft Entra app registration with a client secret
+-   The app registered as an **Application User** in your Dynamics 365 environment with a security role assigned (configured in the [Power Platform admin center](https://admin.powerplatform.microsoft.com))
+
+**To connect with a Service Principal:**
+
+**Step 1:** Visit the **Settings** page and navigate to **Connections.**
+
+**Step 2:** Click **+ Add Connection**, select **Dynamics 365 CRM**, and choose **Service Principal** as the authentication method.
+
+**Step 3:** Enter the following from your Entra app registration:
+
+-   **Environment URL** — your Dynamics 365 environment URL (for example, `https://myorg.crm.dynamics.com`)
+-   **Directory (tenant) ID** — the tenant ID from your app registration's overview page in the Entra portal
+-   **Application (client) ID** — the client ID from your app registration's overview page
+-   **Client secret** — a client secret created for the app registration
+
+**Step 4:** Name your account key and save.
 
 ## [‍](https://app.arcade.software/share/IiX3ez8JQvNmSDhn9F7w)Import your Microsoft Dynamics data into Clay
 
