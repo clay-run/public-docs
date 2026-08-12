@@ -78,11 +78,11 @@ The native Clay MCP contact enrichment — including the "Find and Enrich list o
 
 The `Enable for MCP` option requires a modern Launch, Growth, Enterprise, or Legacy Enterprise plan.
 
-### How far back does signal activity go when I ask questions about accounts via Claude or ChatGPT?
+### Can I retrieve signal and activity data for accounts through Claude or ChatGPT?
 
-When you use the `ask-question-about-accounts` tool through Claude or ChatGPT, signal activity is limited to the **last 90 days**. Activity older than 90 days is not returned by that tool — this limit is fixed and cannot be extended from within a prompt.
+Yes. The `ask-question-about-accounts` tool — available on Launch, Growth, and Enterprise plans with Clay Audiences enabled — queries signal events and activity data for any account in your Audiences. The tool returns all available signal events on the record (no time-based cap) and activity data from the **past 365 days**.
 
-If you need signal data beyond 90 days, use the `Get Audiences Activity` action in a Clay table. It retrieves signal and activity events for an Audiences record and lets you set a longer lookback window. To make this available directly from Claude or ChatGPT, wrap `Get Audiences Activity` in a Clay Function and enable it for MCP — see [Enabling a function for MCP](#enabling-a-function-for-mcp) above.
+For bulk retrieval of signal and activity events — or to set a custom lookback window — use the `Get Audiences Activity` action in a Clay table instead. It has a configurable lookback window (default: 90 days, maximum: 365 days). To make it callable from Claude or ChatGPT, wrap it in a Clay Function and enable it for MCP — see [Enabling a function for MCP](#enabling-a-function-for-mcp) above.
 
 ### Does Clay provide an MCP server URL I can paste into any AI tool?
 
