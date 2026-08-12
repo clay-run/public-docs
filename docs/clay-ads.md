@@ -234,7 +234,9 @@ This is expected behavior. Meta enforces a 60-day expiry on OAuth tokens — whe
 
 ### **Why do I see "No ad accounts found" when setting up my Meta Ads destination?**
 
-"No ad accounts found" in the Configure ad accounts step means Clay authenticated with Meta but received no ad accounts for the selected connection. The cause and fix depend on which authentication method you used.
+"No ad accounts found" in the Configure ad accounts step means Clay authenticated with Meta successfully but no ad accounts were returned for the selected connection.
+
+**Note:** If you see a red **"Failed to load Meta Ads accounts. Please try again."** error instead, that indicates an expired or invalid token — go to **Settings → Connections**, find your Meta integration, click the **…** menu next to the account, and select **Reconnect** to re-authenticate. See [Why did I receive an email saying my Meta account will disconnect soon?](#why-did-i-receive-an-email-saying-my-meta-account-will-disconnect-soon) for more detail on OAuth token expiry.
 
 **Using a system user token:** The most common cause is that the ad account hasn't been assigned to the system user in Meta Business Manager, or was assigned with Partial Access instead of Full Control. To fix this:
 
@@ -244,7 +246,9 @@ This is expected behavior. Meta enforces a 60-day expiry on OAuth tokens — whe
 
 After updating the asset assignments in Meta, generate a new token and reconnect the account in Clay.
 
-**Using OAuth (Sign in with Facebook):** Your Meta OAuth token may have expired — Meta tokens expire every 60 days. Go to **Settings → Connections**, find your Meta integration, click the **…** menu next to the account, and select **Reconnect** to re-authenticate. See [Why did I receive an email saying my Meta account will disconnect soon?](#why-did-i-receive-an-email-saying-my-meta-account-will-disconnect-soon) for more detail, and consider [switching to a system user token](#meta-system-user-token-authentication) to avoid recurring expiry.
+**Using OAuth (Sign in with Facebook):** Confirm that the Meta account you authenticated with has admin access to the ad account you want to use. If you can see the account in **Manage accounts** but it doesn't appear in the dropdown, the ad account may be inactive or restricted in Meta Business Manager.
+
+**Note:** Meta Ads connections in **Settings → Connections** always show an **Unknown** status badge — this is expected and does not indicate a problem. Meta Ads does not support automated connection health checks through the Connections page; use the steps above to diagnose and fix any issues.
 
 ### **Can I sync to multiple ad accounts?**
 
