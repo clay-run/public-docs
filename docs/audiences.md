@@ -183,6 +183,15 @@ Clay syncs data from Google BigQuery on the following schedules:
 
 **Note:** A search import only populates field values for companies or people that are **new** to your Audience. Records already in your Audience from Salesforce, Snowflake, or another higher-priority source keep their existing field values — Clay's search data has lower precedence and will not overwrite them. To populate or update a field (such as Industry) on records that already exist in your Audience, bring the search results into a Clay table and use the `Upsert Audiences Record` action to push those values to matching records.
 
+**Live Search (Search on/off toggle)**
+
+Each people or company search source listed under **Searches** in the **Add data** panel has a **Search on/off** toggle — this is called Live Search.
+
+-   **Search on:** Clay continuously re-runs your search on a recurring basis. New people or companies that match your criteria are automatically surfaced and added to your audience as they appear — you do not need to manually re-run the search to stay current.
+-   **Search off:** The search is paused. No new contacts are pulled in automatically; contacts already imported from this search remain in your audience.
+
+**Live Search has no credit cost.** Running the search itself does not spend Data Credits. Credits are only spent when enrichments or actions run on records. If you have enrichment columns configured with auto-enrich enabled, those will run automatically on newly added records once they are committed from draft to live.
+
 ### Importing from CSV
 
 You can import a CSV file of people or companies as a one-time import into Audiences.
