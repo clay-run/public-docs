@@ -193,6 +193,8 @@ Skills are reusable instructions that teach a Claygent how you want a specific k
 
 Skills are saved at the workspace level rather than on a single agent. One person can encode how your team does account research or writes outbound, and every teammate can enable that same skill on their own Claygents.
 
+**Note:** Skills are available to workspaces where the feature has been enabled. If you don't see the **Skills** section in your configuration panel, contact support to request access.
+
 ### Creating a skill
 
 Find the `Skills` section in the configuration panel on the right side of the Builder, then:
@@ -366,7 +368,7 @@ To move a Claygent onto a revised skill, open it in Claygent builder and save it
 
 ### Who can create and edit skills?
 
-Anyone with edit access to your workspace can create, edit, and delete skills. Since skills are shared workspace-wide, an edit or deletion affects every teammate who has that skill available.
+Only workspace admins can create, edit, and delete skills. All workspace members can view available skills and enable them on their own Claygents. Since skills are shared workspace-wide, an admin's edit or deletion affects every teammate who has that skill available.
 
 Deleting a skill removes it from the list and clears it from the agent you're currently editing. Claygents already saved with that skill keep running on their stored copy until you save them again.
 
