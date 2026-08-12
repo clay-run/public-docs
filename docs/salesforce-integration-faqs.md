@@ -157,6 +157,29 @@ WHERE AccountId = '/Account ID'
 
 Replace `/Account ID` with the relevant column from your Clay table using the `/` picker in the query editor. You can use an AI assistant to help write the query — for example: "write a SOQL query to return all contacts for a given Salesforce account ID." For SOQL syntax reference, see [Salesforce SOQL](salesforce-soql.md).
 
+## How do I update all Salesforce records when a lookup returns multiple matches?
+
+The **Update Record** action updates one Salesforce record per row — it takes a single **Record ID** as input and cannot iterate through a list of account IDs returned by a Lookup Record column. To update every account that matched your lookup, you first need to expand that list into individual rows using **Send Table Data**, then run **Update Record** in the destination table.
+
+**Three-step setup:**
+
+1. **Lookup Record (source table)** — Keep your existing Lookup Record column returning the matching account IDs.
+
+2. **Send Table Data (source table)** — Add a **Send Table Data** column configured to use **Send row for each item in a list**:
+   - Select your Lookup Record column as the list source.
+   - Map the Account ID and any enrichment fields (for example, funding, revenue, or location) you want to write back to Salesforce.
+   - Set the destination to a new table.
+
+   This creates one row in the destination table for each matched account — turning a single row containing a list of account IDs into one row per account.
+
+3. **Update Record (destination table)** — In the destination table, add an **Update Record** column:
+   - Set **Record ID** to the Account ID column sent from the source table.
+   - Map the Salesforce fields you want to update.
+
+Each row in the destination table now contains a single account ID, so Update Record can update each Salesforce record individually.
+
+**Note:** The standard Lookup Record action returns up to 5 results per row, and Send Table Data's "Send row for each item in a list" sends up to 20 items per run. If a domain maps to more than 5 accounts, use the **Lookup records via SOQL** action instead — you control the result count with a `LIMIT` clause, or omit it to return all matches. See [Why does the Lookup Record action return a maximum of 5 results?](#why-does-the-lookup-record-action-return-a-maximum-of-5-results) and [Send Table Data](send-table-data.md) for details.
+
 ## Why does the Lookup Record action return "Error: Bad Request"?
 
 The standard **Lookup record** action uses `FIELDS(ALL)` to fetch every field from the matched Salesforce record. If the object's schema contains more than 15 fields that reference related objects — such as owner, parent account, engagement manager, or other relationship fields — Salesforce rejects the query with a 400 error, which appears in Clay as **"Error: Bad Request"**.
