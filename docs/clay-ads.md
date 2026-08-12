@@ -232,6 +232,20 @@ This is expected behavior. Meta enforces a 60-day expiry on OAuth tokens — whe
 -   **Reconnect your Meta account** — go to your Meta connections in Clay and click to reconnect using "Sign in with Facebook." This resets the 60-day timer.
 -   **Switch to a System User Token** — system user tokens can be configured to never expire, avoiding the need to reconnect every 60 days. This is the recommended approach for production Ad Sync workflows. See [Meta system user token authentication](#meta-system-user-token-authentication) for setup instructions.
 
+### **Why do I see "No ad accounts found" when setting up my Meta Ads destination?**
+
+"No ad accounts found" in the Configure ad accounts step means Clay authenticated with Meta but received no ad accounts for the selected connection. The cause and fix depend on which authentication method you used.
+
+**Using a system user token:** The most common cause is that the ad account hasn't been assigned to the system user in Meta Business Manager, or was assigned with Partial Access instead of Full Control. To fix this:
+
+1.  In Meta Business Manager, go to **Business Settings → Users → System users** and open your system user.
+2.  Click **Add assets** and assign your ad account to the system user with **Full Control** — not Partial Access.
+3.  Also confirm the token was generated with the `ads_management` permission selected (step 10 of [Creating a system user token](#creating-a-system-user-token)).
+
+After updating the asset assignments in Meta, generate a new token and reconnect the account in Clay.
+
+**Using OAuth (Sign in with Facebook):** Your Meta OAuth token may have expired — Meta tokens expire every 60 days. Go to **Settings → Connections**, find your Meta integration, click the **…** menu next to the account, and select **Reconnect** to re-authenticate. See [Why did I receive an email saying my Meta account will disconnect soon?](#why-did-i-receive-an-email-saying-my-meta-account-will-disconnect-soon) for more detail, and consider [switching to a system user token](#meta-system-user-token-authentication) to avoid recurring expiry.
+
 ### **Can I sync to multiple ad accounts?**
 
 Yes, you can connect multiple LinkedIn or Meta ad accounts and choose which account to sync each audience to.
