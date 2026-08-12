@@ -34,6 +34,19 @@ Functions are reusable enrichment workflows built in Clay that reps can invoke d
 
 _For more information about functions, check out our_ [_full doc_](https://university.clay.com/docs/functions)_._
 
+## Hiding or showing default enrichment functions
+
+By default, Clay exposes a set of built-in enrichment tools through MCP — including email lookup, website traffic, tech stack, open jobs, and latest funding. These are the tools an AI client invokes when a rep asks for basic contact or company data.
+
+Workspace admins can hide all of these default tools from MCP at once using the **Hide default functions from MCP** toggle on the MCP settings page:
+
+-   **Toggle ON** — the default enrichment data points (email, website traffic, tech stack, open jobs, latest funding) are hidden from Clay's MCP UI and refused if invoked. The underlying functions remain in your workspace and on the Functions page; only MCP access is blocked.
+-   **Toggle OFF (default)** — all default enrichment tools are available through MCP.
+
+**When to use this toggle:** Admins who want reps to use only custom-built Functions (and not the default Clay enrichments) can turn this ON to keep the MCP tool list clean. To re-enable built-in email lookup and other default data points, turn the toggle OFF.
+
+**Troubleshooting — rep sees "The following data point(s) are disabled for this workspace by an admin: Email" (or another data point):** This error means the **Hide default functions from MCP** toggle is ON in your workspace. To fix it: click `MCP` in the workspace sidebar, find the **Hide default functions from MCP** toggle, and turn it OFF. The MCP page is only visible to workspace admins — if you don't see it in the sidebar, ask your workspace admin to make the change.
+
 ## Setting credit limits
 
 Credit limits cap how many Clay credits a rep can spend through ChatGPT, Claude, or Glean in a given month. Credit spend automatically resets on the 1st of each month at midnight UTC.
