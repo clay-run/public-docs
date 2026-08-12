@@ -215,7 +215,7 @@ If you added or edited a **Clean variable** and it is not appearing in your mess
 
 ### Why doesn't my Claygent or AI column appear as a variable in the email template?
 
-Claygent (web research AI) columns store their output as a structured object with multiple sub-fields — Response, Reasoning, Confidence, Steps Taken, and others. The email template's **Clean variable** picker only lists plain-text columns, so a Claygent column does not appear in the picker by default.
+Claygent (web research AI) columns store their output as a structured object with multiple sub-fields — Response, Reasoning, Confidence, Steps Taken, and others. Even if the column appears in the email template's variable picker, its value renders as raw JSON rather than the clean text you want. To get just the response text as a usable personalization variable, extract it to a standalone plain-text column first.
 
 To use the AI output as a personalization variable in your message sequence:
 
