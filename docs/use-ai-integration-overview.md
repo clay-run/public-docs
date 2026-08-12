@@ -358,6 +358,18 @@ To check your current OpenAI rate limits and request a tier increase:
 - [Limits](https://platform.openai.com/settings/organization/limits)
 - [Usage Tiers](https://platform.openai.com/docs/guides/rate-limits#usage-tiers)
 
+### Cells showing "You have reached your specified workspace API usage limits" with your own Anthropic API key
+
+If cells fail with the message **"You have reached your specified workspace API usage limits. You will regain access on [date] at 00:00 UTC."** and you have your own Anthropic API key connected, this error comes directly from Anthropic — not from Clay. Your Anthropic workspace has hit its monthly spend limit, which is set in the Anthropic console. Clay surfaces the error as-is and does not retry, so affected cells stay blocked until the limit is raised or resets.
+
+**Resolution options:**
+
+1. **Raise the spend limit in your Anthropic account (recommended).** Open the [Anthropic console](https://console.anthropic.com/), go to **Settings → Limits**, and increase your workspace spend limit. Cells will run again as soon as the change takes effect — you do not need to wait for a monthly reset.
+
+2. **Switch to Clay's managed account.** Open the column settings, click the **Account** dropdown, and select the default Clay-managed account. This uses Clay Data Credits instead of your Anthropic key and is not subject to Anthropic's workspace spend cap.
+
+3. **Wait for the monthly reset.** Anthropic spend limits reset at 00:00 UTC on the first of each month. If you cannot modify the limit, affected columns will resume automatically at that time.
+
 ### Scrape Website returns empty results on login-required pages
 
 If Clay's **Scrape Website** enrichment returns a login screen or empty results instead of the content you expected, the page is likely gated behind user authentication.
