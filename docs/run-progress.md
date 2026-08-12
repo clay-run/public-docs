@@ -197,6 +197,8 @@ Despite being a "stopped before running" state, these rows are classified as Fai
 
 **To resolve rows showing "Some inputs missing":**
 
+**First, identify which input is blank:** Click the failing cell to open the Cell Details panel — it lists each missing input by name, so you can pinpoint exactly which column is causing the error before choosing a resolution.
+
 -   **Make the input optional.** Open the column settings and find the input field that is blank for those rows. Turn off its **Required to run** toggle. The column will run for all rows; for rows where that input is blank, the column proceeds without it.
 -   **Add a run condition.** Add a [run condition](conditional-runs.md) so the column only fires when the required input has a value. Rows without that input will show **"Run condition not met"** instead — and unlike "Some inputs missing," that status is treated as a successful skip (🟢), so those rows no longer appear in errored row views.
 
