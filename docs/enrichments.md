@@ -128,3 +128,14 @@ To retrieve actual contact data, add a dedicated enrichment column instead:
 -   **Work email addresses** — click `Add enrichment` and select `Work Email`. This pre-built waterfall cascades through multiple email providers in sequence. See [Work Email waterfall](work-email-waterfall.md) for full setup details.
 -   **Phone numbers** — click `Add enrichment`, search for `Phone`, and select the waterfall option for your region under **Waterfalls** — `Mobile Phone (US and Canada)`, `Mobile Phone (EMEA)`, `Mobile Phone (APAC)`, or `Mobile Phone (Global)`. See [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md) for provider recommendations by region.
 -   **Full profile data (job title, company, professional profile URL, and more)** — click `Add enrichment` and search for `Enrich Person` to browse provider-specific integrations. Each provider connects to a different data source — choose the one that fits your needs, or stack several as a [waterfall](building-a-data-waterfall.md) for broader coverage.
+
+### "How do I edit an enrichment column's settings without re-running it on all my existing rows?"
+
+Editing an enrichment column's configuration does not re-run it on rows that already have results — as long as you choose the right save option. When you click **Save** after making changes, a dropdown appears:
+
+-   **Save and don't run** — Saves your updated configuration without queuing any existing rows for re-processing. Rows that already have results are preserved; only new rows added after saving will trigger this enrichment if auto-run is enabled.
+-   **Save and run _N_ rows** — Saves your settings and immediately queues all rows for a re-run using the updated configuration.
+
+Choose **Save and don't run** to apply your changes safely without spending credits on rows that are already populated.
+
+**Built-in credit protection:** Clay's **"Keep existing results"** setting (on by default for new tables) provides an additional safeguard — even when auto-run fires on new data, only empty, errored, or new cells are processed. Rows that already have a successful result are always skipped. Confirm this is enabled under the `⛭` icon in the top toolbar → **Run Settings**. See [Auto-run](auto-run.md) for full details.
