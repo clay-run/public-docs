@@ -128,3 +128,24 @@ To retrieve actual contact data, add a dedicated enrichment column instead:
 -   **Work email addresses** — click `Add enrichment` and select `Work Email`. This pre-built waterfall cascades through multiple email providers in sequence. See [Work Email waterfall](work-email-waterfall.md) for full setup details.
 -   **Phone numbers** — click `Add enrichment`, search for `Phone`, and select the waterfall option for your region under **Waterfalls** — `Mobile Phone (US and Canada)`, `Mobile Phone (EMEA)`, `Mobile Phone (APAC)`, or `Mobile Phone (Global)`. See [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md) for provider recommendations by region.
 -   **Full profile data (job title, company, professional profile URL, and more)** — click `Add enrichment` and search for `Enrich Person` to browse provider-specific integrations. Each provider connects to a different data source — choose the one that fits your needs, or stack several as a [waterfall](building-a-data-waterfall.md) for broader coverage.
+
+### "The model provider's rate limits are low" error on AI enrichment columns
+
+This error means Clay sent too many requests to the AI model provider (such as OpenAI, Anthropic, or Google) too quickly and hit their requests-per-minute limit. It is most common when running a large table — many rows fire AI requests at once, overwhelming the provider's limit for your account or API key.
+
+**To prevent this going forward: add a delay to the column**
+
+1.  Click the column header for the AI enrichment (Use AI, Claygent, or an AI action inside a Function) and select **Edit column**.
+2.  In the **Run settings** section, switch from **Run immediately** to **Run after delay**.
+3.  Enter a delay in seconds — starting with **5 seconds** spaces requests enough to stay under most providers' default limits. Increase the delay if errors persist.
+4.  Click **Save**. Future rows processed by this column will be spaced out automatically.
+
+**Note:** The **Custom rate limit** setting at the bottom of the enrichment panel does not apply to Clay's built-in AI enrichments — use the delay approach above instead.
+
+**To rerun the rows that already errored**
+
+After saving the delay setting, right-click the column header and choose **Run column** → **Run [N] rows with errors or no result**. This queues all errored rows for a fresh pass using the updated, delayed configuration.
+
+**If you are using your own AI provider API key**
+
+Adding a delay lowers the request rate, but you can also raise your rate limit ceiling at the provider level. In your provider's developer dashboard (for example, OpenAI Platform or Google AI Studio), request a higher rate limit tier for the API key connected to Clay. A higher tier allows more requests per minute, reducing the chance of hitting this error even on large tables.
