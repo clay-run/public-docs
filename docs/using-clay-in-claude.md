@@ -69,7 +69,12 @@ To get the best results when using Clay in Claude:
 
 -   Include the company domain (e.g., "[rippling.com](http://rippling.com)"), not just the company name
 -   Limit your search to one company at a time for more accurate results
--   Be specific with criteria: job titles, locations, seniority, keywords
+-   Be specific with criteria: job titles, locations, seniority levels, and keywords
+-   Use synonyms and keyword variations for the functions you're targeting — instead of a single broad term like "managers," list related titles and keywords (e.g., "Compliance, Financial Crime, AML, KYC, KYB, Fraud, Trust & Safety, and Payments Risk"). This helps Clay match contacts whose titles don't use the exact terms in your prompt.
+-   Specify that you want current employees only to avoid former employees appearing in results
+-   State how many contacts you want and which fields to return — for example, "return up to 10 people with their name, title, LinkedIn URL, location, and work email"
+-   When searching across several different function areas, run separate queries for each instead of combining them in one prompt. Broad categories like "Product" match a much wider range of titles than specialized functions like "Compliance" or "Risk," so mixing them makes results less precise.
+-   Explicitly exclude functions you don't need — for example, "exclude sales, marketing, HR, and customer support" — to prevent broadly matching titles from appearing in results
 -   If you aren't sure what job title you're looking for, try asking "who manages X at company"
 -   Avoid broad queries or general web searches
 
