@@ -274,7 +274,7 @@ When two data sources write different values to the same field on an Audience re
 | 5 | CSV |
 | 6 (lowest) | Find Companies / Find People search |
 
-There is an optional **CSV-first override** that, when enabled for a workspace, promotes CSV to priority tier 2 — above Salesforce and HubSpot but below Upsert Audiences Record and Bulk Enrichments. Contact your Growth Strategist to enable it.
+There is an optional **CSV-first override** that, when enabled, promotes CSV to priority tier 2 — above Salesforce and HubSpot but below Upsert Audiences Record and Bulk Enrichments. Contact your Growth Strategist to enable it.
 
 **When merging happens**
 
@@ -669,18 +669,15 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 ### How do I export my audience data to CSV?
 
-Audiences do not have a direct CSV download — the **Tools → Export** option that appears in regular Clay tables is not available in the Audiences view.
+Audiences do not have a direct CSV download — the **Tools → Export** option that appears in regular Clay tables is not available in the Audiences view. Audience-origin bulk enrichment tables (created via **Enrich** → **Add bulk enrich**) also do not expose the standard CSV export through the toolbar.
 
-To download audience data as a CSV, use a bulk enrichment with an **Export to CSV** column action:
+The supported workaround is to move the segment into a regular Clay table first, then export from there:
 
 1.  Open the audience segment you want to export.
-2.  Click **Enrich** → **Add bulk enrich**.
-3.  Add the fields you want to include in your download (for example, Name, Company, LinkedIn URL). You can add audience data columns without requiring any additional enrichment providers.
-4.  In the bulk enrichment table, click **Add column** → search for **Export to CSV** → add it as a column action. This action writes each row's data to a CSV file on your computer as it is processed.
-5.  Optionally click **Run on 10 rows** to preview the output before running at full scale.
-6.  Click **Start Run** — the CSV downloads automatically as rows are processed.
+2.  Click **Send** to open the send options and choose the option that pushes the segment to a Clay table or workbook.
+3.  In the resulting Clay table, click **Tools** (top right) → **Export** → **Download CSV**.
 
-**Note:** Adding and running bulk enrichments requires workspace **Admin** access.
+If you do not see a table export option in the **Send** menu, contact your workspace Admin or Clay support for the export path available in your account.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
