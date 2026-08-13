@@ -33,7 +33,8 @@ The table below lists the data credit cost per task for select AI models availab
 | GPT-5 Mini | 0.4 | 1 |
 | GPT-5 Nano | 0.2 | 0.5 |
 | o3 | 5 | variable |
-| Anthropic | Claude 4.5 Haiku | 1 | variable |
+| Anthropic | Claude Sonnet 5 | 0.7 | variable |
+| Claude 4.5 Haiku | 1 | variable |
 | Claude 4.5 Sonnet | 1.5 | variable |
 | Claude 4.6 Sonnet | 1 | variable |
 | Claude 4.6 Opus | 7.5 | variable |
@@ -56,7 +57,7 @@ The actual LLM cost is the cost charged by the AI provider of the model you've s
 3.  **Calculate.** Clay calculates the actual LLM cost for each row.
 4.  **Reconcile.** The withheld amount is compared to the actual cost. Any surplus is returned to your balance; any additional cost is deducted. You only pay for what was used.
 
-Every AI prompt counts as **one action**. The variable component affects only the data credit cost of that action.
+Every AI prompt counts as **one action**. The variable component affects only the data credit cost that action.
 
 **Balance protection**
 
