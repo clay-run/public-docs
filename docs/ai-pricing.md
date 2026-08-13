@@ -57,7 +57,7 @@ The actual LLM cost is the cost charged by the AI provider of the model you've s
 3.  **Calculate.** Clay calculates the actual LLM cost for each row.
 4.  **Reconcile.** The withheld amount is compared to the actual cost. Any surplus is returned to your balance; any additional cost is deducted. You only pay for what was used.
 
-Every AI prompt counts as **one action**. The variable component affects only the data credit cost that action.
+Every AI prompt counts as **one action**. The variable component affects only the data credit cost of that action.
 
 **Balance protection**
 
