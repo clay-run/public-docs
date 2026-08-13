@@ -81,20 +81,20 @@ A **custom table** (shown with the table icon in your workbook) is a blank canva
 
 In Clay, a workbook is a container for related tables. It's common to keep linked tables together in one workbook — for example, a Find Companies table and the Find People table created from it — so the workflow is easy to navigate and share as a template. Create a new workbook when you're working on a distinct project or campaign (for example, separate workbooks for different clients or different outbound plays).
 
-### Why do I see many irrelevant company records when I search for a specific well-known company?
+### Why do I see many company records when I search for a specific well-known company like Amazon or Google?
 
-Clay's company database includes separate records for subsidiaries, acquired companies, and other organizations within the same corporate family — many of which share the same top-level domain. A search for a large enterprise company by name or keyword can return all of these related records, not just the primary entity. For example, a search touching the amazon.com domain may include AWS, various Amazon-branded entities, and other listings that share that domain. This is expected behavior, not a data error.
+The description keyword filter searches company profile descriptions, not company names directly. Searching for "Amazon" as a keyword returns every company whose profile description mentions that name — partners, resellers, marketplace sellers, and other organizations that reference "Amazon" in their descriptions — not just Amazon itself. For large enterprise companies whose names appear widely across corporate profiles, keyword results can include many unrelated entries. This is expected behavior.
 
-**To target one specific known company precisely:** Create a blank table and add that company's LinkedIn company URL directly (for example, `https://www.linkedin.com/company/amazon`). LinkedIn URLs resolve to a single company profile, bypassing domain-based matching entirely. Add the URL as a row, then run an **Enrich Company** column to pull full company data for that exact entity.
+**To target one specific known company precisely:** Skip the search and import the company's LinkedIn URL directly. Create a blank table, add a row with the LinkedIn company URL (for example, `https://www.linkedin.com/company/amazon`), and run an **Enrich Company** column. LinkedIn URLs resolve to a single company profile and bypass description-keyword matching entirely.
 
-**To narrow a Find Companies search down to the intended entity:** Combine these filters to cut through the noise:
+**To narrow a Find Companies search:** Layer these filters alongside your keywords to cut through the noise:
 
--   **Company type** — select `Public Company` for large publicly traded companies; this removes most subsidiaries, storefronts, and low-quality records.
--   **Estimated employee count** — set a minimum that matches the company's scale (for example, 10,000+).
--   **Headquarters location** — filter by the country or city where the company's primary office is located.
--   **Industries to exclude** — remove categories generating irrelevant results (for example, exclude `Retail` for an enterprise tech target).
+-   **Company type** — select `Public Company` for large publicly traded companies; this removes most storefronts and low-quality records.
+-   **Estimated employee count** — set a minimum matching the target company's scale (for example, 10,000+).
+-   **Headquarters location** — filter by the city or country where the company's primary office is located.
+-   **Industries to exclude** — remove categories generating noise (for example, exclude `Retail` for an enterprise tech company).
 
-Find Companies results include each company's LinkedIn URL — once you've found the right record in the preview, you can copy that URL and use it in downstream steps without re-running a search.
+Find Companies results include each company's LinkedIn URL — once you spot the right record in the preview, copy that URL for downstream enrichments or table imports.
 
 ### Can I filter by job title or role in company search?
 
