@@ -81,6 +81,21 @@ A **custom table** (shown with the table icon in your workbook) is a blank canva
 
 In Clay, a workbook is a container for related tables. It's common to keep linked tables together in one workbook — for example, a Find Companies table and the Find People table created from it — so the workflow is easy to navigate and share as a template. Create a new workbook when you're working on a distinct project or campaign (for example, separate workbooks for different clients or different outbound plays).
 
+### Why do I see many irrelevant company records when I search for a specific well-known company?
+
+Clay's company database includes separate records for subsidiaries, acquired companies, and other organizations within the same corporate family — many of which share the same top-level domain. A search for a large enterprise company by name or keyword can return all of these related records, not just the primary entity. For example, a search touching the amazon.com domain may include AWS, various Amazon-branded entities, and other listings that share that domain. This is expected behavior, not a data error.
+
+**To target one specific known company precisely:** Create a blank table and add that company's LinkedIn company URL directly (for example, `https://www.linkedin.com/company/amazon`). LinkedIn URLs resolve to a single company profile, bypassing domain-based matching entirely. Add the URL as a row, then run an **Enrich Company** column to pull full company data for that exact entity.
+
+**To narrow a Find Companies search down to the intended entity:** Combine these filters to cut through the noise:
+
+-   **Company type** — select `Public Company` for large publicly traded companies; this removes most subsidiaries, storefronts, and low-quality records.
+-   **Estimated employee count** — set a minimum that matches the company's scale (for example, 10,000+).
+-   **Headquarters location** — filter by the country or city where the company's primary office is located.
+-   **Industries to exclude** — remove categories generating irrelevant results (for example, exclude `Retail` for an enterprise tech target).
+
+Find Companies results include each company's LinkedIn URL — once you've found the right record in the preview, you can copy that URL and use it in downstream steps without re-running a search.
+
 ### Can I filter by job title or role in company search?
 
 No — `Find Companies` only filters by company-level attributes (industry, size, location, revenue, etc.). There is no job title filter in company search. Job title is a person-level attribute available only in People search.
