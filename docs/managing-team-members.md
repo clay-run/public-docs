@@ -68,6 +68,13 @@ The invited person will receive an email to join the workspace with the specifie
 
 This error appears when the invitee is already logged into Clay with a different account than the one the invite was sent to. Clay verifies server-side that the logged-in account's email matches the invite email — if they don't match, the invite cannot be accepted from that session. To resolve it, have the invitee open the invite link in an **incognito or private browsing window** (where no Clay session is active) — they will be prompted to sign in or sign up with the correct email and can then accept the invite. Alternatively, they can log out of Clay first and then click the invite link again.
 
+**If the invitee sees the error "Email cannot be used"**
+
+This error appears when the invitee tries to sign up with a plus-addressed email — an address that contains a `+` character, such as `alexis+hdb@domain.com`. Clay does not accept plus-addressed emails for account creation. To resolve it:
+
+1. The inviter should go to `Settings` > `Team`, cancel the pending invite sent to the plus-addressed email, and send a new invite to the plain version of the address (for example, `alexis@domain.com` instead of `alexis+hdb@domain.com`).
+2. The invitee should then sign up using that plain email address.
+
 ## Change a team member's role
 
 To update a member's role:
