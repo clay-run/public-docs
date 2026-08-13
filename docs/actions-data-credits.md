@@ -370,6 +370,8 @@ You must upgrade to a higher action tier. Actions cannot be topped up separately
 
 If your billing cycle resets soon, waiting is also an option — your full Actions allotment replenishes automatically at your next renewal. You can check your exact renewal date in `Settings` → `Plan & billing`.
 
+**What happens to in-progress enrichments?** Any enrichment runs in progress — including Audiences bulk enrichments — automatically pause when your Action credits are exhausted. You do not lose your progress or need to restart from the beginning. Once your Actions are replenished (either by upgrading or at your next billing cycle reset), open the bulk enrichment and click **Resume** → **From where you stopped** to continue processing the remaining rows.
+
 ### Why can't I top up Actions?
 
 Actions represent fixed platform capacity tied to your action tier. To get more Actions, you must upgrade to a higher action tier. Data Credits, however, are consumption-based and can be purchased as one-time top-ups or by upgrading your Data Credits tier.
