@@ -179,6 +179,19 @@ This is different from CRM sources such as HubSpot and Salesforce, which track e
 
 **Note:** Auto-dedupe may not catch duplicates when two payloads arrive within milliseconds of each other. See the [simultaneous insert limitation](https://www.clay.com/university/guide/table-management-settings#auto-dedupe) in the auto-dedupe docs for details and workarounds.
 
+### Why are my credits being consumed faster than expected?
+
+When Auto-run is enabled on a table (the default for new tables), each new row that arrives automatically triggers your enrichment columns to run — consuming credits for every row processed. A webhook that receives data at high frequency can therefore drive rapid credit consumption: every incoming payload creates a new row, and Auto-run immediately queues and executes enrichments on that row.
+
+**To stop or slow credit consumption from a webhook table:**
+
+- **Disable table-level Auto-run** — Open table settings (click the `⛭` icon in the toolbar, or click the table name → **Run Settings**), then toggle **Auto-run** off. Enrichments stop running automatically; new rows from the webhook continue arriving but are not enriched until you trigger them manually. When you're ready to process the accumulated rows, re-enable Auto-run and choose **Update cells**, or run columns manually from the column header.
+- **Disable Auto-run on specific columns** — In **Edit column → Run settings**, toggle Auto-run off for any enrichment column you don't want firing on every new row. This lets you keep some enrichments automated while pausing others.
+- **Add a run condition** — In **Edit column → Run settings**, enable **Only run if** and set a condition (for example, `Email is not empty`). The enrichment only fires when the condition is met, skipping rows that don't qualify and saving credits on those rows.
+- **Pause the webhook source itself** — Turning off Auto-run does **not** stop the webhook from receiving new rows — the webhook source and Auto-run operate independently. To stop new rows from arriving entirely, disable the webhook source in your sending system.
+
+See [Auto-run](auto-run.md) for full details on table-level and column-level controls, and [Ways to save Clay credits](clay-credit-conservation.md) for additional cost-management strategies.
+
 ### Can Clay replay webhook events that were acknowledged but not processed?
 
 No — Clay does not have a built-in replay function for webhook events. Once Clay returns a `200 OK` for an incoming payload, that acknowledgment is final. There is no admin endpoint, UI control, or automatic retry that can reprocess or re-deliver those events from within Clay.
