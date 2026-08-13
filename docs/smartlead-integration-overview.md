@@ -45,7 +45,19 @@ Adds a new lead to an existing Smartlead campaign.
 
 **Outputs:**
 
-This action confirms whether the lead was successfully added but does not return additional output fields.
+Every row returns the following status fields:
+
+-   `ok`: Returns `true` if the API call was accepted by Smartlead.
+-   `lead_actually_added`: Returns `true` if the lead was newly enrolled in the campaign.
+-   `existing_lead_updated`: Returns `true` if the lead already existed in the campaign and had their details updated.
+
+The remaining output fields depend on whether batch mode is enabled and whether the lead was new or already existed:
+
+-   **Non-batch mode — newly added lead:** Smartlead returns upload statistics (`total_leads`, `upload_count`, `emailToLeadIdMap`, and others) but does **not** include `campaign_id`.
+-   **Non-batch mode — lead already in campaign:** Smartlead returns `campaign_id`, `lead_id`, `status`, and `reason`.
+-   **Batch mode:** Returns a normalized response per row that always includes `campaign_id` (copied from the action's Campaign ID input), `lead_id`, `status`, and `reason` — regardless of whether the lead was new or already existed.
+
+If you need to reference `campaign_id` in a downstream step (for example, in an **Update Audience Record** action), see [campaign_id is missing from the Add lead to campaign output](#campaign_id-is-missing-from-the-add-lead-to-campaign-output) below.
 
 **Batching**
 
@@ -170,6 +182,20 @@ By default, Smartlead will not add a lead to a campaign if that lead already exi
 ### I don't have a Lead ID to use the Update or Remove actions
 
 The `Lead ID` required by `Update lead in campaign`, `Update lead category`, and `Remove lead from campaign` is Smartlead's internal identifier for a lead — it is not the same as a row ID in Clay. Run the `Lookup lead in campaign` action for the relevant lead first, then map the `Id` output into the `Lead ID` field of your update or remove action.
+
+### `campaign_id` is missing from the Add lead to campaign output
+
+When running **Add lead to campaign** outside of batch mode, the response fields returned by Smartlead differ depending on the outcome:
+
+-   If the lead was **newly added**, the response includes upload statistics (such as `upload_count` and `emailToLeadIdMap`) but does **not** include `campaign_id`.
+-   If the lead **already existed** in the campaign, the response includes `campaign_id`, `lead_id`, `status`, and `reason`.
+
+This means you cannot reliably reference `{{Add Lead to Campaign}}?.campaign_id` in a downstream step such as **Update Audience Record** when your table contains a mix of new leads and leads that already exist in the campaign.
+
+To access `campaign_id` reliably in a downstream step, use one of the following approaches:
+
+1.  **Enable batch mode:** Turn on the **Run in batches** toggle in the column's **Batching** settings. Batch mode returns a normalized response per row that always includes `campaign_id` (copied from the action's Campaign ID input), regardless of whether the lead was new or already existed.
+2.  **Store the campaign ID in a separate column:** Add a basic column at the start of your table with the campaign ID hardcoded or referenced from another column. Map that column into your downstream step instead of relying on the **Add lead to campaign** output.
 
 ### Custom variables appear empty in Smartlead campaign emails
 
