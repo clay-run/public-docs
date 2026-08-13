@@ -671,20 +671,16 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 Audiences do not have a direct CSV download — the **Tools → Export** option that appears in regular Clay tables is not available in the Audiences view.
 
-To download audience data as a CSV, use a bulk enrichment as a staging step:
+To download audience data as a CSV, use a bulk enrichment with an **Export to CSV** column action:
 
 1.  Open the audience segment you want to export.
 2.  Click **Enrich** → **Add bulk enrich**.
 3.  Add the fields you want to include in your download (for example, Name, Company, LinkedIn URL). You can add audience data columns without requiring any additional enrichment providers.
-4.  Optionally click **Run on 10 rows** to preview the output before running at full scale.
-5.  Click **Start Run**.
-6.  Once the run completes, open the bulk enrichment table: click **⋮** on the enrichment card in the Enrich sidebar → **Open bulk enrichment**.
-7.  Scroll to the bottom of the table and click **Archive**.
-8.  Click **Export full archive** to download all processed rows as a CSV.
+4.  In the bulk enrichment table, click **Add column** → search for **Export to CSV** → add it as a column action. This action writes each row's data to a CSV file on your computer as it is processed.
+5.  Optionally click **Run on 10 rows** to preview the output before running at full scale.
+6.  Click **Start Run** — the CSV downloads automatically as rows are processed.
 
 **Note:** Adding and running bulk enrichments requires workspace **Admin** access.
-
-**Alternative — Export to CSV column action:** For an ongoing or automated export, add an **Export to CSV** column action directly inside the bulk enrichment table (click **Add column** → search for **Export to CSV**). This writes data to a file as each row is processed, rather than as a one-time archive download.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
