@@ -63,6 +63,16 @@ The license requirement depends on which connection method you use:
 
 If your org uses a dedicated integration or service account with an API-only or Integration User license, use the **Client Credentials** method. For setup instructions, see [Connecting to Salesforce](https://university.clay.com/docs/salesforce-integration-overview).
 
+## When should I use Client Credentials instead of User Sign In?
+
+Use **Client Credentials** when you want a Salesforce connection that is stable and not tied to any individual employee. Two reasons most commonly drive this choice:
+
+**Employee turnover.** A User Sign In connection stores an OAuth refresh token tied to the specific Salesforce user who authenticated. When that person leaves the company and their Salesforce account is deactivated, Salesforce revokes their tokens — and the Clay connection stops working. Client Credentials authenticates using a Connected App's consumer key and consumer secret, not a personal token. Because the app's credentials are independent of any individual, the connection remains active even when employees leave.
+
+**License cost.** User Sign In requires a full Salesforce user license. Client Credentials works with Salesforce Integration User licenses and API-only licenses, which are typically less expensive. This lets you dedicate a purpose-built service account to Clay without consuming a paid Sales seat.
+
+If both concerns apply — you want resilience to employee turnover and prefer a lower-cost license — Client Credentials is the recommended approach. For setup instructions, see [Connecting to Salesforce](https://university.clay.com/docs/salesforce-integration-overview).
+
 ## How do I verify which Salesforce user is associated with my connection?
 
 Once you've tested a Salesforce connection, Clay saves the result and displays the connected SFDC user and Salesforce org directly in the connections list — so you can see which account each connection belongs to at a glance without re-testing.
