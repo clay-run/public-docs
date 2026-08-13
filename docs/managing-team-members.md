@@ -70,10 +70,12 @@ This error appears when the invitee is already logged into Clay with a different
 
 **If the invitee sees the error "Email cannot be used"**
 
-This error appears when the invitee tries to sign up with a plus-addressed email — an address that contains a `+` character, such as `alexis+hdb@domain.com`. Clay does not accept plus-addressed emails for account creation. To resolve it:
+This error appears when the invitee tries to sign up using a password with a plus-addressed email — an address containing a `+` character, such as `alexis+hdb@domain.com`. Clay does not accept plus-addressed emails during password-based signup. To resolve it:
 
 1. The inviter should go to `Settings` > `Team`, cancel the pending invite sent to the plus-addressed email, and send a new invite to the plain version of the address (for example, `alexis@domain.com` instead of `alexis+hdb@domain.com`).
 2. The invitee should then sign up using that plain email address.
+
+Alternatively, if the invitee has a Google account at that email address, they can sign up using **Continue with Google** instead — the plus-address restriction applies only to password-based signup, not to Google OAuth.
 
 ## Change a team member's role
 
