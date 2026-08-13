@@ -16,7 +16,7 @@ Clay's `Find Companies` and `Find People` sources give you instant access to bil
 
 ### Anchor on description keywords
 
-Industry categories map to the categories companies self-select on LinkedIn — which can be too broad for most use cases. **Description keywords** let you narrow by what a company actually does, not just how it's categorized. Use them heavily as your primary filter, and layer industry categories on top only when needed.
+Industry categories map to the categories companies self-select on LinkedIn — which can be too broad for most use cases. The **Description keywords to include** field lets you narrow by what a company actually does, not just how it's categorized. Use it heavily as your primary filter, and layer industry categories on top only when needed.
 
 ### Use AI filters to avoid paying for data you won't use
 
