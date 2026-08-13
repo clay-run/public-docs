@@ -85,7 +85,7 @@ In Clay, a workbook is a container for related tables. It's common to keep linke
 
 The description keyword filter searches company profile descriptions, not company names directly. Searching for "Amazon" as a keyword returns every company whose profile description mentions that name — partners, resellers, marketplace sellers, and other organizations that reference "Amazon" in their descriptions — not just Amazon itself. For large enterprise companies whose names appear widely across corporate profiles, keyword results can include many unrelated entries. This is expected behavior.
 
-**To target one specific known company precisely:** Skip the search and import the company's LinkedIn URL directly. Create a blank table, add a row with the LinkedIn company URL (for example, `https://www.linkedin.com/company/amazon`), and run an **Enrich Company** column. LinkedIn URLs resolve to a single company profile and bypass description-keyword matching entirely.
+**To target one specific known company precisely:** Skip the search and import the company's professional network company URL directly. Create a blank table, add a row with the company's professional network URL, and run an **Enrich Company** column. Professional network company URLs resolve to a single company profile and bypass description-keyword matching entirely.
 
 **To narrow a Find Companies search:** Layer these filters alongside your keywords to cut through the noise:
 
@@ -94,7 +94,7 @@ The description keyword filter searches company profile descriptions, not compan
 -   **Headquarters location** — filter by the city or country where the company's primary office is located.
 -   **Industries to exclude** — remove categories generating noise (for example, exclude `Retail` for an enterprise tech company).
 
-Find Companies results include each company's LinkedIn URL — once you spot the right record in the preview, copy that URL for downstream enrichments or table imports.
+Find Companies results include each company's professional network URL — once you spot the right record in the preview, copy that URL to use in the import approach above or for downstream enrichments.
 
 ### Can I filter by job title or role in company search?
 
