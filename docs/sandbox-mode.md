@@ -24,6 +24,8 @@ Sandbox mode is a special table mode that lets you safely build, test, and publi
     -   **To turn off sandbox mode:** Click `Exit sandbox` in the toolbar. This will return you to your normal table and discard all unpublished changes in your sandbox.
     -   **If you close your browser tab or navigate away:** Your sandbox is saved automatically — no changes are discarded. When you return to the table, Clay redirects you back to your sandbox where you left off.
 
+**Note on tables created from a source:** Sandbox mode requires a table that already has data in it — the **Sandbox Mode** button is disabled on empty tables. If you are creating a new table from a credit-consuming source (for example, a "Companies by product usage with HG Insights" table), the initial source run happens before sandbox mode is available. Use the **Maximum credit cost per run** setting in the source setup to cap spending during that first run. Once the table is created and rows are imported, enable sandbox mode before running any enrichment columns.
+
 **Note:** During sandbox mode:
 
 -   Your regular table becomes read-only and cannot be updated directly — the **All data** tab shows a **View-only** indicator while sandbox is active.
