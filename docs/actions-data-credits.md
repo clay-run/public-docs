@@ -511,6 +511,21 @@ No. **Lookup Record** operations — such as `Salesforce > Lookup Record` — re
 
 Only CRM **write** operations consume Actions: Create Record, Update Record, Upsert Object, and other actions that push data from Clay to your CRM.
 
+### Does HubSpot Lookup Object consume an Action credit?
+
+No. **Lookup Object** reads data from your HubSpot CRM into Clay and is treated as a CRM import — the same as Salesforce Lookup Record. It does not consume Action credits.
+
+Only HubSpot **write** operations consume Actions: Create Object, Update Object, and other actions that push data from Clay into HubSpot.
+
+### Why do some lookup actions in third-party tools cost Actions while CRM lookups don't?
+
+The distinction is whether Clay is reading from a **CRM or data warehouse connection** (treated as an import) or making an **active API call to a third-party tool** (treated as an enrichment).
+
+-   **CRM lookup operations** — such as **HubSpot > Lookup Object** or **Salesforce > Lookup Record** — read data from your connected CRM and do not consume Actions.
+-   **Lookups in non-CRM tools** — such as **Smartlead > Lookup Lead Status in Campaign** — make active API calls to retrieve data and are treated as enrichments, consuming 1 Action per row. This applies even if you own the account in that tool.
+
+To check whether a specific column costs an Action before running it, look for the action cost indicator next to the **Save** button in the column settings panel.
+
 ### Does enriching the same person in two separate tables charge me credits twice?
 
 Yes. Clay charges **1 Action** (and the associated Data Credits) per enrichment row run, regardless of whether that person has been enriched in another table. There is no cross-table deduplication — each row runs independently. If the same contact appears in two tables and you run an enrichment such as Enrich Person in both, you will be charged for each run separately.
