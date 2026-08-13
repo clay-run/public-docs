@@ -612,8 +612,10 @@ In `Setup` → `Session Settings`:
 
 In `Setup` → `Manage Connected Apps` → `Clay`:
 
--   Set `IP Relaxation` to "Relax IP Restrictions" (Clay's integration calls originate from cloud IPs that may change).
+-   Set `IP Relaxation` to "Relax IP Restrictions" — this is the simplest option if your org's security policy allows it.
 -   Set `Permitted Users` to "All users may self-authorize" unless your org requires admin approval.
+
+**If your org requires strict IP restrictions (Enterprise plan):** On Enterprise plans, all Salesforce connections route through Clay's fixed egress IP addresses by default — no extra configuration is needed in Clay. Rather than relaxing IP restrictions, you can add Clay's static IPs to your Salesforce allowlist instead. Contact Clay support to request the current IP list, then add each address in Salesforce under `Setup` → `Network Access` → `New`. For full setup instructions, see [IP allowlisting](salesforce-integration-overview.md#ip-allowlisting) in the Salesforce integration overview.
 
 ## Why did the owner on my Salesforce record change when Clay updated a field?
 
