@@ -370,7 +370,7 @@ You must upgrade to a higher action tier. Actions cannot be topped up separately
 
 If your billing cycle resets soon, waiting is also an option — your full Actions allotment replenishes automatically at your next renewal. You can check your exact renewal date in `Settings` → `Plan & billing`.
 
-**What happens to in-progress enrichments?** Any enrichment runs in progress — including Audiences bulk enrichments — automatically pause when your Action credits are exhausted. You do not lose your progress or need to restart from the beginning. Once your Actions are replenished (either by upgrading or at your next billing cycle reset), open the bulk enrichment and click **Resume** → **From where you stopped** to continue processing the remaining rows.
+**What if an Audiences bulk enrichment stops mid-run?** You do not have to restart the enrichment from the beginning. Open the bulk enrichment, click **Resume** → **From where you stopped**, and Clay continues processing the remaining rows from where it left off — without re-running rows that already completed. You can also pause a bulk enrichment yourself at any time using the **Pause** button in the enrichment interface.
 
 ### Why can't I top up Actions?
 
