@@ -99,7 +99,7 @@ Clay offers pre-built MCP connectors within each supported platform's app or con
 
 The Clay CLI is part of the Clay Agent Plugin — a developer tool that lets coding agents (Claude Code, Codex, or any terminal environment) build and run Clay workflows without opening the Clay UI. Install it from the [agent-plugins repository](https://github.com/clay-run/agent-plugins) and follow the setup instructions there.
 
-**System requirements:** The Clay CLI runs on **macOS and Linux only**. Windows is not currently supported — if you're on Windows you'll see an error like "no native windows binary in the plugin." There is no workaround at this time; Windows support is not yet available.
+**System requirements:** The Clay CLI runs on **macOS and Linux**. Native Windows is not supported — the CLI launcher exits with an error on Windows. Windows users can run the CLI using **WSL (Windows Subsystem for Linux)**: install WSL via [Microsoft's WSL guide](https://learn.microsoft.com/en-us/windows/wsl/install), then follow the standard Linux installation steps in the [agent-plugins repository](https://github.com/clay-run/agent-plugins). If you run into issues even with WSL, contact [Clay support](https://www.clay.com/contact-form).
 
 When you run `clay routines list` or `clay routines get`, each function-type routine in the response includes a `source` field and a `createdBy` field. `source` is `"managed"` for Clay-built default functions and `"custom"` for functions built in your workspace. `createdBy` is an object with `id`, `name`, and `email` for custom functions, and `null` for managed defaults. Both fields are omitted for workflow-type routines.
 
