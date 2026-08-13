@@ -261,6 +261,78 @@ The most common cause is that the source reached the 50,000 total records proces
 
 For a full explanation of which source types are compatible with auto-delete's continuous passthrough mode, see [Auto-delete in tables](auto-delete.md).
 
+## How do I set up a Salesforce Flow to send records to a Clay webhook?
+
+A record-triggered Flow in Salesforce can call Clay's webhook endpoint whenever a record is created or updated, pushing data to Clay in real time. This is the recommended approach for real-time Salesforce → Clay data push.
+
+**Architecture: one-way inbound channel**
+
+Clay's webhook is a one-way inbound channel. Salesforce sends a JSON payload and Clay responds with a minimal HTTP acknowledgment — either an empty `200 OK` by default, or `{ "success": true }` if your webhook is configured for JSON response mode. The acknowledgment response is never enrichment data. Enriched data syncs back to Salesforce separately through Clay's native Salesforce integration actions (such as Update Record or Upsert) after the enrichment completes, not as a return leg of the webhook call.
+
+**Step 1: Create a webhook source in Clay**
+
+1. In a Clay workbook, click **+ Add** at the bottom.
+2. Search for **Webhooks** and click **Monitor webhook**.
+3. Copy the webhook URL Clay generates. Note the path portion — for example, `/v1/webhooks/YOUR_WEBHOOK_ID`.
+4. Optionally add an authentication token. Copy it immediately — it is only displayed once. You will need this token when configuring the Salesforce callout.
+
+**Step 2: Set up Named Credentials in Salesforce**
+
+Use **Named Credentials** to call Clay's webhook from your Flow — not External Services. External Services expect a typed response schema from the endpoint they call; Clay's webhook returns only a minimal acknowledgment that does not match a typed schema, causing errors on the Salesforce side. Named Credentials do not enforce a response schema and work correctly with Clay's acknowledgment response.
+
+1. In Salesforce Setup, search for **Named Credentials** and create a new entry:
+   - **Label / Name**: Clay Webhook (or any descriptive name)
+   - **URL**: `https://api.clay.com`
+   - **Authentication Protocol**: No Authentication (authentication is handled via a custom header in the callout, described below)
+2. Save the Named Credential.
+
+**Step 3: Build the record-triggered Flow**
+
+1. In Salesforce Setup, open **Flow Builder** and create a new **Record-Triggered Flow** on the object you want to push to Clay (for example, Lead or Contact).
+2. Set your trigger (for example, **A record is created**) and any entry conditions.
+3. Add an action to send an HTTP callout using your Named Credential:
+   - **Method**: POST
+   - **Named Credential**: select the Clay Webhook credential created above
+   - **Relative URL**: the path portion of your Clay webhook URL — for example, `/v1/webhooks/YOUR_WEBHOOK_ID`
+   - **Headers**: add a custom header with name `x-clay-webhook-auth` and your Clay authentication token as the value
+   - **Request Body**: valid JSON with the data you want to send to Clay (see payload guidance below)
+4. Place this HTTP callout action on the **Run Asynchronously** path. Salesforce does not allow HTTP callouts on synchronous paths in record-triggered flows.
+
+**Payload: what to send**
+
+You can send any valid JSON object in the request body. A common approach is to send just the Salesforce Record ID and let Clay fetch the fields it needs using a **Lookup Record** action:
+
+```json
+{ "salesforceId": "003Pk000008CnYDIA0" }
+```
+
+Alternatively, include the specific fields your Clay table needs — such as first name, last name, email, and company name — to skip the extra lookup step. Clay creates columns based on whatever top-level keys you send, so there is no required field set.
+
+**Architecture summary**
+
+| Direction | Mechanism |
+|---|---|
+| Salesforce → Clay | Record-triggered Flow HTTP callout via Named Credentials |
+| Clay → Salesforce | Clay's Salesforce actions (Update Record, Upsert, etc.) run after enrichment |
+
+For more on creating a webhook source in Clay, see [Webhooks in Clay](webhook-integration-guide.md).
+
+## Why are duplicate rows appearing in my Clay table from a Salesforce Flow?
+
+If your record-triggered Flow is set to fire on record creation but multiple rows appear in Clay for the same Salesforce record, the most common cause is that other Salesforce automations — flows, triggers, or process builders — update the record immediately after it is created. Each save event re-triggers the Flow, sending an additional payload to Clay and creating a duplicate row.
+
+**Recommended fix: a processing status checkbox**
+
+Add a custom checkbox field to your Salesforce object to gate the Flow so it only runs once per record:
+
+1. **Create the checkbox field in Salesforce**: Go to **Setup** → **Object Manager** → select your object (for example, Lead) → **Fields & Relationships** → **New** → choose **Checkbox**. Name it something like `Clay_Enriched`, and set its default value to `Unchecked (false)`.
+
+2. **Add an entry condition to your Flow**: In your record-triggered Flow, add an entry condition: `Clay_Enriched__c equals false`. The Flow will only fire when this field is unchecked. When another automation saves the record later — after `Clay_Enriched__c` has been set to `true` — the Flow skips the record.
+
+3. **Have Clay mark the record after processing**: In your Clay table, add an **Update Record** action column configured to set `Clay_Enriched__c` to `true` on the Salesforce record, matched by the Record ID sent in the webhook payload. Clay updates this field after enrichment completes, preventing the Flow from re-firing on future saves to that record.
+
+This pattern ensures each Salesforce record is sent to Clay exactly once, regardless of how many automations touch it after creation.
+
 ## Will Clay create duplicate records in Salesforce?
 
 Clay does not create duplicate records by default. However, you can allow duplicates by enabling the "Duplicate Rule Override" in the Create Record enrichment.
