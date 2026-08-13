@@ -111,6 +111,17 @@ This triggers all enrichment and waterfall columns on those rows only, leaving o
 
 **To run a single column on specific rows only**, select the cells in that column for your target rows, then right-click → **Run [N] cells**.
 
+**If an enrichment column shows a clock icon after "Run [N] rows" and never completes**, the likely cause is a column dependency chain. When Clay runs a row, it executes upstream columns first. Once those upstream columns finish and update their values, Clay immediately marks any downstream columns that depend on them as out-of-date. The row-run then skips those downstream columns because their inputs just changed — leaving a clock icon that doesn't resolve on its own.
+
+**To run enrichments on specific rows when a column has upstream dependencies, use the filter + run column approach instead:**
+
+1.  Click **Filter** in the table toolbar and add conditions that match only the rows you want — for example, filter by name, company, or any field that identifies your target rows.
+2.  Right-click the enrichment column header and choose **Run column** → **Run [N] empty or out-of-date rows**.
+
+Running the column directly rather than the rows bypasses the dependency timing issue — the column run processes all visible rows in the current filtered view without first re-running upstream columns.
+
+Remove the filter when the run finishes to return to the full table view.
+
 ## Setting a row limit
 
 If you want to process only a portion of your table — for example, to find emails for the first 1,000 rows before committing credits to a full run — use the **Row limit** and **Starting row** settings in the toolbar.
