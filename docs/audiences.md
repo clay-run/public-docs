@@ -566,15 +566,15 @@ Once created, the field is immediately available as a filter in any segment and 
 
 ### A Salesforce field isn't appearing in my audience filters — how do I add it?
 
-Only fields explicitly included in the Salesforce import field mapping are brought into Audiences as columns and made available as filter options. If a Salesforce field — including custom fields like `Account_Record_ID__c` — doesn't appear in the filter dropdown, it was not included when the import was configured.
+Only fields explicitly included in the Salesforce import field mapping are brought into Audiences as columns and made available as filter options. If a Salesforce field — including custom fields like `Account_Record_ID__c` — doesn't appear in the filter dropdown, it was not included when the import was configured. This applies whether you want to use the field as a filter, as a Company or Person attribute in your audience, or to make it available for downstream enrichments.
 
 To add a missing field:
 
-1.  Click **Add data** in the top toolbar.
-2.  Find your Salesforce integration and click the **⋮** (three-dot) menu next to it.
-3.  Select **Settings**.
-4.  In the field mapping section, add the Salesforce field you want and name the corresponding Clay column.
-5.  Click **Save and review** → **Confirm**.
+1.  Open your Salesforce source settings. You can get there two ways:
+    -   **From the Audiences view:** click **Add data** in the top toolbar, find your Salesforce source in the list, and click the **⋮** (three-dot) menu → **Settings**.
+    -   **From workspace settings:** go to **Settings → Audiences → Sources**, find your Salesforce source in the list, and click the **⋮** (three-dot) menu → **Settings**.
+2.  In the field mapping section, add the Salesforce field you want and name the corresponding Clay column.
+3.  Click **Save and review** → **Confirm**.
 
 The filter option for the field becomes available after the next incremental sync (typically within 15 minutes). However, if you added this field to the mapping after your initial import, records that haven't been modified in Salesforce since the mapping was saved won't have data for the new field yet — see [I added a new Salesforce field to my mapping but some records are missing data for it](#i-added-a-new-salesforce-field-to-my-mapping-but-some-records-are-missing-data-for-it) below. Read-only Salesforce fields — fields shown with a lock icon in the mapping because Salesforce does not allow Clay to write them — can still be imported and used as filters. They will show a **Never write (Read-only)** export rule.
 
