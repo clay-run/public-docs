@@ -89,6 +89,18 @@ The workspace and table dashboards break down spend by workbook, table, column, 
 
 This is useful for spot-checking costs before scaling a workflow: run a small batch of rows, click into individual action cells to see per-enrichment charges, then use those figures to estimate total credit cost at higher volumes.
 
+## Credit spike alerts
+
+**Note:** Credit spike alerts are currently rolling out to Enterprise plan workspaces. Contact Clay support or your Growth Strategist if you have not yet seen this feature in your workspace.
+
+Clay automatically monitors workspace credit spend and proactively notifies workspace admins when it detects an unusually high burst of spend relative to your plan's monthly allocation. This helps catch misconfigured tables, accidental full-table reruns, or other runaway credit consumption before it quietly burns through a large portion of your credits.
+
+**How spike detection works:** Clay continuously monitors your workspace's credit spend. When a short burst of spend is detected that is outsized relative to your workspace's monthly credit allocation, a spike is flagged and workspace admins are notified.
+
+**Elevated Credit Usage Alert email:** When a spike is detected, all workspace admins receive an **"Elevated Credit Usage Alert"** email with a direct link to your Usage dashboard (`Settings → Usage`). A 24-hour cooldown between alerts prevents repeated notifications for the same sustained spend period.
+
+**Spike markers on usage graphs:** Detected spikes appear as markers on the balance and spend breakdown graphs in your Usage dashboard. Click through from the alert email to see exactly when a spike occurred and drill into what drove it. You can also look back at past spike markers when auditing historical credit spend.
+
 ## **Credit usage breakdown**
 
 The credit usage dashboard is organized into tabs, each covering a different slice of your workspace spend. Use the `When` dropdown and `Apply filters` to scope each tab to a specific time period.
