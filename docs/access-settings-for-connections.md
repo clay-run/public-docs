@@ -135,7 +135,7 @@ You can swap the restricted connection out for any connection you're allowlisted
 
 **What happens when an employee leaves the workspace?**
 
-When a user is deactivated, their personal credentials are disabled by default.
+Connections in Clay are workspace-level — they are not disabled or deleted when a user is removed from the workspace. Their access roles in Clay are revoked, but the connections they added remain active for all enrichments and workflows. If the user's account at an external provider (such as Salesforce or HubSpot) is also deactivated by your organization, the underlying OAuth credentials may expire at the provider level — use Settings → Connections → Verify to check connection health after the user has left.
 
 **How do I set up controls for my workspace?**
 
