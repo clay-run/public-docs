@@ -71,6 +71,10 @@ Use this action to add a prospect to a Gong Engage flow.
 -   **Prospect Owner email:** Email of the Gong Engage user who owns the flow instance. Once this is selected, you'll be able to assign the prospect.
 -   **Flow ID:** ID of the Gong Engage flow you want to add the prospect to.
 -   **CRM Prospect ID:** This is the CRM ID of the prospect you want to add to the flow (Hubspot, Salesforce, etc.). For this to work properly, you must have the CRM connected to your Gong account.
+-   **Flow instance description (optional):** A description for this prospect's flow instance, visible to reps. Useful for automatically triggered flows so reps understand the context of who they're engaging and why.
+-   **Override flow instance variables (optional):** Set values for custom field placeholder variables defined in the flow. Provide key-value pairs where the key is the variable name from your Gong flow and the value is the Clay data to insert. The values you set apply to the entire flow for this prospect.
+-   **Override for step N subject line (optional):** Replace the subject line sent to this prospect in step N (steps 1 through 20). Map a Clay column containing the complete subject — the override replaces the entire subject for that step, so generate the full subject line in Clay before mapping it here.
+-   **Override for step N body (optional):** Replace the message body sent to this prospect in step N (steps 1 through 20). Map a Clay column containing the complete body — the override replaces the entire body for that step, so generate the full copy in Clay before mapping it here.
 
 **Important:** The Gong account connected in Clay must belong to the same user whose email is set as Prospect Owner. If a different user's Gong account is connected, there will be a mismatch between the authenticating user and the flow owner, which may prevent the prospect from being enrolled in Gong Engage.
 
@@ -135,3 +139,21 @@ To move a prospect from one Gong Engage flow owner to another—for example, whe
 1.  **Remove the prospect from their current flow:** Add a **Remove Prospect from Flow** enrichment action. Provide the current owner's email, the Flow ID, and the CRM Prospect ID (the contact's Salesforce or HubSpot ID).
 2.  **Look up the new owner's email:** If your table doesn't already have the new owner's email, add a **Salesforce Lookup Record** enrichment column set to look up the **User** object using the contact's `OwnerId` field and pull back the `Email` field.
 3.  **Re-enroll the prospect under the new owner:** Add an **Add Prospect to Flow** enrichment action. Map the new owner's email to **Prospect Owner email**, provide the Flow ID, and map the CRM Prospect ID.
+
+## `Guide` Populating Gong Engage step content with Clay data
+
+You can inject Clay-enriched data — such as personalized snippets, company details, job titles, or AI-generated copy — into Gong Engage flow steps using the override inputs on the **Add Prospect to Flow** action. This lets you customize each prospect's outreach without creating custom Salesforce fields or configuring Gong's field placeholder setup separately.
+
+**Two override approaches:**
+
+-   **Override subject and body per step:** Use **Override for step N subject line** and **Override for step N body** to replace the full content of a flow step for a specific prospect. Because the override replaces the entire subject or body for that step (not just a placeholder within the existing template), generate the complete copy in Clay first — using an AI column or formula column — and then map that column to the corresponding override input.
+
+-   **Override flow instance variables:** If your Gong flow uses custom field placeholder variables, use **Override flow instance variables** to set their values per prospect. Provide key-value pairs where the key is the placeholder variable name as defined in your Gong flow and the value is the Clay column data to insert. This approach inserts values into the placeholders while keeping the rest of the template intact.
+
+**Setup steps:**
+
+1.  In your Clay table, add an AI column or formula column to generate the personalized content you want in each flow step. You can also reference an existing enriched data column directly.
+2.  Add the **Add Prospect to Flow** enrichment action and configure **Prospect Owner email**, **Flow ID**, and **CRM Prospect ID** as usual.
+3.  To override a step's content: in the action settings, scroll to **Step N overrides** and map your Clay column to **Override for step N subject line** and/or **Override for step N body**.
+4.  To set custom field placeholder values: scroll to **Override flow instance variables** and add key-value pairs — key = the variable name in your Gong flow, value = the Clay column with the data to insert.
+5.  Run the action. Each prospect receives the override values from their own row in Clay.
