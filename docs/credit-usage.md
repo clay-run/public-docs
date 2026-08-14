@@ -91,7 +91,7 @@ This is useful for spot-checking costs before scaling a workflow: run a small ba
 
 ## Credit spike alerts
 
-**Note:** Credit spike alerts are currently rolling out to Enterprise plan workspaces. Contact Clay support or your Growth Strategist if you have not yet seen this feature in your workspace.
+**Note:** Credit spike alerts are available for Enterprise plan workspaces.
 
 Clay automatically monitors workspace credit spend and proactively notifies workspace admins when it detects an unusually high burst of spend relative to your plan's monthly allocation. This helps catch misconfigured tables, accidental full-table reruns, or other runaway credit consumption before it quietly burns through a large portion of your credits.
 
