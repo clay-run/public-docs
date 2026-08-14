@@ -69,8 +69,6 @@ Each cell can hold a list of items — like a list of people found at a company,
 
 This is useful for **flattening lists**. For example, if you run Find Active Job Openings on a list of companies, each cell may contain multiple job postings — use this method to send each posting as its own row in a destination table, giving you a clean per-role breakdown you can filter and analyze. Similarly, if you find multiple people at a company, you can send each person as a separate row. **This method always creates a new row for each item.**
 
-**Note:** This method sends a maximum of **20 items per row** per run. If the list has more than 20 items, only the first 20 will be sent—there is no setting to increase this limit. For workflows that need to process more than 20 items per row, use [Lookup Multiple Rows](https://university.clay.com/docs/lookup-rows) to query the destination table directly instead.
-
 You can also select additional data to send along with the flattened list, just like with `Send row`.
 
 **Tip: Use "Take action on list" to set this up automatically**
