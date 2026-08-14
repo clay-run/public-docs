@@ -45,6 +45,16 @@ Build lists of companies based on what technology they use, including "back of h
 -   **Include total product signals count**
 -   **Include product first verified date**
 
+**Credit cost**
+
+The `Source Companies by product usage with HG Insights` action charges **8 credits per company per product matched**, capped at your **Max products per company** setting. A company that uses only 1 of your selected products costs 8 credits — the same as a company that uses all 7. Selecting more products only increases total credit spend if companies actually match those additional products.
+
+Running separate per-product searches does not reduce costs. A company that matches 3 of your selected products is billed 24 credits (3 × 8) whether you run one combined search or three separate per-product searches — but in three separate runs, that company appears in each run and is billed each time. **One combined run across all products is the most efficient approach.**
+
+**Lower-cost alternative for building a company universe**
+
+If your goal is to build a list of companies using a vendor's products — without needing to know exactly which products each company uses — the built-in **Technographics** filter in [Find Companies](find-companies.md) costs **3 credits per matching company row** (powered by [BuyerCaddy](https://university.clay.com/docs/buyercaddy-integration)). Use `Source Companies by product usage with HG Insights` when you specifically need the full product breakdown per company.
+
 ## **Enriching data with HG Insights**
 
 1.  While in a Clay table, click `Add enrichment` and search for `HG Insights`.
