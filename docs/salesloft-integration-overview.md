@@ -95,7 +95,13 @@ If you are running trigger campaigns please make sure to turn Auto-update on.
 
 ### Action: Adding Person to Cadence
 
-The Add Person to Cadence action lets you create new leads within Salesloft.
+The Add Person to Cadence action enrolls existing Salesloft contacts in a cadence.
+
+**How cadence enrollment works**
+
+The **Current Active Cadence** field visible on a Salesloft person record is a data field — it shows which cadence the contact is currently enrolled in. Writing a cadence name to this field will not enroll the contact. Cadence enrollment requires the separate **Add Person to Cadence** action.
+
+Before running Add Person to Cadence, the contact must already exist in Salesloft. Run a **Create Person** or **Upsert Person** action first, then add a second column using Add Person to Cadence. The cadence must also already exist in Salesloft — Clay cannot create cadences, and only cadences that exist in your Salesloft account appear in the cadence dropdown.
 
 **Step 1: Select the Add Person to Cadence action**
 
@@ -103,11 +109,11 @@ The Add Person to Cadence action lets you create new leads within Salesloft.
 
 Select the Salesloft account to send emails from. If you have not already integrated Salesloft with Clay, please enter your API key when creating an account ([Salesloft API key documentation](https://developers.salesloft.com/docs/platform/external-calendars/setup-api-key/)).
 
-**Step 3: Specify the Salesloft Person and Cadence ID**
+**Step 3: Specify the Salesloft Person and Cadence**
 
-The SalesLoft Person you'd like to add to a cadence. This is normally taken from a Lookup Person or Upsert Person step.
+For the **Salesloft person id** field, map the Person ID returned by your Create Person or Upsert Person column — use the `/` field picker to reference that column's output. This is the numeric Salesloft record ID assigned when the contact was created, not the contact's email address.
 
-The Cadence you'd like to add this person to.
+For the **Cadence id** field, select the cadence from the dropdown. Only cadences that already exist in Salesloft appear here.
 
 **Step 4: Configure run settings**
 
