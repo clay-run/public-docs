@@ -169,6 +169,14 @@ Several factors work together to pace delivery over multiple days rather than se
 
 If all your sender accounts have hit their daily limit, the campaign resumes automatically when the next sending window opens.
 
+### How many email accounts can I connect to Clay Sequencer?
+
+There is no limit on the number of **self-connected accounts** (Google Workspace OAuth, Microsoft Outlook OAuth, or SMTP) you can add to the sequencer. Each account has its own independent daily sending budget, so your total daily sending capacity scales with the number of accounts you connect.
+
+For **accounts purchased through Clay** (SmartSenders, currently in beta on Growth and Enterprise plans), each domain supports up to 5 email accounts. See [Buying email accounts](buying-email-accounts.md) for details.
+
+For guidance on how many inboxes to connect to hit your target daily send volume, see [How many emails can I send per day?](#how-many-emails-can-i-send-per-day-and-is-the-sequencer-right-for-large-volume-campaigns)
+
 ### How many emails can I send per day, and is the sequencer right for large-volume campaigns?
 
 The daily send limit is set at the **email account level** and varies by account type:
