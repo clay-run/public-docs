@@ -117,7 +117,13 @@ Access control is enforced at the Google Ads account level — the person connec
 
 Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, and **Google Ads**.
 
-Note that data source restrictions apply depending on the platform — see [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) below for details.
+Supported audience types differ by platform:
+
+-   **LinkedIn** — supports both **contact lists** (matched by email, name, and job title) and **account lists** (matched by company name and website).
+-   **Meta** — supports **contact-level audiences only**. Account-level (company list) audiences are not supported. To target people at specific accounts on Meta, use Clay to identify the relevant contacts at those accounts — filtered by job title, function, or seniority — and sync that contact list to Meta for direct targeting, exclusions, or as the seed for a lookalike audience.
+-   **Google Ads** — supports contact lists and is currently in **closed beta**. Contact [Clay support](https://www.clay.com/contact) to request access.
+
+Note that data source restrictions also apply depending on the platform — see [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) below for details.
 
 ### **Why are some contacts excluded when I set up an ad sync?**
 
