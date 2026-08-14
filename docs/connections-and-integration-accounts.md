@@ -84,6 +84,21 @@ To rotate or update credentials:
 
 The connection updates in place — the same connection is preserved with the new credentials. Existing data values already enriched and stored in your table rows are not affected — Reconnect does not clear or overwrite previously enriched cell values. Only actively re-running an enrichment column on existing rows would change those stored values.
 
+### When a workspace member leaves
+
+When a user is removed or deactivated from a workspace, their personal credentials on any connections they added are disabled. Any enrichment columns or workflows that reference those connections will stop working on their next run.
+
+To prevent disruption, reassign their connections **before** removing them from the workspace:
+
+1.  Navigate to `Settings` → `Connections`.
+2.  Identify connections belonging to the leaving teammate.
+3.  Click the `…` menu next to each connection and choose **Reconnect**.
+4.  Sign in with a different active account's credentials.
+
+Reconnect updates the connection in place — the same connection is preserved with the new credentials, and every column or workflow already referencing it will automatically use the updated credentials on its next run. You do not need to update each column individually.
+
+> **Note:** Do not delete the connection and add a new one. Deleting a connection leaves all existing columns pointing to the deleted connection's ID — they will fail on their next run. Use Reconnect to update the credentials in place so existing columns continue to work.
+
 ### Verify connection health
 
 If you are unsure whether a connected account is still working — for example, after a team member who set it up has left, or after a period of inactivity — you can check its status directly from Settings.
