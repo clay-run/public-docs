@@ -924,6 +924,8 @@ When two sources write different values to the same field on the same Audience r
 
 **Example:** If both a CSV import and a Salesforce sync write different values to the `Industry` field on the same company record, the Salesforce value wins — even if the CSV was imported more recently.
 
+**Example:** If you push a LinkedIn URL to a company record using `Upsert Audiences Record` from a Clay table, and Salesforce has a different value for that same field, the value you pushed from Clay wins — even though Salesforce syncs automatically every 15 minutes on Enterprise plans. `Upsert Audiences Record` and Bulk Enrichments hold the highest priority (tier 1), so the Salesforce import sync will not override field values set by those actions.
+
 ### Will two records automatically merge if a dedup field is filled in after the initial import?
 
 No. Dedup matching runs only at the time a record is upserted or imported. If an existing record's dedup field — such as domain — is updated after its initial import (for example, by a bulk enrichment that fills in a previously null value), Clay does not re-check whether that updated value now matches another record. The two records stay separate even if they now share the same domain or email.
