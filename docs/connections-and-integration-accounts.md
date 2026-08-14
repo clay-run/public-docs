@@ -86,18 +86,20 @@ The connection updates in place — the same connection is preserved with the ne
 
 ### When a workspace member leaves
 
-When a user is removed or deactivated from a workspace, their personal credentials on any connections they added are disabled. Any enrichment columns or workflows that reference those connections will stop working on their next run.
+Connections in Clay are workspace-level — they persist when a user is removed from the workspace. Removing a team member from Clay does not disable or delete any connections they added; those connections remain active for all enrichments and workflows.
 
-To prevent disruption, reassign their connections **before** removing them from the workspace:
+That said, if the leaving teammate's account at the **external provider** (for example, Salesforce or Salesloft) is also deactivated by your organization, the underlying OAuth token may become invalid at the provider level, which would cause enrichments using that connection to fail.
+
+To proactively guard against this, you can use **Reconnect** to update the connection's credentials to a different active account before the user's provider access is revoked:
 
 1.  Navigate to `Settings` → `Connections`.
 2.  Identify connections belonging to the leaving teammate.
 3.  Click the `…` menu next to each connection and choose **Reconnect**.
 4.  Sign in with a different active account's credentials.
 
-Reconnect updates the connection in place — the same connection is preserved with the new credentials, and every column or workflow already referencing it will automatically use the updated credentials on its next run. You do not need to update each column individually.
+Reconnect updates the connection in place — all existing columns and workflows referencing it automatically use the new credentials on their next run, with no per-column updates required.
 
-> **Note:** Do not delete the connection and add a new one. Deleting a connection leaves all existing columns pointing to the deleted connection's ID — they will fail on their next run. Use Reconnect to update the credentials in place so existing columns continue to work.
+After the team member has left, use **Verify** (see [Verify connection health](#verify-connection-health) below) to confirm that all connections are still working correctly.
 
 ### Verify connection health
 
