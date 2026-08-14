@@ -455,7 +455,7 @@ When you have a segment ready, you can sync it to an ad platform to run account-
 
 **How you might use this:**
 
--   **Account-based advertising** — sync company segments to LinkedIn, Meta, or Google Ads. Contacts who no longer qualify are automatically removed.
+-   **Account-based advertising** — sync company segments to LinkedIn or Google Ads. For Meta, sync a contact-level segment targeting the specific people at your accounts instead — Meta supports contact-level audiences only. Contacts who no longer qualify are automatically removed.
 
 **Syncing to multiple ad platforms**
 
