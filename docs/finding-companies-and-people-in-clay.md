@@ -592,6 +592,22 @@ The source returns results in a new table and is subject to a per-source cumulat
 
 The outputs are similar. If you want contacts as individual rows without spending credits on the lookup, choose **Save results in new table** to use Find People. Choose **Save results in this table** when you need contacts stored inline with their parent company row.
 
+### I used Find Contacts at Company and my contacts are stored as a list — how do I turn them into individual rows?
+
+When **Find Contacts at Company** runs as an enrichment column, results are stored as a list within each company row rather than as separate rows. To give each contact its own row in a separate people table:
+
+1. Click a populated cell in the **Find Contacts at Company** column to open the **Cell details** panel.
+2. Hover over the **People** section in the panel to reveal the **Take action on list** button.
+3. Select **Write each item to new row in other table**.
+4. Choose or create a destination table, map contact fields (name, job title, LinkedIn URL, etc.) to destination columns, and click **Save**.
+5. Run the column. Each contact becomes its own row in the destination table.
+
+**Note:** This method sends up to 20 contacts per company row per run. If a cell holds more than 20 contacts, only the first 20 are sent. See [Send table data](send-table-data.md) for full details.
+
+Once contacts are in their own rows, add **Work Email** and **Phone** enrichments directly to the destination table — see [Enriching your results](#enriching-your-results).
+
+**Alternative:** If you want contacts as individual rows from the start — without a manual flatten step — use **Find People at These Companies** from **Tools → Import** instead. It creates a new people table with one row per contact and does not consume credits for the initial import. See [Source vs. enrichment — when to use each](#source-vs-enrichment--when-to-use-each).
+
 ### I added new companies to my company table — how do I get them through my Find People searches?
 
 **If using Find People as a source (a separate people table):**
