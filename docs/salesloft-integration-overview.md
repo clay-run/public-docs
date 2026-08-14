@@ -173,6 +173,21 @@ If you are running trigger campaigns please make sure to turn Auto-update on.
 
 ![](https://cdn.prod.website-files.com/687e604972375496b891fe58/691e659fa1b8cb9cc1ee32da_672aeddc0616d6a7ef69234a_672aec9c4163926064f940bf_CleanShot%2525202024-10-31%252520at%25252002.14.57%2525402x%252520\(1\).png)
 
+## Enrolling contacts in a Salesloft cadence
+
+To enroll a contact in a Salesloft cadence from Clay, use the **Add Person to Cadence** action as a separate column in your Clay table. Cadence enrollment is a distinct step from creating or updating a person record and requires its own column.
+
+**The "current active cadence" field does not trigger enrollment.** The "current active cadence" field visible on Salesloft person records is a read-only data field that reflects which cadence the person is currently in. Writing a value into that field does not enroll the person in a cadence — it only updates a data value on the record.
+
+**To enroll contacts in a cadence:**
+
+1. Add a **Create Person** or **Upsert Person** column to your Clay table and run it first. The contact must already exist in Salesloft before Clay can enroll them in a cadence.
+2. Add a second Clay column and select **Add Person to Cadence** as the Salesloft action.
+3. Set the **Salesloft Person ID** field to reference the Person ID returned by your Create Person or Upsert Person column. Then select the target cadence from the **Cadence ID** dropdown. The cadence must already exist in Salesloft — Clay cannot create cadences. Refer to [Salesloft's documentation](https://help.salesloft.com/s/article/Create-a-Cadence?language=en_US) to create one first.
+4. Run one row and confirm the contact appears in the correct cadence in Salesloft before running the full table.
+
+For guidance on sequencing these two columns to prevent duplicate person records from being created, see [Avoiding duplicate Salesloft person records](#avoiding-duplicate-salesloft-person-records).
+
 ## Passing personalized copy to Salesloft cadences
 
 Salesloft cadences reference personalized copy through variable tokens that pull values from custom Person fields on the contact record. Custom Person fields are the only way to pass Clay-generated content — such as AI-written email snippets — into a cadence email template.
