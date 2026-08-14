@@ -32,7 +32,7 @@ Build lists of companies based on what technology they use, including "back of h
 -   **Product categories**
 -   **Product attributes**
 -   **Products**
--   **Max products per company**
+-   **Max products per company:** Limits the number of matched products returned per company. Defaults to **3** if not specified. A lower limit also caps the maximum credit cost per company.
 -   **Max companies:** Limits the number of companies returned. Defaults to **100** if not specified — increase this value if you need to capture more target accounts.
 -   **Revenue**
 -   **Employee count**
@@ -44,6 +44,16 @@ Build lists of companies based on what technology they use, including "back of h
 -   **Include total product locations count**
 -   **Include total product signals count**
 -   **Include product first verified date**
+
+**Credit cost**
+
+The `Companies by product usage with HG Insights` action charges **8 credits per company per product matched** — not per product selected. If HG Insights finds only 1 of the 7 products you selected for a given company, that company costs 8 credits, not 56.
+
+The **Max products per company** setting caps how many matched products are returned per company, which in turn caps the maximum credit cost per company. At the default of 3, each company costs at most 24 credits even if it matches more products.
+
+**Splitting your search into separate per-product runs does not reduce costs.** A company that uses multiple of your selected products will appear in each run it matches and be billed independently in each one — making multiple single-product runs more expensive than a single combined run.
+
+If you only need the list of companies (not the per-company product breakdown), use [Find Companies](find-companies.md) with the **Technographics** filter instead. Technographics filtering costs 3 credits per matching company regardless of how many products that company uses, and is typically cheaper for large company universes.
 
 ## **Enriching data with HG Insights**
 
