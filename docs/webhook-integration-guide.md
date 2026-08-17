@@ -127,7 +127,7 @@ If your webhook isn't creating rows — even on a brand-new webhook that has nev
 
 2. **Incorrect URL** — Confirm you copied the full webhook endpoint URL from the **Monitor webhook** section in your table source settings (not a partial URL or the cURL command itself).
 
-3. **Missing or wrong authentication token** — If you added an auth token when creating the webhook, it must be included in every request as a header. The token is only displayed once at creation — if you didn't copy it, you'll need to delete and recreate the webhook to generate a new one.
+3. **Missing or wrong authentication token** — If you added an auth token when creating the webhook, it must be included in every request as a header. Clay returns `401 Unauthorized` when the token is absent or does not match. The token is only displayed once at creation — if you didn't copy it, you'll need to delete and recreate the webhook to generate a new one.
 
 4. **Submission limit reached** — See the [Limits](#limits) section. Once a webhook source hits 50,000 submissions, Clay returns a `403 Record limit reached for webhook` error and stops creating rows. This limit is cumulative — it counts all submissions since the webhook was created, and deleting rows does not reset it. **Enterprise plan:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) to bypass this limit entirely — when passthrough mode is active, the 50,000 cap is skipped and the webhook can accept data indefinitely.
 
@@ -140,6 +140,29 @@ curl -X POST YOUR_CLAY_WEBHOOK_URL \
 ```
 
 If a row appears in your table, the issue is in your original request's formatting, headers, or auth token. If no row appears on a brand-new webhook, contact support.
+
+### What HTTP status codes does Clay's webhook endpoint return?
+
+Clay's webhook endpoint returns the following status codes:
+
+| Status code | Meaning | What to do |
+|---|---|---|
+| `200 OK` or `202 Accepted` | Request accepted; row created successfully | No action needed — treat any `2xx` as success |
+| `400 Bad Request` | Invalid payload — `Content-Type: application/json` header is missing, the body is not valid JSON, or the payload exceeds 100 KB | Fix the request format and resend |
+| `401 Unauthorized` | Auth token is missing or does not match | Verify you are sending the correct token in the `x-clay-webhook-auth` request header |
+| `403 Forbidden` | Webhook source has reached the 50,000-submission limit | Create a new webhook source, or enable [auto-delete](https://www.clay.com/university/guide/auto-delete) on an Enterprise plan to bypass this limit |
+| `429 Too Many Requests` | Workspace-level throughput limit exceeded (10 requests/second) | Retry after the value in the `Retry-After` response header, using exponential backoff |
+
+Only a `2xx` response guarantees that a row was created in your table. Any other status code means no row was created and no credits were consumed.
+
+### Can I restrict webhook access to specific IP addresses?
+
+No — IP-based access restrictions are not available for webhook sources. The authentication token is the sole security layer for your webhook endpoint. To keep your webhook secure:
+
+- Store the token in a secrets manager rather than hardcoding it.
+- Rotate the token immediately if you suspect it has been leaked — rotating it invalidates the old token right away.
+
+To rotate the token, open the webhook source settings in your Clay table and generate a new one. Update any external systems that send to this webhook with the new token before retiring the old one.
 
 ### How can I tell which webhook source a row came from?
 
