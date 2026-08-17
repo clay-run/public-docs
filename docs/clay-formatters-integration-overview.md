@@ -1,16 +1,16 @@
 ---
 title: Clay formatters overview
-description: Format your Clay table data for free.
+description: Normalize and format your Clay table data using Clay's built-in tools.
 last_synced: 2026-04-26T01:39:44.557Z
 ---
 
 # Clay formatters overview
 
-Format your Clay table data for free.
+Normalize and format your Clay table data using Clay's built-in tools.
 
 ### Clay Formatters Overview
 
-Clay Formatters allow you to format your cell data without using any credits.
+Clay Formatters allow you to format and normalize your cell data. Most tools on this page run at no credit cost — the Normalize First and Last Names action costs 1 credit per run.
 
 ### `Action` Format Date/Time
 
@@ -59,6 +59,31 @@ To run enrichment only under specific conditions, use formulas that trigger the 
 
 **Step 4:** Run your enrichment to normalize your company name.
 
+### `Action` Normalize First and Last Names
+
+Normalize first and last names by stripping unwanted characters and suffixes. Use this after running enrichments like Enrich Person, which return raw name data from data providers without any normalization applied.
+
+**Note:** This action costs 1 credit per run.
+
+To normalize:
+
+**Step 1:** Input the first name and/or last name you want to normalize. You can provide one or both — each field is normalized independently.
+
+**Step 2:** Configure run settings.
+
+By default, new rows within your Clay table will automatically run this enrichment. Learn more about auto-update in [this brief guide](https://docs.clay.com/en/articles/9642165-auto-update-and-auto-dedupe-table).
+
+To run enrichment only under specific conditions, use formulas that trigger the column when the formula is true. Learn more about AI formulas in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101).
+
+**Step 3:** Run your enrichment to normalize the names.
+
+**What gets normalized:**
+
+- **First name** — Takes the first word of the input, capitalizes the first character, and lowercases the rest. For example, `JANE SMITH` → `Jane`.
+- **Last name** — Strips everything after the first comma, removes registered trademark symbols (®), standalone credential abbreviations (for example, `PHD`, `MBA`, `MD`), and parenthetical labels (for example, `(Founder)`), then applies title case. For example, `MCDONALD, PHD (Founder)®` → `Mcdonald`.
+
+The action outputs a **Normalized First Name** and a **Normalized Last Name** field.
+
 ### `Action` Normalize a Domain
 
 Extract and standardize a domain URL to the format you need. To add this action to your table, click **+ Add Column → Enrich Data** and search for **"Normalize a Domain."**
@@ -76,7 +101,7 @@ To normalize a domain:
 
 **Step 3:** Configure run settings.
 
-By default, new rows within your Clay table will automatically be formatted. Learn more about auto-update in [this brief guide](https://docs.clay.com/en/articles/9642165-auto-update-and-auto-dedupe-table).
+By default, new rows within your Clay table will automatically be formatted. Learn more about auto-update in [this brief guide](https://docs.clay.com/en/articles/9642165-auto-update-and-auto-dedupe-update).
 
 To run enrichment only under specific conditions, use formulas that trigger the column when the formula is true. Learn more about AI formulas in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101).
 
