@@ -69,8 +69,6 @@ Each cell can hold a list of items — like a list of people found at a company,
 
 This is useful for **flattening lists**. For example, if you run Find Active Job Openings on a list of companies, each cell may contain multiple job postings — use this method to send each posting as its own row in a destination table, giving you a clean per-role breakdown you can filter and analyze. Similarly, if you find multiple people at a company, you can send each person as a separate row. **This method always creates a new row for each item.**
 
-**Note:** This method sends a maximum of **20 items per row** per run. If the list has more than 20 items, only the first 20 will be sent—there is no setting to increase this limit. For workflows that need to process more than 20 items per row, use [Lookup Multiple Rows](https://university.clay.com/docs/lookup-rows) to query the destination table directly instead.
-
 You can also select additional data to send along with the flattened list, just like with `Send row`.
 
 **Tip: Use "Take action on list" to set this up automatically**
@@ -95,8 +93,6 @@ When configuring the list field by hand, select the **list itself** (e.g., `Peop
 - **Array columns** — such as **Find Contacts at Company → People** or **Find Active Job Openings → Job Openings** — return multiple items in one cell. Clay can expand each item into its own destination row.
 
 If you need to iterate over a sub-array nested inside an object column — for example, a list of past positions inside an **Enrich Person** result — expand the column in the token picker to find and select the specific nested array sub-field. Nested arrays are valid list sources even if the parent column is an object.
-
-**Selecting two list fields:** If you add two list-type columns as list sources, Clay computes the **cartesian product** — every combination of one item from each list. For example, a list with 5 contacts and a list with 2 job titles produces 10 rows for that source row (5 × 2 = 10).
 
 **If the column holds a stringified JSON array** — for example, a text value that looks like `[{"name": "Alice"}, {"name": "Bob"}]`, common when data arrives from an HTTP API call or webhook — Clay won't recognize it as a native list and will show the same **"Please add a valid list."** error. To fix this, click the **gear icon** on the right side of the list input to switch to formula mode, then enter `JSON.parse(/YourColumn)`, replacing `YourColumn` with the name of your column (use `/` to reference it). This converts the text string into a native array that Clay can iterate over.
 
