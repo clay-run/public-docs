@@ -115,6 +115,8 @@ Filters in Clay are display-only — they control which rows appear in the curre
 
 If you clear the filters and the expected rows still don't appear, see [Why aren't any rows arriving in my webhook table?](#why-arent-any-rows-arriving-in-my-webhook-table) for configuration-level troubleshooting.
 
+**If Clay's response was `202 Accepted` rather than `200 OK`:** A `202` response means Clay received your payload and queued it for processing — the row will appear in your table with a short delay rather than immediately. This is normal during periods of elevated load and is not an error. Wait a moment and refresh your table; if the row still doesn't appear after a few minutes, check the filter and configuration items in [Why aren't any rows arriving in my webhook table?](#why-arent-any-rows-arriving-in-my-webhook-table).
+
 ### Why aren't any rows arriving in my webhook table?
 
 If your webhook isn't creating rows — even on a brand-new webhook that has never received a submission — check these common causes:
