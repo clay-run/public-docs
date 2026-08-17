@@ -248,6 +248,10 @@ There is no per-row force-stop for cells in Awaiting Callback. To halt all proce
 
 Yes. Enable "share as template" on the function to generate a shareable link. Anyone with the link can view the function's columns and create a table in their workspace using it.
 
+### How do I duplicate a function within my workspace?
+
+To duplicate a function, open the function from your Clay homepage or directly in the function editor, then click the function name at the top. In the dropdown that appears, select **Duplicate function**. Clay creates a new, independent copy in the same workspace — you can rename it and modify it freely without affecting the original.
+
 ### Can a function be enabled for MCP tools like ChatGPT, Claude, or Glean?
 
 Yes, on supported plans. The `Enable for MCP` option in the function editor panel is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans. On other legacy plans (such as legacy Pro), the toggle does not appear in the function settings — if you do not see it, your workspace plan does not include this capability. Upgrading to a modern plan is required to enable custom Functions for MCP. For setup instructions, see [MCP settings](https://university.clay.com/docs/mcp-settings).
