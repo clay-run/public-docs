@@ -127,7 +127,7 @@ If your webhook isn't creating rows — even on a brand-new webhook that has nev
 
 2. **Incorrect URL** — Confirm you copied the full webhook endpoint URL from the **Monitor webhook** section in your table source settings (not a partial URL or the cURL command itself).
 
-3. **Missing or wrong authentication token** — If you added an auth token when creating the webhook, it must be included in every request as a header. The token is only displayed once at creation — if you didn't copy it, you'll need to delete and recreate the webhook to generate a new one.
+3. **Missing or wrong authentication token** — If you added an auth token when creating the webhook, it must be included in every request as a header. Clay returns `401` if the token is missing or does not match. The token is only displayed once at creation — if you didn't copy it, you'll need to delete and recreate the webhook to generate a new one.
 
 4. **Submission limit reached** — See the [Limits](#limits) section. Once a webhook source hits 50,000 submissions, Clay returns a `403 Record limit reached for webhook` error and stops creating rows. This limit is cumulative — it counts all submissions since the webhook was created, and deleting rows does not reset it. **Enterprise plan:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) to bypass this limit entirely — when passthrough mode is active, the 50,000 cap is skipped and the webhook can accept data indefinitely.
 
@@ -140,6 +140,12 @@ curl -X POST YOUR_CLAY_WEBHOOK_URL \
 ```
 
 If a row appears in your table, the issue is in your original request's formatting, headers, or auth token. If no row appears on a brand-new webhook, contact support.
+
+### Can I restrict webhook access by IP range?
+
+No — Clay webhook sources do not support IP allowlisting or any other network-level access restrictions. The authentication token is the only security control available for webhook sources.
+
+To keep your webhook secure, store the token in a secrets manager rather than hard-coding it in your sending system. If you suspect the token has been exposed, delete the webhook source and recreate it to generate a new token and URL, then update your sending system with the new values.
 
 ### How can I tell which webhook source a row came from?
 
