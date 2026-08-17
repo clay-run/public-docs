@@ -101,7 +101,7 @@ To normalize a domain:
 
 **Step 3:** Configure run settings.
 
-By default, new rows within your Clay table will automatically be formatted. Learn more about auto-update in [this brief guide](https://docs.clay.com/en/articles/9642165-auto-update-and-auto-dedupe-update).
+By default, new rows within your Clay table will automatically be formatted. Learn more about auto-update in [this brief guide](https://docs.clay.com/en/articles/9642165-auto-update-and-auto-dedupe-table).
 
 To run enrichment only under specific conditions, use formulas that trigger the column when the formula is true. Learn more about AI formulas in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101).
 
