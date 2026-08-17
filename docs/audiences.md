@@ -564,6 +564,25 @@ Once created, the field is immediately available as a filter in any segment and 
 
 **Note:** There is no option to add new fields directly from the Audience screen — you must go through the `Update Audiences Record` column mapping in a bulk enrichment table.
 
+### How do I delete an Audience field to free up column capacity?
+
+Audiences enforces a field limit per entity type (People and Companies separately). Enterprise workspaces default to **135 fields per entity type**; Growth workspaces default to **70 fields per entity type**. When you reach the limit, Clay displays a "field limit reached" error and blocks new fields from being added until existing ones are removed.
+
+**Before deleting a field:**
+
+If the field is mapped to a data source import — for example, a Snowflake column that writes to this Audience field — go to that source's import settings and remove the field mapping first. If you delete the Audience field without removing the source mapping, the source will continue trying to write data to the deleted field on each sync. To remove the mapping, navigate to **Settings** → **Sources / Destinations**, open the relevant source (for example, your Snowflake import), and remove the specific field mapping before proceeding.
+
+**To delete a field:**
+
+1.  Click **Data Hub** in the left sidebar.
+2.  Click the **Fields** tab.
+3.  Click on the field you want to delete to open its sidebar.
+4.  Review the **Enrichments** section in the sidebar — any bulk enrichment writing data to this field will stop updating it after deletion.
+5.  Click **Delete field** at the bottom of the sidebar.
+6.  In the confirmation dialog, review any audience **segments** listed — segment filters that reference this field are automatically removed when you confirm. Click **Delete** to confirm.
+
+Deletion is permanent. The field slot is reclaimed, allowing new fields to be added up to your plan's limit. **Admin access is required** to delete Audience fields.
+
 ### A Salesforce field isn't appearing in my audience filters — how do I add it?
 
 Only fields explicitly included in the Salesforce import field mapping are brought into Audiences as columns and made available as filter options. If a Salesforce field — including custom fields like `Account_Record_ID__c` — doesn't appear in the filter dropdown, it was not included when the import was configured.
