@@ -579,11 +579,13 @@ A connected app only appears after a successful OAuth authorization. If it's mis
 
 ## What callback URL does Clay use for Salesforce?
 
+When configuring a Salesforce Connected App or External Client App for Clay's **User Sign In** connection, enter this URL in the **Callback URL** field:
+
 -   [https://api.clay.com/v3/app-accounts/oauth/salesforce/callback](https://api.clay.com/v3/app-accounts/oauth/salesforce/callback)
 
 ## What OAuth scopes does Clay require for Salesforce?
 
-Clay requires these scopes:
+Configure your Salesforce Connected App or External Client App to grant the following scopes for Clay's **User Sign In** connection:
 
 -   `api`
 -   `refresh_token`
