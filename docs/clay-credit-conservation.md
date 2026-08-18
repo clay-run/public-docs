@@ -120,11 +120,17 @@ There are two ways to implement conditional runs:
 2.  In the **"Only run if"** box, add your conditional formula to specify when the enrichment should run.
 3.  **Tip:** Use the **"Use AI"** button to input plain language instructions, making it easier to define your conditions without needing complex formulas.
 
-**Method #2: Filter Existing Rows**
+**Method #2: Manually run on a filtered view**
 
-You can also conditionally run columns through filtering rows.
+Filtered views in Clay are display-only — they control which rows appear in your current view but do not gate auto-run enrichments. If auto-run is on, all new or empty rows in the table are enriched as they arrive, regardless of which filtered view is active.
 
-Filtered views only enriches the rows you're viewing so this can be used as a way to run enrichments conditionally
+However, when you trigger a column run **manually** from a filtered view, Clay processes only the rows visible in that view. To enrich a specific subset of rows without running on the entire table:
+
+1. Turn off table-level **Auto-run** (click the `⛭` icon → toggle **Auto-run** off).
+2. Filter the table to show only the rows you want to enrich.
+3. Right-click the enrichment column header and choose **Run column** → **Run [N] empty or out-of-date rows**.
+
+With auto-run off, only the rows visible in the filtered view will be processed when you trigger the manual run.
 
 ## Look up existing data to avoid duplicate enrichments
 
