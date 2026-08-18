@@ -70,6 +70,16 @@ If your workspace uses Clay Audiences, two additional workspace-level toggles ap
 
 ## FAQ
 
+### Why do some tools appear in my MCP interface but not in the Functions page when I filter by "MCP: Enabled"?
+
+Clay exposes two separate categories of tools through MCP:
+
+-   **Default built-in tools** — Clay automatically makes a set of standard enrichment and research tools available to every MCP connection without any setup. These include contact enrichments like Email, Summarize Work History, and Find Thought Leadership, plus company enrichments like Headcount Growth, Website Traffic, Tech Stack, Open Jobs, and more. Because these are part of Clay's built-in MCP layer — not custom Functions you created — they do not appear in the Functions page or show up when you filter Functions by "MCP: Enabled."
+
+-   **Custom Functions you enable for MCP** — Functions your ops team built in Clay and toggled "Enable for MCP" on. These appear in the Functions page when you filter by "MCP: Enabled."
+
+To control whether the built-in default tools are visible through MCP, use the **Hide default functions from MCP** toggle on the MCP settings page. Turning it ON blocks all built-in enrichment tools from MCP while leaving your custom MCP-enabled Functions active; turning it OFF (the default) makes the built-in tools available again.
+
 ### Why does Clay MCP return different results than my Clay table?
 
 The native Clay MCP contact enrichment — including the "Find and Enrich list of contacts" tool — runs a preset set of enrichment steps. It does not run the multi-provider waterfall you may have set up in your Clay tables. As a result, contacts that are only findable via a specific waterfall provider may return an email in your Clay table but not through MCP.
