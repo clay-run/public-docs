@@ -249,7 +249,7 @@ If you are on a **monthly plan**, unused Data Credits will roll over and accumul
 
 If you are on an **annual plan**, your full year's Data Credits are deposited into your account immediately at purchase — they are not distributed in monthly installments. You can run a bulk enrichment right away without waiting for credits to accumulate. You are also eligible for a **15% Data Credit rollover** of unused Data Credits when you renew, provided you renew on the same or a higher-tier plan.
 
-_Note: Your rollover and renewal happen on the same day and at the same time you originally subscribed (this timestamp is now shown in your billing details). Credits are updated via a payment-processor webhook and typically appear within a few minutes of that timestamp._
+_Note: Your rollover and renewal happen on the same day and at the same time you originally subscribed (this timestamp is now shown in your billing details). Credits are updated via a payment-processor webhook and typically appear within a few minutes of your renewal timestamp._
 
 ## Managing your plan and credits
 
@@ -366,11 +366,11 @@ You don't need to change your Actions tier.
 
 ### Why am I seeing "Action execution limit reached" on my cells?
 
-This error means your workspace has used up its Actions capacity for the current billing period — it is not a Data Credits issue. Your Data Credits balance is separate and unaffected.
+This error appears on **Free and Trial plan** workspaces that have used up their Actions capacity for the current billing period. It is not a Data Credits issue — your Data Credits balance is separate and unaffected.
 
 To check your current Actions usage, go to `Settings` → `Usage`. Your Actions allotment resets automatically when your billing period renews; you can see your exact renewal date in `Settings` → `Plan & billing`.
 
-If you cannot wait for the next renewal, upgrade to a higher action tier in `Settings` → `Plan & billing`. Actions cannot be purchased as one-time top-ups — an upgrade is the only way to unlock more capacity before your billing cycle resets.
+To run more rows before the billing period resets, upgrade to a paid plan in `Settings` → `Plan & billing`. You can also contact Clay support to request additional Actions without upgrading.
 
 ### What happens if I run out of Actions but not Data Credits?
 
