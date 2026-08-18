@@ -122,13 +122,3 @@ When you run `clay routines list` or `clay routines get`, each function-type rou
 -   `clay audiences records search-count --entity-type <people|companies> [--audience-id <id> | --filter <file>]` — return the count of records matching a scope without paging through ids.
 
 All three return `auth_forbidden` (exit 3) if Audiences is not enabled for the workspace. `records get` additionally returns `rate_limited` (exit 4) if the workspace exceeds its hourly record budget or per-minute request rate — back off for `details.retryAfter` seconds before retrying.
-
-**Note: Five `clay signals` commands are available in the experimental channel.** Set `CLAY_CLI_CHANNEL=experimental` before running them. Signal ids use the `td_…` prefix (trigger definition id) — passing a `sig_…` signal id returns `not_found`:
-
--   `clay signals list` — list every signal in the workspace (web intent signals excluded), each with its id, name, `runStatus`, signal type, input, and destination table.
--   `clay signals get <triggerDefinitionId>` — return one signal with its full detail: filter, schedule, error, and the per-type configuration in `signal.inputs`.
--   `clay signals pause <triggerDefinitionId>` — set the signal's `runStatus` to `Paused`, stopping it from running or spending credits. Only accepts signals whose current `runStatus` is Active or Paused; any other status (Errored, Disabled, Testing, Preview) is refused with `validation_error` (exit 2). Returns the updated signal — no confirming call needed.
--   `clay signals resume <triggerDefinitionId>` — set the signal's `runStatus` to `Active`, resuming it on its existing schedule. Same Active-or-Paused prerequisite as `pause`; an Errored signal must be fixed in the app before it can be resumed via CLI. Returns the updated signal.
--   `clay signals delete <triggerDefinitionId>` — remove the signal from the workspace regardless of its current `runStatus`. The destination table and all events it captured are left intact. Deleting is not idempotent: a second delete of the same id returns `not_found` (exit 6). Prefer `clay signals pause` when the goal is only to stop a signal from running or spending — pausing is reversible, deletion is not.
-
-All five commands refuse web intent signals (`WebsiteVisitorTracking` type) — manage those in the Clay app. Common errors across all five: `auth_forbidden` (exit 3) if Signals is not enabled for the workspace or the credential cannot access them; `not_found` (exit 6) if a `sig_…` id was passed instead of the `td_…` trigger definition id.
