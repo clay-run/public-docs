@@ -157,7 +157,7 @@ This prevents unexpected credit usage when you add new data to tables with exist
 The import warning and the first-10-rows auto-run limit both protect you when **adding a People, Companies, or Jobs search source to an existing table** — but neither applies when you create a **brand-new table** with a source and enrichment columns for the first time.
 
 -   **No import warning**: Clay shows the confirmation modal only when a source is added to a table that already has enrichment columns. A new table has no action columns at the moment the source first runs, so no credit-spend warning appears.
--   **Enrichments fire on all imported rows**: The first-10-rows auto-run limit only applies to People, Companies, and Jobs search sources when first added to an existing table. For a new table, enrichments with auto-run enabled queue on every row the source imports — not just the first 10.
+-   **Enrichments fire on all imported rows**: The first-10-rows auto-run limit applies when adding a People, Companies, or Jobs search source to an existing table, and also when adding the Work Email or Domain waterfall to a table that already has rows. For a brand-new table, neither of these protections is in place — enrichments with auto-run enabled queue on every row the source imports.
 
 To safely test a new table before committing credits at scale:
 
