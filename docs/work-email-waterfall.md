@@ -93,24 +93,24 @@ To run the waterfall on multiple contacts at once — without running the full t
 
 For a full reference on run options — including a row limit and starting row — see [Run progress](run-progress.md).
 
-### Why did my Work Email waterfall only run on the first 10 rows when I first added it?
+### Why did my Work Email waterfall only run on the first 10 rows when it was first set up?
 
-This is expected behavior, not an error. When you add the Work Email waterfall to a table that already has rows, Clay automatically previews the waterfall on only the first 10 rows. This intentional limit prevents unexpected credit spend while you verify that your inputs are mapped correctly and the results look right before committing to the full table.
+The behavior depends on how the waterfall was added to your table:
 
-The remaining rows stay in the table but do not run until you manually trigger them. Once you've reviewed the first 10 results and are ready to process the rest:
+**If set up using Sculptor (Clay's AI assistant):** When Sculptor builds the Work Email waterfall and you click **Accept and Run**, Clay automatically previews it on the first 10 rows. This lets you check that your inputs are mapped correctly and results look right before committing credits to the full table. The remaining rows stay blank until you trigger them manually. Once you've reviewed the preview:
 
 1. Click the **▶** button in the Work Email waterfall column header.
 2. Select **Run empty or out-of-date rows**.
 
-This queues the waterfall for every row that hasn't returned a result yet. For additional run options, see [Run progress](run-progress.md).
+**If added manually (via Tools → Enrich → Work Email):** When you add the waterfall manually to a table that already has rows, those existing rows do not auto-run — only new rows added to the table after the waterfall is set up will trigger it automatically. To enrich your existing rows, right-click the waterfall column header and select **Run column → Run empty or out-of-date rows**.
 
-**Note:** This 10-row preview applies specifically to the Work Email waterfall (and the Domain waterfall) when added to a table that already has rows. New rows that arrive after the waterfall is set up — for example, via a scheduled source — are not subject to this cap.
+For the full set of run options, see [Run progress](run-progress.md).
 
 ### What do the numbers in parentheses in my waterfall column headers mean (e.g., "Find work email (7)")?
 
-When you expand the Work Email waterfall to reveal individual provider sub-columns (click the **«»** arrow on the waterfall column header), each provider column is labeled with its position in the waterfall sequence — for example, **"Find work email (7)"** means this is the 7th provider Clay will try. The waterfall starts at provider (1) and works down the list in order, stopping as soon as one returns a valid email.
+When you expand the Work Email waterfall to reveal individual provider sub-columns (click the **«»** arrow on the waterfall column header), each provider column is labeled with its position in the waterfall sequence. The first provider is labeled **"Find work email"** (no number); the second is **"Find work email (2)"**, the third is **"Find work email (3)"**, and so on. So **"Find work email (7)"** means this is the 7th provider Clay will try.
 
-The number is just a label showing where that provider sits in your configured sequence. You can reorder providers in the waterfall's Full Configuration to change the order.
+The waterfall tries providers in order, stopping as soon as one returns a valid email. The number is just a label showing where each provider sits in your configured sequence — you can reorder providers in the waterfall's Full Configuration to change the order.
 
 ### What does it mean if no email is found?
 
