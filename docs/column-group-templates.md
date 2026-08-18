@@ -10,6 +10,8 @@ Column group templates let you save and reuse related column sets across tables 
 
 **Creating new column group templates using "Save as template" has been replaced by [Functions](functions.md).** To save a set of columns for reuse across tables, select the columns, right-click one of the selected headers, and choose **Save as function** instead. Functions provide the same column reusability with additional capabilities: logic updates everywhere at once when you edit the function, permissions control, and observability. Functions are available on all paid plans. See [Functions](functions.md) for step-by-step instructions.
 
+> **Note:** This change is rolling out across workspaces. If you still see a **Save as template** option in your multi-column right-click menu, your workspace may not yet have received the update — **Save as function** is the supported replacement going forward. Contact support if you have questions about your workspace.
+
 If you have existing column group templates, you can still apply, edit (name and description only), and delete them as described below. To convert an existing template into a function, open the template from **Tools → Templates** and use the migration workflow shown in the template's settings panel.
 
 ## Grouping columns
