@@ -237,6 +237,13 @@ To get one Clay row per sheet row, set **"Fields to deduplicate by"** to a field
 
 When adding a new source to an existing table, you must have the appropriate columns set up. For example, to add a `Find company` source, you need professional social URLs or Company Domains columns.
 
+**If you see "You must be able to update a table to create a source within it."** — the destination table is in Sandbox mode, which makes it read-only. Sources cannot be created or edited while a table is in Sandbox mode. To fix this:
+
+1. Click **Exit Sandbox** in the top right corner of the table to return to your normal, editable table.
+2. Retry adding the source.
+
+**Note:** If Sculptor put the table into Sandbox mode, use the **Review changes** button instead of **Exit Sandbox** — clicking Exit Sandbox discards all of Sculptor's proposed changes without saving them. See [Sandbox mode](sandbox-mode.md) for the full publishing step-by-step.
+
 ### I see "Limit of 20 sources for source field reached" when adding a source
 
 **Each Clay table supports a maximum of 20 sources.** If you try to add a 21st source, Clay shows the error: *"Limit of 20 sources for source field reached. Please create another table to add more sources."*
