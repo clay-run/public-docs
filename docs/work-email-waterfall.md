@@ -93,6 +93,25 @@ To run the waterfall on multiple contacts at once — without running the full t
 
 For a full reference on run options — including a row limit and starting row — see [Run progress](run-progress.md).
 
+### Why did my Work Email waterfall only run on the first 10 rows when I first added it?
+
+This is expected behavior, not an error. When you add the Work Email waterfall to a table that already has rows, Clay automatically previews the waterfall on only the first 10 rows. This intentional limit prevents unexpected credit spend while you verify that your inputs are mapped correctly and the results look right before committing to the full table.
+
+The remaining rows stay in the table but do not run until you manually trigger them. Once you've reviewed the first 10 results and are ready to process the rest:
+
+1. Click the **▶** button in the Work Email waterfall column header.
+2. Select **Run empty or out-of-date rows**.
+
+This queues the waterfall for every row that hasn't returned a result yet. For additional run options, see [Run progress](run-progress.md).
+
+**Note:** This 10-row preview applies specifically to the Work Email waterfall (and the Domain waterfall) when added to a table that already has rows. New rows that arrive after the waterfall is set up — for example, via a scheduled source — are not subject to this cap.
+
+### What do the numbers in parentheses in my waterfall column headers mean (e.g., "Find work email (7)")?
+
+When you expand the Work Email waterfall to reveal individual provider sub-columns (click the **«»** arrow on the waterfall column header), each provider column is labeled with its position in the waterfall sequence — for example, **"Find work email (7)"** means this is the 7th provider Clay will try. The waterfall starts at provider (1) and works down the list in order, stopping as soon as one returns a valid email.
+
+The number is just a label showing where that provider sits in your configured sequence. You can reorder providers in the waterfall's Full Configuration to change the order.
+
 ### What does it mean if no email is found?
 
 If the cell shows no result, click into it to see which providers were tried and what each returned. Common reasons no email surfaces:
