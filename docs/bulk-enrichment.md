@@ -66,6 +66,19 @@ To inspect specific records before or after processing, here are some alternativ
 -   **Use test data** — Use the **Test data** option in your bulk enrichment settings to add a small subset of rows and verify output before running the full source.
 -   **Review results at the destination** — Once enriched rows are exported to your destination (Salesforce, Google Sheets, Snowflake, etc.), filter and review them there.
 
+### When the Errored rows limit is reached
+
+The **Errored rows** tab holds a maximum of 10,000 rows. When this limit is reached during a bulk enrichment run, Clay automatically pauses the run to prevent spending credits on something failing at scale. You'll see the following message on the bulk enrichment:
+
+> *"This table has 10K errored rows, which exceeds the limit. To continue with the bulk run, please fix and re-run the errored rows."*
+
+This is expected behavior, not a bug. To resume the run:
+
+1.  **Identify the cause of the errors.** Click the **Errored rows** tab and hover over failing cells to see the specific error message for each row. Common causes include provider-side failures (for example, a data provider returning no results for a domain) and the table's credit limit being reached.
+2.  **Fix the underlying issue.** If rows are failing because the table's credit limit was exhausted, a workspace admin can raise the limit — see [Credit spend limits FAQ](credit-spend-limits-faq.md) for instructions. If rows are failing due to provider errors, check that your input fields (such as domain or full name) are populated correctly before retrying.
+3.  **Re-run the errored rows.** Right-click the failing column header → **Run column** → **Run [N] empty or out-of-date rows** to retry only the rows that failed.
+4.  Once the errored row count drops below 10,000, the bulk enrichment automatically resumes processing the remaining queued rows.
+
 ### Understanding Run Stopped
 
 **Run Stopped** appears on a cell when the run was manually paused or stopped before that action had a chance to execute for that row. Because the action never ran, the row stays in the Queued rows or Errored rows tab (depending on your deletion criteria configuration) rather than completing normally.
