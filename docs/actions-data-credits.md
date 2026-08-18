@@ -364,6 +364,14 @@ You can either:
 
 You don't need to change your Actions tier.
 
+### Why am I seeing "Action execution limit reached" on my cells?
+
+This error means your workspace has used up its Actions capacity for the current billing period — it is not a Data Credits issue. Your Data Credits balance is separate and unaffected.
+
+To check your current Actions usage, go to `Settings` → `Usage`. Your Actions allotment resets automatically when your billing period renews; you can see your exact renewal date in `Settings` → `Plan & billing`.
+
+If you cannot wait for the next renewal, upgrade to a higher action tier in `Settings` → `Plan & billing`. Actions cannot be purchased as one-time top-ups — an upgrade is the only way to unlock more capacity before your billing cycle resets.
+
 ### What happens if I run out of Actions but not Data Credits?
 
 You must upgrade to a higher action tier. Actions cannot be topped up separately because they're tied to your action tier's capacity.
