@@ -230,7 +230,7 @@ No. The script runs in the visitor's browser and loads asynchronously, so it won
 
 You do not need to add rows manually. Once your tracking snippet is installed and your Web Intent connection is enabled, rows appear in your table automatically as website visitors arrive — no manual input is required.
 
-Web Intent creates one row per company domain. If a company that has already visited your site returns, Clay updates the existing row (including the `lastSeen` field) rather than creating a new row, so no duplicates are added.
+By default, Web Intent creates one row per company domain. If a company that has already visited your site returns, Clay updates the existing row (including the `lastSeen` field) rather than creating a new row. If you prefer a separate row for each visit, you can switch to **New row per visit** mode in your Web Intent table settings.
 
 Because Clay waits for each visitor's session to finish before processing the data, new rows and updates can be delayed up to 30 minutes after a visitor's last page view. See [Is visitor tracking data shown in real-time?](#is-visitor-tracking-data-shown-in-real-time) for more detail.
 
