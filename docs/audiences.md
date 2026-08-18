@@ -409,7 +409,7 @@ For **Companies** audiences, four built-in signal types are available:
 After you add a signal:
 
 -   Results write to a `dedicated signal column` on each matching record — stored permanently and globally (not scoped to this segment).
--   Clay **automatically creates a companion segment** combining your original filters plus a filter for the new signal result — this is expected, not an error.
+-   Clay **automatically creates a companion segment** combining your original filters plus a filter for the new signal result — this is expected, not an error. The companion segment appears in the Audiences left sidebar (you may need to scroll or expand the list to find it); it is a segment within Audiences, not a separate table.
 -   Multiple signals each get their own column; the `Signal Summary` column aggregates all results. Click any row to see per-signal detail.
 -   Any other segment that filters on this signal type will also surface these results.
 
@@ -418,6 +418,17 @@ After you add a signal:
 While the signal is processing its initial run, its status shows **Running**. Once the initial run completes, the status flips to **Monitoring** and displays a **Last run** timestamp. To see how many records were detected, go to **Data Hub** → **Signals** — the **Signals fired (30d)** column shows the count of events the signal emitted over the past 30 days.
 
 To see which specific records in your audience were picked up by the signal, add a filter on your audience for the **Job change results** field (or the equivalent results field for other signal types). You can save that filtered view as a separate segment — or use the auto-created companion segment, which already has this filter applied.
+
+**Enriching people who matched a signal**
+
+To run an enrichment on the people who matched a signal:
+
+1.  In Audiences, open the companion segment. Find it in the Audiences left sidebar — or navigate there directly from **Data Hub** → **Signals** by clicking the audience name in the **Audiences** column of your signal's row.
+2.  Inside the companion segment, click **Enrich** → **Add bulk enrich**.
+3.  Add your enrichment columns (for example, `Enrich Person` for LinkedIn URL, phone, or work email).
+4.  Click **Start Run**.
+
+Enrichment results write permanently back to All People — they are available as filters in any other segment going forward.
 
 ### Claygent-managed columns
 
