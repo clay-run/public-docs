@@ -119,6 +119,8 @@ Clay syncs data from HubSpot automatically on the following schedules:
 -   **Incremental sync:** Runs every **15 minutes** on Enterprise workspaces, or **once daily** on Growth workspaces. Picks up new and changed HubSpot records since the last sync.
 -   **Full sync (every 7 days):** Re-reads all records from HubSpot and reconciles deleted records — catching anything the incremental sync may have missed.
 
+**Record scope:** The HubSpot Audiences connector imports all records for the object type you select — there is no option to pre-filter to a specific HubSpot list within the Audiences source setup. If your HubSpot has more records than your plan's limit (250,000 for Growth; 25,000,000 for Enterprise), see [My HubSpot has more records than my plan limit — how do I limit what gets imported?](#my-hubspot-has-more-records-than-my-plan-limit--how-do-i-limit-whats-imported) in the FAQs below.
+
 ### Importing from Snowflake
 
 1.  Click `Add data` → `Import from Snowflake`.
@@ -748,6 +750,21 @@ Audiences does not have a native HubSpot export destination — Salesforce is cu
 5.  Click **Start Run** — the HubSpot action column fires alongside your enrichment columns and writes the values directly to HubSpot.
 
 This approach supports batching and works for both contacts and companies. To automatically push data for new records entering the segment going forward, enable the **auto-enrich toggle** on the bulk enrichment.
+
+### My HubSpot has more records than my plan limit — how do I limit what gets imported into Audiences?
+
+The Audiences HubSpot connector imports all records for the selected object type (Contacts, Companies, or Deals) — there is no option to select a specific HubSpot list within the Audiences source setup. If your HubSpot object has more than 250,000 records (the Growth plan limit), the import will pull all records for that object. Filtering in Audiences after the import won't reduce your record count against the plan limit — the records have already been imported.
+
+To import only a filtered subset of HubSpot records into Audiences:
+
+1.  In a **Clay table**, add a source and select **Import objects from HubSpot**.
+2.  Under **List to pull objects from**, select the specific HubSpot list containing the contacts or companies you want.
+3.  Map and format the fields you need in the table.
+4.  Add **Upsert Audiences Record** as an action column — this pushes each row from your scoped, mapped table directly into Audiences without going through the full-object Audiences import.
+
+This gives you control over both which records enter Audiences and how their fields are mapped, independent of the native Audiences HubSpot source connector.
+
+**Note:** There is no add-on available to increase the Audiences record limit above 250,000 while staying on the Growth plan. To increase the limit, upgrade to the Enterprise plan, which supports up to 25,000,000 CRM/DWH records.
 
 ### I enriched data in my Audience. Why hasn't it appeared in Salesforce yet?
 
