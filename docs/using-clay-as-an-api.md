@@ -61,7 +61,7 @@ Clay offers a fast API for searching its proprietary People and Company data. Yo
 
 **Public HTTP API — Routines (same beta access)**
 
-The same workspace-level beta access also unlocks a Routines endpoint for triggering Clay enrichment functions programmatically:
+The same workspace-level beta access also unlocks a Routines endpoint for triggering Clay enrichment functions programmatically — including contact enrichment workflows that find mobile phone numbers and personal email addresses. This is the right approach when you want to run Clay enrichment from an external data pipeline (such as a Databricks notebook, a custom script, or any system-to-system integration) using your Clay workspace's credits:
 
 -   `POST /routines/{routine_id}/run` — submit input records to a Clay function and start an enrichment run.
 -   `GET /routines/run/{routine_run_id}/results` — poll for results once the run completes.
