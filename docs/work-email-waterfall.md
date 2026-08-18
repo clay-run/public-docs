@@ -120,6 +120,20 @@ This is different from an *upstream column* being skipped due to a run condition
 
 See [Conditional runs](conditional-runs.md) for a full reference on how run conditions work and how to use the **Explain** button to diagnose them.
 
+### Why do some providers in my waterfall skip every row while earlier providers ran successfully?
+
+If earlier providers in your waterfall (such as Findymail, Hunter, or Prospeo) ran normally but specific later providers show **"Run condition not met"** for every single row — not just rows where an earlier provider already found a result — the most common cause is a missing or invalid **Social Profile URL** (person's professional profile URL) input.
+
+Some providers in the Work Email waterfall accept a professional profile URL alongside name and company domain. When the **Social Profile URL** input for those providers is empty, unmapped, or shows **"Please select a valid value"** in the waterfall settings, those provider steps evaluate their run condition as false and skip every row — while providers that rely only on name and company domain continue running normally.
+
+**How to fix it:**
+
+1. **Enrich LinkedIn URLs first.** Add a "Find LinkedIn URL" enrichment column to your table using any provider that supports it (such as Prospeo or Findymail). Run it on all rows to populate person profile URLs before the Work Email waterfall executes.
+2. **Map the enriched column as the Social Profile URL input.** Right-click the Work Email waterfall column header → **Edit column**, then set the **Social Profile URL** field to the LinkedIn URL column you just populated.
+3. **Re-run the waterfall.** With the profile URL input mapped and populated, the previously-skipped providers will execute and should increase your email coverage beyond what earlier providers alone could find.
+
+**Circular dependency:** If you try to map a LinkedIn URL column that is itself downstream of the Work Email waterfall — for example, a column enriched after the Work Email waterfall runs — you will see a **"Circular dependency error"**: *"You referenced downstream columns that depend on the values of this column as input."* The fix is to use a LinkedIn URL column that runs independently of the Work Email waterfall: add a separate "Find LinkedIn URL" enrichment that takes only name and company domain as inputs, and map that column to the Social Profile URL input instead.
+
 ### Why do some rows in my waterfall show "Run condition not met" on provider or validation columns?
 
 This is expected behavior when the waterfall is working correctly. **"Run condition not met"** appearing on a subset of rows — not all rows — means the waterfall's built-in sequencing logic skipped that step for those rows. There are two common reasons:
@@ -148,7 +162,7 @@ If you want to find emails for more of your contacts, here are the most effectiv
 
 1.  **Make sure Company Domain and full name are populated.** Most providers need both to run. Rows without a company domain in particular are skipped by a large portion of the waterfall. If you only have a company name, use the [Company Domain waterfall](building-a-data-waterfall.md) to find domains first.
 
-2.  **Add profile URLs for your contacts.** Mapping professional profile URLs as an additional input can expand which providers are able to run on each row, increasing your overall coverage.
+2.  **Add profile URLs for your contacts.** Some providers in the waterfall accept a person's professional profile URL (LinkedIn URL) alongside name and company domain. When the **Social Profile URL** input is empty or shows **"Please select a valid value"**, those specific providers show **"Run condition not met"** for every row and never execute — even when name and domain are populated. To unlock those providers, add a "Find LinkedIn URL" enrichment column, run it first, and map the results to the **Social Profile URL** input in the waterfall settings. See [Why do some providers in my waterfall skip every row while earlier providers ran successfully?](#why-do-some-providers-in-my-waterfall-skip-every-row-while-earlier-providers-ran-successfully) for the full fix.
 
 3.  **Check which providers are finding emails.** In the waterfall's Full Configuration, toggle off `Hide provider columns?` to reveal individual per-provider result columns. This shows you exactly which providers are returning emails for your list and where coverage drops off — useful for identifying whether adding new providers might help.
 
