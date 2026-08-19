@@ -84,6 +84,7 @@ No. Clay's MCP integrations are pre-built apps within each supported platform's 
 
 -   **Claude:** [claude.com/connectors/clay](https://claude.com/connectors/clay)
 -   **ChatGPT:** Type `@Clay` (browser) or `/Clay` (desktop) in a prompt
+-   **Microsoft 365 Copilot:** Your Microsoft 365 admin finds Clay in the [Microsoft Marketplace](https://marketplace.microsoft.com/en-us/product/WA200011257) or the Agent Store inside Microsoft 365 Copilot and deploys it for your organization via the Microsoft 365 Admin Center. Reps are prompted to sign in to their Clay account on first use.
 -   **Codex:** Add the `clay-run/agent-plugins` marketplace in Codex, then install the `clay` plugin. The setup signs you in via `clay login` — after sign-in completes, restart Codex so its MCP server picks up the new session.
 -   **Glean:** Your Glean admin connects Clay through Glean's MCP Apps directory (Enterprise plans only)
 
@@ -105,13 +106,13 @@ There is no self-service way to add a custom redirect URI to Clay's OAuth allowl
 
 ### What role should I assign to team members who will only use Clay through MCP?
 
-Any team member who needs to use Clay through an AI tool (Claude, ChatGPT, Glean, or xAI) must first be added to your Clay workspace. When inviting them, assign the **Sales Rep** role.
+Any team member who needs to use Clay through an AI tool (Claude, ChatGPT, Glean, or Microsoft Copilot) must first be added to your Clay workspace. When inviting them, assign the **Sales Rep** role.
 
 The Sales Rep role restricts access to the main Clay workspace: users can invoke functions and run enrichments from within their AI tool, but they cannot open or interact with the Clay interface (tables, workbooks, etc.). This makes it the right choice for team members who should use Clay through AI tools only — not build workflows directly in Clay.
 
 To invite them: go to `Settings` → `Team`, click `+ Invite`, enter their email address, and select **Sales Rep** from the role dropdown.
 
-**Important:** Team members must accept their workspace invite email *before* connecting Clay to Claude, ChatGPT, or Glean. If a rep goes through the Clay MCP connection flow before accepting the invite, they'll be routed into a new personal workspace instead of your team workspace — and they won't appear in your `MCP users` table or be eligible for credit allocation.
+**Important:** Team members must accept their workspace invite email *before* connecting Clay to Claude, ChatGPT, Glean, or Microsoft Copilot. If a rep goes through the Clay MCP connection flow before accepting the invite, they'll be routed into a new personal workspace instead of your team workspace — and they won't appear in your `MCP users` table or be eligible for credit allocation.
 
 If this happens: have the rep disconnect Clay in their AI tool (remove and re-add the connector), then during re-authorization select your team workspace instead of "Personal Workspace." If invite links have expired, remove the user from `Settings → Team` and resend the invite before they reconnect.
 
