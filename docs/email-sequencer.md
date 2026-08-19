@@ -133,6 +133,18 @@ Key practices to follow:
 
 ## FAQs
 
+### Does Clay send my emails directly, or does it use a third-party service?
+
+Clay's sequencer is powered by **Smartlead** as the underlying email-sending infrastructure — your campaign emails are processed and delivered through Smartlead on Clay's behalf. You don't need a Smartlead account, and you won't interact with Smartlead directly; everything runs through the Clay interface on Clay credits.
+
+Here's how the pieces fit together:
+
+- **Clay** manages your campaign setup, lead data, AI personalization, and sending schedule.
+- **Smartlead** handles the actual email delivery infrastructure.
+- **Your email account** (Google Workspace, Outlook, or an SMTP address you own) determines the "From" address — recipients see your address, not a Clay or Smartlead domain.
+
+If you already have a Smartlead account, see [What if I already have a Smartlead account? Can I use my API key?](#what-if-i-already-have-a-smartlead-account-can-i-use-my-api-key).
+
 ### What if I already have a Smartlead account? Can I use my API key?
 
 Our sequencer is powered by Smartlead, but everything runs on Clay credits. You don't need a Smartlead account, and you can't use an existing Smartlead API key with the sequencer. If you have a key, you can still use it with our in-table enrichments.
