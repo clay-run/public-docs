@@ -142,7 +142,7 @@ A common example: you have a "Postal Code" column and a "Postal Code (AI Fallbac
 
 -   Map the enrichment result to a **new column** instead of the existing destination.
 -   Or, open the enrichment(s) that reference the destination column as an input and remove that reference, then re-map.
--   **Or, use a Merge column** if your goal is to fill blank values in a primary column using a fallback AI column. Create a new [Merge column](#merge-columns) that lists the primary column first and the fallback column second — it returns the first non-empty value per row, so rows with existing data are unchanged and blank rows fall back to the AI-generated value. Because the Merge column is a separate read-only output that does not modify either input column, it cannot create a cycle.
+-   **Or, use a Merge column** if your goal is to fill blank values in a primary column using a fallback AI column. Create a new [Merge column](#merge-columns) that lists the primary column first and the fallback column second — it returns the first non-empty value per row, so rows with existing data are unchanged and blank rows fall back to the AI-generated value. Make sure neither of the two input columns references the new Merge column back, so the dependency graph stays acyclic.
 
 To visualize the full dependency chain and identify where the loop originates, open **Graph view**: click the view selector dropdown in your table toolbar and choose **Graph view**.
 
