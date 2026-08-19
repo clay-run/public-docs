@@ -208,7 +208,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 Clay partners with leading AI providers, all of whom have contractual obligations to:
 
 -   **Never train models on customer data.**
--   **Zero data retention**: providers do not store your data after AI processing completes.
 -   **Maintain security certifications** (SOC 2, ISO 27001).
 -   **Comply with data protection regulations.**
 
