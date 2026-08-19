@@ -52,10 +52,14 @@ Use this action to retrieve a list of members from a specified Slack channel.
 
 ### `Action` Send for approval to Slack channel
 
+Use this action to send a Slack message with **Approve** and **Deny** buttons to a channel. The Clay cell stays in a pending state until a team member clicks a button, then updates with their response.
+
 **Inputs**
 
 -   **Slack channel**: Select a public channel from the dropdown. The dropdown lists **public channels only** — private channels do not appear. For a private channel, switch the input to text mode and enter the channel **ID** (for example, `C04F8AWK44T`) instead of the channel name. To find a channel's ID: right-click the channel name in Slack → **Copy link** — the ID (starting with `C`) appears at the end of the copied URL.
 -   **Message**
+
+> **Approval requests do not expire.** The Approve and Deny buttons in the Slack message remain active indefinitely — Clay sets no timeout on approval requests. A rep can approve or deny a request days or weeks after the alert was sent, and the Clay cell will update when they do.
 
 ### **Run settings**
 
