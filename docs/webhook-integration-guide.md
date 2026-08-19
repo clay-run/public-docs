@@ -2,7 +2,7 @@
 title: Webhooks in Clay
 description: Real-time data updates enabling application integrations and
   automated workflows.
-last_synced: 2026-04-26T01:40:54.241Z
+last_synced: 2026-04-26T01:40:54.942Z
 ---
 
 # Webhooks in Clay
@@ -200,3 +200,19 @@ When you click a cell in your webhook column, open **Cell details**, hover over 
 2.  Add a [Merge column](https://university.clay.com/docs/table-columns-overview#merge-columns) that references both the original column and the new webhook column — it returns the first non-empty value per row, preserving your original data for older rows while populating from the webhook for new arrivals.
 
 **Note:** Clay's Table Versioning feature can restore a table's column schema and formula configuration from a previous snapshot, but it cannot recover lost manually-entered or CSV-imported cell data values. If you confirmed the overwrite and lost that underlying data, re-import the original source and use the approach above going forward.
+
+### A webhook field isn't showing in the "/" picker when I write a Claygent or Use AI prompt
+
+When you type `/` in a Claygent or Use AI column prompt to reference your webhook data, Clay discovers available sub-fields by sampling rows from the top of the current table view. If a field was added to your webhook payloads after some records had already been received — for example, you started including an `emailDomain` key in your payloads a week after the first submissions arrived — that field may not appear in the `/` picker because the rows sampled (which are near the top of the view) don't contain it yet.
+
+You can confirm this is the case if the field appears in the webhook column's **Setup mapping** panel (click the webhook column header → **Edit source** → **Setup mapping**) but not in the `/` picker when writing a prompt.
+
+**To make the field appear in the picker:**
+
+1.  Sort or filter the table view so that rows containing the missing field appear at the top. For example, add a filter that requires the field to have a value, or sort descending by a date column so the most recent rows (which include the new field) come first.
+2.  Hard-refresh the page (Ctrl+Shift+R on Windows, Cmd+Shift+R on Mac).
+3.  Open your Claygent or Use AI column, type `/`, and expand the Webhook column — the field should now be listed.
+
+Once the field is selectable in your prompt, you can remove the temporary filter or sort to restore your original view.
+
+**Alternative:** If you frequently need to reference a webhook sub-field in prompts across multiple columns, extract it as a standalone column. Click a cell in the webhook column, open **Cell details**, hover over the field, and select **Add as column → Create column**. The extracted column is then always available in the `/` picker without needing to sort the view first.
