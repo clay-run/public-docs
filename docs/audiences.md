@@ -80,7 +80,7 @@ You can import data from:
 15.  Name the corresponding Clay fields.
 16.  Click `Save and Preview`, then `Confirm`.
 
-**Troubleshooting — "Incomplete" import status:** If a source in your Audiences Sources tab shows **Incomplete**, the source was added but setup was never fully finished — no field mapping was saved and the **Import** toggle was not enabled. No Salesforce connection reset is needed; the authorization is fine. To fix it, open each incomplete source, complete the field mapping, enable **Import** for each object (Accounts, Contacts, Leads, Opportunities), and click **Save and Confirm**. See [Why is my Salesforce source showing as "Incomplete" in Audiences?](#why-is-my-salesforce-source-showing-as-incomplete-in-audiences) in the FAQs below for step-by-step instructions.
+**Troubleshooting — "Incomplete" import status:** If a source in your Audiences Sources tab shows **Incomplete**, the source was added but field mappings were never saved for it — Clay has no fields configured to import. No Salesforce connection reset is needed; the authorization is fine. To fix it, open each incomplete source, add field mappings for the fields you want to sync, and click **Save and review** → **Confirm**. See [Why is my Salesforce source showing as "Incomplete" in Audiences?](#why-is-my-salesforce-source-showing-as-incomplete-in-audiences) in the FAQs below for step-by-step instructions.
 
 **Sync timing and behavior**
 
@@ -605,15 +605,14 @@ There is no self-serve option to trigger a full sync manually. If you need an ex
 
 ### Why is my Salesforce source showing as "Incomplete" in Audiences?
 
-**Incomplete** means the Audiences source was started but setup was never fully finished — field mapping was not saved and/or the **Import** toggle was not enabled for that object. The Salesforce connection itself is authorized; no reset of your Salesforce connection is needed.
+**Incomplete** means the Audiences source was added but field mappings were never saved for it — Clay has no fields configured to import. The Salesforce connection itself is authorized; no reset of your Salesforce connection is needed.
 
 To complete the setup for an incomplete source:
 
 1.  In **Settings** → **Audiences** → **Sources**, click the three-dot menu (⋮) next to the incomplete source and select **Settings**.
 2.  Select each object tab (Accounts, Contacts, Leads, Opportunities).
-3.  Enable the **Import** toggle for each object.
-4.  Add any Salesforce fields you want to filter or segment by, and name the corresponding Clay fields.
-5.  Click **Save and Confirm** — this kicks off the initial import for that object.
+3.  Add any Salesforce fields you want to filter or segment by, and name the corresponding Clay fields.
+4.  Click **Save and review** → **Confirm** — this saves the field mapping and kicks off the initial import.
 
 Repeat for each object that shows Incomplete. You do not need a Salesforce admin to do anything on the Salesforce side.
 
