@@ -119,7 +119,7 @@ Column templates are saved configurations for a single column that you apply man
 
 ### Where did "Save as template" go?
 
-The **Save as template** option — used to save selected columns as a column group template — has been replaced by **Save as function**. Select the columns you want to reuse, right-click a selected header, and choose **Save as function** instead. Functions provide the same reusability as column group templates, plus automatic syncing across every table that calls them. See [Creating a function](#creating-a-function) for full instructions.
+As of August 2026, the **Save as template** option — used to save selected columns as a column group template — has been replaced by **Save as function** and rolled out to all workspaces. Select the columns you want to reuse, right-click a selected header, and choose **Save as function** instead. Functions provide the same reusability as column group templates, plus automatic syncing across every table that calls them. See [Creating a function](#creating-a-function) for full instructions.
 
 Existing column group templates continue to work. When you open one from **Tools**, a **Migrate to function** notice appears with a one-click workflow to convert it.
 
