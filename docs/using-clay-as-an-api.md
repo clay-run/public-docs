@@ -11,6 +11,8 @@ last_synced: 2026-04-26T01:40:52.256Z
 
 Clay doesn't have a traditional API, but you can send data via webhooks, wrap Clay with Make or Zapier, use the Enterprise API for people & company lookups, or connect AI tools via MCP.
 
+**Looking for Clay's developer or API pages?** Clay's developer documentation — including the Public REST API reference, CLI setup, and MCP configuration — is available at [developers.clay.com](https://developers.clay.com/).
+
 It's one of the most common questions we get — and the honest answer is: not in the traditional sense. Clay isn't built like a typical SaaS tool where you send a request to an endpoint and get data back in milliseconds. Instead, Clay is an enrichment and automation platform designed around tables, workflows, and integrations.
 
 But that doesn't mean you're stuck. Depending on what you're trying to do, there are several ways to interact with Clay programmatically and get results that feel a lot like working with an API. You can pipe data into Clay automatically via webhooks, wrap Clay's functionality using tools like Make or Zapier, connect AI tools like Claude or ChatGPT directly to your Clay workspace via MCP, or — if you have beta access enabled — access Clay's native People and Company API directly.
@@ -97,7 +99,7 @@ Clay offers pre-built MCP connectors within each supported platform's app or con
 
 ### 5\. **CLI agent plugin** (Best for building workflows from a coding agent)
 
-The Clay CLI is part of the Clay Agent Plugin — a developer tool that lets coding agents (Claude Code, Codex, or any terminal environment) build and run Clay workflows without opening the Clay UI. Install it from the [agent-plugins repository](https://github.com/clay-run/agent-plugins) and follow the setup instructions there.
+The Clay CLI is part of the Clay Agent Plugin — a developer tool that lets coding agents (Claude Code, Codex, or any terminal environment) build and run Clay workflows without opening the Clay UI. Install it and find the full setup guide at [developers.clay.com](https://developers.clay.com/), or go directly to the [agent-plugins repository](https://github.com/clay-run/agent-plugins).
 
 **System requirements:** The Clay CLI runs on **macOS and Linux only**. Windows is not currently supported — if you're on Windows you'll see an error like "no native windows binary in the plugin." There is no workaround at this time; Windows support is not yet available.
 
