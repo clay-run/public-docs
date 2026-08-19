@@ -103,6 +103,16 @@ Any enrichments you add afterward (work email, phone number, profile enrichment)
 
 **Yes.** The search wizard shows a result count directly in the interface — you can see how many people match your filters before clicking Import. The count also shows how many rows will be imported based on your **Limit results** setting. For very large searches, the count may display as a capped number with a "+" indicator; hover over it to load the full exact total.
 
+### Why does my table have fewer rows than the preview count?
+
+**The import may still be in progress.** Find People imports process asynchronously — rows are added in batches. If you check right after clicking Import, the row count will be lower than the final total. Wait a minute and refresh to see the complete count.
+
+If the count still doesn't match after the import finishes, the **preview count** shown in the search wizard (for example, "~1,507 found") is an approximate figure — the `~` tilde prefix indicates the total is estimated, not an exact count. The actual import can return a slightly different total, and this is expected.
+
+Also check your **Limit results** setting: the import won't exceed whatever limit you've configured.
+
+**If you're re-running or editing an existing Find People source:** When you reopen a source that has already run, the preview reflects only *net new* records — people who match your filters and aren't already in your table. Contacts imported in previous runs are automatically excluded from the preview count, so the number shown can be much lower than the total matching universe. To see the full unfiltered count, create a new Find People search with the same filters. See [The preview count drops dramatically when editing an existing Find People source](finding-companies-and-people-in-clay.md#the-preview-count-drops-dramatically-when-editing-an-existing-find-people-source) for more detail.
+
 ### Why does my Find People search return people from companies I didn't add to my list?
 
 When you use domains (e.g., `acme.com`) as company identifiers, Clay maps each domain to internal company records at the root-domain level. This mapping can occasionally include people from a parent company, subsidiary, or other entity associated with that domain — resulting in contacts from companies you didn't explicitly target.
