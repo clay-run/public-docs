@@ -304,9 +304,9 @@ When selecting a third-party model (Claude, GPT-4o, Gemini, etc.) in Claygent, t
 
 Yes. Switch models in the configuration panel and rerun tests to compare output quality across different AI models.
 
-### What happens if I update an agent while it's running in a table?
+### Do I need to remove and re-add a Claygent from a table after updating it?
 
-In-flight runs finish on the version that started them. New runs pick up the latest version automatically.
+No — you do not need to remove and re-add a Claygent after making changes in Claygent builder. Updates are picked up automatically without any changes to the table column. New runs use the latest saved version of the agent. If a run is already in progress when you save an update, that run continues using the version it started with and completes normally before any new runs pick up the change.
 
 ### I switched to a cheaper model in my Claygent column but new runs still charge the old price — why?
 
