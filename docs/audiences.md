@@ -71,6 +71,8 @@ You can import data from:
      -   Lead records are automatically merged with matching Contact records into a single person record in your People audience. Data from both sources is combined, and duplicates across Salesforce Leads, Contacts, and other sources count as one person. The primary matching key is the `ConvertedContactId` field — see [Why do some of my Salesforce Lead records not appear as separate person records in Clay?](#why-do-some-of-my-salesforce-lead-records-not-appear-as-separate-person-records-in-clay) for details.
      -   After syncing, you can filter your People audience by **sync status** (whether a Lead record has been imported from Salesforce) and **record conversion status** (whether the Lead has been converted to a Contact in Salesforce).
 11.  Name the corresponding Clay fields.
+
+**Note:** The Salesforce Leads object is **import-only** in Audiences. There is no Export sync or Scheduled export rules for Leads — Clay can import Lead data from Salesforce for audience filtering and segmentation, but cannot write enriched field values back to Salesforce Leads via the native Audiences export. To push enriched data back to Salesforce Leads, use a **Salesforce Update Record** action column in a bulk enrichment table — see [How do I write enriched fields back to existing Salesforce records from a bulk enrichment?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-bulk-enrichment) below.
 12.  Select `Opportunities` at the top of the sync panel.
 13.  Enable the `Import` toggle.
 14.  Add any Opportunity fields you want to filter or segment by — common fields include `Stage`, `Amount`, `Close Date`, and `Owner`.
@@ -489,7 +491,9 @@ With **Premium** or **Standard**, Clay queries its provider network to find and 
 
 **Note:** Salesforce is currently the only native export destination in Audiences. HubSpot export from Audiences is not yet available — to write data to HubSpot, see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
 
-Audiences supports **bidirectional sync** with Salesforce. To push data from Audiences back to Salesforce, you must first enable the **Export sync** toggle in your Salesforce source settings — this is the master switch for all outbound writes. Even if individual fields are configured with an "Always write" rule, no data flows to Salesforce until Export sync is turned on.
+Audiences supports **bidirectional sync** with Salesforce for **Contacts** and **Accounts** only. **Leads** and **Opportunities** are import-only — Clay can import their data for audience filtering and segmentation, but cannot write enriched values back to those objects via the native Audiences export. To push enriched data back to Salesforce Leads or Opportunities, use a **Salesforce Update Record** action column in a bulk enrichment table instead — see [How do I write enriched fields back to existing Salesforce records from a bulk enrichment?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-bulk-enrichment) below.
+
+To push Contact or Account data from Audiences back to Salesforce, you must first enable the **Export sync** toggle in your Salesforce source settings — this is the master switch for all outbound writes. Even if individual fields are configured with an "Always write" rule, no data flows to Salesforce until Export sync is turned on.
 
 **To enable Export sync (admin-only):**
 
@@ -519,7 +523,7 @@ To change a field's write rule, click the **pencil (edit) icon** next to any map
 
 Export settings also control whether Clay **creates new Salesforce records** for net-new contacts or **only updates existing ones**.
 
-The **`Create new Salesforce records`** toggle is in your Salesforce source settings under the export section. It is **off by default** — when off, Clay only updates Salesforce records that already have a matching entry in your Audience. Turn it on to allow Clay to create new Contacts or Leads in Salesforce for Audience records that don't yet exist in SFDC. This toggle is admin-only.
+The **`Create new Salesforce records`** toggle is in your Salesforce source settings under the export section. It is **off by default** — when off, Clay only updates Salesforce records that already have a matching entry in your Audience. Turn it on to allow Clay to create new Contacts in Salesforce for Audience records that don't yet exist in SFDC. This toggle is admin-only.
 
 Export sync behavior:
 
@@ -713,7 +717,9 @@ The updated value will be pushed to Salesforce on the next export cycle (within 
 
 ### How do I create new Salesforce contacts or leads from an Audience enrichment?
 
-New Salesforce records are not created automatically when you run a bulk enrichment. Record creation is not driven by a Create Contact or Create Lead action inside the enrichment table — it is controlled by the **`Create new Salesforce records`** toggle in your Audiences Salesforce export settings.
+New Salesforce records are not created automatically when you run a bulk enrichment. Record creation is not driven by a Create Contact action inside the enrichment table — it is controlled by the **`Create new Salesforce records`** toggle in your Audiences Salesforce export settings.
+
+**Note:** This toggle applies to **Contacts** (from People audiences) only — Leads are import-only in Audiences and are not supported as a native export target. To create or update Salesforce Leads from Audiences, use a **Salesforce Update Record** action column in a bulk enrichment table (see [How do I write enriched fields back to existing Salesforce records from a bulk enrichment?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-bulk-enrichment) above).
 
 To push net-new contacts to Salesforce:
 
@@ -721,7 +727,7 @@ To push net-new contacts to Salesforce:
 2.  Under the export section, enable the **`Create new Salesforce records`** toggle. (Admin access required — the toggle is off by default.)
 3.  Confirm your field mappings and save.
 
-Once the toggle is on, Clay will create new Contacts or Leads in Salesforce for any Audience record that doesn't already have a matching SFDC record.
+Once the toggle is on, Clay will create new Contacts in Salesforce for any Audience record that doesn't already have a matching SFDC record.
 
 To track which contacts in Salesforce came from a specific Audience enrichment, create a custom Audience text field (for example, an "Audience Source" field set to a label like `"Q2-enrichment"`), and map it to a Salesforce field (a custom field, campaign tag, or lead status) in your export settings. You can then filter on that value directly in Salesforce.
 
