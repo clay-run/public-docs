@@ -104,7 +104,7 @@ The credit usage dashboard is organized into tabs, each covering a different sli
 
 ## Credit spike alerts
 
-**Note:** Credit spike alerts are available for all Enterprise plan workspaces.
+**Note:** Credit spike alerts are currently in beta and available to all Enterprise plan workspaces. If you're on an Enterprise plan and not yet seeing alerts, contact [Clay support](https://app.clay.com) to enable the feature for your workspace.
 
 Clay automatically monitors workspace credit spend and alerts workspace admins when it detects an unusually high burst of spend — so you can investigate and address runaway credit usage before it quietly burns through your balance.
 
