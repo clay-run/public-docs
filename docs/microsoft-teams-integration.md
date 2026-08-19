@@ -54,3 +54,24 @@ Use this action to send messages to a Microsoft Teams channel directly from Clay
 -   **Was Sent:** Boolean confirmation that the message was successfully sent
 -   **Message ID:** The unique identifier assigned to the message in Microsoft Teams
 -   **Web URL:** Direct link to view the message in Microsoft Teams
+
+## Limitations
+
+### @mentions are not supported
+
+The native **Send message to Teams channel** action sends only an HTML-formatted message body. Real Teams @mentions — including individual mentions and @All — require both an `<at>` element in the body and a corresponding `mentions` object in the request payload. The native Clay action does not include the `mentions` object, so adding `<at>` tags to the **Message body** field will not trigger a real Teams notification or @mention for any user or group.
+
+As a workaround, you can route messages through a bridge tool such as Microsoft Power Automate:
+
+1.  Clay posts the alert to a staging channel (for example, `#clay-alert-staging`).
+2.  Power Automate watches that channel for new messages.
+3.  It identifies who should be mentioned and generates the @mention token using the **Get an @mention token for a user** action.
+4.  It posts the final message — with the real @mention — to the target channel.
+
+## Limits and considerations
+
+-   **Rate limit:** Clay applies a safeguard of 15 requests per second per connected Teams account. This is a buffer below Microsoft's Graph API limit of 30 requests per second per application, to avoid conflicts with other Microsoft integrations sharing the same OAuth token.
+-   **Recommended channel throughput:** Even within Clay's 15 req/s safeguard, Teams applies its own channel-level throttling. Send no more than one message per second to a given channel, and batch multiple items into a single digest message where possible.
+-   **Message size:** Clay does not impose a separate character or size limit on the **Message body** field. The Microsoft Teams payload limit of approximately 28 KB — including HTML markup, links, and any other content — is the relevant constraint. Keep messages comfortably below that size.
+-   **Daily volume cap:** There is no Clay-specific daily message cap per channel or workspace for this action. Normal Clay workspace limits apply, including available action credits, workflow execution budgets, and table concurrency.
+-   **Retries:** The native action does not handle retries automatically. If a send fails or Teams returns a throttling response, handle the retry path in your Clay workflow. Microsoft Graph returns a `Retry-After` header in throttling responses to indicate when to retry.
