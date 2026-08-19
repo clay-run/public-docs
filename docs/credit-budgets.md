@@ -70,8 +70,9 @@ To update access for an existing budget, open it from `Settings` → `Budgets`, 
 
 Clay sends email alerts to workspace admins when a budget reaches specific usage thresholds:
 
--   **80%** of the credit limit used — early warning, giving admins time to adjust before the limit is reached.
--   **100%** of the credit limit used — budget exhausted; credit-consuming runs have stopped. An in-app notification is also shown at this threshold.
+-   **75%** of the credit limit used — early warning.
+-   **90%** of the credit limit used — approaching the limit.
+-   **100%** of the credit limit used — budget exhausted, processing in assigned resources has stopped.
 
 Alerts fire once per threshold crossing. They reset when an admin increases the credit limit or resets the budget's spend.
 
