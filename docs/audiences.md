@@ -591,6 +591,22 @@ If an existing record had a value for the field in Salesforce before you added t
 
 **To fill in missing data immediately for specific records:** In Salesforce, make a small change to any field on the affected accounts or contacts (for example, add and remove a space in a text field). This updates `SystemModstamp` and Clay will pick up those records — with all their current field values including the newly mapped field — on the next incremental sync.
 
+### Why do I see values in Clay Audiences fields that are blank in Salesforce?
+
+Clay populates several standard company fields automatically from its own company graph when an account is matched in Audiences — independently of what your CRM has for those fields. This process is called **Entity Resolution**. When Clay matches an account to its company database, it writes values for the following fields if they are not already present:
+
+- **Employee count**
+- **Industry**
+- **Annual revenue range**
+- **Logo URL**
+- **City, State, Country** (location fields)
+
+This enrichment happens asynchronously after an account is first imported, costs no credits, and is separate from your Salesforce field mapping — which is why you may see these fields populated in Audiences even when the corresponding Salesforce Account fields are empty.
+
+**What about other fields, like Total Funding?** Fields outside this standard set are not populated automatically by Entity Resolution. If you see a value for a field like Total Funding in Audiences that isn't coming from your CRM, it is being populated by a Data Hub enrichment that was configured for your workspace. To see which enrichments are running and what fields they write, go to **Data Hub** → **Enrichments**.
+
+**Will this data sync back to Salesforce?** Not by default. Every field mapping has a **Scheduled export rule** — and the default for all newly mapped fields is **Never write**, meaning Clay's values stay in Audiences and are never pushed to Salesforce automatically. To sync these values to Salesforce, open your Salesforce source settings, find the field, click the pencil icon, and change the rule to **Always write** or **Write if empty**. Syncing data back to Salesforce costs **1 Action per record updated** — no Data Credits are consumed. See [Writing back to your CRM](#writing-back-to-your-crm) for full details.
+
 ### Can I see when the weekly full sync is scheduled, or trigger it manually?
 
 No. The Clay UI shows only that the Salesforce full sync runs weekly — it does not display the exact day or time the next full sync is scheduled for your workspace. The timing is assigned automatically per workspace and is not shown in the interface.
