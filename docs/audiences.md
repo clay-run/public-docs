@@ -1,7 +1,7 @@
 ---
 title: Audiences
 description: "Clay Audiences is available on Growth and Enterprise plans. Launch workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above. Trial workspaces do not have access to Audiences."
-last_synced: 2026-07-02T20:01:45.311Z
+last_synced: 2026-08-20T01:53:27.937Z
 ---
 
 # Audiences
@@ -209,6 +209,13 @@ You can also send contacts from any existing Clay table directly to your Audienc
 4.  Map your table columns to Audience fields in the field mapping step. Click **Auto-map** to automatically suggest mappings based on column names — Clay matches existing Audience fields and creates new ones where necessary.
 
 Records saved from tables are automatically deduplicated and merged with your existing audience data.
+
+**Starting from Audiences instead:** You can also pull a table in from the `Add data` sidebar, which runs the same two-step wizard a CSV import does.
+
+1.  Click `Add data` → `Add source` → `Clay table`.
+2.  On `Select a Clay table`, enter a `Source name` and choose the `Audience type`, then pick the `People table` or `Companies table` and the `View` holding the records you want.
+3.  Click `Next`, then map your columns on `Field mapping` — `Clay People` or `Clay Companies` against `Table columns`.
+4.  Click `Import`.
 
 **To add enriched data to existing Audience records:** If you enriched companies or people in a Clay table — for example, adding website traffic, technographic data, or any other enrichment — and want those values to appear on records already in your Audience, use `Upsert Audiences Record` (available on Launch, Growth, and Enterprise plans) as an action column in the table instead. In the table, click `Add enrichment` and search for `Upsert Audiences Record` — it creates a new record in Audiences if no match is found, or updates the matching record's fields if one is found. See [Using Audiences from a Clay table](#adding-enrichments) below for the full list of table ↔ Audience actions.
 
