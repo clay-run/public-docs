@@ -140,8 +140,8 @@ These restrictions exist for compliance reasons, as third-party sourced contact 
 
 Ad audiences are available on **Growth** and **Enterprise** plans:
 
--   **Growth**: Includes 1 ads platform sync
--   **Enterprise**: Includes unlimited audiences and additional ads platform syncs
+-   **Growth**: Includes 1 active recurring ad sync
+-   **Enterprise**: Includes unlimited active ad syncs — there is no limit on the number of recurring syncs you can have live at one time
 
 Each record exported or synced consumes 1 action. Data credits apply for any enrichments used in the table to build the audience.
 
