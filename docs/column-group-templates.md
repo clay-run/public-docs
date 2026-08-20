@@ -6,7 +6,7 @@ last_synced: 2026-04-26T01:39:46.780Z
 
 # Column group templates
 
-**As of August 2026, creating new column group templates is no longer available.** The **Save as template** option has been removed from the right-click menu when selecting multiple columns. To create reusable column sets going forward, use [**Save as function**](functions.md) instead — available on all paid Clay plans, it works the same way and adds benefits like cross-table usage, permission handling, and automatic propagation of updates everywhere the function is used. Existing column group templates are unaffected and can still be applied, edited, and deleted.
+**As of August 2026, creating new column group templates is no longer available.** The **Save as template** option has been removed from the right-click menu when selecting multiple columns. To create reusable column sets going forward, use [**Save as function**](functions.md) instead — it works the same way and adds benefits like cross-table usage, permission handling, and automatic propagation of updates everywhere the function is used. **Save as function is available on all paid Clay plans. If you do not see this option in the right-click menu, your workspace may be on a free plan — contact Clay support to confirm or to have access enabled.** Existing column group templates are unaffected and can still be applied, edited, and deleted.
 
 Column group templates let you save and reuse related column sets across tables in your workspace. This eliminates the need to recreate complex column configurations repeatedly, saving time and maintaining consistency.
 
