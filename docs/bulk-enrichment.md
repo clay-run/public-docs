@@ -123,7 +123,7 @@ Turn field mapping off when you want to run enrichments and route results somewh
 
 The **Auto-enrich new records** toggle determines whether records that newly qualify for the segment are enriched automatically after the initial run.
 
--   **On** — any record that enters the segment after the initial run is automatically enriched in the background, typically within 15 minutes of joining the segment. This includes records that newly qualify because you updated your audience filters.
+-   **On** — any record that enters the segment after the initial run is automatically enriched in the background, within 20 minutes of joining the segment. This includes records that newly qualify because you updated your audience filters.
 -   **Off** — only records present at the time of the initial run are enriched. Records that join the segment later are not enriched automatically.
 
 **To change this setting while a run is active:** click **Pause** first. The toggle is locked while the enrichment is running and can only be changed when the enrichment is paused or not yet started.
@@ -158,7 +158,7 @@ Records already in the queue finish processing first. What happens to newly-qual
 -   If you **added a new segment** to the bulk enrichment while it was paused, members of the newly-added segment are enqueued automatically when you resume.
 -   If you **edited the filter conditions on an existing connected segment** (same segment, narrowed or changed the filters), records that newly match the updated filters are **not** automatically enqueued on resume. Clay tracks which segment IDs were connected at the time the run was paused — it does not re-evaluate membership changes from in-place filter edits when resuming.
 
-If you edited an existing segment's filters and want those newly-qualifying records to be enriched, use **Run from the beginning** instead. Alternatively, if **Auto-enrich new records** is enabled, newly-qualifying records will be picked up automatically in the background within 15 minutes of joining the segment.
+If you edited an existing segment's filters and want those newly-qualifying records to be enriched, use **Run from the beginning** instead. Alternatively, if **Auto-enrich new records** is enabled, newly-qualifying records will be picked up automatically in the background within 20 minutes of joining the segment.
 
 **Run from the beginning**
 
