@@ -261,17 +261,19 @@ The **Monitor Professional Posts** signal discovers professional posts matching 
 
 ### Why does my "Get interactions with professional posts" Signal fail with "Invalid input"?
 
-The **Get interactions with professional posts** source only accepts original post URLs from the professional network — specifically those containing `-activity-` or `ugcPost` in the URL path. Share URLs — those containing `-share-` before the numeric post ID — are not valid and cause the "Invalid input" error.
+The **Get interactions with professional posts** source only accepts original post URLs from the professional network — specifically those containing `-activity-` or `ugcPost` in the URL path. Share URLs — those containing `urn:li:share:` or `-share-` in the URL — are not valid and cause the "Invalid input" error. The professional network's API commonly returns the `urn:li:share:` format for ad posts and feed posts.
 
 **How to identify the URL type:**
 
 -   **Valid (activity):** the path contains `-activity-` before the post ID, e.g. `…/posts/author-slug-activity-7212099008951975937-xxxx`
 -   **Valid (ugcPost):** the path contains `ugcPost`, e.g. `…/feed/update/urn:li:ugcPost:7264751670859911168`
--   **Invalid (share):** the path contains `-share-` before the post ID, e.g. `…/posts/author-slug-share-7468708383462797312-LxbK`
+-   **Invalid (share):** the URL contains `urn:li:share:` or `-share-` in the path, e.g. `…/feed/update/urn:li:share:7303872322979983361/` or `…/posts/author-slug-share-7468708383462797312-LxbK`
 
 To get a valid URL manually: open the post on the professional network, click **•••** (three dots) at the top right of the post, and select **Copy link to post**. If the post is a reshare of someone else's content, open the original underlying post first and copy its link from there.
 
-If post URLs are flowing in from another Clay source — such as **Find professional posts** or **Get a person's professional posts and shares** — some rows may contain share-type URLs for reshared content. To convert those automatically, add an **Enrich professional post** enrichment column and map your post URL column to it. The enrichment's **Post URL** output contains an activity-type URL that you can then pass to **Get interactions with professional posts**.
+If post URLs are flowing in from another Clay source — such as **Find professional posts** or **Get a person's professional posts and shares** — or from an external system (such as a professional network ads integration or a workflow tool that pulls post references from the professional network's API), some rows may contain `urn:li:share:` or other share-type URLs. To convert those automatically, add an **Enrich professional post** enrichment column and map your post URL column to it. The enrichment's **Post URL** output contains an activity-type URL that you can then pass to **Get interactions with professional posts**.
+
+For a step-by-step guide on converting share URLs at scale — including a formula to flag only the rows that need conversion and a conditional run to limit credit spend — see [Troubleshoot share URLs in professional post integrations](professional-post-share-url-troubleshooting.md).
 
 ### Why did my job description keyword search return unexpected results?
 
