@@ -1,12 +1,12 @@
 ---
 title: Column group templates
-description: Create, apply, edit, and delete column group templates to reuse related column sets across your workspace.
-last_synced: 2026-04-26T01:39:46.520Z
+description: Apply, edit, and delete existing column group templates. Creating new templates via Save as template has been deprecated — use Save as function instead.
+last_synced: 2026-04-26T01:39:46.780Z
 ---
 
 # Column group templates
 
-Save columns into templates to easily reuse them.
+**As of August 2026, creating new column group templates is no longer available.** The **Save as template** option has been removed from the right-click menu when selecting multiple columns. To create reusable column sets going forward, use [**Save as function**](functions.md) instead — available on all paid Clay plans, it works the same way and adds benefits like cross-table usage, permission handling, and automatic propagation of updates everywhere the function is used. Existing column group templates are unaffected and can still be applied, edited, and deleted.
 
 Column group templates let you save and reuse related column sets across tables in your workspace. This eliminates the need to recreate complex column configurations repeatedly, saving time and maintaining consistency.
 
@@ -26,16 +26,11 @@ Once grouped, click the arrow on the group header to collapse or expand the colu
 
 To add a new column to an existing group, open the dropdown menu for any column already inside the group and choose **Insert right** or **Insert left**. The new column is added to the same group, adjacent to the column you selected. If the group is collapsed when you insert, the new column is placed outside the group instead.
 
-To save a group of columns so you can reuse it in other tables, see [Creating a column group template](#creating-a-column-group-template) below.
-
-## Creating a column group template
-
-1.  While in a table, select multiple columns by clicking their title while holding `⌘` (Mac) or `ctrl` (Windows) on your keyboard.
-2.  `Right-click` on one of the titles and select `Save as template`.
-3.  Write a name and other details so your template is easier to find later.
-4.  Click `Create template`.
+To create a reusable column set you can use across multiple tables, see [Functions](functions.md).
 
 ## Using a column group template
+
+If you have existing column group templates in your workspace, you can still apply them:
 
 1.  While in a table, click `Tools`.
 2.  Search for your template by name, or click **View all enrichments** and select the **Templates** tab.
@@ -56,16 +51,6 @@ You can update a template's name, description, and category from the template li
 2.  Search for your template by name or click **View all enrichments** and select the **Templates** tab to find your template.
 3.  Click the `...` menu next to the template and select **Edit template settings...**.
 4.  Update the details and click **Save**.
-
-To update the columns in a template, you need to recreate it:
-
-1.  Apply the template to a table (or use an existing table where it was applied).
-2.  Edit the columns in the table as needed.
-3.  Select the updated columns by holding `⌘` (Mac) or `ctrl` (Windows) and clicking each column title.
-4.  `Right-click` on one of the selected titles and select `Save as template`.
-5.  Enter a name and click `Create template`.
-
-Saving always creates a new template — it does not replace or overwrite the original. If you want to remove the old version, delete it from the template list after saving the corrected one (see [Deleting a column group template](#deleting-a-column-group-template)).
 
 ## Deleting a column group template
 
