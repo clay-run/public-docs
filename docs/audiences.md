@@ -321,6 +321,8 @@ The search is scoped to the exact companies in the segment at run time. After th
 
 **Note:** **Find people from this list** is available only on Companies Audience segments — it does not appear on People Audience segments.
 
+**Note:** You can also run a standalone **Find People** search from any workbook and set **Target companies** to a Companies Audience segment — the segment appears alongside Clay tables in the company picker, and the search is free. The key difference is where results go: **Find people from this list** adds contacts directly to your People Audience, where you can immediately run bulk enrichments and sync to an ad platform. Standalone Find People imports contacts into a new Clay table; to sync those contacts to an ad platform, you must save them to Audiences first via **Continue → Save to People**.
+
 ## Enriching and monitoring
 
 ### Adding enrichments
