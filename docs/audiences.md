@@ -945,11 +945,10 @@ To merge them, re-upsert or re-import the records so the dedup check runs again 
 
 ### Does syncing my CRM to Audiences cost credits?
 
-CRM import is free. Salesforce scheduled export is also free. Here is the full breakdown:
+CRM import is free. The Salesforce scheduled export is also free. Here is the full breakdown:
 
 -   **CRM sync (import):** Free. Clay reads your CRM and imports or refreshes records in your Audience at no credit cost. Connecting a CRM or data warehouse as a source requires Growth plan or above.
 -   **Salesforce scheduled export (24-hour cycle):** Free. When Clay writes Audiences field values back to Salesforce on the automatic 24-hour export cycle, no Clay Actions or Data Credits are consumed — including after you change a field's write rule from Never write to Always write or Write if empty.
--   **On-demand single-record export:** Costs 1 Action per record. Clicking the **Export** button on an individual Audience record panel sends that record to Salesforce immediately and consumes 1 Action.
 -   **Enrichment:** Costs credits. Running an enrichment on Audience records (for example, to update job titles or find contact data) uses 1 Action per record enriched plus Data Credits that vary by provider and data type — the same billing as enriching in a regular Clay table.
 
 For a full breakdown of how Actions and Data Credits work together, see [Actions & Data Credits](./actions-data-credits.md).
