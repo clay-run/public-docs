@@ -142,6 +142,14 @@ For a well-configured Work Email waterfall with good input data, a match rate of
 
 If you're seeing rates well below 60%, see [How can I improve my email match rate?](#how-can-i-improve-my-email-match-rate) below. If you're already near 70% and have optimized your inputs and provider sequence, you may be close to the ceiling for your specific contact list — some contacts simply don't have emails findable through any commercial data provider.
 
+### Do I need a LinkedIn URL to find work emails?
+
+No. A LinkedIn URL is **not required** to run the Work Email waterfall. The minimum required inputs are a **full name** and a **company domain** — most providers in the waterfall run on those two fields alone, with no LinkedIn or personal email needed. LinkedIn URLs are optional: providing one enables more providers to run on each row and can improve your match rate, but the waterfall returns results without one.
+
+**If you only have company names, not domains:** Use the [Company Domain waterfall](building-a-data-waterfall.md) to look up each company's domain first, then run the Work Email waterfall.
+
+**If you want to find LinkedIn URLs to maximize provider coverage:** Add a Claygent column with a Google search prompt using the `site:linkedin.com/in` operator — for example, searching `site:linkedin.com/in "First Last" "Company Name"` — to locate each contact's LinkedIn profile URL. Map the returned URL to the waterfall's optional LinkedIn URL input before running.
+
 ### How can I improve my email match rate?
 
 If you want to find emails for more of your contacts, here are the most effective steps to take:
