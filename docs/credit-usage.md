@@ -187,9 +187,11 @@ To avoid unexpected spend before it starts, disable [auto-run](auto-run.md) befo
 
 ### Credits spiked after editing a formula or upstream column
 
-When you edit a column that other enrichments reference — including formula, AI, and Claygent columns — Clay marks all downstream cells as stale. If **Keep existing results** is off, this triggers a re-run for every stale cell across all rows — which can fire every dependent enrichment column at once and produce a large, unexpected credit charge.
+When an upstream column runs and its output changes — whether it's a formula, AI, or Claygent column — Clay marks all downstream cells that reference it as stale. If **Keep existing results** is off, this triggers a re-run for every stale cell across all rows — which can fire every dependent enrichment column at once and produce a large, unexpected credit charge.
 
-Before making configuration changes to an upstream column, you have several options to prevent an unintended downstream cascade:
+A common scenario: you revise a Claygent or AI column's prompt, run the column to apply your changes, and the new output automatically triggers all downstream enrichment columns to re-run across all rows. (Saving an enrichment column's settings alone doesn't trigger a cascade — it's the column running and producing new output that does.)
+
+Before running an upstream column after making configuration changes, you have several options to prevent an unintended downstream cascade:
 
 **Option 1 — Verify Keep existing results is on (passive protection)**
 
