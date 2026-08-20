@@ -469,7 +469,7 @@ You can add multiple ad platforms to a single audience sync. After your initial 
 
 Enhanced Matching improves ad platform match rates by looking up hashed personal email addresses for your contacts via Clay's provider network and sending up to three per record to the connected ad platform. It is currently in beta — contact your Growth Strategist to enable it for your workspace.
 
-When setting up an Audiences → Ads sync, the **Map** step includes an Enhanced Matching panel where you choose a tier:
+When setting up an Audiences → Ads sync, the **Match** step includes an Enhanced Matching panel where you choose a tier:
 
 | Tier | Cost (modern plans) | Cost (legacy plans) | Expected match rates |
 |------|---------------------|---------------------|---------------------|
@@ -480,6 +480,15 @@ When setting up an Audiences → Ads sync, the **Map** step includes an Enhanced
 Modern plans include Launch, Growth, and post-2026-pricing-change Enterprise. Legacy Enterprise (EnterpriseApril2023) plans are charged the legacy rates above.
 
 With **Premium** or **Standard**, Clay queries its provider network to find and hash personal emails for each contact automatically. With **None**, you manually map up to three existing hashed email columns from your Audience under **Include emails**.
+
+**Which records Enhanced Matching processes:** Enhanced Matching automatically skips records that already have an Enhanced Match Status — meaning Clay has previously enriched that contact through Enhanced Matching. Records without this status are always processed, including contacts that have hashed emails from a third-party provider (such as RB2B) stored in your own custom fields. Those custom-field values are not checked by the skip logic — only Clay's internal Enhanced Match Status field is.
+
+**Hashed Email output fields:** When Enhanced Matching is set to Good or Best, Clay automatically populates Hashed Email 1, Hashed Email 2, and Hashed Email 3 with results from its provider network and includes them in the export automatically. These are reserved output fields — they cannot be manually mapped while Enhanced Matching is active. When Enhanced Matching is set to **None**, these fields are no longer reserved. You can then map your own existing hashed email columns (for example, hashed emails already collected from a third-party provider) in the **Email fields** section (labeled **Include emails** in the sidebar export flow) to send them to the ad platform directly.
+
+**If your segment mixes contacts with and without pre-existing hashed emails:** If some contacts already have hashed emails from a third-party source in custom fields and others don't, use two separate syncs to avoid spending Enhanced Matching credits on contacts that already have usable hashed email data:
+
+1.  **Contacts without hashed emails:** Filter to rows where the custom hashed email column is empty, then enable Enhanced Matching (Good or Best) so Clay finds and exports hashed emails for those contacts.
+2.  **Contacts with existing hashed emails:** Filter to rows where the custom hashed email column is filled, set Enhanced Matching to **None**, and map your custom hashed email column in the **Email fields** section so it is sent to the ad platform as-is.
 
 **Hashed email limit:** All tiers support a maximum of **3 hashed email fields** per contact. If a contact has more than 3 personal email addresses available, only the first three are sent to the ad platform — there is no way to include additional emails beyond this limit.
 
