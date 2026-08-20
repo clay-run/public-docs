@@ -711,6 +711,19 @@ To allow Clay to overwrite existing Salesforce values for a field:
 
 The updated value will be pushed to Salesforce on the next export cycle (within 24 hours).
 
+### Why are Clay-prefixed fields (like Clay Employee Count) already populated in my Audience when those fields are blank in Salesforce?
+
+Clay Audiences maintains its own enriched company data for every matched account, separate from what's in your connected CRM. When a company account is matched, a set of standard firmographic fields — including employee count, LinkedIn URL, domain, and industry — is populated automatically from Clay's own company database. These values appear in your Audience immediately after matching, regardless of whether the corresponding Salesforce fields contain data.
+
+The "Clay" prefix in a field name (for example, "Clay Employee Count") is simply the name you assigned to that field when setting up your Salesforce field mapping — it distinguishes Clay's version of the value from the raw Salesforce-imported value. The source of the data depends on the field type:
+
+- **Standard firmographic fields** (employee count, LinkedIn URL, domain, industry, and similar) are populated automatically from Clay's own company database when accounts are matched. No enrichment setup is required, and this does not consume Clay credits.
+- **Non-default fields** (such as total funding amount, revenue, or technographics) are not populated automatically. If you see a value for one of these fields, it is coming from a **Data Hub enrichment** that has been set up in your workspace.
+
+To find out which enrichment is populating a specific field, go to **Data Hub** → **Enrichments** in the left sidebar. Each enrichment listed there shows which fields it writes and whether it is active, paused, or configured as a one-time run.
+
+By default, all field mappings in the Salesforce export configuration use the **Never write** rule, so Clay-populated values stay in Audiences and are not exported to Salesforce. To push these values to Salesforce, change the write rule to **Always write** or **Write if empty** — see [Writing back to your CRM](#writing-back-to-your-crm) for instructions. Changing the write rule and letting the next scheduled 24-hour sync export those values to Salesforce does not consume Clay Actions or Data Credits.
+
 ### How do I create new Salesforce contacts or leads from an Audience enrichment?
 
 New Salesforce records are not created automatically when you run a bulk enrichment. Record creation is not driven by a Create Contact or Create Lead action inside the enrichment table — it is controlled by the **`Create new Salesforce records`** toggle in your Audiences Salesforce export settings.
@@ -932,10 +945,11 @@ To merge them, re-upsert or re-import the records so the dedup check runs again 
 
 ### Does syncing my CRM to Audiences cost credits?
 
-CRM import is free; writing data back to your CRM costs Actions. Here is the full breakdown:
+CRM import is free. Salesforce scheduled export is also free. Here is the full breakdown:
 
 -   **CRM sync (import):** Free. Clay reads your CRM and imports or refreshes records in your Audience at no credit cost. Connecting a CRM or data warehouse as a source requires Growth plan or above.
--   **CRM write-back (export):** Costs 1 Action per record updated; no Data Credits are consumed. Updating a CRM record from Audiences — for example, syncing enriched fields back to Salesforce or updating a HubSpot contact via a workflow connected to a segment — falls under the "Exporting and executing GTM tasks" billing category.
+-   **Salesforce scheduled export (24-hour cycle):** Free. When Clay writes Audiences field values back to Salesforce on the automatic 24-hour export cycle, no Clay Actions or Data Credits are consumed — including after you change a field's write rule from Never write to Always write or Write if empty.
+-   **On-demand single-record export:** Costs 1 Action per record. Clicking the **Export** button on an individual Audience record panel sends that record to Salesforce immediately and consumes 1 Action.
 -   **Enrichment:** Costs credits. Running an enrichment on Audience records (for example, to update job titles or find contact data) uses 1 Action per record enriched plus Data Credits that vary by provider and data type — the same billing as enriching in a regular Clay table.
 
 For a full breakdown of how Actions and Data Credits work together, see [Actions & Data Credits](./actions-data-credits.md).
