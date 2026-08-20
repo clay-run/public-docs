@@ -332,6 +332,8 @@ When you add a Salesforce picklist field in **Map fields**, the input looks diff
 
 When using **Text with tokens** mode, the column's value is sent to Salesforce for each row. The value must still exactly match a valid Salesforce picklist option — see format requirements below.
 
+**If a picklist option isn't visible in Clay's dropdown:** Click **Refresh** in the Map fields panel to reload field definitions from Salesforce — Refresh re-fetches picklist values along with the field schema. If the option is still missing after refreshing, confirm in Salesforce that the value is **active** (Salesforce excludes inactive picklist values from the field schema Clay receives) and, for restricted picklists, that the value is assigned to the correct Record Type for the records you are updating.
+
 ### Single-select picklist (dropdown)
 
 When updating picklist fields in Salesforce from Clay, you need to match the exact format Salesforce expects.
