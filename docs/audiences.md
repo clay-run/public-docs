@@ -412,7 +412,7 @@ After you add a signal:
 -   Clay **automatically creates a companion segment** combining your original filters plus a filter for the new signal result — this is expected, not an error.
 -   Multiple signals each get their own column; the `Signal Summary` column aggregates all results. Click any row to see per-signal detail.
 -   Any other segment that filters on this signal type will also surface these results.
--   Each signal column shows only whether the signal has fired for each record — the **most recent match is stored per record**, and the specific date of the signal event is not visible in the audience view.
+-   Each signal column shows only whether the signal has fired for each record — the **most recent match is stored per record**, and the specific date of the signal event is not visible in the audience table grid.
 
 **Monitoring signal progress**
 
@@ -826,7 +826,7 @@ Three things to check:
 
 ### Can I see the date when a signal fired in my audience?
 
-Signal columns in the audience view show only whether a signal has matched each record — the specific date of the signal event is not displayed as a column value. Each signal column stores only the **most recent match per record**; earlier matches are not retained in the audience view. To narrow records to those where a signal fired within a particular time window, add a filter on the signal results field (for example, **News & Fundraising results → within the last 80 days**) from the Filters panel.
+Signal columns in the audience view show only whether a signal has matched each record — the specific date of the signal event is not displayed as a column value in the audience table. Each signal column stores only the **most recent match per record**; earlier matches are not retained in the audience view. To see the timestamp for a signal match on a specific record, click that row to open the record detail page — signal events listed there include a date. To narrow all records to those where a signal fired within a particular time window, add a filter on the signal results field (for example, **News & Fundraising results → within the last 80 days**) from the Filters panel.
 
 ### How do I remove records from an audience?
 
