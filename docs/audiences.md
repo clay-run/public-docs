@@ -550,7 +550,7 @@ The simplest framing: Tables are how you _work on_ data. Audiences is where your
 
 **Start with Audiences when:**
 
--   **You want to sync contacts to an ad platform (LinkedIn, Meta)** — Audiences is the native path for Clay Ads. Table-based ad syncs are deprecated; new ad targeting workflows require Audiences.
+-   **You want to sync contacts to an ad platform (LinkedIn, Meta)** — Audiences is the recommended path for Clay Ads. Table-based ad syncs are labeled Legacy in the product and being phased out in favor of Audiences-based syncs.
 -   **You want a persistent, deduplicated database** — Audiences stores one unified record per contact or company, updated continuously as data changes across sources.
 -   **You're doing ongoing contact management** — your list needs to stay current over time, not just for a single enrichment run.
 -   **You want to enrich and push to your CRM** — Audiences syncs enriched data back to Salesforce automatically and keeps records in sync as data changes.
