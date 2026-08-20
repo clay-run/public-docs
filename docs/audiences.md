@@ -903,11 +903,11 @@ There are two types of record matching in Clay Audiences:
 
 Both work together to ensure you have a single, unified record per person or company in your Audiences.
 
-### If I delete a Clay table I used to send records to Audiences, will those records disappear from Audiences?
+### If I delete or archive a Clay table I used to send records to Audiences, will those records disappear from Audiences?
 
-No. Records you sent to Audiences from a Clay table — via **Continue → Save to Companies** / **Save to People**, or using `Upsert Audiences Record` — persist in Audiences even if the source table is later deleted. Clay marks that source's contribution as **Deleted in source** but does not remove the audience record. If the record has contributions from multiple sources and one source disappears, it remains associated with its other active sources.
+No. Records you sent to Audiences from a Clay table — via **Continue → Save to Companies** / **Save to People**, or using `Upsert Audiences Record` — persist in Audiences even if the source table is later deleted or archived. When a table is deleted, Clay marks that source's contribution as **Deleted in source** but does not remove the audience record. When a table is archived, the audience records are unaffected — they remain exactly as they were, with no status change. In both cases, the table's name continues to appear as an option in the **Origin source** filter because the records it contributed are still present in Audiences.
 
-To remove those records from Audiences, you must explicitly archive them — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience)
+To remove those records from your audience — and stop the old table from appearing as an Origin source — filter by **Origin source** → select the archived or deleted table name → create a segment from those results → archive the records. See [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) for the full steps.
 
 ### When two sources have conflicting values for the same field, which value wins?
 
