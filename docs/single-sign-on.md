@@ -38,7 +38,7 @@ In the WorkOS setup portal, look for the **Service Provider Details** section, w
 
 ## What happens when SSO is enabled
 
--   All users whose email address is on your verified domain are redirected to sign in through SSO when they type their email on the Clay login page. **Note:** This redirect is handled in the browser — users who have an existing email + password Clay account can still log in using their password directly, which bypasses the SSO redirect. Clay does not block password-based login at the backend for SSO-configured domains.
+-   All users whose email address is on your verified domain must sign in through SSO once SSO is enforced by Clay support (step 5 of setup). Password-based login is blocked at the backend — users on your domain cannot log in using an email and password, even if their account previously had a Clay password set.
 -   Google OAuth sign-in is disabled for users on your domain. Clicking the **Sign in with Google** button on the login page will return an error (`Google OAuth is disabled for this account`) — this button uses Google OAuth, which is a separate authentication path from SSO.
 -   SSO is configured at the email domain level — if your organization uses multiple Clay workspaces, users on your domain will be routed through SSO for all of them.
 -   Once SSO is activated, users can sign in from either the Clay login page or directly from your IdP dashboard (for example, clicking the Clay tile in your Okta launcher). If clicking the IdP tile returns `{"type":"BadRequest","message":"Unable to login","details":null}`, SSO has likely not yet been activated on Clay's side — contact Clay support to complete activation.
@@ -49,9 +49,9 @@ In the WorkOS setup portal, look for the **Service Provider Details** section, w
 
 ## MFA enforcement and compliance requirements
 
-Clay does not have a workspace admin setting to require multi-factor authentication (MFA) for all users. When SSO is enabled, users on your domain are redirected to your identity provider in the browser — but this is not a backend login block. Users who have an existing email + password Clay account can log in via password and bypass the SSO redirect entirely, which means IdP-level MFA requirements are not enforced for those users.
+Clay does not have a self-serve workspace admin setting to require MFA. Once SSO is enforced by Clay support, however, password-based login is blocked at the backend — users on your domain cannot bypass SSO by entering a password directly. All authentication flows through your identity provider, so any MFA policy you have configured in your IdP (such as Okta or Azure AD) applies to all users on your domain.
 
-If your security policy or compliance requirements (for example, SOC 2) mandate that all users authenticate through MFA, this is a current limitation: there is no workspace-level setting in Clay to disable password-based login or restrict authentication to SSO only. For Clay's security and compliance documentation, including the SOC 2 report, visit [trust.clay.com](https://trust.clay.com).
+If your security policy or compliance requirements (for example, SOC 2) mandate that all users authenticate through MFA, enforcing SSO with MFA configured in your IdP satisfies this requirement. For Clay's security and compliance documentation, including the SOC 2 report, visit [trust.clay.com](https://trust.clay.com).
 
 ## External collaborators (non-domain email addresses)
 
