@@ -321,6 +321,8 @@ The search is scoped to the exact companies in the segment at run time. After th
 
 **Note:** **Find people from this list** is available only on Companies Audience segments — it does not appear on People Audience segments.
 
+**Note:** You can also run a standalone **Find People** search from any workbook and set **Target companies** to a Companies Audience segment — the segment appears alongside Clay tables in the company picker, and the search is free. The key difference is where results go: **Find people from this list** adds contacts directly to your People Audience, where you can immediately run bulk enrichments and sync to an ad platform. Standalone Find People imports contacts into a new Clay table; to sync those contacts to an ad platform, you must save them to Audiences first via **Continue → Save to People**.
+
 ## Enriching and monitoring
 
 ### Adding enrichments
@@ -547,6 +549,27 @@ The simplest framing: Tables are how you _work on_ data. Audiences is where your
 | Scope | A specific working set you build and run | A slice across your entire dataset |
 | Connections | Built per workflow | Continuously synced to your CRM, warehouse, and other sources |
 | Scale | Up to 50,000 rows | Millions of records |
+
+**Start with Audiences when:**
+
+-   You want to sync contacts to an ad platform (LinkedIn Ads, Meta Ads) — Audiences is the required path for new ad platform sync workflows. Creating table-based ad syncs is no longer supported.
+-   You want a persistent, deduplicated contact and company database that merges data from your CRM, enrichments, and people searches and stays current over time.
+-   You want to continuously enrich contacts and push the results back to your CRM automatically.
+-   You're doing ongoing contact management rather than a one-time or exploratory project.
+
+**Start with Tables when:**
+
+-   You need complex multi-step enrichment logic — for example, conditional runs, waterfall enrichments, or AI scoring before deciding which contacts to keep.
+-   You're running a one-time or exploratory enrichment project where you don't need to store results permanently.
+-   You need fine-grained per-row automation — conditional logic, webhook triggers, or enrichment chains that reference each other.
+
+**People sourcing for ad platform sync — recommended flow:**
+
+1.  In your Companies Audience segment, click **⋮** → **Find people from this list**. Apply job title, seniority, and location filters. Contacts are added directly to your People Audience at no credit cost.
+    -   Alternatively, use the standalone **Find People** source (also free) with your Companies Audience as the **Target companies** filter. Results go to a new table — click **Continue → Save to People** to move them into your People Audience.
+2.  From your People Audience, run **Bulk Enrich** to add the contact fields you need (for example, work email and phone number).
+3.  Build a filtered segment from your enriched People Audience.
+4.  Click **Send → Sync to ad platforms** to push the segment to LinkedIn Ads or Meta Ads. See [Syncing audiences to ad platforms](#syncing-audiences-to-ad-platforms).
 
 ### What if my integration isn't supported yet?
 
