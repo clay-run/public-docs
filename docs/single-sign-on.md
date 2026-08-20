@@ -70,6 +70,15 @@ SSO only applies to users whose email address matches your verified domain. Team
 
 **If a user has already landed in a personal workspace instead of the company workspace:** You can recover without contacting support. From your company workspace, go to `Settings` > `Team` > `+ Invite` and send them a workspace invite. Have them accept the Clay invite from their email first, then sign in through your IdP (for example, by clicking the Clay tile in Okta). SSO will match them to the workspace seat you created and place them in the correct workspace. The empty personal workspace they were initially placed in remains as an orphan but does not affect their access to the company workspace.
 
+**Offboarding users**
+
+When a team member leaves, take two steps to remove their access:
+
+1.  **In your IdP:** Revoke their access to the Clay application (for example, remove them from the Clay tile in Okta). Once removed from your IdP, they can no longer sign in to Clay via SSO.
+2.  **In your Clay workspace:** Go to `Settings` > `Team`, find the member, and remove their seat. This frees the seat and ensures workspace access is blocked regardless of login method — important because password-based login is not blocked at the backend for SSO domains (see "What happens when SSO is enabled" above).
+
+Since Clay does not currently support SCIM, workspace seat removal is a manual step. SCIM would automate this: when you deprovision a user in your IdP, SCIM would remove them from your Clay workspace automatically.
+
 SCIM directory sync is on Clay's roadmap — contact Clay support or your Growth Strategist for the latest status on this feature.
 
 **Clay user roles are not managed through SSO or SAML.** Enabling SSO does not change existing team members' roles in your workspace. Clay reads only the user's email address from the SAML assertion, with `firstName` and `lastName` as optional attributes — no role or group attributes from your identity provider are mapped to Clay workspace roles. To assign or update a team member's role after SSO is enabled, go to `Settings` > `Team` and use the role dropdown next to their name.
