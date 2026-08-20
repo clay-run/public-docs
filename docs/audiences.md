@@ -68,7 +68,7 @@ You can import data from:
 8.  Select `Leads` at the top of the sync panel.
 9.  Enable the `Import` toggle.
 10.  Add any Lead fields you want to filter or segment by — common fields include `Lead Status`, `Lead Source`, `Title`, and `Company`.
-     -   Lead records are automatically merged with matching Contact records into a single person record in your People audience. Data from both sources is combined, and duplicates across Salesforce Leads, Contacts, and other sources count as one person. The primary matching key is the `ConvertedContactId` field — see [Why do some of my Salesforce Lead records not appear as separate person records in Clay?](#why-do-some-of-my-salesforce-lead-records-not-appear-as-separate-person-records-in-clay) for details.
+     -   Lead records are automatically merged with matching Contact records into a single person record in your People audience. Data from both sources is combined, and duplicates across Salesforce Leads, Contacts, and other sources count as one person. The primary matching key is the `ConvertedContactId` field — see [Why do some of my Salesforce Lead records not appear as separate person records in Clay?](#why-do-some-of-my-salesforce-lead-records-not-appear-as-separate-person-requests-in-clay) for details.
      -   After syncing, you can filter your People audience by **sync status** (whether a Lead record has been imported from Salesforce) and **record conversion status** (whether the Lead has been converted to a Contact in Salesforce).
 11.  Name the corresponding Clay fields.
 12.  Select `Opportunities` at the top of the sync panel.
@@ -317,11 +317,11 @@ Once you have a Companies Audience segment, you can run a people search scoped s
 4.  In the setup panel, apply filters for job title, seniority, location, and experience.
 5.  Click **Continue**. Clay searches for matching contacts at the companies currently in that segment.
 
-The search is scoped to the exact companies in the segment at run time. After the contacts are added to your People audience, you can run bulk enrichments (for example, work email or phone) and export them to an ad platform — see [Syncing audiences to ad platforms](#syncing-audiences-to-ad-platforms).
+The search is scoped to the exact companies in the segment at run time. In the final step of the wizard, click **Send to Audiences** to add the contacts to your People Audience. You can then run bulk enrichments (for example, work email or phone) and export them to an ad platform — see [Syncing audiences to ad platforms](#syncing-audiences-to-ad-platforms).
 
 **Note:** **Find people from this list** is available only on Companies Audience segments — it does not appear on People Audience segments.
 
-**Note:** You can also run a standalone **Find People** search from any workbook and set **Target companies** to a Companies Audience segment — the segment appears alongside Clay tables in the company picker, and the search is free. The key difference is where results go: **Find people from this list** adds contacts directly to your People Audience, where you can immediately run bulk enrichments and sync to an ad platform. Standalone Find People imports contacts into a new Clay table; to sync those contacts to an ad platform, you must save them to Audiences first via **Continue → Save to People**.
+**Note:** You can also run a standalone **Find People** search from any workbook and set **Target companies** to a Companies Audience segment — the segment appears alongside Clay tables in the company picker, and the search is free. Both paths open the same Find People wizard; in the final step, click **Send to Audiences** to add contacts to your People Audience, or **Import to Table** to create a new Clay table. The main difference is that **Find people from this list** pre-scopes the search to the companies in the current segment, while standalone Find People requires you to set the Target companies filter yourself.
 
 ## Enriching and monitoring
 
@@ -565,8 +565,8 @@ The simplest framing: Tables are how you _work on_ data. Audiences is where your
 
 **People sourcing for ad platform sync — recommended flow:**
 
-1.  In your Companies Audience segment, click **⋮** → **Find people from this list**. Apply job title, seniority, and location filters. Contacts are added directly to your People Audience at no credit cost.
-    -   Alternatively, use the standalone **Find People** source (also free) with your Companies Audience as the **Target companies** filter. Results go to a new table — click **Continue → Save to People** to move them into your People Audience.
+1.  In your Companies Audience segment, click **⋮** → **Find people from this list**. Apply job title, seniority, and location filters. At the end of the wizard, click **Send to Audiences** to add the contacts to your People Audience at no credit cost.
+    -   Alternatively, use the standalone **Find People** source (also free) with your Companies Audience as the **Target companies** filter. The same wizard opens — click **Send to Audiences** to send contacts to your People Audience, or **Import to Table** if you prefer to review results first (then click **Continue → Save to People** from the table).
 2.  From your People Audience, run **Bulk Enrich** to add the contact fields you need (for example, work email and phone number).
 3.  Build a filtered segment from your enriched People Audience.
 4.  Click **Send → Sync to ad platforms** to push the segment to LinkedIn Ads or Meta Ads. See [Syncing audiences to ad platforms](#syncing-audiences-to-ad-platforms).
