@@ -1,6 +1,6 @@
 ---
 title: Delete content within your workspace
-description: Learn how to delete and recover tables, workbooks, and rows within your workspace.
+description: Learn how to delete and recover tables, workbooks, rows, and workflows within your workspace.
 last_synced: 2026-04-26T01:39:53.278Z
 ---
 
@@ -72,3 +72,14 @@ Note: rows cannot be restored if doing so would put your table over the 50,000-r
 ## Cell data cannot be recovered
 
 Recovery only applies to deleted rows — **individual cell data cannot be recovered**, by you or by Clay support. If a cell's value is cleared or overwritten (for example, by clearing a cell, editing its contents, or re-running an enrichment that returns a different result), the previous value is gone. [Table versions](table-versions.md) do not help here either: they capture your table's structure and configuration, not cell data.
+
+## Manage workflows
+
+_Workflows is currently in open beta — contact your Growth Strategist to enable it for your workspace._
+
+From the **Workflows** page in your workspace sidebar, you can rename, duplicate, or delete any workflow using the row actions menu. Click the **⋮** icon at the right end of any workflow row to open it. The available actions are:
+
+-   **Rename workflow** — opens a dialog to enter a new name for the workflow. Click **Save** to apply the change.
+-   **Duplicate workflow** — creates an independent copy of the workflow with the same name and configuration. The duplicate appears immediately in the list.
+-   **Credit usage** — opens a modal showing credit spend for this workflow. Visible only to workspace members with billing management access.
+-   **Delete** — permanently removes the workflow after you confirm. Deleted workflows cannot be recovered.
