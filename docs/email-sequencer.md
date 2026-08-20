@@ -258,7 +258,7 @@ Warmup is the process of automatically sending and receiving emails from other i
 
 The initial warmup phase typically takes **2–3 weeks**, during which the account's status shows as **Warming up** in Campaigns → Email Accounts. Once the initial phase completes, the status switches to **Ready**. Warmup emails continue to run in the background even after the status shows **Ready** — the Ready label means the account has been warming for at least 2 weeks and is ready for campaigns, not that warmup has stopped.
 
-When you add accounts via OAuth, we will automatically set up labels and filters to make it clear what emails are warmups and reduce clutter in your inbox. Each connected email account has a unique two-word filter key (e.g., `clever-rocket`) that marks warmup emails received by that account, so you can apply labels and filters to keep them out of your main inbox.
+When you add accounts via OAuth, we will automatically set up labels and filters to make it clear what emails are warmups and reduce clutter in your inbox. Your workspace has a unique two-word filter key (e.g., `clever-rocket`) that marks all warmup emails so you can apply these labels and filters.
 
 During warmup, your inbox will receive emails from other accounts in Smartlead's warmup pool. These emails often look random or spam-like in content — this is intentional, as the warmup engine simulates natural human email activity. They are automatically filed under your warmup label (named **Clay sequencer warmup email**), so they won't clutter your main inbox. Receiving them is not a sign of unauthorized account access or phishing activity.
 
@@ -266,15 +266,17 @@ Warmup is enabled during the account connection flow: after connecting your emai
 
 ### Why do I see multiple different keyphrases in my sent folder?
 
-Each connected email account has a unique filter key that identifies warmup emails **received** by that account. When your account sends warmup emails to other inboxes in Smartlead's warmup pool, each outgoing message carries the **recipient's** filter key — not yours. Because your account participates in the warmup pool by sending to many different mailboxes, each with its own keyphrase, your Sent folder shows a variety of different keyphrases (for example, `active-glider`, `route-swung`, `learn-chair`, and others). This is expected behavior, not a sign of a problem.
+Your workspace's filter key (e.g., `active-glider`) identifies warmup emails **received** by accounts in your workspace. When warmup emails from Smartlead's pool arrive in your inbox, they carry your workspace's filter key — which is why the auto-created label and filter catches them cleanly.
+
+When your account **sends** warmup emails to other inboxes in the pool, those outgoing messages go to accounts in other workspaces, each of which has its own filter key. As a result, your Sent folder shows a variety of different keyphrases — for example, `route-swung`, `learn-chair`, `active-glider`, and others — rather than a single consistent phrase. This is expected behavior.
 
 **To manage sent warmup emails in Outlook (or another email client)**
 
-Since the keyphrases in your Sent folder vary and rotate as the warmup pool changes, you cannot reliably filter them by keyphrase. Instead, build a rule based on the recipient domain: move any message in your Sent folder addressed to a domain you do not recognize (i.e., not a prospect or colleague) to a dedicated warmup folder. This catches all outgoing warmup emails regardless of which keyphrase they contain.
+Since the keyphrases in your Sent folder vary as the warmup pool changes, you cannot reliably filter sent warmup emails by keyphrase. Instead, build a rule based on the recipient domain: move any message in your Sent folder addressed to a domain you do not recognize (i.e., not a prospect or colleague) to a dedicated warmup folder. This catches all outgoing warmup emails regardless of which keyphrase they contain.
 
-If you prefer not to have warmup emails flow through your mailbox at all, disable warming: go to **Campaigns → Email Accounts**, find the account, click the ⋯ menu, and select **Disable warming**. Disabling warmup affects your sender reputation — warmup is recommended for all active sending accounts.
+If you prefer not to have warmup emails in your mailbox at all, disable warming: go to **Campaigns → Email Accounts**, find the account, click the ⋯ menu, and select **Disable warming**. Disabling warmup affects your sender reputation — warmup is recommended for all active sending accounts.
 
-To preserve warmup effectiveness, avoid auto-deleting warmup emails from your mailbox. Moving messages to a folder or marking them as read is safe.
+When managing warmup messages, moving them to a folder or marking them as read is preferable to permanently deleting them, as the warmup process relies on send/reply history remaining in your mailbox.
 
 ### What does the Reputation percentage mean?
 
