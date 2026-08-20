@@ -81,7 +81,7 @@ The table credit dashboard offers three ways to analyze your credit spend:
 
 All views allow you to download the data as a CSV for further analysis.
 
-**Note:** Historical data for the table credit dashboard begins on November 5th, 2025. You'll see a warning about incomplete data if your selected time range belongs before this date.
+**Note:** Historical data for the table credit dashboard begins on November 5th, 2025. You'll see a warning about incomplete data if your selected time range begins before this date.
 
 ### Checking credit cost for a specific action on a row
 
