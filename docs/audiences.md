@@ -321,7 +321,7 @@ The search is scoped to the exact companies in the segment at run time. In the f
 
 **Note:** **Find people from this list** is available only on Companies Audience segments — it does not appear on People Audience segments.
 
-**Note:** You can also run a standalone **Find People** search from any workbook and set **Target companies** to a Companies Audience segment — the segment appears alongside Clay tables in the company picker, and the search is free. Both paths open the same Find People wizard; in the final step, click **Send to Audiences** to add contacts to your People Audience, or **Import to Table** to create a new Clay table. The main difference is that **Find people from this list** pre-scopes the search to the companies in the current segment, while standalone Find People requires you to set the Target companies filter yourself.
+**Note:** You can also run a standalone **Find People** search from any workbook and set **Target companies** to a Companies Audience segment — the segment appears alongside Clay tables in the company picker, and the search is free. Both paths open the same Find People wizard; in the final step, click **Send to Audiences** to add contacts to your People Audience, or **Import to Table** to create a new Clay table. The main difference is that **Find people from this list** pre-scopes the search to the companies in the current segment, while standalone Find People requires you to set the Target companies filter yourself. **Note:** The option to use a Companies Audience segment as the Target companies filter in standalone Find People requires Audiences to be enabled on your workspace (available on Launch, Growth, and Enterprise plans).
 
 ## Enriching and monitoring
 
@@ -552,7 +552,7 @@ The simplest framing: Tables are how you _work on_ data. Audiences is where your
 
 **Start with Audiences when:**
 
--   You want to sync contacts to an ad platform (LinkedIn Ads, Meta Ads) — Audiences is the required path for new ad platform sync workflows. Creating table-based ad syncs is no longer supported.
+-   You want to sync contacts to an ad platform (LinkedIn Ads, Meta Ads) — Audiences is the recommended path for new ad targeting workflows. Table-based ad syncs are deprecated and display a deprecation notice in the product; Clay recommends using Audiences for all new ad sync setups.
 -   You want a persistent, deduplicated contact and company database that merges data from your CRM, enrichments, and people searches and stays current over time.
 -   You want to continuously enrich contacts and push the results back to your CRM automatically.
 -   You're doing ongoing contact management rather than a one-time or exploratory project.
@@ -566,7 +566,7 @@ The simplest framing: Tables are how you _work on_ data. Audiences is where your
 **People sourcing for ad platform sync — recommended flow:**
 
 1.  In your Companies Audience segment, click **⋮** → **Find people from this list**. Apply job title, seniority, and location filters. At the end of the wizard, click **Send to Audiences** to add the contacts to your People Audience at no credit cost.
-    -   Alternatively, use the standalone **Find People** source (also free) with your Companies Audience as the **Target companies** filter. The same wizard opens — click **Send to Audiences** to send contacts to your People Audience, or **Import to Table** if you prefer to review results first (then click **Continue → Save to People** from the table).
+    -   Alternatively, use the standalone **Find People** source (also free) with your Companies Audience as the **Target companies** filter (requires Launch, Growth, or Enterprise plan). The same wizard opens — click **Send to Audiences** to send contacts to your People Audience, or **Import to Table** if you prefer to review results first (then click **Continue → Save to People** from the table).
 2.  From your People Audience, run **Bulk Enrich** to add the contact fields you need (for example, work email and phone number).
 3.  Build a filtered segment from your enriched People Audience.
 4.  Click **Send → Sync to ad platforms** to push the segment to LinkedIn Ads or Meta Ads. See [Syncing audiences to ad platforms](#syncing-audiences-to-ad-platforms).
