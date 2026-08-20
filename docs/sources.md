@@ -76,6 +76,18 @@ To export the complete text, extract the specific field into a dedicated column 
 
 **Export fails with an unexpected error.** If you encounter an unexpected error while exporting, your session may have expired. Log out of Clay and log back in, then retry the export. For full troubleshooting steps, see [Your session has expired error](workspace-administration-documentation.md#your-session-has-expired-error).
 
+**Accented characters appear garbled when opening the CSV in Excel.** Clay's CSV export is encoded as UTF-8. Excel does not automatically detect UTF-8 encoding when you double-click a downloaded CSV file, which causes accented characters (such as é, ñ, or ü) to appear as garbled codes or question marks.
+
+To open the file with correct encoding in Excel:
+
+1.  Open Excel.
+2.  Go to **Data** → **From Text/CSV**.
+3.  Select your downloaded file.
+4.  In the import dialog, set **File Origin** to **65001: Unicode (UTF-8)**.
+5.  Click **Load**. Accented characters will display correctly.
+
+Alternatively, upload the CSV to Google Sheets — Google Sheets detects UTF-8 automatically. From Google Sheets, download as a `.xlsx` file (`File → Download → Microsoft Excel (.xlsx)`) to open in Excel without any encoding setup.
+
 ### Exporting a specific subset of contacts
 
 To export only specific contacts from a table — for example, contacts at a particular company or contacts matching a custom condition — first narrow the view to those rows, then export.
