@@ -249,7 +249,7 @@ When setting up a Snowflake or BigQuery import, you also define a `Unique Identi
 **Other deduplication behaviors**
 
 -   **Cross-source deduplication** — merge the same person from multiple sources.
--   **Whitespace detection** — when importing from a Find People or Find Companies search, or saving results from a Clay table to your Audience, records that already exist in All People or All Companies are automatically excluded from the merge. The draft shows a banner with the count of excluded records, and clicking **All people** or **All companies** will only add net-new records. For Companies, exclusion matches on Clay's internal company identifier (CPJ ID). Existing Audience records need entity resolution to have completed — records missing a recognized domain or professional network URL may not yet have been assigned a CPJ ID, which can cause them to slip through as apparent duplicates. Ensuring your Companies audience records have accurate domains and professional network URLs helps entity resolution complete and improves deduplication coverage.
+-   **Whitespace detection** — when importing from a Find People or Find Companies search, or saving results from a Clay table to your Audience, records that already exist in All People or All Companies are automatically excluded from the merge. The draft shows a banner with the count of excluded records, and clicking **All people** or **All companies** will only add net-new contacts — the existing records are not duplicated. For Companies, exclusion matches on Clay's internal company identifier (CPJ ID). Existing Audience records need entity resolution to have completed — records missing a recognized domain or professional network URL may not yet have been assigned a CPJ ID, which can cause them to slip through as apparent duplicates. Ensuring your Companies audience records have accurate domains and professional network URLs helps entity resolution complete and improves deduplication coverage.
 -   **Country-code domain variants** — Clay's entity matching normalizes domains by stripping subdomains and `www` prefixes, but does not automatically merge country-code TLD variants. A company at `swarovski.co.uk` and a company at `swarovski.com` are treated as separate entities by default — this reflects how many enterprises maintain distinct regional accounts. If a regional variant appears as net new in your search results and you want to exclude it, use the **Exclude companies** filter in your Find Companies source. See [Find Companies](find-companies.md) for how to set up exclusions.
 -   **Secondary domains from your CRM** — Clay entity matching uses only the primary domain field mapped from your CRM source. If your CRM stores additional domains for a company (for example, HubSpot's secondary domain fields), those alternate domains are not imported into the Audiences company record and are not used for entity matching. A Find Companies search result for a secondary domain may appear as net new even if the same company exists in your audience under a different primary domain. To exclude known secondary domains from appearing as net new, add them to the **Exclude companies** filter in your Find Companies source.
 
@@ -547,6 +547,19 @@ The simplest framing: Tables are how you _work on_ data. Audiences is where your
 | Scope | A specific working set you build and run | A slice across your entire dataset |
 | Connections | Built per workflow | Continuously synced to your CRM, warehouse, and other sources |
 | Scale | Up to 50,000 rows | Millions of records |
+
+**Start with Audiences when:**
+
+-   **You want to sync contacts to an ad platform (LinkedIn, Meta)** — Audiences is the native path for Clay Ads. Table-based ad syncs are deprecated; new ad targeting workflows require Audiences.
+-   **You want a persistent, deduplicated database** — Audiences stores one unified record per contact or company, updated continuously as data changes across sources.
+-   **You're doing ongoing contact management** — your list needs to stay current over time, not just for a single enrichment run.
+-   **You want to enrich and push to your CRM** — Audiences syncs enriched data back to Salesforce automatically and keeps records in sync as data changes.
+
+**Start with Tables when:**
+
+-   **You need a one-time or exploratory enrichment** — you're testing criteria, comparing providers, or running a project where results don't need to persist.
+-   **You need complex multi-step workflows** — conditional logic, custom formulas, or fine-grained control over when and how enrichments run.
+-   **You're using an integration Audiences doesn't yet support natively** — use `Upsert Audiences Record` to push results into your Audience afterward when needed.
 
 ### What if my integration isn't supported yet?
 
