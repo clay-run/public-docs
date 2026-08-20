@@ -446,6 +446,17 @@ To manually run the workflow on segment members already in the segment, open the
 
 The **Run** button is available in any trigger state — draft, live, or paused — so you can run the workflow on existing members before or after publishing.
 
+**Testing a workflow on specific records**
+
+To test a workflow on hand-picked records — rather than an automatic sample — use the **Add data** button in the test data panel at the bottom of the workflow editor:
+
+1.  Open the workflow in the editor and locate the test panel at the bottom of the screen.
+2.  Click **Add data** and select an audience segment from the dropdown.
+3.  In the record picker, search for and check the specific records you want to include. You can select up to **50 records** total.
+4.  Click **Run [N] rows** to run the workflow on your selected records only.
+
+Selected records are merged with any existing test records for the trigger — duplicates across sources are removed automatically. You can add records from multiple connected audience segments.
+
 ### **Syncing audiences to ad platforms**
 
 When you have a segment ready, you can sync it to an ad platform to run account-based advertising across your highest-fit contacts and companies.
