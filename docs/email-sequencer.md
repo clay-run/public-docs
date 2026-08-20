@@ -40,17 +40,17 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead replies (excluding out-of-office replies, which we detect and work around).
     -   Toggle `Preview` mode to see real data from your source table in the message template. When HTML is enabled (beta — see note above), Preview also renders how your formatting will appear in the recipient's inbox — the message editor shows the content structure you've built, not the final rendered output, so use Preview to verify formatting before sending.
     -   Within each message, use `/` to access features such as:
-        -   `Clean variable`: Reference synced lead data with safe fallbacks and optional formatting. When configuring a Clean variable, the **Fallback** field ("Simple text to display if variable is empty") is required — the variable will not save if left blank.
+        -   `Clean variable`: Reference synced lead data with safe fallbacks and optional formatting. When configuring a Clean variable, the **Fallback** field (\"Simple text to display if variable is empty\") is required — the variable will not save if left blank.
         -   `Sender variable`: Reference identifying information from the sending account
-        -   `AI snippet`: Generate personalized copy for each lead automatically. After inserting an AI snippet via `/`, a snippet chip appears in your message. Click the chip to open the inline prompt editor — describe what the snippet should generate and reference lead data columns in your instructions (for example: *"Write a one-sentence opening based on [Company Domain] and [Job Title]"*). Toggle **Preview** to see the AI-generated output for your current preview lead in real time and refine the prompt as needed. The AI model is configured at the campaign level, not per snippet; if you need to control which AI model generates the copy, build the personalized content in a **Use AI** column in your source table and reference it as a `Clean variable` in the email template instead.
+        -   `AI snippet`: Generate personalized copy for each lead automatically. After inserting an AI snippet via `/`, a snippet chip appears in your message. Click the chip to open the inline prompt editor — describe what the snippet should generate and reference lead data columns in your instructions (for example: *\"Write a one-sentence opening based on [Company Domain] and [Job Title]\"*). Toggle **Preview** to see the AI-generated output for your current preview lead in real time and refine the prompt as needed. The AI model is configured at the campaign level, not per snippet; if you need to control which AI model generates the copy, build the personalized content in a **Use AI** column in your source table and reference it as a `Clean variable` in the email template instead.
         -   `Spintax variable`: Choose a random value from a list
         -   `Rows from [Table]`: Directly reference synced data (Clean variables are recommended to handle empty values safely).
         -   (HTML only): If enabled, use hyperlinks, inline images, fonts, and rich text formatting.
 5.  Go to `Settings` to add your email account:
     -   `Google OAuth` (recommended): Connect your Google Workspace account via OAuth.
-        -   ⚠️ Note: You or your Google Workspace admin must authorize Clay Sequencer as a Trusted app for your domain before connecting. If you or a teammate sees **"Access blocked: clay.com has not completed the Google verification process" (Error 403: access_denied)** when connecting, follow [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth) for the required admin setup steps. Until this is done, all users in your domain will see this error.
+        -   ⚠️ Note: You or your Google Workspace admin must authorize Clay Sequencer as a Trusted app for your domain before connecting. If you or a teammate sees **\"Access blocked: clay.com has not completed the Google verification process\" (Error 403: access_denied)** when connecting, follow [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth) for the required admin setup steps. Until this is done, all users in your domain will see this error.
     -   `Microsoft Outlook OAuth` (recommended): Connect your Outlook account via OAuth.
-        -   ℹ️ Note: Unlike Google OAuth, no Clay-side admin setup is required upfront. If your Microsoft 365 / Entra tenant requires admin approval for third-party apps, your admin may need to grant consent for "Clay Sequencer – Smartlead" in the [Microsoft Entra Admin Center](https://entra.microsoft.com).
+        -   ℹ️ Note: Unlike Google OAuth, no Clay-side admin setup is required upfront. If your Microsoft 365 / Entra tenant requires admin approval for third-party apps, your admin may need to grant consent for \"Clay Sequencer – Smartlead\" in the [Microsoft Entra Admin Center](https://entra.microsoft.com).
     -   `SMTP`: Connect a single account via SMTP credentials directly. The form requires both SMTP settings (host, port, username, password) and IMAP settings (host, port) — Clay does not provide a built-in inbox, so your IMAP credentials must come from an existing IMAP-capable mailbox under your domain (such as Google Workspace, Microsoft 365, Zoho, or Fastmail). If your sending service is send-only (for example, SendGrid or another transactional email relay), you must pair it with a separate IMAP-enabled mailbox.
     -   `Bulk CSV upload`: Add multiple accounts at once by uploading a CSV. Download the example template from the modal and fill in the following eight columns for each account: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`. For Google Workspace accounts, generate an app password for each account (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` value.
     -   You can also [buy email accounts directly in Clay](https://university.clay.com/docs/buying-email-accounts) if you want to increase your sending capacity.
@@ -85,7 +85,7 @@ Once all your settings are saved, you can launch your campaign. Launching a camp
 -   The `Replies` tab shows you any incoming replies and lets you respond to them directly in Clay
 -   Actions are consumed for each email sent (1 Action per lead, plus standard Action and Data Credit rates for any AI snippets used).
 -   Your campaign becomes live, which means:
-    -   Any new leads routed into the campaign will automatically be sequenced, enabling "always-on" campaigns for inbound routing.
+    -   Any new leads routed into the campaign will automatically be sequenced, enabling \"always-on\" campaigns for inbound routing.
     -   All campaign settings become locked.
 -   If you haven't set up custom webhooks in the `Advanced` section, a campaign events table will be created to capture all activity as it occurs.
 
@@ -114,7 +114,7 @@ In the Campaigns homepage, you can access the `Global inbox` which centralizes r
 
 Check out the `Email accounts` tab to manage your fleet of sender accounts and `Global blocklist` to add or remove entries.
 
-To duplicate a campaign — for example, to reuse your message sequence and settings for a new persona or messaging variant — open the campaign you want to copy and click its name in the breadcrumb at the top. Select **Duplicate campaign** from the dropdown. Clay creates a new draft campaign named "<original name> (copy)" with the same message sequence, settings, and AI context, then opens it immediately for editing.
+To duplicate a campaign — for example, to reuse your message sequence and settings for a new persona or messaging variant — open the campaign you want to copy and click its name in the breadcrumb at the top. Select **Duplicate campaign** from the dropdown. Clay creates a new draft campaign named \"<original name> (copy)\" with the same message sequence, settings, and AI context, then opens it immediately for editing.
 
 ## Best practices
 
@@ -197,9 +197,9 @@ To shorten the estimated time:
 -   **Add more sender accounts** — each account adds its own independent daily capacity.
 -   **Increase the account send limit** — in `Sender accounts`, click the three-dot (⋯) menu next to an account and select `Update send limit`.
 
-### My "Sync lead data to campaign" column is showing a warning. What does it mean?
+### My \"Sync lead data to campaign\" column is showing a warning. What does it mean?
 
-This usually means the Clay table that the column points to was deleted. Hover over the warning icon to confirm — the error reads *"Destination table was deleted. Please either restore that table from the trash, or create a new Send table data column."*
+This usually means the Clay table that the column points to was deleted. Hover over the warning icon to confirm — the error reads *\"Destination table was deleted. Please either restore that table from the trash, or create a new Send table data column.\"*
 
 To fix it, open `Trash` from the bottom-left of your workspace sidebar, find the deleted table, and click `Restore`. The column will reconnect once the table is back.
 
@@ -211,7 +211,7 @@ Deleting a campaign through the column header's settings (the **Delete campaign*
 
 Be sure to press `Save settings` after making edits. Note: deleting a campaign step saves immediately without requiring a manual save click—all other edits require pressing `Save settings`.
 
-If you added or edited a **Clean variable** and it is not appearing in your message, check that the **Fallback** field ("Simple text to display if variable is empty") is filled in — this field is required, and the variable will not save if left blank.
+If you added or edited a **Clean variable** and it is not appearing in your message, check that the **Fallback** field (\"Simple text to display if variable is empty\") is filled in — this field is required, and the variable will not save if left blank.
 
 ### Why can't I see or edit the Message sequence section?
 
@@ -233,7 +233,7 @@ Each lead can only be sequenced once per campaign. To send multiple sequences to
 
 ### What happens if my source table has two leads with the same email address?
 
-If two leads in the same campaign share a recipient email address, Clay automatically enrolls only one of them to prevent duplicate outreach. The other lead is permanently skipped and will not be retried in future enrollment runs. In the `Leads` view, skipped contacts show the status: "Another lead with this email address is already enrolled in this campaign, so we skipped this one." Leads without an email address are not affected — they pass through to standard enrollment validation.
+If two leads in the same campaign share a recipient email address, Clay automatically enrolls only one of them to prevent duplicate outreach. The other lead is permanently skipped and will not be retried in future enrollment runs. In the `Leads` view, skipped contacts show the status: \"Another lead with this email address is already enrolled in this campaign, so we skipped this one.\" Leads without an email address are not affected — they pass through to standard enrollment validation.
 
 To avoid losing leads this way, deduplicate your source table before launching. Click any email column header → **Dedupe** to remove rows with identical email values before starting the campaign.
 
@@ -246,7 +246,7 @@ Email providers like Google and Microsoft occasionally revoke access due to inac
 If you've moved to a new email provider (for example, switching from a third-party address to Google Workspace), update your Clay campaigns in these steps:
 
 1.  **Connect the new email account.** Go to `Campaigns` → `Email Accounts` → `Add email accounts` and choose the connection method for your new provider:
-    -   Google Workspace: select `Gmail (OAuth)`. If you see an "Access blocked" error, your Google Workspace admin must first authorize Clay Sequencer for your domain — follow the steps in [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth).
+    -   Google Workspace: select `Gmail (OAuth)`. If you see an \"Access blocked\" error, your Google Workspace admin must first authorize Clay Sequencer for your domain — follow the steps in [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth).
     -   Microsoft Outlook: select `Microsoft Outlook OAuth`.
     -   Other providers (including third-party email hosting): select `SMTP` and enter your SMTP and IMAP credentials.
 2.  **Enable warmup on the new account.** The new account starts warmup from scratch — the initial phase typically takes 2–3 weeks before the account shows as **Ready**. Enable warmup right after connecting to start building sender reputation.
@@ -258,11 +258,23 @@ Warmup is the process of automatically sending and receiving emails from other i
 
 The initial warmup phase typically takes **2–3 weeks**, during which the account's status shows as **Warming up** in Campaigns → Email Accounts. Once the initial phase completes, the status switches to **Ready**. Warmup emails continue to run in the background even after the status shows **Ready** — the Ready label means the account has been warming for at least 2 weeks and is ready for campaigns, not that warmup has stopped.
 
-When you add accounts via OAuth, we will automatically set up labels and filters to make it clear what emails are warmups and reduce clutter in your inbox. Your workspace has a unique two-word filter key (e.g., `clever-rocket`) that marks all warmup emails so you can apply these labels and filters.
+When you add accounts via OAuth, we will automatically set up labels and filters to make it clear what emails are warmups and reduce clutter in your inbox. Each connected email account has a unique two-word filter key (e.g., `clever-rocket`) that marks warmup emails received by that account, so you can apply labels and filters to keep them out of your main inbox.
 
 During warmup, your inbox will receive emails from other accounts in Smartlead's warmup pool. These emails often look random or spam-like in content — this is intentional, as the warmup engine simulates natural human email activity. They are automatically filed under your warmup label (named **Clay sequencer warmup email**), so they won't clutter your main inbox. Receiving them is not a sign of unauthorized account access or phishing activity.
 
 Warmup is enabled during the account connection flow: after connecting your email account, Clay shows a prompt with all newly added accounts pre-selected for warmup. Clicking **Enable warming** activates it — warmup emails will then appear in your inbox (filed under your warmup label/filter) even if you haven't launched a campaign yet. If you enabled warmup by accident or want to stop it, go to `Campaigns` → `Email Accounts`, find the account, click the ⋯ options menu, and select **Disable warming**.
+
+### Why do I see multiple different keyphrases in my sent folder?
+
+Each connected email account has a unique filter key that identifies warmup emails **received** by that account. When your account sends warmup emails to other inboxes in Smartlead's warmup pool, each outgoing message carries the **recipient's** filter key — not yours. Because your account participates in the warmup pool by sending to many different mailboxes, each with its own keyphrase, your Sent folder shows a variety of different keyphrases (for example, `active-glider`, `route-swung`, `learn-chair`, and others). This is expected behavior, not a sign of a problem.
+
+**To manage sent warmup emails in Outlook (or another email client)**
+
+Since the keyphrases in your Sent folder vary and rotate as the warmup pool changes, you cannot reliably filter them by keyphrase. Instead, build a rule based on the recipient domain: move any message in your Sent folder addressed to a domain you do not recognize (i.e., not a prospect or colleague) to a dedicated warmup folder. This catches all outgoing warmup emails regardless of which keyphrase they contain.
+
+If you prefer not to have warmup emails flow through your mailbox at all, disable warming: go to **Campaigns → Email Accounts**, find the account, click the ⋯ menu, and select **Disable warming**. Disabling warmup affects your sender reputation — warmup is recommended for all active sending accounts.
+
+To preserve warmup effectiveness, avoid auto-deleting warmup emails from your mailbox. Moving messages to a folder or marking them as read is safe.
 
 ### What does the Reputation percentage mean?
 
@@ -278,11 +290,11 @@ Warmup automatically disables when your emails are being throttled by your email
 
 Clay's email sequencer runs on shared Smartlead infrastructure, and Smartlead only allows each email address to be connected once across the entire system. This error most commonly appears when the email was already connected to the sequencer in **another Clay workspace** — you don't need a separate Smartlead account for this to occur. To fix it, check your other Clay workspaces: go to `Campaigns` → `Email Accounts`, locate the address, and delete it there. Once removed from the other workspace, you can add it to the current one. If you can't identify which workspace has it, contact Clay support with the email address and we'll remove it from our end.
 
-### Why are some leads failing with "Sender email address is not a configured sender account in this campaign"?
+### Why are some leads failing with \"Sender email address is not a configured sender account in this campaign\"?
 
 This error fires in the `Sync lead data to campaign` column when the **Assign sender account field to lead** setting (in the `Sender accounts` tab) is mapped to an email column, and the email address in that column for a lead does not match any of the sender accounts configured in your campaign.
 
-A common cause: mapping this field to a column that contains your leads' own email addresses (such as a "Personal Email" column) rather than a column that holds one of your sending account addresses. When the `Sync lead data to campaign` column runs, Clay validates each row's sender email against the campaign's configured accounts — if the address isn't a connected sender, that row fails with this error.
+A common cause: mapping this field to a column that contains your leads' own email addresses (such as a \"Personal Email\" column) rather than a column that holds one of your sending account addresses. When the `Sync lead data to campaign` column runs, Clay validates each row's sender email against the campaign's configured accounts — if the address isn't a connected sender, that row fails with this error.
 
 **To fix it:**
 
@@ -340,10 +352,10 @@ No — connecting a mailbox via OAuth only adds the specific email account you a
 
 To use an alias as a distinct sender, connect it as its own account:
 
--   **SMTP:** Go to `Settings` → `Add email accounts` → `SMTP`. Set the "From" email to the alias address and enter your primary account's server credentials (username, password, SMTP host, and port).
+-   **SMTP:** Go to `Settings` → `Add email accounts` → `SMTP`. Set the \"From\" email to the alias address and enter your primary account's server credentials (username, password, SMTP host, and port).
 -   **Bulk CSV upload:** Use the `Bulk CSV upload` option to add multiple aliases at once. Set each row's `from_email` to the alias address and fill in the remaining SMTP and IMAP fields using your primary account's server settings.
 
-**For Microsoft 365 aliases:** The SMTP and bulk CSV paths work with Microsoft 365, provided your tenant has SMTP AUTH enabled and the alias has "Send As" permissions configured in your Microsoft 365 admin settings.
+**For Microsoft 365 aliases:** The SMTP and bulk CSV paths work with Microsoft 365, provided your tenant has SMTP AUTH enabled and the alias has \"Send As\" permissions configured in your Microsoft 365 admin settings.
 
 **Note:** If your aliases are simple forwarding addresses that route to the same underlying mailbox (rather than independent inboxes with their own SMTP access), connecting them separately does not increase your total daily sending capacity — they share the same inbox. To scale sending volume, add accounts that each have a dedicated inbox. See [Buying email accounts](buying-email-accounts.md) for a faster path to additional inboxes.
 
@@ -379,7 +391,7 @@ Because the campaign events table is a standard Clay table, you can add CRM enri
 
 ### How do unsubscribes work in the sequencer?
 
-When HTML is enabled, you can turn on an unsubscribe link in `Advanced` settings. This adds a hyperlinked phrase at the bottom of every email (default text: "Not interested? Click here to unsubscribe."). You can customize this text in the `Advanced` section.
+When HTML is enabled, you can turn on an unsubscribe link in `Advanced` settings. This adds a hyperlinked phrase at the bottom of every email (default text: \"Not interested? Click here to unsubscribe.\"). You can customize this text in the `Advanced` section.
 
 **Note on test emails:** When you use `Send test email` to preview your campaign, the unsubscribe link text appears at the bottom of the email but is not an active link — the real unsubscribe URL is only injected when an actual campaign email is sent to a recipient. This is expected behavior. To confirm the unsubscribe link works, send a live campaign email to a test address you control rather than using the test email feature.
 
@@ -419,7 +431,7 @@ These are disclosed when you add your account via OAuth. Clay requests the follo
 
 Additionally, you will need to have a Google Workspace admin authorize our app to request these permissions for the domain(s) you want to add to the sequencer.
 
-### I'm seeing "Access blocked: clay.com has not completed the Google verification process" when I try to connect my Google account. What does this mean?
+### I'm seeing \"Access blocked: clay.com has not completed the Google verification process\" when I try to connect my Google account. What does this mean?
 
 This error is expected — Clay's sequencer uses automated warmup sends, which prevents it from passing Google's standard app verification process. It does not mean Clay is broken or untrustworthy. The fix is for your **Google Workspace admin** to authorize Clay Sequencer as a Trusted app in your Google Admin panel. Until they do, all users in your domain will see this error when attempting to connect via OAuth.
 
@@ -427,7 +439,7 @@ To resolve it, have your admin follow the steps in [Connecting Google Workspace 
 
 If you need to start sending right away while waiting for the admin change to take effect, you can connect your email account via **SMTP** instead — go to your campaign's `Settings` → `Add email accounts` → `SMTP`.
 
-If your admin has already completed those steps and you still see the error, see [I followed the admin setup steps but still see "Access blocked"](#i-followed-the-admin-setup-steps-but-still-see-access-blocked-claycoms-has-not-completed-the-google-verification-process-what-should-i-do).
+If your admin has already completed those steps and you still see the error, see [I followed the admin setup steps but still see \"Access blocked\"](#i-followed-the-admin-setup-steps-but-still-see-access-blocked-claycoms-has-not-completed-the-google-verification-process-what-should-i-do).
 
 ### How do I authorize Clay's app in the Google Admin panel?
 
@@ -437,7 +449,7 @@ Follow the instructions in the modal and have your Google Workspace admin set ou
 
 No — the Trusted setting is not domain-wide delegation. Marking Clay Sequencer as Trusted in the Google Workspace Admin Console removes the verification block that would otherwise prevent users in your domain from connecting their accounts, but it does not give Clay access to any mailbox automatically. Each person who wants to use the sequencer must still connect their own Google account individually: go to `Campaigns` → `Email Accounts` → `Add email accounts` → `Google OAuth` and complete the OAuth flow for their own account. Clay can only access a mailbox after that individual user explicitly authorizes it.
 
-### I followed the admin setup steps but still see "Access blocked: clay.com has not completed the Google verification process." What should I do?
+### I followed the admin setup steps but still see \"Access blocked: clay.com has not completed the Google verification process.\" What should I do?
 
 This error is expected — Clay's sequencer uses automated warmup sends, which prevents the app from passing Google's standard verification process. Admin approval in your Google Workspace Admin panel is the intended workaround; Clay's app will not become Google-verified.
 
@@ -449,7 +461,7 @@ These are disclosed when you add your account via OAuth. We request: offline\_ac
 
 ### How can I tell if a lead has finished a campaign sequence?
 
-Clay's campaign events table doesn't include a dedicated "sequence completed" event type. You can infer whether a lead has finished the sequence using two signals:
+Clay's campaign events table doesn't include a dedicated \"sequence completed\" event type. You can infer whether a lead has finished the sequence using two signals:
 
 -   **They replied** — when a lead replies to any email, an `EMAIL_REPLY` event is recorded and the sequence automatically stops for that lead. Check whether any row in the campaign events table for that lead has `Event type = EMAIL_REPLY`.
 -   **They received all emails** — each `EMAIL_SENT` event includes a `sequence_number` value nested inside the Campaign event data. When this number equals the total steps in your campaign, the lead has received all emails without replying. Click a Campaign event cell, find the `sequence_number` field in the Cell details panel, and click **Add as column** to extract it into a standalone column you can filter on.
