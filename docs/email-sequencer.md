@@ -395,6 +395,12 @@ To view and manually manage your blocklist—including adding individual email a
 
 If a lead *replies* to your email — rather than clicking an HTML unsubscribe link — their response is categorized by Smartlead (e.g., as `Do Not Contact` or `Not Interested`), but they are **not** automatically added to the blocklist. The `Add email to blocklist` column in the campaign events table is a button by default: you can click it manually for a specific row, or automate it by setting an `Only run if` condition on the column. To trigger the blocklist action for reply-based opt-outs, set the condition to run when `Event type` equals `LEAD_CATEGORY_UPDATED` — this event fires whenever Smartlead categorizes a lead's reply. See [How are replies categorized in the Campaign Events table?](#how-are-replies-categorized-in-the-campaign-events-table) for the full list of reply categories.
 
+### What happens if I manually add a lead to the Global Blocklist while they're already in an active campaign?
+
+Adding an email address to the Global Blocklist prevents that address from being enrolled in **future** campaigns — it does not automatically stop or cancel the remaining email steps for a lead that is already active in a running campaign.
+
+To immediately stop further emails to a specific lead who is mid-campaign, open the campaign, go to the **Leads** tab, and pause that lead manually. For GDPR or compliance use cases, pause the lead first (which stops queued emails immediately), then add the address to the Global Blocklist as a permanent safeguard against future enrollment in any campaign.
+
 ### What happens when an email to a lead bounces?
 
 A bounce is recorded as an `EMAIL_BOUNCE` event in your campaign events table, but the sequence does **not** automatically stop or pause for that lead — bounces do not trigger the same auto-stop behavior as replies. Remaining emails in the sequence continue to send unless you take action.
