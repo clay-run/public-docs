@@ -130,6 +130,21 @@ Clay populates the Object Field(s) list by calling Salesforce's object describe 
 
 **To confirm which Salesforce user your connection is authenticated as**, go to `Settings` → `Connections` → `Salesforce`, click `…` next to your connection, and select `Test Connection`. Clay displays that user's email address — confirm the user has the correct FLS permissions for the fields you need.
 
+## Why does the Map fields section start empty in Update Record or Create Record?
+
+The **Map fields** section in the Update Record and Create Record actions is designed to start empty. Rather than displaying every available Salesforce field for your selected object at once — which can be a long list on large objects — Clay lets you add only the specific fields you need to update or set. This keeps the configuration focused.
+
+To add a field:
+
+1.  In the **Map fields** section, click **+ Add field**.
+2.  Search for or scroll to the field you want, then select it.
+3.  Map the field to a column or value from your Clay table.
+4.  Repeat for each additional field you need to set or update.
+
+Click **Refresh** if a field you expect isn't appearing in the picker — this re-fetches field definitions from Salesforce and picks up any recently added or modified fields in your Salesforce org.
+
+If a specific field still doesn't appear after refreshing, it may be excluded due to Salesforce field-level security (FLS). See [Why are some Salesforce fields missing from the Map fields panel?](#why-are-some-salesforce-fields-missing-from-the-map-fields-panel-in-the-update-record-or-create-record-action) for troubleshooting steps.
+
 ## Why are some Salesforce fields missing from the Map fields panel in the Update Record or Create Record action?
 
 If a Salesforce field exists in your org but doesn't appear when you click **+ Add field** in the **Map fields** panel of an Update Record or Create Record action, the most common cause is **field-level security (FLS)**.
