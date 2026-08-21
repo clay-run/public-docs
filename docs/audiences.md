@@ -114,10 +114,12 @@ Clay pulls data from Salesforce on two schedules:
 
 HubSpot data sync in Audiences is currently in open beta — contact your Growth Strategist to enable it for your workspace.
 
-Clay syncs data from HubSpot automatically on the following schedules:
+Clay syncs data from HubSpot automatically. The schedule depends on your plan:
 
--   **Incremental sync:** Runs every **15 minutes** on Enterprise workspaces, or **once daily** on Growth workspaces. Picks up new and changed HubSpot records since the last sync.
--   **Full sync (every 7 days):** Re-reads all records from HubSpot and reconciles deleted records — catching anything the incremental sync may have missed.
+-   **Enterprise workspaces:** An **incremental sync** runs every **15 minutes**, picking up new and changed HubSpot records since the last sync. A **full sync** also runs approximately once a week to re-read all records and reconcile deleted ones.
+-   **Growth workspaces:** A **full sync** runs approximately **once a week**, re-reading all records and reconciling deleted ones. Growth workspaces do not receive incremental syncs — new or changed HubSpot records appear after the next weekly full sync.
+
+The exact time of the weekly full sync is not shown in the Clay UI and is not user-configurable. To trigger an immediate full sync outside the regular schedule, click **Add data**, find your HubSpot source, click the **⋮** (three-dot menu) next to it, select **Settings**, and click **Sync now** at the bottom of the settings panel.
 
 ### Importing from Snowflake
 
@@ -474,7 +476,7 @@ When setting up an Audiences → Ads sync, the **Map** step includes an Enhanced
 | Tier | Cost (modern plans) | Cost (legacy plans) | Expected match rates |
 |------|---------------------|---------------------|---------------------|
 | **Premium** | 2 credits/row | 3 credits/row | Professional network ≤ 95%, Meta ≤ 65% |
-| **Standard** | 1 credit/row | 2 credits/row | Professional network ≤ 80%, Meta ≤ 50% |
+| **Standard** | 1 credits/row | 2 credits/row | Professional network ≤ 80%, Meta ≤ 50% |
 | **None** | 0 credits | 0 credits | Professional network < 60%, Meta < 30% |
 
 Modern plans include Launch, Growth, and post-2026-pricing-change Enterprise. Legacy Enterprise (EnterpriseApril2023) plans are charged the legacy rates above.
@@ -648,7 +650,7 @@ You don't need a clean CRM to get started — CRM cleanup is often the first use
 Yes. Segments update in real time as records enter or exit your filter criteria. The refresh frequency depends on your plan:
 
 -   **Enterprise plan:** CRM and data warehouse syncs run every 15 minutes, and segments update continuously.
--   **Growth plan:** CRM and data warehouse syncs run daily, and segments update based on that daily refresh.
+-   **Growth plan:** Salesforce and data warehouse (Snowflake, BigQuery) syncs run daily, and segments update based on that daily refresh. HubSpot syncs run approximately once a week — see [Importing from HubSpot](#importing-from-hubspot) for details.
 
 Enrichments configured with `Continuous Enrichment` enabled automatically process new records entering a segment, typically within 15 minutes. No manual runs are required after initial setup.
 
