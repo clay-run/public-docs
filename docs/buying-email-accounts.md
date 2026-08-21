@@ -64,3 +64,9 @@ Clay fulfills orders through Smartlead, which in turn uses Zapmail to provision 
 ### **How can I look up the rep's details for a purchased account?**
 
 Use the **Get rep data** enrichment in a Clay table. Provide the SmartSender account email address as the input — the action returns the rep's email address and full name (when available). This is useful for personalizing campaign messages with the sender's name.
+
+### **Can I provision Clay inboxes on a domain I already own?**
+
+No. The **Buy email accounts** flow can only provision inboxes on new domains purchased through Clay — it cannot attach inboxes to a domain you already own.
+
+If you want to send from an existing domain, create the mailbox through Google Workspace or Microsoft 365 and connect it to Clay under **Campaigns → Email Accounts** using Google OAuth, Microsoft Outlook OAuth, or SMTP. See the [Email sequencer guide](email-sequencer.md) for connection instructions.
