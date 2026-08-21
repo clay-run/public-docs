@@ -319,7 +319,12 @@ The same fix applies to any reference field that returns a `MALFORMED_ID` error 
 
 No. Mapping the **Account ID** field in the **Map fields** panel is sufficient to associate the new contact with an account. The Account Name you see displayed in Salesforce is not a separate field to create — Salesforce derives it from the Account ID relationship and shows it as a label in the record form. Because Account Name is a read-only derived field, it does not appear as an option in Clay's **Map fields** panel and cannot be mapped directly.
 
-To set the correct Account ID, use a **Lookup Record** column (with the **Account** object) to find the account by name, domain, or another identifier, then map the returned `Id` field to the **Account ID** field in your **Create Record** column. For a step-by-step example of retrieving a Salesforce ID for a reference field, see [Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?](#why-am-i-seeing-a-malformed_id-error-when-creating-or-updating-a-salesforce-record).
+To set the correct Account ID, you need the Salesforce Account record's ID — not its name. How you get that ID depends on whether the Account already exists in Salesforce:
+
+-   **Account already exists:** Add a **Lookup Record** column, set the Salesforce object to **Account**, and search by company name, domain, or another identifier. The returned `Id` field is the Account ID to map.
+-   **Account does not exist yet:** Add a **Create Record** column, set the Salesforce object to **Account**, and map your company name and any other required Account fields. This step returns a new Account ID you can then pass through to the Contact step.
+
+In both cases, map the returned Account ID to the **Account ID** field in your **Create Record** or **Update Record** column for the Contact — never to a text "Account Name" field. Salesforce displays the account name automatically once the Account ID is linked. For a step-by-step example of the lookup approach, see [Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?](#why-am-i-seeing-a-malformed_id-error-when-creating-or-updating-a-salesforce-record).
 
 ## Why does Clay show "✅ Record created" but the record doesn't appear in Salesforce?
 
