@@ -128,3 +128,20 @@ To retrieve actual contact data, add a dedicated enrichment column instead:
 -   **Work email addresses** — click `Add enrichment` and select `Work Email`. This pre-built waterfall cascades through multiple email providers in sequence. See [Work Email waterfall](work-email-waterfall.md) for full setup details.
 -   **Phone numbers** — click `Add enrichment`, search for `Phone`, and select the waterfall option for your region under **Waterfalls** — `Mobile Phone (US and Canada)`, `Mobile Phone (EMEA)`, `Mobile Phone (APAC)`, or `Mobile Phone (Global)`. See [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md) for provider recommendations by region.
 -   **Full profile data (job title, company, professional profile URL, and more)** — click `Add enrichment` and search for `Enrich Person` to browse provider-specific integrations. Each provider connects to a different data source — choose the one that fits your needs, or stack several as a [waterfall](building-a-data-waterfall.md) for broader coverage.
+
+### "What accuracy or match rate can I expect from data enrichment in Clay?"
+
+Clay does not publish a single universal accuracy percentage because match rates vary based on several factors:
+
+-   **Data type** — Work emails, personal emails, mobile phone numbers, and company attributes each have different coverage rates.
+-   **Geography** — Coverage for contacts in North America typically differs from EMEA or APAC regions.
+-   **Input data quality** — More complete inputs (for example, a full name plus a verified company domain) generally produce higher match rates.
+-   **Provider selection** — Clay connects to 150+ data providers, each optimized for different data types and regions.
+
+**Using a single enrichment provider** on a challenging dataset typically yields match rates in the 40–60% range. **Using a waterfall** — which chains multiple providers in sequence and stops as soon as one returns a result — significantly increases coverage. For specific numbers by data type, see Clay's published data tests:
+
+-   [[Data test] Personal email providers](data-test-methodology-personal-emails.md) — tested across 2,354 contacts; providers collectively returned emails for 53% of contacts, with 43% confirmed valid.
+-   [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md) — accuracy and coverage scores across NAMER, EMEA, and APAC.
+-   [[Data test] Work email providers](data-test-work-email-providers.md) — confidence scores comparing work email finders across SMB and enterprise datasets.
+
+**Recommendation:** Run a proof-of-concept (POC) test on a sample of your actual accounts or contacts before committing to a full run. Results vary significantly depending on your industry, persona, and geographic mix — testing with your own data gives you the most accurate picture of expected coverage.
