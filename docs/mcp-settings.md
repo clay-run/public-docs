@@ -78,6 +78,22 @@ The native Clay MCP contact enrichment — including the "Find and Enrich list o
 
 The `Enable for MCP` option requires a modern Launch, Growth, Enterprise, or Legacy Enterprise plan.
 
+### What are Clay-managed functions, and how do I find the list?
+
+Clay provides two types of functions in the Functions tab:
+
+-   **Clay-managed functions** — pre-built enrichment workflows built and maintained by Clay (such as company lookups, contact enrichment, and data waterfalls). These are available to all workspaces with no setup required.
+-   **Workspace functions** — custom workflows your team builds and enables for MCP.
+
+To view the full list of Clay-managed functions available in your workspace:
+
+1.  Go to **Functions** in the left sidebar of your Clay homepage.
+2.  Click the **Clay managed** tab at the top of the Functions list. (The default view shows your workspace's custom functions.)
+
+Clay-managed functions are listed by name and description. You can browse this list to identify function names for security reviews, gateway allowlists, or infosec documentation.
+
+To bring your own enrichment logic into MCP, build a workspace function and enable it for MCP — see [Enabling a function for MCP](#enabling-a-function-for-mcp) above.
+
 ### Does Clay provide an MCP server URL I can paste into any AI tool?
 
 No. Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory. Connect through:
