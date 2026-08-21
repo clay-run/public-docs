@@ -61,4 +61,4 @@ Saved searches are ideal when you:
 
 **Start with templates:** For searches your team uses frequently, save them as go-to templates that everyone can access and modify as needed.
 
-**Combine with table templates:** Save both your search criteria _and_ your enrichment workflow as a table template for even faster setup.
+**Combine with functions:** Save your enrichment workflow as a [function](functions.md) alongside your saved search criteria for even faster setup — recreate the search, then call the function to run your standard enrichments.
