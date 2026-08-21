@@ -129,6 +129,22 @@ Functions eliminate duplicate work when you need the same workflow in multiple t
 
 No. Saving columns as a function preserves the existing data without rerunning the enrichments. You won't be charged credits twice.
 
+### Do run conditions carry over when I save columns as a function?
+
+No. When you save columns as a function using **Save as function** from the right-click menu, run conditions on the original columns are **not** automatically carried over to the new function. You need to manually add any run conditions inside the function after creating it.
+
+To add a run condition to a column inside a function:
+
+1.  Open the function table.
+2.  Click **Live function** (top-left dropdown) and select **Edit draft** to enter edit mode.
+3.  Click the header of the column you want to configure.
+4.  Select **View column** to open the column settings panel on the right.
+5.  Add the run condition in the settings panel.
+6.  Repeat for each column that needs a run condition.
+7.  Click **Review Changes**, then **Publish Changes** to apply.
+
+**Note:** This applies only when creating a new function from selected columns without checking **Replace columns with function**. If you checked **Replace columns with function** during setup, your original column configurations — including run conditions — are preserved intact inside the function. See [What happened to my original columns after I used "Replace columns with function"?](#what-happened-to-my-original-columns-and-prompts-after-i-used-replace-columns-with-function)
+
 ### What happened to my original columns and prompts after I used "Replace columns with function"?
 
 When you check **Replace columns with function** during function creation, Clay doesn't delete your original columns — it moves them inside the function. All column configurations, AI prompts, enrichment settings, and run conditions are preserved intact inside the function's internal table.
@@ -234,7 +250,7 @@ To return a value that comes in through a row input as function output:
 
 ### How do I return a single output field when two enrichment columns each cover the same data but only one runs per row?
 
-If your function uses two enrichment columns that cover the same data (e.g., two person enrichment providers where only one runs per row based on a run condition), the "Send data back" step maps column values by reference — it does not accept inline formulas to merge or transform values within the step itself.
+If your function uses two enrichment columns that cover the same data (e.g., two person enrichment providers where only one runs per row based on a run condition), the "Send data back" step maps column values by reference — it does not accept inline formulas to merge or transform values within the set itself.
 
 The workaround is to create a **formula column** (Merge columns) inside your function that coalesces the two enrichment columns, then use that formula column as the output:
 
