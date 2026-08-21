@@ -1,7 +1,7 @@
 ---
 title: Table management settings
 description: Manage table settings including auto-dedupe, duplicate table, view graph, rename, edit description, view history, auto-delete, and navigating to a table by ID.
-last_synced: 2026-04-26T01:40:46.522Z
+last_synced: 2026-04-26T01:40:46.543Z
 ---
 
 # Table management settings
@@ -31,7 +31,7 @@ Auto-dedupe continuously monitors a specified column to detect and resolve dupli
 
 **Note:** Auto-dedupe only works with **Text**, **Email**, and **URL** column types. If the selected column uses a different data type (such as Number), auto-dedupe is automatically disabled. Convert the column to **Text** type first to use it for deduplication.
 
-**Note:** The auto-dedupe toggle cannot be changed while the table is running. Stop the run first by clicking the **Stop** button in the run summary panel at the bottom-right of the table. If the toggle remains greyed out after the table has stopped, try a hard refresh (`Cmd+Shift+R` on Mac, `Ctrl+Shift+R` on Windows/Linux`) to clear stale browser state.
+**Note:** The auto-dedupe toggle cannot be changed while the table is running. Stop the run first by clicking the **Stop** button in the run summary panel at the bottom-right of the table. If the toggle remains greyed out after the table has stopped, try a hard refresh (`Cmd+Shift+R` on Mac, `Ctrl+Shift+R` on Windows/Linux) to clear stale browser state.
 
 To enable or disable auto-dedupe:
 
