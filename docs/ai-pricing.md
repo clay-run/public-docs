@@ -84,8 +84,6 @@ For models from OpenAI, Anthropic, Google, and other third-party providers, you 
 
 **Note:** Clay's proprietary models—Neon, Helium, and Argon—run on Clay's own infrastructure and are only available via Clay credits. Because they don't have an external provider API, there is no personal API key option for these models.
 
-**Why do credit costs still appear in the model picker when I have my own API key connected?** The credit amounts shown next to models in the model selection dropdown are Clay-managed pricing estimates. They appear regardless of which account you have configured — they do not mean those credits will be charged when your own API key is active. With your own key selected, model usage is billed directly through your provider (Google, OpenAI, or Anthropic), not from your Clay Data Credits. **Action costs** (1 per AI run) are still consumed from your Clay balance even when using your own key. To confirm your key is being used, open the AI or Claygent column configuration and check the **Account** dropdown: make sure your connected account is selected rather than the Clay-managed account.
-
 ## **FAQs**
 
 **How do I know if a model uses fixed or variable pricing?**
