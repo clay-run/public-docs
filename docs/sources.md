@@ -2,7 +2,7 @@
 title: Sources
 description: Every Clay table begins with a source. Sources are the foundation
   of how data gets into your tables.
-last_synced: 2026-04-26T01:40:43.486Z
+last_synced: 2026-04-26T01:40:43.456Z
 ---
 
 # Sources
@@ -232,6 +232,31 @@ To re-import the same rows after deleting them: delete the existing Google Sheet
 If the fields you selected under **"Fields to deduplicate by"** are not unique per row — for example, if you selected **Company** and multiple rows in your sheet share the same company name — those rows produce identical hashes and collapse into a single record. The run history may report *N* rows found while only one row appears in your table per unique hash value.
 
 To get one Clay row per sheet row, set **"Fields to deduplicate by"** to a field that is genuinely unique per record, such as **Email**, **Profile URL**, or a dedicated ID column. Avoid fields like Company or Title that many rows may share.
+
+### I added a second source to my existing table and it created separate rows — why doesn't the data show up on the same row as my existing accounts?
+
+**This is expected behavior.** Every source in Clay — whether CSV, CRM, an intent data source like Topic Intent, or any other type — adds new rows to your table, one row per incoming record from that source. Sources do not enrich or merge into rows that already exist in your table from a different source.
+
+When you add a second source (such as Topic Intent) to a table already populated by a CSV import, each record from the new source creates its own separate row. The two sets of rows sit side by side in the same table but are not automatically matched to each other — data from one source does not line up on the same row as data from the other.
+
+**How to see data from two sources on the same row**
+
+Keep each data source in its own table, then join them using **Lookup Multiple Rows in Other Table** on a shared identifier:
+
+1. Keep your existing accounts in their current table (for example, your CSV-imported accounts table).
+2. Create a **new table** and add the second data source (for example, Topic Intent) to that new table.
+3. Make sure both tables have a **shared identifier column** — company domain or website URL is the most reliable match key.
+   - In your accounts table: add a domain column if one doesn't already exist.
+   - In the second source's table: click any domain cell → **Add as column** to extract the domain into a standalone column.
+4. In your accounts table, click **+ Add column** and search for **Lookup Multiple Rows in Other Table**.
+   - `Table to search` → your second-source table
+   - `Target column` → the domain column in that table
+   - `Filter operator` → `Equals`
+   - `Row value` → the domain column in your accounts table
+5. Run the lookup.
+6. Click any populated result cell → **Add as column** to pull specific fields from the second source (such as intent score or topic data) into your accounts table as standalone columns.
+
+See [Lookup Rows](lookup-rows.md) for full configuration details and examples.
 
 ### I am trying to add a source to an existing table, but I get an error
 
