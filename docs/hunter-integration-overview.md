@@ -38,7 +38,7 @@ You have two options connecting Hunter to Clay.
 
 ### Option 1: Use the Clay-managed Hunter account
 
-This means you do not need to have a Hunter account to use the enrichment. You will be charged 2 credits per enriched cell without any need to create a Hunter account.
+This means you do not need to have a Hunter account to use the enrichment. Credit costs vary by action — see each action section below for details.
 
 When you pull up the enrichment you will simply select the option for `Clay-managed Hunter account`. And you can now use the enrichment!
 
@@ -62,7 +62,7 @@ The **Find Emails by Company** action helps you find public email addresses on t
 
 First, you can use either the Clay-managed Hunter.io account or your own API key.
 
-If you use the Clay-managed Hunter account you will be charged at 2 credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://docs.clay.com/en/articles/9654103-how-clay-credits-work).
+If you use the Clay-managed Hunter account, you will be charged at 2 credits per email address found (credits are charged per result returned, not per row enriched). For more information on how Clay credits work, please refer to [this guide](https://docs.clay.com/en/articles/9654103-how-clay-credits-work).
 
 **Step 2: Select what emails you'd like to find within a company**
 

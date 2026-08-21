@@ -53,9 +53,10 @@ In the **Cell details** panel, click **Take action on list** to access the follo
 
 ## Cell size limits
 
-Clay has two types of cell size limits:
+Clay enforces three types of cell size limits:
 
 -   **Basic columns** (text and formula columns): 8 kB limit
+-   **Source columns** (the **"Rows from: [source table name]"** column in destination tables that receives data via Send Table Data): 100 kB limit
 -   **Action columns** (enrichment outputs): 200 kB limit
 
 When a basic column's data exceeds the 8 kB limit, the cell shows **"Cell data size exceeds limit (8 kB)"**. The final step of a waterfall returns a basic column with an 8 kB limit. If your waterfall contains large amounts of data, it may exceed this limit.
@@ -66,5 +67,8 @@ When a basic column's data exceeds the 8 kB limit, the cell shows **"Cell data s
 -   **Technology waterfall (BuiltWith):** Can output over 200 kB; use keywords to filter.
 -   **HTTP-API and webhooks:** May bring in over 200 kB; use field-path filters.
 -   **Snowflake Lookup:** Large query results can exceed the 200 kB limit. Select only the columns you need instead of `SELECT *`, and avoid broad wildcard patterns (e.g., a leading `%` in an `ILIKE` clause) that match far more rows than intended. See the [Snowflake integration](snowflake-integration.md) page for additional tips.
--   **Extracting to basic columns:** May hit the 8 kB limit when extracting large action fields.
+-   **Extracting large enrichment outputs to formula or text columns:** Formula and text columns enforce an 8 kB limit. When you use a formula to pull content from a large enrichment — for example, job postings from a **Find Active Job Openings** or **Find Open Jobs** enrichment, or articles from a **Find Most Recent News** enrichment — the cell shows **"Cell data size exceeds limit (8 kB)"** or goes blank when the full enrichment output exceeds 8 kB. Three workarounds:
+    -   **Filter to specific fields in the enrichment settings.** Open the enrichment column settings and, if the enrichment includes a **Filter data by field paths** or **Extract data by field paths** option, configure it to return only the fields you need (for example, just the job title and description rather than the full posting). This keeps the enrichment output small enough to extract specific fields into formula columns.
+    -   **Reference the enrichment column directly in a Use AI column.** Instead of pulling raw content into a formula column, point a **Use AI** (Claude, GPT, or another model) column directly at the enrichment column and prompt it to analyze or summarize the data — for example, "What roles is this company currently hiring for?" The enrichment action column holds up to 200 kB, so the AI column reads the full output without hitting the 8 kB restriction and returns a structured answer.
+    -   **Extract individual items into separate columns.** If the enrichment returns a list, create one formula column per item using its index — for example, `{{Enrichment Column}}?.results?.[0]?.title` for the first item and `{{Enrichment Column}}?.results?.[1]?.title` for the second — rather than joining all items into one column. You can also click a populated enrichment cell, hover over any nested field in the cell details panel, and click **Add column** to add that specific field as its own column.
 -   **Long text in text columns:** Long email replies (e.g., from the campaign events table) and AI-generated text such as personalized outreach messages or reply drafts can exceed the 8 kB limit when stored in a text column, showing **"Cell data size exceeds limit (8 kB)"**. To work around this, add a formula column with `LEFT({{Column Name}}, 7000)` to extract the first 7,000 characters, then use that formula column as input to downstream AI columns or exports.

@@ -51,6 +51,18 @@ The email address field in `Settings` > `Account` is read-only and cannot be cha
 
 Changing your email address does not affect your workspace data or your password.
 
+**If your Google account email changed externally and you now see a blank workspace**
+
+If your Google account email was updated outside of Clay — for example, a Gmail address was migrated to a Google Workspace domain — signing into Clay with the new address creates a new empty workspace. Clay matches accounts by email address at sign-in and cannot automatically link the new email to your existing account. Your original workspace is not lost; it stays tied to your original email address.
+
+To regain access with your new email:
+
+1.  Sign into Clay using your **original email address**.
+2.  In your original workspace, go to `Settings` > `Team` and invite your new email address as **Admin**, then click **Send invite**.
+3.  Accept the invite from your new email address — you will have full Admin access to your original workspace and all your data.
+
+If you no longer have access to your original email address, contact Clay support via the in-app chat — the support team can verify your identity and help restore access.
+
 ## Update your country
 
 Clay's account profile settings don't include a country field — there is no country selector in `Settings` > `Account`. If you need to update the country associated with your billing information, go to `Settings` > `Plans & billing`, click `Edit`, and select `Edit billing info...` — this lets you update your name, billing email, and country. US-based accounts can also update their address, city, state, and ZIP code there.

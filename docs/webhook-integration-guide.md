@@ -82,6 +82,16 @@ For a complete example using Zapier, see [Send Clay data to Zapier](https://www.
 
 ## FAQs
 
+### How can I see webhook logs?
+
+Clay does not have a built-in webhook log UI. The two places to check webhook activity are:
+
+- **Your webhook table in Clay:** Every payload Clay successfully receives creates a row in your webhook table immediately. The row count in the table is your record of accepted deliveries — if a row exists, Clay received and stored that payload. To see all rows, make sure no filter is active (look for a number badge on the filter icon in the table toolbar).
+
+- **Your sending system's delivery logs:** For delivery history, retry records, or to investigate failed attempts, check the logs in the tool sending the webhook (for example, Zapier, Make, HubSpot, Salesforce, or a custom script). These systems typically maintain a delivery history where you can see each request's status code and optionally replay events that failed.
+
+**Note:** Clay does not queue or retry incoming webhook requests. If a payload was rejected (for example, because of a `429` rate limit error or a `400` bad request), it is not stored and no row appears in the table. See [Why aren't any rows arriving in my webhook table?](#why-arent-any-rows-arriving-in-my-webhook-table) for troubleshooting.
+
 ### Why does my webhook source show a higher row count than my table?
 
 The webhook source node in the workbook view shows the **total number of records stored by the source** since it was created. This count increases with every accepted payload and does not decrease when you delete rows from the table.
@@ -134,6 +144,8 @@ If a row appears in your table, the issue is in your original request's formatti
 ### How can I tell which webhook source a row came from?
 
 Clay records which webhook source sent each row at ingestion time, so you can filter the table by source without any extra setup.
+
+**Note:** The **Webhook** filter field only appears in the filter panel if this table has at least one webhook source directly connected to it. If you open the filter panel and don't see a Webhook field, this table has no webhook source attached — rows may be arriving from another Clay table (via Send Table Data) that itself has a webhook source.
 
 **To filter by webhook source:**
 

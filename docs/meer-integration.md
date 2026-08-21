@@ -9,14 +9,10 @@ last_synced: 2026-05-11T17:47:40.000Z
 
 Screen phone numbers against national do-not-call registries before initiating outbound calls.
 
-**Important:** Meer does not appear in the enrichment search panel until you accept its compliance terms. If you cannot find Meer when adding enrichments to your table, follow these steps to unlock it:
+**Note:** Meer appears in the enrichment search panel for all workspaces. If your workspace has not yet accepted Meer's compliance terms, you will be prompted when you first open the integration:
 
-1. Click your workspace name or the **Settings** icon
-2. Navigate to **Settings → Enrichments**
-3. Select the **Compliance** tab
-4. Enter your company's domain when prompted, then click **Agree and activate**
-
-Once you accept the terms, the Meer enrichment will appear in your actions panel. If you are not a workspace admin, ask your admin to complete these steps — admins will also see an **Accept terms in settings** link directly in the enrichment panel.
+-   **Workspace admins** can click **Accept terms** directly in the enrichment panel. Enter your company domain in the dialog and click **Agree and activate** to unlock Meer immediately. Admins can also accept from **Settings → Enrichments → Compliance**.
+-   **Non-admins** will see a message to contact their workspace admin to accept the terms.
 
 The Meer integration helps you maintain Do Not Contact (DNC) compliance by screening phone numbers against national do-not-call registries before initiating outbound calls.
 

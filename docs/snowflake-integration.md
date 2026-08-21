@@ -44,7 +44,7 @@ When setting up key-pair authentication, you'll need to provide:
 -   **Schema** (optional): The schema to connect to in Snowflake. If not specified, you'll be prompted to enter it when setting up a Snowflake enrichment.
 -   **Warehouse** (optional): The warehouse to use for queries in Snowflake. If not specified, you'll be prompted to enter it when setting up a Snowflake enrichment.
 
-**Static IP routing:** Snowflake Key Pair connections always route through Clay's fixed IP addresses — no toggle is required. If your Snowflake network policy requires IP allowlisting, contact Clay support for the current list of IP addresses.
+**Static IP routing:** Snowflake Key Pair connections always route through Clay's fixed IP addresses — no toggle or configuration is needed on the Clay side. If your Snowflake account has a network policy restricting incoming connections by IP address, you may see the error "The provided account has IP allow-listing enabled, which is preventing the connection." To resolve this, add Clay's static IP addresses to your Snowflake network policy. Contact [Clay support](https://www.clay.com/support) to get the current list of IP addresses to allowlist.
 
 ### Setting up username and password authentication
 

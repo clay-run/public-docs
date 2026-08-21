@@ -1,7 +1,7 @@
 ---
 title: Clay Ads compliance best practices
 description: Explains Clay Ads' automatic targeting controls for US and international audiences, including how Clay-sourced data is handled for Google Ads compliance.
-last_synced: 2026-06-22T15:12:14.779Z
+last_synced: 2026-08-04T05:12:16.770Z
 ---
 
 # Clay Ads compliance best practices
@@ -28,24 +28,50 @@ To target people outside the US, you can use **your own first-party data,** for 
 
 -   **US audiences:** Clay-sourced data ✅ and your first-party data ✅
 -   **Non-US audiences:** Your first-party data ✅, Clay-sourced data ❌
+-   **Google and Bing, any region:** Your first-party data ✅, Clay-sourced data ❌
 
 ### Why this distinction exists
 
 Many regions outside the US, most notably the EU under GDPR, require explicit, opt-in consent before someone can be targeted with ads. That consent lives in your own systems, which is why non-US audiences must be built from your first-party data rather than from Clay's dataset. Sourcing US-based audiences from Clay's data is supported because the US doesn't operate under the same opt-in framework.
 
-## Advertising on Google
+## Platforms that require first-party data
 
-Google's advertising policies don't allow advertisers to use third-party sourced data when building audiences on Google's platform.
+Google and Bing don't allow advertisers to use third-party sourced data when building audiences on their platforms, and Clay enforces this for both. This rule is stricter than the regional rules above: a contact sourced from Clay's data is ineligible for Google and Bing no matter where that contact is located, so the US allowance doesn't apply.
 
-To keep your Google campaigns compliant, Clay automatically **filters out any Clay-provided data** when syncing an audience to Google. Only your first-party data flows through to your Google Ads account and any contacts or fields that originated from Clay's dataset are removed before the sync.
+What you'll see depends on where you set the sync up.
 
-This happens automatically, so you don't need to manually separate your data sources before syncing to Google.
+### Setting up a sync from an audience segment
+
+In the `Select ad providers` modal, `Google Ads` and `Bing Ads` are both marked `For use with first-party data only.` You can still select them. Clay then evaluates every contact in the segment individually and syncs only the ones backed by first-party data, leaving the rest out.
+
+Clay tells you how many contacts this affects before anything syncs. When you create the sync, a confirmation step titled `Creating an ad sync will remove [number] contacts` lists the reasons that apply to your selection. Once the sync exists, the audience header shows a yellow badge reading `Ad syncs exclude [number] people sourced from Clay`.
+
+### Setting up a sync from a workbook table
+
+On this path the check is all-or-nothing rather than per-contact. If any field in the table was populated by a Clay source, `Google Ads` is disabled entirely for that audience and shows a `First-party only` badge with the message `Google Ads only supports contacts sourced from first-party data.` There's no partial sync to fall back on — to advertise on Google, build the audience in a table whose fields all come from your own data.
+
+`Bing Ads` is only offered as a destination for audience segments, so you won't encounter it on this path.
+
+**Note:** Clay counts a contact as Clay-sourced only when Clay's data is that contact's sole source. A contact you imported from your CRM, data warehouse, or a CSV keeps its first-party status even after you enrich it with Clay — so enriching your own records doesn't make them ineligible for Google or Bing.
+
+## How Clay-sourced contacts are filtered for other platforms
+
+For destinations other than Google and Bing — such as `Meta Ads` — contacts sourced from Clay's data are eligible, but only where the regional rules allow it. Clay checks each contact's country and includes a Clay-sourced contact when that country is the US, or when the country is blank because Clay doesn't have it. Clay-sourced contacts with any other country are left out of the sync.
+
+The badge on the audience header names this case specifically: `Ad syncs exclude [number] people sourced from Clay outside the US`.
+
+Because Clay applies this contact by contact, a segment that mixes US and non-US people still syncs — just with fewer contacts than the segment's total. Contacts that came from your own first-party data are never filtered on country.
+
+## Restricting Clay data in Ad Sync tables
+
+Rather than relying on filtering at sync time, you can stop non-compliant audiences from being built at all. Under `Ads settings`, the `Restrict Table Ad Sync enrichments` control has a `First-party only` toggle, described as `When enabled, only your CRM and Warehouse data are available in Table Ad Syncs`. With it on, Clay's enrichment providers no longer appear as options inside Ad Sync tables.
 
 ## Best practices
 
 -   **Collect and store consent in your own systems.** For non-US audiences especially, build from first-party data (CSV, CRM or data warehouse) where consent has been captured.
--   **Use first-party data for Google campaigns.** Since Clay-provided data is filtered out on sync to Google, plan Google audiences around your own data.
--   **Keep opt-outs current in your source systems.** We recommend you sync opt-out status into Audiences and filter out these users from your Ad Sync segments. Clay runs full replacement syncs every 2 days, so removing someone will flow through to your connected ad account on the next sync.
+-   **Plan Google and Bing campaigns around first-party data.** Clay-sourced contacts never reach either platform, in any region, so build those audiences from your CRM, data warehouse, or CSV data. Read the excluded-contact count on the confirmation step before you create the sync so your delivered audience size isn't a surprise.
+-   **Fill in country data on contacts you own.** For platforms other than Google and Bing, a Clay-sourced contact with a country outside the US is dropped, while a blank country is allowed through. If you hold reliable country data in your own systems, sync it into Audiences so eligibility is decided on real values rather than gaps.
+-   **Keep opt-outs current in your source systems.** We recommend you sync opt-out status into Audiences and filter out these users from your Ad Sync segments. Recurring syncs run every 3 days, so removing someone in your source will flow through to your connected ad account on the next sync cycle.
 
 ## Frequently asked questions
 
@@ -55,8 +81,14 @@ No. Clay's dataset can't be used to source people outside the US for ad targetin
 **Can I use Clay's data to build a US ad audience?**  
 Yes. You can use Clay's data to source and build audiences of US-based people.
 
-**Why isn't all of my data showing up in my Google audience?**  
-When syncing to Google, Clay filters out any data it provided, because Google doesn't allow third-party sourced data on its platform. Your first-party data will sync as expected.
+**Do these sourcing and country rules apply to company audiences?**  
+No. Clay applies them to contact audiences only. Company audiences aren't filtered on how their data was sourced or on country.
+
+**Who can change the workspace ads settings that restrict Clay data?**  
+Only workspace admins. The `First-party only` toggle under `Ads settings` is visible to everyone but editable only by admins.
+
+**My segment and my synced audience show different counts. Is something broken?**  
+No. The segment count is everyone matching your filters, while the synced count is only the contacts eligible for the destinations you picked. The difference is the excluded contacts, and the badge on the audience header tells you which rule accounts for them.
 
 **How quickly do opt-outs take effect?**  
-Clay runs full replacement syncs up to every 2 days, so opt-outs updated in your source system are reflected in your connected ad account on the next sync cycle.
+Recurring syncs run every 3 days. Opt-outs updated in your source system are reflected in your connected ad account on the next sync cycle.

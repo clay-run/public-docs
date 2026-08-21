@@ -189,6 +189,39 @@ If only certain rows fail with **"Invalid SOQL Query. Please check your query sy
 
 Only rows with those characters in the matched column will fail — rows with clean values run normally.
 
+## How do I look up activity records (Tasks or Events) for a Salesforce contact?
+
+In Salesforce, activity records — Tasks and Events — are stored as separate objects, not directly on the Contact record. Because of this, the standard **Lookup Record** action (which retrieves the Contact object) won't return a contact's activities. You need to query the Task or Event object directly.
+
+Use the **Lookup records via SOQL** action and filter on the `WhoId` field, which links each Task or Event to its associated contact or lead.
+
+**For Tasks (calls, to-dos, logged emails):**
+
+```sql
+SELECT Id, Subject, ActivityDate, Status, Description
+FROM Task
+WHERE WhoId = '/Salesforce Contact ID'
+```
+
+**For Events (meetings, appointments):**
+
+```sql
+SELECT Id, Subject, ActivityDate, StartDateTime, EndDateTime, Description
+FROM Event
+WHERE WhoId = '/Salesforce Contact ID'
+```
+
+Replace `/Salesforce Contact ID` with the contact's Salesforce ID column from your Clay table, inserted using the `/` picker in the query editor.
+
+**Tips:**
+
+-   **Select only the fields you need.** Fetching fewer fields keeps queries fast and avoids hitting Salesforce's response-size limits.
+-   **Add a `LIMIT` clause** to control how many activity records are returned per contact row (for example, `LIMIT 10`).
+-   **Sort by most recent first** using `ORDER BY ActivityDate DESC` so the newest activities appear at the top of the result.
+-   **Run two separate SOQL columns** if you need both Tasks and Events — one column querying `Task` and one querying `Event` — then use a formula column to combine or compare the results.
+
+For SOQL syntax reference, see Salesforce's [SOQL documentation](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql.htm) or the [Lookup records via SOQL](salesforce-integration-overview.md) section of the Salesforce integration overview.
+
 ## Why does a Salesforce Lookup return "no records found" when searching by phone number?
 
 If the column holding phone numbers is set to **Number** type, Clay alters the value before passing it to Salesforce. A phone number in plain E.164 format — for example, `+12345678900` — stored in a Number column loses its leading `+`, becoming `12345678900`. If Salesforce stores the number as `+12345678900`, the lookup finds no match. Phone numbers that contain spaces or dashes (for example, `+1 234-567-8900`) produce a coercion error in the cell rather than a silently altered value.
@@ -204,6 +237,15 @@ Clay's report picker automatically filters to show only Tabular and Matrix repor
 **To fix:** In Salesforce, open the report, click **Edit**, then change the report format to **Tabular** (a flat list without row groupings) or **Matrix** (rows and columns both grouped). Save the report, then re-run your Clay source.
 
 For an overview of Salesforce report formats, see Salesforce's [Report Formats documentation](https://trailhead.salesforce.com/content/learn/modules/lex_implementation_reports_dashboards/lex_implementation_reports_dashboards_report_formats).
+
+## Why did my Salesforce report import only bring in 2,000 rows when my report has more?
+
+This is expected behavior. The Salesforce Analytics API caps the number of records returned when running a report at **2,000 rows**. Clay's **Import records from a Salesforce report** source fetches a single page of results from this API — if your report contains more than 2,000 records, only the first 2,000 are imported into Clay. This is a Salesforce API restriction, not a Clay bug.
+
+**To import more than 2,000 records from Salesforce, use one of these alternatives:**
+
+- **Salesforce List source (recommended):** Create a Salesforce list view that matches your report criteria and use Clay's **Import records from a Salesforce list** source instead. SOQL-compatible list views support up to 50,000 records per import. See the [Salesforce integration overview](salesforce-integration-overview.md) for setup steps.
+- **Salesforce SOQL source:** Write a custom SOQL query that pulls the exact records you need. The SOQL source also supports up to 50,000 records per import and gives you full control over filtering and field selection. See [Salesforce SOQL](salesforce-soql.md) for details.
 
 ## Why did my scheduled "Import records from a Salesforce list" stop running?
 
@@ -273,6 +315,45 @@ Clay does not transform field values before sending them to Salesforce — whate
 
 The same fix applies to any reference field that returns a `MALFORMED_ID` error — not just **OwnerId**.
 
+## When creating a Salesforce contact, do I need to map Account Name in addition to Account ID?
+
+No. Mapping the **Account ID** field in the **Map fields** panel is sufficient to associate the new contact with an account. The Account Name you see displayed in Salesforce is not a separate field to create — Salesforce derives it from the Account ID relationship and shows it as a label in the record form. Because Account Name is a read-only derived field, it does not appear as an option in Clay's **Map fields** panel and cannot be mapped directly.
+
+To set the correct Account ID, use a **Lookup Record** column (with the **Account** object) to find the account by name, domain, or another identifier, then map the returned `Id` field to the **Account ID** field in your **Create Record** column. For a step-by-step example of retrieving a Salesforce ID for a reference field, see [Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?](#why-am-i-seeing-a-malformed_id-error-when-creating-or-updating-a-salesforce-record).
+
+## Why does Clay show "✅ Record created" but the record doesn't appear in Salesforce?
+
+When Clay's Create Record action receives a valid record ID back from Salesforce, it marks the action as successful and displays **"✅ Record created"** with a link to the new record. Clay does not perform a follow-up check to verify the record still exists in Salesforce — so if Salesforce discards or removes the record after the initial creation response, the cell still shows success with the original URL.
+
+If you click the URL from a successfully created cell and see **"We couldn't find the record you're trying to access"** in Salesforce, the record was created but then became inaccessible. The most common causes, in rough order of likelihood:
+
+**1. A Salesforce automation removed the record after creation**
+
+Clay creates the record and receives a valid Salesforce ID back — but a workflow rule, Flow, trigger, or Process Builder on the object fires on record creation and deletes or converts the record right after. Check your Salesforce automations on the object for anything that runs on creation.
+
+**2. Required fields weren't mapped**
+
+Salesforce may allow a record to be created in an incomplete state and then discard it if required relationship fields are missing. For Tasks specifically, the `WhoId` (the associated contact or lead) and `WhatId` (the associated account or opportunity) fields are commonly required. Confirm all required fields — including lookup relationship fields — are mapped in your **Create Record** column's **Map fields** section.
+
+If you have a name but not the Salesforce ID for a relationship field, add a **Lookup Record** column before your Create Record step to retrieve the ID first. For a step-by-step example, see [Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?](#why-am-i-seeing-a-malformed_id-error-when-creating-or-updating-a-salesforce-record).
+
+**3. A field type mismatch**
+
+If a mapped value doesn't match the expected Salesforce field type — for example, text sent where a boolean or lookup ID is expected — the record can fail validation after creation. Review your **Map fields** configuration for type alignment.
+
+**4. Duplicate rules on the object**
+
+If your Salesforce org has duplicate rules configured on the object (or related objects), those rules may be blocking or discarding the record post-creation.
+
+**5. Integration user has write but not read access**
+
+If the Salesforce user connected to Clay has write access but not read access to the object, the record is created successfully but appears "not found" when accessed. Confirm the integration user has full read/write access to the object in Salesforce Setup.
+
+**To narrow it down:**
+
+-   Search your **Salesforce Recycle Bin** — if the record was auto-deleted by an automation, it may still be recoverable there.
+-   In Salesforce Setup, review active **Flows** and **triggers** on the object to see if any run on record creation.
+
 ## How do I prevent Salesforce records from being created or updated when there is no valid email?
 
 Use conditional runs on your **Create Record** and **Update Record** action columns to gate them on a passing email validation result. Rows where email validation fails are skipped automatically and do not consume credits.
@@ -286,6 +367,44 @@ Here's how to set it up:
 Rows where the condition is not met show **"Run condition not met"** in the column cell — no Salesforce record is created or updated, and no credits are consumed for those rows.
 
 For full details on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
+
+## Does Salesforce enforce its required fields when Clay creates a record?
+
+Yes. Clay does not validate required fields before sending data to Salesforce — all fields in the **Map fields** panel are optional from Clay's perspective. Salesforce enforces required fields at the API level: if a required field is missing from your mapping, Salesforce rejects the record creation and Clay displays the error from Salesforce (for example, `REQUIRED_FIELD_MISSING: Last Name`).
+
+To avoid this, map all required fields for your Salesforce object in the **Map fields** section of your **Create Record** column. Which fields Salesforce marks as required depends on your org's configuration — check the object's field settings in Salesforce Setup, or look for the asterisk (\*) next to field labels in Salesforce's record creation form. Common required fields for the Contact object include **Last Name** and, depending on your org, **Account ID** (required when contacts must be associated with an account).
+
+To skip rows where a required field is blank — rather than letting Salesforce reject them — add a run condition to your **Create Record** column. See [How do I prevent contacts from being pushed to Salesforce when required fields are blank?](#how-do-i-prevent-contacts-from-being-pushed-to-salesforce-when-required-fields-like-account-name-or-title-are-blank) for instructions.
+
+## How do I prevent contacts from being pushed to Salesforce when required fields like Account Name or Title are blank?
+
+Gate your Salesforce write so only complete records reach Salesforce. There are two approaches:
+
+**Option 1: Add an "Only run if" condition on the Salesforce action column (all plans)**
+
+Add a run condition to your **Create Record** or **Update Record** action column so it fires only when all required fields are populated.
+
+1.  Open the column settings for your Salesforce **Create Record** or **Update Record** column.
+2.  Click **Run settings** → **Only run if**.
+3.  In the formula field, enter a condition that checks all required fields. For example, to require both Account Name and Title:
+
+    `/Account Name is not empty AND /Title is not empty`
+
+4.  Click **Generate formula**, verify the preview, then save.
+
+Rows where any required field is blank are skipped and shown as **"Run condition not met"** — no Salesforce record is created or updated, and no credits are consumed for those rows. Repeat this configuration on every Salesforce action column that should respect the same requirement.
+
+For full details on writing run conditions, including combining multiple conditions with AND and OR, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
+
+**Option 2: Filter your Audiences segment before syncing (Growth and Enterprise plans)**
+
+If you're using [Clay Audiences](audiences.md), create a segment filtered to only complete records and sync that segment to Salesforce — records missing required fields are excluded from the sync entirely.
+
+1.  In Audiences, open or create a segment under **People** or **Companies**.
+2.  Add a filter for each required field — for example, **Account Name → is not empty** — then add a second filter for **Title → is not empty**. Multiple top-level filters are joined with AND, so only records where all required fields are populated will match.
+3.  Sync this filtered segment to Salesforce. Records that don't match the filters stay in Audiences but are never written to Salesforce.
+
+This gives you a single place to manage field-completeness rules across your workspace, rather than maintaining run conditions in each table. Note that syncing an Audiences segment to Salesforce requires a **Growth or Enterprise** plan.
 
 ## How do I add leads or contacts to a Salesforce campaign and update the status of existing campaign members?
 
@@ -600,3 +719,19 @@ If you need to change the default connection, ask a workspace admin to:
 3.  Click the `…` menu next to it and select `Set as default`.
 
 To change your own role to admin, ask an existing workspace admin to update it in `Settings` → `Team`.
+
+## Why aren't enrichment notifications being sent after I use the Launch Enrichment button in Salesforce?
+
+When using the Clay Salesforce package, the **Launch Enrichment** button on a Lead, Contact, or Account record sends that record to Clay for enrichment and writes the results back to Salesforce. For Salesforce users to receive a notification ("Your record has been enriched by Clay") after the enrichment completes, the **Get Enrichment Notifications** toggle must be enabled on the corresponding workflow.
+
+**To enable enrichment notifications:**
+
+1.  In Salesforce, open the **Clay** app and go to **Object and Field Mapping**.
+2.  Under **Select Object**, choose the object type the Launch Enrichment button lives on — Account, Contact, or Lead.
+3.  Under **Optional (Edit Existing Workflow)**, select the specific workflow tied to that button.
+4.  Confirm that **Get Enrichment Notifications** is toggled **Active** (blue with a checkmark). If it is inactive, toggle it on.
+5.  Save your changes.
+
+Once the toggle is active, Salesforce users will receive a notification in their Salesforce notification center after each successful enrichment run triggered by that button.
+
+**Enrichment notifications only fire on successful enrichments.** There is currently no built-in way to receive a notification when an enrichment fails or when an update or upsert action fails in Salesforce. Failures do not produce a notification — they fail silently from the Salesforce user's perspective. If you need visibility into failures, check the enrichment results directly in Clay.

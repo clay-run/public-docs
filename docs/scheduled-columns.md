@@ -24,6 +24,8 @@ This keeps your data current without manual updates (e.g., keeping enrichment da
     5.  Custom — set a specific day of the week, time of day, and timezone (e.g., every Sunday at 6:00 AM Eastern Time).
 4.  Decide whether you want to run `All columns` (the whole table) or `Only selected columns`.
 
+**Note:** If the Hour option is not visible in your Run Settings, your current plan does not include hourly scheduling. On non-Enterprise plans, Day is the most frequent schedule available.
+
 ## Action columns and scheduled re-runs
 
 Scheduled column re-runs fire for **every row** in the table on each cycle — including rows that already have successful results. Unlike table-level Auto-run, scheduled column runs always force-run and do not respect the "Keep existing results" option.

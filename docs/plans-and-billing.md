@@ -223,7 +223,7 @@ Payment refunds take up to **10 business days** to appear in your account after 
 1.  Confirm the funds haven't already been credited to your account.
 2.  Contact [Clay support](https://app.clay.com) and share any available transaction details — an Acquirer Reference Number (ARN) is especially helpful for tracing the payment.
 
-Clay Data Credit refunds (for enrichment actions that return no data) are applied to your account balance immediately after processing.
+Note that this applies to payment refunds only. Clay generally does not offer credit refunds — for example, for accidental credit spend or data quality issues. In some cases, a data provider may not charge when no data is found — in those cases, your credits will be refunded automatically.
 
 ### Why might my payment fail?
 

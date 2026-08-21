@@ -106,7 +106,7 @@ If two providers in a waterfall both return the same email address, and the firs
 
 Because the waterfall can't predict what any given provider will return, all providers in the sequence still run normally. Only the validation step is skipped when the returned value is already known to be invalid.
 
-Validation steps skipped with **Run condition not met** do not consume credits — Clay automatically refunds those steps.
+Validation steps skipped with **Run condition not met** do not consume credits.
 
 To limit the number of providers the waterfall calls when the same invalid email keeps appearing across multiple steps, use the **Threshold for duplicate results** setting in the Work Email waterfall's **Additional column settings**. Setting this to `2` or higher stops the waterfall from calling additional providers once the same email has appeared that many times consecutively. See [Work Email waterfall](work-email-waterfall.md) for full configuration details.
 
@@ -257,5 +257,7 @@ See [HG Insights integration](hg-insights-integration-overview.md) for more deta
 ### Other providers for tech stack enrichment
 
 **Sumble** is available as a standalone enrichment action (not part of a pre-built waterfall). It validates whether a company uses specific technologies you select, charging 6 credits per technology found. Use it when you need targeted confirmation of named tools rather than a broad technology scan. See [Sumble integration](sumble-integration.md).
+
+**Claygent** supplements database-backed tech stack enrichment by searching the web for signals of technology adoption. It is most useful for open-source or infrastructure frameworks — such as LangChain or AWS Bedrock — that leave no footprint in website source code and may not appear in database provider catalogs. Add a Claygent column to your table, use the company domain as an input variable, and write a mission prompt such as: *"Does {{company_domain}} use [technology name]? Search the company's website, blog posts, GitHub repositories, case studies, and press mentions, and return yes or no with the evidence found."* See [Claygent](claygent-builder.md) for setup details.
 
 **Note:** 6sense is not available as a waterfall provider in Clay. Store Leads enriches e-commerce site traffic data and is not part of any technographic waterfall.

@@ -89,11 +89,11 @@ The company identifier field accepts these LinkedIn URL formats:
 
 **Important:** Person profile URLs (`https://www.linkedin.com/in/<name>`) are not valid as company identifiers. Passing a person LinkedIn URL produces a confusing "Invalid companies provided" error even though the URL is real and correctly formatted — the field only accepts company or school page URLs, not individual profiles. See the [troubleshooting section](#getting-invalid-companies-provided-error-despite-having-a-valid-linkedin-url) below if you hit this error.
 
-### Run conditional people searches with table views
+### Run Find People on a subset of companies using a filtered view
 
-Company and people search sources — including **Find People at These Companies** and the **Update People Table** action — don't support the "Only run if" run condition that enrichment columns use. To search only companies that meet specific criteria (for example, companies where a lead qualification column equals "yes"), use a **filtered view** as the source:
+Company and people search sources — including **Find People at These Companies** and the **Update People Table** action — don't support the "Only run if" run condition that enrichment columns use. To search only a subset of companies — whether by qualification criteria or to process a specific batch (for example, 100 companies at a time from a 500-company table) — use a **filtered view** as the source:
 
-1. In your company table, apply a filter to the view you want to use — for example, add a filter where your qualification column equals the value you need. You can filter the **Default view** directly, or right-click any view tab and select **Duplicate view** to create a named copy, then apply filters to the copy.
+1. In your company table, apply a filter to the view you want to use. You can filter the **Default view** directly, or right-click any view tab and select **Duplicate view** to create a named copy with its own filters. To build more complex filter logic, click **+ Add filter group** to add a nested group with its own AND/OR conditions. View filters save automatically — there is no separate Save button.
 2. When setting up (or editing) a **Find People at These Companies** search, go to the **Companies** section and use the **View** dropdown to select the filtered view.
 3. Save. The search will only process companies visible in that view.
 
@@ -356,6 +356,12 @@ This is expected behavior. The Find People source deduplicates results against r
 **To get the same contacts back** (for example, when testing your table setup): delete the existing rows from your People table first, then re-run the source. Once the rows are cleared, the search will import the same contacts as before.
 
 **Note:** Deduplication is based on each person's unique profile ID, not your search filters. If the data source returns genuinely new profiles matching your criteria that aren't already in the table, those will still come through on re-run. Only contacts already in the table are filtered out.
+
+**If each run adds only 0–1 new people (on a manual or scheduled run):** The search's total matching universe is likely nearly exhausted — the total number of people matching your criteria is small, and nearly all have already been imported. The **Limit results** setting is a ceiling on new additions per run, not a cap on results fetched before filtering. Clay passes already-imported contacts as exclusions to the search before fetching, so the search returns up to **Limit results** genuinely new people. When the pool of unimported matches is nearly empty, even a high limit will add only 0–1 new people per run — raising the limit won't change this.
+
+**To keep getting new people over time:**
+- **Broaden your search criteria** — expand job titles, seniority levels, locations, or the company list to increase the total matching universe.
+- **Use criteria that change over time** — add dynamic filters such as recent job changes or new hires at your target accounts. These produce a continuously refreshing pool of matches, so each run finds people who qualify now but didn't before.
 
 ### The preview count drops dramatically when editing an existing Find People source
 
@@ -651,3 +657,18 @@ If initial results are unsatisfactory, extracting the company name from the emai
 1.  Add the **Identify Email Type and Extract Company Domain from Email** enrichment and map your email column. This extracts the company domain from the address (for example, `jane@acme.com` → `acme.com`).
 2.  Use a company enrichment (such as Apollo, ZoomInfo, or Clearbit) to look up the company name from the extracted domain.
 3.  Re-run your professional profile enrichment with **Full Name**, **Email**, and **Company Name** all mapped as inputs. The additional company context can improve the match rate.
+
+### How do I see what filters I used in a Find People at These Companies search?
+
+Click the **Edit source** icon on the column header of your search column in your company table — it appears as a small database (stack) icon in the column header bar. A panel opens listing all the inputs you configured — job title keywords, seniority, location, exclusions, and more. To update the filters before re-running the search, click **Edit inputs** in that panel.
+
+### I don't see a Tools button — I only see Actions, or my instructions say to click Actions
+
+The top-right toolbar button in a Clay table is labeled **Tools** in all workspaces — this is the button you need for table-level functions like **Find People at These Companies**, Export, and Import. The Tools button appears whether you open the table directly or access it through a workbook.
+
+If you see **Actions** in the top right instead of **Tools**, one or more rows are checked. Clay's toolbar switches based on row selection state:
+
+-   **No rows selected**: **Tools** is visible, providing table-level functions including Find People at These Companies, Export, and Import.
+-   **Rows selected**: **Tools** is replaced by **Actions**, which provides bulk row operations (Run rows, Delete rows). Uncheck all rows to restore **Tools**.
+
+**Note:** If you're following older instructions — such as some Clay University videos — that refer to an **Actions** button for finding people, **Tools** is the renamed version. The rename applies to all workspaces.

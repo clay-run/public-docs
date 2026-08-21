@@ -19,7 +19,7 @@ This tracking provides insights into how visitors engage with your content and h
 
 ### **Creating the connection**
 
-1.  Click on your account name → `Settings` → `Website tracking`.
+1.  Click on your account name → `Settings` → `Web intent`.
 2.  Click `Add connection` and give the connection a unique name – you'll need this later.
 3.  Copy the code under `Install tracking snippet` and install with one of the two methods.
     -   **Directly installing a tracking snippet (Recommended):**
@@ -38,7 +38,7 @@ This tracking provides insights into how visitors engage with your content and h
     -   **Installing via** [**Twilio Segment**](https://segment.com/docs/connections/destinations/catalog/actions-clay/)**:**
         1.  Visit [this link](https://app.segment.com/goto-my-workspace/destinations/catalog/actions-clay) to add the Clay integration as a new destination in Segment.
         2.  Select the website data source in Segment you want to connect to Clay.
-        3.  From your Clay website connection page, copy both your `Connection key` and `Secret key` to the Segment settings page.
+        3.  In your Clay website connection, click the **Twilio Segment** tab. Your `Connection key` is shown there automatically. If you haven't generated a `Secret key` yet, click **Create secret key** to generate one. Copy both keys and paste them into the Segment destination settings.
         4.  Enable your Clay destination to begin sending events.
 4.  Configure which de-anonymization providers you'd like to use. Clay provides a recommended selection or you can manually choose your own provider settings.
     -   **Note:** Pricing is based on unique IP addresses that successfully retrieve data. You'll be charged at most once per 30-day period for each visitor with the same IP address who visits your website.
@@ -88,10 +88,17 @@ Install the tracking snippet before the closing `</body>` tag, not in the `<head
 
 Use relative URL paths starting from the root domain:
 
--   ✅ `/pricing` or `/blog/*`
+-   ✅ `/pricing` or `/blog*`
 -   ❌ `https://www.example.com/pricing`
 
-For wildcards, use `*` to match all child pages (e.g., `/resources/*`). Note that URL paths are exact-match, so `/blog` and `/blog/` are treated as different paths.
+URL path filters use exact matching with optional `*` wildcards:
+
+-   `/advertise` matches only the page at `/advertise` exactly — it does not match `/advertise/`, `/advertise/en`, or any sub-path.
+-   `/advertise*` matches `/advertise`, `/advertise/`, `/advertise/en`, and every page whose path starts with `/advertise`.
+-   `/blog/` and `/blog` are treated as different paths because the match is exact.
+-   `/blog/*` matches pages under `/blog/` (e.g., `/blog/post-title`) but not `/blog` itself.
+
+To track a section of your site and all pages within it, use `*` at the end (e.g., `/resources*`). To track a single exact page, omit the wildcard.
 
 ### Reducing credit usage
 
@@ -147,7 +154,13 @@ To verify the script is loading at the browser level:
 
 ### Tracking filters not working as expected
 
-URL paths are exact-match, so `/blog` and `/blog/` are different. Also, filter changes only apply to new data — existing rows aren't affected. Make sure you haven't accidentally excluded important pages.
+**Include filter not matching pages you expect:** URL paths use exact matching, so `/blog` only matches `/blog` exactly — not `/blog/`, `/blog/post-title`, or any sub-path. To include a section of your site and all pages under it, append a wildcard: `/blog*` matches `/blog`, `/blog/`, and every page whose path starts with `/blog`.
+
+**Exclude filter not working as expected:** Exclude filters apply at the session level. A session is blocked only if every page the visitor viewed during that session matches at least one exclude pattern. If a visitor toured multiple pages and only some of them match your exclude filter, the session will still appear in your table.
+
+**All rows show '/' as the page path, or fewer visitors than expected:** The "URL paths to include" filter operates at the session level — a session is tracked only if at least one page the visitor viewed matches an include pattern. If your include list contains only `/`, Clay tracks sessions where the visitor hit the homepage at any point, but sessions where the visitor never visited the homepage are excluded entirely. Visitors who entered your site directly on an interior page (for example, from a search result or ad) without navigating to `/` will not appear in your table, which can make it look like everyone only visited the homepage. To track all visitor sessions regardless of entry page, remove the `/` entry from "URL paths to include" (Settings → Web intent → Tracker → Tracking filters). Leaving the field empty tracks all sessions by default.
+
+Filter changes only apply to new data — existing rows aren't affected. Make sure you haven't accidentally omitted wildcards on paths you want to include.
 
 ### Content Security Policy blocking the script
 
@@ -212,6 +225,19 @@ Other common causes: adding new pages to tracking, removing exclusions, loosenin
 No. The script runs in the visitor's browser and loads asynchronously, so it won't affect page performance. Website issues after installation are usually due to other simultaneous changes.
 
 # FAQ
+
+### Does Clay connect natively to Segment?
+
+Yes. Clay has a native destination in Segment's catalog. If you already have the Segment JavaScript tag on your site, you can route your website event data directly into Clay's web intent tracking without installing a separate Clay snippet.
+
+To connect Segment to Clay web intent:
+
+1.  In Segment's destination catalog, search for **Clay** (or use [this direct link](https://app.segment.com/goto-my-workspace/destinations/catalog/actions-clay)), add it, and connect the website source you want to send from.
+2.  In Clay, go to **Settings → Web intent** and open your website connection. If you don't have one yet, click **Add connection** first.
+3.  Click the **Twilio Segment** tab. Your `Connection key` is shown automatically. If you haven't generated a `Secret key` yet, click **Create secret key**. Copy both keys.
+4.  Paste the `Connection key` and `Secret key` into the Clay destination settings in Segment, then enable the destination.
+
+Using the Segment tag and Clay's own JavaScript snippet are equivalent — you get the same web intent data and features either way.
 
 ### Is visitor tracking data shown in real-time?
 
@@ -284,6 +310,14 @@ For subdomain tracking questions (for example, `shop.company.com` and `blog.comp
 ### What do I need to know about GDPR and cookie consent for web intent?
 
 The tracking script captures IP address data, which may be considered personally identifiable information in some jurisdictions. Work with your legal and web teams to confirm that your consent and privacy setup supports your intended use. In particular, make sure your Content Security Policy and any cookie consent tooling allow the Clay tracking scripts to run — if they block the script, tracking will stop working.
+
+### Can I exclude just the homepage?
+
+Yes — add `/` to **URL paths to exclude** in your tracking settings. Because URL paths use exact matching, `/` matches only the root path and not every page on your site.
+
+Keep in mind that exclude filters are session-level: a session is blocked only if every page the visitor viewed during that session matches an exclude pattern. A visitor who lands on the homepage and then browses to `/pricing` in the same session will still appear in your table, because not all pages they viewed match the `/` filter.
+
+To remove homepage visits from your results without changing your tracking settings, add a view filter in your Clay table that excludes rows where the page URL is `/`. Configure table filters using the **page paths** field under your table's filter options.
 
 ### What cookies and local storage items does the tracking script use?
 

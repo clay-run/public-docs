@@ -72,6 +72,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 -   Clean and normalize both sides of the match key (trim, lowercase, consistent formatting)
 -   **If expected matches aren't found, try switching to `Contains`**: The `Equals` operator requires an exact character-for-character match — minor discrepancies in spacing, casing, or formatting between the Row Value and the target column will cause it to miss valid records. Switching the Filter Operator to `Contains` is a useful diagnostic: if it finds records that `Equals` missed, normalize the upstream data so both sides match exactly, then switch back to `Equals` for precision.
 -   **Avoid Number-type columns as lookup keys — convert to text first**: A **Number**-type `Target column` produces unreliable results. Depending on cache state, the lookup may return "No Record Found" even when identical values exist in both tables, or silently return a wrong row when the `Row value` cannot be parsed as a number. **Workaround:** In both tables, add a formula column that converts the number to a text string — for example, `String({{Clay Company Id}})` — then configure your lookup to match on those text columns instead of the number columns directly.
+-   **Checking whether a lookup found a match — use `== null` in formulas and run conditions**: When a Lookup Single Row column finds no matching record, the cell stores `null` — the "No Record Found" label you see in the table is a display indicator, not the stored value. Comparing against the string `"No Record Found"` in a formula always fails because the actual stored value is `null`. Use `== null` to test for no match and `!= null` to test for a match. For example, to label rows as "Unique" or "Duplicate" based on whether any of three lookup columns found a match: `({{Table 2}} == null && {{Table 3}} == null && {{Table 4}} == null) ? "Unique" : "Duplicate"`. The same expression works as a **Run settings → Only run if** condition to skip enrichment for rows that already exist in any of those tables.
 -   Use single row lookup instead of multiple row lookup when you only need one result — it's faster
 -   If an expected field isn't visible in the result panel, the matched row in the source table likely has an empty value for that field — the panel only shows fields that have a value for the specific matched row. To add that column anyway, find a row whose matched source record has the field populated, open that lookup cell, and click **Add as column**.
 -   **Lookup not auto-running for new rows?** If the **Row Value** is a static string with no column reference (no `/` pick), Clay sees no upstream dependency and won't trigger the column when new rows are added. Fix: in **Run settings → Only run if**, add a condition that references an upstream column — for example, `/[Your source column] is present`. This creates the dependency Clay needs to fire the lookup automatically for each incoming row.
@@ -153,6 +154,7 @@ You can also use `Lookup multiple rows` within the same table to find duplicates
 -   Count related records inside one table (e.g., "how many people share this domain?")
 -   **Prevent duplicate enrichment for shared company data** — Enrichment columns run independently per row with no awareness of sibling rows. When multiple rows share the same company (e.g., several contacts who work at the same account), each row can trigger the same company-level enrichment separately. To run the enrichment only once per company: add a **Lookup single row** (same table, matching on company domain) that checks for any other row where the company-level enrichment result is already populated. Then add a [conditional run](conditional-runs.md) to your enrichment column that fires only when the lookup finds no existing result. The first row to process writes the company data; subsequent rows with the same domain find the existing result via lookup and skip the enrichment.
 -   Consolidate paired or related rows (e.g., pull a duplicate account's ID or attributes into the master record row) — run a self-lookup on the shared group key (such as a duplicate set number or shared parent ID) to find all rows in the group, then use `Add as column` or a formula column to extract the specific fields you need from the matched rows
+-   **Rank or compare rows within a group** — find the highest-scoring row among rows sharing a value in a group column, or determine each row's position within its group. Add a self-lookup matched on the group column, then add a formula column that iterates over the returned records — for example, using `findIndex` to locate the current row by its Unique ID within the result list. The self-lookup always includes the current row itself, so account for that offset (position 0 = rank 1). To pick the highest scorer instead, sort the lookup by your score column and compare the first returned record's Unique ID against the current row's.
 
 **Example: Enrich only one row per company group (without deleting duplicates)**
 
@@ -185,6 +187,45 @@ When a table has multiple rows sharing the same company — for example, several
 -   Use a clean, consistent match key (domain is usually more reliable than company name)
 -   Remember a self-lookup will usually match the row to itself—account for that when interpreting counts (e.g., "other matches" vs "total matches")
 -   Use the lookup result as a gate to control downstream actions (enrich/send/route only when criteria are met)
+-   **Counts can be off when rows evaluate concurrently** — when many rows run at the same time, a self-lookup may return an inaccurate count for some rows (for example, showing 2 when the real count is 1). This happens because rows reading and writing the same table simultaneously can see partially updated data. For accurate counts after a full run, select the lookup column and click **Run column** once the table finishes processing.
+
+### **Deduplication: cross-checking new imports against an existing leads table**
+
+When you upload a new batch of leads and want to identify which ones already exist in another table, add multiple **Lookup single row** columns — one per identifier — and a formula column that marks each row as new or existing.
+
+**Setup**
+
+1.  **Enrich your new leads table** to get consistent identifiers: a professional profile URL (e.g., a social profile URL from a professional network) and a work email address. These become the match keys for your lookups.
+
+2.  **Add one Lookup single row column per identifier**, each pointing at your existing leads table but matching on a different column:
+    -   *Lookup by Profile URL* — `Table to search` → your existing leads table, `Target column` → the profile URL column, `Row value` → the profile URL from the new row
+    -   *Lookup by Email* — `Table to search` → your existing leads table, `Target column` → the email column, `Row value` → the email from the new row
+    -   *(Optional) Lookup by Name + Company* — in both tables, add a formula column that concatenates name and company into a single string (e.g., `{{First Name}} + " " + {{Last Name}} + " " + {{Company}}`), then add a third lookup matching on that combined column. Use this as a fallback when a profile URL or email is unavailable.
+
+3.  **Add a Formula column** (e.g., `Is Existing Lead`) that returns `"Existing"` if any lookup found a match, or `"New"` if all lookups returned null (no match):
+
+    `({{Lookup by Profile URL}} == null && {{Lookup by Email}} == null) ? "New" : "Existing"`
+
+    Add additional `&&` conditions for any extra lookup columns.
+
+4.  **Gate downstream enrichment** on this formula column. Open **Run settings → Only run if** on any enrichment column and set: `/Is Existing Lead equals "New"`. This skips enrichment for leads already in your existing table and avoids consuming credits on records you've already processed. See [Conditional runs](conditional-runs.md) for how to set this up.
+
+**Identifier priority**
+
+Match on the strongest identifier first:
+-   **Professional profile URL** — most reliable. Unique per person and doesn't change when someone switches jobs or updates their email. Use this as your primary match key.
+-   **Work email** — second-best option. Reliable for identifying a contact at their current company, but can change when someone changes employers.
+-   **Name + Company** — weakest fallback. Company names are often inconsistent across datasets (e.g., "Zoom" vs. "Zoom Video Communications"). Use only when neither a profile URL nor email is available.
+
+**Rolling log for ongoing ingestion**
+
+If you import new leads continuously over time, use a dedicated **log table** that accumulates every lead you've already processed, instead of checking against a static snapshot:
+
+1.  Create a separate **leads log table** with columns for the identifiers you match on (profile URL, email).
+2.  In your new-leads table, point your lookup columns at this log table instead of your original leads table.
+3.  Add a **Send Table Data** column that copies the new lead's identifier columns into the log table after enrichment completes. Set a [conditional run](conditional-runs.md) on this column so it only fires for rows where `Is Existing Lead equals "New"`.
+
+Each subsequent import is automatically checked against the cumulative log. Leads processed in any previous import will be caught as `"Existing"` on every future run.
 
 ### **Timing considerations in multi-step workflows**
 

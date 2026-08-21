@@ -86,7 +86,7 @@ After generating a setup, you can easily edit your original description and rege
         -   **JSON must be strictly valid — no trailing commas.** Standard JSON does not allow a comma after the last property in an object or array. A stray trailing comma (e.g., `"items": { "type": "string" },` when it is the last property in that object) will cause the error: `Your JSON Schema configuration is invalid. Please try using the "Generate from prompt" button in the column config to create a valid schema, or check your JSON Schema for formatting errors.`
         -   **Keywords such as `minimum`, `maximum`, `minLength`, `maxLength`, `pattern`, `minItems`, `maxItems`, and `uniqueItems` are not supported and will prevent the column from running.** Remove them from your schema if present. To document a constraint, add it to the field's `"description"` instead — for example, `"description": "Confidence score from 0 to 1"` rather than `"minimum": 0, "maximum": 1`.
         -   To skip writing schema by hand, click **Generate from prompt** to let Clay generate a valid schema from your prompt automatically.
-8.  _(Optional – Create or modify content only)_ Click `Examples` and `Add examples` to show AI what responses should look like.
+8.  _(Optional – Create or modify content only)_ Click `Examples` and `Add examples` to show AI what responses should look like. Examples are stored as part of the column configuration — not derived from row data at run time — and are always included in the AI's prompt whenever the column runs for any eligible row. **The column's run condition controls which rows the AI executes on, not which examples appear in the prompt.** So even if an example row has a run condition that prevents the column from executing on it, those examples still apply as context when the column runs on any other eligible row.
 
 ### Document context (Beta)
 
@@ -262,9 +262,9 @@ To fix this, open the column settings and increase the **Clay Credit Budget** va
 
 **Note:** This setting only applies to expensive variable-priced models when using Clay's managed account. Users who connect their own API key are billed directly by the AI provider and this cap does not apply.
 
-### Cells showing "API key is missing"
+### Cells showing "Invalid credentials: API key is missing"
 
-If your AI column cells show an **"API key is missing"** error, the column is configured to use a model that requires your own API key, but no key has been connected for that model.
+If your AI column cells show an **"Invalid credentials"** error with the message **"API key is missing."**, the column is configured to use a model that requires your own API key, but no key has been connected for that model.
 
 There are two ways to resolve this:
 

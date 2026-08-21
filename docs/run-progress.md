@@ -3,10 +3,11 @@ title: Run progress
 description: Clay provides multiple ways to track and monitor run progress
   across your tables, including how to set a row limit to control which rows are
   processed, manually trigger unrun enrichment cells, run enrichments on a
-  specific subset of rows, troubleshoot cells stuck in Queued status, diagnose
-  enrichments that aren't triggering automatically, resolve persistent error
-  messages by clearing the browser cache, and troubleshoot slow cell loading
-  when using multiple tables in a workbook.
+  specific subset of rows, troubleshoot cells stuck in Queued status, recover
+  action column cells stuck in Queued status when the Stop button is grayed out,
+  diagnose enrichments that aren't triggering automatically, resolve persistent
+  error messages by clearing the browser cache, and troubleshoot slow cell
+  loading when using multiple tables in a workbook.
 last_synced: 2026-04-26T01:40:34.620Z
 ---
 
@@ -74,6 +75,8 @@ The table-level progress bar, shown at the bottom right of a table, provides a s
 To stop a running table, click the **Stop** button in the run summary panel at the bottom-right of the table.
 
 **Important: clicking Stop does not immediately cancel enrichments that are already in progress.** When you click Stop, Clay cancels all queued cells that haven't been dispatched yet — but any enrichment calls already sent to an external data provider will run to completion and **will still consume credits**. You may see a short delay between clicking Stop and the table fully halting while these in-flight calls finish.
+
+**If the Stop button appears greyed out with the tooltip "No runs are in progress for this table" while cells still show Running or Synthesizing status, this is expected during AI column runs.** The Stop button only becomes active when requests are actively in-flight (already dispatched to a data provider). During large Claygent or AI column runs, Clay dispatches rows in small concurrent batches through a rate limiter. Between batches, no requests are in-flight, so the button temporarily deactivates even though queued cells remain. The run will continue automatically — to stop it, wait for the Stop button to become active between batches and click it then.
 
 To prevent unintended credit usage before it starts, turn off [auto-run](auto-run.md) before importing large batches of rows. This prevents enrichments from triggering automatically on new data.
 
@@ -155,6 +158,15 @@ If cells remain Queued for an extended period, common causes include:
 
 > **Note:** **Run column → Run [N] empty or out-of-date rows** will not work here — queued rows are classified as "running," not as empty or stale, so that option shows 0 eligible rows and does nothing for this scenario. Use **Force run all [N] rows** instead.
 
+**If action column cells are stuck in Queued status and the Stop button is grayed out:** The Stop button becomes active when there are active run records in the queue. If an action column — a column that pushes data to an external system such as a CRM or marketing platform (for example, Update Marketo or Update HubSpot) — shows cells in "Queued..." status but the Stop button in the run summary panel is grayed out, those cells' run records are no longer present. There is nothing for Stop to cancel, and force-running the column will not clear these cells either.
+
+To recover from this state:
+
+1.  Right-click the action column header and select **Duplicate column**. The duplicate starts with a fresh queue state and no stuck entries.
+2.  Delete the original column. Deleting removes the stuck entries.
+
+The duplicate keeps your column settings. Once you have deleted the original, check the duplicate's auto-run setting before triggering it to confirm it is configured as expected.
+
 ## Troubleshooting: table appears stopped at a partial percentage with no credits consumed
 
 If your table completes at a partial percentage — for example, 20–40% — and no credits are being consumed, enrichment cells have likely failed with `ERROR_MISSING_INPUT`. This error means a required input field is blank for those rows.
@@ -227,6 +239,14 @@ Clay.getCellStatus({{Your Column}})
 This returns a status string for each cell. Cells that hit the cell size limit return `"ERROR_ACTION_OUTPUT_DATA_SIZE_LIMIT_EXCEEDED"`; cells that ran successfully but found nothing return `"SUCCESS_NO_DATA"`; cells with data return `"SUCCESS"`. Filter or sort the table on this formula column to isolate the error rows without catching legitimate empty results.
 
 For the full list of `getCellStatus()` return values, see [Formulas](formula-generator.md).
+
+To capture the error message text itself — for example, to forward the exact failure reason to a Slack notification or surface it in another column — use `Clay.getCellErrorMessagePreview()` in a formula column pointed at the failing enrichment:
+
+```
+Clay.getCellErrorMessagePreview({{Your Column}})
+```
+
+This returns up to 300 characters of the error text from a failed cell — the same message visible in the Cell Details panel when you click a red cell. `Clay.getCellStatus()` tells you *that* a cell errored and which error code; `Clay.getCellErrorMessagePreview()` tells you *why* — the human-readable error text. For full details and limitations, see [Formulas](formula-generator.md).
 
 ## Troubleshooting: persistent error messages
 

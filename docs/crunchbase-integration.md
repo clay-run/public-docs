@@ -88,3 +88,13 @@ Get essential company details like name, website, headquarters location, and ind
 
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
+
+## FAQs
+
+### Can I use Crunchbase data to find companies that may be seeking capital or funding?
+
+Yes. The **Enrich a company's funding predictions** action surfaces Crunchbase's statistical predictions of a company's likelihood of receiving funding, along with the factors influencing those predictions. Add this enrichment to a company table and sort or filter by the funding likelihood score to prioritize outreach to companies most likely to be in fundraising mode.
+
+To set it up: in your company table, click `Add enrichment`, search for `Crunchbase`, and select **Enrich a company's funding predictions**. A Crunchbase API key is required — click `+ Add account` in the setup modal to authenticate.
+
+To complement this with real-time monitoring, pair it with Clay's **Monitor for news & fundraising** signal (select **Fundraising** as the news topic) — that signal fires whenever a company in your list appears in fundraising-related news articles such as funding round announcements.

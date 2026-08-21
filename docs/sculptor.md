@@ -38,6 +38,8 @@ History is scoped to the surface you're currently working in:
 -   **Claygent Builder** — only shows conversations for the Claygent you are currently viewing.
 -   **Search / Onboarding** — only shows conversations from search and onboarding sessions.
 
+Sculptor conversations cannot be deleted or cleared — there is no control to remove individual conversations or clear the history list in bulk. They are retained so you can return to any previous session at any time.
+
 ## Best practices
 
 -   **Go step by step.** Sculptor does best when handling a problem one element at at ime.

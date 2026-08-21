@@ -94,10 +94,10 @@ This is useful for spot-checking costs before scaling a workflow: run a small ba
 The credit usage dashboard is organized into tabs, each covering a different slice of your workspace spend. Use the `When` dropdown and `Apply filters` to scope each tab to a specific time period.
 
 -   **Workbooks** — shows credit spend broken down by folder, workbook, and table. Click the dropdown next to any folder or workbook to drill into its contents. Sort by `Name` or `Credits used`. Click `Export` to download a CSV for offline analysis.
--   **Integrations** — shows credit spend grouped by integration across your entire workspace. Expand any integration row to see a breakdown by individual API key — useful when you have both Clay-managed and personal (BYOK) keys connected, or multiple keys for the same provider. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
+-   **Integrations** — shows credit spend grouped by integration across your entire workspace. Expand any integration row to see a breakdown by individual API key — useful when you have both Clay-managed and personal (BYOK) keys connected, or multiple keys for the same provider. If your workspace uses Audiences agent runs, credits for those runs appear as a **Clay Auto** row under the Artificial Intelligence integration. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
 -   **Signals** — shows credit spend broken down by individual signal. A totals row (`All Signals`) appears at the top, followed by a per-signal breakdown of `Credits used` and `Actions used`.
 -   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
--   **API** — shows programmatic spend generated through Clay's API and Exportly, broken down by user. Like MCP, unattributable spend appears as `Unattributed`.
+-   **API** — shows programmatic spend from Clay's People & Company Search API and Exportly, broken down by user. Like MCP, unattributable spend appears as `Unattributed`. Credits from Routines API runs are not tracked here — those appear in the **Workbooks** tab, attributed to the function table that processed each run.
 -   **Budgets** — shows credit spend broken down by budget. Visible only on workspaces with Credit Budgets enabled (currently in open beta for Enterprise customers). See [Credit Budgets](/docs/credit-spend-limits-faq#credit-budgets-open-beta) for details.
 
 **Note:** The `Credits used` total on the **Workbooks** tab reflects only workbook and table activity. Credits consumed by Signals, MCP, or API access appear on those respective tabs and are not included in the Workbooks total. To see your complete workspace credit spend for a given period, review the totals across all relevant tabs.
@@ -105,6 +105,14 @@ The credit usage dashboard is organized into tabs, each covering a different sli
 ## Credit estimates before running
 
 Clay provides transparent cost estimates before you run enrichments or actions in your tables. This helps you understand and manage your credit usage.
+
+### Per-row credit estimate on table cards
+
+Each table card in the workbook canvas displays an estimated credit cost per row — shown as a `~X / row` pill beneath the table name. This gives you a quick way to estimate how many credits enriching your remaining rows will cost, without needing to initiate a run first.
+
+To estimate your total enrichment cost for a table, multiply the per-row figure by the number of rows you still need to enrich.
+
+**Note:** The `~` prefix means this is an approximation. The estimate is calculated from the configured credit cost of all active enrichment columns — actual costs are often lower, since some enrichments return no data for certain rows and conditional logic may skip columns based on existing values.
 
 ### Run cost breakdown
 
@@ -192,14 +200,14 @@ Alternatively, turn auto-run **off** entirely before editing (`⛭` → toggle *
 
 See [Auto-run](auto-run.md) for full details on **Keep existing results** and how the auto-run mode affects which cells run.
 
-### Requesting a goodwill credit refund
+### Accidental credit spend
 
-If credits were accidentally consumed — for example, from a misconfigured scheduled run or an unintended large batch — you can contact [Clay support](https://app.clay.com) to request a one-time goodwill credit refund. When submitting a request, include:
+Clay generally does not offer credit refunds for accidentally consumed credits — for example, from a misconfigured scheduled run or an unintended large batch. If you believe something went wrong, you can contact [Clay support](https://app.clay.com) and the team will investigate. When reaching out, include:
 
 -   Your workspace name
 -   The table where the credits were consumed
 -   The number of credits used
 
-The support team will review your request and, if eligible, restore the credits to your account balance. Goodwill refunds are a one-time exception and are not guaranteed for repeat requests. For credits consumed due to a scheduled table run or integration issue, a partial refund may be considered depending on the circumstances.
+To prevent accidental spend, turn off auto-run while building or testing workflows, and set credit spend limits for your workspace.
 
 **Learn more:** For related information, check out our [credit limit FAQs doc](http://university.clay.com/docs/credit-spend-limits-faq).

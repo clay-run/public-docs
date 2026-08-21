@@ -44,11 +44,29 @@ You can use Share as Template to copy a workbook into any workspace you have acc
 
 Tables, columns, formulas, and enrichment column configurations all copy over. Audiences and credits stay tied to the original workspace and are not transferred.
 
+**Row data does not transfer.** The template link copies only the table structure and one row of sample data — your existing rows are not included. To bring your row data to the new workspace, export each table as a CSV from the source workspace, then import those CSVs into the corresponding new tables. When prompted during import, choose **Save and don't run** to avoid re-triggering enrichments on the imported rows.
+
+**Clay Lookup Rows columns:** After the workbook is created in the new workspace, any Lookup Rows columns in those tables will have no valid target table — the column's internal table reference points to a table ID in the original workspace that does not exist in the new workspace. Open each Lookup Rows column and repoint it to the correct table in the new workspace. One reconnection is required per lookup target table.
+
 ### Separate Clay accounts (different logins)
 
 There is no native one-click migration between two unrelated Clay accounts. The recommended approach:
 
 1. Share each workbook as a template to recreate the table structure in the new account.
 2. Export each table's row data as a CSV from the source workspace.
-3. Import those CSVs into the corresponding new tables in the destination account.
+3. Import those CSVs into the corresponding new tables in the destination account. When prompted, choose **Save and don't run** to import the rows without triggering enrichments — this prevents enrichment columns from re-running on every imported row and consuming credits. If you want to permanently prevent auto-run on future additions as well, turn off **Auto-run** in the table settings before importing. See [Auto-run](auto-run.md) for details.
 4. Reconnect any integrations and reconfigure enrichment columns that reference connections from the source workspace.
+
+**Clay Lookup Rows columns:** Lookup Rows columns store a reference to a specific table ID within a workspace. That reference does not carry over to the new account — in the new workspace, each Lookup Rows column has no target table configured. After rebuilding all tables in the destination account, open each Lookup Rows column and repoint it at the correct migrated table. One reconnection is required per lookup target table.
+
+### Billing when consolidating two workspaces
+
+Each Clay workspace has its own plan and bills independently — there is no automatic billing merge. Consolidating two workspaces means keeping one plan and canceling the other.
+
+Once you have moved all workbooks and data to the workspace you're keeping:
+
+1. Verify everything you need is accessible in the destination workspace.
+2. Go to **Settings → Plans & billing** in the workspace you're leaving.
+3. Select **Cancel plan** to cancel its subscription.
+
+**Credits and plan features do not transfer between workspaces.** If the workspace you're leaving has unused data credits, spend them before canceling — when a plan is canceled, the credit balance is capped at the Free plan's rollover limit (200 credits), and any credits above that are forfeited. See [Plans & billing](plans-and-billing.md) for details on how cancellation affects your credit balance.

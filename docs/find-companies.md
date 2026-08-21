@@ -26,7 +26,6 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
     -   **Industries** to include and exclude
     -   **Company size** — The self-reported size band on the company's profile (e.g., 11–50, 51–200). Select one or more bands from the dropdown.
     -   **Annual revenue ranges** — Filter by revenue brackets from $0–$500K up to $100B+.
-    -   **Funding raised** — Filter by total funding raised. Select one or more brackets from Under $1M up to $250M+, or select **Funding unknown** to include companies with no recorded funding data.
     -   **Company types** — Privately Held, Public Company, Partnership, Self Employed, Non Profit, Educational, Self Owned, or Government Agency. These values reflect how companies self-classify on their profiles.
     -   **Keywords** to include or exclude
         -   **Exact phrase matching:** Wrap multi-word terms in single or double quotes to search for that exact phrase. For example, searching for "Google Cloud" finds companies with "Google Cloud" in their description — not just companies that mention Google and cloud separately. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are stripped out even with quoted phrases.
@@ -76,6 +75,8 @@ A **custom table** (shown with the table icon in your workbook) is a blank canva
 
 **In short:** Choose **Find Companies** when you need to discover new companies from scratch; choose a **custom table** (or CSV import) when you're starting from a list you already own.
 
+**Already have a company list and want to find contacts at those companies?** Once your companies are in a custom table — whether imported from a CSV, CRM export, or any other source — you can run a people search directly from it: click **Tools** → **Import** → **Find People at These Companies**, set your title, seniority, and location filters, and send results to an Audiences draft. See [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md#choose-your-starting-point) for the full workflow.
+
 **Keeping related tables in the same workbook**
 
 In Clay, a workbook is a container for related tables. It's common to keep linked tables together in one workbook — for example, a Find Companies table and the Find People table created from it — so the workflow is easy to navigate and share as a template. Create a new workbook when you're working on a distinct project or campaign (for example, separate workbooks for different clients or different outbound plays).
@@ -96,6 +97,21 @@ For more detail on both workflows, see [Guide: Finding companies and people in C
 Founded year is not available as a filter when building a `Find Companies` search — you can't narrow results by founding date before importing.
 
 However, `Find Companies` automatically includes a **Founded** column in your table showing the founding year for each company. Once you've imported your results, you can filter or sort that column to focus on companies founded within a specific range — for example, filtering to companies founded after 2020 to target early-stage startups.
+
+### Which location field gives the most accurate headquarters address?
+
+Clay returns location data at two levels of detail — choose based on what you need:
+
+**For city/state/country-level headquarters identification (most reliable):**
+Use **Structured Locations** in the cell details. A company may have multiple Structured Location entries — one per known office. The **Is Headquarters** field is `true` for the company's primary office, so looking at entries where `Is Headquarters = true` pinpoints the HQ. These fields are geocoded and normalized (they handle informal names like "Greater Chicago Area") but do not include a full street address. The **Is Headquarters** filter in the Location section of Find Companies uses this same flag — enabling it restricts search results to companies whose HQ matches your location criteria.
+
+**For a raw street-level address:**
+Each company record also includes a **Locations** section in the cell details with a raw **Address** string per office (for example, "Brooklyn, NY 11222, US") and an **Is Primary** flag. When **Is Primary** is `true`, that entry is the designated primary office — the closest native field to a full street address. Two caveats:
+-   **Is Primary does not always equal HQ** — in some records, the primary flag doesn't perfectly map to the headquarters location.
+-   The address is an unparsed string; if you need city, zip, or country as separate values, you'll need a formula or AI column to extract them.
+
+**For confirmed street-level HQ address (highest accuracy):**
+None of Clay's native location fields return a verified street-level headquarters address on their own. For that level of precision, run a Claygent or AI research column that looks up the company's HQ from public sources. To reduce research cost, use **Structured Location where Is Headquarters = true** as a seed — it narrows the research to the right city and country without requiring a full web search from scratch.
 
 ### What if the industry I'm looking for isn't in the dropdown?
 
@@ -165,6 +181,12 @@ This is expected behavior. The Find Companies source deduplicates new results ag
 Deduplication is based on each company's unique profile ID, not your filter configuration. A company already in the table is skipped on re-run regardless of whether your filters changed.
 
 **To re-import the full result set** (for example, when testing): delete the existing rows from your table first, then re-run the source. Once the rows are cleared, the search re-imports all matching companies from scratch.
+
+### Where does the Industry value come from in company data?
+
+The **`Industry`** field in Clay's company data — returned by the Companies, People, Jobs enrichment and present in Find Companies results — reflects the industry category a company has set on its professional network profile. Clay's underlying data provider scrapes professional network company profiles; the industry values conform to the professional network's industry taxonomy naming system (for example: *Software Development*, *Financial Services*, *Technology, Information and Internet*).
+
+Because companies self-select their industry on the professional network, the values are open-ended text names rather than a fixed coded list. Clay recognizes approximately 457 common values. If a company has not set an industry on its professional network profile, the field returns empty.
 
 ### What are the available AI Subindustry filter values?
 

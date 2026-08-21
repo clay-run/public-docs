@@ -87,7 +87,9 @@ Use this action to retrieve associations between two objects in HubSpot.
 -   **From object ID:** The unique identifier of the object you want to look up associations for.
 -   **Remove blank values from results (Optional):** Exclude empty properties from the response.
 -   **Include read-only properties (Optional):** Include calculated fields in the response.
--   **Limit (Optional):** Maximum number of objects to return. Defaults to 20.
+-   **Limit (Optional):** Maximum number of associated objects to return per run. Minimum 1, maximum 20. Defaults to 20.
+
+**Note:** This action performs a single API call and does not paginate automatically. If an object has more than 20 associated records in HubSpot, only up to 20 are returned.
 
 ### `Action` Find owner
 
@@ -429,3 +431,13 @@ Clay's HubSpot integration does not include a native action for creating Notes. 
 **Tip:** Use the `hs_object_id` returned by a HubSpot **Lookup object** column to get the correct object ID for the association target.
 
 If a note you created does not appear in HubSpot, confirm that your HubSpot role has permission to view unassigned notes and that your HubSpot view filter includes notes.
+
+### Why does "Retrieve associated objects" return at most 20 results, even when HubSpot shows more?
+
+The "Retrieve associated objects" action has a maximum result count of 20 per run, enforced in Clay's code. The **Limit** field accepts values between 1 and 20 — entering a higher value is not possible. The action also performs a single API call and does not paginate automatically: if an object has more than 20 associated records in HubSpot, only up to 20 are returned in a single run. There is no built-in way to retrieve more than 20 associated objects through this action in a single run.
+
+### Why can't I import HubSpot Activities (calls, emails, meetings, notes, or tasks) into Clay?
+
+HubSpot Activities — including calls, emails, meetings, notes, and tasks — are not currently available as importable object types in Clay's HubSpot integration. Clay's HubSpot integration supports importing **Company**, **Contact**, **Deal**, **Lead**, and any **custom objects** configured in your HubSpot account — but Activity types are not included in the object type selector, regardless of your HubSpot settings or permissions.
+
+**Workaround:** Create HubSpot rollup properties on your Contact or Company objects to capture the activity data you need. For example, to track completed meetings for a contact, create a Contact property in HubSpot that stores the most recent completed meeting date — populated by a HubSpot workflow or rollup. Once those properties are in place, import the Contact or Company into Clay using the **Import objects from HubSpot** source or a **Lookup object** action; Clay reads the rollup property like any other contact or company field. Using date-based rollup properties (rather than booleans) lets you compute recency-based values in Clay with a formula, such as the number of days since the last completed meeting.

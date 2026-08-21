@@ -12,14 +12,14 @@ Salesforce is a customer relationship management (CRM) platform that helps busin
 
 ## Connecting to Salesforce
 
-Clay supports two methods for authenticating your Salesforce account. You can choose the one that fits your organization's setup when adding a new connection or when reconnecting an existing one.
+Clay uses OAuth 2.0 for all Salesforce authentication. Two methods are available — you can choose the one that fits your organization's setup when adding a new connection or when reconnecting an existing one.
 
--   **User Sign In** — the default method. You sign in as a Salesforce user via an OAuth browser prompt.
--   **Client Credentials** — a server-to-server method. No browser sign-in is required; instead, you supply credentials from an external client app configured in your Salesforce org.
+-   **User Sign In** — the default method. A standard OAuth 2.0 browser-based flow where you authenticate as a Salesforce user via a browser prompt.
+-   **Client Credentials** — an OAuth 2.0 server-to-server flow. No browser sign-in is required; instead, you supply credentials from an external client app configured in your Salesforce org.
 
 ### User Sign In
 
-Connect via OAuth as a Salesforce user.
+Connect via OAuth 2.0 as a Salesforce user.
 
 1.  In the home sidebar, click `Settings` → `Connections`.
 2.  Click `Add connection` and search for `Salesforce`.
@@ -115,6 +115,17 @@ For full instructions on setting up a restricted Salesforce user with field-leve
 -   **Salesforce object:** The type of object to look for in Salesforce.
 -   **List view:** The view to sync into Clay.
     -   Views that are not SOQL-compatible (those that cannot be generated from a SOQL query) have a 2,000-record limit.
+
+**Re-syncing does not remove rows from your Clay table**
+
+When you re-sync (or when a scheduled run fires), records removed from the Salesforce list remain in your Clay table — they are not deleted automatically. Clay's list source is additive only: each sync adds new matching records and optionally updates existing ones, but never removes rows for records that have left the Salesforce list.
+
+To remove records that no longer belong in your table, you have two options:
+
+-   **Delete the stale rows manually** — filter to isolate the rows you no longer need, select them, and delete them.
+-   **Delete the source and re-add it** — this re-imports only records currently in the Salesforce list. Alternatively, duplicate the table with the updated source to start fresh.
+
+If you need your Clay list to stay in sync with Salesforce automatically — with records added *and* removed as they enter and leave the Salesforce list — use [Clay Audiences](audiences.md) instead. An Audiences segment is a live filter: records are added when they match your criteria and removed automatically when they no longer qualify, without any manual cleanup.
 
 **Fields not in your Salesforce list view**
 
@@ -368,8 +379,40 @@ Clay Value: `Technology;Healthcare;Finance`
 | Error | Cause | Solution |
 | --- | --- | --- |
 | Bad value for restricted picklist | Text doesn't match picklist | Check exact spelling & case in Salesforce |
+| Bad value for restricted picklist | New value not assigned to Record Type | Assign the value to the Record Type in Salesforce: Setup → Object Manager → [Object] → Record Types |
 | Values not updating | Wrong delimiter used | Use semicolons (;), not commas |
 | Field not accepting value | Using display label instead of API name | Verify API name in Salesforce Setup |
+
+### New picklist value still rejected after being added to Salesforce
+
+If you added a new value to a Salesforce restricted picklist and are still seeing a "bad value for restricted picklist field" error when Clay tries to write that value, the cause is almost always a Salesforce Record Type configuration issue — not a Clay problem and not a timing delay.
+
+**What's happening:** Adding a value to a restricted picklist's global value list does not automatically make it available to your existing Record Types. The value shows up in the field's master list — which is why it appears to exist — but Salesforce enforces picklist values per Record Type for restricted fields. If the record being updated uses a Record Type that does not include the new value, Salesforce rejects the write regardless of how the value is spelled. Clay sends the value to Salesforce exactly as it appears in your table or AI column output — no character encoding or transformation is applied — so the rejection happens on the Salesforce side.
+
+**To fix this:** Assign the new value to the correct Record Type.
+
+1. In Salesforce, go to `Setup` → `Object Manager` → select the object (for example, `Lead`).
+2. Click `Record Types` in the left sidebar, then click the Record Type that applies to the records you are updating.
+3. Under the `Picklists Available in the Page Layout` section, find the restricted picklist field and click `Edit`.
+4. Move your new value from **Available Values** to **Selected Values**.
+5. Click `Save`.
+
+After saving, re-run the rows in Clay. The value will now be accepted for records that use that Record Type. If your org uses multiple Record Types for the same object, repeat these steps for each Record Type you write to.
+
+**Also verify the text matches exactly.** Whatever Clay sends must be character-for-character identical to the selected option in Salesforce — same spelling, capitalization, and spacing. If you renamed the value in either place after testing, confirm both sides match before re-running.
+
+### Clearing a picklist field
+
+Salesforce uses `--None--` as a UI label to indicate that a picklist field has no stored value. `--None--` is not an actual picklist API option — it does not appear as a selectable choice in Clay's **Map fields** dropdown, and there is no way to send an empty or null value to clear a picklist field through the **Update Record** action.
+
+To clear a picklist field (return it to empty in Salesforce), use a sentinel-value approach:
+
+1. Ask your Salesforce admin to add a dedicated picklist value to the field — for example, `Cleared` or `To Clear` — that will serve as a signal to clear the field.
+2. In your Clay **Update Record** column, map the picklist field to that sentinel value.
+3. Run the rows.
+4. Have your Salesforce admin create a Salesforce Flow on the object that detects the sentinel value and sets the field to null (clearing it).
+
+This approach works for both restricted and unrestricted Salesforce picklist fields.
 
 ### Writing AI-generated values to restricted picklist fields
 

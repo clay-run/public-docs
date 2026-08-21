@@ -48,10 +48,10 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
         -   (HTML only): If enabled, use hyperlinks, inline images, fonts, and rich text formatting.
 5.  Go to `Settings` to add your email account:
     -   `Google OAuth` (recommended): Connect your Google Workspace account via OAuth.
-        -   ⚠️ Note: You or your Workspace admin must authorize the Clay sequencer app for your domain, or you'll see an access error.
+        -   ⚠️ Note: You or your Google Workspace admin must authorize Clay Sequencer as a Trusted app for your domain before connecting. If you or a teammate sees **"Access blocked: clay.com has not completed the Google verification process" (Error 403: access_denied)** when connecting, follow [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth) for the required admin setup steps. Until this is done, all users in your domain will see this error.
     -   `Microsoft Outlook OAuth` (recommended): Connect your Outlook account via OAuth.
         -   ℹ️ Note: Unlike Google OAuth, no Clay-side admin setup is required upfront. If your Microsoft 365 / Entra tenant requires admin approval for third-party apps, your admin may need to grant consent for "Clay Sequencer – Smartlead" in the [Microsoft Entra Admin Center](https://entra.microsoft.com).
-    -   `SMTP`: Connect a single account via SMTP credentials directly.
+    -   `SMTP`: Connect a single account via SMTP credentials directly. The form requires both SMTP settings (host, port, username, password) and IMAP settings (host, port) — Clay does not provide a built-in inbox, so your IMAP credentials must come from an existing IMAP-capable mailbox under your domain (such as Google Workspace, Microsoft 365, Zoho, or Fastmail). If your sending service is send-only (for example, SendGrid or another transactional email relay), you must pair it with a separate IMAP-enabled mailbox.
     -   `Bulk CSV upload`: Add multiple accounts at once by uploading a CSV. Download the example template from the modal and fill in the following eight columns for each account: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`. For Google Workspace accounts, generate an app password for each account (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` value.
     -   You can also [buy email accounts directly in Clay](https://university.clay.com/docs/buying-email-accounts) if you want to increase your sending capacity.
     -   After setup, you can:
@@ -60,6 +60,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
         -   `Update send limit`: Change the daily number of emails the account can send per day
         -   `Update sender variables`: Change the sender variable values for the account
     -   **Searching and bulk actions:** Use the **search bar** and **Filter** control in `Sender accounts` to quickly find accounts by email address or name. Filter by account type (Google OAuth, Outlook, or SMTP) or status (Ready, Warming up, Not warming, or Auth error). Select multiple accounts to bulk-enable warmup or remove them from the campaign at once.
+    -   **Assign sender account field to lead (optional):** At the bottom of the `Sender accounts` section, you can optionally map a column to assign a specific sending account to each lead. When this field is set, Clay uses the email address in that column as the sender for each lead — that address must match one of the sender accounts already configured in the campaign. If the mapped column contains an email that is not a configured sender account, that lead's row in the `Sync lead data to campaign` column will fail with a validation error when it runs. Leads where the column is blank (no value) are distributed evenly across all configured sender accounts. If you are not deliberately routing leads to specific senders, leave this field empty.
 6.  Adjust your `Schedule settings`:
     -   `Timezone`: Select the timezone to send from (we recommend matching your prospects').
     -   `Days of the week`: Choose which days emails are sent.
@@ -240,6 +241,17 @@ To avoid losing leads this way, deduplicate your source table before launching. 
 
 Email providers like Google and Microsoft occasionally revoke access due to inactivity, security checks, or suspicious activity detection. To fix this, delete the disconnected account from your sequencer settings and re-authenticate it.
 
+### How do I switch my campaign's sending email to a new provider or address?
+
+If you've moved to a new email provider (for example, switching from a third-party address to Google Workspace), update your Clay campaigns in these steps:
+
+1.  **Connect the new email account.** Go to `Campaigns` → `Email Accounts` → `Add email accounts` and choose the connection method for your new provider:
+    -   Google Workspace: select `Gmail (OAuth)`. If you see an "Access blocked" error, your Google Workspace admin must first authorize Clay Sequencer for your domain — follow the steps in [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth).
+    -   Microsoft Outlook: select `Microsoft Outlook OAuth`.
+    -   Other providers (including third-party email hosting): select `SMTP` and enter your SMTP and IMAP credentials.
+2.  **Enable warmup on the new account.** The new account starts warmup from scratch — the initial phase typically takes 2–3 weeks before the account shows as **Ready**. Enable warmup right after connecting to start building sender reputation.
+3.  **Update your campaigns.** Open each active campaign that used the old sending account. In the `Sender accounts` tab, add the new account, then use the ⋯ menu next to the old account to remove it.
+
 ### What is email account warmup?
 
 Warmup is the process of automatically sending and receiving emails from other inboxes in Smartlead's warmup pool so your actual campaign traffic looks similar to the emails you're already sending. We recommend you keep warmup on at all times for email accounts in the sequencer to maximize deliverability.
@@ -252,6 +264,12 @@ During warmup, your inbox will receive emails from other accounts in Smartlead's
 
 Warmup is enabled during the account connection flow: after connecting your email account, Clay shows a prompt with all newly added accounts pre-selected for warmup. Clicking **Enable warming** activates it — warmup emails will then appear in your inbox (filed under your warmup label/filter) even if you haven't launched a campaign yet. If you enabled warmup by accident or want to stop it, go to `Campaigns` → `Email Accounts`, find the account, click the ⋯ options menu, and select **Disable warming**.
 
+### What does the Reputation percentage mean?
+
+The **Reputation** percentage shown next to each email account in `Campaigns → Email Accounts` is the percentage of warm-up emails from that mailbox that landed in the inbox — not in spam or promotions. It reflects how successfully that specific warmed mailbox is delivering warm-up emails through Smartlead's warmup pool.
+
+A high Reputation score (for example, 100%) means the vast majority of warm-up sends for that mailbox are reaching the inbox. This is a useful directional health signal for the warmup process itself. It is **not** an authoritative, provider-level domain-reputation score from Google Postmaster Tools, Microsoft SNDS, or similar services — those reflect your actual campaign traffic, not the simulated warmup activity.
+
 ### Why did warmup turn itself off?
 
 Warmup automatically disables when your emails are being throttled by your email provider. This protects your sender reputation. You can manually turn warmup back on from the `Sender Accounts` tab once the throttling issue is resolved.
@@ -260,6 +278,54 @@ Warmup automatically disables when your emails are being throttled by your email
 
 Clay's email sequencer runs on shared Smartlead infrastructure, and Smartlead only allows each email address to be connected once across the entire system. This error most commonly appears when the email was already connected to the sequencer in **another Clay workspace** — you don't need a separate Smartlead account for this to occur. To fix it, check your other Clay workspaces: go to `Campaigns` → `Email Accounts`, locate the address, and delete it there. Once removed from the other workspace, you can add it to the current one. If you can't identify which workspace has it, contact Clay support with the email address and we'll remove it from our end.
 
+### Why are some leads failing with "Sender email address is not a configured sender account in this campaign"?
+
+This error fires in the `Sync lead data to campaign` column when the **Assign sender account field to lead** setting (in the `Sender accounts` tab) is mapped to an email column, and the email address in that column for a lead does not match any of the sender accounts configured in your campaign.
+
+A common cause: mapping this field to a column that contains your leads' own email addresses (such as a "Personal Email" column) rather than a column that holds one of your sending account addresses. When the `Sync lead data to campaign` column runs, Clay validates each row's sender email against the campaign's configured accounts — if the address isn't a connected sender, that row fails with this error.
+
+**To fix it:**
+
+-   **If you do not intend to route specific leads to specific senders:** Remove the field mapping — open the `Sender accounts` tab, scroll to the `Assign sender account field to lead` section, and clear the selection. Leads will then be distributed evenly across all your configured sender accounts. After clearing it, re-run the `Sync lead data to campaign` column for the affected rows to re-enroll them.
+-   **If you do want to route specific leads to specific senders:** Make sure the column you selected contains one of your configured sending account email addresses — not the lead's own email. Add those sender accounts to the campaign first if they are not already there, then re-run the `Sync lead data to campaign` column.
+
+### Can I connect a third-party email provider (such as LiteMail) as a sender account?
+
+Yes — Clay's email sequencer sends campaigns directly and supports any email provider that supplies SMTP credentials, not just Google Workspace or Microsoft Outlook. The **Sender accounts** tab in your campaign is where you add all sending inboxes.
+
+To connect a provider like LiteMail:
+
+1.  In your campaign, go to the **Sender accounts** tab (or `Campaigns → Email Accounts` globally).
+2.  Click **Add email accounts** and select **SMTP**.
+3.  Enter the SMTP credentials your provider supplies: host, port, username, and password.
+4.  Enter your **IMAP credentials** (host and port) — Clay uses these to surface replies from recipients inside the platform. Most business email providers include IMAP access alongside SMTP.
+5.  Click **Add account**. The inbox appears in your Sender accounts list with its own independent daily sending limit.
+
+Use **SMTP** for any provider that isn't Google Workspace (use Google OAuth) or Microsoft Outlook (use Outlook OAuth). See [What fields does the SMTP connection form require?](#what-fields-does-the-smtp-connection-form-require) for the full list of required fields.
+
+### What fields does the SMTP connection form require?
+
+The manual SMTP form requires credentials in two sections:
+
+-   **SMTP settings** (for sending): SMTP host, port, username, password, and encryption type (SSL, TLS, or None).
+-   **IMAP settings** (for receiving): IMAP host, port, and encryption type.
+
+Both sections must be filled in before you can add the account. Clay does not provide a built-in inbox — IMAP credentials must come from an IMAP-capable mailbox you already have with a provider such as Google Workspace, Microsoft 365, Zoho, or Fastmail. Clay uses the IMAP connection to surface replies from recipients inside the platform, but the inbox itself stays with your email provider.
+
+If your sending service is SMTP-only and does not include IMAP (for example, SendGrid or another transactional email relay), you must pair it with a separate IMAP-enabled mailbox under your domain.
+
+### Can I use SendGrid as a sending account?
+
+Yes. SendGrid provides an SMTP relay that works with Clay's manual SMTP connection. In the manual SMTP form, enter:
+
+1.  **SMTP host**: `smtp.sendgrid.net`
+2.  **SMTP port**: `587`
+3.  **SMTP type**: TLS
+4.  **Username**: `apikey` — type this literally; it is not your SendGrid account name or email address.
+5.  **Password**: your SendGrid API key with the **Mail Send** permission enabled.
+
+Because SendGrid is a send-only relay, you must also fill in the **IMAP section** with credentials from a separate IMAP-capable mailbox under your domain (for example, a Google Workspace or Microsoft 365 inbox). Without an IMAP connection, Clay cannot track replies from your recipients.
+
 ### How do I add multiple email accounts at once?
 
 Use the `Bulk CSV upload` option on the `Add email accounts` screen (it's a top-level choice, not nested under SMTP). Download the example template from the modal and fill in one row per account with eight columns: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`.
@@ -267,6 +333,19 @@ Use the `Bulk CSV upload` option on the `Add email accounts` screen (it's a top-
 For Google Workspace accounts on adjacent or alternate domains, you'll need to:
 1. Enable SMTP access for each domain in your Google Workspace Admin panel (Apps → Google Workspace → Gmail → End User Access → Enable IMAP and SMTP).
 2. Generate an app password for each email alias (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` column value.
+
+### Does connecting via OAuth automatically add my email aliases?
+
+No — connecting a mailbox via OAuth only adds the specific email account you authenticate with. Email aliases associated with that account are **not** automatically connected as separate sender accounts. Warmup and campaign rotation apply per connected account, so aliases you haven't explicitly added do not participate in sending or warmup.
+
+To use an alias as a distinct sender, connect it as its own account:
+
+-   **SMTP:** Go to `Settings` → `Add email accounts` → `SMTP`. Set the "From" email to the alias address and enter your primary account's server credentials (username, password, SMTP host, and port).
+-   **Bulk CSV upload:** Use the `Bulk CSV upload` option to add multiple aliases at once. Set each row's `from_email` to the alias address and fill in the remaining SMTP and IMAP fields using your primary account's server settings.
+
+**For Microsoft 365 aliases:** The SMTP and bulk CSV paths work with Microsoft 365, provided your tenant has SMTP AUTH enabled and the alias has "Send As" permissions configured in your Microsoft 365 admin settings.
+
+**Note:** If your aliases are simple forwarding addresses that route to the same underlying mailbox (rather than independent inboxes with their own SMTP access), connecting them separately does not increase your total daily sending capacity — they share the same inbox. To scale sending volume, add accounts that each have a dedicated inbox. See [Buying email accounts](buying-email-accounts.md) for a faster path to additional inboxes.
 
 ### Are personal email accounts supported (e.g., Gmail, Hotmail)?
 
@@ -316,6 +395,14 @@ To view and manually manage your blocklist—including adding individual email a
 
 If a lead *replies* to your email — rather than clicking an HTML unsubscribe link — their response is categorized by Smartlead (e.g., as `Do Not Contact` or `Not Interested`), but they are **not** automatically added to the blocklist. The `Add email to blocklist` column in the campaign events table is a button by default: you can click it manually for a specific row, or automate it by setting an `Only run if` condition on the column. To trigger the blocklist action for reply-based opt-outs, set the condition to run when `Event type` equals `LEAD_CATEGORY_UPDATED` — this event fires whenever Smartlead categorizes a lead's reply. See [How are replies categorized in the Campaign Events table?](#how-are-replies-categorized-in-the-campaign-events-table) for the full list of reply categories.
 
+### What happens when an email to a lead bounces?
+
+A bounce is recorded as an `EMAIL_BOUNCE` event in your campaign events table, but the sequence does **not** automatically stop or pause for that lead — bounces do not trigger the same auto-stop behavior as replies. Remaining emails in the sequence continue to send unless you take action.
+
+To handle bounces automatically, add an `Only run if` condition to the relevant enrichment columns in your campaign events table:
+- **Pause lead in campaign** — set the condition to `Event type = EMAIL_BOUNCE` to automatically pause a bounced lead's remaining sequence steps.
+- **Add email to blocklist** — use the same condition to prevent future emails to that address across all campaigns in your workspace.
+
 ### What is a cold lead? What is a warm lead?
 
 A cold lead is someone who doesn't already know about your business and you. A warm lead is someone who has already responded to your email or expressed interest in some other way. The kinds of emails you send to each type are completely different—you can send a lot more emails from your main domain to warm leads than you can to cold leads.
@@ -345,6 +432,10 @@ If your admin has already completed those steps and you still see the error, see
 ### How do I authorize Clay's app in the Google Admin panel?
 
 Follow the instructions in the modal and have your Google Workspace admin set our Clay sequencer app to `Trusted` — not `Specific Google Data`. When searching in Google Admin, the app is listed as **Clay Sequencer (Web)** — the `(Web)` suffix indicates the web client type and refers to the same Clay Sequencer app. Selecting `Specific Google Data` will not grant all the permissions Clay needs, and the access error will persist. Despite its name, `Trusted` only allows Clay to request Gmail-specific permissions (full email access, basic email settings, OpenID, and your profile) — it does not grant access to Google Drive, Calendar, Docs, or any other Google service. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the Clay sequencer.
+
+### Does the Trusted admin setting give Clay access to all Google accounts in my domain?
+
+No — the Trusted setting is not domain-wide delegation. Marking Clay Sequencer as Trusted in the Google Workspace Admin Console removes the verification block that would otherwise prevent users in your domain from connecting their accounts, but it does not give Clay access to any mailbox automatically. Each person who wants to use the sequencer must still connect their own Google account individually: go to `Campaigns` → `Email Accounts` → `Add email accounts` → `Google OAuth` and complete the OAuth flow for their own account. Clay can only access a mailbox after that individual user explicitly authorizes it.
 
 ### I followed the admin setup steps but still see "Access blocked: clay.com has not completed the Google verification process." What should I do?
 

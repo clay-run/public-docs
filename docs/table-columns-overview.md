@@ -187,7 +187,7 @@ You can filter your table to show only rows that match specific criteria. Filter
 
 ### Apply a filter
 
-1.  Click the **Filter** button in the table toolbar.
+1.  Click the **Filter** button (funnel icon) in the table toolbar, above the rows.
 2.  Click **Add filter** and select a column to filter by.
 3.  Choose a comparison operator (e.g., **is**, **contains**, **is not empty**) and enter a value. The operators shown depend on the column's data type: Number (#) columns include numeric operators such as **is greater than** and **is less than**, while Text columns include string operators such as **contains**. If an expected numeric operator isn't visible, check that the column is set to the **Number** type. See [Comparison operators](comparison-operators.md) for a full reference.
 4.  To add more conditions, click **Add filter** again. Multiple filters are applied together — a row must match all active filters to appear.
@@ -195,7 +195,7 @@ You can filter your table to show only rows that match specific criteria. Filter
 
 ### Check whether a filter is active
 
-When a filter is active, the **Filter** button in the toolbar shows a number badge, and the row count displays as **X / Y rows** — X is the number of rows passing the filter, Y is the total. If Y is higher than X, some rows are being hidden by the active filter.
+When a filter is active, the **Filter** button in the toolbar shows the active filter count, and the row count displays as **X / Y rows** — X is the number of rows passing the filter, Y is the total. If Y is higher than X, some rows are being hidden by the active filter.
 
 ### Filters and source row limits
 

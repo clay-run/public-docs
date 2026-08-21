@@ -17,6 +17,16 @@ You can add tags to:
 -   Workbooks
 -   Functions
 
+## Finding your tables and workbooks
+
+The Clay homepage at [app.clay.com](https://app.clay.com) lists every table, workbook, folder, and function in your workspace. Three tabs let you navigate your resources:
+
+-   **All files** — Shows all tables, workbooks, folders, and functions you have created or have access to. If you have built something and cannot find it, start here. You can sort by **Created at** or **Last opened by me** to surface older resources.
+-   **Recents** — Shows the resources you have opened most recently, sorted newest first. Use this when you remember working on something recently but cannot recall where it is stored.
+-   **Favorites** — Shows only resources you have starred. Star any table or workbook by clicking the ☆ icon on its row.
+
+To open a table or workbook, click its name from any of these views.
+
 ## **When to use tags**
 
 **Tags complement folders** by adding flexible cross-categorization to your workspace:

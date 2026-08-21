@@ -63,7 +63,7 @@ The `Validation` section in `Full configuration` controls how the waterfall eval
 
 `Validation strategy`: Controls your risk tolerance for what counts as a valid email. Select from:
 
--   `Conservative` — The safest approach, including all verified email types. Best when deliverability matters (e.g. cold outreach where bounce rates affect sender reputation).
+-   `Conservative` — The safest approach. Accepts only emails confirmed as fully deliverable to a real mailbox — **catch-all domain emails are excluded**, even when a validation provider reports them as "Valid." Best when deliverability matters (e.g. cold outreach where bounce rates affect sender reputation).
 -   `Balanced` — Moderate risk level, including catch-alls. A good middle ground when you want some coverage of catch-all domains.
 -   `Aggressive` — Higher risk level, good for casting a wide net. Best when volume and coverage take priority over precision.
 -   `Advanced` — Manual configuration for fine-grained control over validation behavior.
@@ -184,6 +184,8 @@ No. `Infer Email` is completely free. The validation step _does_ cost Clay credi
 
 You only pay for the provider step that successfully finds an email — providers that run and return nothing are not charged. Total credit cost per matched email depends on which provider in the sequence finds a result first: if the first provider succeeds, you pay that provider's cost; if the waterfall tries two or three providers before finding a valid email, you pay for each attempt. Credit costs vary by provider and your plan tier. To reduce per-email spend, enable `Infer Email` — it adds a free first step that can skip paid providers entirely when the naming pattern matches.
 
+**When multiple providers return the same invalid email:** Each provider searches its own database independently — no provider's result is shared with the next. If two providers both find the same address, you are charged for each provider's find step regardless. The only exception is validation: once an email has been confirmed as invalid by an earlier validation step, the validation column for any later provider that returns that same address shows **Run condition not met** — that re-check is skipped and does not cost credits. To limit credit spend when the same invalid email keeps appearing across providers, use the **Threshold for duplicate results** setting in Full configuration → Additional column settings and set it to `2`. Once the same email has appeared twice in a row, the waterfall stops rather than continuing to additional providers. See [Additional column settings](#additional-column-settings) for details.
+
 For additional strategies — including connecting your own provider API keys (which drop the Clay credit cost for that step to 0) or using Lookup Columns to pull existing email data before the waterfall runs — see [Ways to save Clay credits](clay-credit-conservation.md).
 
 ### What happens if Infer Email guesses the wrong email?
@@ -214,6 +216,8 @@ To permanently show provider and validation columns going forward, open the wate
 
 -   Switch to a less strict `Validation strategy` — for example, `Balanced` or `Aggressive` instead of `Conservative`.
 -   Remove the validation provider entirely — any email found will then flow directly to the final output column without being checked.
+
+**A common cause — catch-all domain emails with Conservative strategy:** If your contacts are on catch-all domains (domains configured to accept email sent to any address), the validation provider may report those emails as "Valid" — but the `Conservative` strategy still rejects catch-all results, keeps the waterfall running, and leaves the output column blank. The validation column appears to show success while the waterfall's strategy filter is rejecting the result. To accept catch-all emails, switch to `Aggressive` in the waterfall's Full Configuration validation settings, or use `Advanced` with the catch-all option enabled. (`Balanced` also includes catch-all results but is not available for all validation providers.)
 
 **A related sub-case — same email found by multiple providers:** To avoid paying for validation twice, the waterfall skips re-validation for any email address that was already found and validated (as invalid) by an earlier provider step. If Provider 3 finds the same email address that Provider 1 already returned and confirmed as invalid, the validation column for Provider 3 will show **run conditions not met** and that email will not be written to the final output column. This is expected behavior — the waterfall continues searching because a later provider might still return a different, valid email.
 

@@ -84,9 +84,15 @@ Use this action to locate and enrich contact records with phone numbers using Li
 
 ## Troubleshooting
 
+### My Wiza column shows "Awaiting Callback" — is this normal?
+
+Yes — **Awaiting Callback** is the expected status while Wiza processes your email lookup. Wiza delivers results asynchronously: when Clay triggers a lookup, Wiza processes it in the background and sends the results back to Clay via a webhook. Your column stays in **Awaiting Callback** until that callback arrives, which typically takes a few minutes. This status does not indicate downtime.
+
+If a cell has been in **Awaiting Callback** for more than 5 minutes, Clay's timeout has likely elapsed and the cell will have moved to an error state. To retry, re-run those rows from your table: right-click the affected cells in the Wiza column and choose **Run selected rows** to dispatch fresh lookups.
+
 ### Wiza times out on large batches, causing waterfall fallthrough and extra credits
 
-Wiza processes work-email lookups asynchronously, which can take several minutes per lookup — Clay waits up to 5 minutes for a Wiza response before timing out. When you run many rows at once, multiple concurrent Wiza lookups can queue up and exhaust the concurrency limit on your Wiza API key, causing requests to stall and time out. In a waterfall enrichment, a timed-out step is treated as a non-result: Clay falls through to the next provider in the sequence and charges that provider's credits — even though Wiza did not have a chance to return a genuine match. Wiza's own credits are automatically refunded on timeout.
+Wiza processes work-email lookups asynchronously, which can take several minutes per lookup — Clay waits up to 5 minutes for a Wiza response before timing out. When you run many rows at once, multiple concurrent Wiza lookups can queue up and exhaust the concurrency limit on your Wiza API key, causing requests to stall and time out. In a waterfall enrichment, a timed-out step is treated as a non-result: Clay falls through to the next provider in the sequence and charges that provider's credits — even though Wiza did not have a chance to return a genuine match. Wiza's own credits are not consumed on timeout.
 
 **To prevent unintended credit spend from Wiza timeouts:**
 

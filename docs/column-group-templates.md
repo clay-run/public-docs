@@ -28,6 +28,8 @@ If you have existing column group templates, you can convert each one to a funct
 
 Once migrated, the function appears under the **Functions** tab on your Clay homepage and can be called from any table. See [Functions](functions.md) for how to call, edit, and manage it.
 
+**About integration accounts:** Column group templates do not include the template creator's integration credentials. When you apply an existing template, Clay automatically connects integration columns to an account you have already set up in your workspace. If your workspace does not yet have that integration connected, the columns are added but show a **Required auth account is missing** error. To fix this, open each affected column's settings, select or add your integration account in the account selector, and click **Save**.
+
 To save a new set of columns for reuse going forward, select the columns, right-click, and choose **Save as function** instead.
 
 ## Grouping columns

@@ -134,6 +134,8 @@ Clay's parallel models differ in power and cost:
 -   **clay-neon** — Good balance of capability and speed for moderately complex tasks.
 -   **clay-helium** — Fastest and most cost-effective among Clay parallel models.
 
+**For multi-step web research tasks** — such as finding contacts by searching Google and then visiting each profile page to verify details — prefer **clay-argon** or **clay-neon**. Clay's parallel models route to a dedicated research engine; within that engine, Argon handles the most thorough research and Neon covers moderately complex tasks. If a Claygent output explains that it could not complete all required research steps within its available budget, switching from Helium or a lightweight third-party model to Argon resolves the issue.
+
 **For classification and categorization tasks** (assigning a contact or record to a fixed list of labels using data already in your table), lighter models such as **clay-helium**, **GPT-4o mini**, or **Claude Haiku** work better than Argon. Argon is designed for deep research and complex reasoning — on a simple "pick one label from this list" task, it tends to return multi-sentence explanations and reasoning traces rather than a clean single-value response. Lighter models follow concise output instructions more reliably and cost less per run.
 
 To get a clean single-value response (for example, "Sales" rather than "This contact is best categorized as Sales because their title indicates..."):
@@ -143,6 +145,8 @@ To get a clean single-value response (for example, "Sales" rather than "This con
 3.  Add one or two examples in your prompt showing the expected output format — for example: _"Example output: Sales"_. The **Sculptor** tool can generate these automatically.
 
 **Note:** Switching to a non-parallel model (GPT-4o mini, Claude Haiku, etc.) also disables mandatory web search, which keeps runs faster and more consistent when classifying from data already in your table.
+
+**Reasoning effort**: Claygent runs all model calls with a fixed **low** reasoning effort level. This applies to all models — including third-party OpenAI models you connect with your own API key — and is not configurable in the Claygent interface. There is no option to set the reasoning level to medium or high. When comparing models for research or analysis tasks, the primary control over reasoning depth is the model you select.
 
 ### Output schema
 
@@ -264,6 +268,22 @@ No. Claygents are scoped to the workspace they are created in, and there is no b
 
 To use a Claygent in a different workspace, manually recreate it using Claygent Builder in the destination workspace — copy over the prompt, model settings, any uploaded context documents, and the output schema from the original.
 
+### Can Claygent access data from another table in my workspace?
+
+Claygent works at the row level — it receives only the inputs you explicitly pass to it for the current row. It cannot query other tables, loop through records, or check whether a value exists elsewhere in your workspace on its own.
+
+**Workaround: use Lookup Multiple Rows in Other Table before Claygent**
+
+To give a Claygent access to data from another table — for example, to check whether a prospected account has a relationship (subsidiary, affiliate, or existing account) with records in a separate reference table — use a two-step column sequence:
+
+1. Add a **Lookup Multiple Rows in Other Table** column that searches your reference table based on a shared attribute (such as company domain or account name).
+2. Reference the lookup results as an input in your Claygent prompt — the matched records are passed to the agent row by row.
+3. Instruct Claygent to evaluate, compare, or flag based on those returned records.
+
+**Hard cap: 100 matching records returned per row**
+
+The Lookup Multiple Rows action returns at most 100 matching records per row — this is a cap on results returned per lookup, not on the total size of the referenced table. You can reference a table with thousands of rows; only the first 100 records that match the filter criteria are returned. For use cases requiring comparison against more than 100 potential matches per row, split the reference table into segments, add a lookup column per segment, and combine the results in a formula or Claygent prompt. See [Lookup Rows](lookup-rows.md) for full details.
+
 ### Does testing cost credits?
 
 No. You can have up to 10 test cases per Claygent at a time for free. You can delete and add new test inputs to keep testing. Once you deploy and run your agent in a table, standard runs follow your normal billing.
@@ -287,6 +307,19 @@ Yes. Switch models in the configuration panel and rerun tests to compare output 
 ### What happens if I update an agent while it's running in a table?
 
 In-flight runs finish on the version that started them. New runs pick up the latest version automatically.
+
+### I switched to a cheaper model in my Claygent column but new runs still charge the old price — why?
+
+When you change the model in a Claygent column's settings and close the panel, Clay prompts you with a **"Save changes?"** dialog. If you clicked **"Don't save"** in that dialog, the model selection was discarded and new runs continue using the previous model and its credit cost.
+
+To apply the change:
+
+1.  Open the column settings (click the column name → **Edit column**).
+2.  Check that the **Model** picker shows the model you want.
+3.  If it still shows the old model, re-select your target model.
+4.  Click **Save** in the column settings panel — or when the "Save changes?" dialog appears on close, click **Save changes**.
+
+After saving, run a test row to confirm the credit cost has updated. Click the completed cell to open the **cell details** panel, which shows the credits charged for that run.
 
 ### Can I still edit prompts directly in tables?
 

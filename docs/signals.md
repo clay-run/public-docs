@@ -127,6 +127,15 @@ No. Signals monitor changes at companies or contacts already in your data source
 
 To search for open job postings by location, job title, or other criteria, use the **Find Jobs** source when creating a new table. You can also [schedule it to run on a recurring basis](https://www.clay.com/university/guide/scheduled-sources) (daily, weekly, etc.) so your table stays up to date with the latest postings.
 
+### What data does the Find Jobs source pull from?
+
+The Find Jobs source draws from a dataset of job postings that can normally be found on the professional network. When you search by job title, location, seniority, posting date, or other filters in the Find Jobs panel, you are searching across that dataset — results reflect jobs that were publicly listed on the professional network at the time the data was indexed. The **Find Active Job Openings** enrichment column uses the same data source, so its results draw from the same professional network dataset.
+
+To pull job postings sourced from company career pages or other job boards, use one of these enrichment integrations in your company table instead:
+
+-   **TheirStack** — aggregates postings from thousands of job posting sources. Available under **Add enrichment → TheirStack**.
+-   **PredictLeads Find open jobs** — sources from company career pages and professional networking platforms. Available under **Add enrichment → PredictLeads**.
+
 ### How do I check for job openings at each company in my table?
 
 If you have a table of company domains or names and want to pull active job openings for each one, use the **Find Active Job Openings** enrichment column — not a Signal.
@@ -227,6 +236,42 @@ If you had a brand mentions signal set up before the deprecation, it will show a
 -   **Claygent** — Use Clay's AI web scraper to monitor brand mentions from publicly available sources on the web.
 -   **Google News alerts** — Integrate through Clay to track brand mentions across news and web content.
 -   **Third-party social listening tools** — Many social listening platforms can connect to Clay through API integrations, letting you route mention data into your Clay tables.
+
+### How do I configure the Monitor Professional Posts signal?
+
+The **Monitor Professional Posts** signal discovers professional posts matching your criteria and adds new results to your table on a recurring schedule. It is a custom signal available under **Tools → Monitor for... → Professional Posts**.
+
+**Signal inputs:**
+
+-   **Companies filter (optional):** Choose how posts relate to the companies you provide:
+    -   **Mentions companies** — Posts that mention those companies by name or tag. Use this to track when people mention a brand.
+    -   **Posted by companies** — Posts published from those companies' official pages.
+    -   **Posted by companies' employees** — Posts written by people who currently work at those companies. Use this option to find posts from employees of specific organizations.
+-   **Company domains or profile URLs:** When a Companies filter is selected, provide the domains (e.g., `acme.com`) or professional profile URLs for the companies you want to monitor. Up to 5 identifiers are supported per run.
+-   **People filter (optional):** Limit results to posts mentioning specific individuals ("Mentions individuals") or written by them ("Posted by individuals"). Up to 5 person profile URLs are supported.
+-   **Keyword (optional):** Enter a **single** keyword or hashtag to filter by post content (e.g., `AI` or `#machinelearning`). Only one keyword is supported per signal — phrases like "AI security" and comma-separated lists are not valid. To track multiple topics, create a separate signal for each keyword.
+-   **Time frame:** Last 24 hours or last week (default).
+-   **Sort by:** Most recent (default) or Top match.
+
+**If the Monitor Professional Posts signal is returning 0 results:**
+
+-   **Check your keyword.** The keyword field accepts only a single word or hashtag. A multi-word phrase such as "agentic AI security" is not valid — use a single term like `AI` or `security` instead.
+-   **Confirm your identifiers.** At least one Companies or People filter must be configured with valid domains or profile URLs if you have selected a filter type.
+-   **Check the Companies filter option.** If you want posts *written by* employees at specific companies (not posts that merely *mention* those companies), set the Companies filter to **Posted by companies' employees**, not **Mentions companies**.
+
+### Why does my "Get interactions with professional posts" Signal fail with "Invalid input"?
+
+The **Get interactions with professional posts** source only accepts original post URLs from the professional network — specifically those containing `-activity-` or `ugcPost` in the URL path. Share URLs — those containing `-share-` before the numeric post ID — are not valid and cause the "Invalid input" error.
+
+**How to identify the URL type:**
+
+-   **Valid (activity):** the path contains `-activity-` before the post ID, e.g. `…/posts/author-slug-activity-7212099008951975937-xxxx`
+-   **Valid (ugcPost):** the path contains `ugcPost`, e.g. `…/feed/update/urn:li:ugcPost:7264751670859911168`
+-   **Invalid (share):** the path contains `-share-` before the post ID, e.g. `…/posts/author-slug-share-7468708383462797312-LxbK`
+
+To get a valid URL manually: open the post on the professional network, click **•••** (three dots) at the top right of the post, and select **Copy link to post**. If the post is a reshare of someone else's content, open the original underlying post first and copy its link from there.
+
+If post URLs are flowing in from another Clay source — such as **Find professional posts** or **Get a person's professional posts and shares** — some rows may contain share-type URLs for reshared content. To convert those automatically, add an **Enrich professional post** enrichment column and map your post URL column to it. The enrichment's **Post URL** output contains an activity-type URL that you can then pass to **Get interactions with professional posts**.
 
 ### Why did my job description keyword search return unexpected results?
 

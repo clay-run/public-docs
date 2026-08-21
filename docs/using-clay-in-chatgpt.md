@@ -2,14 +2,14 @@
 title: Using Clay in ChatGPT
 description: Find people, enrich contacts, and draft personalized outreach — all
   within a regular ChatGPT conversation.
-last_synced: 2026-04-26T01:40:52.599Z
+last_synced: 2026-07-13T21:39:45.462Z
 ---
 
 # Using Clay in ChatGPT
 
 Find people, enrich contacts, and draft personalized outreach — all within a regular ChatGPT conversation.
 
-Clay in ChatGPT lets you find people, enrich contacts, and draft personalized outreach — all within a regular ChatGPT conversation. Clay pulls data from a subset of its 150+ providers and AI-powered research agents directly into ChatGPT, so you can move from research to action in seconds.
+Clay in ChatGPT lets you find people, enrich contacts, and draft personalized outreach — all within a regular ChatGPT conversation. Clay pulls data from a subset of its 200+ providers and AI-powered research agents directly into ChatGPT, so you can move from research to action in seconds.
 
 ## Getting started
 
@@ -37,7 +37,7 @@ Use cases for Clay in ChatGPT
 
 ### Find and enrich people at target accounts
 
-Once you've researched an account, Clay can help you find the right people to reach out to. Search by job title, seniority, location, or other criteria, and Clay will enrich each contact with verified emails, phone numbers, work history, and professional profile.
+Once you've researched an account, Clay can help you find the right people to reach out to. Search by job title, seniority, location, or other criteria, and Clay will enrich each contact with verified emails, work history, and professional profile.
 
 **Example prompts:**
 
@@ -71,7 +71,7 @@ After gathering context on companies and contacts, use Clay to draft personalize
 
 To get the best results when using Clay in ChatGPT:
 
--   Include the company domain (e.g., "rippling.com"), not just the company name
+-   Include the company domain (e.g., "rippling.com\"), not just the company name
 -   Limit your search to one company at a time for more accurate results
 -   Be specific with criteria: job titles, locations, seniority, keywords
 -   If you aren't sure what job title you're looking for, try asking "who manages X at company"
@@ -100,7 +100,7 @@ Workspace admins can set credit limits and monitor rep usage from `Settings → 
 
 **What data sources does Clay use in ChatGPT?**
 
-Clay in ChatGPT pulls from a subset of its 150+ third-party data providers to give you comprehensive coverage across contact data, company intelligence, and web research. If you want to enable additional enrichments, add a function for them and enable it for MCP.
+Clay in ChatGPT pulls from a subset of its 200+ third-party data providers to give you comprehensive coverage across contact data, company intelligence, and web research. If you want to enable additional enrichments, add a function for them and enable it for MCP.
 
 **What if I need data that isn't available?**
 

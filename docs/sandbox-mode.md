@@ -28,7 +28,7 @@ Sandbox mode is a special table mode that lets you safely build, test, and publi
 
 -   Your regular table becomes read-only and cannot be updated directly — the **All data** tab shows a **View-only** indicator while sandbox is active.
 -   You can switch between your sandbox and the read-only production table using the tabs menu.
--   All recurring sources ([webhooks](https://www.clay.com/university/guide/webhook-integration-guide), [signals](https://www.clay.com/university/guide/signals), etc.) and [scheduled runs](https://www.clay.com/university/guide/scheduled-columns) will still run while sandbox mode is active.
+-   All recurring sources ([webhooks](https://www.clay.com/university/guide/webhook-integration-guide), [signals](https://www.clay.com/university/guide/signals), etc.) and [scheduled runs](https://www.clay.com/university/guide/scheduled-columns) will still run while sandbox mode is active — under the same rate limits as your production table.
 
 **Sculptor and sandbox mode:** [Sculptor](https://www.clay.com/university/guide/sculptor) automatically puts your table into sandbox mode whenever it builds new columns. This lets you review and validate Sculptor's changes before they go live.
 
@@ -41,6 +41,8 @@ In sandbox mode, you can test formulas, waterfalls, and enrichments. **Here are 
 -   You cannot add or edit sources in sandbox mode. To make these changes, first return to your normal table, then re-enable sandbox mode.
 -   To prevent accidental updates, all outbound actions (actions that send data such as exporting or [Write to Other Table](https://www.clay.com/university/guide/write-to-table-integration-overview)) are automatically disabled in sandbox mode.
     -   However, you can still manually run individual cells or columns if needed.
+
+**Credits:** Sandbox mode is not free — enrichments and integrations consume credits normally. Because sandbox execution is limited to at most 50 rows (10 by default), credit consumption is much lower than a full-table run, but it is not zero. Think of sandbox as a credit-conservative testing environment rather than a zero-cost one.
 
 ### Adding data to the sandbox
 

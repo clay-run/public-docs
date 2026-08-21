@@ -177,6 +177,12 @@ Use **Pause** when you want to temporarily suspend new work (for example, while 
 
 No. Previously processed rows remain unchanged and won't be marked as stale. Only new rows processed after you publish your changes will use the updated logic.
 
+### Do changes to a function apply to rows that have already run?
+
+No. Changes to a function don't backfill — they won't reapply to rows that have already been processed. Past outputs stay exactly as they were. Only rows that run after you publish your changes will use the new version of the function.
+
+To apply the updated logic to a row that already ran, re-run that row's function column in the calling table. This dispatches a fresh invocation against the current function configuration.
+
 ### What columns should I include when building a function?
 
 Include action columns (enrichments, Claygents, waterfalls) — not static input columns like company name or domain. Action columns contain the reusable logic you want to apply across tables.
@@ -302,7 +308,21 @@ Other useful column status filters you can apply to any function or enrichment c
 
 ### Can I share a function with someone outside my workspace?
 
-Yes. Enable "share as template" on the function to generate a shareable link. Anyone with the link can view the function's columns and create a table in their workspace using it.
+Yes. Enable "share as template" on the function to generate a shareable link. Anyone with the link can view the function's columns and create a copy of the function in their workspace.
+
+### How do I duplicate a function within my workspace?
+
+Use the **Share as template** feature to create a copy of any function:
+
+1.  Open the function from your Clay homepage.
+2.  In the function's settings panel, scroll to the **Share as template** section and enable the toggle.
+3.  Copy the template link that appears.
+4.  Paste the link into your browser. The template page opens, showing the function's columns and input mappings.
+5.  Click the button to copy the function into your workspace.
+
+The duplicate is created as a new, independent function — you can rename it and modify it freely without affecting the original.
+
+**Note:** While the toggle is on, the function's columns, input mappings, and first row of data are visible to anyone with the link. Disable the toggle after duplicating if you want to keep the function private.
 
 ### Can a function be enabled for MCP tools like ChatGPT, Claude, or Glean?
 
@@ -311,6 +331,17 @@ Yes, on supported plans. The `Enable for MCP` option in the function editor pane
 ### Can I call a function programmatically via the API?
 
 Yes — currently in beta. Clay's public API lets you invoke a function against input data without opening the app, making it useful for agent workflows, CI pipelines, and system-to-system integrations. To get access, contact your GTM engineer or [our team](https://www.clay.com/contact-form) to have the public API beta enabled for your workspace.
+
+**Finding your function's Routine ID:**
+
+Each function has a unique **Routine ID** (format: `function:...`) that identifies it in API calls. The Routine ID appears in the **Integrations** section of the function's settings panel — but this section is only visible when you are **not** in edit mode.
+
+To find your Routine ID:
+
+1.  Go to **Functions** on your Clay homepage and open the function.
+2.  If you see an "Editing function" toolbar or an orange banner reading "Changes in Edit Mode will not go live until you review and publish," click **Exit edit mode** at the bottom of the editor.
+3.  In the settings panel on the right, scroll to the **Integrations** section.
+4.  Copy the **Routine ID** — it has the format `function:...`. Use this value when calling the API, for example: `POST /routines/<Routine ID>/run`.
 
 **Rate limits and batch sizes:**
 

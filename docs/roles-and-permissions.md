@@ -127,6 +127,8 @@ Workspace admins can edit access levels for specific workbooks. This helps preve
     -   **Admins and invited collaborators only** — restricts access to admins and any collaborators you explicitly invite.
 3.  If `Admins and invited collaborators only` is selected, an option to `+ Add collaborators` will appear.
 
+**These settings control edit access only, not visibility.** All workspace members can see every workbook once they are invited to the workspace — there is no way to hide specific workbooks from specific users. If your goal is to prevent certain users from seeing a workbook entirely, that is not currently supported in Clay.
+
 ## Related access controls
 
 Beyond roles, workspace admins have additional tools to control what users can do:
@@ -149,4 +151,4 @@ Create named credit spending pools and assign them to users or groups, so spend 
 
 **Audiences**
 
-There are currently no configurable workspace-level access controls specific to the Audiences feature — you cannot restrict which workspace members can view or filter audience data. However, **setting up data sources in Audiences requires Admin access**: Editors can view and filter audiences but cannot add or configure sources. If you're an Editor who needs to connect a source, ask a workspace Admin to do it, or have your role upgraded. Note that connection access controls do apply to enrichment columns within Audiences — see [Access settings for connections](https://university.clay.com/docs/access-settings-for-connections) for details.
+Viewing and filtering audience data is available to all workspace roles. Most write operations require **Admin** access: creating and editing audience segments, running bulk enrichments, adding or configuring data sources, exporting individual records to Salesforce, and upserting records from a Clay table into Audiences are all Admin-only. Editors can export audience segments to Clay workbooks or campaigns. Viewers have read-only access. For the full breakdown, see [Audiences roles and permissions](https://university.clay.com/docs/audiences#roles-and-permissions). Note that connection access controls also apply to enrichment columns within Audiences — see [Access settings for connections](https://university.clay.com/docs/access-settings-for-connections) for details.

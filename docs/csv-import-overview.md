@@ -40,7 +40,7 @@ Once your data is in Clay, you can enrich rows to pull in additional information
 **If you imported a list of companies and want to find contacts and their email and phone numbers:**
 
 1.  **Find company domains (if your list has company names but no domains).** The Work Email waterfall requires a company domain for each row — a company name alone is not enough. In your table, click **Tools**, switch to the **Enrich** tab, and search for **Company Domain** to add the Company Domain waterfall. Map the column containing company names as the input and click **Save**. The waterfall cascades across multiple providers to find a domain, stopping as soon as one returns a result.
-2.  **Find contacts at each company.** Click **Tools**, switch to the **Import** tab, and select **Find People at These Companies** to search for people at each company by job title, seniority, or other criteria. Each match is returned as a separate contact row.
+2.  **Find contacts at each company.** Click **Tools**, switch to the **Import** tab, and select **Find People at These Companies**. In the setup panel, use **Job title keywords** to target a specific role — for example, "Head of E-commerce" or "VP of Sales" — and add seniority or location filters as needed. Clay runs this search across every company in your table in one batch — you configure it once and it processes your entire list without needing to trigger it per company. Each match is returned as a separate contact row in a new linked people table.
 3.  **Add email and phone enrichments to the contacts table:**
     -   **Work email:** Click **Add enrichment**, search for **Work Email**, and select the waterfall. It requires each person's full name and company domain.
     -   **Mobile phone:** Click **Add enrichment**, search for **Phone number**, and select the waterfall under **Waterfalls**. It requires the person's professional profile URL, which is returned by the people search.
@@ -94,3 +94,14 @@ Clay requires **UTF-8 encoded** CSV files. Files saved with other encodings (suc
 **If the upload still fails after the steps above:**
 
 Make sure your CSV file name is short. Long file names can interfere with the upload process. Rename the file to a brief descriptive name and try again.
+
+**If the CSV import dialog shows "Row limit exceeded.":**
+
+This error means the destination table has already reached its per-plan row capacity — there are no remaining rows available to add. It appears when importing into a table that is already at its row ceiling, not when the CSV file itself is larger than the plan limit (a CSV larger than the table's remaining space shows an **"Import First N Rows"** button instead).
+
+Per-table row limits by plan:
+
+-   **Free plan:** 200 rows per table
+-   **Launch, Growth, and Enterprise plans:** 50,000 rows per table
+
+To proceed: delete some rows from the destination table to free up capacity, switch the destination to **Create new table** to import into a fresh table, or upgrade your plan to increase the per-table row limit (click **Upgrade your plan** in the top right of your workspace).

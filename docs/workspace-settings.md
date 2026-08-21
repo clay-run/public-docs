@@ -1,6 +1,6 @@
 ---
 title: Workspace settings
-description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, agency setups, and deletion.
+description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, agency setups, deletion, and recovering a previous workspace.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -27,6 +27,22 @@ To switch between workspaces:
 **If your tables seem to have disappeared** — for example, after upgrading your plan or returning to Clay after some time — check the workspace switcher first. Your data is not deleted; it's in the workspace where you originally created it.
 
 **Note:** When you upgrade a plan, the upgrade applies to the specific workspace you are currently in. If you upgrade while viewing a different workspace than the one where you created your tables, those tables remain in the original workspace. Use the workspace switcher to navigate between them.
+
+## Can't find a previous account or workspace
+
+If you log in and find yourself in a blank new workspace with none of your tables, or feel like Clay created a brand new account for you, this almost always means you signed in with a different identity than the one you used originally:
+
+-   **Different Google account:** Clicking **Continue with Google** while a different Google account was active in your browser (for example, a personal Gmail instead of a work account) signs you into that Google account and automatically creates a new workspace for it. Your original workspace is untouched.
+-   **Different email address:** Signing in with a different email address creates a separate Clay account and workspace. Each email address has its own account.
+
+**To get back to your original workspace:**
+
+1.  **Sign out and sign back in with your original credentials:** Go to [app.clay.com](https://app.clay.com), sign out, and then sign in with the email address or Google account you originally used. Your workspace and tables will be there.
+2.  **Use the workspace switcher if you have multiple workspaces under the same account:** Click your **profile picture or name in the top-right corner** and look for the **Workspaces** section in the dropdown. The switcher shows all workspaces the currently-signed-in account belongs to — it cannot show workspaces from a different Clay account (different email or Google account).
+
+**If you cannot find your original workspace** or you are not sure which email address or Google account you originally used, contact Clay support via the in-app chat. Having the following details ready will help the team locate your account quickly: the email address you originally signed up with, the login method you used (Google or email and password), and anything you remember about the workspace — its name, roughly when you created it, or the names of tables in it.
+
+For step-by-step guidance on recovering access after signing in with the wrong Google account, see [Account settings](./account-settings.md).
 
 ## Using Clay as an agency
 
@@ -68,6 +84,28 @@ To update your billing email:
 
 -   In `Workspace settings`, edit the `Billing email` field to update the email address used for all billing-related communication.
 -   Click `Save` to ensure the new email is recorded.
+
+## Single Sign-On (SSO)
+
+SSO is not configured through the Clay workspace settings UI — there is no self-serve configuration panel. To set up SSO for your workspace, contact Clay support. SSO is available on **Enterprise** plans at no additional cost, and as a paid add-on on annual Pro and annual Growth plans.
+
+See [Single Sign-On (SSO)](./single-sign-on.md) for full details on eligibility, the setup process (handled by Clay's support team via WorkOS), how login behavior changes once SSO is enabled, and important notes on user provisioning.
+
+## Beta Program
+
+The Clay Beta Program gives your workspace early access to experimental and cutting-edge features before they reach general availability. Beta features are marked throughout the app with a **Beta** tag.
+
+**Joining the Beta Program is self-serve and available to all workspaces.** Only a workspace admin can enroll or leave — non-admins can see the option but cannot toggle it.
+
+To join the Beta Program:
+
+-   Go to `Settings` > `Workspace settings`.
+-   In the **Beta program** section, click **Join beta program**.
+-   Your workspace immediately gains access to all current beta features.
+
+To leave the Beta Program, return to the same section and click **Leave beta program**.
+
+Once enrolled, beta feature announcements and discussions are shared in the [**#clay-beta-program**](https://clayrunhq.slack.com/archives/C08T0RDMBBR) channel in the Clay community Slack.
 
 ## Delete your workspace
 

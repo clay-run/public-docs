@@ -53,7 +53,7 @@ To add more profiles from the same search to an existing people table without cr
 -   **Languages:** Filter by specific languages spoken.
 -   **Education:** Search for specific school names.
 -   **Companies:** Find people at specific companies using an existing Clay table or a custom list. By default, this matches people who **currently** work at those companies.
-    -   **Locked after creation:** The filter type (Clay table vs. custom list) and which table is linked cannot be changed once the source exists — this is what the "Can only be changed during source creation" tooltip means. The table's row contents are not frozen, however: adding or removing rows from the linked table is reflected each time the source runs. When re-run after new companies are added, the source searches across all companies currently in the table, not just the newly added ones.
+    -   **Locked after creation:** The filter type (Clay table vs. custom list), which table is linked, and — when using a custom list — the specific company identifiers entered cannot be changed once the source exists. This is what the "Can only be changed during source creation" tooltip means. If you need to target a different set of companies (for example, to correct a mistyped domain), create a new Find People source with the corrected identifiers. The linked Clay table's row contents are not frozen, however: adding or removing rows from the linked table is reflected each time the source runs. When re-run after new companies are added, the source searches across all companies currently in the table, not just the newly added ones.
     -   **Run settings:** The source runs **Manually** by default — adding new companies to the linked table does not automatically trigger a new run. To automatically pick up new companies on a recurring basis, click the source column header in your people table, expand **Run settings**, and switch from **Manually** to **On a schedule**. Choose a frequency (Daily is most common) and click **Save schedule**. You can also click **Run now** at any time for an immediate on-demand run.
     -   **Company identifier type:** The identifier in your linked table or custom list determines how companies are resolved. **Domains** (e.g., `acme.com`) match at the root-domain level — useful for broader coverage, but may return people from a parent company or other entities that share that domain. **Company profile URLs** from the professional network match the exact company page, limiting results to that specific entity. Company profile URLs return fewer but more precise results; domains return more but may include unintended companies.
 -   **Exclude people:** Exclude up to 3 different sets of people from your search using Clay tables, CSVs, or manual lists. You can exclude up to 300,000 people total (100,000 per source). Exclusions match by individual professional profile URL — each row in your exclusion table must contain a person-level profile URL. Adding a company name, domain, or company page URL to the exclusion table will **not** suppress all people from that company.
@@ -102,6 +102,22 @@ Any enrichments you add afterward (work email, phone number, profile enrichment)
 ### Can I see the total number of people that match my search before importing?
 
 **Yes.** The search wizard shows a result count directly in the interface — you can see how many people match your filters before clicking Import. The count also shows how many rows will be imported based on your **Limit results** setting. For very large searches, the count may display as a capped number with a "+" indicator; hover over it to load the full exact total.
+
+### Why does my Find People search return people from companies I didn't add to my list?
+
+When you use domains (e.g., `acme.com`) as company identifiers, Clay maps each domain to internal company records at the root-domain level. This mapping can occasionally include people from a parent company, subsidiary, or other entity associated with that domain — resulting in contacts from companies you didn't explicitly target.
+
+To limit results to a specific company only, use **company profile URLs from the professional network** instead of domains as your identifier. Profile URLs map directly to a single company page, so only people from that exact company appear in your results. See [Use profile URLs, not domains, as company identifiers](finding-companies-and-people-in-clay.md) for the full guidance and valid URL formats.
+
+### How do I adjust or refine my search criteria on an existing Find People table?
+
+Your search filters are saved on the source, not on the table rows. To update them after initial setup:
+
+1. In your Find People table, click the **database icon** in the source column header (tooltip: "Edit source") — or click the column header dropdown and select **Edit source**. A panel opens showing a read-only summary of your current inputs.
+2. Click **Edit inputs** in the panel. A wizard opens where you can update your criteria — job title, seniority, location, company filters, exclusions, and so on.
+3. Save your changes, then run the source from the panel to re-import results with the updated criteria.
+
+**Note:** Re-running after a filter change imports only *new* contacts that match your updated criteria and are not already in the table. Contacts that were previously imported remain in the table and are not re-evaluated against the new criteria. If you need to start fresh with the updated filters, create a new Find People table.
 
 ## Importing from a Sales Navigator search URL
 
@@ -170,7 +186,9 @@ To build a table of people who liked, commented on, or shared a specific post, u
 
 **URL format requirement:** This source only accepts `activity` and `ugcPost` type post URLs. Share URLs — those containing `-share-` between the author slug and the post ID — are not valid and return an invalid-URL error. To identify the URL type: valid post URLs contain either `-activity-` or `ugcPost` in the path; share post URLs contain `-share-` and are not accepted.
 
-To get the correct URL: open the post, click **•••** (three dots) at the top right of the post, and choose **Copy link to post**. If the post is a reshare, open the original underlying post first and copy its link from there.
+To get the correct URL manually: open the post, click **•••** (three dots) at the top right of the post, and choose **Copy link to post**. If the post is a reshare, open the original underlying post first and copy its link from there.
+
+If post URLs are flowing in from another Clay source — such as **Find professional posts** or **Get a person's professional posts and shares** — some rows may return share-type URLs for reshared content. To convert those share URLs to the required activity format automatically, add an **Enrich professional post** enrichment column and map your post URL column to it. The enrichment's **Post URL** output contains an activity-type URL that you can then pass to **Get interactions with professional posts**.
 
 ## Getting a person's posts and shares
 

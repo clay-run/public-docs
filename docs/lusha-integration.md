@@ -158,7 +158,7 @@ Search for contact-level signals — such as promotions or company changes — f
 
 ### `Action` Enrich company headcount growth
 
-Search for a company's headcount growth over a specified time period using its domain or company name. Costs 8 Clay credits per run, refunded if no data is found.
+Search for a company's headcount growth over a specified time period using its domain or company name. Costs 8 Clay credits per run. In some cases, a data provider may not charge when no data is found — in those cases, your credits will be refunded automatically.
 
 **Inputs**
 

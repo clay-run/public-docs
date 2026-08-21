@@ -334,6 +334,28 @@ Beyond the schedule, sources can also run in response to other events. For examp
 
 To investigate why a source ran unexpectedly, click the source column title and select **View Run History**.
 
+### My source is set to "Run this source: Manually" but credits are still being consumed — why?
+
+**"Run this source: Manually" controls only when the source re-imports rows — it does not stop enrichment columns from running automatically.**
+
+Clay has two independent run controls:
+
+-   **Source schedule** ("Run this source: Manually" / "On a schedule") — determines when the source queries your external system to add or update rows. Set to "Manually," the source adds rows only when you click **Run now** or when a non-schedule trigger fires. It has no effect on whether enrichment columns run.
+-   **Table-level Auto-run toggle** (click the ⛭ icon → **Run Settings**) — determines whether enrichment columns fire automatically whenever rows arrive or their inputs change. This toggle is independent of the source's schedule setting.
+
+If the table-level Auto-run toggle is **on**, enrichment columns run automatically whenever rows are added or dependencies change — regardless of whether the source is scheduled or manual. Credits are charged for each enrichment that runs.
+
+**To stop enrichment columns from running automatically:**
+
+1.  Click the ⛭ icon in the table toolbar to open **Run Settings**.
+2.  Toggle **Auto-run** off. The toggle shows "Manual" when disabled.
+
+With table-level Auto-run off, no enrichment columns run automatically — you must click individual cells or trigger runs manually.
+
+For more granular control, you can also disable auto-run per column: click the column name → **Edit column** → toggle **Auto-run** off under **Run settings** → **Save**. Column-level auto-run only takes effect when table-level Auto-run is on.
+
+See [Auto-run](auto-run.md) for full details on table-level and column-level auto-run controls.
+
 ### What happened to the Action button and Source option?
 
 The toolbar button previously labeled **Action** has been renamed to **Tools** — this applies to all workspaces. Within the **Tools** panel, the tab previously labeled **Sources** is called **Import** in workspaces where the Functions feature is enabled (currently in beta — contact support to enable it); workspaces without Functions enabled continue to see a **Sources** tab in the same panel.

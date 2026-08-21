@@ -83,6 +83,27 @@ Check both the **Queued rows** and **Errored rows** tabs for rows with **Run Sto
 
 For more options on re-running specific rows or cells, see [Run progress](run-progress.md).
 
+### Understanding count differences between Clay and your destination
+
+When a bulk enrichment contains multiple enrichment steps, the record count shown in Clay and the count in your downstream destination (Snowflake, Salesforce, Google Sheets, etc.) will often differ while a run is in progress. **This is expected behavior, not a bug.**
+
+Each enrichment step processes independently with its own queue and latency. Clay's processed count increments when a row exits the bulk enrichment table — but the final write to your destination only completes after all upstream enrichment steps for that row have finished. As the work drains through the chain, the two counts catch up to each other.
+
+For example, if your bulk enrichment runs several function-based enrichment steps before a Snowflake export, you may see Clay reporting 46,000 records processed while Snowflake shows only 14,000 rows — because thousands of rows are still working through the intermediate steps.
+
+**Why destination counts keep climbing after you pause a run**
+
+Pausing a bulk enrichment stops new rows from entering the processing queue. However, rows that were already dispatched to enrichment steps continue running to completion. This means your downstream destination (Snowflake, Salesforce, etc.) may keep receiving new writes for some time after the table is paused — the in-flight work is still finishing. Once those rows complete, the destination count stabilizes.
+
+**How to reconcile counts**
+
+To understand where rows are in the pipeline:
+
+1.  Start from your final write action (for example, your Snowflake or Salesforce export column) and check its progress bar.
+2.  Work backwards through the enrichment chain, checking the progress of each step.
+
+Each enrichment column shows a progress bar you can hover over to see how many rows have completed, are queued, or have errored at that step. Comparing the counts across steps shows exactly where rows are still in flight.
+
 ## Run Setup settings (Audiences)
 
 When a bulk enrichment is attached to an [Audiences](https://university.clay.com/docs/audiences) segment (available on Growth and Enterprise plans), clicking the enrichment card opens a **Run Setup** panel with additional settings for ongoing enrichment behavior.
@@ -125,3 +146,25 @@ Here's what happens to setup-mode rows when you click **Start Run**:
 -   **Records that still match your current segment** — these are re-enriched from scratch. Credits are spent again for these rows.
 
 This means if you updated your audience segment filters after creating a bulk enrichment, you do not need to manually remove records that no longer match before running — clicking **Start Run** handles cleanup automatically.
+
+### Resuming after changing segment filters
+
+If you pause a bulk enrichment and update your audience segment before resuming, the resume option you choose determines which records are picked up next.
+
+**Continue where you left off**
+
+Records already in the queue finish processing first. What happens to newly-qualifying records depends on how you changed your segment:
+
+-   If you **added a new segment** to the bulk enrichment while it was paused, members of the newly-added segment are enqueued automatically when you resume.
+-   If you **edited the filter conditions on an existing connected segment** (same segment, narrowed or changed the filters), records that newly match the updated filters are **not** automatically enqueued on resume. Clay tracks which segment IDs were connected at the time the run was paused — it does not re-evaluate membership changes from in-place filter edits when resuming.
+
+If you edited an existing segment's filters and want those newly-qualifying records to be enriched, use **Run from the beginning** instead. Alternatively, if **Auto-enrich new records** is enabled, newly-qualifying records will be picked up automatically in the background within 15 minutes of joining the segment.
+
+**Run from the beginning**
+
+All rows currently in the bulk enrich table are cleared, and the enrichment restarts fresh using your current segment configuration — including any filter changes you made to existing connected segments. Previously archived rows from the completed portion of the run are not affected — they remain in the archive. Note: restarting costs credits again for the newly seeded rows.
+
+**Which option to use:**
+
+-   Choose **Continue where you left off** if you want to finish processing records already in the queue. Note that if you edited an existing segment's filter conditions (rather than adding a new segment), those newly-qualifying records will not be pulled in automatically on resume.
+-   Choose **Run from the beginning** if you edited the filter conditions on an existing connected segment and want the enrichment to start fresh using your updated filters. This clears the current queue and seeds the run from your current segment configuration.

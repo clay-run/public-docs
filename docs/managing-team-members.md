@@ -52,6 +52,8 @@ Clay offers three user roles with different permission levels to help manage you
 
 Workspace access in Clay is invitation-only. When a new user signs up for Clay, they are automatically placed in their own workspace — they will not join yours unless you explicitly invite them. Your workspace remains private to you until you send an invite.
 
+**If your workspace uses SSO (such as Okta or another SAML identity provider):** Clay's SSO handles authentication only — it does not provision users or add them to your workspace. Adding a user in your identity provider does not create a Clay account or grant access to your organization's workspace. You must send a Clay workspace invite before a user can log in via SSO and be directed to your workspace. If a user clicks the SSO tile before receiving a Clay invite, they will be routed to a new, empty workspace of their own instead of your organization's workspace. Sending a Clay invite after the fact still works — once the user accepts the invite and logs in via SSO, they will be directed to the correct workspace.
+
 To invite a new member to your workspace:
 
 -   Go to `Settings` > `Team`.
@@ -105,3 +107,7 @@ If a team member hasn't accepted their invite yet, they appear in `Settings` > `
 -   Select `Remove member`.
 
 Once removed, you can re-invite the same email address if needed. Only workspace admins can cancel pending invites.
+
+## Export your team member list
+
+Clay does not currently offer a built-in option to export your workspace team members as a CSV. Your team member list can only be viewed and managed directly in `Settings` > `Team`. To contact support for assistance with bulk user management tasks, reach out via the in-app chat.
