@@ -82,7 +82,7 @@ The `Enable for MCP` option requires a modern Launch, Growth, Enterprise, or Leg
 
 Clay provides two types of functions in the Functions tab:
 
--   **Clay-managed functions** — pre-built enrichment workflows built and maintained by Clay (such as company lookups, contact enrichment, and data waterfalls). These are available to all workspaces with no setup required.
+-   **Clay-managed functions** — pre-built enrichment workflows built and maintained by Clay (such as company lookups, contact enrichment, and data waterfalls). Available on all paid plans that include Functions; no configuration needed to use them.
 -   **Workspace functions** — custom workflows your team builds and enables for MCP.
 
 To view the full list of Clay-managed functions available in your workspace:
