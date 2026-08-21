@@ -13,7 +13,7 @@ Common use cases:
 
 -   **Prioritize in-market accounts.** Layer intent into lead scoring so reps focus on accounts already researching your category.
 -   **Find net-new buyers.** Source companies or people researching a competitor, product category, or industry theme.
--   **Build higher-intent ad audiences.** Sync people and accounts showing fresh intent into LinkedIn, Meta, or Google Ads.
+-   **Build higher-intent ad audiences.** Sync people and accounts showing fresh intent into connected ad platforms to reach active buyers.
 -   **Personalize outreach.** Use the specific topic someone is researching to tailor messaging at the account or person level.
 
 ## Finding net-new companies with topic intent
