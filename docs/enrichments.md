@@ -1,6 +1,6 @@
 ---
 title: Enrichments
-description: Learn how to run enrichments in Clay, including run settings, delay options, and custom rate limits.
+description: Learn how to run enrichments in Clay, including how enrichment search works, run settings, delay options, and custom rate limits.
 last_synced: 2026-04-26T01:39:56.840Z
 ---
 
@@ -26,6 +26,16 @@ You can run enrichments in several ways:
 2.  Under `Integrations`, select an option.
 3.  In the modal, select your account.
     -   Clay provides API keys for certain enrichments, but you can save [credits](https://www.clay.com/university/guide/credits) by using your own account—click `+ Add account` to set it up.
+
+## Enrichment search
+
+When you click `Add enrichment` and start typing, the search panel surfaces the most relevant options for your query.
+
+**Curated results for popular queries.** For common searches like `email`, `phone`, `linkedin`, `salesforce`, and others, Clay shows curated results with waterfall options listed first — these multi-provider sequences maximize coverage at the lowest credit cost. For other queries, results are ranked by relevance.
+
+**Row type labels.** Every result shows its type — **Waterfall**, **Enrichment**, **Template**, **Send & export**, and so on — so you can tell at a glance what you're selecting. Enrichments you created show "By me"; those from colleagues show the creator's name (for example, "By Jane Smith"); and Clay-built options show "By Clay."
+
+**Institutional knowledge badges.** Some results carry badges that surface practical provider context contributed by Clay's Solutions and Partnerships teams — for example, "EMEA Coverage" or "SMB." Click a badge to filter the result list to providers tagged with that label.
 
 ## Run settings
 
