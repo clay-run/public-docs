@@ -19,7 +19,7 @@ Build and sync contact and account lists to LinkedIn, Meta, and Google Ads for p
 -   Advertise to executives who recently changed jobs or got promoted
 -   Target leads that aren't in your CRM to expand total addressable market
 
-**Note:** Legacy ad sync (table-based Ad Sync) is deprecated. All existing table-based ad syncs now show a deprecation notice, and creating new table-based ad syncs is no longer supported. For new ad targeting workflows, create a segment in Audiences and use Ad sync instead — see [Syncing audiences to ad platforms](https://university.clay.com/docs/audiences#syncing-audiences-to-ad-platforms).
+**Note:** Legacy ad sync (table-based Ad Sync) is being deprecated. All existing table-based ad syncs now show a deprecation notice, and creating new table-based ad syncs is no longer supported. For new ad targeting workflows, create a segment in Audiences and use Ad sync instead — see [Syncing audiences to ad platforms](https://university.clay.com/docs/audiences#syncing-audiences-to-ad-platforms).
 
 ## **Creating and syncing ad audiences**
 
@@ -115,9 +115,9 @@ Access control is enforced at the Google Ads account level — the person connec
 
 ### **What is the difference between Ad sync and Legacy ad sync?**
 
-**Ad sync** uses a segment from Audiences — a People list or Company list — as its source. Ad sync is the recommended option for all new campaigns. Your audience stays up to date automatically as contacts enter or leave the segment.
+**Ad sync** uses a segment from Audiences — a People list or Company list — as its source. Ad sync is available on Growth and Enterprise plans and is the recommended option for new campaigns. Your audience stays up to date automatically as contacts enter or leave the segment.
 
-**Legacy ad sync** uses a Clay table directly as its source. This is an older workflow that is now deprecated: existing legacy syncs remain active and visible, but creating new table-based ad syncs is no longer supported. Legacy ad syncs show a deprecation notice in the Ads dashboard.
+**Legacy ad sync** uses a Clay table directly as its source. This is an older workflow that is being deprecated: existing legacy syncs remain active and visible, but creating new table-based ad syncs is no longer supported. Legacy ad syncs show a deprecation notice in the Ads dashboard.
 
 If you have an existing legacy ad sync you want to modernize, import the table into Audiences, create a People or Company list from it, then set up a new Ad sync from that segment.
 
