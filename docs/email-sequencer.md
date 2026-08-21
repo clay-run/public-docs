@@ -104,7 +104,7 @@ Special sequencer enrichments available in the table include:
 
 -   `Reply to lead`: Automate responses to any email reply event using a pre-built HTML template, AI-generated snippet, or booking link.
 -   `Pause lead in campaign`: This can be called from any Clay table to pause a lead on an incoming event (e.g. event signup, or if the recipient filled in a form).
--   `Add email to blocklist`: Automatically prevent unsubscribed or removed leads from being added to future campaigns.
+-   `Add email to blocklist`: Stop an email address from receiving emails across all campaigns in your workspace — including any campaigns that address is currently active in.
 
 ## Managing campaigns
 
