@@ -131,19 +131,9 @@ No. Saving columns as a function preserves the existing data without rerunning t
 
 ### Do run conditions carry over when I save columns as a function?
 
-No. When you save columns as a function using **Save as function** from the right-click menu, run conditions on the original columns are **not** automatically carried over to the new function. You need to manually add any run conditions inside the function after creating it.
+Yes. When you save columns as a function using **Save as function** from the right-click menu, run conditions on the original columns are automatically carried over to the new function. Clay copies the run condition formulas and remaps formula references to the new function context — so the columns inside the function will have the same run conditions as they had in your original table.
 
-To add a run condition to a column inside a function:
-
-1.  Open the function table.
-2.  Click **Live function** (top-left dropdown) and select **Edit draft** to enter edit mode.
-3.  Click the header of the column you want to configure.
-4.  Select **View column** to open the column settings panel on the right.
-5.  Add the run condition in the settings panel.
-6.  Repeat for each column that needs a run condition.
-7.  Click **Review Changes**, then **Publish Changes** to apply.
-
-**Note:** This applies only when creating a new function from selected columns without checking **Replace columns with function**. If you checked **Replace columns with function** during setup, your original column configurations — including run conditions — are preserved intact inside the function. See [What happened to my original columns after I used "Replace columns with function"?](#what-happened-to-my-original-columns-and-prompts-after-i-used-replace-columns-with-function)
+**One edge case to be aware of:** If a run condition references a column that was not included in the function and is not wired as a function input, that reference is carried over verbatim but will point to the original table's field ID — which doesn't exist inside the function. In that situation the run condition needs to be updated manually. To access column settings inside a function: open the function in edit mode (click **Live function** → **Edit draft** from the function's live view, or **Edit function** from the settings panel), then click the column header and select **View column** to open the settings panel on the right.
 
 ### What happened to my original columns and prompts after I used "Replace columns with function"?
 
