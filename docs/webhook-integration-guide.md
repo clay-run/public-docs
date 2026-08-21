@@ -161,13 +161,13 @@ There is no customer-facing search to look up a Clay table by its webhook URL. I
 
 **Tip:** To avoid this situation in the future, give each webhook table a descriptive name when you create it (for example, "HubSpot MQL ingest" or "Salesforce lead flow"). Since every table generates a unique webhook URL, a clear name makes it easy to match a URL back to the right table later.
 
-### What happens to my webhook URL if I duplicate a table?
+### What happens to my webhook URL if I duplicate a table or share it as a template?
 
-When you duplicate a table that has a webhook source, Clay generates a **brand new, unique webhook URL** for the duplicate. The original table's URL continues working as before — it is not affected by the duplication.
+When you duplicate a table — or share a workbook as a template and someone copies it — Clay generates a **brand new, unique webhook URL** for each copy. The original table's URL continues working as before — it is not affected by the duplication or template copy.
 
-Because the duplicate has a different URL, any external system currently sending data to the original table will not automatically send to the new table. To start receiving data in the duplicate, update your sending system (for example, Zapier, Make, a custom script, or another tool) to POST to the new URL.
+Because each copy has a different URL, any external system currently sending data to the original table will not automatically send to the new one. To start receiving data in the copied table, update your sending system (for example, Zapier, Make, a custom script, or another tool) to POST to the new URL.
 
-To find the new webhook URL: open the duplicated table, click the webhook source column, and copy the URL shown there.
+To find the new webhook URL: open the duplicated or template-copied table, click the webhook source node, and copy the URL shown there.
 
 ### Does Clay prevent the same webhook record from being processed more than once?
 
