@@ -397,9 +397,7 @@ If a lead *replies* to your email — rather than clicking an HTML unsubscribe l
 
 ### What happens if I manually add a lead to the Global Blocklist while they're already in an active campaign?
 
-Adding an email address to the Global Blocklist prevents that address from being enrolled in **future** campaigns — it does not automatically stop or cancel the remaining email steps for a lead that is already active in a running campaign.
-
-To immediately stop further emails to a specific lead who is mid-campaign, open the campaign, go to the **Leads** tab, and pause that lead manually. For GDPR or compliance use cases, pause the lead first (which stops queued emails immediately), then add the address to the Global Blocklist as a permanent safeguard against future enrollment in any campaign.
+Adding an email address to the Global Blocklist stops that address from receiving emails from **all** campaigns in your workspace — including leads already mid-campaign. No separate pause step is required. Emails already in Smartlead's immediate outgoing queue at the moment you add the address (typically within the next few minutes before a scheduled send time) may still be delivered, but no further emails are queued after the blocklist takes effect.
 
 ### What happens when an email to a lead bounces?
 
