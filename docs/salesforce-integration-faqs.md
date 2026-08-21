@@ -301,6 +301,40 @@ On the Salesforce side, modify the duplicate rule to exclude records coming from
 
 For details on Clay's Create Record settings, see [Salesforce integration](https://university.clay.com/docs/salesforce-integration-overview). For more on Salesforce duplicate rules, see [Salesforce's documentation](https://help.salesforce.com/s/articleView?id=sales.duplicate_rules_map_of_reference.htm&type=5).
 
+## Why am I seeing a `DUPLICATES_DETECTED` error when updating records in Salesforce?
+
+This error means Salesforce has an active duplicate rule that is blocking the update because the record being modified matches an existing record in your org.
+
+Unlike the **Create Record** action — which has a **Duplicate Rule Override** toggle that can bypass duplicate warnings when the rule is set to allow saves — the **Update Record** action does not have a duplicate bypass option. When a Salesforce duplicate rule fires on an update and is configured to block (rather than warn), Clay surfaces the error and the update does not proceed.
+
+There are three ways to resolve this:
+
+**Option 1: Merge or remove the duplicate in Salesforce**
+
+Look up the conflicting account in Salesforce (the error message typically includes the conflicting record ID) to identify which records are in conflict. Merge or clean up the duplicates in Salesforce to consolidate them into a single surviving record, then re-run the Update Record action.
+
+**Option 2: Exclude Clay's integration user from the duplicate rule**
+
+In Salesforce, modify the duplicate rule to exclude the Salesforce user that Clay authenticates as. For example, add a condition such as "Current User not equal to \[the Salesforce user Clay authenticates as\]". This lets Clay update records without triggering the rule, while still protecting your org from duplicates created by other users.
+
+**Option 3: Loosen the rule so it warns instead of blocks on edits**
+
+Adjust the duplicate rule in Salesforce so that it warns about duplicates rather than hard-blocking updates. When the rule is set to warn (rather than block), updates proceed even when a potential match is detected.
+
+For more on Salesforce duplicate rules, see [Salesforce's documentation](https://help.salesforce.com/s/articleView?id=sales.duplicate_rules_map_of_reference.htm&type=5).
+
+## Why is Clay returning an "entity is deleted" error when updating a Salesforce record that still exists?
+
+This error typically occurs after Salesforce accounts have been merged. When Salesforce merges two accounts, the losing duplicate is soft-deleted — its record ID becomes invalid, and all of its data is folded into the surviving record, which has a different ID. If Clay imported the losing account's ID before the merge, it continues using that old ID when running the Update Record action. Because that ID now points to a deleted record, Salesforce returns an "entity is deleted" error even though the account's data still exists on the surviving record.
+
+**To fix this:**
+
+1.  Add a **Lookup Record** column before your Update Record column. Set the Salesforce object to **Account** (or whichever object you are updating) and search by a field that remains stable across the merge — such as Account Name or domain. Enable **Exact match** to avoid partial matches.
+2.  In your **Update Record** column, change the **Record ID** input to reference the `Id` field returned by the Lookup Record column instead of the originally imported ID.
+3.  Re-run the Update Record action. Clay will now send requests using the surviving record's current Salesforce ID.
+
+To refresh IDs across multiple affected rows at once, click the Lookup Record column header and select **Run column → Run empty or out-of-date rows** before re-running your Update Record action.
+
 ## Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?
 
 The `MALFORMED_ID` error means Salesforce received a value it cannot interpret as a valid record ID for a reference (lookup) field — such as **OwnerId**, **AccountId**, **ContactId**, or **CampaignId**. Reference fields require the actual Salesforce record ID (an 18-character alphanumeric string, for example `005Pk000008CnYDIA0`), not a display name or label. Passing a person's name — for example, `Matt Bagshaw` — to the **OwnerId** field causes Salesforce to return a `MALFORMED_ID` error, which Clay surfaces as-is.
