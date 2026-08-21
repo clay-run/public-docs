@@ -476,7 +476,7 @@ When setting up an Audiences → Ads sync, the **Map** step includes an Enhanced
 | Tier | Cost (modern plans) | Cost (legacy plans) | Expected match rates |
 |------|---------------------|---------------------|---------------------|
 | **Premium** | 2 credits/row | 3 credits/row | Professional network ≤ 95%, Meta ≤ 65% |
-| **Standard** | 1 credits/row | 2 credits/row | Professional network ≤ 80%, Meta ≤ 50% |
+| **Standard** | 1 credit/row | 2 credits/row | Professional network ≤ 80%, Meta ≤ 50% |
 | **None** | 0 credits | 0 credits | Professional network < 60%, Meta < 30% |
 
 Modern plans include Launch, Growth, and post-2026-pricing-change Enterprise. Legacy Enterprise (EnterpriseApril2023) plans are charged the legacy rates above.
