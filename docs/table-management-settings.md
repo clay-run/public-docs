@@ -1,7 +1,7 @@
 ---
 title: Table management settings
 description: Manage table settings including auto-dedupe, duplicate table, view graph, rename, edit description, view history, auto-delete, and navigating to a table by ID.
-last_synced: 2026-04-26T01:40:46.543Z
+last_synced: 2026-04-26T01:40:46.622Z
 ---
 
 # Table management settings
