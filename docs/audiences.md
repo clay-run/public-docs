@@ -30,10 +30,13 @@ Viewing and filtering audience data is available to all workspace roles. Most wr
 | Run bulk enrichments | ✓ | — | — |
 | Add or configure data sources | ✓ | — | — |
 | Export individual records to Salesforce | ✓ | — | — |
+| Update segment record | ✓ | — | — |
 | Upsert or update records from a Clay table into Audiences | ✓ | — | — |
 | Export a segment to a Clay workbook or campaign | ✓ | ✓ | — |
 
-To change someone's role, go to **Settings** → **Team** and use the dropdown next to their name. Changes apply immediately. Editors and Viewers who need to create segments, run bulk enrichments, or manage data sources should have their role upgraded to Admin, or ask a workspace Admin to perform those actions on their behalf.
+To change someone's role, go to **Settings** → **Team** and use the dropdown next to their name. Changes apply immediately. Editors and Viewers who need to create segments, run bulk enrichments, manage data sources, or use the Update segment record action should have their role upgraded to Admin, or ask a workspace Admin to perform those actions on their behalf.
+
+**Note:** When a non-admin user sees the error "You don't have access to this feature — Ask your workspace admin to grant you permission to use this feature," it means the action requires Admin role. There are no sub-admin permissions to grant for Audiences write operations — the only option is for a workspace Admin to upgrade the user's role to Admin via **Settings** → **Team**.
 
 ## Importing your data
 
@@ -68,7 +71,7 @@ You can import data from:
 8.  Select `Leads` at the top of the sync panel.
 9.  Enable the `Import` toggle.
 10.  Add any Lead fields you want to filter or segment by — common fields include `Lead Status`, `Lead Source`, `Title`, and `Company`.
-     -   Lead records are automatically merged with matching Contact records into a single person record in your People audience. Data from both sources is combined, and duplicates across Salesforce Leads, Contacts, and other sources count as one person. The primary matching key is the `ConvertedContactId` field — see [Why do some of my Salesforce Lead records not appear as separate person records in Clay?](#why-do-some-of-my-salesforce-lead-records-not-appear-as-separate-person-records-in-clay) for details.
+     -   Lead records are automatically merged with matching Contact records into a single person record in your People audience. Data from both sources is combined, and duplicates across Salesforce Leads, Contacts, and other sources count as one person. The primary matching key is the `ConvertedContactId` field — see [Why do some of my Salesforce Lead records not appear as separate person records in Clay?](#why-do-some-of-my-salesforce-lead-records-not-appear-as-separate-person-requests-in-clay) for details.
      -   After syncing, you can filter your People audience by **sync status** (whether a Lead record has been imported from Salesforce) and **record conversion status** (whether the Lead has been converted to a Contact in Salesforce).
 11.  Name the corresponding Clay fields.
 12.  Select `Opportunities` at the top of the sync panel.
