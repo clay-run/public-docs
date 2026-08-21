@@ -24,16 +24,19 @@ Setting up Audiences is four major steps:
 Viewing and filtering audience data is available to all workspace roles. Most write operations require workspace **Admin** access. The table below shows the full breakdown:
 
 | Action | Admin | Editor | Viewer |
-|---|---|---|---|
+|---|---|---|
 | View, browse, and filter audience data | ✓ | ✓ | ✓ |
 | Create and edit audience segments | ✓ | — | — |
 | Run bulk enrichments | ✓ | — | — |
 | Add or configure data sources | ✓ | — | — |
 | Export individual records to Salesforce | ✓ | — | — |
+| Update segment record | ✓ | — | — |
 | Upsert or update records from a Clay table into Audiences | ✓ | — | — |
 | Export a segment to a Clay workbook or campaign | ✓ | ✓ | — |
 
-To change someone's role, go to **Settings** → **Team** and use the dropdown next to their name. Changes apply immediately. Editors and Viewers who need to create segments, run bulk enrichments, or manage data sources should have their role upgraded to Admin, or ask a workspace Admin to perform those actions on their behalf.
+To change someone's role, go to **Settings** → **Team** and use the dropdown next to their name. Changes apply immediately. Editors and Viewers who need to create segments, run bulk enrichments, manage data sources, or use the Update segment record action should have their role upgraded to Admin, or ask a workspace Admin to perform those actions on their behalf.
+
+**Note:** When a non-admin user sees the error "You don't have access to this feature — Ask your workspace admin to grant you permission to use this feature," it means the action requires Admin role. There are no sub-admin permissions to grant for Audiences write operations — the only option is for a workspace Admin to upgrade the user's role to Admin via **Settings** → **Team**.
 
 ## Importing your data
 
