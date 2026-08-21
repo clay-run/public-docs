@@ -158,6 +158,17 @@ To apply the proposed column to your table:
 
 If you'd prefer to add a column directly without going through sandbox, use the **Add enrichment** or **+** button in your table toolbar instead.
 
+### My search only shows 50 rows
+
+If Sculptor ran a search — such as Find People, Find Companies, or Find Jobs — and your table shows only 50 rows, the cause is **Sandbox Mode**, not a limit on the search itself. Look for the **Sandbox Mode** badge in the top toolbar to confirm.
+
+Sandbox Mode is a testing environment that caps the table at a maximum of 50 rows. This is by design and is not a bug. Your full search results exist in the production table.
+
+To access all your results:
+
+-   **To check the full row count without publishing:** Click the **All data** tab in the tab bar above your table. The production table is read-only while sandbox is active, but you can see the total number of rows there.
+-   **To run your workflow on all rows:** Click **Review changes** → **Publish and run**. This publishes your Sculptor-built columns to the production table and runs them across all matching rows.
+
 ## FAQs
 
 ### **When should I use Sculptor instead of building manually?**
