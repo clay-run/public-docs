@@ -80,13 +80,13 @@ The `Validation` section in `Full configuration` controls how the waterfall eval
 
 ## FAQs
 
-### Do I need a LinkedIn URL or personal email to find work emails?
+### Do I need a professional profile URL or personal email to find work emails?
 
-No. The Work Email waterfall requires only **full name** and **company domain** as its minimum inputs — no LinkedIn URL or personal email is needed. Most providers in the waterfall can locate a work email using name and domain alone. Providing a LinkedIn URL as an additional input can expand which providers are able to run on each row, but it is not required.
+No. The Work Email waterfall requires only **full name** and **company domain** as its minimum inputs — no professional profile URL or personal email is needed. Most providers in the waterfall can locate a work email using name and domain alone. Providing a professional profile URL as an additional input can expand which providers are able to run on each row, but it is not required.
 
 If you have company names but not domains, add a **Company Domain** waterfall column first to look up each domain from the company name, then map that column as the `Company Domain` input in your Work Email waterfall. See [Building a data waterfall](building-a-data-waterfall.md) for setup steps.
 
-If you need LinkedIn URLs for other enrichments (such as Enrich Person), you can use Claygent to find them via Google search. Write a Claygent mission that queries `site:linkedin.com/in "{{First Name}} {{Last Name}}" "{{Company Name}}"` and extracts the matching profile URL. See [Claygent](claygent-builder.md) for how to build a research agent.
+If you need professional profile URLs for other enrichments (such as Enrich Person), you can use Claygent to find them via Google search — write a mission that searches for a person by name and company and extracts their profile URL. See [Claygent](claygent-builder.md) for how to build a research agent.
 
 ### How do I find an email for a specific contact?
 
