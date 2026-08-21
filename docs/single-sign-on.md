@@ -70,7 +70,18 @@ SSO only applies to users whose email address matches your verified domain. Team
 
 **If a user has already landed in a personal workspace instead of the company workspace:** You can recover without contacting support. From your company workspace, go to `Settings` > `Team` > `+ Invite` and send them a workspace invite. Have them accept the Clay invite from their email first, then sign in through your IdP (for example, by clicking the Clay tile in Okta). SSO will match them to the workspace seat you created and place them in the correct workspace. The empty personal workspace they were initially placed in remains as an orphan but does not affect their access to the company workspace.
 
-SCIM directory sync is on Clay's roadmap — contact Clay support or your Growth Strategist for the latest status on this feature.
+### Removing a team member (deprovisioning)
+
+Deprovisioning is a manual process — removing a user from your identity provider (for example, unassigning the Clay tile in Okta) does **not** automatically revoke their Clay workspace access. To deprovision a team member:
+
+1.  Go to `Settings` > `Team`.
+2.  Find the team member you want to remove.
+3.  Click the `…` (three-dot) menu at the end of their row and select `Remove member`.
+4.  Confirm the removal in the dialog that appears.
+
+Access is revoked immediately upon removal. There is currently no API or automated flow to deprovision users through SSO.
+
+SCIM directory sync — which would enable automatic provisioning and deprovisioning — is in active development. Contact Clay support or your Growth Strategist for the latest availability status.
 
 **Clay user roles are not managed through SSO or SAML.** Enabling SSO does not change existing team members' roles in your workspace. Clay reads only the user's email address from the SAML assertion, with `firstName` and `lastName` as optional attributes — no role or group attributes from your identity provider are mapped to Clay workspace roles. To assign or update a team member's role after SSO is enabled, go to `Settings` > `Team` and use the role dropdown next to their name.
 
