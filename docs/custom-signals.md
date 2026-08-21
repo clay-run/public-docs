@@ -56,13 +56,15 @@ The preview shown in the signal wizard (labeled "This is a preview showing up to
 
 ### What does the recurring credit cost in the signal wizard mean?
 
-The "Your recurring cost will be ~X credits per run" estimate shown in the signal wizard covers the cost of running the source query on each scheduled cadence. This charge applies every time the signal fires — including runs where no new companies are found — because credits are consumed for querying the data provider, not only when new rows are added to your table.
+Credits for a Custom Signal using HG Insights as the source are charged per company result that HG Insights returns on each run. If HG Insights returns no companies on a given run, no source-query credits are charged for that run.
 
-When the source query does return newly discovered companies, additional credits from that same run are applied toward those results based on the data provider's rates.
+One important nuance: credits are charged for every company HG Insights returns in the query, including companies already present in your results table from a previous run. Those existing companies are not added as duplicate rows, but they do count toward the run's credit cost.
+
+The estimate shown in the wizard reflects the expected total cost per run based on the number of company results your configuration is likely to return. Changing the run cadence (daily, weekly, monthly) does not change the per-result credit rate — it only changes how often the signal queries HG Insights.
 
 To manage your credit spend:
--   Choose a cadence that matches how frequently you need fresh data (daily, weekly, or monthly). The estimated cost shown in the wizard reflects the per-run cost at your selected cadence.
--   Review any enrichment columns in your results table — each enrichment with **Auto-update** enabled will also run automatically on newly added rows and will consume additional credits on top of the signal run cost. Turn off **Auto-update** on enrichment columns you don't want to fire automatically.
+-   Reduce the **Max companies** input in your signal configuration to limit how many results HG Insights can return per run.
+-   Review any enrichment columns in your results table — each enrichment with **Auto-update** enabled will also run automatically on newly added rows and will consume additional credits on top of the source query cost. Turn off **Auto-update** on enrichment columns you don't want to fire automatically.
 -   To see your full credit breakdown after a signal run, click `History` in the lower right corner of your results table and select `Usage history`.
 
 ## Guide: Turning enrichments into signals
