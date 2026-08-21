@@ -200,12 +200,15 @@ Clay sends the following fields to each ad platform for contact audience matchin
 | First name | ✓ | ✓ | ✓ |
 | Last name | ✓ | ✓ | ✓ |
 | Country | ✓ | ✓ | ✓ |
-| Zip / postal code | ✓ | — | — |
+| Zip / postal code | ✓ | ✓ | — |
 | City | — | ✓ | — |
 | State | — | ✓ | — |
 | Gender | — | ✓ | — |
+| Mobile advertiser ID | — | ✓ | — |
 | Company | — | — | ✓ |
 | Job title | — | — | ✓ |
+| Google AID (mobile device ID) | — | — | ✓ |
+| Google UID (mobile device ID) | — | — | ✓ |
 
 Email is the primary matching field on all three platforms — if no email column is mapped, the platform returns an audience size of 0. Phone numbers should be in E.164 format (for example, `+1…` for US, `+39…` for Italy). LinkedIn profile URL is used for **company audience** matching only and is not used for contact audience matching — to improve LinkedIn contact match rates, focus on clean email, name, company, and country data.
 
