@@ -18,7 +18,7 @@ In Clay, you can share tables and workbooks via a public link or specific emails
 
 Note that when sharing as a template, only the table structure and one row of sample data are shared. If you need to share your table data, you can export the table as a CSV file.
 
-**Webhook sources:** If your workbook includes a webhook source ("Pull in data from a Webhook"), the webhook node carries over into the template — recipients won't need to rebuild it from scratch. However, each person who copies the template receives their own unique webhook endpoint URL. After copying the template, each recipient should open the webhook source node in their copy, copy the new endpoint URL shown there, and update the system sending data to Clay to point to it.
+**Webhook sources:** If your workbook includes a webhook source ("Pull in data from a Webhook"), the webhook node carries over into the template — recipients won't need to rebuild it from scratch. However, each person who copies the template receives their own unique webhook endpoint URL, so they must open the webhook source node in their copy, copy the new endpoint URL, and update the system sending data to Clay to point to it. Copying a template that includes a webhook source requires a Pro or higher plan — recipients on Free or Launch plans will see an error when attempting to copy the workbook.
 
 **Table limit:** By default, workbooks with more than 10 tables cannot be duplicated or shared as templates. If your workbook exceeds this limit, contact Clay support to have the limit raised for your workspace.
 
