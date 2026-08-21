@@ -24,7 +24,7 @@ Setting up Audiences is four major steps:
 Viewing and filtering audience data is available to all workspace roles. Most write operations require workspace **Admin** access. The table below shows the full breakdown:
 
 | Action | Admin | Editor | Viewer |
-|---|---|---|
+|---|---|---|---|
 | View, browse, and filter audience data | ✓ | ✓ | ✓ |
 | Create and edit audience segments | ✓ | — | — |
 | Run bulk enrichments | ✓ | — | — |
