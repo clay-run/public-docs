@@ -479,7 +479,7 @@ When setting up an Audiences → Ads sync, the **Map** step includes an Enhanced
 
 Modern plans include Launch, Growth, and post-2026-pricing-change Enterprise. Legacy Enterprise (EnterpriseApril2023) plans are charged the legacy rates above.
 
-With **Premium** or **Standard**, Clay queries its provider network to find and hash personal emails for each contact automatically. With **None**, you manually map up to three existing hashed email columns from your Audience under **Include emails**.
+With **Premium** or **Standard**, Clay queries its provider network to find additional personal emails for each contact and hashes them automatically before sending. With **None**, no additional email lookup is performed — you map your existing email columns under **Include emails**, and Clay hashes those addresses automatically at sync time. You do not need to provide pre-hashed emails for any tier.
 
 **Hashed email limit:** All tiers support a maximum of **3 hashed email fields** per contact. If a contact has more than 3 personal email addresses available, only the first three are sent to the ad platform — there is no way to include additional emails beyond this limit.
 
