@@ -250,7 +250,7 @@ To return a value that comes in through a row input as function output:
 
 ### How do I return a single output field when two enrichment columns each cover the same data but only one runs per row?
 
-If your function uses two enrichment columns that cover the same data (e.g., two person enrichment providers where only one runs per row based on a run condition), the "Send data back" step maps column values by reference — it does not accept inline formulas to merge or transform values within the set itself.
+If your function uses two enrichment columns that cover the same data (e.g., two person enrichment providers where only one runs per row based on a run condition), the "Send data back" step maps column values by reference — it does not accept inline formulas to merge or transform values within the step itself.
 
 The workaround is to create a **formula column** (Merge columns) inside your function that coalesces the two enrichment columns, then use that formula column as the output:
 
