@@ -26,6 +26,16 @@ No. To maintain clear governance, only Admins can set credit limits. If an Edito
 
 Since Viewers can't create workbooks, an Admin must create one on their behalf and set a spending limit for their use.
 
+**Can I set credit limits per user or by team role?**
+
+Clay does not support per-user credit caps for regular workspace members (Admin or Editor roles). Credits are shared across the workspace for all standard table and workbook usage.
+
+To manage spend by team or user group, you have three options depending on how your team uses Clay:
+
+-   **Credit Budgets (Enterprise, open beta):** Create named budgets (for example, "RevOps" or "Sales") via `Settings` → `Budgets`, set a credit limit for each, and assign each team's workbooks to the relevant budget. Credits consumed by workbooks in a budget count against that budget's limit — once the limit is reached, enrichment processing stops for those workbooks until an admin increases the limit. Contact your Growth Strategist to request access to the Credit Budgets beta. See [Credit budgets](https://university.clay.com/docs/credit-budgets) for setup instructions.
+-   **MCP credit limits (Claude/ChatGPT/Glean):** For team members who access Clay through AI tools via the Clay MCP integration, admins can set a default monthly credit limit for all MCP users and override the limit per individual user. See `Settings` → `MCP` and [MCP settings](https://university.clay.com/docs/mcp-settings) for details.
+-   **Viewer role (Enterprise only):** Assigning the Viewer role prevents users from running enrichments by default — Viewers cannot consume credits unless an admin grants them workbook collaborator access. See [Roles and permissions](https://university.clay.com/docs/roles-and-permissions) for details.
+
 ## What can have credit limits?
 
 **What resources can have credit limits applied?**
