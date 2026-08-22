@@ -32,9 +32,9 @@ Clay does not support per-user credit caps for regular workspace members (Admin 
 
 To manage spend by team or user group, you have three options depending on how your team uses Clay:
 
--   **Credit Budgets (Enterprise, open beta):** Create named budgets (for example, "RevOps" or "Sales") via `Settings` → `Budgets`, set a credit limit for each, and assign each team's workbooks to the relevant budget. Credits consumed by workbooks in a budget count against that budget's limit — once the limit is reached, enrichment processing stops for those workbooks until an admin increases the limit. Contact your Growth Strategist to request access to the Credit Budgets beta. See [Credit budgets](https://university.clay.com/docs/credit-budgets) for setup instructions.
--   **MCP credit limits (Claude/ChatGPT/Glean):** For team members who access Clay through AI tools via the Clay MCP integration, admins can set a default monthly credit limit for all MCP users and override the limit per individual user. See `Settings` → `MCP` and [MCP settings](https://university.clay.com/docs/mcp-settings) for details.
--   **Viewer role (Enterprise only):** Assigning the Viewer role prevents users from running enrichments by default — Viewers cannot consume credits unless an admin grants them workbook collaborator access. See [Roles and permissions](https://university.clay.com/docs/roles-and-permissions) for details.
+-   **Credit Budgets (Enterprise):** Create named budgets (for example, "RevOps" or "Sales") via `Settings` → `Budgets`, set a credit limit for each, and assign each team's workbooks to the relevant budget. Credits consumed by workbooks in a budget count against that budget's limit — once the limit is reached, enrichment processing stops for those workbooks until an admin increases the limit. Available to all Enterprise plan workspaces. See [Credit budgets](https://university.clay.com/docs/credit-budgets) for setup instructions.
+-   **MCP credit limits (Claude/ChatGPT/Glean):** For team members who access Clay through AI tools via the Clay MCP integration, admins can set a default monthly credit limit for all MCP users and override the limit per individual user. See [MCP settings](https://university.clay.com/docs/mcp-settings) for details.
+-   **Viewer role (Enterprise only):** Viewers cannot create workbooks or tables, so they have no tables to run enrichments on by default. Assigning the Viewer role to a user effectively prevents credit consumption from standard workspace usage unless an admin explicitly grants them workbook collaborator access. See [Roles and permissions](https://university.clay.com/docs/roles-and-permissions) for details.
 
 ## What can have credit limits?
 
@@ -138,10 +138,10 @@ No. The notifications above are for workbook-level credit spend limits only — 
 
 To manually monitor your monthly credit balance, go to **Settings → Usage**. The Usage Dashboard shows your remaining Data Credits and your current billing period end date. For a detailed breakdown of credit consumption, see [Credit usage](/docs/credit-usage).
 
-## Credit Budgets (open beta)
+## Credit Budgets
 
 **What's the difference between credit spend limits and credit budgets?**
 
 **Credit spend limits** (covered in this guide) set workbook-level spending caps — admins define a maximum credit amount for each workbook, and all tables and campaigns within it share that cap.
 
-**Credit Budgets** is a related but separate feature currently in open beta for Enterprise customers. It lets admins create named budget pools, assign users or user groups to each budget, and associate workbooks, tables, and campaigns with a specific budget — providing more granular, shared credit governance as your organization scales Clay across multiple teams. To join the Credit Budgets open beta, contact your Growth Strategist.
+**Credit Budgets** is a related but separate feature available to all Enterprise plan workspaces. It lets admins create named budget pools, assign users or user groups to each budget, and associate workbooks, tables, and campaigns with a specific budget — providing more granular, shared credit governance as your organization scales Clay across multiple teams. Access it via `Settings` → `Budgets`. See [Credit budgets](https://university.clay.com/docs/credit-budgets) for complete documentation.
