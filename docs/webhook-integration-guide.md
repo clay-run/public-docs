@@ -31,14 +31,14 @@ The following limits apply to all webhook sources in your workspace:
 
 | Limit | Value |
 |---|---|
-| Throughput | 50 requests/second per webhook, burst up to 100 requests |
-| Rate limit scope | Per webhook source — each webhook has its own independent limit |
+| Throughput | 10 requests/second, burst up to 20 requests |
+| Rate limit scope | Per workspace — all active webhook sources share this budget |
 | Max payload size | 100 KB per request |
 | Max submissions | 50,000 per webhook source |
 
-**Throughput:** Clay accepts up to 50 incoming HTTP requests per second per webhook source. A burst of up to 100 requests is allowed when capacity is available — after a burst, throughput returns to the sustained 50-per-second rate. Each POST counts as one request against this limit, regardless of how many fields or records the payload contains. Exceeding the limit returns a `429` error with a `Retry-After: 1` response header — records are dropped and Clay does not queue them. For event-driven integrations where you cannot control the send rate directly (for example, a webhook triggered by a form submission), implement retry logic with exponential backoff on your sending system: wait at least 1 second after receiving a `429` before retrying. To avoid data loss when sending in bulk, pace your requests to 50 per second or fewer.
+**Throughput:** Clay accepts up to 10 incoming HTTP requests per second per workspace. A burst of up to 20 requests is allowed when capacity is available — after a burst, throughput returns to the sustained 10-per-second rate. Each POST counts as one request against this limit, regardless of how many fields or records the payload contains. Exceeding the limit returns a `429 Too Many Requests` response with a `Retry-After: 1` header and this body: `{"type":"TooManyRequests","message":"Too many requests. Wait a bit and retry.","details":null}` — records are dropped and Clay does not queue them. For event-driven integrations where you cannot control the send rate directly (for example, a webhook triggered by a form submission), implement retry logic with exponential backoff on your sending system: wait at least 1 second after receiving a `429` before retrying. To avoid data loss when sending in bulk, pace your requests to 10 per second or fewer. Multiple active webhook sources in the same workspace share this limit.
 
-**Need a higher throughput limit?** If 50 requests/second is too restrictive for your workflow, contact Clay support to request an increase — rate limits can be adjusted for your workspace on request.
+**Need a higher throughput limit?** If 10 requests/second is too restrictive for your workflow, contact Clay support to request an increase — rate limits can be adjusted for your workspace on request.
 
 **Payload size:** Each HTTP POST to Clay's webhook endpoint must be 100 KB or smaller.
 
@@ -78,7 +78,7 @@ For a complete example using Zapier, see [Send Clay data to Zapier](https://www.
 
 **Rate limits and retry for outbound calls:** Clay applies a default rate limit of **100 requests per second per workspace** on outbound HTTP API enrichment calls. If the receiving service enforces a stricter limit, configure the **Custom rate limit** setting inside your HTTP API column settings to match it. By default, the HTTP API enrichment **retries failed requests automatically** when the receiving service returns a `408`, `413`, or `429` status code, or a network-level connection error — up to 1 retry by default, configurable up to 5. For details on both settings, see the [HTTP API guide](https://www.clay.com/university/guide/http-api-integration-overview).
 
-**Note:** The 50 requests/second per webhook throughput limit in the [Limits](#limits) section above applies only to data *arriving at* Clay through a webhook source. It does not apply to outbound HTTP API calls your table makes to external services.
+**Note:** The 10 requests/second throughput limit in the [Limits](#limits) section above applies only to data *arriving at* Clay through a webhook source. It does not apply to outbound HTTP API calls your table makes to external services.
 
 ## FAQs
 
@@ -103,7 +103,7 @@ So if your source displays more rows than your table (for example, 162 vs. 92), 
 -   **Deleted rows.** Rows that were ingested at some point but later deleted from the table are still counted by the source. Deleting a row from the table does not reduce the source count.
 -   **Table filters.** If a filter is active on your table, only the rows matching that filter are shown in the table count. The source count always reflects all stored records, regardless of any filters.
 
-**Note:** Records that Clay rejected with a `429` rate limit error were never stored and do not appear in either count. See the [Limits](#limits) section above for guidance on keeping requests within the 50/second per webhook throughput limit to avoid dropped records.
+**Note:** Records that Clay rejected with a `429` rate limit error were never stored and do not appear in either count. See the [Limits](#limits) section above for guidance on keeping requests within the 10/second throughput limit to avoid dropped records.
 
 ### My webhook is sending data successfully but new rows aren't visible in my table
 
