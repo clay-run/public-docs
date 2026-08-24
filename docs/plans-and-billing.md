@@ -35,14 +35,14 @@ To upgrade your Clay workspace plan:
 3.  Select the plan you want to upgrade to and review the details.
 4.  Confirm your selection by clicking `Review change → Continue to payment`.
 
-Your new plan will activate immediately, and any applicable charges will be applied.
-
 **How upgrade billing works:**
 
--   Plan upgrades are **not prorated** — you pay the full price of the new tier immediately, not a partial amount for remaining days in your current cycle.
+-   Plan upgrades are **not prorated** — you pay the full price of the new tier immediately, not a partial amount for remaining days in your current cycle. Your billing cycle resets to the upgrade date.
 -   You receive the **full** Actions and Data Credits for your new plan right away.
 -   Unused Actions from your previous plan are not carried over (Actions reset each billing cycle and do not roll over).
--   Your existing unused Data Credits are preserved when you upgrade.
+-   Your existing unused Data Credits carry over — the new plan's monthly Data Credit allotment is added on top of your existing balance, up to a maximum of 2× the new plan's monthly credit limit. Any credits above that cap are dropped.
+
+Some workspaces see a timing choice at checkout: **Immediately (today)** activates the plan and resets billing right away (as described above); **At the end of your current billing period** schedules the upgrade and payment for your next renewal date while keeping your current plan active until then.
 
 ### Free plan
 
@@ -179,7 +179,7 @@ For more details, see our guide on [actions and data credits](https://www.notion
 
 No. Plan upgrades are not prorated. When you upgrade to a higher tier, you are charged the full price for the new plan immediately — not a partial amount for remaining days in your current billing cycle. In return, you receive the **full** Actions and Data Credits for your new tier right away, not just the incremental difference over your current plan.
 
-Unused Actions from your previous plan are not refunded or carried over (Actions reset each billing cycle and do not roll over). Your existing unused Data Credits are preserved when you upgrade.
+Unused Actions from your previous plan are not refunded or carried over (Actions reset each billing cycle and do not roll over). Your existing unused Data Credits carry over when you upgrade — the new plan's monthly Data Credit allotment is added on top of your existing balance, up to a maximum of 2× the new plan's monthly credit limit. Any credits above that cap are dropped.
 
 Upgrading also resets your billing cycle to the date of the upgrade — for example, if you upgrade on the 15th, your plan will renew on the 15th of the following month.
 
