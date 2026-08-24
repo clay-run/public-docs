@@ -264,6 +264,20 @@ During warmup, your inbox will receive emails from other accounts in Smartlead's
 
 Warmup is enabled during the account connection flow: after connecting your email account, Clay shows a prompt with all newly added accounts pre-selected for warmup. Clicking **Enable warming** activates it — warmup emails will then appear in your inbox (filed under your warmup label/filter) even if you haven't launched a campaign yet. If you enabled warmup by accident or want to stop it, go to `Campaigns` → `Email Accounts`, find the account, click the ⋯ options menu, and select **Disable warming**.
 
+### Can I start sending campaigns while my account is still warming up?
+
+Yes — accounts in **Warming up** status can send live campaign emails immediately. The status reflects that warmup is in progress, not that sending is blocked.
+
+That said, your account's sender reputation is still building during this period, so starting with low send volume and ramping up gradually is strongly recommended. Sending a high volume from a cold inbox right away can look suspicious to Google or Microsoft, increasing the risk of emails landing in spam, throttling, or account restrictions.
+
+Keep warmup running while you send live campaigns rather than disabling it — the ongoing warmup emails continue to build your sender reputation alongside your real sends. Best practices while your account shows **Warming up**:
+
+-   Start near the account's default daily send limit (20 emails/day) and increase gradually rather than jumping to your maximum.
+-   Confirm your domain's SPF, DKIM, and DMARC records are properly configured — these are a prerequisite for good deliverability regardless of warmup status.
+-   Prioritize well-targeted, high-quality outreach over high volume while warming up.
+
+Once the account switches to **Ready** (typically after 2–3 weeks), it has built enough sender reputation to handle normal campaign volume.
+
 ### What does the Reputation percentage mean?
 
 The **Reputation** percentage shown next to each email account in `Campaigns → Email Accounts` is the percentage of warm-up emails from that mailbox that landed in the inbox — not in spam or promotions. It reflects how successfully that specific warmed mailbox is delivering warm-up emails through Smartlead's warmup pool.
