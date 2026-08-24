@@ -627,7 +627,7 @@ If your people table has a **Company Table Data** column (created automatically 
 
 ### Why do "Picture URL Copy" and "Picture URL Orig" return null in Enrich Person?
 
-This is expected behavior. Clay stopped returning professional profile picture URLs through the Enrich Person enrichment for privacy and compliance reasons. Both the **Picture URL Copy** and **Picture URL Orig** output fields are present but always return null for all customer workspaces — this is not a bug and is not plan-specific (Growth, Pro, and Enterprise plans are all affected equally).
+This is expected behavior. Clay stopped returning professional profile picture URLs through the Enrich Person enrichment for privacy and compliance reasons. Both the **Picture URL Copy** and **Picture URL Orig** output fields are present but return null by default — this is not a bug.
 
 If you need professional profile photos in your workflow, the alternative is to use a third-party scraping tool integrated with Clay via HTTP API or webhooks:
 
@@ -635,6 +635,8 @@ If you need professional profile photos in your workflow, the alternative is to 
 -   **Apify** — offers profile scrapers with authentication.
 
 When using third-party scrapers, ensure your usage complies with the platform's Terms of Service and your organization's data privacy policies.
+
+**Note for enterprise customers:** Profile picture URLs can be enabled for specific enterprise workspaces on request — contact Clay support to inquire.
 
 ### How can I find a professional profile URL if I only have a name and an old email address?
 
