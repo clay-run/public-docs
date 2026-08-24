@@ -796,6 +796,21 @@ This means the filter answers "find me everyone who is a contact role on these s
 
 This pulls every contact tied to those accounts, regardless of their OpportunityContactRole status.
 
+### Why does my HubSpot deal Stage filter return no results in a Companies audience?
+
+When you filter a Companies audience by **Stage** under the Deals filter group, the value you enter must match HubSpot's **internal stage ID** — not the human-readable display name shown in the HubSpot UI. Clay stores the raw `dealstage` property value as it comes from HubSpot, so entering "Closed Won" returns no results even though that is the stage's display name in HubSpot.
+
+**HubSpot's default pipeline stages** use internal IDs that resemble their display names (for example, `closedlost` for Closed Lost and `closedwon` for Closed Won in the default pipeline). Stages in custom pipelines, or any stage that has been renamed, use a numeric internal ID assigned by HubSpot — which is why trying common text patterns like "closed" or "won" may not match.
+
+**To find the internal stage ID for any deal stage:**
+
+1.  In HubSpot, go to **Settings → Objects → Deals → Pipelines**.
+2.  Select the pipeline that contains the stage you want to filter by.
+3.  Hover over the stage name — HubSpot displays the internal stage ID.
+4.  Copy that value and paste it into the Clay **Stage** filter (for example, use the `contains` operator and enter the internal ID).
+
+**Note:** This limitation applies only to the deal Stage filter in Audiences. In Clay table enrichment columns, deal lookup and retrieval actions return both the internal stage ID and the readable display label as separate fields — so you can see the label there and use it to look up the matching internal ID.
+
 ### Why does Clay MCP show activity data for a contact when the Audiences Activity tab shows no activity?
 
 When a Salesforce lead is converted to a contact, Audiences merges both records into a single People entry using the lead's `ConvertedContactId`. The underlying activity data from the lead record — including activity counts and last-activity dates — is stored in Audiences and is accessible via Clay MCP, including the `ask-question-about-accounts` tool, which queries your Audiences data at the backend level.
