@@ -315,6 +315,32 @@ Clay does not transform field values before sending them to Salesforce — whate
 
 The same fix applies to any reference field that returns a `MALFORMED_ID` error — not just **OwnerId**.
 
+## Why am I seeing an `INVALID_CROSS_REFERENCE_KEY` error when updating a Salesforce record?
+
+This error comes from Salesforce, not Clay. When Clay's **Update Record** action sends an update request to Salesforce, Salesforce returns `INVALID_CROSS_REFERENCE_KEY` if it cannot resolve the record ID in the **Record ID** field to a record the connected user can write to. Clay passes the Salesforce error message through to the cell without modification.
+
+Three things cause this:
+
+1.  **The ID belongs to a different object type.** Salesforce record IDs carry a three-character prefix that identifies the object — `003` for Contact, `00Q` for Lead, `001` for Account. If a row's **Record ID** column contains an ID whose prefix doesn't match the object you're updating — for example, a Lead ID (`00Q...`) supplied to a Contact **Update Record** action — Salesforce rejects the update with `INVALID_CROSS_REFERENCE_KEY`.
+
+2.  **The record was deleted or merged in Salesforce after the ID was pulled into Clay.** If the Salesforce record no longer exists or was merged into another record, the stored ID is stale and Salesforce cannot find it.
+
+3.  **The connected Salesforce integration user lacks write access to that specific record.** Record-level restrictions — such as org-wide sharing defaults, sharing rules, or record ownership settings — can make a record invisible or read-only for the integration user. When the record is inaccessible to the connected user, Salesforce returns `INVALID_CROSS_REFERENCE_KEY` rather than a standard access error.
+
+**To diagnose which cause applies:**
+
+1.  Click into an erroring row in Clay to see the exact ID that was used as the **Record ID**.
+2.  Look up that ID directly in Salesforce (navigate to `https://[your-org].salesforce.com/[ID]`):
+    -   If Salesforce shows "We couldn't find the record," the record was deleted or merged — the ID is stale (cause 2).
+    -   If Salesforce opens the record but it's the wrong object type, an ID prefix mismatch is the cause (cause 1). Check that the column you mapped as **Record ID** only contains IDs for the object type you're updating.
+    -   If Salesforce opens the correct record and the record exists, the issue is a permissions restriction on the integration user for that specific record (cause 3).
+
+**Fixes by cause:**
+
+-   **Wrong object type (cause 1):** Verify the column you're using as **Record ID** only contains IDs for the object type your **Update Record** action targets. Use a formula column to check the prefix before the action runs — for example, `LEFT({{Record ID}}, 3) = "003"` to confirm Contact IDs.
+-   **Stale ID — deleted or merged record (cause 2):** Add a **Lookup Record** step to find the current record (or confirm it no longer exists) and refresh the ID in your Clay table before updating.
+-   **Permissions restriction (cause 3):** Ask your Salesforce admin to confirm the integration user has write access to the affected records through their profile, permission sets, sharing rules, or record ownership settings. See [Creating a restricted Salesforce user](creating-a-restricted-salesforce-user.md) for guidance on setting up integration user permissions.
+
 ## When creating a Salesforce contact, do I need to map Account Name in addition to Account ID?
 
 No. Mapping the **Account ID** field in the **Map fields** panel is sufficient to associate the new contact with an account. The Account Name you see displayed in Salesforce is not a separate field to create — Salesforce derives it from the Account ID relationship and shows it as a label in the record form. Because Account Name is a read-only derived field, it does not appear as an option in Clay's **Map fields** panel and cannot be mapped directly.
