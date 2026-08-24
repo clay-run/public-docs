@@ -250,7 +250,7 @@ When setting up a Snowflake or BigQuery import, you also define a `Unique Identi
 
 -   **Cross-source deduplication** — merge the same person from multiple sources.
 -   **Whitespace detection** — when importing from a Find People or Find Companies search, or saving results from a Clay table to your Audience, records that already exist in All People or All Companies are automatically excluded from the merge. The draft shows a banner with the count of excluded records, and clicking **All people** or **All companies** will only add net-new records. For Companies, exclusion matches on Clay's internal company identifier (CPJ ID). Existing Audience records need entity resolution to have completed — records missing a recognized domain or professional network URL may not yet have been assigned a CPJ ID, which can cause them to slip through as apparent duplicates. Ensuring your Companies audience records have accurate domains and professional network URLs helps entity resolution complete and improves deduplication coverage.
--   **Country-code domain variants** — Clay's entity matching normalizes domains by stripping subdomains and `www` prefixes, but does not automatically merge country-code TLD variants. A company at `swarovski.co.uk` and a company at `swarovski.com` are treated as separate entities by default — this reflects how many enterprises maintain distinct regional accounts. If a regional variant appears as net new in your search results and you want to exclude it, use the **Exclude companies** filter in your Find Companies source. See [Find Companies](find-companies.md) for how to set up exclusions.
+-   **Country-code domain variants** — Clay's entity matching normalizes domains by stripping protocol prefixes (such as `http://` and `https://`), `www` prefixes, and subdomains, but does not automatically merge country-code TLD variants. A company at `swarovski.co.uk` and a company at `swarovski.com` are treated as separate entities by default — this reflects how many enterprises maintain distinct regional accounts. If a regional variant appears as net new in your search results and you want to exclude it, use the **Exclude companies** filter in your Find Companies source. See [Find Companies](find-companies.md) for how to set up exclusions.
 -   **Secondary domains from your CRM** — Clay entity matching uses only the primary domain field mapped from your CRM source. If your CRM stores additional domains for a company (for example, HubSpot's secondary domain fields), those alternate domains are not imported into the Audiences company record and are not used for entity matching. A Find Companies search result for a secondary domain may appear as net new even if the same company exists in your audience under a different primary domain. To exclude known secondary domains from appearing as net new, add them to the **Exclude companies** filter in your Find Companies source.
 
 Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs — org duplicates carry over as-is.
@@ -642,6 +642,21 @@ The Source column is plain text — there is no direct link from the Source colu
 ### My CRM is messy. Should I clean it up before setting up Audiences?
 
 You don't need a clean CRM to get started — CRM cleanup is often the first use case Audiences enables. A common approach: sync your existing CRM, run professional network enrichments to refresh contact data, use the enriched identifiers to surface duplicates, then build further enrichments from there.
+
+### Why do I see duplicate company records for the same company in Audiences?
+
+Within a Salesforce source, Clay uses the **Salesforce Account ID** as the unique matching key — not the company name or domain. If your Salesforce org contains multiple Account records for the same company (each with a different Salesforce Account ID), Clay imports each one as a separate record in your Companies audience. Entity resolution does not merge records that originated from separate Salesforce Account IDs; org-level duplicates within a single Salesforce org carry over to Audiences as-is.
+
+Cross-source deduplication (for example, between Salesforce and Web Intent or Snowflake) does use domain, LinkedIn URL, and probabilistic matching. Entity resolution normalizes domain values for this matching — stripping protocol prefixes, `www`, and subdomains — so `https://www.snowflake.com` and `snowflake.com` resolve to the same entity when they come from different sources.
+
+**To resolve existing Salesforce duplicates:**
+
+1. Merge the duplicate Account records in Salesforce itself.
+2. On the next Clay sync, the deleted ("losing") Salesforce Account record is marked **Deleted in source** in Audiences.
+3. In your Companies audience, create a segment filtered by **Sync status → Deleted in source** and your Salesforce source name.
+4. Click the **⋮** (three-dot) menu next to the segment name and select **Archive records** to remove the stale entries — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) for full steps.
+
+There is no self-serve interface to merge company records directly in Audiences. If you need help consolidating duplicate Audience records, contact Clay support.
 
 ### Does Audiences update automatically?
 
