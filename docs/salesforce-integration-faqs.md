@@ -451,6 +451,16 @@ This error means the contact or lead is already a member of that Salesforce camp
 
 The most common cause is that your **Create Record** column (set to the `CampaignMember` object) runs for every row in your table — including rows for contacts who were already in that campaign before your workflow ran.
 
+**Why the error appears even when the contact isn't in any campaigns**
+
+If a contact was originally created in Salesforce as a Lead, added to the campaign, and then converted to a Contact, Salesforce retains the campaign membership under the Lead record — not under the new Contact. The Contact's campaign history appears empty, but Salesforce still considers the person a campaign member and returns `DUPLICATE_VALUE` when your workflow tries to add the Contact.
+
+To confirm this is the cause: in Salesforce, open the campaign, switch the campaign members view to include **Leads and converted Leads**, then search for the contact's email address. The membership will appear listed under the original Lead record.
+
+**Why Account ID in the Map fields can cause this error**
+
+If your Campaign Member **Create Record** column's **Map fields** section includes an `Account ID` field alongside `Contact ID` and `Campaign ID`, Salesforce may return `DUPLICATE_VALUE` even for contacts who are not personally campaign members — because the associated Account may already be in that campaign. `CampaignMember` records require only one person identifier (`ContactId` or `LeadId`) plus `CampaignId`. Remove `Account ID` from the **Map fields** section of your Campaign Member Create Record column to avoid this.
+
 **Option 1 — Gate on contact creation (simpler)**
 
 If your table creates new contacts or leads in Salesforce before adding them to a campaign, add a run condition to your Campaign Member Create Record column so it only fires when the contact creation step succeeded. Brand-new contacts cannot already be campaign members, so the error won't occur.
