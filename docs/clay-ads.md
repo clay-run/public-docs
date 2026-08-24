@@ -2,7 +2,7 @@
 title: Clay Ads
 description: Build and sync contact and account lists to LinkedIn, Meta, and Google Ads for
   precise ad targeting.
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-08-24T16:58:07.075Z
 ---
 
 # Clay Ads
@@ -60,7 +60,8 @@ To update an audience, simply modify the data in your Clay table. The audience w
 
 ## **Glossary**
 
--   **Match rate** — The percent of contacts or accounts your ad platform can match to real users. Personal emails usually improve match rates (often ~40–60%+ on Meta and up to ~95% on LinkedIn).
+-   **Match rate** — The share of the contacts or accounts you sent that an ad platform could match to users in its identity graph. Personal emails usually improve match rates (often ~40–60%+ on Meta and up to ~95% on LinkedIn).
+-   **Audience size** — The number of matched users an ad platform can currently serve your ads to. It is a subset of the matched total, and it varies by inventory type.
 -   **Ad audience** — A list of contacts or accounts synced from Clay to an ad platform for use in campaigns. Audiences can be used for targeting (showing ads to people on the list) or exclusion (preventing ads from reaching people on the list).
 -   **Exclusion list** — An ad audience configured to prevent a group of people from seeing your ads. Common exclusion lists include existing customers, current employees, or open pipeline opportunities — helping eliminate wasted ad spend.
 -   **Hashed email** — A privacy-safe version of an email address encrypted using a one-way algorithm (SHA-256) before being sent to an ad platform. Ad platforms use hashed emails to match contacts without ever seeing the raw address. Clay's `Hashed Email for Ads` waterfall finds and hashes personal emails automatically to maximize match rates.
@@ -200,6 +201,12 @@ Yes! Once synced, your audiences automatically update as data changes in your Cl
 ### **Can I see which contacts matched?**
 
 No, LinkedIn and Meta don't provide contact-level match visibility for privacy reasons. However, Clay shows aggregate match rates and total audience size after each sync.
+
+### **Why is my match rate high but my audience size much smaller?**
+
+Because the two numbers count different things. Match rate is how many of the contacts you sent the platform could tie to a user in its identity graph. Audience size is the slice of those matched users it can serve an ad to right now — signed in, opted into personalised ads, and eligible for the inventory the campaign runs on.
+
+On platforms that split inventory, one matched set produces a different audience size per surface, so Google Ads can report one figure for Search and a smaller one for Display. Both are subsets of the same matched users rather than competing measurements, and a gap between them is expected. If you want more reach, match rate is the lever — `Enhanced matching` and better identifier coverage on the segment lift every destination.
 
 ### **Why does my ad audience show "too small for use in campaigns"?**
 
