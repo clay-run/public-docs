@@ -1,12 +1,12 @@
 ---
 title: Clay Ads compliance best practices
 description: Explains Clay Ads' automatic targeting controls for US and international audiences, including how Clay-sourced data is handled for Google Ads compliance.
-last_synced: 2026-08-04T05:12:16.770Z
+last_synced: 2026-08-24T17:01:32.388Z
 ---
 
 # Clay Ads compliance best practices
 
-Keep your ad campaigns compliant with Clay's automatic targeting controls for US/international audiences and Google Ads.
+Understand which ad platforms require first-party data and how Clay filters audiences to meet their requirements.
 
 When you build an advertising audience in Clay Ads, Clay automatically applies a set of built-in controls that determine which contacts are eligible for ad targeting based on where they're located and how their data was sourced. These controls run behind the scenes every time you build and sync an audience, so you don't have to manage them manually.
 
@@ -52,7 +52,7 @@ On this path the check is all-or-nothing rather than per-contact. If any field i
 
 `Bing Ads` is only offered as a destination for audience segments, so you won't encounter it on this path.
 
-**Note:** Clay counts a contact as Clay-sourced only when Clay's data is that contact's sole source. A contact you imported from your CRM, data warehouse, or a CSV keeps its first-party status even after you enrich it with Clay — so enriching your own records doesn't make them ineligible for Google or Bing.
+**Note:** Clay counts a contact as Clay-sourced only when Clay's data is that contact's sole source. A contact you imported from your CRM, data warehouse, or a CSV keeps its first-party status even after you enrich it with Clay — so enriching your own records doesn't make them ineligible for Google or Bing. That covers the enrichments most ad audiences rely on, including additional emails and `Enhanced matching` results.
 
 ## How Clay-sourced contacts are filtered for other platforms
 
@@ -72,6 +72,8 @@ Rather than relying on filtering at sync time, you can stop non-compliant audien
 -   **Plan Google and Bing campaigns around first-party data.** Clay-sourced contacts never reach either platform, in any region, so build those audiences from your CRM, data warehouse, or CSV data. Read the excluded-contact count on the confirmation step before you create the sync so your delivered audience size isn't a surprise.
 -   **Fill in country data on contacts you own.** For platforms other than Google and Bing, a Clay-sourced contact with a country outside the US is dropped, while a blank country is allowed through. If you hold reliable country data in your own systems, sync it into Audiences so eligibility is decided on real values rather than gaps.
 -   **Keep opt-outs current in your source systems.** We recommend you sync opt-out status into Audiences and filter out these users from your Ad Sync segments. Recurring syncs run every 3 days, so removing someone in your source will flow through to your connected ad account on the next sync cycle.
+-   **Build net-new reach from a seed list you own.** Create a lookalike audience from a customer list sourced from your own systems, then exclude that seed list in the campaign so spend goes to people you haven't reached yet. Because the seed is first-party, it's eligible on every destination, Google and Bing included.
+-   **Check what your own terms already cover.** If your terms of service or privacy notice tell customers their data may be used for advertising, that gives you a clear basis for targeting them. Worth confirming with whoever owns that language before you build the audience.
 
 ## Frequently asked questions
 
@@ -80,6 +82,9 @@ No. Clay's dataset can't be used to source people outside the US for ad targetin
 
 **Can I use Clay's data to build a US ad audience?**  
 Yes. You can use Clay's data to source and build audiences of US-based people.
+
+**Do these rules apply to an audience I only use for exclusion?**  
+Yes. Clay applies the sourcing and country filters when it builds the audience, and whether you attach it as targeting or as an exclusion is chosen later in the ad platform's campaign manager. So a suppression list is filtered on exactly the same basis as a targeting list. If you need every contact on the list to land, build it from your own data.
 
 **Do these sourcing and country rules apply to company audiences?**  
 No. Clay applies them to contact audiences only. Company audiences aren't filtered on how their data was sourced or on country.
@@ -92,3 +97,6 @@ No. The segment count is everyone matching your filters, while the synced count 
 
 **How quickly do opt-outs take effect?**  
 Recurring syncs run every 3 days. Opt-outs updated in your source system are reflected in your connected ad account on the next sync cycle.
+
+**Which fields are hashed before they reach an ad platform?**  
+This varies by destination, since each platform sets its own specification and Clay follows it. Google Ads takes email, phone, first name, and last name as SHA-256 hashes, while country and zip code are sent unhashed to match Google's specification. Meta Ads hashes every field Clay sends it, country and zip code included. LinkedIn Ads and Bing Ads hash the email address and send the remaining fields as plain text.
