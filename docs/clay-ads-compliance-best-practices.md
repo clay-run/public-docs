@@ -52,7 +52,7 @@ On this path the check is all-or-nothing rather than per-contact. If any field i
 
 `Bing Ads` is only offered as a destination for audience segments, so you won't encounter it on this path.
 
-**Note:** Clay counts a contact as Clay-sourced only when Clay's data is that contact's sole source. A contact you imported from your CRM, data warehouse, or a CSV keeps its first-party status even after you enrich it with Clay — so enriching your own records doesn't make them ineligible for Google or Bing. That covers the enrichments most ad audiences rely on, including additional emails and `Enhanced matching` results.
+**Note:** Clay counts a contact as Clay-sourced only when Clay's data is that contact's sole source. A contact you imported from your CRM, data warehouse, or a CSV keeps its first-party status even after you enrich it with Clay — so enriching your own records doesn't make them ineligible for Google or Bing.
 
 ## How Clay-sourced contacts are filtered for other platforms
 
@@ -99,4 +99,4 @@ No. The segment count is everyone matching your filters, while the synced count 
 Recurring syncs run every 3 days. Opt-outs updated in your source system are reflected in your connected ad account on the next sync cycle.
 
 **Which fields are hashed before they reach an ad platform?**  
-This varies by destination, since each platform sets its own specification and Clay follows it. Google Ads takes email, phone, first name, and last name as SHA-256 hashes, while country and zip code are sent unhashed to match Google's specification. Meta Ads hashes every field Clay sends it, country and zip code included. LinkedIn Ads and Bing Ads hash the email address and send the remaining fields as plain text.
+This varies by destination, since each platform sets its own specification and Clay follows it. Google Ads takes email, phone, first name, and last name as SHA-256 hashes, while country and zip code are sent unhashed to match Google's specification. Meta Ads hashes every field Clay sends it, country and zip code included. LinkedIn Ads hashes the email address and sends the remaining fields as plain text. Bing Ads hashes the email address only.
