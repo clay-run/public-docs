@@ -37,8 +37,8 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
         -   **Revenue streams** — e.g., Subscriptions/Recurring, Professional Services, Transaction Fees, Advertising, Licensing/IP
         -   **Business types** — B2B, B2C, or Nonprofit
     -   **Technographics** — Filter by installed technology, powered by [BuyerCaddy](https://university.clay.com/docs/buyercaddy-integration). Costs **3 credits per matching company row** — cheaper in most cases than pulling a broad list and running a technographic enrichment afterward, since you pay only for companies that already match your tech criteria. Technographics data is also included when sending company rows to Audiences; the same 3-credit cost per matching row applies.
-        -   **Vendors** — e.g., AWS, Salesforce, HubSpot
-        -   **Products** — e.g., Amazon EC2, Salesforce Sales Cloud
+        -   **Vendors** — The company that makes or provides the technology (e.g., Palo Alto Networks, Fortinet, AWS, Salesforce). Selecting a vendor returns companies that use *any* product from that vendor.
+        -   **Products** — A specific tool or application (e.g., Prisma Cloud, Lacework, Amazon EC2, Salesforce Sales Cloud). Selecting a product returns companies using that exact product.
         -   **Main categories** and **Parent categories**
         Product and vendor names in the filter come from BuyerCaddy's catalog and may not match a company's public brand name exactly. To identify what a product name refers to, run the search and check the **Vendor** field in the cell details for any returned row — it shows the company behind the product.
     -   **Domain filters:**
@@ -229,3 +229,14 @@ The full set, grouped by parent category:
 -   **Non-Profit, Public Sector and Education (Non-Commercial):** Government Administration and Municipal Services, NGOs, Charities and Community Organizations, Public Healthcare and Social Services, Public/Private Research Institutions and Educational Foundations, Student Organizations and Campus Services
 
 **Note:** AI Subindustries is a filter input, not an output column. It controls which companies are returned in Find Companies, but does not add a dedicated Subindustry column to your table.
+
+### Why is my technographics filter returning no results?
+
+The most common cause is entering a product name in the **Vendors** filter, or a vendor name in the **Products** filter. These fields query different parts of BuyerCaddy's catalog:
+
+-   **Vendor** is the company that makes the technology — for example, Palo Alto Networks, Fortinet, or Aqua Security. Filtering by vendor returns companies using *any* product from that vendor.
+-   **Product** is a specific tool or application — for example, Prisma Cloud, Lacework, or Cortex. Filtering by product returns companies using that exact tool.
+
+Entering a product name (like "Prisma") into the **Vendors** field, or a vendor name (like "Palo Alto Networks") into the **Products** field, produces no results because the name doesn't exist in that part of the catalog.
+
+**To fix:** Clear your current technographics filter and re-enter each item under the correct field. Use **Vendors** when you want companies using any product from a technology company; use **Products** when you want companies using a specific tool by name.
