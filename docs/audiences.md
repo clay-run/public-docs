@@ -1,12 +1,12 @@
 ---
 title: Audiences
 description: "Clay Audiences is available on Growth and Enterprise plans. Launch workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above. Trial workspaces do not have access to Audiences."
-last_synced: 2026-07-02T20:01:45.311Z
+last_synced: 2026-08-10T20:00:44.707Z
 ---
 
 # Audiences
 
-**Plan availability:** Clay Audiences is available on **Growth** and **Enterprise** plans (including legacy Enterprise). Launch workspaces have access to core Audiences features — importing via CSV, people/company search, and Clay table sends — but connecting a CRM or data warehouse as a data source requires **Growth or above**. Free, Trial, and legacy non-Enterprise plan workspaces do not have access to Audiences. Growth plans can sync up to 250,000 CRM/DWH records; Enterprise plans support up to 25,000,000 records.
+**Plan availability:** Clay Audiences is available on **Growth** and **Enterprise** plans (including legacy Enterprise). Launch workspaces have access to core Audiences features — importing via CSV, people/company search, and Clay table sends — but connecting a CRM or data warehouse as a data source requires **Growth or above**. Free, Trial, and legacy non-Enterprise plan workspaces do not have access to Audiences. Growth plans can sync up to 250,000 CRM/DWH records; Enterprise plans support up to 25,000,000 records. Audiences fields are limited to approximately 70 per data type on non-Enterprise plans and approximately 135 per type on Enterprise plans, counted separately for People and Companies.
 
 Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
 
@@ -14,7 +14,7 @@ Use it to build dynamic segments across millions of records, run automated enric
 
 Setting up Audiences is four major steps:
 
-1.  **Import your data** — connect Salesforce, HubSpot, Snowflake, or Google BigQuery and bring your records into Audiences.
+1.  **Import your data** — connect Salesforce, HubSpot, Snowflake, Google BigQuery, or Databricks (beta) and bring your records into Audiences.
 2.  **Create audiences** — build dynamic segments using filters to target the right contacts and accounts.
 3.  **Enrich and monitor** — run bulk enrichments and signals that write data permanently back to each record.
 4.  **Write back to your CRM** — sync enriched data and segment membership back to Salesforce.
@@ -49,6 +49,7 @@ You can import data from:
 -   CSV
 -   Snowflake
 -   Google BigQuery
+-   Databricks (beta — contact your Growth Strategist to enable)
 -   Salesforce
 -   HubSpot
 
@@ -129,8 +130,8 @@ Clay syncs data from HubSpot automatically on the following schedules:
     -   For People: `email` or `user_id`.
     -   For Companies: `company_id` or `domain`.
 5.  (Optional) Configure a `Timestamp Field` for incremental syncing:
-    -   With a timestamp: syncs run every **15 minutes** and only import new/changed records.
-    -   Without a timestamp: the full query reruns every **12 hours**.
+    -   With a timestamp: syncs run every **15 minutes** on Enterprise plans, or once every **24 hours** on other plans, and only import new or changed records.
+    -   Without a timestamp: the full query reruns every **12 hours** on Enterprise plans, or once every **24 hours** on other plans.
 6.  Map your Snowflake columns to Audience fields.
 7.  Review and click `Confirm` — Clay begins importing immediately.
 8.  Monitor the import. If records don't appear immediately, refresh the page to see the latest count.
@@ -139,7 +140,7 @@ Clay syncs data from HubSpot automatically on the following schedules:
 
 Clay syncs data from Snowflake on the following schedules:
 
--   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured (for example, `updatedAt`), importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
+-   **Incremental sync:** Runs every **15 minutes** on Enterprise plans (or **once every 24 hours** on other plans) when a `Timestamp Field` is configured (for example, `updatedAt`), importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours** on Enterprise plans, or every **24 hours** on other plans.
 -   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
 
 **Deleted records:** When a record is no longer returned by your Snowflake import query — either because it was physically removed from the underlying Snowflake table, or because you updated your SQL to exclude it — Clay marks the record's Snowflake source association as **Deleted in source** during the next full sync. The audience record itself is **not removed**. To clean up these records, see [How do I archive records that no longer match my Snowflake import query?](#how-do-i-archive-records-that-no-longer-match-my-snowflake-import-query) below.
@@ -157,8 +158,8 @@ Clay syncs data from Snowflake on the following schedules:
     -   For People: `email` or `user_id`.
     -   For Companies: `company_id` or `domain`.
 5.  (Optional) Configure a `Timestamp Field` for incremental syncing:
-    -   With a timestamp: syncs run every **15 minutes** and only import new/changed records.
-    -   Without a timestamp: the full query reruns every **12 hours**.
+    -   With a timestamp: syncs run every **15 minutes** on Enterprise plans, or once every **24 hours** on other plans, and only import new or changed records.
+    -   Without a timestamp: the full query reruns every **12 hours** on Enterprise plans, or once every **24 hours** on other plans.
 6.  Map your BigQuery columns to Audience fields.
 7.  Review and click `Confirm` — Clay begins importing immediately.
 
@@ -166,7 +167,7 @@ Clay syncs data from Snowflake on the following schedules:
 
 Clay syncs data from Google BigQuery on the following schedules:
 
--   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured, importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
+-   **Incremental sync:** Runs every **15 minutes** on Enterprise plans (or **once every 24 hours** on other plans) when a `Timestamp Field` is configured, importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours** on Enterprise plans, or every **24 hours** on other plans.
 -   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
 
 ### Importing from people and companies search
@@ -336,7 +337,7 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
 3.  Test on a small batch first — click `Run on 10 rows` to verify output before running at scale.
 4.  Open `Field Mapping` and map each column you want to save back to Audiences:
     -   Enable the auto-enrich toggle so that any new record entering this segment is automatically passed through the enrichment — typically within 15 minutes.
-5.  Click `Start Run`.
+5.  Click `Finish setup and run`.
 
 **Note:** To run a bulk enrichment on Audience data, always start from within the Audience — click `Enrich` → `Add bulk enrich` from any segment view. When creating a new Bulk Enrichment from the Clay homepage (`New` → `Bulk enrichment`), the source type options are CSV and Salesforce CRM only — there is no "Audiences" source type in that dialog. The Audience segment serves as the source when you add the enrichment from within Audiences.
 
@@ -532,6 +533,21 @@ To estimate API calls for initial export, divide record count by 10,000 and comp
 
 **Note:** CRM export is admin-only. Enrichments and signals follow standard Clay table pricing.
 
+## Reporting
+
+**Note:** `Reporting` is available on Enterprise plans and is currently rolling out — contact your Growth Strategist to enable it for your workspace.
+
+The `Reporting` tab shows how Clay has contributed to your audience data, and what that data drove downstream. Switch between `People` and `Companies` to scope the whole tab to that record type.
+
+Two cards at the top summarize your current data: the total record count for the record type, and the `Sources` connected to it. Below them, four sections break down Clay's impact:
+
+-   **`Clay coverage`** — how many records Clay `Sourced`, `Enriched`, and `Actioned`, plus `Total records` for the unique records covered by any of the three. Set the window to `Last 7 days`, `Last 30 days`, or `Last 90 days`, and switch between `Cumulative` and `Daily`.
+-   **`Fields`** — the fill rate for every field on the record type, so you can see which fields still have missing data. Sort by `Fill rates` or `Fill lifts`, then click `View all fields` to open the Data Hub.
+-   **`Signals`** — how many signals fired and how many records have at least one signal, with a trend chart over time and a per-signal breakdown you can sort by `Most fired` or `Most results`.
+-   **`Revenue impact`** — `Active pipeline` and `Closed-won revenue` for deals linked to records Clay sourced, broken out by `From companies` and `From people`. Click a revenue figure to drill into the underlying deals, each with its stage and close date.
+
+Revenue figures cover deals linked to records Clay **sourced** — deals where Clay only enriched or actioned an existing record are not attributed yet. Workspaces that use Audiences for a single use case may see `Low data` or `No data` in place of some metrics.
+
 ## FAQs
 
 ### When should I use Audiences vs. a table?
@@ -650,7 +666,7 @@ Yes. Segments update in real time as records enter or exit your filter criteria.
 -   **Enterprise plan:** CRM and data warehouse syncs run every 15 minutes, and segments update continuously.
 -   **Growth plan:** CRM and data warehouse syncs run daily, and segments update based on that daily refresh.
 
-Enrichments configured with `Continuous Enrichment` enabled automatically process new records entering a segment, typically within 15 minutes. No manual runs are required after initial setup.
+Enrichments with the `Auto-enrich new records` toggle enabled automatically process new records entering a segment, typically within 15 minutes. No manual runs are required after initial setup.
 
 ### Why didn't my audience count change after I tightened my search filters?
 
@@ -962,7 +978,7 @@ Define your audience filters before running Bulk Enrich. Credits are charged per
 
 Before running across your full segment, click `Run on 10 rows` and confirm the output is correct and field mapping is configured as intended. Given the credit implications of a misconfigured enrichment across millions of records, treat this as a standard step every time.
 
-### Check your field mapping intent before hitting `Start Run`
+### Check your field mapping intent before hitting `Finish setup and run`
 
 Field mapping is on by default. If you want enriched data to write back to Audiences, confirm your column mappings are configured. If you're running an enrichment purely to trigger an action without saving data, explicitly disable field mapping so the run behaves as expected.
 
