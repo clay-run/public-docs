@@ -1,12 +1,12 @@
 ---
 title: Audiences
-description: "Clay Audiences is available on Growth and Enterprise plans. Launch workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above. Trial workspaces do not have access to Audiences."
+description: "Clay Audiences is available on Growth and Enterprise plans. Launch workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above. Free, Trial, and Starter workspaces currently do not have access to Audiences and will see an upgrade page when navigating to the Audiences tab. Audiences access is planned to expand to Starter and Explorer legacy plan workspaces on August 11, 2026."
 last_synced: 2026-07-02T20:01:45.311Z
 ---
 
 # Audiences
 
-**Plan availability:** Clay Audiences is available on **Growth** and **Enterprise** plans (including legacy Enterprise). Launch workspaces have access to core Audiences features — importing via CSV, people/company search, and Clay table sends — but connecting a CRM or data warehouse as a data source requires **Growth or above**. Free, Trial, and legacy non-Enterprise plan workspaces do not have access to Audiences. Growth plans can sync up to 250,000 CRM/DWH records; Enterprise plans support up to 25,000,000 records.
+**Plan availability:** Clay Audiences is available on **Growth** and **Enterprise** plans (including legacy Enterprise). Launch workspaces have access to core Audiences features — importing via CSV, people/company search, and Clay table sends — but connecting a CRM or data warehouse as a data source requires **Growth or above**. Free, Trial, Starter, and other legacy non-Enterprise plan workspaces currently do not have access to Audiences. If your workspace is on a plan without Audiences access, navigating to the Audiences section will display an upgrade page — this is expected behavior, not a bug. To search for people or companies without upgrading, use [Find People](find-people-overview.md) or [Find Companies](find-companies.md) instead. **Note:** Audiences access is planned to expand to Starter and Explorer legacy plan workspaces on August 11, 2026, with access equivalent to the Launch plan tier. Growth plans can sync up to 250,000 CRM/DWH records; Enterprise plans support up to 25,000,000 records.
 
 Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
 
