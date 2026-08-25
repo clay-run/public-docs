@@ -1,6 +1,6 @@
 ---
 title: How to import your CSV into Clay
-description: Import your CSV into Clay.
+description: Import your CSV into Clay, and download (export) your Clay table as a CSV file.
 last_synced: 2026-04-26T01:39:49.725Z
 ---
 
@@ -32,6 +32,21 @@ Within Clay you can import CSV as a source to an existing or new table.
     -   `Save and don't run` — imports the rows without triggering any enrichments for this batch. This is a one-time skip for the current import only — it does not change your table's [Auto-run](table-management-settings.md) setting.
 
     > **Tip:** If you're importing into a table that already has enrichment columns and you don't want them to run on the new rows, choose `Save and don't run`. If you want to prevent enrichments from automatically running on all future row additions as well, turn off **Auto-run** in your [table settings](table-management-settings.md) before importing.
+
+## Exporting (downloading) your Clay table as CSV
+
+To download the data in a Clay table as a CSV file:
+
+1.  Open the table you want to download.
+2.  Click **Tools** in the top right corner of the table.
+3.  In the sidebar that opens, click the **Export** tab.
+4.  Click **Download CSV**.
+
+A modal appears while your export is processing. Once it is ready, the CSV file downloads automatically to your browser's default download location. If the automatic download does not start, you can retrieve the file from the **Exports** tab in your workspace homepage (accessible from the profile icon in the top bar).
+
+The exported CSV includes only the columns and rows visible in your current view. Columns hidden in the view and rows filtered out by active view filters are not included. To export your full table, make sure no view filters are active and all columns are visible before starting the download.
+
+Downloading a table as CSV does not consume any Actions or Data Credits.
 
 ## Next steps after importing
 
