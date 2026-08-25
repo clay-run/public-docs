@@ -119,6 +119,8 @@ Clay syncs data from HubSpot automatically on the following schedules:
 -   **Incremental sync:** Runs every **15 minutes** on Enterprise workspaces, or **once daily** on Growth workspaces. Picks up new and changed HubSpot records since the last sync.
 -   **Full sync (every 7 days):** Re-reads all records from HubSpot and reconciles deleted records — catching anything the incremental sync may have missed.
 
+**Using your HubSpot records for CRM exclusion:** Once your HubSpot contacts and companies are in Audiences, you can use them as an exclusion source in any Find People or Find Companies search — so existing CRM records are not re-prospected. In the search's exclusion section, click **Add** → **Select segments** to choose a specific segment, or toggle **Exclude all** to suppress all records in your Audiences from results. See [Excluding companies and people](finding-companies-and-people-in-clay.md#excluding-companies-and-people) for full details.
+
 ### Importing from Snowflake
 
 1.  Click `Add data` → `Import from Snowflake`.

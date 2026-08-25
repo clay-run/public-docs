@@ -247,7 +247,7 @@ You can exclude up to **150,000 companies or people** from any company or people
 -   For companies: domain or LinkedIn URL
 -   For people: LinkedIn URL
 
-This is the current way to suppress your existing CRM or list against new searches. In the future, Audiences will allow you to exclude an entire synced CRM instance (e.g., all of Salesforce) in one step.
+On workspaces with Audiences enabled (Growth and Enterprise plans), you can also add an **Audiences segment** as an exclusion source. In the exclusion section of any search, click **Add** → **Select segments** and choose which segment to exclude. To suppress your entire synced CRM in one step — for example, all HubSpot or Salesforce contacts and companies imported into Audiences — toggle **Exclude all** in the segment picker instead of selecting a specific segment. Audiences exclusions are configured per search; they are not applied automatically.
 
 **Plan availability:** The exclusion option in source settings is available on Launch plan and above. It is not available on Free or Starter plans.
 
