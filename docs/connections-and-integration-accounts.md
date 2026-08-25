@@ -1,6 +1,6 @@
 ---
 title: Connections and integration accounts
-description: Add, edit, test, and delete integration accounts in Clay's Connections settings, and set default accounts for your workspace.
+description: Add, edit, test, and delete integration accounts in Clay's Connections settings, set default accounts, and see which tables and workbooks use a specific connection.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -124,6 +124,21 @@ A **default account** is automatically selected for workflows or integrations wh
 **Note:** The default account is used when creating new columns and workflows going forward — it does not retroactively update existing columns or workflows. Columns already configured to use a specific connection continue to reference that connection regardless of which account is set as default. To update all existing columns to use a different account's credentials, use **Reconnect** on the connection those columns already reference (see [Rotating or updating credentials](#rotating-or-updating-credentials) above). Reconnecting updates the credentials in place so every column referencing that connection automatically uses the updated account on its next run.
 
 **Note:** Workspace connection defaults apply per provider — there is no single setting that routes all AI usage to one API key. For Claygent columns (including those using custom MCP servers), you also need to manually select a non-Clay model (such as Claude Sonnet or GPT) in the model picker, since Claygent defaults to Clay's parallel models and does not automatically switch to a third-party model when you set a connection as default.
+
+### See where a connection is used
+
+> **Note:** This feature is currently rolling out — it is confirmed available on Enterprise plans. If you do not see the Resources column described below, contact Clay support to enable it for your workspace.
+
+Each connection row in the `Connections` list includes a **Resources** column showing how many workbooks, tables, and functions reference that connection. This lets you identify the impact of changing or removing a connection — for example, to see which tables will be affected when you swap out a former team member's API key, or to confirm a connection is no longer referenced before deleting it.
+
+To see where a connection is used:
+
+1.  Navigate to `Settings` → `Connections`.
+2.  Find the connection in the list.
+3.  Check the **Resources** column. A number means that many workbooks, tables, or functions reference the connection. A `—` means the connection is not used anywhere in the workspace.
+4.  Click the number to open a side panel listing every workbook, table, and function that uses the connection, each with a direct link.
+
+If the Resources column shows `—`, removing or replacing the connection will not break any active workflows.
 
 ### Deleting accounts
 
