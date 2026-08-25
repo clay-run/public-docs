@@ -10,13 +10,11 @@ Efficiently process and enrich large volumes of data.
 
 **Note:** This is a feature available to users on the Enterprise Plan.
 
-Auto-delete is a powerful feature designed to help you process and enrich large volumes of data efficiently. It allows you to bypass the standard row limit by automatically processing incoming data, enriching it, and then forwarding it to a designated destination before deleting the original entries from the table. This ensures your tables remain manageable while continuously handling new data.
+Clay tables have a 50,000-row limit that applies to all plans, including Enterprise. Auto-delete is a powerful feature that lets Enterprise customers process and enrich large volumes of data beyond this per-table limit. It works by automatically processing incoming data, enriching it, and forwarding it to a designated destination before deleting the original entries from the table. This ensures your tables remain manageable while continuously handling new data.
 
 **Tip:** You can receive advance warning before your table reaches the row limit by enabling the **Row count limit** alert in [Table alerts](table-alerts.md). The default threshold is 45,000 rows, and notifications can be delivered via email or Slack. Table alerts are opt-in and configured per table — no notification is sent automatically when a table hits the 50,000-row limit.
 
 **Note that auto-delete does not apply to CSVs, including bulk uploads at high volumes.**
-
-**Note:** The auto-delete mechanism itself does not consume credits. Your enrichment action columns continue to charge credits as usual when they run on each row — the automatic row deletion step is free.
 
 ## **Enable auto-delete**
 
