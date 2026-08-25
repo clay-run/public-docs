@@ -33,7 +33,8 @@ The table below lists the data credit cost per task for select AI models availab
 | GPT-5 Mini | 0.4 | 1 |
 | GPT-5 Nano | 0.2 | 0.5 |
 | o3 | 5 | variable |
-| Anthropic | Claude 4.5 Haiku | 1 | variable |
+| Anthropic | Claude Sonnet 5 | 0.7 | variable |
+| Claude 4.5 Haiku | 1 | variable |
 | Claude 4.5 Sonnet | 1.5 | variable |
 | Claude 4.6 Sonnet | 1 | variable |
 | Claude 4.6 Opus | 7.5 | variable |

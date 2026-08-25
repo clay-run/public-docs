@@ -266,7 +266,7 @@ Clay provides access to a wide range of AI models from multiple providers. Below
 | --- | --- |
 | Clay | HeliumNeonArgonXenonRadonClay ConductorClay Navigator |
 | OpenAI | GPT 4o, 4.1, 4o MiniGPT 4.1 Mini, 4.1 NanoGPT 5.1, 5.4, 5.4 Mini, 5.4 Nano, 5.5, 5 Mini, 5 Nanoo1, o1 Pro, o1 Minio3, o3 Mini, o3 Deep Researcho4 MiniDALL·E 3 (Standard, HD)GPT Image 1 (Low, Medium, High) |
-| Anthropic | Claude 4.5 SonnetClaude 4.5 HaikuClaude 4.6 OpusClaude 4.6 SonnetClaude 4.7 OpusClaude 4.8 Opus *(Claude 4 Sonnet, Claude 4 Opus, and Claude 4.5 Opus are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them.)* |
+| Anthropic | Claude Sonnet 5Claude 4.5 SonnetClaude 4.5 HaikuClaude 4.6 OpusClaude 4.6 SonnetClaude 4.7 OpusClaude 4.8 Opus *(Claude 4 Sonnet, Claude 4 Opus, and Claude 4.5 Opus are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them.)* |
 | Gemini | 2.0 Flash, Flash Lite2.5 Flash, Flash Lite2.5 Pro, 3 Flash, 3 ProImagen 3.0, 3.0 Fast |
 | xAI | Grok 4Grok 4.1 Fast Reasoning |
 | DeepSeek | *(DeepSeek V4 Pro is deprecated and no longer available for new configurations; existing configurations that use this model remain unaffected.)* |
