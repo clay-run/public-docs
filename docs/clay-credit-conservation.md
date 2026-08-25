@@ -120,6 +120,10 @@ There are two ways to implement conditional runs:
 2.  In the **"Only run if"** box, add your conditional formula to specify when the enrichment should run.
 3.  **Tip:** Use the **"Use AI"** button to input plain language instructions, making it easier to define your conditions without needing complex formulas.
 
+**Note:** A condition like "Only run if email is blank" prevents re-enriching rows that already have an email address — but rows where a provider ran and returned no result also show a blank email field, so they still match this condition. Blank enrichment cells mean the provider has no record for that contact (no provider has 100% coverage); credits were consumed for the attempt.
+
+The protection against auto-re-enriching these "no result" rows is **"Keep existing results"** — checked by default in Run Settings. With this setting on, Clay treats cells where providers found no data as complete and does not automatically re-run them on subsequent auto-run cycles. To verify: click ⛭ → **Run Settings** → confirm **Keep existing results** is checked. See [Auto-run](auto-run.md) for details.
+
 **Method #2: Filter Existing Rows**
 
 You can also conditionally run columns through filtering rows.
