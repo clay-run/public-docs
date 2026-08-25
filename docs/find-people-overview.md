@@ -103,6 +103,24 @@ Any enrichments you add afterward (work email, phone number, profile enrichment)
 
 **Yes.** The search wizard shows a result count directly in the interface — you can see how many people match your filters before clicking Import. The count also shows how many rows will be imported based on your **Limit results** setting. For very large searches, the count may display as a capped number with a "+" indicator; hover over it to load the full exact total.
 
+### Why did I import fewer people than the preview count showed?
+
+Two factors commonly cause the imported row count to be lower than the preview estimate:
+
+**Cross-company deduplication.** When your search targets a list of companies, the same person can appear as a match at more than one company in your list. Clay deduplicates on import: anyone matching at multiple companies is written as a single row — not one row per company match. When you search across a large company list where individuals hold roles at several of the companies you're targeting, this deduplication accounts for much of the gap between the preview count and the actual imported row count.
+
+**Approximate preview count (Upgraded search).** If Upgraded search is enabled in your workspace, the preview count uses a fast approximate backend query and is shown with a `~` prefix. The actual import total may differ from this estimate.
+
+**Note:** The **Limit per company** cap (if configured) is also applied at import time and can reduce the row count further. See the [Limit per company](#source-find-people) note in the Inputs section for details.
+
+### What is Upgraded search, and how do I turn it off?
+
+**Upgraded search** (currently in beta) is an enhanced version of Find People that changes how job title matching works by default. With Upgraded search on, job titles match using **Is similar to** — a fuzzy, semantic approach that finds synonyms and related variations automatically (for example, "VP of Sales" also returns "Head of Sales"). With it off, the default reverts to **Contains** — a substring match requiring the exact phrase to appear in the title.
+
+To toggle it: click the **gear icon (⚙)** in the search settings panel and use the **Upgraded search is on** switch. The setting saves per user — turning it off returns you to the previous search experience immediately, and you can switch back at any time. Note that Upgraded search is in beta and pricing is subject to change.
+
+If you don't see the toggle, Upgraded search hasn't been enabled for your workspace yet. Contact support to request access.
+
 ### Why does my Find People search return people from companies I didn't add to my list?
 
 When you use domains (e.g., `acme.com`) as company identifiers, Clay maps each domain to internal company records at the root-domain level. This mapping can occasionally include people from a parent company, subsidiary, or other entity associated with that domain — resulting in contacts from companies you didn't explicitly target.
