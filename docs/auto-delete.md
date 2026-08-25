@@ -16,6 +16,8 @@ Auto-delete is a powerful feature designed to help you process and enrich large 
 
 **Note that auto-delete does not apply to CSVs, including bulk uploads at high volumes.**
 
+**Note:** The auto-delete mechanism itself does not consume credits. Your enrichment action columns continue to charge credits as usual when they run on each row — the automatic row deletion step is free.
+
 ## **Enable auto-delete**
 
 Follow these steps to set up auto-delete:
