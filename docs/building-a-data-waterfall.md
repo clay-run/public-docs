@@ -116,6 +116,7 @@ After a waterfall runs, click the **»** arrow on the waterfall column header to
 
 -   A sub-column that found a result displays the value it returned.
 -   A sub-column that was skipped because an earlier provider already found a result shows **Run condition not met**.
+-   A sub-column that returned an error shows the error message for that row — an error does not stop the waterfall. The record automatically falls through to the next provider in the sequence. The waterfall only stops when a provider returns a valid result or all providers have been tried.
 -   Click into any individual provider sub-column cell to open that provider's details panel for that specific row.
 
 To add a dedicated column per row showing the winning provider's name, enable **Output name of successful provider?** in the waterfall's output settings.
