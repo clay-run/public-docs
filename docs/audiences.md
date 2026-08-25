@@ -446,6 +446,18 @@ To manually run the workflow on segment members already in the segment, open the
 
 The **Run** button is available in any trigger state — draft, live, or paused — so you can run the workflow on existing members before or after publishing.
 
+**Pausing or stopping a workflow**
+
+Clay Workflows does not have a dedicated "unpublish" button. To stop a workflow from running without deleting it, pause or remove its triggers from the trigger card in the workflow editor:
+
+1.  Open the workflow and click the **Trigger** node.
+2.  In the **Triggers** panel that opens on the right, find the trigger you want to stop.
+3.  Click **Pause** to stop that trigger from firing. The trigger's status changes from **Live** to **Paused** — the workflow keeps all its steps intact and stops processing new members for that trigger. Click **Resume** on the same card at any time to reactivate it.
+
+To remove a trigger permanently (without deleting the workflow or its other steps), click **Remove** on the trigger card. Removing a trigger deletes its configuration; the rest of the workflow remains unchanged.
+
+To stop a workflow completely, pause or remove all of its triggers. The workflow and its steps are preserved and can be reactivated at any time.
+
 ### **Syncing audiences to ad platforms**
 
 When you have a segment ready, you can sync it to an ad platform to run account-based advertising across your highest-fit contacts and companies.
