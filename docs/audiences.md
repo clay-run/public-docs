@@ -80,6 +80,8 @@ You can import data from:
 
 **Sync timing and behavior**
 
+**API method:** Audiences uses Salesforce's **Bulk API 2.0** for both import and export. Bulk API 2.0 runs under a separate daily quota from your standard Salesforce REST API — Enterprise Salesforce orgs typically have very high Bulk API limits, so sync volume is rarely a constraint. The initial full import processes records in batches of approximately 50,000 per API call.
+
 Clay pulls data from Salesforce on two schedules:
 
 -   **Incremental sync:** Runs every **15 minutes** on Enterprise plans, or once **daily** on Growth plans. Retrieves records whose `SystemModstamp` has changed since the last sync. Any modification to a Salesforce record — user edits, workflow updates, or integration changes — updates `SystemModstamp` and triggers the record to be re-synced. There is no field-level filtering; when a record is picked up, all its mapped fields are synced.
