@@ -310,9 +310,13 @@ Other useful column status filters you can apply to any function or enrichment c
 
 Yes. Enable "share as template" on the function to generate a shareable link. Anyone with the link can view the function's columns and create a copy of the function in their workspace.
 
+**Note:** The **Share as template** section is only visible when the function is not in edit mode. If you don't see it in the settings panel, click **Exit edit mode** to return to the live function view first.
+
 ### How do I duplicate a function within my workspace?
 
 Use the **Share as template** feature to create a copy of any function:
+
+**Note:** The **Share as template** section is only visible when the function is not in edit mode. If you see an "Editing function" toolbar or the section is missing from the settings panel, click **Exit edit mode** first.
 
 1.  Open the function from your Clay homepage.
 2.  In the function's settings panel, scroll to the **Share as template** section and enable the toggle.
