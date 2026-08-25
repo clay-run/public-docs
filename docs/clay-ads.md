@@ -1,15 +1,15 @@
 ---
 title: Clay Ads
-description: Build and sync contact and account lists to LinkedIn, Meta, and Google Ads for
-  precise ad targeting.
+description: Build and sync contact and account lists to LinkedIn, Meta, Google Ads, Bing
+  Ads, Reddit Ads, and Vibe.co for precise ad targeting.
 last_synced: 2026-05-11T17:47:40.000Z
 ---
 
 # Clay Ads
 
-Build and sync contact and account lists to LinkedIn, Meta, and Google Ads for precise ad targeting.
+Build and sync contact and account lists to LinkedIn, Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co for precise ad targeting.
 
-Build and sync contact and account lists to LinkedIn, Meta, and Google Ads for precise ad targeting. Import your target accounts and contacts into Clay, enrich them with personal emails for better match rates, then sync to ad platforms for campaigns and exclusions.
+Build and sync contact and account lists to LinkedIn, Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co for precise ad targeting. Import your target accounts and contacts into Clay, enrich them with personal emails for better match rates, then sync to ad platforms for campaigns and exclusions.
 
 **Key use cases:**
 
@@ -28,7 +28,7 @@ _Note: Personal email addresses significantly improve match rates when syncing t
 1.  **To start, go to `Ads`** from the Clay homepage. Then click `New Ad Sync` and select a source type:
     -   **Best practice:** Sync lists from your CRM (Salesforce, HubSpot) or data warehouse for compliance
     -   Also available: CSV upload
-    -   Note: When using Clay's company/people search (CPJ) as a source, data source restrictions apply by platform — only US-origin contacts are eligible for LinkedIn and Meta; CPJ data cannot be used at all for Google Ads. For Google Ads syncs, use your CRM or data warehouse as the source.
+    -   Note: When using Clay's company/people search (CPJ) as a source, data source restrictions apply by platform — only US-origin contacts are eligible for LinkedIn and Meta; CPJ data cannot be used at all for Google Ads or Bing Ads. For Google Ads and Bing Ads syncs, use your CRM or data warehouse as the source.
 2.  **Choose your connected account** on LinkedIn or Meta and prepare your data before mapping:
     -   LinkedIn has character limits for certain fields. If needed, add a formula column to shorten longer job titles for better match rates.
     -   **Note:** Ad Sync tables have a more limited selection of enrichment providers and actions than regular Clay tables. For complex transformations (such as domain normalization), prepare the data upstream in a regular table first, then use that table or a Clay Audience as the source for your Ad Sync.
@@ -115,7 +115,7 @@ Access control is enforced at the Google Ads account level — the person connec
 
 ### **What platforms are supported?**
 
-Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, and **Google Ads**.
+Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, **Google Ads**, **Bing Ads**, **Reddit Ads**, and **Vibe.co**.
 
 Note that data source restrictions apply depending on the platform — see [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) below for details.
 
@@ -128,7 +128,7 @@ When you create an ad sync, you may see an **Ad sync segment filters** panel sho
 **Why contacts get excluded:**
 
 -   **LinkedIn and Meta:** Contacts sourced from Clay's company/people search (CPJ) are restricted to US-origin contacts only. Non-US CPJ contacts are automatically filtered out.
--   **Google Ads:** Contacts sourced from Clay's company/people search (CPJ) or any other third-party data source are excluded entirely, regardless of country. Only contacts sourced from your own CRM (Salesforce, HubSpot) or data warehouse are eligible for Google Ads syncs.
+-   **Google Ads and Bing Ads:** Contacts sourced from Clay's company/people search (CPJ) or any other third-party data source are excluded entirely, regardless of country. Only contacts sourced from your own CRM (Salesforce, HubSpot) or data warehouse are eligible for Google Ads and Bing Ads syncs.
 
 These restrictions exist for compliance reasons, as third-party sourced contact data is subject to usage limitations under each ad platform's terms of service.
 
@@ -169,7 +169,7 @@ Yes. After your initial sync is active, an **Expand your reach** section appears
 
 -   If the **Expand your reach** section is not visible, no additional platforms are currently available to add for your workspace. Which platforms appear depends on which ones your workspace has been granted access to — Google Ads requires a separate access request (currently in closed beta) and will not appear as an option even if you are already actively syncing to other ad platforms. Contact [Clay support](https://www.clay.com/contact) to request Google Ads access. If you need to add a platform that is not yet available in **Expand your reach**, the workaround is to deactivate the current sync and create a new Ad Sync with all desired destinations configured from the start. See [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for credit implications.
 -   You cannot add a platform while a sync is currently in progress — wait for the active sync to complete first.
--   Google Ads is only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience includes contacts from Clay's company/people search data, Google Ads will appear disabled. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) for details.
+-   Google Ads and Bing Ads are only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience includes contacts from Clay's company/people search data, Google Ads and Bing Ads will appear disabled. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) for details.
 
 ### **Will I be charged again if I deactivate and recreate an Ad Sync?**
 
