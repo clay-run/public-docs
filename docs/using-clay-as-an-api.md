@@ -4,7 +4,7 @@ description: Clay doesn't have a traditional API, but you can send data via
   webhooks, wrap Clay with Make or Zapier, use the Enterprise API for people &
   company lookups, connect AI tools via MCP, or build workflows via the CLI
   agent plugin.
-last_synced: 2026-04-26T01:40:52.803Z
+last_synced: 2026-04-26T01:40:52.256Z
 ---
 
 # Does Clay have an API?
