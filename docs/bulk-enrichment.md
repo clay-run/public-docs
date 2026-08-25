@@ -134,6 +134,17 @@ The **Auto-enrich new records** toggle determines whether records that newly qua
 
 To set a schedule, click **Recurring enrichments** in the Run Setup panel and select your desired frequency.
 
+### Adding a segment to an existing enrichment
+
+A single bulk enrichment can run on multiple Audiences segments — you do not need to recreate it for each segment. To add another segment to an enrichment that is already connected to one segment:
+
+1.  Open the enrichment — from any segment, click `Enrich` in the top-right toolbar to open the enrichments sidebar, then click the enrichment card to open the **Run Setup** panel.
+2.  If the enrichment is actively running, click **Pause** first — the **Add segment** button is disabled while a run is in progress.
+3.  In the Run Setup panel, click **Add segment** and select the segment you want to include.
+4.  Resume the enrichment. When prompted, choose **Continue where you left off** — members of the newly added segment are enqueued automatically.
+
+Once the segment is linked, navigating to that segment and clicking `Enrich` shows the enrichment in the sidebar. You can view its status and manage settings from either connected segment.
+
 ### What happens when you click Start Run
 
 When you click **Start Run** on an Audiences bulk enrichment, Clay recalculates your **live segment at that moment** using your current filters — not the member list baked in when the bulk enrichment was first created. The live segment is the source of truth for the run.
