@@ -45,6 +45,17 @@ Filter any of the content on this page by:
 
 **Note:** The Workbooks tab does not show per-user credit attribution — it groups spend by workbook or table, not by which team member ran the enrichments. If you need per-user credit tracking, see the **MCP** and **API** tabs, which attribute spend to individual users for those access methods.
 
+### Credit spike alerts (Enterprise)
+
+Enterprise workspace admins receive automatic **Credit Spike Alerts** when Clay detects unusually high credit spend — a short burst of consumption that is outsized relative to the workspace's monthly plan allocation.
+
+When a spike is detected:
+
+-   **Email alert:** Workspace admins receive an **"Elevated Credit Usage Alert"** email linking directly to the Usage dashboard. A 24-hour cooldown prevents repeated alerts during the same sustained spike.
+-   **Spike markers on usage graphs:** The spike is marked on the workspace balance and spend breakdown graphs in the Usage dashboard. Admins can click through from the alert email to see exactly when the spike occurred and drill into what drove it, or look back at past spike markers to audit historical spend.
+
+To review past spike events, open **Settings → Usage** and look for markers on the workspace usage graphs.
+
 ### Understanding table-specific credit usage
 
 For deeper insights into credit spend within a specific table, you can access the table credit usage dashboard. This gives you realtime data on when and how credits were spent within that table.

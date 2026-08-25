@@ -124,9 +124,11 @@ Notifications will be delivered via both email and in-product UI across various 
 
 **Is there an automated alert for my workspace's monthly Data Credit balance?**
 
-No. The notifications above are for workbook-level credit spend limits only — they fire when a specific workbook reaches its configured cap. There is currently no automated alert when your workspace's overall monthly Data Credit allotment is running low or is exhausted.
+Yes — Enterprise workspaces have **Credit Spike Alerts**. When Clay detects a short burst of credit spend that is unusually high relative to the workspace's monthly plan allocation, workspace admins automatically receive an **"Elevated Credit Usage Alert"** email linking directly to the Usage dashboard. A 24-hour cooldown prevents repeated alerts during the same sustained spike. Spike events are also marked on the workspace usage graphs so admins can see exactly when a spike occurred and drill into what drove it.
 
-To manually monitor your monthly credit balance, go to **Settings → Usage**. The Usage Dashboard shows your remaining Data Credits and your current billing period end date. For a detailed breakdown of credit consumption, see [Credit usage](/docs/credit-usage).
+The workbook-level notifications described above are separate: those fire when a specific workbook reaches its configured spending cap.
+
+To manually monitor your monthly credit balance at any time, go to **Settings → Usage**. The Usage Dashboard shows your remaining Data Credits and your current billing period end date. For a detailed breakdown of credit consumption, see [Credit usage](/docs/credit-usage).
 
 ## Credit Budgets (open beta)
 
