@@ -335,7 +335,7 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
 2.  Add enrichment columns as you normally would (e.g., `Enrich Person` for LinkedIn URL, title, phone).
 3.  Test on a small batch first — click `Run on 10 rows` to verify output before running at scale.
 4.  Open `Field Mapping` and map each column you want to save back to Audiences:
-    -   Enable the auto-enrich toggle so that any new record entering this segment is automatically passed through the enrichment — typically within 15 minutes.
+    -   Enable the auto-enrich toggle so that any new record entering this segment is automatically passed through the enrichment — within 20 minutes.
 5.  Click `Start Run`.
 
 **Note:** To run a bulk enrichment on Audience data, always start from within the Audience — click `Enrich` → `Add bulk enrich` from any segment view. When creating a new Bulk Enrichment from the Clay homepage (`New` → `Bulk enrichment`), the source type options are CSV and Salesforce CRM only — there is no "Audiences" source type in that dialog. The Audience segment serves as the source when you add the enrichment from within Audiences.
@@ -650,7 +650,7 @@ Yes. Segments update in real time as records enter or exit your filter criteria.
 -   **Enterprise plan:** CRM and data warehouse syncs run every 15 minutes, and segments update continuously.
 -   **Growth plan:** CRM and data warehouse syncs run daily, and segments update based on that daily refresh.
 
-Enrichments configured with `Continuous Enrichment` enabled automatically process new records entering a segment, typically within 15 minutes. No manual runs are required after initial setup.
+Enrichments configured with `Continuous Enrichment` enabled automatically process new records entering a segment within 20 minutes. No manual runs are required after initial setup.
 
 ### Why didn't my audience count change after I tightened my search filters?
 
@@ -939,6 +939,24 @@ CRM import is free; writing data back to your CRM costs Actions. Here is the ful
 -   **Enrichment:** Costs credits. Running an enrichment on Audience records (for example, to update job titles or find contact data) uses 1 Action per record enriched plus Data Credits that vary by provider and data type — the same billing as enriching in a regular Clay table.
 
 For a full breakdown of how Actions and Data Credits work together, see [Actions & Data Credits](./actions-data-credits.md).
+
+### Does an Audience show one row per company or one row per signal event?
+
+An Audience always shows **one row per company** (or one row per person in a People audience). Audiences is an entity database — it maintains a single unified record for each company or person, regardless of how many signal events that company has received. When a signal fires, results write to a dedicated column on the matching company record. Multiple signal events accumulate in that column over time rather than creating new rows. To view individual signal events, open a company record and navigate to the **Activity** tab.
+
+If you need one row per signal event — for example, to enrich and upsert each individual news or new-hire event to Salesforce or Salesloft — use a standalone signal that writes its output to a Clay table. Each new matching event creates a new row in that table, where you can run enrichments and CRM actions at the event level.
+
+### Does a Signal firing automatically trigger my bulk enrichment to run?
+
+No — Signals and bulk enrichments are separate systems. A Signal firing writes results to a dedicated column on the matching company record but does not directly trigger a bulk enrichment to run. Bulk enrichments run in only three cases:
+
+-   **Start Run** — manually enriches all records currently in the segment.
+-   **Auto-enrich new records** — enriches a record within 20 minutes of it newly entering the segment.
+-   **Recurring enrichments** — re-enriches all records in the segment on a schedule you set.
+
+A Signal can indirectly trigger auto-enrichment only if its result causes a company to **newly enter** a segment that has **Auto-enrich new records** enabled. In that case, the flow is: Signal fires → results write to the company record → company newly qualifies for and enters a matching segment → auto-enrich runs within 20 minutes. If the company was already in the segment before the signal fired, the new signal result writes to its record but does not trigger auto-enrich again.
+
+**To set up a flow where a Signal result triggers enrichment:** Attach a bulk enrichment with Auto-enrich new records enabled to the companion segment that Clay automatically creates when you add a signal (see [Signals](#signals) above). This companion segment already filters for companies that have received that signal's result — so any company that newly receives a signal result will enter the companion segment and be enriched automatically.
 
 ## Best practices
 
