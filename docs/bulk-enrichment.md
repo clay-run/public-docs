@@ -138,7 +138,7 @@ To set a schedule, click **Recurring enrichments** in the Run Setup panel and se
 
 A single bulk enrichment can run on multiple Audiences segments — you do not need to recreate it for each segment. To add another segment to an enrichment that is already connected to one segment:
 
-1.  Open the enrichment — from any segment, click `Enrich` in the top-right toolbar to open the enrichments sidebar, then click the enrichment card to open the **Run Setup** panel.
+1.  Open the enrichment — navigate to a segment the enrichment is already attached to, click `Enrich` in the top-right toolbar to open the enrichments sidebar, and click the enrichment card to open the **Run Setup** panel. If you're viewing a different segment and don't see the enrichment listed, use the dropdown at the top of the sidebar to switch from the current-segment view to **All** to browse enrichments across all segments.
 2.  If the enrichment is actively running, click **Pause** first — the **Add segment** button is disabled while a run is in progress.
 3.  In the Run Setup panel, click **Add segment** and select the segment you want to include.
 4.  Resume the enrichment. When prompted, choose **Continue where you left off** — members of the newly added segment are enqueued automatically.
