@@ -669,7 +669,23 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 ### How do I export my audience data to CSV?
 
-The Audiences screen does not have a direct CSV download button, and there is currently no built-in path to download audience data as a CSV file directly from the Audiences screen.
+Audiences does not have a direct CSV download button. To export audience records as a CSV, use a bulk enrichment as the export mechanism — bulk enrichments are available on Growth and Enterprise plans.
+
+**For smaller audiences — Download CSV from the enrichment table:**
+
+1. Open an audience segment and click the **Enrich** button (lightning bolt icon) in the top toolbar.
+2. Click the **⋮** (three-dot) menu on an enrichment card → **Open enrichment**. If no enrichment exists yet, click **Add bulk enrich** first.
+3. In the enrichment table, click **+ Import**, enter the number of rows to load (up to 500 at a time), and repeat until all records you want to export are loaded.
+4. In the **Tools** panel on the right, search for **Download CSV** and click it to download the current table rows as a CSV file.
+
+**For large audiences — export to Google Sheets:**
+
+Importing 500 rows at a time is impractical for segments with thousands of records. Instead, use the **Add row** (Google Sheets) action as an export column — Clay processes all segment records automatically:
+
+1. Click **Enrich** → **Add bulk enrich** to create a new bulk enrichment (or open an existing one via **⋮** → **Open enrichment**).
+2. Click **+ Add column** and add the **Add row** action (Google Sheets). Connect your Google account when prompted and select the destination spreadsheet and sheet.
+3. Set the deletion criterion to the **Add row** column so rows are marked complete after being written to your sheet.
+4. Click **Start Run** — Clay processes all records in the segment and writes each one to Google Sheets automatically (1 credit per row). Download the results from Google Sheets when the run finishes.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
