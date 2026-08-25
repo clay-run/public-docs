@@ -91,6 +91,32 @@ Clay pulls data from Salesforce on two schedules:
 
 **Salesforce activities:** To import Salesforce Tasks and Events associated with your Accounts, go to your Salesforce source settings, select `Accounts`, and enable the **Also import activities (tasks and events) associated with these accounts** toggle. Accounts are associated automatically in the background. The Activity tab on each record's detail view then shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp. This toggle is only available for Accounts — there is no equivalent option for Contacts, Leads, or the People object. Even if your Salesforce CRM has Tasks or Events associated with contacts or leads, those activities will not appear in the People Activity tab in Audiences.
 
+### Importing a Salesforce record subset via SOQL
+
+Instead of importing all records of a Salesforce object type, you can use a custom SOQL query to bring only the records you need into Audiences — for example, accounts above a revenue threshold, contacts from a specific region, or any subset you can express in SOQL. This is useful when privacy, compliance, or data-ownership requirements make importing your entire CRM impractical.
+
+You can create multiple SOQL-based imports for the same Salesforce connection, each targeting a different subset of your data. SOQL record subsets support the **Contact**, **Lead**, and **Account** object types. Opportunity SOQL subsets are coming soon.
+
+**To set up a SOQL record subset:**
+
+1.  Click `Add data` → `Add Source` → select your **Salesforce integration**.
+2.  Select the object type: `Contact`, `Lead`, or `Account`.
+3.  Under **Record selection**, choose **Record subset** — "Filter records with a SOQL query."
+4.  Enter a **Subset name** for this import (for example, `US Contacts` or `Active Accounts`).
+5.  Write your SOQL query. Clay requires the following fields to be present in every SOQL query:
+    -   `Id`, `SystemModstamp`, `IsDeleted` — required for all object types.
+    -   `AccountId` — required for Contact objects.
+    -   `ConvertedContactId` — required for Lead objects.
+6.  Optionally, click **Generate SOQL** and describe what records you want in plain language — Clay generates a valid SOQL query from your description.
+7.  Click **Preview** to validate the query and review a sample of the matching records.
+8.  Map your Salesforce fields to Audience fields and click **Save**.
+
+**Sync timing:** SOQL record subset imports sync on the same schedule as standard Salesforce imports — incremental sync runs every **15 minutes** on Enterprise plans or **once daily** on Growth plans, plus a full sync every 7 days.
+
+For SOQL syntax guidance, query examples, and troubleshooting — including how to query related objects and handle large datasets — see [Salesforce SOQL](https://university.clay.com/docs/salesforce-soql).
+
+If the **Record subset** option is not visible in your Salesforce import setup, contact your Growth Strategist to enable SOQL imports for your workspace.
+
 ### Importing from HubSpot
 
 **Note:** Setup must be completed separately for Contacts, Companies, and Deals. HubSpot Deal import is currently in early access — contact your Growth Strategist to enable it for your workspace.
