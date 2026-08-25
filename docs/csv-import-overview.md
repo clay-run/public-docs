@@ -1,6 +1,6 @@
 ---
 title: How to import your CSV into Clay
-description: Import your CSV into Clay.
+description: Import a CSV into Clay, including how to prepare your CRM data for import, format requirements, and row and column limits.
 last_synced: 2026-04-26T01:39:49.725Z
 ---
 
@@ -9,6 +9,26 @@ last_synced: 2026-04-26T01:39:49.725Z
 Import your CSV into Clay.
 
 Within Clay you can import CSV as a source to an existing or new table.
+
+## Preparing your CRM data for import
+
+When exporting contacts from your CRM (such as HubSpot, Salesforce, or Pipedrive) as a CSV, include the following columns to get the most from Clay's enrichment features:
+
+| Column | Why it matters |
+|--------|----------------|
+| First Name | Required input for the Work Email and Phone Number waterfalls |
+| Last Name | Required input for the Work Email and Phone Number waterfalls |
+| Email | Lets Clay validate existing email addresses or skip re-enrichment on rows that already have one |
+| Company Name | Needed to look up company domains when a domain is not already in your export |
+| Company Domain | The most important enrichment column — required by the Work Email waterfall; a company name alone is not sufficient |
+| Job Title | Useful for filtering and targeting contacts by role |
+| Phone Number | Can be validated or used to cross-match records |
+| LinkedIn Profile URL | Required by several phone number enrichment providers |
+| CRM Contact ID | Preserves a reference to the original CRM record for tracking or future updates |
+
+You can include any subset of these — only the fields relevant to the enrichments you plan to run are required. If your CRM export does not include company domains, Clay can find them automatically after import using the Company Domain waterfall (see [Next steps after importing](#next-steps-after-importing)).
+
+**Direct CRM sync vs. CSV import:** Importing a CSV works on all Clay plans, including Free (up to 200 rows per table). If you want Clay to pull new and updated records directly from your CRM automatically — without a manual export — that requires Growth plan or higher. See [HubSpot integration](hubspot-integration-overview.md), [Salesforce integration](salesforce-integration-overview.md), and [Plans & billing](plans-and-billing.md) for details.
 
 ## Importing a CSV into Clay
 
