@@ -2,7 +2,7 @@
 title: Clay Ads
 description: Build and sync contact and account lists to LinkedIn, Meta, and Google Ads for
   precise ad targeting.
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-08-11T18:18:24.197Z
 ---
 
 # Clay Ads
