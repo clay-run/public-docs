@@ -669,7 +669,28 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 ### How do I export my audience data to CSV?
 
-The Audiences screen does not have a direct CSV download button, and there is currently no built-in path to download audience data as a CSV file directly from the Audiences screen.
+The Audiences screen does not have a direct CSV download button. Two paths let you export audience records as a CSV.
+
+**Option 1 — Archive export via bulk enrichment (unlimited rows):**
+
+1.  Open the audience segment and click `Enrich` in the top toolbar.
+2.  Click **Add bulk enrich** to create a new bulk enrichment, or open an existing one via `⋮` → **Open enrichment**.
+3.  In the bulk enrichment settings, enable **Archive deleted rows** and configure a deletion criterion — for example, add a **Normalize Domain** column (a free action under **Enrichment** → **By Clay**) and set the deletion mode to delete rows once that column has run.
+4.  Click **Start Run** to process the rows. Processed rows move to the archive automatically.
+5.  When processing completes and the queue is empty, click **See archived rows**.
+6.  Click **Export full archive** to download all archived rows as a CSV.
+
+**Note:** The archive export covers all processed rows with no row-count cap.
+
+**Option 2 — Send to workbook (up to 50,000 rows, currently in beta):**
+
+Currently in beta — contact your Growth Strategist to enable it for your workspace.
+
+1.  Open the audience segment you want to export.
+2.  Click **Send** → **Add to workbook**. Name the new table and click **Continue** — Clay creates a Clay table pre-populated with up to 50,000 records from the segment.
+3.  In the new table, click **Tools** → **Export** → **Download CSV** to download the data.
+
+**Note:** Only the first 50,000 records are exported to the workbook.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
