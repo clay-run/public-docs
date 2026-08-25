@@ -19,7 +19,7 @@ You can also click the `⛭` icon in the top toolbar to open the Run Settings pa
 
 ## Auto-dedupe
 
-Auto-dedupe continuously monitors a specified column to detect and resolve duplicate values. When duplicates are found, Clay keeps one row and deletes the rest — you choose whether to keep the **oldest** or **newest** row (defaults to **Keep oldest row**). Blank cells, stale cells, and cells with more than 200 characters are excluded from this process.
+Duplicate rows in a Clay table can occur when the same record is added more than once — for example, from repeated CSV uploads, overlapping source imports, or webhook sends that deliver the same contact multiple times. Auto-dedupe continuously monitors a specified column to detect and resolve duplicate values. When duplicates are found, Clay keeps one row and deletes the rest — you choose whether to keep the **oldest** or **newest** row (defaults to **Keep oldest row**). Blank cells, stale cells, and cells with more than 200 characters are excluded from this process.
 
 **When does auto-dedupe fire?** Auto-dedupe runs whenever a row is added to the table **and** whenever a cell value in the dedupe column changes — including when a formula field or enrichment column fills in from an empty or stale state. This means if the dedupe column cell is blank or still processing when a row is first inserted, the duplicate check runs again automatically once the cell resolves. You don't need to manually trigger deduplication after a cell updates.
 
@@ -35,11 +35,11 @@ Auto-dedupe continuously monitors a specified column to detect and resolve dupli
 
 To enable or disable auto-dedupe:
 
-1.  Open the table name dropdown menu.
-2.  Select `Edit table settings`.
-3.  In the settings panel, find the **Auto-dedupe rows** toggle and turn it on or off.
-4.  Select the column to be used for identifying duplicate values.
-5.  Choose **Keep oldest row** or **Keep newest row** to set which duplicate is retained.
+1.  Click the gear (`⚙`) icon at the bottom right of the table to open Table Settings — or open the table name dropdown and select `Edit table settings`.
+2.  Find the **Deduplication** section and toggle **Auto-dedupe rows** on.
+3.  Under **Dedupe via column**, select the column to use for identifying duplicates.
+4.  Choose **Keep oldest row** or **Keep newest row** to set which duplicate is retained.
+5.  Click **Save changes**.
 
 **Note:** Auto-dedupe monitors a **single column** only. If you need to deduplicate on a combination of fields — for example, treating each unique `OpportunityId + ContactId + Role` as a distinct row — use the **Uniqueness fields** setting in your source configuration instead (e.g., the [Salesforce SOQL source](salesforce-soql.md)). Source-level uniqueness fields apply at import time, before rows reach the table.
 
