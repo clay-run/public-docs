@@ -91,14 +91,14 @@ Each Clay table enforces two independent column limits — one for the total num
 
 -   Clay tables have a default column limit of **100** (all column types combined).
 -   Clay tables have a default enrichment column limit of **40**. This is a separate, independent cap — your table's enrichment column count is tracked on its own, regardless of how high the total column limit is.
--   Tables using phone or email waterfalls can have this limit raised to a maximum of **60** (for that table only).
+-   For tables that include phone or email waterfall enrichments, the action column limit automatically extends — by 1 per eligible waterfall column, up to a maximum of **60** for that table. No support request is needed for this extension.
 -   Note: Enterprise Plans may have custom column limits. Each limit (total and enrichment) is set independently — a custom total column limit does not automatically raise the enrichment column limit.
 
 ### "Cannot create new computable field due to table size limit"
 
 If you see the error **"Table cannot create new computable field due to table size limit"** — whether you're adding a new enrichment column, connecting a new data source, or saving a workflow as a Function ("Replace columns with function") — your table has reached the **40 enrichment column limit**. Despite the phrase "table size," this error is about column count — not row count or data volume. It can appear even on a table that has very few or no rows.
 
-If your table's enrichment limit was previously raised (for example, to 60 for a phone or email waterfall table) and you hit that higher cap, the in-product error instead reads **"This table has reached the [N] enrichment columns limit"** — where [N] is your table's current limit. The cause and resolutions are identical.
+You may also see the error: **"You have reached the maximum number of columns allowed (100 total columns, 40 action columns). Please delete some columns before adding new ones."** For tables where the action column limit has extended due to phone or email waterfall columns, the number shown in the message reflects your table's current limit (up to 60). The cause and resolutions are identical regardless of the specific number shown.
 
 Enrichment (action) columns include any column that runs an integration, waterfall, AI enrichment, lookup, or other data action. Your table can hold up to 40 of these before new ones are blocked. This cap is enforced independently from your workspace's total column limit — even if your workspace has a custom total column limit (such as 99 instead of the default 100), the enrichment column limit remains at 40 unless it was separately raised.
 
@@ -106,7 +106,8 @@ Enrichment (action) columns include any column that runs an integration, waterfa
 
 -   **Delete unused enrichment columns.** Click the column header dropdown → `Delete column` for any enrichment columns you no longer need. Hidden enrichment columns still count toward the limit, so open the columns panel to check for any hidden ones.
 -   **Consolidate with Functions.** [Functions](https://university.clay.com/docs/functions) run multiple enrichment steps in a background mini-table and return a single column to your main table — collapsing 20–50 enrichment columns into one. This is the most effective way to stay within the limit while keeping your workflows intact.
--   **Request a higher limit.** Tables using email or phone waterfalls can have the enrichment column limit raised to 60. Contact support if you need a higher limit for your use case.
+-   **Split into multiple tables.** Use **Send table data** to forward key identifier columns (name, domain, profile URL) to a second table and run additional enrichments there. See [Send table data](send-table-data.md) for setup details.
+-   **Request a higher limit.** For tables using email or phone waterfalls, the action column limit automatically extends up to 60 — no support request needed for that increase. For limits beyond 60, contact support.
 
 ## Create child columns from a parent column
 
