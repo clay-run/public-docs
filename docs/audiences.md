@@ -453,6 +453,8 @@ When you have a segment ready, you can sync it to an ad platform to run account-
 1.  Click `Send` → `Export action`.
 2.  Click `Sync to ad platforms`.
 
+**Note:** Google Ads audience syncing is currently in beta — contact your Growth Strategist or [Clay support](https://www.clay.com/contact) to enable it for your workspace. If Google Ads does not appear as a sync destination, two things to check: (1) your workspace may not have Google Ads enabled yet (contact support to request access), and (2) contacts must have at least one first-party source (your CRM or data warehouse) to be eligible — contacts whose only data source is Clay's company/people search (CPJ) are excluded from Google Ads syncs. Clay does not sync directly to DV360; once your audience is live in Google Ads Customer Match, you can use it for DV360 campaigns from within Google's platform.
+
 **How you might use this:**
 
 -   **Account-based advertising** — sync company segments to LinkedIn, Meta, or Google Ads. Contacts who no longer qualify are automatically removed.
@@ -463,7 +465,7 @@ You can add multiple ad platforms to a single audience sync. After your initial 
 
 **Notes:**
 -   You cannot add a platform while a sync is currently in progress — wait for the active sync to complete first.
--   Google Ads is only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience uses Clay's company/people search (CPJ) data, Google Ads will not be available to add.
+-   Google Ads requires workspace enablement (currently in beta — contact your Growth Strategist or [Clay support](https://www.clay.com/contact) to enable it), and is only available for contacts that have at least one first-party source (your CRM or data warehouse). Contacts whose only data source is Clay's company/people search (CPJ) are excluded from Google Ads syncs.
 
 **Enhanced Matching (Beta)**
 
