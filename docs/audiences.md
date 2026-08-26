@@ -423,6 +423,7 @@ After you add a signal:
 -   Clay **automatically creates a companion segment** combining your original filters plus a filter for the new signal result — this is expected, not an error.
 -   Multiple signals each get their own column; the `Signal Summary` column aggregates all results. Click any row to see per-signal detail.
 -   Any other segment that filters on this signal type will also surface these results.
+-   Each signal column shows only whether the signal has fired for each record — the **most recent match is stored per record**, and the specific date of the signal event is not visible in the audience table grid.
 
 **Monitoring signal progress**
 
@@ -884,6 +885,10 @@ Three things to check:
 -   **The signal falls outside the default lookback window.** `Lookup in Audiences` returns signal data for the past **90 days** by default via the **Signal data to include (days)** column setting. This lookback is independent of your audience's filter criteria — a contact can be correctly included in a "job change results" audience yet still show empty signal data in a lookup if the job-change event falls outside the configured window. To retrieve older signals, open the column settings and increase **Signal data to include (days)** to cover the relevant time range.
 -   **The default 5-result count was reached.** `Lookup in Audiences` returns 5 signal results per record by default. If a company has more active signals than that, some may not appear — increase the result limit in the column settings (up to 50), or use `Get Audiences Activity` to retrieve a larger set of signal data.
 -   **The signal hasn't fired for that record yet.** Signal results are written asynchronously and may not appear immediately after a signal run completes. If a signal should be recent but is still missing, open the signal's column header → `Edit column` and re-run the signal to refresh the data for that record.
+
+### Can I see the date when a signal fired in my audience?
+
+Signal columns in the audience view show only whether a signal has matched each record — the specific date of the signal event is not displayed as a column value in the audience table. Each signal column stores only the **most recent match per record**; earlier matches are not retained in the audience view. To see the timestamp for a signal match on a specific record, click that row to open the record detail page — signal events listed there include a date. To narrow all records to those where a signal fired within a particular time window, add a filter on the signal results field (for example, **News & Fundraising results → within the last 80 days**) from the Filters panel.
 
 ### How do I remove records from an audience?
 
