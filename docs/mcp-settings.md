@@ -20,7 +20,7 @@ Credit controls and usage monitoring are available on all modern paid plans (Lau
 
 Audiences controls are available to workspaces with Clay Audiences enabled — contact support if you're unsure whether your workspace qualifies.  
 
-The `Enable for MCP` option on [Functions](#enabling-a-function-for-mcp) (reusable enrichment workflows built in Clay) is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans.
+The `MCP for reps` option on [Functions](#enabling-a-function-for-mcp) (reusable enrichment workflows built in Clay) is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans.
 
 Glean integration is available on Enterprise plans only.
 
@@ -29,7 +29,7 @@ Glean integration is available on Enterprise plans only.
 Functions are reusable enrichment workflows built in Clay that reps can invoke directly from ChatGPT, Claude, or Glean with a single prompt. Admins build them once and enable them for MCP — reps never need to open Clay to use them.
 
 1.  Go to the `Functions` tab in your workspace and find the function you want (or click `+ New function` to create a new one.)
-2.  Click the function to open it's settings and toggle `Enable for MCP`.
+2.  Click the function to open it's settings and check `MCP for reps` in the Integrations section.
     -   Set a name and description for the MCP app — this is what reps see when browsing available functions, so make it actionable (e.g., _"Company enrichment waterfall"_ or _"Outbound email generator"_).
 
 _For more information about functions, check out our_ [_full doc_](https://university.clay.com/docs/functions)_._
@@ -76,7 +76,7 @@ The native Clay MCP contact enrichment — including the "Find and Enrich list o
 
 **To bring your waterfall coverage into MCP**, wrap the waterfall in a Clay Function and enable it for MCP. See [Enabling a function for MCP](#enabling-a-function-for-mcp) above for step-by-step instructions. Once enabled, you and your reps can invoke the waterfall function directly from Claude or ChatGPT.
 
-The `Enable for MCP` option requires a modern Launch, Growth, Enterprise, or Legacy Enterprise plan.
+The `MCP for reps` option requires a modern Launch, Growth, Enterprise, or Legacy Enterprise plan.
 
 ### Does Clay provide an MCP server URL I can paste into any AI tool?
 

@@ -18,7 +18,7 @@ Functions are built for workflows you'd otherwise rebuild from scratch in every 
 
 -   Company enrichment: Given a domain or LinkedIn URL, return firmographic data (revenue, employee count, website traffic) — collapsing 15+ columns into one.
 -   ICP scoring: Enrich sourced accounts against a pre-defined scoring methodology and update your CRM with the result — governed centrally so logic never drifts between tables.
--   Inbound qualification & routing: Run enrichments to identify and score inbound leads, apply routing logic, and update your CRM — all from a single function column.
+-   Inbound qualification & routing: Run enrichments to identify and score inbound leads, apply routing logic, and update your CRM — all from a single function.
 
 ## Creating a function
 
@@ -338,7 +338,7 @@ To duplicate a function, open the function from your Clay homepage or directly i
 
 ### Can a function be enabled for MCP tools like ChatGPT, Claude, or Glean?
 
-Yes, on supported plans. The `Enable for MCP` option in the function editor panel is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans. On other legacy plans (such as legacy Pro), the toggle does not appear in the function settings — if you do not see it, your workspace plan does not include this capability. Upgrading to a modern plan is required to enable custom Functions for MCP. For setup instructions, see [MCP settings](https://university.clay.com/docs/mcp-settings).
+Yes, on supported plans. The `MCP for reps` option in the function editor panel is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans. On other legacy plans (such as legacy Pro), the toggle does not appear in the function settings — if you do not see it, your workspace plan does not include this capability. Upgrading to a modern plan is required to enable custom Functions for MCP. For setup instructions, see [MCP settings](https://university.clay.com/docs/mcp-settings).
 
 ### Can I call a function programmatically via the API?
 
