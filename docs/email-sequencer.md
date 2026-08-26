@@ -104,7 +104,7 @@ Special sequencer enrichments available in the table include:
 
 -   `Reply to lead`: Automate responses to any email reply event using a pre-built HTML template, AI-generated snippet, or booking link.
 -   `Pause lead in campaign`: This can be called from any Clay table to pause a lead on an incoming event (e.g. event signup, or if the recipient filled in a form).
--   `Add email to blocklist`: Automatically prevent unsubscribed or removed leads from being added to future campaigns.
+-   `Add email to blocklist`: Stop an email address from receiving emails across all campaigns in your workspace — including any campaigns that address is currently active in.
 
 ## Managing campaigns
 
@@ -394,6 +394,10 @@ To view and manually manage your blocklist—including adding individual email a
 **What about leads who reply asking not to be contacted?**
 
 If a lead *replies* to your email — rather than clicking an HTML unsubscribe link — their response is categorized by Smartlead (e.g., as `Do Not Contact` or `Not Interested`), but they are **not** automatically added to the blocklist. The `Add email to blocklist` column in the campaign events table is a button by default: you can click it manually for a specific row, or automate it by setting an `Only run if` condition on the column. To trigger the blocklist action for reply-based opt-outs, set the condition to run when `Event type` equals `LEAD_CATEGORY_UPDATED` — this event fires whenever Smartlead categorizes a lead's reply. See [How are replies categorized in the Campaign Events table?](#how-are-replies-categorized-in-the-campaign-events-table) for the full list of reply categories.
+
+### What happens if I manually add a lead to the Global Blocklist while they're already in an active campaign?
+
+Adding an email address to the Global Blocklist stops that address from receiving emails from **all** campaigns in your workspace — including leads already mid-campaign. No separate pause step is required. Emails already in Smartlead's immediate outgoing queue at the moment you add the address (typically within the next few minutes before a scheduled send time) may still be delivered, but no further emails are queued after the blocklist takes effect.
 
 ### What happens when an email to a lead bounces?
 
