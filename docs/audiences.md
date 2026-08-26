@@ -54,6 +54,8 @@ You can import data from:
 
 ### Importing from Salesforce
 
+**One Salesforce connection per workspace:** Audiences supports a single Salesforce account as a data source per workspace. Once a Salesforce connection is selected, the account picker locks to it — other Salesforce connections in your workspace are not selectable as Audiences sources until the active one is disconnected. To switch to a different org, disconnect the current source first. If you need two Salesforce orgs syncing into Audiences simultaneously, you will need a separate Clay workspace for the second org. See [Can I connect multiple Salesforce orgs to Audiences?](#can-i-connect-multiple-salesforce-orgs-to-audiences) in the FAQs below.
+
 **Note:** Setup must be completed separately for People, Accounts, Leads, and Opportunities. Complete steps for `People` first, then repeat for `Accounts`, then `Leads`, then `Opportunities`.
 
 1.  Click `Add data` → `Add Source` → select your [**Salesforce integration**](https://university.clay.com/docs/salesforce-integration-overview).
@@ -77,6 +79,8 @@ You can import data from:
      -   Opportunity data is associated with your Companies records and becomes available as a filter in any Companies audience.
 15.  Name the corresponding Clay fields.
 16.  Click `Save and Preview`, then `Confirm`.
+
+**Troubleshooting — "Incomplete" import status:** If a source in your Audiences Sources tab shows **Incomplete**, the source was added but field mappings were never saved for it — Clay has no fields configured to import. No Salesforce connection reset is needed; the authorization is fine. To fix it, open each incomplete source, add field mappings for the fields you want to sync, and click **Save and review** → **Confirm**. See [Why is my Salesforce source showing as "Incomplete" in Audiences?](#why-is-my-salesforce-source-showing-as-incomplete-in-audiences) in the FAQs below for step-by-step instructions.
 
 **Sync timing and behavior**
 
@@ -645,6 +649,34 @@ No. The Clay UI shows only that the Salesforce full sync runs weekly — it does
 There is no self-serve option to trigger a full sync manually. If you need an expedited full sync — for example, to pick up formula field updates that are not captured by incremental syncs — contact Clay support.
 
 **Workaround for specific records:** The incremental sync (every 15 minutes for Enterprise, once daily for Growth) picks up any Salesforce record whose `SystemModstamp` has been updated. To re-sync specific records sooner, make a small edit to those records in Salesforce — for example, add and remove a space in any field. This updates `SystemModstamp` and Clay will pick up those records on the next incremental sync, without waiting for the weekly full sync.
+
+### Why is my Salesforce source showing as "Incomplete" in Audiences?
+
+**Incomplete** means the Audiences source was added but field mappings were never saved for it — Clay has no fields configured to import. The Salesforce connection itself is authorized; no reset of your Salesforce connection is needed.
+
+To complete the setup for an incomplete source:
+
+1.  In **Settings** → **Audiences** → **Sources**, click the three-dot menu (⋮) next to the incomplete source and select **Settings**.
+2.  Select each object tab (Accounts, Contacts, Leads, Opportunities).
+3.  Add any Salesforce fields you want to filter or segment by, and name the corresponding Clay fields.
+4.  Click **Save and review** → **Confirm** — this saves the field mapping and kicks off the initial import.
+
+Repeat for each object that shows Incomplete. You do not need a Salesforce admin to do anything on the Salesforce side.
+
+### Can I connect multiple Salesforce orgs to Audiences?
+
+No — Audiences supports one Salesforce account per workspace. The first Salesforce connection you use when adding a source becomes the active one, and the account picker locks to it. Other Salesforce connections visible in **Settings** → **Connections** are not available in the Audiences source picker until the active one is disconnected.
+
+**To switch to a different Salesforce org:**
+
+1.  Go to **Settings** → **Audiences** → **Sources**.
+2.  Click the three-dot menu (⋮) next to your current Salesforce source and select **View settings**.
+3.  Disconnect the current connection.
+4.  Return to your Audience and click **Add data** → **Add Source** — the full account dropdown reappears and you can select a different Salesforce org.
+
+**Important:** Disconnecting and reconnecting a different Salesforce org starts a brand-new full import from that org rather than an incremental update. Already-synced audience records from the previous org are preserved, but the new org's data imports separately.
+
+**If you need two Salesforce orgs syncing into Audiences simultaneously:** set up a second Clay workspace and connect the second org there. Each workspace supports one Salesforce connection in Audiences independently.
 
 ### Why do some of my Salesforce Lead records not appear as separate person records in Clay?
 
