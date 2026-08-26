@@ -158,6 +158,19 @@ To apply the proposed column to your table:
 
 If you'd prefer to add a column directly without going through sandbox, use the **Add enrichment** or **+** button in your table toolbar instead.
 
+### My search only shows 50 rows
+
+When you use Sculptor to set up a Find People, Find Companies, or Find Jobs search, you may see 50 rows in two different situations — each with a different cause and fix.
+
+**In the Sculptor search panel (before clicking Continue):** The search results preview is limited to 50 rows. This is a preview only — it does not cap how many records are imported. When you click **Continue**, Sculptor sends your full search query to the table and imports the complete result set. The button shows the total count (for example, *"2,400 results will be imported"*) so you can confirm the full number before proceeding.
+
+**In your table after the search runs (with the Sandbox Mode badge visible):** If your table is in [Sandbox Mode](https://www.clay.com/university/guide/sandbox-mode) — shown by the **Sandbox Mode** badge in the toolbar — it is capped at a maximum of 50 rows. This is expected behavior and not a search error. Your full results exist in the production table.
+
+To access all your results from sandbox:
+
+-   **To check the full row count without publishing:** Click the **All data** tab in the tab bar above your table. The production table is read-only while sandbox is active, but you can see the total number of rows there.
+-   **To run your workflow on all rows:** Click **Review changes** → **Publish and run**. This publishes your Sculptor-built columns to the production table and runs them across all matching rows.
+
 ## FAQs
 
 ### **When should I use Sculptor instead of building manually?**
