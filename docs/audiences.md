@@ -747,7 +747,9 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 ### How do I export my audience data to CSV?
 
-The Audiences screen does not have a direct CSV download button, and there is currently no built-in path to download audience data as a CSV file directly from the Audiences screen.
+The Audiences screen does not have a direct CSV download button. Neither the Audiences view nor the bulk enrichment tables created from within Audiences include an Export option — to download audience data as a CSV, you must move records into a separate regular Clay table first, then export from there.
+
+To pull Audience records into a regular Clay table, add a `Lookup in Audiences` enrichment column: in any Clay table, click **Add enrichment**, search for **Lookup in Audiences**, and configure it to match each row by email or LinkedIn URL. After the column runs, click **Tools** → **Export** → **Download CSV** to download.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
