@@ -60,7 +60,7 @@ To update an audience, simply modify the data in your Clay table. The audience w
 
 ## **Glossary**
 
--   **Match rate** — The percent of contacts or accounts your ad platform can match to real users. Personal emails usually improve match rates (often ~40–60%+ on Meta and up to ~95% on LinkedIn).
+-   **Match rate** — The percentage of contacts or accounts in your synced audience that the ad platform matched to real users in its network. Match rate is calculated against the number of contacts (rows) synced, not the number of hashed email addresses sent per contact — so sending more emails per contact (via Enhanced Matching) improves your absolute reach without deflating the percentage. Note: LinkedIn may report a matched audience count higher than your contact count because it creates a separate audience entry per hashed email; this is expected and means one contact was matched via multiple email addresses.
 -   **Ad audience** — A list of contacts or accounts synced from Clay to an ad platform for use in campaigns. Audiences can be used for targeting (showing ads to people on the list) or exclusion (preventing ads from reaching people on the list).
 -   **Exclusion list** — An ad audience configured to prevent a group of people from seeing your ads. Common exclusion lists include existing customers, current employees, or open pipeline opportunities — helping eliminate wasted ad spend.
 -   **Hashed email** — A privacy-safe version of an email address encrypted using a one-way algorithm (SHA-256) before being sent to an ad platform. Ad platforms use hashed emails to match contacts without ever seeing the raw address. Clay's `Hashed Email for Ads` waterfall finds and hashes personal emails automatically to maximize match rates.
@@ -161,6 +161,10 @@ This is different from deactivating: deactivating places the sync in read-only h
 
 **Note:** Deleting an Audiences segment that is the source for an Ad Sync will automatically delete the associated Ad Sync as well.
 
+**What happens to the ad platform audience when you delete and recreate:** Deleting an Ad Sync stops syncing on Clay's side but does not automatically remove the corresponding audience list from the ad platform — the list is left in place but frozen (no longer updated by Clay). If you create a new Ad Sync for the same destination, Clay creates a **brand-new audience list** on the platform; it does not reuse or update the previous frozen list. Any live campaigns targeting the old list will not automatically switch to the new one — you would need to manually re-point those campaigns to the new audience. For Google Ads specifically, Google enforces unique audience list names, so creating a new sync with the same name as a deleted one may cause a naming conflict.
+
+To update audience membership without disrupting live campaigns, modify the source data in Clay instead — the existing sync automatically updates the same platform audience list on its next scheduled run, keeping all campaigns running uninterrupted.
+
 ### **Can I add another ad platform to an existing Ad Sync?**
 
 Yes. After your initial sync is active, an **Expand your reach** section appears below your current platform destinations. Click **Add** next to any available platform to configure field mappings for that provider — it will sync on the same schedule as your existing provider.
@@ -184,6 +188,29 @@ After sending your audience to LinkedIn or Meta, it will be created within **48 
 ### **Why should I use personal emails instead of work emails?**
 
 Personal emails are essential for better match rates because most users sign up for LinkedIn and Meta with personal email addresses rather than work emails. Match rates depend on your audience data quality. To maximize results, use the `Hashed Email for Ads` waterfall to find contact email addresses.
+
+### **What fields does Clay send to each ad platform for contact audiences?**
+
+Clay sends the following fields to each ad platform for contact audience matching. Populated fields contribute to match rates — the more fields you provide, the more ways the platform can identify a contact.
+
+| Field | Google | Meta | LinkedIn |
+|-------|--------|------|----------|
+| Email | ✓ | ✓ | ✓ |
+| Phone | ✓ | ✓ | — |
+| First name | ✓ | ✓ | ✓ |
+| Last name | ✓ | ✓ | ✓ |
+| Country | ✓ | ✓ | ✓ |
+| Zip / postal code | ✓ | ✓ | — |
+| City | — | ✓ | — |
+| State | — | ✓ | — |
+| Gender | — | ✓ | — |
+| Mobile advertiser ID | — | ✓ | — |
+| Company | — | — | ✓ |
+| Job title | — | — | ✓ |
+| Google AID (mobile device ID) | — | — | ✓ |
+| Google UID (mobile device ID) | — | — | ✓ |
+
+Email is the primary matching field on all three platforms — if no email column is mapped, the platform returns an audience size of 0. Phone numbers should be in E.164 format (for example, `+1…` for US, `+39…` for Italy). LinkedIn profile URL is used for **company audience** matching only and is not used for contact audience matching — to improve LinkedIn contact match rates, focus on clean email, name, company, and country data.
 
 ### **How does the `Hashed Email for Ads` waterfall work?**
 
@@ -218,6 +245,19 @@ In your Google Ads account, go to **Tools & Settings → Audience Manager**. If 
 
 **If Customer Match is enabled and the error still appears:**
 Reauthenticate your Google Ads connection in Clay: disconnect the Google Ads account in your Clay connections settings, reconnect it via OAuth, then run the sync again.
+
+### **How do I configure Google consent signals for EEA audiences?**
+
+Google Customer Match requires consent signals when uploading audiences that include contacts in the European Economic Area (EEA). Without these signals, Google will not match EEA contacts even for Gmail-heavy lists, which significantly suppresses match rates for European audiences.
+
+When you add Google as a sync destination, the Setup step includes two consent settings:
+
+-   **Consent for sending user data to Google** — whether Google may receive the contact identity data you are uploading.
+-   **Consent for ad personalization** — whether Google may use that data for ad targeting.
+
+Set both to **Granted** if you have valid consent on file for the contacts in the audience. Leaving either setting at the default (Unspecified) causes Google to treat those contacts as having no consent, which reduces match rates for EEA audiences.
+
+These consent settings apply to the entire sync — they cannot be configured per contact. If you have valid ad personalization consent only for a subset of your contacts, split them into two separate audience segments before syncing: one for consented contacts (set both to Granted) and one for the rest.
 
 ### **How do I connect my LinkedIn, Meta, or Google Ads account?**
 
