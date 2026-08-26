@@ -224,6 +224,16 @@ Signals track events at the **company level** — each fundraising round, new hi
 
 This lets you see the latest signal event for each company directly in your contacts table without mixing signal event rows into your contacts.
 
+### How do I use a CRM record ID from my company table's Create Record action in my contact table?
+
+When a signal workflow creates company records in your CRM from the company table (using a Create Record action), the returned CRM record ID — such as a HubSpot Company ID or Salesforce Account ID — is not automatically available as a standalone column that other tables can read. To pass that ID into a contact table's Create Record action, follow these three steps:
+
+1. **In the company table**, open any populated Create Record cell and hover over the CRM record ID field in the output. Click **Add to column** to extract it as its own standalone column.
+2. **In the contact table**, re-run the company lookup (Lookup Single Row in Other Table) so it reads the updated company table row, which now includes the new standalone CRM record ID column.
+3. **In the contact table's Create Record action**, map the CRM record ID — now available through the company lookup output — to the appropriate company or account field (for example, the associated company ID or account ID in your CRM).
+
+The CRM record ID returned by Create Record lives inside the action column's output object. Extracting it as its own column (step 1) makes it visible to other tables that look up rows from the company table, which is how the contact table can reference it.
+
 ### Why did my brand mentions signal stop working?
 
 The social network brand mentions signal — along with related social listening actions — was discontinued in early March 2026. Clay's data partner for these actions updated their terms of use, and to remain aligned with their guidelines, Clay discontinued this feature.
