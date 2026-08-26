@@ -208,6 +208,24 @@ There are two ways to resolve this:
 -   **Fill in the missing data.** Ensure that the columns referenced in your prompt have values for the rows you want to run.
 -   **Make the inputs optional.** In the column prompt, hover your cursor over a `{{Column Name}}` reference token — a **Required to run** toggle appears inline on that token. Switch it off for any input you want to be optional. When toggled off, the cell will still run even if that column is blank — the empty field is simply omitted from the prompt for that row.
 
+### Column header shows "Settings contains deleted column" error
+
+A **warning icon (⚠)** on the Use AI column header with the tooltip **"Settings contains deleted column for "prompt" input"** means the column's prompt contains a reference to a column that no longer exists in your table — because it was deleted, renamed, or because the AI column came from a waterfall template built with different column names than your table uses.
+
+This error blocks the column from running entirely. No rows will process until the stale reference is replaced.
+
+**To fix:**
+
+1.  Click the column name → **Edit column** to open the settings panel.
+2.  Go to the **Configure** tab and find the **Prompt** field. Any reference pointing to a missing column appears as a **"(Deleted column)"** chip instead of the normal column name chip.
+3.  Click and delete each **"(Deleted column)"** chip.
+4.  Type `/` in the prompt editor to open the column picker, then select the correct column from your table.
+5.  Click **Save** and re-run the column.
+
+**Note:** Do not type the column reference as `{{Column Name}}` literal text — only references inserted via the `/` picker are substituted with real row data when the column runs. Text typed in `{{...}}` form is treated as a plain string.
+
+**Common cause — waterfall templates:** When you add a pre-built waterfall from the enrichment library (for example, the Funding Stage waterfall), the included Use AI step may reference column names from the template's original table — such as `Company Name` or `Company Domain` — which may not match the column names in your table. If your table uses different names (for example, `Name` and `Domain`), those references appear as deleted immediately. Replacing them with your table's actual columns resolves the error.
+
 ### AI column running but producing unexpected output
 
 If an AI column runs without errors but produces output that doesn't match what you expected — for example, a name-normalization column returning a value from the wrong source, or any column that seems to ignore the data you're looking at — the most likely cause is that the prompt's `{{Column Name}}` references point to a different column than you intended.
