@@ -39,6 +39,8 @@ _They cannot:_
 
 Viewers have limited access to protect sensitive data. By default, they can only view workspace content and **cannot create new tables or workbooks**.
 
+Viewers can also authorize and use Clay's MCP integration to access Clay through AI tools like Claude, ChatGPT, or Glean.
+
 ### Granting Viewers additional access
 
 Viewers can be granted Editor access to specific tables or workbooks, or added as workbook collaborators. When given this access, they can:

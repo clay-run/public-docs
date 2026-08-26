@@ -105,11 +105,13 @@ There is no self-service way to add a custom redirect URI to Clay's OAuth allowl
 
 ### What role should I assign to team members who will only use Clay through MCP?
 
-Any team member who needs to use Clay through an AI tool (Claude, ChatGPT, Glean, or xAI) must first be added to your Clay workspace. When inviting them, assign the **Sales Rep** role.
+Any workspace role — Admin, Member, Viewer, or Sales Rep — can authorize Clay in AI tools like Claude, ChatGPT, or Glean. Team members must first be added to your workspace before connecting.
 
-The Sales Rep role restricts access to the main Clay workspace: users can invoke functions and run enrichments from within their AI tool, but they cannot open or interact with the Clay interface (tables, workbooks, etc.). This makes it the right choice for team members who should use Clay through AI tools only — not build workflows directly in Clay.
+For team members whose only purpose is to use Clay through AI tools — with no need to access tables, workbooks, or other workspace resources — assign the **Sales Rep** role. Sales Rep restricts access to the main Clay workspace: users can invoke functions and run enrichments from within their AI tool, but they cannot open or interact with the Clay interface (tables, workbooks, etc.).
 
-To invite them: go to `Settings` → `Team`, click `+ Invite`, enter their email address, and select **Sales Rep** from the role dropdown.
+If a team member already has Viewer, Member, or Admin access to your workspace, they can also authorize Clay in Claude, ChatGPT, or Glean without a role change.
+
+To invite MCP-only users: go to `Settings` → `Team`, click `+ Invite`, enter their email address, and select **Sales Rep** from the role dropdown.
 
 **Important:** Team members must accept their workspace invite email *before* connecting Clay to Claude, ChatGPT, or Glean. If a rep goes through the Clay MCP connection flow before accepting the invite, they'll be routed into a new personal workspace instead of your team workspace — and they won't appear in your `MCP users` table or be eligible for credit allocation.
 
