@@ -968,6 +968,14 @@ CRM import is free; writing data back to your CRM costs Actions. Here is the ful
 
 For a full breakdown of how Actions and Data Credits work together, see [Actions & Data Credits](./actions-data-credits.md).
 
+### Does the Find Companies or Find People search in Audiences cost credits?
+
+**Running a Find Companies or Find People search in Audiences using standard filters is free** — no Data Credits are consumed when you run the search, save results to your Audience, or add companies to a segment.
+
+The one exception is **Technographics** filtering in Find Companies: each company row that matches your technographics criteria costs **3 Data Credits**. Any enrichments you run on Audience records afterward also consume credits as usual.
+
+For full details on technographics credit behavior, see [Find Companies — Does importing cost credits?](find-companies.md#does-importing-from-find-companies-cost-credits).
+
 ## Best practices
 
 ### Start with RevOps, not marketing or sales
