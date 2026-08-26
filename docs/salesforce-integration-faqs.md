@@ -719,15 +719,61 @@ In `Setup` → `Manage Connected Apps` → `Clay`:
 
 **If your org requires strict IP restrictions:** All Salesforce connections in Clay automatically route through Clay's fixed egress IP addresses — no extra configuration is needed in Clay. Rather than relaxing IP restrictions, you can add Clay's static IPs to your Salesforce allowlist instead. Contact Clay support to request the current IP list, then add each address in Salesforce under `Setup` → `Network Access` → `New`. For full setup instructions, see [IP allowlisting](salesforce-integration-overview.md#ip-allowlisting) in the Salesforce integration overview.
 
-## Why did the owner on my Salesforce record change when Clay updated a field?
+## Why do records created or updated by Clay show my name (or another user's name) in Salesforce's Created By or Last Modified By field?
 
-If a Lead, Contact, or Account owner changes unexpectedly after Clay updates a field (for example, filling in a phone number), Salesforce assignment rules are likely the cause.
+Salesforce's `CreatedBy` and `LastModifiedBy` audit fields always reflect the **Salesforce user whose credentials authenticated the API request**. Clay passes the connection's access token with each API request, and Salesforce sets those fields accordingly. **`CreatedBy` is set by Salesforce at the moment of record creation and cannot be changed afterward** — this is a Salesforce constraint that applies to all API clients, not only Clay. `LastModifiedBy` does update on every subsequent write and will reflect the new authenticated user once you reconnect.
 
-Assignment rules in Salesforce fire on every record save — not just when a record is created. When Clay updates a record, Salesforce treats it as a save and re-runs any active assignment rules, which can re-assign the owner.
+**For the User Sign In connection method:** Clay authenticates as whichever Salesforce user was active in the browser when you completed the OAuth setup. If you were logged into your personal Salesforce account at that moment, all records Clay writes will show your personal name in those fields — even if you have a dedicated "integration user" configured in Salesforce. The integration user's name will only appear in `CreatedBy` and `LastModifiedBy` if the Clay connection was actually authenticated *as* that integration user.
 
-**To prevent this**, open the settings for your **Update Record** column and enable the **Disable auto-assignment rules** option. This tells Salesforce to skip assignment rules when Clay saves the record.
+**To fix this**, reconnect Clay using the integration user's credentials. See [How do I connect to Salesforce as a specific user](#how-do-i-connect-to-salesforce-as-a-specific-user-such-as-an-integration-user-using-user-sign-in) below for steps. **Reconnecting only affects future records** — `CreatedBy` on records already created cannot be updated retroactively. If the concern is that the currently connected user has broad Salesforce admin access, reconnecting under a dedicated integration user with only the permissions Clay needs resolves both issues: future records will show that integration user in `CreatedBy`, and Clay's Salesforce access is scoped to only what it needs. See [Creating a restricted Salesforce user](creating-a-restricted-salesforce-user.md) for permission setup guidance.
 
-**Note:** If your Update Record column was created before this option was added, the toggle may be off. Check your column settings if you are seeing unexpected owner changes after Clay updates a record.
+**For the Client Credentials connection method:** `CreatedBy` and `LastModifiedBy` reflect the Salesforce execution user configured in the Connected App's **Run As** field during setup — not whoever configured the Clay connection. This is one reason Client Credentials is often preferred for dedicated integration accounts — the audit fields consistently show the configured execution user regardless of who set up the Clay connection.
+
+**To check which Salesforce user your connection is currently authenticated as**, go to `Settings` → `Connections` → `Salesforce`, click `…` next to your connection, and select `Test Connection`. Clay will display the email address of the authenticated user.
+
+## How do I connect to Salesforce as a specific user (such as an integration user) using User Sign In?
+
+When you connect via **User Sign In**, Clay opens an OAuth popup that authenticates using whatever Salesforce session is active in your browser at that moment. If you are already signed in to Salesforce as your personal account, Clay will connect as you — not as the intended integration user.
+
+To connect as a specific Salesforce user:
+
+1.  Open an incognito or private browser window (this gives you a fresh session with no existing Salesforce login).
+2.  Log into Salesforce as the user you want Clay to connect as (for example, a dedicated service account).
+3.  From that same window, open Clay and go to `Settings` → `Connections`.
+4.  Click `Add connection` (or `Reconnect` on an existing Salesforce connection) and complete the OAuth sign-in flow. Clay will authenticate as whoever is logged into Salesforce in that window.
+5.  Optionally, rename the connection (for example, "SFDC Integration User") so it is easy to identify later.
+
+Make sure the connecting user has **API Enabled** and the correct object and field permissions for everything you plan to read or write in Clay. For guidance on setting up a service account with the right access, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
+
+**Note:** If your Salesforce org uses an Integration User license or API-only license, the User Sign In OAuth flow may not work. Use [Client Credentials](https://university.clay.com/docs/salesforce-integration-overview) instead — that method connects server-to-server without a browser login.
+
+## Why can't I set a Salesforce connection as the default, or change which connection is the default?
+
+Setting or changing the default Salesforce connection is restricted to **workspace admins**. Non-admin workspace members do not see the **Set as default** option in the connection menu.
+
+If you need to change the default connection, ask a workspace admin to:
+
+1.  Go to `Settings` → `Connections` and select `Salesforce`.
+2.  Find the connection you want to make the default.
+3.  Click the `…` menu next to it and select `Set as default`.
+
+To change your own role to admin, ask an existing workspace admin to update it in `Settings` → `Team`.
+
+## Why aren't enrichment notifications being sent after I use the Launch Enrichment button in Salesforce?
+
+When using the Clay Salesforce package, the **Launch Enrichment** button on a Lead, Contact, or Account record sends that record to Clay for enrichment and writes the results back to Salesforce. For Salesforce users to receive a notification ("Your record has been enriched by Clay") after the enrichment completes, the **Get Enrichment Notifications** toggle must be enabled on the corresponding workflow.
+
+**To enable enrichment notifications:**
+
+1.  In Salesforce, open the **Clay** app and go to **Object and Field Mapping**.
+2.  Under **Select Object**, choose the object type the Launch Enrichment button lives on — Account, Contact, or Lead.
+3.  Under **Optional (Edit Existing Workflow)**, select the specific workflow tied to that button.
+4.  Confirm that **Get Enrichment Notifications** is toggled **Active** (blue with a checkmark). If it is inactive, toggle it on.
+5.  Save your changes.
+
+Once the toggle is active, Salesforce users will receive a notification in their Salesforce notification center after each successful enrichment run triggered by that button.
+
+**Enrichment notifications only fire on successful enrichments.** There is currently no built-in way to receive a notification when an enrichment fails or when an update or upsert action fails in Salesforce. Failures do not produce a notification — they fail silently from the Salesforce user's perspective. If you need visibility into failures, check the enrichment results directly in Clay.
 
 ## Why is the owner on a new Salesforce lead or contact set to the Clay integration user?
 
@@ -783,59 +829,3 @@ Manual retries succeed because running one cell at a time eliminates the simulta
 -   **Ask your Salesforce admin to review automations:** If your org uses DLRS or other triggers on shared parent records, your admin can investigate switching those rollups to scheduled mode — this decouples the rollup write from the original save and eliminates the lock contention entirely.
 
 **Note:** `UNABLE_TO_LOCK_ROW` is a Salesforce-side limitation, not a Clay bug. Clay automatically retries when this error occurs, but surfaces "Retried but failed: Failed to lock row" after exhausting its retry budget.
-
-## Why do records created or updated by Clay show my name (or another user's name) in Salesforce's Created By or Last Modified By field?
-
-Salesforce's `CreatedBy` and `LastModifiedBy` audit fields always reflect the **Salesforce user whose credentials authenticated the API request**. Clay does not have a mechanism to override this — it passes the connection's access token with each API request, and Salesforce sets those fields accordingly.
-
-**For the User Sign In connection method:** Clay authenticates as whichever Salesforce user was active in the browser when you completed the OAuth setup. If you were logged into your personal Salesforce account at that moment, all records Clay writes will show your personal name in those fields — even if you have a dedicated "integration user" configured in Salesforce. The integration user's name will only appear in `CreatedBy` and `LastModifiedBy` if the Clay connection was actually authenticated *as* that integration user.
-
-**To fix this**, reconnect Clay using the integration user's credentials. See [How do I connect to Salesforce as a specific user](#how-do-i-connect-to-salesforce-as-a-specific-user-such-as-an-integration-user-using-user-sign-in) below for steps.
-
-**For the Client Credentials connection method:** `CreatedBy` and `LastModifiedBy` reflect the Salesforce execution user configured in the Connected App's **Run As** field during setup — not whoever configured the Clay connection. This is one reason Client Credentials is often preferred for dedicated integration accounts — the audit fields consistently show the configured execution user regardless of who set up the Clay connection.
-
-**To check which Salesforce user your connection is currently authenticated as**, go to `Settings` → `Connections` → `Salesforce`, click `…` next to your connection, and select `Test Connection`. Clay will display the email address of the authenticated user.
-
-## How do I connect to Salesforce as a specific user (such as an integration user) using User Sign In?
-
-When you connect via **User Sign In**, Clay opens an OAuth popup that authenticates using whatever Salesforce session is active in your browser at that moment. If you are already signed in to Salesforce as your personal account, Clay will connect as you — not as the intended integration user.
-
-To connect as a specific Salesforce user:
-
-1.  Open an incognito or private browser window (this gives you a fresh session with no existing Salesforce login).
-2.  Log into Salesforce as the user you want Clay to connect as (for example, a dedicated service account).
-3.  From that same window, open Clay and go to `Settings` → `Connections`.
-4.  Click `Add connection` (or `Reconnect` on an existing Salesforce connection) and complete the OAuth sign-in flow. Clay will authenticate as whoever is logged into Salesforce in that window.
-5.  Optionally, rename the connection (for example, "SFDC Integration User") so it is easy to identify later.
-
-Make sure the connecting user has **API Enabled** and the correct object and field permissions for everything you plan to read or write in Clay. For guidance on setting up a service account with the right access, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
-
-**Note:** If your Salesforce org uses an Integration User license or API-only license, the User Sign In OAuth flow may not work. Use [Client Credentials](https://university.clay.com/docs/salesforce-integration-overview) instead — that method connects server-to-server without a browser login.
-
-## Why can't I set a Salesforce connection as the default, or change which connection is the default?
-
-Setting or changing the default Salesforce connection is restricted to **workspace admins**. Non-admin workspace members do not see the **Set as default** option in the connection menu.
-
-If you need to change the default connection, ask a workspace admin to:
-
-1.  Go to `Settings` → `Connections` and select `Salesforce`.
-2.  Find the connection you want to make the default.
-3.  Click the `…` menu next to it and select `Set as default`.
-
-To change your own role to admin, ask an existing workspace admin to update it in `Settings` → `Team`.
-
-## Why aren't enrichment notifications being sent after I use the Launch Enrichment button in Salesforce?
-
-When using the Clay Salesforce package, the **Launch Enrichment** button on a Lead, Contact, or Account record sends that record to Clay for enrichment and writes the results back to Salesforce. For Salesforce users to receive a notification ("Your record has been enriched by Clay") after the enrichment completes, the **Get Enrichment Notifications** toggle must be enabled on the corresponding workflow.
-
-**To enable enrichment notifications:**
-
-1.  In Salesforce, open the **Clay** app and go to **Object and Field Mapping**.
-2.  Under **Select Object**, choose the object type the Launch Enrichment button lives on — Account, Contact, or Lead.
-3.  Under **Optional (Edit Existing Workflow)**, select the specific workflow tied to that button.
-4.  Confirm that **Get Enrichment Notifications** is toggled **Active** (blue with a checkmark). If it is inactive, toggle it on.
-5.  Save your changes.
-
-Once the toggle is active, Salesforce users will receive a notification in their Salesforce notification center after each successful enrichment run triggered by that button.
-
-**Enrichment notifications only fire on successful enrichments.** There is currently no built-in way to receive a notification when an enrichment fails or when an update or upsert action fails in Salesforce. Failures do not produce a notification — they fail silently from the Salesforce user's perspective. If you need visibility into failures, check the enrichment results directly in Clay.
