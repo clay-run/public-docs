@@ -244,7 +244,7 @@ This is expected behavior. The Salesforce Analytics API caps the number of recor
 
 **To import more than 2,000 records from Salesforce, use one of these alternatives:**
 
-- **Salesforce List source (recommended):** Create a Salesforce list view that matches your report criteria and use Clay's **Import records from a Salesforce list** source instead. SOQL-compatible list views support up to 50,000 records per import. See the [Salesforce integration overview](salesforce-integration-overview.md) for setup steps.
+- **Salesforce List source (recommended):** Create a Salesforce list view that matches your report criteria and use Clay's **Import records from a Salesforce list** source instead. SOQL-compatible list views support up to 50,000 records per import — list views that are not SOQL-compatible are still capped at 2,000 rows. See the [Salesforce integration overview](salesforce-integration-overview.md) for setup steps.
 - **Salesforce SOQL source:** Write a custom SOQL query that pulls the exact records you need. The SOQL source also supports up to 50,000 records per import and gives you full control over filtering and field selection. See [Salesforce SOQL](salesforce-soql.md) for details.
 
 ## Why did my scheduled "Import records from a Salesforce list" stop running?
