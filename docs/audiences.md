@@ -815,6 +815,20 @@ The Audiences screen does not have a direct CSV download button. To download aud
 
 For segments with more than 50,000 records, export in batches by applying filters to create smaller sub-segments and repeating steps 2–4 for each batch.
 
+### Why do I only see "Sync to ad platforms" when I click Send on my audience segment?
+
+The options available when you click **Send** on an audience segment depend on which features are enabled in your workspace. For most new workspaces, **Sync to ad platforms** is the primary export option — other actions such as **Send to workflow** and **Export to campaign** require additional features that your Growth Strategist can enable.
+
+**Getting audience data into a Clay table** — There is no direct "Send to table" option in the Send menu. The recommended path is through a bulk enrichment, which automatically creates a Clay table you can use for downstream workflows:
+
+1. From your audience segment, click **Enrich** → **Add bulk enrich**.
+2. Add your enrichment columns (for example, **Enrich Person** to find email, title, or phone).
+3. Test on 10 rows first before running at scale.
+4. In **Field mapping**, map the columns you want saved back to your Audience permanently.
+5. Click **Start Run**, then click **Open enrichment** on the enrichment card to open the underlying Clay table — use it for any downstream actions or orchestration.
+
+This approach handles large volumes, keeps data fresh as your audience updates, and gives you full control over conditional logic before taking action.
+
 ### What happens to a contact's ad targeting when they become a customer?
 
 If your segment has an exclusion condition (e.g., Account Type ≠ "Customer"), the contact is automatically **removed** from the synced ad audience as soon as that condition is met. See [Clay Ads](https://university.clay.com/docs/clay-ads) for platform-specific guidance.
