@@ -89,6 +89,8 @@ When supported by an enrichment, a **Custom rate limit** collapsible section app
 
 The request limit and duration together must average at least 1 request per second (for example, 60 requests per 60,000 ms is valid; 1 request per 2,000 ms is also valid).
 
+**Tip — set slightly below the provider's documented maximum:** When a request hits a rate limit, Clay's retry fires immediately with no delay between the failed attempt and the next try. If your Request limit is set at exactly the provider's stated maximum, the retry can push you back over the limit right at the edge of the window. To leave headroom for retries, set your Request limit one step below the provider's cap — for example, if the provider allows 5 requests per 1,000 ms, try 4 requests per 1,000 ms.
+
 **Note:** Custom rate limit is not available for Clay's built-in AI enrichments (Use AI, Claygent, etc.). It only appears for enrichments that support custom rate limiting, such as HTTP API and Apollo OAuth enrichments.
 
 ## Troubleshooting
