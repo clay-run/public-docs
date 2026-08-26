@@ -63,6 +63,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 -   Check against a static reference database, like a list of users
 -   Check a Do Not Contact list or verify whether a record has already been enriched, then branch actions based on yes/no
 -   Validate that a contact's email domain matches their company's domain — use a formula column to extract the domain from an enriched email address, then look it up against a table of company-level domains
+-   **Prevent duplicate outreach across teammates with separate tables** — When multiple teammates each manage their own lead table in the same workspace, add a Lookup Single Row column pointing to a co-worker's table and match on email address or professional profile URL. If the lookup finds a match, that lead already exists in the other table — add a [conditional run](conditional-runs.md) to skip outreach for those rows. All tables in a workspace are visible to every workspace member, so no special sharing step is needed.
 
 **Best practices**
 
