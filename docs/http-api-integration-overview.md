@@ -259,6 +259,23 @@ In token mode, every column chip inserted via the `/` picker is automatically JS
 
 **Fix:** Extract the sub-property into its own formula column first, then reference that column as a chip in the HTTP body via the `/` picker. Chip tokens are always auto-serialized, even when the column value is a complex object or array.
 
+**Passing a JSON array field from a multi-value column**
+
+When an API field expects a JSON array (e.g., `"mailboxes": ["email1@example.com", "email2@example.com"]`) and your source data is a column that stores multiple values as a single string — for example, comma-separated emails or values where each item is pre-quoted — inserting that column directly as a chip may produce malformed JSON. Pre-formatted values such as emails stored with surrounding quotes cause double-quoting when the chip is serialized.
+
+**Fix:** Create an intermediate formula column that parses and cleans the multi-value string into a proper array, then insert that formula column as a chip where the array field belongs in the body. Clay formula columns support standard JavaScript array methods (`.split()`, `.map()`, `.filter()`), which let you transform any multi-value string into a clean array.
+
+Example formula (for a column containing comma-, semicolon-, or newline-separated values):
+
+```javascript
+String({{Your Multi-Value Column}} ?? "")
+  .split(/[,;\n]+/)
+  .map(s => s.replace(/["'\[\]\s]/g, ""))
+  .filter(s => s.length > 0)
+```
+
+This formula splits the value on commas, semicolons, or newlines; strips surrounding quotes and brackets from each item; and removes empty entries. In the body, insert the formula column as a chip **without** surrounding quotes or brackets — for example, `"mailboxes": /Emails Formula Column` — and Clay auto-serializes the array into proper JSON.
+
 **Example body configuration:**
 
 ```javascript
