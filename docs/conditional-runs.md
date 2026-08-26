@@ -267,6 +267,22 @@ Alternatively, restructure so the condition-determining step happens fully upstr
 3. Save those columns — re-saving recompiles the formula into an up-to-date dependency record, clearing the stale cycle.
 4. Return to your original column and try saving the run condition again.
 
+### "Settings contains deleted column for 'Conditional Run' input" warning
+
+When a column referenced in a run condition is later deleted from the table, a red warning indicator appears on the column header. Hovering over it shows: **"Settings contains deleted column for "Conditional Run" input."**
+
+Inside the run condition formula editor, the deleted column appears as a **(Deleted column)** chip with a warning icon. Hovering over that chip shows: "This input has been deleted. Remove or replace with a new column to run the cell."
+
+**To fix it:**
+
+1. Click the column header and select **Edit column**.
+2. Scroll to the **Run conditions** section.
+3. In the formula, locate the **(Deleted column)** chip.
+4. Remove the chip — click its **×** — or replace it by typing `/` to select a different column from the picker.
+5. Click **Save**.
+
+**To identify what the deleted column was:** Open the **History** panel (bottom-right corner of the table) and select **Change log** — it shows the exact name of each deleted column and when it was deleted. If multiple columns were deleted around the same time, the surrounding formula logic (for example, the operator or the other column references in the condition) can help you narrow down which deleted column was referenced.
+
 ### "Only run if" re-evaluates each time an upstream column changes
 
 With **Auto-run** enabled, Clay re-evaluates an action column's "Only run if" condition each time a value in the current row changes — including each time an upstream enrichment column finishes running. The condition is **not a one-time gate**: if it evaluates to `true` on multiple occasions as different enrichments complete, the action column can run multiple times on the same row.
