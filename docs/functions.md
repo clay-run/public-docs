@@ -53,7 +53,7 @@ Functions are built for workflows you'd otherwise rebuild from scratch in every 
 3.  In the configuration panel:
     -   **Search/Choose which function to run.**
     -   **Map your inputs** — connect the function's input fields to the corresponding columns in this table (e.g., map `Domain` in the function to the domain column in your table).
-        -   You can also add a static value for an input (if a value is not changing for function) by toggling the inputs mode button at the right of each input.
+        -   You can also add a static value for an input (if a value is not changing for a function) by toggling the inputs mode button at the right of each input.
 4.  Run the column. Clay spins up a background mini-table, runs every enrichment step, and returns the outputs to your table as a single column.
 
 **Note:** All enrichment logic runs in a background mini-table invisible to you. Your main table stays clean — what used to be 20–50 enrichment columns becomes a single `Run Function` column.
