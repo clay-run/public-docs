@@ -108,6 +108,24 @@ Each enrichment column shows a progress bar you can hover over to see how many r
 
 When a bulk enrichment is attached to an [Audiences](https://university.clay.com/docs/audiences) segment (available on Growth and Enterprise plans), clicking the enrichment card opens a **Run Setup** panel with additional settings for ongoing enrichment behavior.
 
+### Audiences
+
+The **Audiences** row in the **Configuration** section shows which audience segments are connected to this bulk enrichment. You can connect one or more segments to run the same enrichment across different audiences from a single table.
+
+**To add or change the connected segments on an existing bulk enrichment:**
+
+1.  Click **Pause** if the enrichment is currently running. The Audiences row is locked while a run is active.
+2.  In the **Run setup** panel, click **Set up** next to **Audiences**.
+3.  In the **Connect audiences** modal, select the segments you want to include and click **Save selection**.
+4.  Click **Resume** to continue the run.
+
+**What happens on resume:**
+
+-   **Newly added segments** — records in any newly added segment are automatically enqueued when you resume.
+-   **Removed segments** — removing a segment does not cancel records already queued from it. Those records continue processing.
+
+If you updated the filter conditions on an existing connected segment (rather than adding a new one), see [Resuming after changing segment filters](#resuming-after-changing-segment-filters).
+
 ### Field mapping
 
 The **Field mapping** setting controls whether enriched data is written back to your Audiences records after each row runs.
