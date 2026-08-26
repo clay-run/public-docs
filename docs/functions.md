@@ -334,17 +334,7 @@ Yes. Enable "share as template" on the function to generate a shareable link. An
 
 ### How do I duplicate a function within my workspace?
 
-Use the **Share as template** feature to create a copy of any function:
-
-1.  Open the function from your Clay homepage.
-2.  In the function's settings panel, scroll to the **Share as template** section and enable the toggle.
-3.  Copy the template link that appears.
-4.  Paste the link into your browser. The template page opens, showing the function's columns and input mappings.
-5.  Click the button to copy the function into your workspace.
-
-The duplicate is created as a new, independent function — you can rename it and modify it freely without affecting the original.
-
-**Note:** While the toggle is on, the function's columns, input mappings, and first row of data are visible to anyone with the link. Disable the toggle after duplicating if you want to keep the function private.
+To duplicate a function, open the function from your Clay homepage or directly in the function editor, then click the function name at the top. In the dropdown that appears, select **Duplicate function**. Clay creates a new, independent copy in the same workspace — you can rename it and modify it freely without affecting the original.
 
 ### Can a function be enabled for MCP tools like ChatGPT, Claude, or Glean?
 
