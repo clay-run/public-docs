@@ -219,6 +219,18 @@ In your Google Ads account, go to **Tools & Settings → Audience Manager**. If 
 **If Customer Match is enabled and the error still appears:**
 Reauthenticate your Google Ads connection in Clay: disconnect the Google Ads account in your Clay connections settings, reconnect it via OAuth, then run the sync again.
 
+### **Why does my Meta Ads account show "Accept the terms of service in your ads manager"?**
+
+When a Meta ad account in the account selector shows the message "Accept the terms of service in your **ads manager** to select this account," that account has not yet accepted Meta's **Custom Audience Terms of Service**. Clay cannot create or sync audiences for that account until those terms are accepted.
+
+**To fix this:**
+
+1. Click the **ads manager** link in the tooltip — it takes you directly to the Custom Audience Terms of Service acceptance page for that specific ad account on Meta's site.
+2. Accept the terms.
+3. Return to Clay and try selecting the account again.
+
+Make sure the Meta user you authenticated with has **admin access** to the ad account — only admins can accept the Terms of Service on behalf of the account.
+
 ### **How do I connect my LinkedIn, Meta, or Google Ads account?**
 
 When you create your first ad audience, you'll be prompted to authenticate with LinkedIn Campaign Manager, Meta Business Manager, or your Google Ads account via OAuth. Make sure you have admin access to the ad account you want to use. Note that Google Ads syncing is currently in closed beta — contact [Clay support](https://www.clay.com/contact) to request access.
