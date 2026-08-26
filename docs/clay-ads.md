@@ -216,6 +216,21 @@ Yes! Once synced, your audiences automatically update as data changes in your Cl
 
 No, LinkedIn and Meta don't provide contact-level match visibility for privacy reasons. However, Clay shows aggregate match rates and total audience size after each sync.
 
+### **Why does the match rate shown in Clay differ from what my ad platform reports?**
+
+If the match rate Clay displays does not match what you see in your ad platform's campaign manager, duplicate rows in your Clay table are the most common cause.
+
+**How each side calculates match rate:**
+
+-   **Clay** sends every row in your table to the ad platform without deduplication. Clay's displayed match rate uses the matched-row count returned by the platform API, divided by the total number of rows submitted.
+-   **Ad platforms** deduplicate the submitted list and report their match rate based on unique contacts — the same person appearing in multiple rows is counted once in the platform's calculation.
+
+**The most common source of large discrepancies — same person in multiple rows:** If two rows in your table represent the same person (for example, one row with a personal email and a second row with a work email for the same contact), Clay counts both rows in its denominator. The ad platform collapses both emails to the same member when calculating its unique audience size, producing a different percentage.
+
+**How to fix it:** Deduplicate your Clay table before syncing. Click any column heading and select **Dedupe** to identify and remove duplicate rows. Deduplicating before sync also conserves enrichment credits by avoiding enriching the same contact more than once.
+
+**Secondary factor — platform-side audience refinement:** Ad platforms may also adjust their reported audience size over time as members become inactive, change their privacy settings, or opt out of ad targeting. These platform-side changes are independent of your list and can cause small shifts in the reported match rate or audience size after the initial sync completes.
+
 ### **Why does my ad audience show "too small for use in campaigns"?**
 
 Ad platforms report an audience as "too small" when fewer than 300 contacts matched. The most common cause is that no email column was mapped in the field mapping — ad platforms match contacts by email, so without it the platform processes all sent records but matches 0.
