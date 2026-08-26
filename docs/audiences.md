@@ -299,7 +299,7 @@ When two data sources write different values to the same field on an Audience re
 | 5 | CSV |
 | 6 (lowest) | Find Companies / Find People search |
 
-There is an optional **CSV-first override** that, when enabled for a workspace, promotes CSV to priority tier 2 — above Salesforce and HubSpot but below Upsert Audiences Record and Bulk Enrichments. Contact your Growth Strategist to enable it.
+There is an optional **CSV-first override** that, when enabled, promotes CSV to priority tier 2 — above Salesforce and HubSpot but below Upsert Audiences Record and Bulk Enrichments. Contact your Growth Strategist to enable it.
 
 **When merging happens**
 
@@ -747,7 +747,15 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 ### How do I export my audience data to CSV?
 
-The Audiences screen does not have a direct CSV download button, and there is currently no built-in path to download audience data as a CSV file directly from the Audiences screen.
+Audiences do not have a direct CSV download — the **Tools → Export** option that appears in regular Clay tables is not available in the Audiences view. Audience-origin bulk enrichment tables (created via **Enrich** → **Add bulk enrich**) also do not expose the standard CSV export through the toolbar.
+
+The supported workaround is to move the segment into a regular Clay table first, then export from there:
+
+1.  Open the audience segment you want to export.
+2.  Click **Send** to open the send options and choose the option that pushes the segment to a Clay table or workbook.
+3.  In the resulting Clay table, click **Tools** (top right) → **Export** → **Download CSV**.
+
+If you do not see a table export option in the **Send** menu, contact your workspace Admin or Clay support for the export path available in your account.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
