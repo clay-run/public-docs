@@ -487,9 +487,26 @@ Valid inputs for the company identifier field:
 -   **Company page URL**: `https://www.linkedin.com/company/<slug>`
 -   **School page URL**: `https://www.linkedin.com/school/<slug>`
 -   **Company domain**: e.g., `example.com`
--   **Sales Navigator company URL or company ID`
+-   **Sales Navigator company URL or company ID**
 
 To fix this, replace the person profile URLs in your column with the corresponding company LinkedIn URLs. You can use the **Find Company** or **Enrich Company** enrichments to retrieve a company URL from a company name or domain, then pass that URL into **Find Contacts at Company**.
+
+### Getting "Invalid company identifier." error from Enrich Company
+
+If the **Enrich Company** column shows **"Invalid input: Invalid company identifier."**, the value mapped to the **Company Identifier** field is a company name (for example, "Mayo Clinic" or "Acme Corp") rather than a supported identifier type. Enrich Company does not accept bare company names — the field requires one of:
+
+-   **Company LinkedIn URL**: `https://www.linkedin.com/company/<slug>` (e.g., `https://www.linkedin.com/company/clay-run`) — recommended for highest accuracy
+-   **Company domain**: e.g., `clay.com`
+-   **Sales Navigator company URL**
+-   **Sales Navigator company ID**
+
+**If you only have company names:** Use the **Find company domain** enrichment to resolve a name to a domain first, then pass that domain into Enrich Company:
+
+1.  In your table, click **Add enrichment**, search for **Find company domain**, and add it. Map the **Company Name** input to your company name column. The enrichment costs 1 credit per row and returns the company's domain.
+2.  In your **Enrich Company** column, update the **Company Identifier** input to reference the domain returned by **Find company domain**.
+3.  Re-run **Enrich Company** on the rows that previously errored.
+
+If you have the company's website URL (e.g., `https://www.clay.com`) but not a clean domain, strip the `https://`, `www.`, and any trailing path before mapping it — the identifier field expects a bare domain like `clay.com`.
 
 ### Getting "Invalid input: Invalid person identifier" from Enrich person
 
