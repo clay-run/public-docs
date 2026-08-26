@@ -105,6 +105,22 @@ Viewing a function in "Live" mode provides visibility to current/past function r
 -   If you want to edit/test your function logic, click `Edit function` to safely change, test, and publish your changes.
 -   If you want to re-run past rows in a function, re-run the function column/cells in the origin table that called the function itself. This will generate a new row in your function which will be automatically run on the latest configurations.
 
+### How do I avoid re-running contacts through a function they've already been processed by?
+
+You cannot look up directly into a function's background table — the **Lookup single row** action only shows regular Clay tables in its "Table to search" dropdown, and function tables don't appear there. A function's result lives in the function column of whichever table called it, so that's the table you look up against.
+
+**Recommended pattern — use a master table as your source of truth:**
+
+1. **Keep (or create) one master table** where contacts are enriched by the function. The function column in that table holds each contact's result.
+2. **In the table you're working from**, add a **Lookup single row** column:
+   - **Table to search** → your master table
+   - **Target column** → the identifier column (email or LinkedIn URL)
+   - **Row value** → the matching identifier from the current row
+3. If the lookup finds a match, **pull the function's output into a dedicated column**: click the returned value in the lookup result → **Create column for it**. That's the contact's existing result — no re-run needed.
+4. **Gate the function column** with a [conditional run](conditional-runs.md): set **Only run if** the lookup result is empty. Contacts already in the master table are skipped automatically; only genuinely new contacts are processed.
+
+**If the same contact may arrive through multiple tables**, add a **Send Table Data** column that pushes each newly enriched row's identifier and function result into the master table after the function runs. This keeps the master table as a cumulative log that any table can check via Lookup.
+
 ### Can functions call other functions?
 
 Yes. Functions can be nested — a function can call another function as part of its enrichment sequence, letting you compose complex workflows from smaller, validated building blocks.
