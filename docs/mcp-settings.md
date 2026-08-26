@@ -45,10 +45,10 @@ There are two levels of control:
 
 ## Monitoring usage
 
-The `MCP users` table gives a live view of every rep who has connected Clay to an external platform:
+The `MCP users` table lists all workspace members, including those who haven't yet connected Clay to an external platform. Connected members appear at the top; remaining workspace members appear below, sorted by name. Admins can pre-assign credit limits and Salesforce IDs for any member before the member connects an MCP client.
 
 -   **Name** — rep's name and email address
--   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, Glean, or a combination)
+-   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, Glean, or a combination). Members who haven't connected yet show no platform icons.
 -   **Credit limit** — the rep's current limit, either the workspace default or a per-user override
 -   **Credits used** — live usage tracked against the rep's limit
 -   **Salesforce ID** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
