@@ -291,7 +291,8 @@ For standard source imports (CSV, CRM, list builders), Clay stops importing sile
 **Solutions for large datasets:**
 
 -   Split your data using filters or date ranges into multiple tables
--   Create a new import source — for Snowflake, CRM, and other database sources that have hit the limit, adding a new source definition starts at a fresh 0/50,000 record count (see [FAQ below](#my-scheduled-snowflake-or-crm-import-appears-to-have-stopped-importing-new-records))
+-   Create a new import source — for Salesforce, HubSpot, Snowflake, and other CRM/database sources that have hit the limit, adding a new source definition starts at a fresh 0/50,000 record count (see [FAQ below](#my-salesforce-hubspot-snowflake-or-crm-import-is-returning-0-new-records))
+-   Use [Audiences](audiences.md) for large Salesforce, HubSpot, or other CRM imports that regularly exceed 50,000 records — Audiences are not subject to the per-source 50,000 record cap and scale to millions of records
 -   Use [auto-delete](https://university.clay.com/docs/table-management-settings#auto-delete-passthrough-tables) (Enterprise plan) for unlimited rows with compatible source types (webhooks, send table data, signals)
 -   Use [bulk enrichment](https://www.clay.com/university/guide/bulk-enrichment) (Enterprise plan) to process millions of records
 
@@ -301,11 +302,11 @@ For standard source imports (CSV, CRM, list builders), Clay stops importing sile
 
 To free up source capacity, enable **auto-delete**. For compatible source types (webhooks, send table data, and signal sources), auto-delete removes rows from both the table and the source, keeping the source record count in check. See [auto-delete](auto-delete.md) for setup instructions and source compatibility details.
 
-### My scheduled Snowflake or CRM import appears to have stopped importing new records
+### My Salesforce, HubSpot, Snowflake, or CRM import is returning 0 new records
 
-**If a scheduled Snowflake, HubSpot, Salesforce, or other database import is running on schedule but no new rows are appearing in your table, the most likely cause is that the import source has accumulated 50,000 records and is now silently discarding all incoming data.**
+**If a Salesforce, HubSpot, Snowflake, or other CRM/database source is returning 0 new records — whether on a scheduled run or triggered manually — the most likely cause is that the source has accumulated 50,000 records and is now silently discarding all incoming data.**
 
-Clay's scheduled source runs continue to fire normally after the limit is reached — the schedule itself is not broken. But at the point of record insertion, Clay silently discards every incoming record without displaying an error or sending a notification. From the outside, it looks exactly as if the schedule has stopped running.
+Clay's source continues to run normally after the limit is reached — the schedule is not broken, and manually triggering a run also appears to succeed. But at the point of record insertion, Clay silently discards every incoming record without displaying an error or sending a notification. From the outside, it looks exactly as if the source has stopped running.
 
 **Important:** This is the *source record count*, not the table's visible row count. The source tracks every record it has ever introduced to the table, including rows you have since deleted. A table can show far fewer than 50,000 visible rows while the source has already accumulated 50,000 records. Deleting rows from the table does not reset the source record count.
 
@@ -317,7 +318,7 @@ Clay's scheduled source runs continue to fire normally after the limit is reache
 
 2.  **Set a row count alert.** Use [table alerts](table-alerts.md) to get notified before the next source approaches the limit. The default threshold is 45,000 rows, giving you time to act before importing stops.
 
-For large ongoing Snowflake imports that regularly approach or exceed 50,000 records, consider [Audiences](audiences.md) instead of a standard table. Audiences scales to millions of records without per-source limits.
+For large ongoing Salesforce, HubSpot, Snowflake, or other CRM/database imports that regularly approach or exceed 50,000 records, consider [Audiences](audiences.md) instead of a standard table. Audiences scale to millions of records without the per-source limit.
 
 ### Why did my source run automatically even though it's set to "Run manually"?
 
