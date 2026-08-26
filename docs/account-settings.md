@@ -130,12 +130,11 @@ If none of these steps resolve the error, contact Clay support via the in-app ch
 
 ## Clay API key access
 
-Your Clay API key enables Clay-specific integrations and external connections. To manage your API key:
+Your Clay API key enables Clay-specific integrations and external connections. To manage your API key, go to `Settings` > `Your profile` > `API key`.
 
--   Go to `Settings` >`Your profile` > `API key`.
--   Use the following options:
-    -   `Copy` the key for application use.
-    -   `Regenerate` the key if compromised.
+Your full API key is shown **once** immediately after it is generated or regenerated — copy it from the modal that appears and store it somewhere safe. After you close the modal, only a redacted version is visible in settings and the full key cannot be retrieved without regenerating.
+
+-   **To create or replace your key:** click `Regenerate key`. The new key is shown once in the modal; your previous key is invalidated immediately.
 
 ## Delete your account
 

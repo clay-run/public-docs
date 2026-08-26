@@ -49,8 +49,7 @@ You can find Table IDs and View IDs the same way: they appear after `tables/` an
 
 If your workspace still doesn't appear after entering the ID manually, verify that you're using the correct Clay API key:
 
--   In Clay, go to `Settings` → `Account` → `API key`.
--   Copy the key and re-enter it in Zapier's Clay connection settings.
+-   In Clay, go to `Settings` → `Account` → `API key`. Your full API key is not displayed in settings after it is generated — only a redacted version is shown. If you no longer have the key saved, click `Regenerate key` to create a new one (this immediately invalidates the previous key). Copy the new key from the one-time modal that appears, then re-enter it in Zapier's Clay connection settings.
 
 ### Webhook alternative (Growth plan and above)
 
