@@ -27,7 +27,7 @@ Every time a source runs or re-runs, Clay walks through a short decision tree be
 
 **Step 2 — Column-level auto-run**
 
--   If the **column's Auto-run toggle is off**: the cell is marked stale and skipped (only runs on a manual click).
+-   If the **column's Auto-run toggle is off**: the cell is marked stale and skipped — it will not run when new rows are added. To run cells in this column on demand, right-click the column header and choose **Run column → Run N rows**.
 -   If the **column's Auto-run toggle is on** (default): **the cell runs**.
 
 **Note: Adding a People, Companies, or Jobs list-builder source to an existing table auto-runs enrichments on the first 10 rows only.** When you use a People, Companies, or Jobs search source to add rows to an existing table — including tables created by duplicating a workbook and then adding a source afterward — Clay automatically queues enrichments for only the **first 10 imported rows**. The remaining rows are added to the table but do not trigger auto-run. This is intentional behavior to prevent unexpected credit burns. This 10-row cap applies only to the initial source setup; subsequent scheduled runs of the same source run enrichments on all newly imported rows. To process the remaining rows, manually run them: select all rows in the table, right-click, and choose **Run [N] rows** — or right-click the first column in your workflow and select **Run column**.
@@ -126,6 +126,8 @@ Column-level auto-run controls whether a specific enrichment runs automatically.
 -   If table-level is **ON** + column-level is **OFF**: That specific column won't run automatically.
 -   If table-level is **ON** + column-level is **ON**: Column runs automatically. ✅
 
+**Running an auto-run-OFF column on demand:** Turning a column's auto-run off prevents it from firing automatically when new rows arrive — it does not prevent you from triggering it manually. To run an auto-run-OFF column for a set of rows, right-click the column header and choose **Run column → Run N rows** (or **Run column → Force run all N rows** to re-run cells that already have results). Each column must be triggered individually from its own column header menu.
+
 ## Conditional runs ("Only run if")
 
 Add conditional logic to control when an enrichment executes. The enrichment only runs when the formula evaluates to true.
@@ -175,6 +177,14 @@ The **Update existing rows** toggle in your source column settings controls whet
 -   Email column: ✅ ON
 -   Other columns: ❌ OFF
 -   **Result**: New rows → Only email enrichment runs automatically
+
+**Selective automation with on-demand column runs:**
+
+-   Table-level: ✅ ON
+-   Some columns: ❌ OFF (auto-run)
+-   **Result**: New rows → Only auto-run-ON columns fire automatically; auto-run-OFF columns stay as "Click to run."
+-   **To run the OFF columns on demand:** Right-click the column header → **Run column → Run N rows**. This triggers that column for the specified rows without enabling auto-run on the column.
+-   **Use case:** You want Clay to automatically enrich some fields (e.g., email lookup) when new rows arrive, but want full control over when others run (e.g., a CRM write-back or a phone waterfall you trigger on a schedule).
 
 **Manual control (testing mode):**
 
