@@ -126,6 +126,8 @@ Clay syncs data from HubSpot automatically on the following schedules:
 -   **Incremental sync:** Runs every **15 minutes** on Enterprise workspaces, or **once daily** on Growth workspaces. Picks up new and changed HubSpot records since the last sync.
 -   **Full sync (every 7 days):** Re-reads all records from HubSpot and reconciles deleted records — catching anything the incremental sync may have missed.
 
+The exact time of day for each sync is not shown in the Clay UI and is not configurable — only the cadence is guaranteed.
+
 ### Importing from Snowflake
 
 1.  Click `Add data` → `Import from Snowflake`.
