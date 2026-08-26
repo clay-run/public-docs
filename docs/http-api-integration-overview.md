@@ -323,6 +323,13 @@ Headers provide authentication and specify data formats. Add them as key-value p
 -   Key: X-API-Key
 -   Value: YOUR\_API\_KEY\_HERE
 
+**HTTP Basic Authentication:**
+
+-   Key: Authorization
+-   Value: Basic YOUR\_BASE64\_ENCODED\_CREDENTIALS
+
+⚠️ HTTP Basic Authentication requires credentials to be Base64-encoded. The raw format is `username:password` — or `apikey:` (key followed by a colon, no password) for APIs that authenticate with a single key. Encode your credentials using a Base64 tool, then set the value to `Basic <encoded_value>`. Setting the value to `Basic <raw_api_key>` without encoding returns a 401 error. See [the troubleshooting section below](#401-unauthorized--api-requires-http-basic-authentication) for step-by-step encoding instructions.
+
 **Content type (automatically set in Clay):**
 
 -   Key: Content-Type
@@ -662,6 +669,23 @@ This error means the API credentials in your HTTP API action are no longer valid
 **Tip:** Saving credentials in a header account (`Settings → Connections`) is the easiest way to manage token rotation — when a token expires, you only need to update it in one place instead of editing every column individually.
 
 If your API issues short-lived tokens that expire automatically, the **[HTTP API with JWT Authentication](https://university.clay.com/docs/http-api-with-jwt-authentication-integration-overview)** action may be a better fit — it fetches a fresh token from a configurable endpoint and refreshes it automatically approximately every 55 minutes (available on Explorer and above plans).
+
+### "401 Unauthorized" — API requires HTTP Basic Authentication
+
+Some APIs authenticate using HTTP Basic Authentication, which requires credentials to be Base64-encoded in the `Authorization` header. Clay sends header values exactly as entered — it does not encode them automatically. Setting `Authorization: Basic <raw_api_key>` without encoding the key causes the API to reject the request with a 401 Unauthorized error.
+
+**How to fix:**
+
+1.  Check the API's documentation to confirm it uses HTTP Basic Authentication and what format it expects. The standard format is `username:password`. APIs that use a single API key typically expect `apikey:` — the key followed by a colon, with no password after it.
+2.  Base64-encode the credentials string. For example, to encode `YOUR_API_KEY:`:
+    -   In a terminal: `echo -n "YOUR_API_KEY:" | base64`
+    -   Online: paste into any Base64 encoder (search "base64 encode online").
+3.  In your HTTP API connection (`Settings → Connections`), set the Authorization header:
+    -   **Key:** `Authorization`
+    -   **Value:** `Basic <paste the Base64-encoded value here>`
+4.  Test with a single row to confirm you receive a 200 response.
+
+**Note:** The colon at the end of an API key (with no password after it) is required — it represents the `username:password` format where the password is empty. Omitting the colon produces a 401 even after encoding.
 
 ### "Missing authentication" — saved account deleted or unavailable
 
