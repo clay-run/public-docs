@@ -216,6 +216,12 @@ Yes! Once synced, your audiences automatically update as data changes in your Cl
 
 No, LinkedIn and Meta don't provide contact-level match visibility for privacy reasons. However, Clay shows aggregate match rates and total audience size after each sync.
 
+### **Why is my LinkedIn matched count higher than the number of contacts I sent?**
+
+This is expected. Clay sends up to 3 hashed personal email addresses per contact (via Enhanced Matching) rather than a single email, giving LinkedIn more identifiers to match against. LinkedIn counts each matched identifier separately in its reporting — not each unique contact. A single contact with 3 matching hashed emails contributes 3 to the matched count, which is why the matched count can exceed your total contact count.
+
+Your actual ad reach is based on the audience size (unique contacts), not the matched count. The same behavior applies to Vibe.co syncs.
+
 ### **Why does my ad audience show "too small for use in campaigns"?**
 
 Ad platforms report an audience as "too small" when fewer than 300 contacts matched. The most common cause is that no email column was mapped in the field mapping — ad platforms match contacts by email, so without it the platform processes all sent records but matches 0.
@@ -233,6 +239,17 @@ In your Google Ads account, go to **Tools & Settings → Audience Manager**. If 
 
 **If Customer Match is enabled and the error still appears:**
 Reauthenticate your Google Ads connection in Clay: disconnect the Google Ads account in your Clay connections settings, reconnect it via OAuth, then run the sync again.
+
+### **Why do Search and Display show a smaller audience size than my overall Google Ads match rate?**
+
+Google reports two different measurements in your Clay Ads sync results:
+
+-   **Match rate** — the percentage of the email hashes you sent that Google matched to any Google Account. A 30% match rate means Google identified 30% of your contacts as real Google users.
+-   **Search and Display audience size** — the subset of matched contacts who are eligible to receive ads on that specific inventory type. To count toward Search or Display, a user must be opted into personalized ads on that network and meet Google's minimum campaign requirements.
+
+This means a 30% overall match rate can coexist with a Search or Display audience size of 0 — if none of the matched contacts meet the eligibility requirements for those networks at the time of matching. This is expected behavior from Google's Customer Match API, not an indication that your sync failed.
+
+If Search and Display remain at 0 after 48 hours, check the audience status in your Google Ads account under **Tools & Settings → Audience Manager**. See [Why is my Google Ads audience sync showing a "Failed to update audience" error?](#why-is-my-google-ads-audience-sync-showing-a-failed-to-update-audience-error) if the sync itself shows an error.
 
 ### **How do I connect my LinkedIn, Meta, or Google Ads account?**
 
