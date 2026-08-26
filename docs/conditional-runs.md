@@ -323,6 +323,22 @@ If the Confirm Run panel does not appear when you run a column, that column has 
 
 See [Credit usage](credit-usage.md) for more detail on the run cost breakdown displayed in this panel.
 
+### Condition is met but the enrichment cell shows out-of-date without re-running
+
+When you manually update a field referenced by an enrichment's "Only run if" condition — for example, editing an ID field when the condition is `ID > 0` — the downstream enrichment cell is marked out-of-date (the clock indicator appears). However, the cell will not automatically re-run if **"Keep existing results"** is enabled at the table level and the cell already has a successful value.
+
+This is expected behavior. Clay evaluates the "Only run if" condition, finds it is satisfied, but then applies the "Keep existing results" check — if the cell already has a result, Clay skips it to prevent overwriting existing data and consuming credits. The cell's existing value remains valid and usable by downstream columns.
+
+**To allow the enrichment to re-run whenever its condition becomes satisfied on existing rows:**
+
+1.  Click the `⛭` icon in the top toolbar → **Run Settings**.
+2.  Make sure **Auto-run** is on.
+3.  Uncheck **"Keep existing results"**.
+
+With this setting off, the enrichment re-runs whenever the condition is met — including when you manually edit an upstream field.
+
+**To immediately re-run currently out-of-date cells** without changing your table settings: right-click the enrichment column header → **Run column** → **Run [N] empty or out-of-date rows**.
+
 ## See also
 
 [Conditional statements](https://www.clay.com/university/guide/conditional-statements)

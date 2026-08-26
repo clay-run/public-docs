@@ -148,6 +148,8 @@ Add conditional logic to control when an enrichment executes. The enrichment onl
 
 **Why this matters:** Conditional runs help control costs by preventing enrichments from running when data already exists or conditions aren't met.
 
+**Note:** If "Keep existing results" is enabled (the default for new tables), cells with an existing successful result are skipped even when the "Only run if" condition evaluates to true. Clay evaluates the condition, and if it is satisfied, then applies the "Keep existing results" check — meaning a condition like `Company Size > 50` can pass, yet the cell still won't re-run automatically if it already has a value. To allow conditional re-runs on existing rows, uncheck "Keep existing results" in **Run Settings**. See [Conditional runs](conditional-runs.md) for troubleshooting.
+
 For full documentation on conditional run syntax, operators, and advanced patterns, see [Conditional runs](conditional-runs.md).
 
 ## Update Existing Rows toggle (for scheduled source imports)
