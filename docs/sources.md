@@ -76,6 +76,8 @@ To export the complete text, extract the specific field into a dedicated column 
 
 **Export fails with an unexpected error.** If you encounter an unexpected error while exporting, your session may have expired. Log out of Clay and log back in, then retry the export. For full troubleshooting steps, see [Your session has expired error](workspace-administration-documentation.md#your-session-has-expired-error).
 
+**My workflow showed a file path like `/mnt/session/outputs/contacts.csv` — where is the file?** File paths that appear in a workflow's run output are internal to the processing environment — they are not files on your computer and cannot be downloaded directly. To export your data as a CSV, open the Clay table linked to your workflow and click **Tools → Export → Download CSV**. Clay processes the export in the background and the file downloads to your computer automatically. Completed exports are also saved to the **Exports** tab in the left sidebar of your workspace homepage, where you can re-download them.
+
 ### Exporting a specific subset of contacts
 
 To export only specific contacts from a table — for example, contacts at a particular company or contacts matching a custom condition — first narrow the view to those rows, then export.
