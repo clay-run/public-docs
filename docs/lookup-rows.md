@@ -130,7 +130,7 @@ When prospecting existing accounts, contacts can leave a company, change roles, 
 
    Find People now only fires for accounts where you have fewer than 2 prospects on file. (Clay automatically ensures the lookup runs before this condition is evaluated — column order in the table does not matter.)
 
-3. To avoid returning contacts who are already in your prospects table, open the Find People source configuration and add your prospects table to the **Exclude people** filter. Exclusions match by individual professional profile URL, so your prospects table must contain a profile URL column for this to work. See [Find People in Clay](find-people-overview.md) for details.
+3. To avoid returning contacts who are already in your prospects table, open the Find People source configuration and add your prospects table to the **Exclude people** filter. Exclusions match by LinkedIn URL or email, so your prospects table must contain a LinkedIn URL or email column for this to work. See [Find People in Clay](find-people-overview.md) for details.
 
 4. Add a **Send Table Data → Send row for each item in a list** column and point it at your prospects table. Each contact returned by Find People becomes a new row in your prospects table, where they flow into your existing enrichment and sequencing workflow.
 
