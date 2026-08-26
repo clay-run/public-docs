@@ -160,7 +160,7 @@ If you'd prefer to add a column directly without going through sandbox, use the 
 
 ### My search only shows 50 rows
 
-When you use Sculptor to set up a Find People, Find Companies, or Find Jobs search, you may see 50 rows in two different situations — each with a different cause and fix.
+When you use Sculptor to set up a Find People, Find Companies, or Find Jobs search, you may see 50 rows in three different situations — each with a different cause and fix.
 
 **In the Sculptor search panel (before clicking Continue):** The search results preview is limited to 50 rows. This is a preview only — it does not cap how many records are imported. When you click **Continue**, Sculptor sends your full search query to the table and imports the complete result set. The button shows the total count (for example, *"2,400 results will be imported"*) so you can confirm the full number before proceeding.
 
@@ -170,6 +170,14 @@ To access all your results from sandbox:
 
 -   **To check the full row count without publishing:** Click the **All data** tab in the tab bar above your table. The production table is read-only while sandbox is active, but you can see the total number of rows there.
 -   **To run your workflow on all rows:** Click **Review changes** → **Publish and run**. This publishes your Sculptor-built columns to the production table and runs them across all matching rows.
+
+**In your table after publishing (no Sandbox Mode badge visible):** When a search is set up and published, Clay immediately adds the first 50 matching rows to the table as a fast preview, then runs a background export to bring in the full result set. If the background export takes too long to finish — for example, because your search uses a large keyword list or filters across several fields at once — it can time out before completing, leaving the table with only those initial 50 rows.
+
+To fix this, simplify your search so the query can complete in time:
+
+-   **Search one field instead of several.** Applying keyword filters to both the bio/about section and every job description simultaneously increases query time — pick whichever field is most likely to surface relevant results.
+-   **Trim your keyword list.** Reduce to your 6–8 most distinctive terms rather than an exhaustive list of 20 or more.
+-   **Split into multiple searches.** If you need broad coverage — for example, a long list of schools or companies — break it into two or more searches with smaller filter sets and merge the results in a single table.
 
 ## FAQs
 
