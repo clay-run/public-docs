@@ -1156,7 +1156,11 @@ Before running across your full segment, click `Run on 10 rows` and confirm the 
 
 ### Check your field mapping intent before hitting `Start Run`
 
-Field mapping is on by default. If you want enriched data to write back to Audiences, confirm your column mappings are configured. If you're running an enrichment purely to trigger an action without saving data, explicitly disable field mapping so the run behaves as expected.
+Field mapping is on by default. Before you run, decide which of these three cases applies:
+
+- **You want enriched data written directly to Audiences** — keep field mapping on and confirm your column mappings are configured.
+- **You're running purely to trigger an action without saving data** — explicitly disable field mapping so the run behaves as expected.
+- **You're using the enrichment to write back to Salesforce (or another CRM) and want those values reflected in Audiences** — whether you need bulk-enrich field mapping depends on your import field mapping. If the enriched Salesforce fields **are** already mapped in your Salesforce import field mapping (under **Settings → Sources → Salesforce → field mapping**), the updated values will appear on the Audience record automatically on the next import sync — no bulk-enrich field mapping required. If the fields **are not** mapped in your import field mapping, enable field mapping in the bulk enrichment, or add those fields to your import field mapping so future syncs bring them in.
 
 ### Work backwards from the use case when building segments
 
