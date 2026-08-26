@@ -747,7 +747,21 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 ### How do I export my audience data to CSV?
 
-The Audiences screen does not have a direct CSV download button, and there is currently no built-in path to download audience data as a CSV file directly from the Audiences screen.
+The Audiences screen does not have a direct CSV download button. To export audience data as a CSV file, use a bulk enrichment with the **Archive deleted rows** feature — currently rolling out to Growth and Enterprise workspaces. Contact your Growth Strategist to enable it.
+
+Once enabled:
+
+1.  Navigate to your audience segment and click **Enrich** → **Add bulk enrich**.
+2.  Add the enrichment columns you need — include any fields you want to appear in the CSV export (such as hashed email addresses).
+3.  In the Run Setup settings, configure **Field Mapping** to map at least one enriched column back to your Audience records.
+4.  Enable **Archive deleted rows** in the bulk enrichment settings. This archives each processed row for up to 30 days and makes it downloadable as a CSV.
+5.  Click **Start Run**.
+6.  After the run completes, click **View archive** in the bulk enrichment toolbar and select the run from the dropdown to open the archive.
+7.  Click **Export full archive** to download all processed rows — including all enriched columns — as a CSV file.
+
+Archived rows are stored for up to 30 days and are read-only. Repeat this workflow any time you need a fresh CSV export.
+
+**Alternative for live integrations:** If you need to keep data continuously updated for a third-party platform rather than exporting a one-time file, add a Google Sheets action column to the bulk enrichment and push the enriched values to a Google Sheet — then pull from the sheet on the platform side.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
