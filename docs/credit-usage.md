@@ -83,6 +83,34 @@ All views allow you to download the data as a CSV for further analysis.
 
 **Note:** Historical data for the table credit dashboard begins on November 5th, 2025. You'll see a warning about incomplete data if your selected time range begins before this date.
 
+### Understanding workflow-specific credit usage
+
+For a detailed breakdown of credit spend within a specific workflow, access the workflow credit usage dashboard from two places:
+
+_From the workspace credit dashboard:_
+
+-   Go to **Settings → Usage → Workflows tab**, hover over any workflow row, and click the chart icon next to the workflow name.
+
+_From within the workflow editor (workspace admins only):_
+
+-   Click the workflow name in the topbar to open its dropdown menu, then select **Credit usage**.
+
+**Dashboard views:**
+
+The workflow credit usage dashboard offers three ways to analyze your spend:
+
+`Time view:` See a time series graph of credit spend over time. Choose your time range and aggregate by hour, day, week, or month.
+
+`Run view:` See credit spend grouped by individual workflow run.
+
+`Node view:` See credit spend broken down by each node in your workflow — useful for identifying which steps consume the most credits.
+
+All views allow you to download the data as a CSV.
+
+**Note:** Workflow credit data is available from May 7, 2026. You'll see a notice about incomplete data if your selected time range begins before this date.
+
+**External API key costs:** When you use your own API key (such as an OpenAI or Anthropic key) in a workflow node, the dollar amount charged by that provider is billed directly by the provider and is not tracked in Clay's credit dashboard. Clay records the number of **Actions** consumed by your external key — not the dollar amount. To see your actual charges, check your provider's billing dashboard. To see which external API keys consumed Actions in Clay, go to **Settings → Usage → Integrations tab** and expand the relevant integration.
+
 ### Checking credit cost for a specific action on a row
 
 The workspace and table dashboards break down spend by workbook, table, column, or run — but not by individual row. To see what a specific enrichment charged on a particular row, click on that **action cell** directly. The cell details panel shows a **Charged** line with the data credits consumed by that enrichment for that row.
@@ -94,13 +122,14 @@ This is useful for spot-checking costs before scaling a workflow: run a small ba
 The credit usage dashboard is organized into tabs, each covering a different slice of your workspace spend. Use the `When` dropdown and `Apply filters` to scope each tab to a specific time period.
 
 -   **Workbooks** — shows credit spend broken down by folder, workbook, and table. Click the dropdown next to any folder or workbook to drill into its contents. Sort by `Name` or `Credits used`. Click `Export` to download a CSV for offline analysis.
+-   **Workflows** — shows credit spend broken down by individual workflow. Expand any workflow row to see a node-by-node breakdown. Click the chart icon next to a workflow to open the workflow credit usage dashboard, which breaks down spend by time, by run, or by node. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
 -   **Integrations** — shows credit spend grouped by integration across your entire workspace. Expand any integration row to see a breakdown by individual API key — useful when you have both Clay-managed and personal (BYOK) keys connected, or multiple keys for the same provider. If your workspace uses Audiences agent runs, credits for those runs appear as a **Clay Auto** row under the Artificial Intelligence integration. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
 -   **Signals** — shows credit spend broken down by individual signal. A totals row (`All Signals`) appears at the top, followed by a per-signal breakdown of `Credits used` and `Actions used`.
 -   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
 -   **API** — shows programmatic spend from Clay's People & Company Search API and Exportly, broken down by user. Like MCP, unattributable spend appears as `Unattributed`. Credits from Routines API runs are not tracked here — those appear in the **Workbooks** tab, attributed to the function table that processed each run.
 -   **Budgets** — shows credit spend broken down by budget. Visible only on workspaces with Credit Budgets enabled (currently in open beta for Enterprise customers). See [Credit Budgets](/docs/credit-spend-limits-faq#credit-budgets-open-beta) for details.
 
-**Note:** The `Credits used` total on the **Workbooks** tab reflects only workbook and table activity. Credits consumed by Signals, MCP, or API access appear on those respective tabs and are not included in the Workbooks total. To see your complete workspace credit spend for a given period, review the totals across all relevant tabs.
+**Note:** The `Credits used` total on the **Workbooks** tab reflects only workbook and table activity. Credits consumed by Workflows, Signals, MCP, or API access appear on those respective tabs and are not included in the Workbooks total. To see your complete workspace credit spend for a given period, review the totals across all relevant tabs.
 
 ## Credit estimates before running
 
