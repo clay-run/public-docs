@@ -75,6 +75,15 @@ When you duplicate a table, Clay copies the table structure and run settings —
 
 **Webhook sources:** If a table has a webhook source column, duplicating generates a **brand new, unique webhook URL** for the copy. The original table's URL is not affected. Any external system sending data to the original URL will not automatically send to the new table — you need to update your sending tool to POST to the new URL. To find the new URL, click the webhook source column in the duplicate. See [Webhooks in Clay](webhook-integration-guide.md) for more details.
 
+**Running a workflow on a new set of inputs:** Duplicating is also the recommended approach when you want to run an existing set of enrichment columns and automations on a completely different batch of data — for example, running the same people-finding and enrichment pipeline for a new city or a new target list. The duplicate starts with zero rows but all your column logic intact. After duplicating:
+
+1.  In the duplicate, open the existing source column header and click **Edit source** to update the source to your new data — for example, swap in a different CSV file, change a location filter, or point it at a different reference table.
+2.  Run the updated source. Your downstream enrichment columns, formulas, and conditional runs will repopulate automatically on the new rows without any rebuilding.
+
+**Important:** Update the source by clicking **Edit source** in the source column header — do not add a second source alongside the existing one. Adding a new source leaves both active simultaneously; if you then delete the original, any downstream columns that reference it will break.
+
+For workflows you want to run across many different input datasets over time, consider saving the downstream enrichment columns as a [Function](functions.md). Functions let you define the pipeline once and call it from multiple tables with different inputs, without re-creating the enrichment columns each time.
+
 To duplicate a table:
 
 1.  Click on the title of the table on the top left.
