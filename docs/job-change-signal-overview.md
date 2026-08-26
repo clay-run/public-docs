@@ -24,6 +24,7 @@ To set up Job Change Signals in your table:
 1.  Click `Tools`, then select `Monitor for job changes`.
 2.  Select your table of the contacts you want to monitor for job changes. It must contain the contact's LinkedIn URL as an identifier.
     -   **LinkedIn URL stored in Salesforce?** If the LinkedIn URL exists in Salesforce but isn't yet a column in your Clay table, add a [Salesforce Lookup Record](salesforce-integration-overview.md) column first — it returns all fields on the Contact record, including custom LinkedIn URL fields.
+    -   **Note:** The contacts table selected here cannot be changed after the signal is saved. To monitor a different set of contacts, create a new signal.
 3.  Optionally, enable `Initial check`.
     1.  The Job Change Signal monitors for new changes **going forward** from when you set it up — it will not automatically surface contacts who had already changed jobs before monitoring started. Enable Initial check to also scan for recent past job changes. It checks each contact's **work history** for role changes within your chosen lookback window: **3 months**, **6 months**, or **1 year**.
 4.  Set how often the Signal should run.
@@ -41,6 +42,12 @@ To set up Job Change Signals in your table:
 No. Clay does not have a native persistent person identifier equivalent to a third-party data provider's contact ID (such as a ZoomInfo Contact ID). Instead, **the contact's professional profile URL** is the practical stable anchor — because a person's professional profile follows them across employers, it lets Clay continue tracking that contact after a job change.
 
 For this reason, the Job Change Signal requires each contact's professional profile URL as input. When Clay detects that the person's current employer no longer matches your records, it fires an event so you can re-enrich or update your CRM.
+
+### Can I change which contacts my Job Change Signal monitors?
+
+No — the contacts table a Job Change Signal monitors is selected when the signal is first created and cannot be changed afterward via **Edit Signal**. Attempting to edit the signal will show the contacts table field as locked.
+
+To switch to monitoring a different contacts table, create a new signal pointing to the new table. To preserve your enrichment column configurations from the existing signal's results table, save it as a template first: click the table title → scroll to **Share as template** → toggle it on and copy the link. Open the link in a new tab — the resulting table will include all your enrichment column configurations, so you don't have to rebuild them from scratch.
 
 ### How do I track contacts who change jobs ("movers") and refresh their details?
 
