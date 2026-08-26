@@ -160,9 +160,9 @@ A record subset import works alongside any standard Salesforce import. You can a
 1.  Click `Add data` → `Add Source` → select your [**HubSpot integration**](https://university.clay.com/docs/hubspot-integration-overview).
 2.  Select `Contacts` at the top of the sync panel.
 3.  Enable the `Import` toggle.
-4.  Add any HubSpot fields you want to segment by — only fields included here will appear as columns and filter options in your Audience.
+4.  Add any HubSpot fields you want to segment by — only fields included here will appear as columns and filter options in your Audience. Common contact fields include `Lifecycle Stage`, `Lead Status`, and `Contact Owner`.
 5.  Name the corresponding Clay fields — these become the column names in Audiences.
-6.  Select `Companies` and repeat steps 3–5 for accounts.
+6.  Select `Companies` and repeat steps 3–5 for accounts. Common company fields include `Industry`, `Country/Region`, and `Number of Employees`.
 7.  To import Deals (if enabled for your workspace), select `Deals` at the top of the sync panel.
 8.  Enable the `Import` toggle.
 9.  Add any Deal fields you want to filter or segment by — common fields include `Deal Stage`, `Amount`, `Close Date`, and `Owner`.
