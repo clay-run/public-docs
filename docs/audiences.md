@@ -457,7 +457,7 @@ When you have a segment ready, you can sync it to an ad platform to run account-
 
 **How you might use this:**
 
--   **Account-based advertising** — sync company segments to LinkedIn, Meta, or Google Ads. Contacts who no longer qualify are automatically removed.
+-   **Account-based advertising** — sync company segments to LinkedIn, Meta, Google Ads, Bing Ads, Reddit Ads, or Vibe.co. Contacts who no longer qualify are automatically removed.
 
 **Syncing to multiple ad platforms**
 
@@ -465,7 +465,7 @@ You can add multiple ad platforms to a single audience sync. After your initial 
 
 **Notes:**
 -   You cannot add a platform while a sync is currently in progress — wait for the active sync to complete first.
--   Google Ads is only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience uses Clay's company/people search (CPJ) data, Google Ads will not be available to add.
+-   Google Ads and Bing Ads are only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience uses Clay's company/people search (CPJ) data, Google Ads and Bing Ads will not be available to add.
 
 **Enhanced Matching (Beta)**
 
