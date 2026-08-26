@@ -278,6 +278,17 @@ Warmup automatically disables when your emails are being throttled by your email
 
 Clay's email sequencer runs on shared Smartlead infrastructure, and Smartlead only allows each email address to be connected once across the entire system. This error most commonly appears when the email was already connected to the sequencer in **another Clay workspace** — you don't need a separate Smartlead account for this to occur. To fix it, check your other Clay workspaces: go to `Campaigns` → `Email Accounts`, locate the address, and delete it there. Once removed from the other workspace, you can add it to the current one. If you can't identify which workspace has it, contact Clay support with the email address and we'll remove it from our end.
 
+### Why was my campaign email sent from a different sender account than I expected?
+
+If your emails are going out from an unexpected account, the most likely cause is that the **Assign sender account field to lead** setting has not been configured in the campaign's **Sender accounts** tab. When this field is not set, Clay distributes leads evenly across all configured sender accounts — even if your source table has a column that specifies which sender each lead should use, that column has no effect on the campaign until you explicitly map it here.
+
+**To route each lead to a specific sender:**
+
+1. Open the campaign's **Sender accounts** tab.
+2. Scroll to the bottom and find **Assign sender account field to lead (optional)**.
+3. Click the field and select the column in your source table that contains the sending account's email address for each lead. The values in that column must match one of the sender accounts already configured in the campaign.
+4. Click **Save settings**. Future sends will use each lead's designated sender account. Leads whose column value is blank are distributed evenly across all configured accounts.
+
 ### Why are some leads failing with "Sender email address is not a configured sender account in this campaign"?
 
 This error fires in the `Sync lead data to campaign` column when the **Assign sender account field to lead** setting (in the `Sender accounts` tab) is mapped to an email column, and the email address in that column for a lead does not match any of the sender accounts configured in your campaign.
