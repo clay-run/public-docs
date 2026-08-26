@@ -35,6 +35,7 @@ Sculptor saves your conversation history so you can view and continue previous s
 History is scoped to the surface you're currently working in:
 
 -   **Table Sculptor** — only shows conversations from the table you are currently viewing.
+-   **Workflow Builder** — only shows conversations from the workflow you are currently viewing.
 -   **Claygent Builder** — only shows conversations for the Claygent you are currently viewing.
 -   **Search / Onboarding** — only shows conversations from search and onboarding sessions.
 
@@ -211,6 +212,14 @@ Sculptor can be helpful throughout the building process, and you can freely turn
 -   **Run Conditions** — Read and configure on new columns; when Sculptor sets a run condition automatically, review it in column settings before running at scale to ensure it matches your data.
 -   **Message Drafting** — Not yet supported
 -   **Filters & Sorting** — Not yet supported
+
+### How can I use Sculptor to replicate an existing workflow's logic in a new workflow?
+
+Open the existing workflow and click the Sculptor button to open the chat panel. Ask Sculptor to describe the workflow — for example: *"Explain step by step everything this workflow does."* Sculptor reads the full workflow graph and returns a description of each node, its configuration, and how the nodes connect.
+
+Copy that description, open Sculptor on the new workflow, and paste it in as your build instructions. Sculptor will use the description as a blueprint to recreate the logic in the new workflow.
+
+You can also use the Clay CLI to extract a workflow description without opening the Sculptor chat panel directly — ask the CLI to describe your workflow and use the output as build instructions in the same way.
 
 ### What table sources does Sculptor connect with?
 
