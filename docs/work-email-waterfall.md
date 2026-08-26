@@ -95,6 +95,8 @@ For a full reference on run options — including a row limit and starting row �
 
 ### What does it mean if no email is found?
 
+An empty Work Email cell after the waterfall has run is **expected behavior** — it means the waterfall completed but could not find a valid email for that person. This is different from a **"Missing input"** error, which appears only when the required inputs (such as a full name or company domain) were missing before the waterfall could attempt to run at all.
+
 If the cell shows no result, click into it to see which providers were tried and what each returned. Common reasons no email surfaces:
 
 -   The row is missing required input data. Check that the contact's full name and company domain are populated.
