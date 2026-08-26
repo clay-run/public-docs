@@ -144,6 +144,10 @@ A **default account** is automatically selected for workflows or integrations wh
 -   Click the `…` menu next to the account and select `Delete`.
 -   Confirm the deletion.
 
+> **Important:** If the connection you delete is referenced by existing columns, sources, or workflows, those items will stop working — they still point to the deleted connection's ID and will fail on their next run. **There is no bulk way to reassign existing columns to a new connection.** You would need to open each affected column individually and select the new connection from the **Account** dropdown.
+>
+> To avoid this, **use Reconnect instead of deleting and recreating the connection when rotating an API key.** Reconnecting updates the credentials in place, so every column and workflow that references that connection automatically uses the updated key — no column-by-column work needed. See [Rotating or updating credentials](#rotating-or-updating-credentials) above.
+
 ### Clay-managed accounts
 
 Clay-managed accounts simplify access to external services by providing pre-configured integrations that use workspace credits instead of requiring individual credentials.
