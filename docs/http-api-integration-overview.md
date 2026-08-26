@@ -323,6 +323,23 @@ Headers provide authentication and specify data formats. Add them as key-value p
 -   Key: X-API-Key
 -   Value: YOUR\_API\_KEY\_HERE
 
+**Basic authentication (username:password):**
+
+Some APIs use HTTP Basic authentication, where credentials are sent as the base64 encoding of `username:password`.
+
+-   Key: Authorization
+-   Value: Basic YOUR\_BASE64\_ENCODED\_CREDENTIALS
+
+To generate the base64 value, run this in your terminal (replacing with your actual credentials):
+
+```
+printf '%s' 'username:password' | base64
+```
+
+Set the header value to `Basic ` (note the space) followed by that output.
+
+**⚠️ Common mistake — trailing newline from `echo`**: Running `echo 'username:password' | base64` adds a newline character before encoding. The resulting value ends in `Cg==` (the base64 of a newline). Clay sends header values exactly as entered, so this trailing newline reaches the external API as part of the credential — causing a 401 even though the same credential works in tools like Postman, which strip trailing whitespace from headers automatically. Use `printf '%s'` or `echo -n` instead to produce a clean encoded value.
+
 **Content type (automatically set in Clay):**
 
 -   Key: Content-Type
@@ -662,6 +679,25 @@ This error means the API credentials in your HTTP API action are no longer valid
 **Tip:** Saving credentials in a header account (`Settings → Connections`) is the easiest way to manage token rotation — when a token expires, you only need to update it in one place instead of editing every column individually.
 
 If your API issues short-lived tokens that expire automatically, the **[HTTP API with JWT Authentication](https://university.clay.com/docs/http-api-with-jwt-authentication-integration-overview)** action may be a better fit — it fetches a fresh token from a configurable endpoint and refreshes it automatically approximately every 55 minutes (available on Explorer and above plans).
+
+### 401 error with Basic authentication — trailing newline in base64 credential
+
+If you're using HTTP Basic authentication and getting 401 "Unauthorized" responses — but the same credential works in Postman or another API client — the most likely cause is a trailing newline embedded in your base64-encoded credential.
+
+**How to identify it:** Check whether your `Authorization` header value ends in `Cg==`. That suffix is the base64 encoding of a newline character (`\n`). The external API receives your username and password followed by an invisible newline, which doesn't match the stored credential, so authentication fails.
+
+**Why this happens:** The shell command `echo 'username:password' | base64` appends a newline to the input before encoding. Clay sends header values exactly as entered — the trailing newline is preserved in the outgoing request. Tools like Postman generate Basic auth headers internally and strip trailing whitespace before sending, which is why the same credential appears to work elsewhere.
+
+**How to fix:**
+
+1.  Re-encode your credentials without a trailing newline:
+    ```
+    printf '%s' 'username:password' | base64
+    ```
+2.  Update the `Authorization` header value in your Clay HTTP API (Headers) account (at `Settings → Connections`) or directly in the column's header field. Set it to `Basic ` (with a space) followed by the new encoded output.
+3.  Test with a single row to confirm the API returns a successful response.
+
+If you still get a 401 after re-encoding, verify that API token access is enabled in the external platform's admin settings, and confirm that the credential format matches what the API expects (check the API's documentation for the exact format).
 
 ### "Missing authentication" — saved account deleted or unavailable
 
