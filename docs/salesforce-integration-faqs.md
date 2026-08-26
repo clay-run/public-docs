@@ -174,6 +174,8 @@ LIMIT 5
 
 By requesting only the fields you actually use, the query stays under the 15-reference limit and the error goes away. For tips on writing SOQL queries in Clay, see the [Lookup records via SOQL](salesforce-integration-overview.md) section of the Salesforce integration overview.
 
+**If you selected "Activity History" as the Salesforce Object:** This error has a different cause. Activity History is not a directly queryable object in Salesforce — it is a read-only rollup of Tasks and Events, accessible only as a child relationship on a parent record. Salesforce rejects any query that uses `ActivityHistory` directly in a SOQL `FROM` clause, which is what the Lookup Record action does. No field selection or configuration change will fix this. Query **Task** and **Event** directly using the **Lookup records via SOQL** action instead. See [How do I look up activity records (Tasks or Events) for a Salesforce contact?](#how-do-i-look-up-activity-records-tasks-or-events-for-a-salesforce-contact) for step-by-step SOQL examples.
+
 ## Why is my Lookup Records via SOQL action returning "Invalid SOQL Query" for some rows?
 
 If only certain rows fail with **"Invalid SOQL Query. Please check your query syntax and try again."** while others succeed, the most likely cause is **special characters in the input value** for those rows. Two characters that commonly appear in company names and break SOQL string literals are:
@@ -191,9 +193,9 @@ Only rows with those characters in the matched column will fail — rows with cl
 
 ## How do I look up activity records (Tasks or Events) for a Salesforce contact?
 
-In Salesforce, activity records — Tasks and Events — are stored as separate objects, not directly on the Contact record. Because of this, the standard **Lookup Record** action (which retrieves the Contact object) won't return a contact's activities. You need to query the Task or Event object directly.
+If you select **Activity History** as the Salesforce Object in a standard **Lookup Record** column, the action returns **"Error: Bad Request"** on every row. Activity History is not a directly queryable object in Salesforce — it is a read-only rollup of Tasks and Events that Salesforce exposes only as a child relationship on Contact, Lead, Account, and other records. No field selection or configuration change in the Lookup Record action will fix this.
 
-Use the **Lookup records via SOQL** action and filter on the `WhoId` field, which links each Task or Event to its associated contact or lead.
+To look up activity records, query the **Task** or **Event** object directly using the **Lookup records via SOQL** action and filter on the `WhoId` field, which links each Task or Event to its associated contact or lead.
 
 **For Tasks (calls, to-dos, logged emails):**
 
@@ -211,7 +213,7 @@ FROM Event
 WHERE WhoId = '/Salesforce Contact ID'
 ```
 
-Replace `/Salesforce Contact ID` with the contact's Salesforce ID column from your Clay table, inserted using the `/` picker in the query editor.
+Replace `/Salesforce Contact ID` with the contact's or lead's Salesforce ID column from your Clay table, inserted using the `/` picker in the query editor. `WhoId` accepts both contact IDs (starting with `003`) and lead IDs (starting with `00Q`) — do not use the **Related To ID** field, which links to accounts and opportunities, not to contacts or leads.
 
 **Tips:**
 
