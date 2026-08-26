@@ -55,7 +55,17 @@ If your security policy or compliance requirements (for example, SOC 2) mandate 
 
 ## External collaborators (non-domain email addresses)
 
-SSO only applies to users whose email address matches your verified domain. Team members with email addresses outside your domain are not affected and continue to access Clay through their regular login (Google or password).
+SSO only applies to users whose email address matches your verified domain. If you need to give access to someone outside your organization — for example, an external contractor or partner — and their email domain is different from your SSO-configured domain, you can invite them to your Clay workspace and they will not be routed through SSO.
+
+To add an external collaborator with a different email domain:
+
+1.  Invite them to your Clay workspace via `Settings` > `Team` > `+ Invite`.
+2.  Have them accept the workspace invite from their email.
+3.  They sign in using their standard Clay login (email and password, or Sign in with Google) — they are not redirected to your identity provider and do not need to be added to your IdP (for example, Microsoft Entra or Okta).
+
+Clay's SSO routing is domain-based: when a user enters their email on the Clay login page, Clay checks whether that email domain has SSO configured. If the domain does not match your configured SSO domain, Clay treats the user as a standard (non-SSO) user — no additional configuration is required on Clay's side for these external collaborators.
+
+**Note:** If an external collaborator's email address happens to share your SSO-configured domain (for example, a contractor using your company email addresses), they will be routed through SSO and must be added to your identity provider. If you are unsure how to handle that case, contact Clay support.
 
 ## User provisioning
 
