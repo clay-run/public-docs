@@ -186,7 +186,7 @@ The **Update existing rows** toggle in your source column settings controls whet
 
 -   Table-level: ❌ OFF (Manual mode)
 -   Source auto-update schedule: ✅ ON (source schedule is independent of Auto-run)
--   **Result**: Scheduled source imports continue adding new rows to the table; enrichment columns are paused. When ready to process, turn Auto-run back on and choose `Update cells` to queue enrichments for all rows added during the pause — or choose `Continue without running` to leave those rows unprocessed for now. Review the table before choosing `Update cells` if a large batch of rows has accumulated, since this will queue all empty or out-of-date enrichment cells including any downstream write-backs.
+-   **Result**: Scheduled source imports continue adding new rows to the table; enrichment columns are paused. When ready to process, turn Auto-run back on and choose `Update cells` to queue enrichments for all rows added during the pause — or choose `Continue without running` to leave those rows unprocessed for now. Review the table before choosing `Update cells` if a large batch of rows has accumulated, since this will queue all empty or out-of-date enrichment cells including any downstream write-backs. Either way, **rows that already have successful enrichment results will not be re-run** — "Keep existing results" is on by default, so only empty, errored, or new cells are queued. After re-enabling, future new rows added by source syncs are enriched automatically; rows that were added during the Manual-mode pause are not retroactively queued on future syncs — use `Update cells` or manually trigger the enrichment columns to process them.
 
 **Conditional execution:**
 
