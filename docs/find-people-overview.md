@@ -142,9 +142,9 @@ If your Sales Navigator search matches more than 2,500 leads, the 2,500 cap is e
 
 Collect the resulting Sales Navigator URLs and add them to your Clay table one at a time.
 
-## Finding LinkedIn posts by keyword
+## Finding LinkedIn posts by keyword or profile
 
-To find LinkedIn posts containing a specific keyword or hashtag, use the **Find professional posts** source — a separate source from Find People that returns posts rather than people profiles.
+To find LinkedIn posts matching your criteria, use the **Find professional posts** source — a separate source from Find People that returns posts rather than people profiles.
 
 **To create a table with Find professional posts:**
 
@@ -153,9 +153,13 @@ To find LinkedIn posts containing a specific keyword or hashtag, use the **Find 
 
 **Inputs:**
 
--   **Keyword:** A single keyword or hashtag to search for in post content (e.g., `#cvpr2026` or `GTM`). Only one keyword is supported — comma-separated lists are not valid.
+-   **Keyword (optional):** A single keyword or hashtag to search for in post content (e.g., `#cvpr2026` or `GTM`). Only one keyword is supported — comma-separated lists are not valid.
 -   **Companies filter (optional):** Limit results to posts that mention companies, were posted by companies, or were posted by employees of specific companies.
--   **People filter (optional):** Limit results to posts that mention or were posted by specific individuals.
+-   **People filter (optional):** Limit results to posts that mention or were posted by specific individuals. Choose the relationship type from the dropdown:
+    -   **Mentions individuals** — Returns posts that tag or mention the specified people.
+    -   **Posted by individuals** — Returns posts authored by the specified people.
+
+    When either option is selected, a **Person professional profile URLs** field appears. Enter the LinkedIn profile URLs of the people you want to filter by (e.g., `linkedin.com/in/johndoe`) as a manual list or from a Clay table column. **Only the first 5 profile URLs are used per run**, even if you provide more.
 -   **Sort by:** `Most recent` (default) or `Top match`.
 -   **Time frame:** `Last 24 hours` or `Last week` (default).
 -   **Max number of results:** Default is 100; maximum is 1,000.
