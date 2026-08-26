@@ -276,6 +276,27 @@ If the column holding phone numbers is set to **Number** type, Clay alters the v
 
 **To fix:** Click the phone number column header, hover over the current data type, and switch it to **Text**. Text columns preserve the exact phone number string — including the leading `+` and any separators — so the value Clay sends to Salesforce matches what Salesforce has stored.
 
+## Why does Lookup Record return "no records found" when searching by LinkedIn URL or website domain, even though the record exists in Salesforce?
+
+URL format differences between the value in your Clay table and the value stored in Salesforce — such as a `www.` prefix, a trailing slash, or `http://` versus `https://` — are enough for the lookup to return "No records found," even when the URLs point to the same page.
+
+**Why this happens:** When **Exact match?** is turned off (the default), Clay queries Salesforce using `field LIKE '%value%'`. This means the Clay search value must be a **substring** of the Salesforce field value — not the other way around. A `www.` prefix makes the Clay value longer than the Salesforce stored value, so it cannot be contained within it:
+
+- Clay has `https://www.linkedin.com/company/acme`, Salesforce has `https://linkedin.com/company/acme` → **no match** (Clay value is longer and is not a substring of the Salesforce value)
+- Clay has `https://linkedin.com/company/acme`, Salesforce has `https://www.linkedin.com/company/acme` → **match** (Clay value is shorter and is contained within the Salesforce value)
+
+The same asymmetry applies to trailing slashes (`linkedin.com/company/acme/` vs `linkedin.com/company/acme`) and protocol differences (`http://` vs `https://`).
+
+**To fix:** Add a formula column that normalizes the URL to a consistent format, then use that cleaned column as the search input instead of the raw URL column. To strip a `www.` prefix and remove a trailing slash:
+
+```javascript
+#{{LinkedIn URL}}?.replace(/^(https?:\/\/)www\./, "$1")?.replace(/\/$/, "")
+```
+
+This converts `https://www.linkedin.com/company/acme/` to `https://linkedin.com/company/acme` regardless of what prefix or trailing slash was present, so the value Clay sends matches what Salesforce has stored.
+
+If your Salesforce org stores LinkedIn URLs or website domains in inconsistent formats across records, use the **Lookup records via SOQL** action with a `LIKE` query that wraps the core URL path in `%` wildcards — this matches any prefix or suffix. See the [Lookup records via SOQL](salesforce-integration-overview.md) section of the Salesforce integration overview for details.
+
 ## Why is my Salesforce report data not populating in Clay?
 
 The most likely cause is the report's format. Clay's **Import records from a Salesforce report** source only supports **Tabular** and **Matrix** report formats. Reports in **Summary** or **Joined** format are not supported and will return an error when Clay tries to run them.
