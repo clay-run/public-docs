@@ -536,6 +536,20 @@ Clay's company and people search relies on snapshot data that may lag behind rea
 
 First, check that you're filtering on **Job title keywords** (not just function or seniority). If you're using **Is similar to** mode, you may get some fuzzy matches — filter those out with a formula or AI after the fact.
 
+### Why do I still see people with excluded job titles when they hold multiple current roles?
+
+When using the experience filter with a "job title doesn't contain" exclusion — for example, `>= 1 current experience where job title doesn't contain "Project Manager"` — Clay evaluates the condition against **each current experience individually**. A person who holds more than one current role simultaneously passes the filter as long as *at least one* of their active roles satisfies the condition.
+
+For example: someone who is simultaneously a "Technical Project Manager" at their main employer and a "Founder" at a side company passes a "Project Manager" exclusion because their Founder role satisfies "doesn't contain Project Manager" — even though their primary role matches the excluded term.
+
+There is no built-in option to require that *all* current experiences satisfy an exclusion condition.
+
+**Workaround:** After importing your results, add a **Use AI** column that reviews all of the person's current roles and flags anyone whose active titles include the excluded terms. Use a prompt such as:
+
+*"The person's current job titles are: {{Experiences}}. Does any current role contain any of these terms: [your excluded terms]? Answer Yes if any match, No if none do."*
+
+Then add a view filter showing only rows where the AI returned "No." This catches mismatches from people with multiple concurrent roles, regardless of how many active positions they hold.
+
 ### Why isn't someone I found on LinkedIn showing in Clay?
 
 Your search filters may be too specific. Try broadening your criteria incrementally. The profile may also not yet be in the dataset.
