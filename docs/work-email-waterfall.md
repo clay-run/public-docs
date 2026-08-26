@@ -255,6 +255,19 @@ To permanently show provider and validation columns going forward, open the wate
 
 If you need to use an email that a later provider found despite an earlier invalid result, you can manually paste it into your output column, or create a formula column that pulls directly from the individual provider result columns.
 
+### Why does a standalone validation column return a different result from the waterfall's built-in validator?
+
+Running the same validation provider as a standalone enrichment column and as the waterfall's built-in validator can return different statuses for the same email address. The most common cause is that the two places have separate settings for what counts as "valid."
+
+**Validation strictness is configured independently in each place.** The waterfall's **Validation strategy** setting (in Full Configuration → Validation) controls which email types are accepted: `Conservative` excludes catch-all emails; `Balanced` and `Aggressive` include them. A standalone validation enrichment column has its own equivalent settings — for example, a standalone ZeroBounce column has an `Only "Safe To Send" Emails?` toggle that controls whether catch-all emails are treated as valid. If these two configurations don't match, the same catch-all email will appear as valid in one place and invalid in the other.
+
+**To resolve:** compare the settings in both places and align them to the same threshold. In the waterfall, review the Validation strategy under Full Configuration → Validation. In the standalone column, open its settings and check any catch-all or deliverability options.
+
+Two other possible causes:
+
+-   **Catch-all domain variability** — On catch-all domains, validation providers use DNS and SMTP probing that can return different answers depending on server timing. Two runs of the same provider on the same email may legitimately return different results; this is expected provider behavior, not a Clay error.
+-   **Different email addresses** — The waterfall may have found a slightly different version of the email than what is in your standalone column. To confirm both are checking the same address, unhide the waterfall's provider columns (in Full Configuration, turn off **Hide provider columns?**) and compare the exact address each step returned with what your standalone column shows.
+
 ### Why does my own email address appear in the Work Email results?
 
 If your own email address shows up in the Work Email output column, a field containing your own email — such as an "Account Owner" column synced from a CRM — has likely been wired to one of the waterfall's input fields. The waterfall passes mapped inputs directly to providers without checking whether the value belongs to you or to a contact, so any field mapped to an email input is used as-is.
