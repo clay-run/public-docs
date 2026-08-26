@@ -121,6 +121,7 @@ You can also add MCP server connections workspace-wide from `Settings` → `Conn
 -   **Limit to 2–3 servers per run.** Enabling too many MCP servers at once can confuse the agent and produce inconsistent results.
 -   **Chain servers for multi-step workflows.** For example: add a lead in Salesforce, research their background online, then draft a summary doc in Notion.
 -   **OAuth is not currently supported.** Use API key authentication or open (unauthenticated) endpoints.
+-   **API key transmission format.** When an API key is provided, Clay sends it to your MCP server as `Authorization: Bearer <your-key>`. Enter the key value directly — unencoded and without any prefix. Custom header names are not configurable.
 
 ### Model selection
 
@@ -344,6 +345,20 @@ This feature is available on Enterprise plans; self-serve customers can contact 
 Yes. Custom MCP servers work in both standalone Claygents (built in Claygent builder) and in table-embedded AI columns. In Claygent builder, open your agent's **Configuration** panel, scroll to the **Tools** section, and click **Add custom MCP server**. You'll be prompted to name the connection, provide the server URL, and optionally add an API key for authenticated endpoints.
 
 This feature is available on Enterprise plans; self-serve customers can contact support to request beta access.
+
+### Why doesn't my Custom MCP Server connection appear when I search for enrichment connectors in a table?
+
+Custom MCP Server connections are not standalone enrichment providers — they will not appear in the connector or integration search when adding a new enrichment column to a table. Custom MCP servers are available only as tools inside a **Use AI** (Claygent) column.
+
+To call your Custom MCP Server from a table:
+
+1.  Add a **Use AI** column.
+2.  Select a tool-capable model (Claude Sonnet/Opus 4 series or GPT-5 series) in the **Configure** panel and connect your Anthropic, OpenAI, or Gemini API key via the **Account** dropdown.
+3.  Open **Configuration → Tools** and select your Custom MCP Server connection.
+4.  Write a prompt instructing the Claygent to use the MCP tool — for example, _"Use the [server name] tool to look up account data for \{Company Name\}."_
+5.  Save and run.
+
+The API key you entered for the Custom MCP Server connection is only the credential Clay uses to authenticate to your server. You also need a supported third-party model account connected in the **Account** dropdown for the Claygent itself.
 
 ### Why does my Claygent show "Tools are not available for the selected model"?
 
