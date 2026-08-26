@@ -186,6 +186,12 @@ This means a formula containing a lookahead can appear correct in the preview bu
 
 Always verify regex formulas by saving the column and checking actual table results — not just the preview.
 
+### **Why is my formula erroring on every row when I reference a column by name?**
+
+The most common cause is writing `/Column Name` in the formula code instead of `{{Column Name}}`. In the formula generator prompt, typing `/` opens a column picker that *inserts* a `{{Column Name}}` token — but typing `/Column Name` literally into the JavaScript expression does not create a column reference. Clay cannot resolve it and the formula errors on every row.
+
+To fix it: expand the **Formula** section below the prompt, find any `/Column Name` patterns in the JavaScript code, and replace them with `{{Column Name}}`. For example, replace `/SFDC Company Name` with `{{SFDC Company Name}}`.
+
 ### **Why does my formula return 0 when combining values from other formula columns?**
 
 If a formula that sums or combines values from other columns shows 0 in the preview even though those columns contain data, the formula may not be resolving the column references you intended.
