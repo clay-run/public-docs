@@ -69,6 +69,46 @@ Waterfall templates allow you to save and reuse your waterfall configuration, ma
 
 **Note:** Waterfall templates cannot be edited, only created and deleted.
 
+## Building a provider cascade with run conditions
+
+Use this pattern when you want to chain enrichment steps where each provider tries a **different approach** — for example, attempting a targeted contact database first, falling back to a broader enrichment tool, and falling back again to a people search — rather than multiple providers all returning the **same data point** (which is what the built-in waterfall column handles).
+
+Common examples:
+- Cognism lookup → Apollo Enrich Person → Find People at Company
+- A region-specific data source for priority contacts → a general enrichment provider as fallback
+
+**No Audiences intermediate step or manual kickoff is required.** Run conditions evaluate automatically as each enrichment completes, so the cascade runs end-to-end without intervention.
+
+### Setting it up
+
+1. **Add your first enrichment column** and set its **Run settings → Only run if** condition so it runs when its prerequisite exists — for example, `/Redeem ID is not empty` to run a Cognism redemption step only when a Cognism redeem ID is available.
+
+2. **Add your fallback enrichment column** and set its run condition to check whether the previous step produced a result. For example, to run Apollo Enrich Person only when the first step produced no email:
+
+   `/First Step Email is empty`
+
+3. **Add your last-resort enrichment column** (for example, Find People at Company) and gate it on all earlier steps having returned nothing:
+
+   `/First Step Email is empty AND /Second Step Email is empty`
+
+4. **Add a formula column to combine results** from all providers into a single merged field. For example:
+
+   `{{First Step Email}} || {{Second Step Email}}`
+
+   Name this column something like `Combined Email`. This single field tells you whether any step in the cascade found a result, regardless of which provider succeeded.
+
+5. **Gate any downstream steps** — CRM writes, Send Table Data, work email enrichment, and so on — on the combined field. For example, to run a subsequent enrichment only on rows where the full cascade returned nothing:
+
+   `/Combined Email is empty`
+
+   Or, to push to a CRM only after the cascade has completed and found a result:
+
+   `/Combined Email is not empty`
+
+When Auto-run is enabled (the default), each enrichment column fires as soon as its dependencies are ready and its run condition is met — so the cascade progresses automatically row by row without any manual intervention.
+
+**Tip:** Rows where a run condition is not met show **"Run condition not met"** in that enrichment's cell — this is expected, not an error. It means that provider was correctly skipped because an earlier step already succeeded for that row, or the prerequisite for that step was not present. See [Conditional runs](conditional-runs.md) for more on how run conditions work.
+
 ## Running a waterfall on specific rows
 
 To run your waterfall on a specific set of rows — for example, to test it on a small sample before running the full table — select those rows by clicking a row number and dragging (or **Shift+clicking**) to extend the selection, then right-click and choose **Run [N] rows**. This runs all enrichment and waterfall columns on only those rows.
