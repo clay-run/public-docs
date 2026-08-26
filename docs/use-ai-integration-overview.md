@@ -242,6 +242,48 @@ If an AI column runs without errors but produces output that doesn't match what 
 
 **Tip:** Adding concrete input/output examples in the **Examples** section (Configure tab → **Examples** → **Add examples**) helps the AI handle edge cases specific to your data — for instance, names with honorifics, middle initials, or unusual formatting not covered by your initial prompt.
 
+### AI returns incorrect YES or NO for a strict classification or ICP scoring column
+
+When a Use AI column is built to qualify rows against an explicit set of criteria — for example, an ICP check that should return NO for any city not on an approved list — the model can occasionally return the wrong answer even when the prompt states the rule clearly. AI models are probabilistic, not deterministic: they produce the most likely output for a given input and are not guaranteed to follow hard rules, especially when the output field accepts free-form text.
+
+**Step 1: Constrain the output to exactly YES or NO.**
+
+A free-form Text output field lets the model return any variation — "Yes", "yes, it qualifies", "No (city is not approved)" — which reduces consistency. Restricting the output to a fixed set of values tells Clay to request structured output from the model:
+
+-   **Use a Select output field (recommended for YES/NO).** In the **Outputs** section of the column config, click **Add field**, set the type to **Select**, and add **YES** and **NO** as the field's allowed options. Clay sends these as a structured output constraint to the model — the response is limited to those exact values.
+-   **Use JSON Schema with an enum.** In the **Outputs** section, switch to the **JSON Schema** tab and include `"enum": ["YES", "NO"]` on the result field. For example:
+    ```json
+    {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string",
+          "enum": ["YES", "NO"],
+          "description": "ICP qualification result"
+        }
+      }
+    }
+    ```
+
+**Step 2: Move deterministic criteria to a formula column.**
+
+AI should handle subjective judgment — industry fit, company description analysis, organizational maturity. Exact-match criteria — whether a city is on an approved list, whether employee count falls in a range, whether revenue meets a threshold — are deterministic and formula columns evaluate them exactly at no credit cost. For criteria like city allowlists:
+
+1.  Add a **Formula** column with the exact check. For example: `["San Francisco", "Los Angeles", "San Diego"].includes({{City}})`.
+2.  Add a **run condition** to the AI column (in **Run Settings**, click **Add run condition**) so the AI step only executes when the formula gate passes. See [Conditional runs](conditional-runs.md) for syntax details.
+
+This keeps deterministic decisions out of the model entirely, reducing the surface area where the AI can produce a wrong answer.
+
+**Step 3: Add a hard-gate instruction for missing or unrecognized data.**
+
+Explicitly tell the model what to return when a required field is blank, unknown, or does not appear in the approved set:
+
+> "If any required field is missing, unknown, or does not match the approved list exactly, return NO. Do not infer or estimate."
+
+**Step 4: Validate on a sample before running the full table.**
+
+Select a few rows with known expected results — at least one that should return YES, one that should return NO, and one with a missing or borderline value. Right-click and choose **Run [N] rows** to check output before spending credits on every row. Correct any prompt issues before scaling up.
+
 ### AI column output shows as a JSON object (response, reasoning, confidence, stepsTaken)
 
 When a Use AI web research column or Claygent column runs, the result is stored as a structured JSON object. This object automatically includes these fields:
