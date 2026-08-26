@@ -436,6 +436,20 @@ If a note you created does not appear in HubSpot, confirm that your HubSpot role
 
 The "Retrieve associated objects" action has a maximum result count of 20 per run, enforced in Clay's code. The **Limit** field accepts values between 1 and 20 — entering a higher value is not possible. The action also performs a single API call and does not paginate automatically: if an object has more than 20 associated records in HubSpot, only up to 20 are returned in a single run. There is no built-in way to retrieve more than 20 associated objects through this action in a single run.
 
+### Why does "Retrieve associated objects" return No data even though the association exists in HubSpot?
+
+The most common cause is a mismatch between **From Object Type** and the actual type of the record whose ID you pass as **From Object ID**. Clay passes both values directly to HubSpot's API without checking that they match — if they don't, HubSpot queries the wrong path and returns `{"results":[],"totalFound":0}`, which Clay renders as **No data**.
+
+For example, to retrieve all deals associated with a contact, both settings must reference the same contact record:
+
+-   **From Object Type:** Contact
+-   **To Object Type:** Deal
+-   **From Object ID:** the contact's numeric `hs_object_id` (not a company ID, email address, or any other value)
+
+If **From Object Type** is set to Company but **From Object ID** holds a contact's `hs_object_id` (or vice versa), HubSpot returns empty results even though the association is correctly set up in HubSpot.
+
+**To fix:** Open the column settings and confirm that **From Object Type** matches the actual type of the record you're looking up associations for, and that **From Object ID** is mapped to the `hs_object_id` of that same object type. The most reliable source for `hs_object_id` is the **Import objects from HubSpot** source or a **Lookup object** action for the matching object type.
+
 ### Why can't I import HubSpot Activities (calls, emails, meetings, notes, or tasks) into Clay?
 
 HubSpot Activities — including calls, emails, meetings, notes, and tasks — are not currently available as importable object types in Clay's HubSpot integration. Clay's HubSpot integration supports importing **Company**, **Contact**, **Deal**, **Lead**, and any **custom objects** configured in your HubSpot account — but Activity types are not included in the object type selector, regardless of your HubSpot settings or permissions.
