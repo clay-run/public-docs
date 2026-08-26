@@ -200,6 +200,21 @@ Despite being a "stopped before running" state, these rows are classified as Fai
 -   **Make the input optional.** Open the column settings and find the input field that is blank for those rows. Turn off its **Required to run** toggle. The column will run for all rows; for rows where that input is blank, the column proceeds without it.
 -   **Add a run condition.** Add a [run condition](conditional-runs.md) so the column only fires when the required input has a value. Rows without that input will show **"Run condition not met"** instead — and unlike "Some inputs missing," that status is treated as a successful skip (🟢), so those rows no longer appear in errored row views.
 
+## Troubleshooting: cells showing "Waiting for another column to finish"
+
+When a cell shows **"Waiting for another column to finish"**, the column depends on an upstream column that is still running or queued. The cell is blocked and will not run until the upstream column completes — no action is needed on your part if the upstream column is actively processing.
+
+This status most commonly appears on formula columns that extract values from a Clay Function column that is in **"Awaiting Callback"** state. Because the formula cannot calculate until the function returns a result, every row where the function is still processing shows **"Waiting for another column to finish"** in those dependent formula cells.
+
+**To confirm the upstream column is the cause:**
+
+1.  Look across the same row for an enrichment or function column whose cells show **"Awaiting Callback"**, **"Queued"**, or **"Running"** status.
+2.  Once that upstream column finishes processing for the row, the dependent cells automatically recalculate and the **"Waiting for another column to finish"** status clears on its own.
+
+**If the upstream column is a Clay Function stuck in "Awaiting Callback"**, see [What does "Awaiting Callback" mean on a function column?](functions.md#what-does-awaiting-callback-mean-on-a-function-column) for how to re-run or unblock it.
+
+**If you need a column to run regardless of whether the upstream column has returned a value**, add or adjust a [run condition](conditional-runs.md) on the dependent column so it no longer waits on that upstream result.
+
 ## Troubleshooting: enrichments not triggering automatically despite auto-run being enabled
 
 If your enrichment columns are configured with auto-run enabled but cells still show as out-of-date and nothing runs automatically, check whether the **table itself** is in Manual mode.
