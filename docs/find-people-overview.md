@@ -226,6 +226,16 @@ The enrichment returns a single `posts` array. Each item in that array can be an
 
 **Important:** There is no separate `shares` array. Both original posts and reposts are stored together in the same `posts` array.
 
+**Getting the most recent activity date:**
+
+Each post in the `posts` array includes a `created_at` timestamp for when it was published. To pull the date of a person's most recent post or share into a formula column:
+
+```
+{{Get a person's professional posts and shares}}?.posts?.[0]?.created_at
+```
+
+Posts are returned most-recent first, so `posts[0].created_at` gives the publication date of the person's latest post or share. Use this to quickly filter for recently active people — for example, in a conditional formula that checks whether `posts[0].created_at` falls within the last 30 days.
+
 **Extracting post text:**
 
 For original posts, the text is in `posts[N].text`. For reposts, `posts[N].text` is `null` when the person shared without adding their own comment — in that case, the text of the original content being shared is in `posts[N].shared_post.text`.

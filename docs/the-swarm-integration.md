@@ -34,14 +34,14 @@ The platform automatically updates LinkedIn connections every week, ensuring you
 1.  While in a Clay table, click `Add enrichment` and search for `The Swarm`.
 2.  Under `Integrations`, select one of the The Swarm options.
 3.  In the modal, you will be asked to `Select The Swarm account`.
-    -   If you have your own account, click `+ Add account` and complete authentication. Otherwise, use the Clay provided key
-        -   When using the Clay key, network mapping will be based on the company domain you provide.
+    -   **Find warm intros to company** works with Clay's shared key — if you don't have your own Swarm account, you can proceed without adding one. When using the Clay key, network mapping is based on the company domain you provide.
+    -   **Find warm intros to person** requires your own private Swarm API key. Click `+ Add account` and authenticate with your Swarm credentials — Clay's shared key is not available for this action.
 
 **Note:** When connecting to a company domain that no Clay user has previously connected to, it may take up to 8 hours to establish the connection. During this time, you may see an "awaiting callback" status.
 
 ### `Action` Find warm intros to person
 
-Use this action to identify and score relationships between your company and a specific person.
+Use this action to identify and score relationships between your company and a specific person. **Requires your own Swarm API key** — see the account setup note above.
 
 **Inputs**
 
@@ -50,7 +50,7 @@ Use this action to identify and score relationships between your company and a s
 
 ### `Action` Find warm intros to company
 
-Use this action to identify and score relationships between your company and a target company.
+Use this action to identify and score relationships between your company and a target company. Costs **3 credits per row**.
 
 **Inputs**
 
