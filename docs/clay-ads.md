@@ -151,25 +151,25 @@ The 50,000 row limit applies to ad audiences exported from tables. For larger au
 
 ### **Can I edit the field mapping after setting up an Ad Sync?**
 
-No. Field mapping is configured when you create the Ad Sync and cannot be changed afterward. Deactivating an Ad Sync places it in read-only history — it does not unlock the mapping for editing. To use a different field mapping, deactivate or permanently delete the current sync and create a new Ad Sync with your updated configuration. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for details on the delete option.
+No. Field mapping is configured when you create the Ad Sync and cannot be changed afterward. To use a different field mapping, delete the current sync and create a new Ad Sync with your updated configuration. **Deletion is permanent — the sync cannot be restored afterward.** Deleting the sync does not affect your underlying audience segment. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for details.
 
 ### **Can I permanently delete an Ad Sync?**
 
 Yes. Workspace admins can permanently delete an Ad Sync from the **Ads** homepage by clicking the **⋮** (three-dot) menu next to a sync and selecting **Delete**. Deleting permanently stops all enrichment and syncing and cannot be undone — there is no way to restore a deleted Ad Sync.
 
-This is different from deactivating: deactivating places the sync in read-only history (and can be referenced later), while deleting removes it entirely. If you want to preserve the sync history, use **Deactivate** instead.
+Deleting an ad sync does **not** delete the underlying audience segment — your segment and its contacts remain intact. You can create a new Ad Sync from the same segment at any time.
 
 **Note:** Deleting an Audiences segment that is the source for an Ad Sync will automatically delete the associated Ad Sync as well.
 
 ### **Can I add another ad platform to an existing Ad Sync?**
 
-Yes. After your initial sync is active, an **Expand your reach** section appears below your current platform destinations. Click **Add** next to any available platform to configure field mappings for that provider — it will sync on the same schedule as your existing provider.
+Not directly — once an ad sync is active, its destination platforms are locked. Ad sync configuration can only be changed while the sync is still in draft state. Configure all desired destinations when you first create the Ad Sync, before activating it.
+
+If you need to add a platform to a sync that is already active, the workaround is to delete the current sync and create a new Ad Sync with all desired destinations included from the start. **Deletion is permanent — a deleted sync cannot be restored or reactivated.** Deleting the sync does not affect your underlying audience segment; your segment and its contacts remain intact, and you can create a new Ad Sync from the same segment immediately. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for how to delete and [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for credit implications.
 
 **Notes:**
 
--   If the **Expand your reach** section is not visible, no additional platforms are currently available to add for your workspace. Which platforms appear depends on which ones your workspace has been granted access to — Google Ads requires a separate access request (currently in closed beta) and will not appear as an option even if you are already actively syncing to other ad platforms. Contact [Clay support](https://www.clay.com/contact) to request Google Ads access. If you need to add a platform that is not yet available in **Expand your reach**, the workaround is to deactivate the current sync and create a new Ad Sync with all desired destinations configured from the start. **Deactivation is permanent — once deactivated, the sync becomes read-only and cannot be reactivated or edited; the previous sync remains visible as read-only history.** See [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for credit implications.
--   You cannot add a platform while a sync is currently in progress — wait for the active sync to complete first.
--   Google Ads and Bing Ads are only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience includes contacts from Clay's company/people search data, Google Ads and Bing Ads will appear disabled. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) for details.
+-   Google Ads and Bing Ads are only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience includes contacts from Clay's company/people search data, Google Ads and Bing Ads will not be available as destination options. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) for details.
 
 ### **Will I be charged again if I deactivate and recreate an Ad Sync?**
 
@@ -222,7 +222,7 @@ Ad platforms report an audience as "too small" when fewer than 300 contacts matc
 
 A second factor: if Enhanced Matching is enabled, it uses a professional profile URL or Work Email column you designate to look up personal emails before syncing. If those input columns are not configured, Enhanced Matching cannot improve your match rate.
 
-**To fix this:** Because field mapping cannot be changed after an Ad Sync is created, you'll need to deactivate the current sync and create a new one. **Note: Deactivation is permanent — the sync becomes read-only and cannot be reactivated afterward.** Map at least one email column, and configure Enhanced Matching inputs if using that feature. See [Why should I use personal emails instead of work emails?](#why-should-i-use-personal-emails-instead-of-work-emails) for guidance on which email type gives the best results.
+**To fix this:** Because field mapping cannot be changed after an Ad Sync is created, you'll need to delete the current sync and create a new one. **Note: Deletion is permanent — the sync cannot be restored afterward. Deleting the sync does not affect your underlying audience segment.** Map at least one email column, and configure Enhanced Matching inputs if using that feature. See [Why should I use personal emails instead of work emails?](#why-should-i-use-personal-emails-instead-of-work-emails) for guidance on which email type gives the best results.
 
 ### **Why is my Google Ads audience sync showing a "Failed to update audience" error?**
 
