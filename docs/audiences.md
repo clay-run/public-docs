@@ -519,9 +519,13 @@ To change a field's write rule, click the **pencil (edit) icon** next to any map
 
 **Important:** Because **Never write** is the default, a newly mapped field will not export data until you explicitly change its write rule. If a specific field isn't showing up in Salesforce after enabling Export sync, confirm its write rule is set to **Always write** or **Write if empty**.
 
-Export settings also control whether Clay **creates new Salesforce records** for net-new contacts or **only updates existing ones**.
+Export settings also control whether Clay **creates new Salesforce records** for Audience records that don't yet have an SFDC match, or **only updates existing ones**.
 
-The **`Create new Salesforce records`** toggle is in your Salesforce source settings under the export section. It is **off by default** — when off, Clay only updates Salesforce records that already have a matching entry in your Audience. Turn it on to allow Clay to create new Contacts or Leads in Salesforce for Audience records that don't yet exist in SFDC. This toggle is admin-only.
+The **`Create new Salesforce records`** toggle is in your Salesforce source settings under the export section. It is **off by default** — when off, Clay only updates Salesforce records that already have a matching entry in your Audience. Turn it on to allow Clay to create new **Accounts** or **Contacts** in Salesforce for any Audience record that doesn't already have a matching SFDC entry. (This toggle applies to Account and Contact object types only — Leads and Opportunities do not support record creation through this toggle.) This toggle is admin-only.
+
+**What happens when you first enable this toggle:** Clay will attempt to create Salesforce records for *all* Audience records that currently lack a matching SFDC entry — not only records that enter the Audience going forward. For example, if your Companies Audience already contains 60,000 companies with only a subset matched to existing Salesforce Accounts, the first export will attempt to create Account records for all currently-unmatched companies. Test on a small, filtered segment first and verify your matching fields, required Salesforce fields, permissions, and Clay ID field mapping before enabling for a large Audience.
+
+**Note:** Saving records to Audiences does not create anything in Salesforce. Record creation only happens once Export sync is enabled, field mappings are configured, and the `Create new Salesforce records` toggle is on.
 
 Export sync behavior:
 
@@ -713,17 +717,17 @@ To allow Clay to overwrite existing Salesforce values for a field:
 
 The updated value will be pushed to Salesforce on the next export cycle (within 24 hours).
 
-### How do I create new Salesforce contacts or leads from an Audience enrichment?
+### How do I create new Salesforce Accounts or Contacts from an Audience?
 
-New Salesforce records are not created automatically when you run a bulk enrichment. Record creation is not driven by a Create Contact or Create Lead action inside the enrichment table — it is controlled by the **`Create new Salesforce records`** toggle in your Audiences Salesforce export settings.
+New Salesforce records are not created automatically when you run a bulk enrichment. Record creation is not driven by a Create Contact or Create Account action inside the enrichment table — it is controlled by the **`Create new Salesforce records`** toggle in your Audiences Salesforce export settings.
 
-To push net-new contacts to Salesforce:
+To push net-new Accounts or Contacts to Salesforce:
 
 1.  Open your Audiences workspace and go to your Salesforce source settings.
 2.  Under the export section, enable the **`Create new Salesforce records`** toggle. (Admin access required — the toggle is off by default.)
 3.  Confirm your field mappings and save.
 
-Once the toggle is on, Clay will create new Contacts or Leads in Salesforce for any Audience record that doesn't already have a matching SFDC record.
+Once the toggle is on, Clay will create new Accounts or Contacts in Salesforce for any Audience record that doesn't already have a matching SFDC entry. (Leads and Opportunities do not support record creation through this toggle.)
 
 To track which contacts in Salesforce came from a specific Audience enrichment, create a custom Audience text field (for example, an "Audience Source" field set to a label like `"Q2-enrichment"`), and map it to a Salesforce field (a custom field, campaign tag, or lead status) in your export settings. You can then filter on that value directly in Salesforce.
 
