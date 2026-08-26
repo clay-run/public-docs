@@ -135,6 +135,12 @@ Functions eliminate duplicate work when you need the same workflow in multiple t
 
 No. Saving columns as a function preserves the existing data without rerunning the enrichments. You won't be charged credits twice.
 
+### Do run conditions carry over when I save columns as a function?
+
+Yes. When you save columns as a function using **Save as function** from the right-click menu, run conditions on the original columns are automatically carried over to the new function. Clay copies the run condition formulas and remaps formula references to the new function context — so the columns inside the function will have the same run conditions as they had in your original table.
+
+**One edge case to be aware of:** If a run condition references a column that was not included in the function and is not wired as a function input, that reference is carried over verbatim but will point to the original table's field ID — which doesn't exist inside the function. In that situation the run condition needs to be updated manually. To access column settings inside a function: open the function in edit mode (click **Live function** → **Edit draft** from the function's live view, or **Edit function** from the settings panel), then click the column header and select **View column** to open the settings panel on the right.
+
 ### What happened to my original columns and prompts after I used "Replace columns with function"?
 
 When you check **Replace columns with function** during function creation, Clay doesn't delete your original columns — it moves them inside the function. All column configurations, AI prompts, enrichment settings, and run conditions are preserved intact inside the function's internal table.
