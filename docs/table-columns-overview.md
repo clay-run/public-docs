@@ -267,7 +267,7 @@ To dedupe a column:
 
 A few rules to keep in mind for column deduplication:
 
--   Deleted rows cannot be recovered, so proceed with caution.
+-   **Before running a column dedupe, export your table to CSV** (Tools → Export → Download CSV). If the dedupe removes rows you didn't expect, re-import the CSV to restore them — there is no built-in undo for a column dedupe. If you did not export first, deleted rows may be recoverable by Clay support within 30 days — see [Recover deleted rows](delete-content-within-your-workspace.md#recover-deleted-rows) for details. On passthrough tables, row deletions are permanent and cannot be recovered.
 -   Duplicates are identified based on exact string matches.
     -   Deduplication is case-sensitive, meaning `Clay` and `clay` are treated as different.
     -   Extra whitespace is considered, so `Clay (with a space)` and `Clay` are not the same.
