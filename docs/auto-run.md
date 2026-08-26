@@ -38,6 +38,7 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
 
 -   When **enabled**: Enrichments run automatically whenever rows are added or edited.
     -   New tables use **"Keep existing results" on** by default — only errored, empty, or new cells run automatically. Cells that already have existing data **will not** run automatically unless you turn off Keep existing results.
+    -   **Filtered views do not limit auto-run.** Auto-run applies to every row in the table, not just those visible in the current filtered view. If you import a large dataset into a table that has auto-run on and no run conditions set, enrichments fire on all imported rows — even if you are only viewing a filtered subset. To prevent this, turn off auto-run before importing, or add [run conditions](conditional-runs.md) to your enrichment columns to gate which rows they execute on.
 -   When **disabled**: You must manually click cells to trigger enrichments. **Auto-run only controls enrichment columns — it does not affect your data sources.** Scheduled source imports (such as a Salesforce SOQL query or any source with an auto-update schedule) continue to add new rows to the table on their normal schedule even when Auto-run is off. To also pause row ingestion, disable the source's auto-update schedule separately in the source column settings.
 -   **Default setting**: Enabled by default — Clay is designed to automatically enrich data as soon as it arrives.
 
