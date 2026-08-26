@@ -129,7 +129,7 @@ If you need your Clay list to stay in sync with Salesforce automatically — wit
 
 **Fields not in your Salesforce list view**
 
-Clay imports exactly the fields that are columns in your selected Salesforce list view. Any field not included in that list view will not appear in your Clay table, even if the data exists in Salesforce. Two types of fields commonly go missing this way:
+If your Clay table shows only a small subset of your Salesforce record's fields after a list view import, this is expected behavior. Clay imports exactly the fields that are columns in your selected Salesforce list view — no more. Any field not included as a column in that list view will not appear in your Clay table, even if the data exists on the record in Salesforce. Two types of fields commonly go missing this way:
 
 -   **Custom or optional direct fields** — fields stored on the object itself (for example, a custom LinkedIn URL field on a Contact) that weren't added as a column to your Salesforce list view.
 -   **Related (cross-object) fields** — fields stored on a related object (for example, `Account Name` shown in a Contact list view, which is actually stored on the Account object). These are never imported even if they appear as columns in the list view.
