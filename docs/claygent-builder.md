@@ -289,6 +289,14 @@ The Lookup Multiple Rows action returns at most 100 matching records per row —
 
 No. You can have up to 10 test cases per Claygent at a time for free. You can delete and add new test inputs to keep testing. Once you deploy and run your agent in a table, standard runs follow your normal billing.
 
+### If I re-run a Claygent column on rows that already have results, am I still charged credits?
+
+Yes. Every Claygent run costs credits regardless of whether the new output matches what is already in the cell. Clay does not compare the incoming result against the existing value before charging — a re-run starts from 0 on cost every time.
+
+To limit cost when you only need to refresh one specific output field, create a separate Claygent column with a prompt scoped to just that field. Run only that slimmer column instead of the full multi-field agent, and you pay credits for that single field per row rather than for the complete set.
+
+To prevent cells that already have results from being re-run automatically when new rows arrive, confirm that **Keep existing results** is on in your table's Run Settings (`⛭` → **Run Settings**). With **Keep existing results** enabled, auto-run only fires on empty or errored cells — rows with an existing result are skipped. See [Auto-run](auto-run.md) for details.
+
 ### How much does it cost to run a Claygent in production?
 
 Credit cost depends on the AI model you select. Claygent defaults to **Argon** for web research — Clay's model for open-ended web lookups — which costs **3 credits per row**. Switching to **Helium** (1 credit per row) is a cost-effective alternative for simpler web research tasks. For a full model pricing reference, see [How AI is priced](ai-pricing.md).
