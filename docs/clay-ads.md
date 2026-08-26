@@ -216,11 +216,11 @@ Yes! Once synced, your audiences automatically update as data changes in your Cl
 
 No, LinkedIn and Meta don't provide contact-level match visibility for privacy reasons. However, Clay shows aggregate match rates and total audience size after each sync.
 
-### **Why is my LinkedIn matched count higher than the number of contacts I sent?**
+### **Why is my matched count higher than the number of contacts I sent?**
 
-This is expected. Clay sends up to 3 hashed personal email addresses per contact (via Enhanced Matching) rather than a single email, giving LinkedIn more identifiers to match against. LinkedIn counts each matched identifier separately in its reporting — not each unique contact. A single contact with 3 matching hashed emails contributes 3 to the matched count, which is why the matched count can exceed your total contact count.
+This is expected on platforms that match on multiple identifiers per contact. Clay sends up to 3 hashed personal email addresses per contact (via Enhanced Matching) rather than a single email, giving the ad platform more identifiers to match against. The platform counts each matched identifier separately in its reporting — not each unique contact. A single contact with 3 matching hashed emails contributes 3 to the matched count, which is why the matched count can exceed your total contact count.
 
-Your actual ad reach is based on the audience size (unique contacts), not the matched count. The same behavior applies to Vibe.co syncs.
+Your actual ad reach is based on the audience size (unique contacts), not the matched count. When this behavior is active, the Sync panel shows an info note explaining that matched count can exceed contacts sent.
 
 ### **Why does my ad audience show "too small for use in campaigns"?**
 
