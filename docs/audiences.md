@@ -685,17 +685,58 @@ The simplest framing: Tables are how you _work on_ data. Audiences is where your
 
 Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data into a Clay table from any source, then use Upsert to push those records permanently into your Audience. This works for any source Audiences doesn't yet natively support.
 
+### How do I sync a Clay table's accounts to a dedicated audience segment?
+
+**Available on Launch, Growth, and Enterprise plans.** Free plan workspaces do not have access to `Upsert Audiences Record`.
+
+If you have a Clay table built with custom filters or enrichment — for example, a marketing account list — and want to sync it to a specific audience segment rather than rebuilding the same filter criteria inside Audiences, use a source tag field with `Upsert Audiences Record`:
+
+**Step 1: Add a source tag column to your table**
+
+1.  Open the table in Clay.
+2.  Click **+ Add Column** → choose **Text**.
+3.  Set the column value to a static string that identifies this table — for example, `marketing_list`.
+4.  Confirm the value populates on every row.
+
+**Step 2: Create a matching custom field in Audiences**
+
+1.  In Audiences, click **Data Hub** → **Fields**.
+2.  Click **+ Add Field**, name it (for example, `Audience Source`), choose type **Text**, and save.
+
+**Step 3: Upsert the table's records into Audiences**
+
+1.  In the table, click **+ Add Enrichment** and search for **`Upsert Audiences Record`**.
+2.  Set a lookup key — **Domain** or **LinkedIn URL** for company records. This is required for deduplication and prevents duplicate Audience entries.
+3.  In the field mapping, map your source tag column to the custom Audiences field you created.
+4.  Run on a small batch (10–20 rows) to confirm the mapping is correct, then run on all rows.
+
+**Step 4: Create an audience segment filtered on the tag**
+
+1.  Go to **Audiences** → **Companies** (or **People**).
+2.  Click **New audience**.
+3.  Add a filter: **[your custom field]** = `[your tag value]`.
+4.  Confirm the record count matches your table.
+
+To sync this segment to an ad platform such as LinkedIn, see [Syncing audiences to ad platforms](#syncing-audiences-to-ad-platforms).
+
+**Tip:** Use a distinct tag per table (for example, `marketing_list_q3`) so that records from different tables are easy to isolate or combine in segment filters.
+
 ### How do I create a custom Audience field that isn't tied to Salesforce?
 
-The `+ Add field` option is available in the `Update Audiences Record` column mapping inside a bulk enrichment table:
+You can create a custom Audience field in two ways:
+
+**Option 1 — from Data Hub:**
+
+1.  In Audiences, click **Data Hub** → **Fields** in the left sidebar.
+2.  Click **+ Add Field**, enter a name, choose a field type (for example, **Text**), and save.
+
+**Option 2 — from within a bulk enrichment:**
 
 1.  Navigate to a segment and click `Enrich` → `Add bulk enrich`.
 2.  In the bulk enrich table, click the `Update Audiences Record` column header to open the Configure panel.
 3.  In the `Column mapping` dropdown, click `+ Add field`, name the new field, and save.
 
 Once created, the field is immediately available as a filter in any segment and as a target for `Update Audiences Record` or `Upsert Audiences Record` from any Clay table.
-
-**Note:** There is no option to add new fields directly from the Audience screen — you must go through the `Update Audiences Record` column mapping in a bulk enrichment table.
 
 ### A Salesforce field isn't appearing in my audience filters — how do I add it?
 
