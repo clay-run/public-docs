@@ -1091,3 +1091,89 @@ Both work together to ensure you have a single, unified record per person or com
 No. Records you sent to Audiences from a Clay table — via **Continue → Save to Companies** / **Save to People**, or using `Upsert Audiences Record` — persist in Audiences even if the source table is later deleted or archived. When a table is deleted, Clay marks that source's contribution as **Deleted in source** but does not remove the audience record. When a table is archived, the audience records are unaffected — they remain exactly as they were, with no status change. In both cases, the table's name continues to appear as an option in the **Origin source** filter because the records it contributed are still present in Audiences.
 
 To remove those records from your audience — and stop the old table from appearing as an Origin source — filter by **Origin source** → select the archived or deleted table name → create a segment from those results → archive the records. See [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) for the full steps.
+
+### When two sources have conflicting values for the same field, which value wins?
+
+When two sources write different values to the same field on the same Audience record, Clay applies these rules:
+
+- **Same source type:** The most recent write wins.
+- **Different source types:** The source type with higher priority wins, regardless of write time. The default priority order, from highest to lowest:
+  1. **Bulk enrichments** and **Upsert Audiences Record** (highest priority)
+  2. **Salesforce** Account, Contact, and Opportunity records; and **HubSpot**
+  3. **Salesforce Lead** records
+  4. **Snowflake** and **BigQuery**
+  5. **CSV** (a CSV override setting is available that promotes CSV above Salesforce and HubSpot to second-highest priority; bulk enrichments and Upsert Audiences Record remain at top regardless; contact Clay support to enable it)
+  6. **Find Companies / Find People search** (lowest priority — Salesforce, Snowflake, and CSV values all take precedence when they exist on a record)
+
+**Example:** If both a CSV import and a Salesforce sync write different values to the `Industry` field on the same company record, the Salesforce value wins — even if the CSV was imported more recently.
+
+### Will two records automatically merge if a dedup field is filled in after the initial import?
+
+No. Dedup matching runs only at the time a record is upserted or imported. If an existing record's dedup field — such as domain — is updated after its initial import (for example, by a bulk enrichment that fills in a previously null value), Clay does not re-check whether that updated value now matches another record. The two records stay separate even if they now share the same domain or email.
+
+To merge them, re-upsert or re-import the records so the dedup check runs again at ingestion time.
+
+### Does syncing my CRM to Audiences cost credits?
+
+CRM import is free, and the Audiences native Salesforce export sync is also free. Here is the full breakdown:
+
+-   **CRM sync (import):** Free. Clay reads your CRM and imports or refreshes records in your Audience at no credit cost. Connecting a CRM or data warehouse as a source requires Growth plan or above.
+-   **Audiences native Salesforce export sync:** Free. The built-in daily sync that pushes Audiences data back to Salesforce does not charge Action credits per record — whether the record was updated once or many times before the sync ran, no Actions are consumed.
+-   **Direct Salesforce table actions (Update Record, Create Record, Upsert Object):** These Salesforce actions, when used as enrichment columns in a Clay table, cost 1 Action per record; no Data Credits are consumed. This is a separate path from the Audiences native export sync.
+-   **Enrichment:** Costs credits. Running an enrichment on Audience records (for example, to update job titles or find contact data) uses 1 Action per record enriched plus Data Credits that vary by provider and data type — the same billing as enriching in a regular Clay table.
+
+For a full breakdown of how Actions and Data Credits work together, see [Actions & Data Credits](./actions-data-credits.md).
+
+### Does the Find Companies or Find People search in Audiences cost credits?
+
+**Running a Find Companies or Find People search in Audiences using standard filters is free** — no Data Credits are consumed when you run the search, save results to your Audience, or add companies to a segment.
+
+The one exception is **Technographics** filtering in Find Companies: each company row that matches your technographics criteria costs **3 Data Credits**. Any enrichments you run on Audience records afterward also consume credits as usual.
+
+For full details on technographics credit behavior, see [Find Companies — Does importing cost credits?](find-companies.md#does-importing-from-find-companies-cost-credits).
+
+## Best practices
+
+### Start with RevOps, not marketing or sales
+
+The fastest path to a working setup runs through whoever owns the CRM keys — typically a RevOps lead or manager. Starting with another team means going back to RevOps for CRM authorization, which can take days. Starting with RevOps means a live CRM sync in under 20 minutes.
+
+### Import before you export
+
+Turn on import first, validate Clay's data quality, then enable write-back once you trust what you're seeing.
+
+### Import more fields than you think you need
+
+You can hide fields you don't use, but adding fields not imported at setup requires reconfiguring your sync. Fields that weren't imported can't be used as segment filters. When in doubt, include it.
+
+### Filter before enriching
+
+Define your audience filters before running Bulk Enrich. Credits are charged per record enriched — if you enrich `All People` instead of a filtered segment, you pay for every record in your database. The narrower your audience, the more targeted and cost-efficient your enrichment run.
+
+### Test enrichments on 10 rows before running at scale
+
+Before running across your full segment, click `Run on 10 rows` and confirm the output is correct and field mapping is configured as intended. Given the credit implications of a misconfigured enrichment across millions of records, treat this as a standard step every time.
+
+### Check your field mapping intent before hitting `Start Run`
+
+Field mapping is on by default. If you want enriched data to write back to Audiences, confirm your column mappings are configured. If you're running an enrichment purely to trigger an action without saving data, explicitly disable field mapping so the run behaves as expected.
+
+### Work backwards from the use case when building segments
+
+Don't start with the data and ask what to filter. Start with the finish line: what action will be taken on this segment, and by whom? Segment by rep assignment for outbound, by product signals for PLG, by deal stage for pipeline plays.
+
+### Use CPJ draft mode to qualify records before committing
+
+Records from People Search land in draft state before entering `All People`. Use this window to apply additional filters, run a quick enrichment, and verify quality before clicking `Commit` — credits for downstream enrichments and actions are not spent until records are live.
+
+### Schedule large initial syncs at end of day
+
+For enterprise customers where Salesforce is live and operational, start large initial syncs near end of business EST. If the sync generates high load, it won't interfere with critical business functions.
+
+### Do the API math with nervous admins
+
+Divide your total record count by 50,000 (import batch size) to estimate import API calls, or by 10,000 for export. For most enterprise customers, the math makes this a non-issue — a 5M-record CRM generates only 100 import API calls against a Salesforce limit typically around 150 million records per day.
+
+### Start narrow, then expand
+
+Start with one scoped use case, demonstrate value, then expand. Customers who see one use case working naturally discover the next — signals lead to TAM sourcing, TAM sourcing leads to account matching. Trying to configure everything at once often stalls progress.
