@@ -95,7 +95,12 @@ To downgrade your Clay workspace plan:
 2.  Navigate to `Plans & billing` and click `Switch plan`.
 3.  Choose the plan you'd like to downgrade to and confirm your selection.
 
-**How downgrade billing works:** Plan downgrades are deferred to the end of your current billing cycle — your existing plan stays active until then, and you keep receiving its current Actions and Data Credit allocation. At renewal, your workspace switches to the new plan and your monthly Actions and Data Credit allocation resets to the new plan's level.
+**How downgrade billing works:** When you confirm a downgrade, you choose when it takes effect:
+
+-   **At the end of my current billing period:** No charge today. Your current plan stays active — with its full Actions and Data Credit allocation — until the billing period ends. At renewal, your workspace automatically switches to the new plan and your Actions and Data Credit allocation resets to the new plan's level. After scheduling this change, you can cancel it at any time by going to `Settings` → `Plans & billing` and clicking `Restore plan`.
+-   **Immediately (today):** A new subscription starts at the new plan's price and you are charged today. Your current subscription ends immediately — there is no refund for unused time on the old plan.
+
+The confirmation step defaults to **Immediately (today)**. To avoid a charge when downgrading, select **At the end of my current billing period** before confirming.
 
 **What happens to your Data Credits:** When the plan change takes effect, your credit balance is reduced to the rollover cap of your new plan — 2× its monthly credit limit. For the free plan (100 credits/month), that cap is 200 credits. Any credits above the cap are forfeited. If you have a large balance, spend it down before the change takes effect.
 
