@@ -1,6 +1,6 @@
 ---
 title: Connections and integration accounts
-description: Add, edit, test, and delete integration accounts in Clay's Connections settings, and set default accounts for your workspace.
+description: Add, edit, test, and delete integration accounts in Clay's Connections settings, view where each connection is used, and set default accounts for your workspace.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -67,6 +67,18 @@ To add a new account for an integration:
     -   Modify or re-enter credentials.
 -   Toggle `Set as Default` to make this account the default.
 -   Click `Save` to apply changes.
+
+### Viewing resources that use a connection
+
+The **Resources** column on the Connections table shows how many workbooks, tables, and functions reference each connection. To see the full list for a specific connection:
+
+1.  Navigate to `Settings` > `Connections`.
+2.  Find the connection you want to inspect.
+3.  Click the `…` menu next to the account and select **View resources**.
+
+A panel opens listing every workbook, table, and function that uses that connection. You can filter the list by resource type (workbooks, tables, functions) to narrow the results.
+
+Use this before rotating credentials, reconnecting with new credentials, or removing a connection — it shows exactly which parts of your workspace will be affected. It is also the recommended first step when a team member who owns connections is leaving and you need to identify which connections to update before their account is deactivated (see the FAQ below).
 
 ### Rotating or updating credentials
 
@@ -136,3 +148,15 @@ A **default account** is automatically selected for workflows or integrations wh
 Clay-managed accounts simplify access to external services by providing pre-configured integrations that use workspace credits instead of requiring individual credentials.
 
 For some integrations, only Clay-managed accounts are supported. For others, you will need to provide your own API key.
+
+## FAQs
+
+**What should I do when a team member who owns connections is leaving?**
+
+Before the member's account is deactivated, a workspace admin should:
+
+1.  Navigate to `Settings` > `Connections` and search or filter by the departing member's name (use the **Added by** column to identify connections they own).
+2.  Click `…` > **View resources** for each of their connections to see which tables, workbooks, and functions depend on it.
+3.  Click `…` > **Reconnect** to re-authenticate using a service account or another team member's credentials. All tables and workflows that reference that connection will automatically use the new credentials on their next run — you do not need to update each table individually.
+
+Once the member's account is deactivated, their personal credentials are disabled. Any connections that were not reconnected to new credentials will stop working.
