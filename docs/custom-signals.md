@@ -42,6 +42,31 @@ Custom Signals let you monitor data sources for specific changes on a regular sc
 -   [Job changes](https://www.clay.com/university/guide/job-change-signal-overview): Track when your contacts move to new companies, helping you leverage existing relationships for new opportunities or prepare for shifts in account engagement.
 -   [News & fundraising](https://www.clay.com/university/guide/monitor-for-news-fundraising): Alert you to significant events at monitored companies, helping you spot timely engagement opportunities.
 
+## FAQs
+
+### How do Custom Signals with data sources like HG Insights work?
+
+When you select an external data source — such as **Source Companies by product usage with HG Insights** — as the source for your Custom Signal, the signal actively queries that provider on each scheduled run to discover companies that match your criteria. You do not need a pre-existing list of companies to get started.
+
+On each run, the signal queries the provider (for example, HG Insights) for companies matching your configuration, then compares the results against companies already in your signal's results table. Any newly identified companies are added as new rows. Companies already present in the table are not duplicated.
+
+This means your signal automatically surfaces net-new companies on each run — for example, companies that HG Insights has newly identified as using your target technology since the last time the signal ran. Each newly detected company gets added as a row in your Clay table, where you can trigger enrichment columns, Slack notifications, or outreach workflows.
+
+The preview shown in the signal wizard (labeled "This is a preview showing up to 10 sample results") displays example companies that match your current configuration. It is illustrative — it does not represent results that are already being continuously tracked.
+
+### What does the recurring credit cost in the signal wizard mean?
+
+Credits for a Custom Signal using HG Insights as the source are charged per company result that HG Insights returns on each run. If HG Insights returns no companies on a given run, no source-query credits are charged for that run.
+
+One important nuance: credits are charged for every company HG Insights returns in the query, including companies already present in your results table from a previous run. Those existing companies are not added as duplicate rows, but they do count toward the run's credit cost.
+
+The estimate shown in the wizard reflects the expected total cost per run based on the number of company results your configuration is likely to return. Changing the run cadence (daily, weekly, monthly) does not change the per-result credit rate — it only changes how often the signal queries HG Insights.
+
+To manage your credit spend:
+-   Reduce the **Max companies** input in your signal configuration to limit how many results HG Insights can return per run.
+-   Review any enrichment columns in your results table — each enrichment with **Auto-update** enabled will also run automatically on newly added rows and will consume additional credits on top of the source query cost. Turn off **Auto-update** on enrichment columns you don't want to fire automatically.
+-   To see your full credit breakdown after a signal run, click `History` in the lower right corner of your results table and select `Usage history`.
+
 ## Guide: Turning enrichments into signals
 
 You may occasionally need to monitor changes in an enrichment. Below is a step-by-step guide on creating a signal for any enrichment. **In this guide, we'll start with a list of companies and add enrichments to monitor.**
