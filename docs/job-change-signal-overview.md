@@ -52,3 +52,17 @@ If you also want a stable custom contact ID that survives job changes, build a *
 -   **Professional profile URL** — follows the person across jobs (note: the URL's custom username portion can occasionally be edited by the user, so it is not fully immutable)
 
 Avoid basing a custom ID on work email, company name, or a CRM contact ID, since all of these can change when someone switches employers.
+
+### Can I detect job changes that already happened before I set up the signal?
+
+Yes — enable **Initial check** in step 3 of the signal setup. Initial check scans each contact's LinkedIn work history and surfaces contacts who changed roles within your chosen lookback window (3 months, 6 months, or 1 year), even if those changes happened before you set up the signal. The signal only needs each contact's LinkedIn URL to run; no additional CRM fields are required for retroactive detection.
+
+**Using the Job Change Signal to clean up stale CRM data:** If your goal is to find contacts in your CRM (HubSpot, Salesforce, etc.) who have already moved to a new company — so you can update or re-associate their records — follow this order:
+
+1.  Export your contacts from your CRM into a Clay table. Make sure each row includes the contact's **LinkedIn URL** — that is the only identifier the signal needs.
+2.  Set up the Job Change Signal on that table and enable **Initial check** with your desired lookback window.
+3.  Run the signal. It flags every contact whose current employer (as shown on their LinkedIn profile) changed within the lookback window.
+4.  Use those results to update your CRM records — re-associate contacts to their new companies, correct outdated job titles, etc.
+5.  Keep the signal running on a schedule to catch future job changes automatically.
+
+**Set up and run the signal before doing a bulk removal of contacts from your CRM.** If you delete contact records first, you lose their LinkedIn URLs and can no longer check those contacts for past job changes.
