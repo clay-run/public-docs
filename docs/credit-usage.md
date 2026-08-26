@@ -216,18 +216,30 @@ To avoid unexpected spend before it starts, disable [auto-run](auto-run.md) befo
 
 ### Credits spiked after editing a formula or upstream column
 
-When you edit a formula in a column that other enrichments reference, Clay marks all downstream cells as stale. If **Keep existing results** is off, this triggers a re-run for every stale cell across all rows — which can fire every dependent enrichment column at once and produce a large, unexpected credit charge.
+When an upstream column runs and its output changes — whether it's a formula, AI, or Claygent column — Clay marks all downstream cells that reference it as stale. If **Keep existing results** is off, this triggers a re-run for every stale cell across all rows — which can fire every dependent enrichment column at once and produce a large, unexpected credit charge.
 
-Before making formula or configuration changes, verify that **Keep existing results** is on:
+A common scenario: you revise a Claygent or AI column's prompt, run the column to apply your changes, and the new output automatically triggers all downstream enrichment columns to re-run across all rows. (Saving an enrichment column's settings alone doesn't trigger a cascade — it's the column running and producing new output that does.)
+
+Before running an upstream column after making configuration changes, you have several options to prevent an unintended downstream cascade:
+
+**Option 1 — Verify Keep existing results is on (passive protection)**
 
 1.  Click `⛭` in the top toolbar to open Run Settings.
 2.  Confirm **Keep existing results** is checked. (It is on by default for new tables — turn it off only when you explicitly want all cells to re-run.)
 
-With **Keep existing results** on, auto-run only fires on cells that are empty or errored — cells that already have a result are skipped, even when their upstream formula changes. This lets you update formulas without re-running (and re-charging) your entire table.
+With **Keep existing results** on, auto-run only fires on cells that are empty or errored — cells that already have a result are skipped, even when their upstream column changes. This lets you update column configurations without re-running (and re-charging) your entire table.
 
-Alternatively, turn auto-run **off** entirely before editing (`⛭` → toggle **Auto-run** off), make your changes, then manually run only the specific rows or columns you need.
+**Option 2 — Turn off auto-run on the specific downstream columns before editing (targeted)**
 
-See [Auto-run](auto-run.md) for full details on **Keep existing results** and how the auto-run mode affects which cells run.
+For each downstream enrichment column you don't want to auto-run: click the column name → **Edit column** → toggle **Auto-run** off under **Run settings** → **Save**. Make your changes to the upstream column, then manually trigger only the rows or columns you need. Re-enable auto-run on the downstream columns when you're ready. This is more targeted than disabling table-level auto-run — it stops specific downstream columns from cascading while leaving the rest of the table's behavior intact.
+
+**Option 3 — Turn off table-level auto-run before editing**
+
+Turn auto-run **off** entirely before editing (`⛭` → toggle **Auto-run** off), make your changes, then manually run only the specific rows or columns you need.
+
+**Tip:** Use [Sandbox mode](sandbox-mode.md) to test configuration changes on a small subset of rows before applying them to your full table — especially useful when editing a heavily-referenced column, so you can verify the output before triggering a downstream cascade across all rows.
+
+See [Auto-run](auto-run.md) for full details on **Keep existing results** and column-level auto-run controls.
 
 ### Accidental credit spend
 
