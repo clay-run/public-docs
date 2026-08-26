@@ -134,12 +134,15 @@ To map an endpoint from an enrichment to an existing column:
 
 ### Circular dependency error
 
-If Clay blocks the save with a **Circular dependency error**, it means the destination column is already used as an input somewhere upstream in the same enrichment chain — directly or indirectly through another dependent column. Mapping into it would create a loop, so Clay prevents the save.
+If Clay blocks the save with a **Circular dependency error**, or you see a **"Dag is cyclical"** error (status 400) while a column is updating, it means two or more columns reference each other — directly or indirectly — creating a loop. Clay blocks the update or save to prevent an infinite dependency cycle.
+
+A common example: you have a "Postal Code" column and a "Postal Code (AI Fallback)" column whose formula reads from "Postal Code." If you then try to update "Postal Code" to pull from "Postal Code (AI Fallback)," the cycle closes and Clay returns this error.
 
 **How to fix it:**
 
 -   Map the enrichment result to a **new column** instead of the existing destination.
 -   Or, open the enrichment(s) that reference the destination column as an input and remove that reference, then re-map.
+-   **Or, use a Merge column** if your goal is to fill blank values in a primary column using a fallback AI column. Create a new [Merge column](#merge-columns) that lists the primary column first and the fallback column second — it returns the first non-empty value per row, so rows with existing data are unchanged and blank rows fall back to the AI-generated value. Make sure neither of the two input columns references the new Merge column back, so the dependency graph stays acyclic.
 
 To visualize the full dependency chain and identify where the loop originates, open **Graph view**: click the view selector dropdown in your table toolbar and choose **Graph view**.
 
