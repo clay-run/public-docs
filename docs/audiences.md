@@ -309,7 +309,7 @@ Records need a high-confidence identifier to match. Auto-enrichment adds `Linked
 
 **Import record matching (beta)**
 
-When importing from Salesforce or Snowflake, you can configure **Import record matching** to deduplicate records at ingestion time. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
+For any Audiences source, you can configure **Import record matching** to deduplicate records at ingestion time. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
 
 **Example:** If you're importing from both Snowflake and Salesforce, setting `domain` as your alias field ensures that a single company row in your Audiences reflects data from both sources — rather than creating two separate records for the same company.
 
@@ -1112,6 +1112,17 @@ When two sources write different values to the same field on the same Audience r
 No. Dedup matching runs only at the time a record is upserted or imported. If an existing record's dedup field — such as domain — is updated after its initial import (for example, by a bulk enrichment that fills in a previously null value), Clay does not re-check whether that updated value now matches another record. The two records stay separate even if they now share the same domain or email.
 
 To merge them, re-upsert or re-import the records so the dedup check runs again at ingestion time.
+
+### I already have duplicate records in Audiences — how do I fix them?
+
+There is no self-serve merge button for records already in Audiences. Deduplication only runs when a record is first imported or upserted — existing duplicate records do not merge automatically, even when both share the same domain or email address.
+
+**To prevent new duplicates going forward:** Enable Import Record Matching on your source connection (HubSpot, Salesforce, Snowflake, or other sources) and set Domain (for companies) or Email (for people) as the alias field. Future imports will then match against existing records instead of creating new ones. This setting is currently in beta — contact your Growth Strategist to enable it. It applies only to records imported after the setting is enabled; it does not retroactively merge records already in Audiences.
+
+**To clean up existing duplicates:**
+1. Decide which record you want to keep (your "keeper").
+2. Copy any fields you need from the duplicate onto the keeper — either manually by editing cell values, or for many duplicate pairs at once, by building a Clay table and using a **Lookup in Audiences** column matched on Domain (for companies) or Email (for people) to pull the relevant fields programmatically.
+3. Once the keeper has all the data you need, archive the duplicate. Archive the duplicate after consolidating, not before — archiving removes the record from your active audience immediately.
 
 ### Does syncing my CRM to Audiences cost credits?
 
