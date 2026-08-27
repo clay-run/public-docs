@@ -103,6 +103,7 @@ The objects available in Clay are determined entirely by the permissions of the 
 -   **Object-level permissions:** Does the connected user's profile or permission set include **Read** access to the Account object? In Salesforce, go to `Setup` → `Profiles` (or `Permission Sets`) → find the user's profile → `Object Settings` → `Account` → confirm `Read` is enabled.
 -   **Org-wide sharing defaults:** Are there sharing rules that restrict Account visibility for this user? Go to `Setup` → `Sharing Settings` and check the organization-wide default for Accounts.
 -   **API access per object:** Some Salesforce orgs restrict which objects are accessible via the API. Confirm the Account object is API-accessible for the connected user.
+-   **Permission set license (Salesforce Integration User license only):** If the connected user has a **Salesforce Integration** user license (a lower-cost, API-only license designed for system integrations), standard object permissions must be granted through a permission set whose **License** field is set to **Salesforce API Integration** — not the default **Salesforce** license type. A permission set using the **Salesforce** license will appear to be assigned successfully in Salesforce Setup, but its object permissions do not take effect for Salesforce Integration license holders, leaving standard objects like Account, Contact, and Lead absent from Clay's dropdown even after the assignment. To resolve this: go to `Setup` → `Users` → open the integration user → under **Permission Set License Assignments**, confirm **Salesforce API Integration** is listed (add it if it is not). Then create a new permission set with **License** set to **Salesforce API Integration**, grant **Read** (and **Edit** if needed) on the required objects under **Object Settings**, and assign that permission set to the integration user. After saving in Salesforce, click **Refresh fields** in Clay.
 
 Once your Salesforce admin grants the necessary permissions, the updated access will be reflected in Clay automatically. You can verify by logging into Salesforce as the connected user and confirming Account records are visible there.
 
@@ -306,6 +307,19 @@ Clay's report picker automatically filters to show only Tabular and Matrix repor
 **To fix:** In Salesforce, open the report, click **Edit**, then change the report format to **Tabular** (a flat list without row groupings) or **Matrix** (rows and columns both grouped). Save the report, then re-run your Clay source.
 
 For an overview of Salesforce report formats, see Salesforce's [Report Formats documentation](https://trailhead.salesforce.com/content/learn/modules/lex_implementation_reports_dashboards/lex_implementation_reports_dashboards_report_formats).
+
+## Why does Clay show "The connected Salesforce user's profile doesn't have access to the Report object via the API"?
+
+This error appears in the **Import records from a Salesforce report** source when Salesforce determines that the connected user's profile does not have API access to the Report object. Clay calls Salesforce's Analytics API to fetch and run the report — if Salesforce rejects the request with a Report access error, Clay surfaces: *"The connected Salesforce user's profile doesn't have access to the Report object via the API. Ask your Salesforce admin to enable API access to Reports on this profile."*
+
+**To resolve this**, ask your Salesforce admin to enable Report API access for the integration user:
+
+1.  In Salesforce, go to `Setup` → `Profiles` (or `Permission Sets`) and open the profile or permission set assigned to the connected user.
+2.  Under **System Permissions**, enable **Run Reports** and **View Reports in Public Folders**.
+3.  Make sure the specific report's folder is shared with the integration user — reports stored in private folders are inaccessible to other users via the API.
+4.  Back in Clay, open the **Import records from a Salesforce report** source and click **Refresh fields** to re-fetch the available report list.
+
+**If you are using a Salesforce Integration User license:** a standard permission set will not apply system permissions to this license type. You need a permission set whose **License** is set to **Salesforce API Integration** in order for the Report permissions to take effect. See [Why is a Salesforce object not appearing in Clay?](#why-is-a-salesforce-object-such-as-account-not-appearing-in-clay) for the full setup steps.
 
 ## Why did my Salesforce report import only bring in 2,000 rows when my report has more?
 
