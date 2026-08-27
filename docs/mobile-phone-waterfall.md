@@ -14,7 +14,7 @@ The Mobile Phone waterfall finds a person's mobile (cell) phone number by queryi
 
 You only pay credits for the provider that finds a match, making it one of the most credit-efficient ways to build phone coverage at scale.
 
-**Available on:** Launch plan or higher. Phone number enrichments are not available on free or trial plans — this restriction applies even if you have unused data credits. To access the Mobile Phone waterfall, upgrade to a paid plan. See [Plans & billing](plans-and-billing.md#trials) for details.
+**Plan availability:** The Mobile Phone waterfall requires the **Launch plan or above**. It is not available on the Free plan or during the free trial period — this restriction applies even if you have unused data credits. Work email enrichment, people search (Find People), and LinkedIn profile resolution (Enrich Person) work on all plans including Trial — so you can build and validate the rest of your table workflow before upgrading. To upgrade, go to **Settings → Plan & billing**. See [Plans & billing](plans-and-billing.md#trials) for details.
 
 ## Setting up the Mobile Phone waterfall
 
