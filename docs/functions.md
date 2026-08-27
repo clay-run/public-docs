@@ -86,6 +86,8 @@ Functions is available on all paid plans at no additional cost, including paid l
 
 No. Functions do not add their own credit or action cost. Credits are consumed by the individual enrichment actions inside the function (e.g., a profile lookup, an email waterfall step) and are attributed to the table where the function is called, not to the function itself. If a function only contains formula columns and no enrichment steps, it will cost zero credits. Estimated cost is visible in the function editor panel and also in the table where the function is referenced.
 
+When a function contains a waterfall, the estimated cost shown (marked with a `~` prefix) is an **average** across all providers in the waterfall sequence — not a guaranteed per-row charge. The actual credit cost for each row depends on which provider in the waterfall resolves it: if an earlier, cheaper provider finds a result, that row costs less than the estimate; if the waterfall falls through to a later, more expensive provider, that row costs more. Hover over the estimated cost badge to see the maximum possible cost per row.
+
 ### Is there a row limit for functions?
 
 No. As of General Availability, functions support unlimited rows via passthrough. Functions also include a 10x speedup and fair sharding for parallel execution, so large workloads are distributed efficiently instead of queuing. Prior to GA, Functions had a 50,000-row limit.
