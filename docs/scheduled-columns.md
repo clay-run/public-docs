@@ -51,6 +51,20 @@ Scheduled column runs force-run **only the selected columns**. After the schedul
 
 To prevent the downstream column from running on every row on every cycle — for example, if you only want it to execute when the upstream value meets a condition — add a run condition. In the downstream column's **Run settings**, enable **Add run condition** and enter a formula that references the upstream column's value (for example, `Only run when [Sentiment] contains "BULLISH" & [Full Name] is not empty`). Clay evaluates the condition on each row and skips rows where it is not met, so you only consume credits for rows where the upstream result warrants it. See [Conditional runs](conditional-runs.md) for setup details.
 
+## Troubleshooting
+
+### Some rows show old timestamps after a scheduled run
+
+Scheduled column reruns force-run every cell in the selected columns — they don't skip cells because a previous result already exists or because the input value looks the same as before. If specific rows still show an older "last updated" timestamp after a scheduled run completes, those cells were skipped due to one of the following conditions:
+
+-   **Blank or missing inputs** — the cell's required input (such as a lookup key, email address, or referenced column value) is empty or could not be resolved. Clay skips the cell rather than running it with incomplete data.
+-   **Unmet run condition** — the column has an **Only run if** condition configured, and that condition evaluated to false for the row. The cell is intentionally skipped, and no new timestamp is recorded.
+-   **Formula or input validation error** — a formula feeding the column couldn't be evaluated (for example, a referenced column is missing, returns an unexpected type, or its value is invalid). The cell is skipped with an error status.
+
+**To diagnose:** hover over or click into the cells in the affected rows to see their current status and any error messages. Fixing the underlying input — filling in a blank field, correcting the run condition, or resolving a formula error — will allow the next scheduled run to process those rows.
+
+**Note:** A scheduled run completing successfully across the whole table does not guarantee every cell re-ran. The run itself fires for all rows, but individual cells with the issues above are skipped regardless.
+
 ## Usage limits
 
 Each plan has a limit to the total number of tables with scheduled columns.
