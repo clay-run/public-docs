@@ -113,14 +113,14 @@ Access control is enforced at the Google Ads account level — the person connec
 
 ## **FAQs**
 
-### **I built a people list in a Clay workbook. How do I send it to LinkedIn Ads?**
+### **I built a people list in a Clay workbook. How do I send it to an ad platform?**
 
 The recommended path — available on **Growth and Enterprise plans** — goes through Audiences:
 
 1.  **Save to People.** In your Find People table, click **Continue** at the bottom and select **Save to People**. Contacts already in your People Audience are excluded automatically, so only net-new records are added.
-2.  **Enrich (optional but recommended).** In Audiences, open your People segment and click **Enrich** → **Add bulk enrich** to add work email or phone number. More identifying fields improve your LinkedIn match rate.
-3.  **Sync to ad platforms.** From your People segment, click **Send** → **Sync to ad platforms** and select **LinkedIn Ads**.
-4.  **Connect your LinkedIn account and map fields.** Select your LinkedIn Campaign Manager account (or connect one via OAuth) and map contact fields such as first name, last name, and work email. Click **Continue** — your audience starts syncing automatically and is available in LinkedIn Campaign Manager within **48 hours** of the first sync.
+2.  **Enrich (optional but recommended).** In Audiences, open your People segment and click **Enrich** → **Add bulk enrich** to add work email or phone number. More contact fields improve match rates on the ad platform.
+3.  **Sync to ad platforms.** From your People segment, click **Send** → **Sync to ad platforms** and select your target platform.
+4.  **Connect your account and map fields.** Select your ad account (or connect one via OAuth) and map contact fields such as first name, last name, and work email. Click **Continue** — your audience starts syncing automatically and is available in the platform's campaign manager within **48 hours** of the first sync.
 
 For full setup details, see [Syncing audiences to ad platforms](https://university.clay.com/docs/audiences#syncing-audiences-to-ad-platforms).
 
