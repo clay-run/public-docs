@@ -82,6 +82,8 @@ Clay's SSO routing is domain-based: when a user enters their email on the Clay l
 
 SCIM directory sync is on Clay's roadmap — contact Clay support or your Growth Strategist for the latest status on this feature.
 
+**Clay does not have an admin API for managing workspace members.** There is no public API endpoint for inviting, deactivating, or removing users from a Clay workspace programmatically. Workspace membership must be managed manually through the Clay UI (`Settings` > `Team`).
+
 **Clay user roles are not managed through SSO or SAML.** Enabling SSO does not change existing team members' roles in your workspace. Clay reads only the user's email address from the SAML assertion, with `firstName` and `lastName` as optional attributes — no role or group attributes from your identity provider are mapped to Clay workspace roles. To assign or update a team member's role after SSO is enabled, go to `Settings` > `Team` and use the role dropdown next to their name.
 
 ## Disabling or re-enabling SSO
