@@ -421,7 +421,7 @@ It depends on the provider's billing model. In some cases, a data provider may n
 
 ### Why does an enrichment show "Tool execution failed with status: SUCCESS\_BLOCKED\_DATA"?
 
-Clay checks every enrichment request against an internal compliance list before contacting any data provider. If a contact's email address, phone number, or LinkedIn identifier is on that list, the enrichment exits early — no lookup is attempted and no credits are charged (any credits tentatively held are automatically refunded). The cell detail panel shows the message "Data blocked — the data owner has requested for this information to be blocked in Clay."
+Clay checks every enrichment request against an internal compliance list before contacting any data provider. If a contact's email address, phone number, or professional profile identifier is on that list, the enrichment exits early — no lookup is attempted and no credits are charged (any credits tentatively held are automatically refunded). The cell detail panel shows the message "Data blocked — the data owner has requested for this information to be blocked in Clay."
 
 This is not a bug, a provider error, or anything specific to your account. Other contacts in the same workflow run are unaffected — the block applies only to the specific flagged identifier. Retrying will not change the outcome; the block is tied to the contact's identifier, not to run conditions or timing.
 
