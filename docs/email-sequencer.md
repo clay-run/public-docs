@@ -473,6 +473,12 @@ This error is expected — Clay's sequencer uses automated warmup sends, which p
 
 If the error persists more than 24 hours after your admin marked the app as `Trusted`, confirm that they approved the app for the exact domain of the email account you're connecting (e.g., for `ryan@company.com`, the admin must approve for `company.com` specifically — not a different domain they manage). If you're connecting accounts from multiple domains, each domain requires its own separate Trusted configuration — having one domain approved does not automatically cover the others. Your admin can verify which org units are currently configured by going to Google Admin → Security → API Controls → App Access Control and checking the Clay Sequencer app's org unit count. If it's still blocked after verifying the domain, contact support.
 
+### I see multiple "Clay" apps when searching in Google Admin. Which one do I need for the sequencer?
+
+Searching for "clay" in Google Admin returns many results because Clay uses more than one Google OAuth app. For the Campaigns Gmail OAuth connection, the only app you need to mark as `Trusted` is **Clay Sequencer (Web)**.
+
+To make sure you select the correct one, use the Client ID shown in Clay's modal rather than searching by name. In Step 2 of the [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth) setup, copy the Client ID from the `Search for Clay Sequencer` step in the modal — then paste that ID into the Google Admin search bar (Step 5). Searching by Client ID returns exactly one match and eliminates any ambiguity about which app to configure.
+
 ### What exact Microsoft permissions does sequencer require?
 
 These are disclosed when you add your account via OAuth. We request: offline\_access, openid, email, profile, Mail.Send, Mail.Send.Shared, Mail.ReadWrite, Mail.ReadWrite.Shared, [User.Read](http://User.Read), MailboxSettings.ReadWrite.
