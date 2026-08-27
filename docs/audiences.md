@@ -636,11 +636,11 @@ The **`Create new Salesforce records`** toggle is in your Salesforce source sett
 Export sync behavior:
 
 -   **Export frequency:** Once every 24 hours. Clay assigns each workspace a stable export time automatically — the schedule is not user-configurable.
--   **First export:** After you enable Export Sync, the first export does not run immediately — it fires at your workspace's next scheduled export time, which may be up to 24 hours away. The Exports panel shows **Not set up** until the first export completes successfully.
--   **Export batch size:** ~10,000 records per batch.
--   **Subsequent syncs:** Incremental — only changed records are processed.
+-   **First export:** After you enable Export Sync, the first export does not run immediately — it fires at your workspace's next scheduled export time, which may be up to 24 hours away. The Exports panel shows **Not set up** until the first export completes successfully. The first export is a **full load** — it processes all records in your Audience regardless of when they were last changed. At high record volumes, this initial run can take considerably longer than subsequent exports.
+-   **Subsequent syncs:** Incremental — only records whose Audiences fields have changed since the last export are processed, so subsequent exports complete much faster than the initial full load.
+-   **Monitoring:** The **API usage** card on the Salesforce source settings page shows your daily Bulk API quota and the number of calls made in the last 24 hours — use it to confirm exports are actively running and to check your remaining API capacity.
 
-To estimate API calls for initial export, divide record count by 10,000 and compare against your Salesforce limit.
+To monitor API consumption during and after the initial export, check the **API usage** card on the Salesforce source settings page.
 
 **Note:** CRM export is admin-only. Enrichments and signals follow standard Clay table pricing.
 
@@ -881,6 +881,23 @@ Add a **Salesforce Update Record** action column directly inside your bulk enric
 
 If you have the Audiences Salesforce export enabled, enriched fields also sync back to Salesforce automatically on the next 24-hour export cycle (see [Writing back to your CRM](#writing-back-to-your-crm)). Adding Update Record directly in the enrichment table is useful when you need immediate write-back or when you are not using the native Audiences Salesforce import.
 
+### How do I keep a "Clay Last Enriched" date current in Salesforce?
+
+To maintain a continuously updated enrichment timestamp in Salesforce, add a formula column to your bulk enrichment table that returns the current date or datetime, then map it to your Salesforce date field with an **Always write** rule.
+
+**Setup:**
+
+1.  In your bulk enrichment table, click **Add column** → **Formula**.
+2.  Enter a formula that returns the current timestamp in the format your Salesforce field expects:
+    -   **DateTime field:** `new Date()?.toISOString?.()`
+    -   **Date field (YYYY-MM-DD only):** `new Date()?.toISOString?.()?.split?.("T")?.[0]`
+3.  Name the column (for example, **Clay Last Enriched**).
+4.  In your Salesforce export field mapping, map this formula column to the corresponding Salesforce field and set its write rule to **Always write**.
+
+Each time the bulk enrichment re-runs — whether triggered automatically by a new record entering the segment or manually — the formula produces a new timestamp. Clay writes the updated value to Salesforce on the next 24-hour export cycle.
+
+**Note:** The timestamp re-stamps on every re-run, even when the underlying enrichment data (such as an enriched phone number or job title) has not changed. If you only want the timestamp to update when specific enrichment data actually returned a result, add a run condition on the formula column — for example, set it to evaluate only when a key enrichment column is not empty.
+
 ### How do I write enriched data back to HubSpot from Audiences?
 
 Audiences does not have a native HubSpot export destination — Salesforce is currently the only built-in CRM export. To push enriched data to HubSpot, use a Bulk Enrichment with a HubSpot action column directly from within your audience segment:
@@ -1094,24 +1111,11 @@ To remove those records from your audience — and stop the old table from appea
 
 ### When two sources have conflicting values for the same field, which value wins?
 
-When two sources write different values to the same field on the same Audience record, Clay applies these rules:
-
-- **Same source type:** The most recent write wins.
-- **Different source types:** The source type with higher priority wins, regardless of write time. The default priority order, from highest to lowest:
-  1. **Bulk enrichments** and **Upsert Audiences Record** (highest priority)
-  2. **Salesforce** Account, Contact, and Opportunity records; and **HubSpot**
-  3. **Salesforce Lead** records
-  4. **Snowflake** and **BigQuery**
-  5. **CSV** (a CSV override setting is available that promotes CSV above Salesforce and HubSpot to second-highest priority; bulk enrichments and Upsert Audiences Record remain at top regardless; contact Clay support to enable it)
-  6. **Find Companies / Find People search** (lowest priority — Salesforce, Snowflake, and CSV values all take precedence when they exist on a record)
-
-**Example:** If both a CSV import and a Salesforce sync write different values to the `Industry` field on the same company record, the Salesforce value wins — even if the CSV was imported more recently.
+Clay resolves field-value conflicts using a fixed source priority order — see [Conflict resolution when sources provide different field values](#conflict-resolution-when-sources-provide-different-field-values) in the "Importing your data" section above for the full priority table. Within the same priority tier, the most recently updated value wins.
 
 ### Will two records automatically merge if a dedup field is filled in after the initial import?
 
-No. Dedup matching runs only at the time a record is upserted or imported. If an existing record's dedup field — such as domain — is updated after its initial import (for example, by a bulk enrichment that fills in a previously null value), Clay does not re-check whether that updated value now matches another record. The two records stay separate even if they now share the same domain or email.
-
-To merge them, re-upsert or re-import the records so the dedup check runs again at ingestion time.
+No. Merging two Audience records into one happens only at the time of a record upsert or import — not when an existing field is later updated with a matching value. For example, if one company record has a null domain and another has `mpsworks.com`, those two records are not automatically merged when a later enrichment fills the first record's domain with `mpsworks.com`. The two records stay separate. To merge them, re-import or re-upsert the record so that the matching identifier is present at ingestion time.
 
 ### Does syncing my CRM to Audiences cost credits?
 
@@ -1172,7 +1176,7 @@ For enterprise customers where Salesforce is live and operational, start large i
 
 ### Do the API math with nervous admins
 
-Divide your total record count by 50,000 (import batch size) to estimate import API calls, or by 10,000 for export. For most enterprise customers, the math makes this a non-issue — a 5M-record CRM generates only 100 import API calls against a Salesforce limit typically around 150 million records per day.
+Divide your total record count by 50,000 (import batch size) to estimate import API calls. For the export direction, use the **API usage** card on the Salesforce source settings page to monitor actual Bulk API 2.0 consumption — it shows your daily quota and the number of calls made in the last 24 hours. For most enterprise customers, even large initial full-load exports are a non-issue — a 5M-record CRM generates roughly 100 import API calls against a Salesforce limit typically around 150 million records per day.
 
 ### Start narrow, then expand
 
