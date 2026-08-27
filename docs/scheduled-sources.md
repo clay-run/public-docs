@@ -1,7 +1,7 @@
 ---
 title: Scheduled sources
 description: Automatically refresh data from sources on a set schedule.
-last_synced: 2026-04-26T01:40:37.460Z
+last_synced: 2026-04-26T01:40:37.604Z
 ---
 
 # Scheduled sources
