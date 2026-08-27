@@ -433,7 +433,7 @@ Four Clay actions let you move data between a Clay table and your Audience direc
 -   In any Clay table, click `Add enrichment` and search for:
     -   `Upsert Audiences Record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. Use it to commit data from integrations not yet natively supported in Audiences, qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table.
     -   `Update Audiences Record` writes data from a table row to one or more fields on an existing Audience record. Unlike `Upsert Audiences Record`, it does not create a new record if no match is found. Both actions write only to fields that already exist in your Audience — to create a new custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
-    -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls. By default, signal data is returned for the past **90 days** and the action returns **5 signal results** per record by default — adjust the **Signal data to include (days)** setting in the column settings to retrieve older signals, or increase the result limit (up to 50) when you need more results per record. Use `Get Audiences Activity` when you need a larger set of results.
+    -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls. By default, signal data is returned for the past **90 days** and the action returns **5 signal results** per record by default — adjust the **Signal data to include (days)** setting in the column settings to retrieve older signals, or increase the result limit (up to 50) when you need more results per record. Use `Get Audiences Activity` when you need a larger set of results. The lookup searches your full audience by field value and cannot be scoped to a specific saved segment — see [Can I scope a Lookup in Audiences to a specific segment?](#can-i-scope-a-lookup-in-audiences-to-a-specific-segment) in the FAQs below.
     -   `Get Audiences Activity` retrieves signal and activity data for an Audiences record — including signal events and, if Gong is connected to your workspace, Gong call records. Use it when you need more results or want to query a longer time window than `Lookup in Audiences` provides by default.
 
 ### Reviewing enrichment results
@@ -988,6 +988,21 @@ Two behaviors to keep in mind:
 -   **Blank or empty filter values prevent any match.** If any field in **Fields to filter by** has a blank or null value in your table row, the lookup returns "No records found" — even if the Audiences record also has a blank value for that field. Every filter field must have a non-empty value for the lookup to run.
 
 **Tip:** Use a single strong identifier like `Email` when you want reliable matches. Email is unique per person and avoids the no-match issue that occurs when secondary identifier fields are inconsistently populated.
+
+### Can I scope a Lookup in Audiences to a specific segment?
+
+No. `Lookup in Audiences` searches your full audience by field value — it cannot be pointed at a specific saved segment. There is no segment parameter in the lookup configuration.
+
+**To check whether a record belongs to a specific segment from a Clay table**, write a custom field to your Audience records that flags segment membership, then filter on that field in the lookup:
+
+1.  In Audiences, open the segment you want to reference.
+2.  Click **Enrich** → **Add bulk enrich**. In the bulk enrichment table, add an `Update Audiences Record` column and map it to a custom field on each record — for example, a field named **In XYZ Segment** set to `true`.
+3.  Enable the **auto-enrich** toggle on the enrichment so that new records entering the segment are flagged automatically.
+4.  In your Clay table, add a `Lookup in Audiences` column. Set **Fields to filter by** to the identifier that links the table row to an Audience record (for example, **Domain**). Include **In XYZ Segment** in **Data to include** and check the returned value to determine segment membership.
+
+The custom field is immediately available as a filter in any other segment or `Lookup in Audiences` column once created.
+
+**Alternative:** Use a formula column. Describe the criteria that define your segment in plain language — Sculptor can write the formula for you if you tell it which fields to check. This works when the data that defines the segment already exists as fields on the Audience record.
 
 ### Why isn't a signal showing up in my Lookup in Audiences result?
 
