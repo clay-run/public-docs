@@ -212,7 +212,7 @@ Once you're happy with the output:
 1.  Go to any table and add an AI column.
 2.  Under Claygent options, select `Saved Claygents`.
 3.  Select the agent you just built.
-4.  Variables automatically map to your table columns.
+4.  Clay automatically maps your agent's input variables to table columns using name matching, with an AI-powered fallback for variables that don't find an exact match. Review the **#INPUTS#** section of the column settings to confirm each variable is connected to the right column before running.
 5.  Save and run.
 
 You can also deploy directly from Claygent builder by clicking `Add to table`.
@@ -409,6 +409,22 @@ There are two ways to resolve this:
 
 -   **Fill in the missing data.** Ensure the referenced column has a value for every row you want to run.
 -   **Make the input optional.** Click the column name → **Edit column**, scroll to the **#INPUTS#** section, and toggle off the **Required to run** switch next to each input that doesn't always have data. When an input is optional, the cell will still run for rows where that field is blank — the empty value is simply omitted from the prompt for that row.
+
+### My Claygent variable isn't using my column data — the output is wrong, empty, or shows placeholder text
+
+When a Claygent runs, it substitutes each input variable with the value from its mapped table column. If a variable produces the wrong data, shows a `[no value provided for "VarName"]` marker, or appears to ignore your column entirely, the variable is likely mapped to the wrong column — or not mapped at all.
+
+**Why this happens:** When you first add a saved Claygent to a table, Clay auto-maps each variable to a table column using name matching. If the variable name and column name differ — for example, a Salesforce custom field named `Campaign_Title__c` in the Claygent versus a Clay column named `Campaign_Title_C` — the auto-match may connect the variable to a similar-looking but incorrect column, or fall back to a positional match that doesn't correspond to your intended data.
+
+**To fix the mapping:**
+
+1.  Click the Claygent column name → **Edit column** to open the column settings.
+2.  Scroll to the **#INPUTS#** section. Each input variable is listed alongside the table column it's currently mapped to.
+3.  Click the column picker next to any incorrectly mapped variable and select the correct table column.
+4.  Alternatively, click **Suggest input mappings with AI** to trigger a fresh on-demand suggestion for all variables — review the results before saving.
+5.  Click **Save**, then re-run the column.
+
+**Note:** For existing Claygent columns, the mapping suggestion does not re-run automatically — you need to review and correct mappings manually, or use the **Suggest input mappings with AI** button to re-trigger the suggestion.
 
 ### How do I get individual Claygent result fields into their own table columns?
 
