@@ -41,7 +41,7 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
         -   **Products** — e.g., Amazon EC2, Salesforce Sales Cloud
         -   **Main categories** and **Parent categories**
         Product and vendor names in the filter come from BuyerCaddy's catalog and may not match a company's public brand name exactly. To identify what a product name refers to, run the search and check the **Vendor** field in the cell details for any returned row — it shows the company behind the product.
-    -   **Company identifiers** — Return only companies that match a specific list of domains or LinkedIn company page URLs. Enter one type per search (domains only, or LinkedIn URLs only, not both). Each domain is resolved to matching company records in Clay's database; a single domain can map to more than one company record when multiple entities share that domain (for example, a parent company and its subsidiaries).
+    -   **Company identifiers** — Return only companies that match a specific list of domains or professional network company page URLs. Enter one type per search (domains only, or professional network URLs only, not both). Each domain is resolved to matching company records in Clay's database; a single domain can map to more than one company record when multiple entities share that domain (for example, a parent company and its subsidiaries).
     -   **Domain filters:**
         -   **Has domain** — Whether a company has a resolved domain.
         -   **Domain is live** — Whether the company's domain is currently active.
