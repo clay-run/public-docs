@@ -43,11 +43,21 @@ To change your theme:
 
 ## Change your account email address
 
-The email address field in `Settings` > `Account` is read-only and cannot be changed directly in the UI. To change the email associated with your Clay account, contact Clay support via the in-app chat.
+The email address field in `Settings` > `Account` is read-only and cannot be changed directly in the UI.
 
-**Who can request this change:** Email address changes are processed by Clay's support team and handled internally. Support will only honor requests that originate from the workspace admin's registered email address — if you are not the workspace admin, coordinate with them to submit the request.
+**Self-service option:** You can switch your workspace to a new email address by inviting it as an Admin and then removing the old one:
 
-**If the new email address is already linked to another Clay account:** That existing account must be resolved (for example, deleted) before the change can be made.
+1.  Go to `Settings` > `Team` and click **Invite**.
+2.  Enter the new email address, set the role to **Admin**, and click **Send invite**.
+3.  Accept the invitation from the new email address — you will have full Admin access to the workspace.
+4.  Log in to Clay using the new email address.
+5.  Go to `Settings` > `Team`, find the old email address, and remove it from the workspace.
+
+**Who can do this:** Only a workspace Admin can send invites. If you are not the workspace admin, ask your workspace admin to send the invite on your behalf.
+
+**If the new email address is already linked to another Clay account:** That existing account must be resolved (for example, deleted) before the new email can be invited.
+
+If you prefer to have Clay support handle the change instead, contact us via the in-app chat.
 
 Changing your email address does not affect your workspace data or your password.
 
