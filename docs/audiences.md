@@ -816,6 +816,23 @@ The Audiences screen does not have a direct CSV download button. To download aud
 
 For segments with more than 50,000 records, export in batches by applying filters to create smaller sub-segments and repeating steps 2–4 for each batch.
 
+### Can I move an audience segment to a different workspace?
+
+Moving an audience segment directly between workspaces is not supported — there is no built-in transfer or copy option. To recreate an audience in another workspace, export it from the source workspace as a CSV, then import that CSV in the target workspace.
+
+**Step 1 — Export from the source workspace:**
+
+Follow the steps in [How do I export my audience data to CSV?](#how-do-i-export-my-audience-data-to-csv) above. The **Add to workbook** path exports up to 50,000 rows per batch; for larger segments, apply filters to split the audience into sub-segments and export each batch separately.
+
+**Step 2 — Import into the target workspace:**
+
+1. Switch to the target workspace.
+2. Navigate to your Audiences and click **Add data** → **Add Source** → **CSV**.
+3. Name your import, select **People** or **Companies**, and upload the CSV file.
+4. Set the **Unique identifier** (for example, email for People or domain for Companies), map your CSV columns to Audience fields, and click **Import**.
+
+Segment filters and enrichment history are not included in the export — only the record data in the exported columns is transferred. After importing, rebuild any segment filters in the target workspace to re-create the same audience view.
+
 ### What happens to a contact's ad targeting when they become a customer?
 
 If your segment has an exclusion condition (e.g., Account Type ≠ "Customer"), the contact is automatically **removed** from the synced ad audience as soon as that condition is met. See [Clay Ads](https://university.clay.com/docs/clay-ads) for platform-specific guidance.
