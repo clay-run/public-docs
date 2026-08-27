@@ -41,6 +41,16 @@ This keeps your data current without manual updates by pulling in new informatio
 
 **Scheduled source runs are additive.** Each run adds new records from the source to your table. Records that are no longer in the source — for example, contacts removed from a HubSpot list since the last run — remain in your Clay table and are not deleted. To remove rows that are no longer in the source, delete them manually or start fresh with a new table.
 
+## Schedule time zones
+
+The timezone shown next to a scheduled source's run time (for example, "11:57 GMT-3") reflects the system timezone of the computer used to set up that schedule — it is not a workspace-wide setting. Different sources in the same workspace can display different offsets if they were configured on computers with different timezone settings.
+
+**There is currently no in-app control to select or change the timezone for a scheduled source.** The timezone label next to the "At:" field is a read-only display — clicking it does not open a selector. There is also no account- or workspace-level timezone preference that affects source schedules.
+
+**If you need your source to run at a specific fixed time in a particular timezone (for example, 15:00 UTC):** temporarily change your computer's system clock to that timezone before entering the run time in the "At:" field. The schedule captures whichever timezone your OS is set to at the moment you save it. Once saved, the schedule runs at that captured offset on all future runs, regardless of any subsequent changes to your system clock.
+
+**Note:** This timezone behavior applies to scheduled *sources* only (Salesforce, HubSpot, Find People, etc.). Scheduled enrichment column re-runs — configured in the table's Run Settings under **Re-run columns on a schedule** — support a **Custom** option that includes an explicit timezone picker (for example, every Sunday at 6:00 AM Eastern Time). See [Scheduled columns](scheduled-columns.md) for details.
+
 ## Triggering an immediate run
 
 If you need to run a scheduled source right now — for example, after expanding a HubSpot list and not wanting to wait for the next scheduled run — you can trigger a one-time run without changing or canceling your existing schedule.
