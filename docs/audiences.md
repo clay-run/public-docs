@@ -698,6 +698,20 @@ Once created, the field is immediately available as a filter in any segment and 
 
 **Note:** There is no option to add new fields directly from the Audience screen — you must go through the `Update Audiences Record` column mapping in a bulk enrichment table.
 
+### How do I delete a custom field from Audiences?
+
+Clicking a column header in the Audiences view (People or Companies) only shows **Hide** — there is no "Delete column" option in the column dropdown. To delete a custom field, use the **Data Hub**:
+
+1.  In the left sidebar, click **Data Hub**.
+2.  Select the **Fields** tab (it opens by default).
+3.  Click the row for the field you want to delete — this opens the field settings sidebar.
+4.  Click **Delete field** at the bottom of the sidebar.
+5.  Confirm by clicking **Delete** in the dialog that appears.
+
+The field is permanently removed and cannot be recovered.
+
+**Note:** Only custom fields — fields you created yourself — can be deleted. Built-in fields from Salesforce, HubSpot, or other connected sources have the Delete field button disabled. To stop a field from appearing in your column view without deleting it, use **Hide field** instead (available from the same sidebar, or by clicking the column header and selecting **Hide**).
+
 ### A Salesforce field isn't appearing in my audience filters — how do I add it?
 
 The answer depends on which type of Salesforce import you are using:
@@ -1083,12 +1097,4 @@ When a Salesforce Lead is converted into a Contact in Salesforce, Clay automatic
 There are two types of record matching in Clay Audiences:
 
 -   **Automatic Lead/Contact merging** — When Salesforce converts a Lead to a Contact, Clay automatically merges these records. This is Salesforce-specific and not user-configurable.
--   **Deterministic matching** — User-configurable matching across different data sources. You choose which field to match on (email, domain, profile URL, etc.) when importing a new source. This allows you to merge the same person or company across Salesforce, Snowflake, HubSpot, and other sources.
-
-Both work together to ensure you have a single, unified record per person or company in your Audiences.
-
-### If I delete or archive a Clay table I used to send records to Audiences, will those records disappear from Audiences?
-
-No. Records you sent to Audiences from a Clay table — via **Continue → Save to Companies** / **Save to People**, or using `Upsert Audiences Record` — persist in Audiences even after the source table is deleted or archived. Removing or archiving the table does not affect the Audience records — they remain as they were, and the table's name continues to appear as an option in the **Origin source** filter because the records it contributed are still present in Audiences.
-
-To remove those records from your Audience, archive them through a segment — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) for steps.
+-   **Deterministic matching** — User-configurable matching across different data sources. You choose which field to match on (email, domain, profile URL, etc.) when importing a new source. This allows you to merge the same person or company from multiple data sources into a single Audiences record.
