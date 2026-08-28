@@ -41,6 +41,10 @@ Conditional runs allow you to execute specific actions or enrichments in a workf
 
 Rows where the formula flags the address as personal show **"Run condition not met"** — no credits are consumed for those rows.
 
+**Create a record only if no existing match was found**: After running a CRM or table lookup step, run a create action only if the lookup found no existing record and a required field is available. This is sometimes called the "create if not found" pattern — for example, look up a company in HubSpot, then create a company record only if no match was returned and a company name is present.
+
+-   **Condition**: `[Look up Company] has no results AND [Company Name] is not empty`
+
 ## How do they work?
 
 Conditional runs are built on **Conditional statements** and evaluate a condition as true or false to determine whether to execute or skip an action.
@@ -235,6 +239,20 @@ This keeps the run condition simple and is easier to maintain when checking many
 **Option 3 — Disable Auto-run and run the action manually**
 
 Turn off Auto-run on the action column (Edit column → Run settings → toggle Auto-run off). Once all other enrichments have finished, manually trigger the column: right-click its column header → **Run column** → **Run all rows**. This gives you complete control over when the action fires and is the simplest option when your workflow does not need to run automatically.
+
+### Gating a create action on a lookup finding no existing match ("create if not found")
+
+A common workflow: run a lookup step (for example, "Look up Company in HubSpot") to check whether a record already exists, then run a create step only if the lookup found no match and a required field is populated. Set the create column's **Run settings → Only run if** using the condition builder:
+
+`[Look up Company] has no results AND [Company Name] is not empty`
+
+**How the formula works**: Clay generates a formula like `(!{{Look up Company}}?.results?.length) && !!{{Company Name}}`. The `{{Look up Company}}?.results?.length` part reads the count of results returned by the lookup — `!` of zero is `true`, so the condition fires when the lookup found nothing and the name field is filled.
+
+**The `{{Look up Company}}` reference is what creates the dependency**: including the lookup column token directly in the run condition formula registers the lookup as an upstream dependency. Clay waits for the lookup to finish before evaluating the condition at runtime. Do not substitute a field populated by the lookup (for example, `{{HubSpot Company ID}} is empty`) — that reference does not create a dependency on the lookup column itself and the condition could evaluate before the lookup completes.
+
+**Always use the built-in "has no results" option**: different lookup actions structure their output differently, so the property name used to check result count varies by action. Using the **"has no results"** condition from Clay's condition builder generates the correct formula for your specific action automatically. Writing the formula manually — for example, using `?.id is empty` on an action that returns an array of results — may not work as expected.
+
+**If "Will run" appears for a row where the lookup shows results**: this can occur when the lookup column is in an out-of-date state from a previous run — the prior result is still displayed, but the current run cycle hasn't yet started re-processing that cell. During this window, the run condition evaluates with no data for the lookup (as if it returned nothing), so the condition fires and "Will run" appears alongside the stale lookup result. Once the lookup re-runs for that row and produces a new result, the run condition re-evaluates and the status updates to **"Run condition not met"** if the lookup found a match. To confirm what the formula resolved to at runtime, click the action cell and use the **Explain** button after the run completes.
 
 ### "Circular dependency error" when setting a run condition
 
