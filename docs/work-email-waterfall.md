@@ -255,6 +255,18 @@ To permanently show provider and validation columns going forward, open the wate
 
 If you need to use an email that a later provider found despite an earlier invalid result, you can manually paste it into your output column, or create a formula column that pulls directly from the individual provider result columns.
 
+### Why does the Work Email output column show "Waiting for another column to finish"?
+
+When the Work Email output column shows **"Waiting for another column to finish"**, a provider or validation step within the waterfall is still running or queued for that row. The output column updates automatically once those steps complete — no action is needed if the waterfall is actively processing.
+
+**If you can't identify which step is blocking**, it's likely because provider and validation columns are hidden by default. To find the blocking step:
+
+1. Click the **«»** arrow on the Work Email column header to expand the waterfall and reveal each provider's individual sub-column.
+2. Look across that row for a cell showing **"Queued"**, **"Running"**, or **"Awaiting Callback"** — that is the step the output column is waiting on.
+3. Once all running steps complete, the "Waiting for another column to finish" status clears automatically and the Work Email output updates with the result.
+
+To permanently show provider and validation columns so you can monitor waterfall progress at a glance, open the waterfall's **Full configuration**, turn off `Hide provider columns?`, and re-run.
+
 ### Why does my own email address appear in the Work Email results?
 
 If your own email address shows up in the Work Email output column, a field containing your own email — such as an "Account Owner" column synced from a CRM — has likely been wired to one of the waterfall's input fields. The waterfall passes mapped inputs directly to providers without checking whether the value belongs to you or to a contact, so any field mapped to an email input is used as-is.
