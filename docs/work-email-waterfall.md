@@ -182,9 +182,9 @@ If you want to find emails for more of your contacts, here are the most effectiv
 
 2.  **Add profile URLs for your contacts.** Mapping a person's professional profile URL (LinkedIn URL) as an additional input improves accuracy for providers that accept it. If certain provider steps in your waterfall show **"Run condition not met"** for every row — including rows where earlier providers didn't find an email — those steps may have an **Only run if** condition that checks for a LinkedIn URL column that isn't yet populated. See [Why do some providers in my waterfall skip every row while earlier providers ran successfully?](#why-do-some-providers-in-my-waterfall-skip-every-row-while-earlier-providers-ran-successfully) for how to diagnose and fix this.
 
-3.  **Check which providers are finding emails.** In the waterfall's Full Configuration, toggle off `Hide provider columns?` to reveal individual per-provider result columns. This shows you exactly which providers are returning emails for your list and where coverage drops off — useful for identifying whether adding new providers might help.
+3.  **Check which providers are finding emails.** Click the waterfall tab and select **Edit group**, then in the **Full configuration** tab, toggle off `Hide provider columns?` to reveal individual per-provider result columns. This shows you exactly which providers are returning emails for your list and where coverage drops off — useful for identifying whether adding new providers might help.
 
-4.  **Add more providers to your waterfall.** In Full Configuration, click **Add provider**. Different providers cover different datasets, so a longer sequence gives more chances to find emails your current providers missed.
+4.  **Add more providers to your waterfall.** In the **Full configuration** tab, click **Add provider**. Different providers cover different datasets, so a longer sequence gives more chances to find emails your current providers missed.
 
 ### Why do some rows show "Invalid input" with a message about a first or last name?
 
@@ -242,7 +242,7 @@ The most common cause is validation: when `Require validation success?` is enabl
 
 The validation columns are hidden by default to keep your table clean. To review each email's validation status without re-running, click the **columns button** in the toolbar (shown as "N/N columns") and use **Show/Hide columns by color → All columns** to reveal all hidden columns. Each validation column shows what the provider returned and whether the email passed or failed.
 
-To permanently show provider and validation columns going forward, open the waterfall's `Full configuration`, turn off `Hide provider columns?`, and re-run.
+To permanently show provider and validation columns going forward, click the waterfall tab, select **Edit group**, click the **Full configuration** tab, turn off `Hide provider columns?`, and re-run.
 
 **If validation is rejecting emails you want to keep:**
 
@@ -265,7 +265,7 @@ When the Work Email output column shows **"Waiting for another column to finish"
 2. Look across that row for a cell showing **"Queued"**, **"Running"**, or **"Awaiting Callback"** — that is the step the output column is waiting on.
 3. Once all running steps complete, the "Waiting for another column to finish" status clears automatically and the Work Email output updates with the result.
 
-To permanently show provider and validation columns so you can monitor waterfall progress at a glance, open the waterfall's **Full configuration**, turn off `Hide provider columns?`, and re-run.
+To permanently show provider and validation columns so you can monitor waterfall progress at a glance, click the waterfall tab, select **Edit group**, click the **Full configuration** tab, turn off `Hide provider columns?`, and re-run.
 
 ### Why does my own email address appear in the Work Email results?
 
