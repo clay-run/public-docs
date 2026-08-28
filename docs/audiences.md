@@ -557,6 +557,14 @@ Selected records are merged with any existing test records for the trigger — d
 
 ### **Syncing audiences to ad platforms**
 
+**Available on Enterprise plans — beta opt-in required.** The **Sync to ad platforms** option is currently in beta. If it does not appear in the **Send** menu on your audience segment, a workspace admin needs to enable it:
+
+1.  Go to **Settings** → **General** → **Beta features**.
+2.  Enable the **Audience ad sync** toggle. Admin access is required to see this setting.
+3.  Return to your audience — **Sync to ad platforms** will now appear under **Send**.
+
+**Ad account connections are per workspace.** LinkedIn, Meta, Google Ads, and other ad platform connections are stored per workspace. If you have ad accounts connected in a different Clay workspace, you will need to reconnect them when setting up an ad sync in this workspace — you are prompted to authenticate during the sync setup flow.
+
 When you have a segment ready, you can sync it to an ad platform to run account-based advertising across your highest-fit contacts and companies.
 
 1.  Click `Send` → `Export action`.
