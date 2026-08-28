@@ -45,7 +45,7 @@ To change the region, adjust validation settings, or add, remove, or reorder pro
 
 1.  Click the waterfall tab — the labeled bar spanning your waterfall's provider columns — to open the waterfall menu, then select **Edit group**.
 2.  In the waterfall editor, click the **Full configuration** tab.
-3.  Make your changes — update **Optimize for**, **Validation**, **Waterfall sequence**, or **Additional column settings** as needed.
+3.  Make your changes — update **Optimized For**, **Validation**, **Waterfall sequence**, or **Additional column settings** as needed.
 4.  Click **Save**.
 
 ## Optimize for (location)
