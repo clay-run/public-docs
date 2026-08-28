@@ -261,7 +261,7 @@ When the Work Email output column shows **"Waiting for another column to finish"
 
 **If you can't identify which step is blocking**, it's likely because provider and validation columns are hidden by default. To find the blocking step:
 
-1. Click the **«»** arrow on the Work Email column header to expand the waterfall and reveal each provider's individual sub-column.
+1. Click the **«»** arrow on the waterfall column header to expand the waterfall and reveal each provider's individual sub-column.
 2. Look across that row for a cell showing **"Queued"**, **"Running"**, or **"Awaiting Callback"** — that is the step the output column is waiting on.
 3. Once all running steps complete, the "Waiting for another column to finish" status clears automatically and the Work Email output updates with the result.
 
