@@ -59,7 +59,7 @@ No. You must still warm up purchased domains for approximately two weeks after p
 
 ### **How many emails should I send from each inbox per day?**
 
-For best deliverability, send no more than approximately 20 emails per inbox per day — about 600 emails per inbox per month. Sending cold outreach at higher volumes before inboxes are established can trigger spam filters and damage your sender reputation. Clay does not enforce a per-inbox daily send limit; this is a best-practice recommendation for cold outreach.
+Clay recommends no more than 20 emails per inbox per day — approximately 600 emails per inbox per month. Clay warns you when you try to set a daily send limit above 20, as higher volumes can trigger spam filters and damage your sender reputation. The maximum daily send limit for purchased inboxes is 30 emails per inbox per day.
 
 ### **Where are the purchased email accounts from?**
 
