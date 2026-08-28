@@ -308,12 +308,16 @@ If your emails are going out from an unexpected account, the most likely cause i
 
 This error fires in the `Sync lead data to campaign` column when the **Assign sender account field to lead** setting (in the `Sender accounts` tab) is mapped to an email column, and the email address in that column for a lead does not match any of the sender accounts configured in your campaign.
 
-A common cause: mapping this field to a column that contains your leads' own email addresses (such as a "Personal Email" column) rather than a column that holds one of your sending account addresses. When the `Sync lead data to campaign` column runs, Clay validates each row's sender email against the campaign's configured accounts — if the address isn't a connected sender, that row fails with this error.
+Two common causes:
+
+-   **Wrong column mapped:** The field is mapped to a column that contains your leads' own email addresses (such as a "Personal Email" column) rather than a column that holds one of your configured sender email addresses.
+-   **Case mismatch:** The column contains the correct sender address but with different capitalization — for example, `John.Smith@example.com` in your table vs. `john.smith@example.com` as the registered account. Matching is case-sensitive, so even a single capital letter causes this error.
 
 **To fix it:**
 
 -   **If you do not intend to route specific leads to specific senders:** Remove the field mapping — open the `Sender accounts` tab, scroll to the `Assign sender account field to lead` section, and clear the selection. Leads will then be distributed evenly across all your configured sender accounts. After clearing it, re-run the `Sync lead data to campaign` column for the affected rows to re-enroll them.
--   **If you do want to route specific leads to specific senders:** Make sure the column you selected contains one of your configured sending account email addresses — not the lead's own email. Add those sender accounts to the campaign first if they are not already there, then re-run the `Sync lead data to campaign` column.
+-   **If you are using the wrong column:** Make sure the column you selected contains one of your configured sending account email addresses — not the lead's own email. Add those sender accounts to the campaign first if they are not already there, then re-run the `Sync lead data to campaign` column.
+-   **If the issue is a case mismatch:** Add a formula column in your source table — enter `{{Your Sender Email Column}}.toLowerCase()` — and select that column in **Assign sender account field to lead** instead. Re-run the `Sync lead data to campaign` column for the affected rows.
 
 ### Can I connect a third-party email provider (such as LiteMail) as a sender account?
 
