@@ -120,3 +120,9 @@ Once removed, you can re-invite the same email address if needed. Only workspace
 ## Export your team member list
 
 Clay does not currently offer a built-in option to export your workspace team members as a CSV. Your team member list can only be viewed and managed directly in `Settings` > `Team`. To contact support for assistance with bulk user management tasks, reach out via the in-app chat.
+
+## Programmatic user management
+
+Clay does not have a programmatic API for workspace member management. There is no API endpoint to invite users, update their roles, or remove or deactivate them from a workspace. All user management must be done manually through the workspace UI at `Settings` > `Team`.
+
+For automated user lifecycle management through an identity provider (such as automatically adding or removing users when accounts are created or deactivated in Okta), see [Single Sign-On (SSO)](/docs/single-sign-on) — SSO handles authentication only and does not provision workspace membership automatically.
