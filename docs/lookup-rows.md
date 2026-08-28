@@ -164,6 +164,18 @@ When prospecting existing accounts, contacts can leave a company, change roles, 
 
 You can also use `Lookup multiple rows` within the same table to find duplicates, count related records, or group rows by shared traits.
 
+**Self-lookups don't work inside a Clay function.** When you add steps inside a function, the function runs in a background table that is not a regular workspace table — it won't appear in the "Table to search" picker. This means the Lookup multiple rows action inside a function can't search the function's own rows. If you need cross-row context (such as a duplicate count) inside a function, use the workaround below: run the self-lookup in the calling table and pass the count as a function input.
+
+**Workaround — run the lookup in the calling table and pass the result in as a function input:**
+
+1. In the calling table (the table that invokes the function), add a **Lookup multiple rows in other table** column and set **Table to search** to the calling table itself.
+2. Set **Target column** and **Row value** to your match key (e.g., Domain).
+3. Run the lookup. Each row returns a count of matching rows. The lookup always includes the current row itself, so a row with a unique value returns a count of 1 — subtract 1 if you want "other matches only."
+4. In the function configuration, map that count (or a formula derived from it) as a function input.
+5. Reference that input inside your function logic.
+
+**To set up a self-lookup in a regular table:**
+
 1.  Decide what you're trying to group/dedupe by.
 2.  Create a shared match key column in the table.
 3.  Add the `Lookup multiple rows` action on the table.
