@@ -92,6 +92,8 @@ After generating a setup, you can easily edit your original description and rege
 
 **Important:** After uploading a PDF to **Document context**, wait until its status shows **Completed** before clicking **Save**. If you save the column before the upload finishes processing, the file will not be attached to the column — the column will run without any document context, with no indication in the results that the PDF is missing. Once the file shows **Completed**, it is safe to save and run.
 
+**Note:** PDFs uploaded to **Document context** cannot be downloaded or accessed from the Clay interface. The files are processed and stored as part of the column's configuration — they are only used by the AI when the column runs and are not exposed as downloadable files in the UI. If you need to review a PDF that was uploaded to a Document context column, ask the person who uploaded it for the original file directly. If the original file is no longer available, the PDF cannot be recovered from within Clay — you will need to re-upload it from another source.
+
 ### Browsing pre-built templates
 
 The **Templates** dropdown at the top of the Use AI panel lets you explore pre-configured setups for common use cases. Click **Templates** → **Browse templates** to open the template browser and apply a ready-made configuration to your column—useful when you want to start from a working example rather than writing a prompt from scratch.
