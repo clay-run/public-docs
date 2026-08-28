@@ -114,7 +114,8 @@ You can permanently delete your Clay workspace through workspace settings. This 
 
 **Requirements:**
 
--   The workspace must have **no pending invites**.\n-   You must be the **only member** in the workspace.
+-   The workspace must have **no pending invites**.
+-   You must be the **only member** in the workspace.
 
 **To delete your workspace:**
 
