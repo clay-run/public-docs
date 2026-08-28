@@ -106,6 +106,14 @@ By default, alerts appear inside the `Table alerts` panel. You can also receive 
     -   **Daily digest** — a single message per day with all alerts
     -   **Weekly digest** — a weekly summary of all alerts
 
+**Note:** The Clay Alerts Bot is not listed in the Slack Marketplace. If your Slack workspace requires admin approval before new apps can be installed, a Slack workspace owner must approve the Clay Alerts Bot — once approved, complete the connection from within Clay's Workspace Settings (do not use the Slack Marketplace link in the approval email, as it will show an error).
+
+For your organization's security review, the Clay Alerts Bot requires the following Slack OAuth permissions:
+
+-   `channels:read` — view the list of public channels
+-   `groups:read` — view private channels the bot has been invited to
+-   `chat:write` — send messages to Slack channels as the Clay bot
+
 ## **FAQs**
 
 ### **How do I get more or fewer alerts?**
