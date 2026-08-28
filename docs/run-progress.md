@@ -1,13 +1,14 @@
 ---
 title: Run progress
 description: Clay provides multiple ways to track and monitor run progress
-  across your tables, including how to set a row limit to control which rows are
-  processed, manually trigger unrun enrichment cells, run enrichments on a
-  specific subset of rows, troubleshoot cells stuck in Queued status, recover
-  action column cells stuck in Queued status when the Stop button is grayed out,
-  diagnose enrichments that aren't triggering automatically, resolve persistent
-  error messages by clearing the browser cache, and troubleshoot slow cell
-  loading when using multiple tables in a workbook.
+  across your tables, including how to use the built-in Errored rows view to
+  filter to failed rows, set a row limit to control which rows are processed,
+  manually trigger unrun enrichment cells, run enrichments on a specific subset
+  of rows, troubleshoot cells stuck in Queued status, recover action column cells
+  stuck in Queued status when the Stop button is grayed out, diagnose enrichments
+  that aren't triggering automatically, resolve persistent error messages by
+  clearing the browser cache, and troubleshoot slow cell loading when using
+  multiple tables in a workbook.
 last_synced: 2026-04-26T01:40:34.620Z
 ---
 
@@ -69,6 +70,23 @@ The table-level progress bar, shown at the bottom right of a table, provides a s
     -   A detailed breakdown of status percentages.
     -   Table-level auto-run and scheduled run settings.
     -   A toggle to enable/disable column-level run status data.
+
+## Filtering to errored rows
+
+Every Clay table includes a built-in **Errored rows** view that instantly filters the table to show only rows where at least one enrichment cell failed. Use this view to quickly identify and investigate failed runs without manually setting up a filter.
+
+To open the Errored rows view:
+
+1.  Click the view selector dropdown at the top of the table toolbar (it shows the name of your current view, for example **Default view**).
+2.  Select **Errored rows**.
+
+The table immediately updates to display only rows with at least one 🔴 Failed cell. Click any red cell to open the **Cell Details** panel and read the specific error message for that row.
+
+To re-run only the errored rows, select them (click a row number, then **Shift+click** to extend the selection) and right-click → **Run [N] rows**. Alternatively, right-click any enrichment column header and choose **Run column** → **Run [N] empty or out-of-date rows** to re-run just that column for all currently visible errored rows.
+
+To return to the full table, click the view selector again and choose **Default view** or **All rows**.
+
+**For automated error monitoring:** Enterprise workspaces can use [table alerts](table-alerts.md) to receive notifications when a column's failure rate exceeds a configured threshold — so you're alerted to errors without checking the table manually.
 
 ## Stopping a run
 
