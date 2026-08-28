@@ -26,14 +26,13 @@ To run a pre-built waterfall:
 
 To add, remove, or reorder providers in a waterfall you've already saved:
 
-1.  Click the waterfall column header to open the column menu.
-2.  Select **Edit column**.
-3.  If the waterfall shows a **Quick setup** / **Full configuration** tab selector, click **Full configuration**.
-4.  In the **Waterfall sequence** section, you can:
+1.  Click the waterfall tab — the labeled bar spanning your waterfall's provider columns — to open the waterfall menu, then select **Edit group**.
+2.  In the waterfall editor, click the **Full configuration** tab if it is not already selected.
+3.  In the **Waterfall sequence** section, you can:
     -   Click **Add provider** to add a new data provider.
     -   Drag providers up or down to reorder them.
     -   Click the delete icon next to a provider to remove it.
-5.  Click **Save**.
+4.  Click **Save**.
 
 ### Preserving existing data when reorganizing providers
 
