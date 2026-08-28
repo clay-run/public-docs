@@ -240,7 +240,7 @@ Posts are returned most-recent first, so `posts[0].created_at` gives the publica
 
 **Extracting post text:**
 
-For original posts, the text is in `posts[N].text`. For reposts, `posts[N].text` is `null` when the person shared without adding their own comment — in that case, the text of the original content being sharing is in `posts[N].shared_post.text`.
+For original posts, the text is in `posts[N].text`. For reposts, `posts[N].text` is `null` when the person shared without adding their own comment — in that case, the text of the original content being shared is in `posts[N].shared_post.text`.
 
 > **Note:** Use `shared_post` (snake_case) in formulas. The Cell details panel displays this field as "Shared Post," but formula references must use `shared_post`.
 
