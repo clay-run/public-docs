@@ -289,6 +289,18 @@ A high Reputation score (for example, 100%) means the vast majority of warm-up s
 
 Warmup automatically disables when your emails are being throttled by your email provider. This protects your sender reputation. You can manually turn warmup back on from the `Sender Accounts` tab once the throttling issue is resolved.
 
+### Can I send campaign emails from an inbox that shows "Warming up"?
+
+Yes — a **Warming up** inbox is not blocked from campaign sending. However, it is not recommended. The 3-week warmup period builds your sender reputation with email providers; sending before warmup completes risks lower deliverability and emails landing in spam. If you do send before warmup finishes, keep daily volume low to minimize the impact on your domain reputation.
+
+The only status that triggers a warning in the campaign UI is **Auth error** — that indicates a connection problem that needs to be resolved before that inbox can send reliably. **Warming up** and **Not warming** inboxes carry no campaign-level block or warning.
+
+Once the 3-week warmup period is complete, the status automatically changes to **Ready**, signaling the inbox is ready for full campaign volume.
+
+### How can I tell how much longer my inbox needs to warm up?
+
+There is no countdown timer or progress indicator in the UI showing time remaining in warmup. To estimate when warmup will complete, note the date you connected the account and enabled warmup — the initial warmup phase is 3 weeks from that point. Once that window passes, the status automatically switches from **Warming up** to **Ready**.
+
 ### I'm getting an error that my email account is already in use. What does this mean?
 
 Clay's email sequencer runs on shared Smartlead infrastructure, and Smartlead only allows each email address to be connected once across the entire system. This error most commonly appears when the email was already connected to the sequencer in **another Clay workspace** — you don't need a separate Smartlead account for this to occur. To fix it, check your other Clay workspaces: go to `Campaigns` → `Email Accounts`, locate the address, and delete it there. Once removed from the other workspace, you can add it to the current one. If you can't identify which workspace has it, contact Clay support with the email address and we'll remove it from our end.
