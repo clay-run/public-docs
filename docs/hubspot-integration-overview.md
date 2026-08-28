@@ -100,6 +100,19 @@ Use this action to find a HubSpot owner by ID or email address.
 -   **Owner ID (Optional):** The HubSpot owner ID to search for. If both ID and email are provided, the email will be validated against the owner found by ID.
 -   **Email (Optional):** The email address to search for. If both ID and email are provided, the email will be validated against the owner found by ID.
 
+### `Action` Enroll a contact in a sequence
+
+Use this action to enroll a HubSpot contact in an automated follow-up sequence.
+
+**Note:** This action requires the `automation.sequences.read` and `automation.sequences.enrollments.write` OAuth scopes, which are **disabled by default** in Clay's HubSpot connection. If the Sequence dropdown shows no options, see [Why is the Sequence dropdown empty?](#why-is-the-sequence-dropdown-empty-when-i-set-up-enroll-a-contact-in-a-sequence) for how to enable them.
+
+**Inputs**
+
+-   **Contact ID:** The unique identifier of the HubSpot contact to enroll in the sequence.
+-   **Sequence:** The sequence to enroll the contact in. Options load dynamically from your HubSpot account once the required scopes are enabled.
+-   **Sender email:** The email address of the user who will send the sequence emails.
+-   **Sender alias address (Optional):** An alternate address from which the sequence emails will appear to be sent. Alternate email addresses must be set up in HubSpot.
+
 ## OAuth scopes
 
 When connecting your HubSpot account, Clay uses optional OAuth scopes to give you fine-grained control over permissions.
@@ -369,6 +382,20 @@ Each HubSpot column stores a reference to the specific connection it was configu
 
 1. Open each affected column's settings and change the **Account** dropdown to select the new connection. This updates the column to use the new connection ID.
 2. If re-selecting the account in the existing column doesn't resolve the error, create a new column with the same HubSpot action and configuration. New columns automatically pick up the currently active connection and will run successfully.
+
+### Why is the Sequence dropdown empty when I set up "Enroll a contact in a sequence"?
+
+The Sequence field populates dynamically from your HubSpot account, but it requires the `automation.sequences.read` OAuth scope — which is **disabled by default** in Clay's HubSpot connection. If no sequences appear in the dropdown, this scope was not enabled when you first connected.
+
+**To fix:**
+
+1.  Go to **Settings → Connected accounts**.
+2.  Find your HubSpot connection and click **Reconnect**.
+3.  On the scopes screen, check both **`automation.sequences.read`** and **`automation.sequences.enrollments.write`**.
+4.  Complete the reconnection flow.
+5.  Return to your "Enroll a contact in a sequence" column — the Sequence dropdown will now show your available HubSpot sequences.
+
+**Note:** If after enabling these scopes you see an "Authorization failed" error, your HubSpot plan may not include the Sequences feature. See [Why do I get "Authorization failed because your account lacks access to the required scopes"?](#why-do-i-get-authorization-failed-because-your-account-lacks-access-to-the-required-scopes-automationsequencesenrollmentswrite-automationsequencesread) below.
 
 ### Why do I get "Authorization failed because your account lacks access to the required scopes [automation.sequences.enrollments.write, automation.sequences.read]"?
 
