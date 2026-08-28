@@ -280,7 +280,7 @@ After updating the asset assignments in Meta, generate a new token and reconnect
 
 **Using OAuth (Sign in with Facebook):** Confirm that the Meta account you authenticated with has admin access to the ad account you want to use. If you can see the account in **Manage accounts** but it doesn't appear in the dropdown, the ad account may be inactive or restricted in Meta Business Manager.
 
-**Note:** Meta Ads connections in **Settings → Connections** always show an **Unknown** status badge — this is expected and does not indicate a problem. Meta Ads does not support automated connection health checks through the Connections page; use the steps above to diagnose and fix any issues.
+**Note:** Meta Ads connections in **Settings → Connections** always show a **View in Meta** badge — this is expected and does not indicate a problem. Meta Ads does not support automated connection health checks through the Connections page; use the steps above to diagnose and fix any issues.
 
 ### **Can I sync to multiple ad accounts?**
 
