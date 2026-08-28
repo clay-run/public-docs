@@ -164,7 +164,7 @@ When prospecting existing accounts, contacts can leave a company, change roles, 
 
 You can also use `Lookup multiple rows` within the same table to find duplicates, count related records, or group rows by shared traits.
 
-**Self-lookups don't work inside a Clay function.** When you add steps inside a function, the function runs in a background table that is not a regular workspace table — it won't appear in the "Table to search" picker. This means the Lookup multiple rows action inside a function can't search the function's own rows. If you need cross-row context (such as a duplicate count) inside a function, use the workaround below: run the self-lookup in the calling table and pass the count as a function input.
+**Self-lookups don't work inside a Clay function.** Clay functions use a dedicated table type that is excluded from the workspace table picker by design — only regular workspace tables appear in the "Table to search" dropdown. This means the Lookup multiple rows action inside a function can't search the function's own rows. If you need cross-row context (such as a duplicate count) inside a function, use the workaround below: run the self-lookup in the calling table and pass the count as a function input.
 
 **Workaround — run the lookup in the calling table and pass the result in as a function input:**
 
