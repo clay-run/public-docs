@@ -942,6 +942,24 @@ To pull Account-level data into a Clay table:
 
 The lookup returns the matching Company record from your Audiences, including all Account-level fields configured when you imported Salesforce Accounts into the Companies audience (for example, Company Name, Company Domain, and custom Account fields).
 
+### Why aren't my people linked to their companies in Audiences?
+
+When you import people into Audiences, Clay creates person-to-company associations through a background job that runs approximately every 15 minutes. If your people records are not showing a company association, the two most common causes are:
+
+**Companies don't exist in Audiences yet**
+
+The linking job can only connect a person to a company record that already exists in your Companies Audience. If you imported people before companies, the associations won't form until companies are present — but once you import companies, the job retries automatically and will link existing people records within approximately 15 minutes. For the fastest setup, **import companies first, then people**.
+
+**Identifier mismatch between people and company records**
+
+The linking job matches people to companies using Clay Company IDs and external source IDs (for example, Salesforce Account IDs). If there is no shared identifier between a person and a company record in Audiences — for example, because they were imported from different sources, or because source IDs differ across subsidiaries, regional offices, or rebranded entities — the link won't form. Adding company domains or email addresses to your import does not affect this linking step; the job relies on Clay-internal and external source identifiers only.
+
+To maximize successful associations:
+
+- **Import companies before people** so the job can link them immediately on first import.
+- Use **Email** as the unique identifier when importing people records.
+- Use **Domain** or **LinkedIn Company URL** as the unique identifier when importing company records.
+
 ### Why does filtering my People audience by deal attributes return fewer contacts than expected?
 
 When you filter a People audience by opportunity or deal attributes (for example, Stage, Amount, or a custom deal field), Clay only includes contacts that are **directly linked to the matching deal via OpportunityContactRole** in Salesforce — not all contacts at the account that owns the deal.
