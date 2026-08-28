@@ -389,7 +389,7 @@ The Sequence field populates dynamically from your HubSpot account, but it requi
 
 **To fix:**
 
-1.  Go to **Settings → Connected accounts**.
+1.  Go to **Settings → Connections**.
 2.  Find your HubSpot connection and click **Reconnect**.
 3.  On the scopes screen, check both **`automation.sequences.read`** and **`automation.sequences.enrollments.write`**.
 4.  Complete the reconnection flow.
