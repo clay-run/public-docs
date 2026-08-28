@@ -274,14 +274,14 @@ CSV imports are one-time — they do not re-sync automatically. To update your A
 
 ### Sending data from Clay table
 
-You can also send contacts from any existing Clay table directly to your Audience:
+To push records from a Clay table into your Audience, add an **Upsert segment record** enrichment column to the table:
 
-1.  Open any table with contacts you want to save to your Audience.
-2.  Click `Continue` at the bottom of the table.
-3.  Select `Save to People` or `Save to Companies` depending on the record type.
-4.  Map your table columns to Audience fields in the field mapping step. Click **Auto-map** to automatically suggest mappings based on column names — Clay matches existing Audience fields and creates new ones where necessary.
+1.  Open the Clay table whose records you want to send to Audiences.
+2.  Click **Add enrichment** and search for **Upsert segment record**.
+3.  Map your table columns to Audience fields. Click **Auto-map** to automatically suggest mappings based on column names — Clay matches existing Audience fields and creates new ones where necessary.
+4.  Run the column to push your records into Audiences.
 
-Records saved from tables are automatically deduplicated and merged with your existing audience data.
+`Upsert segment record` creates a new Audience record if no match is found, or updates the matching record's fields if one exists. Records are automatically deduplicated and merged with your existing audience data. Available on Launch, Growth, and Enterprise plans. See [Using Audiences from a Clay table](#adding-enrichments) below for the full list of table ↔ Audience actions.
 
 **Starting from Audiences instead:** you can also pull a table in from the `Add data` sidebar.
 
@@ -289,8 +289,6 @@ Records saved from tables are automatically deduplicated and merged with your ex
 2.  On `Select a Clay table`, enter a `Source name` and choose the `Audience type` (People or Companies), then pick the `People table` or `Companies table` and the `View` holding the records you want.
 3.  Click `Next`, then map your columns on `Field mapping` — `Clay People` or `Clay Companies` against `Table columns`.
 4.  Click `Import`.
-
-**To add enriched data to existing Audience records:** If you enriched companies or people in a Clay table — for example, adding website traffic, technographic data, or any other enrichment — and want those values to appear on records already in your Audience, use `Upsert Audiences Record` (available on Launch, Growth, and Enterprise plans) as an action column in the table instead. In the table, click `Add enrichment` and search for `Upsert Audiences Record` — it creates a new record in Audiences if no match is found, or updates the matching record's fields if one is found. See [Using Audiences from a Clay table](#adding-enrichments) below for the full list of table ↔ Audience actions.
 
 ### Entity resolution and deduplication
 
@@ -677,7 +675,7 @@ The simplest framing: Tables are how you _work on_ data. Audiences is where your
 **People sourcing for ad platform sync — recommended flow:**
 
 1.  In your Companies Audience segment, click **⋮** → **Find people from this list**. Apply job title, seniority, and location filters. At the end of the wizard, click **Send to Audiences** to add the contacts to your People Audience at no credit cost.
-    -   Alternatively, use the standalone **Find People** source (also free) with your Companies Audience as the **Target companies** filter (requires Launch, Growth, or Enterprise plan). The same wizard opens — click **Send to Audiences** to send contacts to your People Audience, or **Import to Table** if you prefer to review results first (then click **Continue → Save to People** from the table).
+    -   Alternatively, use the standalone **Find People** source (also free) with your Companies Audience as the **Target companies** filter (requires Launch, Growth, or Enterprise plan). The same wizard opens — click **Send to Audiences** to send contacts to your People Audience, or **Import to Table** if you prefer to review results in a table first (then use `Upsert segment record` in the table to push the results to Audiences).
 2.  From your People Audience, run **Bulk Enrich** to add the contact fields you need (for example, work email and phone number).
 3.  Build a filtered segment from your enriched People Audience.
 4.  Click **Send → Sync to ad platforms** to push the segment to LinkedIn Ads or Meta Ads. See [Syncing audiences to ad platforms](#syncing-audiences-to-ad-platforms).
@@ -765,13 +763,13 @@ The underlying field and data are identical. If you mapped Salesforce's Account 
 
 ### Why doesn't my Clay table appear in the Person source filter?
 
-The **Person source** filter lists each source by its display name. If you sent records from a Clay table to Audiences using **Continue → Save to People**, look for the table's display name in the Person source dropdown — the same name that appears in the **Source** column on each record.
+The **Person source** filter lists each source by its display name. If you added your Clay table to Audiences using **Add data → Add source → Clay table**, look for the source name you entered during setup in the Person source dropdown — the same name that appears in the **Source** column on each record.
 
 If your table still doesn't appear in the dropdown, the records may have been pushed via the `Upsert Audiences Record` table action, which doesn't create a named source entry. In that case, type a plain-language description into the filter search box (for example, "Filter people by source id: t_0tfg3qav6HC2a54Cdpx") — a **Create filters with AI** option may appear as you type. Click it and Clay will build the Person source filter automatically. If the option doesn't appear, contact Clay support.
 
 ### How do I find which Clay table a lead in Audiences came from?
 
-Each record in Audiences has a **Source** column that shows the display name of the data source the record originated from. For records sent to Audiences from a Clay table (via **Continue → Save to People** or **Save to Companies**), the Source column displays the table's name.
+Each record in Audiences has a **Source** column that shows the display name of the data source the record originated from. For records added to Audiences from a Clay table using **Add data → Add source → Clay table**, the Source column displays the source name you entered during setup. Records pushed using `Upsert segment record` do not create a named source entry and will not appear in the Source column.
 
 The Source column is plain text — there is no direct link from the Source column to open the originating table. To open the table, use its name to find it in your workspace's tables list.
 
@@ -1089,6 +1087,6 @@ Both work together to ensure you have a single, unified record per person or com
 
 ### If I delete or archive a Clay table I used to send records to Audiences, will those records disappear from Audiences?
 
-No. Records you sent to Audiences from a Clay table — via **Continue → Save to Companies** / **Save to People**, or using `Upsert Audiences Record` — persist in Audiences even after the source table is deleted or archived. Removing or archiving the table does not affect the Audience records — they remain as they were, and the table's name continues to appear as an option in the **Origin source** filter because the records it contributed are still present in Audiences.
+No. Records you sent to Audiences from a Clay table — using `Upsert segment record` or the **Add data → Add source → Clay table** import flow — persist in Audiences even after the source table is deleted or archived. Removing or archiving the table does not affect the Audience records — they remain as they were, and the table's name continues to appear as an option in the **Origin source** filter because the records it contributed are still present in Audiences.
 
 To remove those records from your Audience, archive them through a segment — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) for steps.
