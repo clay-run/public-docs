@@ -39,6 +39,15 @@ Map whichever of these columns you have. Providing more than one identifier impr
 
 Once the enrichment starts, Clay moves through the waterfall dynamically. If a provider returns a mobile number, the process stops for that contact and (where applicable) the results of unused providers are not charged. If a provider returns nothing, Clay moves on to the next provider until a number is found or all providers are exhausted.
 
+## Editing the Mobile Phone waterfall
+
+To change the region, adjust validation settings, or add, remove, or reorder providers in a Mobile Phone waterfall you've already saved:
+
+1.  Click the waterfall tab — the labeled bar spanning your waterfall's provider columns — to open the waterfall menu, then select **Edit group**.
+2.  In the waterfall editor, click the **Full configuration** tab.
+3.  Make your changes — update **Optimize for**, **Validation**, **Waterfall sequence**, or **Additional column settings** as needed.
+4.  Click **Save**.
+
 ## Optimize for (location)
 
 The `Optimized For` setting controls which version of the waterfall runs. You can base your choice on the inputs you have or on the outcome you want. By default, Clay selects `Mobile Phone (Global)` — the most universal version of the waterfall. To target a specific region, open the dropdown and choose the option that best matches where your contacts are based.
@@ -103,4 +112,4 @@ It can. Rejecting more numbers means the waterfall calls more providers per cont
 **Some of the phone numbers the waterfall is returning are wrong or outdated — how do I find out which provider is responsible?**
 Enable **Output name of successful provider?** in your waterfall's **Additional column settings**. This adds a column to your table showing which provider returned the accepted number for each row. When reps flag a bad number, check that column to identify a pattern — if the same provider appears repeatedly on flagged rows, that provider may have stale data for your specific audience or geography.
 
-To compare providers directly before committing to a waterfall order, run individual provider enrichments on the same set of contacts rather than nesting waterfalls. Running them as separate columns makes each provider's result visible and attributable, so you can evaluate accuracy across sources side by side. Once you've identified which providers consistently return the most accurate results for your use case, reorder or disable underperformers in the waterfall's **Waterfall sequence** configuration.
+To compare providers directly before committing to a waterfall order, run individual provider enrichments on the same set of contacts rather than nesting waterfalls. Running them as separate columns makes each provider's result visible and attributable, so you can evaluate accuracy across sources side by side. Once you've identified which providers consistently return the most accurate results for your use case, reorder or disable underperformers in the waterfall's **Waterfall sequence** configuration (open via the waterfall tab → **Edit group** → **Full configuration** tab).
