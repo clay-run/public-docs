@@ -27,8 +27,8 @@ To run an ads campaign targeting Director-level and above contacts at accounts a
 2.  **Add a Company Topic Intent signal to monitor those accounts.** In your Companies Audience segment, click **Enrich** → **Signals** → **Company Topic Intent** (open beta, available on all paid plans). Select the topics you want to track and set a run frequency.
 3.  **Filter to high-intent accounts.** After the signal runs, add a filter on **Company Topic Intent results** and select High or Medium — these are the accounts actively researching your topics.
 4.  **Find Director-level contacts at the intent-matched companies.** From the filtered segment, click the **⋮** menu → **Find people from this list**. Apply seniority filters (Director, VP, C-Level) or job title keywords. Click **Continue** → **Send to Audiences** to add the contacts to your People Audience at no credit cost.
-5.  **Enrich contacts for better match rates (optional).** In your People Audience, run a bulk enrichment to add personal emails — use the `Hashed Email for Ads` waterfall or Enable Enhanced Matching for the highest possible match rates.
-6.  **Push to ads.** From your People Audience segment, click **Send** → **Sync to ad platforms** and choose LinkedIn Ads or Meta Ads. See [Syncing audiences to ad platforms](audiences.md#syncing-audiences-to-ad-platforms) for field mapping details.
+5.  **Enrich contacts for better match rates (optional).** In your People Audience, run a bulk enrichment to add personal emails — use the `Hashed Email for Ads` waterfall or enable Enhanced Matching for the highest possible match rates.
+6.  **Push to ads.** From your People Audience segment, click **Send** → **Sync to ad platforms** and select your destination ad platform. See [Syncing audiences to ad platforms](audiences.md#syncing-audiences-to-ad-platforms) for field mapping details.
 
 The signal re-runs on schedule — contacts from newly intent-matched companies are found and added to the synced audience automatically, keeping your ad targeting current.
 
