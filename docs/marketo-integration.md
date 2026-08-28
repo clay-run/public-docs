@@ -10,6 +10,8 @@ Create, update, and lookup Marketo objects directly from Clay.
 
 Marketo is a marketing automation platform for managing leads and campaigns. With this integration, you can create, update, and look up Marketo objects directly from Clay, and connect Marketo via webhook to enrich inbound leads in real time.
 
+**Plan availability:** The Marketo integration is available on Enterprise plans only.
+
 ## Enriching data with Marketo
 
 1.  While in a Clay table, click `Add enrichment` and search for `Marketo`.
@@ -127,7 +129,7 @@ Clay builds the field list for both the Lookup object and Update object actions 
 1.  In Marketo, go to **Admin** → **Users & Roles**.
 2.  Open the role assigned to your API user.
 3.  Confirm that both **Read-Write Schema Standard Field** and **Read-Write Schema Custom Field** are enabled for that role. Also confirm that access to the relevant objects (for example, Person/Lead or Company) is enabled.
-4.  After saving the updated permissions in Marketo, reconnect your Marketo account in Clay: go to **Settings** → **Accounts**, find your Marketo account, and click **Reconnect**. Clay re-fetches the Marketo schema on reconnect — the updated field list will appear in both actions after reconnecting.
+4.  After saving the updated permissions in Marketo, reconnect your Marketo account in Clay: go to **Settings** → **Accounts**, find your Marketo account row, click the **⋯** three-dot actions menu, and select **Reconnect**. Clay re-fetches the Marketo schema using the updated permissions. The field list is cached for up to 3 minutes — if fields don't appear right away, wait a few minutes and reopen the action.
 
 ### Field values containing special characters are split incorrectly in Clay
 
