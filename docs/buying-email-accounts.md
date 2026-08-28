@@ -57,6 +57,10 @@ Credit costs are calculated using your workspace's cost-per-credit (CPC) against
 
 No. You must still warm up purchased domains for approximately two weeks after provisioning before using them in campaigns.
 
+### **How many emails should I send from each inbox per day?**
+
+For best deliverability, send no more than approximately 20 emails per inbox per day — about 600 emails per inbox per month. Sending cold outreach at higher volumes before inboxes are established can trigger spam filters and damage your sender reputation. Clay does not enforce a per-inbox daily send limit; this is a best-practice recommendation for cold outreach.
+
 ### **Where are the purchased email accounts from?**
 
 Clay fulfills orders through Smartlead, which in turn uses Zapmail to provision and manage the email accounts.
