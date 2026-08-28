@@ -50,7 +50,7 @@ If you need results that meet _either_ of two different filter combinations, set
 -   **Find People at These Companies** — sends the matched contacts to an **Audiences draft segment** (one contact per match, linked back to the company). **To access:** In your company table, click **Tools** (top right) → **Import** tab → **Find People at These Companies**. The setup panel includes full filters for job title, seniority, location, experience, and more — set your criteria, preview the results, then click **Continue** to send the contacts to an Audiences draft. To cap results to a specific number per company (for example, 5 contacts per company), use the **Number of people per company** field in the setup panel before clicking Continue. On large company lists, the in-table **Find People at These Companies** enrichment action gives you the most predictable per-company control, since it processes each company row individually.
 -   **Find Contacts at Company** (add as a column in your company table) — stores contacts as a list within each company row. Best when you want contacts to stay in your company table, or when you're adding companies one at a time and don't want a single search to re-run across all rows. Use **Send Table Data** afterward to push individual contacts to another table if needed.
 
-    **Note:** Formula columns you add to your company table (for example, a "Contact Title" or "Contact Profile URL" column) extract data for **one contact per row** — they reference a single indexed position in the list, such as the first person found. To get every found contact as its own row — each with their own name, title, and profile URL — use **Send Table Data** with **Send row for each item in a list**. The quickest way is to click a populated result cell and select **Take action on list → Write each item to new row in other table**. Note that this method sends up to 20 contacts per run — see [Send table data](send-table-data.md) for full details.
+    **Note:** Formula columns you add to your company table (for example, a "Contact Title" or "Contact Profile URL" column) extract data for **one contact per row** — they reference a single indexed position in the list, such as the first person found. To get every found contact as its own row — each with their own name, title, and profile URL — use **Send Table Data** with **Send row for each item in a list**. The quickest way is to click a populated result cell and select **Take action on list → Write each item to new row in other table**. See [Send table data](send-table-data.md) for full details.
 
 If you don't have a company list, use **People search as a source** — a standalone search by title or other criteria that returns a new table.
 
@@ -134,7 +134,7 @@ Clay gives you three ways to get contacts from a company list. Here's how they d
 **Find Contacts at Company — as a column enrichment (list stored in cell):**
 
 -   Add as a column directly in your company table. Each row independently runs a people search and stores the matching contacts as a list within the cell.
--   Unlike Find People at These Companies, results are not written as rows to a separate people table — they stay in your company table as cell data. To turn each contact into its own row in another table, use **Send Table Data** with **Send row for each item in a list**. Quickest setup: click a populated result cell, hover over the **People** section in the cell details panel, and click **Take action on list** → **Write each item to new row in other table**. Note that this method sends up to 20 contacts per run — see [Send table data](send-table-data.md) for full details.
+-   Unlike Find People at These Companies, results are not written as rows to a separate people table — they stay in your company table as cell data. To turn each contact into its own row in another table, use **Send Table Data** with **Send row for each item in a list**. Quickest setup: click a populated result cell, hover over the **People** section in the cell details panel, and click **Take action on list** → **Write each item to new row in other table**. See [Send table data](send-table-data.md) for full details.
 -   Returns **10 contacts per row by default**, with full profile data.
 -   `Reduce data for more results` mode returns up to **500 contacts per row**, but only name, job title, and professional profile URL — run `Enrich Person` on each row afterward to get full profiles.
 -   Processes each company row independently — adding a new company row does not re-trigger the enrichment on other rows.
@@ -622,6 +622,20 @@ The source returns results in a new table and is subject to a per-source cumulat
 -   **Save results in new table** — opens the Find People search instead, which creates a new table with one row per contact. Find People draws from Clay's regularly-ingested people index and does not cost credits.
 
 The outputs are similar. If you want contacts as individual rows without spending credits on the lookup, choose **Save results in new table** to use Find People. Choose **Save results in this table** when you need contacts stored inline with their parent company row.
+
+### I used Find Contacts at Company and my contacts are stored as a list — how do I turn them into individual rows?
+
+When **Find Contacts at Company** runs as an enrichment column, results are stored as a list within each company row rather than as separate rows. To give each contact its own row in a separate people table:
+
+1. Click a populated cell in the **Find Contacts at Company** column to open the **Cell details** panel.
+2. Hover over the **People** section in the panel to reveal the **Take action on list** button.
+3. Select **Write each item to new row in other table**.
+4. Choose or create a destination table, map contact fields (name, job title, LinkedIn URL, etc.) to destination columns, and click **Save**.
+5. Run the column. Each contact becomes its own row in the destination table.
+
+Once contacts are in their own rows, add **Work Email** and **Phone** enrichments directly to the destination table — see [Enriching your results](#enriching-your-results).
+
+**Alternative:** If you want contacts as individual rows from the start — without a manual flatten step — use **Find People at These Companies** from **Tools → Import** instead. It creates a new people table with one row per contact and does not consume credits for the initial import. See [Source vs. enrichment — when to use each](#source-vs-enrichment--when-to-use-each).
 
 ### I added new companies to my company table — how do I get them through my Find People searches?
 
