@@ -51,7 +51,7 @@ If you're managing Clay for multiple clients, the recommended approach is to use
 
 **Why separate workspaces work well for agencies:**
 
--   Each workspace has its own **AI Context** domain (configured in **Settings → AI Context**), so you can set the right company domain and business context per client rather than sharing a single workspace setup.
+-   Each workspace has its own **AI Context** domain (accessible via **AI context** in the left sidebar of your workspace), so you can set the right company domain and business context per client rather than sharing a single workspace setup.
 -   Credits and billing are tracked separately per workspace, making it easy to see exactly what each client is consuming.
 -   When a project ends, you can hand the workspace over to the client by ensuring they have admin access and removing yourself — all tables, workbooks, and settings remain in place.
 
@@ -114,8 +114,7 @@ You can permanently delete your Clay workspace through workspace settings. This 
 
 **Requirements:**
 
--   The workspace must have **no pending invites**.
--   You must be the **only member** in the workspace.
+-   The workspace must have **no pending invites**.\n-   You must be the **only member** in the workspace.
 
 **To delete your workspace:**
 
