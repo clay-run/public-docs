@@ -266,8 +266,8 @@ Clay provides access to a wide range of AI models from multiple providers. Below
 | --- | --- |
 | Clay | HeliumNeonArgonXenonRadonClay ConductorClay Navigator |
 | OpenAI | GPT 4o, 4.1, 4o MiniGPT 4.1 Mini, 4.1 NanoGPT 5.1, 5.4, 5.4 Mini, 5.4 Nano, 5.5, 5 Mini, 5 Nanoo1, o1 Pro, o1 Minio3, o3 Mini, o3 Deep Researcho4 MiniDALL·E 3 (Standard, HD)GPT Image 1 (Low, Medium, High) |
-| Anthropic | Claude 4.5 SonnetClaude 4.5 HaikuClaude 4.6 OpusClaude 4.6 SonnetClaude 4.7 OpusClaude 4.8 Opus *(Claude 4 Sonnet, Claude 4 Opus, and Claude 4.5 Opus are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them.)* |
-| Gemini | 2.0 Flash, Flash Lite2.5 Flash, Flash Lite2.5 Pro, 3.7 Flash, 3 ProImagen 3.0, 3.0 Fast *(Gemini 3 Flash and 3.5 Flash are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them.)* |
+| Anthropic | Claude 4.5 HaikuClaude 4.6 OpusClaude 4.6 SonnetClaude 4.7 OpusClaude 4.8 Opus *(Claude 4 Sonnet, Claude 4 Opus, Claude 4.5 Opus, and Claude 4.5 Sonnet are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them.)* |
+| Gemini | 2.0 Flash, Flash Lite2.5 Flash, Flash Lite2.5 pro, 3.7 Flash, 3 ProImagen 3.0, 3.0 Fast *(Gemini 3 Flash and 3.5 Flash are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them.)* |
 | xAI | Grok 4Grok 4.1 Fast Reasoning |
 | DeepSeek | *(DeepSeek V4 Pro is deprecated and no longer available for new configurations; existing configurations that use this model remain unaffected.)* |
 | Mistral | Mistral Medium 3Mistral Large 2.1Mistral Large 3Magistral MediumDevstral 2 |
@@ -275,6 +275,15 @@ Clay provides access to a wide range of AI models from multiple providers. Below
 | Playground | Playground V2Playground V2.5 |
 | Segmind | SSD 1B |
 | Stability | Stable Diffusion XL 1024 |
+
+### Model deprecation policy
+
+Clay periodically retires older models from the same class to keep the model selection dropdown manageable — as newer versions are released, their predecessors are deprecated. When a model is deprecated:
+
+-   **It is removed from the model dropdown.** Deprecated models cannot be selected for new columns or configurations.
+-   **Existing configurations keep running unchanged.** Any column or configuration already using the deprecated model continues to work as-is — no action is needed on your end.
+-   **Migration is not automatic.** Clay does not automatically switch your existing configurations to a newer model. If you want to use a newer model, open the column settings and select the replacement from the dropdown.
+-   **Proactive notification applies only to pricing changes.** Clay notifies customers when a model change affects credit pricing. For other deprecations, no advance notification is sent.
 
 Questions?
 
