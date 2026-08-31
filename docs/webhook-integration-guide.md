@@ -141,6 +141,21 @@ curl -X POST YOUR_CLAY_WEBHOOK_URL \
 
 If a row appears in your table, the issue is in your original request's formatting, headers, or auth token. If no row appears on a brand-new webhook, contact support.
 
+### My webhook was working for a while but suddenly stopped receiving records
+
+If your webhook successfully received records for days or weeks and then stopped with no changes on the sending side, the most common cause is the **50,000 submission limit**.
+
+Unlike the throughput limit (which causes temporary `429` errors that resolve on their own), the 50,000 submission limit is permanent until you act: once a webhook source reaches 50,000 cumulative submissions, Clay returns a `403 Record limit reached for webhook` error on every subsequent request — even if the webhook appears active and your sending system reports success.
+
+**The counter tracks total submissions ever sent, not the current row count.** The limit counts every payload ever delivered to the webhook URL since it was created. Archiving rows, filtering your view, or managing table contents does not reduce this counter — if you archived rows expecting the webhook to resume, the source counter remains at its current total.
+
+**To recover:**
+
+- **Create a new webhook source.** A new webhook URL starts with a fresh counter at 0/50,000 and begins accepting records immediately. Update your sending system (for example, your Salesforce flow, Zapier scenario, or custom script) to POST to the new URL.
+- **Enable auto-delete (Enterprise plan, currently in beta).** [Auto-delete](auto-delete.md) puts the webhook in passthrough mode, which bypasses the 50,000 submission limit entirely — the webhook can then receive data indefinitely without hitting the cap. Auto-delete is currently in beta and available on Enterprise plans only.
+
+**To confirm the limit is the cause:** Check your sending system's delivery logs for a `403` status code on recent webhook requests. Some senders (such as Salesforce flows) treat any non-`5xx` response as a success and may not surface the `403` — inspect the raw HTTP response code returned by Clay's webhook endpoint to confirm.
+
 ### How can I tell which webhook source a row came from?
 
 Clay records which webhook source sent each row at ingestion time, so you can filter the table by source without any extra setup.
