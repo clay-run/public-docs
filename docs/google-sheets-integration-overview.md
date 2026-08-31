@@ -176,6 +176,8 @@ To avoid re-building contacts already in your Google Sheets master sheet, use **
 
 Update one or more rows in a Google Sheet by first looking up which rows to change, then overwriting the specified columns with new values.
 
+**Note:** Update rows replaces the older **Lookup, Add, or Update Row** action, which is now deprecated in Clay. Existing columns using the old action will continue to work, but use **Update rows** for all new work. Unlike the old combined action, **Update rows** handles the update step only — if no matching row is found, the action completes with `updated_rows: 0` and does not insert a new row. To replicate the old add-or-update behavior, use two enrichments with [run conditions](conditional-runs.md): an **Update rows** enrichment to update matching rows, and an **Add row** enrichment set to run only when **Update rows** returns no matches (for example, when `updated_rows` equals `0`).
+
 **Important:** Update rows always overwrites the mapped columns with the values you provide — it does not check whether the existing cell content has changed first. Every time the action runs, it writes the mapped values regardless of what is already in the sheet.
 
 **How to set it up**
