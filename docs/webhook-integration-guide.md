@@ -152,7 +152,7 @@ Unlike the throughput limit (which causes temporary `429` errors that resolve on
 **To recover:**
 
 - **Create a new webhook source.** A new webhook URL starts with a fresh counter at 0/50,000 and begins accepting records immediately. Update your sending system (for example, your Salesforce flow, Zapier scenario, or custom script) to POST to the new URL.
-- **Enable auto-delete (Enterprise plan).** [Auto-delete](auto-delete.md) puts the webhook in passthrough mode, which bypasses the 50,000 submission limit entirely — the webhook can then receive data indefinitely without hitting the cap. Auto-delete is available on Enterprise plans only.
+- **Enable auto-delete (Enterprise plan, currently in beta).** [Auto-delete](auto-delete.md) puts the webhook in passthrough mode, which bypasses the 50,000 submission limit entirely — the webhook can then receive data indefinitely without hitting the cap. Auto-delete is currently in beta and available on Enterprise plans only.
 
 **To confirm the limit is the cause:** Check your sending system's delivery logs for a `403` status code on recent webhook requests. Some senders (such as Salesforce flows) treat any non-`5xx` response as a success and may not surface the `403` — inspect the raw HTTP response code returned by Clay's webhook endpoint to confirm.
 
