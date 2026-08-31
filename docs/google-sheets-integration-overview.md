@@ -172,13 +172,36 @@ To avoid re-building contacts already in your Google Sheets master sheet, use **
 5.  Under **Fields to return**, select the fields you want pulled from the matched row (for example, lead names or contact details).
 6.  If a match is found, the selected fields are returned. If no match is found, the cell is empty — use this as a [run condition](conditional-runs.md) to skip enrichment for rows already in your database.
 
-### `Action` Lookup, add, or update row
+### `Action` Update rows
 
-Lookup a row in a Google Sheet using a column and a value. Optionally, you can add a row if nothing is found, or update a row if something is found.
+Update one or more rows in a Google Sheet by first looking up which rows to change, then overwriting the specified columns with new values.
+
+**Important:** Update rows always overwrites the mapped columns with the values you provide — it does not check whether the existing cell content has changed first. Every time the action runs, it writes the mapped values regardless of what is already in the sheet.
+
+**How to set it up**
+
+1.  In your Clay table, click **Add Enrichment** and search for **Google Sheets**.
+2.  Select **Update rows**.
+3.  Connect your Google account if you haven't already. The connected account must have **edit access** to the spreadsheet.
+4.  Paste your **Google Spreadsheet URL** and select the **Sheet ID** (tab) to update.
+5.  Set the **Lookup column** — the column Clay uses to find the row(s) to update.
+6.  Map the **Lookup value** to a column in your Clay table (for example, an email or domain).
+7.  Under **Update fields**, map the column values you want to write.
+8.  If your lookup value might match more than one row and you want to update all of them, enable **Update multiple rows?**. If this is disabled and multiple rows match, the action returns an error instead of updating.
+9.  Click **Save** and run the enrichment.
 
 **Inputs**
 
--   **Google Spreadsheet URL**
+-   **Google Spreadsheet URL** — Must be a spreadsheet the connected Google account has edit access to.
+-   **Sheet ID** — The specific tab within the spreadsheet to update.
+-   **Lookup column** — The column Clay searches to find matching rows (case-insensitive).
+-   **Lookup value** — The value to match, mapped from a column in your Clay table.
+-   **Update multiple rows?** *(Optional)* — When enabled, all rows matching the lookup value are updated. When disabled (default), the action returns an error if more than one row matches.
+-   **[Column name fields]** — One optional field per column in your sheet. Set values only for the columns you want to overwrite; leave others blank.
+
+**What it returns**
+
+The action reports how many rows and cells were updated, the row indices changed, and a link to the spreadsheet. If no rows match the lookup value, the action completes successfully with `updated_rows: 0`.
 
 ### **Run settings**
 
@@ -212,6 +235,6 @@ If you open a Google Sheets action or source and the **Sheet ID** or column mapp
 
 ### Lookup rows are slow or return errors
 
-If rows using a **Lookup row** or **Lookup, add, or update row** enrichment run slowly or fail with errors, the Google Sheets API rate limit is the most likely cause. According to Google's published API documentation, the Google Sheets API enforces a default limit of 300 read requests per minute per project. When Clay's integration exceeds this limit, Google temporarily blocks further requests until the quota resets — typically after one minute.
+If rows using a **Look up row** or **Update rows** enrichment run slowly or fail with errors, the Google Sheets API rate limit is the most likely cause. According to Google's published API documentation, the Google Sheets API enforces a default limit of 300 read requests per minute per project. When Clay's integration exceeds this limit, Google temporarily blocks further requests until the quota resets — typically after one minute.
 
 Clay automatically retries rate-limited requests using exponential backoff, so most quota errors resolve without manual intervention. If rows remain in an error state after automatic retries are exhausted, re-running them after a brief pause will usually succeed once the quota window has reset.
