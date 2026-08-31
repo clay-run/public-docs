@@ -183,6 +183,8 @@ Clay syncs data from HubSpot automatically on the following schedules:
 
 **Record scope:** The HubSpot Audiences connector imports all records for the object type you select — there is no option to pre-filter to a specific HubSpot list within the Audiences source setup. If your HubSpot has more records than your plan's limit (250,000 for Growth; 25,000,000 for Enterprise), see [My HubSpot has more records than my plan limit — how do I limit what gets imported?](#my-hubspot-has-more-records-than-my-plan-limit--how-do-i-limit-whats-imported) in the FAQs below.
 
+**Write-back to HubSpot:** Unlike Salesforce, the HubSpot source in Audiences does not include per-field export rules or a scheduled export toggle — there is no write-back configuration in the HubSpot source settings panel. To push enriched data from Audiences to HubSpot, use a Bulk Enrichment Table with a HubSpot action column — see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
+
 ### Importing from Snowflake
 
 1.  Click `Add data` → `Import from Snowflake`.
@@ -902,7 +904,7 @@ Audiences does not have a native HubSpot export destination — Salesforce is cu
 
 1.  Navigate to an audience segment and click **Enrich** → **Add bulk enrich**.
 2.  In the bulk enrichment table, add your data enrichment columns as usual (for example, `Enrich Person` to find phone numbers or professional profile URLs).
-3.  Click `Add enrichment` and search for **HubSpot** → select **HubSpot: Update Contact** (to update existing HubSpot contacts) or **HubSpot: Create records** (to create new contacts or companies in HubSpot).
+3.  Click `Add enrichment` and search for **HubSpot** → select **HubSpot: Update object** (to update an existing HubSpot contact or company) or **HubSpot: Create object** (to create a new contact or company in HubSpot).
 4.  Map each enriched field to the corresponding HubSpot property you want to populate.
 5.  Click **Start Run** — the HubSpot action column fires alongside your enrichment columns and writes the values directly to HubSpot.
 
