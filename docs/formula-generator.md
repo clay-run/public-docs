@@ -87,6 +87,31 @@ For example, to check whether any competitor name from a known list appears in a
 
 The formula generator will produce a JavaScript expression that performs the match row-by-row without any credit cost, regardless of how many rows your table has. For a full list of features that don't consume credits, see [Actions and data credits](actions-data-credits.md).
 
+### **Can I loop or iterate over a list of items in a formula?**
+
+Formula columns in Clay run a JavaScript expression once per row and cannot loop across rows. To process a list within a single row, use standard JavaScript array methods or Lodash utilities, both available in Clayscript.
+
+**Iterating over an array in a formula column:** Use `.map()`, `.filter()`, `.reduce()`, or `.find()` to transform or filter elements. For example, to extract one field from every object in an array:
+
+```javascript
+{{My Array Column}}.map(item => item.name)
+```
+
+To keep only elements matching a condition:
+
+```javascript
+{{My Array Column}}.filter(item => item.active === true)
+```
+
+Lodash also provides `_.sortBy()`, `_.flatMap()`, `_.groupBy()`, and `_.uniq()` for sorting, flattening, and deduplicating arrays. Formula columns run at no credit cost and do not consume actions.
+
+**Limitation:** Formula columns are for data transformation only — they reshape or filter arrays already in a cell. They cannot trigger Clay enrichment actions once per array element.
+
+**In Clay Workflows:** Clay Workflows has no standalone "for loop" or "while loop" node type. To implement iteration in a workflow, use one of these approaches:
+
+-   **Code node:** Add a code node and write a Python `handler` function. You can use `for` loops, `while` loops, list comprehensions, and any other Python iteration construct within the node. The node receives named inputs from upstream nodes and returns a dictionary to the next node.
+-   **Conditional loop:** Draw an edge from a later node back to an earlier node in the workflow. As long as the cycle includes at least one conditional node, Clay allows the loop — the conditional node controls when execution exits the loop. Conditional loops are limited to 50 uninterrupted steps; the conditional node displays a warning when this limit applies.
+
 ### **How do I use today's date in a formula?**
 
 Use `moment()` with no arguments to get the current date and time at the moment the formula evaluates. For example, to return `"Yes"` if an event date is more than 6 months in the future from today:
