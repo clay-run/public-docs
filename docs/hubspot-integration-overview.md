@@ -144,6 +144,7 @@ These permissions are requested by default but can be disabled:
 -   [`crm.objects.deals.read`](http://crm.objects.deals.read) — View deal properties and details.
 -   \[`crm.objects.deals](<http://crm.objects.deals>).write` — Create, delete, or edit deals.
 -   [`crm.schemas.deals.read`](http://crm.schemas.deals.read) — View deal property settings.
+-   `crm.export` — Export CRM records in bulk.
 
 ### Optional scopes (disabled by default)
 
@@ -411,6 +412,22 @@ If these scopes were checked during setup and your HubSpot subscription doesn't 
 4. Complete the reconnection flow.
 
 You only need to enable these scopes if you're specifically using Clay to enroll contacts in HubSpot Sequences. For standard CRM syncing, contact and company management, or Audiences setup, leave them unchecked.
+
+### Why do I get "Authorization failed because this app hasn't been approved to access the required scopes [crm.export]"?
+
+This error comes from HubSpot when your organization has **App Governance** (also called App Permissions) enabled and the Clay app has not been approved to use the `crm.export` scope. App Governance is a HubSpot feature that lets super admins control which OAuth scopes third-party apps are permitted to access — even when your HubSpot plan supports those scopes. Until a super admin grants approval for the Clay app, the OAuth connection fails with this error.
+
+Clay uses `crm.export` to export CRM records in bulk (for example, when importing records via the HubSpot source or the Audiences HubSpot import). This scope is enabled by default in Clay's HubSpot connection.
+
+**To fix:**
+
+1.  In HubSpot, go to **Settings → Integrations → Connected Apps** (or search "App Governance" in HubSpot Settings).
+2.  Find **Clay** in the list and click **Manage**.
+3.  On the app detail page, expand **App access and permissions**.
+4.  Under **Conditionally required** permissions, find `crm.export` and enable it.
+5.  Return to Clay, go to **Settings → Connections**, find your HubSpot connection, and click **Reconnect** to complete the authorization.
+
+**Note:** Only a HubSpot super admin can approve permissions in App Governance. If you are not a super admin, ask your HubSpot account administrator to complete steps 1–4.
 
 ### Why does my HubSpot Create Object show "Invalid input" on some rows?
 
