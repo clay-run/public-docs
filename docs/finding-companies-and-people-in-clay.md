@@ -623,6 +623,12 @@ The source returns results in a new table and is subject to a per-source cumulat
 
 The outputs are similar. If you want contacts as individual rows without spending credits on the lookup, choose **Save results in new table** to use Find People. Choose **Save results in this table** when you need contacts stored inline with their parent company row.
 
+### Why does a large company return fewer contacts when I search from a company table than when I search it alone?
+
+**This is expected behavior.** When you use the Find People source with **Start from = Table of companies**, Clay runs a single globally-ranked query across all companies in your table at once — every company's contacts share the same result pool. A large company like Gensler that returns hundreds of matching contacts when searched individually (via **Company identifiers**) competes with all other companies for slots in the batch results. Raising the overall **Limit results** setting does not change this: result distribution across companies is determined by global ranking, not the limit ceiling.
+
+For full per-company depth across a large company list, use **Find People at These Companies** as an enrichment action in your company table rather than the source — the enrichment runs an independent search per company row, so each company's results are not constrained by the size of the list. See [Choose your starting point](#choose-your-starting-point) for setup guidance and [Source vs. enrichment — when to use each](#source-vs-enrichment--when-to-use-each) for a comparison of the two approaches.
+
 ### I added new companies to my company table — how do I get them through my Find People searches?
 
 **If using Find People as a source (a separate people table):**
