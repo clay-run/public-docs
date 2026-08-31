@@ -183,7 +183,7 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 **Data privacy**:
 
--   Only your ICP description is processed by AI.\
+-   Only your ICP description is processed by AI.
 -   Search results come from Clay's company database, not your data.
 -   Your search criteria are not shared with other customers.
 -   No training occurs on your ICP descriptions.
