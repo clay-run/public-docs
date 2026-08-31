@@ -1,6 +1,6 @@
 ---
 title: Table management settings
-description: Manage table settings including auto-dedupe, duplicate table, view graph, rename, edit description, view history, auto-delete, and navigating to a table by ID.
+description: Manage table settings including auto-dedupe, duplicate table, view graph, rename, edit description, view history, auto-delete, enabling tables for API access (Enterprise), and navigating to a table by ID.
 last_synced: 2026-04-26T01:40:46.622Z
 ---
 
@@ -154,6 +154,24 @@ To enable or disable passthrough tables:
     -   **Delete based on conditional rules** — Deletes rows that match custom filter conditions you define.
 
     See [Auto-delete in tables](auto-delete.md) for details on each mode and additional configuration options.
+
+## Enable for API
+
+**Available on Enterprise plans only.** The **Integrations** section in Table Settings lets you make individual tables readable via Clay's Public API (`POST /public/v0/tables/query`) and the `clay tables query` CLI command. Each table must be opted in separately — your workspace being on an Enterprise plan does not automatically expose any tables for querying.
+
+To enable a table for API access:
+
+1.  Open the table.
+2.  Click the gear (`⚙`) icon in the top toolbar to open Table Settings.
+3.  Scroll to the **Integrations** section.
+4.  Turn on **Enable for API** ("Allow this table to be read via API").
+5.  Click **Save changes**.
+
+You can also enable a table via the CLI: `clay tables update <tableId> --query-enabled`.
+
+**Workspace limit:** Enterprise workspaces can enable up to 5 tables at once. When you reach the limit, the toggle is greyed out and Table Settings shows "Synced tables limit reached." Contact [Clay support](https://www.clay.com/contact-form) to raise this limit.
+
+**Note:** The Integrations section only appears in Table Settings on Enterprise workspaces. On non-Enterprise workspaces, the section is hidden and `POST /tables/query` returns `403 "API table sync is not enabled for this workspace."` If you need API table access on a non-Enterprise plan, contact [Clay support](https://www.clay.com/contact-form).
 
 ## Rename your table
 
