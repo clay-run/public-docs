@@ -592,6 +592,22 @@ The queries you see from Clay come from two sources: **Lookup Record columns** r
 
 On the Salesforce side, asking your admin to add custom indexes on the fields Clay filters against will also help those queries run more efficiently.
 
+## How do I control pacing when writing large volumes of records to Salesforce?
+
+Clay does not have a built-in batch-and-pause scheduling feature — there is no automated way to send 50,000 records, wait a set amount of time, and then send the next 50,000 automatically. To control pacing when writing large volumes (for example, updating 500,000 contacts in waves to avoid overloading downstream systems such as Salesforce → Marketo pipelines), the options below are available.
+
+**Manual batching across tables (recommended)**
+
+Split your records into separate Clay tables — for example, ten tables of 50,000 contacts each. Clay tables support up to 50,000 rows, which aligns naturally with this approach. Run each table's Salesforce action columns independently, leaving whatever gap you need between runs to allow downstream systems to process each wave before the next one arrives. This gives you full manual control over timing.
+
+**Per-row Delay run**
+
+In any Salesforce action column's **Run settings**, set **Delay run** → **Run after delay** and enter a number of seconds (up to 600 seconds / 10 minutes per column). This delays each individual row before it fires, spreading writes across the run rather than sending all rows at once. The delay is per row, not per batch — it does not insert a pause between groups. For example, a 60-second delay across a 1,000-row table spreads those rows out over roughly 16 hours within a single run.
+
+**Run in batches (reduces concurrency, not time-based pacing)**
+
+Enable **Run in batches** in any Create Record, Update Record, or Upsert object column's **Run settings**. This sends rows through Salesforce's Composite API in sequential groups of up to 200 records rather than firing all rows simultaneously. Run in batches is primarily designed to reduce lock contention — see [Why am I seeing a "Retried but failed: Failed to lock row" error when updating Salesforce records?](#why-am-i-seeing-a-retried-but-failed-failed-to-lock-row-error-when-updating-salesforce-records). It does not add time-based pauses between groups; everything still processes as fast as possible.
+
 ## Why does enriching a Salesforce timestamp field cause records to keep re-running?
 
 Salesforce system-managed fields such as `LastModifiedDate` and `SystemModstamp` are automatically updated by Salesforce on every record write — including writes triggered by Clay. If you reference one of these fields as an input in an enrichment that also writes back to Salesforce, you can inadvertently create an ongoing loop: Clay updates a record → Salesforce refreshes `LastModifiedDate` → Clay detects the change and re-runs the enrichment → cycle continues.
