@@ -85,7 +85,17 @@ Clay customers should integrate DNC status in their data workflows where availab
 
 While DNC lists focus on "who not to call," many jurisdictions also mandate **when you may contact a number** (e.g., U.S. guidelines restrict calls to business hours). Always verify local rules around permissible calling windows.
 
-### **e. Document and Audit**
+### **e. Be aware of TCPA requirements for autodialed calls and texts**
+
+In the US, the **Telephone Consumer Protection Act (TCPA)** imposes consent requirements that go beyond standard DNC registry screening:
+
+-   **Autodialed, prerecorded, or artificial voice calls and texts** — using an automatic telephone dialing system, playing a prerecorded or artificial voice message, or sending automated marketing texts to a mobile number generally requires the prior express written consent of the recipient, even for business contacts.
+-   **Opt-out requirements** — recipients must be given a clear mechanism to opt out of future automated calls or texts, and opt-out requests must be honored promptly.
+-   **State-level laws** — several states impose requirements beyond federal TCPA rules. Texas, for example, has its own telephone solicitation laws; campaigns targeting Texas phone numbers should be reviewed for compliance with both federal TCPA requirements and Texas state law.
+
+Scrubbing against the national DNC registry is necessary but not sufficient for automated or prerecorded outreach. If your campaigns involve autodialed calls, prerecorded messages, or marketing texts, consult qualified legal counsel before contacting US numbers.
+
+### **f. Document and Audit**
 
 -   Document your DNC compliance procedures in writing.
 -   Train your team on these procedures.
