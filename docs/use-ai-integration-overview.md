@@ -322,7 +322,9 @@ If a Use AI or Claygent column completes without error — and the cell shows a 
 
 For AI columns using variable-priced models (such as GPT-4.1, Claude Sonnet, or Gemini 2.5 Pro) with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. This sets the maximum number of Clay credits that can be spent on a single row. If the estimated cost of running a row exceeds this limit, the cell shows **"Budget Credit Limit Reached"** and does not complete. Clicking the cell reveals the full message with the estimated cost and your current budget.
 
-To fix this, open the column settings and increase the **Clay Credit Budget** value. Consider the length of your prompt and system prompt when choosing a limit, as longer prompts cost more credits per row.
+**When the Clay Credit Budget field is left blank, it defaults to the model's base cost** (for example, 7.5 credits for Claude Opus). This means any prompt whose estimated cost exceeds that base cost — because the prompt is long or references many columns — will be blocked, even though you never explicitly set a limit.
+
+To fix this, open the column settings and increase the **Clay Credit Budget** value above the estimated cost shown in the error. Set it high enough to give some headroom for prompt length variation — for example, if the error shows an estimated cost of 8.5 credits, a budget of 11 credits gives comfortable room. You are only charged the actual cost per run; the budget is a ceiling, not a prepaid amount.
 
 **Note:** This setting only applies to expensive variable-priced models when using Clay's managed account. Users who connect their own API key are billed directly by the AI provider and this cap does not apply.
 
