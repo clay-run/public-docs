@@ -67,6 +67,7 @@ Functions are built for workflows you'd otherwise rebuild from scratch in every 
         1.  Manually enter test data.
         2.  Select recent inputs to replay inputs received by your live function.
     -   Additionally you can select up to 50 archived rows from your live function and `Debug` in edit mode to help safely investigate in a running mode.
+    -   **Inspecting out-of-date cells:** When a cell in Edit mode shows a clock icon (out of date), click it to open the **Cell details** panel. The panel shows a dependency graph — stale upstream cells appear in red and the selected cell appears in yellow. Click **Re-run these cells** to re-run those cells and their stale dependencies within the sandbox. Results appear in the sandbox only and do not persist to your live function or to any calling table.
     -   Note that no changes made here will apply to the live function until published.
 4.  Once your changes are ready, click `Review Changes` to view your pending changes and click `Publish Changes` to apply your changes to your live function.
 
