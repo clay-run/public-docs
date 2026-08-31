@@ -1091,49 +1091,21 @@ To identify and archive these orphaned records:
 
 ### Why did Update Audiences Record report 0 fields updated?
 
-This "0 fields updated" result comes from the `Update Audiences Record` action that pushes data into your Audience from a Clay table. It means the action ran successfully but found no fields to update — typically because the record already had the same values, the mapped Audience fields were already populated, or the field mapping itself was empty.
+This "0 fields updated" result comes from the `Update Audiences Record` action that pushes data into your Audience from a Clay table. The most common cause is that all mapped fields had null values in the source row. This action filters out any field whose value is `null`, `undefined`, or empty before writing to the Audience — when every mapped field is empty, there is nothing to write, so the action completes successfully but reports 0 fields updated. This null-filtering is built into the action and is not user-configurable.
 
-Common causes:
+**To confirm this is the cause:** Check whether the columns you mapped into `Update Audiences Record` are populated for the rows that show 0 fields updated.
 
--   **The target Audience fields already have data.** `Update Audiences Record` only updates fields that are currently empty by default. If the Audience record already has a value in the mapped field, no update is made.
--   **The field mapping is empty.** If no Clay columns are mapped to Audience fields in the action's configuration, there is nothing to write — the action completes with 0 updates.
--   **The record doesn't exist in Audiences.** Unlike `Upsert Audiences Record`, `Update Audiences Record` does not create a new record if no match is found — it silently skips unmatched rows. If the Audiences record doesn't exist, 0 fields are updated.
+**To fix it, use an explicit placeholder value instead of null.** Rework your formula so it always returns a meaningful non-null value. For example, if you use a timestamp to mark when a contact becomes eligible, have the formula return the eligible date when it applies and a text value like `"Not Eligible"` when it doesn't. Both are real values, so `Update Audiences Record` writes an update on every run — and you can route off the result (process the row when the field contains a date; skip when it says `"Not Eligible"`).
 
-To overwrite existing Audience field values, switch to `Upsert Audiences Record` instead — it updates existing records and creates new ones when no match is found. If you specifically need `Update Audiences Record` to overwrite values, check the action's **Overwrite existing values** toggle in the column settings, if available.
+**Note:** The **Ignore blank values** toggle does exist, but on the `Upsert Audiences Record` action (and on the variant of `Update Audiences Record` that is configured via the Upsert config panel). It is on by default; when disabled, null values are passed through and will clear existing values on the target Audience field. These actions report `✅ Success` (or `✅ Upserting...` / `✅ Updating...`) rather than `0 fields updated`, so the toggle is not what controls the "0 fields updated" message described above.
 
-### How do I use Audiences fields as sources for a Clay table?
+### How does Clay handle Salesforce Lead-to-Contact conversions?
 
-You can pull Audience data into a Clay table using `Lookup in Audiences` or `Get Audiences Activity` as action columns. These actions let you query your Audience from within a table — for example, to enrich table rows with CRM data, signal results, or enrichment fields stored in Audiences.
+When a Salesforce Lead is converted into a Contact in Salesforce, Clay automatically merges the Lead record with the Contact record in Audiences. The data from both records is combined into a single person record, and all historical data is preserved. This merging happens automatically and is not user-configurable.
 
-Both actions require a matching identifier to find the right Audience record:
+### What's the difference between automatic Lead/Contact merging and deterministic matching?
 
--   **`Lookup in Audiences`**: maps one or more table columns to Audience fields (for example, email → Person email) and returns the matching Audience record's data. Configure the **Fields to filter by** in the action settings to specify which fields to match on.
--   **`Get Audiences Activity`**: returns signal and activity data (job postings, news, web visits, etc.) for a specific Audience record, identified by its **Record ID** (the internal Clay Audiences ID).
+There are two types of record matching in Clay Audiences:
 
-For a full list of available actions and configuration steps, see [Using Audiences from a Clay table](#adding-enrichments) above.
-
-### How do I import records from multiple sources while keeping them deduplicated?
-
-Audiences automatically deduplicates records across sources using entity resolution — matching by LinkedIn URL, email, domain, or probabilistic signals. To ensure deduplication works correctly across multiple imports:
-
-1.  Make sure your records include at least one strong identifier (LinkedIn URL, email, or domain) — records without a recognizable identifier may not merge correctly.
-2.  Use **Import record matching** (beta) to specify an alias field — such as `email` for People or `domain` for Companies — that Clay uses to join records from different sources at ingestion time. This is especially useful when importing from both Salesforce and Snowflake or BigQuery.
-3.  After importing, check the **All People** or **All Companies** view to confirm the total record count looks correct. If duplicates appear, it may indicate records lack matching identifiers — add LinkedIn URLs or emails to improve entity resolution.
-
-For instructions on configuring Import record matching, see [Import record matching (beta)](#import-record-matching-beta) above.
-
-### Why do I see "Import record matching settings" when I don't have multiple sources?
-
-The **Import record matching** settings panel appears on every source, even if you only have one source connected. It is not harmful to have it configured with only one source — the setting simply has no effect until a second source is added. You can ignore it or leave it unconfigured if you're only importing from a single source.
-
-### What is the difference between a Clay People table and the People Audience?
-
-A Clay People table is a working dataset — a snapshot of people you are actively enriching, filtering, or routing. It is scoped to the rows you put in it, can have up to 50,000 rows, and is designed for one-time or iterative enrichment work.
-
-The People Audience is your persistent, deduplicated contact database — it combines data from all your connected sources (Salesforce, HubSpot, Snowflake, CSV, people searches) into a single unified record per person, continuously updated, and supports millions of records. Any enrichment you run from within the Audience writes results back to the permanent record.
-
-Use a People table when you need to work on a specific, bounded set of contacts — for example, a one-time outbound campaign. Use the People Audience when you need a live, always-current database of your contacts that powers segments, CRM sync, and ongoing automations.
-
-### What field should I use to match on when importing a new source?
-
-Use the field to match on (email, domain, profile URL, etc.) when importing a new source. This allows you to merge the same person or company from multiple data sources into a single Audiences record.
+-   **Automatic Lead/Contact merging** — When Salesforce converts a Lead to a Contact, Clay automatically merges these records. This is Salesforce-specific and not user-configurable.
+-   **Deterministic matching** — User-configurable matching across different data sources. You choose which field to match on (email, domain, profile URL, etc.) when importing a new source. This allows you to merge the same person or company from multiple data sources into a single Audiences record.
