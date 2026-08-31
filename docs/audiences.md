@@ -1091,12 +1091,21 @@ To identify and archive these orphaned records:
 
 ### Why did Update Audiences Record report 0 fields updated?
 
-This "0 fields updated" result comes from the `Update Audiences Record` action that pushes data into your Audience from a Clay table. It does **not** indicate the action failed or that your data was lost. It means the incoming value matched what was already stored in Audiences for that field — so there was nothing to update.
+This "0 fields updated" result comes from the `Update Audiences Record` action that pushes data into your Audience from a Clay table. The most common cause is that all mapped fields had null values in the source row. This action filters out any field whose value is `null`, `undefined`, or empty before writing to the Audience — when every mapped field is empty, there is nothing to write, so the action completes successfully but reports 0 fields updated. This null-filtering is built into the action and is not user-configurable.
 
-Common causes:
+**To confirm this is the cause:** Check whether the columns you mapped into `Update Audiences Record` are populated for the rows that show 0 fields updated.
 
--   The field already contains the same value you are trying to write (no change needed).
--   The source field in your table is empty, and the matching Audiences field is also empty (again, no change).
--   You are writing to a field mapped from Salesforce, and the Salesforce import just re-synced the same value.
+**To fix it, use an explicit placeholder value instead of null.** Rework your formula so it always returns a meaningful non-null value. For example, if you use a timestamp to mark when a contact becomes eligible, have the formula return the eligible date when it applies and a text value like `"Not Eligible"` when it doesn't. Both are real values, so `Update Audiences Record` writes an update on every run — and you can route off the result (process the row when the field contains a date; skip when it says `"Not Eligible"`).
 
-If the data you expected to write is visible in the Audiences record and matches the value in your table, "0 fields updated" is the correct outcome — not an error. If the field is still empty or shows a stale value after the action ran, check that your table column is correctly mapped to the right Audiences field and that the row's source value is populated.
+**Note:** The **Ignore blank values** toggle does exist, but on the `Upsert Audiences Record` action (and on the variant of `Update Audiences Record` that is configured via the Upsert config panel). It is on by default; when disabled, null values are passed through and will clear existing values on the target Audience field. These actions report `✅ Success` (or `✅ Upserting...` / `✅ Updating...`) rather than `0 fields updated`, so the toggle is not what controls the "0 fields updated" message described above.
+
+### How does Clay handle Salesforce Lead-to-Contact conversions?
+
+When a Salesforce Lead is converted into a Contact in Salesforce, Clay automatically merges the Lead record with the Contact record in Audiences. The data from both records is combined into a single person record, and all historical data is preserved. This merging happens automatically and is not user-configurable.
+
+### What's the difference between automatic Lead/Contact merging and deterministic matching?
+
+There are two types of record matching in Clay Audiences:
+
+-   **Automatic Lead/Contact merging** — When Salesforce converts a Lead to a Contact, Clay automatically merges these records. This is Salesforce-specific and not user-configurable.
+-   **Deterministic matching** — User-configurable matching across different data sources. You choose which field to match on (email, domain, profile URL, etc.) when importing a new source. This allows you to merge the same person or company from multiple data sources into a single Audiences record.
