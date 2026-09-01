@@ -202,6 +202,16 @@ If you're unsure whether you need a higher tier, check your current usage in `Se
 
 Each fully enriched record typically costs 6-20 data credits (including company and person profile, email, phone number, and custom AI enrichments). The more private API keys you use, the fewer data credits you'll spend per record.
 
+### Which plans include access to Clay's Public API?
+
+Clay's Public HTTP API (`api.clay.com`, authenticated via a workspace-scoped `clay-api-key`) is available on **all paid plans** — it is not restricted to Enterprise. The Searches and Routines endpoints work on Launch, Growth, and Enterprise plans. For per-plan search result quotas, see [Does Clay have an API?](using-clay-as-an-api.md).
+
+The **Tables resource** — reading Clay table data programmatically via the Public API or the CLI `clay tables` commands — requires an **Enterprise plan**. On non-Enterprise workspaces, these endpoints return an error indicating the public observability API is not enabled for your workspace.
+
+**Note:** The "HTTP API" listed as a Growth plan feature refers to the [HTTP API integration](http-api-integration-overview.md) — table columns that call external APIs from within Clay. This is a different feature from the Clay Public API described above. The Clay Public API (`api.clay.com`) does not require Growth plan access and is available on all paid plans.
+
+For setup instructions and full API reference, see [Does Clay have an API?](using-clay-as-an-api.md) and [developers.clay.com](https://developers.clay.com).
+
 ### How do I cancel my subscription?
 
 There is no minimum contract commitment — you can cancel at any time. To cancel:
