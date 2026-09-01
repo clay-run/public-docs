@@ -29,7 +29,7 @@ From the `Campaigns` homepage, go to the `Email Accounts` tab and click `Add Ema
 
 ![](https://cdn.prod.website-files.com/687e604972375496b891fe58/69c6b5ea48b4f4c966867201_Buying%20Email%20Accounts%20in%20Clay%20\(1\).png)
 
-**Note:** After confirming your purchase, your order appears in the `Account orders` tab (`Campaigns → Account orders`) with a **Pending fulfillment** status — this is expected and means the order is being processed. Email accounts typically arrive within a few hours but may take up to 72 hours to be provisioned. Once they appear in your `Email Accounts` tab, warm them up for approximately two weeks before use — purchased domains are not pre-warmed.
+**Note:** After confirming your purchase, your order appears in the `Account orders` tab (`Campaigns → Account orders`) with a **Pending fulfillment** status — this is expected and means the order is being processed. Email accounts typically arrive within a few hours but may take up to 72 hours to be provisioned. Once they appear in your `Email Accounts` tab, warmup starts automatically — allow approximately three weeks before using them in campaigns, as purchased domains are not pre-warmed. If an account shows **Not warming**, re-enable warming manually from the account's three-dot action menu.
 
 ## **FAQs**
 
@@ -40,6 +40,10 @@ After placing an order, you can track its progress in the `Account orders` tab (
 ### **Can I add more email accounts to a domain after I've purchased it?**
 
 No. Once a domain is purchased, you cannot add additional email accounts to it. Select your desired number of accounts (up to 5 per domain) before confirming your order.
+
+### **Can I buy persona slots now and fill in the persona details later?**
+
+No. All persona details — first name, last name, and profile picture — must be entered for every account at the time of purchase. There is no way to reserve empty slots and configure them afterward. To scale gradually, start with one domain and fewer accounts for your first test, then buy additional domains as you onboard more senders — each domain supports up to 5 personas.
 
 ### **What happens if I cancel a domain before the year is up? Will I get a refund?**
 
@@ -55,7 +59,7 @@ Credit costs are calculated using your workspace's cost-per-credit (CPC) against
 
 ### **Are purchased domains pre-warmed?**
 
-No. You must still warm up purchased domains for approximately two weeks after provisioning before using them in campaigns.
+No. Warmup starts automatically once your accounts are provisioned, but allow approximately three weeks before using them in campaigns. If an account shows **Not warming**, re-enable warming manually from the account's three-dot action menu.
 
 ### **Where are the purchased email accounts from?**
 
