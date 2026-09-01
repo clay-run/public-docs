@@ -208,7 +208,7 @@ When merging data from multiple source tables into a single destination table, f
     -   If you want to receive data in the table you're also sending data from, use one of these other actions:
         -   `Lookup Multiple Rows in Other Table`
         -   `Lookup Single Row in Other Table`
--   **The destination table has reached its 50,000-row limit and is no longer accepting rows — how do I continue?** Each destination table can hold a maximum of **50,000 rows** from a Send Table Data source. When the table is full, new rows from the upstream Send Table Data action will be rejected. The most reliable approach is to route the remaining rows to a **new downstream table** with a fresh source.
+-   **The destination table has reached its 50,000-row limit and is no longer accepting rows — how do I continue?** Each destination table can accept a maximum of **50,000 rows total** from a Send Table Data source. This is a **cumulative lifetime count** — the source tracks every row ever added, and deleting rows from the destination table does **not** decrement this count. As a result, **"Record limit reached"** can appear in your Send Table Data column even when the destination table shows far fewer than 50,000 visible rows. When this limit is reached, new rows from the upstream Send Table Data action will be rejected. The most reliable approach is to route the remaining rows to a **new downstream table** with a fresh source.
 
     To avoid sending duplicate rows to both tables, add a run condition to the new Send Table Data action:
 
