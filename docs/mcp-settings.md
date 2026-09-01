@@ -151,6 +151,14 @@ The MCP user credit limit is a rolling monthly limit. Credit spend automatically
 
 Further actions through ChatGPT, Claude, or Glean are hard-blocked until the monthly reset — the rep won't be able to run enrichments or invoke Functions. Admins can increase the per-user limit at any time from the `MCP users` table to restore access immediately.
 
+### Why does Clay show "out of monthly credits" when my workspace credit balance is fine?
+
+The workspace credit balance shown in `Settings → Usage` is your total remaining Data Credits — it is separate from per-user MCP credit limits. Each MCP user has their own monthly credit allocation that tracks independently of the workspace balance.
+
+When an MCP user exhausts their monthly allocation, Clay blocks further MCP enrichments and function calls with an "out of monthly credits" error — even if the workspace still has plenty of credits remaining.
+
+To resolve: click `MCP` in the left nav, find the user in the `MCP users` table, and click the pencil icon next to their `Credit limit` to raise or remove the cap. To prevent this for future new users, raise the workspace default via `Set default limit`. Changes take effect immediately.
+
 ### Where else can I see MCP credit usage?
 
 MCP usage appears in the main credit usage dashboard at `Settings → Credit Usage`, which tracks all credit consumption across your workspace broken down by table, integration, and time period.
