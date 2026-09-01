@@ -620,6 +620,19 @@ No, once you update or create an object in Salesforce from Clay, you cannot undo
 
 Please check with your Salesforce admin before making any changes to your Salesforce CRM.
 
+## Can Clay delete records from Salesforce?
+
+No. Clay does not support deleting records from Salesforce — there is no native delete action available in standard Clay tables or Clay Audiences.
+
+Clay's supported write actions to Salesforce are:
+
+-   **Create** new records
+-   **Update** existing records
+-   **Upsert** (create or update based on an external ID)
+-   **Convert** leads
+
+If you need to delete records from Salesforce, that action must be performed directly in Salesforce. Clay can help you identify the records to remove — for example, by enriching your data and exporting a list as a CSV — but the deletion itself must happen in Salesforce.
+
 ## Do we need to create a custom Salesforce object to integrate Salesforce data?
 
 No, one of Clay's benefits is that you can update any object and any field in Salesforce.
