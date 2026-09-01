@@ -194,6 +194,19 @@ If you're unsure whether you need a higher tier, check your current usage in `Se
 -   **Upgrade your Data Credits tier** (recommended for ongoing needs) — no premium charged.
 -   **Purchase a one-time top-up** — available on paid plans only; not available on the free plan. For emergency needs during your billing cycle at a 30% premium (50% on legacy plans), subject to rollover limits. Go to `Settings` → `Usage` and click `Add one-time data credits`.
 
+### Does the People & Company Search API have its own usage limit?
+
+Yes. When you access Clay's People & Company data through the Public API, CLI, or MCP server, a separate annual result quota applies — independent of your monthly Actions and Data Credits. This quota does **not** apply to in-app table enrichments or Routines API runs.
+
+| Plan | Search results per period | Period window |
+| ---- | ------------------------- | ------------- |
+| Free | 100 | Monthly (resets on the 1st of each month, UTC) |
+| Trial | 10,000 | 14 days from plan start |
+| Paid (Launch, Growth) | 1,000,000 | Annual (resets January 1 UTC) |
+| Enterprise | 10,000,000 | Annual (resets January 1 UTC) |
+
+When you exceed the limit, the API returns a `400` error describing the cap and when it resets. There is no in-product usage meter for this quota — you will not receive a warning before hitting it. To request a higher limit, [contact Clay support](https://www.clay.com/contact-form). For endpoint details and the exact error format, see [Does Clay have an API?](./using-clay-as-an-api.md).
+
 ### How many actions and data credits do I need?
 
 -   **Launch plan:** Suitable for enriching less than 1,000 records per month
