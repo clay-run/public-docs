@@ -428,6 +428,8 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
 
 **To run an existing enrichment on another segment without recreating it:** A single bulk enrichment can be connected to multiple segments — you do not need to recreate it for each one. Open the enrichment from the **Enrich** sidebar and use the **Add segment** option in the Run Setup panel to include additional segments. See [Adding a segment to an existing enrichment](bulk-enrichment.md#adding-a-segment-to-an-existing-enrichment) for full steps.
 
+**Enrichment workflows (beta):** Some workspaces include a **Create enrichment workflow** option in the `Enrich` menu when viewing a People or Companies audience. This option — currently in beta — opens a workflow builder pre-configured with your audience segment as the source. Add an **Enrich** step, configure the enrichment columns you need, and click **Run**; results write permanently back to your Audience records. If you don't see this option, use `Enrich` → `Add bulk enrich` as described above. You can also set up the same enrichment directly from **Workflows**: create a new workflow, select your People or Companies audience as the source/trigger, add an **Enrich** step, configure the columns, and run it.
+
 **Using Audiences from a Clay table:**
 
 Four Clay actions let you move data between a Clay table and your Audience directly.
