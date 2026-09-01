@@ -16,7 +16,7 @@ Credit budgets appear at `Settings` → `Budgets`. Only workspace admins can cre
 
 A **budget** is a named credit pool with:
 
--   A **credit limit** — the maximum number of credits the budget can spend in its lifetime (limits do not auto-reset on a billing cycle).
+-   A **credit limit** — the maximum credits the budget can spend per reset period (or over its lifetime when no reset is configured). You set a **Reset Frequency** to control whether the balance resets automatically on a schedule or stays as a cumulative cap.
 -   A **current balance** — how many credits remain (limit minus spend so far).
 -   An **access rule** — whether all workspace members can draw from the budget by default, or only members explicitly granted access.
 -   An optional list of **users** or **user groups** with explicit access.
@@ -30,11 +30,16 @@ When a workbook (or other resource) is assigned to a budget, all credit-consumin
 1.  Go to `Settings` → `Budgets`.
 2.  Click **Create**.
 3.  Enter a budget **name** and set a **credit limit**.
-4.  Choose a **default access** setting:
+4.  Choose a **Reset Frequency** — how often the budget's spend resets automatically:
+    -   **Never (default)** — the credit limit is a cumulative lifetime cap; spend never resets automatically.
+    -   **Monthly** — spend resets on the 1st of every month at 12am UTC.
+    -   **Quarterly** — spend resets on January 1, April 1, July 1, and October 1 at 12am UTC.
+    -   **Annual** — spend resets on January 1 at 12am UTC each year.
+5.  Choose a **default access** setting:
     -   **All workspace members** — any member can assign their workbooks to this budget.
     -   **Only specific users or groups** — only members you explicitly add can use the budget.
-5.  Optionally, add specific **users** or **user groups** who should have access.
-6.  Click **Save**.
+6.  Optionally, add specific **users** or **user groups** who should have access.
+7.  Click **Save**.
 
 ## Assigning resources to a budget
 
@@ -78,7 +83,7 @@ Alerts fire once per threshold crossing. They reset when an admin increases the 
 
 ## Resetting and adjusting budgets
 
-Admins can increase or decrease a budget's credit limit at any time from `Settings` → `Budgets`. If you need to restart tracking spend from zero, you can reset the budget's spend when editing it.
+Admins can increase or decrease a budget's credit limit at any time from `Settings` → `Budgets`. If you configured a Reset Frequency, the budget's spend resets automatically on that schedule — no action needed. You can also reset spend manually at any time by editing the budget. A weekly reset cadence is not available.
 
 When a budget is deleted, you can reassign all of its resources to a different budget — or leave them without a budget.
 
