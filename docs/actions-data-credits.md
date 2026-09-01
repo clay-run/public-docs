@@ -417,7 +417,28 @@ Note that credits are not refunded for enrichments where the system operated as 
 
 ### Are Data Credits charged when a provider finds no result?
 
-It depends on the provider's billing model. In some cases, a data provider may not charge when no data is found — in those cases, your credits will be refunded automatically. Other providers charge Clay for the API call regardless of whether data is found, so credits are deducted either way. You can see the exact credit cost for each enrichment in the enrichment panel before running.
+It depends on the provider's billing model. When a provider's API call succeeds but returns no matching data, credits may or may not be refunded — this varies by provider.
+
+**Key distinction:** For true errors and failures — such as timeouts, bad credentials, rate-limit hits, or provider outages — credits are **always** returned to your balance automatically. The no-result charge behavior described below applies only when an API call completes successfully but finds nothing.
+
+By default, most providers in Clay's marketplace charge Data Credits regardless of whether results are returned. A smaller set of providers automatically refund credits on a no-result response.
+
+**Providers explicitly configured to never refund on no-result responses:**
+
+-   **Modash** (17 Instagram, TikTok, and YouTube lookup actions): Modash bills Clay for a "not found" response, so that charge is passed through.
+-   **Pubrio** (6 company expansion and ad insight actions): Pubrio refunds only when the API call itself fails — not when it succeeds but returns no data.
+
+**Additional integrations that charge Data Credits regardless of whether results are returned:**
+
+**Enrichment and data providers:** Adbeat, Apollo, Clearbit, Clearout, Crossbeam, Debounce, G2, GoldenLeads, Google search and lookup actions, Hacker News, Harmonic, HitHorizons, Instagram, LeadIQ, Lob, Logo.dev, Lusha, MadKudu, Mapbox, Modash's generic Search action, OpenMart, People Data Labs, PitchBook, PredictLeads, Product Hunt, Prospeo, Reddit, Serpstat, SimilarWeb, Social Posts, Swordfish AI, The Swarm, Twitter/X, Upfluence, Yelp, YouTube, ZoomInfo, and Clay actions powered by Coresignal, Mantheos, or Mixrank.
+
+**CRM and sales engagement tools:** ActiveCampaign, Attio, Chorus, Close, Dynamics 365, EmailBison, Gong, HeyReach, HubSpot, Instantly, La Growth Machine, Lemlist, Loxo, Marketo, Outreach, PandaDoc, Salesforce (including Pardot), Salesloft, Sendoso, Sequel, Shopify, Smartlead, Snov.io, Woodpecker, and Za-Zu.
+
+**Data warehouse and no-code connectors:** Airtable, BigQuery, ClickHouse, Coda, Databricks, GitHub, Google Docs, Google Sheets, Notion, PostgreSQL, RSS Feeds, Slack, Snowflake, and Webflow.
+
+**AI and content tools:** ChatGPT, Cohere, HeyGen, Twain, Bitly, and Clay's built-in scrape, search, company enrichment, and people enrichment actions. Claygent also charges credits when a run completes, regardless of whether it found the answer you were looking for.
+
+The exact credit cost for each enrichment is shown in the enrichment panel before you run.
 
 ### What happens to credits if an enriched email fails validation or turns out to be undeliverable?
 
