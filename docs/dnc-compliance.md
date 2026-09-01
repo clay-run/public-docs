@@ -1,7 +1,7 @@
 ---
 title: Do Not Contact (DNC) compliance & best practices
 description: Information about DNC compliance and best practices.
-last_synced: 2026-04-26T01:39:53.932Z
+last_synced: 2026-07-21T04:46:49.913Z
 ---
 
 # Do Not Contact (DNC) compliance & best practices
@@ -50,7 +50,7 @@ Clay enables outbound outreach workflows — including call lists and integratio
 
 Before initiating outbound calls:
 
--   Check your phone number lists **against applicable national DNC registries** (e.g., in the U.S. National Do Not Contact Registry, in the UK, the Corporate Telephone Preference Service) to ensure numbers listed by consumers are excluded. We've partnered with [Meer](http://meerapi.com/) to help you easily do this within your existing Clay workflows. Meer currently supports US (National DNC Registry), UK (TPS/CTPS), Germany ([Robinsonliste.de](http://robinsonliste.de/)), Ireland ([comreg.ie](http://comreg.ie/)), Spain ([Lista Robinson](http://listarobinson.es)), Indiana (Indiana No-Call List), Florida (Florida Do Not Call Program), Massachusetts (Massachusetts DNC Registry), and Colorado (Colorado No-Call List), with additional countries being added regularly.
+-   Check your phone number lists **against applicable national DNC registries** (e.g., in the U.S. National Do Not Contact Registry, in the UK, the Corporate Telephone Preference Service) to ensure numbers listed by consumers are excluded. We've partnered with [Meer](http://meerapi.com/) to help you easily do this within your existing Clay workflows. Meer currently supports US (National DNC Registry), UK (TPS/CTPS), Germany ([Robinsonliste.de](http://robinsonliste.de/)), Ireland ([comreg.ie](http://comreg.ie/)), Spain ([Lista Robinson](http://listarobinson.es)), Belgium ([DNCM](https://www.dncm.be/en/home)), Indiana (Indiana No-Call List), Florida (Florida Do Not Call Program), Massachusetts (Massachusetts DNC Registry), Colorado (Colorado No-Call List), Missouri ([Missouri No-Call List](https://ago.mo.gov/get-help/no-call/)), and Louisiana ([Louisiana Do Not Call Program](https://www.lpsc.louisiana.gov/DNC)), with additional countries being added regularly.
     -   **To use Meer in Clay:** Search for "Meer" in the `Add enrichment` panel — Meer appears in search for all workspaces. If your workspace has not yet accepted Meer's compliance terms, you will be prompted when you open the integration. Workspace admins can click **Accept terms** in the panel to accept inline, or go to **Settings → Enrichments → Compliance** and click **Agree and activate**. Non-admins will need to ask their workspace admin to complete this step. See the [Meer integration guide](https://university.clay.com/docs/meer-integration) for full setup steps.
     -   **Recommended workflow (enrich → screen → gate):** Meer screens phone numbers, not names — a phone number must exist in your table before you can screen it. Set up your columns in this sequence:
         1.  Run a phone-finding waterfall to retrieve the contact's number.
