@@ -568,7 +568,7 @@ Pagination always stops at 50,000 rows regardless of other settings.
 
 If your server or firewall requires incoming requests to originate from a known set of IP addresses, you can enable **Use static IP** on HTTP API columns. This routes requests from those columns through Clay's fixed egress IP addresses, which you can add to your server's allow-list.
 
-**Availability:** This feature is available for Enterprise customers. Contact your Clay account team or support before enabling — static IP must be activated for your workspace first.
+**Availability:** This feature is currently in beta for Enterprise customers. Contact your Clay account team or support to request access — static IP must be activated for your workspace first.
 
 ### Enabling static IP for an HTTP API enrichment column
 
@@ -577,6 +577,8 @@ If your server or firewall requires incoming requests to originate from a known 
 3.  At the bottom of the column configuration, toggle on **Use static IP**.
 
 All requests from that column will then originate from Clay's fixed IP addresses. Your account team can provide the current list of IP addresses to add to your allow-list.
+
+**Note:** The **Use static IP** toggle is currently in beta for Enterprise customers — it only appears in the column configuration after Clay has activated the feature for your workspace (step 1). If you don't see the toggle, contact your account team or support to request access.
 
 **Note:** Static IP for HTTP API is per column, not workspace-wide — you control exactly which columns route through fixed IPs.
 
