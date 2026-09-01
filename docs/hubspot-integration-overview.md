@@ -447,6 +447,34 @@ This is different from the case where some mapped fields have values: when at le
 
 **Note:** The older **Update Contact** and **Update Company** actions handle this case differently — they return a success result with "Nothing to update" instead of an error. If you previously used one of those actions and recently switched to **Update Object**, this difference in behavior is expected.
 
+### How do I stamp a "Last updated by Clay" date in a HubSpot record?
+
+To record when Clay last pushed data to a HubSpot record, add a formula column that captures the current timestamp, then map it to a custom date property in your Update Object action.
+
+**Step 1 — create a custom property in HubSpot**
+
+In HubSpot, go to **Settings → Properties** and create a new property on the relevant object (Contact, Company, etc.). Choose the field type:
+
+-   **Date & Time** — stores a full timestamp (recommended for tracking the exact moment Clay ran).
+-   **Date** — stores only the date (no time component).
+
+Name it something like "Last Enriched by Clay."
+
+**Step 2 — add a formula column in Clay**
+
+In your Clay table, add a **Formula** column. Use the formula that matches your HubSpot property type:
+
+-   **For a Date & Time property:** `moment().toISOString()` — returns an ISO 8601 timestamp (e.g. `2024-03-11T14:23:00.000Z`).
+-   **For a Date property:** `moment.utc().format("YYYY-MM-DD[T]00:00:00[Z]")` — HubSpot Date-only fields require the value sent as midnight UTC; passing a full datetime string to a Date property returns a validation error.
+
+For more on using `moment()` in Clay formulas, see [How do I use today's date in a formula?](formula-generator.md#how-do-i-use-todays-date-in-a-formula).
+
+**Step 3 — map the formula column in your Update Object action**
+
+In your HubSpot **Update Object** column settings, add a field mapping for the custom property and set its value to the formula column from Step 2. Each time a row runs, Clay writes the current timestamp to that HubSpot property.
+
+**Note:** The timestamp reflects the time the formula last ran — not a live clock. When Auto-run is enabled, the formula updates each time the table re-runs. If Auto-run is off, re-run the table manually to refresh the timestamp.
+
 ### Why do HubSpot property fields not appear in the Update Object mapping section?
 
 When you open an **Update Object** column and select an **Object type**, the available HubSpot properties are fetched from your HubSpot account in real time. If the field picker is empty or the mapping section shows no properties, check the following:
