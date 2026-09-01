@@ -83,6 +83,20 @@ Check both the **Queued rows** and **Errored rows** tabs for rows with **Run Sto
 
 For more options on re-running specific rows or cells, see [Run progress](run-progress.md).
 
+### Understanding errors from missing enrichment inputs
+
+Rows can also stay in the **Queued rows** or **Errored rows** tabs when an enrichment column can't run because the row is missing all of its required input data — not because the run was paused.
+
+A common example: the **Enrich Person** column requires at least one identifier to run — a LinkedIn Profile URL, LinkedIn User ID, Sales Navigator URL, or work email. If all of these are blank for a given row, the column fails immediately with: *"Please include either a LinkedIn profile URL, LinkedIn User ID, Sales Navigator URL or an email."* No credits are charged for these rows.
+
+Resuming the run won't fix them — there is no data to enrich from. To resolve them:
+
+1.  **Identify which rows are affected.** Click any cell showing red on the failing enrichment column to see the exact error and which inputs are missing.
+2.  **Add a run condition to the enrichment column.** Open the column → **Run conditions** → add a condition requiring at least one identifier to be present — for example, "LinkedIn URL is not empty" or "Email is not empty." Rows that don't meet the condition show **Run condition not met** instead of an error, which is treated as a successful skip (🟢), so the row can proceed through the rest of the pipeline normally.
+3.  **Re-run affected rows.** Right-click the column header → **Run column** → **Run [N] empty or out-of-date rows**.
+
+See [Conditional runs](conditional-runs.md) for full details on configuring run conditions.
+
 ### Understanding count differences between Clay and your destination
 
 When a bulk enrichment contains multiple enrichment steps, the record count shown in Clay and the count in your downstream destination (Snowflake, Salesforce, Google Sheets, etc.) will often differ while a run is in progress. **This is expected behavior, not a bug.**
