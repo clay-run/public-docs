@@ -149,6 +149,18 @@ Each record exported or synced consumes 1 action. Data credits apply for any enr
 
 The 50,000 row limit applies to ad audiences exported from tables. For larger audiences, create multiple tables and attach multiple audiences to your campaigns in the ad platform.
 
+Each audience segment supports only one ad sync. If a segment already has an active or previously-exported ad sync, the option to create a new ad sync from that segment will not appear. To sync the same audience to a different ad platform, clone the segment and create a new ad sync from the clone.
+
+LinkedIn is the only ad platform that supports Company (account-level) segments. Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co support People (contact-level) segments only. To run campaigns on those platforms targeting contacts at your company accounts, use **Find people from this list** on your Companies segment to build a People segment, then create an ad sync from that People segment.
+
+### **Why don't I see Google Ads (or other platforms) as an option when creating an ad sync from my Companies segment?**
+
+LinkedIn is the only ad platform that supports Company (account-level) segments. Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co support People (contact-level) segments only — those platforms do not offer account-level targeting.
+
+When you open the ad sync setup from a Companies segment, only LinkedIn appears as an available destination. To use any other platform, create an ad sync from a People segment instead.
+
+To target contacts at your company accounts on those platforms, use **Find people from this list** on your Companies segment to build a corresponding People segment, then sync the People segment to the ad platform of your choice.
+
 ### **Can I edit the field mapping after setting up an Ad Sync?**
 
 No. Field mapping is configured when you create the Ad Sync and cannot be changed afterward. To use a different field mapping, delete the current sync and create a new Ad Sync with your updated configuration. **Deletion is permanent — the sync cannot be restored afterward.** Deleting the sync does not affect your underlying audience segment. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for details.
