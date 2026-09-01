@@ -90,3 +90,6 @@ No. Use the flag from Step 1 plus a conditional run formula so it only runs on S
 
 **How much does this cost?**
 Enrich professional post is **0.5 credits per row** it runs on.
+
+**Is there a Clay enrichment that accepts share URLs directly for retrieving engagement data?**
+No. All Clay enrichments that return engagement data — Get interactions with professional posts, Get comments on a professional post, and Get reactions on a professional post — require a direct activity or ugcPost post URL and will error on share URLs. There is no engagement enrichment that processes share URLs as a final destination. If your post references come from a source that returns share-format URLs (for example, external integrations that pull LinkedIn post data via the LinkedIn API often return share URNs), you must run **Enrich professional post** first to obtain the activity URL, then feed that URL into your engagement enrichment.
