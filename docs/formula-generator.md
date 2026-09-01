@@ -186,7 +186,7 @@ Clay.getCellStatus({{Column Name}})
 
 This returns a string representing the cell's current state. Possible values include:
 
--   **Success**: `"SUCCESS"` (data returned), `"SUCCESS_NO_DATA"` (ran successfully but returned no data), `"SUCCESS_BLOCKED_DATA"`
+-   **Success**: `"SUCCESS"` (data returned), `"SUCCESS_NO_DATA"` (ran successfully but returned no data), `"SUCCESS_BLOCKED_DATA"` (contact blocked by Clay's internal compliance list before the provider was contacted — no credits charged)
 -   **In progress**: `"RETRY"` (actively retrying — shown as "Retrying…" in the UI), `"QUEUED"`, `"RUNNING"`, `"RATE_LIMITED"`, `"AWAITING_CALLBACK"`
 -   **Skipped**: `"ERROR_RUN_CONDITION_NOT_MET"` — the column's "Only run if" condition evaluated to false for this row; the enrichment was skipped and no credits were consumed
 -   **Error**: `"ERROR"` and error-specific variants such as `"ERROR_TIMEOUT"`, `"ERROR_NUMBER_OF_RETRIES_EXCEEDED"`
