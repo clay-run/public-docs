@@ -171,9 +171,11 @@ Add a Claygent column and prompt it to find the company's street address from th
 
 ## Why does the Lookup Record action return a maximum of 5 results?
 
-The standard **Lookup Record** action returns a maximum of 5 records per run. This is by design — it is optimized for finding a single matching record and returns up to 5 results when multiple matches exist.
+The standard **Lookup Record** action returns a maximum of 5 records per run. This is by design — it is optimized for finding a single matching record and returns up to 5 results when multiple matches exist. The 5 records are returned in no guaranteed order (Salesforce's default retrieval order, not sorted by date or any other field), so you may not see the most recent records even when the related object has more than 5.
 
-If you need to retrieve all contacts (or other records) linked to a specific account — for example, when your CRM has 20 or more contacts per account — use the **Lookup Records via SOQL** action instead. With SOQL you control how many results are returned via your own `LIMIT` clause, or omit it to return all matches:
+If you need to retrieve all related records — or control how many are returned and in what order — use the **Lookup Records via SOQL** action instead. With SOQL you set the record count via your own `LIMIT` clause and can sort results with `ORDER BY`.
+
+**All contacts linked to an account:**
 
 ```sql
 SELECT Id, FirstName, LastName, Email, Title
@@ -181,7 +183,17 @@ FROM Contact
 WHERE AccountId = '/Account ID'
 ```
 
-Replace `/Account ID` with the relevant column from your Clay table using the `/` picker in the query editor. You can use an AI assistant to help write the query — for example: "write a SOQL query to return all contacts for a given Salesforce account ID." For SOQL syntax reference, see [Salesforce SOQL](salesforce-soql.md).
+**Most recent opportunities for an account (newest close date first):**
+
+```sql
+SELECT Id, Name, StageName, Amount, CloseDate
+FROM Opportunity
+WHERE AccountId = '/Account ID'
+ORDER BY CloseDate DESC
+LIMIT 200
+```
+
+Replace `/Account ID` with the relevant column from your Clay table using the `/` picker in the query editor. The `ORDER BY CloseDate DESC` clause in the Opportunity query returns the most recently closed opportunities first; adjust `LIMIT` to set how many you want back. You can use an AI assistant to help write the query — for example: "write a SOQL query to return the 10 most recent opportunities for a given Salesforce account ID, sorted by close date descending." For SOQL syntax reference, see [Salesforce SOQL](salesforce-soql.md).
 
 ## How do I update all Salesforce records returned when a lookup finds multiple matches?
 
