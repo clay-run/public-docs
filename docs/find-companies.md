@@ -41,6 +41,7 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
         -   **Products** — e.g., Amazon EC2, Salesforce Sales Cloud
         -   **Main categories** and **Parent categories**
         Product and vendor names in the filter come from BuyerCaddy's catalog and may not match a company's public brand name exactly. To identify what a product name refers to, run the search and check the **Vendor** field in the cell details for any returned row — it shows the company behind the product.
+    -   **Company identifiers** — Return only companies that match a specific list of domains or professional network company page URLs. Enter one type per search (domains only, or professional network URLs only, not both). Each domain is resolved to matching company records in Clay's database; a single domain can map to more than one company record when multiple entities share that domain (for example, a parent company and its subsidiaries).
     -   **Domain filters:**
         -   **Has domain** — Whether a company has a resolved domain.
         -   **Domain is live** — Whether the company's domain is currently active.
@@ -136,6 +137,12 @@ Any enrichments you select during the import wizard, or add to the table afterwa
 If the count still doesn't match after the import finishes, the **preview count** (e.g., "Showing 50 of ~39,869 results") is an approximate figure — the `~` tilde prefix in the UI indicates the total is estimated using a fast approximate count, not an exact query. The actual import can return a slightly different total, and this is normal.
 
 Also check your **Limit results** setting: the import won't exceed whatever limit you've configured (default 10,000).
+
+### I entered a list of domains in Company identifiers — why does the preview show far more results than the number of domains I entered?
+
+Each domain you enter is resolved to one or more matching company records in Clay's database. Multiple companies can share a single domain — for example, a parent company and its subsidiaries may all be associated with the same root domain. One input domain can therefore map to more than one company record, which is why a list of thousands of domains can produce a preview estimate that shows many more companies than domains entered.
+
+The preview total (displayed as `~X results` for large result sets) is an approximation, not an exact count. The actual import is capped at your **Limit results** setting (default and maximum: 10,000 rows), regardless of how large the preview estimate appears.
 
 ### My search preview shows more than 10,000 results — how do I import all of them?
 
