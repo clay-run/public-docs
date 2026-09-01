@@ -1,0 +1,27 @@
+docs/clay-api-cli.md
+  h_cb266dffc49517 58-59,61,63,72-73,75-79,88-89
+  s_1cbdfbad81d451::t_adb1694572f40d 45
+  s_1cbdfbad81d451::t_565cbd3df7cb28 3,11,60,62,64-71,74,80-87
+  s_1cbdfbad81d451::t_6369ebcd6eb007 90
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "5e61e35e9fee0814ca395074a7aad91ad2c39bb9",
+  "prompts": {},
+  "humans": {
+    "h_cb266dffc49517": {
+      "author": "Jim Ren <jim.ren@clay.com>"
+    }
+  },
+  "sessions": {
+    "s_1cbdfbad81d451": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a05904-085b-7ea0-b93a-fc8988df0b50",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Jim Ren <jim.ren@clay.com>"
+    }
+  }
+}
