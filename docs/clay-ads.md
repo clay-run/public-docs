@@ -19,7 +19,7 @@ Build and sync contact and account lists to LinkedIn, Meta, Google Ads, Bing Ads
 -   Advertise to executives who recently changed jobs or got promoted
 -   Target leads that aren't in your CRM to expand total addressable market
 
-**Note:** Table ads (Ad Sync tables created directly from a Clay table) are being deprecated. All existing table-based ad syncs now show a deprecation notice, and creating new recurring table ad syncs is no longer supported. For new ad targeting workflows, use Audience Ads instead — see [Syncing audiences to ad platforms](https://university.clay.com/docs/audiences#syncing-audiences-to-ad-platforms).
+**Note:** Legacy ad sync (table-based Ad Sync) is being deprecated. All existing table-based ad syncs now show a deprecation notice, and creating new table-based ad syncs is no longer supported. For new ad targeting workflows, create a segment in Audiences and use Ad sync instead — see [Syncing audiences to ad platforms](https://university.clay.com/docs/audiences#syncing-audiences-to-ad-platforms).
 
 ## **Creating and syncing ad audiences**
 
@@ -112,6 +112,14 @@ When you connect your Google Ads account, Clay requests the following OAuth perm
 Access control is enforced at the Google Ads account level — the person connecting must have appropriate permissions on the ad account they link.
 
 ## **FAQs**
+
+### **What is the difference between Ad sync and Legacy ad sync?**
+
+**Ad sync** uses a segment from Audiences — a People list or Company list — as its source. Ad sync is available on Growth and Enterprise plans and is the recommended option for new campaigns. Your audience stays up to date automatically as contacts enter or leave the segment.
+
+**Legacy ad sync** uses a Clay table directly as its source. This is an older workflow that is being deprecated: existing legacy syncs remain active and visible, but creating new table-based ad syncs is no longer supported. Legacy ad syncs show a deprecation notice in the Ads dashboard.
+
+If you have an existing legacy ad sync you want to modernize, import the table into Audiences, create a People or Company list from it, then set up a new Ad sync from that segment.
 
 ### **What platforms are supported?**
 
