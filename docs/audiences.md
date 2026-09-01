@@ -566,7 +566,7 @@ When you have a segment ready, you can sync it to an ad platform to run account-
 
 **How you might use this:**
 
--   **Account-based advertising** — sync company segments to LinkedIn, Meta, Google Ads, Bing Ads, Reddit Ads, or Vibe.co. Contacts who no longer qualify are automatically removed.
+-   **Account-based advertising** — sync company segments to the professional network, which is the only ad platform that supports account-level (company) targeting. Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co support People (contact-level) segments only — to use those platforms, sync a People segment instead. Contacts who no longer qualify are automatically removed.
 
 **Syncing to multiple ad platforms**
 
