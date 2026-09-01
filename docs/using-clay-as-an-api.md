@@ -66,6 +66,12 @@ The same workspace-level beta access also unlocks a Routines endpoint for trigge
 -   `POST /routines/{routine_id}/run` — submit input records to a Clay function and start an enrichment run.
 -   `GET /routines/run/{routine_run_id}/results` — poll for results once the run completes.
 
+**How polling works:** The results endpoint returns HTTP 202 with `{"status": "in_progress", "total": N, "finished": M}` while the run is processing. Once the run finishes, it returns HTTP 200 with `{"status": "complete", "data": [...]}`. Results are only available after a run fully completes — the results endpoint does not return partial row data for in-progress runs. Keep polling until you receive a 200 response.
+
+**Batch runs (datasets over 100 rows):** For large inputs, use the batch run flow: upload your records as a JSONL file (`POST /routines/{routine_id}/run-batch/upload-url` to get a presigned URL, then PUT your file), then start the run (`POST /routines/{routine_id}/run-batch/start`). Poll `GET /routines/run-batch/{routine_run_id}/results` — the same 202/200 pattern applies, and the 200 response includes a `result_url` pointing to the completed output. Each workspace can have up to 20 batch runs processing simultaneously; attempting to start a 21st returns a 429 with the message "Wait for one to finish before starting another."
+
+**No cancel endpoint:** There is no API endpoint to cancel an in-progress run. If a run appears stuck and is not making progress, contact [Clay support](https://www.clay.com/contact-form). If multiple runs appear stuck at the same time, check [status.clay.com](https://status.clay.com/) before troubleshooting — simultaneous stalls often indicate a platform incident that the Clay team is already working to resolve.
+
 Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is under **Settings → Account → API keys** and is distinct from the personal API key on your profile page.
 
 **Note:** A 401 (`Authentication required`) from `api.clay.com/public/v0` means your workspace hasn't been provisioned for the Public HTTP API — this applies even if your API key is visible in settings. Regenerating the key will not fix a provisioning 401. [Contact Clay support](https://www.clay.com/contact-form) to request workspace enablement.
