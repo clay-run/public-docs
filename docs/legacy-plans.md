@@ -122,6 +122,15 @@ Here is a breakdown of what you gain, lose, and what changes when migrating from
 
 For a full side-by-side comparison, see the [Pricing mechanics comparison](#pricing-mechanics-comparison) and [Feature access comparison](#feature-access-comparison) tables above.
 
+**What's the difference between the "credits" on my legacy plan and the "Actions" I see listed for the Growth plan?**
+
+Legacy plans use a single usage meter called **Data Credits** for all usage — both running enrichments and purchasing data from Clay's marketplace is counted together as a single credit deduction. Modern plans (Growth, Launch, Enterprise) split usage into two separate meters:
+
+-   **Data Credits** — used to purchase third-party data or AI from Clay's data marketplace. Prices vary by data type, and on modern plans, data credit costs are approximately 50% lower on 70+ enrichments.
+-   **Actions** — measure platform usage: enriching accounts and contacts with net-new data, running AI web research, sending emails, syncing to CRM, and other GTM execution. Each enrichment run or export counts as 1 Action, regardless of which data provider you use.
+
+On a legacy plan, running an enrichment spends only Data Credits. On a modern plan, the same enrichment spends 1 Action plus variable Data Credits for the data itself. The total cost is typically similar or lower on modern plans because data credit prices are cheaper. For a full breakdown of what Actions and Data Credits each cover, see [Actions & Data Credits](./actions-data-credits.md).
+
 **Do legacy customers benefit from the 50% credit price reduction?**
 
 No. Only customers on modern plans see the data cost savings in-product. Rule of thumb: If you're charged for actions, you're on new pricing and see credit savings. If you're NOT charged for actions, you're on legacy pricing and do NOT see credit savings.
