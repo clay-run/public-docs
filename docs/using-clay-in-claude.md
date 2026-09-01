@@ -147,6 +147,17 @@ Yes. Ask _"What functions do you have?"_ or _"What workflows has RevOps built fo
 
 Yes. Once you connect Clay via Claude's connector system at `claude.com/connectors/clay`, it will also work in Claude Code.
 
+**Why does Claude keep asking for permission to use Clay even after I click "Allow"?**
+
+This is expected — it is Claude's built-in security control for MCP tools, not an error with Clay. Claude asks for permission before **each** Clay tool call unless ongoing access has been granted.
+
+When prompted:
+
+-   **Allow once** grants access only for that individual request. You will see the same prompt again the next time Claude uses a Clay tool in the conversation.
+-   **Always allow** grants ongoing permission for that Clay tool, which prevents the prompt from appearing repeatedly.
+
+To avoid repeated prompts, select **Always allow** when Claude asks to use a Clay tool.
+
 **Troubleshooting: "SDK auth failed: Client name must not impersonate a known platform"**
 
 If you see this error, Clay was added via CLI (e.g., `claude mcp add https://api.clay.com/v3/mcp`) instead of through the Claude desktop app. Clay's MCP does not support CLI installation — the OAuth flow only accepts connections from the official connector.
