@@ -307,6 +307,8 @@ Clay's report picker automatically filters to show only Tabular and Matrix repor
 
 For an overview of Salesforce report formats, see Salesforce's [Report Formats documentation](https://trailhead.salesforce.com/content/learn/modules/lex_implementation_reports_dashboards/lex_implementation_reports_dashboards_report_formats).
 
+**If the report format is correct but the report still doesn't appear in the picker**, the report's folder permissions may be the cause. Clay queries the Salesforce Report API using the connected Salesforce user's credentials, and Salesforce only returns reports in folders that user can read — making a report public in Salesforce is not sufficient if the connected user lacks read access to the folder containing the report. To fix this, ask your Salesforce admin to grant the connected Salesforce user read access to the folder where the missing report is stored.
+
 ## Why did my Salesforce report import only bring in 2,000 rows when my report has more?
 
 This is expected behavior. The Salesforce Analytics API caps the number of records returned when running a report at **2,000 rows**. Clay's **Import records from a Salesforce report** source fetches a single page of results from this API — if your report contains more than 2,000 records, only the first 2,000 are imported into Clay. This is a Salesforce API restriction, not a Clay bug.
