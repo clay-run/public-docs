@@ -63,6 +63,24 @@ To regain access with your new email:
 
 If you no longer have access to your original email address, contact Clay support via the in-app chat — the support team can verify your identity and help restore access.
 
+## Migrating your whole team to a new email domain
+
+If your company is changing its email domain and every team member needs a new email address on their Clay account, use the following sequence. Clay matches accounts by email address at sign-in — signing in with a new address creates a new empty workspace rather than linking to the existing account — so coordinating the switch in the right order prevents anyone from losing access.
+
+**Recommended sequence:**
+
+1.  **Change the workspace admin's email first, before the old mailbox is disabled.** While your current email address is still active, email support@clay.com from your registered Clay address and request the change to your new address. Clay support will update the email on your account.
+
+2.  **After the domain switch, sign in as admin with your new email address.** Your workspace data, tables, and settings will be exactly as you left them.
+
+3.  **Remove and re-invite the remaining team members using their new addresses.** Go to `Settings` > `Team`, remove each member, and re-invite them using their new email address. As the workspace admin, you can do this yourself without opening a support ticket for each person.
+
+**Your workspace data is not affected by this process.** Tables, enrichments, shared views, run history, and credits belong to the workspace itself — not to individual user accounts. Removing a member and re-inviting them on a new email address does not delete or move any of that data. Any tables or workbooks they owned automatically transfer to the longest-tenured admin until they re-join the workspace.
+
+**API keys survive an email change.** Clay API keys are scoped to the account by internal user ID, not by email address. Changing an email — whether done by support or via the remove-and-re-invite method — does not invalidate existing API keys. Production integrations will continue working without regeneration.
+
+**Important: prevent team members from signing in before they are re-invited.** If someone signs in with their new email address before you have re-invited them, Clay creates a new empty workspace for that email. Their data in the original workspace is not lost, but they will land in the wrong place. If this happens, invite their new address from `Settings` > `Team` > `+ Invite`, have them accept the invite, and they will regain full access to the original workspace and all its data.
+
 ## Update your country
 
 Clay's account profile settings don't include a country field — there is no country selector in `Settings` > `Account`. If you need to update the country associated with your billing information, go to `Settings` > `Plans & billing`, click `Edit`, and select `Edit billing info...` — this lets you update your name, billing email, and country. US-based accounts can also update their address, city, state, and ZIP code there.
