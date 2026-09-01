@@ -81,6 +81,21 @@ A **custom table** (shown with the table icon in your workbook) is a blank canva
 
 In Clay, a workbook is a container for related tables. It's common to keep linked tables together in one workbook — for example, a Find Companies table and the Find People table created from it — so the workflow is easy to navigate and share as a template. Create a new workbook when you're working on a distinct project or campaign (for example, separate workbooks for different clients or different outbound plays).
 
+### Why do I see many company records when I search for a specific well-known company like Amazon or Google?
+
+The description keyword filter searches company profile descriptions, not company names directly. Searching for "Amazon" as a keyword returns every company whose profile description mentions that name — partners, resellers, marketplace sellers, and other organizations that reference "Amazon" in their descriptions — not just Amazon itself. For large enterprise companies whose names appear widely across corporate profiles, keyword results can include many unrelated entries. This is expected behavior.
+
+**To target one specific known company precisely:** Skip the search and import the company's professional network company URL directly. Create a blank table, add a row with the company's professional network URL, and run an **Enrich Company** column. Professional network company URLs resolve to a single company profile and bypass description-keyword matching entirely.
+
+**To narrow a Find Companies search:** Layer these filters alongside your keywords to cut through the noise:
+
+-   **Company type** — select `Public Company` for large publicly traded companies; this removes most storefronts and low-quality records.
+-   **Estimated employee count** — set a minimum matching the target company's scale (for example, 10,000+).
+-   **Headquarters location** — filter by the city or country where the company's primary office is located.
+-   **Industries to exclude** — remove categories generating noise (for example, exclude `Retail` for an enterprise tech company).
+
+Find Companies results include each company's professional network URL — once you spot the right record in the preview, copy that URL to use in the import approach above or for downstream enrichments.
+
 ### Can I filter by job title or role in company search?
 
 No — `Find Companies` only filters by company-level attributes (industry, size, location, revenue, etc.). There is no job title filter in company search. Job title is a person-level attribute available only in People search.
