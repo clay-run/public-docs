@@ -78,6 +78,20 @@ Always pair this with a **Job title keywords to exclude** list to filter out com
 -   **Contains** — returns titles that contain your full keyword phrase as a substring. "Chief executive officer" will not match "chief financial officer."
 -   **Is exactly** — matches only the precise titles you enter. Use when precision is critical.
 
+### Upgraded search (Beta)
+
+Currently in beta — available on all paid plans and 14-day trials. Free accounts do not have access.
+
+**Upgraded search** is an alternative search experience for Find People (and Find Companies) that enables custom natural-language queries across people, companies, and jobs. When enabled, the settings panel shows "Upgraded search is on" with a **Beta** badge.
+
+**To enable or disable:** In the search criteria panel, click the **Settings** icon (⚙️) next to the saved search button. Toggle **Upgraded search** on or off. The setting saves against your user and persists across sessions — you can switch back and forth at any time.
+
+**What changes when Upgraded search is on:**
+
+-   Job title matching defaults to **Is similar to** (fuzzy match) instead of **Contains**. For example, searching "VP of Sales" also returns "Vice President of Sales" and similar variations. You can still switch to **Contains** or **Is exactly** using the match mode selector.
+
+**When to turn Upgraded search off:** If your search uses a Clay table of companies as the company identifier and you are getting fewer results than expected, turn off Upgraded search to revert to the previous experience. To do this, click the **Settings** icon (⚙️) and toggle **Upgraded search** off. Your filters and saved searches are preserved, and you can re-enable Upgraded search at any time.
+
 ### Use LinkedIn URLs, not domains, as company identifiers
 
 When running a people search against a company list, provide a **company or school LinkedIn URL** rather than a domain wherever possible. Clay resolves domains by running them through a company lookup, which can occasionally surface the wrong company — especially for subsidiaries. LinkedIn URLs map directly to the intended profile.
@@ -382,6 +396,8 @@ To improve coverage across all your companies:
 -   **Remove the per-company limit** and use the global **Limit results** setting instead to cap the total.
 -   **Reduce your company list size** so that all companies can be processed within a single search run.
 -   **Switch to the enrichment action** (Find People at These Companies in-table) rather than the source — it processes each company row individually and returns results per company regardless of list size.
+
+**Also: deduplication on import.** A person who matches at more than one company in your search is imported as a single unique row — Clay deduplicates by profile URL before writing results to the table. The preview count reflects all matches before deduplication, so a search across a large, overlapping company list can show a preview total significantly higher than the actual imported row count. This is expected: every row you receive is a unique person.
 
 ### Find People is returning people from the wrong company
 
