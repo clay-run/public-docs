@@ -368,6 +368,14 @@ This way, new records are created and existing records are updated — without e
 
 On the Salesforce side, modify the duplicate rule to exclude records coming from Clay's integration user. For example, add a condition such as "Current User not equal to \[the Salesforce user Clay authenticates as\]". This prevents the rule from firing when Clay creates records, while still protecting your org from duplicates created by other users.
 
+**If you want to surface the error details to reps or a downstream column** — rather than bypassing or preventing the duplicate — add a formula column pointing at the failed Create Record cell:
+
+```javascript
+Clay.getCellErrorMessagePreview({{Create Record}})
+```
+
+This returns up to 300 characters of the Salesforce error response at no credit cost, including the duplicate rule name and error message text. Note that the formula preview sidebar will show blank — this is expected; save the column and values will populate on actual rows. The 300-character preview is the only error text accessible via formula. For branching on error type rather than error text, use `Clay.getCellStatus()` in a separate formula column — it returns `"ERROR"` for any failed cell, which is more stable across Clay releases than matching on message content. For full details and limitations, see [Formulas](formula-generator.md).
+
 For details on Clay's Create Record settings, see [Salesforce integration](https://university.clay.com/docs/salesforce-integration-overview). For more on Salesforce duplicate rules, see [Salesforce's documentation](https://help.salesforce.com/s/articleView?id=sales.duplicate_rules_map_of_reference.htm&type=5).
 
 ## Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?
