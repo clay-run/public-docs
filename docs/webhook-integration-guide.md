@@ -169,6 +169,14 @@ Because the duplicate has a different URL, any external system currently sending
 
 To find the new webhook URL: open the duplicated table, click the webhook source column, and copy the URL shown there.
 
+### Will adding a new webhook source to my existing table re-run enrichments on all my current rows?
+
+No — adding a new webhook source to a table with existing rows does not trigger enrichments on those existing rows. The "Import data to existing table" confirmation dialog that appears when you add a source to a table with auto-run enabled warns you that **new rows arriving through the new webhook** will automatically run your enrichment columns — not that Clay is about to re-process the rows already in your table.
+
+Click **Import and run** to proceed. Your existing rows are unaffected; enrichments will only run on each new row as it arrives through the new webhook URL.
+
+**To prevent new incoming rows from triggering enrichments automatically:** Turn off table-level auto-run by clicking the **⛭** icon in the top toolbar → **Run Settings** → toggle **Auto-run** off. With auto-run off, incoming webhook rows are added to the table without running any enrichment columns — you can trigger them manually when you're ready.
+
 ### Does Clay prevent the same webhook record from being processed more than once?
 
 **No — unlike CRM sources, webhooks do not deduplicate by record identity.** Every HTTP POST creates a new row, regardless of whether identical data already exists in the table. Clay assigns each incoming payload a fresh unique identifier, so sending the same contact or event a second time will create a second row and trigger enrichments again.
