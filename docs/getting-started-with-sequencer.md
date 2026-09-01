@@ -79,7 +79,7 @@ For domain strategy, monitoring, and what to do when a domain's reputation slips
 
 ## Costs, plans, and limits
 
-Sequencer 2.0 is available on Launch, Growth, and Enterprise plans; buying email accounts in Clay needs Growth or Enterprise. Each lead enrolled in a campaign costs 1 action credit, plus variable data credits for any AI snippets in your copy — the campaign editor shows an estimate before you launch.
+Sequencer 2.0 is currently rolling out to Launch, Growth, and Enterprise plans — contact support if you don't yet have access. Buying email accounts in Clay needs Growth or Enterprise. Each lead enrolled in a campaign costs 1 action credit, plus variable data credits for any AI snippets in your copy — the campaign editor shows an estimate before you launch.
 
 Credit budgets are set up at the workspace level, and you attach one to a campaign when you launch it. Once a budget's limit is reached, the campaigns drawing on it stop spending credits, which stops new leads enrolling.
 
@@ -88,7 +88,7 @@ The hard limits, in one place:
 | Limit | Value |
 | --- | --- |
 | Emails per sequence | 4 |
-| Maximum delay between steps | 10 days |
+| Maximum delay between steps | 365 days |
 | Leads per campaign | Up to 500,000 |
 | Message size | 8 KB of text per email |
 | Copy variants per campaign | 2 |
