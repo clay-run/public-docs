@@ -18,6 +18,7 @@ Cold outbound often requires sending a high volume of emails to inboxes that may
 From the `Campaigns` homepage, go to the `Email Accounts` tab and click `Add Email Accounts`. Select `Buy email accounts` to open the purchase flow.
 
 1.  **Search for alt domains.** Clay automatically loads your workspace's company domain as a starting point. Search for available alternative domains and select the ones you want to add to your order.
+    -   **How many domains do I need?** Use the calculator in this step to plan your order: enter your target **weekly sends** to get a recommended domain count, or enter a **domain count** directly to see its expected weekly sending capacity. The calculator assumes 3 email accounts per domain on the default sending schedule and includes a 5% buffer to account for domains that may not pass availability checks at placement.
     -   Each domain supports up to 5 email accounts.
     -   The preview panel on the right shows your current order, including per-domain pricing (yearly) and per-account pricing (monthly).
 2.  **Add personas.** Personas map directly to the reps who will manage replies coming into these inboxes.
