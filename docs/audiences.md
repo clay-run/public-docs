@@ -422,6 +422,12 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
     -   Enable the auto-enrich toggle so that any new record entering this segment is automatically passed through the enrichment — typically within 15 minutes.
 5.  Click `Start Run`.
 
+**Recurring enrichments (scheduled re-runs)**
+
+After an initial run, you can configure the enrichment to re-run automatically on a fixed schedule. In the enrichment's **Run settings**, enable **Recurring enrichments** and choose a frequency: **daily**, **weekly**, **monthly**, **quarterly**, or **custom** (custom lets you specify an interval in days, weeks, or months). On each scheduled run, the enrichment re-processes all current segment members — every record in the segment at run time is re-queued and enriched from scratch.
+
+Scheduled enrichment runs are not SLA-guaranteed — monitor the first few runs to confirm timing and results meet your needs.
+
 **Note:** To run a bulk enrichment on Audience data, always start from within the Audience — click `Enrich` → `Add bulk enrich` from any segment view. When creating a new Bulk Enrichment from the Clay homepage (`New` → `Bulk enrichment`), the source type options are CSV and Salesforce CRM only — there is no "Audiences" source type in that dialog. The Audience segment serves as the source when you add the enrichment from within Audiences.
 
 **Note:** Clay does not impose rate limits on Audiences bulk enrichments — the system is built to handle large lists at scale. Third-party data providers (such as Clearbit or Apollo) apply their own rate limits, but Clay queues requests and manages these automatically in the background. If you supply personal API keys for a provider, those keys' own rate limits apply.
@@ -805,6 +811,16 @@ Yes. Segments update in real time as records enter or exit your filter criteria.
 -   **Growth plan:** CRM and data warehouse syncs run daily, and segments update based on that daily refresh.
 
 Enrichments configured with `Continuous Enrichment` enabled automatically process new records entering a segment, typically within 15 minutes. No manual runs are required after initial setup.
+
+### Can I run a bulk enrichment on a recurring schedule?
+
+Yes. In the enrichment's **Run settings**, enable **Recurring enrichments** and choose a frequency: **daily**, **weekly**, **monthly**, **quarterly**, or **custom** (custom lets you specify an interval in days, weeks, or months).
+
+On each scheduled run, the enrichment re-processes all current segment members — every record in the segment at run time is re-queued and enriched from scratch. This makes recurring enrichments useful for keeping data fresh as your audience evolves over time, without manual re-runs.
+
+Recurring enrichments is an Audiences-specific feature — it is available only in bulk enrichments started from within an Audience segment (`Enrich` → `Add bulk enrich`), not in bulk enrichments created from the Clay homepage.
+
+Scheduled enrichment runs are not SLA-guaranteed — monitor the first few runs to confirm the timing and results meet your needs.
 
 ### Why didn't my audience count change after I tightened my search filters?
 
