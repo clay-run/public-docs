@@ -1,7 +1,7 @@
 ---
 title: Claygent builder
 description: Build smarter agents faster
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-08-12T02:16:28.170Z
 ---
 
 # Claygent builder
@@ -10,7 +10,7 @@ Build smarter agents faster
 
 Claygent builder is the centralized hub for building, testing, and deploying Claygents — Clay's AI agents designed for judgment-based GTM work like account research, lead scoring, outbound copywriting, and persona classification.
 
-With Claygent builder, you can build agents conversationally using Sculptor, test for free on your production data, add business context and documents directly to your prompts, and deploy agents across all your workflows from one place.
+With Claygent builder, you can build agents conversationally using Sculptor, test for free on your production data, add business context and documents directly to your prompts, save reusable methodologies as skills, and deploy agents across all your workflows from one place.
 
 For example, you could create:
 
@@ -188,6 +188,41 @@ Common errors when writing schema by hand:
 
 To avoid writing schema by hand, click **Generate from prompt** to have Clay auto-generate a valid schema from your prompt.
 
+## Skills
+
+**Note:** Skills are currently in beta. Contact support to request access for your workspace.
+
+Skills are reusable instructions that teach a Claygent how you want a specific kind of work done — the research sequence to follow, the quality bar to hold, the output format to return. Where your prompt defines the task, a skill defines the methodology. Your Claygent pulls in a skill only when it reaches a step that calls for it, so you can keep several methodologies available without packing them all into one prompt.
+
+Skills are saved at the workspace level rather than on a single agent. One person can encode how your team does account research or writes outbound, and every teammate can enable that same skill on their own Claygents.
+
+### Creating a skill
+
+Find the `Skills` section in the configuration panel on the right side of the Builder, then:
+
+1.  Click `Create skill`.
+2.  Enter a `Skill name`. This is the name shown in the skill list when you configure an agent.
+3.  Write a `Description` covering when the skill applies. Your Claygent reads this to decide whether to load the skill, so name the situation it's for rather than describing the output.
+4.  Write the `Instructions` — the methodology itself, in plain language. This is where the steps, quality checks, and formatting rules go.
+5.  Click `Create skill` to save it to your workspace.
+
+**Note:** Field limits are 80 characters for the skill name, 500 for the description, and 50,000 for the instructions — enough room for a genuinely detailed playbook. Clay also derives a short lowercase identifier from the name you enter, shown underneath the field as you type; your Claygent uses it internally to load the skill.
+
+### Enabling skills on a Claygent
+
+Every skill in your workspace appears in the `Skills` section with a checkbox. Select the checkbox for each skill you want this Claygent to be able to draw on, then save the agent.
+
+Enabling or disabling a skill marks the agent as modified. Saving the agent after toggling creates a new version in your agent's history, and enabled skills are stored on that version — which means they carry through to column runs and workflow nodes exactly as they behave in the Builder.
+
+To revise or remove a skill, use the pencil and trash icons next to its name in the list.
+
+### How your Claygent uses skills during a run
+
+-   Up front, your Claygent sees only the name and description of each enabled skill — not the full instructions.
+-   When it reaches a step where one applies, it loads that skill's instructions and follows them for that step.
+-   It can load more than one skill in a run, and there's no cap on how many.
+-   Skills it doesn't need stay unloaded, keeping the rest of the context focused on the task at hand.
+
 ## Testing before you deploy
 
 **Note:** You can have up to 10 test cases at a time for free (you can delete and add new test cases to keep testing). Test runs don't cost credits.
@@ -210,7 +245,7 @@ This is especially useful when you want to balance output quality against cost a
 Once you're happy with the output:
 
 1.  Go to any table and add an AI column.
-2.  Under Claygent options, select `Saved Claygents`.
+2.  Find the `Use a saved Claygent` card. Your three most recent agents appear there — click `Browse agents` if the one you want isn't among them.
 3.  Select the agent you just built.
 4.  Variables automatically map to your table columns.
 5.  Save and run.
@@ -333,6 +368,22 @@ After saving, run a test row to confirm the credit cost has updated. Click the c
 ### Can I still edit prompts directly in tables?
 
 Yes, but centralizing in Claygent builder gives you version control, free testing, and the ability to update once and deploy everywhere. It's the better choice for agents you'll reuse or iterate on.
+
+### If I edit a skill, do my existing Claygents pick up the change?
+
+Not automatically. Each Claygent stores its own copy of a skill's instructions as of the last time you saved that agent, so editing a skill won't retroactively change agents already running in your tables.
+
+To move a Claygent onto a revised skill, open it in Claygent Builder and save it again. That creates a new version using the current instructions.
+
+### Who can create and edit skills?
+
+Anyone with edit access to your workspace can create, edit, and delete skills. Since skills are shared workspace-wide, an edit or deletion affects every teammate who has that skill available.
+
+Deleting a skill removes it from the list and clears it from the agent you're currently editing. Claygents already saved with that skill keep running on their stored copy until you save them again.
+
+### Do skills cost extra to run?
+
+No. Skills don't change Claygent pricing — a run is still one action plus data credits, which vary by the model you've selected.
 
 ### Sculptor updated my prompt but the output looks the same — what happened?
 
