@@ -279,6 +279,17 @@ A lookup reads the target table at the exact moment it runs — it doesn't wait 
 **Ways to make it more reliable (most to least effective):**
 
 -   **Remove the cross-table dependency:** Run the enrichment (e.g., a "Find People at Company" action) directly in the same table where you need the results, rather than populating a separate people table and then looking it up. This eliminates the timing dependency entirely and is the most reliable fix.
--   **Restructure to a sequential flow:** Make sure the source table fully finishes running before the dependent table reads from it. For scheduled tables, offset the second table's schedule by enough time for the first to complete — see [Custom signals](custom-signals.md) for an example of staggering table schedules.
+-   **Restructure to a sequential flow:** Make sure the source table fully finishes running before the dependent table reads from it. For scheduled tables, offset the second table's schedule by enough time for the first to complete.
+
+    **How to schedule only the lookup column (not the whole table):** Use Table Settings to re-run specific columns on a schedule, set to start after the source table finishes.
+
+    1. In the dependent table, open **Table Settings** (the ⛭ icon in the top toolbar) → **Run Settings** → enable **Re-run columns on a schedule** → choose **Only selected columns**.
+    2. Check the Lookup column. If downstream enrichment or AI columns should cascade — for example, an AI column that generates a justification from the lookup result — check those too.
+    3. Set the day, time, and timezone to start after the source table has had time to complete. For example, if the source table refreshes at 10 AM Monday, set the lookup re-run to noon Monday — a 2-hour buffer accounts for variable row processing times.
+    4. Click **Save changes**.
+
+    **Save credits on downstream columns:** If you added a downstream enrichment or AI column to the scheduled re-run, set a run condition on it (**Run settings → Only run if**) so it only fires when the lookup found records — for example, `/[Lookup column name] is not empty`. Rows where the lookup returned nothing show "Run condition not met" and consume no credits. See [Conditional runs](conditional-runs.md).
+
+    See [Custom signals](custom-signals.md) for an example of staggering table schedules.
 -   **Use a scheduled lookup:** A table run on a schedule reads other tables that have already completed their prior runs, so it is less susceptible to this issue than a lookup triggered in real time alongside an in-progress enrichment.
 -   **Add a delay:** Insert a delay column before the lookup (up to 600 seconds). This reduces failures but does not guarantee they disappear, since enrichment time varies per row.
