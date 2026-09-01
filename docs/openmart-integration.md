@@ -29,8 +29,9 @@ When the source runs, Clay automatically creates columns in your table for each 
     -   Overall rating range
     -   Review count range
     -   Contact info presence
-    -   Business name phrases
-    -   Include or exclude keywords
+    -   **Business name must include:** A hard filter — only returns businesses whose name contains **all** of the listed phrases (AND logic, up to 5 phrases). For example, entering both "roof" and "supply" returns only businesses with both words in their name. If you want businesses whose name contains **any** of several terms — such as "roof", "roofer", or "roofing" — use **Boost scores for matches with these keywords** instead.
+    -   **Boost scores for matches with these keywords:** Boosts the match score for businesses that include **any** of these keywords in their name, description, specialty, business type, tags, or keywords list (up to 64 keywords). Unlike **Business name must include**, this is not a hard filter — businesses without any of these keywords can still appear, but will rank lower.
+    -   **Exclude matches with these keywords:** Excludes any business whose name, description, specialty, business type, tags, or keywords list contains any of these keywords (up to 64 keywords).
     -   Exclude specific root domains
 
 **Output**
