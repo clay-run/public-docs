@@ -335,7 +335,7 @@ There is no countdown timer or progress indicator in the UI showing time remaini
 
 ### I'm getting an error that my email account is already in use. What does this mean?
 
-Clay's email sequencer runs on shared Smartlead infrastructure, and Smartlead only allows each email address to be connected once across the entire system. This error most commonly appears when the email was already connected to the sequencer in **another Clay workspace** — you don't need a separate Smartlead account for this to occur. To fix it, check your other Clay workspaces: go to `Campaigns` → `Email Accounts`, locate the address, and delete it there. Once removed from the other workspace, you can add it to the current one. If you can't identify which workspace has it, contact Clay support with the email address and we'll remove it from our end.
+Clay's email sequencer runs on shared Smartlead infrastructure, and Smartlead only allows each email address to be connected once across the entire system. This error most commonly appears when the email was already connected to the sequencer in **another Clay workspace** — you don't need a separate Smartlead account for this to occur. To fix it, check your other Clay workspaces: go to `Campaigns` → `Email Accounts`, locate the address, and delete it there. Once removed from the other workspace, you can add it to the current one. If you can't find the address in any of your current workspaces, the email may be registered in a workspace you no longer have access to — for example, a former employer's or a client's workspace. In that case, contact Clay support with the email address and we'll remove it from the system directly.
 
 ### Why was my campaign email sent from a different sender account than I expected?
 
