@@ -580,6 +580,8 @@ All requests from that column will then originate from Clay's fixed IP addresses
 
 **Note:** Static IP for HTTP API is per column, not workspace-wide — you control exactly which columns route through fixed IPs.
 
+**Note:** Clay's fixed egress IPs are shared across all customers using the static IP feature — they are not dedicated to individual workspaces. These addresses are intended to be stable; while Clay does not currently offer advance notification of IP address changes as a formal policy, contact your account team if you have strict firewall change-management requirements.
+
 ### Enabling static IP for HTTP API as source
 
 In Step 5 of the source configuration (**Configure optional settings**), toggle on **Use static IP**.
@@ -878,6 +880,12 @@ If you want to call Clay from your own systems — push records into a table, se
 ### Does using HTTP API consume Data Credits?
 
 No. HTTP API calls consume 1 Action per run but do not use any Data Credits. Since HTTP API calls reach external endpoints directly — rather than purchasing data through Clay's marketplace — no Data Credit charge applies. This holds regardless of which HTTP method you use (GET, POST, PUT, or DELETE). For a full breakdown of how Actions and Data Credits work together, see [Actions & Data Credits](https://www.clay.com/university/guide/actions-data-credits).
+
+### What happens to my Actions when an HTTP API request fails, times out, or retries?
+
+If an HTTP API run fails — including when your endpoint returns a 4xx error, when the request hits the response timeout, or when a network error occurs — the Action is fully refunded. You are not charged for failed runs.
+
+Retries follow the same rule: if all configured retry attempts fail, the Action is fully refunded. You are charged 1 Action per row only when a run successfully completes.
 
 ### Why do I need quotation marks around dynamic string variables?
 
