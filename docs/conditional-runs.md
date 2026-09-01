@@ -178,6 +178,30 @@ When a run condition is not met, Clay skips the enrichment and stores **no outpu
 
 **Note:** If a row previously ran and produced output, that output is preserved when the condition is not met on a subsequent run — the run condition only gates new executions and does not clear existing cell data.
 
+### "No result found" status labels are UI-only — the underlying cell data is empty
+
+When an enrichment provider runs for a row but finds no data (for example, a phone lookup that finds no phone number), the cell displays a provider-specific status label in the Clay UI — such as "No mobile found." **This label is display-only. The underlying cell data is empty**, not the string "No mobile found."
+
+This matters for run conditions because `!!{{Column}}` and `/Column is not empty` both evaluate to **false** for these cells — the same result you get for a cell that was skipped by a run condition or has never run. All three states look identical from a value perspective:
+
+| Cell state | UI display | Underlying data | `!!{{Column}}` |
+|---|---|---|---|
+| Enrichment ran, no result found | "No mobile found" | Empty | `false` |
+| Enrichment skipped (run condition not met) | "Run condition not met" | Empty | `false` |
+| Enrichment has never run | Blank | Empty | `false` |
+
+**To distinguish these states, use `Clay.getCellStatus()` in a formula column.** This returns `"SUCCESS_NO_DATA"` when the enrichment ran but found nothing, `"ERROR_RUN_CONDITION_NOT_MET"` when it was skipped, and `"UNKNOWN"` when it has never run.
+
+**Example — sequential provider waterfall**: You want provider B to run only when provider A completed but found no result. Create a formula column (for example, named "Run Provider B") with:
+
+```javascript
+Clay.getCellStatus({{Provider A Column}}) === "SUCCESS_NO_DATA"
+```
+
+Then set provider B's run condition to `/Run Provider B is not empty`. Provider B will run only for rows where provider A ran and explicitly returned no result — not for rows where provider A was skipped or hasn't run yet.
+
+See [What does `Clay.getCellStatus()` return?](formula-generator.md#what-does-claycellstatus-return) for the full list of possible values.
+
 ### Using the "Explain" button to diagnose a skipped run condition
 
 When a cell shows **"Run condition not met"**, an **Explain** button appears next to the status message in the cell details panel. Clicking it triggers an AI analysis of your run condition formula and the current row's values, then returns a plain-language explanation of exactly why the condition evaluated to false for that row.
