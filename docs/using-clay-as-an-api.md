@@ -57,6 +57,11 @@ Clay offers a fast API for searching its proprietary People and Company data. Yo
 -   It doesn't include deep enrichment like emails, phone numbers, or revenue data.
 -   **It returns enriched data to the caller — it does not write to Salesforce or any other CRM automatically.** Your system is responsible for taking the response and updating the CRM record. If you want Clay to handle the Salesforce write-back for you, use the webhook workflow described above instead.
 
+**Note:** The People & Company Search API has two modes — filters-mode and query-mode — that return different fields for people results. If you need a person's professional profile URL, use filters-mode: it is included as the `url` field on every returned person record, with no separate enrichment step.
+
+-   **Filters-mode** (`POST /search/filters-mode`): Pass structured filter fields (discover them via `GET /search/filters-mode/fields`). People results include: `name`, `first_name`, `last_name`, `url`, `domain`, `structured_location`, `latest_experience_title`, `latest_experience_company`, `latest_experience_start_date`, and `matched_experience`.
+-   **Query-mode** (`POST /search/query-mode`): Pass a natural-language query; Clay's AI translates it to filters. People results use a fixed, narrower projection — `clay_profile_id`, `name`, `first_name`, `last_name`, `location`, and `matched_experiences` — and **do not include the `url` field**. Query-mode requires per-workspace enablement; if your workspace is not enabled, the endpoint returns `403 Forbidden`. Run `clay search --help` for the CLI equivalent of both modes.
+
 [Contact our GTM engineers for more information.](https://www.clay.com/contact-form)
 
 **Public HTTP API — Routines (same beta access)**
