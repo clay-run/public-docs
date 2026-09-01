@@ -47,6 +47,8 @@ In the WorkOS setup portal, look for the **Service Provider Details** section, w
 
 **If your Clay account was originally created with Google (no password set):** Once SSO is enabled for your domain, the `Sign in with Google` button will return an error — Google OAuth is disabled for SSO domains. Because your account was created through Google, you have no Clay email + password; attempting to enter a password or trigger a password reset will not work (there is no Clay password on your account to reset). To sign in, simply type your **email address** into the email field and click **Continue** to be redirected to your SSO provider. If the redirect does not work after SSO has been activated by Clay support, contact Clay support to verify the configuration.
 
+**Confirming SSO enforcement is active:** To verify that SSO has been activated for your workspace, open a private or incognito browser window, navigate to the Clay login page, and enter a company email address in the email field, then click **Continue**. If SSO is active, you will be redirected to your identity provider's login page. If you are not redirected, contact Clay support to confirm that SSO activation has been completed on Clay's side.
+
 ## MFA enforcement and compliance requirements
 
 Clay does not have a workspace admin setting to require multi-factor authentication (MFA) for all users. When SSO is enabled, users on your domain are redirected to your identity provider in the browser — but this is not a backend login block. Users who have an existing email + password Clay account can log in via password and bypass the SSO redirect entirely, which means IdP-level MFA requirements are not enforced for those users.
