@@ -1,6 +1,6 @@
 ---
 title: Workspace settings
-description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, agency setups, deletion, and recovering a previous workspace.
+description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, agency setups, AI Context, deletion, and recovering a previous workspace.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -107,6 +107,19 @@ To join the Beta Program:
 To leave the Beta Program, return to the same section and click **Leave beta program**.
 
 Once enrolled, beta feature announcements and discussions are shared in the [**#clay-beta-program**](https://clayrunhq.slack.com/archives/C08T0RDMBBR) channel in the Clay community Slack.
+
+## AI Context
+
+**AI Context** is where you enter your company domain and business background so Clay's AI features can tailor their output to your organization. Each workspace has its own AI Context — if you manage multiple workspaces (for example, one per client), you can set a different domain and context for each one.
+
+**AI Context is only available to workspace admins and owners.** If you are a workspace member or editor, the AI context option will not appear in your sidebar. Ask your workspace admin to configure AI Context for your workspace.
+
+**To open AI Context (admins and owners only):**
+
+-   From your Clay workspace homepage, look at the **bottom-left sidebar**.
+-   Click **AI context** — it appears as its own item below Settings, not as a sub-item inside the Settings menu.
+
+If you do not see **AI context** in the sidebar, first confirm you have an admin or owner role in the workspace (go to Settings → Team and check your role). If your role is correct, make sure you are on the main workspace view (the page showing your tables and folders). If you have navigated into a Settings sub-page (such as Settings → Team), click the back arrow or your workspace name in the breadcrumb to return to the main workspace view first, then look at the bottom-left corner for **AI context**.
 
 ## Delete your workspace
 
