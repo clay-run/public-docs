@@ -333,9 +333,14 @@ Once the 3-week warmup period is complete, the status automatically changes to *
 
 There is no countdown timer or progress indicator in the UI showing time remaining in warmup. To estimate when warmup will complete, note the date you connected the account and enabled warmup — the initial warmup phase is 3 weeks from that point. Once that window passes, the status automatically switches from **Warming up** to **Ready**.
 
-### I'm getting an error that my email account is already in use. What does this mean?
+### I see an error: "This email address is already connected to Smartlead." What do I do?
 
-Clay's email sequencer runs on shared Smartlead infrastructure, and Smartlead only allows each email address to be connected once across the entire system. This error most commonly appears when the email was already connected to the sequencer in **another Clay workspace** — you don't need a separate Smartlead account for this to occur. To fix it, check your other Clay workspaces: go to `Campaigns` → `Email Accounts`, locate the address, and delete it there. Once removed from the other workspace, you can add it to the current one. If you can't identify which workspace has it, contact Clay support with the email address and we'll remove it from our end.
+Clay's email sequencer runs on shared Smartlead infrastructure, and Smartlead only allows each email address to be connected once across the entire system. To fix it, you have two options:
+
+-   **If you have access to your Smartlead account:** Delete the email address from Smartlead directly.
+-   **If you don't have direct Smartlead access:** Contact Clay support with the email address you want to add, and we'll remove it from Smartlead on your end.
+
+Once removed from Smartlead, you can add it to the current workspace.
 
 ### Why was my campaign email sent from a different sender account than I expected?
 
