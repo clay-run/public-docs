@@ -279,6 +279,8 @@ For emergency Data Credit needs during your billing cycle (not available for Act
 
 Credits are added to your balance immediately upon purchase. Top-ups do not change your plan or billing cycle — your existing subscription and renewal date are unaffected.
 
+**Tip:** The **Add one-time data credits** button is in `Settings` → `Usage`, not `Settings` → `Plan & billing`. If you navigate to Plan & billing, you will only see plan upgrade options — not the one-time top-up button.
+
 **Note:** One-time top-ups have a **30% premium** on modern plans (**50% premium** on legacy plans). Top-up credits are subject to the 2× rollover cap: at your next renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap are dropped — including credits you purchased. For example, on a plan with 2,500 credits/month, your maximum balance at renewal is 5,000; if you buy a 15,000-credit top-up and don't spend it all before renewal, only up to 5,000 credits carry over. Check your current balance and upcoming renewal date before purchasing a large top-up. For regular needs, upgrading your Data Credits tier is more cost-effective.
 
 ### Downgrade or cancel your plan
