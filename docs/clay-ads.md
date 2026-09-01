@@ -151,13 +151,13 @@ The 50,000 row limit applies to ad audiences exported from tables. For larger au
 
 Each audience segment supports only one ad sync. If a segment already has an active or previously-exported ad sync, the option to create a new ad sync from that segment will not appear. To sync the same audience to a different ad platform, clone the segment and create a new ad sync from the clone.
 
-LinkedIn is the only ad platform that supports Company (account-level) segments. Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co support People (contact-level) segments only. To run campaigns on those platforms targeting contacts at your company accounts, use **Find people from this list** on your Companies segment to build a People segment, then create an ad sync from that People segment.
+Company (account-level) segments are supported by the professional network only. Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co support People (contact-level) segments only. To run campaigns on those platforms targeting contacts at your company accounts, use **Find people from this list** on your Companies segment to build a People segment, then create an ad sync from that People segment.
 
 ### **Why don't I see Google Ads (or other platforms) as an option when creating an ad sync from my Companies segment?**
 
-LinkedIn is the only ad platform that supports Company (account-level) segments. Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co support People (contact-level) segments only — those platforms do not offer account-level targeting.
+Only the professional network supports Company (account-level) segments. Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co support People (contact-level) segments only — those platforms do not offer account-level targeting.
 
-When you open the ad sync setup from a Companies segment, only LinkedIn appears as an available destination. To use any other platform, create an ad sync from a People segment instead.
+When you open the ad sync setup from a Companies segment, only the professional network option appears as an available destination. To use any other platform, create an ad sync from a People segment instead.
 
 To target contacts at your company accounts on those platforms, use **Find people from this list** on your Companies segment to build a corresponding People segment, then sync the People segment to the ad platform of your choice.
 
