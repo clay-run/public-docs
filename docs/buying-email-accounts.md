@@ -57,6 +57,10 @@ Credit costs are calculated using your workspace's cost-per-credit (CPC) against
 
 No. You must still warm up purchased domains for approximately two weeks after provisioning before using them in campaigns.
 
+### **How many emails should I send from each inbox per day?**
+
+Clay recommends no more than 20 emails per inbox per day — approximately 600 emails per inbox per month. Clay warns you when you try to set a daily send limit above 20, as higher volumes can trigger spam filters and damage your sender reputation. The maximum daily send limit for purchased inboxes is 30 emails per inbox per day.
+
 ### **Where are the purchased email accounts from?**
 
 Clay fulfills orders through Smartlead, which in turn uses Zapmail to provision and manage the email accounts.
