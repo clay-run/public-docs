@@ -559,6 +559,10 @@ Selected records are merged with any existing test records for the trigger — d
 
 ### **Syncing audiences to ad platforms**
 
+**Available on Growth and Enterprise plans — currently in beta.** Audience ad syncs are rolling out to Growth and Enterprise workspaces. The **Sync to ad platforms** option appears in the **Send** menu for all Audiences-enabled workspaces — workspaces without an eligible plan see an upgrade prompt instead of the sync setup flow. If your workspace is on Growth or Enterprise but the option still shows an upgrade prompt, contact your Growth Strategist to have the feature enabled for your workspace.
+
+**Ad account connections are per workspace.** Ad platform connections are stored per workspace — they are not shared across workspaces. If you have ad accounts connected in a different Clay workspace, you will need to reconnect them when setting up an ad sync in this workspace — you are prompted to authenticate during the sync setup flow.
+
 When you have a segment ready, you can sync it to an ad platform to run account-based advertising across your highest-fit contacts and companies.
 
 1.  Click `Send` → `Export action`.
