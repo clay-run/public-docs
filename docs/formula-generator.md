@@ -249,6 +249,34 @@ No. Formula columns evaluate one row at a time — each row receives only its ow
 
 To compare values across rows, use a **Lookup Multiple Rows in Other Table** column pointed at the same table (called a self-lookup). The lookup returns all rows that share a value in a column you specify, giving a downstream formula column the group context it needs. See [Lookup Rows](lookup-rows.md#using-lookups-in-the-same-table) for setup and common use cases, including cross-row ranking.
 
+**Example: Calculate what percentage of rows have a value in a column**
+
+Formula columns can check whether a column is filled in for individual rows, but aggregating that check across the whole table requires a self-lookup. To calculate a coverage percentage — what share of rows have a non-empty value in a given column:
+
+1. **Add a formula column `Has Value`** that returns `true` when the target column is non-empty, and `false` when it is blank:
+
+   ```javascript
+   !!{{Your Column}}
+   ```
+
+2. **Add a formula column `Match Key`** that returns the same constant string for every row — this makes the lookup treat all rows as a single group:
+
+   ```javascript
+   "all"
+   ```
+
+3. **Add a Lookup Multiple Rows column** configured as a self-lookup (set `Table to search` to this table). Set `Target column` to `Match Key`, `Filter operator` to `Equals`, and `Row value` to the current row's `Match Key` column. This returns all rows in the table as lookup results.
+
+4. **Add a formula column `Coverage %`** that counts how many returned rows have `Has Value` equal to `true`, then divides by the total rows returned:
+
+   ```javascript
+   Math.round({{All Rows Lookup}}.records.filter(r => r['Has Value']).length / {{All Rows Lookup}}.numberOfResults * 100)
+   ```
+
+   This returns the percentage as a whole number (for example, `72` for 72% coverage).
+
+**Note:** Lookup Multiple Rows returns at most 100 rows per match. For tables with more than 100 rows, this percentage reflects only the first 100 rows returned — not the full table.
+
 ### **Why does my formula return blank for some rows when I expect a value?**
 
 When a formula's final branch evaluates to a column that has no value for a given row, Clay returns blank — there is nothing to return. The formula is correct; the source data for that row is empty.
