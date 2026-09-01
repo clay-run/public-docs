@@ -1,7 +1,7 @@
 ---
 title: MCP settings
 description: Connect your Clay workspace to AI tools.
-last_synced: 2026-04-26T01:40:20.821Z
+last_synced: 2026-08-06T01:50:18.647Z
 ---
 
 # MCP settings
@@ -18,7 +18,7 @@ Navigate to it from the Clay homepage by clicking `MCP` in the side nav. The MCP
 
 Credit controls and usage monitoring are available on all modern paid plans (Launch, Growth, Enterprise) and Legacy Enterprise.  
 
-Audiences controls are available to workspaces with Clay Audiences enabled — contact support if you're unsure whether your workspace qualifies.  
+Audiences controls are available on Launch, Growth, and Enterprise plans.  
 
 The `MCP for reps` option on [Functions](#enabling-a-function-for-mcp) (reusable enrichment workflows built in Clay) is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans.
 
@@ -58,6 +58,8 @@ Use the search bar at the top of the table to find a specific rep by name or ema
 MCP credit usage also appears in the main credit usage dashboard at `Settings → Credit Usage`, alongside all other workspace credit consumption.
 
 ## Audiences controls
+
+**Note:** This feature is available on Launch, Growth, and Enterprise plans.
 
 If your workspace uses Clay Audiences, two additional workspace-level toggles appear on the `MCP users` page:
 
