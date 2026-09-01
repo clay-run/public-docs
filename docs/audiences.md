@@ -804,6 +804,8 @@ Yes. Segments update in real time as records enter or exit your filter criteria.
 -   **Enterprise plan:** CRM and data warehouse syncs run every 15 minutes, and segments update continuously.
 -   **Growth plan:** CRM and data warehouse syncs run daily, and segments update based on that daily refresh.
 
+**These frequencies apply to the import direction only** — how often Clay pulls new or changed records from Salesforce (or your data warehouse) into Audiences. The **export direction** — writing enriched data and segment membership back to Salesforce — runs on a separate fixed schedule of **once every 24 hours**, regardless of plan. The export time is assigned automatically per workspace and is not user-configurable. See [I enriched data in my Audience. Why hasn't it appeared in Salesforce yet?](#i-enriched-data-in-my-audience-why-hasnt-it-appeared-in-salesforce-yet) for the full import vs. export timing breakdown.
+
 Enrichments configured with `Continuous Enrichment` enabled automatically process new records entering a segment, typically within 15 minutes. No manual runs are required after initial setup.
 
 ### Why didn't my audience count change after I tightened my search filters?
