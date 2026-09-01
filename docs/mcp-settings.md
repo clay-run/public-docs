@@ -78,6 +78,12 @@ The native Clay MCP contact enrichment — including the "Find and Enrich list o
 
 The `MCP for reps` option requires a modern Launch, Growth, Enterprise, or Legacy Enterprise plan.
 
+### Can I retrieve signal and activity data for accounts through Claude or ChatGPT?
+
+Yes. The `ask-question-about-accounts` tool — available on Launch, Growth, and Enterprise plans with Clay Audiences enabled — queries signal events and activity data for any account in your Audiences. The tool returns all available signal events on the record (no time-based cap) and activity data from the **past 365 days**.
+
+For bulk retrieval of signal and activity events — or to set a custom lookback window — use the `Get Audiences Activity` action in a Clay table instead. It has a configurable lookback window (default: 90 days, maximum: 365 days). To make it callable from Claude or ChatGPT, wrap it in a Clay Function and enable it for MCP — see [Enabling a function for MCP](#enabling-a-function-for-mcp) above.
+
 ### Does Clay provide an MCP server URL I can paste into any AI tool?
 
 No. Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory. Connect through:
