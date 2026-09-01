@@ -197,7 +197,7 @@ Clay syncs data from HubSpot automatically on the following schedules:
 5.  (Optional) Configure a `Timestamp Field` for incremental syncing:
     -   With a timestamp: syncs run every **15 minutes** and only import new/changed records.
     -   Without a timestamp: the full query reruns every **12 hours**.
-6.  Map your Snowflake columns to Audience fields.
+6.  Map your Snowflake columns to Audience fields — only columns mapped here will appear as filter options in your Audience. Include all fields you plan to segment by at this stage; fields not mapped during initial setup cannot be used as segment filters unless you reconfigure the sync.
 7.  Review and click `Confirm` — Clay begins importing immediately.
 8.  Monitor the import. If records don't appear immediately, refresh the page to see the latest count.
 
@@ -225,7 +225,7 @@ Clay syncs data from Snowflake on the following schedules:
 5.  (Optional) Configure a `Timestamp Field` for incremental syncing:
     -   With a timestamp: syncs run every **15 minutes** and only import new/changed records.
     -   Without a timestamp: the full query reruns every **12 hours**.
-6.  Map your BigQuery columns to Audience fields.
+6.  Map your BigQuery columns to Audience fields — only columns mapped here will appear as filter options in your Audience. Include all fields you plan to segment by at this stage; fields not mapped during initial setup cannot be used as segment filters unless you reconfigure the sync.
 7.  Review and click `Confirm` — Clay begins importing immediately.
 
 **Sync timing and behavior**
