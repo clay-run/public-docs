@@ -332,6 +332,14 @@ There is no per-row force-stop for cells in Awaiting Callback. To halt all proce
 -   Add a **run condition** on downstream columns in the calling table so they only run once the function column has returned a value (e.g., only run if `{{Function Column}}` is not empty).
 -   Use `Clay.getCellStatus({{field_name}})` in a formula column to check the function column's status, then use that formula as a run condition on dependent columns.
 
+### What does "⚠️ Data already sent successfully, cannot send again" mean in the function table?
+
+This message appears on a **"Send data back"** column cell and is **not an error**. It means the data for that row was already sent successfully to the calling table on a prior run — the callback has already been consumed, and Clay is preventing a duplicate send.
+
+When "Send data back" completes successfully for a row, Clay removes the internal record for that function invocation. If "Send data back" runs again for the same row after that record has been removed, Clay finds no matching record and displays this message instead of sending the data a second time. The calling table already received the data from the first successful run.
+
+**No action is required when you see this message.** The row's data was delivered. If you need to resend the data for a row, re-run the function column cell in the origin table — this dispatches a new invocation with a fresh record.
+
 ### My enrichment data appears missing after a function ran against those columns — where did it go?
 
 The data hasn't been deleted. When a function column runs, it receives data from any Claygent or enrichment columns wired as its inputs, processes it, and stores the results in the **function result column** in your main table. The original Claygent or enrichment column cells may appear empty or replaced — the processed data now lives in the function result column.
