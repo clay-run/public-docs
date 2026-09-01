@@ -1,7 +1,6 @@
 ---
 title: Signals in Clay
-description: Learn about Signals, a way to monitor changes to your contacts like
-  promotions, job changes, or new hires.
+description: Learn about Signals, automated monitors for key events like job changes, promotions, new hires, and Topic Intent activity.
 last_synced: 2026-04-26T01:40:40.844Z
 ---
 
@@ -17,6 +16,7 @@ Signals are automated tracking systems that notify you of important changes rela
 -   [Promotions](https://www.clay.com/university/guide/promotion-signal-overview): Monitor when contacts receive promotions within their current company, allowing you to engage during high-intent decision-making periods.
 -   [Job changes](https://www.clay.com/university/guide/job-change-signal-overview): Track when your contacts move to new companies, helping you leverage existing relationships for new opportunities or prepare for shifts in account engagement.
 -   [News & fundraising](https://www.clay.com/university/guide/monitor-for-news-fundraising): Alert you to significant events at monitored companies, helping you spot timely engagement opportunities.
+-   [Topic Intent](https://www.clay.com/university/guide/topic-intent): Identify companies and contacts actively researching topics relevant to your business, using data from Bombora, Delivr, and Intentsify. Currently in open beta — contact your Clay account team to enable.
 
 Looking to monitor a specific enrichment? [Learn how to create Custom Signals.](https://www.clay.com/university/guide/custom-signals)
 
@@ -70,7 +70,7 @@ The signal runs on its scheduled cadence and checks all rows in the destination 
 
 ### What plans are Signals available on?
 
-Most Signals — Clay's automated monitors for events like job changes, promotions, and news and fundraising — are available on any paid plan.
+Most Signals — Clay's automated monitors for events like job changes, promotions, and news and fundraising — are available on any paid plan. [Topic Intent](https://www.clay.com/university/guide/topic-intent) is currently in open beta and requires separate workspace enablement; contact your Clay account team to enable it.
 
 ### Why is my Signal returning 0 results?
 
