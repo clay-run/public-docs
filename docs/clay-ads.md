@@ -43,7 +43,7 @@ _Note: Personal email addresses significantly improve match rates when syncing t
     -   **Sync destinations** shows a status card for each connected ad platform with details from the most recent and previous sync runs. To view the full sync history, click **Sync history** at the top of this section. The Sync history panel shows past runs grouped by date — each row displays match rate, records sent, matched count, and the change in match rate since the previous run.
     -   Your audience will be available in your ad platform's campaign manager within **48 hours** of the first sync.
 
-**Note:** The Sync panel is currently in beta and rolling out progressively to Growth and Enterprise workspaces. Contact [Clay support](https://www.clay.com/contact) if you'd like early access.
+**Note:** Clay Ads is currently in beta and rolling out progressively to Growth and Enterprise workspaces. Contact [Clay support](https://www.clay.com/contact) if you'd like early access.
 
 Once synced, your audience updates automatically as data changes in your Clay table. Contacts and accounts are added or removed based on your criteria, keeping your ad targeting aligned with your latest data.
 
