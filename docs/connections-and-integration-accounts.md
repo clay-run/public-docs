@@ -96,6 +96,23 @@ To rotate or update credentials:
 
 The connection updates in place — the same connection is preserved with the new credentials. Existing data values already enriched and stored in your table rows are not affected — Reconnect does not clear or overwrite previously enriched cell values. Only actively re-running an enrichment column on existing rows would change those stored values.
 
+### When a workspace member leaves
+
+Connections in Clay are workspace-level — they persist when a user is removed from the workspace. Removing a team member from Clay does not disable or delete any connections they added; those connections remain active for all enrichments and workflows.
+
+That said, if the leaving teammate's account at the **external provider** (for example, Salesforce or Salesloft) is also deactivated by your organization, the underlying OAuth token may become invalid at the provider level, which would cause enrichments using that connection to fail.
+
+To proactively guard against this, you can use **Reconnect** to update the connection's credentials to a different active account before the user's provider access is revoked:
+
+1.  Navigate to `Settings` → `Connections`.
+2.  Identify connections belonging to the leaving teammate.
+3.  Click the `…` menu next to each connection and choose **Reconnect**.
+4.  Sign in with a different active account's credentials.
+
+Reconnect updates the connection in place — all existing columns and workflows referencing it automatically use the new credentials on their next run, with no per-column updates required.
+
+After the team member has left, use **Verify** (see [Verify connection health](#verify-connection-health) below) to confirm that all connections are still working correctly.
+
 ### Verify connection health
 
 If you are unsure whether a connected account is still working — for example, after a team member who set it up has left, or after a period of inactivity — you can check its status directly from Settings.
