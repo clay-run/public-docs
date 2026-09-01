@@ -1,6 +1,6 @@
 ---
 title: Clay API & CLI
-description: Use the Clay CLI and Public API to run searches, call enrichment functions, and build Workflows programmatically without the UI.
+description: Use the Clay CLI and Public API to run searches, enrich data, build Workflows, and work with Audiences programmatically.
 last_synced: 2026-08-06T15:56:40.269Z
 ---
 
@@ -8,7 +8,7 @@ last_synced: 2026-08-06T15:56:40.269Z
 
 Access Clay's data and enrichments programmatically with the Clay CLI and Public API — no UI required.
 
-Clay's Agent Plugin lets you use Clay programmatically — from coding agents, terminals, and backend systems — without working in the UI. With the API and CLI, you can run searches over Clay's GTM dataset, call Clay enrichment functions, and build Workflows, all using Clay's existing integrations and data infrastructure.
+Clay's Agent Plugin connects coding agents, terminals, and backend systems to Clay. Use the API and CLI to search Clay's GTM dataset, run enrichments, build Workflows, and work with Audiences.
 
 **Note:** Clay's Agent Plugin is in open beta. Some capabilities — particularly Workflows — are in an earlier Alpha stage and are actively evolving.
 
@@ -42,7 +42,7 @@ For the full CLI quickstart, Public API setup, code examples, and guides for Sea
 
 Agent Plugin has two primary features:
 
--   **CLI** — Build GTM workflows in natural language from coding agents (including Claude Code, Codex, and Cursor).
+-   **CLI** — Build GTM workflows and manage Audiences from coding agents, including Claude Code, Codex, and Cursor.
 -   **Public API** — Access data from Clay or 200+ vendors in the data marketplace. Trigger functions, Claygents, or workflows.
 
 Both paths consume the same credits and actions as equivalent in-product work. There is no additional cost to use the Agent Plugin.
@@ -54,6 +54,39 @@ The platform has three core primitives:
 -   **Tables** — Read structured data from known Clay tables. Available on Enterprise plans only.
 
 **Note:** The CLI and API are currently supported on Mac and Linux. Windows is not supported in open beta.
+
+## Work with Audiences from the CLI
+
+Use `clay audiences` to work with segments, fields, records, activities, and signal events. Use `clay signals` to create and manage signals. Audiences must be enabled for your workspace, and these features are available in the CLI rather than the Public API.
+
+Commands return JSON. Run `clay <command> --help` for options and examples.
+
+| Task | Commands |
+| ---- | -------- |
+| Manage saved segments | `clay audiences create`, `clay audiences list`, `clay audiences get`, `clay audiences update`, `clay audiences archive` |
+| Manage fields | `clay audiences fields list`, `clay audiences fields create`, `clay audiences fields update`, `clay audiences fields delete`, `clay audiences fields segments` |
+| Read records | `clay audiences records get`, `clay audiences records search-ids`, `clay audiences records search-count` |
+| Read activities | `clay audiences activities get`, `clay audiences activities summary` |
+| Read signal events | `clay audiences signals get`, `clay audiences signals summary` |
+| Manage signals | `clay signals create`, `clay signals search-topics`, `clay signals list`, `clay signals get`, `clay signals pause`, `clay signals resume`, `clay signals update`, `clay signals delete` |
+
+```bash
+# Count the companies in a saved segment.
+clay audiences records search-count \
+  --entity-type companies \
+  --audience-id audseg_abc
+```
+
+### Before you start
+
+- People and companies support all commands. Deal records can be read, counted, and listed, but deals can't be saved segment roots and their fields are read-only.
+- Record searches accept `--audience-id` for a saved segment or `--filter` for an ad hoc filter. Omit both to search all records. Deal searches support neither option.
+- For paginated `activities get` and segment-level `signals get` results, pass the returned cursor to continue. Activity windows can cover up to 365 days.
+- New signals start paused unless you pass `--activate`. Use `"ALL"` in `segmentIds` to monitor every record.
+- Use the top-level `td_…` ID to manage a signal. Use the nested `sig_…` ID with `--signal-ids` to filter signal events.
+- Configure Web Intent signals in the Clay app. Their events still appear in `clay audiences signals` results.
+
+See [Audiences](https://university.clay.com/docs/audiences) for plan availability, imports, CRM and warehouse syncs, and the Audiences product workflow.
 
 ## Plan availability and limits
 
