@@ -37,6 +37,7 @@ The table below lists the data credit cost per task for select AI models availab
 | Claude 4.5 Sonnet | 1.5 | variable |
 | Claude 4.6 Sonnet | 1 | variable |
 | Claude 4.6 Opus | 7.5 | variable |
+| Claude Sonnet 5 | 0.7 | variable |
 | Gemini | 2.5 Pro | 3 | variable |
 | 2.5 Flash | 0.5 | 1 |
 | 2.5 Flash Lite | 0.5 | 1 |
