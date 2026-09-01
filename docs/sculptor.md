@@ -231,3 +231,19 @@ Sculptor works with these sources:
 -   **Google** **Maps**
 -   **CSV Import**
 -   **Web Search**
+
+### How do I make a custom field available to a downstream Upsert in a workflow?
+
+**For Claygent nodes**, the output fields available to downstream steps are defined in the Claygent Builder — not from within the workflow itself. To expose a new output field (for example, an Updated Date), open the Claygent in the Claygent Builder, add the field to its output schema there, and save. The field will then appear as a mappable option in downstream steps automatically.
+
+**For Run Code (Python) nodes**, output fields are inferred from what the code returns. After updating the code to return a new field, click **Update outputs from code** in the node's sidebar to refresh the schema — the field won't appear in downstream mapping until you do.
+
+To generate a custom field that doesn't come from an existing upstream node — for example, a current timestamp to use as an Updated Date — add a **Run Code (Python)** node immediately before your Upsert step and return the value explicitly:
+
+```python
+def handler(context):
+    from datetime import datetime, timezone
+    return {"updated_date": datetime.now(timezone.utc).isoformat()}
+```
+
+Fields returned by a code node are available at the top level in downstream steps. Map `$.updated_date` (not `$.result.updated_date`) in your Upsert.
