@@ -20,6 +20,8 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
 1.  In a workbook, click `+ Add` at the bottom.
 2.  Search for `Find Companies`.
 
+**Note:** The search wizard shows a preview of up to 50 results so you can check your criteria before importing. When you click **Continue**, all matching results — up to the **Limit results** value you configure — are added to the table.
+
 ## `Source` **Find Companies**
 
 1.  Configure the source to your preferences:
