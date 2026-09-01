@@ -108,6 +108,15 @@ To get back to your correct workspace:
 -   **Navigate directly to your existing workspace:** Type `https://app.clay.com/workspaces/<your-workspace-id>` in the address bar. This loads your real workspace without going through the onboarding flow for the unwanted one.
 -   **Contact Clay support:** Use the in-app chat to ask support to stop the onboarding flow or delete the unwanted workspace. The support team can do this on your behalf even if you cannot reach that workspace's settings yourself.
 
+**If your company changed its Google domain and you can no longer access your workspace**
+
+If your company rebranded or changed its primary email domain (for example, from `oldcompany.com` to `newcompany.com`), signing into Clay with your new company Google account creates a new Personal Workspace tied to the new email address. Your original workspace — including any paid plan — remains tied to the old email address and is not accessible from the new account.
+
+To get back to your original workspace or cancel its billing:
+
+-   **Navigate directly using your workspace ID:** If you know your original workspace ID (from a bookmark or a previous Clay email), go to `https://app.clay.com/workspaces/<workspace-id>` in the address bar to access it directly without signing out.
+-   **Contact Clay support:** Use the in-app chat to reach the support team. Support can verify your identity and update the email on your original workspace so you can log in with your new address. Support can also cancel billing on the original workspace on your behalf if you no longer need access to it. Because the workspace is tied to your old email address, you cannot reach `Settings` → `Plans & billing` from your new account to cancel yourself — the support team handles this for you.
+
 ## Using a corporate identity provider (Entra ID, Okta, etc.)
 
 Individual Clay accounts support two login methods only: **Sign in with Google** (Google OAuth) or **email and password**. Microsoft Entra ID (Azure AD), Okta, and other corporate identity providers are not available as individual login options.
