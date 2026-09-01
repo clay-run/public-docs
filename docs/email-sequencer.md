@@ -1,7 +1,7 @@
 ---
 title: Email sequencer
 description: Run outbound campaigns directly from your table.
-last_synced: 2026-05-04T00:00:00.000Z
+last_synced: 2026-09-01T01:27:12.565Z
 upstream_hash: 3d3db81ae3036812b3d4dc0b56f1ae7fff367acb652370008e4fdffc6f91fa96
 ---
 
@@ -106,6 +106,38 @@ Special sequencer enrichments available in the table include:
 -   `Pause lead in campaign`: This can be called from any Clay table to pause a lead on an incoming event (e.g. event signup, or if the recipient filled in a form).
 -   `Add email to blocklist`: Stop an email address from receiving emails across all campaigns in your workspace — including any campaigns that address is currently active in.
 -   `Forward lead email in campaign`: Route an email thread from the global inbox to any email address — including addresses outside Clay (recipients do not need a Clay seat). Map Campaign ID and Lead ID from the event row, set Recipient email addresses to the target inbox, and add a run condition so it only fires on `EMAIL_REPLY` events.
+
+## Managing leads in campaigns
+
+The `Leads` tab in your campaign lists every lead synced into it, along with a `Lead status` column showing where each lead sits in the sequence. What you can do to an individual lead depends on whether the campaign has launched yet.
+
+### Removing a lead before launch
+
+While a campaign is still a draft, you can take leads out of it completely:
+
+1.  Go to the `Leads` tab in your campaign.
+2.  Hover over the lead's row and click the three-dot (⋮) menu on the right.
+3.  Select `Remove from campaign`.
+
+To remove several leads at once, select them and click `Remove [n] leads from campaign`.
+
+**Note:** Removal is immediate — there is no confirmation step, and it can't be undone. Leads are only removed from the campaign; their rows stay in the source table they were synced from.
+
+### Pausing a lead in a launched campaign
+
+After a campaign launches, `Remove from campaign` is no longer offered. Pause the lead instead:
+
+1.  Go to the `Leads` tab in your campaign.
+2.  Hover over the lead's row and click the three-dot (⋮) menu on the right.
+3.  Select `Pause lead`.
+
+Pausing stops further emails to that lead while the rest of the campaign keeps running, and the same menu shows `Resume lead` once a lead is paused. To act on several leads at once, select them and click `Pause [n] leads` or `Resume [n] leads` — that button is disabled when your selection mixes active, paused, and completed leads.
+
+The same menu also offers `Show in leads table`, which opens the lead's row in the table it was synced from, and `Send test email`.
+
+### Lead statuses
+
+The `Lead status` column is populated by the sequencing provider behind the campaign, so leads don't carry a status until the campaign launches and they're handed off — there's no separate "pending launch" state to look for. Once sequencing begins, the values you'll see are `STARTED`, `INPROGRESS`, `PAUSED`, `COMPLETED`, `STOPPED`, and `BLOCKED`.
 
 ## Managing campaigns
 
