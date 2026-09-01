@@ -236,7 +236,7 @@ This returns people who currently work at your target companies and have the for
 
 ## Excluding companies and people
 
-You can exclude up to **150,000 companies or people** from any company or people search by adding up to **three exclusion sources**. Each exclusion source can be one of:
+You can exclude companies or people from any company or people search by adding up to **three exclusion sources**. CSV files and manual URL lists are limited to **100,000 entries per source**; Clay table sources have no fixed row cap. Each exclusion source can be one of:
 
 -   A Clay table
 -   A comma-separated list of URLs (e.g., LinkedIn profile or company page URLs)
