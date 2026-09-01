@@ -407,6 +407,21 @@ If a Use AI column header displays a **yellow warning icon** after you connect y
 
 **Note:** If the column header shows a **red warning icon** instead of yellow, the rate limits on your key are too low to run the column at all — not just slow. Switching to Clay's managed account or upgrading to a higher OpenAI tier is required before the column can run. See [AI tokens](ai-tokens.md) for minimum TPM requirements by model.
 
+### Claygent or Use AI cells show cycling status text ("Orchestrating...", "Polishing...", etc.) without completing, when using your own OpenAI API key
+
+If Claygent or Use AI cells display rotating animation text — "Orchestrating...", "Polishing...", "Calibrating...", or similar words — for an extended period without completing when you have a personal OpenAI API key connected, Clay is most likely retrying requests because your OpenAI key's rate limits are too low to sustain the column's request volume.
+
+The cycling animation appears for cells in any active processing state, including when Clay is waiting for a rate limit to reset before retrying. There is no visual distinction between a cell that is actively processing and one that is paused waiting for rate limits — both display the same cycling animation text. Clay retries rate-limited requests automatically for up to 1 hour; the **"Rate limit wait time exceeded"** error only appears once Clay has exhausted that retry window.
+
+To confirm rate limits are the cause, open the column settings (click the column header → **Edit column**). If the column shows an error banner about insufficient rate limits on your OpenAI key, the key's token-per-minute (TPM) limits are below what this column type requires. See [AI tokens](ai-tokens.md) for minimum TPM requirements by provider.
+
+**Resolution options:**
+
+1. **Switch to Clay's managed OpenAI account (recommended).** Open the column settings, click the **Account** dropdown, and select the default Clay-managed account. Clay's managed account handles rate limits automatically — no tier upgrade needed on your end.
+2. **Upgrade your OpenAI API usage tier.** Higher tiers provide more tokens-per-minute capacity, which reduces rate limiting during large table runs. Review your current limits and request a tier increase at [Limits](https://platform.openai.com/settings/organization/limits). See [OpenAI usage tiers](https://platform.openai.com/docs/guides/rate-limits#usage-tiers) for per-tier details.
+
+To stop the run while cells are in this state, click the **Stop** button in the bottom-right of the table. Stopping cancels queued cells immediately; cells already dispatched to OpenAI will run to completion. See [Run progress](run-progress.md) for details.
+
 ### Cells showing "Rate limit wait time exceeded" with your own OpenAI API key
 
 If cells in a **Use AI** column show a **"Rate limit wait time exceeded"** error and you have your own OpenAI API key connected, the error means Clay has hit the token-per-minute (TPM) rate limits on your key. Clay automatically waits for the rate-limit window to reset before retrying, but if your key's TPM limits are persistently below what the operation requires, rows will remain stuck.
