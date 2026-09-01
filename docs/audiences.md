@@ -945,6 +945,22 @@ The 24-hour export schedule is fixed and cannot be triggered manually. Two optio
 -   **Export a single record on demand (admin-only):** Open any record in Audiences and click **Export** in the top right of the record panel. This sends that record to Salesforce immediately, without waiting for the next scheduled sync. The button appears only when the record has a Salesforce export configured.
 -   **Export many records immediately:** Add a **Salesforce Update Record** action column to a bulk enrichment table — see [How do I write enriched fields back to existing Salesforce records from a bulk enrichment?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-bulk-enrichment) above.
 
+### How do I write enriched data back to HubSpot from Audiences?
+
+Native HubSpot export sync — equivalent to Salesforce's bidirectional sync with per-field write rules (Never write / Always write / Write if empty) — is not yet available in Audiences. Only Salesforce has a native write-back destination. The **Export rules** shown in the Data Hub field details panel are Salesforce-specific and cannot be configured for HubSpot fields.
+
+To push enriched data (such as LinkedIn URL, job title, or email) from Audiences back to HubSpot, use a **Bulk Enrichment table sourced from your Audience segment** with a HubSpot **Update Object** action:
+
+1.  Navigate to your Audience segment and click **Enrich** → **Add bulk enrich**. The bulk enrichment opens with your Audience segment as the source.
+2.  *(Optional)* Add data enrichment columns (for example, **Enrich Person** to find LinkedIn URL or job title). Skip this step if you only want to push existing Audience data to HubSpot without running additional enrichments.
+3.  Click **Add enrichment**, search for **HubSpot**, and select **Update Object**.
+4.  Set **Object Type** to **Contact** (or **Company**, as appropriate).
+5.  Set **HubSpot Object ID** to the Audience field containing your HubSpot record IDs — this is the `hs_object_id` value imported from your HubSpot source.
+6.  Under **Map fields**, map each Audience field to the corresponding HubSpot property.
+7.  Click **Start Run**. The bulk enrichment runs on **all records** currently in your Audience segment — not just the rows visible in the table preview. For large audiences, processing runs in the background automatically.
+
+**Note:** HubSpot's batch update API accepts up to 100 records per request. For audiences with hundreds of thousands of records, the run completes in batches automatically — no manual intervention required.
+
 ### How do I access Account-level fields (like Company Name or Company Domain) from a People audience?
 
 When you import Salesforce Contacts into a People audience, only fields from the **Contact object** are available as columns — Account-level fields (Company Name, Company Domain, and any custom Account object fields) are not included automatically, even if the Contact has a linked Salesforce Account.
