@@ -195,8 +195,9 @@ Clay syncs data from HubSpot automatically on the following schedules:
     -   For People: `email` or `user_id`.
     -   For Companies: `company_id` or `domain`.
 5.  (Optional) Configure a `Timestamp Field` for incremental syncing:
-    -   With a timestamp: syncs run every **15 minutes** and only import new/changed records.
-    -   Without a timestamp: the full query reruns every **12 hours**.
+    -   With a timestamp (Enterprise): syncs run every **15 minutes** and only import new/changed records.
+    -   Without a timestamp (Enterprise): the full query reruns every **12 hours**.
+    -   Growth plans: syncs run once **daily** regardless of Timestamp Field configuration.
 6.  Map your Snowflake columns to Audience fields.
 7.  Review and click `Confirm` — Clay begins importing immediately.
 8.  Monitor the import. If records don't appear immediately, refresh the page to see the latest count.
@@ -205,8 +206,11 @@ Clay syncs data from HubSpot automatically on the following schedules:
 
 Clay syncs data from Snowflake on the following schedules:
 
--   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured (for example, `updatedAt`), importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
--   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
+-   **Incremental sync (Enterprise):** Runs every **15 minutes** when a `Timestamp Field` is configured (for example, `updatedAt`), importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours** on Enterprise plans.
+-   **Daily sync (Growth):** Regardless of Timestamp Field configuration, Growth plan workspaces sync once **daily**.
+-   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental or daily sync may have missed.
+
+See [Warehouse sync cadence](#warehouse-sync-cadence) in the FAQs for a complete plan-by-plan breakdown.
 
 **Deleted records:** When a record is no longer returned by your Snowflake import query — either because it was physically removed from the underlying Snowflake table, or because you updated your SQL to exclude it — Clay marks the record's Snowflake source association as **Deleted in source** during the next full sync. The audience record itself is **not removed**. To clean up these records, see [How do I archive records that no longer match my Snowflake import query?](#how-do-i-archive-records-that-no-longer-match-my-snowflake-import-query) below.
 
@@ -223,8 +227,9 @@ Clay syncs data from Snowflake on the following schedules:
     -   For People: `email` or `user_id`.
     -   For Companies: `company_id` or `domain`.
 5.  (Optional) Configure a `Timestamp Field` for incremental syncing:
-    -   With a timestamp: syncs run every **15 minutes** and only import new/changed records.
-    -   Without a timestamp: the full query reruns every **12 hours**.
+    -   With a timestamp (Enterprise): syncs run every **15 minutes** and only import new/changed records.
+    -   Without a timestamp (Enterprise): the full query reruns every **12 hours**.
+    -   Growth plans: syncs run once **daily** regardless of Timestamp Field configuration.
 6.  Map your BigQuery columns to Audience fields.
 7.  Review and click `Confirm` — Clay begins importing immediately.
 
@@ -232,8 +237,11 @@ Clay syncs data from Snowflake on the following schedules:
 
 Clay syncs data from Google BigQuery on the following schedules:
 
--   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured, importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
--   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
+-   **Incremental sync (Enterprise):** Runs every **15 minutes** when a `Timestamp Field` is configured, importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours** on Enterprise plans.
+-   **Daily sync (Growth):** Regardless of Timestamp Field configuration, Growth plan workspaces sync once **daily**.
+-   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental or daily sync may have missed.
+
+See [Warehouse sync cadence](#warehouse-sync-cadence) in the FAQs for a complete plan-by-plan breakdown.
 
 ### Importing from people and companies search
 
@@ -805,6 +813,34 @@ Yes. Segments update in real time as records enter or exit your filter criteria.
 -   **Growth plan:** CRM and data warehouse syncs run daily, and segments update based on that daily refresh.
 
 Enrichments configured with `Continuous Enrichment` enabled automatically process new records entering a segment, typically within 15 minutes. No manual runs are required after initial setup.
+
+### CRM sync cadence
+
+Salesforce and HubSpot imports into Clay Audiences run on the following schedule, determined by your plan:
+
+| Source | Enterprise plan | Growth plan |
+|---|---|---|
+| Salesforce | Every **15 minutes** (incremental) | Once **daily** (incremental) |
+| HubSpot | Every **15 minutes** (incremental) | Once **daily** (incremental) |
+
+Clay also runs a **full sync every 7 days** for all plans. The full sync re-reads all records from your CRM, reconciles hard-deleted records, and catches anything the incremental sync may have missed.
+
+For Salesforce import details, see [Importing from Salesforce](#importing-from-salesforce). For HubSpot, see [Importing from HubSpot](#importing-from-hubspot).
+
+### Warehouse sync cadence
+
+Snowflake, BigQuery, and Databricks imports into Clay Audiences run on the following schedule, depending on your plan and whether a Timestamp Field is configured:
+
+| Plan | With Timestamp Field | Without Timestamp Field |
+|---|---|---|
+| Enterprise | Every **15 minutes** (incremental) | Every **12 hours** (full query) |
+| Growth | Once **daily** | Once **daily** |
+
+A Timestamp Field (such as `updatedAt`) lets Clay identify which records changed since the last sync and import only those. Without a Timestamp Field, Clay re-runs the full SQL query on each sync cycle. On Growth plans, the daily cadence applies regardless of Timestamp Field configuration.
+
+Clay also runs a **full sync every 7 days** for all plans, regardless of Timestamp Field configuration.
+
+For setup details, see [Importing from Snowflake](#importing-from-snowflake) or [Importing from Google BigQuery](#importing-from-google-bigquery).
 
 ### Why didn't my audience count change after I tightened my search filters?
 
