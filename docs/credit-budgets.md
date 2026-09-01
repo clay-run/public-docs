@@ -2,6 +2,7 @@
 title: Credit budgets
 description: Create and manage named credit budgets to organize spend, prevent
   overspend, and govern how Clay credits flow across your organization.
+last_synced: 2026-08-06T01:52:38.374Z
 ---
 
 # Credit budgets
@@ -16,7 +17,7 @@ Credit budgets appear at `Settings` → `Budgets`. Only workspace admins can cre
 
 A **budget** is a named credit pool with:
 
--   A **credit limit** — the maximum number of credits the budget can spend in its lifetime (limits do not auto-reset on a billing cycle).
+-   A **credit limit** — the maximum number of credits the budget can spend. Budgets count down until manually reset, or automatically reset on a schedule if a reset frequency is configured.
 -   A **current balance** — how many credits remain (limit minus spend so far).
 -   An **access rule** — whether all workspace members can draw from the budget by default, or only members explicitly granted access.
 -   An optional list of **users** or **user groups** with explicit access.
@@ -30,11 +31,12 @@ When a workbook (or other resource) is assigned to a budget, all credit-consumin
 1.  Go to `Settings` → `Budgets`.
 2.  Click **Create**.
 3.  Enter a budget **name** and set a **credit limit**.
-4.  Choose a **default access** setting:
+4.  Optionally, set a **Reset frequency** — how often the budget's usage automatically resets: `Never` (the default), `Monthly`, `Quarterly`, or `Annual`. **Note:** Reset frequency is rolling out gradually; if you don't see this option, it isn't enabled for your workspace yet — reach out to your Growth Strategist.
+5.  Choose a **default access** setting:
     -   **All workspace members** — any member can assign their workbooks to this budget.
     -   **Only specific users or groups** — only members you explicitly add can use the budget.
-5.  Optionally, add specific **users** or **user groups** who should have access.
-6.  Click **Save**.
+6.  Optionally, add specific **users** or **user groups** who should have access.
+7.  Click **Save**.
 
 ## Assigning resources to a budget
 
@@ -78,7 +80,20 @@ Alerts fire once per threshold crossing. They reset when an admin increases the 
 
 ## Resetting and adjusting budgets
 
-Admins can increase or decrease a budget's credit limit at any time from `Settings` → `Budgets`. If you need to restart tracking spend from zero, you can reset the budget's spend when editing it.
+Admins can increase or decrease a budget's credit limit at any time from `Settings` → `Budgets`. If you need to restart tracking spend from zero, you can manually reset the budget's spend when editing it — Clay shows how much usage will be cleared and gives you an `Undo` option before the reset takes effect when you save.
+
+### Scheduled resets
+
+**Note:** Reset frequency is rolling out gradually. If you don't see this option when creating or editing a budget, it isn't enabled for your workspace yet — reach out to your Growth Strategist.
+
+Budgets can be configured to reset automatically on a calendar schedule. Set a **Reset frequency** when creating or editing a budget:
+
+-   `Never` (default) — the budget doesn't reset automatically.
+-   `Monthly` — resets on the 1st of every month.
+-   `Quarterly` — resets on January 1, April 1, July 1, and October 1.
+-   `Annual` — resets on January 1 each year.
+
+Resets run at midnight UTC. When a budget resets, its usage returns to zero and the balance is restored to its full limit — unused credits don't carry over. A manual reset is available at any time regardless of the budget's reset frequency, and doesn't affect the next scheduled reset date. Each budget has its own schedule; in `Settings` → `Budgets`, the **Reset** column shows each budget's frequency and its next reset date.
 
 When a budget is deleted, you can reassign all of its resources to a different budget — or leave them without a budget.
 
