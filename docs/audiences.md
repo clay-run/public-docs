@@ -801,8 +801,10 @@ You don't need a clean CRM to get started — CRM cleanup is often the first use
 
 Yes. Segments update in real time as records enter or exit your filter criteria. The refresh frequency depends on your plan:
 
--   **Enterprise plan:** CRM and data warehouse syncs run every 15 minutes, and segments update continuously.
--   **Growth plan:** CRM and data warehouse syncs run daily, and segments update based on that daily refresh.
+-   **Enterprise plan:** CRM and data warehouse **imports** (CRM → Clay) run every 15 minutes, and segments update continuously.
+-   **Growth plan:** CRM and data warehouse **imports** run daily, and segments update based on that daily refresh.
+
+The 15-minute (or daily) cadence applies to the **import direction only** — it reflects changes from your CRM in Clay. The reverse direction — exporting enriched data from Clay back to Salesforce — runs on a **separate 24-hour schedule**. See [I enriched data in my Audience. Why hasn't it appeared in Salesforce yet?](#i-enriched-data-in-my-audience-why-hasnt-it-appeared-in-salesforce-yet) for details.
 
 Enrichments configured with `Continuous Enrichment` enabled automatically process new records entering a segment, typically within 15 minutes. No manual runs are required after initial setup.
 
@@ -924,6 +926,19 @@ To import only a filtered subset of HubSpot records into Audiences:
 This gives you control over both which records enter Audiences and how their fields are mapped, independent of the native Audiences HubSpot source connector.
 
 **Note:** There is no add-on available to increase the Audiences record limit above 250,000 while staying on the Growth plan. To increase the limit, upgrade to the Enterprise plan, which supports up to 25,000,000 CRM/DWH records.
+
+### I changed a field value in Salesforce but it's not updating in Clay
+
+Clay's incremental sync picks up Salesforce changes via `SystemModstamp` — any modification to a Salesforce record triggers a re-sync of all its mapped fields on the next incremental cycle (every 15 minutes on Enterprise, once daily on Growth). However, if the field's current value in Clay was set by a **bulk enrichment** or **Upsert Audiences Record**, Clay's conflict resolution keeps that bulk-enriched value rather than accepting the incoming CRM value. Bulk enrichments and Upsert Audiences Record are Priority 1; Salesforce Account/Contact/Opportunity imports are Priority 2 (see **Conflict resolution when sources provide different field values** under [Entity resolution and deduplication](#entity-resolution-and-deduplication) above).
+
+This means: if you clear or change a field in Salesforce that was previously populated by a bulk enrichment, Clay's import sync will pick up the Salesforce change — but discard it in favor of the existing higher-priority bulk-enriched value.
+
+**To make Salesforce the source of truth for that field, use one of these approaches:**
+
+-   **Delete and recreate the field mapping.** Removing the existing field mapping clears the bulk-enriched value for that field. After you add the mapping back, the next Salesforce sync will set the field value from CRM with no competing bulk-enriched value. This is the most reliable approach when you want to reset a field to match its current Salesforce value.
+-   **Override the field with a new bulk enrichment.** Use **Update Audiences Record** in a bulk enrichment table to explicitly write the value you want (for example, `0` or null). Because `Update Audiences Record` is also Priority 1, this new value replaces the old bulk-enriched one and stays unless overwritten by another enrichment. See [Adding enrichments](#adding-enrichments).
+
+**Note:** If your workspace requires Salesforce values to always take precedence over bulk-enriched values for a given field, contact Clay support — a workspace-level field precedence configuration is available.
 
 ### I enriched data in my Audience. Why hasn't it appeared in Salesforce yet?
 
