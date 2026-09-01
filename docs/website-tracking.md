@@ -226,6 +226,10 @@ No. The script runs in the visitor's browser and loads asynchronously, so it won
 
 # FAQ
 
+### How does Clay identify which company is behind a website visit?
+
+Clay's tracking snippet captures the visitor's IP address when their browser session ends. Clay then runs that IP through a waterfall of de-anonymization providers and returns the first successful match — a company domain (for example, `acmecorp.com`). The result is the company associated with that IP address, not the specific individual who visited. Once the company domain is identified, you can use Clay enrichments like **Find People** to surface relevant contacts at that company.
+
 ### Does Clay connect natively to Segment?
 
 Yes. Clay has a native destination in Segment's catalog. If you already have the Segment JavaScript tag on your site, you can route your website event data directly into Clay's web intent tracking without installing a separate Clay snippet.
@@ -282,6 +286,26 @@ Clay can support hundreds of thousands of daily visitors for even the largest en
 ### Is the visitor data consistent across different providers?
 
 Yes, de-anonymized website data is in a consistent format across various providers.
+
+### Why might Clay's website visit signals differ from other tools like 6sense or Qualified?
+
+Because each vendor resolves IP addresses against its own proprietary databases, results rarely align one-to-one across tools. Clay passes the visitor IP through its de-anonymization providers and returns the first match; other platforms use different data sources and matching logic. The same IP may be identified differently across tools, or may appear in one tool's results but not another's.
+
+Common reasons signals differ between vendors:
+
+-   **VPN or proxy usage** — the IP reflects the VPN exit node, not the visitor's actual company network
+-   **Residential or mobile networks** — consumer and mobile ISPs often share IPs across many users, making company attribution less reliable
+-   **Shared ISP ranges** — some corporate IP ranges route through shared ISP infrastructure, which may resolve to the ISP rather than the company
+-   **Cloud infrastructure IPs** — IPs allocated to major cloud providers may resolve to those providers rather than the company using them
+-   **Secondary or infrastructure domains** — the IP may resolve to a parent company, subsidiary, or infrastructure vendor rather than the company's primary domain
+
+This divergence is expected across all IP deanonymization tools, not specific to Clay.
+
+### Why does a visit show an unexpected location — like a US-based company appearing to visit from Singapore?
+
+The location shown in your web intent table reflects where the visitor's device was at the time of the visit, not where the company is headquartered. Clay derives location by geolocating the visitor's IP address. A US-based company appearing to visit from Singapore typically means a remote employee, someone traveling, or VPN usage from that country.
+
+The company attribution (which company visited) comes from the IP-to-domain match; the location (where the visit originated) reflects the device's network location at the time and does not necessarily reflect the company's geography.
 
 ### What do "Total Time On Page" and "Engaged Time On Page" mean, and what are the units?
 
