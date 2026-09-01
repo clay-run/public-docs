@@ -68,6 +68,8 @@ The `Validation` section in `Full configuration` controls how the waterfall eval
 -   `Aggressive` — Higher risk level, good for casting a wide net. Best when volume and coverage take priority over precision.
 -   `Advanced` — Manual configuration for fine-grained control over validation behavior.
 
+**Note:** Available strategies depend on the validation provider you select. Some providers — including Findymail — support only `Conservative`; `Balanced`, `Aggressive`, and `Advanced` will appear greyed out when such a provider is selected. To use a less strict strategy, change your `Validation Provider` to one that supports it — for example, Zerobounce supports `Conservative`, `Aggressive`, and `Advanced`.
+
 ### Additional column settings
 
 `Output name of successful provider?` (optional): When enabled, adds a column showing which provider successfully found the email.
@@ -246,7 +248,7 @@ To permanently show provider and validation columns going forward, click the wat
 
 **If validation is rejecting emails you want to keep:**
 
--   Switch to a less strict `Validation strategy` — for example, `Balanced` or `Aggressive` instead of `Conservative`.
+-   Switch to a less strict `Validation strategy` — for example, `Balanced` or `Aggressive` instead of `Conservative`. If those strategies appear greyed out, your current validation provider supports only `Conservative` — Findymail, for example, supports only `Conservative`. To access other strategies, change your `Validation Provider` to one that supports them; Zerobounce supports `Conservative`, `Aggressive`, and `Advanced`.
 -   Remove the validation provider entirely — any email found will then flow directly to the final output column without being checked.
 
 **A common cause — catch-all domain emails with Conservative strategy:** If your contacts are on catch-all domains (domains configured to accept email sent to any address), the validation provider may report those emails as "Valid" — but the `Conservative` strategy still rejects catch-all results, keeps the waterfall running, and leaves the output column blank. The validation column appears to show success while the waterfall's strategy filter is rejecting the result. To accept catch-all emails, switch to `Aggressive` in the waterfall's Full Configuration validation settings, or use `Advanced` with the catch-all option enabled. (`Balanced` also includes catch-all results but is not available for all validation providers.)
