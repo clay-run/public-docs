@@ -185,6 +185,8 @@ Each row includes the post URL, post text, author name, author LinkedIn URL, aut
 **To get comments, reactions, or shares on a specific post:** Click `Add enrichment`, search for **Get comments on a professional post**, **Get reactions on a professional post**, or **Get shares on a professional post**, and map **Post URL** to the post URL column from your import.
 
 > **Important:** These actions require the original post URL — a URL containing `-activity-` in the path (e.g., `https://www.linkedin.com/posts/clay-hq_...-activity-7212099008951975937-ezPv`). Share URLs containing `-share-` are not valid and return an error. To get the original URL for any post: open the post on LinkedIn, click **•••** (three dots) at the top right of the post, and select **Copy link to post**. If the post is a repost of someone else's content, open the original underlying post first and copy its link.
+>
+> If the post URLs in your table came from the **Find professional posts** source, some rows may contain share-type URLs — in certain cases the underlying data provider returns share-format URLs that are passed through to your table as-is. To convert them automatically without leaving Clay, add an **Enrich professional post** enrichment column, map it to your post URL column, and use the enrichment's **Post URL** output as the input for your reactions or comments enrichment. See [Troubleshoot "Share" URLs in professional post Signals and integrations](professional-post-share-url-troubleshooting.md) for step-by-step instructions, including how to use a conditional run formula to limit the 0.5-credit charge to only the rows that actually contain share URLs.
 
 ## Getting people who interacted with a post
 
