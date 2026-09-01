@@ -793,6 +793,19 @@ The Source column is plain text — there is no direct link from the Source colu
 
 **Note:** To filter your audience to show only records that came from a specific table, use the **Person source** filter — see [Why doesn't my Clay table appear in the Person source filter?](#why-doesnt-my-clay-table-appear-in-the-person-source-filter) above.
 
+### I forgot to map some columns when I sent data from a Clay table to Audiences — how do I add them?
+
+Column mappings in a Clay table's **Send to Audiences** column are editable after the initial setup. To add the columns you missed:
+
+1. Open the Clay table that sends data to your Audience.
+2. Click the **Send to Audiences** column header and select **Edit column**.
+3. In the settings panel, add the column mappings you missed — map each additional table column to the corresponding Audience field.
+4. After saving, choose **Run all rows in view** when prompted to push the new field values to your existing Audience records. Clay upserts each row, so existing records are updated with the new fields without creating duplicates.
+
+**Note:** Only the column-to-field mappings are editable after setup — the entity type (People or Companies) and source object settings are locked.
+
+If you need to update specific fields on Audience records without re-running the full column, use the **Upsert Audiences Record** action instead — add it to your table, configure it to map the missing fields, and run it on the rows you want to update. See [Using Audiences from a Clay table](#adding-enrichments) for the full list of table ↔ Audience actions.
+
 ### My CRM is messy. Should I clean it up before setting up Audiences?
 
 You don't need a clean CRM to get started — CRM cleanup is often the first use case Audiences enables. A common approach: sync your existing CRM, run professional network enrichments to refresh contact data, use the enriched identifiers to surface duplicates, then build further enrichments from there.
