@@ -72,6 +72,8 @@ Authenticate by passing your workspace-scoped API key in the `clay-api-key` requ
 
 **Note:** A `413` (`Payload Too Large`) from `POST /search/filters-mode/{search_id}/run` means the requested page of results exceeds the API's internal output cap. Reduce the `limit` parameter in your request and retry — the error is deterministic, so retrying at the same `limit` will always fail.
 
+**Note:** When iterating through query-mode search results (`POST /search/query-mode/{search_id}/run`), each response includes a `has_more` boolean indicating whether more records remain. When `has_more` is `false`, the optional `exhaustion_reason` field explains why the search ended: `"query_limit"` means the query's `LIMIT` clause was reached; `"no_more_results"` means there are no more matching records in Clay's database. The CLI surfaces this as `exhaustionReason` in the `clay search query-mode run` JSON output.
+
 **Note:** Clay caps how many search results your workspace can return through the Public API, CLI, and MCP server per billing period. These quotas apply to Clay's People & Company Search API — they do not apply to in-app table enrichments or Routines API runs.
 
 | Plan | Results per period | Period window |
