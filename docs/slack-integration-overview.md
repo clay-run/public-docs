@@ -36,7 +36,7 @@ Use this action to send messages to Slack channels through a bot directly from C
 
 -   **Bot name (Optional):** Specify the name of the bot that will post the message.
 -   **Emoji (Optional)**
--   **Slack channel**: Select the Slack channel where you want to post the message. Both public channels and private channels the Clay bot has been invited to appear in the list. To post to a private channel, first invite the Clay bot in Slack (type `/invite @Clay` in the channel) — the private channel will then appear in the list automatically.
+-   **Slack channel**: Select the Slack channel where you want to post the message. Both public channels and private channels the Clay bot has been invited to appear in the list. To post to a private channel, first invite the Clay bot in Slack (type `/invite @Clay` in the channel) — the private channel will then appear in the list automatically. You can also switch the input to text mode and enter the channel ID directly (for example, `C04F8AWK44T`) to send to any channel.
 -   **Message (Optional):** The text body of the Slack notification (e.g., "A new lead has submitted a form"). Supports [Slack markdown](https://api.slack.com/reference/surfaces/formatting#basic-formatting).
 -   **Form information (Optional):** Add structured form data to the message (e.g., "First Name → Kareem"). The form will be sorted alphabetically by field name.
 
