@@ -95,7 +95,7 @@ The hard limits, in one place:
 | Limit | Value |
 | --- | --- |
 | Emails per sequence | 4 |
-| Maximum delay between steps | 10 days |
+| Maximum delay between steps | 365 days |
 | Leads per campaign | Up to 500,000 |
 | Message size | 8 KB of text per email |
 | Copy variants per campaign | 2 |
