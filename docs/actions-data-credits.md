@@ -430,7 +430,7 @@ By default, most providers in Clay's marketplace charge Data Credits regardless 
 
 **Additional integrations that charge Data Credits regardless of whether results are returned:**
 
-**Enrichment and data providers:** Adbeat, Apollo, Clearbit, Clearout, Crossbeam, Debounce, G2, GoldenLeads, Google search and lookup actions, Hacker News, Harmonic, HitHorizons, Instagram, LeadIQ, Lob, Logo.dev, Lusha, MadKudu, Mapbox, Modash's generic Search action, OpenMart, People Data Labs, PitchBook, PredictLeads, Product Hunt, Prospeo, Reddit, Serpstat, SimilarWeb, Social Posts, Swordfish AI, The Swarm, Twitter/X, Upfluence, Yelp, YouTube, ZoomInfo, and Clay actions powered by Coresignal, Mantheos, or Mixrank.
+**Enrichment and data providers:** Adbeat, Apollo, Clearbit, Clearout, Crossbeam, Debounce, G2, GoldenLeads, Google search and lookup actions, Hacker News, Harmonic, HitHorizons, Instagram, LeadIQ, Lob, Logo.dev, Lusha, MadKudu, Mapbox, Modash's generic Search action, OpenMart, People Data Labs, PitchBook, PredictLeads, Product Hunt, Prospeo, Reddit, Serpstat, SimilarWeb, Social Posts, Swordfish AI, The Swarm, Upfluence, Yelp, YouTube, ZoomInfo, and Clay actions powered by Coresignal, Mantheos, or Mixrank.
 
 **CRM and sales engagement tools:** ActiveCampaign, Attio, Chorus, Close, Dynamics 365, EmailBison, Gong, HeyReach, HubSpot, Instantly, La Growth Machine, Lemlist, Loxo, Marketo, Outreach, PandaDoc, Salesforce (including Pardot), Salesloft, Sendoso, Sequel, Shopify, Smartlead, Snov.io, Woodpecker, and Za-Zu.
 
