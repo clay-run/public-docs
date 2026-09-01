@@ -121,6 +121,14 @@ Column-level auto-run controls whether a specific enrichment runs automatically.
 1.  Click the name of the column → `Edit column`.
 2.  Toggle auto-run on/off under `Run settings`. Click `Save` to apply your changes.
 
+**Columns inside a function:** If the column is part of a function, its settings panel shows a banner reading "Column configurations in functions can only be saved in edit mode." Clicking the toggle while viewing the function in live mode makes no lasting change. To update auto-run on a column inside a function:
+
+1.  Click **Enter edit mode** in the banner (or open the function from your Clay homepage → **Edit function**).
+2.  In edit mode, open the column's settings panel and toggle **Auto-run** on or off under **Run settings**.
+3.  Click **Publish Changes** to apply your changes to the live function.
+
+After enabling auto-run on a function column, rows that were added while auto-run was off will not backfill automatically. To process them, go to the calling table and manually trigger the function: right-click the function column header → **Run column** → **Run [N] empty or out-of-date rows**.
+
 **Important:** Table-level auto-run acts as the parent setting:
 
 -   If table-run is **OFF**: No columns will run automatically, regardless of column settings.
