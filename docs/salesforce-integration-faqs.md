@@ -824,6 +824,26 @@ If you need to change the default connection, ask a workspace admin to:
 
 To change your own role to admin, ask an existing workspace admin to update it in `Settings` → `Team`.
 
+## Is the Clay Salesforce managed package available on the public AppExchange?
+
+The Clay Salesforce managed package is not listed on the Salesforce AppExchange. It is installed directly in your Salesforce org via a private installation link. To get the installation link and confirm availability on your plan, reach out to your Clay account team.
+
+For the full setup walkthrough (including installation steps and videos), see the [Clay Salesforce Package setup guide](https://clayrun.notion.site/Clay-Salesforce-Package-V8-With-Videos-1307e66eb014807bbde2dca8ec26ce63). Your Clay account team will provide the correct installation link for your Salesforce environment (production, sandbox, or developer org).
+
+Once installed, the package adds a **Launch Enrichment** button to Salesforce page layouts and list views for Accounts, Contacts, and Leads. Clicking the button sends that record to a Clay webhook-source table and triggers your configured enrichment workflow.
+
+## Can the Launch Enrichment button be triggered automatically from a Salesforce Flow?
+
+No. The Launch Enrichment button is designed for manual, rep-initiated use only. It adds a button to Salesforce page layouts and list views that a user clicks — there is no supported way to invoke it automatically from a Salesforce Flow.
+
+**If you need to trigger a Clay workflow automatically from Salesforce Flow** — for example, to send a record ID along with Flow-calculated field values when a record is created or updated — use a **Salesforce Flow HTTP Callout** to a Clay webhook URL instead:
+
+1. In Clay, create a new table using **Import data from Webhook** as the source. Copy the webhook URL from the source settings.
+2. In Salesforce Flow Builder, add an **HTTP Callout** step and set the endpoint to your Clay webhook URL. Include the record ID and any Flow-calculated field values as JSON in the request body.
+3. When the Flow runs and fires the callout, Clay receives the payload as a new row and runs your enrichment workflow automatically.
+
+This approach lets you pass any combination of Salesforce field values into Clay at the exact moment Flow logic executes — without requiring a user to click a button. For setup instructions for the Clay webhook source, see the [Webhook integration guide](https://university.clay.com/docs/webhook-integration-guide).
+
 ## Why aren't enrichment notifications being sent after I use the Launch Enrichment button in Salesforce?
 
 When using the Clay Salesforce package, the **Launch Enrichment** button on a Lead, Contact, or Account record sends that record to Clay for enrichment and writes the results back to Salesforce. For Salesforce users to receive a notification ("Your record has been enriched by Clay") after the enrichment completes, the **Get Enrichment Notifications** toggle must be enabled on the corresponding workflow.
