@@ -171,6 +171,7 @@ Two options:
 -   Available for emergency needs during your billing cycle.
 -   **30% premium** applies (on modern plans; **50% premium** on legacy plans).
 -   Subject to the 2× rollover cap: at renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap — including purchased top-ups — are dropped.
+-   Only workspace admins can make the purchase.
 
 ### Data Credits for AI
 
@@ -278,6 +279,8 @@ For emergency Data Credit needs during your billing cycle (not available for Act
 4.  Confirm your purchase.
 
 Credits are added to your balance immediately upon purchase. Top-ups do not change your plan or billing cycle — your existing subscription and renewal date are unaffected.
+
+**Note:** Only workspace admins can make a top-up purchase. If the **Add one-time data credits** button is not visible to you, ask your workspace admin to complete the purchase.
 
 **Note:** One-time top-ups have a **30% premium** on modern plans (**50% premium** on legacy plans). Top-up credits are subject to the 2× rollover cap: at your next renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap are dropped — including credits you purchased. For example, on a plan with 2,500 credits/month, your maximum balance at renewal is 5,000; if you buy a 15,000-credit top-up and don't spend it all before renewal, only up to 5,000 credits carry over. Check your current balance and upcoming renewal date before purchasing a large top-up. For regular needs, upgrading your Data Credits tier is more cost-effective.
 
