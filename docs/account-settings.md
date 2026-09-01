@@ -1,6 +1,6 @@
 ---
 title: Account settings
-description: Update your Clay profile picture, name, password, and login method, manage your API key, and delete your account.
+description: Update your Clay profile picture, name, password, and login method, change your account email address, manage your API key, and delete your account.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -43,9 +43,11 @@ To change your theme:
 
 ## Change your account email address
 
-The email address field in `Settings` > `Account` is read-only and cannot be changed directly in the UI. To change the email associated with your Clay account, contact Clay support via the in-app chat.
+The email address field in `Settings` > `Account` > `Your details` is read-only and cannot be edited there.
 
-**Who can request this change:** Email address changes are processed by Clay's support team and handled internally. Support will only honor requests that originate from the workspace admin's registered email address — if you are not the workspace admin, coordinate with them to submit the request.
+**Self-serve email change (currently in beta):** Some accounts have a **Change sign-in** option in `Settings` > `Account` > `Security`. When available, this lets you change your login email address or switch between Google SSO and email/password login — no support contact required. The **Change sign-in** option is only shown for accounts that sign in with Google or email/password; it is not available for accounts using GitHub as a login method. If you don't see this option in your Security tab, contact Clay support via the in-app chat to request an email address update.
+
+**Who can request a change via support:** When the change is handled by the support team, the request must originate from the workspace admin's registered email address — if you are not the workspace admin, coordinate with them to submit the request.
 
 **If the new email address is already linked to another Clay account:** That existing account must be resolved (for example, deleted) before the change can be made.
 
@@ -84,9 +86,9 @@ If you do not receive a reset email, you likely signed up with Google rather tha
 
 ## Switch from Google login to email and password
 
-If you signed up with Google and want to create a password so you can log in with your email and password instead, this cannot be done through your account settings — it requires a support action.
+If you signed up with Google and want to create a password so you can log in with your email and password instead, first check `Settings` > `Account` > `Security` — some accounts have a **Change sign-in** option that lets you make this switch without contacting support (currently in beta, may not be visible on all accounts). If you don't see that option, it requires a support action.
 
-To request the change:
+To request the change via support:
 
 -   Open the in-app chat and ask the support team to switch your login method from Google to password.
 -   Once the change is made, go to [app.clay.com/forgot](https://app.clay.com/forgot), enter your email address, and follow the link in the email to set your new password.
