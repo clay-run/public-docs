@@ -157,6 +157,20 @@ To fix:
 2.  Open the Claude desktop app, go to Connectors, and add Clay — completing the authentication flow in your browser. (Or go directly to [claude.com/connectors/clay](https://claude.com/connectors/clay).)
 3.  Once connected through the desktop app, Claude Code can call the Clay MCP.
 
+**Troubleshooting: "Access blocked: clay.com has not completed the Google verification process" (Error 403: access\_denied)**
+
+If you see this error when signing in to Clay during the connector setup, your company's Google Workspace admin has restricted which third-party apps employees can authorize with their Google accounts. This is a policy setting on your organization's side, not a Clay issue.
+
+To resolve it:
+
+1.  On the Google error page, click **error details** to find the exact Client ID of Clay's sign-in app.
+2.  Share that Client ID with your IT or Google Workspace admin.
+3.  Ask your admin to go to [Google Admin Console](https://admin.google.com/) → `Security` → `API Controls` → `App Access Control`, search for Clay by Client ID, select it, choose the relevant org units, and set access to `Trusted`.
+
+Once the admin saves the setting, you can sign in and connect normally. Changes can take up to 24 hours to apply.
+
+**Note:** If you're also connecting a Google Workspace email account for Clay's email sequencer (for outbound campaigns), that uses a separate Google app called **Clay Sequencer (Web)**. Your admin will need to trust both apps if you're using both features. See the [Email sequencer setup guide](https://university.clay.com/docs/email-sequencer#connecting-google-workspace-via-oauth) for those steps.
+
 **When I run an action in Claude, does it count as a Clay action?**
 
 Yes. Everything runs on a Clay table behind the scenes, so actions taken through Claude count as Clay actions and draw from your credit balance accordingly.
