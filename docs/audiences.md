@@ -806,6 +806,26 @@ Yes. Segments update in real time as records enter or exit your filter criteria.
 
 Enrichments configured with `Continuous Enrichment` enabled automatically process new records entering a segment, typically within 15 minutes. No manual runs are required after initial setup.
 
+### How do I automatically add contacts to a segment after a set number of days?
+
+To move contacts into an audience segment automatically after a time delay — for example, syncing them to a LinkedIn Ads campaign 30 days after adding them to an outbound sequence — stamp a date onto each contact's Audience record when the triggering action completes, then filter the segment using a relative date operator.
+
+**Setup:**
+
+1. **Capture the date in your Clay table.** In the table where the triggering action runs, add a formula column that returns the current date and time in ISO format when the action succeeds and returns nothing otherwise. For example: if an Apollo add-to-sequence action returns a success status, output the current date; otherwise return nothing.
+
+2. **Write the date to Audiences.** Add an `Upsert Audiences Record` action column in the same table. Map your date formula column to a custom Audiences date field — for example, **Sequence Start Date**. Each time the action succeeds for a row, that date is stored permanently on the matching Audiences record. If the date field doesn't exist yet, create it first via `+ Add field` inside a bulk enrichment — see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce).
+
+3. **Build the timed segment.** In Audiences, create a new audience with two filters:
+   - **Sequence Start Date → is not empty** — limits the segment to contacts who have been stamped with a date.
+   - **Sequence Start Date → not within the last → 30 days** — includes only contacts whose date is more than 30 days in the past.
+
+   The **"not within the last"** filter is a rolling window recalculated automatically against today's date. Segment membership is re-evaluated continuously — contacts enter the segment within approximately 20 minutes of crossing the threshold. No batch re-runs are needed.
+
+4. **Sync the segment to your ad platform.** Click `Send` → `Export action` → `Sync to ad platforms` to connect the segment to LinkedIn, Meta, or Google Ads.
+
+**Important:** Do not configure the date formula column to re-run automatically on subsequent table runs — doing so would overwrite the original date with today's date and reset the clock. Use the column's **"Only run if"** conditional to gate it on the date field being empty, so the date is written only once when the action first succeeds.
+
 ### Why didn't my audience count change after I tightened my search filters?
 
 By default, audience searches (Find People and Find Companies sources) use **Add new results** mode — the search only adds net-new contacts going forward and never removes contacts from an earlier, broader search. To narrow your results, use the **Replace existing results** option when saving.
