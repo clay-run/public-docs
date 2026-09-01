@@ -255,6 +255,12 @@ This means **same-session personalization is not supported** — if a visitor hi
 
 Charges begin after you install the tracking snippet and Clay starts receiving events. To stop tracking, disable the website connection under your workspace settings. Clay will stop processing new visitor sessions and stop charging Clay credits.
 
+### Does Clay capture website visits from before the tracking snippet was installed?
+
+No. Clay's Website Visitor Tracking only captures visits from the moment the tracking snippet is installed on your website. Historical visits that occurred before installation cannot be backfilled.
+
+To start collecting visitor data as soon as possible, install the tracking snippet on all pages of your website and enable your connection. New visits will begin appearing in your table within 30 minutes of the first tracked session completing.
+
 ### How does pricing work?
 
 **Cost:** Each successful IP enrichment consumes 1 action plus the applicable data credits (based on the de-anonymization provider). Results are cached for 30 days to avoid repeat costs.
