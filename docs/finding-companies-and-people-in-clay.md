@@ -709,3 +709,14 @@ If you see **Actions** in the top right instead of **Tools**, one or more rows a
 -   **Rows selected**: **Tools** is replaced by **Actions**, which provides bulk row operations (Run rows, Delete rows). Uncheck all rows to restore **Tools**.
 
 **Note:** If you're following older instructions — such as some Clay University videos — that refer to an **Actions** button for finding people, **Tools** is the renamed version. The rename applies to all workspaces.
+
+### What do TAM and ICP mean in Clay?
+
+Clay uses two key terms to describe how to approach your market:
+
+- **TAM (Total Addressable Market)** — the total universe of accounts that could theoretically buy your product. Clay's company search and [Lookalikes](clay-lookalikes.md) features are designed to help you map this full landscape.
+- **ICP (Ideal Customer Profile)** — the qualified, high-fit subset of your TAM that you should be actively targeting today. Clay's AI filters, enrichments, and signals help you dynamically filter your TAM down to your ICP in real time.
+
+Clay's platform is built to help you do both at once: source your full TAM, then layer in scoring and signal data to surface your ICP continuously.
+
+Clay does not use **SAM (Serviceable Addressable Market)** or **SOM (Serviceable Obtainable Market)** terminology in its platform or frameworks. To apply further market segmentation, use AI filters and enrichment columns to qualify your company search results.
