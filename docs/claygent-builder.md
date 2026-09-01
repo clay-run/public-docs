@@ -503,6 +503,17 @@ Changing the column data type will not bypass this limit — the constraint is o
 
 **Alternatively**, reference the Claygent action column directly in downstream formulas — using `/` to navigate into specific properties — rather than extracting large fields into standalone text columns. Accessing a property of the action column reads from its 200 kB store; only columns that *hold* a copy of the value as text are subject to the 8 kB limit.
 
+### Why am I seeing a "weekly conversation limit" error when using Sculptor in Claygent builder?
+
+This message means your workspace has hit its weekly Sculptor conversation limit. Sculptor — the conversational agent-building assistant inside Claygent builder — is subject to the following weekly limits, applied per workspace on a rolling 7-day window:
+
+-   **In-table Sculptor conversations** (launched from within a Clay table): **20 per week**
+-   **Homepage Sculptor conversations** (launched from the [app.clay.com](http://app.clay.com/) homepage): **50 per week**
+
+A "conversation" is an entire chat thread — all back-and-forth messages within a single session count as one conversation. Limits reset automatically after 7 days.
+
+If you need your limit increased, contact support.
+
 ## Tips for success
 
 **Importing test cases**: Instead of manually creating test data, import real rows from your tables. Click `Import from table` in the test panel to pull actual data and see how your agent performs on real-world inputs.
