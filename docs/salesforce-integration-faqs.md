@@ -370,6 +370,14 @@ On the Salesforce side, modify the duplicate rule to exclude records coming from
 
 For details on Clay's Create Record settings, see [Salesforce integration](https://university.clay.com/docs/salesforce-integration-overview). For more on Salesforce duplicate rules, see [Salesforce's documentation](https://help.salesforce.com/s/articleView?id=sales.duplicate_rules_map_of_reference.htm&type=5).
 
+## What does a `duplicateResult` in my Create Record error details mean?
+
+If your Create Record action fails and the error details show a JSON object containing `duplicateResult` — with fields such as `duplicateRule`, `allowSave`, and `errorMessage: "Use one of these records?"` — Salesforce's duplicate rule detected an existing record matching the one Clay tried to create. Clay surfaces this as an error containing the raw Salesforce response.
+
+The `allowSave: true` value inside `duplicateResult` does **not** mean the record was saved. It means the duplicate rule is configured to warn rather than hard-block — Salesforce will allow the save, but only if the API client explicitly requests an override. Because Clay does not send that override by default, the create fails.
+
+To create the record anyway, enable the **Duplicate Rule Override** toggle in your Create Record column settings. Clay will then include the override instruction in the Salesforce API request, bypassing the duplicate warning. For additional options — including updating the existing record instead of creating a new one, or adjusting the Salesforce rule itself — see [Why am I seeing a `DUPLICATES_DETECTED` error when creating records in Salesforce?](#why-am-i-seeing-a-duplicates_detected-error-when-creating-records-in-salesforce) above.
+
 ## Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?
 
 The `MALFORMED_ID` error means Salesforce received a value it cannot interpret as a valid record ID for a reference (lookup) field — such as **OwnerId**, **AccountId**, **ContactId**, or **CampaignId**. Reference fields require the actual Salesforce record ID (an 18-character alphanumeric string, for example `005Pk000008CnYDIA0`), not a display name or label. Passing a person's name — for example, `Matt Bagshaw` — to the **OwnerId** field causes Salesforce to return a `MALFORMED_ID` error, which Clay surfaces as-is.
