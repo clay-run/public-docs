@@ -80,6 +80,22 @@ For a complete example using Zapier, see [Send Clay data to Zapier](https://www.
 
 **Note:** The 10 requests/second throughput limit in the [Limits](#limits) section above applies only to data *arriving at* Clay through a webhook source. It does not apply to outbound HTTP API calls your table makes to external services.
 
+## Webhooks as Workflow triggers
+
+In Clay's Workflows feature, a webhook can be used as the trigger that starts a workflow run. This behaves differently from the **Monitor webhook** table source described above.
+
+**Response behavior — fire and forget:** When your external system POSTs to a Workflow's webhook URL, Clay immediately returns a `202 Accepted` response before the workflow begins executing. The response body is always:
+
+```json
+{"success": true, "workflowRunId": "<id>", "message": "Webhook request accepted and queued for processing"}
+```
+
+There is no way to wait for the workflow to finish or return a custom response body to the caller. Clay enqueues the workflow run and returns the `202` immediately — the workflow executes asynchronously after that point.
+
+**There is no way to customize the webhook response body in Workflows.** The `202` response shape, the `success` value, and the message are fixed. If your integration requires a specific response format or needs to receive workflow output synchronously, that is not supported today.
+
+**If you need results delivered back to your system:** Build an outbound step into the workflow itself — for example, an HTTP API call or a CRM update action — to push the processed results back to your external system once the run completes.
+
 ## FAQs
 
 ### How can I see webhook logs?
