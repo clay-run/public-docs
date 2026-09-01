@@ -88,9 +88,9 @@ The hard limits, in one place:
 | Limit | Value |
 | --- | --- |
 | Emails per sequence | 4 |
-| Maximum delay between steps | 10 days |
+| Maximum delay between steps | 365 days |
 | Leads per campaign | Up to 500,000 |
-| Message size | 8 KB of text per email |
+| Message size | 10,000 characters per text node |
 | Copy variants per campaign | 2 |
 | Sequences per lead, per campaign | 1 |
 | Send limit per email account, per day | 10–500 (30 for accounts bought in Clay) |
