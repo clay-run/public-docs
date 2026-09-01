@@ -27,6 +27,7 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
     -   **Company size** — The self-reported size band on the company's profile (e.g., 11–50, 51–200). Select one or more bands from the dropdown.
     -   **Annual revenue ranges** — Filter by revenue brackets from $0–$500K up to $100B+.
     -   **Company types** — Privately Held, Public Company, Partnership, Self Employed, Non Profit, Educational, Self Owned, or Government Agency. These values reflect how companies self-classify on their profiles.
+    -   **NAICS codes** *(currently in beta — contact support to enable)* — Filter companies by North American Industry Classification System (NAICS) code. The available codes are the full 2022 NAICS taxonomy published by the U.S. Census Bureau — the same classification system used across U.S. government and business filings. Codes range from 2 to 6 digits; matching is hierarchical, so selecting a shorter code (e.g., `513`) includes all companies whose more specific codes fall under it (e.g., `5132`, `513210`). Type a code number or industry name in the filter search box to find the right entry. To browse the full list, visit [census.gov/naics](https://www.census.gov/naics/). Three 2-digit sectors appear as ranges — `31-33` (Manufacturing), `44-45` (Retail Trade), `48-49` (Transportation and Warehousing) — and are available as picker options.
     -   **Description keywords to include** and **Description keywords to exclude** — Filter companies by keywords that appear in their description.
         -   **Exact phrase matching:** Wrap multi-word terms in double quotes to match that exact phrase. For example, `"Google Cloud"` finds companies with that phrase in their description — not just companies that mention Google and cloud separately. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are stripped out even with quoted phrases.
     -   **Semantic company description** — Enter a free-text description to help rank results based on how closely they match your ideal company profile (e.g., "B2B fintech company selling to mid-market banks").
@@ -241,3 +242,9 @@ The full set, grouped by parent category:
 -   **Non-Profit, Public Sector and Education (Non-Commercial):** Government Administration and Municipal Services, NGOs, Charities and Community Organizations, Public Healthcare and Social Services, Public/Private Research Institutions and Educational Foundations, Student Organizations and Campus Services
 
 **Note:** AI Subindustries is a filter input, not an output column. It controls which companies are returned in Find Companies, but does not add a dedicated Subindustry column to your table.
+
+### Where do the NAICS codes in the filter come from?
+
+The **NAICS codes** filter uses the full official 2022 NAICS taxonomy published by the U.S. Census Bureau — not a custom Clay-defined list. The same codes appear across U.S. government and business filings. To browse or search the complete list, visit [census.gov/naics](https://www.census.gov/naics/). You can also type a code number or industry name directly in the filter search box in Clay to find the right entry.
+
+Note: Three 2-digit sectors appear as ranges rather than single codes — `31-33` (Manufacturing), `44-45` (Retail Trade), `48-49` (Transportation and Warehousing) — following the standard U.S. Census Bureau designations for those sectors.
