@@ -147,9 +147,9 @@ Restrict which users or groups can configure workflows using specific integratio
 
 Set workbook-level credit caps to prevent overspending. Admins can configure a workspace default limit that automatically applies to all new workbooks. For members accessing Clay through AI tools (Claude, ChatGPT, or Glean) via the MCP integration, admins can also set per-user credit limits. See [Credit spend limits FAQ](https://university.clay.com/docs/credit-spend-limits-faq) and [MCP settings](https://university.clay.com/docs/mcp-settings).
 
-**Credit budgets** _(Enterprise, open beta)_
+**Credit budgets** _(Enterprise)_
 
-Create named credit spending pools and assign them to users or groups, so spend can be tracked and governed by team or cost center. Workbooks are assigned to a budget, and any Data Credits they consume count against that budget's limit. Access via `Settings` → `Budgets`. See [Credit budgets](https://university.clay.com/docs/actions-data-credits#credit-budgets-enterprise-open-beta) in the Actions & Data Credits guide.
+Create named credit spending pools and assign them to users or groups, so spend can be tracked and governed by team or cost center. Workbooks are assigned to a budget, and any Data Credits they consume count against that budget's limit. Access via `Settings` → `Budgets`. See [Credit budgets](https://university.clay.com/docs/actions-data-credits#credit-budgets-enterprise) in the Actions & Data Credits guide.
 
 **Audiences**
 
