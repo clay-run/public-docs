@@ -419,6 +419,19 @@ Note that credits are not refunded for enrichments where the system operated as 
 
 It depends on the provider's billing model. In some cases, a data provider may not charge when no data is found — in those cases, your credits will be refunded automatically. Other providers charge Clay for the API call regardless of whether data is found, so credits are deducted either way. You can see the exact credit cost for each enrichment in the enrichment panel before running.
 
+### Why am I charged for an enrichment that returned null values for some fields?
+
+Credits are charged based on whether the enrichment found the entity you searched for — not based on whether every individual output field is populated. When an enrichment returns a success result (for example, "✅ Organization found"), credits are consumed because the provider located the entity and returned data, even if specific output fields are null. Null fields mean the provider's database doesn't have that specific data for the entity, not that the enrichment failed.
+
+For example, a CrunchBase financials enrichment that locates a company (showing "Organization found") and returns a revenue range but null for Valuation Value and Funding Total still charges credits, because CrunchBase found the company. Those specific fields are null because that financial data isn't available in CrunchBase for that company.
+
+Credits are refunded only when the enrichment returns no data at all. For CrunchBase enrichments, credits are refunded in two cases:
+
+-   **"Not found"** — the company doesn't exist in CrunchBase's database.
+-   **"No data"** — the company was found in CrunchBase, but none of the requested data fields have any values.
+
+To see which outcome applies to each cell, add a formula column with `Clay.getCellStatus({{Your Column}})`. Cells that found the entity return `SUCCESS` (credits charged); cells that returned no data return `SUCCESS_NO_DATA` (credits refunded).
+
 ### What happens to credits if an enriched email fails validation or turns out to be undeliverable?
 
 Credits are charged when a provider returns a result — including email addresses that later fail a validation step or turn out to be undeliverable. There is no automatic credit refund when a returned email fails validation or bounces after sending; credits are deducted at the point the provider returns data, regardless of what happens to that address downstream.
