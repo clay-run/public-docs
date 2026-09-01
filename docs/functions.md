@@ -360,16 +360,21 @@ Yes, on supported plans. The `MCP for reps` option in the function editor panel 
 
 Yes — currently in beta. Clay's public API lets you invoke a function against input data without opening the app, making it useful for agent workflows, CI pipelines, and system-to-system integrations. To get access, contact your GTM engineer or [our team](https://www.clay.com/contact-form) to have the public API beta enabled for your workspace.
 
-**Finding your function's Routine ID:**
+**Enabling API access and finding your function's Routine ID:**
 
-Each function has a unique **Routine ID** (format: `function:...`) that identifies it in API calls. The Routine ID appears in the **Integrations** section of the function's settings panel — but this section is only visible when you are **not** in edit mode.
+Each function has a unique **Routine ID** (format: `function:t_<tableId>`) that identifies it in API calls. Before you can call a function via the API, you must enable API access for it. The **Integrations** section of the function's settings panel is where you do both — but this section is only visible when you are **not** in edit mode.
 
-To find your Routine ID:
+To enable API access and find your Routine ID:
 
 1.  Go to **Functions** on your Clay homepage and open the function.
 2.  If you see an "Editing function" toolbar or an orange banner reading "Changes in Edit Mode will not go live until you review and publish," click **Exit edit mode** at the bottom of the editor.
 3.  In the settings panel on the right, scroll to the **Integrations** section.
-4.  Copy the **Routine ID** — it has the format `function:...`. Use this value when calling the API, for example: `POST /routines/<Routine ID>/run`.
+4.  Check the **API & CLI** checkbox — this exposes the function through the Clay public API and CLI.
+5.  Copy the **Routine ID** — it has the format `function:t_<tableId>` (for example, `function:t_0abc123def456`). Use this value when calling the API: `POST /routines/function:t_<tableId>/run`. External tools that ask for a "routine ID" or a `function:t_...` value expect this full string.
+
+**How inputs work when calling a function via API:**
+
+The function's defined inputs become the API call's parameters — your external tool passes the actual values (full name, company domain, etc.) at call time, and Clay runs the enrichment against whatever it sends. When building a function specifically for API use, create a blank column in your source table for each input you expect to receive (e.g., "Full Name," "Company Domain"), map the enrichment action to those columns, then save as a function. Those blank columns become the function's official inputs; the table itself is just the template — your external caller provides the real data at runtime, not the table.
 
 **Rate limits and batch sizes:**
 
