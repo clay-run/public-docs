@@ -139,10 +139,10 @@ Turn field mapping off when you want to run enrichments and route results somewh
 
 ### Auto-enrich new records
 
-The **Auto-enrich new records** toggle determines whether records that newly qualify for the segment are enriched automatically after the initial run.
+The **Auto-enrich new records** toggle controls whether records that newly join the segment are enriched automatically in the background after the initial run. This toggle does **not** affect what happens when you click **Start Run** — clicking Start Run always begins enrichment for all current segment members regardless of whether this setting is on or off.
 
 -   **On** — any record that enters the segment after the initial run is automatically enriched in the background, typically within 15 minutes of joining the segment. This includes records that newly qualify because you updated your audience filters.
--   **Off** — only records present at the time of the initial run are enriched. Records that join the segment later are not enriched automatically.
+-   **Off** — records that join the segment after the initial run are not enriched automatically. Records already in the segment when you click Start Run are still enriched.
 
 **To change this setting while a run is active:** click **Pause** first. The toggle is locked while the enrichment is running and can only be changed when the enrichment is paused or not yet started.
 
@@ -164,6 +164,8 @@ A single bulk enrichment can run on multiple Audiences segments — you do not n
 Once the segment is linked, navigating to that segment and clicking `Enrich` shows the enrichment in the sidebar. You can view its status and manage settings from either connected segment.
 
 ### What happens when you click Start Run
+
+**Clicking Start Run immediately begins enrichment and consumes credits** — it is not a "save" or "confirm settings" step. The moment you click Start Run, Clay starts processing all rows in the segment and charges credits for each row. There is no standalone "Save" button in the Run Setup panel; enrichment configuration changes take effect when the run starts, not before.
 
 When you click **Start Run** on an Audiences bulk enrichment, Clay recalculates your **live segment at that moment** using your current filters — not the member list baked in when the bulk enrichment was first created. The live segment is the source of truth for the run.
 
