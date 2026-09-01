@@ -563,6 +563,13 @@ This is expected. When a lead replies using an HTML-capable email client like Mi
 
 To work with the reply as clean text — for example, when mapping it to a CRM note or passing it to an AI action — use the `Text` sub-field instead. If you prefer to use `Html` and strip the tags, add a formula column to do so.
 
+### I pasted HTML into my message but I'm only seeing raw code — how do I preview the rendered output?
+
+HTML content only renders in the message editor when **Enable HTML** is turned on for the campaign. Without it, anything you type or paste — including HTML markup — appears as plain text.
+
+1. Turn on `Enable HTML` in your campaign's **Setup** settings (it's off by default). If the option appears disabled or isn't visible, contact support to request access — this feature is currently in beta and not available in every workspace.
+2. Once HTML is enabled, switch to **Preview** mode using the toggle at the top of the message editor. Preview renders your HTML formatting and substitutes real lead data from your source table, so you can see how the email will appear in a recipient's inbox before sending. The other mode — **Template** — shows the raw content structure (markup and variable chips), which is useful for editing but does not show the final rendered output.
+
 ### Useful links
 
 -   [Smartlead documentation](https://helpcenter.smartlead.ai/)
