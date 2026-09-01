@@ -139,7 +139,7 @@ For more ways to control credit usage, see [Ways to save Clay credits](clay-cred
 
 ## How waterfall validation works
 
-Email waterfalls include a validation step after each provider to confirm whether the email found is valid. However, validators are designed to skip if the same email address has already been returned and found invalid by an earlier step in the sequence.
+Pre-built email waterfall templates — Work Email and Personal Email — include a validation step after each provider to confirm whether the email found is valid. However, validators are designed to skip if the same email address has already been returned and found invalid by an earlier step in the sequence.
 
 If two providers in a waterfall both return the same email address, and the first validator already confirmed it's invalid, the second validator won't run — its column will show **Run condition not met**. This is expected behavior, not an error. Re-validating an email that was already tested would waste credits without adding new information.
 
@@ -148,6 +148,8 @@ Because the waterfall can't predict what any given provider will return, all pro
 Validation steps skipped with **Run condition not met** do not consume credits.
 
 To limit the number of providers the waterfall calls when the same invalid email keeps appearing across multiple steps, use the **Threshold for duplicate results** setting in the Work Email waterfall's **Additional column settings**. Setting this to `2` or higher stops the waterfall from calling additional providers once the same email has appeared that many times consecutively. See [Work Email waterfall](work-email-waterfall.md) for full configuration details.
+
+**Custom waterfall columns don't include validation settings.** If you created a waterfall via **Add column → Waterfall** rather than selecting a pre-built template from **Tools → Enrich**, no Validation section appears in the column settings — regardless of the data type or providers you added. To get email validation, switch to the pre-built Personal Email or Work Email waterfall from **Tools → Enrich** (search for "Personal Email" or "Work Email" in the Enrich tab), which includes full validation configuration including validation provider, strategy, and catch-all handling. Alternatively, add a dedicated email verifier enrichment (such as ZeroBounce or NeverBounce) as a separate column after your custom waterfall, and set its **Only run if** condition to run only when the waterfall output column is not empty. See [Conditional runs](conditional-runs.md) for how to write that condition.
 
 ## Viewing per-provider results
 
