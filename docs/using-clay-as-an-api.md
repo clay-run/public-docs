@@ -68,6 +68,8 @@ The same workspace-level beta access also unlocks a Routines endpoint for trigge
 
 Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is under **Settings → Account → API keys** and is distinct from the personal API key on your profile page.
 
+**Making Routines API calls recurring:** The Routines API is on-demand only — the Clay API has no built-in scheduling. To call the Routines endpoint on a recurring schedule from an external script, pair it with an external scheduler: a cron job, a cloud scheduler such as AWS EventBridge, or an automation platform like Make.com. Your scheduler triggers `POST /routines/{routine_id}/run` at whatever cadence you need (daily, weekly, monthly, etc.). If your workflow runs inside Clay tables rather than from an external script, Clay's native [Scheduled Sources](scheduled-sources.md) and [Scheduled Columns](scheduled-columns.md) handle recurring runs automatically — no external tooling needed.
+
 **Note:** A 401 (`Authentication required`) from `api.clay.com/public/v0` means your workspace hasn't been provisioned for the Public HTTP API — this applies even if your API key is visible in settings. Regenerating the key will not fix a provisioning 401. [Contact Clay support](https://www.clay.com/contact-form) to request workspace enablement.
 
 **Note:** A `413` (`Payload Too Large`) from `POST /search/filters-mode/{search_id}/run` means the requested page of results exceeds the API's internal output cap. Reduce the `limit` parameter in your request and retry — the error is deterministic, so retrying at the same `limit` will always fail.
