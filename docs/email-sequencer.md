@@ -105,7 +105,7 @@ Special sequencer enrichments available in the table include:
 -   `Reply to lead`: Automate responses to any email reply event using a pre-built HTML template, AI-generated snippet, or booking link.
 -   `Pause lead in campaign`: This can be called from any Clay table to pause a lead on an incoming event (e.g. event signup, or if the recipient filled in a form).
 -   `Add email to blocklist`: Stop an email address from receiving emails across all campaigns in your workspace — including any campaigns that address is currently active in.
--   `Forward lead email in campaign`: Route an email thread from the global inbox to any email address — including addresses outside Clay (recipients do not need a Clay seat). Map Campaign ID and Lead ID from the event row, set Recipient email addresses to the target inbox, and add a run condition so it only fires on `EMAIL_REPLY` events.
+-   `Forward lead email in campaign`: Route an email thread from the global inbox to any email address — including addresses outside Clay (recipients do not need a Clay seat). Map Campaign ID and Lead ID from the event row, set Recipient email addresses to the target inbox, and add a run condition so it only fires on `EMAIL_REPLY` events. Use the optional **Forward message** field to prepend custom text (HTML or plain text) above the forwarded thread — for example, the lead's engagement history or follow-up guidance for the rep. **Note:** The forwarded email does not include a Reply-To pointing back to the original lead. If the rep replies directly from their inbox, the response goes to the Clay sending mailbox rather than to the lead. To reply to the lead from within Clay, use the `Reply to lead` enrichment instead.
 
 ## Managing leads in campaigns
 
@@ -552,7 +552,13 @@ Smartlead assigns leads into one of the following categories:
 
 ### How do I handle replies from leads?
 
-Replies are available in the `Replies` tab of your campaign and in the campaign events table. You can reply directly from Clay using the `Reply to lead` enrichment in the campaign events table.
+When a prospect replies to a sequencer email, the reply lands in Clay's inbox — not in the rep's personal email. Brief your sales team to check Clay for incoming replies. You can access replies from:
+
+-   The **Inbox** button at the top-right of the Campaigns page (global inbox across all campaigns)
+-   The `Replies` tab within a specific campaign
+-   The campaign events table, where you can automate responses using the `Reply to lead` enrichment
+
+To automatically forward reply notifications to a rep's real email inbox, add the `Forward lead email in campaign` enrichment to your campaign events table and set a run condition to `EMAIL_REPLY` events. See the [Campaign events table](#campaign-events-table) section for setup details.
 
 ### Why does the reply body show HTML instead of plain text?
 
