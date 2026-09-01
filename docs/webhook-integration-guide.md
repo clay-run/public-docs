@@ -115,6 +115,8 @@ Filters in Clay are display-only — they control which rows appear in the curre
 
 If you clear the filters and the expected rows still don't appear, see [Why aren't any rows arriving in my webhook table?](#why-arent-any-rows-arriving-in-my-webhook-table) for configuration-level troubleshooting.
 
+**If Clay's response was `202 Accepted` rather than `200 OK`:** A `202` response means Clay received your payload and queued it for processing — the row will appear in your table with a short delay rather than immediately. This is normal during periods of elevated load and is not an error. Wait a moment and refresh your table; if the row still doesn't appear after a few minutes, check the filter and configuration items in [Why aren't any rows arriving in my webhook table?](#why-arent-any-rows-arriving-in-my-webhook-table).
+
 ### Why aren't any rows arriving in my webhook table?
 
 If your webhook isn't creating rows — even on a brand-new webhook that has never received a submission — check these common causes:
@@ -127,7 +129,7 @@ If your webhook isn't creating rows — even on a brand-new webhook that has nev
 
 2. **Incorrect URL** — Confirm you copied the full webhook endpoint URL from the **Monitor webhook** section in your table source settings (not a partial URL or the cURL command itself).
 
-3. **Missing or wrong authentication token** — If you added an auth token when creating the webhook, it must be included in every request as a header. The token is only displayed once at creation — if you didn't copy it, you'll need to delete and recreate the webhook to generate a new one.
+3. **Missing or wrong authentication token** — If you added an auth token when creating the webhook, it must be included in every request as a header. Clay returns `401` if the token is missing or does not match. The token is only displayed once at creation — if you didn't copy it, you'll need to delete and recreate the webhook to generate a new one.
 
 4. **Submission limit reached** — See the [Limits](#limits) section. Once a webhook source hits 50,000 submissions, Clay returns a `403 Record limit reached for webhook` error and stops creating rows. This limit is cumulative — it counts all submissions since the webhook was created, and neither deleting nor archiving rows resets it. **Enterprise plan:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) to bypass this limit entirely — when passthrough mode is active, the 50,000 cap is skipped and the webhook can accept data indefinitely.
 
@@ -140,6 +142,12 @@ curl -X POST YOUR_CLAY_WEBHOOK_URL \
 ```
 
 If a row appears in your table, the issue is in your original request's formatting, headers, or auth token. If no row appears on a brand-new webhook, contact support.
+
+### Can I restrict webhook access by IP range?
+
+No — Clay webhook sources do not support IP allowlisting or any other network-level access restrictions. The authentication token is the only security control available for webhook sources.
+
+To keep your webhook secure, store the token in a secrets manager rather than hard-coding it in your sending system. If you suspect the token has been exposed, delete the webhook source and recreate it to generate a new token and URL, then update your sending system with the new values.
 
 ### How can I tell which webhook source a row came from?
 
