@@ -306,3 +306,16 @@ You can chain as many validators as needed this way. Each column's **Only run if
 **Tip:** Before running at scale, test by right-clicking a single row and choosing **Run 1 cell**, or enable [sandbox mode](sandbox-mode.md) to try your full validation sequence without consuming live credits.
 
 For a full reference on writing conditional run formulas, see [Conditional runs](conditional-runs.md).
+
+### How does Generate Email Permutations work, and how do I validate the results?
+
+**Generate Email Permutations** takes a person's **Full Name** and **Company Domain** and returns a list of up to 17 possible email address formats — for example, `first.last@domain.com`, `firstlast@domain.com`, `f.last@domain.com`, `last.first@domain.com`, and others. The permutations are not ranked by likelihood — they are all the common email naming patterns applied to the inputs, with no scoring or ordering.
+
+The output is an **array** (list) of email addresses, not a single value. Email verification enrichments in Clay — including Kitt Verify Email and other validators — accept **one email address per row as input**, not an array. If you map the full permutations list to a verifier's Email field, the enrichment will fail with an input error on those rows.
+
+**To validate email permutations, use one of these approaches:**
+
+- **Reference a single permutation by index.** To verify one specific format, select a sub-field from the Generate Email Permutations column when mapping the Email input of your verifier — for example, `permutations > 0` gives you the first generated email. Each verifier column validates one email at a time, so add a separate verifier column for each permutation you want to check.
+- **Use the Work Email waterfall's Infer Email setting instead.** For most use cases, the waterfall's built-in **Infer Email** step is simpler and more credit-efficient. It generates a single email from a naming pattern (defaulting to `first.last@domain.com`) and validates it for free before any paid providers run. See [Infer Email](#infer-email) above for setup steps.
+
+**Note on credits:** Email verification enrichments charge a credit per call regardless of whether the email turns out to be valid or invalid. A credit is incurred each time the verification provider is called — not only when a valid email is confirmed.
