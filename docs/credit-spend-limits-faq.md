@@ -130,10 +130,10 @@ The notifications above are for workbook-level credit spend limits only — they
 
 To manually monitor your monthly credit balance at any time, go to **Settings → Usage**. The Usage Dashboard shows your remaining Data Credits and your current billing period end date. For a detailed breakdown of credit consumption, see [Credit usage](/docs/credit-usage).
 
-## Credit Budgets (open beta)
+## Credit Budgets
 
 **What's the difference between credit spend limits and credit budgets?**
 
 **Credit spend limits** (covered in this guide) set workbook-level spending caps — admins define a maximum credit amount for each workbook, and all tables and campaigns within it share that cap.
 
-**Credit Budgets** is a related but separate feature currently in open beta for Enterprise customers. It lets admins create named budget pools, assign users or user groups to each budget, and associate workbooks, tables, and campaigns with a specific budget — providing more granular, shared credit governance as your organization scales Clay across multiple teams. To join the Credit Budgets open beta, contact your Growth Strategist.
+**Credit Budgets** is a related but separate feature available to all Enterprise plan workspaces. It lets admins create named budget pools, assign users or user groups to each budget, and associate workbooks, tables, and campaigns with a specific budget — providing more granular, shared credit governance as your organization scales Clay across multiple teams. See [Credit budgets](/docs/credit-budgets) for full details.
