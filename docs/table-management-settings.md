@@ -61,7 +61,7 @@ When you duplicate a table, Clay copies the table structure and run settings —
 **What is copied:**
 -   Column headers and their configuration (enrichment settings, formulas, conditional run logic)
 -   Run settings, including the **Auto-run** toggle and "Keep existing results" setting
--   Scheduling configuration (if the table has a scheduled source import)
+-   Scheduling configuration (if the table has a scheduled source import) — Clay attempts to carry over the schedule to the duplicate. If it cannot — for example, because your workspace has reached its scheduled-table limit — the table is still duplicated but the schedule is not copied. You can add the schedule to the duplicate manually once a slot is available.
 
 **What is not copied:**
 -   Enriched data — enrichment columns start empty in the duplicate
