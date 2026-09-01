@@ -210,6 +210,20 @@ When enriching a person or company, providers match on name or profile data — 
 1. Filter the table to rows where the domain-match column is `false`.
 2. Re-enrich the company using the email domain as the primary input instead of the company name. A validated work email domain is a more reliable signal than a profile-based best-match result.
 
+### Social profile URL waterfalls and wrong-person matches
+
+Clay's pre-built social profile URL waterfalls — such as **Social URLs Found** and the **Social Profile URL** waterfall — use different provider configurations, which is why they can return different results for the same contact. Each waterfall stops at the first provider that returns a profile URL. The waterfall does not validate the returned URL against the other identifiers you mapped (work email, company name, or company website) — it simply accepts the first result.
+
+Because providers use their own matching logic, a returned URL may belong to a different person who partially matches the inputs — for example, someone with the same name at a large company. The more specific the identifiers you provide, the more accurate the result.
+
+**Work email is the strongest identifier.** Map a work email column when available — providers are more likely to return the correct professional profile from an email than from name and company alone.
+
+**Detecting wrong-person matches:** Run both waterfalls in separate columns and compare their outputs. When the two waterfalls return different URLs, at least one result is likely wrong. When they agree, the match is more likely to be correct — but agreement alone is not a guarantee.
+
+**Verifying matches with AI:** Add a **Use AI** or **Claygent** column that compares the name on the returned profile against the full name you have on record. For example: *"Does the professional profile at {{Profile URL}} belong to a person named {{Full Name}}? Return true or false."* Rows returning false need further review.
+
+**Fixing non-matching rows:** For rows your verification column flags as incorrect, use a Claygent column as a fallback: pass the person's full name, current company, and title and ask Claygent to find the correct professional profile URL directly.
+
 ## Trial plan and provider restrictions
 
 Waterfall enrichments are available on all plans, including the Trial plan. However, some individual providers within a waterfall require a paid plan.
