@@ -474,6 +474,40 @@ When **Run in batches** is enabled, Clay groups rows and sends them through Sale
 -   **Reduced lock contention:** Useful when bulk-writing to records that share a parent object, such as contacts in the same Account
 -   **Individual error handling:** Each record in a batch is processed independently — if one fails, others in the same batch can still succeed
 
+## Clay Salesforce App
+
+Available on Enterprise plans. The Clay Salesforce App is a native Salesforce component that lets your team trigger Clay enrichment workflows directly from within a Salesforce record — without switching to the Clay web app. Once configured, a **Launch Enrichment** button or action appears on Salesforce records, giving users a dropdown to select and run a Clay enrichment workflow.
+
+Each option in the **Launch Enrichment** dropdown corresponds to one workflow you have configured in the Clay Salesforce App. The label users see for each option is the **Friendly Name** you set when creating the workflow.
+
+### Accessing the Clay Salesforce App
+
+1. Click the **App Launcher** (the grid icon) in Salesforce.
+2. Search for **Clay** and select it.
+3. Click **Select Object** and choose the Salesforce object you want to configure (for example, **Contact** or **Account**).
+
+### Adding a new enrichment workflow
+
+To add a new workflow and make it appear as an option in the **Launch Enrichment** dropdown:
+
+1. Access the Clay Salesforce App (see above).
+2. Click **+ New Workflow**.
+3. Enter a **Friendly Name** — this is the label users see in the **Launch Enrichment** dropdown (for example, "Enrich Contact Info From AI").
+4. Paste your Clay table's **Table Webhook URL**. Your Clay table must use a webhook source so it can receive the records sent from Salesforce. For setup instructions, see [Import data to Clay using webhooks](webhook-integration-guide.md).
+5. Set **Max number of records a user can send at once** to control how many Salesforce records a user can select and send in a single enrichment action.
+6. Toggle **Get Enrichment Notifications** on if you want to receive a notification each time a record is enriched by Clay.
+7. Under **Select Fields**, move the Salesforce fields you want to send to Clay into the **Selected** panel.
+8. Click **Save Configuration**.
+
+### Renaming an existing workflow
+
+To change the label that appears for a workflow in the **Launch Enrichment** dropdown:
+
+1. Access the Clay Salesforce App (see above).
+2. Under **Optional (Edit Existing Workflow)**, select the workflow you want to rename.
+3. Edit the **Friendly Name** field.
+4. Click **Save Configuration**.
+
 ## Best practices
 
 -   **Test before automating:** Start with auto-update disabled when using **Create** or **Update** actions. Test manually with a few rows first before enabling automation.
