@@ -387,6 +387,8 @@ The operators available when building a filter depend on the field's data type, 
 
 **Note:** A field that appears numeric may have been imported as text (shown by a T icon rather than #). Text fields — such as "Annual revenue range" synced from Salesforce as a string — will not show range operators. To use range filtering on a field, contact Clay support to have the field's type changed to Number (#). Range operators will then appear when you add a filter on that field.
 
+**Built-in location fields:** Both People and Companies audiences include dedicated **City**, **State**, and **Country** filter fields, populated from Clay's identity data. These text fields appear in the filter dropdown and support text-matching operators — for example, `City → contains → Austin` to target records in a specific city, or `Country → contains → United States` to narrow by country. No manual field configuration is required. These fields are currently rolling out to all Audiences workspaces — new workspaces have them automatically, and existing workspaces will have them added as the rollout completes. Field values populate automatically when records sync from your connected sources (CRM, data warehouse, or Find People/Companies searches).
+
 ## Finding people from a Companies Audience
 
 Once you have a Companies Audience segment, you can run a people search scoped strictly to the companies in that segment — without needing a separate company table.
