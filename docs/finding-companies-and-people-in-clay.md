@@ -293,6 +293,29 @@ If you already have a populated Find People table and want to suppress contacts 
 2.  In your people table, add a **Lookup single row in other table** column. Set `Table to search` to your customers table, `Target column` to the customer domain column, and `Row value` to the person's current company domain.
 3.  Add a **view filter** showing only rows where the lookup returned no match (the lookup column is empty). Contacts at customer companies are hidden from view without being deleted — your enrichment data is preserved.
 
+### Excluding companies based on Salesforce or CRM field values
+
+Clay's **Exclude companies** filter accepts Clay tables, CSV files, or comma-separated domain lists — it does not read CRM field values like Salesforce account type or opportunity stage directly. To exclude companies based on those criteria, prepare your exclusion list in one of two ways before adding it to your Find Companies source.
+
+**Option 1 — Import a filtered Salesforce list view into Clay and use it as the exclusion source**
+
+This works best when your exclusion list may change over time (for example, as new customers close or move opportunity stages).
+
+1.  In Salesforce, create an Account list view filtered by the criteria you want to exclude — for example, Account Type is "Customer" or Opportunity Stage is "Closed Won."
+2.  In Clay, add a new table using the **Import records from a Salesforce list** source and select that list view. The matching accounts import as rows in the Clay table.
+3.  In your Find Companies source configuration, expand **Exclude companies** and add this Clay table as an exclusion source, matching on the **Domain** column.
+
+Companies in the exclusion table are matched against Find Companies results by domain. Those companies are filtered out before any rows are imported into your table.
+
+**Option 2 — Export a filtered Salesforce report as CSV and upload it**
+
+This works best for a one-time or infrequent suppression list.
+
+1.  In Salesforce, run an Account report filtered by the fields you want to exclude. Include the **Website** (company domain) column in the export.
+2.  In your Find Companies source configuration, expand **Exclude companies**, choose **CSV**, and upload the file.
+
+**Important:** Rows in the CSV that do not contain a company domain or LinkedIn URL are silently skipped — they will not cause an error, but those companies will not be excluded. Make sure your Salesforce export includes a domain or LinkedIn company URL for each account you want to suppress.
+
 ### Excluding companies from a Find Jobs search
 
 The **Exclude jobs** filter in a Find Jobs source is for **deduplication only** — it removes job postings that already exist in another Find Jobs table in your workspace. It does not accept a company list, CSV of domains, or any other company-based input. If you select a company table as the exclusion source, Clay shows the error: *"This table does not contain a jobs search."*
