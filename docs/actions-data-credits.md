@@ -206,9 +206,7 @@ Once enabled, all Actions run within that workbook will contribute to the workbo
 
 For complete documentation on credit spend limits—including default workspace limits, notifications, and behavior when limits are reached—see the [Credit spend limits FAQ](https://university.clay.com/docs/credit-spend-limits-faq).
 
-### Credit budgets (Enterprise, open beta)
-
-_Credit budgets are currently in open beta for Enterprise Plan workspaces._
+### Credit budgets (Enterprise)
 
 Credit budgets let admins create named spending pools and assign them to users or groups, so each team or cost center's Data Credit usage is tracked and governed independently. Unlike workbook credit limits—which cap a single workbook's spend—a budget spans multiple workbooks and users, making it well-suited for team- or department-level cost allocation.
 
