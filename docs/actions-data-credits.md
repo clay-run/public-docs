@@ -382,6 +382,20 @@ Data Credits work more like a currency and do roll over. On Launch and Growth pl
 
 **Trial plans:** Trial Data Credits are handled differently — see the [*I have a trial, when do the Data Credits expire?*](#i-have-a-trial-when-do-the-data-credits-expire) section below for details.
 
+### Why did my credit balance drop when my plan renewed?
+
+Two things happen at every billing renewal that can cause your balance to look lower than expected:
+
+1. **Actions reset to zero** — Actions represent your monthly platform capacity. Unused Actions expire at the end of each billing cycle and do not carry over to the next one. Your Actions balance restarts at your plan tier's full monthly allotment at each renewal.
+
+2. **Data Credits are capped at 2× your monthly limit** (on monthly plans) — When new monthly Data Credits are added at renewal, your total balance cannot exceed 2× your monthly allotment. Any Data Credits above that cap — including credits you purchased as a one-time top-up during the month — are dropped at renewal.
+
+**Example:** On a plan with 2,500 Data Credits per month, the most you can hold at renewal is 5,000. If you have 4,800 credits when your plan renews, adding 2,500 new credits would bring the total to 7,300 — but the cap is 5,000, so your balance is set to 5,000 and 2,300 credits are dropped.
+
+This is especially likely to happen if you purchased a top-up close to your billing date and didn't spend it all before renewal — the cap applies to top-up credits too. To avoid losing credits at renewal, check your upcoming renewal date in `Settings` → `Plan & billing` or by clicking the **Credits** button in your workspace toolbar, and spend down your balance before that date.
+
+To see exactly what happened at a specific renewal, go to `Settings` → `Usage` and use the `When` filter to review the period around your renewal date — you can see what credits came in, what was spent, and what was dropped.
+
 ### Why do I see a warning that credits are "over the rollover limit" when my current balance is below the 2× cap?
 
 The warning appears when your current balance is already high enough that adding your next monthly renewal would push the total over the 2× rollover cap — not because you are over it right now.
