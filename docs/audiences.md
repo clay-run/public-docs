@@ -201,6 +201,10 @@ Clay syncs data from HubSpot automatically on the following schedules:
 7.  Review and click `Confirm` — Clay begins importing immediately.
 8.  Monitor the import. If records don't appear immediately, refresh the page to see the latest count.
 
+**Connected workflows fire on segment entry, not on source import.** Adding a Snowflake source does not directly trigger any workflow. A workflow fires when a record first enters a connected segment — so incoming Snowflake records will only trigger workflows for the segments whose filters they match. If you want to keep your Salesforce and Snowflake automations separate, build distinct segments scoped to each data source and connect workflows only to those segments.
+
+**Test your import in a test workspace first.** Records imported into Audiences can only be archived (soft-deleted) — there is no self-serve option to permanently remove them. Before connecting a large Snowflake dataset to your production workspace, consider testing your import in a separate test workspace to verify your SQL query, field mapping, and unique identifier return the expected results. See [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) if you need to clean up records after import.
+
 **Sync timing and behavior**
 
 Clay syncs data from Snowflake on the following schedules:
@@ -1081,13 +1085,13 @@ To exclude Salesforce-deleted records from your audience lookups, filter on **Sy
 If you imported a CSV and need to correct the data — for example, because account records changed — archive the old records first, then import the updated file. **Admin access is required** — the Archive records option is not visible to Members or Viewers.
 
 1.  Navigate to **People** or **Companies** in the left sidebar.
-2.  Click **New audience** and add a filter: **Origin source** → **=** → select the name of your original CSV file. This targets only records that came from that specific import.
-3.  Once the segment shows the correct records, click the **⋮** (three-dot) menu next to the segment name and select **Archive records**.
-4.  Import the updated CSV using **Add data** → **Add Source** → **CSV**.
+2.  Click **Criteria** and add a filter for **Origin source** — select the CSV import you want to replace. This isolates only the records that came from that CSV.
+3.  Click **+ Create Audience** in the toolbar to save this as a named segment — for example, "Old CSV Import."
+4.  Once the segment shows only the records from the old import, click the **⋮** (three-dot) menu next to the segment name.
+5.  Select **Archive records** — this removes all the old CSV records from your active audience.
+6.  After archiving, import the updated CSV: click **Add data** → **Add Source** → **CSV** and follow the import steps.
 
 Audiences deduplicates on import using the unique identifier you configure — any incoming record whose identifier matches an existing (non-archived) record will update that record rather than create a duplicate.
-
-**Note:** After archiving, the original CSV source entry remains visible in the Sources tab. There is no self-serve option to remove a CSV source listing — the entry is retained for filtering and audit purposes. To permanently remove the source entry, contact Clay support.
 
 ### How do I archive records that no longer match my Snowflake import query?
 
@@ -1095,32 +1099,43 @@ When you update your Snowflake Import Sync with a more restrictive SQL query (re
 
 To identify and archive these orphaned records:
 
-1.  Navigate to **People** or **Companies** and click **New audience** to create a segment.
-2.  Use one of these filters to isolate the orphaned records:
+1.  Navigate to **People** or **Companies** in the left sidebar.
+2.  Click **Criteria** and add one of the following filters, depending on which best describes the records you want to remove:
     -   **Sync status → Deleted in source** — surfaces records whose Snowflake source association was cleared by the most recent full sync.
     -   **Sources → doesn't contain → [your Snowflake sync name]** — surfaces records not currently associated with the active sync.
-    -   **[Your custom field] → is empty** — if your updated import adds a new column (for example, an `inferred_updated_at` timestamp used for incremental loading), records where that field is empty were not touched by the new import and are the orphaned ones.
-3.  Once the segment shows the correct records, click **⋮** next to the segment name and select **Archive records**.
+3.  Click **+ Create Audience** to save this as a named segment (for example, "Snowflake orphans").
+4.  Click the **⋮** menu next to the segment name and select **Archive records**.
 
-**Admin access is required** — the Archive records option is not visible to Editors or Viewers.
+Archived records are excluded from all segments and enrichments. They remain viewable in the **Archived** section and can be restored at any time.
 
-### Why did Update Audiences Record report 0 fields updated?
+### Why does filtering my People audience by deal attributes return fewer contacts than expected?
 
-This "0 fields updated" result comes from the `Update Audiences Record` action that pushes data into your Audience from a Clay table. The most common cause is that all mapped fields had null values in the source row. This action filters out any field whose value is `null`, `undefined`, or empty before writing to the Audience — when every mapped field is empty, there is nothing to write, so the action completes successfully but reports 0 fields updated. This null-filtering is built into the action and is not user-configurable.
+Filtering by deal attributes (Stage, Amount, Close Date) returns only contacts **directly linked to a matching deal via OpportunityContactRole in Salesforce** — not all contacts at the associated account. If your org assigns few or no contacts to OpportunityContactRole, the filter returns fewer results than you expect.
 
-**To confirm this is the cause:** Check whether the columns you mapped into `Update Audiences Record` are populated for the rows that show 0 fields updated.
+To include all contacts at accounts with matching deals, build a Companies audience with the deal filter, connect a workflow that flags those accounts, then filter your People audience by that flag.
 
-**To fix it, use an explicit placeholder value instead of null.** Rework your formula so it always returns a meaningful non-null value. For example, if you use a timestamp to mark when a contact becomes eligible, have the formula return the eligible date when it applies and a text value like `"Not Eligible"` when it doesn't. Both are real values, so `Update Audiences Record` writes an update on every run — and you can route off the result (process the row when the field contains a date; skip when it says `"Not Eligible"`).
+### What is Import record matching, and how does it differ from the Unique Identifier?
 
-**Note:** The **Ignore blank values** toggle does exist, but on the `Upsert Audiences Record` action (and on the variant of `Update Audiences Record` that is configured via the Upsert config panel). It is on by default; when disabled, null values are passed through and will clear existing values on the target Audience field. These actions report `✅ Success` (or `✅ Upserting...` / `✅ Updating...`) rather than `0 fields updated`, so the toggle is not what controls the "0 fields updated" message described above.
+When you add a Snowflake or BigQuery source, you define a **Unique Identifier** — a field that must be completely unique and non-null in your dataset (for example, `email` for people, `domain` for companies). Clay uses this to decide whether an incoming row creates a new Audiences record or updates an existing one within that source.
 
-### How does Clay handle Salesforce Lead-to-Contact conversions?
+**Import record matching** (currently in beta) is a separate, optional setting that controls how Clay merges records across multiple sources. It uses an **alias field** — a shared identifier like `domain` or `email` — to recognize that a record from Snowflake and a record from Salesforce represent the same person or company, and merges them into one Audiences record instead of creating two.
 
-When a Salesforce Lead is converted into a Contact in Salesforce, Clay automatically merges the Lead record with the Contact record in Audiences. The data from both records is combined into a single person record, and all historical data is preserved. This merging happens automatically and is not user-configurable.
+The key difference: the Unique Identifier governs record creation and updates within a single source. The alias field in Import record matching governs how Clay joins records across sources. You configure Import record matching after connecting each source, and it applies only to records imported after the setting is enabled — it does not retroactively merge records already in your Audience.
 
-### What's the difference between automatic Lead/Contact merging and deterministic matching?
+To enable Import record matching, contact your Growth Strategist. To set it up once enabled, see [Import record matching (beta)](#import-record-matching-beta) under Entity resolution and deduplication above.
 
-There are two types of record matching in Clay Audiences:
+### What is the difference between "Deleted in source" and archiving a record in Audiences?
 
--   **Automatic Lead/Contact merging** — When Salesforce converts a Lead to a Contact, Clay automatically merges these records. This is Salesforce-specific and not user-configurable.
--   **Deterministic matching** — User-configurable matching across different data sources. You choose which field to match on (email, domain, profile URL, etc.) when importing a new source. This allows you to merge the same person or company from multiple data sources into a single Audiences record.
+These are two separate states that look similar but have different meanings and causes.
+
+**Deleted in source** means Clay detected that a record is no longer present in the connected external source — for example, a row was removed from your Snowflake table, or a Salesforce record was deleted. The record stays in your Audiences (it is not removed), but it is flagged to indicate that its source no longer contains it. You can filter on **Sync status → Deleted in source** to identify these records, then decide whether to archive them.
+
+**Archived** means you (or a workspace Admin) explicitly removed the record from your active audience using the **Archive records** action. Archiving is a soft delete — the record is removed from all segments and enrichments, but it persists in the **Archived** section and can be restored.
+
+A record can be **Deleted in source** without being archived (it remains visible in segments, just flagged), and a record can be archived without being **Deleted in source** (for example, if you manually archived a duplicate). To permanently remove **Deleted in source** records from your active audience, filter on that status and archive them.
+
+### How do I get help with field mapping when setting up the Snowflake import?
+
+When writing your SQL query in the Snowflake import setup, you define which columns from your Snowflake data appear as fields in Audiences. After you run the query test and click Continue, Clay shows the columns your query returned and lets you map each one to an existing Audiences field or create a new one.
+
+If you need guidance on which field to match on (email, domain, profile URL, etc.) when importing a new source. This allows you to merge the same person or company from multiple data sources into a single Audiences record.
