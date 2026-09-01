@@ -16,9 +16,11 @@ Navigate to it from the Clay homepage by clicking `MCP` in the side nav. The MCP
 
 **Note:**  
 
+Basic contact search and enrichment through MCP (Claude, ChatGPT, Codex) is available to all Clay workspace members — there is no plan restriction for finding and enriching new contacts.  
+
 Credit controls and usage monitoring are available on all modern paid plans (Launch, Growth, Enterprise) and Legacy Enterprise.  
 
-Audiences controls are available to workspaces with Clay Audiences enabled — contact support if you're unsure whether your workspace qualifies.  
+Audiences controls and querying existing account and contact data through MCP require Clay Audiences — included on Launch, Growth, and Enterprise plans. Contact support if you're unsure whether your workspace qualifies.  
 
 The `MCP for reps` option on [Functions](#enabling-a-function-for-mcp) (reusable enrichment workflows built in Clay) is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans.
 
