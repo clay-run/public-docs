@@ -469,6 +469,9 @@ In Audiences bulk enrichment, a row appears in the **Errored rows** tab when any
 To resolve errored rows:
 -   **Rerun failed rows** — in the bulk enrichment table, right-click the failing column header → **Run column** → **Run [N] empty or out-of-date rows** to retry only records that didn't get a result.
 -   **Remove non-critical provider columns** — if a provider consistently fails to match your records and the data isn't essential, removing that column from the bulk enrichment table means its failures will no longer mark rows as errored.
+-   **Add a run condition** — if rows are errored because a required input field is missing (for example, Domain), open the column settings, go to **Run settings → Only run if**, and add a condition that checks the input field is not empty. Rows where the condition is not met show **"Run condition not met"** instead — a successful skip (🟢) — so they no longer appear in the Errored rows tab. See [Conditional runs](conditional-runs.md) for details.
+
+**Deleting rows from the bulk enrichment:** Checking the checkbox and deleting a row removes it from the enrichment queue only — the corresponding record in your People or Companies Audience is not affected.
 
 ### Signals
 
@@ -687,6 +690,18 @@ The simplest framing: Tables are how you _work on_ data. Audiences is where your
 ### What if my integration isn't supported yet?
 
 Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data into a Clay table from any source, then use Upsert to push those records permanently into your Audience. This works for any source Audiences doesn't yet natively support.
+
+### How do I delete a field from Audiences?
+
+To permanently remove a field from your Audience:
+
+1.  Click **People** or **Companies** in the left sidebar.
+2.  Click the **Data Hub** tab.
+3.  Click the field you want to remove.
+4.  Click the **⋮** (three-dot) menu at the top of the field details panel.
+5.  Select **Delete field**.
+
+Deleting a field removes it from all Audience records and from the filter builder — existing values stored in that field are permanently deleted and cannot be recovered. This is useful for removing duplicate fields created during initial field mapping (for example, if you ended up with both `Domain` and `DOMAIN` as separate fields).
 
 ### How do I create a custom Audience field that isn't tied to Salesforce?
 
