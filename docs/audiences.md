@@ -376,6 +376,8 @@ To create a new audience:
     -   **Filters** evaluate a single condition at a time. All top-level filters are joined with AND — a record must match every one.
     -   **Filter groups** combine multiple conditions using their own AND/OR logic. Within a single filter group, all conditions share the same operator — all AND or all OR; changing the operator in the group header switches all conditions at once. To mix AND and OR, use a nested filter group. For example, to build `A AND B AND (C OR D)`: add A and B as top-level filters, click **`+ Filter group`**, then add C and D inside the group. Once the group contains two or more conditions, a small **`and`** button appears between them — click it to switch to **`or`**.
 
+**Filtering by CRM and data warehouse properties:** All fields synced from your CRM (Salesforce, HubSpot) or data warehouse are available as filter options alongside Clay's built-in fields — you are not limited to Clay's native properties. When you click **+ Filter**, type the property name in the search box to find it. For example, to build a Companies segment of your existing customers, add a filter on the field in your CRM that tracks account type (such as **Account Type** in Salesforce) and set the value to `Customer`. Any field included in your import field mapping appears in the filter picker after the next sync completes. If a CRM field isn't showing up in the filter list, see [A Salesforce field isn't appearing in my audience filters — how do I add it?](#a-salesforce-field-isnt-appearing-in-my-audience-filters--how-do-i-add-it) in the FAQs below.
+
 ### Filter operators by field type
 
 The operators available when building a filter depend on the field's data type, shown by the icon next to the field name:
@@ -1072,55 +1074,25 @@ Archiving a record is a **soft delete** — the record is not permanently remove
 
 **There is no self-serve option to permanently delete records from Audiences.** Archiving is the only available removal method. If your use case requires permanent removal, contact Clay support.
 
-**Note on lookup timing:** After archiving a record, there is a brief processing delay before the change is reflected in `Lookup in Audiences` results. Running a lookup immediately after archiving may still return the archived record — lookups typically update within a short time as changes propagate.
-
-To exclude Salesforce-deleted records from your audience lookups, filter on **Sync status → Deleted in source** to identify them, then archive the records you no longer want matched against.
+**Note on lookup timing:** After archiving a record, there is a brief processing delay before the change is reflected in `Lookup in Audiences` results. Running a lookup immediately after archiving may still return the archived record until the change propagates.
 
 ### How do I replace a CSV import with updated data?
 
-If you imported a CSV and need to correct the data — for example, because account records changed — archive the old records first, then import the updated file. **Admin access is required** — the Archive records option is not visible to Members or Viewers.
+CSV imports are one-time and do not re-sync. To replace a CSV import with corrected or updated data:
 
-1.  Navigate to **People** or **Companies** in the left sidebar.
-2.  Click **New audience** and add a filter: **Origin source** → **=** → select the name of your original CSV file. This targets only records that came from that specific import.
-3.  Once the segment shows the correct records, click the **⋮** (three-dot) menu next to the segment name and select **Archive records**.
-4.  Import the updated CSV using **Add data** → **Add Source** → **CSV**.
+1.  Archive the records from the original CSV import — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above. Use the **Origin source** filter to isolate records from that specific import.
+2.  After archiving, import the updated CSV file using the same steps as the original import. Clay will create new records from the updated file.
 
-Audiences deduplicates on import using the unique identifier you configure — any incoming record whose identifier matches an existing (non-archived) record will update that record rather than create a duplicate.
-
-**Note:** After archiving, the original CSV source entry remains visible in the Sources tab. There is no self-serve option to remove a CSV source listing — the entry is retained for filtering and audit purposes. To permanently remove the source entry, contact Clay support.
+**Note:** Archiving removes records from all audience segments and enrichments. If those records existed in other sources (for example, also synced from Salesforce), they will remain in Audiences through those other sources even after being archived from the CSV source.
 
 ### How do I archive records that no longer match my Snowflake import query?
 
-When you update your Snowflake Import Sync with a more restrictive SQL query (returning fewer records than before), records from the previous import that no longer match the new query are not automatically removed from Audiences. After the next full sync, Clay marks those records as **Deleted in source** for that Snowflake sync — but the audience records remain active and continue to appear in segment filters and enrichments until you manually archive them.
+When a record is no longer returned by your Snowflake SQL query — because it was removed from Snowflake or you updated your query to exclude it — Clay marks the record's Snowflake source association as **Deleted in source** during the next full sync. The Audience record itself is **not removed**.
 
-To identify and archive these orphaned records:
+To clean up these records:
 
-1.  Navigate to **People** or **Companies** and click **New audience** to create a segment.
-2.  Use one of these filters to isolate the orphaned records:
-    -   **Sync status → Deleted in source** — surfaces records whose Snowflake source association was cleared by the most recent full sync.
-    -   **Sources → doesn't contain → [your Snowflake sync name]** — surfaces records not currently associated with the active sync.
-    -   **[Your custom field] → is empty** — if your updated import adds a new column (for example, an `inferred_updated_at` timestamp used for incremental loading), records where that field is empty were not touched by the new import and are the orphaned ones.
-3.  Once the segment shows the correct records, click **⋮** next to the segment name and select **Archive records**.
+1.  In your audience, add a filter for **Snowflake source status → is → Deleted in source** (or filter on the specific Snowflake source name).
+2.  Save that filter set as a new segment.
+3.  From the segment, click the **⋮** menu → **Archive records** to remove them from your Audience.
 
-**Admin access is required** — the Archive records option is not visible to Editors or Viewers.
-
-### Why did Update Audiences Record report 0 fields updated?
-
-This "0 fields updated" result comes from the `Update Audiences Record` action that pushes data into your Audience from a Clay table. The most common cause is that all mapped fields had null values in the source row. This action filters out any field whose value is `null`, `undefined`, or empty before writing to the Audience — when every mapped field is empty, there is nothing to write, so the action completes successfully but reports 0 fields updated. This null-filtering is built into the action and is not user-configurable.
-
-**To confirm this is the cause:** Check whether the columns you mapped into `Update Audiences Record` are populated for the rows that show 0 fields updated.
-
-**To fix it, use an explicit placeholder value instead of null.** Rework your formula so it always returns a meaningful non-null value. For example, if you use a timestamp to mark when a contact becomes eligible, have the formula return the eligible date when it applies and a text value like `"Not Eligible"` when it doesn't. Both are real values, so `Update Audiences Record` writes an update on every run — and you can route off the result (process the row when the field contains a date; skip when it says `"Not Eligible"`).
-
-**Note:** The **Ignore blank values** toggle does exist, but on the `Upsert Audiences Record` action (and on the variant of `Update Audiences Record` that is configured via the Upsert config panel). It is on by default; when disabled, null values are passed through and will clear existing values on the target Audience field. These actions report `✅ Success` (or `✅ Upserting...` / `✅ Updating...`) rather than `0 fields updated`, so the toggle is not what controls the "0 fields updated" message described above.
-
-### How does Clay handle Salesforce Lead-to-Contact conversions?
-
-When a Salesforce Lead is converted into a Contact in Salesforce, Clay automatically merges the Lead record with the Contact record in Audiences. The data from both records is combined into a single person record, and all historical data is preserved. This merging happens automatically and is not user-configurable.
-
-### What's the difference between automatic Lead/Contact merging and deterministic matching?
-
-There are two types of record matching in Clay Audiences:
-
--   **Automatic Lead/Contact merging** — When Salesforce converts a Lead to a Contact, Clay automatically merges these records. This is Salesforce-specific and not user-configurable.
--   **Deterministic matching** — User-configurable matching across different data sources. You choose which field to match on (email, domain, profile URL, etc.) when importing a new source. This allows you to merge the same person or company from multiple data sources into a single Audiences record.
+If the same records exist in other sources (Salesforce, HubSpot, CSV), archiving will remove them from those sources' audience contributions as well. Archived records can be restored from the **Archived** section in the sidebar if needed.
