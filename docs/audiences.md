@@ -341,6 +341,8 @@ Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs �
 
 When a record disappears from a source — for example, a row is deleted from a Clay table, or the table itself is removed — the corresponding Audience record is **not deleted**. Clay marks the record's association with that source as removed, but the record itself persists in Audiences. If the same record exists in multiple sources and disappears from one, it remains in Audiences as long as it is associated with at least one other source. Removing the entire source table does not remove those records from your Audience.
 
+**Origin source filter:** The removed or archived source's name continues to appear in the **Origin source** filter dropdown in Audiences. This is expected — the entry is retained so you can still locate and manage records that came from that source. Filtering by an archived table in the **Origin source** dropdown returns the records that were originally imported from it, because those records persist in Audiences even after the source is removed.
+
 To remove a record from Audiences entirely, archive it manually — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience).
 
 **Conflict resolution when sources provide different field values**
