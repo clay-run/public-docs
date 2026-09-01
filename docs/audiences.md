@@ -14,7 +14,7 @@ Use it to build dynamic segments across millions of records, run automated enric
 
 Setting up Audiences is four major steps:
 
-1.  **Import your data** — connect Salesforce, HubSpot, Snowflake, or Google BigQuery and bring your records into Audiences.
+1.  **Import your data** — connect Salesforce, HubSpot, Snowflake, Google BigQuery, or Databricks and bring your records into Audiences.
 2.  **Create audiences** — build dynamic segments using filters to target the right contacts and accounts.
 3.  **Enrich and monitor** — run bulk enrichments and signals that write data permanently back to each record.
 4.  **Write back to your CRM** — sync enriched data and segment membership back to Salesforce.
@@ -49,6 +49,7 @@ You can import data from:
 -   CSV
 -   Snowflake
 -   Google BigQuery
+-   Databricks
 -   Salesforce
 -   HubSpot
 
@@ -231,6 +232,32 @@ Clay syncs data from Snowflake on the following schedules:
 **Sync timing and behavior**
 
 Clay syncs data from Google BigQuery on the following schedules:
+
+-   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured, importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
+-   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
+
+### Importing from Databricks
+
+**Note:** Databricks import is currently in beta — contact your Growth Strategist to enable it for your workspace.
+
+1.  Click `Add data` → `Import from Databricks`.
+2.  Select your Databricks account and SQL warehouse.
+    -   If you haven't connected your Databricks account yet, click `+ Add account`. See the [Databricks integration](https://university.clay.com/docs/databricks-integration) for setup instructions.
+3.  Enter a SQL `SELECT` query to define which records to import.
+    -   Click `Test` to preview your data before continuing.
+4.  Confirm the preview looks correct, then click `Continue`.
+5.  Define the `Unique Identifier`:
+    -   For People: `email` or `user_id`.
+    -   For Companies: `company_id` or `domain`.
+6.  (Optional) Configure a `Timestamp Field` for incremental syncing:
+    -   With a timestamp: syncs run every **15 minutes** and only import new/changed records.
+    -   Without a timestamp: the full query reruns every **12 hours**.
+7.  Map your Databricks columns to Audience fields.
+8.  Review and click `Confirm` — Clay begins importing immediately.
+
+**Sync timing and behavior**
+
+Clay syncs data from Databricks on the following schedules:
 
 -   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured, importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
 -   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
