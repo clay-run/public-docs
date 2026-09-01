@@ -291,6 +291,19 @@ Once auto-run is enabled at the table level, the waterfall will flow through to 
 
 Yes — and this is the recommended setup for cost-efficient workflows. `Infer Email` handles the free first attempt; your validation strategy then controls how the rest of the waterfall evaluates results from paid providers.
 
+### What if I already have emails and just want to validate them?
+
+The Work Email waterfall is designed to **find** email addresses from scratch — starting from a name and company domain, it tries multiple providers to locate a valid work email. If you already have email addresses in your table and need to check whether they are deliverable, use a standalone email validation enrichment instead.
+
+To validate emails you already have:
+
+1.  Click **Add column** and search for **Validate Email** (or search directly for a specific provider such as **ZeroBounce** or **Debounce**).
+2.  Select the **Validate Email** action for your preferred provider.
+3.  Map your existing email column as the input.
+4.  In **Run settings**, add an **Only run if** condition — for example, `/Email is not empty` (replace `Email` with your actual column name) — so the enrichment only runs on rows that have an email address.
+
+Each provider charges 1 credit per validated email. See [ZeroBounce](zerobounce-integration-overview.md) and [Debounce](debounce-integration-overview.md) for setup details and output field descriptions.
+
 ### Can I run additional validators after the waterfall?
 
 Yes. The waterfall's built-in `Validation Provider` supports one provider at a time, validating emails as the waterfall finds them. To layer additional validators in sequence — for example, running a second email verification enrichment as an extra check after the waterfall completes — add them as **separate enrichment columns** after the waterfall column rather than trying to fit them inside the waterfall itself.
