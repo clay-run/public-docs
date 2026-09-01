@@ -226,6 +226,8 @@ Despite being a "stopped before running" state, these rows are classified as Fai
 
 **To resolve rows showing "Some inputs missing":**
 
+**First, identify which input is blank:** Click the failing cell to open the Cell Details panel — it lists each missing input by name, so you can pinpoint exactly which column is causing the error before choosing a resolution.
+
 -   **Make the input optional.** Open the column settings and find the input field that is blank for those rows. Turn off its **Required to run** toggle. The column will run for all rows; for rows where that input is blank, the column proceeds without it.
 -   **Add a run condition.** Add a [run condition](conditional-runs.md) so the column only fires when the required input has a value. Rows without that input will show **"Run condition not met"** instead — and unlike "Some inputs missing," that status is treated as a successful skip (🟢), so those rows no longer appear in errored row views.
 -   **Consolidate inputs spread across multiple enrichment columns using a Merge column.** If the required input value exists in your table but lands in different columns per row — for example, an Org ID that one enrichment provider returns in one column while another provider returns it in a different column — the single column you mapped as the input will be blank on rows where the other provider ran. Add a [Merge column](table-columns-overview.md#merge-columns) that combines every column holding that input value; it returns the first non-empty value per row. Then re-map the enrichment's input to the merged column so it receives the value regardless of which source populated it.

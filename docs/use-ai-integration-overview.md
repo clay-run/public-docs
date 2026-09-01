@@ -205,6 +205,8 @@ If rerunning the AI column for that row continues to return incorrect results an
 
 When a cell shows **"Some inputs missing"**, one or more column references in your prompt are marked as required but the underlying column is blank for that row. The cell will not run for affected rows.
 
+**To identify which column is missing:** Click the failing cell to open the Cell Details panel — it lists each missing input by name. This is especially useful when your prompt references multiple columns, because the error can be triggered by any column reference, not just the one you're most focused on. For example, if your prompt references both a job title column and a company name column pulled from a CRM, rows where the company name is blank will show "Some inputs missing" even though the job title is populated.
+
 There are two ways to resolve this:
 
 -   **Fill in the missing data.** Ensure that the columns referenced in your prompt have values for the rows you want to run.

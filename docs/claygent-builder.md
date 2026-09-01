@@ -405,6 +405,8 @@ Toggle **Required input** back on if you want the Claygent to skip rows where th
 
 When a Claygent cell shows **"Some inputs missing"**, one or more inputs in the **#INPUTS#** section of your column are marked as required but the referenced column is blank for that row. The cell will not run for affected rows.
 
+**To identify which input is missing:** Click the failing cell to open the Cell Details panel — it lists each missing input by name.
+
 There are two ways to resolve this:
 
 -   **Fill in the missing data.** Ensure the referenced column has a value for every row you want to run.
