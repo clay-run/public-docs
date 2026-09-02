@@ -1,6 +1,6 @@
 ---
 title: Workspace settings
-description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, agency setups, AI Context, deletion, and recovering a previous workspace.
+description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, trusted domain access, agency setups, AI Context, deletion, and recovering a previous workspace.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -91,6 +91,32 @@ To update your billing email:
 SSO is not configured through the Clay workspace settings UI — there is no self-serve configuration panel. To set up SSO for your workspace, contact Clay support. SSO is available on **Enterprise** plans at no additional cost, and as a paid add-on on annual Pro and annual Growth plans.
 
 See [Single Sign-On (SSO)](./single-sign-on.md) for full details on eligibility, the setup process (handled by Clay's support team via WorkOS), how login behavior changes once SSO is enabled, and important notes on user provisioning.
+
+## Trusted domain access
+
+**Currently available to Enterprise workspaces in limited rollout — contact Clay support to enable for your workspace. Rollout to other plans is planned.**
+
+Trusted domain access lets you add your company's email domain to your workspace so that new users who sign up with a matching email address see your workspace as a joinable option during onboarding. Those users are shown a "Join a Clay workspace" screen where they can click **Join** to join your workspace without needing a prior invite.
+
+**There is no setting that prevents users from creating a new workspace for a given email domain.** Users who see this onboarding screen can still choose **Create new workspace instead**. In practice, most users join the existing workspace when it is presented as an option.
+
+**To add your domain:**
+
+1.  Go to `Settings` > `Workspace settings` and scroll to the **Trusted domain access** section.
+2.  Click **Add [yourdomain.com]**.
+
+**Requirements:**
+
+-   You must be a **workspace admin** with a verified company email address.
+-   You can only add a domain that matches your own verified email address.
+-   Public email provider domains (such as gmail.com) cannot be added — use a company domain only.
+
+**Default role for users who join via a trusted domain:**
+
+-   Non-Enterprise workspaces: users who join are automatically given the **Editor** role.
+-   Enterprise workspaces: you can configure a custom default role in the **Trusted domain access** section.
+
+To remove a domain, click the **×** next to it in the **Trusted domain access** section. Removing a domain means users with that email domain will no longer be able to join your workspace without an invite — existing members keep their access.
 
 ## Beta Program
 
