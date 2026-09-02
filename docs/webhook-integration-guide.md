@@ -173,7 +173,11 @@ Clay records which webhook source sent each row at ingestion time, so you can fi
 
 ### How do I find which table a webhook URL belongs to?
 
-There is no customer-facing search to look up a Clay table by its webhook URL. If you have a webhook URL from an external system and need to identify which Clay table it's connected to, contact Clay support with the URL — the team can look it up on your behalf.
+There is no in-app search to look up a Clay table by its webhook URL. If you have a webhook URL from an external system and need to identify which Clay table it's connected to, you have two options depending on how many webhook tables you have.
+
+**Check manually (small workspaces):** The webhook URL for any table is always visible in its source settings — not just when the webhook is first created. To view a table's webhook URL: open the table, click the webhook source column header, and the source settings panel opens showing the full URL. Check each of your webhook tables this way and compare the URL with the one you're looking for.
+
+**Contact support (large workspaces):** If you have too many webhook tables to check one by one, contact Clay support with the URL — the team can look it up on your behalf.
 
 **Tip:** To avoid this situation in the future, give each webhook table a descriptive name when you create it (for example, "HubSpot MQL ingest" or "Salesforce lead flow"). Since every table generates a unique webhook URL, a clear name makes it easy to match a URL back to the right table later.
 
