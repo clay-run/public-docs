@@ -175,7 +175,7 @@ Clay records which webhook source sent each row at ingestion time, so you can fi
 
 There is no in-app search to look up a Clay table by its webhook URL. If you have a webhook URL from an external system and need to identify which Clay table it's connected to, you have two options depending on how many webhook tables you have.
 
-**Check manually (small workspaces):** The webhook URL for any table is always visible in its source settings — not just when the webhook is first created. To view a table's webhook URL: open the table, click the webhook source column header, and the source settings panel opens showing the full URL. Check each of your webhook tables this way and compare the URL with the one you're looking for.
+**Check manually (small workspaces):** The webhook URL for any table is always visible in its source settings — not just when the webhook is first created. To view a table's webhook URL: open the table, hover over the webhook source column header, and click the **Edit source** icon that appears. The source settings panel opens showing the full URL. Check each of your webhook tables this way and compare the URL against the one you're looking for.
 
 **Contact support (large workspaces):** If you have too many webhook tables to check one by one, contact Clay support with the URL — the team can look it up on your behalf.
 
@@ -183,11 +183,11 @@ There is no in-app search to look up a Clay table by its webhook URL. If you hav
 
 ### What happens to my webhook URL if I duplicate a table?
 
-When you duplicate a table that has a webhook source, Clay generates a **brand new, unique webhook URL** for the duplicate. The original table's URL continues working as before — it is not affected by the duplication.
+When you duplicate a table that has a webhook source, Clay copies the table's **columns** but does not copy the webhook source itself. The duplicate starts with no source attached — it will not receive any incoming data until you add a source to it manually.
 
-Because the duplicate has a different URL, any external system currently sending data to the original table will not automatically send to the new table. To start receiving data in the duplicate, update your sending system (for example, Zapier, Make, a custom script, or another tool) to POST to the new URL.
+The original table's webhook URL and source continue working exactly as before — duplication does not affect them.
 
-To find the new webhook URL: open the duplicated table, click the webhook source column, and copy the URL shown there.
+To start receiving data in the duplicate, add a new webhook source to it: in the duplicated table, click **+ Add source**, choose **Monitor webhook**, copy the new URL Clay generates, and update your sending system (for example, Zapier, Make, or a custom script) to POST to that new URL.
 
 ### Does Clay prevent the same webhook record from being processed more than once?
 
