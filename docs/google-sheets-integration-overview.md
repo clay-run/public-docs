@@ -240,3 +240,12 @@ If you open a Google Sheets action or source and the **Sheet ID** or column mapp
 If rows using a **Look up row** or **Update rows** enrichment run slowly or fail with errors, the Google Sheets API rate limit is the most likely cause. According to Google's published API documentation, the Google Sheets API enforces a default limit of 300 read requests per minute per project. When Clay's integration exceeds this limit, Google temporarily blocks further requests until the quota resets — typically after one minute.
 
 Clay automatically retries rate-limited requests using exponential backoff, so most quota errors resolve without manual intervention. If rows remain in an error state after automatic retries are exhausted, re-running them after a brief pause will usually succeed once the quota window has reset.
+
+### The "Lookup, Add, or Update Row" enrichment is missing — how do I add or update a row?
+
+The **Lookup, Add, or Update Row** enrichment is deprecated and is no longer available for new columns. To add a row if it doesn't exist in your Google Sheet, or update it if it does (upsert behavior), use two enrichment columns with mutually exclusive run conditions:
+
+1. Add an **Update rows** enrichment column. When Clay finds a matching row, it updates it and the action returns `updated_rows: 1`. When no match is found, the action completes successfully with `updated_rows: 0` — no row is inserted.
+2. Add an **Add row** enrichment column. In its **Run settings**, add a conditional run so it fires only when the **Update rows** column returns `updated_rows` equal to `0`.
+
+With this setup, each record is updated if it already exists in the sheet, or added as a new row if it doesn't — never both. If you have existing columns using the old **Lookup, Add, or Update Row** enrichment, they will continue to work. Use the two-column approach above for any new add-or-update workflows.
