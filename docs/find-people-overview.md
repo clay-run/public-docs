@@ -129,6 +129,18 @@ Your search filters are saved on the source, not on the table rows. To update th
 
 **Note:** Re-running after a filter change imports only *new* contacts that match your updated criteria and are not already in the table. Contacts that were previously imported remain in the table and are not re-evaluated against the new criteria. If you need to start fresh with the updated filters, create a new Find People table.
 
+### Why do my enrichment columns show a "Settings contains deleted column input" error after I deleted a Find People source?
+
+**When you delete a Find People source, the Find People column keeps all existing row data** — rows already in the table are not removed. However, the column no longer has an active source, so no new data is added on future runs.
+
+**Downstream enrichment columns that reference the Find People column via formulas** show a **"Settings contains deleted column input"** error in their settings. This happens because those columns reference the Find People source column by its ID, which becomes unresolvable once the source is deleted.
+
+**To avoid this when updating your search criteria:** Use **Edit inputs** instead of deleting and re-adding the source. In your Find People table, click the source column header, select **Edit source**, then click **Edit inputs** — this updates the existing source in place, keeping all downstream column references intact. See [How do I adjust or refine my search criteria on an existing Find People table?](#how-do-i-adjust-or-refine-my-search-criteria-on-an-existing-find-people-table) for the step-by-step.
+
+**If your table is already affected:**
+- Re-point each downstream enrichment column to reference the updated Find People column, or
+- Duplicate the affected tables and set up the Find People source fresh in the copy. You only need to duplicate the affected tables — not the entire workbook.
+
 ## Importing from a Sales Navigator search URL
 
 If you have a saved Sales Navigator search and want to pull those results into Clay, use the **Find people from external search** source — not the standard Find People source described above.
