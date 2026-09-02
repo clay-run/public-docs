@@ -149,11 +149,13 @@ Check out the `Email accounts` tab to manage your fleet of sender accounts and `
 
 To duplicate a campaign — for example, to reuse your message sequence and settings for a new persona or messaging variant — open the campaign you want to copy and click its name in the breadcrumb at the top. Select **Duplicate campaign** from the dropdown. Clay creates a new draft campaign named "<original name> (copy)" with the same message sequence, settings, and AI context, then opens it immediately for editing.
 
+To delete multiple draft campaigns at once, hover over any campaign row to reveal a checkbox on its left edge, then check each row you want to remove — or click the header checkbox to select all visible rows. Shift+click a row to extend your selection to a contiguous range. With campaigns selected, click **Actions** → **Bulk Delete**. Only delete-eligible campaigns are acted on: draft V2 people campaigns are permanently deleted, and draft V1 table campaigns you have permission to delete are moved to Trash. The confirmation dialog shows how many selected campaigns are eligible and how many will be skipped. The checkbox controls are available to workspace members who can create resources.
+
 ## Best practices
 
 The golden rule of outreach: send emails the way you'd want to receive them. Your ultimate goal is to land in the prospect's main inbox—if your message goes to Spam or Promotions, it's unlikely to be read. Deliverability (your ability to reach that primary inbox) depends on both the quality of your messaging and the way you send it.
 
-📖 For a deeper dive, check out [Za-zu's Cold Email Handbook](https://za-zu.com/docs/handbook/intro).
+📖 For a deeper dive, check out [Za-zu's Cold Email Handbook](https://za-zu.com/docs/handbook/tips-and-tricks/intro).
 
 Key practices to follow:
 
