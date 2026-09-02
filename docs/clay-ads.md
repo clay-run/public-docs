@@ -243,7 +243,7 @@ No, LinkedIn and Meta don't provide contact-level match visibility for privacy r
 
 This is expected on platforms that match on multiple identifiers per contact. Clay sends up to 3 hashed personal email addresses per contact (via Enhanced Matching) rather than a single email, giving the ad platform more identifiers to match against. The platform counts each matched identifier separately in its reporting — not each unique contact. A single contact with 3 matching hashed emails contributes 3 to the matched count, which is why the matched count can exceed your total contact count.
 
-Your actual ad reach is based on the audience size (unique contacts), not the matched count. When this behavior is active, the Sync panel shows an info note explaining that matched count can exceed contacts sent.
+Your actual ad reach is based on the audience size (unique contacts), not the matched count. When this behavior causes the calculated match rate to reach 95% or higher, Clay displays the rate as **95%+** rather than an exact percentage on LinkedIn, Meta, Reddit Ads, Bing Ads, and Vibe — because the raw rate can exceed 100% when matched count exceeds contacts sent. A tooltip on the 95%+ display confirms this is happening for that run.
 
 ### **Why does my ad audience show "too small for use in campaigns"?**
 
