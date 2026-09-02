@@ -260,3 +260,18 @@ Turning on additional data points, like email and phone, will consume Lusha Unif
 **Are Lusha's signals actions always-on monitors?**
 
 No. Lusha's signals actions (`Enrich person signals`, `Enrich company headcount growth`, `Enrich company jobs growth`, and `Enrich company news`) are retroactive lookups, not always-on monitors like Clay's native Signals. These actions check for events that occurred within a specified lookback window, but they won't notify you of future events as they happen.
+
+**My Lusha enrichment column shows "[Deprecated]" in its name. What does this mean, and what do I need to do?**
+
+Lusha is retiring its V2 API on **November 18, 2026**. Lusha enrichment columns created before approximately July 7, 2026 use the V2 endpoint and display **"[Deprecated] Enrich person"** or **"[Deprecated] Enrich company"** as their action name in Clay. These columns will stop working after November 18, 2026. Columns created after July 7, 2026 use the V3 endpoint, show no "[Deprecated]" prefix, and are not affected.
+
+**To check whether a column is affected:** Open the column in your Clay table and look at the action label in the configuration panel. If it reads "[Deprecated] Enrich person" or "[Deprecated] Enrich company", the column needs to be migrated before November 18, 2026.
+
+**To migrate a deprecated column:**
+
+1.  In the same table, click **Add enrichment** and search for **Lusha**.
+2.  Select **Enrich person** or **Enrich company** — whichever matches your deprecated column — making sure to choose the version with no "[Deprecated]" prefix.
+3.  Map the same inputs as your existing deprecated column.
+4.  Once the new column is running correctly, you can delete the old deprecated column.
+
+Clay will contact impacted workspaces with details before the November 18, 2026 sunset date.
