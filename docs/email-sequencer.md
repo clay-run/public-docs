@@ -274,6 +274,19 @@ For example, if your source table has a "First Name" column but its label was se
 4. Click **Save**, then re-run the `Sync lead data to campaign` column to push the updated label to the campaign.
 5. If you already referenced the old label as a variable in your message template, update those variable references in the campaign's **Message sequence** to use the corrected name.
 
+### How do I add more follow-up emails to an existing campaign?
+
+Once a campaign has launched, the number of emails in its sequence is locked and cannot be changed — even while the campaign is paused. Pausing re-enables edits to message copy, step timing, senders, and settings, but adding, removing, or reordering steps is not possible after launch. Each campaign supports up to 4 emails in its sequence.
+
+To send additional follow-ups to leads who haven't replied:
+
+1. **Find your non-responders.** Open your campaign events table and identify leads who received emails but have no `EMAIL_REPLY` event. See [How can I tell if a lead has finished a campaign sequence?](#how-can-i-tell-if-a-lead-has-finished-a-campaign-sequence) for how to check this from your source table using a lookup column.
+2. **Create a new follow-up campaign.** To reuse your existing message sequence and settings, [duplicate the original campaign](#managing-campaigns) — open the campaign, click its name in the breadcrumb at the top, and select **Duplicate campaign** — then edit the sequence to add your new follow-up emails.
+3. **Sync only non-responders.** In your source table, add an `Only run if` condition to the `Sync lead data to campaign` column to restrict syncing to leads who haven't replied to the original campaign.
+4. **Launch the new campaign.**
+
+Best practice: allow at least a couple of months between sequences to the same person, unless your follow-up message offers something meaningfully different.
+
 ### Why can't I see or edit the Message sequence section?
 
 If your campaign is active, all settings — including the Message sequence — are locked. To make edits, open the campaign's `Setup` tab and click `Pause`. Once paused, you can edit message copy and campaign settings. Note that you cannot change the total number of messages while paused — to add or remove messages, complete the campaign and create a new one.
