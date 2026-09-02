@@ -21,9 +21,15 @@ The recipe uses four columns.
 
 ### 1. Create the Unique ID column
 
-Add a **formula column** that returns an identifying value for the row—the value you want to de-duplicate on. Gate it so it only returns a value *when the row actually has data to work with*: only produce the ID if another key column in the table is not empty.
+Add a **formula column** that assigns each row a random unique number. Use a prompt like:
 
-This is the value everything downstream matches against. Give the column a clean, memorable name—you'll type that exact name into the prompt in Step 3.
+> Return a random 10-digit number if `/[Column Name]` is not empty
+
+Replace `/[Column Name]` with the column that holds the value you're deduplicating on (for example, your Company ID column). The formula generates a different random number for each row — that per-row uniqueness is what lets Step 3 locate exactly this row in the lookup results.
+
+**Do not re-run this column after the initial run.** Formula columns regenerate values on every run. Re-running replaces every row's number with a new random value, which breaks the ranking formula in Step 3. Run the column once when it's set up, then leave it.
+
+Give the column a clean, memorable name—you'll type that exact name into the prompt in Step 3.
 
 ### 2. Add "Lookup Multiple Rows in Other Table"
 
@@ -36,7 +42,7 @@ Add the **Lookup Multiple Rows in Other Table** integration and point it back at
 | **Filter Operator** | `Contains` |
 | **Row Value** | This row's value from that column |
 
-This returns a `recordsFound` array—every row in the table whose value matches the current row.
+This returns a `records` array—every row in the table whose value matches the current row.
 
 > If you only need a single match, the "Lookup Single Row in Other Table" action is faster. For de-duplication you need every match, so use the multiple-rows action.
 
@@ -46,16 +52,16 @@ Add another **formula column** and describe the formula with the prompt below. I
 
 **Prompt:**
 
-> Only run if `/Unique ID` is not empty, then return a number label depending on which number of occurrences any of the "Unique ID" fields from the following array `/Lookup → recordsFound` match `/Unique ID`
+> Only run if `/Unique ID` is not empty, then return a number label depending on which number of occurrences any of the "Unique ID" fields from the following array `/Lookup → records` match `/Unique ID`
 >
 > For example, if the first value of "Unique ID" you find from the array is true, then return 1, if it's the second value then return 2 and so on
 >
 > Otherwise return 2
 
-**Inserting the lookup value:** Where the prompt references the array, insert the lookup output and choose the **"( Insert all items )"** option that appears *beneath the `recordsFound` field*—not a single sub-item. This passes the whole set of matched records into the formula.
+**Inserting the lookup value:** Where the prompt references the array, insert the lookup output and choose the **"( Insert all items )"** option that appears *beneath the `records` field*—not a single sub-item. This passes the whole set of matched records into the formula.
 
 ```
-Lookup Record in Other Table → recordsFound → ( Insert all items )
+Lookup Multiple Rows in Other Table → records → ( Insert all items )
 ```
 
 > **Name it exactly.** The column name must be spelled identically to what you tell the prompt to look for. For example, column `Unique ID` → prompt searches for "Unique ID"; column `Unique Number` → prompt searches for "Unique Number".
@@ -77,3 +83,9 @@ For three rows sharing the same value, the ranking formula returns:
 | `acme.com` | 3 | Skipped |
 
 Only the first row clears the `rank = 1` condition, so the duplicates never consume enrichment credits.
+
+## Cleaning up duplicate rows after enrichment
+
+After enrichment runs, you can delete the duplicate rows so only one row per unique value remains. Click the header of the column you're deduplicating on and select **Dedupe** from the dropdown. Clay shows each group of duplicate values and lets you confirm which to remove — it keeps the first row in each group and deletes the rest.
+
+**Note:** Dedupe is available on Text, Email, and URL columns only. Export your table to CSV before running Dedupe — there is no built-in undo for row deletions. For full details and recovery options, see [Dedupe columns](table-columns-overview.md#dedupe-columns).
