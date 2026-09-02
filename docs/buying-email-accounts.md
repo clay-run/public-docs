@@ -70,3 +70,9 @@ Use the **Get rep data** enrichment in a Clay table. Provide the SmartSender acc
 No. The **Buy email accounts** flow can only provision inboxes on new domains purchased through Clay — it cannot attach inboxes to a domain you already own.
 
 If you want to send from an existing domain, create the mailbox through Google Workspace or Microsoft 365 and connect it to Clay under **Campaigns → Email Accounts** using Google OAuth, Microsoft Outlook OAuth, or SMTP. See the [Email sequencer guide](email-sequencer.md) for connection instructions.
+
+### **Can I use domains or email accounts purchased through Clay with other tools?**
+
+No. Domains and email accounts purchased through Clay are provisioned specifically for sending within Clay's email sequencer. They cannot be used with external tools — for example, you cannot register additional email addresses under them or route emails through a separate platform like Apollo.
+
+If you need to send from an external tool, you will need to purchase separate domains and mailboxes directly for use with that tool.
