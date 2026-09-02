@@ -235,6 +235,16 @@ Clay syncs data from Google BigQuery on the following schedules:
 -   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured, importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
 -   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
 
+**Editing your SQL query**
+
+When you edit the SQL query on a BigQuery import that already has field mappings configured, Clay creates a **new import** for the updated query and marks the old import's display name with a `[DELETED]` prefix — for example, "Google BigQuery" becomes "[DELETED] Google BigQuery" in the source list and in each record's **Origin source** column. The old records are **not automatically removed** from your Audience. **Field mappings reset** on each edit — you will need to re-map your BigQuery columns to Audience fields when configuring the new import.
+
+Records returned by the new query that share the same Unique Identifier value as records from the old query are merged automatically — they are not duplicated. Records where the unique identifier value differs between old and new query results may appear as separate entries in your Audience. To prevent this, ensure your Unique Identifier column and values remain stable across query edits.
+
+To remove records that show a `[DELETED]` origin source, see [How do I archive records that no longer match my BigQuery import query?](#how-do-i-archive-records-that-no-longer-match-my-bigquery-import-query) below.
+
+**Deleted records:** When a record is no longer returned by your BigQuery import query because it was removed from the underlying BigQuery table — and the SQL query itself is unchanged — Clay marks the record's BigQuery source association as **Deleted in source** during the next full sync. The audience record itself is **not removed**. To clean up these records, see [How do I archive records that no longer match my BigQuery import query?](#how-do-i-archive-records-that-no-longer-match-my-bigquery-import-query) below.
+
 ### Importing from people and companies search
 
 1.  Click `Add data` → `Find people` or `Find companies` to open a search.
@@ -1060,6 +1070,8 @@ The People and Companies views in Audiences do not have per-row checkboxes or a 
 3.  Once the segment shows the correct records, click the **⋮** (three-dot) menu next to the segment name.
 4.  Select **Archive records**.
 
+**Note:** The **Archive records** option only appears in the **⋮** menu after at least one filter has been **added and saved** on the segment. If the option is not visible, make sure your filter is saved — click **Save filters** if that button is present.
+
 Archived records are removed from all audience segments and excluded from future enrichments and workflows. The records are not permanently deleted — they can be viewed and restored at any time from the **Archived** section in the left sidebar. See [What happens when I archive a record in Audiences?](#what-happens-when-i-archive-a-record-in-audiences) for full details.
 
 ### What happens when I archive a record in Audiences?
@@ -1096,3 +1108,17 @@ To clean up these records:
 3.  From the segment, click the **⋮** menu → **Archive records** to remove them from your Audience.
 
 If the same records exist in other sources (Salesforce, HubSpot, CSV), archiving will remove them from those sources' audience contributions as well. Archived records can be restored from the **Archived** section in the sidebar if needed.
+
+### How do I archive records that no longer match my BigQuery import query?
+
+When you edit a BigQuery import's SQL query, Clay creates a new import and marks the old import's display name with a `[DELETED]` prefix — for example, "Google BigQuery" becomes "[DELETED] Google BigQuery". Records from the old import remain in your Audience with their **Origin source** column still showing the `[DELETED]` source name. The Audience record itself is **not removed** automatically.
+
+To clean up these records:
+
+1.  In your audience, add a filter for **Origin source → contains → [DELETED]** to target records from the old import (or use the exact `[DELETED]` source name if you need to be more precise).
+2.  Save that filter set as a new segment.
+3.  From the segment, click the **⋮** menu → **Archive records** to remove them from your Audience.
+
+**Note:** The **Archive records** option only appears in the **⋮** menu after at least one filter has been added and saved on the segment.
+
+If the same records exist in other sources (Salesforce, HubSpot, CSV), archiving will remove them from all source associations. Archived records can be restored from the **Archived** section in the sidebar if needed.
