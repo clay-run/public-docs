@@ -53,7 +53,7 @@ Use this action to identify a person's manager using their LinkedIn profile or w
 
 ### `Source` Find company org chart
 
-Use this action to retrieve the full org chart for a company given its domain. The action returns all position nodes in the hierarchy, including names, titles, manager links, work emails, and LinkedIn profile URLs. It costs **25 credits per org chart** regardless of how many positions are returned. Clay refunds the credit if no org chart data is found for the domain.
+Use this action to retrieve the full org chart for a company given its domain. The action returns all position nodes in the hierarchy, including names, titles, manager links, work emails, and professional profile URLs. It costs **25 credits per org chart** regardless of how many positions are returned. Clay refunds the credit if no org chart data is found for the domain.
 
 **Input**
 
@@ -66,7 +66,7 @@ Use this action to retrieve the full org chart for a company given its domain. T
     -   **Full Name:** Person's full name
     -   **Title:** Job title
     -   **Work Email:** Work email address (if available)
-    -   **Professional profile URL:** LinkedIn URL (if available)
+    -   **Professional profile URL:** Professional network profile URL (if available)
     -   **Manager ID:** Internal reference ID of the person's manager
     -   **Id / Position ID:** Internal identifiers for the position node
 
