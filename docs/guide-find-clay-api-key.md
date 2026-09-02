@@ -1,6 +1,6 @@
 ---
 title: Find your Clay API key
-description: Utilize your Clay-native enrichments with your personal key.
+description: Find, regenerate, and manage your personal Clay API key for Clay-native integrations.
 last_synced: 2026-04-26T01:40:06.072Z
 ---
 
@@ -21,6 +21,20 @@ Your Clay API key enables you to:
 
 1.  In the top bar, click your account name and select `Settings`
 2.  Under `Account`, locate `API key`. You'll find your API key here for integrations.
+
+### Your API key is displayed only once
+
+When you create or regenerate your Clay API key, the full key value is displayed **only once** in a confirmation dialog. After you dismiss it, Clay shows only the last few characters (for example, `...44`) so you can identify your active key — the full value cannot be retrieved again from within Clay.
+
+If you need the full key value after dismissing the confirmation:
+- **If an external system is already configured with your key**, retrieve the key from that system's settings or configuration.
+- **If no system has a copy**, click **Regenerate key** to generate a new one — then copy and save it immediately before navigating away.
+
+### Regenerating your API key
+
+Clicking **Regenerate key** immediately invalidates your previous key. Any system that was authenticating with the old key will stop working until you update it with the new value.
+
+Before regenerating, check which Clay integrations are using the legacy API key: go to **Settings → Connections** and search for "Clay" in the Provider filter. If any connections appear, use the **Reconnect** option on each one after regenerating to update them with your new key.
 
 ### Using your API key with external tools
 
