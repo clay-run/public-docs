@@ -955,6 +955,8 @@ After you enable Export sync, the first export does not run immediately — it f
 
 To push enriched data to Salesforce before the next scheduled export, see [How can I export records to Salesforce immediately without waiting for the 24-hour sync?](#how-can-i-export-records-to-salesforce-immediately-without-waiting-for-the-24-hour-sync)
 
+**If a newly added field is still showing as `false` or empty in Clay:** The 24-hour export pushes whatever value a field holds in Clay at the time it runs — if a bulk enrichment that populates the field is still in progress (or hasn't been started yet), the export will push those in-progress or default values. There is no need to reconnect or reconfigure the sync. Wait for enrichment to finish and the field to hold its correct values; the next 24-hour export will then carry those values to Salesforce automatically.
+
 ### How can I export records to Salesforce immediately without waiting for the 24-hour sync?
 
 The 24-hour export schedule is fixed and cannot be triggered manually. Two options let you push records to Salesforce sooner:
