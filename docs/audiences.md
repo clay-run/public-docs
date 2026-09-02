@@ -201,6 +201,10 @@ Clay syncs data from HubSpot automatically on the following schedules:
 7.  Review and click `Confirm` — Clay begins importing immediately.
 8.  Monitor the import. If records don't appear immediately, refresh the page to see the latest count.
 
+**Connected workflows fire on segment entry, not on source import.** Adding a Snowflake source does not directly trigger any workflow. A workflow fires when a record first enters a connected segment — so incoming Snowflake records will only trigger workflows for the segments whose filters they match. If you want to keep your Salesforce and Snowflake automations separate, build distinct segments scoped to each data source and connect workflows only to those segments.
+
+**Test your import in a test workspace first.** Records imported into Audiences can only be archived (soft-deleted) — there is no self-serve option to permanently remove them. Before connecting a large Snowflake dataset to your production workspace, consider testing your import in a separate test workspace to verify your SQL query, field mapping, and unique identifier return the expected results. See [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) if you need to clean up records after import.
+
 **Sync timing and behavior**
 
 Clay syncs data from Snowflake on the following schedules:
