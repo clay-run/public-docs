@@ -235,6 +235,12 @@ Clay syncs data from Google BigQuery on the following schedules:
 -   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured, importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
 -   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
 
+**Deleted records and editing your SQL query**
+
+When a record is no longer returned by your BigQuery import query — either because it was physically removed from the underlying BigQuery table, or because you edited your SQL to exclude it — Clay marks the record's BigQuery source association as **Deleted from Source** (shown as a `[DELETED]` prefix on the source name in the UI) during the next full sync. The audience record itself is **not removed**. To clean up these records, see [How do I archive records that no longer match my BigQuery import query?](#how-do-i-archive-records-that-no-longer-match-my-bigquery-import-query) below.
+
+**Editing your SQL query** updates the existing import in place — it does **not** create a new source. When you save a query change: records still returned by the new query remain in your Audience and are updated using the configured Unique Identifier; new records returned by the new query are added; records that dropped out of the query are marked `[DELETED]` at the next full sync. **Field mappings also reset** each time you edit the query — you will need to re-map your BigQuery columns to Audience fields after each edit.
+
 ### Importing from people and companies search
 
 1.  Click `Add data` → `Find people` or `Find companies` to open a search.
@@ -1060,6 +1066,8 @@ The People and Companies views in Audiences do not have per-row checkboxes or a 
 3.  Once the segment shows the correct records, click the **⋮** (three-dot) menu next to the segment name.
 4.  Select **Archive records**.
 
+**Note:** The **Archive records** option only appears in the **⋮** menu after at least one filter has been **added and saved** on the segment. If the option is not visible, make sure your filter is saved — click **Save filters** if that button is present.
+
 Archived records are removed from all audience segments and excluded from future enrichments and workflows. The records are not permanently deleted — they can be viewed and restored at any time from the **Archived** section in the left sidebar. See [What happens when I archive a record in Audiences?](#what-happens-when-i-archive-a-record-in-audiences) for full details.
 
 ### What happens when I archive a record in Audiences?
@@ -1096,3 +1104,17 @@ To clean up these records:
 3.  From the segment, click the **⋮** menu → **Archive records** to remove them from your Audience.
 
 If the same records exist in other sources (Salesforce, HubSpot, CSV), archiving will remove them from those sources' audience contributions as well. Archived records can be restored from the **Archived** section in the sidebar if needed.
+
+### How do I archive records that no longer match my BigQuery import query?
+
+When you edit a BigQuery import's SQL query — or when records are removed from the underlying BigQuery table — Clay marks those records' BigQuery source association as **Deleted from Source** (shown as a `[DELETED]` prefix on the source name in the UI) during the next full sync. The Audience record itself is **not removed**.
+
+To clean up these records:
+
+1.  In your audience, add a filter for **BigQuery source status → is → Deleted in source** (or filter by **Origin source → contains → [DELETED]** to target the specific deleted source by name).
+2.  Save that filter set as a new segment.
+3.  From the segment, click the **⋮** menu → **Archive records** to remove them from your Audience.
+
+**Note:** The **Archive records** option only appears in the **⋮** menu after at least one filter has been added and saved on the segment.
+
+If the same records exist in other sources (Salesforce, HubSpot, CSV), archiving will remove them from all source associations. Archived records can be restored from the **Archived** section in the sidebar if needed.
