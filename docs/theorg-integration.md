@@ -51,6 +51,37 @@ Use this action to identify a person's manager using their LinkedIn profile or w
     -   LinkedIn URL
     -   Node Type
 
+### `Source` Find company org chart
+
+Use this action to retrieve the full org chart for a company given its domain. The action returns all position nodes in the hierarchy, including names, titles, manager links, work emails, and LinkedIn profile URLs. It costs **25 credits per org chart** regardless of how many positions are returned. Clay refunds the credit if no org chart data is found for the domain.
+
+**Input**
+
+-   **Company domain:** The website domain of the company whose org chart you want to find (e.g., `clay.com`).
+
+**Output**
+
+-   **Total positions found:** Number of position nodes returned
+-   **Positions:** Array of position records, each containing:
+    -   **Full Name:** Person's full name
+    -   **Title:** Job title
+    -   **Work Email:** Work email address (if available)
+    -   **Professional profile URL:** LinkedIn URL (if available)
+    -   **Manager ID:** Internal reference ID of the person's manager
+    -   **Id / Position ID:** Internal identifiers for the position node
+
+#### Enriching a list of companies with org charts
+
+**Find company org chart** is a source-type enrichment — the Company domain field accepts a single fixed value only and cannot be mapped to a column of domains. To pull org charts for multiple companies row-by-row, use The Org's HTTP API directly via Clay's **HTTP API** enrichment column instead:
+
+1.  Obtain your own API key from your The Org account settings.
+2.  In your Clay table, click `Add enrichment` and select **HTTP API**.
+3.  Configure the HTTP API column to call The Org's API endpoint with your API key in the request headers. Save the credentials as an HTTP API (Headers) account to reuse them across tables.
+4.  Map your company domain column as a dynamic input to the URL or request body. Unlike the source-type enrichment, the HTTP API column accepts column references and sends a separate API call for each row.
+5.  Parse the JSON response to extract the org chart fields you need.
+
+For setup details on the HTTP API enrichment column, see [HTTP API](http-api-integration-overview.md).
+
 ### **Run settings**
 
 -   **Auto-update**
