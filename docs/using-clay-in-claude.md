@@ -186,7 +186,7 @@ Your workspace admin can set a default credit limit for all reps, or a per-user 
 
 **Can I see my own credit balance?**
 
-Sales Rep users don't have a credit balance view in Claude — the Clay widget shows only whether credits are available, not a specific number. Only workspace admins can see individual rep credit limits and usage, from `Settings → MCP users`. If you're unsure how many credits you have left or need your limit raised, contact your workspace admin.
+Sales Rep users don't have a credit balance view in Claude — the Clay widget shows only whether credits are available, not a specific number. If your workspace has MCP user credit controls enabled (currently in beta — contact support to enable), workspace admins can see individual rep credit limits and usage from `Settings → MCP users`. If you're unsure how many credits you have left or need your limit raised, contact your workspace admin.
 
 **What will I see if I hit my credit limit?**
 
