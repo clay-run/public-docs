@@ -260,6 +260,20 @@ To use the AI output as a personalization variable in your message sequence:
 
 **Editing a live campaign:** If your campaign is already running, you must pause it before changing the message template — open the campaign's `Setup` tab and click **Pause**. Make your edits to the message sequence, then relaunch the campaign.
 
+### Why is a source table column showing under a different name in the campaign variable picker?
+
+The campaign variable picker shows columns using the labels assigned in the **Sync lead data to campaign** column's field mapping — not necessarily the original column names in your source table. When you set up the mapping, each selected field has an editable label. If a field's label was left as the default placeholder ("New Column") or was manually renamed to something else, the variable picker shows that label instead of the source column name.
+
+For example, if your source table has a "First Name" column but its label was set to "New Column" during mapping setup, the variable picker lists it as "New Column" — not "First Name."
+
+**To fix this:**
+
+1. In your source table, click the **Sync lead data to campaign** column header and select **Edit column**.
+2. In the field mapping section, find the field showing the unexpected name.
+3. Click the edit icon next to it and update the label to the name you expect to see in the variable picker (for example, "First Name").
+4. Click **Save**, then re-run the `Sync lead data to campaign` column to push the updated label to the campaign.
+5. If you already referenced the old label as a variable in your message template, update those variable references in the campaign's **Message sequence** to use the corrected name.
+
 ### Why can't I see or edit the Message sequence section?
 
 If your campaign is active, all settings — including the Message sequence — are locked. To make edits, open the campaign's `Setup` tab and click `Pause`. Once paused, you can edit message copy and campaign settings. Note that you cannot change the total number of messages while paused — to add or remove messages, complete the campaign and create a new one.
