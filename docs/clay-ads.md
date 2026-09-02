@@ -212,6 +212,17 @@ If the waterfall prompts for work email as input, that is normal. One or more pr
 
 The waterfall queries multiple providers and returns a **single hashed email** per contact from the first provider that finds a result.
 
+### **When should I use Enhanced Match vs the `Hashed Email for Ads` waterfall?**
+
+For contacts feeding into an ongoing ad campaign, use **Enhanced Match** via the Audiences Ads sync setup. Enhanced Match automatically queries multiple data providers to find and hash personal emails, sending up to three hashed emails per contact to the ad platform — more identifiers per contact improves match rates compared to a single-email approach. Clay stores the results on your audience records between syncs, so you are not re-enriching the same contacts on every run. Enhanced Match also scales beyond the 50,000-row limit that applies to Clay tables, because it runs within Audiences directly. It is available on Growth and Enterprise plans and is configured during the Audiences → Ads sync setup — it is not available as a standalone enrichment in a Clay table.
+
+Use the `Hashed Email for Ads` waterfall (or individual providers such as Vector or ContactLevel) in a Clay table when:
+
+-   You need a one-off hashed email enrichment.
+-   You need hashed emails outside of an Audiences Ads sync — for example, to pass to another platform or workflow — since Enhanced Match is only accessible within the Audiences Ads sync setup.
+
+The table waterfall returns a **single hashed email** per contact from the first provider that finds a result, which provides fewer matching identifiers per contact than Enhanced Match.
+
 ### **What if my contacts don't have work emails? Can I still use the Personal Email waterfall?**
 
 Yes. Not all providers in the Personal Email waterfall require a work email as input. Many providers — including Forager, Wiza, Limadata, ContactOut, and Aviato — can look up personal emails using only a LinkedIn profile URL, with no work email needed.
