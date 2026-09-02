@@ -235,11 +235,15 @@ Clay syncs data from Google BigQuery on the following schedules:
 -   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured, importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
 -   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
 
-**Deleted records and editing your SQL query**
+**Editing your SQL query**
 
-When a record is no longer returned by your BigQuery import query — either because it was physically removed from the underlying BigQuery table, or because you edited your SQL to exclude it — Clay marks the record's BigQuery source association as **Deleted from Source** (shown as a `[DELETED]` prefix on the source name in the UI) during the next full sync. The audience record itself is **not removed**. To clean up these records, see [How do I archive records that no longer match my BigQuery import query?](#how-do-i-archive-records-that-no-longer-match-my-bigquery-import-query) below.
+When you edit the SQL query on a BigQuery import that already has field mappings configured, Clay creates a **new import** for the updated query and marks the old import's display name with a `[DELETED]` prefix — for example, "Google BigQuery" becomes "[DELETED] Google BigQuery" in the source list and in each record's **Origin source** column. The old records are **not automatically removed** from your Audience. **Field mappings reset** on each edit — you will need to re-map your BigQuery columns to Audience fields when configuring the new import.
 
-**Editing your SQL query** updates the existing import in place — it does **not** create a new source. When you save a query change: records still returned by the new query remain in your Audience and are updated using the configured Unique Identifier; new records returned by the new query are added; records that dropped out of the query are marked `[DELETED]` at the next full sync. **Field mappings also reset** each time you edit the query — you will need to re-map your BigQuery columns to Audience fields after each edit.
+Records returned by the new query that share the same Unique Identifier value as records from the old query are merged automatically — they are not duplicated. Records where the unique identifier value differs between old and new query results may appear as separate entries in your Audience. To prevent this, ensure your Unique Identifier column and values remain stable across query edits.
+
+To remove records that show a `[DELETED]` origin source, see [How do I archive records that no longer match my BigQuery import query?](#how-do-i-archive-records-that-no-longer-match-my-bigquery-import-query) below.
+
+**Deleted records:** When a record is no longer returned by your BigQuery import query because it was removed from the underlying BigQuery table — and the SQL query itself is unchanged — Clay marks the record's BigQuery source association as **Deleted in source** during the next full sync. The audience record itself is **not removed**. To clean up these records, see [How do I archive records that no longer match my BigQuery import query?](#how-do-i-archive-records-that-no-longer-match-my-bigquery-import-query) below.
 
 ### Importing from people and companies search
 
@@ -1107,11 +1111,11 @@ If the same records exist in other sources (Salesforce, HubSpot, CSV), archiving
 
 ### How do I archive records that no longer match my BigQuery import query?
 
-When you edit a BigQuery import's SQL query — or when records are removed from the underlying BigQuery table — Clay marks those records' BigQuery source association as **Deleted from Source** (shown as a `[DELETED]` prefix on the source name in the UI) during the next full sync. The Audience record itself is **not removed**.
+When you edit a BigQuery import's SQL query, Clay creates a new import and marks the old import's display name with a `[DELETED]` prefix — for example, "Google BigQuery" becomes "[DELETED] Google BigQuery". Records from the old import remain in your Audience with their **Origin source** column still showing the `[DELETED]` source name. The Audience record itself is **not removed** automatically.
 
 To clean up these records:
 
-1.  In your audience, add a filter for **BigQuery source status → is → Deleted in source** (or filter by **Origin source → contains → [DELETED]** to target the specific deleted source by name).
+1.  In your audience, add a filter for **Origin source → contains → [DELETED]** to target records from the old import (or use the exact `[DELETED]` source name if you need to be more precise).
 2.  Save that filter set as a new segment.
 3.  From the segment, click the **⋮** menu → **Archive records** to remove them from your Audience.
 
