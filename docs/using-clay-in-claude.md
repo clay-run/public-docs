@@ -183,3 +183,13 @@ For batch workflows like running an email-finder waterfall on a list of companie
 **How does my admin control my credit limit?**
 
 Your workspace admin can set a default credit limit for all reps, or a per-user override, from `Settings → MCP users`. If you hit your limit, further enrichments will be blocked until the monthly reset on the 1st of each month at midnight UTC. Contact your admin to have your limit adjusted.
+
+**Can I see my own credit balance?**
+
+Sales Rep users don't have a credit balance view in Claude — the Clay widget shows only whether credits are available, not a specific number. Only workspace admins can see individual rep credit limits and usage, from `Settings → MCP users`. If you're unsure how many credits you have left or need your limit raised, contact your workspace admin.
+
+**What will I see if I hit my credit limit?**
+
+If your workspace admin has set a monthly credit limit for your account and you reach it, Clay returns an error to Claude: _"You've hit your monthly user credit limit. Please contact your workspace admin to increase it."_ Claude will display this message in the conversation.
+
+Note: the Clay widget's credit indicator reflects workspace-level credit availability only — if your personal limit is exhausted while the workspace still has credits, the widget may not show a low-credit warning. Watch for the error message in Claude's response to know whether you've hit your limit.
