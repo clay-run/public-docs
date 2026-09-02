@@ -139,7 +139,7 @@ The credit usage dashboard is organized into tabs, each covering a different sli
 -   **Signals** — shows credit spend broken down by individual signal. A totals row (`All Signals`) appears at the top, followed by a per-signal breakdown of `Credits used` and `Actions used`.
 -   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user. Expand any user row to see which Clay functions that user invoked via MCP and how many credits each consumed — the sub-row names match the function names configured for MCP access (see [MCP settings](/docs/mcp-settings)). Spend that cannot be attributed to a specific function appears as **Other**. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
 -   **API** — shows programmatic spend from Clay's People & Company Search API and Exportly, broken down by user. Like MCP, unattributable spend appears as `Unattributed`. Credits from Routines API runs are not tracked here — those appear in the **Workbooks** tab, attributed to the function table that processed each run.
--   **Budgets** — shows credit spend broken down by budget. Visible only on workspaces with Credit Budgets enabled (currently in open beta for Enterprise customers). See [Credit Budgets](/docs/credit-spend-limits-faq#credit-budgets-open-beta) for details.
+-   **Budgets** — shows credit spend broken down by budget. Visible only on Enterprise plan workspaces with Credit Budgets enabled (currently in beta). See [Credit Budgets](/docs/credit-spend-limits-faq#credit-budgets-beta) for details.
 
 **Note:** The `Credits used` total on the **Workbooks** tab reflects only workbook and table activity. Credits consumed by Workflows, Signals, MCP, or API access appear on those respective tabs and are not included in the Workbooks total. To see your complete workspace credit spend for a given period, review the totals across all relevant tabs.
 
@@ -150,7 +150,7 @@ Available on Enterprise plans. Clay continuously monitors workspace credit spend
 **How credit spike alerts work:**
 
 -   **Admin email alerts:** When a spike is detected, all workspace admins receive an "Elevated Credit Usage Alert" email with a direct link to the Usage dashboard (`Settings → Usage`). A 24-hour cooldown applies between alerts — once an alert fires, no additional alerts are sent for 24 hours, even if spend continues to spike.
--   **Spike markers on usage graphs:** Each detected spike appears as a marker on the balance and spend breakdown graphs in the Usage dashboard. You can click through from the email to see exactly when the spike occurred and drill into what drove it. Past spike markers remain visible on the graphs so you can audit historical spend.
+-   **Spike markers on usage graphs:** Each detected spike appears as a marker on the balance and spend breakdown graphs in the Usage dashboard. You can click through from the email to see exactly when a spike occurred and drill into what drove it. Past spike markers remain visible on the graphs so you can audit historical spend.
 
 If you receive an "Elevated Credit Usage Alert" email, go to `Settings → Usage` to review the spike marker on the graphs and identify which workbook, table, or integration was responsible for the unusual spend.
 
