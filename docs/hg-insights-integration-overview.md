@@ -154,7 +154,7 @@ For technologies not tracked by any database provider, a [Claygent](https://univ
 
 ### Street-level address not available from Enrich company
 
-The **Enrich company** action returns location data at the **city, state, and country level only** — it does not include a street address or postal code. This is a limitation of the data HG Insights makes available through their API, not something that has been removed from Clay.
+The **Enrich company** action returns location data at the **city, state, country, and postal code level** — it does not include a street address. This is a limitation of the data HG Insights makes available through their API, not something that has been removed from Clay.
 
 If you need a company's street address, two options work well in Clay:
 
