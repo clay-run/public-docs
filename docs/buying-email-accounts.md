@@ -21,7 +21,7 @@ From the `Campaigns` homepage, go to the `Email Accounts` tab and click `Add Ema
     -   Each domain supports up to 5 email accounts.
     -   The preview panel on the right shows your current order, including per-domain pricing (yearly) and per-account pricing (monthly).
 2.  **Add personas.** Personas map directly to the reps who will manage replies coming into these inboxes.
-    -   Each persona requires a first name, last name, and profile picture to appear as realistic as possible. When purchasing Outlook accounts, first and last names must each be at least 4 characters.
+    -   Each persona requires a first name, last name, and profile picture to appear as realistic as possible.
     -   **Auto-balance** is enabled by default and distributes email accounts evenly across personas. Turn it off to assign accounts manually per domain or to customize email prefixes.
 3.  **Add contact details.** Enter the contact details that will be attached to the generated Google Workspace.
     -   Set your **forwarding domain** — this is the domain where purchased domains will redirect. Clay recommends using your company's primary domain (e.g., `clay.com`).
