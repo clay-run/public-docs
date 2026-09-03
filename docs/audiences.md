@@ -976,7 +976,7 @@ The 24-hour export schedule is fixed and cannot be triggered manually. Two optio
 
 The Clay Company ID is the internal numeric identifier Audiences assigns to each company record. It is the value the **Associate company ID** field in `Upsert Audiences Record` expects when linking a person to an existing company record.
 
-**From a person record in your People audience:** Open the person's record and click the linked company chip (for example, the company name that appears on the record). The company's record opens in the same workspace. Look at your browser's address bar — the Company ID is the integer after `/companies/` in the URL. For example, in `https://app.clay.com/workspaces/123456/companies/987654321/overview`, the Company ID is `987654321`.
+**From a person record in your People audience:** Open the person's record and click the linked company chip (for example, the company name that appears on the record). The company's record opens in the same workspace. Look at your browser's address bar — the Company ID is the integer after `/companies/` in the URL. For example, in `https://app.clay.com/workspaces/123456/companies/987654321`, the Company ID is `987654321`.
 
 **From a Clay table (to use in Upsert Audiences Record):** If you have a table of people records you want to push into your People audience with a company association, use `Lookup in Audiences` to retrieve the Company ID:
 
@@ -994,14 +994,13 @@ When you import Salesforce Contacts into a People audience, only fields from the
 
 To pull Account-level data into a Clay table:
 
-1. In your table, open the **Audiences Record** cell for a Contact row and navigate to **Records → Related IDs → Account IDs**. This value is the **Clay Company ID** for the linked account — Clay's internal identifier for the Company record in your Audiences. It is **not** the Salesforce Account ID.
-2. Add a `Lookup in Audiences` action column.
-3. Set **Object type** to **Companies**.
-4. Set the filter field to **Company ID** and map it to the Account IDs value from step 1.
+1. Add a `Lookup in Audiences` action column. Set **Object type** to **People** and filter by **Email** (map it to your table's email column). In the lookup result, look for the **Account IDs** field — this is the Clay Company ID for the Salesforce Account linked to that Contact. It is **not** the Salesforce Account ID.
+2. Add a second `Lookup in Audiences` action column. Set **Object type** to **Companies**.
+3. Set the filter field to **Company ID** and map it to the Account IDs value from step 1.
 
 The lookup returns the matching Company record from your Audiences, including all Account-level fields configured when you imported Salesforce Accounts into the Companies audience (for example, Company Name, Company Domain, and custom Account fields).
 
-**Salesforce Leads (vs. Contacts):** The steps above apply specifically to records imported from Salesforce **Contacts**. Salesforce **Lead** records in your People audience do not have an automatic Company association. Clay builds the **Account IDs** link by reading the `AccountId` field during Contact import — Lead records have no equivalent Account relationship in Salesforce (they carry a plain-text `Company` field, not an Account lookup), so **Records → Related IDs → Account IDs** is empty for Lead-sourced person records.
+**Salesforce Leads (vs. Contacts):** The steps above apply specifically to records imported from Salesforce **Contacts**. Salesforce **Lead** records in your People audience do not have an automatic Company association. Clay builds the **Account IDs** link by reading the `AccountId` field during Contact import — Lead records have no equivalent Account relationship in Salesforce (they carry a plain-text `Company` field, not an Account lookup), so the **Account IDs** field is empty for Lead-sourced person records.
 
 Two approaches that do not apply to the Lead → Company case:
 
