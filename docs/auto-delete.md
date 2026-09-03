@@ -31,8 +31,10 @@ Follow these steps to set up auto-delete:
     -   **Disabled** — Rows will not be automatically deleted.
     -   **Delete when all actions finish** — Deletes rows once all action columns have finished running.
         -   Optionally, select a **Success column** from the dropdown. When set, a row will only become eligible for deletion after that specific column has run successfully. If no column is selected, rows are deleted as soon as all actions finish.
-    -   **Delete based on conditional rules** — Deletes rows that match a set of custom filter conditions you define. Use this mode to trigger deletion based on more complex logic, such as time created or updated, values in a column, or column run status.
-        -   Click `Add filter` to build your conditions. At least one filter rule is required to save this mode.
+        -   The **Success column** setting accepts **one column only**. To require multiple action columns to all succeed before deletion, switch to **Delete based on conditional rules** and add one filter condition per column, joined with the **And** operator.
+    -   **Delete based on conditional rules** — Deletes rows that match a set of custom filter conditions you define. Use this mode to trigger deletion based on more complex logic, such as time created or updated, values in a column, or column run status — including when you need more than one action column to succeed before a row is removed.
+        -   Click `Add filter` to build your conditions. At least one filter rule is required to save this mode. When you add more than one condition, an **And/Or** toggle appears between rules — choose **And** when every condition must be met (for example, two action columns must both have results), or **Or** when any one condition is sufficient.
+        -   **Note:** Conditional deletion rules only determine which completed rows are eligible for deletion. They have no effect on which action columns run — all action columns in the table continue executing as normal. The condition is checked only after actions finish, not during execution.
 5.  Optionally, enter a value in the **Number of rows to keep** field. This sets how many of the most recent rows are retained in the table when auto-delete runs. Leave the field empty to use the default of 100 rows. **This value does not block new inserts** — the table continues accepting new rows until it reaches the 50,000-row hard ceiling, regardless of the keep-limit setting.
 6.  Click `Save changes`.
 
