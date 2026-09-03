@@ -929,6 +929,19 @@ This gives you control over both which records enter Audiences and how their fie
 
 **Note:** There is no add-on available to increase the Audiences record limit above 250,000 while staying on the Growth plan. To increase the limit, upgrade to the Enterprise plan, which supports up to 25,000,000 CRM/DWH records.
 
+### How do I sync a specific HubSpot contact list to a Clay Ads audience?
+
+The Audiences HubSpot connector imports all contacts for the selected object type — there is no option to select a specific HubSpot list within the Audiences source setup. To sync only the contacts from a specific HubSpot list to an ad audience:
+
+1.  In HubSpot, confirm or create the contact list you want to target.
+2.  In Clay, create a new table. Add a source, select **Import objects from HubSpot**, connect your HubSpot account, and choose your specific contact list under **List to pull objects from**.
+3.  Map the fields you need in the table. Optionally, add a text or checkbox column and set a consistent value for all rows (for example, a `List` column set to `"Q3 prospects"`) — this makes it easy to build a filtered segment in Audiences.
+4.  Add **Upsert Audiences Record** as an action column to push the table rows into your People Audience.
+5.  In Audiences, create a **People** segment filtered to the contacts you just imported (for example, using the tag column from step 3, or any other field unique to this group of contacts).
+6.  Go to **Ads**, click **Create ad sync**, and select the People segment you created.
+
+This lets you sync only the contacts from your selected HubSpot list — without importing your entire CRM.
+
 ### I changed a field value in Salesforce but it's not updating in Clay
 
 Clay's incremental sync picks up Salesforce changes via `SystemModstamp` — any modification to a Salesforce record triggers a re-sync of all its mapped fields on the next incremental cycle (every 15 minutes on Enterprise, once daily on Growth). However, if the field's current value in Clay was set by a **bulk enrichment** or **Upsert Audiences Record**, Clay's conflict resolution keeps that bulk-enriched value rather than accepting the incoming CRM value. Bulk enrichments and Upsert Audiences Record are Priority 1; Salesforce Account/Contact/Opportunity imports are Priority 2 (see **Conflict resolution when sources provide different field values** under [Entity resolution and deduplication](#entity-resolution-and-deduplication) above).
