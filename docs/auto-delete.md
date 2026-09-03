@@ -25,7 +25,7 @@ Follow these steps to set up auto-delete:
 2.  Open the auto-delete settings using either access path:
     -   Click the **table title** and select **Enable auto-delete** from the dropdown, or
     -   Click the **auto-delete icon** (archive icon) in the bottom toolbar of the table.
-3.  In the dialog that appears, check **This table uses a webhook, send table data, signal, or Audiences source.**, then click **Configure auto-delete**.
+3.  In the dialog that appears, check **This table uses a webhook, send table data, signal, or Audiences source.**, then click **Configure auto-delete**. 
     -   If your table uses an incompatible source type, auto-delete will still delete rows, but the source record count continues accumulating toward the 50,000 limit.
 4.  Under **Auto-delete mode**, select one of the following options:
     -   **Disabled** — Rows will not be automatically deleted.
@@ -39,6 +39,8 @@ Follow these steps to set up auto-delete:
 **Warning:** Deleted rows are not recoverable.
 
 ## Keeping space for incoming records
+
+**The 50,000 limit for auto-delete webhook tables applies to rows held in the table at any moment, not to the total number of rows ever received.** When auto-delete is enabled (Enterprise plan) on a compatible source such as a webhook, Clay routes incoming records through a passthrough path that does not check the source's cumulative record count. New records are accepted as long as fewer than 50,000 rows are in the table at the moment each record arrives — and since auto-delete continuously removes completed rows, the table stays below the cap and the webhook can accept data indefinitely. Without auto-delete, the 50,000 limit on a webhook source is a lifetime count of all records ever received: new records are blocked once that total reaches 50,000, regardless of how many rows are currently in the table.
 
 Auto-delete runs after records are written to the table, not before. When records arrive, Clay checks whether the table is below the 50,000-row limit and creates the records first — the auto-delete cleanup job then runs separately, typically about a minute later. This means that if records keep arriving faster than auto-delete can clear space, the table can temporarily reach the 50,000-row limit and new records will be rejected.
 
