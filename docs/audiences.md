@@ -982,7 +982,7 @@ The Clay Company ID is the internal numeric identifier Audiences assigns to each
 
 1. In your table, click `Add enrichment` and search for **Lookup in Audiences**.
 2. Set **Object type** to **Companies** and set your Companies audience as the source.
-3. Under **Fields to filter by**, select **Domain** (or **LinkedIn company URL**) and map it to the column in your table that holds each person's company domain. Domain and LinkedIn company URL are more reliable match keys than company name, which can have duplicates.
+3. Under **Fields to filter by**, select **Domain** (or the company's professional network URL) and map it to the column in your table that holds each person's company domain. Domain and professional network URL are more reliable match keys than company name, which can have duplicates.
 4. Run the column. For rows where a matching company is found, the result includes the company record and its Company ID.
 5. In your **Upsert Audiences Record** action column, map the optional **Associate company ID** field to the Company ID value from step 4.
 
