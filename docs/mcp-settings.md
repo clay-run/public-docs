@@ -24,6 +24,8 @@ The `MCP for reps` option on [Functions](#enabling-a-function-for-mcp) (reusable
 
 Glean integration is available on Enterprise plans only.
 
+The **Hide default functions from MCP** toggle is currently in beta — contact support if you don't see it on your MCP settings page.
+
 ## **Enabling a function for MCP**
 
 Functions are reusable enrichment workflows built in Clay that reps can invoke directly from ChatGPT, Claude, or Glean with a single prompt. Admins build them once and enable them for MCP — reps never need to open Clay to use them.
@@ -33,6 +35,23 @@ Functions are reusable enrichment workflows built in Clay that reps can invoke d
     -   Set a name and description for the MCP app — this is what reps see when browsing available functions, so make it actionable (e.g., _"Company enrichment waterfall"_ or _"Outbound email generator"_).
 
 _For more information about functions, check out our_ [_full doc_](https://university.clay.com/docs/functions)_._
+
+## Controlling which default data points are available in MCP
+
+By default, Clay exposes a set of built-in enrichment data points through MCP that any connected rep can invoke directly — including email lookup, website traffic, tech stack, and more. Workspace admins can hide all of these defaults so that only explicitly-enabled custom Functions are available to reps.
+
+**Hide default functions from MCP** — When this toggle is on, the following built-in data points are hidden from Clay's MCP interface and refused if a client attempts to call them:
+
+-   **Contact data points:** Email, Summarize Work History, Find Thought Leadership
+-   **Company data points:** Website Traffic, Tech Stack, Open Jobs, Latest Funding, Investors, Company Competitors, Company Customers, Revenue Model, Recent News, Annual Revenue, Headcount Growth
+
+Search — finding people and companies — is unaffected. Custom Functions you've explicitly enabled for MCP remain available. The underlying data points stay in your workspace and on the Functions page; only their MCP access is gated.
+
+**When to use this:** Enterprise teams often hide default data points so enrichment runs only through their custom Functions, which can include waterfall logic, deduplication checks, and CRM write-back steps. This ensures reps use the team's approved workflow rather than ad-hoc default lookups.
+
+To access this toggle, navigate to `MCP` in your workspace sidebar. The toggle appears on the MCP settings page, which is visible to workspace admins only.
+
+**Troubleshooting — rep can no longer look up emails or run enrichments through MCP:** If a rep previously could look up email addresses (or run other enrichment actions like website traffic or tech stack) through Claude, ChatGPT, or another MCP client, and that action has disappeared, check whether **Hide default functions from MCP** is enabled in your MCP settings. When this toggle is on, email enrichment and all other built-in data points listed above are hidden and refused — even if the rep has credits available and is connected to the correct workspace. Search still works. To restore built-in email lookup, navigate to `MCP` in your workspace sidebar (admins only) and turn the toggle off. To keep defaults hidden while still offering email enrichment to reps, build a custom Function that includes email enrichment and enable it for MCP — see [Enabling a function for MCP](#enabling-a-function-for-mcp).
 
 ## Setting credit limits
 
@@ -69,6 +88,12 @@ If your workspace uses Clay Audiences, two additional workspace-level toggles ap
 **Troubleshooting — rep sees no results when querying Audiences:** When `Restrict account querying by Salesforce owner` is on, results are scoped to accounts the rep owns in Salesforce. A rep who owns no accounts (or whose Salesforce ownership hasn't synced yet) will receive empty results — which can look like the feature isn't working. To resolve: either disable `Restrict account querying by Salesforce owner` so the rep can see all workspace accounts, or ensure `Sync user IDs from audiences` is on and the rep's Salesforce account ownership is correctly mapped.
 
 ## FAQ
+
+### Why can my rep find people but not look up their email addresses through MCP?
+
+If a rep can search for contacts and companies via MCP but cannot run email enrichment (or other enrichment actions like website traffic or tech stack), the **Hide default functions from MCP** toggle is likely enabled in your MCP settings. When it is on, all built-in enrichment data points — including email lookup — are hidden from the MCP interface and refused if called directly. Search is unaffected, which is why finding people still works while enriching them does not.
+
+To check: navigate to `MCP` in your workspace sidebar (admins only) and look at the **Hide default functions from MCP** toggle. Turn it off to restore built-in email enrichment, or keep it on and build a custom Function that includes email lookup and enable it for MCP — see [Enabling a function for MCP](#enabling-a-function-for-mcp).
 
 ### Why does Clay MCP return different results than my Clay table?
 
