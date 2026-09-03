@@ -51,6 +51,8 @@ The email address field in `Settings` > `Account` is read-only and cannot be cha
 
 Changing your email address does not affect your workspace data or your password.
 
+**If you sign in with Google:** After your email address is changed by support, sign in using the Google account associated with the new email address. Clay matches Google sign-ins by email — signing in with the Google account tied to your previous email address will no longer find your Clay account.
+
 **If your Google account email changed externally and you now see a blank workspace**
 
 If your Google account email was updated outside of Clay — for example, a Gmail address was migrated to a Google Workspace domain — signing into Clay with the new address creates a new empty workspace. Clay matches accounts by email address at sign-in and cannot automatically link the new email to your existing account. Your original workspace is not lost; it stays tied to your original email address.
