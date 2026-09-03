@@ -602,7 +602,7 @@ With **Premium** or **Standard**, Clay queries its provider network to find and 
 
 **Note:** Salesforce is currently the only native export destination in Audiences. HubSpot export from Audiences is not yet available — to write data to HubSpot, see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
 
-Audiences supports **bidirectional sync** with Salesforce. To push data from Audiences back to Salesforce, you must first enable the **Export sync** toggle in your Salesforce source settings — this is the master switch for all outbound writes. Even if individual fields are configured with an "Always write" rule, no data flows to Salesforce until Export sync is turned on.
+Audiences supports **bidirectional sync** with Salesforce. To push data from Audiences back to Salesforce, you must first enable the **Export sync** toggle in your Salesforce source settings — this is the master switch for all outbound writes. Even if individual fields are configured with an "Always write" rule, no data flows to Salesforce until Export sync is enabled.
 
 **To enable Export sync (admin-only):**
 
@@ -806,6 +806,25 @@ The Source column is plain text — there is no direct link from the Source colu
 ### My CRM is messy. Should I clean it up before setting up Audiences?
 
 You don't need a clean CRM to get started — CRM cleanup is often the first use case Audiences enables. A common approach: sync your existing CRM, run professional network enrichments to refresh contact data, use the enriched identifiers to surface duplicates, then build further enrichments from there.
+
+### My organization has multiple company accounts that share the same domain (for example, different subsidiaries or regional business units). How does Audiences handle them?
+
+There are two distinct systems that affect how same-domain company records are handled: entity resolution (the automatic background process) and import record matching (an optional configuration).
+
+**Entity resolution (automatic):** Audiences automatically merges company records that share the same root domain into a single unified Audience profile. If two legitimate company entities share a domain — for example, a Samsung Americas record and a Samsung Korea record both listed under `samsung.com` — entity resolution treats them as the same company and merges them. The exception is LinkedIn URL: if each entity has a distinct LinkedIn company URL, entity resolution uses the LinkedIn URL (which has higher priority in the matching order: LinkedIn URL → Domain → Probabilistic matching) and keeps them as separate records.
+
+To keep same-domain entities separate in Audiences, ensure each entity has its own unique LinkedIn company URL in your imported data. Records that share a domain but have no LinkedIn URL will be merged by entity resolution.
+
+**Import record matching:** When you configure import record matching (beta), the alias field you select is the only field Clay uses to join records across sources — no secondary criteria such as country, company name, location, or business unit are added automatically. If you select `Domain` as the alias field, all records sharing the same domain are merged into one Audience profile, regardless of how many distinct business units or subsidiaries share that domain.
+
+For organizations where multiple valid account records share a corporate domain, use a more specific identifier as the alias field:
+
+-   **Salesforce Account ID** — keeps every CRM account record distinct regardless of domain
+-   **HubSpot Company ID** — same logic for HubSpot sources
+-   **A unique account ID from your data warehouse** — if you maintain a stable account key in Snowflake or BigQuery
+-   **A stable internal account or location ID** — any field that uniquely identifies each business unit or subsidiary in your data model
+
+**Parent and child relationships:** Clay does not automatically infer or assign parent/child relationships between company accounts. There is no native parent account field in Audiences — those relationships must come from enrichment data (for example, company hierarchy data from a data provider such as ZoomInfo or HG Insights) or be defined using your own business logic. A practical approach is to maintain separate fields on each Company record for the parent company name, account country or region, and your CRM's unique account ID, then use those fields to group related records within Audiences.
 
 ### Does Audiences update automatically?
 
@@ -1080,11 +1099,7 @@ Archiving a record is a **soft delete** — the record is not permanently remove
 -   It can be viewed in the **Archived** section in the left sidebar.
 -   It can be **restored at any time** from the Archived section.
 
-**Important:** Re-importing a record with the same identifiers (email, domain, or external IDs) **will not revive an archived record** — the incoming import is silently skipped and the record stays archived. To bring an archived record back, restore it manually: navigate to **People** or **Companies** in the left sidebar → click **Archived** → find the record → click **Restore**. You can then re-import or re-sync data for that record if needed.
-
-**There is no self-serve option to permanently delete records from Audiences.** Archiving is the only available removal method. If your use case requires permanent removal, contact Clay support.
-
-**Note on lookup timing:** After archiving a record, there is a brief processing delay before the change is reflected in `Lookup in Audiences` results. Running a lookup immediately after archiving may still return the archived record until the change propagates.
+**Re-importing an archived record:** Re-importing a record with the same identifiers (email, domain, or external IDs) **will not revive an archived record** — the incoming import is silently skipped and the record stays archived. To bring an archived record back, restore it manually: navigate to **People** or **Companies** in the left sidebar → click **Archived** → find the record → click **Restore**. You can then re-import or re-sync data for that record if needed.
 
 ### How do I replace a CSV import with updated data?
 
