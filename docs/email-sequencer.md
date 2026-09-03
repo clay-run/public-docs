@@ -94,6 +94,14 @@ At any point, you can pause or complete a campaign:
 -   `Pause`: Stops emails from sending and allows edits to message copy and campaign settings (but not change the number of messages in the sequence). You can relaunch later without being charged additional credits for previously sequenced leads.
 -   `Complete`: Permanently ends the campaign and freezes analytics. Use this option only when you're certain you won't need to sequence leads in the campaign again.
 
+### Spam check
+
+The **Spam check** panel in the sequence editor's right sidebar scores your message copy on a 0–100 scale and highlights phrases or patterns that commonly trigger spam filters. The panel label shows your score as a badge — green for `good`, yellow for `fair`, and red for `poor` — and expands automatically when your score is `fair` or `poor`. Before launching, open the panel to review any flagged issues and revise your copy to improve deliverability.
+
+When you click **Launch**, Clay shows a pre-launch warning for any sequence scoring `fair` or `poor`, prompting you to review the flagged issues before proceeding.
+
+For A/B test campaigns, each variant is scored independently. The sidebar shows a separate score badge for each variant (labeled A, B, etc.), and the pre-launch warning identifies which variant needs attention — for example, "Variant A is likely to be flagged as spam."
+
 ### Campaign events table
 
 When a campaign launches, a dedicated campaign events table is created. It records key actions such as sends, bounces, and replies. Because this is a Clay table, you can build automations around these events. Reply events may appear with a 15–30 minute delay.
