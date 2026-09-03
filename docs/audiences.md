@@ -62,7 +62,7 @@ The Salesforce import flow in Audiences has been redesigned. You can import **al
 
 1.  Click `Add data` → `Add Source` → select your [**Salesforce integration**](https://university.clay.com/docs/salesforce-integration-overview).
     -   If you don't see a Salesforce integration listed, contact your Growth Strategist.
-2.  Select your Salesforce account from the dropdown — or click `+ Add account` to authenticate a new one.
+2.  If no Salesforce account is connected yet, select an account from the dropdown or click `+ Add account` to authenticate one. If your workspace already has a Salesforce account connected in Audiences, the panel shows the connected account as a read-only field — **Audiences supports one Salesforce connection per workspace**. You can add multiple imports (different object types or SOQL subsets) from that one connected org, but you cannot switch to or add a second Salesforce account.
 3.  Once connected, you land on the Salesforce source settings page.
 
 **Step 2: Add a Salesforce import**
@@ -715,6 +715,14 @@ Clicking a column header in the Audiences view (People or Companies) only shows 
 The field is permanently removed and cannot be recovered.
 
 **Note:** Only custom fields — fields you created yourself — can be deleted. Built-in fields from Salesforce, HubSpot, or other connected sources have the Delete field button disabled. To stop a field from appearing in your column view without deleting it, use **Hide field** instead (available from the same sidebar, or by clicking the column header and selecting **Hide**).
+
+### Can I connect multiple Salesforce accounts to Audiences?
+
+No. Audiences supports one Salesforce connection per workspace. Once a Salesforce account is connected, the Salesforce source panel shows that account as a read-only field — there is no dropdown or `+ Add account` option to switch to or add a second Salesforce org.
+
+You can still add multiple imports from the same connected Salesforce account — for example, separate imports for Contacts, Accounts, and SOQL-filtered subsets — but all imports come from the same Salesforce org.
+
+If you need data from a second Salesforce org in Audiences, the available workaround is: connect the second org under **Settings → Connections**, bring its records into a Clay table using Salesforce actions, then push those records into Audiences using `Upsert Audiences Record`. Note that Clay table row limits apply in this path.
 
 ### A Salesforce field isn't appearing in my audience filters — how do I add it?
 
