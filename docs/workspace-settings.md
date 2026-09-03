@@ -88,7 +88,7 @@ To update your billing email:
 
 ## Single Sign-On (SSO)
 
-SSO is not configured through the Clay workspace settings UI — there is no self-serve configuration panel. To set up SSO for your workspace, contact Clay support. SSO is available on **Enterprise** plans at no additional cost, and as a paid add-on on annual Pro and annual Growth plans.
+SSO is not configured through the Clay workspace settings UI — there is no self-serve configuration panel. To set up SSO for your workspace, contact Clay support. SSO is available on **Enterprise** plans at no additional cost, and as a paid add-on on annual Growth plans.
 
 See [Single Sign-On (SSO)](./single-sign-on.md) for full details on eligibility, the setup process (handled by Clay's support team via WorkOS), how login behavior changes once SSO is enabled, and important notes on user provisioning.
 
