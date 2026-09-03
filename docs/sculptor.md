@@ -28,7 +28,7 @@ For example, you could:
 4.  **Add enrichments.** Click `Continue` to include any recommended enrichments Sculptor suggests for your table.
 5.  **Finalize your table.** Your table is created automatically. You can exit the chat at any time, and return later by clicking `Chat with Sculptor` to make further updates. To browse and resume any of your previous Sculptor conversations, click the **chat history** button (clock icon) in the Sculptor panel.
 
-**Repositioning the Sculptor panel:** When using Sculptor within a table, workflow, or Claygent Builder, the Sculptor panel opens docked to the side of your screen by default. To move it to a floating panel you can place anywhere on screen, click **Pop out chat** in the Sculptor panel header. While floating, drag the panel using the grip in the header, or press the arrow keys for precise movement. Click **Dock chat** to return the Sculptor panel to its docked position.
+**Repositioning the Sculptor panel:** When using Sculptor within a table, workflow, or Claygent Builder, the Sculptor panel opens docked to the side of your screen by default. To move it to a floating panel you can place anywhere on screen, click **Pop out chat** in the Sculptor panel header. While floating, drag the panel using the grip in the header, or press the arrow keys for precise movement. Click **Dock chat** to return the Sculptor panel to its docked position. Currently rolling out — if you don't see the **Pop out chat** button, contact support to enable it for your workspace.
 
 ## Chat history
 
