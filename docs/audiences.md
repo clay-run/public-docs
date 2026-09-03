@@ -1064,63 +1064,39 @@ The People and Companies views in Audiences do not have per-row checkboxes or a 
 3.  Once the segment shows the correct records, click the **⋮** (three-dot) menu next to the segment name.
 4.  Select **Archive records**.
 
-Archived records are removed from all audience segments and excluded from future enrichments and workflows. The records are not permanently deleted — they can be viewed and restored at any time from the **Archived** section in the left sidebar. See [What happens when I archive a record in Audiences?](#what-happens-when-i-archive-a-record-in-audiences) for more detail.
+Archived records are removed from all audience segments and excluded from future enrichments and workflows. The records are not permanently deleted — they can be viewed and restored at any time from the **Archived** section in the left sidebar. See [What happens when I archive a record in Audiences?](#what-happens-when-i-archive-a-record-in-audiences) for full details.
 
 ### What happens when I archive a record in Audiences?
 
-Archiving a record removes it from **All People** or **All Companies** and from all segments where it previously appeared. The record is excluded from future enrichments, signals, and workflow triggers. It remains visible in the **Archived** section of the left sidebar.
+Archiving a record is a **soft delete** — the record is not permanently removed from your Audiences workspace. When you archive a record:
 
-Archived records are not permanently deleted. To restore an archived record:
+-   It is **excluded from all audience segments and workflows** — it will not appear in segment filter results or trigger enrichment automations.
+-   It can be viewed in the **Archived** section in the left sidebar.
+-   It can be **restored at any time** from the Archived section.
 
-1.  Navigate to **People** → **Archived** (or **Companies** → **Archived**) in the left sidebar.
-2.  Click the record you want to restore.
-3.  Click **Restore** in the record detail panel.
+**Important:** Re-importing a record with the same identifiers (email, domain, or external IDs) **will not revive an archived record** — the incoming import is silently skipped and the record stays archived. To bring an archived record back, restore it manually: navigate to **People** or **Companies** in the left sidebar → click **Archived** → find the record → click **Restore**. You can then re-import or re-sync data for that record if needed.
 
-The record is returned to **All People** (or **All Companies**) and to any segments whose filter criteria it still matches.
+**There is no self-serve option to permanently delete records from Audiences.** Archiving is the only available removal method. If your use case requires permanent removal, contact Clay support.
 
-**Note:** Archiving is permanent in the sense that it removes the record from active segments immediately — but the record itself is preserved and can be restored at any time. There is no "soft" archive that keeps the record in active segments with a flag — once archived, it is fully excluded until restored.
+**Note on lookup timing:** After archiving a record, there is a brief processing delay before the change is reflected in `Lookup in Audiences` results. Running a lookup immediately after archiving may still return the archived record until the change propagates.
 
 ### How do I replace a CSV import with updated data?
 
-CSV imports are one-time — they do not re-sync automatically. If the imported CSV contained errors and you want to start fresh:
+CSV imports are one-time and do not re-sync. To replace a CSV import with corrected or updated data:
 
-1.  Archive the records from the old import:
-    -   Navigate to **People** (or **Companies**) → **All People**.
-    -   Click **Criteria** and add a filter on **Origin source** → select the name of your old CSV import.
-    -   Click **+ Create Audience** to save the filtered set as a segment.
-    -   Click the **⋮** menu next to the new segment and select **Archive records**.
-2.  Import your corrected CSV:
-    -   Click **Add data** → **Add Source** → **CSV**.
-    -   Follow the import steps, using the same **Unique identifier** field as your original import.
+1.  Archive the records from the original CSV import — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above. Use the **Origin source** filter to isolate records from that specific import.
+2.  After archiving, import the updated CSV file using the same steps as the original import. Clay will create new records from the updated file.
 
-Records from the corrected CSV that share a Unique Identifier value with archived records will create new Audience entries (the archived record and the new one are separate until the archived record is restored).
+**Note:** Archiving removes records from all audience segments and enrichments. If those records existed in other sources (for example, also synced from Salesforce), they will remain in Audiences through those other sources even after being archived from the CSV source.
 
 ### How do I archive records that no longer match my Snowflake import query?
 
-When a record is no longer returned by your Snowflake import query, Clay marks the record's Snowflake source association as **Deleted in source** during the next full sync — but the record itself remains in your Audience. To remove these orphaned records:
+When a record is no longer returned by your Snowflake SQL query — because it was removed from Snowflake or you updated your query to exclude it — Clay marks the record's Snowflake source association as **Deleted in source** during the next full sync. The Audience record itself is **not removed**.
 
-1.  Navigate to **People** (or **Companies**) → **All People**.
-2.  Click **Criteria** and add a filter: **Sync status** → **Deleted in source** → select your Snowflake source name.
-3.  Click **+ Create Audience** to save the filtered set as a segment.
-4.  Click the **⋮** menu next to the new segment and select **Archive records**.
+To clean up these records:
 
-The records are moved to the **Archived** section and excluded from all active segments, enrichments, and workflows going forward.
+1.  In your audience, add a filter for **Snowflake source status → is → Deleted in source** (or filter on the specific Snowflake source name).
+2.  Save that filter set as a new segment.
+3.  From the segment, click the **⋮** menu → **Archive records** to remove them from your Audience.
 
-**Note:** This flow applies to records where the Snowflake source is the only source. If a record has additional sources (for example, it also exists in Salesforce), archiving through this method removes it from all segments — including those driven by its Salesforce data. Verify that the records in your segment are exclusively Snowflake-sourced before archiving.
-
-### How do I archive records that no longer match my BigQuery import query?
-
-When a record is no longer returned by your BigQuery import query — because it was removed from the underlying BigQuery table or your SQL was updated to exclude it — Clay marks the record's BigQuery source association as **Deleted in source** during the next full sync. The record itself remains in your Audience. To remove these orphaned records:
-
-1.  Navigate to **People** (or **Companies**) → **All People**.
-2.  Click **Criteria** and add a filter: **Sync status** → **Deleted in source** → select your BigQuery source name.
-3.  Click **+ Create Audience** to save the filtered set as a segment.
-4.  Click the **⋮** menu next to the new segment and select **Archive records**.
-
-The records are moved to the **Archived** section and excluded from all active segments, enrichments, and workflows going forward.
-
-**Note:** This flow applies to records where the BigQuery source is the only source. If a record also exists in Salesforce or another source, archiving through this method removes it from all segments — including those driven by its other source data. Verify that the records in your segment are exclusively BigQuery-sourced before archiving.
-
-### Syncing audiences to ad platforms
-
-Ad platform syncing is currently rolling out. See [Syncing audiences to ad platforms](#syncing-audiences-to-ad-platforms) above for the current setup steps.
+If the same records exist in other sources (Salesforce, HubSpot, CSV), archiving will remove them from those sources' audience contributions as well. Archived records can be restored from the **Archived** section in the sidebar if needed.
