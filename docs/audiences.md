@@ -844,6 +844,8 @@ The Audiences screen does not have a direct CSV download button. To download aud
 
 For segments with more than 50,000 records, export in batches by applying filters to create smaller sub-segments and repeating steps 2–4 for each batch.
 
+**Note:** The **Add to workbook** option is currently available to select workspaces. If you only see **Export to workflow** when you click **Send** → **Export action**, this feature has not yet been enabled for your workspace. Contact Clay support to request access.
+
 ### What happens to a contact's ad targeting when they become a customer?
 
 If your segment has an exclusion condition (e.g., Account Type ≠ "Customer"), the contact is automatically **removed** from the synced ad audience as soon as that condition is met. See [Clay Ads](https://university.clay.com/docs/clay-ads) for platform-specific guidance.
