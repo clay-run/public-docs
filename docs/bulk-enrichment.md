@@ -197,3 +197,7 @@ All rows currently in the bulk enrich table are cleared, and the enrichment rest
 
 -   Choose **Continue where you left off** if you want to finish processing records already in the queue. Note that if you edited an existing segment's filter conditions (rather than adding a new segment), those newly-qualifying records will not be pulled in automatically on resume.
 -   Choose **Run from the beginning** if you edited the filter conditions on an existing connected segment and want the enrichment to start fresh using your updated filters. This clears the current queue and seeds the run from your current segment configuration.
+
+### Monitoring run progress
+
+After an Audiences bulk enrichment has run, opening the enrichment panel shows a run status bar in the review step — completed rows in green, failed rows in red. Click the bar to navigate to the **Runs** view for that enrichment, where you can inspect individual run history and row-level results.
