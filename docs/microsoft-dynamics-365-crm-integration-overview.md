@@ -116,6 +116,8 @@ Define at least one field you want to filter by, then provide the corresponding 
 
 You can either type in these filter values directly or reference data from other columns.
 
+**Note:** The filter field picker lists fields by their **Display Name** in Dynamics 365, not by the internal schema name. For example, the Account object's `accountid` field (schema name) appears in the picker as **Company** (its Display Name). If you can't find a field by its schema name, search for its Display Name instead. You can look up a field's Display Name in Dynamics 365 under **Settings > Customizations > Customize the System**.
+
 **Step 4 (Optional):** Specify fields to return
 
 Choose the fields you want to return. If no fields are selected, all available fields will return.
