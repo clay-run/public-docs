@@ -78,6 +78,7 @@ When your 14-day trial ends, your workspace automatically moves to the Free plan
 -   **Monthly pricing:** Starting at $495/month (includes 6,000 credits and 40,000 actions)
 -   **Table limit:** 50,000 rows per table
 -   **Features:** Webhooks, CRM integrations, HTTP API, web intent signals, advanced automation, audiences
+-   **Available add-ons:** [SSO (Single Sign-On)](./single-sign-on.md) is available as a paid add-on on annual Growth plans — contact Clay support or your Growth Strategist to add it.
 
 ### Enterprise plan
 
