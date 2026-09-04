@@ -79,3 +79,13 @@ When archive is enabled, the **Archive deleted rows** toggle appears in your aut
 You can also select an **Indexed column** in the archive settings. Indexing a column lets you search for and retrieve specific deleted rows within the 30-day archive window.
 
 To view deletion activity, open the **History** modal and select the **Auto-deleted rows** tab. The tab shows a daily and monthly breakdown of how many rows auto-delete has removed, so you can track throughput over time.
+
+## Frequently asked questions
+
+### Does auto-delete remove my data from downstream destinations?
+
+No. Auto-delete only removes rows from the Clay table itself. Any data you have already exported to a downstream destination — such as Google Sheets, a CRM, or a data warehouse — is not affected. Auto-delete has no access to external systems and makes no changes outside of Clay.
+
+### When does Clay delete a row?
+
+In the default **Delete when all actions finish** mode, Clay deletes a row once every action column in the table has finished running — regardless of whether those actions succeeded. If you want Clay to wait until a specific export action completes successfully before deleting the row, select a **Success column** in the auto-delete settings. When a Success column is set, a row is only eligible for deletion after that column reports a successful run.
