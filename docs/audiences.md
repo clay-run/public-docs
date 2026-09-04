@@ -435,7 +435,7 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
 Four Clay actions let you move data between a Clay table and your Audience directly.
 
 -   In any Clay table, click `Add enrichment` and search for:
-    -   `Upsert Audiences Record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. Use it to commit data from integrations not yet natively supported in Audiences, qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table.
+    -   `Upsert Audiences Record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. Use it to commit data from integrations not yet natively supported in Audiences, qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table. By default, the action skips blank or empty cell values to prevent accidental overwrites — this is controlled by the **Ignore blank values** toggle in the action settings. To explicitly write a blank value and clear an existing Audience field (for example, to remove a value that was accidentally set), disable **Ignore blank values** before running. See [How do I clear a field value in Audiences for specific records?](#how-do-i-clear-a-field-value-in-audiences-for-specific-records) for the full workflow.
     -   `Update Audiences Record` writes data from a table row to one or more fields on an existing Audience record. Unlike `Upsert Audiences Record`, it does not create a new record if no match is found. Both actions write only to fields that already exist in your Audience — to create a new custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
     -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls. By default, signal data is returned for the past **90 days** and the action returns **5 signal results** per record by default — adjust the **Signal data to include (days)** setting in the column settings to retrieve older signals, or increase the result limit (up to 50) when you need more results per record. Use `Get Audiences Activity` when you need a larger set of results.
     -   `Get Audiences Activity` retrieves signal and activity data for an Audiences record — including signal events and, if Gong is connected to your workspace, Gong call records. Use it when you need more results or want to query a longer time window than `Lookup in Audiences` provides by default. Set **Object type** (People or Companies) and map the Audiences **Record ID**; optionally filter by **Activity types** — for example, select `Job posting` to retrieve only job posting events, or leave it empty to return all types. Configure **Max activities per type** (default 5, max 200) and **Days lookback** (default 90, max 365). For job posting signals, each event includes the job title, URL, location, posted date, seniority, description, company name, and company domain — data you can parse in downstream columns to qualify and route companies based on the specific roles they are hiring for.
@@ -968,6 +968,24 @@ This means: if you clear or change a field in Salesforce that was previously pop
 -   **Override the field with a new bulk enrichment.** Use **Update Audiences Record** in a bulk enrichment table to explicitly write the value you want (for example, `0` or null). Because `Update Audiences Record` is also Priority 1, this new value replaces the old bulk-enriched one and stays unless overwritten by another enrichment. See [Adding enrichments](#adding-enrichments).
 
 **Note:** If your workspace requires Salesforce values to always take precedence over bulk-enriched values for a given field, contact Clay support — a workspace-level field precedence configuration is available.
+
+### How do I clear a field value in Audiences for specific records?
+
+To blank out an Audience field for a specific set of records — for example, if you accidentally pushed wrong data to a field — use a Clay table and `Upsert Audiences Record` with the **Ignore blank values** toggle disabled. By default, `Upsert Audiences Record` skips empty cells to prevent accidental overwrites, so disabling this toggle is the key step.
+
+**Steps:**
+
+1. Create a Clay table containing the records you want to update (for example, export the affected segment using **Send** → **Export action** → **Add to workbook**, or build a table from a list of the affected records).
+2. In the table, add a column mapped to the Audience field you want to clear and leave all cells in that column blank — do not populate any values.
+3. Click `Add enrichment` and search for **Upsert Audiences Record**.
+4. Configure the action to match on a unique identifier (such as email or LinkedIn URL).
+5. In the action settings, find the **Ignore blank values** toggle and **turn it off**. This setting is enabled by default; disabling it tells the action to write blank values rather than skip them.
+6. Before running all rows, right-click the column header → **Run column** → **Run on 10 rows** to test on a small batch and confirm the field is being cleared correctly.
+7. Once confirmed, run the column for all rows.
+
+After the run, the selected Audience field is overwritten with blank on each matched record.
+
+**Note:** `Upsert Audiences Record` is Priority 1, so it will overwrite the existing field value regardless of which source originally set it. Workspace Admin access is required to run this action.
 
 ### I enriched data in my Audience. Why hasn't it appeared in Salesforce yet?
 
