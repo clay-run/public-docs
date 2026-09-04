@@ -158,13 +158,13 @@ Each fully enriched record typically costs **6–20 Data Credits**, depending on
 
 Two options:
 
-**1\\. Upgrade your Data Credits tier** (recommended)
+**1\. Upgrade your Data Credits tier** (recommended)
 
 -   Go to `Settings` → `Plan & billing`.
 -   Select a higher Data Credits tier.
 -   No premium charged.
 
-**2\\. One-time top-up**
+**2\. One-time top-up**
 
 -   Requires a paid plan — not available on the free plan.
 -   Go to `Settings` → `Usage` and click `Add one-time data credits`.
@@ -516,3 +516,9 @@ Only CRM **write** operations consume Actions: Create Record, Update Record, Ups
 Yes. Clay charges **1 Action** (and the associated Data Credits) per enrichment row run, regardless of whether that person has been enriched in another table. There is no cross-table deduplication — each row runs independently. If the same contact appears in two tables and you run an enrichment such as Enrich Person in both, you will be charged for each run separately.
 
 **To avoid double-charging on overlapping lists:** Merge your lists into a single table first and use the **Dedupe** feature (click a text, email, or URL column header → **Dedupe**) to remove duplicate entries based on a unique identifier such as a profile URL or email address. Enriching the merged, deduplicated table ensures each person is processed and charged only once.
+
+### Why was I charged immediately when I enabled auto top-up?
+
+_Auto top-up is currently rolling out to eligible paid workspaces (Starter plans and above) in beta. Contact [Clay support](https://app.clay.com) if you don't see the option in your settings._
+
+This is expected behavior. When you enable auto top-up or update an existing auto top-up configuration while it is already enabled, Clay immediately checks your current Data Credit balance. If your balance is at or below the threshold you set, a top-up purchase is triggered right away — it does not wait for the next time you spend credits. Credits are available after the payment succeeds; if any enrichments failed due to insufficient credits before the top-up completed, retry them after your balance has increased.
