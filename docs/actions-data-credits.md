@@ -24,7 +24,7 @@ The table below summarizes the key differences between Actions and Data Credits.
 | --- | --- | --- |
 | What it measures | Platform usage capacity | Data marketplace purchases |
 | Cost per enrichment | Always 1 action | Varies (0.5–10+ credits based on data type) |
-| How to get more | Upgrade action capacity tier | Upgrade tier OR purchase one-time top-up |
+| How to get more | Upgrade action capacity tier | Upgrade tier, purchase a one-time top-up, or enable auto top-up (beta) |
 | Rollover | No | Yes (up to 2× monthly limit) |
 
 ## How Actions and Data Credits work together
@@ -156,21 +156,29 @@ Each fully enriched record typically costs **6–20 Data Credits**, depending on
 
 ### How to get more Data Credits
 
-Two options:
+Three options:
 
-**1\\. Upgrade your Data Credits tier** (recommended)
+**1\. Upgrade your Data Credits tier** (recommended)
 
 -   Go to `Settings` → `Plan & billing`.
 -   Select a higher Data Credits tier.
 -   No premium charged.
 
-**2\\. One-time top-up**
+**2\. One-time top-up**
 
 -   Requires a paid plan — not available on the free plan.
 -   Go to `Settings` → `Usage` and click `Add one-time data credits`.
 -   Available for emergency needs during your billing cycle.
 -   **30% premium** applies (on modern plans; **50% premium** on legacy plans).
 -   Subject to the 2× rollover cap: at renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap — including purchased top-ups — are dropped.
+
+**3\. Auto top-up (beta)**
+
+Auto top-up automatically purchases additional Data Credits when your balance falls to or below a threshold you set — so enrichments keep running without manual intervention. Available on paid plans (Starter and above); currently rolling out to self-serve customers. Contact [Clay support](https://app.clay.com) if you don't see this option in your settings yet.
+
+To configure auto top-up, go to `Settings` → `Usage`. You set a threshold (the balance level that triggers a purchase) and a top-up amount (how much to buy).
+
+**Important:** When you enable or update your auto top-up settings, Clay immediately checks your current balance. If your balance is at or below the configured threshold at that moment, a top-up is triggered right away — not only the next time you spend credits. Credits are not available until the payment succeeds; retry any enrichments that failed due to insufficient credits after your balance increases.
 
 ### Data Credits for AI
 
