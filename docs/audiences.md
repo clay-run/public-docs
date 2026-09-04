@@ -930,11 +930,11 @@ If you have a Companies Audience segment and want to find people at those accoun
 
 **Step 2: Enrich the contacts in the table**
 
-Add enrichment columns for the fields you need — typically name, title, LinkedIn URL, validated work email, phone, and Salesforce Account ID (to link each new Contact to the correct Account in Salesforce).
+Add enrichment columns for the fields you need — typically name, title, professional profile URL, validated work email, phone, and Salesforce Account ID (to link each new Contact to the correct Account in Salesforce).
 
 **Step 3: Check whether each contact already exists in Salesforce**
 
-Add a **Salesforce Lookup record** action column and set **Salesforce object** to **Contact**. Use **work email** as the primary match field — it is the most reliable identifier for Contact deduplication. For contacts where email is missing, add a second lookup column using LinkedIn URL, or name plus Account ID, as a fallback.
+Add a **Salesforce Lookup record** action column and set **Salesforce object** to **Contact**. Use **work email** as the primary match field — it is the most reliable identifier for Contact deduplication. For contacts where email is missing, add a second lookup column using professional profile URL, or name plus Account ID, as a fallback.
 
 **Step 4: Write back to Salesforce using conditional columns**
 
