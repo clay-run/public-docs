@@ -1098,16 +1098,17 @@ Two behaviors to keep in mind:
 Three things to check:
 
 -   **The signal falls outside the default lookback window.** `Lookup in Audiences` returns signal data for the past **90 days** by default via the **Signal data to include (days)** column setting. This lookback is independent of your audience's filter criteria — a contact can be correctly included in a "job change results" audience yet still show empty signal data in a lookup if the job-change event falls outside the configured window. To retrieve older signals, open the column settings and increase **Signal data to include (days)** to cover the relevant time range.
--   **The default 5-result count was reached.** `Lookup in Audiences` returns 5 signal results per record by default. If a contact has fired more than 5 signal events in the lookback window, only the 5 most recent are returned. Increase the result limit in column settings (up to 50) or use `Get Audiences Activity` for higher limits.
--   **The signal type hasn't fired for this record yet.** A contact appearing in a segment doesn't guarantee that the signal has run on that record. Open the record detail view and check the **Activity** tab to confirm the signal has fired.
+-   **The default 5-result count was reached.** `Lookup in Audiences` returns 5 signal results per record by default. If a company has more active signals than that, some may not appear — increase the result limit in the column settings (up to 50), or use `Get Audiences Activity` to retrieve a larger set of signal data.
+-   **The signal hasn't fired for that record yet.** Signal results are written asynchronously and may not appear immediately after a signal run completes. If a signal should be recent but is still missing, open the signal's column header → `Edit column` and re-run the signal to refresh the data for that record.
 
-### What is the Clay People ID field, and can I map it to Salesforce?
+### Can I remove a source from the 'Add data' list in Audiences?
 
-The **Clay People ID** is an internal Clay identifier assigned to every People record in Audiences. It uniquely identifies the record within Clay and is used when writing back to Audiences from a Clay table (for example, as the lookup key in `Update Audiences Record`).
+No. Sources listed under **Add data** — including CSV imports and Clay table (local) sources — cannot be removed from the source list in Audiences. The source listing is retained for filtering and audit purposes.
 
-**To map the Clay People ID to Salesforce:** Add a custom text field to the Salesforce Contact object (for example, `Clay_People_ID__c`), then map it in your Audiences export settings with a **Write if empty** rule. Once the next export runs, the Clay People ID will be populated on matching Salesforce Contacts. This makes it easy to reference the Clay record from Salesforce and to look up records in Audiences using the ID as a stable key.
+- **CSV imports:** No removal option is shown in the source list after import.
+- **Clay table (local) sources:** The source entry shows only a **View table** option — there is no disconnect or remove action.
 
-**Note:** The Clay People ID is stable — it does not change when the underlying record is enriched, merged, or updated. It is assigned at record creation and persists for the lifetime of the record in Audiences.
+To remove the **records** that a source contributed to your Audience, archive them through a segment — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) below. For CSV sources specifically, see also [How do I replace a CSV import with updated data?](#how-do-i-replace-a-csv-import-with-updated-data).
 
 ### How do I remove records from an audience?
 
