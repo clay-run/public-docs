@@ -1114,6 +1114,20 @@ CSV imports are one-time and do not re-sync. To replace a CSV import with correc
 
 **Note:** Archiving removes records from all audience segments and enrichments. If those records existed in other sources (for example, also synced from Salesforce), they will remain in Audiences through those other sources even after being archived from the CSV source.
 
+### I accidentally imported records with bad or missing data — how do I clean up my Audiences?
+
+If you imported people or companies you didn't intend to keep — for example, records with mostly empty fields from a test import or a data experiment — you can clean up by removing the records and deleting any custom fields the import created.
+
+**Remove the imported records**
+
+Archive the records to remove them from all audience segments and enrichments. To target just the records from a specific import, create a segment with an **Origin source** filter set to the import's source name, then click **⋮** next to the segment name and select **Archive records**. See [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) for full steps.
+
+**Remove the custom fields the import created**
+
+If the import added new fields to your Audiences that you no longer need, you can delete them from the **Data Hub**: go to **Data Hub → Fields**, click the field you want to remove, then click **Delete field** at the bottom of the sidebar. See [How do I delete a custom field from Audiences?](#how-do-i-delete-a-custom-field-from-audiences) for full steps. Built-in system fields (such as Email and LinkedIn URL) cannot be deleted — if you want to declutter your column view without deleting a field, click the column header and select **Hide**.
+
+**There is no self-serve reset option.** There is no single action to restore your Audiences workspace to a blank state. To undo a bad import, archive the records and delete any custom fields it created using the steps above. For a large-scale cleanup, contact Clay support.
+
 ### How do I archive records that no longer match my Snowflake import query?
 
 When a record is no longer returned by your Snowflake SQL query — because it was removed from Snowflake or you updated your query to exclude it — Clay marks the record's Snowflake source association as **Deleted in source** during the next full sync. The Audience record itself is **not removed**.
