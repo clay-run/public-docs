@@ -24,7 +24,7 @@ The table below summarizes the key differences between Actions and Data Credits.
 | --- | --- | --- |
 | What it measures | Platform usage capacity | Data marketplace purchases |
 | Cost per enrichment | Always 1 action | Varies (0.5–10+ credits based on data type) |
-| How to get more | Upgrade action capacity tier | Upgrade tier, purchase a one-time top-up, or enable auto top-up (beta) |
+| How to get more | Upgrade action capacity tier | Upgrade tier OR purchase one-time top-up |
 | Rollover | No | Yes (up to 2× monthly limit) |
 
 ## How Actions and Data Credits work together
@@ -156,7 +156,7 @@ Each fully enriched record typically costs **6–20 Data Credits**, depending on
 
 ### How to get more Data Credits
 
-Three options:
+Two options:
 
 **1\. Upgrade your Data Credits tier** (recommended)
 
@@ -171,14 +171,6 @@ Three options:
 -   Available for emergency needs during your billing cycle.
 -   **30% premium** applies (on modern plans; **50% premium** on legacy plans).
 -   Subject to the 2× rollover cap: at renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap — including purchased top-ups — are dropped.
-
-**3\. Auto top-up (beta)**
-
-Auto top-up automatically purchases additional Data Credits when your balance falls to or below a threshold you set — so enrichments keep running without manual intervention. Available on paid plans (Starter and above); currently rolling out to self-serve customers. Contact [Clay support](https://app.clay.com) if you don't see this option in your settings yet.
-
-To configure auto top-up, go to `Settings` → `Usage`. You set a threshold (the balance level that triggers a purchase) and a top-up amount (how much to buy).
-
-**Important:** When you enable or update your auto top-up settings, Clay immediately checks your current balance. If your balance is at or below the configured threshold at that moment, a top-up is triggered right away — not only the next time you spend credits. Credits are not available until the payment succeeds; retry any enrichments that failed due to insufficient credits after your balance increases.
 
 ### Data Credits for AI
 
@@ -524,3 +516,7 @@ Only CRM **write** operations consume Actions: Create Record, Update Record, Ups
 Yes. Clay charges **1 Action** (and the associated Data Credits) per enrichment row run, regardless of whether that person has been enriched in another table. There is no cross-table deduplication — each row runs independently. If the same contact appears in two tables and you run an enrichment such as Enrich Person in both, you will be charged for each run separately.
 
 **To avoid double-charging on overlapping lists:** Merge your lists into a single table first and use the **Dedupe** feature (click a text, email, or URL column header → **Dedupe**) to remove duplicate entries based on a unique identifier such as a profile URL or email address. Enriching the merged, deduplicated table ensures each person is processed and charged only once.
+
+### Why was I charged immediately when I enabled auto top-up?
+
+This is expected behavior. When you enable auto top-up or update an existing auto top-up configuration while it is already enabled, Clay immediately checks your current Data Credit balance. If your balance is at or below the threshold you set, a top-up purchase is triggered right away — it does not wait for the next time you spend credits. Credits are available after the payment succeeds; if any enrichments failed due to insufficient credits before the top-up completed, retry them after your balance has increased.
