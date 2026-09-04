@@ -680,6 +680,29 @@ This error means the API credentials in your HTTP API action are no longer valid
 
 If your API issues short-lived tokens that expire automatically, the **[HTTP API with JWT Authentication](https://university.clay.com/docs/http-api-with-jwt-authentication-integration-overview)** action may be a better fit — it fetches a fresh token from a configurable endpoint and refreshes it automatically approximately every 55 minutes (available on Explorer and above plans).
 
+### Token-fetch HTTP API column skipping rows — "Bearer undefined" or 401 on new rows
+
+If you use one HTTP API column to fetch a bearer token and a second HTTP API column to call the API with that token, new rows may get 401 errors or produce `"Bearer undefined"` in the Authorization header — even though the token column appears to work on some rows.
+
+**Why this happens:** Clay determines when to run a column by looking at which other columns it references (its dependency edges). A column with **no column references** anywhere in its URL, headers, query parameters, or body is treated as having no upstream dependency — Clay won't automatically trigger it when new rows are added. If your token-fetch column is fully hardcoded (every value is a static string, with no `/ColumnName` chip inserted via the picker), it has no dependency edge and won't run automatically for new rows. Those rows end up with an empty token cell, and the downstream enrichment column sends `"Bearer undefined"` to the API.
+
+**Best fix — use HTTP API with JWT Authentication:**
+
+For APIs that issue short-lived bearer tokens from a dedicated token endpoint (including ZoomInfo), the recommended solution is the **[HTTP API with JWT Authentication](https://university.clay.com/docs/http-api-with-jwt-authentication-integration-overview)** action. It fetches and refreshes the token automatically (approximately every 55 minutes) without a separate column. See [HTTP API with JWT Authentication](https://university.clay.com/docs/http-api-with-jwt-authentication-integration-overview) for setup instructions, including step-by-step ZoomInfo configuration.
+
+**Alternative — shared token cache table (for auth flows JWT auth doesn't cover):**
+
+For auth flows not supported by the JWT action (for example, OAuth 2.0 `client_credentials` — see the JWT auth FAQ), centralize the token in a dedicated single-row table instead of fetching it per row:
+
+1. Create a new table in the same workbook with a single row. This table holds one shared, always-fresh token.
+2. Move your token-fetch HTTP API column into that table. Add a formula column (e.g., `fetched_at`) with the formula `moment().toISOString()` to record when the token was last fetched. Run the token column once manually to seed an initial value.
+3. Add both columns to a scheduled refresh: click `⛭` → **Run Settings** → **Re-run columns on a schedule** → **Only selected columns** → select both columns. Set the frequency to stay within your token's validity window. **Hourly scheduling requires an Enterprise plan** — on other plans, the most frequent option is Daily. See [Scheduled columns](scheduled-columns.md).
+4. In your main table, add a **Lookup Single Row in Other Table** column pointed at the token cache table. For the match condition, reference any upstream column from the row (even a simple formula column) rather than using a static value — this gives Clay a dependency edge so the lookup auto-runs for each new row. See [Lookup Rows](lookup-rows.md).
+5. Update your enrichment columns to build the Authorization header from the lookup result: `"Bearer " + ({{Token Cache Lookup}}?.records?.[0]?.fields?.["access_token"] || "")`.
+6. Add a run condition on your enrichment columns so they only fire when the cached token is present: `!!{{Token Cache Lookup}}?.records?.[0]?.fields?.["access_token"]`.
+
+**Why a separate cache table — not just scheduling the token column in the same table:** Scheduled re-runs fire for **every row** in the table, not just new ones. Scheduling a token-fetch column that lives in a table with thousands of rows would fetch a separate token for each row on every cycle — thousands of token requests per hour — risking rate-limit errors on the auth endpoint. A single-row cache table fetches one token per cycle regardless of how many rows your main table has.
+
 ### 401 error with Basic authentication — trailing newline in base64 credential
 
 If you're using HTTP Basic authentication and getting 401 "Unauthorized" responses — but the same credential works in Postman or another API client — the most likely cause is a trailing newline embedded in your base64-encoded credential.
