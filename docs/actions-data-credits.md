@@ -281,6 +281,30 @@ Credits are added to your balance immediately upon purchase. Top-ups do not chan
 
 **Note:** One-time top-ups have a **30% premium** on modern plans (**50% premium** on legacy plans). Top-up credits are subject to the 2× rollover cap: at your next renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap are dropped — including credits you purchased. For example, on a plan with 2,500 credits/month, your maximum balance at renewal is 5,000; if you buy a 15,000-credit top-up and don't spend it all before renewal, only up to 5,000 credits carry over. Check your current balance and upcoming renewal date before purchasing a large top-up. For regular needs, upgrading your Data Credits tier is more cost-effective.
 
+### Set up automatic Data Credit top-ups (beta)
+
+_Auto top-ups are currently in beta — contact [Clay support](https://app.clay.com) to request access._
+
+Auto top-ups let Clay automatically purchase Data Credits on your behalf whenever your balance falls to or below a threshold you configure. This keeps enrichments running without requiring you to monitor your balance manually.
+
+Auto top-ups apply to Data Credits only — Actions cannot be automatically replenished.
+
+**How to configure:**
+
+1.  Go to `Settings` → `Usage`.
+2.  Open the **Auto top-ups** settings.
+3.  Set the following options:
+    -   **Trigger below**: The credit balance at which a purchase fires. The minimum threshold is 15% of your monthly credit allotment.
+    -   **Buy each time (USD)**: The dollar amount to purchase each time the threshold is reached. Credits equivalent to this amount are added to your balance once payment succeeds.
+    -   **Daily limit in USD (optional)**: A cap on how much Clay can spend on auto top-ups in a single day.
+4.  Click **Turn on**.
+
+**Key behaviors:**
+
+-   **Immediate top-up on save**: If your balance is already at or below the threshold when you save your settings, Clay will attempt a top-up immediately — you do not need to trigger an enrichment first. Credits are available once payment succeeds.
+-   **Daily limit**: If a daily spending limit is set, auto top-ups stop for that day once the limit is reached, even if your balance remains below the threshold.
+-   **Cancel any time**: Turn off auto top-ups at any time from `Settings` → `Usage`.
+
 ### Downgrade or cancel your plan
 
 To downgrade your Clay workspace plan:
