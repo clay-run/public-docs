@@ -1066,17 +1066,8 @@ Two behaviors to keep in mind:
 Three things to check:
 
 -   **The signal falls outside the default lookback window.** `Lookup in Audiences` returns signal data for the past **90 days** by default via the **Signal data to include (days)** column setting. This lookback is independent of your audience's filter criteria — a contact can be correctly included in a "job change results" audience yet still show empty signal data in a lookup if the job-change event falls outside the configured window. To retrieve older signals, open the column settings and increase **Signal data to include (days)** to cover the relevant time range.
--   **The default 5-result count was reached.** `Lookup in Audiences` returns 5 signal results per record by default. If a company has more active signals than that, some may not appear — increase the result limit in the column settings (up to 50), or use `Get Audiences Activity` to retrieve a larger set of signal data.
--   **The signal hasn't fired for that record yet.** Signal results are written asynchronously and may not appear immediately after a signal run completes. If a signal should be recent but is still missing, open the signal's column header → `Edit column` and re-run the signal to refresh the data for that record.
-
-### Can I remove a source from the 'Add data' list in Audiences?
-
-No. Sources listed under **Add data** — including CSV imports and Clay table (local) sources — cannot be removed from the source list in Audiences. The source listing is retained for filtering and audit purposes.
-
-- **CSV imports:** No removal option is shown in the source list after import.
-- **Clay table (local) sources:** The source entry shows only a **View table** option — there is no disconnect or remove action.
-
-To remove the **records** that a source contributed to your Audience, archive them through a segment — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) below. For CSV sources specifically, see also [How do I replace a CSV import with updated data?](#how-do-i-replace-a-csv-import-with-updated-data).
+-   **The default 5-result count was reached.** `Lookup in Audiences` returns 5 signal results per record by default. If a contact has matched more than 5 signals within the lookback window, only the first 5 are returned. To increase the limit, open the column settings and raise the result count (up to 50).
+-   **The signal type wasn't included.** `Lookup in Audiences` includes all signal types by default. If you filtered by a specific signal type using **Activity types** and the signal you're looking for is of a different type, it won't be returned. Remove the activity type filter to return all signal types, then narrow from there.
 
 ### How do I remove records from an audience?
 
@@ -1113,6 +1104,20 @@ CSV imports are one-time and do not re-sync. To replace a CSV import with correc
 2.  After archiving, import the updated CSV file using the same steps as the original import. Clay will create new records from the updated file.
 
 **Note:** Archiving removes records from all audience segments and enrichments. If those records existed in other sources (for example, also synced from Salesforce), they will remain in Audiences through those other sources even after being archived from the CSV source.
+
+### I accidentally imported records with bad or missing data — how do I clean up my Audiences?
+
+If you imported people or companies you didn't intend to keep — for example, records with mostly empty fields from a test import or a data experiment — you can clean up by removing the records and deleting any custom fields the import created.
+
+**Remove the imported records**
+
+Archive the records to remove them from all audience segments and enrichments. To target just the records from a specific import, create a segment with an **Origin source** filter set to the import's source name, then click **⋮** next to the segment name and select **Archive records**. See [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) for full steps.
+
+**Remove the custom fields the import created**
+
+If the import added new fields to your Audiences that you no longer need, you can delete them from the **Data Hub**: go to **Data Hub → Fields**, click the field you want to remove, then click **Delete field** at the bottom of the sidebar. See [How do I delete a custom field from Audiences?](#how-do-i-delete-a-custom-field-from-audiences) for full steps. Built-in system fields (such as Email and LinkedIn URL) cannot be deleted — if you want to declutter your column view without deleting a field, click the column header and select **Hide**.
+
+**There is no self-serve reset option.** There is no single action to restore your Audiences workspace to a blank state. To undo a bad import, archive the records and delete any custom fields it created using the steps above. For a large-scale cleanup, contact Clay support.
 
 ### How do I archive records that no longer match my Snowflake import query?
 
