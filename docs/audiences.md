@@ -1,12 +1,14 @@
 ---
 title: Audiences
-description: "Clay Audiences is available on Growth and Enterprise plans. Launch workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above. Trial workspaces do not have access to Audiences."
+description: "Clay Audiences is available on Growth and Enterprise plans (including legacy Enterprise). Launch workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above. Legacy non-Enterprise plans (such as legacy Pro) and Trial workspaces do not have access to Audiences."
 last_synced: 2026-08-20T01:53:27.941Z
 ---
 
 # Audiences
 
 **Plan availability:** Clay Audiences is available on **Growth** and **Enterprise** plans (including legacy Enterprise). Launch workspaces have access to core Audiences features — importing via CSV, people/company search, and Clay table sends — but connecting a CRM or data warehouse as a data source requires **Growth or above**. Free, Trial, and legacy non-Enterprise plan workspaces do not have access to Audiences. Growth plans can sync up to 250,000 CRM/DWH records; Enterprise plans support up to 25,000,000 records.
+
+**Identifying your plan type:** Clay introduced updated pricing in 2026. Workspaces on a plan from before that update may be on a legacy plan — identifiable by a date-based name visible in **Settings → Billing** (for example, a plan shown as "proApril2023" is a legacy Pro plan). Legacy Enterprise plans (with names like "enterpriseApril2023") do include Audiences. Other legacy plans — legacy Pro, legacy Starter, and similar — do not. To access Audiences from a legacy non-Enterprise plan, upgrade to a modern Launch, Growth, or Enterprise plan. Contact your Growth Strategist or go to **Settings → Billing** to explore upgrade options.
 
 Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
 
@@ -650,6 +652,18 @@ To estimate API calls for initial export, divide record count by 10,000 and comp
 **Note:** CRM export is admin-only. Enrichments and signals follow standard Clay table pricing.
 
 ## FAQs
+
+### Why don't I see Audiences in my workspace sidebar?
+
+Audiences does not appear in the left sidebar when your workspace is on a plan that does not include it. The most common cause is a legacy non-Enterprise plan.
+
+Audiences is available on all modern plans (Launch, Growth, Enterprise) and on legacy Enterprise plans. Legacy Pro, legacy Starter, and other legacy non-Enterprise plans do not include Audiences.
+
+To check your plan, go to **Settings → Billing**. If your plan name includes a date (for example, "proApril2023"), your workspace is on a legacy plan. Joining the workspace beta program does not grant Audiences access — plan tier is the gate, not beta enrollment.
+
+To access Audiences from a legacy non-Enterprise plan, upgrade to a modern plan. Contact your Growth Strategist or use the upgrade options in **Settings → Billing**.
+
+If your workspace is already on a qualifying modern or legacy Enterprise plan and Audiences is still not visible, contact Clay support — access may need to be manually enabled.
 
 ### When should I use Audiences vs. a table?
 
