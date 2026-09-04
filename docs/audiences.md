@@ -1084,70 +1084,62 @@ Two behaviors to keep in mind:
 Three things to check:
 
 -   **The signal falls outside the default lookback window.** `Lookup in Audiences` returns signal data for the past **90 days** by default via the **Signal data to include (days)** column setting. This lookback is independent of your audience's filter criteria — a contact can be correctly included in a "job change results" audience yet still show empty signal data in a lookup if the job-change event falls outside the configured window. To retrieve older signals, open the column settings and increase **Signal data to include (days)** to cover the relevant time range.
--   **The default 5-result count was reached.** `Lookup in Audiences` returns 5 signal results per record by default. If a contact has more than 5 signal events of the type you're looking for, only 5 are returned. Increase the result limit in the column settings (up to 50).
--   **The signal type isn't included.** By default, `Lookup in Audiences` returns all signal types. If you've filtered by **Activity types** in the column settings, only the selected types are returned — make sure the type you're looking for is included.
+-   **The default 5-result count was reached.** `Lookup in Audiences` returns 5 signal results per record by default. If a company has more active signals than that, some may not appear — increase the result limit in the column settings (up to 50), or use `Get Audiences Activity` to retrieve a larger set of signal data.
+-   **The signal hasn't fired for that record yet.** Signal results are written asynchronously and may not appear immediately after a signal run completes. If a signal should be recent but is still missing, open the signal's column header → `Edit column` and re-run the signal to refresh the data for that record.
 
 ### Can I remove a source from the 'Add data' list in Audiences?
 
-The 'Add data' sidebar displays all integration types available in your workspace — not just sources you've already connected. There is no option to remove or hide a source type from this list. If a source (for example, Databricks) appears in the sidebar but you don't use it, it will continue to appear as an option.
+No. Sources listed under **Add data** — including CSV imports and Clay table (local) sources — cannot be removed from the source list in Audiences. The source listing is retained for filtering and audit purposes.
 
-For CSV sources specifically: CSV source entries remain listed in the **Sources** tab after import. There is no self-serve option to remove or disconnect a CSV source listing — it is retained for filtering and audit purposes.
+- **CSV imports:** No removal option is shown in the source list after import.
+- **Clay table (local) sources:** The source entry shows only a **View table** option — there is no disconnect or remove action.
+
+To remove the **records** that a source contributed to your Audience, archive them through a segment — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) below. For CSV sources specifically, see also [How do I replace a CSV import with updated data?](#how-do-i-replace-a-csv-import-with-updated-data).
 
 ### How do I remove records from an audience?
 
-Records can be **archived** from Audiences — this removes them from all segments and prevents them from being counted, enriched, or exported, but does not delete them permanently. Archived records can be restored if needed.
+The People and Companies views in Audiences do not have per-row checkboxes or a Delete button for individual records. To remove people or companies from your audience, you archive them through a segment filter. **Admin access is required** — the option is not visible to Members or Viewers.
 
-**To archive a single record:**
+1.  Navigate to **People** or **Companies** in the left sidebar.
+2.  Open or create a segment that isolates only the records you want to remove:
+    -   **From All People or All Companies:** click **Criteria**, apply a filter (for example, **Origin source** to target a specific import, or **Name → is not empty** to target all records), then click **+ Create Audience** in the toolbar to save the filtered set as a new named segment.
+    -   **From an existing audience:** open the segment, apply or update its filters, and click **Save filters** to make sure the segment reflects exactly the records you want to remove.
+3.  Once the segment shows the correct records, click the **⋮** (three-dot) menu next to the segment name.
+4.  Select **Archive records**.
 
-1.  Click on a record's name in the Audiences view to open its detail panel.
-2.  Click the **⋮** (three-dot) menu in the top right of the panel.
-3.  Select **Archive**.
-4.  Confirm by clicking **Archive** in the dialog.
-
-**To archive many records at once:**
-
-1.  Build a segment (or use an existing one) that surfaces the records you want to archive — for example, filter by source, enrich status, or a custom field value.
-2.  Click the **⋮** (three-dot) menu next to the segment name in the sidebar.
-3.  Select **Archive records**.
-4.  Confirm the action. Clay archives all records currently in that segment.
-
-Archived records are moved to the **Archived** view (accessible from the left sidebar). They no longer appear in **All People** or **All Companies** and are excluded from all active segments. Archiving is permanent in the sense that the records remain in the Archived view — there is no self-serve option to fully delete records from Audiences. To restore an archived record, open the **Archived** view, click the record, and select **Restore** from the ⋮ menu.
-
-**Note:** Archiving a record in Audiences does not affect the corresponding record in Salesforce or any other connected CRM. It only affects the record's status in Clay.
+Archived records are removed from all audience segments and excluded from future enrichments and workflows. The records are not permanently deleted — they can be viewed and restored at any time from the **Archived** section in the left sidebar. See [What happens when I archive a record in Audiences?](#what-happens-when-i-archive-a-record-in-audiences) for full details.
 
 ### What happens when I archive a record in Audiences?
 
-When you archive an Audience record:
+Archiving a record is a **soft delete** — the record is not permanently removed from your Audiences workspace. When you archive a record:
 
--   The record is removed from **All People** (or **All Companies**) and excluded from all segments.
--   It no longer receives enrichments or signals.
--   It is no longer exported to Salesforce or included in ad audiences.
--   It moves to the **Archived** view in the left sidebar, where it can be restored.
--   The underlying data is retained — archiving is a soft delete. There is no hard-delete option from the UI.
+-   It is **excluded from all audience segments and workflows** — it will not appear in segment filter results or trigger enrichment automations.
+-   It can be viewed in the **Archived** section in the left sidebar.
+-   It can be **restored at any time** from the Archived section.
 
-Archiving does **not** remove the record from your connected CRM (Salesforce, HubSpot). It only affects the record's presence in Audiences.
+**Important:** Re-importing a record with the same identifiers (email, domain, or external IDs) **will not revive an archived record** — the incoming import is silently skipped and the record stays archived. To bring an archived record back, restore it manually: navigate to **People** or **Companies** in the left sidebar → click **Archived** → find the record → click **Restore**. You can then re-import or re-sync data for that record if needed.
 
-If a record is archived and then re-imported (for example, because it re-enters a Snowflake import query or a CSV re-import), Clay treats the incoming record as new and creates a fresh Audiences entry — it does not automatically restore the archived version.
+**There is no self-serve option to permanently delete records from Audiences.** Archiving is the only available removal method. If your use case requires permanent removal, contact Clay support.
+
+**Note on lookup timing:** After archiving a record, there is a brief processing delay before the change is reflected in `Lookup in Audiences` results. Running a lookup immediately after archiving may still return the archived record until the change propagates.
 
 ### How do I replace a CSV import with updated data?
 
-CSV imports are one-time and do not re-sync automatically. To replace the data from a previous CSV import with a corrected or updated file:
+CSV imports are one-time and do not re-sync. To replace a CSV import with corrected or updated data:
 
-1.  Build a segment that filters to records where the **Person source** (or Company source) is the CSV import you want to replace. Use the **Person source** filter and select the CSV import by name.
-2.  Archive all records in that segment — click **⋮** next to the segment name → **Archive records** → **Confirm**. This removes those records from your active audience.
-3.  Return to **Importing data** and re-import the corrected CSV via **Add data** → **Add Source** → **CSV**. The new import creates fresh records without the old data.
+1.  Archive the records from the original CSV import — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above. Use the **Origin source** filter to isolate records from that specific import.
+2.  After archiving, import the updated CSV file using the same steps as the original import. Clay will create new records from the updated file.
 
-**Note:** If the corrected CSV contains records with the same email addresses (for People) or domains (for Companies) as records from other, non-archived sources, entity resolution may merge the new CSV records with existing Audience records from those sources. This is expected deduplication behavior — the merged record will reflect data from both sources according to the conflict resolution priority order.
+**Note:** Archiving removes records from all audience segments and enrichments. If those records existed in other sources (for example, also synced from Salesforce), they will remain in Audiences through those other sources even after being archived from the CSV source.
 
 ### How do I archive records that no longer match my Snowflake import query?
 
-When a record is no longer returned by your Snowflake import query — either because it was physically removed from the underlying Snowflake table, or because you updated your SQL to exclude it — Clay marks the record's Snowflake source association as **Deleted in source** during the next full sync. The Audience record itself is **not removed** — it stays in your audience with that status.
+When a record is no longer returned by your Snowflake SQL query — because it was removed from Snowflake or you updated your query to exclude it — Clay marks the record's Snowflake source association as **Deleted in source** during the next full sync. The Audience record itself is **not removed**.
 
-To archive records marked **Deleted in source** from a specific Snowflake import:
+To clean up these records:
 
-1.  In Audiences, click **+ Filter** and add a filter: **Origin source → is → [your Snowflake import name]**.
-2.  Add a second filter: **Source status → is → Deleted in source**.
-3.  Save this as a segment (for example, "Deleted Snowflake records").
-4.  Click the **⋮** menu next to the segment name → **Archive records** → **Confirm**.
+1.  In your audience, add a filter for **Snowflake source status → is → Deleted in source** (or filter on the specific Snowflake source name).
+2.  Save that filter set as a new segment.
+3.  From the segment, click the **⋮** menu → **Archive records** to remove them from your Audience.
 
-This archives only the records that were previously imported from that Snowflake source and are no longer returned by its query, leaving all other Audience records intact.
+If the same records exist in other sources (Salesforce, HubSpot, CSV), archiving will remove them from those sources' audience contributions as well. Archived records can be restored from the **Archived** section in the sidebar if needed.
