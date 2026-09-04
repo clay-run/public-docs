@@ -1013,6 +1013,8 @@ Two approaches that do not apply to the Lead → Company case:
 
 To filter your People audience by company attributes for Lead records, map company-related fields directly from the Lead object in your Salesforce import field mapping — for example, the Lead's built-in **Company**, **Industry**, or **Annual Revenue** text fields. Mapped Lead fields are available as People audience filter options immediately after the next sync.
 
+**Account IDs empty for other sources:** Empty Account IDs is not limited to Salesforce Leads. Contacts imported via **CSV** will also have an empty Account IDs path if you did not configure the **Company association** field during the CSV import (see [Importing from CSV](#importing-from-csv)). When you open an Audiences Record cell in your table and see **Account IDs** showing zero items — the data tree displays `[0]` as the item count — that contact has no linked company record in Audiences. No second `Lookup in Audiences` on Companies will return data for those rows. To get company information for contacts without a linked account, use a separate Clay enrichment column that looks up company data by domain or email.
+
 ### Why does filtering my People audience by deal attributes return fewer contacts than expected?
 
 When you filter a People audience by opportunity or deal attributes (for example, Stage, Amount, or a custom deal field), Clay only includes contacts that are **directly linked to the matching deal via OpportunityContactRole** in Salesforce — not all contacts at the account that owns the deal.
