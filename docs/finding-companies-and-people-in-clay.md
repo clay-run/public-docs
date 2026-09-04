@@ -273,6 +273,30 @@ The exclusion options above remove matched records before they enter your table.
 
 This pattern is especially useful when your suppression list changes over time (update the lookup table and the condition reflects the new list automatically), when you're pulling contacts from multiple sources and want a single suppression layer, or when you need to exclude records discovered after the initial search.
 
+### Suppressing a specific enriched value (e.g., a bad phone number)
+
+Data providers occasionally return an incorrect value for the same lookup — for example, a phone number that belongs to the wrong person and keeps appearing across multiple rows. You can prevent that value from reaching downstream steps without removing the row or re-running your search.
+
+**Option 1 — Formula column (one-off fix)**
+
+Add a **Formula column** immediately after your phone enrichment column. Use a conditional formula to replace the known-bad value with a blank:
+
+```
+{{Mobile Phone}} == "+49 173 6246282" ? "" : {{Mobile Phone}}
+```
+
+Use this clean formula column in any downstream step (CRM push, dialer export, sequencer) instead of the raw enrichment output. The formula returns the enriched value unchanged for every other row. Formula columns have no credit cost.
+
+**Option 2 — Blocked values table + lookup (ongoing suppression list)**
+
+When you have multiple bad values to suppress, or want to add to the list over time:
+
+1. Create a new Clay table — for example, "Blocked Phone Numbers" — with a single column containing the values to suppress, one per row.
+2. In your enrichment table, add a **Lookup single row in other table** column. Set `Table to search` to the blocked numbers table, `Target column` to the phone number column, and `Row value` to your enriched phone column.
+3. On each downstream column you want to gate — for example, a CRM export or dialer push — open **Run settings → Only run if** and add a condition such as `{{Blocked Phone Lookup}} is empty`. The column skips any row where the lookup found a match.
+
+Adding new numbers to the blocked table automatically affects the next run with no reconfiguration needed. No credits are consumed on rows where the run condition is not met.
+
 ### Excluding people at specific companies (e.g., current customers)
 
 The **Exclude People** filter in a Find People source only removes specific individuals by their professional profile URL — it does not accept a list of companies. To filter out everyone who works at your current customers, competitors, or other off-limits organizations, use one of two approaches.
