@@ -917,6 +917,38 @@ Once the toggle is on, Clay will create new Accounts or Contacts in Salesforce f
 
 To track which contacts in Salesforce came from a specific Audience enrichment, create a custom Audience text field (for example, an "Audience Source" field set to a label like `"Q2-enrichment"`), and map it to a Salesforce field (a custom field, campaign tag, or lead status) in your export settings. You can then filter on that value directly in Salesforce.
 
+### How do I source contacts from a company segment and write them to Salesforce?
+
+If you have a Companies Audience segment and want to find people at those accounts and add them to Salesforce as Contacts, start by testing the workflow in a Clay table before enabling the Audiences export sync.
+
+**Step 1: Find people at your target companies**
+
+1.  Open your Companies Audience and open (or create) the segment for the accounts you want to target.
+2.  Click the **⋮** menu next to the segment name and select **Find people from this list** — or run a standalone **Find People** source from a workbook and set **Target companies** to your segment.
+3.  Apply persona filters: seniority, job title, function, or geography.
+4.  In the final step of the wizard, click **Import to Table** to create a Clay table. Working in a table lets you review and enrich the sourced contacts before committing anything to Salesforce.
+
+**Step 2: Enrich the contacts in the table**
+
+Add enrichment columns for the fields you need — typically name, title, LinkedIn URL, validated work email, phone, and Salesforce Account ID (to link each new Contact to the correct Account in Salesforce).
+
+**Step 3: Check whether each contact already exists in Salesforce**
+
+Add a **Salesforce Lookup record** action column and set **Salesforce object** to **Contact**. Use **work email** as the primary match field — it is the most reliable identifier for Contact deduplication. For contacts where email is missing, add a second lookup column using LinkedIn URL, or name plus Account ID, as a fallback.
+
+**Step 4: Write back to Salesforce using conditional columns**
+
+Add two action columns, each with a run condition:
+
+-   **Create record** (Salesforce object: Contact) — add a run condition so it fires only when the Lookup column returns no result. In the field mapping, include the **Salesforce Account ID** from the company record to associate the new Contact with the correct Account.
+-   **Update record** — add a run condition so it fires only when the Lookup column returns a match. Map only the fields you want to keep current.
+
+Keep **Create record** and **Update record** as separate columns rather than a single Upsert action. Separate columns make it easier to review results and measure how many records were net-new versus existing contacts.
+
+**Graduating to Audiences export sync**
+
+Once the table-based workflow is validated, you can move the write-back into Audiences using field mappings and the **Create new Salesforce records** toggle — see [How do I create new Salesforce Accounts or Contacts from an Audience?](#how-do-i-create-new-salesforce-accounts-or-contacts-from-an-audience) and [Writing back to your CRM](#writing-back-to-your-crm) for setup details. The table-based approach is useful for testing because it writes records immediately, while the Audiences export sync runs on a fixed schedule.
+
 ### How do I write enriched fields back to existing Salesforce records from a bulk enrichment?
 
 Add a **Salesforce Update Record** action column directly inside your bulk enrichment table. This pushes enriched values to matching Salesforce records in the same run, without waiting for the Audiences export cycle:
@@ -1066,17 +1098,16 @@ Two behaviors to keep in mind:
 Three things to check:
 
 -   **The signal falls outside the default lookback window.** `Lookup in Audiences` returns signal data for the past **90 days** by default via the **Signal data to include (days)** column setting. This lookback is independent of your audience's filter criteria — a contact can be correctly included in a "job change results" audience yet still show empty signal data in a lookup if the job-change event falls outside the configured window. To retrieve older signals, open the column settings and increase **Signal data to include (days)** to cover the relevant time range.
--   **The default 5-result count was reached.** `Lookup in Audiences` returns 5 signal results per record by default. If a company has more active signals than that, some may not appear — increase the result limit in the column settings (up to 50), or use `Get Audiences Activity` to retrieve a larger set of signal data.
--   **The signal hasn't fired for that record yet.** Signal results are written asynchronously and may not appear immediately after a signal run completes. If a signal should be recent but is still missing, open the signal's column header → `Edit column` and re-run the signal to refresh the data for that record.
+-   **The default 5-result count was reached.** `Lookup in Audiences` returns 5 signal results per record by default. If a contact has fired more than 5 signal events in the lookback window, only the 5 most recent are returned. Increase the result limit in column settings (up to 50) or use `Get Audiences Activity` for higher limits.
+-   **The signal type hasn't fired for this record yet.** A contact appearing in a segment doesn't guarantee that the signal has run on that record. Open the record detail view and check the **Activity** tab to confirm the signal has fired.
 
-### Can I remove a source from the 'Add data' list in Audiences?
+### What is the Clay People ID field, and can I map it to Salesforce?
 
-No. Sources listed under **Add data** — including CSV imports and Clay table (local) sources — cannot be removed from the source list in Audiences. The source listing is retained for filtering and audit purposes.
+The **Clay People ID** is an internal Clay identifier assigned to every People record in Audiences. It uniquely identifies the record within Clay and is used when writing back to Audiences from a Clay table (for example, as the lookup key in `Update Audiences Record`).
 
-- **CSV imports:** No removal option is shown in the source list after import.
-- **Clay table (local) sources:** The source entry shows only a **View table** option — there is no disconnect or remove action.
+**To map the Clay People ID to Salesforce:** Add a custom text field to the Salesforce Contact object (for example, `Clay_People_ID__c`), then map it in your Audiences export settings with a **Write if empty** rule. Once the next export runs, the Clay People ID will be populated on matching Salesforce Contacts. This makes it easy to reference the Clay record from Salesforce and to look up records in Audiences using the ID as a stable key.
 
-To remove the **records** that a source contributed to your Audience, archive them through a segment — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) below. For CSV sources specifically, see also [How do I replace a CSV import with updated data?](#how-do-i-replace-a-csv-import-with-updated-data).
+**Note:** The Clay People ID is stable — it does not change when the underlying record is enriched, merged, or updated. It is assigned at record creation and persists for the lifetime of the record in Audiences.
 
 ### How do I remove records from an audience?
 
