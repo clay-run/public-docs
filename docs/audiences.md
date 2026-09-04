@@ -755,6 +755,25 @@ If an existing record had a value for the field in Salesforce before you added t
 
 **To fill in missing data immediately for specific records:** In Salesforce, make a small change to any field on the affected accounts or contacts (for example, add and remove a space in a text field). This updates `SystemModstamp` and Clay will pick up those records — with all their current field values including the newly mapped field — on the next incremental sync.
 
+### I removed and re-added my Salesforce source in Audiences and my field mappings are gone — how do I restore them?
+
+Field mappings cannot be recovered once a Salesforce import is removed. The mappings are tied to the specific import configuration — when that import is deleted and a new one is created, the previous mappings are not retained. There is no restore or mapping-history option, so you will need to add the fields back manually.
+
+**To re-add your field mappings:**
+
+1.  Click **Add data** in the top toolbar.
+2.  Find your Salesforce integration and click the **⋮** (three-dot) menu next to it.
+3.  Select **Settings**, then open the relevant object import (for example, Contacts or Accounts).
+4.  In the field-mapping section, add each field you previously had configured.
+5.  Click **Save and review** → **Confirm**.
+
+The fields will appear as filter options after the next incremental sync.
+
+**To avoid this in the future:** If your Salesforce connection has a permissions issue, do not remove the Salesforce source from Audiences — removing it deletes the import configuration and field mappings along with it. Instead:
+
+-   Fix the permissions directly in Salesforce — update the connected user's profile or permission sets in Salesforce Setup.
+-   If the connection itself needs to be refreshed, use **Reconnect** on your Salesforce connection under **Settings → Connections** in Clay. This reauthorizes the OAuth credential without affecting your Audiences import configurations or field mappings.
+
 ### Can I see when the weekly full sync is scheduled, or trigger it manually?
 
 No. The Clay UI shows only that the Salesforce full sync runs weekly — it does not display the exact day or time the next full sync is scheduled for your workspace. The timing is assigned automatically per workspace and is not shown in the interface.
