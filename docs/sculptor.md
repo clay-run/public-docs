@@ -221,6 +221,18 @@ Copy that description, open Sculptor on the new workflow, and paste it in as you
 
 You can also use the Clay CLI to extract a workflow description without opening the Sculptor chat panel directly — ask the CLI to describe your workflow and use the output as build instructions in the same way.
 
+### Can I use Sculptor to extract or transform data from an existing enrichment column?
+
+Yes. Sculptor can create new columns that extract specific values or counts from your existing enrichment results, including nested or array-type fields returned by API integrations like Cognism.
+
+To use Sculptor to transform existing column data:
+
+1. **Open Sculptor from within your table.** Click the `Chat with Sculptor` button in the top-right of your table.
+2. **Describe what you want to extract.** For example: *"Extract the number of locations from the Cognism location column into a new column as a number"* or *"Pull the location names from the Cognism location column into a comma-separated list."*
+3. **Specify your preferred output format.** You can tell Sculptor exactly how you want the result formatted — as a number, a comma-separated list, or plain text.
+
+Sculptor creates an AI column or formula column to perform the transformation. The proposed column appears in [sandbox mode](#sandbox-mode) so you can review it before publishing to your full table.
+
 ### What table sources does Sculptor connect with?
 
 Sculptor works with these sources:
