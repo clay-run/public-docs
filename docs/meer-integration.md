@@ -2,7 +2,7 @@
 title: Meer integration
 description: Screen phone numbers against national do-not-call registries before
   initiating outbound calls.
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-09-04T19:10:36.755Z
 ---
 
 # Meer integration
@@ -26,7 +26,7 @@ With this integration, you can check phone numbers against regularly updated DNC
 
 ### `Action` Screen phone number against DNC registries
 
-Check if a phone number appears in National Do Not Call registries. Currently supports US (National DNC Registry), UK (TPS/CTPS), Germany ([Robinsonliste.de](http://robinsonliste.de/)), Ireland ([comreg.ie](http://comreg.ie/)), Spain ([Lista Robinson](http://listarobinson.es)), Indiana (Indiana No-Call List), Florida (Florida Do Not Call Program), Massachusetts (Massachusetts DNC Registry), and Colorado (Colorado No-Call List), refreshed weekly. Returns DNC status and source information if found.
+Check if a phone number appears in National Do Not Call registries. Currently supports US (National DNC Registry), UK (TPS/CTPS), Germany ([Robinsonliste.de](http://robinsonliste.de/)), Ireland ([comreg.ie](http://comreg.ie/)), Spain ([Lista Robinson](http://listarobinson.es)), Australia (Do Not Call Register), New Zealand, Indiana (Indiana No-Call List), Florida (Florida Do Not Call Program), Massachusetts (Massachusetts DNC Registry), Colorado (Colorado No-Call List), Pennsylvania (Do Not Call List), Texas (No Call List), and Wyoming (Do Not Call), refreshed weekly. Returns DNC status and source information if found.
 
 **Inputs**
 
