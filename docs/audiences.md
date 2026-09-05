@@ -917,6 +917,38 @@ Once the toggle is on, Clay will create new Accounts or Contacts in Salesforce f
 
 To track which contacts in Salesforce came from a specific Audience enrichment, create a custom Audience text field (for example, an "Audience Source" field set to a label like `"Q2-enrichment"`), and map it to a Salesforce field (a custom field, campaign tag, or lead status) in your export settings. You can then filter on that value directly in Salesforce.
 
+### How do I source contacts from a company segment and write them to Salesforce?
+
+If you have a Companies Audience segment and want to find people at those accounts and add them to Salesforce as Contacts, start by testing the workflow in a Clay table before enabling the Audiences export sync.
+
+**Step 1: Find people at your target companies**
+
+1.  Open your Companies Audience and open (or create) the segment for the accounts you want to target.
+2.  Click the **⋮** menu next to the segment name and select **Find people from this list** — or run a standalone **Find People** source from a workbook and set **Target companies** to your segment.
+3.  Apply persona filters: seniority, job title, function, or geography.
+4.  In the final step of the wizard, click **Import to Table** to create a Clay table. Working in a table lets you review and enrich the sourced contacts before committing anything to Salesforce.
+
+**Step 2: Enrich the contacts in the table**
+
+Add enrichment columns for the fields you need — typically name, title, professional profile URL, validated work email, phone, and Salesforce Account ID (to link each new Contact to the correct Account in Salesforce).
+
+**Step 3: Check whether each contact already exists in Salesforce**
+
+Add a **Salesforce Lookup record** action column and set **Salesforce object** to **Contact**. Use **work email** as the primary match field — it is the most reliable identifier for Contact deduplication. For contacts where email is missing, add a second lookup column using professional profile URL, or name plus Account ID, as a fallback.
+
+**Step 4: Write back to Salesforce using conditional columns**
+
+Add two action columns, each with a run condition:
+
+-   **Create record** (Salesforce object: Contact) — add a run condition so it fires only when the Lookup column returns no result. In the field mapping, include the **Salesforce Account ID** from the company record to associate the new Contact with the correct Account.
+-   **Update record** — add a run condition so it fires only when the Lookup column returns a match. Map only the fields you want to keep current.
+
+Keep **Create record** and **Update record** as separate columns rather than a single Upsert action. Separate columns make it easier to review results and measure how many records were net-new versus existing contacts.
+
+**Graduating to Audiences export sync**
+
+Once the table-based workflow is validated, you can move the write-back into Audiences using field mappings and the **Create new Salesforce records** toggle — see [How do I create new Salesforce Accounts or Contacts from an Audience?](#how-do-i-create-new-salesforce-accounts-or-contacts-from-an-audience) and [Writing back to your CRM](#writing-back-to-your-crm) for setup details. The table-based approach is useful for testing because it writes records immediately, while the Audiences export sync runs on a fixed schedule.
+
 ### How do I write enriched fields back to existing Salesforce records from a bulk enrichment?
 
 Add a **Salesforce Update Record** action column directly inside your bulk enrichment table. This pushes enriched values to matching Salesforce records in the same run, without waiting for the Audiences export cycle:
