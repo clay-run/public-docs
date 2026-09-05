@@ -575,6 +575,20 @@ Smartlead assigns leads into one of the following categories:
 
 Replies are available in the `Replies` tab of your campaign and in the campaign events table. You can reply directly from Clay using the `Reply to lead` enrichment in the campaign events table.
 
+**Forwarding replies to a rep's real inbox from a SmartSender Gmail account**
+
+If your SmartSender accounts are Gmail-based, you can route all incoming messages from the sending mailbox to the rep's real inbox directly through Gmail settings — no Clay table setup required. This method forwards every message received by the SmartSender mailbox (not just campaign replies) and the rep does not need a Clay seat.
+
+1. Sign in to the SmartSender Gmail mailbox.
+2. Open **Settings** → **See all settings**.
+3. Go to **Forwarding and POP/IMAP**.
+4. Click **Add a forwarding address** and enter the rep's email address.
+5. Complete verification using the confirmation email sent to the rep.
+6. Return to Gmail Settings and select **Forward a copy of incoming mail to** the rep's address.
+7. Save the changes.
+
+If you want Clay to forward only `EMAIL_REPLY` campaign events (rather than all messages in the mailbox), use the **Forward lead email in campaign** action in your Campaign Events table instead. See the [Campaign events table](#campaign-events-table) section for setup details.
+
 ### Why does the reply body show HTML instead of plain text?
 
 This is expected. When a lead replies using an HTML-capable email client like Microsoft Outlook, the reply arrives in HTML format. The `Reply Message` field in your campaign events table includes two sub-fields:
