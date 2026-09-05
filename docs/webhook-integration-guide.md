@@ -135,10 +135,16 @@ If you clear the filters and the expected rows still don't appear, see [Why aren
 
 If your webhook isn't creating rows — even on a brand-new webhook that has never received a submission — check these common causes:
 
-1. **Missing `Content-Type: application/json` header** — Clay requires this header on every request. Without it, Clay rejects the request with a `400 Bad Request` error and no row is created. Make sure every request includes:
+1. **Missing or unsupported `Content-Type` header** — Clay's webhook endpoint accepts two JSON content types: `application/json` and `application/vnd.api+json` (the JSON:API media type used by platforms such as Outreach). Any other content type causes the request body to be silently ignored — the request is accepted but the row arrives with empty data. Make sure every request uses one of these accepted headers:
 
    ```
    -H "Content-Type: application/json"
+   ```
+
+   For JSON:API senders (such as Outreach), use:
+
+   ```
+   -H "Content-Type: application/vnd.api+json"
    ```
 
 2. **Incorrect URL** — Confirm you copied the full webhook endpoint URL from the **Monitor webhook** section in your table source settings (not a partial URL or the cURL command itself).
