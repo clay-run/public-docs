@@ -389,6 +389,8 @@ The operators available when building a filter depend on the field's data type, 
 
 **Note:** A field that appears numeric may have been imported as text (shown by a T icon rather than #). Text fields — such as "Annual revenue range" synced from Salesforce as a string — will not show range operators. To use range filtering on a field, contact Clay support to have the field's type changed to Number (#). Range operators will then appear when you add a filter on that field.
 
+**Note: Why Audiences filters use text-based matching instead of structured categories.** If you are accustomed to filtering by Industry in Find Companies — which offers a dropdown of structured industry categories and subindustries to select from — the text-based filter in Audiences segments may feel limited. The two tools serve different purposes: Find Companies is built for prospecting discovery and uses a curated taxonomy of industry categories; Audiences segment filters are designed to quickly filter over data you have already imported (from your CRM, data warehouse, or saved searches) and must scale to millions of records, so they use text-based operators (`contains`, `does not contain`, `equals`, `starts with`) rather than enumerated category pickers. To build a company list using structured industry categories, use Find Companies first, then [save those results to your Audiences](#importing-from-people-and-companies-search). You can then use Audiences segment filters for ongoing segmentation based on CRM fields, enrichment data, and signals.
+
 ## Finding people from a Companies Audience
 
 Once you have a Companies Audience segment, you can run a people search scoped strictly to the companies in that segment — without needing a separate company table.
