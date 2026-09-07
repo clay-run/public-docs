@@ -824,17 +824,56 @@ If you need to change the default connection, ask a workspace admin to:
 
 To change your own role to admin, ask an existing workspace admin to update it in `Settings` → `Team`.
 
+## How do I install the Clay Salesforce package to get the Launch Enrichment button on records?
+
+The Clay Salesforce managed package adds a **Launch Enrichment** button to Lead, Contact, and Account records in Salesforce. Clicking the button sends that record to Clay for enrichment and writes the results back to Salesforce automatically. Available on **Enterprise plans**.
+
+**Step 1: Install the package**
+
+In Salesforce, navigate to the Clay package installation URL and install it. When prompted, install for **Admins Only** (recommended). Contact your Clay account team or Clay support for the installation link.
+
+**Step 2: Assign permission sets** (if you installed for Admins Only)
+
+After installation, assign the appropriate permission sets to each Salesforce user who needs to use the package:
+
+-   **Enrichment Menu Usage** — allows users to click the Launch Enrichment button and trigger existing workflows.
+-   **Enrichment Menu Management** — allows users to create and configure new enrichment workflows.
+
+Users who only need to click the button need **Enrichment Menu Usage**. Users who set up or manage enrichment workflows need **Enrichment Menu Management**.
+
+**Step 3: Create a Clay table with a webhook source**
+
+In Clay, create a new table using **Import data from Webhook** as the source. Keep the webhook URL — you'll need it in the next step.
+
+**Step 4: Configure an Enrichment Menu in Salesforce**
+
+In Salesforce, open the App Launcher and search for **Enrichment Menus**. Create a new Enrichment Menu record with the following fields:
+
+-   **Enrichment Menu Name** — an internal name for this menu record in Salesforce.
+-   **Clay Table URL** — the webhook URL from the Clay table you created in Step 3.
+-   **User Label** — the action name that Salesforce users will see when they click the button (for example, "Enrich Contact").
+-   **Supported Objects** — the Salesforce object types where the button will appear (Accounts, Contacts, Leads, or a combination).
+
+**Step 5: Add the Launch Enrichment button to page layouts**
+
+1.  In Salesforce, click the gear icon (⚙️) and select **Set up for current app**.
+2.  Go to **Object Manager** and select the object type you configured (Account, Contact, or Lead).
+3.  Select **Page Layouts** and open the layout you want to update.
+4.  Drag the **Launch Enrichment** button into the **Salesforce Mobile and Lightning Actions** section.
+5.  Save the layout.
+
+The **Launch Enrichment** button now appears on records of that object type. When a Salesforce user clicks it, the record is sent to your Clay webhook table for enrichment, and results are written back to Salesforce.
+
 ## Why aren't enrichment notifications being sent after I use the Launch Enrichment button in Salesforce?
 
 When using the Clay Salesforce package, the **Launch Enrichment** button on a Lead, Contact, or Account record sends that record to Clay for enrichment and writes the results back to Salesforce. For Salesforce users to receive a notification ("Your record has been enriched by Clay") after the enrichment completes, the **Get Enrichment Notifications** toggle must be enabled on the corresponding workflow.
 
 **To enable enrichment notifications:**
 
-1.  In Salesforce, open the **Clay** app and go to **Object and Field Mapping**.
-2.  Under **Select Object**, choose the object type the Launch Enrichment button lives on — Account, Contact, or Lead.
-3.  Under **Optional (Edit Existing Workflow)**, select the specific workflow tied to that button.
-4.  Confirm that **Get Enrichment Notifications** is toggled **Active** (blue with a checkmark). If it is inactive, toggle it on.
-5.  Save your changes.
+1.  In Salesforce, use the App Launcher to search for **Enrichment Menus** and open the menu record for the object type the Launch Enrichment button lives on — Account, Contact, or Lead.
+2.  Under **Optional (Edit Existing Workflow)**, select the specific workflow tied to that button.
+3.  Confirm that **Get Enrichment Notifications** is toggled **Active** (blue with a checkmark). If it is inactive, toggle it on.
+4.  Save your changes.
 
 Once the toggle is active, Salesforce users will receive a notification in their Salesforce notification center after each successful enrichment run triggered by that button.
 
