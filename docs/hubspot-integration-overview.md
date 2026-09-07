@@ -348,6 +348,16 @@ To handle both new and existing contacts without hitting duplicate errors:
 
 For full details on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
 
+### Does the Lookup Object check all domains on a HubSpot company record, or only the primary domain?
+
+**The Lookup Object searches only the specific HubSpot property you select** — it does not fan out to all domains associated with a company. When you filter by **Domain Name**, Clay searches HubSpot's primary **Company domain name** property (`domain`) only.
+
+HubSpot companies can have multiple domains on a single record — one primary domain and additional alternate domains. The Lookup Object does not search those alternate domains. If your input matches only a secondary domain that is not set as the primary Company domain name in HubSpot, the lookup returns no results even if that domain is associated with an existing HubSpot company record.
+
+**One exception:** When filtering by **Domain Name**, Clay automatically searches both the bare domain and its `www.` variant — for example, both `example.com` and `www.example.com`. You do not need to add the `www.` prefix manually.
+
+**Workaround:** If you are searching by a domain that is a secondary domain in HubSpot (not the primary Company domain name), the lookup will not find the company. To resolve this, update the company's primary Company domain name in HubSpot to match the domain you are searching, or use the HubSpot Object ID to look up the record directly instead.
+
 ### Why do I get an `INVALID_OWNER_ID` or `INVALID_INTEGER` error when setting `hubspot_owner_id`?
 
 HubSpot uses two separate identifiers for each user who can own a contact:
