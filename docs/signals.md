@@ -178,6 +178,33 @@ To avoid unexpected charges:
 -   Turn off auto-update on columns you don't want to fire automatically: open the column → `Run settings` → toggle off `Auto-update`.
 -   To see the full per-column credit breakdown after a signal fires, click `History` in the lower right corner of your results table and select `Usage history`.
 
+### Why did my signal fail with "Insufficient credits for estimated signal run"?
+
+This error appears when Clay estimates the upcoming run will cost more credits than your current available balance allows. Clay checks the balance before the run starts — if there isn't enough, the signal stops and enters an errored state.
+
+The available balance Clay checks is the **minimum** of:
+
+-   Your workspace's overall credit balance
+-   Any workbook-level or budget-level credit caps that apply
+-   If you have set a per-signal **Credit spend limit** (in **Edit signal** → **Credit spend limit**), the remaining balance on that cap
+
+This means the error can appear even when your workspace has plenty of credits overall, if a narrower limit — such as a signal-level spending cap — has been nearly exhausted. The error does not identify which limit is the binding constraint, so check each level.
+
+**To identify the binding constraint:** Open **Edit signal** and scroll to the **Credit spend limit** section. The **Credit spend** field shows cumulative spend; if the gap between it and the **Credit limit** is smaller than the signal's estimated run cost (shown as **Total signal cost** at the bottom of the edit panel), the signal-level cap is the binding constraint — not your workspace's overall balance.
+
+**Note:** This pre-run credit check applies only to certain signal types, including topic intent signals and others that charge per record checked. Other signal types are not subject to this upfront check.
+
+**Note on the Credit spend limit section:** The per-signal **Credit spend limit** section in **Edit signal** is currently available to select Audiences workspaces. Contact your Growth Strategist to inquire about access.
+
+### My signal shows an "Insufficient credits for estimated signal run" error. How do I get it running again?
+
+**Step 1 — Fix the credit balance.** If a per-signal **Credit spend limit** is set, open **Edit signal** → expand **Credit spend limit** and either increase the **Credit limit** to give the signal more headroom, or click **Reset spend** to reset the cumulative spend counter to zero (restoring the full credit limit as available balance). Make sure the remaining balance covers the **Total signal cost** shown at the bottom of the edit panel.
+
+**Step 2 — Restart the signal.** After this error, the signal enters an errored state. Two options:
+
+-   **Retry button (immediate run):** Click **Retry** on the errored signal. Retry clears the error and schedules an immediate run.
+-   **Save and re-run (immediate run):** Open **Edit signal**, make any needed changes (such as adjusting the credit limit), and click **Save and re-run**. This also triggers an immediate run.
+
 ### Why did my Job Posting signal return fewer results than expected?
 
 Check the **Limit results** setting inside the **Filter results** section of your signal configuration. By default, a Job Posting signal can return up to 1,250 job postings per run. If you previously entered a lower number — for example, 20 while testing — that value is saved and applies to every subsequent run.
