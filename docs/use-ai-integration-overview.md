@@ -139,6 +139,8 @@ While you don't need your own GPT, Claude, or Gemini API key to use the AI featu
 
 **Note:** Connecting your own OpenAI API key does not enable OpenAI's Batch API. Clay sends all AI column requests in real-time using the standard API — regardless of which account is connected. You will not get OpenAI's batch pricing (50% discount) or the extended processing window (up to 24 hours). If you need to process a large volume of data at batch pricing, the workaround is to export your data from Clay, run it through the OpenAI Batch API externally, then re-import the results.
 
+**Note:** Clay's BYOK connection accepts keys issued directly by each supported provider — Anthropic (from anthropic.com), OpenAI (from platform.openai.com), or Google (from Google AI Studio or Google Cloud for Gemini). Keys accessed through intermediary platforms or API proxies — for example, Anthropic models accessed via Google Vertex AI Model Garden, or a generic OpenAI-compatible API endpoint from a third-party service — are not supported as direct BYOK connections in Use AI. For those setups, use the HTTP API enrichment instead — see [Using additional or custom LLMs](#using-additional-or-custom-llms) below.
+
 ## Using additional or custom LLMs
 
 Use AI supports a fixed set of built-in AI providers (such as GPT, Claude, Gemini, and DeepSeek). Custom or additional LLMs — including open-source models like LLaMA, or models accessed through a proxy such as LiteLLM — cannot be added directly to the Use AI enrichment interface.
