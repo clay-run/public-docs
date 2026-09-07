@@ -1116,7 +1116,7 @@ CSV imports are one-time and do not re-sync. To replace a CSV import with correc
 1.  Archive the records from the original CSV import — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above. Use the **Origin source** filter to isolate records from that specific import.
 2.  After archiving, import the updated CSV file using the same steps as the original import. Clay will create new records from the updated file.
 
-**Note:** Archiving removes records from all audience segments and enrichments. If those records existed in other sources (Salesforce, HubSpot, CSV), archiving will remove them from those sources' audience contributions as well. Archived records can be restored from the **Archived** section in the sidebar if needed.
+**Note:** Archiving removes records from all audience segments and enrichments. If those records existed in other sources (for example, also synced from Salesforce), they will remain in Audiences through those other sources even after being archived from the CSV source.
 
 ### How do I archive records that no longer match my Snowflake import query?
 
@@ -1127,3 +1127,5 @@ To clean up these records:
 1.  In your audience, add a filter for **Snowflake source status → is → Deleted in source** (or filter on the specific Snowflake source name).
 2.  Save that filter set as a new segment.
 3.  From the segment, click the **⋮** menu → **Archive records** to remove them from your Audience.
+
+If the same records exist in other sources (Salesforce, HubSpot, CSV), archiving will remove them from those sources' audience contributions as well. Archived records can be restored from the **Archived** section in the sidebar if needed.
