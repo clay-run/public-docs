@@ -276,6 +276,12 @@ For example, if your source table has a "First Name" column but its label was se
 4. Click **Save**, then re-run the `Sync lead data to campaign` column to push the updated label to the campaign.
 5. If you already referenced the old label as a variable in your message template, update those variable references in the campaign's **Message sequence** to use the corrected name.
 
+### Can I delete or remove an email step from a launched campaign?
+
+No — once a campaign has launched, the number of email steps in the sequence is locked. You cannot add, remove, or reorder steps even while the campaign is paused. Pausing a campaign only allows you to edit message copy, senders, schedule, and other settings.
+
+To run a shorter sequence, create a new campaign with just the emails you want. You can include up to 4 messages per campaign.
+
 ### Why can't I see or edit the Message sequence section?
 
 If your campaign is active, all settings — including the Message sequence — are locked. To make edits, open the campaign's `Setup` tab and click `Pause`. Once paused, you can edit message copy and campaign settings. Note that you cannot change the total number of messages while paused — to add or remove messages, complete the campaign and create a new one.
