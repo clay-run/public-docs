@@ -1089,17 +1089,28 @@ Audiences records are not deleted — they are **archived**. Archiving removes a
 
 **Note:** Archiving a record removes it from all audience segments and enrichments, regardless of which segment you archive it from. If the same records exist in other sources (Salesforce, HubSpot, CSV), archiving will remove them from those sources' audience contributions as well. Archived records can be restored from the **Archived** section in the sidebar if needed.
 
+### What happens when I archive a record in Audiences?
+
+Archiving a record is a **soft delete** — the record is not permanently removed from your Audiences workspace. When you archive a record:
+
+-   It is **excluded from all audience segments and workflows** — it will not appear in segment filter results or trigger enrichment automations.
+-   It can be viewed in the **Archived** section in the left sidebar.
+-   It can be **restored at any time** from the Archived section.
+
+**Important:** Re-importing a record with the same identifiers (email, domain, or external IDs) **will not revive an archived record** — the incoming import is silently skipped and the record stays archived. To bring an archived record back, restore it manually: navigate to **People** or **Companies** in the left sidebar → click **Archived** → find the record → click **Restore**. You can then re-import or re-sync data for that record if needed.
+
+**There is no self-serve option to permanently delete records from Audiences.** Archiving is the only available removal method. If your use case requires permanent removal, contact Clay support.
+
+**Note on lookup timing:** After archiving a record, there is a brief processing delay before the change is reflected in `Lookup in Audiences` results. Running a lookup immediately after archiving may still return the archived record until the change propagates.
+
 ### How do I replace a CSV import with updated data?
 
-CSV imports in Audiences are one-time — they do not re-sync automatically. If you need to update your audience with a corrected or refreshed CSV, the safest approach is to archive the old records first, then re-import the updated file.
+CSV imports are one-time and do not re-sync. To replace a CSV import with corrected or updated data:
 
-**To replace a CSV import:**
+1.  Archive the records from the original CSV import — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above. Use the **Origin source** filter to isolate records from that specific import.
+2.  After archiving, import the updated CSV file using the same steps as the original import. Clay will create new records from the updated file.
 
-1.  Create a segment filtered by the **Origin source** name of the original CSV import — this shows only the records that came from that file.
-2.  Archive those records by clicking the **⋮** menu next to the segment name and selecting **Archive records**. This removes the old records from your active audience.
-3.  Import the updated CSV file using `Add data` → `Add Source` → **CSV**. Use the same **Unique identifier** field as the original import to ensure records are matched and updated correctly.
-
-If your updated CSV contains records with the same unique identifiers as the archived records, Clay will create new records for them during the re-import — the archived records are not automatically restored and linked to the new import.
+**Note:** Archiving removes records from all audience segments and enrichments. If those records existed in other sources (for example, also synced from Salesforce), they will remain in Audiences through those other sources even after being archived from the CSV source.
 
 ### How do I archive records that no longer match my Snowflake import query?
 
@@ -1117,3 +1128,12 @@ To avoid re-importing the same orphaned records on a future sync, verify your up
 When you update your BigQuery import SQL query to exclude certain records — or when records are removed from the underlying BigQuery table — Clay marks the record's BigQuery source association as **Deleted in source** during the next full sync (every 7 days). The Audience record itself is **not automatically removed**.
 
 To remove these records from your active audience, see the steps above under [How do I archive records that no longer match my Snowflake import query?](#how-do-i-archive-records-that-no-longer-match-my-snowflake-import-query) — the same process applies to BigQuery imports.
+
+### Can I remove a source from the 'Add data' list in Audiences?
+
+No. Sources listed under **Add data** — including CSV imports and Clay table (local) sources — cannot be removed from the source list in Audiences. The source listing is retained for filtering and audit purposes.
+
+- **CSV imports:** No removal option is shown in the source list after import.
+- **Clay table (local) sources:** The source entry shows only a **View table** option — there is no disconnect or remove action.
+
+To remove the **records** that a source contributed to your Audience, archive them through a segment — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) below. For CSV sources specifically, see also [How do I replace a CSV import with updated data?](#how-do-i-replace-a-csv-import-with-updated-data).
