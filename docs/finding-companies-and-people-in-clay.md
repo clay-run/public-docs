@@ -643,6 +643,13 @@ If you want to avoid searching the full company list entirely (to save credits),
 **If using Find People as an enrichment action (runs within the company table, per row):**
 New company rows trigger Find People automatically when auto-run is enabled — no extra steps needed. See [Disable auto-run on the people table](#disable-auto-run-on-the-people-table-when-running-find-people-selectively) for caveats about downstream enrichment costs when new rows are added.
 
+**If you want Find People to run only for companies with no people found yet** — so it skips companies already searched, even when their rows are later edited — add a Lookup Multiple Rows count and a run condition:
+
+1. In your company table, add a **Lookup Multiple Rows in Other Table** column. Set `Table to search` to your people table, `Target column` to the company profile URL column in the people table, `Filter operator` to `Equals`, and `Row value` to the company profile URL column in this table. This gives each company row a live count of how many people have already been found for it.
+2. On the **Find People at These Companies** enrichment action column, open **Run settings → Only run if** and set the condition to `{{<your lookup column>}} = 0`. The enrichment fires only when the count is 0 — meaning no people have been found at that company yet. Companies with a count of 1 or more are skipped and no credits are spent.
+
+With this setup, net-new companies arrive with a lookup count of 0 and trigger Find People automatically. Companies that already have people found return a non-zero count and are skipped — even if those rows are later edited. See [Lookup Rows](lookup-rows.md) for full configuration details and [Conditional runs](conditional-runs.md) for the run condition syntax.
+
 ### Why does my downstream company table have fewer rows than my original company list?
 
 When you run a people search across a company list and route results to a downstream company table — for example, using **Send Table Data** from a people table, de-duplicated by company domain — that destination table only contains companies where at least one person was found. Companies where the people search returned no results never generate a row in the people table, so nothing flows downstream for them.
