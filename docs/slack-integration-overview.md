@@ -11,7 +11,7 @@ Team communication and collaboration platform boosting productivity with AI and 
 
 Slack is a communication platform that enables team collaboration through channels, direct messaging, and file sharing.
 
-With this integration, you can retrieve Slack user information, send messages to channels, and get channel member lists directly from Clay.
+With this integration, you can retrieve Slack user information, send messages to public channels, private channels, and direct messages, and get channel member lists directly from Clay.
 
 ## **Enriching data with Slack**
 
@@ -41,6 +41,15 @@ Use this action to send messages to Slack channels through a bot directly from C
 -   **Form information (Optional):** Add structured form data to the message (e.g., "First Name → Kareem"). The form will be sorted alphabetically by field name.
 
 > **Note:** Although both **Message** and **Form information** are displayed as optional in the UI, at least one of them must contain content for the action to run. Leaving both fields empty produces the error *"Missing input: You must include data for the person for this action to work."* Fill in the **Message** field with your notification text to resolve this.
+
+#### Sending a direct message (DM)
+
+To send a Slack direct message to an individual user instead of posting to a channel:
+
+1. In the **Slack channel** field, click the gear icon and switch to **Text with tokens** mode.
+2. Enter the recipient's Slack User ID (for example, `U012AB3CD`). User IDs start with `U` — when passed as the channel value, Slack opens a DM with that user automatically.
+3. To look up a user's Slack ID from their email address, add a **Find Slack user by email** action column and reference its result in the **Slack channel** field.
+4. Run one row first to confirm the DM reaches the correct user, then run the full table.
 
 ### `Action` Find list of channel members
 
@@ -129,7 +138,7 @@ When you connect Slack to Clay, Clay requests the following OAuth permissions fr
 -   `users:read` — Look up Slack users by their user ID.
 -   `users:read.email` — Look up Slack users by email address. Required by the **Find Slack user by email** action.
 
-Clay does **not** request access to message history, direct messages, file uploads, or workspace administration settings. Clay does not store or harvest Slack data for its own purposes — these scopes are used solely to execute the actions you configure in your tables.
+Clay does **not** request access to message history, incoming direct messages, file uploads, or workspace administration settings. Clay does not store or harvest Slack data for its own purposes — these scopes are used solely to execute the actions you configure in your tables.
 
 For full security documentation — including SOC 2 Type II reports, data handling practices, and breach notification policies — visit [trust.clay.com](https://trust.clay.com/).
 
@@ -188,7 +197,7 @@ You can add Markdown to any Slack message, either in the Slack integration itsel
 
 ## Security and permissions
 
-When you connect Slack to Clay, Clay requests a minimal set of OAuth permissions from your Slack workspace. These are scoped to what the integration actually needs — Clay does not request permissions to read message history, send direct messages, or access files.
+When you connect Slack to Clay, Clay requests a minimal set of OAuth permissions from your Slack workspace. These are scoped to what the integration actually needs — Clay does not request permissions to read message history or access files.
 
 ### Required scopes
 
@@ -216,7 +225,7 @@ These permissions are requested by default but can be disabled during the connec
 Clay's Slack connection does **not** include permissions to:
 
 -   **Read message history** — no access to past messages in channels, group messages, or direct messages
--   **Send or read direct messages** — no DM access to individual users
+-   **Read direct messages** — no access to DM history or incoming messages
 -   **Read or upload files** — no file or attachment access
 -   **Administer your workspace** — no admin-level or workspace-management permissions
 
