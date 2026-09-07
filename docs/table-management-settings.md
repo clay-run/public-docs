@@ -19,7 +19,7 @@ You can also click the `⛭` icon in the top toolbar to open the Run Settings pa
 
 ## Auto-dedupe
 
-Duplicate rows in a Clay table can occur when the same record is added more than once — for example, from repeated CSV uploads, overlapping source imports, or webhook sends that deliver the same contact multiple times. Auto-dedupe continuously monitors a specified column to detect and resolve duplicate values. When duplicates are found, Clay keeps one row and deletes the rest — you choose whether to keep the **oldest** or **newest** row (defaults to **Keep oldest row**). Blank cells, stale cells, and cells with more than 200 characters are excluded from this process.
+Duplicate rows in a Clay table can occur when the same record is added more than once — for example, from repeated CSV uploads, overlapping source imports, or webhook sends that deliver the same contact multiple times. Auto-dedupe continuously monitors a specified column to detect and resolve duplicate values. When duplicates are found, Clay keeps one row and deletes the rest — you choose whether to keep the **oldest** or **newest** row (defaults to **Keep oldest row**). Blank cells and cells with more than 200 characters in the dedupe column are excluded from this process — those rows will not be deleted by auto-dedupe, even if the same value appears in another row.
 
 **When does auto-dedupe fire?** Auto-dedupe runs whenever a row is added to the table **and** whenever a cell value in the dedupe column changes — including when a formula field or enrichment column fills in from an empty or stale state. This means if the dedupe column cell is blank or still processing when a row is first inserted, the duplicate check runs again automatically once the cell resolves. You don't need to manually trigger deduplication after a cell updates.
 
@@ -108,8 +108,7 @@ You can edit or add enrichments while using the graph view to refine your data.
 
 **Edit existing enrichments:**
 
--   In the graph view, click on a node or connection to adjust relationships.
--   Modify enrichment settings directly to ensure the data meets your requirements.
+-   In the graph view, click on a node or connection to adjust relationships.\n-   Modify enrichment settings directly to ensure the data meets your requirements.
 
 **Add new enrichments:**
 
