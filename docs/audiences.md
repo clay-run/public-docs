@@ -854,7 +854,9 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 ### How do I export my audience data to CSV?
 
-The Audiences screen does not have a direct CSV download button. To download audience data as a CSV, first send the segment to a Clay table using **Add to workbook**, then export that table:
+The Audiences screen does not have a direct CSV download button. To download audience data as a CSV, first send the segment to a Clay table using **Add to workbook**, then export that table.
+
+**Note:** **Add to workbook** is currently in beta and is not enabled for all workspaces by default. If you don't see **Add to workbook** in the **Send → Export action** menu, contact your Growth Strategist or Clay support to request it for your workspace.
 
 1. Open the audience segment you want to export.
 2. Click **Send** → **Export action** → **Add to workbook**. Clay creates a Clay table containing up to 50,000 rows from that segment.
@@ -1123,5 +1125,3 @@ To clean up these records:
 1.  In your audience, add a filter for **Snowflake source status → is → Deleted in source** (or filter on the specific Snowflake source name).
 2.  Save that filter set as a new segment.
 3.  From the segment, click the **⋮** menu → **Archive records** to remove them from your Audience.
-
-If the same records exist in other sources (Salesforce, HubSpot, CSV), archiving will remove them from those sources' audience contributions as well. Archived records can be restored from the **Archived** section in the sidebar if needed.
