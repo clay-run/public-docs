@@ -65,6 +65,14 @@ Clay fulfills orders through Smartlead, which in turn uses Zapmail to provision 
 
 Use the **Get rep data** enrichment in a Clay table. Provide the SmartSender account email address as the input — the action returns the rep's email address and full name (when available). This is useful for personalizing campaign messages with the sender's name.
 
+### **Why does my sender's name appear with extra characters in Outlook?**
+
+If a persona's first name is fewer than 4 characters (for example, "Sam"), Outlook recipients may see the name padded to 4 characters (for example, "Sama"). Zapmail, the email provisioning provider behind purchased Clay email accounts, requires all account sender names to be at least 4 characters long. Because Outlook does not allow the sender display name on a provisioned account to be updated after creation, the padded name persists for Outlook recipients.
+
+Gmail and other email clients are not affected — they display the sender name exactly as entered in Clay.
+
+To ensure the sender name appears as expected across all inboxes, use a first name of 4 or more characters when setting up personas for purchased email accounts.
+
 ### **Can I provision Clay inboxes on a domain I already own?**
 
 No. The **Buy email accounts** flow can only provision inboxes on new domains purchased through Clay — it cannot attach inboxes to a domain you already own.
