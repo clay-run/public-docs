@@ -1068,8 +1068,8 @@ Two behaviors to keep in mind:
 Three things to check:
 
 -   **The signal falls outside the default lookback window.** `Lookup in Audiences` returns signal data for the past **90 days** by default via the **Signal data to include (days)** column setting. This lookback is independent of your audience's filter criteria — a contact can be correctly included in a "job change results" audience yet still show empty signal data in a lookup if the job-change event falls outside the configured window. To retrieve older signals, open the column settings and increase **Signal data to include (days)** to cover the relevant time range.
--   **The default 5-result count was reached.** `Lookup in Audiences` returns 5 signal results per record by default. If a contact has more than 5 signal events in the lookback window, only the first 5 are returned. To increase the limit, open the column settings and raise the result count (up to 50). Use `Get Audiences Activity` if you need more than 50 results or want to query a longer time window.
--   **The signal type was not included in the lookup.** By default, `Lookup in Audiences` returns all signal types. If you previously customized the **Activity types** filter to include only certain types (for example, just Job change), signals of other types won't appear in the result. Open the column settings, check the **Activity types** filter, and clear it or add the missing signal type.
+-   **The default 5-result count was reached.** `Lookup in Audiences` returns 5 signal results per record by default. If a company has more active signals than that, some may not appear — increase the result limit in the column settings (up to 50), or use `Get Audiences Activity` to retrieve a larger set of signal data.
+-   **The signal hasn't fired for that record yet.** Signal results are written asynchronously and may not appear immediately after a signal run completes. If a signal should be recent but is still missing, open the signal's column header → `Edit column` and re-run the signal to refresh the data for that record.
 
 ### Can I remove a source from the 'Add data' list in Audiences?
 
