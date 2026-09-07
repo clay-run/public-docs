@@ -454,6 +454,46 @@ If the Salesforce user connected to Clay has write access but not read access to
 -   Search your **Salesforce Recycle Bin** — if the record was auto-deleted by an automation, it may still be recoverable there.
 -   In Salesforce Setup, review active **Flows** and **triggers** on the object to see if any run on record creation.
 
+## How do I prevent Clay from updating a Salesforce field when a specific condition is met on that record?
+
+Add a **conditional run** to your Update Record column to skip records that match a given condition — for example, to leave accounts whose Account Status is "Active" untouched.
+
+**Step 1: Make sure the field you want to check is in your Clay table**
+
+A run condition on an Update Record column evaluates values already present in your Clay table — it cannot read Salesforce field values directly at run time. If the field you want to gate on (such as Account Status) is not already a column in your table, add a **Lookup record** column to pull it in:
+
+1.  In the Lookup record column settings, select the Salesforce object (for example, Account) and add the field to **Object Field(s)**.
+2.  Run the column to populate values for each row.
+
+If your table already imports the field from a Salesforce list source, skip this step — the value is already in your table.
+
+**Step 2: Add a run condition to your Update Record column**
+
+1.  Open your **Update Record** column settings and click **Run settings → Only run if**.
+2.  Set a condition that excludes the records you don't want updated — for example, to skip accounts whose Account Status is "Active":
+
+    `/Account Status is not "Active"`
+
+    *(Replace "Account Status" with the name of your column, and "Active" with the exact picklist value used in your Salesforce org.)*
+
+3.  Click **Generate formula**, verify the preview shows the correct rows as "Will run" vs. "Run condition not met," then save.
+
+Rows where Account Status equals "Active" show **"Run condition not met"** in the Update Record cell — Clay skips those rows, the Salesforce fields are left unchanged, and no credits are consumed for those rows.
+
+**Alternatively, omit specific fields from the field mapping**
+
+If you only want to protect a specific Salesforce field rather than skip the entire update, don't include that field in the **Map fields** section of your Update Record column. Fields not added to Map fields are left unchanged in Salesforce, regardless of the value in your Clay table.
+
+**What the "Ignore blank values" toggle does — and doesn't do**
+
+The **Ignore blank values** toggle on Update Record addresses a narrower scenario: when enabled (the default for new Update Record columns), blank Clay cells are omitted from the update payload, so they don't clear existing Salesforce field values. It does not prevent a populated Clay value from overwriting a populated Salesforce field. For that, use a conditional run as described above.
+
+**Applying this consistently across multiple tables**
+
+Clay doesn't have a workspace-wide setting to automatically apply a run condition to all Update Record columns — each column must be configured individually. The most practical approach for teams: configure your Update Record column with the condition in place, then use that table as the starting point when creating new projects — the column configuration, including the run condition, carries over when you duplicate the table.
+
+For guaranteed enforcement at the CRM level — so that the rule applies regardless of how individual Clay tables are configured — create a Salesforce user dedicated to Clay with field-level security that restricts editing the relevant fields on the records you want to protect. See [Creating a restricted Salesforce user](creating-a-restricted-salesforce-user.md) for setup instructions.
+
 ## How do I prevent Salesforce records from being created or updated when there is no valid email?
 
 Use conditional runs on your **Create Record** and **Update Record** action columns to gate them on a passing email validation result. Rows where email validation fails are skipped automatically and do not consume credits.
