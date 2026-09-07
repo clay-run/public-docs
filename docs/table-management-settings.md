@@ -108,7 +108,8 @@ You can edit or add enrichments while using the graph view to refine your data.
 
 **Edit existing enrichments:**
 
--   In the graph view, click on a node or connection to adjust relationships.\n-   Modify enrichment settings directly to ensure the data meets your requirements.
+-   In the graph view, click on a node or connection to adjust relationships.
+-   Modify enrichment settings directly to ensure the data meets your requirements.
 
 **Add new enrichments:**
 
