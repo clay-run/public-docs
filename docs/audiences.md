@@ -484,6 +484,10 @@ For **Companies** audiences, five built-in signal types are available:
 -   **Job Posting** — alert when a monitored company posts a new job opening; Clay analyzes job descriptions for urgency indicators and geographic expansion signals.
 -   **Company Topic Intent** (open beta) — monitor when companies show buying intent for topics you care about, with High, Medium, and Low scoring tiers. Cost: approximately 0.2 credits per account monitored. Contact your Growth Strategist to enable this signal for your workspace.
 
+    **Country filter:** The Country field narrows results by where intent activity was **detected** across the provider's publisher network — not by where companies are headquartered. A company based outside your selected countries can appear in results if its buying activity was observed in those countries. The `country` value shown for each result reflects this intent-detection geography; it is not the company's headquarters country. To find a company's HQ location, run a company enrichment on the signal results.
+
+    **Geographic filter support by provider:** The Country filter applies only to **Intentsify** results. **Bombora** uses a separate **Metro area** field (US metro areas only, also intent-based) and does not support Country filtering. **Delivr** has no geographic filter. When multiple providers are selected, the Country filter affects Intentsify results only — Bombora and Delivr results are not filtered by Country.
+
 **Custom signals are not available within Audiences.** To track a more specific or custom signal (for example, website changes, RSS feed mentions, or technology adoption), build that logic in a bulk enrichment on the audience segment using Claygent or scheduled enrichment columns — see [Adding enrichments](#adding-enrichments) above.
 
 **To add a signal to a segment:**
