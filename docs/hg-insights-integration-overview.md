@@ -151,3 +151,12 @@ BuiltWith detects technologies by scanning a company's public website, so it oft
 **2. Use Claygent**
 
 For technologies not tracked by any database provider, a [Claygent](https://university.clay.com/docs/claygent-builder) column can scan the web for evidence. Add a Claygent column to your table, use the company domain as an input variable, and prompt it to search the company's website and public sources for signs of the technology — for example: *"Does {{company_domain}} use [technology name]? Search the company's website, case studies, and press mentions, and return yes or no with the evidence you found."* Claygent returns structured output, so you can add a boolean field for the yes/no result and a text field for the supporting evidence.
+
+### Street-level address not available from Enrich company
+
+The **Enrich company** action returns location data at the **city, state, country, and postal code level** — it does not include a street address. This is a limitation of the data HG Insights makes available through their API, not something that has been removed from Clay.
+
+If you need a company's street address, two options work well in Clay:
+
+-   **Use a Claygent AI column** to research the company's headquarters address. Add a Claygent column, use the company domain as an input variable, and prompt it to return the address — for example: *"What is the street address of the headquarters for {{company_domain}}? Return the street address, city, state, and postal code."* Claygent will search the company's website and other public sources to find it.
+-   **Try a different enrichment provider** that includes address data. Different providers source data from different repositories (business registries, directories, etc.), so a provider with street-level coverage may have what you need.
