@@ -602,7 +602,7 @@ With **Premium** or **Standard**, Clay queries its provider network to find and 
 
 **Note:** Salesforce is currently the only native export destination in Audiences. HubSpot export from Audiences is not yet available — to write data to HubSpot, see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
 
-Audiences supports **bidirectional sync** with Salesforce. To push data from Audiences back to Salesforce, you must first enable the **Export sync** toggle in your Salesforce source settings — this is the master switch for all outbound writes. Even if individual fields are configured with an "Always write" rule, no data flows to Salesforce until Export sync is enabled.
+Audiences supports **bidirectional sync** with Salesforce. To push data from Audiences back to Salesforce, you must first enable the **Export sync** toggle in your Salesforce source settings — this is the master switch for all outbound writes. Even if individual fields are configured with an "Always write" rule, no data flows to Salesforce until Export sync is turned on.
 
 **To enable Export sync (admin-only):**
 
@@ -1060,35 +1060,18 @@ When you select multiple fields in **Fields to filter by**, the lookup uses **AN
 
 Two behaviors to keep in mind:
 
--   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record is only returned when both values match exactly. A record that matches on email but has a different profile URL than the one in your table will not be returned — the lookup only surfaces records where every selected field matches.
--   **More fields = stricter matching.** Each additional filter narrows the result set. If you add a third field that is empty or inconsistently populated in your Audiences, rows where that field is blank will not match — even if the primary identifier (like email) is correct. Use a single strong identifier like `Email` when you want reliable matches; add secondary fields only when you intentionally want stricter deduplication.
+-   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record is only returned when both values match exactly. A record with the right email but a different or missing secondary value won't be returned.
+-   **Blank or empty filter values prevent any match.** If any field in **Fields to filter by** has a blank or null value in your table row, the lookup returns "No records found" — even if the Audiences record also has a blank value for that field. Every filter field must have a non-empty value for the lookup to run.
+
+**Tip:** Use a single, high-confidence identifier — such as `Email` for people or `Domain` for companies — as the sole filter field wherever possible. Multi-field filtering is useful when you want to guarantee uniqueness (for example, filtering by both email and company domain to avoid matching a contact at the wrong company), but it increases the risk of missed matches when any one field is missing or mismatched.
 
 ### How do I remove records from an audience?
 
-Records in Audiences cannot be permanently deleted through the self-serve UI — they can only be **archived**. Archiving removes the record from all active audience segments and excludes it from enrichment runs and segment membership updates, but the record remains in Audiences in an archived state.
+Records in Audiences cannot be permanently deleted — they can only be **archived**. Archiving a record removes it from all audience segments and excludes it from future enrichments and workflows, but the record is not permanently deleted.
 
-**To archive individual records:**
+**To archive records:**
 
-1.  Open the record in the Audiences panel.
-2.  Click the **⋮** (three-dot) menu in the top right of the record.
-3.  Select **Archive**.
-
-**To archive records in bulk:**
-
-1.  In the segment view, check the rows you want to archive.
-2.  Click **Actions** in the toolbar that appears.
-3.  Select **Archive records**.
-
-Alternatively, to archive all records in a segment at once, click **⋮** next to the segment name in the sidebar and select **Archive records**.
-
-**To archive records that no longer match a Snowflake import query:** If your Snowflake SQL query was updated to exclude certain records and those records no longer appear in your query results, Clay marks their Snowflake source association as **Deleted in source** during the next full sync, but does not automatically archive the audience records. To remove them from your active audience, filter for **Origin source → is → [your Snowflake import name]** combined with **Is deleted from source → is true**, then use **Archive records** on the result set.
-
-**To archive records that no longer match a BigQuery import query:** Same approach — filter for **Origin source → is → [your BigQuery import name]** and **Is deleted from source → is true**, then archive.
-
-**To replace a CSV import with updated data:** Archive the records from the old import first (filter by **Origin source → is → [your CSV import name]** and archive), then import the corrected CSV file.
-
-**Archived records** can be restored if needed: in the sidebar, click **Archived** to view the archived records, select the ones you want to restore, and click **Restore**.
-
-**Permanent deletion** (removing a record entirely from Audiences, not just archiving it) is not available through the self-serve UI. If you need records permanently removed — for example, for compliance or data hygiene reasons — contact Clay support.
+1.  In your audience, select the records you want to remove.
+2.  Right-click (or use the toolbar) → **Archive records** to remove them from your Audience.
 
 If the same records exist in other sources (Salesforce, HubSpot, CSV), archiving will remove them from those sources' audience contributions as well. Archived records can be restored from the **Archived** section in the sidebar if needed.
