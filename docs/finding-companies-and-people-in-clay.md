@@ -138,6 +138,7 @@ Clay gives you three ways to get contacts from a company list. Here's how they d
 -   Returns **10 contacts per row by default**, with full profile data.
 -   `Reduce data for more results` mode returns up to **500 contacts per row**, but only name, job title, and professional profile URL — run `Enrich Person` on each row afterward to get full profiles.
 -   Processes each company row independently — adding a new company row does not re-trigger the enrichment on other rows.
+-   With table auto-run enabled (the default), this column fires automatically when each new company row is added — no schedule needed. Only the new row is processed and billed.
 -   Costs **0.5 credits per row** on current pricing plans (1 credit per row on legacy plans).
 -   Best when you want contacts to stay associated with their parent company row, or when you're processing companies incrementally and only want to find contacts for specific rows.
 
