@@ -151,3 +151,20 @@ BuiltWith detects technologies by scanning a company's public website, so it oft
 **2. Use Claygent**
 
 For technologies not tracked by any database provider, a [Claygent](https://university.clay.com/docs/claygent-builder) column can scan the web for evidence. Add a Claygent column to your table, use the company domain as an input variable, and prompt it to search the company's website and public sources for signs of the technology — for example: *"Does {{company_domain}} use [technology name]? Search the company's website, case studies, and press mentions, and return yes or no with the evidence you found."* Claygent returns structured output, so you can add a boolean field for the yes/no result and a text field for the supporting evidence.
+
+### HG Insights does not return the correct parent company or Group HQ
+
+HG Insights derives corporate hierarchy data — domestic parent, corporate parent, and Group HQ — from its own proprietary database. For some companies, particularly subsidiaries with their own distinct domain (common in financial services, regional holding structures, or recently-acquired companies), HG Insights may not have the parent-subsidiary relationship indexed. In these cases, **Enrich company** returns the queried domain as its own Group HQ, even when a larger real-world parent exists.
+
+**Workaround: add a Claygent fallback column**
+
+Use a [Claygent](claygent-builder.md) column to research the parent company on the web, and set it to run only on rows where HG Insights' hierarchy data is missing or incomplete:
+
+1. Run the **Enrich company** action first to populate the Group HQ fields.
+2. Add a **Claygent** column. Use the company domain as an input variable and prompt it to return the parent company domain — for example: *"What is the ultimate parent company domain for {{company_domain}}? If this company is a subsidiary operating under a larger parent, return only the root domain of the parent (for example, parent.com). If this company has no parent, return the same domain."*
+3. In the Claygent column's **Run Settings**, add an **Only run if** condition so it fires only when HG Insights returned incomplete hierarchy data:
+   - Group HQ domain is empty, **OR**
+   - Group HQ domain equals the company domain (meaning HG Insights considers the company to be its own Group HQ)
+4. In the model selector, choose **clay-helium** (1 credit per row) — it is sufficient for straightforward parent company lookups and keeps credit costs low.
+
+This ensures Claygent only runs on rows where HG Insights either has no hierarchy data or did not find a parent, so you are not spending credits on rows HG Insights already resolved correctly.
