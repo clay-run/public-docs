@@ -380,6 +380,16 @@ To use tools with your Claygent:
 
 Once you're on a supported model with a private API key, the tools in the **Tools** section will become active.
 
+### My Claygent column appears to be spinning or stalled without producing results
+
+If Claygent rows show a loading indicator for longer than expected — or appear stuck without completing or showing a visible error — check these causes in order:
+
+**Normal processing delay on larger tables.** Claygent rows are dispatched in concurrent batches. For tables with many rows, results appear progressively as each batch completes; the loading indicator means Clay is actively processing, not that something has gone wrong. Check the column's progress bar to confirm rows are advancing. For more detail on queued and throttled states, see [Run progress](run-progress.md).
+
+**Exhausted OpenAI API credits (when using your own key).** If you are using your own OpenAI API key, check your API credit balance at **platform.openai.com → Settings → Billing**. When OpenAI API credits run out, rows can stall without displaying a clear error message in Clay. Adding credits to your OpenAI account and re-running the affected rows resolves this. For token-per-minute (TPM) rate limit issues with your key, see [My Claygent isn't working with my connected OpenAI API key](#my-claygent-isnt-working-with-my-connected-openai-api-key) below.
+
+**Active platform incident.** If rows are spinning across multiple tables or workbooks at the same time, check [status.clay.com](https://status.clay.com/) for any active Clay platform incidents.
+
 ### My Claygent isn't working with my connected OpenAI API key
 
 Your connected OpenAI API key will always appear as a selectable option in the Claygent model picker. However, Claygent requires a high token-per-minute (TPM) rate to handle web browsing and multi-step research — in practice, **OpenAI Usage Tier 2 or higher**. On Tier 1, the key's TPM limit is too low and Claygent runs will fail with rate-limit errors.
