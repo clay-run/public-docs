@@ -67,6 +67,14 @@ To manage your credit spend:
 -   Review any enrichment columns in your results table — each enrichment with **Auto-update** enabled will also run automatically on newly added rows and will consume additional credits on top of the source query cost. Turn off **Auto-update** on enrichment columns you don't want to fire automatically.
 -   To see your full credit breakdown after a signal run, click `History` in the lower right corner of your results table and select `Usage history`.
 
+### What happened to the LinkedIn Brand Mentions option in Custom Signals?
+
+The LinkedIn Brand Mentions source — along with several related LinkedIn social listening actions — was discontinued in March 2026. Clay's data partner for these features updated their terms of use, and to remain aligned with their guidelines, Clay sunset this functionality. If you previously had a brand mentions signal set up, it will show an error when run and cannot be re-enabled.
+
+**To monitor brand mentions going forward, use the Monitor Professional Posts signal.** Go to **Tools → Monitor for... → Professional Posts** in your table, set the **Companies filter** to **Mentions companies**, and provide your company domain or professional profile URL as the identifier. Up to 5 domains or URLs are supported per run.
+
+For additional alternatives — including Claygent and third-party social listening tools — see the [Signals in Clay](/docs/signals) documentation.
+
 ## Guide: Turning enrichments into signals
 
 You may occasionally need to monitor changes in an enrichment. Below is a step-by-step guide on creating a signal for any enrichment. **In this guide, we'll start with a list of companies and add enrichments to monitor.**
