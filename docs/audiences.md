@@ -484,6 +484,12 @@ For **Companies** audiences, five built-in signal types are available:
 -   **Job Posting** — alert when a monitored company posts a new job opening; Clay analyzes job descriptions for urgency indicators and geographic expansion signals.
 -   **Company Topic Intent** (open beta) — monitor when companies show buying intent for topics you care about, with High, Medium, and Low scoring tiers. Cost: approximately 0.2 credits per account monitored. Contact your Growth Strategist to enable this signal for your workspace.
 
+For **People** audiences, one built-in signal type is available:
+
+-   **Job Change** — detect when monitored contacts switch to a new employer. Cost: 0.2 credits per person monitored per check run.
+
+**How signal credits are calculated:** Per-check signals (Job Change, New Hire) charge based on the number of records being monitored and the check frequency — not based on how many signal events are detected. A weekly Job Change signal on 1,000 contacts costs 1,000 × 0.2 = 200 credits per run, whether zero or all 1,000 contacts actually changed jobs that week. To estimate your monthly spend: number of records × 0.2 × runs per month (approximately 4 for weekly checks, 1 for monthly). The **cost preview per record** shown in step 5 below reflects this per-record rate.
+
 **Custom signals are not available within Audiences.** To track a more specific or custom signal (for example, website changes, RSS feed mentions, or technology adoption), build that logic in a bulk enrichment on the audience segment using Claygent or scheduled enrichment columns — see [Adding enrichments](#adding-enrichments) above.
 
 **To add a signal to a segment:**
@@ -506,7 +512,7 @@ After you add a signal:
 
 While the signal is processing its initial run, its status shows **Running**. Once the initial run completes, the status flips to **Monitoring** and displays a **Last run** timestamp. To see how many records were detected, go to **Audiences** → **Data Hub** → **Signals** — the **Signals fired (30d)** column shows the count of events the signal emitted over the past 30 days.
 
-**Note:** Audience-based signals appear in **Audiences → Data Hub → Signals** (within the Audiences section), not on the main **Signals** page accessible from the workspace left sidebar under Orchestration. The main Signals page shows only table-based signals — audience-based ones are managed here in the Audiences Data Hub.
+**Note:** Audience-based signals appear in **Audiences → Data Hub** → **Signals** (within the Audiences section), not on the main **Signals** page accessible from the workspace left sidebar under Orchestration. The main Signals page shows only table-based signals — audience-based ones are managed here in the Audiences Data Hub.
 
 To see which specific records in your audience were picked up by the signal, add a filter on your audience for the relevant results field (for example, **Job change results**). You can save that filtered view as a separate segment — or open the auto-created draft segment (**New hires**, **Companies of job changers**, or **Web visitors**) pinned at the top of the Audiences left sidebar.
 
