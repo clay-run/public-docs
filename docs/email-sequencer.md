@@ -81,7 +81,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 Once all your settings are saved, you can launch your campaign. Launching a campaign does the following:
 
 -   Emails begin sending according to your schedule, following deliverability best practices.
--   The `Analytics` tab displays detailed stats for your campaign. You can refresh data manually using the button in the top right.
+-   The `Analytics` tab shows campaign-level engagement metrics — including open rate and click-through rate — as totals across your entire campaign. You can refresh data manually using the button in the top right.
 -   The `Replies` tab shows you any incoming replies and lets you respond to them directly in Clay
 -   Actions are consumed for each email sent (1 Action per lead, plus standard Action and Data Credit rates for any AI snippets used).
 -   Your campaign becomes live, which means:
@@ -560,6 +560,17 @@ Clay's campaign events table doesn't include a dedicated "sequence completed" ev
 -   **They received all emails** — each `EMAIL_SENT` event includes a `sequence_number` value nested inside the Campaign event data. When this number equals the total steps in your campaign, the lead has received all emails without replying. Click a Campaign event cell, find the `sequence_number` field in the Cell details panel, and click **Add as column** to extract it into a standalone column you can filter on.
 
 To check this from your leads table, add a **Lookup rows in other table** column pointing to your campaign events table, matching on email address. You can then use a formula column to evaluate whether any matched event has `Event type = EMAIL_REPLY`, or whether the extracted sequence number equals your campaign's total step count.
+
+### Can I see open rate, click-through rate, or bounce rate broken out per email step in my sequence?
+
+The **Analytics** tab shows open rate, click-through rate, and other engagement metrics as campaign-level totals only — there is no per-step breakdown in that view.
+
+For per-step analysis, use the campaign events table. Each event includes a `sequence_number` value identifying which email in the sequence it came from:
+
+-   **Bounce rate per step**: `EMAIL_BOUNCE` events always carry `sequence_number`. Filter the events table by `sequence_number` and compare sent versus bounced counts for that step.
+-   **Open rate and click-through rate per step**: `EMAIL_OPEN` and `EMAIL_LINK_CLICK` events also carry `sequence_number`, but only appear when HTML email tracking is enabled (`Advanced settings` → `Email tracking`). With tracking on, filter by `sequence_number` to calculate open and click rates per step.
+
+To extract `sequence_number` as a standalone column, click any Campaign event cell, find `sequence_number` in the Cell details panel, and click **Add as column**.
 
 ### How are replies categorized in the Campaign Events table?
 
