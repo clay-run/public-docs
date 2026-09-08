@@ -42,7 +42,7 @@ To download the data in a Clay table as a CSV file:
 3.  In the sidebar that opens, click the **Export** tab.
 4.  Click **Download CSV**.
 
-A modal appears while your export is processing. Once it is ready, the CSV file downloads automatically to your browser's default download location. If the automatic download does not start, you can retrieve the file from the **Exports** tab in your workspace homepage (accessible from the profile icon in the top bar).
+A modal appears while your export is processing. Once it is ready, the CSV file downloads automatically to your browser's default download location. If the automatic download does not start, you can retrieve the file from the **Exports** tab in your workspace homepage (accessible from the profile icon in the top bar). Exports are available in the Exports tab for up to 24 hours after they complete — after that they are no longer accessible and you will need to re-run the export from the table.
 
 The exported CSV includes only the columns and rows visible in your current view. Columns hidden in the view and rows filtered out by active view filters are not included. To export your full table, make sure no view filters are active and all columns are visible before starting the download.
 
