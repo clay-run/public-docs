@@ -107,7 +107,7 @@ Runs a Python `handler(context)` function for deterministic work:
 -   Iterating over data inside one record.
 -   Joining and matching records you loaded in earlier steps — the closest thing to a table formula.
 
-`Run code` is free to run, with a one-second ceiling on each step. It's included on every paid plan; the free plan is the exception, where rules-based conditionals are available but `Run code` and the `Code` and `AI` conditional modes are not.
+`Run code` is free to run. Each step has a configurable timeout — 30 seconds by default, with a minimum of 1 second and a maximum of 30 minutes. It is available on all plans.
 
 ### `Run function`
 
