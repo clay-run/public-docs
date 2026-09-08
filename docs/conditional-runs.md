@@ -104,6 +104,25 @@ Adjust your condition as needed based on the results.
 
 **Note:** The preview uses data loaded when the panel was opened and may not reflect the most recent values in your columns. If upstream columns have run or changed since you opened the editor, the preview can show stale results that don't match what actually evaluates at runtime. See the **Formula preview may not match runtime results** tip below.
 
+## Run conditions on workflow nodes
+
+When using the Clay **Workflows editor** — the standalone workflow builder, not table columns — every node has a **Run if** section in its sidebar. You can set when a node should run using a natural-language prompt or by configuring the condition manually. Both options are available on all plans.
+
+**Prompt-based setup**
+
+1. Open a node's sidebar in the Workflows editor.
+2. In the **Run if** section, type a plain-language description in the text input — for example, *"Only run when the company has more than 100 employees"* or *"Only run when the email is not empty."*
+3. Use `/` to reference specific workflow fields inline in your description.
+4. Click **Generate condition** to generate and apply the condition to the node.
+
+Descriptions are limited to 1,000 characters. You may reference up to 10 workflow fields in a single condition prompt.
+
+**Manual setup**
+
+Click **Build manually** below the prompt input to configure the condition directly using Clay's comparison operators, without writing a prompt.
+
+Once a run condition is set, the **Run if** section shows **"Run this node only when its condition is met."** Click **Edit run condition** at any time to update it.
+
 ## Tips
 
 ### Always use / to reference a column
