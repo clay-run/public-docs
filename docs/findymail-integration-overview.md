@@ -81,3 +81,17 @@ Use this action to verify whether an email address is valid using Findymail.
 
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
+
+## Troubleshooting
+
+### "There was an error when trying to pull this email address" when using your own API key
+
+If you see this error on Findymail cells when using your own Findymail API key — but the same rows work correctly when using Clay credits — the most likely cause is that your Findymail account has run out of credits.
+
+When Clay sends a request to Findymail using your API key and your Findymail account balance is zero, Findymail rejects the request. Clay surfaces this as the generic message "There was an error when trying to pull this email address" rather than a specific credits error.
+
+Clay credits work in this situation because they run on Clay's own Findymail account, which has a separate balance.
+
+**To fix this:** Log in to your Findymail account at [https://app.findymail.com](https://app.findymail.com) and top up your credits. Once your balance is restored, re-run the failing rows in Clay.
+
+If adding credits does not resolve the error, go to **Settings → Connections**, find your Findymail connection, and click **Reconnect** to re-enter your API key. Confirm the key is copied exactly from [https://app.findymail.com/user/api-tokens](https://app.findymail.com/user/api-tokens) with no extra spaces.
