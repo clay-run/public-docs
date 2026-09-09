@@ -31,7 +31,6 @@ Viewing and filtering audience data is available to all workspace roles. Most wr
 | Add or configure data sources | ✓ | — | — |
 | Export individual records to Salesforce | ✓ | — | — |
 | Upsert or update records from a Clay table into Audiences | ✓ | — | — |
-| Export a segment to a Clay workbook or campaign | ✓ | ✓ | — |
 
 To change someone's role, go to **Settings** → **Team** and use the dropdown next to their name. Changes apply immediately. Editors and Viewers who need to create segments, run bulk enrichments, or manage data sources should have their role upgraded to Admin, or ask a workspace Admin to perform those actions on their behalf.
 
@@ -858,14 +857,13 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 ### How do I export my audience data to CSV?
 
-The Audiences screen does not have a direct CSV download button. To download audience data as a CSV, first send the segment to a Clay table using **Add to workbook**, then export that table:
+The Audiences screen does not have a direct CSV download button. To download audience data as a CSV, use the **Enrich** flow to create an enrichment table from the segment, then export that table. **Admin access is required.**
 
 1. Open the audience segment you want to export.
-2. Click **Send** → **Export action** → **Add to workbook**. Clay creates a Clay table containing up to 50,000 rows from that segment.
-3. Open the table. If any rows are checked, uncheck them first — the toolbar shows **Tools** only when no rows are selected.
-4. Click **Tools** → **Export** → **Download CSV**.
-
-For segments with more than 50,000 records, export in batches by applying filters to create smaller sub-segments and repeating steps 2–4 for each batch.
+2. Click `Enrich` to open the enrichment panel, then create a new enrichment table for this segment. (The exact button label varies by workspace — you may see **Add bulk enrich** or a `+` button with a **Create Enrichment Table** option.)
+3. In the enrichment setup, skip adding enrichment columns and turn off field mapping if you only need the raw segment data.
+4. Open the resulting table. If any rows are checked, uncheck them first — the toolbar shows **Tools** only when no rows are selected.
+5. Click **Tools** → **Export** → **Download CSV**.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
