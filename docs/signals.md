@@ -74,7 +74,11 @@ Most Signals — Clay's automated monitors for events like job changes, promotio
 
 ### Why is my Signal returning 0 results?
 
-Signals require a connected data source to run against — either a source table containing the companies or contacts you want to monitor, or an audience segment. Without a linked source table or audience segment (or if the linked table is empty or has been deleted), the Signal has nothing to check and will return 0 results. Confirm that your Signal is connected to an active Clay table with valid company identifiers (domain or LinkedIn URL) or contact LinkedIn URLs, or to a populated audience segment.
+Two common causes:
+
+**No connected or empty source table.** Signals require a connected data source to run against — either a source table containing the companies or contacts you want to monitor, or an audience segment. Without a linked source table or audience segment (or if the linked table is empty or has been deleted), the Signal has nothing to check and will return 0 results. Confirm that your Signal is connected to an active Clay table with valid company identifiers (domain or professional profile URL) or contact profile URLs, or to a populated audience segment.
+
+**Nested or unresolved identifier path.** If the company identifier column references a nested property path within a CRM object — for example, a domain value accessed directly inside a HubSpot object result rather than extracted as its own standalone column — the Signal may silently skip rows where that path does not resolve, returning 0 results even when the table appears populated. No error is shown when this happens. The most reliable approach is to use **Add to column** next to the source field (for example, next to the domain property in the HubSpot object panel) to extract the value as a standalone plain-text column, then create a new signal using that column as the company identifier. Note that the Company Table, View, and Company Identifier fields are locked after a signal is created and cannot be updated in place — see [Why is the View field empty or locked when I open Edit Signal?](#why-is-the-view-field-empty-or-locked-when-i-open-edit-signal)
 
 ### How do I update or replace my master source table without breaking my signal workflows?
 
