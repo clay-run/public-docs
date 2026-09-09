@@ -240,14 +240,14 @@ To add rows safely:
 1.  If the table is actively running, click **Stop** first to cancel the current run.
 2.  Turn table-level auto-run OFF before pasting or importing rows.
 3.  Add your rows, then review the table to confirm the data is correct and columns are aligned.
-4.  Turn auto-run back ON and choose `Update cells` — or manually select rows and right-click → **Run [N] rows** to enrich only the rows you've verified.
+4.  Turn auto-run back ON and choose `Update cells` — or manually select rows and right-click → **Run [N] rows** to enrich only the rows you've verified. Clay shows an estimated credit cost in the confirmation dialog before you commit — check this figure, especially for large batches.
 
 **When running production workflows:**
 
 1.  Turn table-level auto-run ON.
 2.  Configure column-level toggles strategically.
 3.  Use conditional logic (`Only run if`) for cost control.
-4.  Monitor credit usage.
+4.  Monitor credit usage — click the **Credits** button in the top-right of your workspace to check your current balance and upcoming renewal date at any time.
 
 **For credit control:**
 
