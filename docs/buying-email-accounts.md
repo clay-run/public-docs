@@ -63,7 +63,21 @@ Clay fulfills orders through Smartlead, which in turn uses Zapmail to provision 
 
 ### **How can I look up the rep's details for a purchased account?**
 
-Use the **Get rep data** enrichment in a Clay table. Provide the SmartSender account email address as the input — the action returns the rep's email address and full name (when available). This is useful for personalizing campaign messages with the sender's name.
+Use the **Get rep data** enrichment in a Clay table. Provide the SmartSender account email address as the input — the action returns the rep's email address and full name (when available). This is useful for personalizing campaign messages with the sender's name and for routing campaign replies to the rep's inbox — see [How do reps without a Clay seat receive campaign replies from SmartSender accounts?](#how-do-reps-without-a-clay-seat-receive-campaign-replies-from-smartsender-accounts).
+
+### **How do reps without a Clay seat receive campaign replies from SmartSender accounts?**
+
+Reps do not need a Clay seat to receive campaign replies. Use the campaign events table to automatically forward incoming replies to each rep's primary inbox:
+
+1. Open your campaign events table.
+2. Add the **Get rep data** enrichment column. Use the SmartSender account email address column as input — it returns the rep's email address as `repEmail` and their full name.
+3. Locate or add the **Forward lead email in campaign** column. Map **Campaign ID** and **Lead ID** from the event row. Set **Recipient email addresses** to the `repEmail` output from **Get rep data**.
+4. Add a run condition on **Forward lead email in campaign** so it only runs when `Event type = EMAIL_REPLY`.
+5. Enable **Auto-run** on the column so new reply events trigger forwarding automatically.
+
+**Tip:** The **Forward lead email in campaign** column is included by default when a campaign events table is created. If it is already in your table, skip to steps 4 and 5. If it is missing, search for the enrichment and add it manually.
+
+**Note:** When the rep replies to a forwarded email, the reply goes to the SmartSender mailbox rather than directly to the lead. The rep should copy the lead's email address from the forwarded email content before replying.
 
 ### **Why does my sender's name appear with extra characters in Outlook?**
 
