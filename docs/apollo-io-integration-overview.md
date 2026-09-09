@@ -11,6 +11,16 @@ AI-powered platform for sales intelligence, engagement, and workflow automation.
 
 The Apollo and Clay integration enables users to find and enrich leads within Clay by leveraging [Apollo.io](http://Apollo.io)'s extensive B2B database.
 
+## How Apollo works in Clay
+
+Apollo is a **user-connected integration** — it is not a built-in Clay data source, and Clay does not automatically query Apollo on your behalf. To use Apollo data in Clay, you must have your own [Apollo.io](http://Apollo.io) account and connect it. Clay does not hold a managed Apollo credential, so there is no Clay-provided fallback option.
+
+**What data it returns:** The Apollo integration in Clay can return both email addresses and phone numbers, alongside job titles, company details, LinkedIn profiles, and other contact information. The specific fields returned depend on which action you use and the inputs you provide.
+
+**Credits:** Apollo enrichments in Clay use your Apollo account's own lead credits — Clay Data Credits are not charged for Apollo actions. Clay still consumes 1 Action per enrichment run. You can track Apollo action usage in **Settings → Usage → Integrations**.
+
+**Overlap with standalone Apollo:** When you include Apollo in a Clay waterfall or enrichment column, Clay queries the same Apollo database you access directly in Apollo.io, using your own account credentials. Results for the same contacts will largely overlap. Differences can occur when your Clay workflow selects only specific fields from the response, or when other providers in a waterfall return data that Apollo's database does not include.
+
 ## **Creating a table with** [**Apollo.io**](http://Apollo.io)
 
 1.  In a workbook, click `+ Add` at the bottom.
@@ -203,7 +213,7 @@ Finds a contact in [Apollo.io](http://Apollo.io) or creates a new one if it does
 -   Direct Phone (Optional): Primary phone number for contact
 -   Mobile Phone (Optional): Mobile phone number of contact
 -   Present Raw Address (Optional): Personal location for contact (city, US state, country)
--   Contact Stage ID (Optional): Current stage of contact in sales process
+-   Contact Stage ID (Optional): Custom fields defined in Apollo account settings
 -   Custom Fields (Optional): Custom fields defined in Apollo account settings
 
 **Output:**
@@ -317,18 +327,9 @@ To resolve:
 
 ### Insufficient credits
 
-Apollo enrichments in Clay can consume either **Clay Data Credits** or **Apollo lead credits**, depending on which integration type is in use:
+Apollo enrichments in Clay use your Apollo account's own lead credits — Clay Data Credits are not charged for Apollo actions, whether you use the current OAuth connection or a legacy API-key connection. Clay still consumes 1 Action per enrichment run.
 
--   **Clay Data Credits**: Used with the current OAuth-based Apollo integration. New Apollo columns use OAuth by default.
--   **Apollo lead credits**: Used with older API-key-based Apollo columns. If you set up Apollo columns before the OAuth integration launched, those columns may still run against your own Apollo account's lead credits.
-
-If an enrichment step fails with a credits error, first confirm which type of connection your column is using.
-
-**If using the OAuth integration (Clay Data Credits):**
-
-Check your Clay workspace credit balance. If credits are depleted, add more or upgrade your Clay plan.
-
-**If using a legacy API-key-based Apollo column (Apollo lead credits):**
+If an enrichment step fails with a credits error:
 
 1.  Check your Apollo subscription to confirm it includes enough lead credits for the action. If not, upgrade through Apollo's settings.
 2.  If you recently upgraded your Apollo account but still see the error in Clay, try reconnecting your Apollo account to refresh the connection. Ensure the credit type you have matches the activity you are performing.
