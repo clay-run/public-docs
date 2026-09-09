@@ -54,6 +54,8 @@ Workspace access in Clay is invitation-only. When a new user signs up for Clay, 
 
 **If your workspace uses SSO (such as Okta or another SAML identity provider):** Clay's SSO handles authentication only — it does not provision users or add them to your workspace. Adding a user in your identity provider does not create a Clay account or grant access to your organization's workspace. You must send a Clay workspace invite before a user can log in via SSO and be directed to your workspace. If a user clicks the SSO tile before receiving a Clay invite, they will be routed to a new, empty workspace of their own instead of your organization's workspace. Sending a Clay invite after the fact still works — once the user accepts the invite and logs in via SSO, they will be directed to the correct workspace.
 
+**If an invited user logs in before clicking the invitation email:** When an invited user visits Clay directly (for example, by going to app.clay.com) before accepting their invitation, Clay has no invite code to act on and automatically creates a new free workspace for that user instead of routing them to your workspace. Once the free workspace exists, every subsequent login redirects the user there — they will not be able to access your workspace even after you re-send the invite. To prevent this, instruct invited users to always access Clay for the first time through the workspace invitation email link, not by logging in directly. If this has already happened, contact Clay support via the in-app chat to delete the erroneously created workspace. Once it is removed, re-send the invitation and have the user accept it through the email link.
+
 To invite a new member to your workspace:
 
 -   Go to `Settings` > `Team`.
