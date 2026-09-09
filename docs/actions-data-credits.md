@@ -25,7 +25,7 @@ The table below summarizes the key differences between Actions and Data Credits.
 | What it measures | Platform usage capacity | Data marketplace purchases |
 | Cost per enrichment | Always 1 action | Varies (0.5–10+ credits based on data type) |
 | How to get more | Upgrade action capacity tier | Upgrade tier OR purchase one-time top-up |
-| Rollover | No | Yes (up to 2× monthly limit) |
+| Rollover | No | Yes — monthly plans: up to 2× monthly allotment; annual plans: up to 15% of annual allotment |
 
 ## How Actions and Data Credits work together
 
@@ -247,7 +247,7 @@ If you are on a **monthly plan**, unused Data Credits will roll over and accumul
 -   For example, if your plan includes 50,000 credits per month, your maximum balance is 100,000. If you already have 82,000 credits when your plan renews, your balance becomes 100,000 — not 132,000. The 32,000 excess is dropped.
 -   If you cancel or downgrade, you can use any excess Data Credits until your current billing cycle ends. After the billing cycle ends, your balance will be reduced to the **Data Credit rollover limit** of your new plan.
 
-If you are on an **annual plan**, your full year's Data Credits are deposited into your account immediately at purchase — they are not distributed in monthly installments. You can run a bulk enrichment right away without waiting for credits to accumulate. You are also eligible for a **15% Data Credit rollover** of unused Data Credits when you renew, provided you renew on the same or a higher-tier plan.
+If you are on an **annual plan**, your full year's Data Credits are deposited into your account immediately at purchase — they are not distributed in monthly installments. You can run a bulk enrichment right away without waiting for credits to accumulate. You are also eligible to roll over up to **15% of your annual credit allotment** when you renew — your balance after renewal is capped at 115% of your new annual grant (the grant itself plus up to 15% carried over from unused credits). Any unused credits above that 15% cap expire at renewal.
 
 _Note: Your rollover and renewal happen on the same day and at the same time you originally subscribed (this timestamp is now shown in your billing details). Credits are updated via a payment-processor webhook and typically appear within a few minutes of that timestamp._
 
@@ -378,19 +378,23 @@ Actions represent fixed platform capacity tied to your action tier. To get more 
 
 Actions reset each billing cycle and don't roll over, since they reflect the platform capacity your plan includes. Each plan includes enough Actions to cover 90% of customer usage, and if you need more, you can increase your Action tier.
 
-Data Credits work more like a currency and do roll over. On Launch and Growth plans, unused credits can accumulate up to 2x your monthly credit amount (e.g., a 10,000 credit plan can bank up to 20,000 total). Enterprise customers can roll over up to 15% of their prior year's purchased credits, provided they renew at an equal or higher commitment.
+Data Credits work more like a currency and do roll over. On **monthly plans** (Launch and Growth), unused credits can accumulate up to 2× your monthly credit amount (e.g., a 10,000 credit plan can bank up to 20,000 total). On **annual plans** (Launch and Growth), you can roll over up to 15% of your annual credit allotment at renewal — the balance after renewal is capped at 115% of your new annual grant. Enterprise annual plans have rollover terms configured per contract.
 
 **Trial plans:** Trial Data Credits are handled differently — see the [*I have a trial, when do the Data Credits expire?*](#i-have-a-trial-when-do-the-data-credits-expire) section below for details.
 
-### Why do I see a warning that credits are "over the rollover limit" when my current balance is below the 2× cap?
+### Why do I see a warning that credits are "over the rollover limit"?
 
-The warning appears when your current balance is already high enough that adding your next monthly renewal would push the total over the 2× rollover cap — not because you are over it right now.
+The warning appears when your unused credits at renewal would exceed the rollover cap for your plan type — so those credits would expire unless spent before the renewal date shown in the warning.
 
-When your plan renews, your credit balance is capped at 2× your monthly allotment. If your current balance plus the credits you will receive at renewal would exceed that cap, you will see a warning showing how many credits are projected to fall above the cap at renewal.
+**Monthly plans:** Your credit balance is capped at 2× your monthly allotment at renewal. The warning appears when your current balance is already high enough that adding your next monthly renewal would push the total over this 2× cap — not because you are over it right now.
 
-**Example:** On a 10,000 credits/month plan (2× cap = 20,000), if your current balance is 17,150 credits, adding 10,000 at renewal would reach 27,150 — 7,150 above the cap. The warning shows: *"7,150 credits are over the rollover limit. Use them by [renewal date] or they will expire."* At renewal, your balance is set to 20,000.
+**Example (monthly plan):** On a 10,000 credits/month plan (2× cap = 20,000), if your current balance is 17,150 credits, adding 10,000 at renewal would reach 27,150 — 7,150 above the cap. The warning shows: *"7,150 credits are over the rollover limit. Use them by [renewal date] or they will expire."* At renewal, your balance is set to 20,000.
 
-No credits are affected before your renewal date — you can use them freely until then. To preserve more credits, spend down your balance before the renewal date shown in the warning.
+**Annual plans:** Annual plans have a different rollover cap. At renewal, your balance is capped at 115% of your new annual credit allotment — your fresh annual grant plus up to 15% of that allotment carried over from unused credits. If your unused credits at renewal exceed 15% of your annual allotment, the excess expires. The warning shows how many credits will fall over this limit.
+
+**Example (annual plan):** On an annual plan with an 840,000-credit allotment, the rollover limit is 126,000 credits (15% × 840,000). If you have 769,000 unused credits when your plan renews, the warning shows "643,000 credits are over the rollover limit" — 126,000 will carry over, and 643,000 will expire. Your opening balance after renewal is 840,000 (new grant) + 126,000 (rollover) = 966,000 credits.
+
+In both cases, no credits expire before your renewal date — you can spend them freely until then. To preserve more credits, spend down your balance before the renewal date shown in the warning.
 
 ### How do I estimate what my workflow will cost?
 
