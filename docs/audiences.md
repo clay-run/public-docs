@@ -321,6 +321,11 @@ To configure:
 3. Under `In`, map the alias field to the corresponding field in each connected source.
 4. When a new record arrives, Audiences checks whether the alias value already exists. If it does, the new data is merged with the existing record instead of creating a duplicate.
 
+**What happens to field data when records merge:** When Import record matching joins two records into one, field values are handled as follows:
+
+- **Fields that only exist in one source** are added to the merged record automatically — no data is lost, regardless of which source they came from.
+- **Fields that exist in both sources** resolve according to the [conflict resolution priority order](#conflict-resolution-when-sources-provide-different-field-values). Higher-priority source types win for that specific field — no single source takes precedence for the record as a whole.
+
 You can configure one alias field per entity type (one for People, one for Companies). This setting applies to records imported *after* it is enabled — it does not retroactively merge records already in Audiences.
 
 **Unique Identifier vs. alias field (Snowflake and BigQuery imports)**
@@ -1058,27 +1063,15 @@ When you select multiple fields in **Fields to filter by**, the lookup uses **AN
 
 Two behaviors to keep in mind:
 
--   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record is only returned when both values match exactly. A record with the right email but a different or missing secondary value won't be returned.
--   **Blank or empty filter values prevent any match.** If any field in **Fields to filter by** has a blank or null value in your table row, the lookup returns "No records found" — even if the Audiences record also has a blank value for that field. Every filter field must have a non-empty value for the lookup to run.
+-   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record must match on both fields to be returned. A record that matches on Email but not on the secondary field is excluded.
+-   **Empty fields are treated as no match.** If a record in Audiences has no value for one of your filter fields — for example, it has an Email but no Profile URL — it will not be returned, even if the Email matches exactly. The lookup requires all selected fields to have a matching, non-empty value.
 
-**Tip:** Use a single, high-confidence identifier — such as `Email` for people or `Domain` for companies — as the sole filter field wherever possible. Multi-field filtering is useful when you want to guarantee uniqueness (for example, filtering by both email and company domain to avoid matching a contact at the wrong company), but it increases the risk of missed matches when any one field is missing or mismatched.
+### How do I replace a CSV import with updated data?
 
-### Can I use Look up in Audiences to check whether a record belongs to a specific segment?
+CSV imports are one-time — they do not re-sync automatically. To replace a CSV import with corrected or updated data:
 
-**Look up in Audiences** matches records by field values (such as domain or email) across all records in your Audience — it does not filter by segment membership. You cannot point the lookup directly at a named segment like "PG Buyers" to check whether a record belongs to it.
-
-**Workaround: tag segment members with a custom field, then filter by that field**
-
-To use Look up in Audiences as a segment membership check, write a custom field to every record in your target segment, then include that field as a filter in your lookup:
-
-1. In your target segment (for example, "PG Buyers — Companies"), click **Enrich** → **Add bulk enrich**.
-2. In the bulk enrichment table, open the **Update Audiences Record** column and use **+ Add field** to create a custom text field — for example, `In PG Buyers Segment`. Set its value to `Yes`. (To create the custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) above.)
-3. Click **Start Run**. Every record currently in the segment now has `In PG Buyers Segment = Yes` written to their Audiences profile.
-4. In your working table, add a **Look up in Audiences** column. Under **Fields to filter by**, select your stable identifier (for example, **Domain** for companies or **Email** for people) and the `In PG Buyers Segment` field. Map the identifier from your current row as its value, and enter `Yes` as a constant for `In PG Buyers Segment`.
-
-The lookup returns a match only when the record both exists in your Audience and has the segment flag set. Use the lookup result as a suppression check, run condition, or view filter — no match means the record is not in the segment.
-
-**Keep the flag current:** The bulk enrichment writes permanently to All Companies (or All People), so the flag persists on each record even as segment membership changes. Re-run the enrichment on the segment periodically to tag newly added records, and clear the field for records that have left the segment.
+1.  Archive the records from the old CSV import first — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) for steps.
+2.  After archiving, import the updated CSV file as a new source.
 
 ### How do I remove records from an audience?
 
