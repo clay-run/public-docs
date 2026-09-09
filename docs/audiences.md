@@ -31,7 +31,6 @@ Viewing and filtering audience data is available to all workspace roles. Most wr
 | Add or configure data sources | ✓ | — | — |
 | Export individual records to Salesforce | ✓ | — | — |
 | Upsert or update records from a Clay table into Audiences | ✓ | — | — |
-| Export a segment to a Clay workbook or campaign | ✓ | ✓ | — |
 
 To change someone's role, go to **Settings** → **Team** and use the dropdown next to their name. Changes apply immediately. Editors and Viewers who need to create segments, run bulk enrichments, or manage data sources should have their role upgraded to Admin, or ask a workspace Admin to perform those actions on their behalf.
 
@@ -858,14 +857,13 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 ### How do I export my audience data to CSV?
 
-The Audiences screen does not have a direct CSV download button. To download audience data as a CSV, first send the segment to a Clay table using **Add to workbook**, then export that table:
+The Audiences screen does not have a direct CSV download button. To download audience data as a CSV, use the **Enrich** flow to create an enrichment table from the segment, then export that table. **Admin access is required.**
 
 1. Open the audience segment you want to export.
-2. Click **Send** → **Export action** → **Add to workbook**. Clay creates a Clay table containing up to 50,000 rows from that segment.
-3. Open the table. If any rows are checked, uncheck them first — the toolbar shows **Tools** only when no rows are selected.
-4. Click **Tools** → **Export** → **Download CSV**.
-
-For segments with more than 50,000 records, export in batches by applying filters to create smaller sub-segments and repeating steps 2–4 for each batch.
+2. Click `Enrich` to open the enrichment panel, then create a new enrichment table for this segment. (The exact button label varies by workspace — you may see **Add bulk enrich** or a `+` button with a **Create Enrichment Table** option.)
+3. In the enrichment setup, skip adding enrichment columns and turn off field mapping if you only need the raw segment data.
+4. Open the resulting table. If any rows are checked, uncheck them first — the toolbar shows **Tools** only when no rows are selected.
+5. Click **Tools** → **Export** → **Download CSV**.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
@@ -1060,35 +1058,82 @@ When you select multiple fields in **Fields to filter by**, the lookup uses **AN
 
 Two behaviors to keep in mind:
 
--   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record is only returned when both values match exactly. A record with the right email but a different or missing secondary value won't be returned.
--   **Blank or empty filter values prevent any match.** If any field in **Fields to filter by** has a blank or null value in your table row, the lookup returns "No records found" — even if the Audiences record also has a blank value for that field. Every filter field must have a non-empty value for the lookup to run.
+-   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record is only returned when both values match exactly. If either field is empty or doesn't match precisely, the lookup returns nothing for that row. To maximize match rates, use only the single strongest identifier you have — typically `Email` for People or `Domain` for Companies.
+-   **Field order does not affect results.** Lookup in Audiences evaluates all selected filter fields as a conjunction — the order you select them in does not change which records are returned.
 
-**Tip:** Use a single, high-confidence identifier — such as `Email` for people or `Domain` for companies — as the sole filter field wherever possible. Multi-field filtering is useful when you want to guarantee uniqueness (for example, filtering by both email and company domain to avoid matching a contact at the wrong company), but it increases the risk of missed matches when any one field is missing or mismatched.
+### How do I archive records that no longer match my Snowflake import query?
 
-### Can I use Look up in Audiences to check whether a record belongs to a specific segment?
+If you have updated your Snowflake SQL query to exclude certain records, those records are marked **Deleted in source** in Audiences during the next full sync — but they remain in your audience. To remove them, archive the records that carry a Snowflake "deleted in source" association.
 
-**Look up in Audiences** matches records by field values (such as domain or email) across all records in your Audience — it does not filter by segment membership. You cannot point the lookup directly at a named segment like "PG Buyers" to check whether a record belongs to it.
+**Steps:**
 
-**Workaround: tag segment members with a custom field, then filter by that field**
+1.  In your audience, add a filter: **Data source** → **Snowflake** → **Deleted in source** → **is true**.
+2.  Save this filtered view as a new segment.
+3.  Click **⋮** next to the segment name in the sidebar and select **Archive records**.
+4.  Confirm the archive.
 
-To use Look up in Audiences as a segment membership check, write a custom field to every record in your target segment, then include that field as a filter in your lookup:
+Archived records are removed from all active audience segments and enrichments. They can be restored from the **Archived** section in the sidebar if needed.
 
-1. In your target segment (for example, "PG Buyers — Companies"), click **Enrich** → **Add bulk enrich**.
-2. In the bulk enrichment table, open the **Update Audiences Record** column and use **+ Add field** to create a custom text field — for example, `In PG Buyers Segment`. Set its value to `Yes`. (To create the custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) above.)
-3. Click **Start Run**. Every record currently in the segment now has `In PG Buyers Segment = Yes` written to their Audiences profile.
-4. In your working table, add a **Look up in Audiences** column. Under **Fields to filter by**, select your stable identifier (for example, **Domain** for companies or **Email** for people) and the `In PG Buyers Segment` field. Map the identifier from your current row as its value, and enter `Yes` as a constant for `In PG Buyers Segment`.
+### How do I archive records that no longer match my BigQuery import query?
 
-The lookup returns a match only when the record both exists in your Audience and has the segment flag set. Use the lookup result as a suppression check, run condition, or view filter — no match means the record is not in the segment.
+If you have updated your BigQuery SQL query to exclude certain records, those records are marked **Deleted in source** in Audiences during the next full sync — but they remain in your audience. To remove them, archive the records that carry a BigQuery "deleted in source" association.
 
-**Keep the flag current:** The bulk enrichment writes permanently to All Companies (or All People), so the flag persists on each record even as segment membership changes. Re-run the enrichment on the segment periodically to tag newly added records, and clear the field for records that have left the segment.
+**Steps:**
+
+1.  In your audience, add a filter: **Data source** → **BigQuery** → **Deleted in source** → **is true**.
+2.  Save this filtered view as a new segment.
+3.  Click **⋮** next to the segment name in the sidebar and select **Archive records**.
+4.  Confirm the archive.
+
+Archived records are removed from all active audience segments and enrichments. They can be restored from the **Archived** section in the sidebar if needed.
+
+### How do I replace a CSV import with updated data?
+
+CSV imports are one-time — they do not re-sync automatically. If you imported a CSV with errors or outdated data, the recommended approach is to archive the old records and then re-import the corrected file.
+
+**Step 1: Archive the old records**
+
+1.  In your audience, add a filter: **Origin source** → set to the display name of your CSV import.
+2.  Save the filtered view as a new segment.
+3.  Click **⋮** next to the segment name and select **Archive records**.
+4.  Confirm the archive.
+
+**Step 2: Re-import the corrected CSV**
+
+1.  Click `Add data` → `Add Source` → select **CSV**.
+2.  Upload your corrected file and complete the import setup as usual.
+
+Archived records are excluded from all audience segments and enrichments going forward. They can be restored from the **Archived** section in the sidebar if needed.
 
 ### How do I remove records from an audience?
 
-Records in Audiences cannot be permanently deleted — they can only be **archived**. Archiving a record removes it from all audience segments and excludes it from future enrichments and workflows, but the record is not permanently deleted.
+You can archive records in bulk using the **Archive records** option on any segment, or archive individual records from their record detail view.
 
-**To archive records:**
+**To archive records in bulk:**
 
-1.  In your audience, select the records you want to remove.
-2.  Right-click (or use the toolbar) → **Archive records** to remove them from your Audience.
+1.  Create or open a segment containing the records you want to remove.
+2.  Click **⋮** next to the segment name in the sidebar.
+3.  Select **Archive records**.
+4.  Confirm the archive.
+
+All records in the segment at the time of archiving are archived — not just the ones currently visible. Archived records are removed from all active audience segments and enrichments. They can be restored from the **Archived** section in the sidebar if needed.
 
 If the same records exist in other sources (Salesforce, HubSpot, CSV), archiving will remove them from those sources' audience contributions as well. Archived records can be restored from the **Archived** section in the sidebar if needed.
+
+**To archive a single record:**
+
+1.  Open the record detail view by clicking on a person or company row.
+2.  Click **⋮** in the top right of the record panel.
+3.  Select **Archive**.
+
+### How do I find audience records that haven't been enriched yet?
+
+To see which records are missing data for a specific field, add a filter to your audience:
+
+1.  Click **+ Filter**.
+2.  Select the enriched field you want to check (for example, `Work email` or `Phone`).
+3.  Set the operator to **`is empty`**.
+
+The filtered view shows only records where that field has no value — these are the records the enrichment did not fill in, or hasn't run on yet.
+
+If you want to run an enrichment on only the un-enriched records, save this filtered view as a new segment and run the bulk enrichment on that segment.
