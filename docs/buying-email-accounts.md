@@ -70,12 +70,10 @@ Use the **Get rep data** enrichment in a Clay table. Provide the SmartSender acc
 Reps do not need a Clay seat to receive campaign replies. Use the campaign events table to automatically forward incoming replies to each rep's primary inbox:
 
 1. Open your campaign events table.
-2. Add the **Get rep data** enrichment column. Use the SmartSender account email address column as input — it returns the rep's email address as `repEmail` and their full name.
-3. Locate or add the **Forward lead email in campaign** column. Map **Campaign ID** and **Lead ID** from the event row. Set **Recipient email addresses** to the `repEmail` output from **Get rep data**.
-4. Add a run condition on **Forward lead email in campaign** so it only runs when `Event type = EMAIL_REPLY`.
-5. Enable **Auto-run** on the column so new reply events trigger forwarding automatically.
-
-**Tip:** The **Forward lead email in campaign** column is included by default when a campaign events table is created. If it is already in your table, skip to steps 4 and 5. If it is missing, search for the enrichment and add it manually.
+2. Add the **Get rep data** enrichment column if it is not already present. Use the SmartSender account email address column as input — it returns the rep's email address as `repEmail` and their full name.
+3. Add the **Forward lead email in campaign** column if it is not already present. Map **Campaign ID** and **Lead ID** from the event row, and set **Recipient email addresses** to the `repEmail` output from **Get rep data**.
+4. Confirm the run condition on **Forward lead email in campaign** is set to `Event type = EMAIL_REPLY`. Add it if it is missing.
+5. Enable **Auto-run** on the **Forward lead email in campaign** column so new reply events trigger forwarding automatically.
 
 **Note:** When the rep replies to a forwarded email, the reply goes to the SmartSender mailbox rather than directly to the lead. The rep should copy the lead's email address from the forwarded email content before replying.
 
