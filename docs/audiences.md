@@ -825,6 +825,14 @@ The Source column is plain text — there is no direct link from the Source colu
 
 **Note:** To filter your audience to show only records that came from a specific table, use the **Person source** filter — see [Why doesn't my Clay table appear in the Person source filter?](#why-doesnt-my-clay-table-appear-in-the-person-source-filter) above.
 
+### What does a value like `t_0tjpziwMEnVGrTSHggQ` mean in the Origin Source field?
+
+When the **Origin Source** field on an Audiences record shows a value starting with `t_` — for example, `t_0tjpziwMEnVGrTSHggQ` — that value is a **Clay table ID**. It identifies the specific Clay table in your workspace that the record was originally imported from.
+
+Clay table IDs always begin with `t_` followed by a string of letters and numbers. To find the table this record came from, open your workspace's tables list — the same `t_` identifier appears in the table's browser URL when you open it.
+
+**Note:** To filter your People audience by a specific source table, see [Why doesn't my Clay table appear in the Person source filter?](#why-doesnt-my-clay-table-appear-in-the-person-source-filter) above.
+
 ### My CRM is messy. Should I clean it up before setting up Audiences?
 
 You don't need a clean CRM to get started — CRM cleanup is often the first use case Audiences enables. A common approach: sync your existing CRM, run professional network enrichments to refresh contact data, use the enriched identifiers to surface duplicates, then build further enrichments from there.
@@ -854,6 +862,14 @@ To work with only the narrower set, open the search, tighten your filters, click
 ### Can I sync an audience to multiple ad platforms?
 
 Yes — you can add multiple ad platforms to a single audience sync. After your initial sync is active, an **Expand your reach** section appears on the Sync tab. Click **Add** next to any available platform to configure field mappings for that provider. The new platform will sync on the same schedule as your existing provider.
+
+### How does Clay match companies when syncing a Companies audience to LinkedIn Ads?
+
+When you sync a Companies audience to LinkedIn, Clay sends several fields for each record — including company name, company website, and **LinkedIn company page URL** (the URL of the company's LinkedIn Company Page, for example `https://www.linkedin.com/company/clay-hq`). LinkedIn uses these to identify and match the company in its system.
+
+The LinkedIn company page URL is a direct identifier that resolves unambiguously to one Company Page, regardless of company name variations or shared domains. If a record's LinkedIn company page URL is missing or incorrect, LinkedIn may fail to match that company — even when the company name and website domain are present. For exclusion audiences, this means the company is not excluded from your campaigns, and members of that company may continue to see your ads.
+
+**To fix a missing or incorrect LinkedIn company page URL:** Open the record in your Companies Audience, update the LinkedIn company page URL field to the correct Company Page URL, and the corrected value will be sent to LinkedIn on the next sync.
 
 ### How do I export my audience data to CSV?
 
@@ -1095,5 +1111,3 @@ Records in Audiences cannot be permanently deleted — they can only be **archiv
 **Note:** The **Archive records** option only appears on segments that have saved filters. It does not appear on "All Companies" or "All People" directly, or on a segment with no saved filters — this is intentional to prevent accidentally archiving your entire audience.
 
 **If you already deleted the segment:** Recreate it using the same filters (click **+** next to "My Audiences" in the sidebar and add the same conditions), then follow the steps above to archive its records.
-
-**After archiving:** Archived records are excluded from future imports — if the same company or person is imported again (for example, via a new CSV or CRM sync), the import treats the record as already present and does not re-add it to your active audience.
