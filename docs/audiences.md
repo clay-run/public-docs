@@ -1060,14 +1060,14 @@ When you select multiple fields in **Fields to filter by**, the lookup uses **AN
 
 Two behaviors to keep in mind:
 
--   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record is only returned when both values match exactly. A record where only one of the two fields matches is not returned.
--   **A blank filter value is treated as "must be empty."** If the cell you're mapping as a filter value is empty for a given row, the lookup treats it as filtering for records where that field is also empty — not as "ignore this filter." To avoid unexpected no-match results, make sure the columns you map as filter values are populated for every row you want to look up.
+-   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record is only returned when both values match exactly. A record with the right email but a different or missing secondary value won't be returned.
+-   **Blank or empty filter values prevent any match.** If any field in **Fields to filter by** has a blank or null value in your table row, the lookup returns "No records found" — even if the Audiences record also has a blank value for that field. Every filter field must have a non-empty value for the lookup to run.
+
+**Tip:** Use a single, high-confidence identifier — such as `Email` for people or `Domain` for companies — as the sole filter field wherever possible. Multi-field filtering is useful when you want to guarantee uniqueness (for example, filtering by both email and company domain to avoid matching a contact at the wrong company), but it increases the risk of missed matches when any one field is missing or mismatched.
 
 ### Can I use Look up in Audiences to check whether a record belongs to a specific segment?
 
-No — `Lookup in Audiences` does not filter by segment membership. It filters by the **field values** of the record itself (such as email, domain, or a custom attribute), not by which segments the record currently belongs to.
-
-**Why this doesn't work the way you might expect:** Segment membership in Audiences is dynamic — it is recomputed continuously based on a record's field values matching the segment's filter criteria. There is no static list of "records in this segment" stored as a field value. Because membership is not stored as a field, it cannot be used as a filter input in `Lookup in Audiences`.
+**Look up in Audiences** matches records by field values (such as domain or email) across all records in your Audience — it does not filter by segment membership. You cannot point the lookup directly at a named segment like "PG Buyers" to check whether a record belongs to it.
 
 **Workaround: tag segment members with a custom field, then filter by that field**
 
