@@ -692,7 +692,7 @@ For APIs that issue short-lived bearer tokens from a dedicated token endpoint (i
 
 **Alternative — shared token cache table (for auth flows JWT auth doesn't cover):**
 
-For auth flows not supported by the JWT action (for example, OAuth 2.0 `client_credentials` — see the JWT auth FAQ), centralize the token in a dedicated single-row table instead of fetching it per row:
+For auth flows not supported by the JWT action (for example, OAuth 2.0 `client_credentials` or `refresh_token` grants — see the JWT auth FAQ), centralize the token in a dedicated single-row table instead of fetching it per row:
 
 1. Create a new table in the same workbook with a single row. This table holds one shared, always-fresh token.
 2. Move your token-fetch HTTP API column into that table. Add a formula column (e.g., `fetched_at`) with the formula `moment().toISOString()` to record when the token was last fetched. Run the token column once manually to seed an initial value.
