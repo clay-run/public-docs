@@ -116,6 +116,16 @@ You can map your `client_id` to the **Username** field and your `client_secret` 
 
 For a formal security review: Clay does not natively support OAuth 2.0 `client_credentials` as a built-in authentication flow in either the standard HTTP API action or this JWT action.
 
+### Does HTTP API with JWT Authentication support OAuth 2.0 refresh_token grants?
+
+No. The JWT action's account stores only two credential fields — Username and Password — plus the token endpoint URL. An OAuth 2.0 `refresh_token` grant requires three parameters in the request body: `client_id`, `client_secret`, and `refresh_token`. Because the JWT action sends only `username` and `password` when calling your token endpoint, it cannot include the `refresh_token` parameter and cannot make a valid `grant_type=refresh_token` request.
+
+For example, Zoho CRM's OAuth2 flow exchanges a long-lived refresh token for a one-hour access token by POSTing `client_id`, `client_secret`, `refresh_token`, and `grant_type=refresh_token` to Zoho's accounts endpoint — a three-field credential requirement that the JWT action cannot accommodate.
+
+**Workaround — two HTTP API columns:** Use a standard HTTP API column to call your token endpoint directly. POST with `grant_type=refresh_token`, `client_id`, `client_secret`, and `refresh_token` as body parameters. Extract the `access_token` from the response into a column, then reference it in the `Authorization` header of a second HTTP API column that makes the actual API call. This pattern uses 2 Actions per row for the write-back step.
+
+**To reduce to 1 Action per row:** Centralize the token fetch in a dedicated single-row cache table that refreshes on a schedule. A [Lookup Single Row in Other Table](https://university.clay.com/docs/lookup-rows) column in your main table pulls the cached token in — lookups don't consume an Action. Each row then pays only 1 Action for the actual write, plus a small near-fixed cost for the periodic token refreshes. See the [shared token cache table pattern](https://university.clay.com/docs/http-api-integration-overview) in the HTTP API guide for full setup steps.
+
 ### How do I call ZoomInfo API endpoints that the native integration doesn't support?
 
 The native ZoomInfo integration in Clay supports four actions: **Enrich Company**, **Enrich Contact**, **Enrich contact(s) by ID** (enrich up to 25 contacts at once using their ZoomInfo contact IDs), and **Search contacts**. For ZoomInfo API endpoints not covered by these native actions, use **HTTP API with JWT Authentication** with the following ZoomInfo-specific settings.
