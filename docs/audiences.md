@@ -602,7 +602,7 @@ With **Premium** or **Standard**, Clay queries its provider network to find and 
 
 **Note:** Salesforce is currently the only native export destination in Audiences. HubSpot export from Audiences is not yet available — to write data to HubSpot, see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
 
-Audiences supports **bidirectional sync** with Salesforce. To push data from Audiences back to Salesforce, you must first enable the **Export sync** toggle in your Salesforce source settings — this is the master switch for all outbound writes. Even if individual fields are configured with an "Always write" rule, no data flows to Salesforce until Export sync is turned on.
+Audiences supports **bidirectional sync** with Salesforce. To push data from Audiences back to Salesforce, you must first enable the **Export sync** toggle in your Salesforce source settings — this is the master switch for all outbound writes. Even if individual fields are configured with an "Always write" rule, no data flows to Salesforce until Export sync is enabled.
 
 **To enable Export sync (admin-only):**
 
@@ -1060,14 +1060,14 @@ When you select multiple fields in **Fields to filter by**, the lookup uses **AN
 
 Two behaviors to keep in mind:
 
--   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record is only returned when both values match exactly. A record with the right email but a different or missing secondary value won't be returned.
--   **Blank or empty filter values prevent any match.** If any field in **Fields to filter by** has a blank or null value in your table row, the lookup returns "No records found" — even if the Audiences record also has a blank value for that field. Every filter field must have a non-empty value for the lookup to run.
-
-**Tip:** Use a single, high-confidence identifier — such as `Email` for people or `Domain` for companies — as the sole filter field wherever possible. Multi-field filtering is useful when you want to guarantee uniqueness (for example, filtering by both email and company domain to avoid matching a contact at the wrong company), but it increases the risk of missed matches when any one field is missing or mismatched.
+-   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record is only returned when both values match exactly. A record where only one of the two fields matches is not returned.
+-   **A blank filter value is treated as "must be empty."** If the cell you're mapping as a filter value is empty for a given row, the lookup treats it as filtering for records where that field is also empty — not as "ignore this filter." To avoid unexpected no-match results, make sure the columns you map as filter values are populated for every row you want to look up.
 
 ### Can I use Look up in Audiences to check whether a record belongs to a specific segment?
 
-**Look up in Audiences** matches records by field values (such as domain or email) across all records in your Audience — it does not filter by segment membership. You cannot point the lookup directly at a named segment like "PG Buyers" to check whether a record belongs to it.
+No — `Lookup in Audiences` does not filter by segment membership. It filters by the **field values** of the record itself (such as email, domain, or a custom attribute), not by which segments the record currently belongs to.
+
+**Why this doesn't work the way you might expect:** Segment membership in Audiences is dynamic — it is recomputed continuously based on a record's field values matching the segment's filter criteria. There is no static list of "records in this segment" stored as a field value. Because membership is not stored as a field, it cannot be used as a filter input in `Lookup in Audiences`.
 
 **Workaround: tag segment members with a custom field, then filter by that field**
 
@@ -1084,11 +1084,18 @@ The lookup returns a match only when the record both exists in your Audience and
 
 ### How do I remove records from an audience?
 
-Records in Audiences cannot be permanently deleted — they can only be **archived**. Archiving a record removes it from all audience segments and excludes it from future enrichments and workflows, but the record is not permanently deleted.
+Records in Audiences cannot be permanently deleted — they can only be **archived**. Archiving is a soft deletion: it removes records from All Companies (or All People) and excludes them from all segments, enrichments, and workflows going forward, but does not permanently delete them. Archived records can be restored from the **Archived** section in the sidebar at any time.
 
-**To archive records:**
+**Important:** **Delete list** — the option in a segment's ⋮ menu — removes only the *segment definition* itself. The underlying company or people records remain in All Companies / All People after you delete a list. To remove the records themselves from your audience, use **Archive records** instead.
 
-1.  In your audience, select the records you want to remove.
-2.  Right-click (or use the toolbar) → **Archive records** to remove them from your Audience.
+**To archive records from a segment:**
 
-If the same records exist in other sources (Salesforce, HubSpot, CSV), archiving will remove them from those sources' audience contributions as well. Archived records can be restored from the **Archived** section in the sidebar if needed.
+1.  In the left sidebar, hover over the segment whose records you want to remove.
+2.  Click the **⋮** (three-dot) menu next to the segment name.
+3.  Select **Archive records**. Clay archives all records currently matching that segment's filters and removes them from All Companies / All People.
+
+**Note:** The **Archive records** option only appears on segments that have saved filters. It does not appear on "All Companies" or "All People" directly, or on a segment with no saved filters — this is intentional to prevent accidentally archiving your entire audience.
+
+**If you already deleted the segment:** Recreate it using the same filters (click **+** next to "My Audiences" in the sidebar and add the same conditions), then follow the steps above to archive its records.
+
+**After archiving:** Archived records are excluded from future imports — if the same company or person is imported again (for example, via a new CSV or CRM sync), the import treats the record as already present and does not re-add it to your active audience.
