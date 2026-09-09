@@ -153,7 +153,7 @@ Further actions through ChatGPT, Claude, or Glean are hard-blocked until the mon
 
 ### I see a "limit reached" error in Claude or ChatGPT but my workspace still shows Data Credits — why?
 
-The per-user MCP credit limit and your workspace's overall Data Credits balance are separate meters. The MCP credit limit (set in Settings → MCP → MCP users table) tracks how many credits you as an individual user can spend through Claude, ChatGPT, or Glean each month — it can be exhausted even when the workspace still has Data Credits remaining. When you hit the per-user limit, further MCP usage is blocked regardless of the workspace's overall balance. To restore access immediately, ask your workspace admin to raise your individual limit from the MCP users table (Settings → MCP). The limit also resets automatically on the 1st of each month at midnight UTC.
+The per-user MCP credit limit and your workspace's overall Data Credits balance are separate meters. The MCP credit limit (visible in the `MCP users` table — click `MCP` in the workspace sidebar) tracks how many credits you as an individual user can spend through Claude, ChatGPT, or Glean each month — it can be exhausted even when the workspace still has Data Credits remaining. When you hit the per-user limit, further MCP usage is blocked regardless of the workspace's overall balance. To restore access immediately, ask your workspace admin to raise your individual limit from the `MCP users` table. The limit also resets automatically on the 1st of each month at midnight UTC.
 
 ### Where else can I see MCP credit usage?
 
