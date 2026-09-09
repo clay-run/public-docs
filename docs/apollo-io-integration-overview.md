@@ -15,7 +15,7 @@ The Apollo and Clay integration enables users to find and enrich leads within Cl
 
 Apollo is a **user-connected integration** — it is not a built-in Clay data source, and Clay does not automatically query Apollo on your behalf. To use Apollo data in Clay, you must have your own [Apollo.io](http://Apollo.io) account and connect it. Clay does not hold a managed Apollo credential, so there is no Clay-provided fallback option.
 
-**What data it returns:** The Apollo integration in Clay can return both email addresses and phone numbers, alongside job titles, company details, LinkedIn profiles, and other contact information. The specific fields returned depend on which action you use and the inputs you provide.
+**What data it returns:** The Apollo integration in Clay can return both email addresses and phone numbers, along with job titles, company details, professional profile URLs, and other contact information. The specific fields returned depend on which action you use and the inputs you provide.
 
 **Credits:** Apollo enrichments in Clay use your Apollo account's own lead credits — Clay Data Credits are not charged for Apollo actions. Clay still consumes 1 Action per enrichment run. You can track Apollo action usage in **Settings → Usage → Integrations**.
 
