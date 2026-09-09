@@ -410,11 +410,20 @@ The search is scoped to the exact companies in the segment at run time. In the f
 
 ### Adding enrichments
 
-Bulk enrichments add contact data, firmographics, technographics, and more to your audience records at scale. They run on an audience and write results permanently back to All People — not just the segment you ran them from. This means any enriched field is immediately available as a filter in any other segment.
+Enrichments add contact data, firmographics, technographics, and more to your audience records at scale. They run on an audience segment and write results permanently back to All People — not just the segment you ran them from. This means any enriched field is immediately available as a filter in any other segment.
 
-**Admin access required.** Adding and managing bulk enrichments requires workspace Admin access.
+**Admin access required.** Adding and managing enrichments requires workspace Admin access.
 
-**To add an enrichment:**
+**Enrichment in Workflows (open beta)** — Audiences enrichment now runs on top of Clay's Workflows engine. New workspaces start with the workflow-backed experience automatically; workspaces that already have Bulk Enrichments continue to see both the workflow-backed and legacy Bulk Enrich experiences during the transition — nothing is being deprecated yet.
+
+The workflow-backed experience offers:
+
+-   **Guided setup** — Start from an Audience segment with the trigger and write-back nodes already preconfigured. No manual wiring required.
+-   **Safer testing** — Choose test records and preview results in a table view before spending credits on the full segment.
+-   **Full observability** — Trace every record, step, and failure through the **Runs tab** after the enrichment runs.
+-   **Faster iteration** — Add steps or change logic on a live enrichment workflow using **partial runs**, without re-running the entire flow from scratch.
+
+**To add an enrichment (legacy Bulk Enrich — for workspaces that already have Bulk Enrichments):**
 
 1.  Navigate to an audience and click `Enrich` → `Add bulk enrich`.
 2.  Add enrichment columns as you normally would (e.g., `Enrich Person` for LinkedIn URL, title, phone).
@@ -1058,42 +1067,32 @@ When you select multiple fields in **Fields to filter by**, the lookup uses **AN
 
 Two behaviors to keep in mind:
 
--   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record is only returned when both values match exactly. A record with the right email but a different or missing secondary value won't be returned.
--   **Blank or empty filter values prevent any match.** If any field in **Fields to filter by** has a blank or null value in your table row, the lookup returns "No records found" — even if the Audiences record also has a blank value for that field. Every filter field must have a non-empty value for the lookup to run.
-
-**Tip:** Use a single, high-confidence identifier — such as `Email` for people or `Domain` for companies — as the sole filter field wherever possible. Multi-field filtering is useful when you want to guarantee uniqueness (for example, filtering by both email and company domain to avoid matching a contact at the wrong company), but it increases the risk of missed matches when any one field is missing or mismatched.
+-   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record is only returned if it matches on every field you selected. A record that matches on Email but not on the secondary identifier will not appear in the result — even if it exists in Audiences. If you are looking up by a secondary identifier that is inconsistently populated, consider filtering only by `Email` to avoid silent misses.
+-   **Multi-value fields use "contains" matching.** Fields that can hold multiple values (such as `External IDs`) check whether the filter value is *present in* the field's value list, not whether the field equals exactly that value.
 
 ### Can I use Look up in Audiences to check whether a record belongs to a specific segment?
 
-**Look up in Audiences** matches records by field values (such as domain or email) across all records in your Audience — it does not filter by segment membership. You cannot point the lookup directly at a named segment like "PG Buyers" to check whether a record belongs to it.
+Yes. `Lookup in Audiences` returns segment membership as part of the result. To check segment membership:
 
-**Workaround: tag segment members with a custom field, then filter by that field**
+1.  In your Clay table, add a `Lookup in Audiences` action column.
+2.  Set **Object type** to **People** or **Companies** as appropriate.
+3.  Under **Fields to filter by**, select `Email` (for People) or `Domain` (for Companies) and map it to the corresponding column in your table.
+4.  Run the column to retrieve the matching Audience record.
+5.  In the result cell, expand the **Segments** field — it lists the names of all segments the record currently belongs to.
 
-To use Look up in Audiences as a segment membership check, write a custom field to every record in your target segment, then include that field as a filter in your lookup:
+You can then use a formula column to check for the segment name (for example, `{{lookup_result.segments}} contains "My Target Segment"`).
 
-1. In your target segment (for example, "PG Buyers — Companies"), click **Enrich** → **Add bulk enrich**.
-2. In the bulk enrichment table, open the **Update Audiences Record** column and use **+ Add field** to create a custom text field — for example, `In PG Buyers Segment`. Set its value to `Yes`. (To create the custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) above.)
-3. Click **Start Run**. Every record currently in the segment now has `In PG Buyers Segment = Yes` written to their Audiences profile.
-4. In your working table, add a **Look up in Audiences** column. Under **Fields to filter by**, select your stable identifier (for example, **Domain** for companies or **Email** for people) and the `In PG Buyers Segment` field. Map the identifier from your current row as its value, and enter `Yes` as a constant for `In PG Buyers Segment`.
-
-The lookup returns a match only when the record both exists in your Audience and has the segment flag set. Use the lookup result as a suppression check, run condition, or view filter — no match means the record is not in the segment.
-
-**Keep the flag current:** The bulk enrichment writes permanently to All Companies (or All People), so the flag persists on each record even as segment membership changes. Re-run the enrichment on the segment periodically to tag newly added records, and clear the field for records that have left the segment.
+**Note:** Segment membership is evaluated at the time the lookup runs — it reflects the record's current segment membership, not historical membership. If a record joined or left a segment after your lookup ran, re-running the column will reflect the updated membership.
 
 ### How do I remove records from an audience?
 
-Records in Audiences cannot be permanently deleted — they can only be **archived**. Archiving is a soft deletion: it removes records from All Companies (or All People) and excludes them from all segments, enrichments, and workflows going forward, but does not permanently delete them. Archived records can be restored from the **Archived** section in the sidebar at any time.
+Audience records cannot be permanently deleted — they can only be **archived**. Archived records are excluded from all segment filters and enrichment runs. They are still visible in the **Archived** section in the sidebar and can be restored if needed.
 
-**Important:** **Delete list** — the option in a segment's ⋮ menu — removes only the *segment definition* itself. The underlying company or people records remain in All Companies / All People after you delete a list. To remove the records themselves from your audience, use **Archive records** instead.
+**To archive records:**
 
-**To archive records from a segment:**
+1.  Click the **⋮** menu next to the audience segment name in the sidebar.
+2.  Select **Archive records** — this archives all records currently matching the segment's filters.
 
-1.  In the left sidebar, hover over the segment whose records you want to remove.
-2.  Click the **⋮** (three-dot) menu next to the segment name.
-3.  Select **Archive records**. Clay archives all records currently matching that segment's filters and removes them from All Companies / All People.
+To archive a specific subset of records, first create a segment filtered to just those records, then use **Archive records** on that segment.
 
-**Note:** The **Archive records** option only appears on segments that have saved filters. It does not appear on "All Companies" or "All People" directly, or on a segment with no saved filters — this is intentional to prevent accidentally archiving your entire audience.
-
-**If you already deleted the segment:** Recreate it using the same filters (click **+** next to "My Audiences" in the sidebar and add the same conditions), then follow the steps above to archive its records.
-
-**After archiving:** Archived records are excluded from future imports — if the same company or person is imported again (for example, via a new CSV or CRM sync), the import treats the record as already present and does not re-add it to your active audience.
+If the same records exist in other sources (Salesforce, HubSpot, CSV), archiving will remove them from those sources' audience contributions as well. Archived records can be restored from the **Archived** section in the sidebar if needed.
