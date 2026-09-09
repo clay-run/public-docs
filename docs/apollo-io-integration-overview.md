@@ -365,6 +365,8 @@ Action columns do not have a built-in rate limit control. To stay below Apollo's
 
 Apollo's database sources phone numbers from business directories, professional listings, and public records. Phone numbers returned by Apollo enrichments are typically direct dial numbers or business lines tied to a contact's work role — personal mobile numbers are rarely available, and when present tend to be for senior executives and US-based contacts.
 
+If phone numbers appear only for contacts you have previously revealed in Apollo, that is expected behavior. Clay's Enrich Person action retrieves data already stored on the Apollo person record and does not trigger Apollo's phone reveal feature. Contacts that have never been revealed in Apollo will not return a phone number through Clay's enrichment.
+
 To find personal mobile phone numbers, use a dedicated mobile phone waterfall. Clay's pre-built mobile phone waterfall (available under **Tools → Enrich → Phone number**) cascades through providers that aggregate personal mobile data from multiple sources. For provider recommendations and coverage by region, see [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md).
 
 ### Apollo API key connection errors
