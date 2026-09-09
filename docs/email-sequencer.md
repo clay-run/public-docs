@@ -36,7 +36,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   Tip: You can customize the `Sync lead data to campaign` column to only send leads with an email address using `Only run if`.
 3.  In the `Setup` tab, you can set:
     -   `Lead email address`: We automatically detect email address columns, but confirm this before proceeding.
-    -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links.
+    -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links. **Important:** This choice is permanent once the campaign is launched — you cannot switch a campaign between plaintext and HTML after launch. If you need HTML features (such as images in sender signatures) in an existing plaintext campaign, create a new campaign and enable HTML before launching it.
 4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead replies (excluding out-of-office replies, which we detect and work around).
     -   Toggle `Preview` mode to see real data from your source table in the message template. When HTML is enabled, Preview also renders how your formatting will appear in the recipient's inbox — the message editor shows the content structure you've built, not the final rendered output, so use Preview to verify formatting before sending.
     -   Within each message, use `/` to access features such as:
@@ -281,6 +281,12 @@ For example, if your source table has a "First Name" column but its label was se
 No — once a campaign has launched, the number of email steps in the sequence is locked. You cannot add, remove, or reorder steps even while the campaign is paused. Pausing a campaign only allows you to edit message copy, senders, schedule, and other settings.
 
 To run a shorter sequence, create a new campaign with just the emails you want. You can include up to 4 messages per campaign.
+
+### Can I switch my campaign from plaintext to HTML (or vice versa) after launching?
+
+No. The plaintext or HTML mode you choose in the campaign `Setup` tab is locked when the campaign launches and cannot be changed afterward. Even if the `Enable HTML` toggle appears available in a launched campaign's settings, toggling it does not change how emails are sent — HTML content such as inline images and formatted sender signatures will still be stripped from campaigns that were originally launched in plaintext mode.
+
+To use HTML features — including images in sender signatures, bold text, or hyperlinks — create a new campaign and enable HTML in the **Setup** tab before launching it. Your sender account and signature settings carry over automatically and do not need to be recreated.
 
 ### Why can't I see or edit the Message sequence section?
 
