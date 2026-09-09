@@ -538,6 +538,12 @@ Connect a Clay workflow to a named audience segment — or to the entire workspa
 
 The workflow card shows the current status — **Draft**, **Live**, or **Paused**. To activate it, click the **⋮** (three-dot) menu on the workflow card and select **Open in Workflows**, then click **Publish** in the top toolbar of the workflow editor. A dialog appears where you can name this version. If your workflow has an audience segment trigger, the dialog also shows a **Run on all members now** checkbox (with a count of the current segment members). Check this box to immediately run the workflow on every contact or company already in the segment as part of publishing — leave it unchecked to have the workflow trigger only for new members that join the segment going forward. Publishing the workflow activates all connected triggers — new segment members will run through the workflow automatically once it is live.
 
+**Editing segment filters with a live connected workflow**
+
+When a segment has one or more live audience triggers (segment membership, manual, or scheduled) connected to a workflow, Clay shows a **Confirm segment changes** dialog before saving any filter edits. The dialog displays the previous and current segment size so you can review the scope of the change before confirming. Click **Save changes** to apply the new filters, or open the dropdown next to it and choose **Save as new segment** to create a new segment with the updated filters and leave the original segment and its connected workflow unchanged.
+
+This safeguard also appears when the segment has active bulk enrichments, signals, or exports — any action that could be affected by updated segment membership triggers the same confirmation. Only live (not draft or paused) workflow triggers cause the dialog to appear.
+
 **Running a workflow on existing segment members**
 
 To manually run the workflow on segment members already in the segment, open the workflow in the editor and use the **Run** dropdown on the trigger card:
