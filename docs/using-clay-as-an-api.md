@@ -68,6 +68,19 @@ The same workspace-level beta access also unlocks a Routines endpoint for trigge
 
 Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is under **Settings → Account → API keys** and is distinct from the personal API key on your profile page.
 
+**Public HTTP API — Credit Balance**
+
+Check your workspace's current credit balance without consuming any credits:
+
+-   `GET /credits/balance` — returns the current credit balances for the workspace associated with your API key.
+
+The response includes:
+
+-   **`balance`** — total remaining spendable data credits, including rollover credits.
+-   **`action_execution_balance`** — remaining actions. Omitted for workspaces on legacy billing plans or without a billing plan.
+
+Use the same workspace-scoped API key in the `clay-api-key` request header. Reading balances does not consume credits.
+
 **Note:** A 401 (`Authentication required`) from `api.clay.com/public/v0` means your workspace hasn't been provisioned for the Public HTTP API — this applies even if your API key is visible in settings. Regenerating the key will not fix a provisioning 401. [Contact Clay support](https://www.clay.com/contact-form) to request workspace enablement.
 
 **Note:** A `413` (`Payload Too Large`) from `POST /search/filters-mode/{search_id}/run` means the requested page of results exceeds the API's internal output cap. Reduce the `limit` parameter in your request and retry — the error is deterministic, so retrying at the same `limit` will always fail.
