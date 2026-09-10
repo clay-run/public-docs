@@ -165,6 +165,12 @@ To target contacts at your company accounts on those platforms, use **Find peopl
 
 No. Field mapping is configured when you create the Ad Sync and cannot be changed afterward. To use a different field mapping, delete the current sync and create a new Ad Sync with your updated configuration. **Deletion is permanent — the sync cannot be restored afterward.** Deleting the sync does not affect your underlying audience segment. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for details.
 
+### **Can I change the Enhanced Matching setting (Best, Good, or None) after an Ad Sync is created?**
+
+No. The Enhanced Matching tier you select during setup — Best match rates, Good match rates, or None (skip enrichment) — is locked once the ad sync is created and cannot be changed afterward. This applies whether you selected an enrichment tier initially or chose to skip enrichment entirely.
+
+To use a different Enhanced Matching tier, delete the current sync and create a new one with your preferred setting. Deleting the sync does not affect your underlying audience segment — your contacts remain intact. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for how to delete, and [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for credit implications.
+
 ### **Can I permanently delete an Ad Sync?**
 
 Yes. Workspace admins can permanently delete an Ad Sync from the **Ads** homepage by clicking the **⋮** (three-dot) menu next to a sync and selecting **Delete**. Deleting permanently stops all enrichment and syncing and cannot be undone — there is no way to restore a deleted Ad Sync.
@@ -252,6 +258,19 @@ Ad platforms report an audience as "too small" when fewer than 300 contacts matc
 A second factor: if Enhanced Matching is enabled, it uses a professional profile URL or Work Email column you designate to look up personal emails before syncing. If those input columns are not configured, Enhanced Matching cannot improve your match rate.
 
 **To fix this:** Because field mapping cannot be changed after an Ad Sync is created, you'll need to delete the current sync and create a new one. **Note: Deletion is permanent — the sync cannot be restored afterward. Deleting the sync does not affect your underlying audience segment.** Map at least one email column, and configure Enhanced Matching inputs if using that feature. See [Why should I use personal emails instead of work emails?](#why-should-i-use-personal-emails-instead-of-work-emails) for guidance on which email type gives the best results.
+
+### **Why am I seeing a "Failed to save ad sync" error?**
+
+This error typically means one or more of the ad platform connections used in your sync is not shared with you. It appears when you save the setup stage — for example, when configuring or editing your sync destinations — if the ad account connections were created by another teammate and not made accessible to your account.
+
+**To fix this:**
+
+1.  Go to **Settings → Connections** in Clay.
+2.  Find each connection used by the affected sync (for example, the LinkedIn, Meta, Google Ads, or Reddit Ads account connection).
+3.  Open the connection and either add yourself to the sharing list, or set access to **Anyone in the workspace can use**.
+4.  Return to the ad sync setup and save again.
+
+Workspace admins can view and update sharing settings for any connection.
 
 ### **Why is my Google Ads audience sync showing a "Failed to update audience" error?**
 
