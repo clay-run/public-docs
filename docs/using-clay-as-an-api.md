@@ -78,7 +78,8 @@ Authenticate by passing your workspace-scoped API key in the `clay-api-key` requ
 | ---- | ------------------ | ------------- |
 | Free | 100 | Monthly (resets on the 1st of each month, UTC) |
 | Trial | 10,000 | 14 days from plan start |
-| Paid | 1,000,000 | Annual (resets January 1 UTC) |
+| Flex | 50,000 | Annual (resets January 1 UTC) |
+| Launch, Growth | 1,000,000 | Annual (resets January 1 UTC) |
 | Enterprise | 10,000,000 | Annual (resets January 1 UTC) |
 
 When you exceed the period limit, Clay returns `400` with a message naming the limit and when it resets — for example: `"This request would exceed your workspace's annual limit of 1,000,000 results. You have already requested X results during the current period, which resets on January 1, [year] (UTC). Contact support to raise this limit."` To monitor your usage before hitting the limit, open the **API and CLI** page in your workspace (`Settings → API`). The **Search API usage** section shows your current period's results used out of your limit, the next reset date, and a progress bar that turns orange at 70% usage and red at 90%. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
@@ -128,3 +129,30 @@ All three return `auth_forbidden` (exit 3) if Audiences is not enabled for the w
 **Note: `clay workflows nodes` subcommands are now available on the stable channel.** `clay workflows nodes get <workflowId> <nodeId>` reads a single node's full configuration. `clay workflows nodes create <workflowId> --input '<json>'` creates a new node. `clay workflows nodes update <workflowId> <nodeId> --input '<json>'` updates an existing node's fields. `clay workflows nodes delete <workflowId> <nodeId>` removes a node (edge cleanup is handled server-side). `clay workflows nodes test <workflowId> <nodeId>` starts a partial test run of a single node. All five commands work on the default stable CLI without setting `CLAY_CLI_CHANNEL=experimental`. Node configuration shapes vary by node type — read a node first with `clay workflows nodes get` to see the exact shape before creating or updating.
 
 **Note: `clay workflows ensure-audience-writeback` creates or reconnects the shared Audiences upsert node for an audience enrichment workflow.** `clay workflows ensure-audience-writeback <workflowId>` calls the server-side helper to create or reuse the single `upsert-audiences-record` terminal node for a workflow of type `audience_enrichment`, and wires every eligible terminal route to it. The command is available on both the stable and experimental channels; it requires `cli:all` or `terracotta:cli` scope on your API key and workspace Admin or Member role (Viewers cannot use this command). Workflow commands (`clay workflows get`, `list`, `create`, `update`, `publish`) now include a `type` field in their output with three possible values: `audience_enrichment` (created by the audience enrichment experience; writes results back to Audiences), `account_agents` (managed by the account agents experience), or `null`/omitted for general workflows. Common errors: `validation_error` (exit 2) if the workflow is not of type `audience_enrichment` or has no eligible terminal route; `auth_forbidden` (exit 3) if the API key lacks the required scope or the caller does not have Admin or Member access; `not_found` (exit 6) if no workflow with that id exists.
+
+### MCP, API/CLI Access by Plan Tiers
+
+The table below summarizes which programmatic access features are available on each Clay plan. All API, CLI, and MCP usage consumes the same credits and actions as equivalent in-product work — there is no additional cost for using programmatic access instead of the Clay UI.
+
+| Feature | Free | Trial | Flex | Launch | Growth | Enterprise |
+| ------- | ---- | ----- | ---- | ------ | ------ | ---------- |
+| MCP (Claude, ChatGPT, Codex, Gemini, Grok, Cursor) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| MCP credit controls and usage monitoring for teams | — | — | ✓ | ✓ | ✓ | ✓ |
+| Functions via MCP (MCP for reps) | — | — | ✓ | ✓ | ✓ | ✓ |
+| Glean MCP integration | — | — | — | — | — | ✓ |
+| CLI/API: People & Company Searches | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| CLI/API: Routines and Functions | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| CLI/API: Audiences data | — | — | — | — | ✓ | ✓ |
+| CLI/API: Tables (read) | — | — | — | — | — | ✓ |
+
+**People & Company Search result limits** (applies to all searches via API, CLI, and MCP):
+
+| Plan | Results per request | Results per period |
+| ---- | ------------------- | ------------------ |
+| Free | 50 | 100 / month |
+| Trial | 50 | 10,000 / 14 days |
+| Flex | 500 | 50,000 / year |
+| Launch, Growth | 500 | 1,000,000 / year |
+| Enterprise | 500 | 10,000,000 / year |
+
+The Flex plan is a newer plan tier positioned between Growth and Enterprise. It includes Launch-level MCP and API/CLI access, excluding Audiences and web intent signals, with a lower People & Company Search result cap. Contact [Clay support](https://www.clay.com/contact-form) or see [Plans & billing](https://university.clay.com/docs/plans-and-billing) for Flex availability and pricing.
