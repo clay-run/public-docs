@@ -297,6 +297,16 @@ This converts `https://www.linkedin.com/company/acme/` to `https://linkedin.com/
 
 If your Salesforce org stores LinkedIn URLs or website domains in inconsistent formats across records, use the **Lookup records via SOQL** action with a `LIKE` query that wraps the core URL path in `%` wildcards — this matches any prefix or suffix. See the [Lookup records via SOQL](salesforce-integration-overview.md) section of the Salesforce integration overview for details.
 
+## Why does my Salesforce Lookup return "no records found" for a record that was just created?
+
+When Clay runs a lookup column as soon as a new row arrives, the Salesforce record may not yet be visible via the API. Salesforce automations — such as LeanData routing rules or other workflow triggers that convert a Lead into an Account and Contact upon creation — can introduce a delay of seconds to several minutes before the newly created record appears in Salesforce search results.
+
+**To fix:** Open the lookup column, scroll to **Run settings**, switch **Delay run** from **Run immediately** to **Run after delay**, and enter a delay in seconds — for example, `60` seconds if your Salesforce automations typically complete within a minute (up to 600 seconds / 10 minutes). This defers the lookup until after Salesforce has finished creating the record. Setting a delay does not consume an extra credit — the lookup is charged normally when it actually runs.
+
+Because the propagation delay from your Salesforce automations may not be fixed, some rows may still come back empty even with a delay. To re-run those stragglers: right-click the lookup column header → **Run column** → **Run N empty or out-of-date rows**. This re-runs only the rows that returned empty or errored results without re-checking rows that already matched.
+
+**Avoid using a row-age run condition for this pattern.** A conditional formula that checks how long ago a row arrived will cause cells to show **"Run condition not met"** if the condition is not satisfied at run time — those cells do not retry automatically. Use Delay run instead; it defers the run without requiring condition re-evaluation.
+
 ## Why is my Salesforce report data not populating in Clay?
 
 The most likely cause is the report's format. Clay's **Import records from a Salesforce report** source only supports **Tabular** and **Matrix** report formats. Reports in **Summary** or **Joined** format are not supported and will return an error when Clay tries to run them.
