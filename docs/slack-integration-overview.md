@@ -260,7 +260,7 @@ Two Slack error codes can appear when a Clay action can't reach a private channe
 
 **`{"ok":false,"error":"not_in_channel"}`** — the Clay bot has not been invited to the channel. Open the private channel in Slack and type `/invite @Clay`, or add the Clay app through the channel's member settings. The Clay bot must be a member of any private channel it posts to.
 
-> **Note for "Send for approval":** The channel dropdown for this action shows only public channels. For a private channel, switch the **Slack channel** input to text mode and enter the channel ID directly.
+> **Note for "Send for approval":** The channel dropdown for this action shows only channels the Clay app has been added to. For any channel not in the list, switch the **Slack channel** input to text mode and enter the channel ID directly.
 
 ### My Slack workspace requires admin approval and the Slack Marketplace link shows an error
 
