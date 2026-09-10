@@ -76,9 +76,9 @@ Use this action to create an association between two objects in HubSpot.
 -   **From Object ID:** The ID of the source object.
 -   **To Object ID:** The ID of the target object.
 
-### `Action` Retrieve associated objects
+### `Action` Get associated objects
 
-Use this action to retrieve associations between two objects in HubSpot.
+Use this action to retrieve the objects associated with a given object in HubSpot.
 
 **Inputs**
 
@@ -327,6 +327,36 @@ Add a **HubSpot → Create association** column:
 
 **Note:** The **From Object ID** and **To Object ID** fields appear only after you have selected both object types and an association type.
 
+### How do I update HubSpot contacts from a companies table without importing a separate contacts list?
+
+You don't need a separate contacts import. Use the **Get associated objects** action to pull associated contact IDs directly onto each company row, then update those contacts in the same table.
+
+**Step 1 — import companies from HubSpot**
+
+Use the **Import objects from HubSpot** source with **Object type** set to **Company**. This gives each row the company's `hs_object_id`.
+
+**Step 2 — get the associated contact IDs**
+
+Add a **HubSpot → Get associated objects** column:
+
+-   **From object type:** Company
+-   **To object type:** Contact
+-   **From Object ID:** map to the `hs_object_id` column from your Companies import
+
+This returns the associated contact records for each company — including each contact's HubSpot ID — directly on the same row. By default, up to 20 associated contacts are returned per company.
+
+**Step 3 — update the contacts**
+
+Add a **HubSpot → Update object** column:
+
+-   **Object type:** Contact
+-   **HubSpot Object ID:** map to the contact ID from the Get associated objects result
+-   Map any other contact properties you want to write
+
+This writes the update directly to the contact record in HubSpot — no separate contacts import needed.
+
+**Note:** Get associated objects returns an array of associated contact records. If a company has multiple associated contacts, each is a separate result you can reference individually.
+
 ### Why does my Lookup Object return no results, but my Create Object still fails with "contact already exists"?
 
 This almost always means the **Lookup Object** and **Create Object** columns are searching and writing to **different email fields**. HubSpot has two separate email properties:
@@ -486,11 +516,11 @@ Clay's HubSpot integration does not include a native action for creating Notes. 
 
 If a note you created does not appear in HubSpot, confirm that your HubSpot role has permission to view unassigned notes and that your HubSpot view filter includes notes.
 
-### Why does "Retrieve associated objects" return at most 20 results, even when HubSpot shows more?
+### Why does "Get associated objects" return at most 20 results, even when HubSpot shows more?
 
-The "Retrieve associated objects" action has a maximum result count of 20 per run, enforced in Clay's code. The **Limit** field accepts values between 1 and 20 — entering a higher value is not possible. The action also performs a single API call and does not paginate automatically: if an object has more than 20 associated records in HubSpot, only up to 20 are returned in a single run. There is no built-in way to retrieve more than 20 associated objects through this action in a single run.
+The **Get associated objects** action has a maximum result count of 20 per run, enforced in Clay's code. The **Limit** field accepts values between 1 and 20 — entering a higher value is not possible. The action also performs a single API call and does not paginate automatically: if an object has more than 20 associated records in HubSpot, only up to 20 are returned in a single run. There is no built-in way to retrieve more than 20 associated objects through this action in a single run.
 
-### Why does "Retrieve associated objects" return No data even though the association exists in HubSpot?
+### Why does "Get associated objects" return No data even though the association exists in HubSpot?
 
 The most common cause is a mismatch between **From Object Type** and the actual type of the record whose ID you pass as **From Object ID**. Clay passes both values directly to HubSpot's API without checking that they match — if they don't, HubSpot queries the wrong path and returns `{"results":[],"totalFound":0}`, which Clay renders as **No data**.
 
