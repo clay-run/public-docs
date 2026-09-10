@@ -1059,21 +1059,27 @@ When you select multiple fields in **Fields to filter by**, the lookup uses **AN
 
 Two behaviors to keep in mind:
 
--   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record is only returned when both fields match exactly. Partial matches are not supported.
--   **Empty fields never match.** If the Audience record has a null or empty value for one of the selected filter fields, it will not be returned — even if other fields match.
+-   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record is only returned when both values match exactly. A record with the right email but a different or missing secondary value won't be returned.
+-   **Blank or empty filter values prevent any match.** If any field in **Fields to filter by** has a blank or null value in your table row, the lookup returns "No records found" — even if the Audiences record also has a blank value for that field. Every filter field must have a non-empty value for the lookup to run.
 
-**Tip:** Use a single strong identifier like `Email` when you want reliable matches. Email is unique per person and avoids the no-match issue that occurs when secondary identifier fields are inconsistently populated.
+**Tip:** Use a single, high-confidence identifier — such as `Email` for people or `Domain` for companies — as the sole filter field wherever possible. Multi-field filtering is useful when you want to guarantee uniqueness (for example, filtering by both email and company domain to avoid matching a contact at the wrong company), but it increases the risk of missed matches when any one field is missing or mismatched.
 
 ### Can I use Look up in Audiences to check whether a record belongs to a specific segment?
 
-Yes. Use `Lookup in Audiences` with a filter on the segment membership field:
+**Look up in Audiences** matches records by field values (such as domain or email) across all records in your Audience — it does not filter by segment membership. You cannot point the lookup directly at a named segment like "PG Buyers" to check whether a record belongs to it.
 
-1.  Add `Lookup in Audiences` as an enrichment column in your Clay table.
-2.  Set **Object type** to **People** or **Companies** depending on the segment type.
-3.  Under **Fields to filter by**, add a filter on **Segment ID** (or the equivalent segment membership field) and set it to the ID of the segment you want to check.
-4.  Map the result to a column — rows where the lookup returns a match confirm the record is in that segment; rows with no result are not in the segment.
+**Workaround: tag segment members with a custom field, then filter by that field**
 
-The segment ID appears in the browser URL when you open the segment in Audiences (for example, `/audiences/audseg_xxxxxx` — the `audseg_xxxxxx` portion is the segment ID).
+To use Look up in Audiences as a segment membership check, write a custom field to every record in your target segment, then include that field as a filter in your lookup:
+
+1. In your target segment (for example, "PG Buyers — Companies"), click **Enrich** → **Add bulk enrich**.
+2. In the bulk enrichment table, open the **Update Audiences Record** column and use **+ Add field** to create a custom text field — for example, `In PG Buyers Segment`. Set its value to `Yes`. (To create the custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) above.)
+3. Click **Start Run**. Every record currently in the segment now has `In PG Buyers Segment = Yes` written to their Audiences profile.
+4. In your working table, add a **Look up in Audiences** column. Under **Fields to filter by**, select your stable identifier (for example, **Domain** for companies or **Email** for people) and the `In PG Buyers Segment` field. Map the identifier from your current row as its value, and enter `Yes` as a constant for `In PG Buyers Segment`.
+
+The lookup returns a match only when the record both exists in your Audience and has the segment flag set. Use the lookup result as a suppression check, run condition, or view filter — no match means the record is not in the segment.
+
+**Keep the flag current:** The bulk enrichment writes permanently to All Companies (or All People), so the flag persists on each record even as segment membership changes. Re-run the enrichment on the segment periodically to tag newly added records, and clear the field for records that have left the segment.
 
 ### How do I remove records from an audience?
 
