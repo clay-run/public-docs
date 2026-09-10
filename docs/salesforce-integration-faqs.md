@@ -236,6 +236,8 @@ Clay's report picker automatically filters to show only Tabular and Matrix repor
 
 **To fix:** In Salesforce, open the report, click **Edit**, then change the report format to **Tabular** (a flat list without row groupings) or **Matrix** (rows and columns both grouped). Save the report, then re-run your Clay source.
 
+Note that even if your report is in the correct Tabular format, Clay will still not be able to read it if the report contains groupings for rows. Make sure you remove all row groupings from the report — in the Salesforce report builder, remove any fields listed under **Group Rows** so the report is a flat list of records — then save the report and re-run your Clay source.
+
 For an overview of Salesforce report formats, see Salesforce's [Report Formats documentation](https://trailhead.salesforce.com/content/learn/modules/lex_implementation_reports_dashboards/lex_implementation_reports_dashboards_report_formats).
 
 ## Why did my Salesforce report import only bring in 2,000 rows when my report has more?
