@@ -36,7 +36,7 @@ Use this action to send messages to Slack channels through a bot directly from C
 
 -   **Bot name (Optional):** Specify the name of the bot that will post the message.
 -   **Emoji (Optional)**
--   **Slack channel**: Select the Slack channel where you want to post the message. Both public channels and private channels the Clay bot has been invited to appear in the list. To post to a private channel, first invite the Clay bot in Slack (type `/invite @Clay` in the channel) — the private channel will then appear in the list automatically.
+-   **Slack channel**: Select the Slack channel where you want to post the message. The dropdown shows only channels — public or private — where the Clay app has been added as a member. Adding Clay to your Slack workspace alone is not enough; Clay must be added to each channel individually for that channel to appear here. To add Clay to a channel: open the channel in Slack, click the channel name → **Integrations** → **Add apps**, search for **Clay**, and add it. Then click **Refresh fields** in Clay to see the channel in the dropdown. Alternatively, click the gear icon next to the **Slack channel** field, switch to **Text with tokens**, and paste the channel ID directly.
 -   **Message (Optional):** The text body of the Slack notification (e.g., "A new lead has submitted a form"). Supports [Slack markdown](https://api.slack.com/reference/surfaces/formatting#basic-formatting).
 -   **Form information (Optional):** Add structured form data to the message (e.g., "First Name → Kareem"). The form will be sorted alphabetically by field name.
 
@@ -65,7 +65,7 @@ Use this action to send a Slack message with **Approve** and **Deny** buttons to
 
 **Inputs**
 
--   **Slack channel**: Select a public channel from the dropdown. The dropdown lists **public channels only** — private channels do not appear. For a private channel, switch the input to text mode and enter the channel **ID** (for example, `C04F8AWK44T`) instead of the channel name. To find a channel's ID: right-click the channel name in Slack → **Copy link** — the ID (starting with `C`) appears at the end of the copied URL.
+-   **Slack channel**: Select a channel from the dropdown. The dropdown lists only channels — public or private — where the Clay app has been added as a member. To add Clay to a channel: open the channel in Slack, click the channel name → **Integrations** → **Add apps**, search for **Clay**, and add it. Then click **Refresh fields** in Clay to see the channel in the dropdown. For a channel that isn't in the list, switch the input to text mode and enter the channel **ID** (for example, `C04F8AWK44T`) instead of the channel name. To find a channel's ID: right-click the channel name in Slack → **Copy link** — the ID (starting with `C`) appears at the end of the copied URL.
 -   **Message**
 
 > **Approval requests do not expire.** The Approve and Deny buttons in the Slack message remain active indefinitely — Clay sets no timeout on approval requests. A rep can approve or deny a request days or weeks after the alert was sent, and the Clay cell will update when they do.
@@ -237,9 +237,9 @@ Clay uses these permissions only to execute the workflows you configure. Clay do
 
 Clay fetches your Slack channel list live each time you open the **Slack channel** dropdown, so newly created channels should appear automatically. If they still don't show up:
 
-1. **Check whether the channel is public or private.**
-   - **Public channels** are listed automatically as soon as they exist in your Slack workspace.
-   - **Private channels** only appear if the Clay integration bot has been explicitly invited to them. Open the private channel in Slack, go to its member settings, and invite the Clay bot — then reopen the channel dropdown in Clay.
+1. **Add the Clay app to the channel.** The Clay channel dropdown shows only channels — public or private — where the Clay app has been added as a member. Adding Clay to your Slack workspace alone is not sufficient; Clay must be added to each channel individually.
+   - Open the channel in Slack, click the channel name → **Integrations** → **Add apps**, search for **Clay**, and add it. Then return to Clay and click **Refresh fields** in the action column.
+   - Alternatively, type `/invite @Clay` in the channel's message box and press Enter, then return to Clay and refresh the channel dropdown.
 
 2. **Reconnect your Slack integration** to get a fresh OAuth token. This resolves cases where the token has become stale or lost permissions:
    - Go to **Settings → Connections** in Clay.
