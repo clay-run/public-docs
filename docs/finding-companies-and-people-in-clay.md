@@ -392,6 +392,28 @@ When Clay resolves a domain to a company, it expands the search to include all c
 
 **Flag contacts from unrelated companies in your existing results:** Add a formula column that compares the contact's company domain against the source organization's domain using only the core domain name — strip the protocol (`http`/`https`), `www`, and TLD suffixes (`.com`, `.co`, `.pt`, etc.) from both before comparing. Rows where the stripped values don't match are contacts from a related but distinct entity. Set this column as a **run condition** on downstream enrichments to gate processing to matched contacts only.
 
+### Account (company) fields are missing after adding Find People to an existing table
+
+If your people table has no **Company Table Data** column and account fields — such as a Salesforce Account ID or other columns from your account list — are not appearing in each person's row, this is likely because the Find People search was added into a table that already existed rather than letting Clay create a new destination table.
+
+When Clay creates the destination table itself during a **Find People at These Companies** or **Find People** setup, it automatically adds a **Company Table Data** column to that new people table. This column carries all fields from the linked company row — including any columns you've added to your account table — into each person's row.
+
+When the search is instead added to a table that already exists, Clay does not add this Company Table Data column. The link between each contact and its parent company row is still created correctly, but no column surfaces those account fields — which is why they appear to be missing even though the underlying connection is intact.
+
+**To retrieve account fields without re-running the search:**
+
+Add a **Lookup single row in other table** column in your people table to pull account fields by matching on a shared identifier (such as domain):
+
+1.  In your people table, click **Add enrichment** and search for **Lookup single row in other table**.
+2.  Set **Table to search** to your account or company table.
+3.  Set **Target column** to the domain (or other identifier) column in your account table.
+4.  Set **Row value** to the corresponding domain column in your people table.
+5.  Run the lookup. From any populated cell, hover over a field — for example, your Salesforce Account ID column — and click **Add as column** to promote it.
+
+See [Lookup Rows](lookup-rows.md) for full configuration details.
+
+**To get the Company Table Data column automatically on future searches:** When setting up a new Find People search from your account table, let Clay create the destination table rather than targeting an existing one. Clay adds the Company Table Data column automatically during table creation, so account fields are populated on every row from the start.
+
 ### "Company Table Data" shows "Missing Input" in the people table
 
 The **Company Table Data** column can show **Missing Input** for two distinct reasons. Identify which applies before choosing a fix.
