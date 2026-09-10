@@ -59,8 +59,7 @@ To add more profiles from the same search to an existing people table without cr
 -   **Exclude people:** Exclude up to 3 different sets of people from your search using Clay tables, CSVs, or manual lists. You can exclude up to 300,000 people total (100,000 per source). Exclusions match by **LinkedIn URL or email** — each row in your exclusion table must contain a person-level LinkedIn URL or email address. Adding a company name, domain, company page URL, or job title to the exclusion table will **not** suppress those people from the results.
 
     **To exclude all people at a specific company**, use a post-import lookup instead: after importing your Find People results, add a **Lookup single row in other table** action that matches each person's company domain against your company blocklist. Set a run condition on downstream enrichments (for example, `{{Company Blocklist Lookup}} is not empty` → skip) to suppress anyone whose employer appears on your list. See [Excluding records during enrichment](finding-companies-and-people-in-clay.md#excluding-records-during-enrichment) for the full pattern.
--   **Past experiences:** Enable the **Include past experiences** toggle to extend your company, job title, and experience description keyword filters to also match against a person's past roles — not just their current one.
-    -   **Incompatible filters:** This toggle cannot be combined with **Limit per company** or any **Company attributes** filter (company size, company industries, or company description keywords). Selecting them together returns an error.
+-   **Past experiences:** Enable the **Include past experiences** toggle to extend your job title and experience description keyword filters to also match against a person's past roles — not just their current one. The **Companies** filter is not affected — people must still currently work at the companies you specify, regardless of this toggle.
     -   **May return fewer results when enabled:** Because exclude keywords apply to a person's entire work history when this toggle is on, the result count can decrease rather than increase. For example, if "Manager" is an excluded title, anyone who has ever held a role containing that word is filtered out — not just people whose current role matches.
 -   **Limit results:** Set a maximum number of results per search (up to 50,000 records).
 -   **Limit per company:** Set the maximum number of people to return per company (up to 100). Note: the preview count shown before running the search reflects the total match universe across all companies and does not account for this limit — the actual number of imported rows will be lower.
@@ -238,7 +237,7 @@ Posts are returned most-recent first, so `posts[0].created_at` gives the publica
 
 **Extracting post text:**
 
-For original posts, the text is in `posts[N].text`. For reposts, `posts[N].text` is `null` when the person shared without adding their own comment — in that case, the text of the original content being shared is in `posts[N].shared_post.text`.
+For original posts, the text is in `posts[N].text`. For reposts, `posts[N].text` is `null` when the person shared without adding their own comment — in that case, the text of the original content being sharing is in `posts[N].shared_post.text`.
 
 > **Note:** Use `shared_post` (snake_case) in formulas. The Cell details panel displays this field as "Shared Post," but formula references must use `shared_post`.
 
