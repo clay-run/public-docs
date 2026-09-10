@@ -178,6 +178,55 @@ When merging data from multiple source tables into a single destination table, f
 
 **Prevent duplicate rows in the destination with auto-dedupe.** When multiple source tables push records to the same destination, the same record can arrive more than once — for example, the same company appearing in two different searches. To handle this automatically, enable [auto-dedupe](table-management-settings.md#auto-dedupe) on a unique identifier column in the destination table (such as domain, email address, or account ID). Clay detects duplicate values in that column and removes the newer duplicate row on arrival, keeping the oldest row by default. This is row-level deduplication: whichever row is kept survives in full; the duplicate row is deleted entirely. Auto-dedupe does not merge field values from the two rows. For coalescing a single best value from multiple columns into one (for example, the best available email from two enrichment sources), use a [Merge column](table-columns-overview.md#merge-columns) instead.
 
+## Guide: Tracking enrichment data changes over time
+
+Use this pattern when you want to record how enrichment values change across repeated runs — for example, tracking which companies appear on or drop off a technology-adoption list, monitoring when company headcount or funding stage shifts, or building an audit log of CRM field values over time. The pattern stores one row per company in a current-state table and builds an append-only history log in a second table using Send Table Data.
+
+**Table setup**
+
+This pattern requires two tables:
+
+-   **Table 1: Current state table** — Keep one row per company (or person, account, etc.). Run your enrichment here (for example, HG Insights technographic data). Store the current result in a field such as `HG Current Status`. Sync that field to Salesforce or your CRM.
+
+-   **Table 2: History log table** — Stores one row per enrichment snapshot. Receives new rows from Table 1 via Send Table Data. Columns typically include: Account ID, a timestamp field, the enrichment status, and any relevant details.
+
+**Configuring Send Table Data to append rather than overwrite**
+
+1.  In Table 1, select **Tools > Export > Send table data**.
+2.  Select the history log table as the destination.
+3.  Choose **Send row** and check the fields you want to log: Account ID, the enrichment status column, and any other fields you want to retain.
+4.  Open **Advanced settings** and turn off **Update existing rows on re-run**.
+5.  Click **Save**.
+
+With **Update existing rows on re-run** off, every time Send Table Data runs for a given row, it creates a new row in the history log instead of updating the previous one, building an append-only record of each enrichment check. First-time sends always create a new row regardless of this setting.
+
+**Recording when each snapshot was taken**
+
+Send Table Data does not automatically add a timestamp to each history row. To capture the date each enrichment was run, add a **Formula** column in Table 1 before configuring Send Table Data:
+
+1.  Add a new column and select **Formula**.
+2.  Enter `TODAY()` for a date or `NOW()` for a date and time.
+3.  Include this column in your Send Table Data field selection so each history row records when the snapshot was taken.
+
+**Logging only when the value changes**
+
+By default, every Send Table Data run creates a new history row — even when the enrichment value has not changed since the previous run. To log only actual changes:
+
+1.  Add a **Lookup single row** column in Table 1 that retrieves the most recently logged status from the history table for each company (matched by Account ID).
+2.  Add a **run condition** on the Send Table Data column: only run when the current enrichment value differs from the last logged value — for example, `HG Current Status != Last Logged HG Status`.
+
+This creates a new history row only when the value actually changes.
+
+**Scheduling periodic enrichment re-runs**
+
+Clay's auto-run is dependency-driven: a cell only re-runs when a column it reads as input has changed in Clay. If your company list is static — rows that already have enrichment results and unchanged input fields such as company domain — auto-run does not re-trigger the enrichment even when the provider updates their data on their end. To detect those provider-side changes, schedule the enrichment column to re-run on a recurring basis:
+
+1.  Click the `⛭` icon → **Run Settings**.
+2.  Under **Re-run columns on a schedule**, select **On a schedule** and choose a frequency (daily, weekly, or monthly).
+3.  Select **Only selected columns** and check the enrichment column (and optionally the Send Table Data column if you want both to run on the same schedule).
+
+Scheduled column re-runs force-run every row in the selected columns regardless of whether cells already have results, so each cycle fetches fresh data from the provider. See [Scheduled columns](scheduled-columns.md) for details and plan limits.
+
 ## Best practices & troubleshooting
 
 -   **Enrichment columns in the destination table will run on rows you send there.** When rows arrive in a destination table via Send Table Data, they are brand-new rows from that table's perspective — even if those records were already enriched in the source table. Any enrichment columns with **auto-run enabled** will fire on every incoming row and consume credits. This is a common source of unexpected credit spend when moving or reorganizing data across tables. Send Table Data itself costs 0 credits — only the destination enrichments that auto-run afterward consume credits.
