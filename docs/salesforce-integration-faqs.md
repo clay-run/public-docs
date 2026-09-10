@@ -108,6 +108,28 @@ Once your Salesforce admin grants the necessary permissions, the updated access 
 
 For guidance on setting up an integration user with the right object access, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
 
+## How do I get a field I just created in Salesforce to appear in Clay?
+
+The answer depends on where you want to use the new field in Clay.
+
+**In a Create Record or Update Record enrichment (Clay table)**
+
+Open the action column, scroll to the **Map fields** section, and click **Refresh**. This re-fetches the object's field definitions live from Salesforce. Once the field list updates, click **+ Add field** to find and add your new field.
+
+**In a Lookup Record enrichment (Clay table)**
+
+Open the Lookup Record column and click **Refresh fields** in the **Object Field(s)** section. This re-fetches the field list from Salesforce and adds any newly created fields to the selector.
+
+**In Audiences (Salesforce sync field mapping)**
+
+Open the Salesforce source settings in Audiences — Clay fetches the available field list live from Salesforce each time you open the settings panel, so no reconnect or refresh is needed. Add your new field to the import mapping, then save. The new field's values will appear after the next incremental sync (typically within 15 minutes on Enterprise plans).
+
+**If the new field still doesn't appear after refreshing**
+
+The most likely cause is Field-Level Security (FLS) — the Salesforce user connected to Clay does not have Read access to the new field. Salesforce's describe API only returns fields the connected user can read, so any field blocked by FLS is absent from Clay's pickers regardless of when it was created. Ask your Salesforce admin to grant **Read** access (and **Edit** access if you plan to write data back) to the field via **Setup** → **Profiles** (or **Permission Sets**) → the user's profile → **Object Settings** → **Field Permissions**. After the permission is updated, reopen the column or the Audiences mapping settings and the field will appear.
+
+For more detail on field-level security and Clay, see [Why are some Salesforce fields missing from the Map fields panel?](#why-are-some-salesforce-fields-missing-from-the-map-fields-panel-in-the-update-record-or-create-record-action) and [Why are some Salesforce fields missing from the Object Field(s) selector?](#why-are-some-salesforce-fields-missing-from-the-object-fields-selector-in-the-lookup-record-action)
+
 ## Why is a Salesforce field not appearing in the Lookup Record field picker?
 
 If a specific field is visible in Salesforce but missing from Clay's Lookup Record dropdown, the most common reason is the field's **data type**. Clay populates the Lookup Record field picker by calling Salesforce's `describeSObject` API and filtering to fields that are both string-typed (text, picklist, email, URL, etc.) and marked as **filterable** by Salesforce — meaning they can be used in a SOQL `WHERE` clause.
