@@ -327,6 +327,18 @@ Add a **HubSpot → Create association** column:
 
 **Note:** The **From Object ID** and **To Object ID** fields appear only after you have selected both object types and an association type.
 
+### Is there a single "Create or Update" action for HubSpot contacts or companies?
+
+No — Clay does not have a customer-facing "Create or Update" (upsert) action for HubSpot. To create new records and update existing ones in the same run, use three separate columns:
+
+1. Add a **Lookup object** column. Filter by the same field you will write to when creating (for contacts, use **Email**). This checks whether the record already exists in HubSpot.
+2. Add a **Create object** column. Open **Run settings → Only run if** and add a condition that the HubSpot Object ID returned by your Lookup column is empty — this ensures Create only runs for rows where no existing record was found.
+3. Add an **Update object** column. Set an **Only run if** condition to check that the Lookup column returned a result, then map the returned `hs_object_id` to the **HubSpot Object ID** input.
+
+**Important:** Map all the fields you want to write (first name, last name, email, job title, and so on) in **both** the Create object and Update object columns. A common mistake is mapping only some fields in the Update object step — for example, mapping only Company — which means the other fields never reach HubSpot for contacts that already exist.
+
+For full details on writing run conditions, see [Conditional runs](conditional-runs.md).
+
 ### Why does my Lookup Object return no results, but my Create Object still fails with "contact already exists"?
 
 This almost always means the **Lookup Object** and **Create Object** columns are searching and writing to **different email fields**. HubSpot has two separate email properties:
