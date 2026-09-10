@@ -77,6 +77,7 @@ The Salesforce import flow in Audiences has been redesigned. You can import **al
 5.  Click **Confirm** to start the import. Clay immediately begins syncing records.
 6.  To add another import (a different object type or a new SOQL subset), click **Add records** again and repeat.
     -   Lead records are automatically merged with matching Contact records into a single person record in your People audience. The primary matching key is the `ConvertedContactId` field — see [Why do some of my Salesforce Lead records not appear as separate person records in Clay?](#why-do-some-of-my-salesforce-lead-records-not-appear-as-separate-person-records-in-clay) in the FAQs below for details.
+    -   **Lead export:** The native Audiences Salesforce export sync writes back to Contacts and Accounts only — Lead records are not included in the bidirectional export. To push enriched data back to existing Salesforce Lead records, use a Salesforce Update Record action inside a bulk enrichment — see [Can I write enriched data back to Salesforce Lead records from Audiences?](#can-i-write-enriched-data-back-to-salesforce-lead-records-from-audiences) in the FAQs below.
     -   Opportunity data is associated with your Companies records and becomes available as a filter in any Companies audience.
 
 **SOQL requirements for record subset imports**
@@ -918,6 +919,21 @@ To push net-new Accounts or Contacts to Salesforce:
 Once the toggle is on, Clay will create new Accounts or Contacts in Salesforce for any Audience record that doesn't already have a matching SFDC entry. (Leads and Opportunities do not support record creation through this toggle.)
 
 To track which contacts in Salesforce came from a specific Audience enrichment, create a custom Audience text field (for example, an "Audience Source" field set to a label like `"Q2-enrichment"`), and map it to a Salesforce field (a custom field, campaign tag, or lead status) in your export settings. You can then filter on that value directly in Salesforce.
+
+### Can I write enriched data back to Salesforce Lead records from Audiences?
+
+The native Audiences Salesforce export sync writes back to **Contacts** and **Accounts** only — Salesforce Lead records are not included in the bidirectional export. There is no export sync option for Lead or Opportunity records; the **`Create new Salesforce records`** toggle also applies to Accounts and Contacts only. As a result, Lead records imported into Audiences are import-only through the native connection: you can filter, enrich, and segment them in Clay, but enriched values do not flow back to Salesforce Lead records via the standard export cycle.
+
+To push enriched data back to existing Salesforce Lead records, add a **Salesforce Update Record** action inside a bulk enrichment:
+
+1.  Navigate to an audience segment that includes your Lead records and click **Enrich** → **Add bulk enrich**.
+2.  Add your enrichment columns as usual (for example, `Enrich Person` to find additional contact data).
+3.  Click `Add enrichment`, search for **Salesforce**, and select **Update Record**.
+4.  Set **Record ID** to the Salesforce Lead ID stored in your Audience — the `00Q…` Lead ID field imported from Salesforce.
+5.  Map each enriched field to the corresponding Salesforce Lead field.
+6.  Click **Start Run** — the Update Record column writes the enriched values directly to Salesforce Lead records in the same run.
+
+See [How do I write enriched fields back to existing Salesforce records from a bulk enrichment?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-bulk-enrichment) for the full workflow including other Salesforce object types.
 
 ### How do I write enriched fields back to existing Salesforce records from a bulk enrichment?
 
