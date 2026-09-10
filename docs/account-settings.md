@@ -43,15 +43,32 @@ To change your theme:
 
 ## Change your account email address
 
-The email address field in `Settings` > `Account` is read-only and cannot be changed directly in the UI. To change the email associated with your Clay account, contact Clay support via the in-app chat.
+The email address field in `Settings` > `Account` is read-only and cannot be changed directly in the UI.
 
-**Who can request this change:** Email address changes are processed by Clay's support team and handled internally. Support will only honor requests that originate from the workspace admin's registered email address — if you are not the workspace admin, coordinate with them to submit the request.
+**Self-service — if you still have access to your current email**
 
-**If the new email address is already linked to another Clay account:** That existing account must be resolved (for example, deleted) before the change can be made.
+You can switch to a new login email by adding it as a workspace member and then removing your old account:
+
+1.  Go to `Settings` > `Team` and click `+ Invite`.
+2.  Enter your new email address, set the role to **Admin**, and click **Send invite**.
+3.  Accept the invite from your new email address and log in using it.
+4.  Go to `Settings` > `Team`, find your old account, click `…`, and select **Remove member**.
+
+If you sign in with Google, log in using the Google account for your new email address after completing the steps above — Clay matches Google sign-ins by email.
+
+**Company-wide domain changes**
+
+If your entire team is moving to a new email domain, repeat the invite-and-remove process for each user. Keep at least one admin account active throughout. For non-admin users, a workspace admin can send new-domain invites and remove old accounts via `Settings` > `Team` once the new accounts are set up.
+
+**Contact Clay support**
+
+If you no longer have access to your original email address, contact Clay support via the in-app chat. Support can verify your identity and change the email on your behalf.
+
+**Who can request this change:** Support will only process requests submitted from the workspace admin's registered email address — if you are not the workspace admin, coordinate with them to submit the request.
+
+**If the new email is already linked to another Clay account:** That account must be deleted before the change can be made.
 
 Changing your email address does not affect your workspace data or your password.
-
-**If you sign in with Google:** After your email address is changed by support, sign in using the Google account associated with the new email address. Clay matches Google sign-ins by email — signing in with the Google account tied to your previous email address will no longer find your Clay account.
 
 **If your Google account email changed externally and you now see a blank workspace**
 
