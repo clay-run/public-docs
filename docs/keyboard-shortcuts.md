@@ -104,6 +104,13 @@ Use the drag-fill handle (small square in the bottom-right corner of a selected 
 -   Enrichment cell runs (because they consume credits)
 -   Column deletions
 
+## Workflow canvas shortcuts
+
+These shortcuts apply in the Clay **Workflows editor** — the node-based workflow builder.
+
+-   `Click and drag` on empty canvas area — Draw a selection rectangle to select multiple nodes at once
+-   `Space` + `drag` — Pan the canvas in any direction
+
 ## FAQs
 
 **Can I undo an enrichment after it runs?**
