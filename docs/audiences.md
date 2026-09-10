@@ -410,6 +410,17 @@ The search is scoped to the exact companies in the segment at run time. In the f
 
 ### Adding enrichments
 
+**Enrichment in Workflows (open beta)** — For new workspaces, Audiences enrichment now runs on top of Workflows, replacing the legacy Bulk Enrich experience. Workspaces that already have bulk enrichments continue to see both. Contact your Growth Strategist to enable it for your workspace. The workflow-backed experience includes:
+
+-   **Guided setup** — start from an Audience segment and open a workflow builder with the audience trigger and write-back nodes preconfigured. Add your enrichment steps in between.
+-   **Safer testing** — pick specific test records and preview enrichment results in a table view before spending credits on the full segment.
+-   **Full observability** — trace every record, step, and failure through the **Runs** tab.
+-   **Faster iteration** — add or change steps on a live enrichment workflow and use partial runs to apply only the new logic without re-running the entire flow.
+
+Auto-enrich fires automatically for records that newly enter the segment; you can also configure recurring runs to refresh the full segment on a schedule.
+
+**Legacy Bulk Enrich (workspaces that already have bulk enrichments):**
+
 Bulk enrichments add contact data, firmographics, technographics, and more to your audience records at scale. They run on an audience and write results permanently back to All People — not just the segment you ran them from. This means any enriched field is immediately available as a filter in any other segment.
 
 **Admin access required.** Adding and managing bulk enrichments requires workspace Admin access.
