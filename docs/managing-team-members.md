@@ -1,7 +1,7 @@
 ---
 title: Managing team members
 description: Understand Clay's Admin, Editor, Viewer, and Sales Rep roles and learn how to invite, update, and remove team members in your workspace.
-last_synced: 2026-04-26T01:40:56.545Z
+last_synced: 2026-04-26T01:40:56.525Z
 ---
 
 # Managing team members
