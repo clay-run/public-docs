@@ -69,7 +69,7 @@ Clay's SSO routing is domain-based: when a user enters their email on the Clay l
 
 ## User provisioning
 
-SSO creates a Clay account automatically the first time a user signs in via SSO — no prior invite is required for initial account creation. However, **SSO alone does not add users to your enterprise workspace**: if a user signs in via SSO without having previously accepted a workspace invite, they will authenticate successfully and a Clay account will be created, but they will land in a new standalone personal workspace instead of your enterprise workspace. To add a new team member to your enterprise workspace:
+SSO creates a Clay account automatically the first time a user signs in via SSO — no prior invite is required for account creation. However, **SSO alone does not add users to your enterprise workspace**: if a user signs in via SSO without having previously accepted a workspace invite, they will authenticate successfully and a Clay account will be created, but they will land in a new standalone personal workspace instead of your enterprise workspace. To add a new team member to your enterprise workspace:
 
 1.  Invite them to your Clay workspace via `Settings` > `Team` > `+ Invite`.
 2.  Assign the Clay app to the user in your identity provider (for example, add them to the Clay tile in Okta).
@@ -80,7 +80,7 @@ SSO creates a Clay account automatically the first time a user signs in via SSO 
 
 **If a user has already landed in a personal workspace instead of the company workspace:** You can recover without contacting support. From your company workspace, go to `Settings` > `Team` > `+ Invite` and send them a workspace invite. Have them accept the Clay invite from their email first, then sign in through your IdP (for example, by clicking the Clay tile in Okta). SSO will match them to the workspace seat you created and place them in the correct workspace. The empty personal workspace they were initially placed in remains as an orphan but does not affect their access to the company workspace.
 
-**SCIM Directory Sync** (automatic workspace provisioning via your identity provider) is currently in beta for Enterprise customers. When SCIM is enabled for your workspace, Clay automatically provisions workspace membership when users are assigned the Clay app in your identity provider — no manual invite from the Clay UI is needed. Users provisioned through SCIM receive a pending workspace invite and are placed into your enterprise workspace on their first SSO login. When a user is removed from the Clay app in your IdP, Clay automatically revokes their workspace access. To enable SCIM for your workspace, contact Clay support or your Growth Strategist.
+SCIM Directory Sync (automatic provisioning via your identity provider) is in active development and not yet available to customers — contact Clay support or your Growth Strategist for the latest status.
 
 **Clay does not have a user management API.** There is no API endpoint to programmatically create, update roles for, or deactivate workspace members. All user management must be performed through the Clay UI at `Settings` > `Team`.
 
