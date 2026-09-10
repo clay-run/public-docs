@@ -410,11 +410,42 @@ The search is scoped to the exact companies in the segment at run time. In the f
 
 ### Adding enrichments
 
-Bulk enrichments add contact data, firmographics, technographics, and more to your audience records at scale. They run on an audience and write results permanently back to All People — not just the segment you ran them from. This means any enriched field is immediately available as a filter in any other segment.
+Audience enrichments add contact data, firmographics, technographics, and more to your audience records at scale. Enrichments run on an audience segment and write results permanently back to All People — not just the segment you ran them from. This means any enriched field is immediately available as a filter in any other segment.
 
-**Admin access required.** Adding and managing bulk enrichments requires workspace Admin access.
+**Admin access required.** Adding and managing enrichments requires workspace Admin access.
 
-**To add an enrichment:**
+Clay Audiences supports two enrichment experiences. Which one you see depends on your workspace:
+
+-   **Enrichment in Workflows (open beta)** — available to workspaces enrolled in the open beta. New workspaces created after the beta rollout start with this experience and do not see the Bulk Enrich option. Enrichment runs on top of Clay Workflows with guided setup, test-record preview before spending credits, a Runs tab for record-level observability, and partial-run iteration.
+-   **Bulk Enrich** — the previous experience, still available in workspaces that had previously created a Bulk Enrich table. Existing workspaces see both options during the open beta period.
+
+#### Enrichment in Workflows (open beta)
+
+**Currently in open beta.** New workspaces start with the workflow-backed enrichment experience. Existing workspaces that previously created a Bulk Enrich table continue to see both options during the open beta period.
+
+Enrichment in Workflows runs your Audiences enrichment on top of Clay's Workflows engine. Key improvements over Bulk Enrich:
+
+-   **Guided setup** — the workflow is pre-configured with your Audience segment as the trigger and a write-back node that automatically saves enrichment results back to your Audience records.
+-   **Test records before spending credits** — choose specific records from your segment and preview enrichment results in a table view before running the full segment.
+-   **Full observability via Runs tab** — after the enrichment runs, open the Runs tab to trace every record, step, and failure. You can see which records succeeded, which failed, and what error each failure returned.
+-   **Partial runs** — add new enrichment steps or change settings on a live enrichment workflow and run only the new or changed steps, without re-running the entire flow.
+
+**To create a workflow-backed enrichment:**
+
+1.  Navigate to an Audience segment and click `Enrich` in the top-right toolbar.
+2.  Click **+ Create enrichment workflow**.
+3.  The workflow editor opens with your segment already set as the trigger and a write-back node preconfigured to save results back to your Audience records.
+4.  Add the enrichment steps you need — for example, `Enrich Person` for work email, phone, or LinkedIn URL.
+5.  In the test panel, click **Add data** to select specific records and preview results before running at scale.
+6.  Click **Run** to enrich the full segment. Results write permanently back to All People.
+
+Workflow enrichments appear in the **Enrichments** tab of the `Enrich` sidebar. Each card shows the workflow name, status (Draft, Live, Paused), and connected segments. To review results after a run, click ⋮ on the workflow card and select **View runs** — this opens the Runs tab where you can trace results at the record level.
+
+#### Bulk Enrich
+
+Workspaces that previously created a Bulk Enrich table continue to see the **Add bulk enrich** option alongside Enrichment in Workflows during the open beta period.
+
+**To add a bulk enrich:**
 
 1.  Navigate to an audience and click `Enrich` → `Add bulk enrich`.
 2.  Add enrichment columns as you normally would (e.g., `Enrich Person` for LinkedIn URL, title, phone).
