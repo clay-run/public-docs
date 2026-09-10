@@ -857,13 +857,14 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 ### How do I export my audience data to CSV?
 
-The Audiences screen does not have a direct CSV download button. To download audience data as a CSV, use the **Enrich** flow to create an enrichment table from the segment, then export that table. **Admin access is required.**
+The Audiences screen does not have a direct CSV download button. To download audience data as a CSV, use the **Enrich** flow to create an enrichment table from the segment, then export the archived rows. **Admin access is required.** This uses the **legacy Bulk Enrich** experience — if you don't see `+` → **Create enrichment table** in the Enrich panel, your workspace uses the newer workflow-backed enrichment experience; contact Clay support for export options.
 
 1. Open the audience segment you want to export.
-2. Click `Enrich` to open the enrichment panel, then create a new enrichment table for this segment. (The exact button label varies by workspace — you may see **Add bulk enrich** or a `+` button with a **Create Enrichment Table** option.)
-3. In the enrichment setup, skip adding enrichment columns and turn off field mapping if you only need the raw segment data.
-4. Open the resulting table. If any rows are checked, uncheck them first — the toolbar shows **Tools** only when no rows are selected.
-5. Click **Tools** → **Export** → **Download CSV**.
+2. Click `Enrich` to open the enrichment panel, then click `+` → **Create enrichment table**.
+3. In the enrichment setup, skip adding enrichment columns if you only need the raw segment data, and turn **Field mapping** off — this prevents data from being written back to Audiences.
+4. Click **Finish setup and run** to run the enrichment.
+5. After the run completes, click **See archived rows** on the enrichment table.
+6. Click **Export full archive** to download a CSV file. For segments over 50,000 records, the export is automatically packaged as a ZIP file containing multiple CSVs of up to 50,000 rows each.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
