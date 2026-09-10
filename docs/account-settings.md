@@ -54,8 +54,6 @@ You can switch to a new login email by adding it as a workspace member and then 
 3.  Accept the invite from your new email address and log in using it.
 4.  Go to `Settings` > `Team`, find your old account, click `…`, and select **Remove member**.
 
-All tables, workbooks, and groups owned by your old account are automatically transferred to the remaining admin when you remove it. If other admins already exist in the workspace, the data goes to the longest-tenured admin — to ensure it goes to your new account, make sure your new account is the only other admin when you perform the removal.
-
 If you sign in with Google, log in using the Google account for your new email address after completing the steps above — Clay matches Google sign-ins by email.
 
 **Company-wide domain changes**
