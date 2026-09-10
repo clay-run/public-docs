@@ -155,4 +155,4 @@ The table below summarizes which programmatic access features are available on e
 | Launch, Growth | 500 | 1,000,000 / year |
 | Enterprise | 500 | 10,000,000 / year |
 
-The Flex plan is a newer plan tier positioned between Growth and Enterprise. It includes Launch-level MCP and API/CLI access, including Audiences, but excludes web intent signals. Its People & Company Search result cap is 50,000 results per year rather than the 1,000,000 on Launch and Growth. Contact [Clay support](https://www.clay.com/contact-form) or see [Plans & billing](https://university.clay.com/docs/plans-and-billing) for Flex availability and pricing.
+The Flex plan is a newer, lower-cost plan tier. It provides the same MCP and API/CLI feature access as Launch — including Audiences — but excludes web intent signals and has a 50,000 annual search result cap instead of Launch's 1,000,000. Contact [Clay support](https://www.clay.com/contact-form) or see [Plans & billing](https://university.clay.com/docs/plans-and-billing) for Flex availability and pricing.
