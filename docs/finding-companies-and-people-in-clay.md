@@ -245,13 +245,13 @@ This is a three-step workflow: build the alumni list first, get each person's cu
 
 Add a **Find People** source. In the **Experience** section, enter your company's name as an **Experience description keyword** (for example, `Acme Corp`). Then, in the **Past experiences** section, enable the **Include past experiences** toggle. This extends the keyword match to past roles, returning people who have your company name anywhere in their experience history.
 
-Where possible, use your company's **LinkedIn company profile URL** (for example, `linkedin.com/company/acme-corp`) as the keyword rather than a short display name — LinkedIn URLs are exact identifiers and reduce false positives from companies with similar names.
+Where possible, use your company's **company profile URL from the professional network** (for example, `linkedin.com/company/acme-corp`) as the keyword rather than a short display name — company profile URLs are exact identifiers and reduce false positives from companies with similar names.
 
 **Note:** Results include both current and former employees, because the toggle matches across all experience descriptions regardless of whether the role is active. Plan to filter out current employees in Step 3.
 
 **Step 2: Get each person's current employer**
 
-Find People results come from a periodically refreshed index — a person's listed company may lag behind their most recent LinkedIn update. Add an **Enrich Person** column mapped to the LinkedIn profile URL. This fetches the live profile and returns up-to-date company and title data you'll need for the matching step.
+Find People results come from a periodically refreshed index — a person's listed company may lag behind their most recent profile update on the professional network. Add an **Enrich Person** column mapped to the profile URL column. This fetches the live profile and returns up-to-date company and title data you'll need for the matching step.
 
 **Step 3: Match against your ICP companies**
 
