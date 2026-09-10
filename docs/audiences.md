@@ -919,6 +919,24 @@ Once the toggle is on, Clay will create new Accounts or Contacts in Salesforce f
 
 To track which contacts in Salesforce came from a specific Audience enrichment, create a custom Audience text field (for example, an "Audience Source" field set to a label like `"Q2-enrichment"`), and map it to a Salesforce field (a custom field, campaign tag, or lead status) in your export settings. You can then filter on that value directly in Salesforce.
 
+### Do I need to add the Clay ID field to both Contact and Account objects in Salesforce?
+
+Yes — create a separate `Clay_ID__c` custom field on both the **Contact** object and the **Account** object in Salesforce. People (Contacts and Leads) and Companies (Accounts) are separate entity types in Audiences, each with their own distinct Clay ID. When Audiences writes back to Salesforce, it uses the Clay ID on each object to identify which records it originally created — a Contact's Clay ID and an Account's Clay ID are generated and stored independently. If the field is missing on one object type, Clay cannot match records for that object and write-back will not work for it.
+
+**To set up the Clay ID field:**
+
+1. In Salesforce Setup, create a custom **Text** field named `Clay ID` with API name `Clay_ID__c` on the **Contact** object.
+2. Create the same custom Text field (`Clay ID` / `Clay_ID__c`) on the **Account** object.
+3. In Audiences, go to **Settings → Sources / Destinations** → your Salesforce connection, and map the Clay ID field in the export field mapping for both Contacts and Accounts.
+
+**Note:** Leads in Audiences are treated as People — a converted Lead shares the same Clay person ID as its matched Contact (via `ConvertedContactId`). The Clay ID field is only needed on the Salesforce objects that Audiences writes back to: Contact and Account.
+
+### Can the Audiences export sync write data back to Salesforce Lead records?
+
+No. The Audiences 24-hour export sync writes to Salesforce **Contact** and **Account** objects only — Lead records are not included in the scheduled export. Leads are import-only in Audiences: Clay reads Lead data from Salesforce and merges it into your People audience, but the export sync does not write enriched data back to the Salesforce Lead object.
+
+To update Salesforce Lead records with enriched data from Audiences, use a bulk enrichment with a **Salesforce Update Record** action column — see [How do I write enriched fields back to existing Salesforce records from a bulk enrichment?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-bulk-enrichment) below. In the **Record ID** field of that action, map the Salesforce Lead ID (the `00Q…` ID) stored on your Audience person record.
+
 ### How do I write enriched fields back to existing Salesforce records from a bulk enrichment?
 
 Add a **Salesforce Update Record** action column directly inside your bulk enrichment table. This pushes enriched values to matching Salesforce records in the same run, without waiting for the Audiences export cycle:
