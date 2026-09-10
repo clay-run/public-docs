@@ -78,7 +78,8 @@ Authenticate by passing your workspace-scoped API key in the `clay-api-key` requ
 | ---- | ------------------ | ------------- |
 | Free | 100 | Monthly (resets on the 1st of each month, UTC) |
 | Trial | 10,000 | 14 days from plan start |
-| Paid | 1,000,000 | Annual (resets January 1 UTC) |
+| Flex | 50,000 | Annual (resets January 1 UTC) |
+| Launch, Growth | 1,000,000 | Annual (resets January 1 UTC) |
 | Enterprise | 10,000,000 | Annual (resets January 1 UTC) |
 
 When you exceed the period limit, Clay returns `400` with a message naming the limit and when it resets — for example: `"This request would exceed your workspace's annual limit of 1,000,000 results. You have already requested X results during the current period, which resets on January 1, [year] (UTC). Contact support to raise this limit."` To monitor your usage before hitting the limit, open the **API and CLI** page in your workspace (`Settings → API`). The **Search API usage** section shows your current period's results used out of your limit, the next reset date, and a progress bar that turns orange at 70% usage and red at 90%. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
@@ -107,9 +108,9 @@ When you run `clay routines list` or `clay routines get`, each function-type rou
 
 **Note: `clay functions list` and `clay functions get` give direct access to function schemas.** `clay functions list` lists all functions in your workspace (both Clay-managed and custom). `clay functions get <functionId>` returns a single function's full context: `id`, `name`, `description`, `source` (`"managed"` or `"custom"`), a prose `schema` description of the function's table written for a model to read, and JSON Schema objects for `inputSchema` and `outputSchema`. Both schema fields are always present — a function with no declared inputs or outputs returns an empty `properties` object, not a missing field. Both commands accept either a raw table id (e.g. `tbl_abc123`) or the `function:<tableId>` form, and require the `cli:all` scope on your API key. Common errors: `not_found` (exit 6) if no function with that id exists in the workspace; `auth_forbidden` (exit 3) if the key lacks the required scope.
 
-**Note: Six `clay tables` read commands require an Enterprise plan.** The commands `clay tables list`, `clay tables get`, `clay tables rows list`, `clay tables rows get`, `clay tables columns list`, and `clay tables columns get` all require the public observability API — available on Enterprise plans only. On non-Enterprise workspaces, these commands exit with `auth_forbidden` (exit code 3) and the message: "The public observability API is not enabled for this workspace (available on Enterprise plans)." Routines, searches, and workflows via the CLI continue to work on non-Enterprise plans — only those six table read commands require Enterprise. If you only need a table's ID and are on a non-Enterprise plan, find it in the table's URL: it is the segment after `/tables/` (for example, `t_0te5b6rGsW6WAJW22cD` in `app.clay.com/workspaces/.../tables/t_0te5b6rGsW6WAJW22cD/views/...`). To read table structure or row data programmatically using these commands, an Enterprise plan is required.
+**Note: Six `clay tables` read commands require a paid or trial plan.** The commands `clay tables list`, `clay tables get`, `clay tables rows list`, `clay tables rows get`, `clay tables columns list`, and `clay tables columns get` all require the public observability API — available on paid and trial plans (Launch, Flex, Growth, Enterprise, and trial workspaces). On free workspaces, these commands exit with `auth_forbidden` (exit code 3) and the message: "The public observability API is not enabled for this workspace (available on paid and trial plans)." Routines, searches, and workflows via the CLI continue to work on all plans including the free plan — only those six table read commands require a paid or trial plan. If you only need a table's ID and are on a free plan, find it in the table's URL: it is the segment after `/tables/` (for example, `t_0te5b6rGsW6WAJW22cD` in `app.clay.com/workspaces/.../tables/t_0te5b6rGsW6WAJW22cD/views/...`). To read table structure or row data programmatically using these commands, a paid or trial plan is required.
 
-**Note: `clay tables query-live` is an experimental command available without an Enterprise plan.** It queries a table's live Postgres data directly using ClayQL (no natural-language step), complementing `clay tables query` (which runs against the synced ClickHouse store and requires Enterprise). Results are capped at 100 rows; use `LIMIT n OFFSET m` in your query to page through more. To access it, set `CLAY_CLI_CHANNEL=experimental` before running the command. Available to workspace Admins, Members, and Viewers — not SalesRep-role users.
+**Note: `clay tables query-live` is an experimental command available without a paid plan.** It queries a table's live Postgres data directly using ClayQL (no natural-language step), complementing `clay tables query` (which runs against the synced ClickHouse store and requires a paid or trial plan). Results are capped at 100 rows; use `LIMIT n OFFSET m` in your query to page through more. To access it, set `CLAY_CLI_CHANNEL=experimental` before running the command. Available to workspace Admins, Members, and Viewers — not SalesRep-role users.
 
 **Note: The `clay tables` commands and v0 REST API do not support writing data.** The CLI's `clay tables` surface includes commands for listing, getting, and querying tables and rows (`clay tables list`, `clay tables get`, `clay tables rows list`, `clay tables rows get`, `clay tables query`, and `clay tables query-live` [experimental]). Adding rows, updating cells, or deleting records is not available through the public developer platform — neither via the CLI nor the v0 REST API. The `clay tables update` command can toggle a table's query-sync configuration (`--query-enabled`), but does not write row data.
 
@@ -117,7 +118,7 @@ When you run `clay routines list` or `clay routines get`, each function-type rou
 
 **Note: Grouped, aggregated, and custom-ordered queries return `truncated: true` when results are capped.** These query shapes cannot issue a cursor — there is no keyset to resume from after a group collapse or custom sort. When more rows matched than the configured `limit` and no cursor can be issued, the response includes `"truncated": true` at the top level. If `truncated` is absent, you received the complete result set (or a cursor was provided for continuation). To see more results, narrow the query with a `filter`, reduce the number of distinct group values, or raise the `limit`. This applies to both the REST API (`POST /public/v0/tables/query`) and the CLI (`clay tables query`).
 
-**Note: Three `clay audiences records` commands let you read Audiences data from the CLI.** All three are available in the stable channel and require Audiences to be enabled for the workspace (available on Growth and Enterprise plans — see [Audiences](https://university.clay.com/docs/audiences)):
+**Note: Three `clay audiences records` commands let you read Audiences data from the CLI.** All three are available in the stable channel and require Audiences to be enabled for the workspace (available on Launch, Flex, Growth, and Enterprise plans — see [Audiences](https://university.clay.com/docs/audiences)):
 
 -   `clay audiences records get --entity-type <people|companies|deals> --ids <ids>` — bulk-fetch up to 100 records by id, returning each record's field values.
 -   `clay audiences records search-ids --entity-type <people|companies|deals> [--audience-id <id> | --filter <file>] [--cursor <cursor>]` — return matching record ids, cursor-paginated at 50 per page. Pass `--audience-id` to scope to a saved audience, `--filter` to apply an ad-hoc filter AST, or omit both to iterate all records of that entity type. Feed the returned ids to `clay audiences records get` in batches of 100 to retrieve field values. When using `--entity-type deals`, `--audience-id` and `--filter` are not accepted — deals are iterable as a whole entity type only.
@@ -128,3 +129,30 @@ All three return `auth_forbidden` (exit 3) if Audiences is not enabled for the w
 **Note: `clay workflows nodes` subcommands are now available on the stable channel.** `clay workflows nodes get <workflowId> <nodeId>` reads a single node's full configuration. `clay workflows nodes create <workflowId> --input '<json>'` creates a new node. `clay workflows nodes update <workflowId> <nodeId> --input '<json>'` updates an existing node's fields. `clay workflows nodes delete <workflowId> <nodeId>` removes a node (edge cleanup is handled server-side). `clay workflows nodes test <workflowId> <nodeId>` starts a partial test run of a single node. All five commands work on the default stable CLI without setting `CLAY_CLI_CHANNEL=experimental`. Node configuration shapes vary by node type — read a node first with `clay workflows nodes get` to see the exact shape before creating or updating.
 
 **Note: `clay workflows ensure-audience-writeback` creates or reconnects the shared Audiences upsert node for an audience enrichment workflow.** `clay workflows ensure-audience-writeback <workflowId>` calls the server-side helper to create or reuse the single `upsert-audiences-record` terminal node for a workflow of type `audience_enrichment`, and wires every eligible terminal route to it. The command is available on both the stable and experimental channels; it requires `cli:all` or `terracotta:cli` scope on your API key and workspace Admin or Member role (Viewers cannot use this command). Workflow commands (`clay workflows get`, `list`, `create`, `update`, `publish`) now include a `type` field in their output with three possible values: `audience_enrichment` (created by the audience enrichment experience; writes results back to Audiences), `account_agents` (managed by the account agents experience), or `null`/omitted for general workflows. Common errors: `validation_error` (exit 2) if the workflow is not of type `audience_enrichment` or has no eligible terminal route; `auth_forbidden` (exit 3) if the API key lacks the required scope or the caller does not have Admin or Member access; `not_found` (exit 6) if no workflow with that id exists.
+
+### MCP, API/CLI Access by Plan Tiers
+
+The table below summarizes which programmatic access features are available on each Clay plan. All API, CLI, and MCP usage consumes the same credits and actions as equivalent in-product work — there is no additional cost for using programmatic access instead of the Clay UI.
+
+| Feature | Free | Trial | Flex | Launch | Growth | Enterprise |
+| ------- | ---- | ----- | ---- | ------ | ------ | ---------- |
+| MCP (Claude, ChatGPT, Codex, Gemini, Grok, Cursor) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| MCP credit controls and usage monitoring for teams | — | — | ✓ | ✓ | ✓ | ✓ |
+| Functions via MCP (MCP for reps) | — | — | ✓ | ✓ | ✓ | ✓ |
+| Glean MCP integration | — | — | — | — | — | ✓ |
+| CLI/API: People & Company Searches | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| CLI/API: Routines and Functions | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| CLI/API: Audiences data | — | — | ✓ | ✓ | ✓ | ✓ |
+| CLI/API: Tables (read) | — | ✓ | ✓ | ✓ | ✓ | ✓ |
+
+**People & Company Search result limits** (applies to all searches via API, CLI, and MCP):
+
+| Plan | Results per request | Results per period |
+| ---- | ------------------- | ------------------ |
+| Free | 50 | 100 / month |
+| Trial | 50 | 10,000 / 14 days |
+| Flex | 500 | 50,000 / year |
+| Launch, Growth | 500 | 1,000,000 / year |
+| Enterprise | 500 | 10,000,000 / year |
+
+The Flex plan is a newer, lower-cost plan tier. It provides the same MCP and API/CLI feature access as Launch — including Audiences — but excludes web intent signals and has a 50,000 annual search result cap instead of Launch's 1,000,000. Contact [Clay support](https://www.clay.com/contact-form) or see [Plans & billing](https://university.clay.com/docs/plans-and-billing) for Flex availability and pricing.
