@@ -76,13 +76,15 @@ Delay when an enrichment runs after its conditions are met. This is useful when 
 
 -   Waits a specified number of seconds before running (maximum 10 minutes).
 -   Delay starts after run conditions are met.
--   Useful for syncing between external systems, like waiting for Salesforce to sync data to Outreach.
+-   Does not consume an extra credit — the enrichment is charged normally when it actually runs after the delay.
+-   Useful for syncing between external systems, such as waiting for a Salesforce Account to finish being created before looking it up, or waiting for a Salesforce sync to propagate to Outreach.
 
 To configure a delay:
 
 1.  Select `Run after delay`.
-2.  Enter the number of seconds to wait (up to 600 seconds/10 minutes).
-3.  Use a formula to set different delays per row.
+2.  Enter the number of seconds to wait (up to 600 seconds/10 minutes), or use a formula (for example, `{{Delay Seconds}}`) to set a different delay per row.
+
+**If some rows still come back empty or out-of-date after the delay:** Right-click the column header → **Run column** → **Run N empty or out-of-date rows**. This re-runs only the rows that returned empty or errored results without re-charging rows that already matched.
 
 **Need a delay longer than 10 minutes?** Chain multiple enrichment columns — each set to `Run after delay` (up to 600 seconds) — and use [conditional runs](conditional-runs.md) to gate each step on the previous column completing. For example, six chained delay columns each set to 600 seconds creates a 60-minute total delay.
 
