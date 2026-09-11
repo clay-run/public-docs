@@ -78,18 +78,14 @@ Signals require a connected data source to run against — either a source table
 
 ### My signal results on an Audience segment appear read-only — how do I analyze or act on them?
 
-When a signal is attached directly to a segment in Clay Audiences, its results are written as signal data on each matching record — not as new rows in a separate editable table. The view you see on the audience surface is read-only: you cannot add AI columns to it, export the rows directly, or chain write actions (such as Slack messages, Google Sheets updates, or Salesforce writes) off it.
+When a signal is attached directly to a segment in Clay Audiences, its results are written as signal data on each matching record — not as new rows in a separate editable table. The view you see on the audience surface is read-only: you cannot add AI columns to it or chain Clay table write actions (such as Slack messages, Google Sheets updates, or Salesforce writes) directly off it.
 
-To analyze, score, or act on signal results, run the signal from a Clay table instead:
-
-1.  Send your audience segment's companies to a Clay table. You can do this from the segment's **Enrich** tab → **Bulk Enrich** → select or create a destination table, or use [Send Table Data](send-table-data.md) to push rows from a Clay table that already contains your companies.
-2.  In that destination table, click **Tools** → **Monitor for news & fundraising** (or the relevant signal type) and set up the signal there. Each matching event lands as a new row in the table.
-3.  With results as real rows, you can add AI scoring columns, apply filters, and chain write actions to Slack, Google Sheets, or Salesforce normally.
+To analyze, score, or act on signal results, run the signal from a Clay table instead. Create or use a Clay table that contains the same companies you are monitoring — imported from your CRM, a CSV, or the same source that populated your audience segment — then click **Tools** → **Monitor for news & fundraising** (or the relevant signal type) in that table to set up the signal there. Each matching event lands as a new row in the table, where you can add AI scoring columns, apply filters, and chain write actions to Slack, Google Sheets, or Salesforce normally.
 
 **Two things to keep in mind:**
 
 -   **Earliest publish date advances each run.** The signal's date floor moves forward after each run by default, so earlier articles become unreachable. If you want to cover a specific time window, open the signal column header → **Edit signal** → **Filter results** → set **Earliest publish date** to the start of the window you need.
--   **Credit limits on AI columns.** If your source segment refreshes automatically, the table will keep receiving new rows on each signal run. Set a credit limit on any AI columns in the results table to avoid unexpected charges as new rows auto-run.
+-   **Credit limits on AI columns.** If your source table receives new rows automatically (for example, via a recurring source or [Send Table Data](send-table-data.md)), set a credit limit on any AI columns in the results table to avoid unexpected charges as new rows auto-run.
 
 ### How do I update or replace my master source table without breaking my signal workflows?
 
