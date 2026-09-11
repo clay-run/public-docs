@@ -310,9 +310,13 @@ Records need a high-confidence identifier to match. Auto-enrichment adds `Linked
 
 **Import record matching (beta)**
 
-When importing from Salesforce or Snowflake, you can configure **Import record matching** to deduplicate records at ingestion time. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
+By default, records from different sources that represent the same company (or person) create separate Audience entities — there is no automatic cross-source merging. For example, a company arriving from a HubSpot sync and the same company arriving from a Salesforce sync each become their own Audience record, because there is no shared field telling Clay they are the same company. Records from the same source do deduplicate against existing records with the same source record ID.
 
-**Example:** If you're importing from both Snowflake and Salesforce, setting `domain` as your alias field ensures that a single company row in your Audiences reflects data from both sources — rather than creating two separate records for the same company.
+**Import record matching** lets you configure a shared field (such as domain for companies, or email for people) so that records arriving from different sources merge into a single Audience entity when that field value matches. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
+
+**Supported sources:** Salesforce, HubSpot, Snowflake, BigQuery, and Databricks. CSV files use a separate mechanism — the **Unique identifier** set at upload time (see [Importing from CSV](#importing-from-csv)) — which deduplicates rows within that CSV against existing records. **Clay company/people search sources and Clay table sources do not support import record matching.** Records from those sources rely on entity resolution for cross-source deduplication. For Clay table sources, use an **Upsert Audiences Record** column with domain or professional network URL as the lookup field to achieve cross-source matching when adding data from a table.
+
+**Example:** If you're importing from both HubSpot and Salesforce, setting `domain` as your alias field ensures that a single company row in your Audience reflects data from both sources — rather than creating two separate records for the same company.
 
 To configure:
 
@@ -1062,6 +1066,30 @@ Two behaviors to keep in mind:
 -   **Empty fields count as non-matches.** If a field value in your Audience record is empty (null), it will not match any filter condition on that field — including equality checks. For example, filtering by `Profile URL = <value>` will not return records that have an empty Profile URL field, even if the Email matches.
 
 If you need to look up a record that may be missing one of your identifier fields, filter by the field most likely to be populated (typically `Email` or `Profile URL`), and use a single-field filter rather than combining multiple conditions.
+
+### Why do I have duplicate company or contact records in my audience?
+
+Duplicate records usually come from one of three causes:
+
+**1. Sources without a match field configured**
+
+By default, records from different sources for the same company (or person) create separate Audience entities — there is no automatic cross-source merging. A company in your HubSpot sync and the same company arriving from a Clay search each become their own Audience record unless you configure **Import record matching** with a shared match field such as domain. See [Entity resolution and deduplication](#entity-resolution-and-deduplication) above for how to set this up.
+
+**2. Large companies with multiple professional network pages**
+
+Global enterprises often have separate company pages on the professional network for regional offices, subsidiaries, and acquired brands — each with a different employee count. When you run multiple company searches with different size filters, a parent company and its subsidiary can each qualify under different criteria and import as separate records. Entity resolution uses professional network URL and domain to collapse these where possible, but if the subsidiary and parent have different professional network URLs and no shared domain, they remain as separate entities.
+
+**3. Duplicate records already in your CRM**
+
+Clay creates one Audience record for each CRM record it syncs. If your Salesforce or HubSpot account already contains duplicate Account or Contact records, Clay faithfully imports each one. The fix belongs in your CRM — merge the duplicate accounts at the source and ensure the website or domain field is populated so Clay's matching logic has a shared field to compare on the next sync.
+
+**How to size the problem before cleaning up**
+
+Export your audience to a Clay table (click **Send** → create an enrichment table, or use a table source connected to the audience), add a column that normalizes company domains (lowercase, strip `www.`), and group on that column. This shows how many distinct Audience records share the same company domain.
+
+**Important: match field changes apply going forward only**
+
+Enabling Import record matching merges records as they arrive — it does not retroactively merge duplicate records already in your audience. To clean up existing duplicates, archive the extra copies and keep one.
 
 ### How do I remove records from an audience?
 
