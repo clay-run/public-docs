@@ -1117,18 +1117,18 @@ CSV imports are one-time — they do not re-sync automatically. If your CSV cont
 
 **1. Archive the old records:**
 
+Before importing the corrected file, remove the incorrect records from your Audience:
+
 1.  Go to **All People** or **All Companies** in your Audiences view.
-2.  Add a filter: **Source** → select the CSV import you want to replace.
-3.  Select all returned rows.
-4.  Click **Archive** in the bottom toolbar and confirm.
+2.  Filter by the source of the old CSV import (use the **Person source** or **Company source** filter and select the original CSV import name).
+3.  Select all rows returned by the filter.
+4.  Click **Archive** in the toolbar that appears at the bottom.
+5.  Confirm. All records from the old CSV are removed from your Audience.
 
-This permanently removes the old CSV records from your Audience.
-
-**2. Upload the corrected CSV:**
+**2. Import the corrected CSV:**
 
 1.  Click `Add data` → `Add Source` → select **CSV**.
-2.  Upload the corrected file and complete the field mapping as usual.
-3.  Click **Import**.
+2.  Upload the corrected file and complete the import steps as usual.
 
 The corrected records are imported fresh without duplicating the old ones.
 
