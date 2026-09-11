@@ -175,7 +175,7 @@ When you apply more than one sort, Clay applies them **in priority order**: the 
 
 — then all rows are arranged by Competitor Status first. Within any group of rows that share the same Competitor Status value, those rows are further sorted by Hiring Sales. Within rows that share both the same Competitor Status and Hiring Sales value, Has RevOps then determines the order.
 
-**This is expected behavior, not a bug.** If a column's sort appears to have no effect, it means the higher-priority sort columns have unique values for every row — there are no ties to break.
+**This is expected behavior, not a bug.** If a column's sort appears to have no effect, it means the higher-priority sort columns have unique values for every row — there are no ties to break. If a sort looks correct for some rows but then jumps to different values for others — for example, a **Created At** date sort where dates appear in order for the first several rows, then reset to earlier dates — another sort is grouping rows by a different column first; your lower-priority sort only orders rows *within* each group, not across the whole table. To sort the entire table by a single column, open the **Sort** panel and remove all higher-priority sorts.
 
 To manage multiple sorts:
 
