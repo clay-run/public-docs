@@ -1142,33 +1142,46 @@ Records that count toward the limit:
 Records that do **not** count:
 
 -   Archived records (removed from your Audience permanently)
--   Segment membership (segments are filters on your base records, not additional records)
--   Records from Clay table sources before they are saved to your Audience
+-   Segment memberships (a record in 10 different segments still counts as one record)
 
-**What happens if you hit the limit:** Clay stops adding new records to your Audience — existing records continue to be enriched and updated, but no new records can enter until you either archive existing records to free up space, or upgrade to a higher-tier plan. Contact Clay support if you believe you've hit your limit unexpectedly.
+If your workspace reaches the limit, Clay will stop importing new records from your connected sources until the count drops below the cap. To free up space: archive records you no longer need (see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above), or upgrade your plan.
+
+Growth plans have a hard cap — there is no add-on to increase the limit without upgrading to Enterprise.
 
 ### Can I add a "notes" or "memo" field to an Audience record?
 
-Yes — you can add a custom text field to store notes, context, or any other free-form text on a per-record basis.
+Yes — you can create a custom text field in Audiences and update it from a Clay table using `Update Audiences Record` or `Upsert Audiences Record`. There is no built-in "notes" column, but a custom field works the same way.
 
-To add a notes field:
+**To set this up:**
 
-1.  Navigate to a segment and click `Enrich` → `Add bulk enrich`.
-2.  In the bulk enrich table, click the `Update Audiences Record` column header to open the Configure panel.
-3.  In the `Column mapping` dropdown, click `+ Add field`, name the field (for example, "Notes"), select **Text** as the field type, and save.
-4.  The new field appears as a column in your Audience views and is immediately available as a filter option.
+1.  Create a custom Audience text field — see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) above.
+2.  In your Clay table, add an `Update Audiences Record` or `Upsert Audiences Record` column.
+3.  Map the text column in your table to the custom notes field in Audiences.
+4.  Run the column — the value writes permanently to the Audience record.
 
-To populate the field, use `Update Audiences Record` or `Upsert Audiences Record` from any Clay table, or manually edit individual records in the Audiences UI (click a record to open its detail panel, then click the field to edit it inline).
-
-You can then filter your audience on this field, sync its value to Salesforce, or use it in enrichment logic.
+You can then filter segments on this field, export it to Salesforce, or use it as input for enrichments.
 
 ### Why does my Databricks import fail with a schema or permission error?
 
-Two common causes:
+Databricks imports in Audiences use the Unity Catalog. Two common causes of failure:
 
-**Schema error — table or column not found:** Databricks imports use a SQL query that Clay runs against your Databricks instance. If the query references a table or column that doesn't exist, the import fails with a schema error. Check that your SQL query uses the correct database, schema, and column names — Databricks is case-sensitive for schema and table names in some configurations. Click **Test** in the import settings to preview the result of your query before saving; if the test returns an error, fix the query first.
+**1. The service principal lacks SELECT on the target table.**
 
-**Permission error — access denied:** The Databricks service principal or personal access token you connected must have `SELECT` permission on the tables referenced in your SQL query. If the import was set up with a token that has since expired or had its permissions reduced, the import will fail with an access-denied error. Reconnect the Databricks account in **Settings → Connections** with a token that has the required permissions, then retry the import.
+In Databricks, grant the service principal read access to the catalog, schema, and table you're importing:
+
+```sql
+GRANT USE CATALOG ON CATALOG <catalog_name> TO `<service-principal-id>`;
+GRANT USE SCHEMA ON SCHEMA <catalog_name>.<schema_name> TO `<service-principal-id>`;
+GRANT SELECT ON TABLE <catalog_name>.<schema_name>.<table_name> TO `<service-principal-id>`;
+```
+
+Replace `<service-principal-id>` with the application ID of the service principal connected to Clay.
+
+**2. The table is not registered in Unity Catalog.**
+
+Audiences can only import from tables registered in Unity Catalog — it cannot query tables or views defined in the legacy Hive metastore. To migrate a legacy table, use `CREATE TABLE ... AS SELECT` in Unity Catalog to register a copy, or move the underlying data to a Unity Catalog volume.
+
+If neither of these applies and the import still fails, contact Clay support with the error message shown in the import setup.
 
 ### How do I archive records that no longer match my Snowflake import query?
 
