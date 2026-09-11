@@ -538,6 +538,8 @@ Connect a Clay workflow to a named audience segment — or to the entire workspa
 
 The workflow card shows the current status — **Draft**, **Live**, or **Paused**. To activate it, click the **⋮** (three-dot) menu on the workflow card and select **Open in Workflows**, then click **Publish** in the top toolbar of the workflow editor. A dialog appears where you can name this version. If your workflow has an audience segment trigger, the dialog also shows a **Run on all members now** checkbox (with a count of the current segment members). Check this box to immediately run the workflow on every contact or company already in the segment as part of publishing — leave it unchecked to have the workflow trigger only for new members that join the segment going forward. Publishing the workflow activates all connected triggers — new segment members will run through the workflow automatically once it is live.
 
+**Before you can publish (Enrichment in Workflows — open beta):** When using the workflow-backed enrichment experience, the workflow builder guides you through four guided steps — **Source**, **Enrich segment**, **Map fields**, and **Review & run**. You must complete the **Map fields** step before the Publish option becomes available. In the Map fields step, map each enrichment output field to the corresponding field in your destination audience segment — these mappings control what data the workflow writes back to your Audience on each run. If the Publish button is missing or disabled, open the workflow editor and check that the Map fields step is fully configured. Contact your Growth Strategist to enable this experience for your workspace.
+
 **Running a workflow on existing segment members**
 
 To manually run the workflow on segment members already in the segment, open the workflow in the editor and use the **Run** dropdown on the trigger card:
@@ -557,6 +559,17 @@ To test a workflow on hand-picked records — rather than an automatic sample �
 4.  Click **Run [N] rows** to run the workflow on your selected records only.
 
 Selected records are merged with any existing test records for the trigger — duplicates across sources are removed automatically. You can add records from multiple connected audience segments.
+
+**Auditing past workflow runs**
+
+To review which records have been processed by a workflow and inspect exactly what happened in each run, use the workflow's **Runs** view:
+
+1.  Open the workflow in the editor. In the graph canvas, open the recent runs panel on the right side and click **View all runs** — or switch directly from **Graph** to **Runs** at the top of the workflow editor.
+2.  Choose a display mode: **Run log** for a chronological list, or **Table view** for a spreadsheet-style grid where each row is a run and each column is a workflow field.
+3.  Filter the results using the **Status**, **Version**, and **Trigger** controls, and use the time-range selector (**All**, **1d**, **1w**, **1m**) to scope the window. You can also search by a specific email address, name, or other input value to find runs for a particular record.
+4.  Click any run to open its detail view and see the run's **Inputs**, **Outputs**, the workflow version that processed it, and a step-by-step trace of what each node returned.
+
+Clay keeps each workflow run immutable — the trace reflects exactly what happened at the time the run executed, regardless of any changes made to the workflow since. Runs processed under an older workflow version show that version's configuration in the trace.
 
 ### **Syncing audiences to ad platforms**
 
