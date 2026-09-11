@@ -617,7 +617,7 @@ Clay creates the workbook table immediately and queues the initial import.
 
 **Table size limit:** Due to Clay table size limits, only the first **50,000 records** from the segment are imported.
 
-**Columns in the table:** The initial table contains three columns — **Name**, **Domain** (for Companies) or **Email** (for People), and **LinkedIn URL**. The underlying source cell for each row stores all current Audience field values. Fields added to your Audience segment after the table was first created do not automatically appear as new columns in that existing table — see [Why aren't new Audience fields appearing as columns in my linked workbook table?](#why-arent-new-audience-fields-appearing-as-columns-in-my-linked-workbook-table) in the FAQs below.
+**Columns in the table:** The initial table contains three columns — **Name**, **Domain** (for Companies) or **Email** (for People), and **professional profile URL**. The underlying source cell for each row stores all current Audience field values. Fields added to your Audience segment after the table was first created do not automatically appear as new columns in that existing table — see [Why aren't new Audience fields appearing as columns in my linked workbook table?](#why-arent-new-audience-fields-appearing-as-columns-in-my-linked-workbook-table) in the FAQs below.
 
 ## Writing back to your CRM
 
@@ -1215,7 +1215,7 @@ To archive these records and remove them from your active Audience:
 
 ### Why aren't new Audience fields appearing as columns in my linked workbook table?
 
-When you create a workbook table via **Send → Add to workbook**, the table is created with three initial columns: **Name**, **Domain** (for Companies) or **Email** (for People), and **LinkedIn URL**. The underlying source cell for each row stores all current Audience field values, but only explicitly configured columns surface those values as visible table columns.
+When you create a workbook table via **Send → Add to workbook**, the table is created with three initial columns: **Name**, **Domain** (for Companies) or **Email** (for People), and **professional profile URL**. The underlying source cell for each row stores all current Audience field values, but only explicitly configured columns surface those values as visible table columns.
 
 Fields added to your Audience segment **after** the initial table was created do not automatically generate new columns in the existing table. This includes custom fields, enrichment output fields, and fields from data sources connected after the table was set up.
 
