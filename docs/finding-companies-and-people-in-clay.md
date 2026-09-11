@@ -222,7 +222,7 @@ The enrichment returns a `start_date` for each active role. The AI column conver
 
 ### Find people who previously worked at a specific company
 
-The **Companies** filter targets people who **currently** work at the companies you specify. Enabling the main **Include past experiences** toggle alongside a Companies filter extends that filter to past roles too — returning both current and former employees of those companies, which is not useful if you want alumni who are now elsewhere.
+The **Companies** filter targets people who **currently** work at the companies you specify — the **Include past experiences** toggle does not change this behavior. To find people who formerly worked at a specific company (alumni who have since moved on), you need a different approach than adding a past company to the Companies filter.
 
 To find current employees at your target companies who **also previously worked at a specific company** (for example, Airtable alumni now working at competitor companies), use **Find People at These Companies** as an action column with the dedicated **Exp. Description Incl. Past Experiences** toggle:
 
@@ -234,6 +234,34 @@ To find current employees at your target companies who **also previously worked 
 This returns people who currently work at your target companies and have the former employer's name in their past experience descriptions.
 
 **Precision caveat:** Keyword matching checks anywhere the name appears in experience descriptions, so it can pick up adjacent mentions — for example, someone who managed an Airtable integration at a vendor but never worked there directly. For higher precision, run `Enrich Person` after pulling results and verify the former employer appears in the structured past experience array.
+
+### Find your company's alumni who now work at your target accounts
+
+Use this approach when you want to identify former employees of your own company who are now at companies on your ICP list — for example, ex-colleagues who have moved to prospects you want to reach.
+
+This is a three-step workflow: build the alumni list first, get each person's current employer, then match against your target companies.
+
+**Step 1: Build the alumni list with Find People**
+
+Add a **Find People** source. In the **Experience** section, enter your company's name as an **Experience description keyword** (for example, `Acme Corp`). Then, in the **Past experiences** section, enable the **Include past experiences** toggle. This extends the keyword match to past roles, returning people who have your company name anywhere in their experience history.
+
+Where possible, use your company's **company profile URL from the professional network** as the keyword rather than a short display name — company profile URLs are exact identifiers and reduce false positives from companies with similar names.
+
+**Note:** Results include both current and former employees, because the toggle matches across all experience descriptions regardless of whether the role is active. Plan to filter out current employees in Step 3.
+
+**Step 2: Get each person's current employer**
+
+Find People results come from a periodically refreshed index — a person's listed company may lag behind their most recent profile update on the professional network. Add an **Enrich Person** column mapped to the profile URL column. This fetches the live profile and returns up-to-date company and title data you'll need for the matching step.
+
+**Step 3: Match against your ICP companies**
+
+Add a **Lookup single row in other table** column that matches each person's current company domain (from Enrich Person) against your ICP companies table. Anyone who returns a match is a former employee now at one of your target accounts.
+
+Filter your view on the lookup column (non-empty = match found), and add run conditions on email and phone enrichments so they only fire on matched rows — this keeps credit usage focused rather than enriching your entire alumni list.
+
+To remove current employees still at your company from the results, add a filter where the enriched current company domain does not match your own company's domain.
+
+**If you already have a defined ICP companies table and want to apply seniority or title filters at the ICP level**, see [Find people who previously worked at a specific company](#find-people-who-previously-worked-at-a-specific-company) above for an alternative approach that starts from your company list instead.
 
 ## Excluding companies and people
 
