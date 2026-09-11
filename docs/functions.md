@@ -379,6 +379,15 @@ To find your Routine ID:
 
 **Note:** Processing speed is subject to workspace-level throttling. If you upload several large batches at once, expect slower completion rates as Clay distributes the workload across your workspace.
 
+### Can I query my function table's row data or error status via the Clay tables API?
+
+No. Function tables do not support ClayQL sync — the "Enable for API" feature that allows `clay tables query` and the v0 REST API to read table data. Attempting to query a function table through the API returns the error: `Tables do not have ClayQL sync enabled`. This is expected: ClayQL sync can only be enabled on standard enrichment tables, not function tables.
+
+**To access function table data or monitor errors programmatically, use one of these workarounds:**
+
+-   **Route output to a standard enrichment table.** Add a [Send Table Data](send-table-data.md) column inside the function to write each processed row's results — including column error states — to a regular Clay table. That destination table can have ClayQL sync enabled, letting you query it via `clay tables query` or the REST API.
+-   **Add a webhook output column inside the function.** Use an HTTP action column to push each row's data — including error fields — to your own endpoint in real time as rows finish processing.
+
 ### How can I limit who can edit my functions?
 
 1.  Click on the function.
