@@ -4,7 +4,7 @@ description: Clay doesn't have a traditional API, but you can send data via
   webhooks, wrap Clay with Make or Zapier, use the Enterprise API for people &
   company lookups, connect AI tools via MCP, or build workflows via the CLI
   agent plugin.
-last_synced: 2026-04-26T01:40:52.352Z
+last_synced: 2026-04-26T01:40:52.256Z
 ---
 
 # Does Clay have an API?
@@ -43,9 +43,7 @@ This is a simpler setup than calling the Clay API directly from Salesforce, beca
 
 ### 2\. **Wrap Clay in a third-party tool** (Best for light API proxying)
 
-You can use tools like Replit or Make as a wrapper around Clay. These tools receive API requests, trigger Clay to do its thing, and return results once processing is complete.
-
-This works if you absolutely need an endpoint, but be aware: Clay's enrichment model means responses might take a minute or more, and you'll need to build logic to handle that. [Click for a little tutorial on how to do that.](https://www.linkedin.com/posts/horacio-lopez_this-is-probably-the-only-enrichment-api-activity-7224062593689169923-cYg-/)
+You can use tools like Replit or Make as a wrapper around Clay. These tools receive API requests, trigger Clay to do its thing, and return results quite a bit faster. This works if you absolutely need an endpoint, but be aware: Clay's enrichment model means responses might take a minute or more, and you'll need to build logic to handle that. [Click for a little tutorial on how to do that.](https://www.linkedin.com/posts/horacio-lopez_this-is-probably-the-only-enrichment-api-activity-7224062593689169923-cYg-/)
 
 ### 3\. **People & Company Search API** (Best for natural-language lookups)
 
