@@ -253,6 +253,26 @@ A second factor: if Enhanced Matching is enabled, it uses a professional profile
 
 **To fix this:** Because field mapping cannot be changed after an Ad Sync is created, you'll need to delete the current sync and create a new one. **Note: Deletion is permanent — the sync cannot be restored afterward. Deleting the sync does not affect your underlying audience segment.** Map at least one email column, and configure Enhanced Matching inputs if using that feature. See [Why should I use personal emails instead of work emails?](#why-should-i-use-personal-emails-instead-of-work-emails) for guidance on which email type gives the best results.
 
+### **Why am I getting a 403 error when I click Continue on an ad sync?**
+
+A 403 error when clicking **Continue** means Clay blocked the save before ever contacting the ad platform. When you click **Continue**, Clay checks whether the current user has permission to use every connection linked to the sync. If any connection is private — not shared with the workspace or with you individually — the entire save is rejected, even if you are a workspace admin.
+
+**Being a workspace admin does not automatically grant permission to use private connections.** Admin role lets you manage connections (change who they're shared with), but it does not give you permission to use connections you don't own unless they have been explicitly shared with you.
+
+**Option 1: Share the connection (can be done by a workspace admin or the connection's creator)**
+
+1. Go to **Settings → Connections**.
+2. Find the connection used by the ad sync (for example, your Google Ads or professional network connection).
+3. Under access settings, change it to **Anyone in the workspace**, or add the relevant user under **Specific people and groups**.
+4. Click **Save**.
+5. Return to the ad sync and click **Continue**.
+
+**Option 2: Have the connection's creator continue the sync**
+
+Ask the person who originally connected the ad account to open the ad sync and click **Continue** themselves.
+
+**If the ad sync has multiple destinations (for example, Google Ads, the professional network, and Meta):** Clay checks every connection on the sync, not just one. If the error persists after sharing one connection, check each destination's connection in **Settings → Connections** and share any that are still private.
+
 ### **Why is my Google Ads audience sync showing a "Failed to update audience" error?**
 
 This error typically means Google's API rejected the request. The most common cause is that **Customer Match** is not enabled on your Google Ads account. Clay creates and updates contact lists using Google's Customer Match API — if Customer Match is disabled or not yet approved for your account, the sync cannot proceed.
