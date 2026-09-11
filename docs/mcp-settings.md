@@ -12,7 +12,7 @@ MCP (Model Context Protocol) is how Clay connects your workspace to AI tools lik
 
 Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory — not a generic server URL you configure manually.
 
-Navigate to it from the Clay homepage by clicking `MCP` under **Orchestration** in the left sidebar. The MCP settings page is only visible to workspace admins — if you don't see it in the sidebar, ask your workspace admin.
+Navigate to it from the Clay homepage by clicking `MCP` under **Orchestration** in the left sidebar (it is not under Settings). The MCP settings page is only visible to workspace admins — if you don't see it in the sidebar, ask your workspace admin.
 
 **Note:**  
 
@@ -149,7 +149,7 @@ The MCP user credit limit is a rolling monthly limit. Credit spend automatically
 
 ### What happens when a rep hits their credit limit?
 
-Further actions through ChatGPT, Claude, or Glean are hard-blocked until the monthly reset — the rep won't be able to run enrichments or invoke Functions. Admins can increase the per-user limit at any time from the `MCP users` table to restore access immediately.
+Further actions through ChatGPT, Claude, or Glean are hard-blocked until the monthly reset — the rep won't be able to run enrichments or invoke Functions. To restore access immediately, a workspace admin can raise the per-user limit at any time: click `MCP` under **Orchestration** in the left sidebar, find the user in the table, and click the pencil icon next to their `Credit limit` to enter a higher amount. The change takes effect immediately — no need to wait for the monthly reset.
 
 ### Where else can I see MCP credit usage?
 
