@@ -228,6 +228,19 @@ This error means two or more inputs in the "Save as function" dialog share the s
 
 To fix it: review the input names in the dialog, make sure each one is unique, and then click **Create**.
 
+### How do I get specific Claygent output fields as separate columns inside my function?
+
+When a Claygent or Use AI column runs inside a function, all its output fields are stored together inside the result cell as a structured object — they don't automatically appear as standalone columns you can select in the "Send data back" checklist. To promote individual output fields into their own columns:
+
+1.  Open the function in edit mode (from your Clay homepage → **Functions**, click **Edit function**).
+2.  Click any populated cell in the Claygent or Use AI column to open the **Cell details** panel on the right.
+3.  Hover over the specific output field you want to add (for example, **Agency Name** or **Buying Model**).
+4.  Click **Add to column** — this creates a standalone basic column for that field in the function table.
+5.  Repeat for each output field you want to expose.
+6.  Click **Publish Changes**.
+
+After publishing, each promoted field appears as its own column in the function and is listed in the **"Choose output data to send"** checklist. Check those columns there to have them returned to the calling table and included in any export. See [How do I configure which columns are returned from my function to the calling table?](#how-do-i-configure-which-columns-are-returned-from-my-function-to-the-calling-table) for the next step.
+
 ### How do I configure which columns are returned from my function to the calling table?
 
 Every function includes a built-in **"Send data back"** column — the final step that controls what data is returned to the table calling the function. Opening that column's settings reveals a **Configure** section with a **"Choose output data to send"** checklist. Only columns that are checked will be sent back to the calling table; unchecked columns are not returned, even if they contain data.
