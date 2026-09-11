@@ -120,7 +120,7 @@ When using the Clay **Workflows editor** — the standalone workflow builder, no
 **Prompt-based setup**
 
 1. Open a node's sidebar in the Workflows editor.
-2. In the **Run if** section, type a plain-language description in the text input — for example, *"Only run when the company has more than 100 employees"* or *"Only run when the email is not empty."*
+2. In the **Run if** section, type a plain-language description in the text input — for example, *\"Only run when the company has more than 100 employees\"* or *\"Only run when the email is not empty.\"*
 3. Use `/` to reference specific workflow fields inline in your description.
 4. Click **Generate condition** to generate and apply the condition to the node.
 
@@ -130,7 +130,7 @@ Descriptions are limited to 1,000 characters. You may reference up to 10 workflo
 
 Click **Build manually** below the prompt input to configure the condition directly using Clay's comparison operators, without writing a prompt.
 
-Once a run condition is set, the **Run if** section shows **"Run this node only when its condition is met."** Click **Edit run condition** at any time to update it.
+Once a run condition is set, the **Run if** section shows **\"Run this node only when its condition is met.\"** Click **Edit run condition** at any time to update it.
 
 ## Tips
 
@@ -213,6 +213,20 @@ When a cell shows **\"Run condition not met\"**, an **Explain** button appears n
 **To use it:** Click the cell showing \"Run condition not met,\" then click the **Explain** button in the status area. The explanation appears inline below the message.
 
 This is particularly useful when the formula looks correct but the condition still isn't met — for example, when a value appears populated in the table but the comparison fails due to type mismatches, unexpected whitespace, or a nested formula that resolves differently at runtime than it previews.
+
+### Seeing "Run condition not met" on a column you didn't configure
+
+If a column shows **"Run condition not met"** for rows you expected it to process — and you didn't set a run condition — the column has one configured, possibly by a teammate or when the column was originally built.
+
+**To view and remove the run condition:**
+
+1.  Click the column header to open the column menu, then select **Edit column**.
+2.  In the settings panel, scroll to the **Run settings** section.
+3.  Look for the **Add run condition** checkbox — if it is checked, a run condition is active. The formula displayed below the checkbox controls which rows the column runs on.
+4.  To understand why a specific row was skipped, click the cell showing "Run condition not met" and use the **Explain** button in the cell details panel.
+5.  To remove the run condition, uncheck **Add run condition** and click **Save**. The column will then run for all rows.
+
+**Common example**: A lead-assignment column might include a run condition like `{{Assignment Rule}} == "Round Robin"` so it only processes round-robin leads and skips rows where the assignment type is something else (for example, "User ID"). Those skipped rows show **"Run condition not met"** — the column is working as designed. If you need it to run for all rows regardless of assignment rule, uncheck **Add run condition** in **Run settings** and save.
 
 ### Running an action only once per row (new rows only)
 
@@ -379,7 +393,7 @@ This is expected behavior. Clay evaluates the "Only run if" condition, finds it 
 
 1.  Click the `⛭` icon in the top toolbar → **Run Settings**.
 2.  Make sure **Auto-run** is on.
-3.  Uncheck **"Keep existing results"**.
+3.  Uncheck **\"Keep existing results\"**.
 
 With this setting off, the enrichment re-runs whenever the condition is met — including when you manually edit an upstream field.
 
