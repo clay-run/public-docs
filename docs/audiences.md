@@ -982,7 +982,7 @@ Clay Audiences syncs in two separate directions on different schedules:
 
 The 15-minute (or daily) sync applies to the **import direction only** — it reflects Salesforce changes in your Audience. Enriched data written in Clay flows back to Salesforce on the 24-hour export cycle.
 
-After you enable Export sync, the first export does not run immediately — it fires at your workspace's next scheduled export time, which may be up to 24 hours away. Subsequent exports run on the same 24-hour schedule. See [Writing back to your CRM](#writing-back-to-your-crm) for the full schedule and behavior details.
+After you enable Export sync, the first export does not run immediately — it fires at your workspace's next scheduled export time, which may be up to 24 hours away. Subsequent exports run on the same 24-hour schedule. See [Writing back to your CRM](#writing-back-to-your-crm) for the full export schedule and behavior.
 
 To push enriched data to Salesforce before the next scheduled export, see [How can I export records to Salesforce immediately without waiting for the 24-hour sync?](#how-can-i-export-records-to-salesforce-immediately-without-waiting-for-the-24-hour-sync)
 
