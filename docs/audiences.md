@@ -1142,76 +1142,48 @@ Records that count toward the limit:
 Records that do **not** count:
 
 -   Archived records (removed from your Audience permanently)
--   Segment memberships (a record in 10 different segments still counts as one record)
+-   Segment membership (segments are filters on your base records, not additional records)
+-   Records from Clay table sources before they are saved to your Audience
 
-If your workspace reaches the limit, Clay will stop importing new records from your connected sources until the count drops below the cap. To free up space: archive records you no longer need (see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above), or upgrade your plan.
-
-Growth plans have a hard cap — there is no add-on to increase the limit without upgrading to Enterprise.
+**What happens if you hit the limit:** Clay stops adding new records to your Audience — existing records continue to be enriched and updated, but no new records can enter until you either archive existing records to free up space, or upgrade to a higher-tier plan. Contact Clay support if you believe you've hit your limit unexpectedly.
 
 ### Can I add a "notes" or "memo" field to an Audience record?
 
-Yes — you can create a custom text field in Audiences and update it from a Clay table using `Update Audiences Record` or `Upsert Audiences Record`. There is no built-in "notes" column, but a custom field works the same way.
+Yes — you can add a custom text field to store notes, context, or any other free-form text on a per-record basis.
 
-**To set this up:**
+To add a notes field:
 
-1.  Create a custom Audience text field — see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) above.
-2.  In your Clay table, add an `Update Audiences Record` or `Upsert Audiences Record` column.
-3.  Map the text column in your table to the custom notes field in Audiences.
-4.  Run the column — the value writes permanently to the Audience record.
+1.  Navigate to a segment and click `Enrich` → `Add bulk enrich`.
+2.  In the bulk enrich table, click the `Update Audiences Record` column header to open the Configure panel.
+3.  In the `Column mapping` dropdown, click `+ Add field`, name the field (for example, "Notes"), select **Text** as the field type, and save.
+4.  The new field appears as a column in your Audience views and is immediately available as a filter option.
 
-You can then filter segments on this field, export it to Salesforce, or use it as input for enrichments.
+To populate the field, use `Update Audiences Record` or `Upsert Audiences Record` from any Clay table, or manually edit individual records in the Audiences UI (click a record to open its detail panel, then click the field to edit it inline).
+
+You can then filter your audience on this field, sync its value to Salesforce, or use it in enrichment logic.
 
 ### Why does my Databricks import fail with a schema or permission error?
 
-Databricks imports in Audiences use the Unity Catalog. Two common causes of failure:
+Two common causes:
 
-**1. The service principal lacks SELECT on the target table.**
+**Schema error — table or column not found:** Databricks imports use a SQL query that Clay runs against your Databricks instance. If the query references a table or column that doesn't exist, the import fails with a schema error. Check that your SQL query uses the correct database, schema, and column names — Databricks is case-sensitive for schema and table names in some configurations. Click **Test** in the import settings to preview the result of your query before saving; if the test returns an error, fix the query first.
 
-In Databricks, grant the service principal read access to the catalog, schema, and table you're importing:
-
-```sql
-GRANT USE CATALOG ON CATALOG <catalog_name> TO `<service-principal-id>`;
-GRANT USE SCHEMA ON SCHEMA <catalog_name>.<schema_name> TO `<service-principal-id>`;
-GRANT SELECT ON TABLE <catalog_name>.<schema_name>.<table_name> TO `<service-principal-id>`;
-```
-
-Replace `<service-principal-id>` with the application ID of the service principal connected to Clay.
-
-**2. The table is not registered in Unity Catalog.**
-
-Audiences can only import from tables registered in Unity Catalog — it cannot query tables or views defined in the legacy Hive metastore. To migrate a legacy table, use `CREATE TABLE ... AS SELECT` in Unity Catalog to register a copy, or move the underlying data to a Unity Catalog volume.
-
-If neither of these applies and the import still fails, contact Clay support with the error message shown in the import setup.
+**Permission error — access denied:** The Databricks service principal or personal access token you connected must have `SELECT` permission on the tables referenced in your SQL query. If the import was set up with a token that has since expired or had its permissions reduced, the import will fail with an access-denied error. Reconnect the Databricks account in **Settings → Connections** with a token that has the required permissions, then retry the import.
 
 ### How do I archive records that no longer match my Snowflake import query?
 
-When a record is no longer returned by your Snowflake import query — because it was removed from the underlying Snowflake table, or because you updated your SQL to exclude it — Clay marks the record's Snowflake source association as **Deleted in source** during the next full sync. The audience record itself is **not removed** — it stays in your Audience with a **Deleted in source** status.
+When you update your Snowflake SQL query to exclude records — for example, removing rows below a revenue threshold — those records are marked **Deleted in source** in your Audience on the next full sync (within 7 days). They are not automatically archived; they remain in All People or All Companies with a **Deleted in source** status.
 
-To archive these records and remove them from your active Audience:
-
-1.  Go to **All People** or **All Companies** in your Audiences view.
-2.  Add a filter: **Person source** (or **Company source**) → select your Snowflake import name.
-3.  Add a second filter: **Source status** → **Deleted in source**.
-4.  Select all rows that match.
-5.  Click **Archive** in the toolbar that appears at the bottom.
-6.  Confirm. The records are permanently removed from your Audience.
-
-**Note:** Archiving is permanent. Once archived, a record cannot be restored. If the same record re-enters via your Snowflake query in a future sync, it will be re-created as a new record without any previous enrichment data.
-
-### How do I archive records that no longer match my BigQuery import query?
-
-When a record is no longer returned by your BigQuery import query — because it was removed from the underlying BigQuery table, or because you updated your SQL to exclude it — Clay marks the record's BigQuery source association as **Deleted in source** during the next full sync. The audience record itself is **not removed** — it stays in your Audience with a **Deleted in source** status.
-
-To archive these records and remove them from your active Audience:
+To remove them from your Audience, archive them manually:
 
 1.  Go to **All People** or **All Companies** in your Audiences view.
-2.  Add a filter: **Person source** (or **Company source**) → select your BigQuery import name.
-3.  Add a second filter: **Source status** → **Deleted in source**.
-4.  Select all rows that match.
-5.  Click **Archive** in the toolbar that appears at the bottom.
-6.  Confirm. The records are permanently removed from your Audience.
+2.  Add a filter: **Source** → select your Snowflake import → set status to **Deleted in source**.
+3.  Select all returned rows.
+4.  Click **Archive** in the bottom toolbar and confirm.
 
-**Note:** Archiving is permanent. Once archived, a record cannot be restored. If the same record re-enters via your BigQuery query in a future sync, it will be re-created as a new record without any previous enrichment data.
+This is permanent and irreversible — archived records cannot be restored.
+
+**Alternatively**, if the record exists in another connected source (for example, Salesforce), it will remain visible in your Audience under that source even after being marked deleted in Snowflake. In that case, archiving removes the record from all sources simultaneously — use this only if you want to remove it entirely.
 
 ### Why aren't new Audience fields appearing as columns in my linked workbook table?
 
