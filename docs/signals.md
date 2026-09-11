@@ -76,6 +76,21 @@ Most Signals — Clay's automated monitors for events like job changes, promotio
 
 Signals require a connected data source to run against — either a source table containing the companies or contacts you want to monitor, or an audience segment. Without a linked source table or audience segment (or if the linked table is empty or has been deleted), the Signal has nothing to check and will return 0 results. Confirm that your Signal is connected to an active Clay table with valid company identifiers (domain or LinkedIn URL) or contact LinkedIn URLs, or to a populated audience segment.
 
+### My signal results on an Audience segment appear read-only — how do I analyze or act on them?
+
+When a signal is attached directly to a segment in Clay Audiences, its results are written as signal data on each matching record — not as new rows in a separate editable table. The view you see on the audience surface is read-only: you cannot add AI columns to it, export the rows directly, or chain write actions (such as Slack messages, Google Sheets updates, or Salesforce writes) off it.
+
+To analyze, score, or act on signal results, run the signal from a Clay table instead:
+
+1.  Send your audience segment's companies to a Clay table. You can do this from the segment's **Enrich** tab → **Bulk Enrich** → select or create a destination table, or use [Send Table Data](send-table-data.md) to push rows from a Clay table that already contains your companies.
+2.  In that destination table, click **Tools** → **Monitor for news & fundraising** (or the relevant signal type) and set up the signal there. Each matching event lands as a new row in the table.
+3.  With results as real rows, you can add AI scoring columns, apply filters, and chain write actions to Slack, Google Sheets, or Salesforce normally.
+
+**Two things to keep in mind:**
+
+-   **Earliest publish date advances each run.** The signal's date floor moves forward after each run by default, so earlier articles become unreachable. If you want to cover a specific time window, open the signal column header → **Edit signal** → **Filter results** → set **Earliest publish date** to the start of the window you need.
+-   **Credit limits on AI columns.** If your source segment refreshes automatically, the table will keep receiving new rows on each signal run. Set a credit limit on any AI columns in the results table to avoid unexpected charges as new rows auto-run.
+
 ### How do I update or replace my master source table without breaking my signal workflows?
 
 Signal columns reference their source table by its internal ID, not its name. Renaming a table won't break any connected signals — but replacing it with a different table will disconnect them unless you update each signal to point to the new one.
