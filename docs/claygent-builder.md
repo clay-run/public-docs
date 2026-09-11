@@ -253,6 +253,23 @@ Claygents handle judgment-based, nondeterministic work in your GTM stack — wor
 -   **Outbound copywriting** — write personalized emails using your ICP and enriched data.
 -   **Persona classification** — categorize contacts by tier, role, or buying persona.
 
+### What if the data I need isn't available from standard enrichment providers?
+
+Standard B2B data providers — Apollo, PDL, Clearbit, and similar — are built primarily for tech and SaaS firmographic data: job titles, company size, funding stage, technographics, and contact details. They typically don't carry niche, industry-specific fields — for example, property-level employee counts, room counts, or meeting space for hospitality; regional business data for non-tech verticals; or other domain-specific attributes that fall outside the SaaS dataset.
+
+For these gaps, use Claygent. Claygent is Clay's AI web research agent — it searches Google and visits web pages to pull data directly from public sources such as property websites, industry directories, and review platforms.
+
+To use Claygent for niche data research:
+
+1.  Add a **Use AI** column and select **Claygent** (or deploy a saved Claygent from Claygent builder).
+2.  Enable **Web search** in the **Configuration** panel. For Clay parallel models (Argon, Neon, Helium), web search is always active.
+3.  Write a prompt telling the agent what to look for and which sources to check — for example: *"Visit {Website} and return the number of guest rooms, total meeting rooms, and total meeting space in square feet."*
+4.  Map your table columns as inputs and run.
+
+For guidance on structuring an effective research prompt, see [Writing AI prompts in Clay](ai-metaprompter-guide.md).
+
+**Note:** Claygent is not a substitute for structured data lookups — email addresses, phone numbers, and standard company records should come from dedicated enrichment providers. Use Claygent to fill in the gaps where structured provider data doesn't exist.
+
 ### How do I find contact information for people who don't have professional networking profiles?
 
 Use Claygent with web search enabled to pull publicly available contact details directly from a company's website. Many organizations — especially smaller businesses — list staff contacts on a `/contact` page or in a site directory. Point Claygent at those URLs and instruct it to extract names, titles, email addresses, or phone numbers it finds there.
