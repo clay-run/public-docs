@@ -538,6 +538,8 @@ Connect a Clay workflow to a named audience segment — or to the entire workspa
 
 The workflow card shows the current status — **Draft**, **Live**, or **Paused**. To activate it, click the **⋮** (three-dot) menu on the workflow card and select **Open in Workflows**, then click **Publish** in the top toolbar of the workflow editor. A dialog appears where you can name this version. If your workflow has an audience segment trigger, the dialog also shows a **Run on all members now** checkbox (with a count of the current segment members). Check this box to immediately run the workflow on every contact or company already in the segment as part of publishing — leave it unchecked to have the workflow trigger only for new members that join the segment going forward. Publishing the workflow activates all connected triggers — new segment members will run through the workflow automatically once it is live.
 
+**Before you can publish:** The workflow builder guides you through four steps — **Source**, **Enrich segment**, **Map fields**, and **Review & run**. You must complete the **Map fields** step before the Publish option becomes available. In the Map fields step, map each enrichment output field to the corresponding field in your destination audience segment — these mappings control what data the workflow writes back to your Audience on each run. If the Publish button is missing or disabled, open the workflow editor and check that the Map fields step is fully configured.
+
 **Running a workflow on existing segment members**
 
 To manually run the workflow on segment members already in the segment, open the workflow in the editor and use the **Run** dropdown on the trigger card:
@@ -557,6 +559,17 @@ To test a workflow on hand-picked records — rather than an automatic sample �
 4.  Click **Run [N] rows** to run the workflow on your selected records only.
 
 Selected records are merged with any existing test records for the trigger — duplicates across sources are removed automatically. You can add records from multiple connected audience segments.
+
+**Auditing past workflow runs**
+
+To review which records have been processed by a workflow and inspect exactly what happened in each run, use the workflow's **Runs** view:
+
+1.  Open the workflow in the editor. In the graph canvas, open the recent runs panel on the right side and click **View all runs** — or switch directly from **Graph** to **Runs** at the top of the workflow editor.
+2.  Choose a display mode: **Run log** for a chronological list, or **Table view** for a spreadsheet-style grid where each row is a run and each column is a workflow field.
+3.  Filter the results using the **Status**, **Version**, and **Trigger** controls, and use the time-range selector (**All**, **1d**, **1w**, **1m**) to scope the window. You can also search by a specific email address, name, or other input value to find runs for a particular record.
+4.  Click any run to open its detail view and see the run's **Inputs**, **Outputs**, the workflow version that processed it, and a step-by-step trace of what each node returned.
+
+Clay keeps each workflow run immutable — the trace reflects exactly what happened at the time the run executed, regardless of any changes made to the workflow since. Runs processed under an older workflow version show that version's configuration in the trace.
 
 ### **Syncing audiences to ad platforms**
 
@@ -1052,126 +1065,83 @@ When a Salesforce lead is converted to a contact, Audiences merges both records 
 
 However, the current Audiences UI contact view does not yet display a full union of all data from the converted lead. This means activity counts and last-activity dates that originated from the lead record may not appear in the contact's Activity tab even though the data exists in Audiences and is retrievable via MCP.
 
-**Note:** This discrepancy is a known limitation in the current Audiences UI. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. A future update will show the full union of contact and converted lead data in the UI.
+**Note:** This discrepancy is a known limitation in the current Audiences UI. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. A future update will show the full union of contact and lead activity in the UI.
 
 ### How does filtering work in Lookup in Audiences when I select multiple fields?
 
-When you select multiple fields in **Fields to filter by**, the lookup uses **AND logic** — a record must match on **all** selected fields to be returned. There is no option to switch to OR logic.
+When you add multiple fields to the **Fields to filter by** setting in a `Lookup in Audiences` column, Clay uses AND logic — a record in your Audience must match all of the specified field values to be returned.
 
-Two behaviors to keep in mind:
+Two behaviors to note:
 
--   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record must match both to be returned — a partial match on only one field returns nothing.
--   **Empty fields count as non-matches.** If a field value in your Audience record is empty (null), it will not match any filter condition on that field — including equality checks. For example, filtering by `Profile URL = <value>` will not return records that have an empty Profile URL field, even if the Email matches.
+-   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record must match both to be returned — a partial match on only one field won't be returned.
+-   **Empty fields never match.** If the Audience record has a null or empty value for one of the selected filter fields, it will not be returned — even if other fields match.
 
-If you need to look up a record that may be missing one of your identifier fields, filter by the field most likely to be populated (typically `Email` or `Profile URL`), and use a single-field filter rather than combining multiple conditions.
+**Tip:** Use a single, high-confidence identifier — such as `Email` for people or `Domain` for companies — as the sole filter field wherever possible. Multi-field filtering is useful when you want to guarantee uniqueness (for example, filtering by both email and company domain to avoid matching a contact at the wrong company), but it increases the risk of missed matches when any one field is missing or mismatched.
 
 ### How do I remove records from an audience?
 
-To remove records from an Audiences segment, you archive them. Archiving removes a record from Audiences entirely — it is no longer visible in any segment, including All People or All Companies — and is permanent and irreversible.
+**Archive** removes records from your active audience. Archived records are excluded from segment filters, bulk enrichments, signals, and CRM export syncs. They remain in Audiences but are no longer active — they can be viewed in the **Archived** section of the sidebar and restored if needed.
 
-**To archive a single record:**
+**To archive a single record:** Open the record's detail panel and click the **⋮** (three-dot) menu in the top right corner. Select **Archive**.
 
-1.  Open any record in your Audiences view by clicking on it.
-2.  In the record detail panel, click the **⋮** (three-dot) menu in the top right.
-3.  Select **Archive record**.
-4.  Confirm the action. The record is immediately removed from all segments and All People / All Companies.
+**To archive multiple records at once:**
 
-**To archive multiple records:**
+1.  In your audience, apply filters to identify the records you want to remove — for example, filter by **Origin source** to target records from a specific import.
+2.  Click the **⋮** (three-dot) menu next to the segment name in the sidebar (or the three-dot menu in the top right of the audience view).
+3.  Select **Archive records**. This archives all records currently matching your segment's filters, not just those visible on screen.
 
-1.  In your Audiences view, select the rows you want to archive by clicking the checkboxes to the left of each row.
-2.  With rows selected, a toolbar appears at the bottom of the screen.
-3.  Click **Archive** in the toolbar.
-4.  Confirm the action. All selected records are immediately removed from all segments.
+If the same records exist in other sources (Salesforce, HubSpot, CSV), archiving will remove them from those sources' audience contributions as well. Archived records can be restored from the **Archived** section in the sidebar if needed.
 
-**Note:** Archiving is permanent. There is no way to restore an archived record. If the same record enters Audiences again from a source (for example, if the underlying Salesforce record is modified and synced again), it will be re-created as a new record without any of its previous enrichment data.
+**After archiving:** Archived records are excluded from future imports — if the same company or person is imported again (for example, via a new CSV or CRM sync), the import treats the record as already present and does not re-add it to your active audience.
 
 ### How do I replace a CSV import with updated data?
 
-CSV imports are one-time — they do not re-sync automatically. If your CSV contained errors and you want to replace it with corrected data, follow these steps to avoid duplicating records:
+CSV imports are one-time — they do not re-sync automatically. If the original CSV contained errors or outdated data, follow these steps to replace it with a corrected version.
 
-**1. Archive the old records:**
+**Step 1: Identify and archive the records from the old import**
 
-Before importing the corrected file, remove the incorrect records from your Audience:
+1.  In Audiences, click **People** or **Companies** in the sidebar.
+2.  Click **+ Filter** and add a filter for **Origin source**.
+3.  Set the filter to match the name of your original CSV import — this is the label you gave the import when you set it up (visible in **Data Hub → Sources** as well).
+4.  Click **⋮** next to the segment name and select **Archive records**. This archives all records that came from the old import.
 
-1.  Go to **All People** or **All Companies** in your Audiences view.
-2.  Filter by the source of the old CSV import (use the **Person source** or **Company source** filter and select the original CSV import name).
-3.  Select all rows returned by the filter.
-4.  Click **Archive** in the toolbar that appears at the bottom.
-5.  Confirm. All records from the old CSV are removed from your Audience.
+**Step 2: Import the corrected CSV**
 
-**2. Import the corrected CSV:**
+1.  Click **Add data** → **Add Source** → **CSV**.
+2.  Upload your corrected CSV file and complete the import wizard — name the import, set the unique identifier, and map your fields.
+3.  Click **Import**.
 
-1.  Click `Add data` → `Add Source` → select **CSV**.
-2.  Upload the corrected file and complete the import steps as usual.
+The corrected records will appear in your active audience. The old records remain archived and are excluded from all segments, enrichments, and CRM syncs.
 
-The corrected records are imported fresh without duplicating the old ones.
-
-**Note:** If your Audience record count appears higher than expected after importing a corrected CSV — even after archiving — it may mean some records from the original import were merged with records from another source (for example, Salesforce) during entity resolution. Archived records that matched a non-CSV source may still appear in your Audience under that source. In this case, contact Clay support to assist with cleanup.
+**Note:** If some records from the old CSV were also present in other sources (Salesforce, HubSpot, Snowflake), archiving them from the CSV source will also remove their CSV-source contribution. Those records may remain in your active audience if they still have data from another source.
 
 ### How does the Audiences record limit work? What counts toward it?
 
-The Audiences record limit is a **per-workspace cap** on the total number of unique records stored in your Audience, regardless of which source they came from. Growth plans cap at 250,000 records; Enterprise plans cap at 25,000,000.
+The record limit applies to the total number of **active, non-archived** People and Companies records in your Audiences workspace, counted separately:
 
-Records that count toward the limit:
+-   **Growth plan:** Up to **250,000** People records AND up to **250,000** Companies records.
+-   **Enterprise plan:** Up to **25,000,000** People records AND up to **25,000,000** Companies records.
 
--   All records in **All People** (contacts and leads from any source)
--   All records in **All Companies** (accounts from any source)
+Records from all sources count toward the limit — Salesforce, HubSpot, Snowflake, BigQuery, CSV, people/companies search, and Clay table sends. Archived records do **not** count. Duplicate records that have been merged by entity resolution count as one record, not two.
 
-Records that do **not** count:
+**What happens when you reach the limit:** Clay stops importing new records from CRM and data warehouse sources (Salesforce, HubSpot, Snowflake, BigQuery) until the record count drops below the limit. Records already in Audiences continue to sync and update normally — only net-new record creation is paused. Clay table sends via `Upsert Audiences Record` are also paused when the limit is reached.
 
--   Archived records (removed from your Audience permanently)
--   Segment memberships (a record in 10 different segments still counts as one record)
+**To free up space:** Archive records you no longer need — for example, records from a test import, churned customers, or contacts that no longer match your ICP. See [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) for the archiving steps.
 
-If your workspace reaches the limit, Clay will stop importing new records from your connected sources until the count drops below the cap. To free up space: archive records you no longer need (see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above), or upgrade your plan.
-
-Growth plans have a hard cap — there is no add-on to increase the limit without upgrading to Enterprise.
+**To increase your limit:** Upgrade to a higher plan tier. Growth supports up to 250,000 records per entity type; Enterprise supports up to 25,000,000. There is no add-on to increase the limit within a plan tier.
 
 ### Can I add a "notes" or "memo" field to an Audience record?
 
-Yes — you can create a custom text field in Audiences and update it from a Clay table using `Update Audiences Record` or `Upsert Audiences Record`. There is no built-in "notes" column, but a custom field works the same way.
+Yes — you can create a custom text field in Audiences and use it as a free-text notes or memo field. The field will appear as a column in your audience view and as a fillable field on each record's detail panel.
 
-**To set this up:**
+**To add a notes field:**
 
-1.  Create a custom Audience text field — see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) above.
-2.  In your Clay table, add an `Update Audiences Record` or `Upsert Audiences Record` column.
-3.  Map the text column in your table to the custom notes field in Audiences.
-4.  Run the column — the value writes permanently to the Audience record.
+1.  Navigate to a segment and click `Enrich` → `Add bulk enrich`.
+2.  In the bulk enrichment table, click the **Update Audiences Record** column header to open the Configure panel.
+3.  In the **Column mapping** section, click `+ Add field`.
+4.  Name the field — for example, `Notes` or `Memo`.
+5.  Save the field definition.
 
-You can then filter segments on this field, export it to Salesforce, or use it as input for enrichments.
+Once created, the field appears in your audience view and on each record's detail panel. You can type directly into the field on any record to add notes — no enrichment run is needed to populate it manually.
 
-### Why does my Databricks import fail with a schema or permission error?
-
-Databricks imports in Audiences use the Unity Catalog. Two common causes of failure:
-
-**1. The service principal lacks SELECT on the target table.**
-
-In Databricks, grant the service principal read access to the catalog, schema, and table you're importing:
-
-```sql
-GRANT USE CATALOG ON CATALOG <catalog_name> TO `<service-principal-id>`;
-GRANT USE SCHEMA ON SCHEMA <catalog_name>.<schema_name> TO `<service-principal-id>`;
-GRANT SELECT ON TABLE <catalog_name>.<schema_name>.<table_name> TO `<service-principal-id>`;
-```
-
-Replace `<service-principal-id>` with the application ID of the service principal connected to Clay.
-
-**2. The table is not registered in Unity Catalog.**
-
-Audiences can only import from tables registered in Unity Catalog — it cannot query tables or views defined in the legacy Hive metastore. To migrate a legacy table, use `CREATE TABLE ... AS SELECT` in Unity Catalog to register a copy, or move the underlying data to a Unity Catalog volume.
-
-If neither of these applies and the import still fails, contact Clay support with the error message shown in the import setup.
-
-### How do I archive records that no longer match my Snowflake import query?
-
-When you update your Snowflake SQL query to exclude records — for example, removing rows below a revenue threshold — those records are marked **Deleted in source** in your Audience on the next full sync (within 7 days). They are not automatically archived; they remain in All People or All Companies with a **Deleted in source** status.
-
-To remove them from your Audience, archive them manually:
-
-1.  Go to **All People** or **All Companies** in your Audiences view.
-2.  Add a filter: **Source** → select your Snowflake import → set status to **Deleted in source**.
-3.  Select all returned rows.
-4.  Click **Archive** in the bottom toolbar and confirm.
-
-This is permanent and irreversible — archived records cannot be restored.
-
-**Alternatively**, if the record exists in another connected source (for example, Salesforce), it will remain visible in your Audience under that source even after being marked deleted in Snowflake. In that case, archiving removes the record from all sources simultaneously — use this only if you want to remove it entirely.
+**To populate the field programmatically** (for example, from a Clay table or workflow), use an `Upsert Audiences Record` or `Update Audiences Record` action column and map the source data to your notes field.
