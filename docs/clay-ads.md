@@ -149,7 +149,7 @@ Each record exported or synced consumes 1 action. Data credits apply for any enr
 
 The 50,000 row limit applies to ad audiences exported from tables. For larger audiences, create multiple tables and attach multiple audiences to your campaigns in the ad platform.
 
-Each audience segment supports only one ad sync. If a segment already has an active or previously-exported ad sync, the option to create a new ad sync from that segment will not appear. To sync the same audience to a different ad platform, clone the segment and create a new ad sync from the clone.
+Each audience segment supports only one ad sync. If a segment already has an active or previously-exported ad sync, the option to create a new ad sync from that segment will not appear. To sync the same audience to a different ad sync, clone the segment and create a new ad sync from the clone.
 
 Company (account-level) segments are supported by the professional network only. Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co support People (contact-level) segments only. To run campaigns on those platforms targeting contacts at your company accounts, use **Find people from this list** on your Companies segment to build a People segment, then create an ad sync from that People segment.
 
@@ -262,7 +262,7 @@ A 403 error when clicking **Continue** means Clay blocked the save before ever c
 **Option 1: Share the connection (can be done by a workspace admin or the connection's creator)**
 
 1. Go to **Settings → Connections**.
-2. Find the connection used by the ad sync (for example, your Google Ads or LinkedIn connection).
+2. Find the connection used by the ad sync (for example, your Google Ads or professional network connection).
 3. Under access settings, change it to **Anyone in the workspace**, or add the relevant user under **Specific people and groups**.
 4. Click **Save**.
 5. Return to the ad sync and click **Continue**.
@@ -271,7 +271,7 @@ A 403 error when clicking **Continue** means Clay blocked the save before ever c
 
 Ask the person who originally connected the ad account to open the ad sync and click **Continue** themselves.
 
-**If the ad sync has multiple destinations (for example, Google Ads, LinkedIn, and Meta):** Clay checks every connection on the sync, not just one. If the error persists after sharing one connection, check each destination's connection in **Settings → Connections** and share any that are still private.
+**If the ad sync has multiple destinations (for example, Google Ads, the professional network, and Meta):** Clay checks every connection on the sync, not just one. If the error persists after sharing one connection, check each destination's connection in **Settings → Connections** and share any that are still private.
 
 ### **Why is my Google Ads audience sync showing a "Failed to update audience" error?**
 
