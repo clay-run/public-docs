@@ -1100,49 +1100,88 @@ To remove records from an Audiences segment, you archive them. Archiving removes
 
 ### How do I replace a CSV import with updated data?
 
-CSV imports are one-time — they do not re-sync automatically. If the original CSV contained errors and you want to start fresh, archive the old records before importing the updated file — see [How do I replace a CSV import with updated data?](#how-do-i-replace-a-csv-import-with-updated-data) in the FAQs below.
+CSV imports are one-time — they do not re-sync automatically. If your CSV contained errors and you want to replace it with corrected data, follow these steps to avoid duplicating records:
 
-**To replace a CSV import:**
+**1. Archive the old records:**
 
-1.  Filter your audience by the old import's source name using the **Person source** or **Company source** filter.
-2.  Archive all returned records using the segment's **⋮** menu → **Archive records** (or select all rows and click **Archive** in the toolbar).
-3.  Import the corrected CSV by clicking `Add data` → `Add Source` → **CSV**.
+Before importing the corrected file, remove the incorrect records from your Audience:
 
-Archived records from the old import are excluded from future syncs. The new import creates fresh records.
+1.  Go to **All People** or **All Companies** in your Audiences view.
+2.  Filter by the source of the old CSV import (use the **Person source** or **Company source** filter and select the original CSV import name).
+3.  Select all rows returned by the filter.
+4.  Click **Archive** in the toolbar that appears at the bottom.
+5.  Confirm. All records from the old CSV are removed from your Audience.
+
+**2. Import the corrected CSV:**
+
+1.  Click `Add data` → `Add Source` → select **CSV**.
+2.  Upload the corrected file and complete the import steps as usual.
+
+The corrected records are imported fresh without duplicating the old ones.
+
+**Note:** If your Audience record count appears higher than expected after importing a corrected CSV — even after archiving — it may mean some records from the original import were merged with records from another source (for example, Salesforce) during entity resolution. Archived records that matched a non-CSV source may still appear in your Audience under that source. In this case, contact Clay support to assist with cleanup.
 
 ### How does the Audiences record limit work? What counts toward it?
 
-The record limit is a workspace-wide cap on the total number of unique, active (non-archived) records in Audiences. People and Companies are counted separately:
+The Audiences record limit is a **per-workspace cap** on the total number of unique records stored in your Audience, regardless of which source they came from. Growth plans cap at 250,000 records; Enterprise plans cap at 25,000,000.
 
--   **Growth plan:** Up to **250,000** People records and up to **250,000** Companies records.
--   **Enterprise plan:** Up to **25,000,000** People records and up to **25,000,000** Companies records.
+Records that count toward the limit:
 
-All records from all sources count — Salesforce, HubSpot, Snowflake, BigQuery, CSV, people/companies search, and Clay table sends. Archived records do **not** count. Records merged by entity resolution count once, not once per source.
+-   All records in **All People** (contacts and leads from any source)
+-   All records in **All Companies** (accounts from any source)
 
-When the limit is reached, Clay stops creating net-new records from CRM and data warehouse sources. Existing records continue to sync and update. To free up space, archive records you no longer need.
+Records that do **not** count:
+
+-   Archived records (removed from your Audience permanently)
+-   Segment memberships (a record in 10 different segments still counts as one record)
+
+If your workspace reaches the limit, Clay will stop importing new records from your connected sources until the count drops below the cap. To free up space: archive records you no longer need (see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above), or upgrade your plan.
+
+Growth plans have a hard cap — there is no add-on to increase the limit without upgrading to Enterprise.
 
 ### Can I add a "notes" or "memo" field to an Audience record?
 
-Yes — create a custom text field in Audiences and use it as a free-text notes or memo field. The field appears as a column in your audience view and as a fillable field on each record's detail panel.
+Yes — you can create a custom text field in Audiences and update it from a Clay table using `Update Audiences Record` or `Upsert Audiences Record`. There is no built-in "notes" column, but a custom field works the same way.
 
-**To add a notes field:**
+**To set this up:**
 
-1.  Navigate to a segment and click `Enrich` → `Add bulk enrich`.
-2.  In the bulk enrichment table, click the **Update Audiences Record** column header to open the Configure panel.
-3.  In the **Column mapping** section, click `+ Add field`.
-4.  Name the field — for example, `Notes` or `Memo`.
-5.  Save the field definition.
+1.  Create a custom Audience text field — see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) above.
+2.  In your Clay table, add an `Update Audiences Record` or `Upsert Audiences Record` column.
+3.  Map the text column in your table to the custom notes field in Audiences.
+4.  Run the column — the value writes permanently to the Audience record.
 
-Once created, the field appears in your audience view and on each record's detail panel. You can type directly into the field on any record to add notes — no enrichment run is needed to populate it manually.
+You can then filter segments on this field, export it to Salesforce, or use it as input for enrichments.
 
-**To populate the field programmatically** (for example, from a Clay table or workflow), use an `Upsert Audiences Record` or `Update Audiences Record` action column and map the source data to your notes field.
+### Why does my Databricks import fail with a schema or permission error?
+
+Databricks imports in Audiences use the Unity Catalog. Two common causes of failure:
+
+**1. The service principal lacks SELECT on the target table.**
+
+In Databricks, grant the service principal read access to the catalog, schema, and table you're importing:
+
+```sql
+GRANT USE CATALOG ON CATALOG <catalog_name> TO `<service-principal-id>`;
+GRANT USE SCHEMA ON SCHEMA <catalog_name>.<schema_name> TO `<service-principal-id>`;
+GRANT SELECT ON TABLE <catalog_name>.<schema_name>.<table_name> TO `<service-principal-id>`;
+```
+
+Replace `<service-principal-id>` with the application ID of the service principal connected to Clay.
+
+**2. The table is not registered in Unity Catalog.**
+
+Audiences can only import from tables registered in Unity Catalog — it cannot query tables or views defined in the legacy Hive metastore. To migrate a legacy table, use `CREATE TABLE ... AS SELECT` in Unity Catalog to register a copy, or move the underlying data to a Unity Catalog volume.
+
+If neither of these applies and the import still fails, contact Clay support with the error message shown in the import setup.
 
 ### How do I archive records that no longer match my Snowflake import query?
 
-When a record is no longer returned by your Snowflake import query, Clay marks its Snowflake source association as **Deleted in source** during the next full sync — but the record itself is not automatically removed from your Audiences. To clean up those records:
+When you update your Snowflake SQL query to exclude records — for example, removing rows below a revenue threshold — those records are marked **Deleted in source** in your Audience on the next full sync (within 7 days). They are not automatically archived; they remain in All People or All Companies with a **Deleted in source** status.
 
-1.  In Audiences, go to **All People** or **All Companies**.
-2.  Add a filter for **Person source** (or **Company source**) = your Snowflake import name, then filter by **Deleted in source** = **true** (or filter by **Origin source** for the relevant import).
+To remove them from your Audience, archive them manually:
+
+1.  Go to **All People** or **All Companies** in your Audiences view.
+2.  Add a filter: **Source** → select your Snowflake import → set status to **Deleted in source**.
 3.  Select all returned rows.
 4.  Click **Archive** in the bottom toolbar and confirm.
 
