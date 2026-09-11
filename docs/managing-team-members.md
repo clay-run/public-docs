@@ -44,11 +44,9 @@ Clay offers three user roles with different permission levels to help manage you
 
 ### Viewer
 
-**Viewers** have read-only access to workspace content by default.
+**Viewers** have read-only access to workspace content.
 
 **Note:** The Viewer role is available on the Enterprise plan only.
-
-On Enterprise workspaces, admins can grant a Viewer edit access to a specific workbook by adding them as a collaborator — see [Granting Viewers additional access](https://university.clay.com/docs/roles-and-permissions#granting-viewers-additional-access) for steps.
 
 ## Add a team member to your workspace
 
