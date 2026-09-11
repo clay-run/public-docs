@@ -191,6 +191,17 @@ Key details:
 -   **Deduplication is cumulative across all runs.** On every re-run (including scheduled runs), the source compares against every business it has ever found — not just the most recent run. A business found in week 1 is still tracked and skipped in week 52.
 -   **Deduplication is tied to the source definition.** If you delete and re-add the source, or create a new source with the same search criteria, deduplication starts over. The new source has no history, so all businesses it finds are treated as new and credited accordingly.
 
+### Can I save my Openmart or Google Maps source inputs to reuse them in a new table?
+
+**No — source inputs for "Find local businesses using Openmart" and "Find local businesses using Google Maps" are not saved or carried over when you duplicate a table or start from a Clay template.** Business types, locations, radius, and other search criteria must be configured each time you set up a new source.
+
+The behavior differs slightly depending on how you create the new table:
+
+-   **When you duplicate a table:** The source column appears in the duplicated table, but it has no source attached. Click the source column header, select **Edit source**, and enter your search inputs — business types, locations, and any other criteria — for the new search.
+-   **When you create a table from a Clay template:** The source column is not present in the copied table. Add a new source from scratch by clicking **Tools → Import** (or by clicking **Add source** when creating a new table).
+
+**Recommended approach for running the same sourcing workflow across multiple locations or business types:** Build one table with your enrichment columns, formulas, and run settings fully configured, then duplicate it each time you want to run a new search. The duplicate preserves the table structure — you only need to enter the source inputs (business types, location, and other search criteria) for each new search.
+
 ### Why doesn't my Clay table update when I change the source filters?
 
 **Editing the source of a Clay table after it's been run won't retroactively update the results, because Clay doesn't reprocess previously generated data automatically.**
