@@ -41,6 +41,15 @@ Conditional runs allow you to execute specific actions or enrichments in a workf
 
 Rows where the formula flags the address as personal show **\"Run condition not met\"** — no credits are consumed for those rows.
 
+**Run enrichment only when email is invalid or missing**: When an email verification enrichment returns a structured result object, referencing the raw enrichment column directly in a run condition evaluates against the full JSON object — a non-null object is always truthy, so the condition passes even for rows with valid emails. To gate on a specific field like verification status, extract that field first into a formula column, then reference the formula column in the run condition.
+
+1.  Your email verification enrichment (e.g., "Verify Email") outputs a JSON object. The relevant field — for example, `verified` — is nested inside it.
+2.  Create a **Formula column** (e.g., named "Verified") with the formula `{{Verify Email}}?.verified`. This extracts the boolean result: `true` for a valid email, `false` for an invalid one.
+3.  On the downstream enrichment column, open **Run settings → Only run if** and set the formula to `!{{Verified}}`. The `!` operator returns `true` for any falsy value — including `false` and an empty cell — so the enrichment runs when the email is invalid (Verified is `false`) or when the Verified field has no result yet.
+4.  To also catch rows where no email address is present at all, combine with `OR`: `!{{Verified}} OR /Email is empty`
+
+Rows where the email is already verified (Verified is `true`) show **\"Run condition not met\"** — no credits are consumed for those rows.
+
 **Create a record only if no existing match was found**: After running a CRM or table lookup step, run a create action only if the lookup found no existing record and a required field is available. This is sometimes called the \"create if not found\" pattern — for example, look up a company in HubSpot, then create a company record only if no match was returned and a company name is present.
 
 -   **Condition**: `[Look up Company] has no results AND [Company Name] is not empty`
@@ -148,7 +157,7 @@ When checking whether a field has a value — in a run condition or a formula co
 - `/Email is not empty` — condition passes when the Email column has a value
 - `/Domain is empty` — condition passes when the Domain column is blank
 
-**You may also see `!{{column}}` syntax in existing run conditions.** The single `!` (negation operator) returns `true` when the column is empty or blank, and `false` when it has a value — making it equivalent to `/column is empty`. For example, a run condition of `!{{Email Address}}` means \"only run when Email Address is blank.\" On rows where Email Address already contains data, the condition evaluates to `false` and the cell shows **\"Run condition not met\"** — this is expected behavior, not an error. To understand why a specific row was skipped, click the cell and use the **Explain** button in the cell details panel. To change the run condition, click the column header → **Edit column** → scroll to **Run settings** → update the **Only run if** formula → click **Save**.
+**You may also see `!{{column}}` syntax in existing run conditions.** The single `!` (negation operator) returns `true` for any falsy value — including an empty or blank cell, the boolean `false`, and the number `0` — and `false` for any truthy value. On text columns this behaves like `/column is empty`; on boolean columns it also fires when the value is `false`, not only when the cell is blank. For example, `!{{Verified}}` on a formula column that returns `true`/`false` means "only run when Verified is false or empty." A run condition of `!{{Email Address}}` on a text column means "only run when Email Address is blank." On rows where the column contains a truthy value, the condition evaluates to `false` and the cell shows **\"Run condition not met\"** — this is expected behavior, not an error. To understand why a specific row was skipped, click the cell and use the **Explain** button in the cell details panel. To change the run condition, click the column header → **Edit column** → scroll to **Run settings** → update the **Only run if** formula → click **Save**.
 
 ### Avoid combining `!!` with equality checks on 0 or other falsy values
 
