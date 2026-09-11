@@ -59,7 +59,7 @@ No. Purchased accounts are not pre-warmed when they arrive. Warmup is automatica
 
 ### **What does Clay manage for purchased email accounts?**
 
-For email accounts purchased through Clay's Smart Senders, Clay manages the core sending infrastructure for you, including:
+For email accounts purchased directly through Clay, Clay manages the core sending infrastructure for you, including:
 
 -   Provisioning the sending domains and mailboxes
 -   Configuring DNS and email authentication, including SPF, DKIM, and DMARC
@@ -70,7 +70,7 @@ As with any outbound email program, deliverability also depends on factors such 
 
 ### **How do I change the sender name or other details on a purchased email account?**
 
-From `Campaigns → Email Accounts`, find the mailbox you want to edit. Click the **⋯** button on the far right of the account row, select **Update sender variables**, and update the first name, last name, signature, or other sender fields. Click **Save** to apply the changes.
+From `Campaigns → Email Accounts`, find the mailbox you want to edit. Click the **⋯** button on the far right of the account row, select **Update sender variables**, and update the **From name** (the sender display name shown to recipients), **Signature**, or any custom sender variables your workspace has configured. Click **Save** to apply the changes.
 
 ### **Where are the purchased email accounts from?**
 
