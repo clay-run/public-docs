@@ -534,7 +534,7 @@ Additionally, you will need to have a Google Workspace admin authorize our app t
 
 ### I'm seeing "Access blocked: clay.com has not completed the Google verification process" when I try to connect my Google account. What does this mean?
 
-This error is expected — Clay's sequencer uses automated warmup sends, which prevents it from passing Google's standard app verification process. It does not mean Clay is broken or untrustworthy. The fix is for your **Google Workspace admin** to authorize Clay Sequencer as a Trusted app in your Google Admin panel. Until they do, all users in your domain will see this error when attempting to connect via OAuth.
+This error is expected — Clay's sequencer uses automated warmup sends, which prevents it from passing Google's standard app verification process. Google verification has not been completed, and there is currently no announced ETA. It does not mean Clay is broken or untrustworthy. The fix is for your **Google Workspace admin** to authorize Clay Sequencer as a Trusted app in your Google Admin panel. Until they do, all users in your domain will see this error when attempting to connect via OAuth.
 
 To resolve it, have your admin follow the steps in [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth). Changes can take up to 24 hours to apply.
 
