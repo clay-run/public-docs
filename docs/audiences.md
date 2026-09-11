@@ -597,6 +597,28 @@ With **Premium** or **Standard**, Clay queries its provider network to find and 
 
 **Professional network behavior:** The professional network creates a separate audience entry per hashed email address, so your audience size on that platform may exceed your contact count after a sync. This is expected — it means one contact was matched via multiple email addresses.
 
+### Exporting a segment to a workbook table (Beta)
+
+**Currently in beta — available to Enterprise plan workspaces by request.** Contact your Growth Strategist or Clay support to enable this feature for your workspace.
+
+You can export a segment to a Clay workbook table, creating a view of your segment's members that updates automatically as the segment changes. Each record that joins the segment becomes a new row in the linked table.
+
+**To export a segment to a workbook table:**
+
+1.  Navigate to an audience segment.
+2.  Click `Send` → **Add to workbook**.
+3.  Enter a table name, optionally assign a credit budget, and click **Continue**.
+
+Clay creates the workbook table immediately and queues the initial import.
+
+**Sync behavior:** New contacts or companies that join the segment are automatically added as new rows to the workbook table, usually **within 20 minutes** of joining the segment. No manual trigger or import run is required.
+
+**Import schedule:** The import schedule is not configurable from the workbook table. Clicking the import schedule setting on a table backed by an Audience segment returns you to the Audience segment — the sync timing is managed automatically. There is no way to trigger an on-demand import or adjust the schedule interval from the table itself.
+
+**Table size limit:** Due to Clay table size limits, only the first **50,000 records** from the segment are imported.
+
+**Columns in the table:** The initial table contains three columns — **Name**, **Domain** (for Companies) or **Email** (for People), and **professional profile URL**. The underlying source cell for each row stores all current Audience field values. Fields added to your Audience segment after the table was first created do not automatically appear as new columns in that existing table — see [Why aren't new Audience fields appearing as columns in my linked workbook table?](#why-arent-new-audience-fields-appearing-as-columns-in-my-linked-workbook-table) in the FAQs below.
+
 ## Writing back to your CRM
 
 **Note:** Salesforce is currently the only native export destination in Audiences. HubSpot export from Audiences is not yet available — to write data to HubSpot, see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
@@ -1175,3 +1197,11 @@ To remove them from your Audience, archive them manually:
 This is permanent and irreversible — archived records cannot be restored.
 
 **Alternatively**, if the record exists in another connected source (for example, Salesforce), it will remain visible in your Audience under that source even after being marked deleted in Snowflake. In that case, archiving removes the record from all sources simultaneously — use this only if you want to remove it entirely.
+
+### Why aren't new Audience fields appearing as columns in my linked workbook table?
+
+When you create a workbook table via **Send → Add to workbook**, the table is created with three initial columns: **Name**, **Domain** (for Companies) or **Email** (for People), and **professional profile URL**. The underlying source cell for each row stores all current Audience field values, but only explicitly configured columns surface those values as visible table columns.
+
+Fields added to your Audience segment **after** the initial table was created do not automatically generate new columns in the existing table. This includes custom fields, enrichment output fields, and fields from data sources connected after the table was set up.
+
+To access new Audience fields in the table, add columns that reference those field names by their exact display name in your Audience. To start fresh with a full set of current fields, create a new table from the segment via **Send → Add to workbook** and set up your columns from there.
