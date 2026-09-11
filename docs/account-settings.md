@@ -45,7 +45,7 @@ To change your theme:
 
 The email address field in `Settings` > `Account` is read-only and cannot be changed directly there.
 
-**Check your Security settings first:** Go to `Settings` > `Account` and open the `Security` tab. If you see a **Change sign-in** option, you can use it to change your login email address through a guided, in-app verification flow — no support request needed. The flow verifies your current email address and your new one before making the change.
+**Self-serve option (Pro+ plans):** Go to `Settings` > `Account` and open the `Security` tab. If you see a **Change sign-in** option, you can use it to change your login email address through a guided, in-app verification flow — no support request needed. The flow verifies your current email address and your new one before making the change.
 
 **If you do not see the Change sign-in option:** Contact Clay support via the in-app chat to request the change. Support will only process requests that originate from the workspace admin's registered email address — if you are not the workspace admin, coordinate with them to submit the request.
 
