@@ -314,7 +314,7 @@ By default, records from different sources that represent the same company (or p
 
 **Import record matching** lets you configure a shared field (such as domain for companies, or email for people) so that records arriving from different sources merge into a single Audience entity when that field value matches. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
 
-**Supported sources:** Salesforce, HubSpot, Snowflake, BigQuery, and Databricks. CSV files use a separate mechanism — the **Unique identifier** set at upload time (see [Importing from CSV](#importing-from-csv)) — which deduplicates rows within that CSV against existing records. **Clay company/people search sources and Clay table sources do not support import record matching.** Records from those sources rely on entity resolution for cross-source deduplication. For Clay table sources, use an **Upsert Audiences Record** column with domain or LinkedIn URL as the lookup field to achieve cross-source matching when adding data from a table.
+**Supported sources:** Salesforce, HubSpot, Snowflake, BigQuery, and Databricks. CSV files use a separate mechanism — the **Unique identifier** set at upload time (see [Importing from CSV](#importing-from-csv)) — which deduplicates rows within that CSV against existing records. **Clay company/people search sources and Clay table sources do not support import record matching.** Records from those sources rely on entity resolution for cross-source deduplication. For Clay table sources, use an **Upsert Audiences Record** column with domain or professional network URL as the lookup field to achieve cross-source matching when adding data from a table.
 
 **Example:** If you're importing from both HubSpot and Salesforce, setting `domain` as your alias field ensures that a single company row in your Audience reflects data from both sources — rather than creating two separate records for the same company.
 
@@ -1075,9 +1075,9 @@ Duplicate records usually come from one of three causes:
 
 By default, records from different sources for the same company (or person) create separate Audience entities — there is no automatic cross-source merging. A company in your HubSpot sync and the same company arriving from a Clay search each become their own Audience record unless you configure **Import record matching** with a shared match field such as domain. See [Entity resolution and deduplication](#entity-resolution-and-deduplication) above for how to set this up.
 
-**2. Large companies with multiple LinkedIn pages**
+**2. Large companies with multiple professional network pages**
 
-Global enterprises often have separate LinkedIn company pages for regional offices, subsidiaries, and acquired brands — each with a different employee count. When you run multiple company searches with different size filters, a parent company and its subsidiary can each qualify under different criteria and import as separate records. Entity resolution uses LinkedIn URL and domain to collapse these where possible, but if the subsidiary and parent have different LinkedIn URLs and no shared domain, they remain as separate entities.
+Global enterprises often have separate company pages on the professional network for regional offices, subsidiaries, and acquired brands — each with a different employee count. When you run multiple company searches with different size filters, a parent company and its subsidiary can each qualify under different criteria and import as separate records. Entity resolution uses professional network URL and domain to collapse these where possible, but if the subsidiary and parent have different professional network URLs and no shared domain, they remain as separate entities.
 
 **3. Duplicate records already in your CRM**
 
