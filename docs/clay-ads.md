@@ -149,7 +149,7 @@ Each record exported or synced consumes 1 action. Data credits apply for any enr
 
 The 50,000 row limit applies to ad audiences exported from tables. For larger audiences, create multiple tables and attach multiple audiences to your campaigns in the ad platform.
 
-Each audience segment supports only one ad sync. If a segment already has an active or previously-exported ad sync, the option to create a new ad sync from that segment will not appear. To sync the same audience to a different ad sync, clone the segment and create a new ad sync from the clone.
+Each audience segment supports only one ad sync. If a segment already has an active or previously-exported ad sync, the option to create a new ad sync from that segment will not appear. To sync the same audience to a different ad platform, clone the segment and create a new ad sync from the clone.
 
 Company (account-level) segments are supported by the professional network only. Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co support People (contact-level) segments only. To run campaigns on those platforms targeting contacts at your company accounts, use **Find people from this list** on your Companies segment to build a People segment, then create an ad sync from that People segment.
 
