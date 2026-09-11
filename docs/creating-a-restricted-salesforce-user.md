@@ -99,7 +99,7 @@ The user you authenticate with Clay can now:
 
 ## **Static IP addresses for allowlisting**
 
-On **Enterprise plans**, Salesforce connections in Clay automatically route through Clay's static IP addresses — no configuration needed. To allowlist these IPs in Salesforce, go to `Setup` → `Network Access` → `New` and enter each address. Contact Clay support to get the current list of IP addresses to allowlist.
+On **Enterprise plans**, Salesforce connections in Clay automatically route through Clay's static IP addresses — no configuration needed. To allowlist these IPs in Salesforce, go to `Setup` → `Network Access` → `New` and enter each address. Contact [Clay support](https://www.clay.com/support) to get the current list of IP addresses to allowlist.
 
 ## **FAQs**
 
