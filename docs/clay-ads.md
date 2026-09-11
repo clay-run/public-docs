@@ -119,6 +119,25 @@ Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, **Google
 
 Note that data source restrictions apply depending on the platform — see [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) below for details.
 
+### **What is the difference between legacy ad syncs and new ad syncs?**
+
+When you go to the **Ads** homepage in Clay, you may see two sections: **Legacy ad syncs** and the standard ad sync list. The difference is the source they use to build your audience:
+
+-   **Legacy ad syncs** (shown under "Legacy ad syncs" in the UI) were built directly from a Clay table. This is the old way of creating ad audiences — it is deprecated and new legacy syncs can no longer be created. Existing legacy syncs continue to run but display a deprecation notice.
+-   **New ad syncs** are built from an [Audiences](https://university.clay.com/docs/audiences) segment. This is the recommended flow for all new ad targeting workflows. Enhanced matching results — hashed personal emails found for your contacts — are saved to the contact record in Audiences and reused across future syncs, so you are not re-enriching the same contacts each time.
+
+All new ad syncs you create go through the Audiences-based flow by default.
+
+### **How do I migrate from a legacy ad sync to a new ad sync?**
+
+To switch an existing legacy (table-based) ad sync to the new Audiences-based flow:
+
+1.  If the legacy sync is **active**, deactivate it first — you cannot add a new Audiences-based sync to a segment while an active legacy sync is attached to it. If the legacy sync is already deactivated, you can skip this step.
+2.  In Clay, go to **Audiences** in the left nav and find or create the segment you want to sync to an ad platform.
+3.  On the segment, click **Send → Sync to ad platforms** and follow the setup wizard to configure your new ad sync.
+
+Once set up, all future ad syncs you create use the Audiences-based flow by default — there is no separate setting to change.
+
 ### **Why are some contacts excluded when I set up an ad sync?**
 
 When you create an ad sync, you may see an **Ad sync segment filters** panel showing a breakdown of your audience segment size, excluded contacts, and syncable contacts. Some contacts are automatically filtered out based on the platform you're syncing to and where their data originally came from.
@@ -138,12 +157,9 @@ These restrictions exist for compliance reasons, as third-party sourced contact 
 
 ### **Is this feature available on all plans?**
 
-Ad audiences are available on **Growth** and **Enterprise** plans:
+Ad audiences are available on **Growth** and **Enterprise** plans. Both plans support unlimited Audiences-based ad syncs.
 
--   **Growth**: Includes 1 ads platform sync
--   **Enterprise**: Includes unlimited audiences and additional ads platform syncs
-
-Each record exported or synced consumes 1 action. Data credits apply for any enrichments used in the table to build the audience.
+Each record exported or synced consumes 1 action. Data credits apply for any enrichments used to build the audience.
 
 ### **What are the limitations?**
 
