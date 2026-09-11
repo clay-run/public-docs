@@ -4,7 +4,7 @@ description: Clay doesn't have a traditional API, but you can send data via
   webhooks, wrap Clay with Make or Zapier, use the Enterprise API for people &
   company lookups, connect AI tools via MCP, or build workflows via the CLI
   agent plugin.
-last_synced: 2026-04-26T01:40:52.256Z
+last_synced: 2026-04-26T01:40:52.352Z
 ---
 
 # Does Clay have an API?
@@ -133,8 +133,8 @@ When you run `clay routines list` or `clay routines get`, each function-type rou
 **Note: Three `clay audiences records` commands let you read Audiences data from the CLI.** All three are available in the stable channel and require Audiences to be enabled for the workspace (available on Growth and Enterprise plans — see [Audiences](https://university.clay.com/docs/audiences)):
 
 -   `clay audiences records get --entity-type <people|companies|deals> --ids <ids>` — bulk-fetch up to 100 records by id, returning each record's field values.
--   `clay audiences records search-ids --entity-type <people|companies|deals> [--audience-id <id> | --filter <file>] [--cursor <cursor>]` — return matching record ids, cursor-paginated at 50 per page. Pass `--audience-id` to scope to a saved audience, `--filter` to apply an ad-hoc filter AST, or omit both to iterate all records of that entity type. Feed the returned ids to `clay audiences records get` in batches of 100 to retrieve field values. When using `--entity-type deals`, `--audience-id` and `--filter` are not accepted — deals are iterable as a whole entity type only.
--   `clay audiences records search-count --entity-type <people|companies|deals> [--audience-id <id> | --filter <file>]` — return the count of records matching a scope without paging through ids. When using `--entity-type deals`, `--audience-id` and `--filter` are not accepted — deals are countable as a whole entity type only.
+-   `clay audiences records search-ids [--query <dsl> | --entity-type <people|companies|deals> [--audience-id <id> | --filter <file>]] [--cursor <cursor>]` — return matching record ids, cursor-paginated at 50 per page. Pass `--query` with an Audiences DSL `select from …` expression (people, companies, or opportunities) to search with the DSL — the entity type is inferred from the query and `--entity-type` must be omitted. Or pass `--entity-type` with optional `--audience-id` to scope to a saved audience, `--filter` to apply an ad-hoc filter AST, or omit both to iterate all records of that entity type. Feed the returned ids to `clay audiences records get` in batches of 100 to retrieve field values. `--query`, `--audience-id`, and `--filter` are mutually exclusive, as are `--query` and `--entity-type`. When using `--entity-type deals` without `--query`, `--audience-id` and `--filter` are not accepted — use `--query` with `select from opportunities where …` for filtered deal ID searches. Activity IDs are strings and are not supported by this command.
+-   `clay audiences records search-count [--query <dsl> | --entity-type <people|companies|deals> [--audience-id <id> | --filter <file>]]` — return the count of records matching a scope without paging through ids. Pass `--query` with an Audiences DSL `count from …` expression (people, companies, opportunities, or activities) to count with the DSL — the entity type is inferred and `--entity-type` must be omitted. Or pass `--entity-type` with optional `--audience-id` or `--filter`. `--query`, `--audience-id`, and `--filter` are mutually exclusive. When using `--entity-type deals` without `--query`, `--audience-id` and `--filter` are not accepted — use `--query` with `count from opportunities where …` for filtered deal counts.
 
 All three return `auth_forbidden` (exit 3) if Audiences is not enabled for the workspace. `records get` additionally returns `rate_limited` (exit 4) if the workspace exceeds its hourly record budget or per-minute request rate — back off for `details.retryAfter` seconds before retrying.
 
