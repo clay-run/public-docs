@@ -310,9 +310,13 @@ Records need a high-confidence identifier to match. Auto-enrichment adds `Linked
 
 **Import record matching (beta)**
 
-When importing from Salesforce or Snowflake, you can configure **Import record matching** to deduplicate records at ingestion time. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
+By default, records from different sources that represent the same company (or person) create separate Audience entities — there is no automatic cross-source merging. For example, a company arriving from a HubSpot sync and the same company arriving from a Salesforce sync each become their own Audience record, because there is no shared field telling Clay they are the same company. Records from the same source do deduplicate against existing records with the same source record ID.
 
-**Example:** If you're importing from both Snowflake and Salesforce, setting `domain` as your alias field ensures that a single company row in your Audiences reflects data from both sources — rather than creating two separate records for the same company.
+**Import record matching** lets you configure a shared field (such as domain for companies, or email for people) so that records arriving from different sources merge into a single Audience entity when that field value matches. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
+
+**Supported sources:** Salesforce, HubSpot, Snowflake, BigQuery, and Databricks. CSV files use a separate mechanism — the **Unique identifier** set at upload time (see [Importing from CSV](#importing-from-csv)) — which deduplicates rows within that CSV against existing records. **Clay company/people search sources and Clay table sources do not support import record matching.** Records from those sources rely on entity resolution for cross-source deduplication. For Clay table sources, use an **Upsert Audiences Record** column with domain or LinkedIn URL as the lookup field to achieve cross-source matching when adding data from a table.
+
+**Example:** If you're importing from both HubSpot and Salesforce, setting `domain` as your alias field ensures that a single company row in your Audience reflects data from both sources — rather than creating two separate records for the same company.
 
 To configure:
 
@@ -1063,6 +1067,30 @@ Two behaviors to keep in mind:
 
 If you need to look up a record that may be missing one of your identifier fields, filter by the field most likely to be populated (typically `Email` or `Profile URL`), and use a single-field filter rather than combining multiple conditions.
 
+### Why do I have duplicate company or contact records in my audience?
+
+Duplicate records usually come from one of three causes:
+
+**1. Sources without a match field configured**
+
+By default, records from different sources for the same company (or person) create separate Audience entities — there is no automatic cross-source merging. A company in your HubSpot sync and the same company arriving from a Clay search each become their own Audience record unless you configure **Import record matching** with a shared match field such as domain. See [Entity resolution and deduplication](#entity-resolution-and-deduplication) above for how to set this up.
+
+**2. Large companies with multiple LinkedIn pages**
+
+Global enterprises often have separate LinkedIn company pages for regional offices, subsidiaries, and acquired brands — each with a different employee count. When you run multiple company searches with different size filters, a parent company and its subsidiary can each qualify under different criteria and import as separate records. Entity resolution uses LinkedIn URL and domain to collapse these where possible, but if the subsidiary and parent have different LinkedIn URLs and no shared domain, they remain as separate entities.
+
+**3. Duplicate records already in your CRM**
+
+Clay creates one Audience record for each CRM record it syncs. If your Salesforce or HubSpot account already contains duplicate Account or Contact records, Clay faithfully imports each one. The fix belongs in your CRM — merge the duplicate accounts at the source and ensure the website or domain field is populated so Clay's matching logic has a shared field to compare on the next sync.
+
+**How to size the problem before cleaning up**
+
+Export your audience to a Clay table (click **Send** → create an enrichment table, or use a table source connected to the audience), add a column that normalizes company domains (lowercase, strip `www.`), and group on that column. This shows how many distinct Audience records share the same company domain.
+
+**Important: match field changes apply going forward only**
+
+Enabling Import record matching merges records as they arrive — it does not retroactively merge duplicate records already in your audience. To clean up existing duplicates, archive the extra copies and keep one.
+
 ### How do I remove records from an audience?
 
 To remove records from an Audiences segment, you archive them. Archiving removes a record from Audiences entirely — it is no longer visible in any segment, including All People or All Companies — and is permanent and irreversible.
@@ -1089,18 +1117,18 @@ CSV imports are one-time — they do not re-sync automatically. If your CSV cont
 
 **1. Archive the old records:**
 
-Before importing the corrected file, remove the incorrect records from your Audience:
-
 1.  Go to **All People** or **All Companies** in your Audiences view.
-2.  Filter by the source of the old CSV import (use the **Person source** or **Company source** filter and select the original CSV import name).
-3.  Select all rows returned by the filter.
-4.  Click **Archive** in the toolbar that appears at the bottom.
-5.  Confirm. All records from the old CSV are removed from your Audience.
+2.  Add a filter: **Source** → select the CSV import you want to replace.
+3.  Select all returned rows.
+4.  Click **Archive** in the bottom toolbar and confirm.
 
-**2. Import the corrected CSV:**
+This permanently removes the old CSV records from your Audience.
+
+**2. Upload the corrected CSV:**
 
 1.  Click `Add data` → `Add Source` → select **CSV**.
-2.  Upload the corrected file and complete the import steps as usual.
+2.  Upload the corrected file and complete the field mapping as usual.
+3.  Click **Import**.
 
 The corrected records are imported fresh without duplicating the old ones.
 
