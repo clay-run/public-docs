@@ -1,7 +1,7 @@
 ---
 title: Legacy plans
 description: Comparing legacy plans to our new plans
-last_synced: 2026-04-26T01:40:14.923Z
+last_synced: 2026-04-26T01:40:14.933Z
 ---
 
 # Legacy plans
