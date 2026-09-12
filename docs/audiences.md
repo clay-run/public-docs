@@ -1052,7 +1052,7 @@ When a Salesforce lead is converted to a contact, Audiences merges both records 
 
 However, the current Audiences UI contact view does not yet display a full union of all data from the converted lead. This means activity counts and last-activity dates that originated from the lead record may not appear in the contact's Activity tab even though the data exists in Audiences and is retrievable via MCP.
 
-**Note:** This discrepancy is a known limitation in the current Audiences UI. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. A future update will show the full union of contact and lead activity in the UI.
+**Note:** This discrepancy is a known limitation in the current Audiences UI. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. A future update will show the full union of contact and converted lead data in the UI.
 
 ### How does filtering work in Lookup in Audiences when I select multiple fields?
 
@@ -1130,15 +1130,16 @@ Growth plans have a hard cap — there is no add-on to increase the limit withou
 
 ### Can I add a "notes" or "memo" field to an Audience record?
 
-Yes. Use the **Data Hub** to create a new custom text field — for example, a field named "Notes" — then add it as a column in any segment view. You can edit the field value directly on individual records. There is no built-in "Notes" field; you create it as a custom field.
+Yes — you can create a custom text field in Audiences and update it from a Clay table using `Update Audiences Record` or `Upsert Audiences Record`. There is no built-in "notes" column, but a custom field works the same way.
 
-**To create a custom text field:**
+**To set this up:**
 
-1.  Navigate to a segment and click `Enrich` → `Add bulk enrich`.
-2.  In the bulk enrich table, click the `Update Audiences Record` column header to open the Configure panel.
-3.  In the `Column mapping` dropdown, click `+ Add field`, name the new field (for example, "Notes"), select the type (Text), and save.
+1.  Create a custom Audience text field — see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) above.
+2.  In your Clay table, add an `Update Audiences Record` or `Upsert Audiences Record` column.
+3.  Map the text column in your table to the custom notes field in Audiences.
+4.  Run the column — the value writes permanently to the Audience record.
 
-The field is immediately available in any segment view as a column. To add it as a column, click **+ Add field** in the segment column header area and select your new field. To edit the value for a record, click the cell directly.
+You can then filter segments on this field, export it to Salesforce, or use it as input for enrichments.
 
 ### Why does my Databricks import fail with a schema or permission error?
 
@@ -1166,13 +1167,12 @@ If neither of these applies and the import still fails, contact Clay support wit
 
 When you update your Snowflake SQL query to exclude records — for example, removing rows below a revenue threshold — those records are marked **Deleted in source** in your Audience on the next full sync (within 7 days). They are not automatically archived; they remain in All People or All Companies with a **Deleted in source** status.
 
-To archive these records after the full sync has run:
+To remove them from your Audience, archive them manually:
 
-1.  In your Audiences view, create a new segment (or use an existing one).
-2.  Add a filter: **Source status** → **is** → **Deleted in source**.
-3.  Select all rows returned.
-4.  Click **Archive** in the toolbar.
-5.  Confirm.
+1.  Go to **All People** or **All Companies** in your Audiences view.
+2.  Add a filter: **Source** → select your Snowflake import → set status to **Deleted in source**.
+3.  Select all returned rows.
+4.  Click **Archive** in the bottom toolbar and confirm.
 
 This is permanent and irreversible — archived records cannot be restored.
 
