@@ -1085,6 +1085,8 @@ To remove records from an Audiences segment, you archive them. Archiving removes
 
 **Note:** Archiving is permanent. There is no way to restore an archived record. If the same record enters Audiences again from a source (for example, if the underlying Salesforce record is modified and synced again), it will be re-created as a new record without any of its previous enrichment data.
 
+**To completely delete records** from Clay's systems (rather than archive them): Contact Clay support. Archiving removes records from all Audience views permanently, but if you need a full data purge — for example, for compliance or data-privacy reasons — the Clay support team can perform a hard deletion on your behalf.
+
 ### How do I replace a CSV import with updated data?
 
 CSV imports are one-time — they do not re-sync automatically. If your CSV contained errors and you want to replace it with corrected data, follow these steps to avoid duplicating records:
