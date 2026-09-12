@@ -72,6 +72,10 @@ As with any outbound email program, deliverability also depends on factors such 
 
 From `Campaigns → Email Accounts`, find the mailbox you want to edit. Click the **⋯** button on the far right of the account row, select **Update sender variables**, and update the **From name** (the sender display name shown to recipients), **Signature**, or any custom sender variables your workspace has configured. Click **Save** to apply the changes.
 
+### **How many emails should I send from each inbox per day?**
+
+Clay recommends no more than 20 emails per inbox per day — approximately 600 emails per inbox per month. Clay warns you when you try to set a daily send limit above 20, as higher volumes can trigger spam filters and damage your sender reputation. The maximum daily send limit for purchased inboxes is 30 emails per inbox per day.
+
 ### **Where are the purchased email accounts from?**
 
 Clay fulfills orders through Smartlead, which in turn uses Zapmail to provision and manage the email accounts.
