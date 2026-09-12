@@ -1,7 +1,7 @@
 ---
 title: Legacy plans
 description: Comparing legacy plans to our new plans
-last_synced: 2026-04-26T01:40:14.933Z
+last_synced: 2026-04-26T01:40:14.923Z
 ---
 
 # Legacy plans
@@ -177,3 +177,18 @@ If you're on Explorer (Legacy) and considering a move to Enterprise, here is a s
 | Support | Standard support queue | Dedicated Slack channel |
 
 Modern plans also include ~50% cheaper data costs on 70+ enrichments compared to legacy pricing — your data credits go further on Enterprise.
+
+**How do I estimate what my usage will look like when moving from legacy credits to actions and data credits?**
+
+Moving from the legacy model (credits only, sometimes called tokens) to the modern model is not a one-to-one conversion from credits to actions. Under the modern model, your usage splits into two separate meters:
+
+-   **Actions** measure orchestration work in Clay: enriching data (including when using your own API keys), running AI, exporting records, syncing with your CRM or data warehouse, and executing GTM workflows. Imports, formulas, and transformations do not consume actions.
+-   **Data Credits** cover data purchased through Clay's marketplace and enrichment providers. On modern plans, many enrichments cost approximately 50% fewer credits than on legacy pricing, so your credits typically go further.
+
+To estimate what your usage will look like on a modern plan:
+
+1.  **Review your current usage** in `Settings` → `Usage` to see which enrichments, exports, and syncs you run most frequently — these activities will drive your action consumption on a modern plan.
+2.  **Use the [Clay Pricing Calculator](https://www.clay.com/credits-calculator)** to model how your typical workflows map to actions and data credits.
+3.  **Contact your Growth Strategist or account team** for a detailed, workspace-specific analysis based on your actual usage history.
+
+For a complete breakdown of which activities consume actions and which don't, see [Actions & Data Credits](./actions-data-credits.md).
