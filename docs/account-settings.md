@@ -43,15 +43,17 @@ To change your theme:
 
 ## Change your account email address
 
-The email address field in `Settings` > `Account` is read-only and cannot be changed directly in the UI. To change the email associated with your Clay account, contact Clay support via the in-app chat.
+The email address field in `Settings` > `Account` is read-only and cannot be changed directly there.
 
-**Who can request this change:** Email address changes are processed by Clay's support team and handled internally. Support will only honor requests that originate from the workspace admin's registered email address — if you are not the workspace admin, coordinate with them to submit the request.
+**Self-serve option (if available on your account):** Go to `Settings` > `Account` and open the `Security` tab. If you see a **Change sign-in** option, you can use it to change your login email address through a guided, in-app verification flow — no support request needed. The flow verifies your current email address and your new one before making the change.
+
+**If you do not see the Change sign-in option:** Contact Clay support via the in-app chat to request the change. Support will only process requests that originate from the workspace admin's registered email address — if you are not the workspace admin, coordinate with them to submit the request.
 
 **If the new email address is already linked to another Clay account:** That existing account must be resolved (for example, deleted) before the change can be made.
 
 Changing your email address does not affect your workspace data or your password.
 
-**If you sign in with Google:** After your email address is changed by support, sign in using the Google account associated with the new email address. Clay matches Google sign-ins by email — signing in with the Google account tied to your previous email address will no longer find your Clay account.
+**If you sign in with Google:** The Change sign-in option also lets you update the Google account linked to your Clay profile. If you do not see this option, contact Clay support via the in-app chat.
 
 **If your Google account email changed externally and you now see a blank workspace**
 
