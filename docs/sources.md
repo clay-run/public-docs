@@ -226,6 +226,27 @@ To remove rows that no longer match your filter, you have two options:
 -   **Delete them manually** — select the rows in the table and delete them.
 -   **Delete and re-run the source** — this re-imports records based on the current filter. You will need to clear any previously imported rows first if you want a clean slate. **For CRM, database, Google Sheets, Google Maps, and Find People sources (Salesforce, HubSpot, Snowflake, Google Sheets, Find local businesses using Google Maps, Find People):** the source tracks previously imported records and will not re-add deleted rows even after re-running. Duplicate the table (or delete and re-add the source) instead.
 
+**Note:** This additive behavior applies to CRM and filter-based sources. If you edit the SQL query text itself on a Snowflake or BigQuery source, the behavior is different — see [What happens to existing rows when I change the SQL query on my source?](#what-happens-to-existing-rows-when-i-change-the-sql-query-on-my-source) below.
+
+### What happens to existing rows when I change the SQL query on my source?
+
+**For SQL-based sources (Snowflake, BigQuery), changing the query text and re-running causes Clay to fully invalidate the existing import and reimport from the new query.** The practical result:
+
+-   **Records returned only by the old query are removed** from your table — they no longer appear in the new results and are deleted when the reimport completes.
+-   **Records returned by both the old and new query are upserted on their unique identifier** — they are updated in place, not duplicated. The unique identifier is the field you designated when configuring the source (for example, a Snowflake ID or email column).
+-   **Records returned only by the new query are added** as fresh rows.
+
+This differs from narrowing a CRM source filter, where existing rows stay in the table regardless of whether they still match the new filter.
+
+**Whether enrichment columns re-run on the matched (upserted) rows depends on your "Keep existing results" setting:**
+
+-   **Keep existing results ON** (the default for new tables): Enrichment cells that already have a successful result are preserved and skipped — only new or empty cells run automatically. Rows that existed in both the old and new query keep their enrichment data without spending credits to re-run them.
+-   **Keep existing results OFF**: All enrichment cells on reimported rows are eligible to re-run, including cells that already have results.
+
+To check or change "Keep existing results": click the table name → **Edit table settings** → scroll to **Run settings** — or click the **⛭** icon in the top toolbar.
+
+**Note:** This full-invalidation behavior applies specifically when you edit the SQL query text itself. For scheduled re-runs of the same unchanged query, Clay uses normal dedup logic — only net-new records are added by default, unless you enable **Update existing rows** in the source settings. See [Auto-run](auto-run.md#update-existing-rows-toggle-for-scheduled-source-imports) for details on how "Update existing rows" and "Keep existing results" interact on scheduled runs.
+
 ### I deleted rows from my table and re-ran the source, but they didn't reappear
 
 **For Salesforce, HubSpot, Snowflake, Google Sheets, Google Maps searches, Find People, and other CRM or database sources, re-running the same source after deleting rows will not restore those records.** Clay's import source tracks every record it has ever introduced to the table — including rows you've since deleted. When the source runs again, it recognizes and skips any record it has already seen, preventing both duplicate imports and unintentional revival of deleted rows.
