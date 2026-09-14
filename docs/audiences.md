@@ -468,8 +468,10 @@ Since enrichment results write permanently back to All People, you can filter an
 In Audiences bulk enrichment, a row appears in the **Errored rows** tab when any of its action columns fail — for example, if a data provider returns no match for a domain. This is true even if the **Update Audiences Record** step succeeded and your data was already written back to Audiences. This is expected behavior, not a bug — Audiences treats a row as complete only when all configured action columns succeed.
 
 To resolve errored rows:
--   **Rerun failed rows** — in the bulk enrichment table, right-click the failing column header → **Run column** → **Run [N] empty or out-of-date rows** to retry only records that didn't get a result.
+-   **Rerun failed rows** — click the **Errored rows** tab, select the rows you want to retry, and click **Run** on the selected rows. Alternatively, right-click the failing column header → **Run column** → **Run [N] empty or out-of-date rows** to retry only records that didn't get a result for that column.
 -   **Remove non-critical provider columns** — if a provider consistently fails to match your records and the data isn't essential, removing that column from the bulk enrichment table means its failures will no longer mark rows as errored.
+
+**If the bulk enrichment is linked to a campaign:** re-running errored rows pushes the updated data to the connected campaign table. Once rows re-run successfully, the campaign's "ready to send" percentage recalculates within a few minutes as the new data lands. Make sure the bulk enrichment is not paused before re-running — if it is, resume it first so that updated data flows through to the campaign.
 
 ### Signals
 
@@ -859,13 +861,15 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 ### How do I export my audience data to CSV?
 
-The Audiences screen does not have a direct CSV download button. To download audience data as a CSV, use the **Enrich** flow to create an enrichment table from the segment, then export that table. **Admin access is required.**
+Audiences does not have a direct CSV download button. To export a People or Companies segment as CSV, create a bulk enrichment table from the segment and then download from the Archive view. **Admin access is required.**
 
 1. Open the audience segment you want to export.
-2. Click `Enrich` to open the enrichment panel, then create a new enrichment table for this segment. (The exact button label varies by workspace — you may see **Add bulk enrich** or a `+` button with a **Create Enrichment Table** option.)
-3. In the enrichment setup, skip adding enrichment columns and turn off field mapping if you only need the raw segment data.
-4. Open the resulting table. If any rows are checked, uncheck them first — the toolbar shows **Tools** only when no rows are selected.
-5. Click **Tools** → **Export** → **Download CSV**.
+2. Click **Enrich** in the top-right toolbar to open the Enrichments panel. Depending on your workspace, click **Add enrichment table** or click the **+** button and select **Create enrichment table** (labeled "Legacy bulk enrichment"). This creates an audience-linked bulk enrichment table for the segment.
+3. Configure the bulk enrichment and start the run. A deletion criterion is required to start the run — configure one and click **Start Run**. You do not need to add enrichment columns if you only want raw segment data.
+4. As rows are processed, they are automatically archived (archiving is enabled by default for audience bulk enrichment tables). Once the run finishes, click **See archived rows** in the table footer to open the Archive view.
+5. Click **Export full archive** to download all processed rows as a CSV file.
+
+**Note:** Audience-linked bulk enrichment tables do not show a **Tools** button — the **Tools → Export → Download CSV** path available in standard Clay tables is not available here. The Archive export described above is the correct path for exporting audience data to CSV.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
