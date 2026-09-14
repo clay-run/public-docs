@@ -12,6 +12,8 @@ Schedule sources let you automatically refresh data from any source (like Find P
 
 This keeps your data current without manual updates by pulling in new information at the frequency you set.
 
+**Scheduled sources are not real-time.** Each run polls the connected system — records newly added to HubSpot, Salesforce, or another source appear in your Clay table only on the next scheduled run, not the moment they are created. The fastest available frequency is **hourly (Enterprise plans only)** or **daily (Launch and Growth plans)**. For updates that must appear in Clay immediately — for example, when a new HubSpot form submission should trigger enrichment within seconds — use a [webhook](webhook-integration-guide.md) instead.
+
 ## Scheduling source runs
 
 **New sources:**
