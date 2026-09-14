@@ -301,3 +301,31 @@ See [HG Insights integration](hg-insights-integration-overview.md) for more deta
 **Claygent** supplements database-backed tech stack enrichment by searching the web for signals of technology adoption. It is most useful for open-source or infrastructure frameworks — such as LangChain or AWS Bedrock — that leave no footprint in website source code and may not appear in database provider catalogs. Add a Claygent column to your table, use the company domain as an input variable, and write a mission prompt such as: *"Does {{company_domain}} use [technology name]? Search the company's website, blog posts, GitHub repositories, case studies, and press mentions, and return yes or no with the evidence found."* See [Claygent](claygent-builder.md) for setup details.
 
 **Note:** 6sense is not available as a waterfall provider in Clay. Store Leads enriches e-commerce site traffic data and is not part of any technographic waterfall.
+
+## Professional profile URL waterfall
+
+The **professional profile URL waterfall** finds a person's profile on the professional network by cascading across multiple providers in sequence — stopping as soon as one returns a result.
+
+**You do not need an email address to find professional profile URLs.** The waterfall's **Optimized for** setting controls which inputs it uses. Choosing the **via Name and Company** option requires only a full name and company name or domain — no email or phone number needed. This is useful when you have contacts without email addresses and want to find profile URLs first, then use those URLs to find emails.
+
+### Setting up the professional profile URL waterfall
+
+1.  In your table, click **Tools** in the top right corner, then select the **Enrich** tab.
+2.  Search for `profile URL` and select the waterfall from the results.
+3.  In **Quick setup**, open the **Optimized for** dropdown and choose the option that matches your available data:
+    -   **Person Profile URL via Name and Company** — requires Full Name and Company Name or Company Domain. Email is **not** required.
+    -   **Person Profile URL via Work Email** — uses a work email address to locate the profile.
+    -   **Person Profile URL via Personal Email** — uses a personal email address to locate the profile.
+4.  Map your input columns to match the option you selected.
+5.  Click **Save**.
+
+**Input required (Name and Company option):** Full Name and Company Name or Company Domain  
+**Output:** Person professional profile URL
+
+### Using Claygent as a fallback
+
+When the professional profile URL waterfall does not return a result for a contact, add a Claygent column as a fallback step. Set its **Only run if** condition to `/Profile URL is empty` so it runs only on rows where the waterfall found nothing. In the Claygent mission prompt, instruct it to search the professional network's people directory using the person's full name and company name to locate their profile URL.
+
+Set the Claygent column output type to **URL** so the result maps directly to a profile URL field. Claygent uses AI credits rather than standard waterfall credits.
+
+Once you have professional profile URLs, you can map them as optional inputs to the [Work Email waterfall](work-email-waterfall.md) and phone number waterfalls to increase provider coverage without needing email addresses upfront.
