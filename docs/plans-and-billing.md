@@ -192,7 +192,7 @@ If you're unsure whether you need a higher tier, check your current usage in `Se
 **Data Credits:** You have three options:
 
 -   **Upgrade your Data Credits tier** (recommended for ongoing needs) — no premium charged.
--   **Set up automatic top-ups** — available to workspace admins on self-serve paid plans (Launch and Growth). Admins can configure automatic credit purchases in `Settings` → `Usage` so credits are purchased whenever your balance runs low. If this option isn't visible in your workspace, contact [Clay support](https://app.clay.com).
+-   **Set up automatic top-ups** *(currently in beta — available to workspace admins on self-serve paid plans)* — configure automatic credit purchases in `Settings` → `Usage` so credits are purchased whenever your balance runs low. If this option isn't visible in your workspace, contact [Clay support](https://app.clay.com).
 -   **Purchase a one-time top-up** — available on paid plans only; not available on the free plan. For emergency needs during your billing cycle at a 30% premium (50% on legacy plans), subject to rollover limits. Go to `Settings` → `Usage` and click `Add one-time data credits`.
 
 ### How many actions and data credits do I need?
