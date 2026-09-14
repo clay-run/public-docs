@@ -2,7 +2,7 @@
 title: Plans & billing
 description: We'll walk through each of our pricing plans and information around
   billing your workspace.
-last_synced: 2026-04-26T01:40:29.319Z
+last_synced: 2026-09-14T17:35:18.199Z
 ---
 
 # Plans & billing
@@ -189,10 +189,11 @@ If you're unsure whether you need a higher tier, check your current usage in `Se
 
 **Actions:** Actions cannot be purchased as one-time top-ups — they represent fixed platform capacity tied to your action tier. To increase your Actions limit, you must upgrade to a higher action tier in `Settings` → `Plans & billing`.
 
-**Data Credits:** You have two options:
+**Data Credits:** You have three options:
 
 -   **Upgrade your Data Credits tier** (recommended for ongoing needs) — no premium charged.
 -   **Purchase a one-time top-up** — available on paid plans only; not available on the free plan. For emergency needs during your billing cycle at a 30% premium (50% on legacy plans), subject to rollover limits. Go to `Settings` → `Usage` and click `Add one-time data credits`.
+-   **Set up automatic top-ups** — Workspace admins can configure automatic top-ups in `Settings` → `Usage`: credits are purchased automatically whenever your balance drops below a threshold you set. Available on paid plans.
 
 ### How many actions and data credits do I need?
 
