@@ -133,7 +133,9 @@ By default, Use AI uses the Clay-managed account, though you can select other ac
 While you don't need your own GPT, Claude, or Gemini API key to use the AI features, having one may reduce costs.
 
 1.  Select the desired `Model` from the dropdown.
-2.  Click on the `Account` dropdown and click `+ Add account`.
+2.  Click on the `Account` dropdown. If you have already connected your API key to the workspace (via `Settings` → `Connections`), select it from the list. If you haven't connected it yet, click `+ Add account` to add and connect your key.
+
+**Important:** Connecting an API key to your workspace (via `Settings` → `Connections`) does **not** automatically apply it to any AI columns. Each AI column uses the Clay-managed account by default — you must explicitly select your connected account in the **Account** dropdown for each individual column or workflow node where you want your own key to be used. If the Account dropdown still shows the Clay-managed account, your own key will not be active for that column even if it is connected to the workspace.
 
 **Note:** The credit amounts displayed next to models in the model selection dropdown are Clay-managed pricing estimates. They appear regardless of which account you have configured — they will not be charged to your Clay balance when your own API key is active. With your own key selected, model usage is billed directly through your provider (Google, OpenAI, or Anthropic), not from your Clay Data Credits. **Action costs** (1 per AI run) are still consumed from your Clay balance even when using your own key.
 
