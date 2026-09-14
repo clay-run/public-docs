@@ -121,7 +121,7 @@ Clay pulls data from Salesforce on two schedules:
 -   **Soft-deleted records** (records moved to the Salesforce Recycle Bin, still queryable with IsDeleted=true): Picked up by the **15-minute incremental sync** and marked **Deleted in source** in your audience within that cycle.
 -   **Hard-deleted records** (records permanently purged from Salesforce, no longer queryable): Not visible to the incremental sync. Clay marks these **Deleted in source** during the next **weekly full sync**.
 
-In both cases, the record is not removed from Audiences — it persists with **Deleted in source** status, which you can filter on in any segment to exclude it from your active audiences. If a Salesforce record is deleted and recreated (assigning it a new Salesforce ID), it will temporarily appear as a duplicate entry until the next weekly full sync resolves it. There is no self-serve option to trigger an early full sync — contact Clay support if you need an expedited cleanup.
+In both cases, the record is not removed from Audiences — it persists with **Deleted in source** status, which you can filter on in any segment to exclude it from your active audiences. This is why your Audiences count may be higher than your current Salesforce account count after a CRM deduplication or cleanup — see [My Audiences company count is higher than my Salesforce account count](#my-audiences-company-count-is-higher-than-my-salesforce-account-count--why-and-how-do-i-fix-it) in the FAQs for how to archive these records. If a Salesforce record is deleted and recreated (assigning it a new Salesforce ID), it will temporarily appear as a duplicate entry until the next weekly full sync resolves it. There is no self-serve option to trigger an early full sync — contact Clay support if you need an expedited cleanup.
 
 **Salesforce activities:** To import Salesforce Tasks and Events associated with your Accounts, go to your Salesforce source settings, select `Accounts`, and enable the **Also import activities (tasks and events) associated with these accounts** toggle. Accounts are associated automatically in the background. The Activity tab on each record's detail view then shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp. This toggle is only available for Accounts — there is no equivalent option for Contacts, Leads, or the People object. Even if your Salesforce CRM has Tasks or Events associated with contacts or leads, those activities will not appear in the People Activity tab in Audiences.
 
@@ -852,6 +852,26 @@ When you edit a search's criteria and click **Save**, a dropdown appears with tw
 -   **Replace existing results**: discards the current results and rebuilds the segment using only contacts that match the updated criteria (contacts previously imported are excluded to avoid re-importing them).
 
 To work with only the narrower set, open the search, tighten your filters, click **Save**, and select **Replace existing results**.
+
+### My Audiences company count is higher than my Salesforce account count — why, and how do I fix it?
+
+Audiences accumulates every account that has ever synced from Salesforce — the total count reflects all records Clay has ever ingested, not just the accounts currently active in Salesforce. When you delete, merge, or deduplicate records in Salesforce, Clay marks those records **Deleted in source** in Audiences but does not remove them. This means your Audiences count will exceed your Salesforce count by however many records were deleted or deduped in Salesforce after your import began.
+
+The most common trigger is a CRM deduplication: if you cleaned up duplicate accounts in Salesforce after your initial Audiences import, the merged or deleted records are still present in Audiences with a **Deleted in source** status.
+
+To get a clean 1:1 match with your current Salesforce state, archive the deleted records:
+
+1.  In your Audiences view, open **All Companies** (or **All People** for contacts).
+2.  Click **+ Filter** and add a **Sync Status** filter set to **Deleted in source**.
+3.  Create a segment from this filtered view by clicking **New audience** — give it a name like "Deleted in source – cleanup."
+4.  In the left sidebar, click the **⋮** (three-dot) menu next to the new segment name and select **Archive records**.
+5.  Confirm. All records with **Deleted in source** status are permanently removed from Audiences.
+
+Archiving is permanent and irreversible. Archived records do not sync back to Salesforce. Ongoing incremental and full syncs will continue to catch new Salesforce deletions going forward.
+
+### Can I sort records in an Audiences segment by column?
+
+Audiences does not currently support sorting records by column. To narrow or prioritize records, use **filters** to build a segment that matches your criteria — CRM fields, enrichment data, sync status, or signals — using AND/OR logic. See [Creating an audience](#creating-an-audience) for how to set up filters.
 
 ### Can I sync an audience to multiple ad platforms?
 
