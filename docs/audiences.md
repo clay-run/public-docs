@@ -1058,44 +1058,6 @@ However, the current Audiences UI contact view does not yet display a full union
 
 **Note:** This discrepancy is a known limitation in the current Audiences UI. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. A future update will show the full union of converted lead and contact data in the UI.
 
-### How do I remove records from an audience?
-
-To remove a record from Audiences, archive it. Archiving removes the record from All People or All Companies and excludes it from all segments.
-
-**To archive a single record:**
-
-1.  Open the record in Audiences.
-2.  Click the **⋮** (three-dot) menu in the top right of the record panel.
-3.  Select **Archive**.
-
-**To archive multiple records at once:**
-
-1.  In your audience view, select the checkboxes next to the records you want to remove.
-2.  Click **Archive** in the toolbar that appears at the bottom of the screen.
-
-Archived records are not permanently deleted — they are hidden from your active audience and can be restored if needed. Archiving a record in Clay does not affect the original record in Salesforce or any other connected source.
-
-### How do I replace a CSV import with updated data?
-
-CSV imports are one-time — they do not re-sync automatically. If you imported a CSV with errors and want to start fresh with corrected data:
-
-1.  Archive the records from the old import — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above.
-2.  Import the corrected CSV file as a new import.
-
-**Note:** Archiving records from a CSV import does not remove the CSV source entry from the Sources tab — the source listing is retained for audit purposes. Importing the corrected file will create a new source entry alongside the archived one.
-
-### How do I archive records that no longer match my Snowflake import query?
-
-When a Snowflake record is no longer returned by your import query — because it was removed from Snowflake or your SQL was updated to exclude it — Clay marks the record's Snowflake source association as **Deleted in source** during the next full sync (every 7 days). The audience record itself is **not automatically removed**.
-
-To clean up these records, use a bulk archive:
-
-1.  In your audience, add a filter for **Source status** → **Deleted in source** (filter by the Snowflake source that was updated).
-2.  Select all matching records.
-3.  Click **Archive** in the bottom toolbar.
-
-This removes the records from your active audience. Archiving does not affect the underlying Snowflake data.
-
 ### Can the Audiences export sync write data back to Salesforce Lead records?
 
 No. The scheduled Audiences export sync supports **Contacts** and **Accounts** only — Lead records imported into Audiences are import-only and do not support the automated export sync. The Lead field mapping in your Salesforce source settings does not include a Scheduled export rule column, which confirms that Lead fields are excluded from the export cycle.
@@ -1108,3 +1070,52 @@ No. The scheduled Audiences export sync supports **Contacts** and **Accounts** o
 4.  Click **Start Run** — the Update Record column writes the enriched values directly to the Lead records in Salesforce.
 
 This approach works for one-time updates and can be re-run manually as needed. For ongoing automatic write-back, repeat the run whenever your enrichment data changes — there is no Lead-specific equivalent to the automated Contact/Account export sync.
+
+### How do I add a notes or memo field to an Audience record?
+
+Audiences does not have a built-in notes or memo field, but you can create a custom text field and populate it from a Clay table:
+
+1.  In a bulk enrichment table connected to your audience, click the `Update Audiences Record` column header to open the Configure panel.
+2.  In the `Column mapping` dropdown, click `+ Add field`, name the new field (for example, `Notes`), and save.
+3.  In your Clay table, add an `Update Audiences Record` or `Upsert Audiences Record` column.
+4.  Map the text column in your table to the custom notes field in Audiences.
+5.  Run the column — the value writes permanently to the Audience record.
+
+You can then filter segments on this field, export it to Salesforce, or use it as input for enrichments.
+
+### Why does my Databricks import fail with a schema or permission error?
+
+Databricks imports in Audiences use the Unity Catalog. Two common causes of failure:
+
+**1. The service principal lacks SELECT on the target table.**
+
+In Databricks, grant the service principal read access to the catalog, schema, and table you're importing:
+
+```sql
+GRANT USE CATALOG ON CATALOG <catalog_name> TO `<service-principal-id>`;
+GRANT USE SCHEMA ON SCHEMA <catalog_name>.<schema_name> TO `<service-principal-id>`;
+GRANT SELECT ON TABLE <catalog_name>.<schema_name>.<table_name> TO `<service-principal-id>`;
+```
+
+Replace `<service-principal-id>` with the application ID of the service principal connected to Clay.
+
+**2. The table is not registered in Unity Catalog.**
+
+Audiences can only import from tables registered in Unity Catalog — it cannot query tables or views defined in the legacy Hive metastore. To migrate a legacy table, use `CREATE TABLE ... AS SELECT` in Unity Catalog to register a copy, or move the underlying data to a Unity Catalog volume.
+
+If neither of these applies and the import still fails, contact Clay support with the error message shown in the import setup.
+
+### How do I archive records that no longer match my Snowflake import query?
+
+When you update your Snowflake SQL query to exclude records — for example, removing rows below a revenue threshold — those records are marked **Deleted in source** in your Audience on the next full sync (within 7 days). They are not automatically archived; they remain in All People or All Companies with a **Deleted in source** status.
+
+To remove them from your Audience, archive them manually:
+
+1.  Go to **All People** or **All Companies** in your Audiences view.
+2.  Add a filter: **Source** → select your Snowflake import → set status to **Deleted in source**.
+3.  Select all returned rows.
+4.  Click **Archive** in the bottom toolbar and confirm.
+
+This is permanent and irreversible — archived records cannot be restored.
+
+**Alternatively**, if the record exists in another connected source (for example, Salesforce), it will remain visible in your Audience under that source even after being marked deleted in Snowflake. In that case, archiving removes the record from all sources simultaneously — use this only if you want to remove it entirely.
