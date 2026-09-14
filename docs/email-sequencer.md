@@ -1,7 +1,7 @@
 ---
 title: Email sequencer
 description: Run outbound campaigns directly from your table.
-last_synced: 2026-09-01T01:27:12.565Z
+last_synced: 2026-09-14T06:34:20.223Z
 upstream_hash: 3d3db81ae3036812b3d4dc0b56f1ae7fff367acb652370008e4fdffc6f91fa96
 ---
 
@@ -300,7 +300,9 @@ If you've paused a campaign but the options to add or remove messages are still 
 
 ### How much does the sequencer cost?
 
-The Clay email sequencer is available on all plans. Each lead sequenced consumes 1 Action (platform orchestration work). If you use AI snippets in your messages, those consume 1 Action per run and Data Credits for AI generation in addition to the Action for sending the email.
+Table-based campaigns are available on Launch, Growth, Enterprise, and Flex plans, and on legacy Explorer and Pro plans.
+
+Each lead sequenced consumes 1 Action (platform orchestration work). If you use AI snippets in your messages, those consume 1 Action per run and Data Credits for AI generation in addition to the Action for sending the email.
 
 ### Can I send multiple sequences to the same email address?
 
