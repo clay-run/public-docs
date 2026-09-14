@@ -1056,30 +1056,90 @@ When a Salesforce lead is converted to a contact, Audiences merges both records 
 
 However, the current Audiences UI contact view does not yet display a full union of all data from the converted lead. This means activity counts and last-activity dates that originated from the lead record may not appear in the contact's Activity tab even though the data exists in Audiences and is retrievable via MCP.
 
-**Note:** This discrepancy is a known limitation in the current Audiences UI. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. A future update will show the full union of converted lead and contact data in the UI.
+**Note:** This discrepancy is a known limitation in the current Audiences UI. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. A future update will show the full union of contact and converted lead data in the UI.
 
-### Can the Audiences export sync write data back to Salesforce Lead records?
+### How does filtering work in Lookup in Audiences when I select multiple fields?
 
-No. The scheduled Audiences export sync supports **Contacts** and **Accounts** only — Lead records imported into Audiences are import-only and do not support the automated export sync. The Lead field mapping in your Salesforce source settings does not include a Scheduled export rule column, which confirms that Lead fields are excluded from the export cycle.
+When you select multiple fields in **Fields to filter by**, the lookup uses **AND logic** — a record must match on **all** selected fields to be returned. There is no option to switch to OR logic.
 
-**To push enriched data from Audiences back to Salesforce Leads:**
+Two behaviors to keep in mind:
 
-1.  In a bulk enrichment table connected to your audience, add a **Salesforce Update Record** action column.
-2.  Set **Record ID** to the Salesforce Lead ID stored on each person record in your Audience (the Lead ID field imported from Salesforce).
-3.  Map each enriched field to the corresponding Salesforce Lead field you want to update.
-4.  Click **Start Run** — the Update Record column writes the enriched values directly to the Lead records in Salesforce.
+-   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record must match both to be returned — a partial match on only one field returns nothing.
+-   **Empty fields count as non-matches.** If a field value in your Audience record is empty (null), it will not match any filter condition on that field — including equality checks. For example, filtering by `Profile URL = <value>` will not return records that have an empty Profile URL field, even if the Email matches.
 
-This approach works for one-time updates and can be re-run manually as needed. For ongoing automatic write-back, repeat the run whenever your enrichment data changes — there is no Lead-specific equivalent to the automated Contact/Account export sync.
+If you need to look up a record that may be missing one of your identifier fields, filter by the field most likely to be populated (typically `Email` or `Profile URL`), and use a single-field filter rather than combining multiple conditions.
 
-### How do I add a notes or memo field to an Audience record?
+### How do I remove records from an audience?
 
-Audiences does not have a built-in notes or memo field, but you can create a custom text field and populate it from a Clay table:
+To remove records from an Audiences segment, you archive them. Archiving removes a record from Audiences entirely — it is no longer visible in any segment, including All People or All Companies — and is permanent and irreversible.
 
-1.  In a bulk enrichment table connected to your audience, click the `Update Audiences Record` column header to open the Configure panel.
-2.  In the `Column mapping` dropdown, click `+ Add field`, name the new field (for example, `Notes`), and save.
-3.  In your Clay table, add an `Update Audiences Record` or `Upsert Audiences Record` column.
-4.  Map the text column in your table to the custom notes field in Audiences.
-5.  Run the column — the value writes permanently to the Audience record.
+**To archive a single record:**
+
+1.  Open any record in your Audiences view by clicking on it.
+2.  In the record detail panel, click the **⋮** (three-dot) menu in the top right.
+3.  Select **Archive record**.
+4.  Confirm the action. The record is immediately removed from all segments and All People / All Companies.
+
+**To archive multiple records:**
+
+1.  In your Audiences view, select the rows you want to archive by clicking the checkboxes to the left of each row.
+2.  With rows selected, a toolbar appears at the bottom of the screen.
+3.  Click **Archive** in the toolbar.
+4.  Confirm the action. All selected records are immediately removed from all segments.
+
+**Note:** Archiving is permanent. There is no way to restore an archived record. If the same record enters Audiences again from a source (for example, if the underlying Salesforce record is modified and synced again), it will be re-created as a new record without any of its previous enrichment data.
+
+### How do I replace a CSV import with updated data?
+
+CSV imports are one-time — they do not re-sync automatically. If your CSV contained errors and you want to replace it with corrected data, follow these steps to avoid duplicating records:
+
+**1. Archive the old records:**
+
+Before importing the corrected file, remove the incorrect records from your Audience:
+
+1.  Go to **All People** or **All Companies** in your Audiences view.
+2.  Filter by the source of the old CSV import (use the **Person source** or **Company source** filter and select the original CSV import name).
+3.  Select all rows returned by the filter.
+4.  Click **Archive** in the toolbar that appears at the bottom.
+5.  Confirm. All records from the old CSV are removed from your Audience.
+
+**2. Import the corrected CSV:**
+
+1.  Click `Add data` → `Add Source` → select **CSV**.
+2.  Upload the corrected file and complete the import steps as usual.
+
+The corrected records are imported fresh without duplicating the old ones.
+
+**Note:** If your Audience record count appears higher than expected after importing a corrected CSV — even after archiving — it may mean some records from the original import were merged with records from another source (for example, Salesforce) during entity resolution. Archived records that matched a non-CSV source may still appear in your Audience under that source. In this case, contact Clay support to assist with cleanup.
+
+### How does the Audiences record limit work? What counts toward it?
+
+The Audiences record limit is a **per-workspace cap** on the total number of unique records stored in your Audience, regardless of which source they came from. Growth plans cap at 250,000 records; Enterprise plans cap at 25,000,000.
+
+Records that count toward the limit:
+
+-   All records in **All People** (contacts and leads from any source)
+-   All records in **All Companies** (accounts from any source)
+
+Records that do **not** count:
+
+-   Archived records (removed from your Audience permanently)
+-   Segment memberships (a record in 10 different segments still counts as one record)
+
+If your workspace reaches the limit, Clay will stop importing new records from your connected sources until the count drops below the cap. To free up space: archive records you no longer need (see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above), or upgrade your plan.
+
+Growth plans have a hard cap — there is no add-on to increase the limit without upgrading to Enterprise.
+
+### Can I add a "notes" or "memo" field to an Audience record?
+
+Yes — you can create a custom text field in Audiences and update it from a Clay table using `Update Audiences Record` or `Upsert Audiences Record`. There is no built-in "notes" column, but a custom field works the same way.
+
+**To set this up:**
+
+1.  Create a custom Audience text field — see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) above.
+2.  In your Clay table, add an `Update Audiences Record` or `Upsert Audiences Record` column.
+3.  Map the text column in your table to the custom notes field in Audiences.
+4.  Run the column — the value writes permanently to the Audience record.
 
 You can then filter segments on this field, export it to Salesforce, or use it as input for enrichments.
 
