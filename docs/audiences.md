@@ -1017,6 +1017,22 @@ Two approaches that do not apply to the Lead → Company case:
 
 To filter your People audience by company attributes for Lead records, map company-related fields directly from the Lead object in your Salesforce import field mapping — for example, the Lead's built-in **Company**, **Industry**, or **Annual Revenue** text fields. Mapped Lead fields are available as People audience filter options immediately after the next sync.
 
+### My Clay segment has far fewer records than my Salesforce report with the same filters — why?
+
+Clay audience segments count only the records that currently match your filters based on data that has been synced into Audiences — not live Salesforce data at query time. A large gap between your segment count and a matching Salesforce report usually traces to one of two causes.
+
+**A filter field is empty for most records.** If you added a field to your Salesforce import mapping after the initial sync, existing records that haven't been re-synced yet have no value for that field in Audiences. A numeric range condition — for example, Annual Revenue between $50M and $5B — excludes every record where the field is empty, even if those same records have a value for the field in Salesforce. This also happens when a segment filter points at a newly added duplicate of an existing field rather than the original mapped field: the duplicate has no data for any record that hasn't been re-synced since it was added.
+
+To resolve this:
+1. Check which field your range condition targets. If two similarly named fields appear in the filter picker, use the one that was part of the original import — not a recently added copy.
+2. To fill in missing values for specific records right away, make a small edit to those records in Salesforce (for example, add and remove a space in any text field). This updates `SystemModstamp` and Clay re-syncs the record — with all its current field values — on the next incremental sync (within 15 minutes on Enterprise plans, once daily on Growth plans). All records are backfilled automatically on the next weekly full sync.
+
+For more on how newly added fields are populated, see [I added a new Salesforce field to my mapping but some records are missing data for it](#i-added-a-new-salesforce-field-to-my-mapping-but-some-records-are-missing-data-for-it).
+
+**A filter is using a contact-level field instead of the account-level field (or vice versa).** Fields mapped from the Salesforce Contact object and fields mapped from the Salesforce Account object are stored separately in Audiences and answer different questions. For example, a **Type** field mapped from the Salesforce Contact object reflects the type value on each individual contact record. A **Type** field mapped from the Salesforce Account object reflects the type on the contact's parent account — which is what most Salesforce account-level reports filter on. If your Salesforce report uses the account's Type but your segment filters on the contact's Type, the two conditions measure different things and return different counts.
+
+To match your Salesforce report, confirm your segment filter is using the field from the same Salesforce object as the report. Both contact-level and account-level fields appear in the filter picker, and similarly named fields from different objects may look identical if your import mapping did not give them distinct column names. Edit the filter condition and verify the source object to confirm you are filtering on the right field.
+
 ### Why does filtering my People audience by deal attributes return fewer contacts than expected?
 
 When you filter a People audience by opportunity or deal attributes (for example, Stage, Amount, or a custom deal field), Clay only includes contacts that are **directly linked to the matching deal via OpportunityContactRole** in Salesforce — not all contacts at the account that owns the deal.
