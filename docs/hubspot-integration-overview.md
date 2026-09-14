@@ -189,7 +189,7 @@ To refresh your table to reflect the updated list, see [Why doesn't my Clay tabl
 
 ### How often does my HubSpot source update, and how do I refresh it immediately?
 
-The update frequency is set by the run schedule you configure in Clay — not by any schedule within HubSpot itself. Options include daily, weekly, and monthly; hourly is available on some plans. To view or change the schedule, click the source column title, select your source, and check the **Run settings** section.
+The HubSpot source polls HubSpot on the schedule you configure in Clay — it is not a real-time sync. Records newly added to HubSpot appear in your Clay table only on the next scheduled run. Available frequencies are daily, weekly, and monthly; hourly is available on Enterprise plans only. To view or change the schedule, click the source column title, select your source, and check the **Run settings** section.
 
 To pull the latest HubSpot data immediately without waiting for the next scheduled run, click the source column title, select your source, and click **Run now**. This triggers a fresh source execution and updates your table with the current state of the HubSpot list.
 
