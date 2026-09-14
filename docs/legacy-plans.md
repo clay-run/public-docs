@@ -1,7 +1,7 @@
 ---
 title: Legacy plans
 description: Comparing legacy plans to our new plans
-last_synced: 2026-04-26T01:40:14.933Z
+last_synced: 2026-04-26T01:40:14.929Z
 ---
 
 # Legacy plans
@@ -134,7 +134,7 @@ To buy a one-time credit top-up:
 2.  Click **Add one-time data credits**.
 3.  Select the amount you need and confirm.
 
-Legacy plans carry a **50% premium** on top-up purchases (compared to 30% on modern plans). Enterprise customers on annual plans should contact their account manager to purchase additional credits. For full details on credits and rollover limits, see [Actions & Data Credits](./actions-data-credits.md).
+Legacy plans carry a **50% premium** on top-up purchases (compared to 30% on modern plans). Top-up purchases are also subject to a **monthly purchase limit of 4× your plan's monthly credit allotment** — for example, on a 50,000 credits/month plan you can purchase up to 200,000 additional credits per billing month. This limit resets at the start of each billing month. If you reach the limit, you will see a message prompting you to upgrade your plan. Enterprise customers on annual plans should contact their account manager to purchase additional credits. For full details on credits and rollover limits, see [Actions & Data Credits](./actions-data-credits.md).
 
 **Can legacy annual customers renew early?**
 
