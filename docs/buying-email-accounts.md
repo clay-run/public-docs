@@ -72,6 +72,12 @@ As with any outbound email program, deliverability also depends on factors such 
 
 From `Campaigns → Email Accounts`, find the mailbox you want to edit. Click the **⋯** button on the far right of the account row, select **Update sender variables**, and update the **From name** (the sender display name shown to recipients), **Signature**, or any custom sender variables your workspace has configured. Click **Save** to apply the changes.
 
+### **Can I change the email address of a provisioned mailbox?**
+
+No. The email address assigned to each mailbox at purchase (for example, `d.henriksen@cyberarkoselabs.com`) is permanent and cannot be changed after provisioning. You can update display-level details such as the **From name** and **Signature** using **Update sender variables** — see [How do I change the sender name or other details on a purchased email account?](#how-do-i-change-the-sender-name-or-other-details-on-a-purchased-email-account) for those steps — but the underlying email address is fixed.
+
+If you need a different email address, purchase a new domain and select the desired email prefix during checkout.
+
 ### **Where are the purchased email accounts from?**
 
 Clay fulfills orders through Smartlead, which in turn uses Zapmail to provision and manage the email accounts.
