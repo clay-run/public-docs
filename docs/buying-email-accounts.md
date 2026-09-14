@@ -29,7 +29,7 @@ From the `Campaigns` homepage, go to the `Email Accounts` tab and click `Add Ema
 
 ![](https://cdn.prod.website-files.com/687e604972375496b891fe58/69c6b5ea48b4f4c966867201_Buying%20Email%20Accounts%20in%20Clay%20\(1\).png)
 
-**Note:** After confirming your purchase, your order appears in the `Account orders` tab (`Campaigns → Account orders`) with a **Pending fulfillment** status — this is expected and means the order is being processed. Email accounts typically arrive within a few hours but may take up to 72 hours to be provisioned. Once they appear in your `Email Accounts` tab, warmup is automatically enabled — allow approximately two weeks for the warmup process to complete before using the accounts in campaigns.
+**Note:** After confirming your purchase, your order appears in the `Account orders` tab (`Campaigns → Account orders`) with a **Pending fulfillment** status — this is expected and means the order is being processed. Email accounts typically arrive within a few hours but may take up to 72 hours to be provisioned. Once they appear in your `Email Accounts` tab, warmup is automatically enabled — allow 2–3 weeks for the warmup process to complete before using the accounts in campaigns.
 
 ## **FAQs**
 
@@ -55,7 +55,7 @@ Credit costs are calculated using your workspace's cost-per-credit (CPC) against
 
 ### **Are purchased domains pre-warmed?**
 
-No. Purchased accounts are not pre-warmed when they arrive. Warmup is automatically enabled during provisioning, but the warmup process takes approximately two weeks to complete — plan to wait before using purchased accounts in campaigns.
+No. Purchased accounts are not pre-warmed when they arrive. Warmup is automatically enabled during provisioning, but the warmup process takes approximately 2–3 weeks to complete — plan to wait before using purchased accounts in campaigns.
 
 ### **What does Clay manage for purchased email accounts?**
 
@@ -93,3 +93,9 @@ To ensure the sender name appears as expected across all inboxes, use a first na
 No. The **Buy email accounts** flow can only provision inboxes on new domains purchased through Clay — it cannot attach inboxes to a domain you already own.
 
 If you want to send from an existing domain, create the mailbox through Google Workspace or Microsoft 365 and connect it to Clay under **Campaigns → Email Accounts** using Google OAuth, Microsoft Outlook OAuth, or SMTP. See the [Email sequencer guide](email-sequencer.md) for connection instructions.
+
+### **Can I use email aliases (like name+eventname@example.com) to scale my sending?**
+
+No. An alias such as `name+eventname@example.com` routes to the same underlying mailbox as your primary address — it is not a separate mailbox. Because aliases share the same inbox, they do not provide independent sending reputation, daily send capacity, or warmup. Using multiple aliases does not increase your total daily throughput or protect your primary domain's reputation the way separate mailboxes do.
+
+To scale your campaign sending capacity, buy additional email accounts directly in Clay using the **Buy email accounts** flow described above, or connect additional mailboxes via Google OAuth, Microsoft Outlook OAuth, or SMTP. Each connected account has its own independent daily sending budget and sender reputation. See the [Email sequencer guide](email-sequencer.md) for connection options.
