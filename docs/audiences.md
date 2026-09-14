@@ -26,13 +26,13 @@ Viewing and filtering audience data is available to all workspace roles. Most wr
 | Action | Admin | Editor | Viewer |
 |---|---|---|---|
 | View, browse, and filter audience data | ✓ | ✓ | ✓ |
-| Create and edit audience segments | ✓ | — | — |
+| Create and edit audience segments | ✓ | ✓ | — |
 | Run bulk enrichments | ✓ | — | — |
 | Add or configure data sources | ✓ | — | — |
 | Export individual records to Salesforce | ✓ | — | — |
 | Upsert or update records from a Clay table into Audiences | ✓ | — | — |
 
-To change someone's role, go to **Settings** → **Team** and use the dropdown next to their name. Changes apply immediately. Editors and Viewers who need to create segments, run bulk enrichments, or manage data sources should have their role upgraded to Admin, or ask a workspace Admin to perform those actions on their behalf.
+To change someone's role, go to **Settings** → **Team** and use the dropdown next to their name. Changes apply immediately. Editors who need to run bulk enrichments, manage data sources, or export to Salesforce should have their role upgraded to Admin, or ask a workspace Admin to perform those actions on their behalf. Viewers cannot create segments.
 
 ## Importing your data
 
@@ -246,7 +246,7 @@ Clay syncs data from Google BigQuery on the following schedules:
 
 **Note:** When you save a search to your Audience, only basic identity fields are carried over as columns — additional data fields visible in the search preview (such as Company Size or Annual Revenue for companies, or Job Title for people) are not automatically added to your Audience. To add one of these fields, create it as a custom Audience field first: see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
 
-**Note:** A search import only populates field values for companies or people that are **new** to your Audience. Records already in your Audience from Salesforce, Snowflake, or another higher-priority source keep their existing field values — Clay's search data has lower precedence and will not overwrite them. To populate or update a field (such as Industry) on records that already exist in your Audience, bring the search results into a Clay table and use the `Upsert Audiences Record` action to push those values to matching records.
+**Note:** A search import only populates field values for companies or people that are **new** to your Audience. Records already in your Audience from Salesforce, Snowflake, or another higher-priority source keep their existing field values — Clay's search data has lower precedence and will not overwrite them. To populate or update a field (such as Industry) on records that already exist in your Audience, bring the search results into a Clay table and use the `Upsert segment record` action to push those values to matching records.
 
 **Excluding people (or companies) from your search**
 
@@ -291,7 +291,7 @@ Records saved from tables are automatically deduplicated and merged with your ex
 3.  Click `Next`, then map your columns on `Field mapping` — `Clay People` or `Clay Companies` against `Table columns`.
 4.  Click `Import`.
 
-**To add enriched data to existing Audience records:** If you enriched companies or people in a Clay table — for example, adding website traffic, technographic data, or any other enrichment — and want those values to appear on records already in your Audience, use `Upsert Audiences Record` (available on Launch, Growth, and Enterprise plans) as an action column in the table instead. In the table, click `Add enrichment` and search for `Upsert Audiences Record` — it creates a new record in Audiences if no match is found, or updates the matching record's fields if one is found. See [Using Audiences from a Clay table](#adding-enrichments) below for the full list of table ↔ Audience actions.
+**To add enriched data to existing Audience records:** If you enriched companies or people in a Clay table — for example, adding website traffic, technographic data, or any other enrichment — and want those values to appear on records already in your Audience, use `Upsert segment record` (available on Launch, Growth, and Enterprise plans) as an action column in the table instead. In the table, click `Add enrichment` and search for `Upsert segment record` — it creates a new record in Audiences if no match is found, or updates the matching record's fields if one is found. See [Using Audiences from a Clay table](#adding-enrichments) below for the full list of table ↔ Audience actions.
 
 ### Entity resolution and deduplication
 
@@ -348,14 +348,14 @@ When two data sources write different values to the same field on an Audience re
 
 | Priority | Source types |
 |---|---|
-| 1 (highest) | Upsert Audiences Record, Bulk Enrichments |
+| 1 (highest) | Upsert segment record, Bulk Enrichments |
 | 2 | Salesforce (Account, Contact, Opportunity), HubSpot |
 | 3 | Salesforce (Lead) |
 | 4 | Snowflake, BigQuery |
 | 5 | CSV |
 | 6 (lowest) | Find Companies / Find People search |
 
-There is an optional **CSV-first override** that, when enabled for a workspace, promotes CSV to priority tier 2 — above Salesforce and HubSpot but below Upsert Audiences Record and Bulk Enrichments. Contact your Growth Strategist to enable it.
+There is an optional **CSV-first override** that, when enabled for a workspace, promotes CSV to priority tier 2 — above Salesforce and HubSpot but below Upsert segment record and Bulk Enrichments. Contact your Growth Strategist to enable it.
 
 **When merging happens**
 
@@ -365,7 +365,7 @@ Merging two Audience records into one happens only at the time of a record upser
 
 After importing, you will want to create new audiences, so you can appropriately target the right contacts.
 
-**Admin access required.** Creating, editing, and deleting audience segments is available to workspace Admins only. Editors and Viewers can view and filter existing segments but cannot create new ones.
+**Viewers cannot create segments.** Creating and editing audience segments is available to workspace **Admins** and **Editors**. Viewers can filter and browse existing segments but cannot create or edit them.
 
 To create a new audience:
 
@@ -434,8 +434,8 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
 Four Clay actions let you move data between a Clay table and your Audience directly.
 
 -   In any Clay table, click `Add enrichment` and search for:
-    -   `Upsert Audiences Record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. Use it to commit data from integrations not yet natively supported in Audiences, qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table.
-    -   `Update Audiences Record` writes data from a table row to one or more fields on an existing Audience record. Unlike `Upsert Audiences Record`, it does not create a new record if no match is found. Both actions write only to fields that already exist in your Audience — to create a new custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
+    -   `Upsert segment record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. Use it to commit data from integrations not yet natively supported in Audiences, qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table.
+    -   `Update Audiences Record` writes data from a table row to one or more fields on an existing Audience record. Unlike `Upsert segment record`, it does not create a new record if no match is found. Both actions write only to fields that already exist in your Audience — to create a new custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
     -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls. By default, signal data is returned for the past **90 days** and the action returns **5 signal results** per record by default — adjust the **Signal data to include (days)** setting in the column settings to retrieve older signals, or increase the result limit (up to 50) when you need more results per record. Use `Get Audiences Activity` when you need a larger set of results.
     -   `Get Audiences Activity` retrieves signal and activity data for an Audiences record — including signal events and, if Gong is connected to your workspace, Gong call records. Use it when you need more results or want to query a longer time window than `Lookup in Audiences` provides by default. Set **Object type** (People or Companies) and map the Audiences **Record ID**; optionally filter by **Activity types** — for example, select `Job posting` to retrieve only job posting events, or leave it empty to return all types. Configure **Max activities per type** (default 5, max 200) and **Days lookback** (default 90, max 365). For job posting signals, each event includes the job title, URL, location, posted date, seniority, description, company name, and company domain — data you can parse in downstream columns to qualify and route companies based on the specific roles they are hiring for.
 
@@ -689,7 +689,29 @@ The simplest framing: Tables are how you _work on_ data. Audiences is where your
 
 ### What if my integration isn't supported yet?
 
-Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data into a Clay table from any source, then use Upsert to push those records permanently into your Audience. This works for any source Audiences doesn't yet natively support.
+Use the `Upsert segment record` table enrichment as a bridge. Bring your data into a Clay table from any source, then use Upsert to push those records permanently into your Audience. This works for any source Audiences doesn't yet natively support.
+
+### How do I configure Upsert segment record to send records from a Clay table into Audiences?
+
+`Upsert segment record` is an action column you add to any Clay table to push records row-by-row into your People or Companies audience. For each row, Clay checks whether a matching Audience record already exists — if it does, Clay updates it; if not, Clay creates a new record.
+
+**Plan availability:** Available on Launch, Growth, and Enterprise plans.
+
+**Before you start:** The action can only write to fields that already exist in your Audience — it cannot create new Audience fields on the fly. If your table has columns with no matching Audience field yet, create those custom fields first. See [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
+
+**To add and configure the action:**
+
+1.  In your table, click **Add enrichment** and search for **Upsert segment record**, then add it as an action column.
+2.  Select the **Audience type** — **People** or **Companies** — to match the record type in your table.
+3.  Under **Record lookup**, choose a **Match field** — the identifier Clay uses to determine whether each row already exists in Audiences. Records that match on this field are updated; rows with no match create new Audience records.
+    -   For **People**: typically **Email** or **LinkedIn URL**.
+    -   For **Companies**: typically **Domain** or **LinkedIn URL**.
+
+    Map the match field to the corresponding column in your table. Each row's match field must contain a valid, non-empty value — rows where it is empty will error with "All lookup field values are empty" and will not be written to Audiences.
+4.  Under **Field mapping**, select which table columns to write to Audiences and map each one to the corresponding Audience field. Only fields that already exist in your Audience appear in the field picker. If a column has no matching Audience field yet, create the custom field first (see Before you start above).
+5.  Click **Run column**. Each row's data is written to Audiences. After the run, records appear under **People** or **Companies** in the Audiences left sidebar.
+
+**Next step — create a segment and use it in a campaign:** Once your records are in Audiences, go to **People** (or **Companies**) in the left sidebar, click **New audience**, add filters to define your target group, and save the segment. You can then select that segment in your campaign. Workspace **Admins and Editors** can create segments — Viewers can browse existing segments but cannot create new ones.
 
 ### How do I create a custom Audience field that isn't tied to Salesforce?
 
@@ -699,7 +721,7 @@ The `+ Add field` option is available in the `Update Audiences Record` column ma
 2.  In the bulk enrich table, click the `Update Audiences Record` column header to open the Configure panel.
 3.  In the `Column mapping` dropdown, click `+ Add field`, name the new field, and save.
 
-Once created, the field is immediately available as a filter in any segment and as a target for `Update Audiences Record` or `Upsert Audiences Record` from any Clay table.
+Once created, the field is immediately available as a filter in any segment and as a target for `Update Audiences Record` or `Upsert segment record` from any Clay table.
 
 **Note:** There is no option to add new fields directly from the Audience screen — you must go through the `Update Audiences Record` column mapping in a bulk enrichment table.
 
@@ -727,7 +749,7 @@ You can still add multiple imports from the same connected Salesforce account �
 
 **To switch to a different Salesforce account** (for example, moving from a UAT org to a production org): remove the existing Salesforce source from Audiences, then reconnect with the new account. Before removing, note down your current field mappings — field mapping configurations cannot be recovered after a source is removed. See [I removed and re-added my Salesforce source in Audiences and my field mappings are gone — how do I restore them?](#i-removed-and-re-added-my-salesforce-source-in-audiences-and-my-field-mappings-are-gone--how-do-i-restore-them) for the full implications.
 
-If you need data from a second Salesforce org in Audiences without removing the existing connection, the available workaround is: connect the second org under **Settings → Connections**, bring its records into a Clay table using Salesforce actions, then push those records into Audiences using `Upsert Audiences Record`. Note that Clay table row limits apply in this path.
+If you need data from a second Salesforce org in Audiences without removing the existing connection, the available workaround is: connect the second org under **Settings → Connections**, bring its records into a Clay table using Salesforce actions, then push those records into Audiences using `Upsert segment record`. Note that Clay table row limits apply in this path.
 
 ### A Salesforce field isn't appearing in my audience filters — how do I add it?
 
@@ -817,7 +839,7 @@ The underlying field and data are identical. If you mapped Salesforce's Account 
 
 The **Person source** filter lists each source by its display name. If you sent records from a Clay table to Audiences using **Continue → Save to People**, look for the table's display name in the Person source dropdown — the same name that appears in the **Source** column on each record.
 
-Tables that have an `Upsert Audiences Record` column configured for People also appear in the **Person source** filter by the table's display name — look for the table's name in the same dropdown. (The equivalent filter for Companies audiences shows tables that have an `Upsert Audiences Record` column configured for Companies.) If your table still doesn't appear in the dropdown after checking both display names, contact Clay support.
+Tables that have an `Upsert segment record` column configured for People also appear in the **Person source** filter by the table's display name — look for the table's name in the same dropdown. (The equivalent filter for Companies audiences shows tables that have an `Upsert segment record` column configured for Companies.) If your table still doesn't appear in the dropdown after checking both display names, contact Clay support.
 
 ### How do I find which Clay table a lead in Audiences came from?
 
@@ -954,7 +976,7 @@ To import only a filtered subset of HubSpot records into Audiences:
 1.  In a **Clay table**, add a source and select **Import objects from HubSpot**.
 2.  Under **List to pull objects from**, select the specific HubSpot list containing the contacts or companies you want.
 3.  Map and format the fields you need in the table.
-4.  Add **Upsert Audiences Record** as an action column — this pushes each row from your scoped, mapped table directly into Audiences without going through the full-object Audiences import.
+4.  Add **Upsert segment record** as an action column — this pushes each row from your scoped, mapped table directly into Audiences without going through the full-object Audiences import.
 
 This gives you control over both which records enter Audiences and how their fields are mapped, independent of the native Audiences HubSpot source connector.
 
@@ -962,7 +984,7 @@ This gives you control over both which records enter Audiences and how their fie
 
 ### I changed a field value in Salesforce but it's not updating in Clay
 
-Clay's incremental sync picks up Salesforce changes via `SystemModstamp` — any modification to a Salesforce record triggers a re-sync of all its mapped fields on the next incremental cycle (every 15 minutes on Enterprise, once daily on Growth). However, if the field's current value in Clay was set by a **bulk enrichment** or **Upsert Audiences Record**, Clay's conflict resolution keeps that bulk-enriched value rather than accepting the incoming CRM value. Bulk enrichments and Upsert Audiences Record are Priority 1; Salesforce Account/Contact/Opportunity imports are Priority 2 (see **Conflict resolution when sources provide different field values** under [Entity resolution and deduplication](#entity-resolution-and-deduplication) above).
+Clay's incremental sync picks up Salesforce changes via `SystemModstamp` — any modification to a Salesforce record triggers a re-sync of all its mapped fields on the next incremental cycle (every 15 minutes on Enterprise, once daily on Growth). However, if the field's current value in Clay was set by a **bulk enrichment** or **Upsert segment record**, Clay's conflict resolution keeps that bulk-enriched value rather than accepting the incoming CRM value. Bulk enrichments and Upsert segment record are Priority 1; Salesforce Account/Contact/Opportunity imports are Priority 2 (see **Conflict resolution when sources provide different field values** under [Entity resolution and deduplication](#entity-resolution-and-deduplication) above).
 
 This means: if you clear or change a field in Salesforce that was previously populated by a bulk enrichment, Clay's import sync will pick up the Salesforce change — but discard it in favor of the existing higher-priority bulk-enriched value.
 
@@ -1052,126 +1074,69 @@ When a Salesforce lead is converted to a contact, Audiences merges both records 
 
 However, the current Audiences UI contact view does not yet display a full union of all data from the converted lead. This means activity counts and last-activity dates that originated from the lead record may not appear in the contact's Activity tab even though the data exists in Audiences and is retrievable via MCP.
 
-**Note:** This discrepancy is a known limitation in the current Audiences UI. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. A future update will show the full union of contact and converted lead data in the UI.
+**Note:** This discrepancy is a known limitation in the current Audiences UI. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. A future update will show the full union of contact and lead data in the Audiences UI.
 
 ### How does filtering work in Lookup in Audiences when I select multiple fields?
 
-When you select multiple fields in **Fields to filter by**, the lookup uses **AND logic** — a record must match on **all** selected fields to be returned. There is no option to switch to OR logic.
-
-Two behaviors to keep in mind:
-
--   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record must match both to be returned — a partial match on only one field returns nothing.
--   **Empty fields count as non-matches.** If a field value in your Audience record is empty (null), it will not match any filter condition on that field — including equality checks. For example, filtering by `Profile URL = <value>` will not return records that have an empty Profile URL field, even if the Email matches.
-
-If you need to look up a record that may be missing one of your identifier fields, filter by the field most likely to be populated (typically `Email` or `Profile URL`), and use a single-field filter rather than combining multiple conditions.
+When you add multiple fields to a `Lookup in Audiences` action column, all conditions are joined with AND — the action returns only records that match every selected filter simultaneously. There is no built-in OR operator for multi-field lookups in this action. To look up records matching any one of several conditions, run separate `Lookup in Audiences` columns for each condition and merge the results in a downstream column.
 
 ### How do I remove records from an audience?
 
-To remove records from an Audiences segment, you archive them. Archiving removes a record from Audiences entirely — it is no longer visible in any segment, including All People or All Companies — and is permanent and irreversible.
+Records in Audiences are not removed automatically when they stop matching a segment's filters — they continue to exist in your All People or All Companies list and simply no longer appear in that segment. To permanently remove a record from Audiences, you archive it.
 
 **To archive a single record:**
 
-1.  Open any record in your Audiences view by clicking on it.
-2.  In the record detail panel, click the **⋮** (three-dot) menu in the top right.
-3.  Select **Archive record**.
-4.  Confirm the action. The record is immediately removed from all segments and All People / All Companies.
+1.  Open the record's detail view in Audiences (click the record row to open it).
+2.  Click the **⋮** (three-dot) menu in the top-right corner of the detail panel.
+3.  Select **Archive**.
 
-**To archive multiple records:**
+Archived records no longer appear in any segment or audience list. They are not deleted — archiving is reversible.
 
-1.  In your Audiences view, select the rows you want to archive by clicking the checkboxes to the left of each row.
-2.  With rows selected, a toolbar appears at the bottom of the screen.
-3.  Click **Archive** in the toolbar.
-4.  Confirm the action. All selected records are immediately removed from all segments.
+**To archive records in bulk:**
 
-**Note:** Archiving is permanent. There is no way to restore an archived record. If the same record enters Audiences again from a source (for example, if the underlying Salesforce record is modified and synced again), it will be re-created as a new record without any of its previous enrichment data.
+Clay does not currently support bulk archiving through the Audiences UI. To archive a large number of records at once, contact Clay support.
+
+**To unarchive a record:**
+
+1.  In the People or Companies view, open the filter panel and add a filter for **Archived = true** to surface archived records.
+2.  Open the archived record's detail view.
+3.  Click the **⋮** menu and select **Unarchive**.
 
 ### How do I replace a CSV import with updated data?
 
-CSV imports are one-time — they do not re-sync automatically. If your CSV contained errors and you want to replace it with corrected data, follow these steps to avoid duplicating records:
+CSV imports into Audiences are one-time — they do not re-sync automatically. If you need to update or correct previously imported CSV data, archive the old records first to avoid duplicates, then re-import the corrected file.
 
-**1. Archive the old records:**
+**To replace a CSV import:**
 
-Before importing the corrected file, remove the incorrect records from your Audience:
+1.  Identify the records imported from the original CSV. The easiest way: filter your audience using **Person source** (for People) or **Company source** (for Companies) and select the name of the original CSV import. This surfaces only the records from that import.
+2.  Archive those records (see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above). Because bulk archiving is not yet available in the UI, contact Clay support if you need to archive a large batch.
+3.  Once the old records are archived, re-import your corrected CSV: click `Add data` → `Add Source` → **CSV** and follow the import wizard.
 
-1.  Go to **All People** or **All Companies** in your Audiences view.
-2.  Filter by the source of the old CSV import (use the **Person source** or **Company source** filter and select the original CSV import name).
-3.  Select all rows returned by the filter.
-4.  Click **Archive** in the toolbar that appears at the bottom.
-5.  Confirm. All records from the old CSV are removed from your Audience.
-
-**2. Import the corrected CSV:**
-
-1.  Click `Add data` → `Add Source` → select **CSV**.
-2.  Upload the corrected file and complete the import steps as usual.
-
-The corrected records are imported fresh without duplicating the old ones.
-
-**Note:** If your Audience record count appears higher than expected after importing a corrected CSV — even after archiving — it may mean some records from the original import were merged with records from another source (for example, Salesforce) during entity resolution. Archived records that matched a non-CSV source may still appear in your Audience under that source. In this case, contact Clay support to assist with cleanup.
+The new import creates fresh records from your corrected data without merging with the archived originals.
 
 ### How does the Audiences record limit work? What counts toward it?
 
-The Audiences record limit is a **per-workspace cap** on the total number of unique records stored in your Audience, regardless of which source they came from. Growth plans cap at 250,000 records; Enterprise plans cap at 25,000,000.
+The Audiences record limit applies separately to **People** and **Companies**. The limit for each plan:
 
-Records that count toward the limit:
+-   **Launch:** No limit (core features only — CRM and data warehouse imports are not available on Launch; those require Growth or above).
+-   **Growth:** 250,000 records per entity type (250,000 People + 250,000 Companies).
+-   **Enterprise:** 25,000,000 records per entity type.
 
--   All records in **All People** (contacts and leads from any source)
--   All records in **All Companies** (accounts from any source)
+**What counts toward the limit:** Every active (non-archived) record in your People or Companies list counts, regardless of how it was added — via CRM sync, CSV import, people/companies search, or Clay table send. Archived records do not count toward the limit.
 
-Records that do **not** count:
+**When you exceed the limit:** Clay stops importing new records from your CRM or data warehouse sources until the count drops below the limit. Existing records and segments are not affected — enrichment and signals continue to run on records already in Audiences. To bring the count down, archive records you no longer need (see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience)) or upgrade your plan.
 
--   Archived records (removed from your Audience permanently)
--   Segment memberships (a record in 10 different segments still counts as one record)
+**Note:** There is no add-on available to increase the record limit above the plan maximum while staying on the same plan tier. Contact your Growth Strategist if you need a higher limit.
 
-If your workspace reaches the limit, Clay will stop importing new records from your connected sources until the count drops below the cap. To free up space: archive records you no longer need (see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above), or upgrade your plan.
+### Can I add notes or comments to individual Audience records?
 
-Growth plans have a hard cap — there is no add-on to increase the limit without upgrading to Enterprise.
+Yes — you can create a custom text field in Audiences and update it from a Clay table using `Update Audiences Record` or `Upsert segment record`. There is no built-in "notes" column, but a custom field works the same way.
 
-### Can I add a "notes" or "memo" field to an Audience record?
+**To set up a notes field:**
 
-Yes — you can create a custom text field in Audiences and update it from a Clay table using `Update Audiences Record` or `Upsert Audiences Record`. There is no built-in "notes" column, but a custom field works the same way.
+1.  Create a custom Audience text field named something like `Notes` — see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) for the steps.
+2.  In your Clay table, add an `Update Audiences Record` or `Upsert segment record` column.
+3.  In the field mapping, map a table column containing your notes text to the `Notes` Audience field.
+4.  Run the column — the note is written to each matching Audience record.
 
-**To set this up:**
-
-1.  Create a custom Audience text field — see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) above.
-2.  In your Clay table, add an `Update Audiences Record` or `Upsert Audiences Record` column.
-3.  Map the text column in your table to the custom notes field in Audiences.
-4.  Run the column — the value writes permanently to the Audience record.
-
-You can then filter segments on this field, export it to Salesforce, or use it as input for enrichments.
-
-### Why does my Databricks import fail with a schema or permission error?
-
-Databricks imports in Audiences use the Unity Catalog. Two common causes of failure:
-
-**1. The service principal lacks SELECT on the target table.**
-
-In Databricks, grant the service principal read access to the catalog, schema, and table you're importing:
-
-```sql
-GRANT USE CATALOG ON CATALOG <catalog_name> TO `<service-principal-id>`;
-GRANT USE SCHEMA ON SCHEMA <catalog_name>.<schema_name> TO `<service-principal-id>`;
-GRANT SELECT ON TABLE <catalog_name>.<schema_name>.<table_name> TO `<service-principal-id>`;
-```
-
-Replace `<service-principal-id>` with the application ID of the service principal connected to Clay.
-
-**2. The table is not registered in Unity Catalog.**
-
-Audiences can only import from tables registered in Unity Catalog — it cannot query tables or views defined in the legacy Hive metastore. To migrate a legacy table, use `CREATE TABLE ... AS SELECT` in Unity Catalog to register a copy, or move the underlying data to a Unity Catalog volume.
-
-If neither of these applies and the import still fails, contact Clay support with the error message shown in the import setup.
-
-### How do I archive records that no longer match my Snowflake import query?
-
-When you update your Snowflake SQL query to exclude records — for example, removing rows below a revenue threshold — those records are marked **Deleted in source** in your Audience on the next full sync (within 7 days). They are not automatically archived; they remain in All People or All Companies with a **Deleted in source** status.
-
-To remove them from your Audience, archive them manually:
-
-1.  Go to **All People** or **All Companies** in your Audiences view.
-2.  Add a filter: **Source** → select your Snowflake import → set status to **Deleted in source**.
-3.  Select all returned rows.
-4.  Click **Archive** in the bottom toolbar and confirm.
-
-This is permanent and irreversible — archived records cannot be restored.
-
-**Alternatively**, if the record exists in another connected source (for example, Salesforce), it will remain visible in your Audience under that source even after being marked deleted in Snowflake. In that case, archiving removes the record from all sources simultaneously — use this only if you want to remove it entirely.
+You can view and filter on the Notes field in any segment, just like any other Audience field.
