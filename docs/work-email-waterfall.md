@@ -174,7 +174,7 @@ No. A LinkedIn URL is **not required** to run the Work Email waterfall. The mini
 
 **If you only have company names, not domains:** Use the [Company Domain waterfall](building-a-data-waterfall.md) to look up each company's domain first, then run the Work Email waterfall.
 
-**If you want to find LinkedIn URLs to maximize provider coverage:** Use the pre-built **LinkedIn URL waterfall** — in your table, click **Tools → Enrich**, search for `LinkedIn URL`, and select the waterfall. In the **Optimized for** dropdown, choose **Person LinkedIn URL via Name and Company** to find profile URLs using only a full name and company name or domain — no email required. Map the resulting LinkedIn URL column as an optional input to the Work Email waterfall. For contacts where the waterfall returns nothing, add a Claygent column as a fallback using a `site:linkedin.com/in` Google search prompt. See [LinkedIn URL waterfall](building-a-data-waterfall.md#linkedin-url-waterfall) for full setup details.
+**If you want to find professional profile URLs to maximize provider coverage:** Use the pre-built **professional profile URL waterfall** — in your table, click **Tools → Enrich**, search for `profile URL`, and select the waterfall. In the **Optimized for** dropdown, choose **Person Profile URL via Name and Company** to find profile URLs using only a full name and company name or domain — no email required. Map the resulting profile URL column as an optional input to the Work Email waterfall. For contacts where the waterfall returns nothing, add a Claygent column as a fallback. See [Professional profile URL waterfall](building-a-data-waterfall.md#professional-profile-url-waterfall) for full setup details.
 
 ### How can I improve my email match rate?
 
