@@ -1065,6 +1065,14 @@ Two behaviors to keep in mind:
 
 If you need to look up a record that may be missing one of your identifier fields, filter by the field most likely to be populated (typically `Email` or `Profile URL`), and use a single-field filter rather than combining multiple conditions.
 
+### How do I delete a segment? Does deleting it also remove the records?
+
+Deleting a segment removes only the saved filter definition — the records themselves are **not removed** from your Audience. All records previously in that segment continue to exist in **All People** or **All Companies** and remain available in any other segments they match.
+
+To delete a segment, click the **⋮** (three-dot) menu next to the segment name in the sidebar and select **Delete segment**. Admin access is required.
+
+If you also want to remove the records — for example, you no longer want those contacts in your Audience at all — archive them before or after deleting the segment. See [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) for steps.
+
 ### How do I remove records from an audience?
 
 To remove records from an Audiences segment, you archive them. Archiving removes a record from Audiences entirely — it is no longer visible in any segment, including All People or All Companies — and is permanent and irreversible.
