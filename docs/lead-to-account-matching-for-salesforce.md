@@ -1,7 +1,7 @@
 ---
 title: Lead-to-account matching for Salesforce
 description: Connect Salesforce leads with their corresponding Salesforce accounts.
-last_synced: 2026-04-26T01:40:13.950Z
+last_synced: 2026-04-26T01:40:13.543Z
 ---
 
 # Lead-to-account matching for Salesforce
@@ -29,6 +29,8 @@ When a Lookup Record column shows **"N records found"** — meaning Salesforce m
 2.  **Add a Use AI column to identify the best match.** In the prompt, include the formula output alongside context from the current row — such as the contact's email address, company domain, or company name — then instruct the AI to return the Salesforce record Id of the best-matching entry. For example: *"These Salesforce accounts matched: /Formula Column. The contact's company domain is /Company Domain. Return the Salesforce Account Id of the best match."*
 
 3.  **Add a run condition to the AI column so it only fires on rows with multiple matches.** Open the AI column → **Run settings** → **Only run if**, and enter a condition such as `/Lookup Record contains "records found"`. This evaluates to true only when multiple records were returned — a single Salesforce match shows the record name directly, not the phrase "records found" — so rows with one match or no match are skipped, saving AI credits.
+
+4.  **Add a Merge column to unify single-match and multi-match results.** Because the AI column's run condition skips rows where the Lookup Record returned exactly one result, the AI column is empty for those rows. To give downstream enrichments a single, consistent column to reference, add a **Merge column** (click **Add column → Merge columns**) and list the AI column first and the Lookup Record column second. Merge returns the first non-empty value per row: for rows with multiple matches the AI-selected record Id is used; for rows with a single match the AI column is empty so Merge falls back to the Lookup Record result automatically. Reference this Merge column in any downstream enrichments — such as a Salesforce Update Record or other CRM push — rather than referencing the Lookup Record or AI columns individually.
 
 **Tip:** For scenarios requiring exact filtering on multiple specific fields at once (for example, website domain AND country code), use [**Lookup records via SOQL**](salesforce-integration-overview.md) instead — it gives full query control without an AI disambiguation step.
 
