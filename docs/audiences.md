@@ -704,8 +704,8 @@ Use the `Upsert segment record` table enrichment as a bridge. Bring your data in
 1.  In your table, click **Add enrichment** and search for **Upsert segment record**, then add it as an action column.
 2.  Select the **Audience type** — **People** or **Companies** — to match the record type in your table.
 3.  Under **Record lookup**, choose a **Match field** — the identifier Clay uses to determine whether each row already exists in Audiences. Records that match on this field are updated; rows with no match create new Audience records.
-    -   For **People**: typically **Email** or **LinkedIn URL**.
-    -   For **Companies**: typically **Domain** or **LinkedIn URL**.
+    -   For **People**: typically **Email** or **professional network URL**.
+    -   For **Companies**: typically **Domain** or **professional network URL**.
 
     Map the match field to the corresponding column in your table. Each row's match field must contain a valid, non-empty value — rows where it is empty will error with "All lookup field values are empty" and will not be written to Audiences.
 4.  Under **Field mapping**, select which table columns to write to Audiences and map each one to the corresponding Audience field. Only fields that already exist in your Audience appear in the field picker. If a column has no matching Audience field yet, create the custom field first (see Before you start above).
