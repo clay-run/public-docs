@@ -159,7 +159,7 @@ If your search is dynamic — where new people continuously match your criteria 
 1.  Click the source column header in your table and expand **Run settings**.
 2.  Switch from **Manually** to **On a schedule** and choose a frequency (Daily or Weekly are most common).
 3.  Toggle on **Update existing rows** — when the source re-runs, contacts already in your table are updated in place rather than added as duplicate rows.
-4.  In **Table settings** (gear icon, top right), enable **Auto-dedupe rows** on a unique column such as the LinkedIn URL — this removes any duplicate entries that slip through across runs.
+4.  In **Table settings** (gear icon, top right), enable **Auto-dedupe rows** on a unique column such as the professional profile URL — this removes any duplicate entries that slip through across runs.
 
 Each scheduled run imports up to 2,500 leads from the search. Contacts already in your table are refreshed in place; contacts new to your search since the last run are added as new rows. See [Scheduled sources](scheduled-sources.md) for full configuration details.
 
