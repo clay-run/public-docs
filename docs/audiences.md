@@ -1052,18 +1052,24 @@ When a Salesforce lead is converted to a contact, Audiences merges both records 
 
 However, the current Audiences UI contact view does not yet display a full union of all data from the converted lead. This means activity counts and last-activity dates that originated from the lead record may not appear in the contact's Activity tab even though the data exists in Audiences and is retrievable via MCP.
 
-**Note:** This discrepancy is a known limitation in the current Audiences UI. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. A future update will show the full union of contact and converted lead data in the UI.
+**Note:** This discrepancy is a known limitation in the current Audiences UI. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. A future update will show the full union of contact and lead data in the Activity tab.
 
 ### How does filtering work in Lookup in Audiences when I select multiple fields?
 
-When you select multiple fields in **Fields to filter by**, the lookup uses **AND logic** — a record must match on **all** selected fields to be returned. There is no option to switch to OR logic.
+When you configure **Lookup in Audiences** with multiple fields in **Fields to filter by**, the lookup applies all fields as an AND condition — a record is returned only when every selected field matches simultaneously. This is stricter than a single-field lookup and has two important behaviors to be aware of:
 
-Two behaviors to keep in mind:
+-   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record must match both to be returned — a partial match on only one field won't be returned.
+-   **Empty fields prevent a match.** If the Audience record has a null or empty value for one of the selected filter fields, it will not be returned — even if other fields match.
 
--   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record must match both to be returned — a partial match on only one field returns nothing.
--   **Empty fields count as non-matches.** If a field value in your Audience record is empty (null), it will not match any filter condition on that field — including equality checks. For example, filtering by `Profile URL = <value>` will not return records that have an empty Profile URL field, even if the Email matches.
+**Tip:** Use a single, high-confidence identifier — such as `Email` for people or `Domain` for companies — as the sole filter field wherever possible. Multi-field filtering is useful when you want to guarantee uniqueness (for example, filtering by both email and company domain to avoid matching a contact at the wrong company), but it increases the risk of missed matches when any one field is missing or mismatched.
 
-If you need to look up a record that may be missing one of your identifier fields, filter by the field most likely to be populated (typically `Email` or `Profile URL`), and use a single-field filter rather than combining multiple conditions.
+### How do I delete a segment? Does deleting it also remove the records?
+
+Deleting a segment removes only the saved filter definition — the records themselves are **not removed** from your Audience. All records previously in that segment continue to exist in **All People** or **All Companies** and remain available in any other segments they match.
+
+To delete a segment, click the **⋮** (three-dot) menu next to the segment name in the sidebar and select **Delete segment**. Admin access is required.
+
+If you also want to remove the records — for example, you no longer want those contacts in your Audience at all — archive them before or after deleting the segment. See [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) for steps.
 
 ### How do I remove records from an audience?
 
@@ -1128,38 +1134,22 @@ Growth plans have a hard cap — there is no add-on to increase the limit withou
 
 ### Can I add a "notes" or "memo" field to an Audience record?
 
-Yes — you can create a custom text field in Audiences and update it from a Clay table using `Update Audiences Record` or `Upsert Audiences Record`. There is no built-in "notes" column, but a custom field works the same way.
+Yes — create a custom text field in Audiences and update it manually using a Clay table action. There is no free-text notes panel built into the Audiences record detail view, but a custom field works as a direct substitute.
 
-**To set this up:**
+**To set up a notes field:**
 
-1.  Create a custom Audience text field — see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) above.
-2.  In your Clay table, add an `Update Audiences Record` or `Upsert Audiences Record` column.
-3.  Map the text column in your table to the custom notes field in Audiences.
-4.  Run the column — the value writes permanently to the Audience record.
+1.  Navigate to any segment and click `Enrich` → `Add bulk enrich`.
+2.  In the bulk enrich table, click the `Update Audiences Record` column header to open the Configure panel.
+3.  In the `Column mapping` dropdown, click `+ Add field`, name it (for example, "Notes" or "Memo"), and save.
+4.  The field now appears as a column in your Audience and as a filter option in any segment.
 
-You can then filter segments on this field, export it to Salesforce, or use it as input for enrichments.
+**To write a note to a specific record:**
 
-### Why does my Databricks import fail with a schema or permission error?
+1.  Create a one-row Clay table with the record's identifier (email or LinkedIn URL) and a column containing the note text.
+2.  Add an `Update Audiences Record` or `Upsert Audiences Record` action column mapped to the Notes field.
+3.  Run the column — the note is written to that record in Audiences.
 
-Databricks imports in Audiences use the Unity Catalog. Two common causes of failure:
-
-**1. The service principal lacks SELECT on the target table.**
-
-In Databricks, grant the service principal read access to the catalog, schema, and table you're importing:
-
-```sql
-GRANT USE CATALOG ON CATALOG <catalog_name> TO `<service-principal-id>`;
-GRANT USE SCHEMA ON SCHEMA <catalog_name>.<schema_name> TO `<service-principal-id>`;
-GRANT SELECT ON TABLE <catalog_name>.<schema_name>.<table_name> TO `<service-principal-id>`;
-```
-
-Replace `<service-principal-id>` with the application ID of the service principal connected to Clay.
-
-**2. The table is not registered in Unity Catalog.**
-
-Audiences can only import from tables registered in Unity Catalog — it cannot query tables or views defined in the legacy Hive metastore. To migrate a legacy table, use `CREATE TABLE ... AS SELECT` in Unity Catalog to register a copy, or move the underlying data to a Unity Catalog volume.
-
-If neither of these applies and the import still fails, contact Clay support with the error message shown in the import setup.
+**To view notes in the Audience UI:** The Notes field appears as a column in your Audience view. To surface it in the record detail panel, click the column header and pin or show the field. There is no dedicated "notes" section — the field behaves like any other custom text column.
 
 ### How do I archive records that no longer match my Snowflake import query?
 
@@ -1168,9 +1158,11 @@ When you update your Snowflake SQL query to exclude records — for example, rem
 To remove them from your Audience, archive them manually:
 
 1.  Go to **All People** or **All Companies** in your Audiences view.
-2.  Add a filter: **Source** → select your Snowflake import → set status to **Deleted in source**.
-3.  Select all returned rows.
-4.  Click **Archive** in the bottom toolbar and confirm.
+2.  Add a filter for **Person source** (or **Company source**) and select your Snowflake import name.
+3.  Add a second filter: **Source status** → **Deleted in source**.
+4.  Select all rows returned by the combined filter.
+5.  Click **Archive** in the toolbar that appears at the bottom.
+6.  Confirm.
 
 This is permanent and irreversible — archived records cannot be restored.
 
