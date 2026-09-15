@@ -193,7 +193,7 @@ For costs related to the export itself, see [How much does it cost to sync audie
 
 The migration path depends on what type of ad sync you currently have:
 
-**If your ad sync was connected to an Audiences segment (not a Table Ad):** The Clay team is migrating these syncs to the updated system automatically — no action is required. After migration, each migrated sync will carry a **Legacy ad sync** label. Recurring syncs will standardize to a **3-day refresh cadence**, and one-time syncs that have already completed will be marked as **Done**. If anything looks unexpected with a specific migrated sync, contact [Clay support](https://www.clay.com/contact).
+**If your ad sync was connected to an Audiences segment (not a Table Ad):** The Clay team is migrating these syncs to the updated system automatically — no action is required. After migration, migrated syncs may appear under a **Legacy ad sync** label in the **Ads** homepage. If anything looks unexpected with a specific migrated sync, contact [Clay support](https://www.clay.com/contact).
 
 **If your ad sync was created directly from a Clay table (a Table Ad):** You'll need to migrate manually. Creating a new ad sync creates a new audience object on the ad platform side, so you'll need to update any campaigns pointing at the old audience once the new one is live.
 
