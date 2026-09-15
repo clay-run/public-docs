@@ -43,7 +43,7 @@ What reps do with it:
 -   **Prepare for meetings** with a briefing per account.
 -   **Run a Function your ops team built** from a single prompt.
 
-**Note:** Credit controls and usage monitoring are available on modern paid plans and Legacy Enterprise. The Audiences controls — which let reps query the accounts they own and the opportunity data behind them — are an Enterprise feature, and the meeting-prep use case depends on them. Reps in a workspace without Audiences still get contact and company search plus any Functions you have enabled.
+**Note:** Credit controls and usage monitoring are available on modern paid plans and Legacy Enterprise. The Audiences controls — which let reps query the accounts they own and the opportunity data behind them — are available on Launch, Growth, and Enterprise plans, and the meeting-prep use case depends on them. Reps in a workspace without Audiences still get contact and company search plus any Functions you have enabled.
 
 Where to go next:
 
@@ -72,7 +72,7 @@ A few boundaries are worth knowing before you plan around the plugin:
 
 -   The CLI reads and segments Audiences rather than writing to it, so there's no command that sets a field value on a record, imports records, or uploads a CSV.
 -   Campaigns stay in the Clay app — the plugin won't launch, pause, or resume one.
--   `clay tables query` reads data that already exists in known Clay tables, and it needs API table sync, which is an Enterprise feature.
+-   `clay tables query` reads data that already exists in known Clay tables, and it needs API table sync, which is available on all paid plans (Trial and above).
 -   Mac and Linux are supported. Windows isn't yet.
 
 Where to go next:
@@ -100,7 +100,7 @@ No — Functions are built in the Clay app by someone with workspace access, the
 
 ### Which one gives us tighter control over credit spend?
 
-MCP for Reps. An admin sets a monthly credit budget per rep from `Settings → MCP users`, and a rep who reaches their cap is blocked until the next reset, which an admin can lift by raising the limit. The plugin doesn't carry per-person credit budgets; you see consumption after the fact from the `Runs` view in Workflows.
+MCP for Reps. An admin sets a monthly credit budget per rep from `MCP → MCP users`, and a rep who reaches their cap is blocked until the next reset, which an admin can lift by raising the limit. The plugin doesn't carry per-person credit budgets; you see consumption after the fact from the `Runs` view in Workflows.
 
 Neither surface adds a surcharge. Work costs the same credits and actions as the equivalent work done in the Clay app.
 
