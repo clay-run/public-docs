@@ -439,6 +439,8 @@ Four Clay actions let you move data between a Clay table and your Audience direc
     -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls. By default, signal data is returned for the past **90 days** and the action returns **5 signal results** per record by default — adjust the **Signal data to include (days)** setting in the column settings to retrieve older signals, or increase the result limit (up to 50) when you need more results per record. Use `Get Audiences Activity` when you need a larger set of results.
     -   `Get Audiences Activity` retrieves signal and activity data for an Audiences record — including signal events and, if Gong is connected to your workspace, Gong call records. Use it when you need more results or want to query a longer time window than `Lookup in Audiences` provides by default. Set **Object type** (People or Companies) and map the Audiences **Record ID**; optionally filter by **Activity types** — for example, select `Job posting` to retrieve only job posting events, or leave it empty to return all types. Configure **Max activities per type** (default 5, max 200) and **Days lookback** (default 90, max 365). For job posting signals, each event includes the job title, URL, location, posted date, seniority, description, company name, and company domain — data you can parse in downstream columns to qualify and route companies based on the specific roles they are hiring for.
 
+**Note:** `Upsert Audiences Record` and `Update Audiences Record` support scalar field types only (text, number, date, boolean). Audiences has no native array or object field type, and JSON array columns cannot be selected as write targets in the field mapper. To expand a JSON array field into individual records in another Audience, see [How do I expand a JSON array field in one Audience into individual records in another?](#how-do-i-expand-a-json-array-field-in-one-audience-into-individual-records-in-another) in the FAQs below.
+
 ### Reviewing enrichment results
 
 After a bulk enrichment runs, there are two ways to see which records were successfully enriched:
@@ -690,6 +692,17 @@ The simplest framing: Tables are how you _work on_ data. Audiences is where your
 ### What if my integration isn't supported yet?
 
 Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data into a Clay table from any source, then use Upsert to push those records permanently into your Audience. This works for any source Audiences doesn't yet natively support.
+
+### How do I expand a JSON array field in one Audience into individual records in another?
+
+Audiences has no native array or object field type. The `Upsert Audiences Record` and `Update Audiences Record` field mappers expose only scalar field types (text, number, date, boolean) — JSON array columns cannot be selected as write targets. To expand a JSON array field — for example, a `providers` array on a Company record — into individual records in another Audience (for example, People records), use a table as an intermediate processing step:
+
+1.  **Get the source records into a Clay table.** If starting from an Audience, click **Enrich → Add bulk enrich** from your segment view to create a bulk enrichment table sourced by that segment.
+2.  **Flatten the array using Send Table Data.** In the table, add a **Send Table Data** column (**Tools → Export → Send table data**) and choose **"Send row for each item in a list"**. Select the column holding your JSON array. If the array is stored as a JSON string (a text value that looks like `[{"name": "Alice"}, ...]`), click the gear icon on the list field and enter `JSON.parse(/YourColumn)` to convert it to a native list. **Note:** This method sends a maximum of 20 items per source row per run — see [Send table data](send-table-data.md) for more on this limit.
+3.  **Extract fields in the destination table.** In the destination table, click the **"Rows from: …"** cell on any row and use **Add to column** to extract individual fields from each item (for example, first name, last name, phone). Run any enrichments you need at this stage.
+4.  **Write to your target Audience.** Add an **`Upsert Audiences Record`** action column in the destination table to push each flattened record into your target Audience — creating a new record if no match exists, or updating an existing one if it does.
+
+The destination table serves as a processing bridge — the flattened records are committed permanently to Audiences, not to the table. For workflows that process large arrays continuously, see [Auto-delete](auto-delete.md) to configure automatic row cleanup so the processing table does not accumulate rows over time.
 
 ### How do I create a custom Audience field that isn't tied to Salesforce?
 
