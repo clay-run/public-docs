@@ -189,6 +189,21 @@ If you used Enhanced Match, no additional data credits are charged for contacts 
 
 For costs related to the export itself, see [How much does it cost to sync audiences?](#how-much-does-it-cost-to-sync-audiences).
 
+### **How do I migrate from a table-based ad sync to an audience-based sync?**
+
+The migration path depends on what type of ad sync you currently have:
+
+**If you have a legacy audience-backed ad sync (an ad sync that was already connected to an Audiences segment):** The Clay team is migrating these to the updated system automatically — no action is required. After migration, each migrated sync will carry a **Legacy ad sync** label. Recurring syncs will standardize to a 3-day refresh cadence, and one-time syncs that have already completed will be marked as **Done**. If anything looks off with a specific migrated sync, contact [Clay support](https://www.clay.com/contact).
+
+**If you have a table-based ad sync (a Table Ad created directly from a Clay table):** You'll need to migrate manually. Creating a new ad sync creates a new audience object on the ad platform side, so you'll need to update any campaigns pointing at the old audience once the new one is live.
+
+1.  **Bring your table records into Audiences.** In Audiences, add your Clay table as a data source to import those records into your People or Companies Audience. Alternatively, add an `Upsert Audiences Record` action column in your Clay table to push records into an existing Audience directly.
+2.  **Create an audience segment.** Once the records are in your Audience, create a segment for the contacts or companies you want to target.
+3.  **Create a new ad sync from the segment.** Go to **Ads** → **New Ad Sync**, select your Audiences segment as the source, choose the same connected ad account, and step through the **Setup → Match → Sync** wizard to configure field mapping and Enhanced Match.
+4.  **Update your ad campaigns.** After the new audience syncs and becomes active on the ad platform (within 48 hours), update your campaigns in LinkedIn, Meta, or Google to point to the new audience.
+
+**Will I be charged for Enhanced Match enrichment again?** No — Clay stores Enhanced Match results on your Audience records. Contacts that were already enriched are automatically skipped when you create a new sync from the same source. See [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for details.
+
 ### **How long does it take for audiences to be created?**
 
 After sending your audience to LinkedIn or Meta, it will be created within **48 hours** (typically 1-2 days). Plan accordingly when launching time-sensitive campaigns.
