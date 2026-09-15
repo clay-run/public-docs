@@ -569,6 +569,16 @@ Clay's campaign events table doesn't include a dedicated "sequence completed" ev
 
 To check this from your leads table, add a **Lookup rows in other table** column pointing to your campaign events table, matching on email address. You can then use a formula column to evaluate whether any matched event has `Event type = EMAIL_REPLY`, or whether the extracted sequence number equals your campaign's total step count.
 
+### Can I access Campaign Analytics data via Clay's API or a third-party tool?
+
+The Campaign Analytics dashboard — which shows aggregated engagement metrics such as open rates, click-through rates, and reply rates — is not accessible via Clay's public API. There is no API endpoint that returns the data shown on that page.
+
+To access campaign activity data for reporting, use the **Campaign Events table**. It is automatically created when a campaign launches (see [Campaign events table](#campaign-events-table)) and records sends, bounces, replies, and other activity as individual rows. Because it is a standard Clay table, you can export it or build automations on top of it.
+
+**For batch reporting across campaigns:** Open each campaign's events table, click `Tools` → `Export` → `Download CSV`. The export includes all rows visible in the current view and does not consume credits. Combine the exports from multiple campaigns in a reporting tool (Google Sheets, Excel, or a BI tool) for aggregated analysis.
+
+**For automated, real-time reporting:** Configure a webhook in the campaign's `Advanced settings` to stream events directly to your data warehouse or reporting system as they happen. In your campaign, go to `Settings` → `Advanced settings` → `Webhooks` and add your endpoint URL. See step 7 in [Create a new email campaign](#create-a-new-email-campaign) for full configuration details.
+
 ### Can I see open rate, click-through rate, or bounce rate broken out per email step in my sequence?
 
 The **Analytics** tab shows open rate, click-through rate, and other engagement metrics as campaign-level totals only — there is no per-step breakdown in that view.
