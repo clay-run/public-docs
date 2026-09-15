@@ -441,7 +441,7 @@ Four Clay actions let you move data between a Clay table and your Audience direc
 
 **How `Upsert Audiences Record` finds the existing record**
 
-The **Look up fields** you configure (Email, LinkedIn URL, or Phone for People) are matched against **identifiers that were registered on each person when they first entered your Audience** — not against the email address or other field values stored in your Audience columns.
+The **Look up fields** you configure (Email, professional network URL, or Phone for People) are matched against **identifiers that were registered on each person when they first entered your Audience** — not against the email address or other field values stored in your Audience columns.
 
 People who entered Audiences through a Clay table import (via **Add data → Clay table** or **Continue → Save to People**) are registered under a source identifier, not an email identifier. An email-based lookup cannot find those records, so instead of updating the existing person the action creates a new duplicate on every run.
 
@@ -1113,7 +1113,7 @@ If you need to look up a record that may be missing one of your identifier field
 
 ### Why is `Upsert Audiences Record` creating duplicate people instead of updating existing ones?
 
-The most common cause: **Look up fields** is set to Email (or LinkedIn URL or Phone), but the people already in your Audience were not registered with that value as an identifier.
+The most common cause: **Look up fields** is set to Email (or professional network URL or Phone), but the people already in your Audience were not registered with that value as an identifier.
 
 `Upsert Audiences Record` resolves an existing person by matching the lookup field value against **identifiers registered at import time** — not against the email address or other field values stored on your audience record. People who entered Audiences through a Clay table import are registered under a source identifier (not an email identifier). An email-based lookup finds nothing, so a new duplicate record is created on every run.
 
