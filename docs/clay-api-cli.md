@@ -70,7 +70,8 @@ Search result limits vary by plan:
 | --- | --- | --- |
 | Free | 50 | 100/mo |
 | Trial | 50 | 10k per 14 days |
-| Paid self-serve plans | 500 | 1M/yr |
+| Flex | 500 | 50k/yr |
+| Launch, Growth, and legacy paid plans | 500 | 1M/yr |
 | Enterprise | 500 | 10M/yr |
 
 ## FAQs
@@ -95,7 +96,7 @@ MCP for Reps is a different connection, set up separately by an admin for seller
 
 No. The CLI builds logic via Workflows, not tables. `Tables` in the Public API is read-only — you can query and read rows, but not create tables, add fields, or write records.
 
-Basic row reads work on any plan. Structured queries — joins, ranges, and paging past 100 rows — need API table sync, an Enterprise feature. There are no current plans to support table building from the API or CLI.
+Basic row reads work on any plan. Structured queries via `/tables/query` — joins, ranges, and filtered reads — require API table sync, an Enterprise feature, for any request; 100 rows is the per-page maximum, not a plan-tier cap. There are no current plans to support table building from the API or CLI.
 
 ### Can I build Workflows with the API or CLI?
 
