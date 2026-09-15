@@ -130,6 +130,21 @@ If you see a **"Your session has expired"** message when trying to access Clay, 
 
 If none of these steps resolve the error, contact Clay support via the in-app chat icon in the bottom-right corner of Clay.
 
+## "Unable to login" error
+
+If you see an **"Unable to login"** error on the Clay login page after entering your email address and password, the most likely cause is that your account was created using **Google authentication** rather than email and password. Clay accounts support only one login method at a time — if your account uses Google, the email and password fields will not work.
+
+To resolve this:
+
+1.  Return to the Clay login page at [app.clay.com](https://app.clay.com).
+2.  Enter your email address and click **Continue**.
+3.  Click **Continue with Google** instead of entering a password.
+4.  Sign in with the Google account associated with your Clay email address.
+
+If you also tried **Forgot password?** and did not receive a reset email, this confirms your account uses Google authentication — password reset emails are not sent for Google-auth accounts because there is no password on the account to reset.
+
+To switch to email and password login instead, see [Switch from Google login to email and password](#switch-from-google-login-to-email-and-password) above — this requires a brief support action and cannot be done through your account settings.
+
 ## Clay API key access
 
 Your Clay API key enables Clay-specific integrations and external connections. To manage your API key, go to `Settings` > `Your profile` > `API key`.
