@@ -164,8 +164,9 @@ A record subset import works alongside any standard Salesforce import. You can a
 6.  Select `Companies` and repeat steps 3–5 for accounts.
 7.  To import Deals (if enabled for your workspace), select `Deals` at the top of the sync panel.
 8.  Enable the `Import` toggle.
-9.  Add any Deal fields you want to filter or segment by — common fields include `Deal Stage`, `Amount`, `Close Date`, and `Owner`.
+9.  Add any Deal fields you want to filter or segment by — common fields include `Deal Stage`, `Amount`, `Close Date`, `Owner`, and `Create Date`.
     -   Deal data is associated with both your Companies and People records. In a Companies audience, you can filter by deal attributes. In a People audience, only contacts directly linked to a deal via HubSpot contact associations appear when you filter on deal attributes — not all contacts at the company that owns the deal.
+    -   **Filtering by deal creation date:** The "Deal creation date" field in the segment builder is Clay's internal timestamp for when the deal record was first synced into Clay — not HubSpot's Create Date property. To filter by when a deal was actually created in HubSpot, add HubSpot's **Create Date** (`createdate`) as a mapped field here (type: Date), give it a name like "Deal created date", and use that mapped field in your segment filter instead of "Deal creation date."
 10.  Name the corresponding Clay fields.
 11.  Click `Save and Preview`, then `Confirm`.
 
@@ -1078,6 +1079,24 @@ When you filter a Companies audience by **Stage** under the Deals filter group, 
 4.  Copy that value and paste it into the Clay **Stage** filter (for example, use the `contains` operator and enter the internal ID).
 
 **Note:** This limitation applies only to the deal Stage filter in Audiences. In Clay table enrichment columns, deal lookup and retrieval actions return both the internal stage ID and the readable display label as separate fields — so you can see the label there and use it to look up the matching internal ID.
+
+### Why does filtering by deal creation date return no results in a Companies audience?
+
+The **"Deal creation date"** field in the Audiences segment builder is Clay's own internal timestamp for when the deal record was first synced into Clay — not HubSpot's **Create Date** property. On initial import, all existing deals receive this timestamp at roughly the same time (the date of the sync run), so filtering for deals "in the last 1 day" matches nothing even when HubSpot has hundreds of new deals created that day.
+
+To filter by when a deal was actually created in HubSpot, explicitly map HubSpot's `createdate` property:
+
+1.  Go to **Settings → Audiences → your HubSpot connection → Deals tab**.
+2.  Click **+ Add mapping**.
+3.  On the **Clay Deals** side, choose **Create field**, name it something like "Deal created date", and set the type to **Date**.
+4.  On the **HubSpot Deals** side, select **Create Date** (`createdate`).
+5.  Click **Save and review**.
+
+Then edit your segment and replace the "Deal creation date" condition with your new "Deal created date" field, still set to your desired time window (for example, "in the last 1 day").
+
+**Note on existing records:** New field mappings populate values as each deal is next synced. After the mapping saves, spot-check a deal you know was recently created in HubSpot to confirm the mapped date came through before building segments or reporting that depend on it.
+
+**Note:** Filtering Companies segments on an associated deal's property is supported — the association syncs correctly. If a deal-based filter returns no results, the cause is almost always that the HubSpot deal field the filter depends on hasn't been explicitly mapped yet. See [Importing from HubSpot](#importing-from-hubspot) for setup steps.
 
 ### Why does Clay MCP show activity data for a contact when the Audiences Activity tab shows no activity?
 
