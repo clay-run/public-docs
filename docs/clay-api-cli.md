@@ -62,7 +62,7 @@ The plugin also gives you access to:
 
 ## Plan availability and limits
 
-The developer platform is available across all Clay plans, including free and trial plans. Legacy plans also have access for a limited time.
+The developer platform is available across all Clay plans, including free and trial plans. Legacy plans also have access.
 
 Search result limits vary by plan:
 
@@ -70,7 +70,8 @@ Search result limits vary by plan:
 | --- | --- | --- |
 | Free | 50 | 100/mo |
 | Trial | 50 | 10k per 14 days |
-| Paid self-serve plans | 500 | 1M/yr |
+| Flex | 500 | 50k/yr |
+| Other paid self-serve plans | 500 | 1M/yr |
 | Enterprise | 500 | 10M/yr |
 
 ## FAQs
