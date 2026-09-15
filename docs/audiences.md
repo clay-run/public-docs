@@ -83,6 +83,8 @@ The Salesforce import flow in Audiences has been redesigned. You can import **al
 
 SOQL queries for Audiences must be valid SELECT statements and must include `Id`, `SystemModstamp`, and `IsDeleted`. Clay uses these fields to handle incremental syncing and soft-delete detection. For Contact queries, also include `AccountId`; for Lead queries, also include `ConvertedContactId`. The AI query generator includes these fields automatically.
 
+**No semi-joins (nested sub-selects in `WHERE` clauses).** Salesforce's Bulk API 2.0 — which handles the initial full import and weekly re-sync — does not support SOQL semi-joins: queries that filter using `WHERE Id IN (SELECT ... FROM ...)`. A query containing a semi-join passes Clay's **Preview** step but causes the Bulk API import job to fail immediately with **"Salesforce Bulk API job [ID] failed. Records processed: 0"** and zero records imported. Use direct field filters on the imported object only. To filter contacts by opportunity or contact-role attributes, import all contacts and apply that filter as an audience segment condition after importing.
+
 **Importing a Salesforce record subset with SOQL**
 
 Available on **Growth and Enterprise plans**. When setting up a Salesforce import in Audiences, each object type offers a **Record selection** step with two options:
@@ -518,7 +520,7 @@ To run an enrichment on the people who matched a signal:
 1.  In Audiences, open the draft segment for your signal type — **New hires**, **Companies of job changers**, or **Web visitors** — pinned at the top of the Audiences left sidebar.
 2.  Inside the segment, click **Enrich** → **Add bulk enrich**.
 3.  Add your enrichment columns (for example, `Enrich Person` for LinkedIn URL, phone, or work email).
-4.  Click **Start Run**.
+4.  Click `Start Run`.
 
 Enrichment results write permanently back to All People — they are available as filters in any other segment going forward.
 
@@ -799,6 +801,20 @@ No. The Clay UI shows only that the Salesforce full sync runs weekly — it does
 There is no self-serve option to trigger a full sync manually. If you need an expedited full sync — for example, to pick up formula field updates that are not captured by incremental syncs — contact Clay support.
 
 **Workaround for specific records:** The incremental sync (every 15 minutes for Enterprise, once daily for Growth) picks up any Salesforce record whose `SystemModstamp` has been updated. To re-sync specific records sooner, make a small edit to those records in Salesforce — for example, add and remove a space in any field. This updates `SystemModstamp` and Clay will pick up those records on the next incremental sync, without waiting for the weekly full sync.
+
+### Why is my Salesforce Audiences import failing with "Salesforce Bulk API job failed. Records processed: 0"?
+
+This error means Salesforce's Bulk API 2.0 rejected the import job before processing any records. Audiences uses Bulk API 2.0 for all initial full imports and weekly re-syncs. The Bulk API does not support SOQL **semi-joins** — queries where the `WHERE` clause contains a nested `SELECT` statement, for example:
+
+```sql
+SELECT Id, FirstName, LastName, AccountId, SystemModstamp, IsDeleted
+FROM Contact
+WHERE Id IN (SELECT ContactId FROM OpportunityContactRole WHERE ...)
+```
+
+A semi-join passes Clay's **Preview** step (which uses Salesforce's standard REST API to estimate matching records) but causes the Bulk API job to fail immediately, surfacing as **"Salesforce Bulk API job [ID] failed. Records processed: 0"** with no records imported.
+
+**Fix:** Remove the nested sub-select and use only direct field filters on the object you are importing. Open the import settings, update the SOQL query to eliminate the semi-join, and re-run the sync. For example, instead of filtering contacts by `WHERE Id IN (SELECT ContactId FROM OpportunityContactRole WHERE ...)`, import all contacts and apply the opportunity contact-role condition as an **audience segment filter** after importing — segment filters evaluate cross-object lookups using a separate query path that supports them.
 
 ### Why do some of my Salesforce Lead records not appear as separate person records in Clay?
 
