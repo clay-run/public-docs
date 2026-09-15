@@ -13,7 +13,7 @@ Clay doesn't have a traditional API, but you can send data via webhooks, wrap Cl
 
 It's one of the most common questions we get — and the honest answer is: not in the traditional sense. Clay isn't built like a typical SaaS tool where you send a request to an endpoint and get data back in milliseconds. Instead, Clay is an enrichment and automation platform designed around tables, workflows, and integrations.
 
-But that doesn't mean you're stuck. Depending on what you're trying to do, there are several ways to interact with Clay programmatically and get results that feel a lot like working with an API. You can pipe data into Clay automatically via webhooks, wrap Clay's functionality using tools like Make or Zapier, connect AI tools like Claude or ChatGPT directly to your Clay workspace via MCP, or — if you have beta access enabled — access Clay's native People and Company API directly.
+But that doesn't mean you're stuck. Depending on what you're trying to do, there are several ways to interact with Clay programmatically and get results that feel a lot like working with an API. You can pipe data into Clay automatically via webhooks, wrap Clay's functionality using tools like Make or Zapier, connect AI tools like Claude or ChatGPT directly to your Clay workspace via MCP, or access Clay's native People and Company API directly.
 
 **Don't confuse this with the HTTP API integration.** Clay's [HTTP API integration](https://university.clay.com/docs/http-api-integration-overview) is an enrichment column (or table source) that your Clay table uses to call **external** APIs — requests go from Clay out to another service. This page covers the opposite direction: calling **Clay** from your own systems — sending data in, searching Clay's data, or triggering Clay from code. If you want a Clay table to hit your CRM, data provider, or custom endpoint, use the HTTP API integration; if you want your app to talk to Clay, keep reading here.
 
@@ -51,17 +51,15 @@ This works if you absolutely need an endpoint, but be aware: Clay's enrichment m
 
 Clay offers a fast API for searching its proprietary People and Company data. You submit a free-text, natural-language query (along with a `source_type` of `people`, `companies`, or `jobs`), and Clay's AI translates it into search filters and returns matching results.
 
-**Note:** This API is currently in beta. Access is enabled per workspace on request — contact your GTM engineer or [our team](https://www.clay.com/contact-form) to have it enabled for your workspace.
-
 -   It's useful for lightweight lookups and lead enrichment via natural-language search.
 -   It doesn't include deep enrichment like emails, phone numbers, or revenue data.
 -   **It returns enriched data to the caller — it does not write to Salesforce or any other CRM automatically.** Your system is responsible for taking the response and updating the CRM record. If you want Clay to handle the Salesforce write-back for you, use the webhook workflow described above instead.
 
 [Contact our GTM engineers for more information.](https://www.clay.com/contact-form)
 
-**Public HTTP API — Routines (same beta access)**
+**Public HTTP API — Routines**
 
-The same workspace-level beta access also unlocks a Routines endpoint for triggering Clay enrichment functions programmatically:
+The Public HTTP API also includes a Routines endpoint for triggering Clay enrichment functions programmatically:
 
 -   `POST /routines/{routine_id}/run` — submit input records to a Clay function and start an enrichment run.
 -   `GET /routines/run/{routine_run_id}/results` — poll for results once the run completes.
