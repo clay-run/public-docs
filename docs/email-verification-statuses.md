@@ -1,7 +1,7 @@
 ---
 title: Email verification statuses
 description: Understand the different statuses an email address can have.
-last_synced: 2026-04-26T01:39:55.342Z
+last_synced: 2026-04-26T01:39:55.232Z
 ---
 
 # Email verification statuses
