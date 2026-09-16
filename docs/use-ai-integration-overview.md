@@ -135,6 +135,10 @@ While you don't need your own GPT, Claude, or Gemini API key to use the AI featu
 1.  Select the desired `Model` from the dropdown.
 2.  Click on the `Account` dropdown and click `+ Add account`.
 
+**Note:** The **Account** dropdown only appears when a third-party model (such as Claude, GPT, or Gemini) is selected. If you are using a Clay parallel model (Argon, Neon, Helium, or similar), the Account dropdown is not shown — parallel models run on Clay's infrastructure and always use Clay's managed key.
+
+**Note:** The **+ Add account** option requires a direct **API key** from your AI provider (available from your Anthropic, OpenAI, or Google console). This is separate from any account you may have connected through Clay's **Settings → Connections** page — OAuth connections and Use AI API key authentication are independent. Even if you have already connected an Anthropic or OpenAI account as an integration, you still need to add your API key here for Use AI and Claygent to use your account.
+
 **Note:** The credit amounts displayed next to models in the model selection dropdown are Clay-managed pricing estimates. They appear regardless of which account you have configured — they will not be charged to your Clay balance when your own API key is active. With your own key selected, model usage is billed directly through your provider (Google, OpenAI, or Anthropic), not from your Clay Data Credits. **Action costs** (1 per AI run) are still consumed from your Clay balance even when using your own key.
 
 **Note:** Connecting your own OpenAI API key does not enable OpenAI's Batch API. Clay sends all AI column requests in real-time using the standard API — regardless of which account is connected. You will not get OpenAI's batch pricing (50% discount) or the extended processing window (up to 24 hours). If you need to process a large volume of data at batch pricing, the workaround is to export your data from Clay, run it through the OpenAI Batch API externally, then re-import the results.
