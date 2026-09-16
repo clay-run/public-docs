@@ -164,7 +164,7 @@ Each table card in the workbook canvas displays an estimated credit cost per row
 
 To estimate your total enrichment cost for a table, multiply the per-row figure by the number of rows you still need to enrich.
 
-**Note:** The `~` prefix means this is an approximation. The estimate is calculated from the configured credit cost of all active enrichment columns — actual costs are often lower, since some enrichments return no data for certain rows and conditional logic may skip columns based on existing values.
+**Note:** The `~` prefix means this is an approximation. The estimate is calculated from the configured credit cost of all active enrichment columns — actual costs are often lower, since some enrichments return no data for certain rows and conditional logic may skip columns based on existing values. For enrichments that charge **per result returned** rather than a flat per-row fee, the estimate assumes the maximum number of results configured — so if fewer results are returned, the actual charge for that row will be proportionally lower. To check what was actually charged on a specific row, click the action cell and look at the **Charged** line in the cell details panel.
 
 ### Run cost breakdown
 
