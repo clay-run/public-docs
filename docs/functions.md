@@ -369,7 +369,17 @@ Other useful column status filters you can apply to any function or enrichment c
 
 ### Can I share a function with someone outside my workspace?
 
-Yes. Enable "share as template" on the function to generate a shareable link. Anyone with the link can view the function's columns and create a copy of the function in their workspace.
+Yes. Use the **Share as template** toggle to generate a shareable link. Anyone with the link can create a copy of the function in their own workspace.
+
+**To generate and share the link:**
+
+1.  Open the function from your Clay homepage. Make sure you are **not** in edit mode — the Share as template section is only visible when viewing a function live, not while editing it. If you see an edit-mode banner, click **Exit edit mode** first.
+2.  In the settings panel on the right, scroll down to the **Share as template** section (a collapsible panel near the bottom of the settings panel).
+3.  Toggle on **Share as template**. A shareable link is generated automatically — copy it from the section that appears.
+4.  Send the link to whoever needs the function, or open it yourself while signed into the destination workspace.
+5.  When the link opens, Clay shows a workspace picker listing the workspaces you have access to. Select the destination workspace and confirm to create the copy.
+
+The copy is fully independent of the original. Any changes you make to the original function after sharing do not sync to the copy — each workspace's version is maintained separately.
 
 ### How do I duplicate a function within my workspace?
 
