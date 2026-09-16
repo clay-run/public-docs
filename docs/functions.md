@@ -439,3 +439,21 @@ To fix it:
 4.  Save the column.
 
 If you haven't renamed or deleted any columns recently, the reference may have become stale after a table update — the remap will resolve it either way.
+
+### What happens when I try to edit a Clay-managed function?
+
+Clay-managed functions receive automatic updates from Clay in the background — you don't need to maintain them yourself. When you try to enter edit mode on a Clay-managed function, you'll see a **"Detach from Clay updates?"** prompt before the editor opens. The prompt reads: *"Editing this function will detach it from Clay's managed updates. This action cannot be undone."*
+
+**What detaching does:**
+
+-   Creates an editable copy of the function that you fully control
+-   Your workflow continues running normally — detaching doesn't break anything or affect in-progress runs
+-   The function will no longer receive Clay's automatic background updates; you take ownership of maintaining it going forward
+
+**When you need to detach:**
+
+Some customizations require entering edit mode — for example, adding a [run condition](conditional-runs.md) so the function only runs when a particular column is already populated. In those cases, detaching first is required.
+
+**Is there a changelog for Clay-managed function updates?**
+
+No. Clay pushes updates automatically in the background, and they're designed to be non-breaking. There's no notification or changelog for individual updates.
