@@ -93,9 +93,19 @@ When a function contains a waterfall, the estimated cost shown (marked with a `~
 
 No. As of General Availability, functions support unlimited rows via passthrough. Functions also include a 10x speedup and fair sharding for parallel execution, so large workloads are distributed efficiently instead of queuing. Prior to GA, Functions had a 50,000-row limit.
 
-**Note:** The function's live view displays only the most recent **1,000 rows** at a time. This limit is intentional: functions are passthrough tables, and keeping the active row count low ensures there is enough space for new incoming records to be processed. All rows are fully processed and their results returned to the calling table regardless of this limit.
+**Note:** The function's live view displays only the most recent **1,000 rows** at a time. This limit is intentional: functions are passthrough tables, and keeping the active row count low ensures there is enough space for new incoming records to be processed. All rows are fully processed and their results returned to the calling table regardless of this limit. When the function is called from multiple tables, the live view allocates up to **50 rows per calling table** (prioritizing the most recently active tables first), with any remaining capacity filled by the globally newest rows.
 
 To review rows beyond the 1,000 shown in the live view, click the **Archive** button in the function table's toolbar. The Archive section shows historically processed rows organized by timeline, and you can export the full set as a CSV. If you need to retain more active rows in the live view (for example, for easier auditing of recent runs), open the auto-delete settings for the function table and update the **Number of rows to keep** field — though increasing this limit on high-volume functions can slow processing.
+
+### Why does "Go to row in function" say the function row has been archived?
+
+When you click a cell in your table that was processed by a function and see **"The corresponding function row has been archived and is no longer available to view"** on the **Go to row in function** button, the intermediate processing record for that row has aged out of the function's Live view.
+
+**Your results are not lost, and you do not need to re-run anything.** The function already ran successfully, wrote the output back to your calling table, and charged credits at the time of execution. The "archived" message means only that the drill-through record inside the function's own view is no longer accessible — not that the enrichment failed or that data is missing from your table.
+
+This happens because the function's Live view retains at most 1,000 rows total, with up to 50 rows allocated per calling table. On high-volume runs — or when the same function is called from many tables — earlier rows age out of that window as newer ones arrive.
+
+To view historical rows that have aged out, click **Archive** in the function table's toolbar. The Archive section shows processed rows organized by timeline and can be exported as a CSV.
 
 ### What's the difference between an input and a column in a function?
 
@@ -140,7 +150,7 @@ Column templates are saved configurations for a single column that you apply man
 
 Column group templates are deprecated — functions have replaced them. Templates could only be used in tables, while functions store the same reusable logic but can be called from multiple surfaces and add capabilities like permission handling and observability. The **Save as template** option in the column right-click menu has been replaced by **Save as function**.
 
-If you have existing column group templates, you can convert each one to a function using a guided migration workflow: open the template's configuration panel (by applying the template, or via its settings in the enrichment panel or Command Center) and click the migration button in the notice at the top. See [Column group templates](column-group-templates.md) for details.
+If you have existing column group templates, you can convert each one to a function using a guided migration workflow: open the template's configuration panel (by applying the template, or via their settings in the enrichment panel or Command Center) and click the migration button in the notice at the top. See [Column group templates](column-group-templates.md) for details.
 
 ### Is there version history for functions?
 
