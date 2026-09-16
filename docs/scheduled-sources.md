@@ -73,6 +73,22 @@ Scheduled sources are not available on the Free plan. For paid plans, the limit 
 
 ## Troubleshooting
 
+### Can I filter the table to see only rows affected by a specific source run?
+
+No. Clay does not provide a way to filter your table to show only the rows added or updated by a specific source run.
+
+-   **Created At** reflects when a row was first inserted into the table — it only updates for net new rows. Existing rows that a source run updates in place do not get a new Created At timestamp, so filtering by today's date will show only newly added rows, not rows that were refreshed.
+-   **Updated At** reflects the last time a row was written to. When a source run updates many rows at once, all of those rows receive the same Updated At timestamp — making it impossible to distinguish rows touched by a specific run from rows that were updated by other events on the same day.
+-   The **Source history** panel (open the source column header → **View Run History**) shows a log of past runs with status, rows added, and date — but this is a run-level summary only. It does not let you filter the table to highlight the specific rows that run affected.
+
+**Workaround — ensure enrichments re-run on all rows daily:** If your goal is to make sure every row in the table gets re-processed on each source run cycle (not just newly added rows), use **Re-run columns on a schedule**:
+
+1.  Click the gear (`⚙`) icon in the bottom-right corner of your table to open **Table Settings**.
+2.  Under **Run Settings**, toggle **Re-run columns on a schedule** on.
+3.  Choose **Day** (or another frequency) and select which columns to re-run.
+
+This forces the selected enrichment columns to re-run for every row on each cycle, regardless of whether the row was newly added or already existed. See [Scheduled columns](scheduled-columns.md) for full setup details, plan limits, and guidance on which column types to include or exclude from a scheduled re-run.
+
 ### Why isn't my Find Jobs table (or any source table) pulling new entries?
 
 By default, sources — including Find Jobs — are configured to run **Manually**, meaning they perform a one-time import when first set up. New entries that match your filters are not pulled in automatically after that initial run.
