@@ -147,6 +147,17 @@ Yes. Ask _"What functions do you have?"_ or _"What workflows has RevOps built fo
 
 Yes. Once you connect Clay via Claude's connector system at `claude.com/connectors/clay`, it will also work in Claude Code.
 
+**Troubleshooting: The Clay widget or "Open in Clay" button isn't appearing**
+
+If you've connected Clay in Claude but don't see the widget or the "Open in Clay" button when running a query, follow these steps:
+
+1.  In Claude, go to **Settings → Connectors** and disconnect Clay.
+2.  Reconnect from [claude.com/connectors/clay](https://claude.com/connectors/clay) and re-authorize your workspace.
+3.  **Fully quit and relaunch Claude** — closing the browser tab or window isn't enough. The Claude desktop app needs to be fully restarted to pick up the refreshed connection.
+4.  Try your query again. If the widget still doesn't appear, add _"use Clay connector"_ to your prompt to explicitly invoke it.
+
+**If you're on Claude Enterprise:** your Claude admin must approve the Clay connector before individual users can access it. Check with your admin if the steps above don't resolve the issue.
+
 **Troubleshooting: "SDK auth failed: Client name must not impersonate a known platform"**
 
 If you see this error, Clay was added via CLI (e.g., `claude mcp add https://api.clay.com/v3/mcp`) instead of through the Claude desktop app. Clay's MCP does not support CLI installation — the OAuth flow only accepts connections from the official connector.
