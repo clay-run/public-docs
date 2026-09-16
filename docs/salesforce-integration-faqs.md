@@ -73,6 +73,23 @@ Use **Client Credentials** when you want a Salesforce connection that is stable 
 
 If both concerns apply — you want resilience to employee turnover and prefer a lower-cost license — Client Credentials is the recommended approach. For setup instructions, see [Connecting to Salesforce](https://university.clay.com/docs/salesforce-integration-overview).
 
+## How do I switch from User Sign In to Client Credentials?
+
+Switching authentication methods requires adding a new Salesforce connection in Clay — you cannot convert an existing User Sign In connection to Client Credentials in place. Here is what to expect:
+
+**Your existing Clay tables will not be disrupted**, as long as the Salesforce user configured as the "Run As" user in your Salesforce External Client App has the same object and field permissions as the user currently connected via User Sign In.
+
+**Step 1: Set up Client Credentials in Salesforce.** Your Salesforce admin needs to create an External Client App and configure it for Client Credentials. See [Client Credentials setup instructions](salesforce-integration-overview.md#client-credentials-integration-user) in the Salesforce integration overview for the full steps.
+
+**Step 2: Add a new Salesforce connection in Clay.**
+
+1.  In the home sidebar, click `Settings` → `Connections`.
+2.  Click `Add connection`, search for `Salesforce`, and select `Client Credentials`.
+3.  Fill in your **My Domain URL**, **Consumer key**, and **Consumer secret** from your External Client App.
+4.  Click `Authenticate` to save the connection.
+
+**Step 3: Update your existing Clay tables.** After adding the new connection, existing tables continue to use the original User Sign In connection — they do not switch automatically. Open each Salesforce action column (Lookup Record, Create Record, Update Record, etc.) in your table and change the selected Salesforce account to your new Client Credentials connection. All column configuration — field mappings, run conditions, and settings — is preserved. Only the connection reference changes.
+
 ## How do I verify which Salesforce user is associated with my connection?
 
 Once you've tested a Salesforce connection, Clay saves the result and displays the connected SFDC user and Salesforce org directly in the connections list — so you can see which account each connection belongs to at a glance without re-testing.
