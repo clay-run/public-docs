@@ -543,11 +543,11 @@ If you have a list of domains and want to cluster them by the company they resol
 
 1.  Add your candidate domains to a table (one per row).
 2.  Run **Enrich Company** on each row.
-3.  Group rows by the **Company LinkedIn URL** or **Org Id** returned. Domains that share the same identifier are resolving to the same company record.
+3.  Group rows by the **Company Profile URL** or **Org Id** returned. Domains that share the same identifier are resolving to the same company record.
 
 This gives you clusters of matching domains from your list, even if it does not enumerate every possible domain that maps to a given company.
 
-**Tip:** When you have a company's LinkedIn URL available, use it as the identifier instead of a domain. LinkedIn URLs map directly to the intended company profile and skip the domain resolution step — which can occasionally surface the wrong entity, especially for large companies with many subsidiary or regional domains.
+**Tip:** When you have a company's professional profile URL available, use it as the identifier instead of a domain. Professional profile URLs map directly to the intended company profile and skip the domain resolution step — which can occasionally surface the wrong entity, especially for large companies with many subsidiary or regional domains.
 
 ### Getting "Invalid input: Invalid person identifier" from Enrich person
 
