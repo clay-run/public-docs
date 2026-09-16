@@ -62,7 +62,7 @@ The plugin also gives you access to:
 
 ## Plan availability and limits
 
-The developer platform is available across all Clay plans, including free and trial plans. Legacy plans also have access for a limited time.
+The developer platform is available across all Clay plans, including free and trial plans. Legacy plans also have access.
 
 Search result limits vary by plan:
 
