@@ -150,7 +150,7 @@ Column templates are saved configurations for a single column that you apply man
 
 Column group templates are deprecated — functions have replaced them. Templates could only be used in tables, while functions store the same reusable logic but can be called from multiple surfaces and add capabilities like permission handling and observability. The **Save as template** option in the column right-click menu has been replaced by **Save as function**.
 
-If you have existing column group templates, you can convert each one to a function using a guided migration workflow: open the template's configuration panel (by applying the template, or via their settings in the enrichment panel or Command Center) and click the migration button in the notice at the top. See [Column group templates](column-group-templates.md) for details.
+If you have existing column group templates, you can convert each one to a function using a guided migration workflow: open the template's configuration panel (by applying the template, or via its settings in the enrichment panel or Command Center) and click the migration button in the notice at the top. See [Column group templates](column-group-templates.md) for details.
 
 ### Is there version history for functions?
 
