@@ -56,6 +56,7 @@ Your new plan will activate immediately, and any applicable charges will be appl
     -   Phone number enrichments are not available (see [Trials](#trials) for details)
     -   CRM integrations (e.g., HubSpot, Salesforce, Pipedrive) require Growth plan or higher
     -   Email sequencing tools (e.g., Outreach, Salesloft) require Launch plan or higher
+    -   The Clay email sequencer (Campaigns) is not available — upgrade to any paid plan to access email campaigns (see [Email sequencer](email-sequencer.md))
     -   HTTP API and webhooks require Growth plan or higher
     -   Custom API keys for certain third-party providers require a paid plan; the Free plan uses Clay-managed accounts for those providers
 
