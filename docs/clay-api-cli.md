@@ -70,7 +70,8 @@ Search result limits vary by plan:
 | --- | --- | --- |
 | Free | 50 | 100/mo |
 | Trial | 50 | 10k per 14 days |
-| Paid self-serve plans | 500 | 1M/yr |
+| Flex | 500 | 50k per rolling 30-day period |
+| Launch/Growth | 500 | 1M per rolling 30-day period |
 | Enterprise | 500 | 10M/yr |
 
 ## FAQs
