@@ -66,7 +66,7 @@ The same workspace-level beta access also unlocks a Routines endpoint for trigge
 -   `POST /routines/{routine_id}/run` — submit input records to a Clay function and start an enrichment run.
 -   `GET /routines/run/{routine_run_id}/results` — poll for results once the run completes.
 
-Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is under **Settings → Account → API keys** and is distinct from the personal API key on your profile page.
+Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is on the **API keys** tab of the **API and CLI** page (accessible from the left sidebar in your workspace) and is distinct from the personal API key on your profile page.
 
 **Public HTTP API — Credit Balance**
 
