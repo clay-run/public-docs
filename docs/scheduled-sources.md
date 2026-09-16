@@ -71,6 +71,8 @@ Scheduled sources are not available on the Free plan. For paid plans, the limit 
 -   Growth: 100 sources
 -   Enterprise: 1,000 sources
 
+There is no in-app counter showing your current scheduled source count against the plan limit. To review which sources are on a recurring schedule, open **Settings → Credit Usage**, select the **Workspace** tab, and filter by **Recurring**. This view includes scheduled columns and signals in addition to scheduled sources, so it captures more than just sources — but it is the most direct way to find recurring schedules across all your tables when you are approaching the limit.
+
 ## Troubleshooting
 
 ### Can I filter the table to see only rows affected by a specific source run?
@@ -103,3 +105,19 @@ To have your table automatically import new matching entries on a recurring basi
 Each subsequent run appends newly matched entries to your table without removing existing rows (see [Scheduled source runs are additive](#scheduling-source-runs) above).
 
 **Note:** Scheduled sources are not available on the Free plan.
+
+### When I try to duplicate a table, I see "This duplication includes scheduled sources, but your workspace has reached the scheduled sources limit for your plan"
+
+This error appears when you try to duplicate a table that contains one or more scheduled sources and your workspace is already at or above the plan limit for scheduled sources.
+
+To resolve it, remove the schedule from one or more sources before duplicating:
+
+1.  In the table you want to duplicate, click a source column header.
+2.  Under **Run this source**, switch from **On a schedule** to **Manually**.
+3.  Click **Update Source Schedule**.
+4.  Repeat for any other scheduled sources in that table.
+5.  Duplicate the table. After duplication, you can re-enable the schedule on sources in either copy.
+
+Alternatively, remove the schedule from existing sources elsewhere in your workspace to free up a slot, then try duplicating again. If you need to identify which sources are scheduled across your workspace, open **Settings → Credit Usage**, select the **Workspace** tab, and filter by **Recurring**.
+
+If you have reduced your scheduled sources but still see the error, contact support — your workspace may need a limit increase.
