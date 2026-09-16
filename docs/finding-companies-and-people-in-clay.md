@@ -531,6 +531,24 @@ If the **Enrich Company** column shows **"Invalid input: Invalid company identif
 
 If you have the company's website URL (e.g., `https://www.clay.com`) but not a clean domain, strip the `https://`, `www.`, and any trailing path before mapping it — the identifier field expects a bare domain like `clay.com`.
 
+### Enrich Company returns the same company for multiple different domains
+
+When you run **Enrich Company** on multiple domains — for example, `allstate.com` and `allstatecorporation.com` — and both rows return the same company record, this is expected behavior. Clay resolves each domain (including subdomains and redirects) to one canonical company record, so any domain associated with a given company maps to the same result.
+
+The matching is one-directional: Clay can resolve a domain to a company, but the company record does not expose the full set of domains that would resolve to it. There is no way to retrieve the complete list of domains that map to a single company record.
+
+**Workaround — identify which of your candidate domains map to the same company:**
+
+If you have a list of domains and want to cluster them by the company they resolve to:
+
+1.  Add your candidate domains to a table (one per row).
+2.  Run **Enrich Company** on each row.
+3.  Group rows by the **Company LinkedIn URL** or **Org Id** returned. Domains that share the same identifier are resolving to the same company record.
+
+This gives you clusters of matching domains from your list, even if it does not enumerate every possible domain that maps to a given company.
+
+**Tip:** When you have a company's LinkedIn URL available, use it as the identifier instead of a domain. LinkedIn URLs map directly to the intended company profile and skip the domain resolution step — which can occasionally surface the wrong entity, especially for large companies with many subsidiary or regional domains.
+
 ### Getting "Invalid input: Invalid person identifier" from Enrich person
 
 If cells in your **Enrich person** column show this error, the value in the **Professional URL** field cannot be parsed as a valid LinkedIn profile URL, Sales Navigator URL, or LinkedIn user ID.
