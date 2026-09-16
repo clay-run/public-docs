@@ -1186,39 +1186,6 @@ The Audiences record limit applies to the total number of unique records stored 
 
 To connect a CRM or data warehouse as an Audiences source, upgrade to the Growth plan or above.
 
-### How do I remove records from an audience?
-
-To remove records from your Audience, you archive them. Archiving moves a record to the **Archived** section in the left sidebar — it is no longer visible in any active segment, including All People or All Companies. Archived records can be restored from the **Archived** section at any time.
-
-**Note:** Removing a data source from your import settings (for example, disconnecting HubSpot from your Sources) does not remove the contacts or companies already imported — records persist in Audiences even after their source is removed. To remove those records, archive them manually using one of the methods below.
-
-**To archive a single record:**
-
-1.  Open any record in your Audiences view by clicking on it.
-2.  In the record detail panel, click the **⋮** (three-dot) menu in the top right.
-3.  Select **Archive record**.
-4.  Confirm the action. The record is immediately moved to the Archived section and removed from all active segments.
-
-**To archive multiple records using row selection:**
-
-1.  In your Audiences view, select the rows you want to archive by clicking the checkboxes to the left of each row.
-2.  With rows selected, a toolbar appears at the bottom of the screen.
-3.  Click **Archive** in the toolbar.
-4.  Confirm the action. All selected records are moved to the Archived section.
-
-**To bulk-archive all records from a specific source (recommended for large-scale cleanup):**
-
-The fastest way to archive many records at once — for example, to remove all contacts imported from a HubSpot account you have disconnected — is to create a segment filtered by that source, then archive all records in the segment at once:
-
-1.  In **People** or **Companies**, click **+ Filter** and add a filter on **Origin source**. Select the source you want to clear (for example, `HubSpot Contact - [your account name]`).
-2.  Click **Create segment** to save this as a named segment. The **Archive records** option only appears on saved segments — it is not available while the filter is in unsaved (draft) state.
-3.  In the left sidebar, click the **⋮** (three-dot) menu next to the segment's name.
-4.  Select **Archive records** and confirm. All records currently in the segment are moved to the Archived section and removed from all active segments.
-
-**Note:** **Delete list** in the same segment menu removes the segment from the sidebar but does not archive the records. Use **Archive records** when you want to remove the contact or company records themselves.
-
-**Note:** Archived records can be restored from the **Archived** section in the left sidebar. If a previously archived record enters Audiences again from a source (for example, if the underlying Salesforce record is modified and re-synced), it will appear as a new record without the archived record's enrichment data.
-
 ### How do I archive records that no longer match my Snowflake import query?
 
 When you update your Snowflake SQL query to exclude records — for example, removing rows below a revenue threshold — those records are marked **Deleted in source** in your Audience on the next full sync (within 7 days). They are not automatically archived; they remain in All People or All Companies with a **Deleted in source** status.
