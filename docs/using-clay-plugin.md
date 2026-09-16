@@ -127,14 +127,14 @@ These aren't specific to any one play. They're the habits that make agent-driven
 
 **More use cases from the Clay team:**
 
--   [Spencer's event lead scanner](https://www.linkedin.com/posts/chemtob_clay-is-now-in-claude-code-codex-wherever-ugcPost-7505645270328721408-Rfw-) — scan a contact at an event, then enrich, qualify, and route them so reps can book a meeting on the spot.
--   [Luca's shared prospecting workflow](https://www.linkedin.com/feed/update/urn:li:activity:7505640486057955328) — turns one rep's process into a team-wide one that finds contacts, verifies emails, and drafts outreach.
--   [Chris's post-event follow-up](https://www.linkedin.com/posts/chrisviglietta_the-clay-api-is-here-and-its-even-more-powerful-ugcPost-7505641661927010304-MbmA) — turns event leads into personalized Sequencer emails.
--   [Alex's leadership org chart](https://www.linkedin.com/posts/alexlindahl_old-clay-we-automated-pre-call-research-ugcPost-7505808319471747072-Tibt) — pulls contacts, researches a company's executive team, and builds a full org chart of its leadership.
--   [Rana's bug bot](https://www.linkedin.com/posts/rana-banankhah_debugging-workflows-used-to-mean-checking-ugcPost-7505634447120175104-kee5) — investigates failing workflow runs, proposes fixes, and applies them through the CLI after human approval.
--   [Andrew's signals-to-pipeline workflow](https://www.linkedin.com/posts/andrewkylemorris_being-a-good-builder-is-becoming-a-commodity-ugcPost-7505652158143475713-tcR3) — turns product signals into enterprise pipeline.
--   [Mopi's account research workflow](https://www.linkedin.com/posts/vaibhavmopidevi_every-rep-needs-to-know-why-this-account-ugcPost-7505639785525354496-RNlF) — researches a company's business, hiring, tech stack, and recent signals to recommend a use case and an outreach angle.
--   [Bhaumik's engagement dashboard](https://www.linkedin.com/posts/bhaumik27_before-i-joined-clay-it-felt-like-everyone-ugcPost-7505645437174009856-n6UJ) — connects engagement on employees' posts to target account tiers, showing which posts reach the right customers.
+-   Spencer's event lead scanner — scan a contact at an event, then enrich, qualify, and route them so reps can book a meeting on the spot.
+-   Luca's shared prospecting workflow — turns one rep's process into a team-wide one that finds contacts, verifies emails, and drafts outreach.
+-   Chris's post-event follow-up — turns event leads into personalized Sequencer emails.
+-   Alex's leadership org chart — pulls contacts, researches a company's executive team, and builds a full org chart of its leadership.
+-   Rana's bug bot — investigates failing workflow runs, proposes fixes, and applies them through the CLI after human approval.
+-   Andrew's signals-to-pipeline workflow — turns product signals into enterprise pipeline.
+-   Mopi's account research workflow — researches a company's business, hiring, tech stack, and recent signals to recommend a use case and an outreach angle.
+-   Bhaumik's engagement dashboard — connects engagement on employees' posts to target account tiers, showing which posts reach the right customers.
 
 ## FAQs
 
