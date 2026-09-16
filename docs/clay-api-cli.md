@@ -1,6 +1,6 @@
 ---
 title: Clay Plugin (API & CLI)
-description: Install and use the Clay Agent Plugin to run searches, call enrichment functions, and build Workflows programmatically from coding agents, terminals, and backend systems via the CLI and Public API.
+description: Install and use the Clay Plugin to run searches, call enrichment functions, and build Workflows programmatically from coding agents, terminals, and backend systems via the CLI and Public API.
 last_synced: 2026-09-16T20:19:59.955Z
 ---
 
