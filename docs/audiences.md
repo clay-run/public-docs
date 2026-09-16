@@ -18,3 +18,5 @@ Setting up Audiences is four major steps:
 2.  **Create audiences** — build dynamic segments using filters to target the right contacts and accounts.
 3.  **Enrich and monitor** — run bulk enrichments and signals that write data permanently back to each record.
 4.  **Write back to your CRM** — sync enriched data and segment membership back to Salesforce.
+
+## Roles and permissions
