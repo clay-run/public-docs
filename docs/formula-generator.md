@@ -195,7 +195,7 @@ This returns a string representing the cell's current state. Possible values inc
 A few important notes:
 
 -   **The formula preview sidebar will show nothing** — this is expected. `Clay.*` functions are evaluated on the backend and cannot run in the preview. Save the column and the values will populate.
--   **Only works for enrichment (action) columns.** The function reads the cell's stored status; it returns `"UNKNOWN"` for formula columns or cells that have never been processed. Cells that were skipped due to a run condition return `"ERROR_RUN_CONDITION_NOT_MET"`, not `"UNKNOWN"`.
+-   **Only works for enrichment (action) columns.** The function reads the cell's stored status; it returns `"UNKNOWN"` for formula columns or cells that have never been processed. Cells that were skipped due to a run condition return `"ERROR_RUN_CONDITION_NOT_MET\"`, not `"UNKNOWN"`.
 -   The function reflects the cell's **current** status — including in-progress states. A cell actively retrying returns `"RETRY"`, a cell waiting to execute returns `"QUEUED"`.
 
 ### **Why does my regex formula work in the preview but fail when the table runs?**
@@ -216,6 +216,10 @@ Always verify regex formulas by saving the column and checking actual table resu
 The most common cause is writing `/Column Name` in the formula code instead of `{{Column Name}}`. In the formula generator prompt, typing `/` opens a column picker that *inserts* a `{{Column Name}}` token — but typing `/Column Name` literally into the JavaScript expression does not create a column reference. Clay cannot resolve it and the formula errors on every row.
 
 To fix it: expand the **Formula** section below the prompt, find any `/Column Name` patterns in the JavaScript code, and replace them with `{{Column Name}}`. For example, replace `/SFDC Company Name` with `{{SFDC Company Name}}`.
+
+**A related cause** is describing the formula with a column's name as plain text — for example, writing *"clean the company name field"* — instead of inserting the column via the `/` picker. When the AI generates a formula from a description that references a column only by plain text rather than a column chip, it may produce code with incorrect column references, causing every row to error.
+
+To fix it: in the description field, delete any plain-text column mention, type `/`, select the column from the picker to insert it as a chip, then click **Regenerate**. This gives the AI the exact column reference it needs and is more reliable than editing the formula code directly.
 
 ### **Why does my formula return 0 when combining values from other formula columns?**
 
