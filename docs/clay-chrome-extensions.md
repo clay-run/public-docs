@@ -15,6 +15,8 @@ Clay offers two powerful Chrome extensions that help you gather and organize inf
 
 Both tools integrate seamlessly with your Clay workspace, making it easier to collect, organize, and act on web data.
 
+The Chrome extensions are optional. Clay's core features — enrichments, AI tools, workflows, and table management — run entirely on Clay's cloud servers without them. Your enrichments and automated workflows continue running even after you close your browser or turn off your computer. Install the extensions when you want to capture data from webpages while you browse and add it directly to a Clay table.
+
 ## Clay for Chrome
 
 The Clay for Chrome extension allows you to extract structured data from webpages. You can capture data from a single page, lists across multiple pages, or even custom-defined structures. Once extracted, the data can be added directly to your Clay table, downloaded as a CSV, or copied to your clipboard.
