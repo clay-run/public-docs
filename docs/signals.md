@@ -258,6 +258,35 @@ If you had a brand mentions signal set up before the deprecation, it will show a
 -   **Google News alerts** — Integrate through Clay to track brand mentions across news and web content.
 -   **Third-party social listening tools** — Many social listening platforms can connect to Clay through API integrations, letting you route mention data into your Clay tables.
 
+### Can I use the Monitor Professional Posts signal to discover net-new contacts not already in my CRM?
+
+Yes. Unlike job change, new hire, promotion, and news signals — which check people or companies **already in your data source** — the **Monitor Professional Posts** signal discovers posts by content criteria, not by iterating over a known contact list. Every matching post can surface a contact or company you have never tracked before.
+
+You configure the signal around content, not a contact list:
+
+-   **Keywords** — posts containing a specific word or hashtag (e.g., `AI` or `#outbound`). One keyword per signal; create separate signals to track multiple topics.
+-   **Company mentions** — posts that mention a specific company. Set the Companies filter to **Mentions companies** and provide the company domain or profile URL.
+-   **Company employees' posts** — posts written by people who currently work at specific companies. Set the Companies filter to **Posted by companies' employees** and provide up to 5 company domains or profile URLs.
+-   **Individual people** — posts written by or mentioning up to 5 specific profile URLs.
+
+When the signal runs, it writes matching posts as new rows in your table — including the post URL, text, author name, author profile URL, and publication date.
+
+**Finding people who engaged with those posts:** Once posts are in your table, add these enrichments on the post URL column:
+
+-   **Get reactions on a professional post** — returns people who reacted to the post
+-   **Get comments on a professional post** — returns people who commented on the post
+
+A common net-new discovery workflow:
+
+1.  **Monitor Professional Posts** — find posts mentioning your company, a competitor, or a relevant keyword
+2.  **Get reactions / Get comments** — identify people actively engaging with that content
+3.  **Enrich person** — look up each person's role, company, and contact information
+4.  **Use AI** — score ICP fit and relevance of the post
+5.  **Lookup in CRM** — check whether the person already exists in Salesforce or HubSpot
+6.  **Route** — send qualified net-new contacts to the appropriate rep or outreach sequence
+
+**Limitation:** The signal monitors only **public** LinkedIn activity — posts, reactions, and comments. The time frame filter covers the last 24 hours or the last week; there is no custom date range option. Profile views, private messages, and Sales Navigator notifications are not accessible.
+
 ### How do I configure the Monitor Professional Posts signal?
 
 The **Monitor Professional Posts** signal discovers professional posts matching your criteria and adds new results to your table on a recurring schedule. It is a custom signal available under **Tools → Monitor for... → Professional Posts**.
