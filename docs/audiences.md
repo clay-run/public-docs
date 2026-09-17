@@ -1207,22 +1207,60 @@ Before importing the corrected file, remove the incorrect records from your Audi
 
 The corrected records are imported fresh without duplicating the old ones.
 
-### Why am I approaching or hitting my Audiences record limit?
+**Note:** If your Audience record count appears higher than expected after importing a corrected CSV — even after archiving — it may mean some records from the original import were merged with records from another source (for example, Salesforce) during entity resolution. Archived records that matched a non-CSV source may still appear in your Audience under that source. In this case, contact Clay support to assist with cleanup.
 
-Clay Audiences enforces a record limit based on your plan: **250,000 records** for Growth plans, and **25,000,000 records** for Enterprise plans.
+### How does the Audiences record limit work? What counts toward it?
+
+The Audiences record limit is a **per-workspace cap** on the total number of unique records stored in your Audience, regardless of which source they came from. Growth plans cap at 250,000 records; Enterprise plans cap at 25,000,000.
+
+Records that count toward the limit:
+
+-   All records in **All People** (contacts and leads from any source)
+-   All records in **All Companies** (accounts from any source)
+
+Records that do **not** count:
+
+-   Archived records (moved to the Archived section; not counted toward the limit while archived)
+-   Segment memberships (a record in 10 different segments still counts as one record)
 
 If your workspace reaches the limit, Clay will stop importing new records from your connected sources until the count drops below the cap. To free up space: archive records you no longer need (see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above), or upgrade your plan.
 
-### Can I use Audiences with Salesforce campaigns?
+Growth plans have a hard cap — there is no add-on to increase the limit without upgrading to Enterprise.
 
-Yes. Clay can write segment membership to a Salesforce Campaign Member status field using the export sync. Map the field that indicates campaign membership (for example, a boolean or string status field on the Contact) to the corresponding Salesforce Campaign Member status, and enable the **Always write** rule for that field. Clay pushes updates on the 24-hour export schedule.
+### Can I add a "notes" or "memo" field to an Audience record?
 
-1.  Create a custom Audience field — for example, `Campaign Status` — and set its value via a bulk enrichment or Upsert Audiences Record.
-2.  In your Salesforce source settings → field mapping, add a row mapping that custom field to the corresponding Salesforce Campaign Member field.
-3.  Set the write rule to **Always write**.
-4.  Enable Export sync and confirm.
+Yes — you can create a custom text field in Audiences and update it from a Clay table using `Update Audiences Record` or `Upsert Audiences Record`. There is no built-in "notes" column, but a custom field works the same way.
 
-Campaign membership changes in Clay Audiences flow to Salesforce on the next 24-hour export cycle.
+**To set this up:**
+
+1.  Create a custom Audience text field — see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) above.
+2.  In your Clay table, add an `Update Audiences Record` or `Upsert Audiences Record` column.
+3.  Map the text column in your table to the custom notes field in Audiences.
+4.  Run the column — the value writes permanently to the Audience record.
+
+You can then filter segments on this field, export it to Salesforce, or use it as input for enrichments.
+
+### Why does my Databricks import fail with a schema or permission error?
+
+Databricks imports in Audiences use the Unity Catalog. Two common causes of failure:
+
+**1. The service principal lacks SELECT on the target table.**
+
+In Databricks, grant the service principal read access to the catalog, schema, and table you're importing:
+
+```sql
+GRANT USE CATALOG ON CATALOG <catalog_name> TO `<service-principal-id>`;
+GRANT USE SCHEMA ON SCHEMA <catalog_name>.<schema_name> TO `<service-principal-id>`;
+GRANT SELECT ON TABLE <catalog_name>.<schema_name>.<table_name> TO `<service-principal-id>`;
+```
+
+Replace `<service-principal-id>` with the application ID of the service principal connected to Clay.
+
+**2. The table is not registered in Unity Catalog.**
+
+Audiences can only import from tables registered in Unity Catalog — it cannot query tables or views defined in the legacy Hive metastore. To migrate a legacy table, use `CREATE TABLE ... AS SELECT` in Unity Catalog to register a copy, or move the underlying data to a Unity Catalog volume.
+
+If neither of these applies and the import still fails, contact Clay support with the error message shown in the import setup.
 
 ### How do I archive records that no longer match my Snowflake import query?
 
