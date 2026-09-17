@@ -1,6 +1,6 @@
 ---
 title: Managing team members
-description: Understand Clay's Admin, Editor, and Viewer roles and learn how to invite, update, and remove team members in your workspace.
+description: Understand Clay's Admin, Editor, Viewer, and Sales Rep roles and learn how to invite, update, and remove team members in your workspace.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -10,7 +10,7 @@ Use this article to understand Clay's user roles and permissions and to invite t
 
 ## Roles and permissions
 
-Clay offers three user roles with different permission levels to help manage your workspace effectively.
+Clay offers several user roles with different permission levels to help manage your workspace effectively.
 
 ### Admin
 
@@ -48,6 +48,18 @@ Clay offers three user roles with different permission levels to help manage you
 
 **Note:** The Viewer role is available on the Enterprise plan only.
 
+### Sales Rep _(Beta)_
+
+**Sales Reps** are workspace members who access Clay exclusively through connected AI tools (Claude, ChatGPT, or Microsoft Copilot) via the Clay MCP integration, and/or who manage their email accounts for the Clay Sequencer.
+
+**Note:** The Sales Rep role is currently in beta — contact support to request access for your workspace.
+
+When a Sales Rep logs in, they land on a dedicated setup page — not the standard Clay dashboard. They have no access to tables, workbooks, or other workspace resources.
+
+**If a team member says they're stuck on a setup page after login** instead of their regular workspace, their role is likely Sales Rep. To restore full workspace access, a workspace admin should go to `Settings` → `Team`, find their name, and change their role to **Editor** or **Admin**.
+
+For the full breakdown of Sales Rep capabilities and permissions, see [Roles and permissions](https://university.clay.com/docs/roles-and-permissions#sales-rep).
+
 ## Add a team member to your workspace
 
 Workspace access in Clay is invitation-only. When a new user signs up for Clay, they are automatically placed in their own workspace — they will not join yours unless you explicitly invite them. Your workspace remains private to you until you send an invite.
@@ -61,7 +73,7 @@ To invite a new member to your workspace:
 -   Go to `Settings` > `Team`.
 -   Click the `+ Invite` button in the top-right corner.
 -   Enter the email address of the person you want to invite, then press **Enter** (or type a comma) to confirm it. You can add multiple addresses this way.
--   Select the appropriate role (Editor or Admin) from the dropdown.
+-   Select the appropriate role from the dropdown. For standard workspace access, choose **Editor** or **Admin**. To invite someone who will only use Clay through Claude, ChatGPT, or Microsoft Copilot (MCP integration), choose **Sales Rep** _(Beta)_.
 -   Click `Send invite`.
 
 The invited person will receive an email to join the workspace with the specified role. The person will appear in your team list with a **Pending** status until they accept.
