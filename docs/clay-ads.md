@@ -2,7 +2,7 @@
 title: Clay Ads
 description: Build and sync contact and account lists to LinkedIn, Meta, Google Ads, Bing
   Ads, Reddit Ads, and Vibe.co for precise ad targeting.
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-09-17T20:19:29.621Z
 ---
 
 # Clay Ads
@@ -247,7 +247,7 @@ Your actual ad reach is based on the audience size (unique contacts), not the ma
 
 ### **Why does my ad audience show "too small for use in campaigns"?**
 
-Ad platforms report an audience as "too small" when fewer than 300 contacts matched. The most common cause is that no email column was mapped in the field mapping — ad platforms match contacts by email, so without it the platform processes all sent records but matches 0.
+Each ad platform enforces its own minimum matched-contact threshold. The professional network requires 300 matched members; Meta requires 1,000 matched contacts. The most common cause is that no email column was mapped in the field mapping — ad platforms match contacts by email, so without it the platform processes all sent records but matches 0.
 
 A second factor: if Enhanced Matching is enabled, it uses a professional profile URL or Work Email column you designate to look up personal emails before syncing. If those input columns are not configured, Enhanced Matching cannot improve your match rate.
 
