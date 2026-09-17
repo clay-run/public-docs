@@ -395,14 +395,39 @@ Yes — currently in beta. Clay's public API lets you invoke a function against 
 
 **Finding your function's Routine ID:**
 
-Each function has a unique **Routine ID** (format: `function:...`) that identifies it in API calls. The Routine ID appears in the **Integrations** section of the function's settings panel — but this section is only visible when you are **not** in edit mode.
+Each function has a unique **Routine ID** (format: `function:t_...`) that identifies it in API calls. The Routine ID appears in the **Integrations** section of the function's settings panel — but this section is only visible when you are **not** in edit mode.
 
-To find your Routine ID:
+To enable API access and find your Routine ID:
 
 1.  Go to **Functions** on your Clay homepage and open the function.
 2.  If you see an "Editing function" toolbar or an orange banner reading "Changes in Edit Mode will not go live until you review and publish," click **Exit edit mode** at the bottom of the editor.
 3.  In the settings panel on the right, scroll to the **Integrations** section.
-4.  Copy the **Routine ID** — it has the format `function:...`. Use this value when calling the API, for example: `POST /routines/<Routine ID>/run`.
+4.  Check **API & CLI** — this exposes the function through the Clay public API and CLI. Without this enabled, API calls to the function return a 403.
+5.  Copy the **Routine ID** — it has the format `function:t_...`. Use this as `{routine_id}` in API calls.
+
+**Calling the function via API:**
+
+Once you have your Routine ID and a workspace-scoped API key (see [Does Clay have an API?](https://university.clay.com/docs/using-clay-as-an-api)), send a POST request:
+
+`POST https://api.clay.com/public/v0/routines/{routine_id}/run`
+
+Set the header `clay-api-key: YOUR_API_KEY`. The request body is a JSON object with an `items` array — each item has an `id` (any string you assign, for tracking) and an `inputs` object whose keys match the function's declared input names:
+
+```json
+{
+  "items": [
+    {
+      "id": "person-1",
+      "inputs": {
+        "full_name": "Ada Lovelace",
+        "domain": "example.com"
+      }
+    }
+  ]
+}
+```
+
+Clay returns a run ID immediately — poll `GET /routines/run/{run_id}/results` to retrieve results. For the full API reference, see [developers.clay.com/routines/api](https://developers.clay.com/routines/api).
 
 **Rate limits and batch sizes:**
 
