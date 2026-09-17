@@ -265,6 +265,12 @@ You can view your credit spend for signals underneath the `Signals` tab of the [
 
 Clay's visitor tracking identifies unique accounts visiting your website, not individuals. Once an account is identified, you can use enrichments (like **Find People** and the Work Email Waterfall) to find specific people at those companies and get their email addresses. To send emails to those contacts, see [Sending emails to identified website visitors](#sending-emails-to-identified-website-visitors) above.
 
+### Why do I see multiple overlapping sessions from the same company?
+
+This is expected behavior, not a data error. Claydar tracks each visitor's session in their browser's `localStorage`, scoped to that specific browser. When two or more people at the same company browse your site simultaneously, each browser generates its own session with a distinct `sessionId` — resulting in multiple rows for the same company `domain` with overlapping timestamps.
+
+Clay identifies visitors at the **company level only**. The `sessionId` in each row is unique to that browser session, but the payload does not include a persistent device fingerprint or stable individual-level identifier. You can confirm that multiple concurrent sessions exist from the same company by comparing `startTime` values for rows with the same `domain`, but you cannot determine from the session data alone which specific person at the company generated each session.
+
 ### How do I send emails to my website visitors?
 
 Because Clay's visitor tracking identifies companies, not specific individuals, reaching out requires a few additional steps:
