@@ -29,7 +29,7 @@ From the `Campaigns` homepage, go to the `Email Accounts` tab and click `Add Ema
 
 ![](https://cdn.prod.website-files.com/687e604972375496b891fe58/69c6b5ea48b4f4c966867201_Buying%20Email%20Accounts%20in%20Clay%20\(1\).png)
 
-**Note:** After confirming your purchase, your order appears in the `Account orders` tab (`Campaigns → Account orders`) with a **Pending fulfillment** status — this is expected and means the order is being processed. Email accounts typically arrive within a few hours but may take up to 72 hours to be provisioned. Once they appear in your `Email Accounts` tab, warmup is automatically enabled — allow 2–3 weeks for the warmup process to complete before using the accounts in campaigns.
+**Note:** After confirming your purchase, your order appears in the `Account orders` tab (`Campaigns → Account orders`) with a **Pending fulfillment** status — this is expected and means the order is being processed. Email accounts typically arrive within a few hours but may take up to 72 hours to be provisioned. Once they appear in your `Email Accounts` tab, warmup is automatically enabled — allow 3 weeks for the warmup process to complete before using the accounts in campaigns.
 
 ## **FAQs**
 
@@ -55,7 +55,7 @@ Credit costs are calculated using your workspace's cost-per-credit (CPC) against
 
 ### **Are purchased domains pre-warmed?**
 
-No. Purchased accounts are not pre-warmed when they arrive. Warmup is automatically enabled during provisioning, but the warmup process takes approximately 2–3 weeks to complete — plan to wait before using purchased accounts in campaigns.
+No. Purchased accounts are not pre-warmed when they arrive. Warmup is automatically enabled during provisioning, but the warmup process takes approximately 3 weeks to complete — plan to wait before using purchased accounts in campaigns.
 
 ### **What does Clay manage for purchased email accounts?**
 
