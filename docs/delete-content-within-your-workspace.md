@@ -72,3 +72,23 @@ Note: rows cannot be restored if doing so would put your table over the 50,000-r
 ## Cell data cannot be recovered
 
 Recovery only applies to deleted rows — **individual cell data cannot be recovered**, by you or by Clay support. If a cell's value is cleared or overwritten (for example, by clearing a cell, editing its contents, or re-running an enrichment that returns a different result), the previous value is gone. [Table versions](table-versions.md) do not help here either: they capture your table's structure and configuration, not cell data.
+
+## Request deletion of records for data privacy compliance
+
+If your end-customers request that their data be deleted — for example, under GDPR or CCPA — and that data has been processed in Clay (imported from a source, enriched, or stored in a table or audience), you need to submit a formal deletion request to Clay's Privacy team.
+
+**Important:** Disabling a source sync prevents future records from being imported but does not remove data that has already been imported into Clay. To have existing records removed, you must submit a deletion request.
+
+**Before submitting, gather the following:**
+
+-   Your Clay workspace URL or ID
+-   The specific records to be deleted, including identifiers such as email addresses, external IDs, or profile URLs
+-   The relevant Clay table, audience, or data source
+-   Whether you are requesting deletion of specific records, an entire source import, or the full workspace
+-   Confirmation that the records have also been deleted or suppressed in the original source system, so they are not re-imported
+
+**How to submit:**
+
+Email **privacy@clay.com** or contact your Clay Growth Strategist. Clay's Privacy team will review the request, determine the appropriate deletion scope, and coordinate any required deletion actions in Clay or with relevant third-party providers.
+
+Requests are generally processed within 30 days. If additional information is needed, the Privacy team will follow up.
