@@ -1284,7 +1284,7 @@ Add a **Lookup multiple rows in other table** column. Configure it to search the
 
 Each row now returns a list of all companies in the table that share its normalized domain — including itself. Add a **Formula** column named `Has duplicates` with the expression `numberOfResults > 1`. Rows where this is `true` belong to groups with at least one duplicate.
 
-**Note:** Self-lookups can return inaccurate counts when many rows evaluate concurrently. After the full run finishes, select the lookup column and click **Run column** again to get accurate counts. See [Lookup Rows](lookup-rows.md) for details on self-lookups.
+**Note:** Self-lookups may return inaccurate counts when many rows evaluate concurrently. After the full run finishes, select the lookup column and click **Run column** again to get accurate counts. See [Lookup Rows](lookup-rows.md) for details on self-lookups.
 
 #### Step 4 — Identify the primary record per domain (AI — optional)
 
