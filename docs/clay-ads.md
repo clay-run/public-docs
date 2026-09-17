@@ -247,7 +247,7 @@ Your actual ad reach is based on the audience size (unique contacts), not the ma
 
 ### **Why does my ad audience show "too small for use in campaigns"?**
 
-Each ad platform enforces its own minimum matched-contact threshold. The professional network requires 300 matched members; Meta requires 1,000 matched contacts. The most common cause is that no email column was mapped in the field mapping — ad platforms match contacts by email, so without it the platform processes all sent records but matches 0.
+Ad platforms enforce a minimum number of matched members before an audience can serve. LinkedIn requires at least 300 matched members; Meta requires at least 1,000 matched contacts. The most common cause of falling below these thresholds is that no email column was mapped in the field mapping — ad platforms match contacts by email, so without it the platform processes all sent records but matches 0.
 
 A second factor: if Enhanced Matching is enabled, it uses a professional profile URL or Work Email column you designate to look up personal emails before syncing. If those input columns are not configured, Enhanced Matching cannot improve your match rate.
 
