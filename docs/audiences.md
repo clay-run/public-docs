@@ -406,6 +406,8 @@ The search is scoped to the exact companies in the segment at run time. In the f
 
 **Note:** **Find people from this list** is available only on Companies Audience segments — it does not appear on People Audience segments.
 
+**Note:** **Find people from this list** does not appear in the **Enrich segment** workflow panel and cannot be added as an enrichment column. If you searched for it in the Enrich panel, that is expected — use the ⋮ menu on the Companies Audience segment as described above.
+
 **Note:** You can also run a standalone **Find People** search from any workbook and set **Target companies** to a Companies Audience segment — the segment appears alongside Clay tables in the company picker, and the search is free. Both paths open the same Find People wizard; in the final step, click **Send to Audiences** to add contacts to your People Audience, or **Import to Table** to create a new Clay table. The main difference is that **Find people from this list** pre-scopes the search to the companies in the current segment, while standalone Find People requires you to set the Target companies filter yourself. **Note:** The option to use a Companies Audience segment as the Target companies filter in standalone Find People requires Audiences to be enabled on your workspace (available on Launch, Growth, and Enterprise plans).
 
 ## Enriching and monitoring
