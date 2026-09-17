@@ -135,6 +135,10 @@ Yes. Credits are drawn directly from your Clay workspace credit balance — ther
 
 Credit pricing matches standard Clay plans. Claude serves as an alternative interface for using your Clay credits — usage draws from the same balance as the Clay platform.
 
+**Where can I track how many credits I've used through Clay in Claude?**
+
+Go to `Settings → Credit Usage → MCP tab`. Your usage appears there, broken down by user — expand your row to see which Clay functions you ran and how many credits each consumed.
+
 **Do I need to invoke Clay manually, or will Claude know to use it?**
 
 Claude will automatically activate Clay based on context when you ask about finding people, researching accounts, or enriching contacts. You don't need to explicitly mention Clay in your prompt—just describe what you need.
