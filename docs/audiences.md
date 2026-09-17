@@ -314,14 +314,14 @@ Records need a high-confidence identifier to match. Auto-enrichment adds `Linked
 
 When importing from Salesforce, HubSpot, Snowflake, or other connected sources, you can configure **Import record matching** to deduplicate records at ingestion time. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
 
-Import record matching is primarily useful for **cross-source scenarios** — when the same person or company exists in two or more connected sources and you want Clay to merge them into a single record. If you are importing from only one source, Entity Resolution (described above) handles deduplication automatically based on shared identifiers like LinkedIn URL and email.
+Import record matching is primarily useful for **cross-source scenarios** — when the same person or company exists in two or more connected sources and you want Clay to merge them into a single record. If you are importing from only one source, Entity Resolution (described above) handles deduplication automatically based on shared identifiers like professional network URL and email.
 
 **Example:** If you're importing contacts from both HubSpot and Snowflake, setting `Email` as your alias field ensures that a single People record in your Audiences reflects data from both sources — rather than creating two separate records for the same person.
 
 To configure:
 
 1. In your import settings, find `Import record matching` and click `Edit`.
-2. Under `When`, choose an **alias field** — the identifier Clay uses to match records across sources. Options include **Email**, **LinkedIn URL**, **Phone number**, and **External record ID** for People; **Domain**, **LinkedIn URL**, and **External record ID** for Companies (among others). The **External record ID** option matches on each source's native record identifier — after selecting it, you map it to the specific field per source (for example, for HubSpot contacts this is the Contact ID field, which is HubSpot's `hs_object_id` property).
+2. Under `When`, choose an **alias field** — the identifier Clay uses to match records across sources. Options include **Email**, **Phone number**, **professional network URL**, and **External record ID** for People; **Domain**, **professional network URL**, and **External record ID** for Companies (among others). The **External record ID** option matches on each source's native record identifier — after selecting it, you map it to the specific field per source (for example, for HubSpot contacts this is the Contact ID field, which is HubSpot's `hs_object_id` property).
 3. Under `In`, map the alias field to the corresponding field in each connected source.
 4. When a new record arrives, Audiences checks whether the alias value already exists. If it does, the new data is merged with the existing record instead of creating a duplicate.
 
@@ -1106,16 +1106,63 @@ When you filter a Companies audience by **Stage** under the Deals filter group, 
 **To find the internal stage ID for any deal stage:**
 
 1.  In HubSpot, go to **Settings → Objects → Deals → Pipelines**.
-2.  Click **Edit** on the pipeline containing the stage you want.
-3.  Hover over the stage name — the internal stage ID appears in the URL or as a tooltip, depending on your HubSpot version. Alternatively, export your pipeline stages via HubSpot's **Properties** API (`GET /crm/v3/properties/deals`) and look up the `dealstage` property options — each option's `value` field is the internal ID.
+2.  Select the pipeline that contains the stage you want to filter by.
+3.  Hover over the stage name — HubSpot displays the internal stage ID.
+4.  Copy that value and paste it into the Clay **Stage** filter (for example, use the `contains` operator and enter the internal ID).
 
-Use that internal ID as the exact filter value in Clay. For example, to filter on "Closed Won" in the default HubSpot pipeline, enter `closedwon`.
+**Note:** This limitation applies only to the deal Stage filter in Audiences. In Clay table enrichment columns, deal lookup and retrieval actions return both the internal stage ID and the readable display label as separate fields — so you can see the label there and use it to look up the matching internal ID.
 
-### Can the Audiences export sync write data back to Salesforce Lead records?
+### Why does Clay MCP show activity data for a contact when the Audiences Activity tab shows no activity?
 
-No. The Audiences export sync — including field-level write rules and the **Export sync** toggle — applies only to **Contact** and **Account** objects. Lead records imported into Audiences are import-only and do not support the automated outbound sync. Any field-level export rule you configure for Leads will not be applied.
+When a Salesforce lead is converted to a contact, Audiences merges both records into a single People entry using the lead's `ConvertedContactId`. The underlying activity data from the lead record — including activity counts and last-activity dates — is stored in Audiences and is accessible via Clay MCP, including the `ask-question-about-accounts` tool, which queries your Audiences data at the backend level.
 
-To write enriched data from Audiences back to Salesforce Lead records, use a **Salesforce Update Record** action column directly in a bulk enrichment table — see [How do I write enriched fields back to existing Salesforce records from a bulk enrichment?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-bulk-enrichment) above. Map the Lead's Salesforce record ID and the fields you want to update, then run the column. This bypasses the export sync and writes directly via the Salesforce API.
+However, the current Audiences UI contact view does not yet display a full union of all data from the converted lead. This means activity counts and last-activity dates that originated from the lead record may not appear in the contact's Activity tab even though the data exists in Audiences and is retrievable via MCP.
+
+**Note:** This discrepancy is a known limitation in the current Audiences UI. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. A future update will show the full union of contact and converted lead data in the UI.
+
+### How does filtering work in Lookup in Audiences when I select multiple fields?
+
+When you select multiple fields in **Fields to filter by**, the lookup uses **AND logic** — a record must match on **all** selected fields to be returned. There is no option to switch to OR logic.
+
+Two behaviors to keep in mind:
+
+-   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record must match both to be returned — a partial match on only one field returns nothing.
+-   **Empty fields count as non-matches.** If a field value in your Audience record is empty (null), it will not match any filter condition on that field — including equality checks. For example, filtering by `Profile URL = <value>` will not return records that have an empty Profile URL field, even if the Email matches.
+
+If you need to look up a record that may be missing one of your identifier fields, filter by the field most likely to be populated (typically `Email` or `Profile URL`), and use a single-field filter rather than combining multiple conditions.
+
+### How do I remove records from an audience?
+
+To remove records from your Audience, you archive them. Archiving moves a record to the **Archived** section in the left sidebar — it is no longer visible in any active segment, including All People or All Companies. Archived records can be restored from the **Archived** section at any time.
+
+**Note:** Removing a data source from your import settings (for example, disconnecting HubSpot from your Sources) does not remove the contacts or companies already imported — records persist in Audiences even after their source is removed. To remove those records, archive them manually using one of the methods below.
+
+**To archive a single record:**
+
+1.  Open any record in your Audiences view by clicking on it.
+2.  In the record detail panel, click the **⋮** (three-dot) menu in the top right.
+3.  Select **Archive record**.
+4.  Confirm the action. The record is immediately moved to the Archived section and removed from all active segments.
+
+**To archive multiple records using row selection:**
+
+1.  In your Audiences view, select the rows you want to archive by clicking the checkboxes to the left of each row.
+2.  With rows selected, a toolbar appears at the bottom of the screen.
+3.  Click **Archive** in the toolbar.
+4.  Confirm the action. All selected records are moved to the Archived section.
+
+**To bulk-archive all records from a specific source (recommended for large-scale cleanup):**
+
+The fastest way to archive many records at once — for example, to remove all contacts imported from a HubSpot account you have disconnected — is to create a segment filtered by that source, then archive all records in the segment at once:
+
+1.  In **People** or **Companies**, click **+ Filter** and add a filter on **Origin source**. Select the source you want to clear (for example, `HubSpot Contact - [your account name]`).
+2.  Click **Create segment** to save this as a named segment. The **Archive records** option only appears on saved segments — it is not available while the filter is in unsaved (draft) state.
+3.  In the left sidebar, click the **⋮** (three-dot) menu next to the segment's name.
+4.  Select **Archive records** and confirm. All records currently in the segment are moved to the Archived section and removed from all active segments.
+
+**Note:** **Delete list** in the same segment menu removes the segment from the sidebar but does not archive the records. Use **Archive records** when you want to remove the contact or company records themselves.
+
+**Note:** Archived records can be restored from the **Archived** section in the left sidebar. If a previously archived record enters Audiences again from a source (for example, if the underlying Salesforce record is modified and re-synced), it will appear as a new record without the archived record's enrichment data.
 
 ### How do I replace a CSV import with updated data?
 
