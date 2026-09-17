@@ -151,6 +151,17 @@ The MCP user credit limit is a rolling monthly limit. Credit spend automatically
 
 Further actions through ChatGPT, Claude, or Glean are hard-blocked until the monthly reset — the rep won't be able to run enrichments or invoke Functions. Admins can increase the per-user limit at any time from the `MCP users` table to restore access immediately.
 
+### Why does a rep's credit usage appear higher than the number of prompts they sent?
+
+Credits are charged per record enriched, not per MCP request or prompt. A rep who sends a small number of prompts can consume many more credits than the prompt count suggests, for two reasons:
+
+-   **One prompt can fan out into multiple requests.** The AI tool may split a single prompt into several underlying calls — for example, asking to enrich a batch of contacts at once can generate a separate request for each one. The number of prompts the rep sent does not equal the number of enrichment requests that ran.
+-   **Credits are charged per record, not per request.** A single request that covers multiple records charges credits for each record individually.
+
+For Functions that run a provider waterfall, the cost per record also varies: the waterfall stops as soon as a provider returns a result, so each record is charged only for the providers that ran before a match was found. Records that resolve with an earlier, lower-cost provider cost less; records that fall through to later, higher-cost providers cost more.
+
+To see exactly what a rep spent and on which Functions: go to `Settings → Credit Usage → MCP tab`, then expand the rep's row to see a per-Function credit breakdown.
+
 ### Where else can I see MCP credit usage?
 
 MCP usage appears in the main credit usage dashboard at `Settings → Credit Usage`, which tracks all credit consumption across your workspace broken down by table, integration, and time period.
