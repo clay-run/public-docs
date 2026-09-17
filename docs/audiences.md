@@ -184,7 +184,7 @@ Clay syncs data from HubSpot automatically on the following schedules:
 
 **Deleted records:** When a HubSpot record is deleted, Clay does not automatically remove it from Audiences. After the next full sync (within 7 days), the record remains in your Audience marked **Deleted in source** — it is not hard-deleted. You can filter on **Deleted in source** in any segment to exclude these records from your active audiences and enrichment workflows.
 
-**Merged records:** When HubSpot merges two companies (or contacts), the original record ID becomes invalid while the surviving record gets a new ID. Clay does not automatically remap the old HubSpot ID to the surviving record — rows still referencing the old ID may return “record not found” errors in enrichment or update actions. To prevent these errors, add a run condition to any HubSpot enrichment or update workflow that skips records where the sync status is **Deleted in source** or where the HubSpot record ID is blank.
+**Merged records:** When HubSpot merges two companies (or contacts), the original record ID becomes invalid while the surviving record gets a new ID. Clay does not automatically remap the old HubSpot ID to the surviving record — rows still referencing the old ID may return "record not found" errors in enrichment or update actions. To prevent these errors, add a run condition to any HubSpot enrichment or update workflow that skips records where the sync status is **Deleted in source** or where the HubSpot record ID is blank.
 
 To clean up records marked **Deleted in source**, see [How do I handle deleted or merged HubSpot records in Audiences?](#how-do-i-handle-deleted-or-merged-hubspot-records-in-audiences) in the FAQs below.
 
@@ -1002,7 +1002,7 @@ This gives you control over both which records enter Audiences and how their fie
 
 ### How do I handle deleted or merged HubSpot records in Audiences?
 
-When a HubSpot record is deleted or merged in HubSpot, Clay does not automatically remove the corresponding Audiences record. After the next full sync (within 7 days), the record is marked **Deleted in source** in your Audience — it persists in All People or All Companies until you archive it. Rows that still reference the old HubSpot ID — for example, enrichment or update actions pointing at a merged company — will return “record not found” errors because HubSpot no longer recognizes that ID.
+When a HubSpot record is deleted or merged in HubSpot, Clay does not automatically remove the corresponding Audiences record. After the next full sync (within 7 days), the record is marked **Deleted in source** in your Audience — it persists in All People or All Companies until you archive it. Rows that still reference the old HubSpot ID — for example, enrichment or update actions pointing at a merged company — will return "record not found" errors because HubSpot no longer recognizes that ID.
 
 **To reduce errors from deleted and merged records:**
 
@@ -1138,9 +1138,20 @@ When you filter a Companies audience by **Stage** under the Deals filter group, 
 
 When a Salesforce lead is converted to a contact, Audiences merges both records into a single People entry using the lead's `ConvertedContactId`. The underlying activity data from the lead record — including activity counts and last-activity dates — is stored in Audiences and is accessible via Clay MCP, including the `ask-question-about-accounts` tool, which queries your Audiences data at the backend level.
 
-The Audiences Activity tab, on the other hand, shows only activities explicitly surfaced in the UI — Salesforce Tasks and Events (if you have the activities toggle enabled on your Accounts import), Gong calls (if Gong is connected), and signal events (New Hire, Job Posting, etc.). It does not surface the internal activity metadata that Clay MCP can access.
+However, the current Audiences UI contact view does not yet display a full union of all data from the converted lead. This means activity counts and last-activity dates that originated from the lead record may not appear in the contact's Activity tab even though the data exists in Audiences and is retrievable via MCP.
 
-In short: Clay MCP has access to a broader set of stored audience activity data than the Audiences Activity tab displays. If a contact was originally a Lead, the lead's historical activity data is in the merged Audiences record and accessible via MCP even if it doesn't appear in the UI's Activity tab.
+**Note:** This discrepancy is a known limitation in the current Audiences UI. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. A future update will show the full union of contact and converted lead data in the UI.
+
+### How does filtering work in Lookup in Audiences when I select multiple fields?
+
+When you select multiple fields in **Fields to filter by**, the lookup uses **AND logic** — a record must match on **all** selected fields to be returned. There is no option to switch to OR logic.
+
+Two behaviors to keep in mind:
+
+-   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record must match both to be returned — a partial match on only one field returns nothing.
+-   **Empty fields count as non-matches.** If a field value in your Audience record is empty (null), it will not match any filter condition on that field — including equality checks. For example, filtering by `Profile URL = <value>` will not return records that have an empty Profile URL field, even if the Email matches.
+
+If you need to look up a record that may be missing one of your identifier fields, filter by the field most likely to be populated (typically `Email` or `Profile URL`), and use a single-field filter rather than combining multiple conditions.
 
 ### How do I remove records from an audience?
 
@@ -1186,15 +1197,15 @@ Before importing the corrected file, remove the incorrect records from your Audi
 1.  Go to **All People** or **All Companies** in your Audiences view.
 2.  Filter by the source of the old CSV import (use the **Person source** or **Company source** filter and select the original CSV import name).
 3.  Select all rows returned by the filter.
-4.  Click **Archive** in the bottom toolbar and confirm. All records from the old import are moved to the Archived section.
+4.  Click **Archive** in the toolbar that appears at the bottom.
+5.  Confirm. All records from the old CSV are removed from your Audience.
 
-**2. Import the corrected file:**
+**2. Import the corrected CSV:**
 
 1.  Click `Add data` → `Add Source` → select **CSV**.
-2.  Upload the corrected CSV file and complete the import wizard as usual — name the import, set the unique identifier, and map your columns.
-3.  Click **Import**. Clay treats this as a new import and adds the corrected records to your Audience.
+2.  Upload the corrected file and complete the import steps as usual.
 
-The archived records from the old import will not be overwritten or re-activated by the new import — they remain in the Archived section. If any corrected records share the same unique identifier as archived records, they appear as new active records without the archived version's enrichment data.
+The corrected records are imported fresh without duplicating the old ones.
 
 ### Why am I approaching or hitting my Audiences record limit?
 
