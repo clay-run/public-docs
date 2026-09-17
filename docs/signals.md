@@ -95,7 +95,7 @@ Under the hood, Clay creates a separate signal event for each individual new hir
 
 1.  In Workflows, create a new workflow (or open an existing one).
 2.  Set the trigger to **"On a signal"** and select your New hire signal from the company audience.
-3.  The workflow now runs **once per new hire**, not once per company. Each hire's LinkedIn URL, job title, location, and start date are available directly in the trigger output.
+3.  The workflow now runs **once per new hire**, not once per company. Each hire's professional profile URL, job title, location, and start date are available directly in the trigger output.
 4.  Map those fields into your enrichment, scoring, or CRM steps as needed.
 5.  To keep your People audience clean, use **Write to Audiences** at the end only for hires who pass your filters.
 
