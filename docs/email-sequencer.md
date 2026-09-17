@@ -28,7 +28,7 @@ Once your table has a populated email column, you're ready to create a campaign.
 
 **2. A sender account connected and warmed up**
 
-Campaigns send from a connected email account (Google Workspace, Microsoft Outlook, or SMTP). Newly connected accounts need to warm up before you can safely send cold email — the initial warmup phase typically takes **2–3 weeks**. The account's status shows **Warming up** in `Campaigns → Email Accounts` during this phase and changes to **Ready** once warmup completes.
+Campaigns send from a connected email account (Google Workspace, Microsoft Outlook, or SMTP). Newly connected accounts need to warm up before you can safely send cold email — the initial warmup phase typically takes **3 weeks**. The account's status shows **Warming up** in `Campaigns → Email Accounts` during this phase and changes to **Ready** once warmup completes.
 
 Connect and enable warmup on your sender account as early as possible so it's ready when you're ready to launch. See [buying email accounts](buying-email-accounts.md) if you need to add a dedicated sending address.
 
@@ -170,7 +170,7 @@ Check out the `Email accounts` tab to manage your fleet of sender accounts and `
 
 To duplicate a campaign — for example, to reuse your message sequence and settings for a new persona or messaging variant — open the campaign you want to copy and click its name in the breadcrumb at the top. Select **Duplicate campaign** from the dropdown. Clay creates a new draft campaign named "<original name> (copy)" with the same message sequence, settings, and AI context, then opens it immediately for editing.
 
-To delete multiple draft campaigns at once, hover over any campaign row to reveal a checkbox on its left edge, then check each row you want to remove — or click the header checkbox to select all visible rows. Shift+click a row to extend your selection to a contiguous range. With campaigns selected, click **Actions** → **Bulk Delete**. Only delete-eligible campaigns are acted on: draft V2 people campaigns are permanently deleted, and draft V1 table campaigns you have permission to delete are moved to Trash. The confirmation dialog shows how many selected campaigns are eligible and how many will be skipped. The checkbox controls are available to workspace members who can create resources.
+To delete multiple draft campaigns at once, hover over any campaign row to reveal a checkbox on its left edge, then check each row you want to remove — or click the header checkbox to select all visible rows. Shift+click a row to extend your selection to a contiguous range. With campaigns selected, click **Actions** → **Bulk Delete**. Only delete-eligible campaigns are deleted: draft V2 people campaigns are permanently deleted, and draft V1 table campaigns you have permission to delete are moved to Trash. The confirmation dialog shows how many selected campaigns are eligible and how many will be skipped. The checkbox controls are available to workspace members who can create resources.
 
 ## Best practices
 
@@ -234,7 +234,7 @@ The daily send limit is set at the **email account level** and varies by account
 
 Total daily throughput scales with the number of connected accounts — each account has its own independent daily budget.
 
-To estimate how many inboxes you need, divide your target daily send count by 20–30 — the recommended per-inbox range for cold outreach. For example, to send 200–300 emails per day, connect roughly 8–15 inboxes, each sending 20–30 emails per day. While self-connected accounts can technically be raised up to 500 emails per day, distributing volume across multiple inboxes at 20–30 each is safer for long-term deliverability than maxing out a single inbox. If you are adding new inboxes to increase capacity, [warm them up first](#what-is-email-account-warmup) — warmup typically takes 2–3 weeks before a new account reaches full sending capacity.
+To estimate how many inboxes you need, divide your target daily send count by 20–30 — the recommended per-inbox range for cold outreach. For example, to send 200–300 emails per day, connect roughly 8–15 inboxes, each sending 20–30 emails per day. While self-connected accounts can technically be raised up to 500 emails per day, distributing volume across multiple inboxes at 20–30 each is safer for long-term deliverability than maxing out a single inbox. If you are adding new inboxes to increase capacity, [warm them up first](#what-is-email-account-warmup) — warmup typically takes 3 weeks before a new account reaches full sending capacity.
 
 Clay's sequencer is built for **targeted, personalized sales outbound** — high-quality sequences to well-researched lists. For very large-scale sends (e.g., 1M+ contacts), a dedicated bulk or marketing email platform is generally a better fit for delivery volume. Clay works well as the enrichment and list-building layer in that setup.
 
@@ -345,14 +345,14 @@ If you've moved to a new email provider (for example, switching from a third-par
     -   Google Workspace: select `Gmail (OAuth)`. If you see an "Access blocked" error, your Google Workspace admin must first authorize Clay Sequencer for your domain — follow the steps in [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth).
     -   Microsoft Outlook: select `Microsoft Outlook OAuth`.
     -   Other providers (including third-party email hosting): select `SMTP` and enter your SMTP and IMAP credentials.
-2.  **Enable warmup on the new account.** The new account starts warmup from scratch — the initial phase typically takes 2–3 weeks before the account shows as **Ready**. Enable warmup right after connecting to start building sender reputation.
+2.  **Enable warmup on the new account.** The new account starts warmup from scratch — the initial phase typically takes 3 weeks before the account shows as **Ready**. Enable warmup right after connecting to start building sender reputation.
 3.  **Update your campaigns.** Open each active campaign that used the old sending account. In the `Sender accounts` tab, add the new account, then use the ⋯ menu next to the old account to remove it.
 
 ### What is email account warmup?
 
 Warmup is the process of automatically sending and receiving emails from other inboxes in Smartlead's warmup pool so your actual campaign traffic looks similar to the emails you're already sending. We recommend you keep warmup on at all times for email accounts in the sequencer to maximize deliverability.
 
-The initial warmup phase typically takes **2–3 weeks**, during which the account's status shows as **Warming up** in Campaigns → Email Accounts. Once the initial phase completes, the status switches to **Ready**. Warmup emails continue to run in the background even after the status shows **Ready** — the Ready label means the account has been warming for at least 2 weeks and is ready for campaigns, not that warmup has stopped.
+The initial warmup phase typically takes **3 weeks**, during which the account's status shows as **Warming up** in Campaigns → Email Accounts. Once the initial phase completes, the status switches to **Ready**. Warmup emails continue to run in the background even after the status shows **Ready** — the Ready label means the account has been warming for at least 3 weeks and is ready for campaigns, not that warmup has stopped.
 
 When you add accounts via OAuth, we will automatically set up labels and filters to make it clear what emails are warmups and reduce clutter in your inbox. Your workspace has a unique two-word filter key (e.g., `clever-rocket`) that marks all warmup emails so you can apply these labels and filters.
 
