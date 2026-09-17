@@ -87,6 +87,20 @@ To analyze, score, or act on signal results, run the signal from a Clay table in
 -   **Earliest publish date advances each run.** The signal's date floor moves forward after each run by default, so earlier articles become unreachable. If you want to cover a specific time window, open the signal column header → **Edit signal** → **Filter results** → set **Earliest publish date** to the start of the window you need.
 -   **Credit limits on AI columns.** If your source table receives new rows automatically (for example, via a recurring source or [Send Table Data](send-table-data.md)), set a credit limit on any AI columns in the results table to avoid unexpected charges as new rows auto-run.
 
+### My New hire signal on a company audience shows only one person per company — how do I get all the individual new hires?
+
+When a New hire signal runs on a company audience, the audience view shows only the most recent new hire per company, along with a count of how many were detected. This is a display constraint: a company record can hold one value per field, so multiple hires at the same company cannot all appear in the same column.
+
+Under the hood, Clay creates a separate signal event for each individual new hire — no data is lost. To process every hire individually through a workflow:
+
+1.  In Workflows, create a new workflow (or open an existing one).
+2.  Set the trigger to **"On a signal"** and select your New hire signal from the company audience.
+3.  The workflow now runs **once per new hire**, not once per company. Each hire's LinkedIn URL, job title, location, and start date are available directly in the trigger output.
+4.  Map those fields into your enrichment, scoring, or CRM steps as needed.
+5.  To keep your People audience clean, use **Write to Audiences** at the end only for hires who pass your filters.
+
+The workflow fires each time your signal runs and finds matching hires — its cadence follows the frequency you set for the signal (daily, weekly, etc.).
+
 ### How do I update or replace my master source table without breaking my signal workflows?
 
 Signal columns reference their source table by its internal ID, not its name. Renaming a table won't break any connected signals — but replacing it with a different table will disconnect them unless you update each signal to point to the new one.
