@@ -1057,12 +1057,9 @@ Salesforce reports on *all objects of a given type* regardless of any prior impo
 
 A filter field is empty for most records in one of two situations:
 
--   **You added the field to your mapping after the initial import.** Existing records that haven't been re-synced yet have no value for that field in Audiences. A numeric range condition — for example, Annual Revenue between $50M and $5B — excludes every record where the field is empty, even if those same records have a value for the field in Salesforce. Wait for the next weekly full sync, or make a small edit to the affected records in Salesforce to force a re-sync.
--   **A segment filter points at a newly added duplicate of an existing field rather than the original mapped field.** The duplicate has no data for any record that hasn't been re-synced since it was added.
+-   **You added the field to your mapping after the initial import.** Existing records that haven't been re-synced yet have no value for that field in Audiences. A numeric range condition — for example, Annual Revenue between $50M and $5B — excludes every record where the field is empty, even if those same records have a value for the field in Salesforce. This also happens when a segment filter points at a newly added duplicate of an existing field rather than the original mapped field: the duplicate has no data for any record that hasn't been re-synced since it was added.
 
-**Record type mismatches**
-
-Salesforce reports can include records of multiple object types in a single report (Accounts, Contacts, Leads). Clay Audiences segments query People and Companies separately — a Companies segment only queries Account records. A Salesforce report that includes both Contacts and Accounts in a single count cannot be directly compared to a Clay Audiences Companies segment, which queries Accounts only.
+**A filter is using a contact-level field instead of the account-level field (or vice versa).** Fields mapped from the Salesforce Contact object and fields mapped from the Salesforce Account object are stored separately in Audiences and answer different questions. For example, a **Type** field mapped from the Salesforce Contact object reflects the type value on each individual contact record. A **Type** field mapped from the Salesforce Account object reflects the type on the contact's parent account — which is what most Salesforce account-level reports filter on. If your Salesforce report uses the account's Type but your segment filters on the contact's Type, the two conditions measure different things and return different counts.
 
 ### Why does filtering my People audience by deal attributes return fewer contacts than expected?
 
@@ -1097,7 +1094,7 @@ Two important behaviors follow from this:
 -   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record must match both to be returned — a partial match on only one field won't be returned.
 -   **Empty fields never match.** If the Audience record has a null or empty value for one of the selected filter fields, it will not be returned — even if other fields match.
 
-**Tip:** Use a single, high-confidence identifier — such as `Email` for people or `Domain` for companies — as the sole filter field wherever possible. Multi-field filtering is useful when you want to guarantee uniqueness (for example, filtering by both email and company domain to avoid matching a contact at the wrong company), but it increases the risk of missed matches when any one field is missing or mismatched.
+If you need to look up a record that may be missing one of your identifier fields, filter by the field most likely to be populated (typically `Email` or `Profile URL`), and use a single-field filter rather than combining multiple conditions.
 
 ### How do I remove records from an audience?
 
@@ -1169,46 +1166,44 @@ Records that do **not** count:
 -   Archived records (moved to the Archived section; not counted toward the limit while archived)
 -   Segment memberships (a record in 10 different segments still counts as one record)
 
+If your workspace reaches the limit, Clay will stop importing new records from your connected sources until the count drops below the cap. To free up space: archive records you no longer need (see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above), or upgrade your plan.
+
+Growth plans have a hard cap — there is no add-on to increase the limit without upgrading to Enterprise.
+
 ### Can I add a "notes" or "memo" field to an Audience record?
 
 Yes — you can create a custom text field in Audiences and update it from a Clay table using `Update Audiences Record` or `Upsert Audiences Record`. There is no built-in "notes" column, but a custom field works the same way.
 
-To set it up:
+**To set this up:**
 
-1.  Navigate to a segment and click **Enrich** → **Add bulk enrich** to open a bulk enrichment table.
+1.  Create a custom Audience text field — see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) above.
 2.  In your Clay table, add an `Update Audiences Record` or `Upsert Audiences Record` column.
-3.  In the column's **Column mapping** section, click **+ Add field**, name it (for example, `Notes`), set the type to **Text**, and save.
-4.  Map your notes source column to this new field and run the enrichment.
+3.  Map the text column in your table to the custom notes field in Audiences.
+4.  Run the column — the value writes permanently to the Audience record.
 
-The field is now available as a filter in any segment and stores whatever text you write to it.
+You can then filter segments on this field, export it to Salesforce, or use it as input for enrichments.
 
 ### Why does my Databricks import fail with a schema or permission error?
 
-Databricks import errors at setup time are almost always one of two issues:
+Databricks imports in Audiences use the Unity Catalog. Two common causes of failure:
 
-**Schema or catalog not found**
+**1. The service principal lacks SELECT on the target table.**
 
-When you enter a SQL query in Clay, the default catalog and schema depend on your Databricks workspace configuration — if your query references a table without a fully qualified name (for example, `SELECT * FROM my_table`), Databricks resolves it against the default catalog and schema of the connected service principal. If that default doesn't match where your table actually lives, you'll see a "table or view not found" error.
-
-**Fix:** Use a fully qualified table name in your query: `SELECT * FROM catalog_name.schema_name.table_name`. If you're unsure of the catalog and schema, open **Databricks → Data Explorer** and browse to the table to find its full path.
-
-**Service principal lacks SELECT permission**
-
-Databricks uses Unity Catalog for access control. The service principal Clay uses must be granted `SELECT` on the specific table (or on the schema or catalog that contains it).
-
-**Fix:** In Databricks, run the following as a workspace admin or a user with `GRANT` privilege:
+In Databricks, grant the service principal read access to the catalog, schema, and table you're importing:
 
 ```sql
-GRANT SELECT ON TABLE catalog_name.schema_name.table_name TO `service_principal_name`;
+GRANT USE CATALOG ON CATALOG <catalog_name> TO `<service-principal-id>`;
+GRANT USE SCHEMA ON SCHEMA <catalog_name>.<schema_name> TO `<service-principal-id>`;
+GRANT SELECT ON TABLE <catalog_name>.<schema_name>.<table_name> TO `<service-principal-id>`;
 ```
 
-To grant access at the schema level (so the service principal can query any table in the schema):
+Replace `<service-principal-id>` with the application ID of the service principal connected to Clay.
 
-```sql
-GRANT SELECT ON SCHEMA catalog_name.schema_name TO `service_principal_name`;
-```
+**2. The table is not registered in Unity Catalog.**
 
-After granting permissions, retry the Clay import — the query should succeed immediately.
+Audiences can only import from tables registered in Unity Catalog — it cannot query tables or views defined in the legacy Hive metastore. To migrate a legacy table, use `CREATE TABLE ... AS SELECT` in Unity Catalog to register a copy, or move the underlying data to a Unity Catalog volume.
+
+If neither of these applies and the import still fails, contact Clay support with the error message shown in the import setup.
 
 ### How do I archive records that no longer match my Snowflake import query?
 
