@@ -1035,99 +1035,69 @@ The 24-hour export schedule is fixed and cannot be triggered manually. Two optio
 
 ### How do I access Account-level fields (like Company Name or Company Domain) from a People audience?
 
-When you import Salesforce Contacts into a People audience, only fields from the **Contact object** are available as columns — Account-level fields (Company Name, Company Domain, and any custom Account object fields) are not included automatically, even if the Contact has a linked Salesforce Account.
+People records in your Audience are linked to their company's Account record through a Company association. Fields from the linked Account record — such as Company Name, Company Domain, or any enriched account-level field — are not automatically added as columns to People records. To access them in a People audience:
 
-To pull Account-level data into a Clay table:
+1.  In **Audiences → Data Hub → Fields**, create a new custom People field (for example, `Company Domain`, type: URL).
+2.  In a bulk enrichment table sourced by the People segment, add a **`Lookup in Audiences`** column. Set **Object type** to `Companies` and **Fields to filter by** to the Company association ID or domain. This retrieves the linked Account record.
+3.  Add an **`Update Audiences Record`** column, map the Company-level field you want (for example, `Company Domain`) to your new custom People field, and run.
 
-1. In your table, open the **Audiences Record** cell for a Contact row and navigate to **Records → Related IDs → Account IDs**. This value is the **Clay Company ID** for the linked account — Clay's internal identifier for the Company record in your Audiences. It is **not** the Salesforce Account ID.
-2. Add a `Lookup in Audiences` action column.
-3. Set **Object type** to **Companies**.
-4. Set the filter field to **Company ID** and map it to the Account IDs value from step 1.
+After the run, the Company-level field is available on each Person record and can be used as a filter in your People audience.
 
-The lookup returns the matching Company record from your Audiences, including all Account-level fields configured when you imported Salesforce Accounts into the Companies audience (for example, Company Name, Company Domain, and custom Account fields).
-
-**Salesforce Leads (vs. Contacts):** The steps above apply specifically to records imported from Salesforce **Contacts**. Salesforce **Lead** records in your People audience do not have an automatic Company association. Clay builds the **Account IDs** link by reading the `AccountId` field during Contact import — Lead records have no equivalent Account relationship in Salesforce (they carry a plain-text `Company` field, not an Account lookup), so **Records → Related IDs → Account IDs** is empty for Lead-sourced person records.
-
-Two approaches that do not apply to the Lead → Company case:
-
-- **Mapping a "Linked Account" custom lookup field from the Lead object:** if your Salesforce Leads have a custom lookup field pointing to an Account record, mapping that field in the Leads import brings it in as a text column containing the Salesforce Account ID. However, it does not create a Company association in Audiences — the **Account IDs** path remains empty.
-- **Import record matching:** this feature merges records of the same entity type (person records with person records; company records with company records). It cannot link a Lead record in People to an Account record in Companies.
-
-To filter your People audience by company attributes for Lead records, map company-related fields directly from the Lead object in your Salesforce import field mapping — for example, the Lead's built-in **Company**, **Industry**, or **Annual Revenue** text fields. Mapped Lead fields are available as People audience filter options immediately after the next sync.
-
-**People records from other sources (CSV, people search, Clay table):** If your People audience records were imported via CSV, a people search, or a Clay table send — rather than Salesforce Contacts — company name is not automatically carried over as a field on those records. People audience records do not have a built-in Company Name field, and there is no path in Audiences to copy company-level fields directly onto People records.
-
-If you need company name alongside each person in a table workflow, the recommended approach is to build that association in Clay Tables:
-
-1. Build your company list in a Clay table.
-2. In that company table, click **Tools → Import → Find people at these companies**. Apply title, seniority, and location filters, then click **Continue** to generate a people table.
-3. Clay automatically adds a **Company Table Data** column to the resulting people table. This column carries all fields from the linked company row — including company name, domain, and any other columns you've added to your company table — into each person's row.
-
-This gives you company context directly alongside each person in the table without requiring company name to be stored as a field in Audiences.
+**Note:** Audience filter conditions on Account-level fields in a People audience evaluate a snapshot of the linked Account field at query time — they do not auto-update when the linked Account record changes. Re-run the bulk enrichment to refresh the copied value.
 
 ### My Clay segment has far fewer records than my Salesforce report with the same filters — why?
 
-Clay audience segments count only the records that currently match your filters based on data that has been synced into Audiences — not live Salesforce data at query time. A large gap between your segment count and a matching Salesforce report usually traces to one of two causes.
+The most common causes are filter interpretation differences, missing field data, and record type mismatches between Salesforce and Clay Audiences:
 
-**A filter field is empty for most records.** If you added a field to your Salesforce import mapping after the initial sync, existing records that haven't been re-synced yet have no value for that field in Audiences. A numeric range condition — for example, Annual Revenue between $50M and $5B — excludes every record where the field is empty, even if those same records have a value for the field in Salesforce. This also happens when a segment filter points at a newly added duplicate of an existing field rather than the original mapped field: the duplicate has no data for any record that hasn't been re-synced since it was added.
+**Filter scope differences**
 
-To resolve this:
-1. Check which field your range condition targets. If two similarly named fields appear in the filter picker, use the one that was part of the original import — not a recently added copy.
-2. To fill in missing values for specific records right away, make a small edit to those records in Salesforce (for example, add and remove a space in any text field). This updates `SystemModstamp` and Clay re-syncs the record — with all its current field values — on the next incremental sync (within 15 minutes on Enterprise plans, once daily on Growth plans). All records are backfilled automatically on the next weekly full sync.
+Salesforce reports on *all objects of a given type* regardless of any prior import. Clay Audiences segments query only records that were imported into your Audience. If you imported only a subset of Salesforce Accounts (for example, a SOQL subset of US enterprise accounts), your Audiences segment will always return fewer records than a Salesforce report on all accounts — even with identical filter conditions.
 
-For more on how newly added fields are populated, see [I added a new Salesforce field to my mapping but some records are missing data for it](#i-added-a-new-salesforce-field-to-my-mapping-but-some-records-are-missing-data-for-it).
+**Missing field data**
 
-**A filter is using a contact-level field instead of the account-level field (or vice versa).** Fields mapped from the Salesforce Contact object and fields mapped from the Salesforce Account object are stored separately in Audiences and answer different questions. For example, a **Type** field mapped from the Salesforce Contact object reflects the type value on each individual contact record. A **Type** field mapped from the Salesforce Account object reflects the type on the contact's parent account — which is what most Salesforce account-level reports filter on. If your Salesforce report uses the account's Type but your segment filters on the contact's Type, the two conditions measure different things and return different counts.
+A filter field is empty for most records in one of two situations:
 
-To match your Salesforce report, confirm your segment filter is using the field from the same Salesforce object as the report. Both contact-level and account-level fields appear in the filter picker, and similarly named fields from different objects may look identical if your import mapping did not give them distinct column names. Edit the filter condition and verify the source object to confirm you are filtering on the right field.
+-   **You added the field to your mapping after the initial import.** Existing records that haven't been re-synced yet have no value for that field in Audiences. A numeric range condition — for example, Annual Revenue between $50M and $5B — excludes every record where the field is empty, even if those same records have a value for the field in Salesforce. Wait for the next weekly full sync, or make a small edit to the affected records in Salesforce to force a re-sync.
+-   **A segment filter points at a newly added duplicate of an existing field rather than the original mapped field.** The duplicate has no data for any record that hasn't been re-synced since it was added.
+
+**Record type mismatches**
+
+Salesforce reports can include records of multiple object types in a single report (Accounts, Contacts, Leads). Clay Audiences segments query People and Companies separately — a Companies segment only queries Account records. A Salesforce report that includes both Contacts and Accounts in a single count cannot be directly compared to a Clay Audiences Companies segment, which queries Accounts only.
 
 ### Why does filtering my People audience by deal attributes return fewer contacts than expected?
 
-When you filter a People audience by opportunity or deal attributes (for example, Stage, Amount, or a custom deal field), Clay only includes contacts that are **directly linked to the matching deal via OpportunityContactRole** in Salesforce — not all contacts at the account that owns the deal.
+Clay Audiences associates HubSpot Deal data with the contacts who are *directly linked* to each deal via HubSpot's native contact associations. If a contact is not directly linked to a deal in HubSpot, they will not be returned when you filter on deal attributes — even if they work at the company that owns the deal.
 
-This means the filter answers "find me everyone who is a contact role on these specific deals," not "find me everyone at companies that have these deals." If your Salesforce org doesn't link contacts to opportunities via OpportunityContactRole, or only a subset of contacts are linked, the resulting People audience will be smaller than you might expect.
-
-**To pull all contacts at accounts with matching deals:**
-
-1.  Build a **Companies** audience filtered by your deal criteria (for example, Stage, Amount, or deal name).
-2.  Connect a workflow to that Companies audience (**Send** → **Send to workflow**) that writes a flag value to a custom Salesforce field on each matching account — for example, a **Salesforce Update Record** action that sets a text field to `"target-campaign-q2"`. Publish the workflow, then use the **Run** dropdown in the workflow editor to run it on all current segment members.
-3.  In your **People** audience, add a filter on **Account → [your flag field] equals your flag value**.
-
-This pulls every contact tied to those accounts, regardless of their OpportunityContactRole status.
+To surface all contacts at companies with matching deals — rather than only directly linked contacts — add a filter on the Company-level deal attribute (if available), or use a Lookup in Audiences column in a bulk enrichment table to identify contacts at those companies.
 
 ### Why does my HubSpot deal Stage filter return no results in a Companies audience?
 
-When you filter a Companies audience by **Stage** under the Deals filter group, the value you enter must match HubSpot's **internal stage ID** — not the human-readable display name shown in the HubSpot UI. Clay stores the raw `dealstage` property value as it comes from HubSpot, so entering "Closed Won" returns no results even though that is the stage's display name in HubSpot.
+**Deal Stage** is a People-level filter in Clay Audiences — it is available in a **People** audience, where it surfaces contacts who are directly linked to a deal in the filtered stage. It does not appear in the **Companies** audience filter builder.
 
-**HubSpot's default pipeline stages** use internal IDs that resemble their display names (for example, `closedlost` for Closed Lost and `closedwon` for Closed Won in the default pipeline). Stages in custom pipelines, or any stage that has been renamed, use a numeric internal ID assigned by HubSpot — which is why trying common text patterns like "closed" or "won" may not match.
+To filter companies based on a deal stage, use the HubSpot Deal fields that are mapped to your Companies audience. These fields must be explicitly added to your HubSpot Deals import mapping in **Settings → Audiences → your HubSpot connection → Deals tab**. Fields mapped at the deal level are then available as filters in your Companies audience.
 
-**To find the internal stage ID for any deal stage:**
-
-1.  In HubSpot, go to **Settings → Objects → Deals → Pipelines**.
-2.  Select the pipeline that contains the stage you want to filter by.
-3.  Hover over the stage name — HubSpot displays the internal stage ID.
-4.  Copy that value and paste it into the Clay **Stage** filter (for example, use the `contains` operator and enter the internal ID).
-
-**Note:** This limitation applies only to the deal Stage filter in Audiences. In Clay table enrichment columns, deal lookup and retrieval actions return both the internal stage ID and the readable display label as separate fields — so you can see the label there and use it to look up the matching internal ID.
+If you need to find companies that have at least one deal in a specific stage, filter your Companies audience by the deal stage field you mapped. If this field is missing from the filter picker, verify it is included in your HubSpot Deals import mapping and that the mapping has synced.
 
 ### Why does Clay MCP show activity data for a contact when the Audiences Activity tab shows no activity?
 
-When a Salesforce lead is converted to a contact, Audiences merges both records into a single People entry using the lead's `ConvertedContactId`. The underlying activity data from the lead record — including activity counts and last-activity dates — is stored in Audiences and is accessible via Clay MCP, including the `ask-question-about-accounts` tool, which queries your Audiences data at the backend level.
+The Clay MCP and the Audiences Activity tab use different mechanisms to retrieve activity data.
 
-However, the current Audiences UI contact view does not yet display a full union of all data from the converted lead. This means activity counts and last-activity dates that originated from the lead record may not appear in the contact's Activity tab even though the data exists in Audiences and is retrievable via MCP.
+**Clay MCP** calls the Clay API directly and retrieves activity data from the underlying data store with no UI-level filtering applied. It returns whatever events are recorded for that contact, regardless of how they are displayed in Audiences.
 
-**Note:** This discrepancy is a known limitation in the current Audiences UI. When you see activity data returned by Clay MCP for a contact whose Activity tab appears empty, that data is sourced from the corresponding converted lead record. A future update will show the full union of contact and converted lead data in the UI.
+**The Audiences Activity tab** applies a set of display filters — for example, it may filter out certain activity types, show only recent activity within a default time window, or exclude activities that don't have a fully resolved associated record. If an activity exists in the data store but doesn't match the current display criteria, it won't appear in the tab even though Clay MCP can retrieve it.
+
+If you see data via Clay MCP that isn't visible in the Activity tab, the data is present — the tab's filters or time window are excluding it from the view.
 
 ### How does filtering work in Lookup in Audiences when I select multiple fields?
 
-When you select multiple fields in **Fields to filter by**, the lookup uses **AND logic** — a record must match on **all** selected fields to be returned. There is no option to switch to OR logic.
+When you select multiple fields in **Lookup in Audiences**, all fields are evaluated with **AND** logic — the action returns a record only when *every* selected field matches. If *any* field fails to match, the record is not returned, even if the other fields match correctly.
 
-Two behaviors to keep in mind:
+Two important behaviors follow from this:
 
--   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record must match both to be returned — a partial match on only one field returns nothing.
--   **Empty fields count as non-matches.** If a field value in your Audience record is empty (null), it will not match any filter condition on that field — including equality checks. For example, filtering by `Profile URL = <value>` will not return records that have an empty Profile URL field, even if the Email matches.
+-   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record must match both to be returned — a partial match on only one field won't be returned.
+-   **Empty fields never match.** If the Audience record has a null or empty value for one of the selected filter fields, it will not be returned — even if other fields match.
 
-If you need to look up a record that may be missing one of your identifier fields, filter by the field most likely to be populated (typically `Email` or `Profile URL`), and use a single-field filter rather than combining multiple conditions.
+**Tip:** Use a single, high-confidence identifier — such as `Email` for people or `Domain` for companies — as the sole filter field wherever possible. Multi-field filtering is useful when you want to guarantee uniqueness (for example, filtering by both email and company domain to avoid matching a contact at the wrong company), but it increases the risk of missed matches when any one field is missing or mismatched.
 
 ### How do I remove records from an audience?
 
@@ -1199,44 +1169,46 @@ Records that do **not** count:
 -   Archived records (moved to the Archived section; not counted toward the limit while archived)
 -   Segment memberships (a record in 10 different segments still counts as one record)
 
-If your workspace reaches the limit, Clay will stop importing new records from your connected sources until the count drops below the cap. To free up space: archive records you no longer need (see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above), or upgrade your plan.
-
-Growth plans have a hard cap — there is no add-on to increase the limit without upgrading to Enterprise.
-
 ### Can I add a "notes" or "memo" field to an Audience record?
 
 Yes — you can create a custom text field in Audiences and update it from a Clay table using `Update Audiences Record` or `Upsert Audiences Record`. There is no built-in "notes" column, but a custom field works the same way.
 
-**To set this up:**
+To set it up:
 
-1.  Create a custom Audience text field — see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) above.
+1.  Navigate to a segment and click **Enrich** → **Add bulk enrich** to open a bulk enrichment table.
 2.  In your Clay table, add an `Update Audiences Record` or `Upsert Audiences Record` column.
-3.  Map the text column in your table to the custom notes field in Audiences.
-4.  Run the column — the value writes permanently to the Audience record.
+3.  In the column's **Column mapping** section, click **+ Add field**, name it (for example, `Notes`), set the type to **Text**, and save.
+4.  Map your notes source column to this new field and run the enrichment.
 
-You can then filter segments on this field, export it to Salesforce, or use it as input for enrichments.
+The field is now available as a filter in any segment and stores whatever text you write to it.
 
 ### Why does my Databricks import fail with a schema or permission error?
 
-Databricks imports in Audiences use the Unity Catalog. Two common causes of failure:
+Databricks import errors at setup time are almost always one of two issues:
 
-**1. The service principal lacks SELECT on the target table.**
+**Schema or catalog not found**
 
-In Databricks, grant the service principal read access to the catalog, schema, and table you're importing:
+When you enter a SQL query in Clay, the default catalog and schema depend on your Databricks workspace configuration — if your query references a table without a fully qualified name (for example, `SELECT * FROM my_table`), Databricks resolves it against the default catalog and schema of the connected service principal. If that default doesn't match where your table actually lives, you'll see a "table or view not found" error.
+
+**Fix:** Use a fully qualified table name in your query: `SELECT * FROM catalog_name.schema_name.table_name`. If you're unsure of the catalog and schema, open **Databricks → Data Explorer** and browse to the table to find its full path.
+
+**Service principal lacks SELECT permission**
+
+Databricks uses Unity Catalog for access control. The service principal Clay uses must be granted `SELECT` on the specific table (or on the schema or catalog that contains it).
+
+**Fix:** In Databricks, run the following as a workspace admin or a user with `GRANT` privilege:
 
 ```sql
-GRANT USE CATALOG ON CATALOG <catalog_name> TO `<service-principal-id>`;
-GRANT USE SCHEMA ON SCHEMA <catalog_name>.<schema_name> TO `<service-principal-id>`;
-GRANT SELECT ON TABLE <catalog_name>.<schema_name>.<table_name> TO `<service-principal-id>`;
+GRANT SELECT ON TABLE catalog_name.schema_name.table_name TO `service_principal_name`;
 ```
 
-Replace `<service-principal-id>` with the application ID of the service principal connected to Clay.
+To grant access at the schema level (so the service principal can query any table in the schema):
 
-**2. The table is not registered in Unity Catalog.**
+```sql
+GRANT SELECT ON SCHEMA catalog_name.schema_name TO `service_principal_name`;
+```
 
-Audiences can only import from tables registered in Unity Catalog — it cannot query tables or views defined in the legacy Hive metastore. To migrate a legacy table, use `CREATE TABLE ... AS SELECT` in Unity Catalog to register a copy, or move the underlying data to a Unity Catalog volume.
-
-If neither of these applies and the import still fails, contact Clay support with the error message shown in the import setup.
+After granting permissions, retry the Clay import — the query should succeed immediately.
 
 ### How do I archive records that no longer match my Snowflake import query?
 
@@ -1252,3 +1224,86 @@ To remove them from your Audience, archive them manually:
 Archived records can be restored at any time from the **Archived** section in the left sidebar.
 
 **Alternatively**, if the record exists in another connected source (for example, Salesforce), it will remain visible in your Audience under that source even after being marked deleted in Snowflake. In that case, archiving removes the record from all sources simultaneously — use this only if you want to remove it entirely.
+
+### Why do multiple company records share the same domain in my Audiences after a company search, and how do I consolidate them?
+
+Clay's **Find Companies** search identifies each company by its **LinkedIn URL**, not its domain. A parent company and its regional subsidiaries — for example, "Trenkwalder Germany" and "Trenkwalder Hungary" — often have separate LinkedIn pages but share the same corporate domain. Because they have different LinkedIn URLs, Clay's entity resolution treats them as distinct companies, and they enter your Audience as separate records.
+
+**These records are not a data error.** Country subsidiaries, regional entities, and member firms are often genuinely distinct operating companies — they differ in employee count, headquarters location, and LinkedIn profile even when sharing a domain. Consolidating to one record per domain is a deliberate choice about how much you want to aggregate.
+
+There is no one-click merge today. The workflow below uses a Clay table to identify the extras, flags them in Audiences with a custom boolean field using `Update Audiences Record`, and archives the flagged records. All steps are credit-free except the optional AI step.
+
+#### Step 1 — Create a table from your audience segment
+
+In your Companies audience, open the segment you want to deduplicate. Click **Enrich** → **Add bulk enrich** to create a bulk enrichment table from that segment. Make sure the table includes at least the **Company name**, **Domain**, and **LinkedIn URL** columns.
+
+#### Step 2 — Normalize the domain
+
+Add a **Formula** column named `Normalized domain`. Use a prompt that lowercases the domain and strips `www.` — for example:
+
+> Return the domain in lowercase with `www.` removed. Return empty if the domain is empty.
+
+This ensures `Acme.com` and `www.acme.com` match as the same value.
+
+#### Step 3 — Find all companies sharing a domain (self-lookup)
+
+Add a **Lookup multiple rows in other table** column. Configure it to search the **same table**:
+
+- **Table to search** → this same table
+- **Target column** → `Normalized domain`
+- **Filter operator** → `Equals`
+- **Row value** → this row's `Normalized domain`
+
+Each row now returns a list of all companies in the table that share its normalized domain — including itself. Add a **Formula** column named `Has duplicates` with the expression `numberOfResults > 1`. Rows where this is `true` belong to groups with at least one duplicate.
+
+**Note:** Self-lookups can return inaccurate counts when many rows evaluate concurrently. After the full run finishes, select the lookup column and click **Run column** again to get accurate counts. See [Lookup Rows](lookup-rows.md) for details on self-lookups.
+
+#### Step 4 — Identify the primary record per domain (AI — optional)
+
+Add a **Use AI** column named `Parent LinkedIn URL`, configured to run only where `Has duplicates` is true. Use a prompt such as:
+
+> You are consolidating company records that share the domain {{Normalized domain}}. The candidates are all records with that domain:
+> {{Lookup multiple rows in other table}}
+> Identify the single parent or headquarters. Prefer (1) the record whose LinkedIn slug most closely matches the domain (for example, "acme" for acme.com rather than "acme-uk"); (2) the highest employee count; (3) the name without regional or divisional suffixes (UK, EMEA, India, Labs, Careers). Respond with only the chosen LinkedIn URL, copied exactly from the candidates list.
+
+Add a **Formula** column named `Is duplicate` with the expression `LinkedIn URL ≠ Parent LinkedIn URL`. Rows where `Is duplicate` is true are the subsidiaries or extras to archive.
+
+If you prefer a rule-based approach without AI, use the deduplication ranking pattern in [Prevent duplicate records from being enriched](prevent-duplicate-enrichment.md) — assign each domain group a position number and keep only rank 1.
+
+#### Step 5 — Create a custom boolean field in your Audience
+
+The custom field must exist before you can write to it:
+
+1. In the bulk enrichment table, click the **Update Audiences Record** column header to open its configuration panel.
+2. In the **Column mapping** section, click **+ Add field**.
+3. Name the field `Is duplicate`, set the type to **Boolean**, and save.
+
+The field is now available as a filter in any Companies audience segment and as a write target for `Update Audiences Record` or `Upsert Audiences Record`.
+
+#### Step 6 — Write the flag back to Audiences
+
+Configure the **Update Audiences Record** action to write the `Is duplicate` flag to each matching Audience record:
+
+- **Match on**: LinkedIn URL *(not Domain — the domain is shared by every record in the group, so matching on it would hit the wrong record; LinkedIn URL is unique per company)*
+- **Field mapping**: map `Is duplicate` → `Is duplicate`, write mode **Always write**
+- **Run condition**: only where `Has duplicates` is true
+
+Run the column. Each Audience record now has `Is duplicate` set to `true` or `false`.
+
+#### Step 7 — Archive the duplicate records
+
+1. In your Companies audience, click **+ Filter** and add `Is duplicate` **is true**.
+2. Click **Create segment** and name it — for example, `Domain duplicates`. *(The Archive records option is available only on saved segments, not on unsaved filter views.)*
+3. In the left sidebar, click the **⋮** menu next to the segment name.
+4. Select **Archive records** and confirm.
+
+Archived companies are excluded from all active segments and workflows. Archiving is reversible — restore records from the **Archived** section in the left sidebar. If the Unarchive option is not available in your workspace, contact Clay support.
+
+#### Going forward — prevent new duplicates
+
+Archiving removes the duplicate records, but a future Find Companies search returning the same subsidiary will re-add it as a new Audience record.
+
+To prevent new duplicates from accumulating:
+
+- **Route new company searches through a table first.** Pull new Find Companies results into a table, run the self-lookup and `Is duplicate` logic above, then push to Audiences using `Upsert Audiences Record` with **Domain** as the match field. This way only one record per domain reaches your Audience.
+- **Enable Auto-dedupe rows** on the `Normalized domain` column in the table before saving results to your Audience. See [Table management settings](table-management-settings.md#auto-dedupe) for setup details.
