@@ -1245,3 +1245,5 @@ To remove them from your Audience, archive them manually:
 4.  Click **Archive** in the bottom toolbar and confirm.
 
 Archived records can be restored at any time from the **Archived** section in the left sidebar.
+
+**Alternatively**, if the record exists in another connected source (for example, Salesforce), it will remain visible in your Audience under that source even after being marked deleted in Snowflake. In that case, archiving removes the record from all sources simultaneously — use this only if you want to remove it entirely.
