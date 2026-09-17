@@ -1227,15 +1227,15 @@ Archived records can be restored at any time from the **Archived** section in th
 
 ### Why do multiple company records share the same domain in my Audiences after a company search, and how do I consolidate them?
 
-Clay's **Find Companies** search identifies each company by its **LinkedIn URL**, not its domain. A parent company and its regional subsidiaries — for example, "Trenkwalder Germany" and "Trenkwalder Hungary" — often have separate LinkedIn pages but share the same corporate domain. Because they have different LinkedIn URLs, Clay's entity resolution treats them as distinct companies, and they enter your Audience as separate records.
+Clay's **Find Companies** search identifies each company by its **professional network URL**, not its domain. A parent company and its regional subsidiaries — for example, "Trenkwalder Germany" and "Trenkwalder Hungary" — often have separate professional network pages but share the same corporate domain. Because they have different professional network URLs, Clay's entity resolution treats them as distinct companies, and they enter your Audience as separate records.
 
-**These records are not a data error.** Country subsidiaries, regional entities, and member firms are often genuinely distinct operating companies — they differ in employee count, headquarters location, and LinkedIn profile even when sharing a domain. Consolidating to one record per domain is a deliberate choice about how much you want to aggregate.
+**These records are not a data error.** Country subsidiaries, regional entities, and member firms are often genuinely distinct operating companies — they differ in employee count, headquarters location, and professional network profile even when sharing a domain. Consolidating to one record per domain is a deliberate choice about how much you want to aggregate.
 
 There is no one-click merge today. The workflow below uses a Clay table to identify the extras, flags them in Audiences with a custom boolean field using `Update Audiences Record`, and archives the flagged records. All steps are credit-free except the optional AI step.
 
 #### Step 1 — Create a table from your audience segment
 
-In your Companies audience, open the segment you want to deduplicate. Click **Enrich** → **Add bulk enrich** to create a bulk enrichment table from that segment. Make sure the table includes at least the **Company name**, **Domain**, and **LinkedIn URL** columns.
+In your Companies audience, open the segment you want to deduplicate. Click **Enrich** → **Add bulk enrich** to create a bulk enrichment table from that segment. Make sure the table includes at least the **Company name**, **Domain**, and **Company professional network URL** columns.
 
 #### Step 2 — Normalize the domain
 
@@ -1260,13 +1260,13 @@ Each row now returns a list of all companies in the table that share its normali
 
 #### Step 4 — Identify the primary record per domain (AI — optional)
 
-Add a **Use AI** column named `Parent LinkedIn URL`, configured to run only where `Has duplicates` is true. Use a prompt such as:
+Add a **Use AI** column named `Parent company URL`, configured to run only where `Has duplicates` is true. Use a prompt such as:
 
 > You are consolidating company records that share the domain {{Normalized domain}}. The candidates are all records with that domain:
 > {{Lookup multiple rows in other table}}
-> Identify the single parent or headquarters. Prefer (1) the record whose LinkedIn slug most closely matches the domain (for example, "acme" for acme.com rather than "acme-uk"); (2) the highest employee count; (3) the name without regional or divisional suffixes (UK, EMEA, India, Labs, Careers). Respond with only the chosen LinkedIn URL, copied exactly from the candidates list.
+> Identify the single parent or headquarters. Prefer (1) the record whose company profile URL slug most closely matches the domain (for example, "acme" for acme.com rather than "acme-uk"); (2) the highest employee count; (3) the name without regional or divisional suffixes (UK, EMEA, India, Labs, Careers). Respond with only the chosen company professional network URL, copied exactly from the candidates list.
 
-Add a **Formula** column named `Is duplicate` with the expression `LinkedIn URL ≠ Parent LinkedIn URL`. Rows where `Is duplicate` is true are the subsidiaries or extras to archive.
+Add a **Formula** column named `Is duplicate` with the expression `Company professional network URL ≠ Parent company URL`. Rows where `Is duplicate` is true are the subsidiaries or extras to archive.
 
 If you prefer a rule-based approach without AI, use the deduplication ranking pattern in [Prevent duplicate records from being enriched](prevent-duplicate-enrichment.md) — assign each domain group a position number and keep only rank 1.
 
@@ -1284,7 +1284,7 @@ The field is now available as a filter in any Companies audience segment and as 
 
 Configure the **Update Audiences Record** action to write the `Is duplicate` flag to each matching Audience record:
 
-- **Match on**: LinkedIn URL *(not Domain — the domain is shared by every record in the group, so matching on it would hit the wrong record; LinkedIn URL is unique per company)*
+- **Match on**: Professional network URL *(not Domain — the domain is shared by every record in the group, so matching on it would hit the wrong record; the professional network URL is unique per company)*
 - **Field mapping**: map `Is duplicate` → `Is duplicate`, write mode **Always write**
 - **Run condition**: only where `Has duplicates` is true
 
