@@ -32,6 +32,10 @@ Use this source to import objects from HubSpot into Clay.
 -   **Include read-only properties? (Optional):** Include all HubSpot calculated fields for each contact (e.g., `hs_analytics_first_timestamp`). If not selected, only editable properties will be included (e.g., `domain`).
 -   **Exclude empty properties? (Optional):** Exclude all empty properties from the response. If not selected, all properties will be included, even those with empty values.
 
+**Credit and auto-run note:** If [Auto-run](auto-run.md) is enabled on your table, every row this source imports immediately triggers any enrichment or AI column that references other columns as inputs — consuming credits for every row imported. Enrichment and AI columns with fully hardcoded configurations that reference no other columns are not triggered by new row imports. For a large HubSpot list, a single import or scheduled sync can result in significant unexpected credit usage.
+
+To import records without triggering enrichments, turn off table-level auto-run before running or scheduling this source: click the `⛭` icon → **Run Settings** → toggle **Auto-run** off. After reviewing the imported rows, re-enable auto-run and choose `Update cells` to process them — or select specific rows and right-click → **Run [N] rows**. See [Auto-run](auto-run.md) for the complete step-by-step.
+
 ### `Action` Create object
 
 Use this action to create an object in HubSpot.
