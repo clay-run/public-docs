@@ -6,6 +6,8 @@ last_synced: 2026-09-17T19:40:16.555Z
 
 # Bing Ads in Clay
 
+Available on Growth and Enterprise plans.
+
 Reach your contacts across Microsoft's search network with a customer list synced from Clay.
 
 Sync contact audiences from Clay to Microsoft Advertising as a customer list. Bing Ads matches on email alone, which makes it the most enrichment-dependent destination in Clay Ads.
