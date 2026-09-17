@@ -10,16 +10,16 @@ LinkedIn automation software.
 
 HeyReach is an automation platform that helps sales teams and agencies automate multi-sender outreach campaigns at scale. Within Clay, you can use HeyReach to add leads directly to your campaigns and map personalization variables for custom sequences.
 
-## LinkedIn outreach with Clay and HeyReach
+## Professional network outreach with Clay and HeyReach
 
-Clay does not send LinkedIn messages natively. For LinkedIn outreach, you can use Clay's HeyReach integration (or [La Growth Machine](https://www.clay.com/university/guide/la-growth-machine-integration-overview)) to send connection requests, LinkedIn messages, and follow-up sequences directly from a Clay workflow.
+Clay does not send professional network messages natively. For outreach via professional networking platforms, you can use Clay's HeyReach integration (or [La Growth Machine](https://www.clay.com/university/guide/la-growth-machine-integration-overview)) to send connection requests, messages, and follow-up sequences directly from a Clay workflow.
 
 The workflow divides responsibilities between the two tools:
 
 - **Clay** handles list building, prospect enrichment, and AI-generated message personalization.
-- **HeyReach** handles the actual LinkedIn connection requests, messages, and follow-ups using your connected LinkedIn sender accounts.
+- **HeyReach** handles the actual connection requests, messages, and follow-ups using your connected sender accounts.
 
-To run campaigns, you will need your own HeyReach account, HeyReach API key, and LinkedIn sender accounts connected in HeyReach. Sending limits are set by HeyReach, not Clay. Note that LinkedIn automation carries account safety and platform-policy risk.
+To run campaigns, you will need your own HeyReach account, HeyReach API key, and sender accounts connected in HeyReach. Sending limits are set by HeyReach, not Clay. Note that professional network automation carries account safety and platform-policy risk.
 
 ## Enriching data with HeyReach
 
