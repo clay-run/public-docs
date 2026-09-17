@@ -1252,3 +1252,86 @@ To remove them from your Audience, archive them manually:
 Archived records can be restored at any time from the **Archived** section in the left sidebar.
 
 **Alternatively**, if the record exists in another connected source (for example, Salesforce), it will remain visible in your Audience under that source even after being marked deleted in Snowflake. In that case, archiving removes the record from all sources simultaneously — use this only if you want to remove it entirely.
+
+### Why do multiple company records share the same domain in my Audiences after a company search, and how do I consolidate them?
+
+Clay's **Find Companies** search identifies each company by its **professional network URL**, not its domain. A parent company and its regional subsidiaries — for example, "Trenkwalder Germany" and "Trenkwalder Hungary" — often have separate professional network pages but share the same corporate domain. Because they have different professional network URLs, Clay's entity resolution treats them as distinct companies, and they enter your Audience as separate records.
+
+**These records are not a data error.** Country subsidiaries, regional entities, and member firms are often genuinely distinct operating companies — they differ in employee count, headquarters location, and professional network profile even when sharing a domain. Consolidating to one record per domain is a deliberate choice about how much you want to aggregate.
+
+There is no one-click merge today. The workflow below uses a Clay table to identify the extras, flags them in Audiences with a custom boolean field using `Update Audiences Record`, and archives the flagged records. All steps are credit-free except the optional AI step.
+
+#### Step 1 — Create a table from your audience segment
+
+In your Companies audience, open the segment you want to deduplicate. Click **Enrich** → **Add bulk enrich** to create a bulk enrichment table from that segment. Make sure the table includes at least the **Company name**, **Domain**, and **Company professional network URL** columns.
+
+#### Step 2 — Normalize the domain
+
+Add a **Formula** column named `Normalized domain`. Use a prompt that lowercases the domain and strips `www.` — for example:
+
+> Return the domain in lowercase with `www.` removed. Return empty if the domain is empty.
+
+This ensures `Acme.com` and `www.acme.com` match as the same value.
+
+#### Step 3 — Find all companies sharing a domain (self-lookup)
+
+Add a **Lookup multiple rows in other table** column. Configure it to search the **same table**:
+
+- **Table to search** → this same table
+- **Target column** → `Normalized domain`
+- **Filter operator** → `Equals`
+- **Row value** → this row's `Normalized domain`
+
+Each row now returns a list of all companies in the table that share its normalized domain — including itself. Add a **Formula** column named `Has duplicates` with the expression `numberOfResults > 1`. Rows where this is `true` belong to groups with at least one duplicate.
+
+**Note:** Self-lookups may return inaccurate counts when many rows evaluate concurrently. After the full run finishes, select the lookup column and click **Run column** again to get accurate counts. See [Lookup Rows](lookup-rows.md) for details on self-lookups.
+
+#### Step 4 — Identify the primary record per domain (AI — optional)
+
+Add a **Use AI** column named `Parent company URL`, configured to run only where `Has duplicates` is true. Use a prompt such as:
+
+> You are consolidating company records that share the domain {{Normalized domain}}. The candidates are all records with that domain:
+> {{Lookup multiple rows in other table}}
+> Identify the single parent or headquarters. Prefer (1) the record whose company profile URL slug most closely matches the domain (for example, "acme" for acme.com rather than "acme-uk"); (2) the highest employee count; (3) the name without regional or divisional suffixes (UK, EMEA, India, Labs, Careers). Respond with only the chosen company professional network URL, copied exactly from the candidates list.
+
+Add a **Formula** column named `Is duplicate` with the expression `Company professional network URL ≠ Parent company URL`. Rows where `Is duplicate` is true are the subsidiaries or extras to archive.
+
+If you prefer a rule-based approach without AI, use the deduplication ranking pattern in [Prevent duplicate records from being enriched](prevent-duplicate-enrichment.md) — assign each domain group a position number and keep only rank 1.
+
+#### Step 5 — Create a custom boolean field in your Audience
+
+The custom field must exist before you can write to it:
+
+1. In the bulk enrichment table, click the **Update Audiences Record** column header to open its configuration panel.
+2. In the **Column mapping** section, click **+ Add field**.
+3. Name the field `Is duplicate`, set the type to **Boolean**, and save.
+
+The field is now available as a filter in any Companies audience segment and as a write target for `Update Audiences Record` or `Upsert Audiences Record`.
+
+#### Step 6 — Write the flag back to Audiences
+
+Configure the **Update Audiences Record** action to write the `Is duplicate` flag to each matching Audience record:
+
+- **Match on**: Professional network URL *(not Domain — the domain is shared by every record in the group, so matching on it would hit the wrong record; the professional network URL is unique per company)*
+- **Field mapping**: map `Is duplicate` → `Is duplicate`, write mode **Always write**
+- **Run condition**: only where `Has duplicates` is true
+
+Run the column. Each Audience record now has `Is duplicate` set to `true` or `false`.
+
+#### Step 7 — Archive the duplicate records
+
+1. In your Companies audience, click **+ Filter** and add `Is duplicate` **is true**.
+2. Click **Create segment** and name it — for example, `Domain duplicates`. *(The Archive records option is available only on saved segments, not on unsaved filter views.)*
+3. In the left sidebar, click the **⋮** menu next to the segment name.
+4. Select **Archive records** and confirm.
+
+Archived companies are excluded from all active segments and workflows. Archiving is reversible — restore records from the **Archived** section in the left sidebar. If the Unarchive option is not available in your workspace, contact Clay support.
+
+#### Going forward — prevent new duplicates
+
+Archiving removes the duplicate records, but a future Find Companies search returning the same subsidiary will re-add it as a new Audience record.
+
+To prevent new duplicates from accumulating:
+
+- **Route new company searches through a table first.** Pull new Find Companies results into a table, run the self-lookup and `Is duplicate` logic above, then push to Audiences using `Upsert Audiences Record` with **Domain** as the match field. This way only one record per domain reaches your Audience.
+- **Enable Auto-dedupe rows** on the `Normalized domain` column in the table before saving results to your Audience. See [Table management settings](table-management-settings.md#auto-dedupe) for setup details.
