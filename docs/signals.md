@@ -39,7 +39,7 @@ To start a signal, you'll **need a table with** companies or contacts you want t
 ### Edit an existing Signal
 
 1.  Click on the column title with the Signal.
-    -   It'll have a `📡` icon and is named `Event: [Signal Type]` by default (e.g., `Event: Job change`, `Event: New hire`).\
+    -   It'll have a `📡` icon and is named `Event: [Signal Type]` by default (e.g., `Event: Job change`, `Event: New hire`).
 2.  Click `Edit signal`.
 3.  Modify any settings as needed and click `Save and re-run` (or `Save and run` if the signal has never run before, `Save only` for scheduled signals, or `Save` for non-scheduled signals).
 
@@ -87,6 +87,7 @@ A pattern that frequently narrows results more than intended: using a **Seniorit
 -   **Remove the Seniority filter** if your Job Title list already captures the right level. Titles like "Chief People Officer," "CHRO," or "VP of HR" already encode seniority — a separate Seniority "Is exactly" filter adds a redundant constraint that can exclude otherwise valid matches.
 -   **Add more Job Title variations** to capture the same role described in different ways — for example, "Chief HR Officer," "CHRO," "Head of People," and "HR Director" alongside "Chief People Officer."
 -   **Switch Seniority from "Is exactly" to "Is similar to"** to use AI-powered matching that recognizes equivalent seniority levels even when the exact classification doesn't match your selected values.
+-   **Enable the "Search raw location field" toggle** if you are also filtering by location. The toggle appears in the Location section of your signal's filter settings. Turning it on broadens location matching to include free-text location data in addition to structured fields, which can recover hires whose locations are stored in non-standard formats.
 
 ### My signal results on an Audience segment appear read-only — how do I analyze or act on them?
 
