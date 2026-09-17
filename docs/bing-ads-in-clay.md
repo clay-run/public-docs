@@ -53,7 +53,7 @@ Bing is a newer destination, and `Enhanced matching` performance on it hasn't be
 ## Bing requirements
 
 -   **1,000-member minimum.** The check runs against matched members rather than the size of your segment, so a large list with thin email coverage can still fall short. Below the floor the audience won't serve, and Clay reports `Audience is below the 1000-member serving minimum`.
--   **1,000,000-member maximum.** A Bing sync carries up to a million members. When a single sync targets several destinations at once, the lowest maximum among them applies to the whole sync — so pairing Bing with a destination that caps lower trims the list to that smaller number for every destination in the sync, Bing included.
+-   **1,000,000-member maximum.** A Bing sync carries up to a million members. When a single sync targets several destinations, each destination's limit is applied independently.
 
 ## Managing your audiences
 
