@@ -21,7 +21,7 @@ To check the credit usage in your workspace:
 
 **Tip:** If your workspace is approaching or has reached its monthly credit limit, Clay displays an orange banner at the top of every page. Click **See usage** in that banner to go directly to the credit usage dashboard.
 
-**Tip:** The credit indicator in the top navigation bar shows your **remaining** balance, labeled **"X credits available"** — this is how many credits you have left to spend this period, not how many you have already consumed. To see your credit consumption (how much you've spent), use the credit usage dashboard at `Settings → Usage`.
+**Tip:** The credit indicator in the top navigation bar shows your **remaining** credit balance — how many credits you have left to spend before the period resets, not how many you have already consumed. When the number shown is low, you are running low on credits for the current billing cycle and approaching the end of your allotment; your balance resets at your next renewal date. To see how many credits you have consumed, use the credit usage dashboard at `Settings → Usage`.
 
 Sort the content by `Name` (alphabetically) or by number of `Credits used` by clicking the column titles. You can `Export` this content as a CSV.
 
@@ -223,7 +223,7 @@ See [Ways to save Clay credits](clay-credit-conservation.md) for the full recomm
 
 ### Credits consumed while auto-run is off
 
-If table-level auto-run is disabled but credits are still being consumed, the most likely causes are manual or team-triggered actions:
+If table-level auto-run is disabled but credits are still being consuming, the most likely causes are manual or team-triggered actions:
 
 -   **Manual column runs** — any Editor on the workspace can right-click a column header and choose **Run column**, which bypasses the auto-run toggle and immediately dispatches enrichments.
 -   **Scheduled columns** — a column may have a recurring schedule that runs independently of the table's auto-run setting. Open **Run Settings → Re-run columns on a schedule** to review which columns are scheduled and disable any you no longer need. See [Ways to save Clay credits](clay-credit-conservation.md) for guidance on auditing scheduled runs.
