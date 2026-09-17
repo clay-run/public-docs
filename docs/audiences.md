@@ -1,1 +1,1 @@
-# PLACEHOLDER - will be replaced by actual content push via push_files
+CONTENT_FROM_FILE
