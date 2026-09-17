@@ -4,7 +4,7 @@ description: Clay doesn't have a traditional API, but you can send data via
   webhooks, wrap Clay with Make or Zapier, use the Enterprise API for people &
   company lookups, connect AI tools via MCP, or build workflows via the CLI
   agent plugin.
-last_synced: 2026-04-26T01:40:52.256Z
+last_synced: 2026-04-26T01:40:52.352Z
 ---
 
 # Does Clay have an API?
@@ -66,7 +66,7 @@ The same workspace-level beta access also unlocks a Routines endpoint for trigge
 -   `POST /routines/{routine_id}/run` — submit input records to a Clay function and start an enrichment run.
 -   `GET /routines/run/{routine_run_id}/results` — poll for results once the run completes.
 
-Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is under **Settings → Account → API keys** and is distinct from the personal API key on your profile page.
+Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is on the **API and CLI** page — click **API and CLI** under **Orchestration** in the left sidebar, then open the **API keys** tab. It is distinct from the personal API key on your profile page.
 
 **Public HTTP API — Credit Balance**
 
@@ -94,7 +94,7 @@ Use the same workspace-scoped API key in the `clay-api-key` request header. Read
 | Paid | 1,000,000 | Annual (resets January 1 UTC) |
 | Enterprise | 10,000,000 | Annual (resets January 1 UTC) |
 
-When you exceed the period limit, Clay returns `400` with a message naming the limit and when it resets — for example: `"This request would exceed your workspace's annual limit of 1,000,000 results. You have already requested X results during the current period, which resets on January 1, [year] (UTC). Contact support to raise this limit."` To monitor your usage before hitting the limit, open the **API and CLI** page in your workspace (`Settings → API`). The **Search API usage** section shows your current period's results used out of your limit, the next reset date, and a progress bar that turns orange at 70% usage and red at 90%. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
+When you exceed the period limit, Clay returns `400` with a message naming the limit and when it resets — for example: `"This request would exceed your workspace's annual limit of 1,000,000 results. You have already requested X results during the current period, which resets on January 1, [year] (UTC). Contact support to raise this limit."` To monitor your usage before hitting the limit, open the **API and CLI** page in your workspace (click **API and CLI** under **Orchestration** in the left sidebar). The **Search API usage** section shows your current period's results used out of your limit, the next reset date, and a progress bar that turns orange at 70% usage and red at 90%. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
 
 **Note:** Credits consumed by Routines API runs appear in the **Workbooks** tab of the credit usage dashboard — not the **API** tab. Each run processes records in the function's table, and those credits are attributed to that table, the same as any other table enrichment. To see this credit spend, go to `Settings → Usage → Workbooks` and find the table associated with your routine. The **API** tab in the credit usage dashboard covers only direct People & Company Search API and Exportly calls — not Routines API enrichments.
 
