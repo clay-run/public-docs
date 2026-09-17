@@ -68,6 +68,16 @@ The same workspace-level beta access also unlocks a Routines endpoint for trigge
 
 Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is under **Settings → Account → API keys** and is distinct from the personal API key on your profile page.
 
+**Note: `processing_failed` means a dispatch failure — not individual row errors.** When you start a run, Clay splits your input into internal batches and dispatches each batch for processing. `processing_failed` is set only if one of those dispatches fails (an infra or processing error after input validation passed), not when individual rows encounter an error. Rows that fail on their own — bad input, a provider miss — appear as `"status": "failed"` in the result file, and the run still reaches `complete` with a `result_url`. If a dispatch fails partway through, batches already dispatched continue to completion; batches not yet dispatched are not executed.
+
+**Note: A `processing_failed` run returns no `result_url` — the result file is only generated on a clean `complete`.** A run that ends in `processing_failed` returns `{"status": "processing_failed", "error": "..."}` with no `result_url`. Rows that executed before the dispatch failure are charged; rows that never ran are not charged.
+
+**Note: While a run is `in_progress`, the `/results` endpoint returns only row counts — not per-row data.** The in-progress response includes `total` and `finished` counts so you can monitor progress, but per-row results are not accessible until the run reaches `complete`.
+
+**Note: `webhook_id` fires at least once on any terminal state — not once per row.** The webhook fires when a run reaches `complete`, `validation_failed`, or `processing_failed`. Delivery is best-effort and at-least-once — your endpoint may receive more than one call for the same terminal event on retries, so make it idempotent. The payload contains only `routine_run_id`; your endpoint must then call `GET /routines/run/{routine_run_id}/results` to retrieve the result file.
+
+**Recovering results after a `processing_failed` run.** Because no `result_url` is issued on `processing_failed`, rows that completed before the failure are not directly retrievable via the API. Two patterns help avoid re-running and re-paying for rows that already succeeded: (1) Add an **HTTP API column** to the function that POSTs each row's result to your own endpoint as the row finishes — include your own record key (for example, a Salesforce ID) as a function input so it's echoed back in the POST body. On a `processing_failed`, you already have every row that completed and can resubmit only the missing ones (`sent − received`). (2) Split large jobs into smaller runs (100–200 rows each) to limit the impact of any single failure. Completed rows are also visible in the function's table in the Clay UI under the **Completed rows** view and can be exported from there as a manual fallback.
+
 **Public HTTP API — Credit Balance**
 
 Check your workspace's current credit balance without consuming any credits:
