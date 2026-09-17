@@ -36,6 +36,7 @@ The table below compares feature availability between legacy plans and modern pl
 | Feature Category | Legacy Plans | Modern Plans |
 | --- | --- | --- |
 | New Features (post-Feb 2026) | ❌ Not available | ✅ Available |
+| Audiences | ✅ Temporary trial through January 2027 (Pro plans: Growth-equivalent access; Starter/Basic/Explorer: Launch-equivalent access) | ✅ Growth+ (CRM/DWH sync, up to 250K records); Launch (CSV, search, tables) |
 | Ads (Clay Ads) | ❌ Not available | ✅ Growth (1 sync), Enterprise (2 syncs) |
 | New Integrations | ❌ Future integrations blocked | ✅ All new integrations |
 | Advanced Orchestration | Current features only | ✅ New releases prioritized |
