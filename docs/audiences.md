@@ -1,12 +1,12 @@
 ---
 title: Audiences
-description: "Clay Audiences is available on Growth and Enterprise plans. Launch workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above. Trial workspaces do not have access to Audiences."
+description: "Clay Audiences is available on Growth and Enterprise plans. Launch workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above. Legacy plan customers have temporary Audiences access through January 2027 (Pro: Growth-equivalent; Starter/Basic/Explorer: Launch-equivalent)."
 last_synced: 2026-08-20T01:53:27.941Z
 ---
 
 # Audiences
 
-**Plan availability:** Clay Audiences is available on **Growth** and **Enterprise** plans (including legacy Enterprise). Launch workspaces have access to core Audiences features — importing via CSV, people/company search, and Clay table sends — but connecting a CRM or data warehouse as a data source requires **Growth or above**. Free, Trial, and legacy non-Enterprise plan workspaces do not have access to Audiences. Growth plans can sync up to 250,000 CRM/DWH records; Enterprise plans support up to 25,000,000 records. Only imported Account, Contact, and Lead records count toward this limit — Activities (Salesforce Tasks and Events) and Opportunities associated with those accounts do not count toward the record limit.
+**Plan availability:** Clay Audiences is available on **Growth** and **Enterprise** plans (including legacy Enterprise). Launch workspaces have access to core Audiences features — importing via CSV, people/company search, and Clay table sends — but connecting a CRM or data warehouse as a data source requires **Growth or above**. **Legacy plan customers have temporary access to Audiences through January 2027:** legacy **Pro** plan workspaces receive Growth-equivalent access (CRM and data warehouse connections supported, up to 250,000 imported records); legacy **Starter**, **Basic**, and **Explorer** plan workspaces receive Launch-equivalent access (CSV, people/company search, and Clay table imports only — no CRM or data warehouse connections). After January 2027, legacy plan access reverts to a limited free tier. Free and Trial workspaces do not have access to Audiences. Growth plans can sync up to 250,000 CRM/DWH records; Enterprise plans support up to 25,000,000 records. Only imported Account, Contact, and Lead records count toward this limit — Activities (Salesforce Tasks and Events) and Opportunities associated with those accounts do not count toward the record limit.
 
 Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
 
@@ -1245,5 +1245,3 @@ To remove them from your Audience, archive them manually:
 4.  Click **Archive** in the bottom toolbar and confirm.
 
 Archived records can be restored at any time from the **Archived** section in the left sidebar.
-
-**Alternatively**, if the record exists in another connected source (for example, Salesforce), it will remain visible in your Audience under that source even after being marked deleted in Snowflake. In that case, archiving removes the record from all sources simultaneously — use this only if you want to remove it entirely.
