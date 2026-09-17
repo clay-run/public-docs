@@ -11,6 +11,27 @@ Run outbound campaigns directly from your table.
 
 Clay's email sequencer lets you run outbound email campaigns directly from your tables. This guide covers setup, campaign configuration, sending behavior, analytics, and troubleshooting tips.
 
+## Before you begin
+
+To run an email campaign in Clay, you need two things ready before creating the campaign.
+
+**1. A table with work email addresses for your leads**
+
+The campaign's lead list comes from a Clay table that has a column containing each contact's work email address. If you already have a CSV with contacts and emails, you can import it directly (see step 1 of [Create a new email campaign](#create-a-new-email-campaign)).
+
+If you're starting from a list of companies and don't yet have individual contact emails, the typical path is:
+
+1. Use the **[Find People](find-people-overview.md)** source to search for contacts at those companies — filter by job title, seniority level, or other criteria to find contacts matching your ideal customer profile.
+2. Run the **[Work Email waterfall](work-email-waterfall.md)** enrichment on your people table to find and validate each contact's work email address.
+
+Once your table has a populated email column, you're ready to create a campaign.
+
+**2. A sender account connected and warmed up**
+
+Campaigns send from a connected email account (Google Workspace, Microsoft Outlook, or SMTP). Newly connected accounts need to warm up before you can safely send cold email — the initial warmup phase typically takes **2–3 weeks**. The account's status shows **Warming up** in `Campaigns → Email Accounts` during this phase and changes to **Ready** once warmup completes.
+
+Connect and enable warmup on your sender account as early as possible so it's ready when you're ready to launch. See [buying email accounts](buying-email-accounts.md) if you need to add a dedicated sending address.
+
 ## Connecting Google Workspace via OAuth
 
 **Note:** This setup requires Google Workspace admin access and only needs to be done once per domain. Changes can take up to 24 hours to apply.
