@@ -223,7 +223,7 @@ See [Ways to save Clay credits](clay-credit-conservation.md) for the full recomm
 
 ### Credits consumed while auto-run is off
 
-If table-level auto-run is disabled but credits are still being consuming, the most likely causes are manual or team-triggered actions:
+If table-level auto-run is disabled but credits are still being consumed, the most likely causes are manual or team-triggered actions:
 
 -   **Manual column runs** — any Editor on the workspace can right-click a column header and choose **Run column**, which bypasses the auto-run toggle and immediately dispatches enrichments.
 -   **Scheduled columns** — a column may have a recurring schedule that runs independently of the table's auto-run setting. Open **Run Settings → Re-run columns on a schedule** to review which columns are scheduled and disable any you no longer need. See [Ways to save Clay credits](clay-credit-conservation.md) for guidance on auditing scheduled runs.
