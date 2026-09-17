@@ -123,6 +123,8 @@ Column-level auto-run controls whether a specific enrichment runs automatically.
 1.  Click the name of the column → `Edit column`.
 2.  Toggle auto-run on/off under `Run settings`. Click `Save` to apply your changes.
 
+**Note on Save button behavior:** When column-level Auto-run is **ON**, clicking Save shows a dropdown letting you choose whether to immediately run rows or save without running. When column-level Auto-run is **OFF**, clicking Save applies the configuration directly — no dropdown appears, and the column stays in manual-only mode. See [Saving configuration changes](enrichments.md#saving-configuration-changes) for the full breakdown of each option.
+
 **Important:** Table-level auto-run acts as the parent setting:
 
 -   If table-run is **OFF**: No columns will run automatically, regardless of column settings.

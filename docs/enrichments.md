@@ -58,10 +58,13 @@ Use conditional logic to control when an enrichment runs. The enrichment only ex
 
 ### Saving configuration changes
 
-When you click **Save** after editing an enrichment column, a dropdown lets you choose how the change takes effect:
+What happens when you click **Save** after editing an enrichment column depends on whether the column's **Auto-run** toggle is on or off:
 
--   **Save and don't run** — Saves your updated settings without re-running existing rows. If [auto-run](table-management-settings.md) is enabled, new rows added after saving will still trigger this enrichment automatically; historical rows remain unchanged until you manually trigger a run.
--   **Save and run _N_ rows** — Saves your settings and immediately queues all rows in the table for a run using the updated configuration.
+-   **Auto-run ON** — A dropdown appears letting you choose how the change takes effect:
+    -   **Save and run 10 rows** — Saves your settings and queues the first 10 rows as a quick sample run. (Only shown when the view has more than 10 rows.)
+    -   **Save and run _N_ rows in this view** — Saves your settings and immediately queues all rows in the current view using the updated configuration.
+    -   **Save and don't run** — Saves your updated settings without running any rows. Because Auto-run is on, new rows added after saving will still trigger this enrichment automatically; historical rows remain unchanged until you manually trigger a run.
+-   **Auto-run OFF** — Clicking **Save** saves the configuration immediately with no dropdown. No rows are queued to run, and the column stays in manual-only mode. To run rows on demand, right-click the column header and choose **Run column → Run _N_ rows**.
 
 ## Delay run
 
