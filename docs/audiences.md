@@ -81,7 +81,7 @@ The Salesforce import flow in Audiences has been redesigned. You can import **al
 
 **SOQL requirements for record subset imports**
 
-SOQL queries for Audiences must be valid SELECT statements and must include `Id`, `SystemModstamp`, and `IsDeleted`. Clay uses these fields to handle incremental syncing and soft-delete detection. For Contact queries, also include `AccountId`; for Lead queries, also include `ConvertedContactId`. The AI query generator includes these fields automatically.
+SOQL queries for Audiences must be valid SELECT statements and must include `Id`, `SystemModstamp`, and `IsDeleted`. Clay uses these fields to handle incremental syncing and soft-delete detection. For Contact queries, also include `AccountId`; for Lead queries, also include `ConvertedContactId`. The AI query generator includes these fields automatically. **The field mapping step shows only the fields listed in your SELECT clause** — to make a Salesforce field available for mapping to an Audience column, add it to the SELECT list. SOQL does not support `SELECT *`, so every field must be named explicitly (this is a Salesforce limitation, not a Clay one).
 
 **No semi-joins (nested sub-selects in `WHERE` clauses).** Salesforce's Bulk API 2.0 — which handles the initial full import and weekly re-sync — does not support SOQL semi-joins: queries that filter using `WHERE Id IN (SELECT ... FROM ...)`. A query containing a semi-join passes Clay's **Preview** step but causes the Bulk API import job to fail immediately with **"Salesforce Bulk API job [ID] failed. Records processed: 0"** and zero records imported. Use direct field filters on the imported object only. To filter contacts by opportunity or contact-role attributes, import all contacts and apply that filter as an audience segment condition after importing.
 
@@ -102,6 +102,7 @@ Record subsets let you bring exactly the Salesforce data you need without import
 4.  Enter a SOQL `SELECT` query. The query must:
     -   Use explicitly named fields (no `SELECT *`).
     -   Include operational sync fields: `Id`, `SystemModstamp`, and `IsDeleted`. Contacts and Opportunities also require `AccountId`; Leads also require `ConvertedContactId`.
+    -   Include any Salesforce fields you want to map to Audience columns — **only fields listed in the SELECT clause appear in the field mapping step**.
 5.  (Optional) Click **Generate with AI** to write a SOQL query from a plain-language description.
 6.  Click **Preview** to verify the query returns the expected records, then save.
 
@@ -147,7 +148,7 @@ A record subset import works alongside any standard Salesforce import. You can a
     ```
     -   To generate a query from a plain-language description, click **Generate with AI** and describe what you need (for example, "US accounts with annual revenue over $1M"). Clay drafts the SOQL for you — review and adjust the result before continuing.
     -   Click **Preview** to verify a sample of matching records before saving.
-6.  Map the SOQL fields to Audience columns.
+6.  Map the SOQL fields to Audience columns. **Only fields listed in your SELECT clause appear here** — if a field you want to map is missing, go back and add it to the SELECT list in step 5.
 7.  Click **Save** to activate the import.
 
 **Multiple subsets:** You can add more than one record subset for the same Salesforce object type. Each appears as a separate named entry under your Salesforce source in Settings and syncs independently.
