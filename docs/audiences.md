@@ -312,14 +312,16 @@ Records need a high-confidence identifier to match. Auto-enrichment adds `Linked
 
 **Import record matching (beta)**
 
-When importing from Salesforce or Snowflake, you can configure **Import record matching** to deduplicate records at ingestion time. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
+When importing from Salesforce, HubSpot, Snowflake, or other connected sources, you can configure **Import record matching** to deduplicate records at ingestion time. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
 
-**Example:** If you're importing from both Snowflake and Salesforce, setting `domain` as your alias field ensures that a single company row in your Audiences reflects data from both sources — rather than creating two separate records for the same company.
+Import record matching is primarily useful for **cross-source scenarios** — when the same person or company exists in two or more connected sources and you want Clay to merge them into a single record. If you are importing from only one source, Entity Resolution (described above) handles deduplication automatically based on shared identifiers like professional network URL and email.
+
+**Example:** If you're importing contacts from both HubSpot and Snowflake, setting `Email` as your alias field ensures that a single People record in your Audiences reflects data from both sources — rather than creating two separate records for the same person.
 
 To configure:
 
 1. In your import settings, find `Import record matching` and click `Edit`.
-2. Under `When`, choose an **alias field** — typically `Domain` for Companies or `Email` for People (additional options include LinkedIn URL, phone number, and others).
+2. Under `When`, choose an **alias field** — the identifier Clay uses to match records across sources. Options include **Email**, **Phone number**, **professional network URL**, and **External record ID** for People; **Domain**, **professional network URL**, and **External record ID** for Companies (among others). The **External record ID** option matches on each source's native record identifier — after selecting it, you map it to the specific field per source (for example, for HubSpot contacts this is the Contact ID field, which is HubSpot's `hs_object_id` property).
 3. Under `In`, map the alias field to the corresponding field in each connected source.
 4. When a new record arrives, Audiences checks whether the alias value already exists. If it does, the new data is merged with the existing record instead of creating a duplicate.
 
