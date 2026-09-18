@@ -740,6 +740,20 @@ If initial results are unsatisfactory, extracting the company name from the emai
 
 Click the **Edit source** icon on the column header of your search column in your company table — it appears as a small database (stack) icon in the column header bar. A panel opens listing all the inputs you configured — job title keywords, seniority, location, exclusions, and more. To update the filters before re-running the search, click **Edit inputs** in that panel.
 
+### What do the Org ID, Company ID, and Clay company ID fields mean in company enrich results?
+
+The **Enrich Company** action returns several numeric identifier fields alongside the enriched company data. Understanding what each field represents helps you pick the right one for re-enrichment and avoids misidentification.
+
+**Org ID (`org_id`):** LinkedIn's numeric organization identifier. This is the numeric ID associated with a company's LinkedIn profile — a separate value from the alphanumeric slug that appears in the profile URL. Org ID is a valid lookup signal you can use as a company identifier input, but it is an external value assigned by LinkedIn. **Important:** if you pass a bare number to the **Company Identifier** field in Enrich Company, Clay treats that number as an org ID — not as a Clay company ID. These are distinct values and will not produce the same lookup results.
+
+**Company ID (`company_id`):** The data provider's internal record identifier. This is an identifier used inside the provider that supplies Clay's company data — it is **not** the same as Clay's internal company identifier. Do not use it as a stable company key for re-enrichment; this field is informational and reflects provider-internal numbering.
+
+**Clay company ID:** Clay's internal identifier for the company in Clay's company graph. This is a separate concept from both Org ID and Company ID, and it is a different type of value than the **Company Record ID** that Company Table Data requires — they cannot be used interchangeably. See ["Company Table Data" shows "Missing Input" in the people table](#company-table-data-shows-missing-input-in-the-people-table) for a detailed explanation of this distinction.
+
+**Which identifier should I use for re-enrichment?**
+
+Use the **LinkedIn company URL** as your company identifier for the most reliable re-enrichment results. LinkedIn URLs map directly to the intended company profile and are the identifier the action treats with the highest accuracy. If you only have a domain, that works too — see [Use LinkedIn URLs, not domains, as company identifiers](#use-linkedin-urls-not-domains-as-company-identifiers) for when the LinkedIn URL is preferable over a domain.
+
 ### I don't see a Tools button — I only see Actions, or my instructions say to click Actions
 
 The top-right toolbar button in a Clay table is labeled **Tools** in all workspaces — this is the button you need for table-level functions like **Find People at These Companies**, Export, and Import. The Tools button appears whether you open the table directly or access it through a workbook.
