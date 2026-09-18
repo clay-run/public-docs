@@ -24,11 +24,11 @@ You can connect and utilize Harmonic.ai enrichments in two ways.
 
 ### `Action` **Get Fundraising Data for Company**
 
-Use this action to retrieve detailed fundraising information for a company based on its domain or LinkedIn URL.
+Use this action to retrieve detailed fundraising information for a company based on its domain or professional network URL.
 
 **Setup Inputs**
 
--   **Company Domain or Company LinkedIn URL**: Enter the company's domain (e.g., clay.com) or LinkedIn URL (e.g., https://www.linkedin.com/company/clay-run/) to fetch relevant fundraising data.
+-   **Company Domain or Company Profile URL**: Enter the company's domain (e.g., clay.com) or professional network URL to fetch relevant fundraising data.
 
 ### `Action` **Enrich Company**
 
