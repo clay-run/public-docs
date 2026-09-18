@@ -247,11 +247,15 @@ Your actual ad reach is based on the audience size (unique contacts), not the ma
 
 ### **Why does my ad audience show "too small for use in campaigns"?**
 
-Ad platforms enforce a minimum number of matched members before an audience can serve. LinkedIn requires at least 300 matched members; Meta requires at least 1,000 matched contacts. The most common cause of falling below these thresholds is that no email column was mapped in the field mapping — ad platforms match contacts by email, so without it the platform processes all sent records but matches 0.
+Ad platforms enforce a minimum number of matched members before an audience can serve. LinkedIn requires at least 300 matched members; Meta requires at least 1,000 matched contacts. For LinkedIn syncs, Clay validates the matchable entry count before uploading — if fewer than 300 rows have valid identifiers, Clay stops the sync and does not upload to LinkedIn. You'll see **Audience failed to sync to Ad destination** in the Sync panel.
+
+**For company audiences (professional network only):** Email columns are not used to match company audiences — LinkedIn matches on company identifiers. A company row counts toward the 300-member minimum only if at least one of the following fields is mapped and populated: company name, company website (domain), or LinkedIn company page URL. If your segment has fewer than 300 companies with at least one valid identifier, the sync will fail even if your domain formatting is correct. To fix this, widen your segment so more companies flow into the sync, then sync again.
+
+**For contact audiences:** The most common cause of falling below the minimum is that no email column was mapped — ad platforms match contacts by email, so without it the platform processes all sent records but matches 0.
 
 A second factor: if Enhanced Matching is enabled, it uses a professional profile URL or Work Email column you designate to look up personal emails before syncing. If those input columns are not configured, Enhanced Matching cannot improve your match rate.
 
-**To fix this:** Because field mapping cannot be changed after an Ad Sync is created, you'll need to delete the current sync and create a new one. **Note: Deletion is permanent — the sync cannot be restored afterward. Deleting the sync does not affect your underlying audience segment.** Map at least one email column, and configure Enhanced Matching inputs if using that feature. See [Why should I use personal emails instead of work emails?](#why-should-i-use-personal-emails-instead-of-work-emails) for guidance on which email type gives the best results.
+**To fix a contact audience:** Because field mapping cannot be changed after an Ad Sync is created, you'll need to delete the current sync and create a new one. **Note: Deletion is permanent — the sync cannot be restored afterward. Deleting the sync does not affect your underlying audience segment.** Map at least one email column, and configure Enhanced Matching inputs if using that feature. See [Why should I use personal emails instead of work emails?](#why-should-i-use-personal-emails-instead-of-work-emails) for guidance on which email type gives the best results.
 
 ### **Why am I getting a 403 error when I click Continue on an ad sync?**
 
