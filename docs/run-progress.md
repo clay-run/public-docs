@@ -157,6 +157,8 @@ To remove the limit and return to the full table, click **Show all rows** in the
 
 ## Troubleshooting cells stuck in Queued status
 
+There is no limit on how many rows you can trigger to run at once. You can queue an entire table of any size — Clay dynamically queues all rows and processes them concurrently without requiring you to batch or stagger your triggers. Very large runs take time to complete because rows queue rather than all fire at the same instant, but Clay manages this automatically. When individual enrichments use third-party APIs with their own rate limits, Clay handles those constraints through queuing as well.
+
 Cells show a **Queued** status when they are waiting to be processed. This is normal when running large tables — Clay processes many rows concurrently, but rows still queue when the system is handling prior requests or when an external API is rate-limiting responses. In most cases the queue resolves automatically.
 
 **If enrichments across multiple tables or workbooks appear stuck at the same time**, check **[status.clay.com](https://status.clay.com/)** before troubleshooting individual tables — simultaneous stalling across tables is often caused by a platform-wide incident. If an incident is active, the Clay team is already working on a fix and no further action is needed on your end.
