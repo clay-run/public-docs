@@ -166,6 +166,17 @@ To see exactly what a rep spent and on which Functions: go to `Settings → Cred
 
 MCP usage appears in the main credit usage dashboard at `Settings → Credit Usage`, which tracks all credit consumption across your workspace broken down by table, integration, and time period.
 
+### Do MCP credits come from my workspace's overall credit balance?
+
+Yes. MCP calls draw from the same shared workspace credit pool as table enrichments, workflows, and all other Clay activity — there is no separate credit allocation for MCP. The **MCP tab** under `Settings → Usage` is a filtered view of that shared balance broken down by user, not a separate bucket of credits.
+
+Two independent per-user controls can cap how much of the workspace balance a specific user consumes via MCP:
+
+-   **Per-user credit limit** — set from the `MCP users` table (see [Setting credit limits](#setting-credit-limits)). This monthly cap resets on the 1st of each month and is available on all paid plans.
+-   **Credit Budget** (Enterprise, currently in beta) — on workspaces with [Credit Budgets](/docs/credit-budgets) enabled, admins can assign a named budget to each MCP user from the **Budget** column in the `MCP users` table. The user's MCP spend counts against that budget's balance.
+
+If neither a credit limit nor a budget is configured for a user, MCP calls draw from the workspace balance with no additional per-user cap — only the workspace's total credit balance acts as the ceiling.
+
 ### What's the difference between the default credit limit and a per-user override?
 
 The default limit is a workspace-wide setting that applies automatically to any new rep who connects ChatGPT, Claude, or Glean. A per-user override replaces the default for a specific rep. Reps showing `No limit` have neither a default nor an override applied.
