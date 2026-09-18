@@ -431,6 +431,13 @@ Set the header `clay-api-key: YOUR_API_KEY`. The request body is a JSON object w
 
 Clay returns a run ID immediately — poll `GET /routines/run/{run_id}/results` to retrieve results. For the full API reference, see [developers.clay.com/routines/api](https://developers.clay.com/routines/api).
 
+**Required inputs must be non-blank.** Passing an empty string (`""`), whitespace-only value, or `null` for a required input is treated the same as omitting the key entirely.
+
+-   **Inline run:** returns `400` naming the offending field. No items are processed.
+-   **Batch run:** if any row has a blank required input, the entire batch returns `validation_failed` (with the line number, field, and message for each invalid row) — no rows in the batch dispatch. Fix the data or make the input optional before retrying.
+
+To allow a field to have no value, make the input optional — see [How do I make a function input optional?](#how-do-i-make-a-function-input-optional).
+
 **Rate limits and batch sizes:**
 
 -   **Rate limit:** 300 requests per minute across all public API endpoints in your workspace.
