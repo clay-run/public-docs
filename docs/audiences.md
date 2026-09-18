@@ -6,7 +6,7 @@ last_synced: 2026-08-20T01:53:27.941Z
 
 # Audiences
 
-**Plan availability:** Clay Audiences is available on **Growth** and **Enterprise** plans (including legacy Enterprise). Launch workspaces have access to core Audiences features — importing via CSV, people/company search, and Clay table sends — but connecting a CRM or data warehouse as a data source requires **Growth or above**. Free, Trial, and legacy non-Enterprise plan workspaces do not have access to Audiences. Growth plans can sync up to 250,000 CRM/DWH records; Enterprise plans support up to 25,000,000 records. Only imported Account, Contact, and Lead records count toward this limit — Activities (Salesforce Tasks and Events) and Opportunities associated with those accounts do not count toward the record limit.
+**Plan availability:** Clay Audiences is available on **Growth** and **Enterprise** plans (including legacy Enterprise). Launch workspaces have access to core Audiences features — importing via CSV, people/company search, and Clay table sends — but connecting a CRM or data warehouse as a data source requires **Growth or above**. Free, Trial, and legacy non-Enterprise plan workspaces do not have access to Audiences. Growth plans can sync up to 250,000 CRM/DWH records; Enterprise plans support up to 25,000,000 records by default — this is a soft cap that can be raised for your workspace, so contact your Growth Strategist if you need more. Only records imported from connected CRM (Salesforce, HubSpot) and data warehouse (Snowflake, BigQuery, Databricks) sources count toward this limit. Records added via Clay's people or company search do not count toward the record limit, regardless of volume. Activities (Salesforce Tasks and Events) and Opportunities associated with accounts do not count either.
 
 Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
 
@@ -1189,21 +1189,22 @@ The corrected records are imported fresh without duplicating the old ones.
 
 ### How does the Audiences record limit work? What counts toward it?
 
-The Audiences record limit is a **per-workspace cap** on the total number of unique records stored in your Audience, regardless of which source they came from. Growth plans cap at 250,000 records; Enterprise plans cap at 25,000,000.
+The Audiences record limit applies to records imported from CRM and data warehouse sources — not all records in your Audience. Growth plans cap at 250,000 records (hard cap — there is no add-on to increase this without upgrading to Enterprise); Enterprise plans default to 25,000,000 records (soft cap — contact your Growth Strategist to raise it for your workspace if you need more).
 
-Records that count toward the limit:
+Records that **count** toward the limit:
 
--   All records in **All People** (contacts and leads from any source)
--   All records in **All Companies** (accounts from any source)
+-   Records imported from **Salesforce** (Contacts, Leads, Accounts)
+-   Records imported from **HubSpot** (Contacts, Companies)
+-   Records imported from **Snowflake**, **BigQuery**, or **Databricks**
 
 Records that do **not** count:
 
--   Archived records (moved to the Archived section; not counted toward the limit while archived)
--   Segment memberships (a record in 10 different segments still counts as one record)
+-   Records added via **Clay's people or company search** — Clay Search results do not count toward your plan's record limit, regardless of volume
+-   Records sent from **CSV imports** or **Clay table sends**
+-   **Archived records** (not counted while archived)
+-   **Segment memberships** (a record in 10 different segments still counts as one record)
 
-If your workspace reaches the limit, Clay will stop importing new records from your connected sources until the count drops below the cap. To free up space: archive records you no longer need (see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above), or upgrade your plan.
-
-Growth plans have a hard cap — there is no add-on to increase the limit without upgrading to Enterprise.
+If your workspace reaches the limit, Clay will stop importing new records from your CRM and warehouse sources until the count drops below the cap. To free up space, archive records you no longer need (see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above). Enterprise workspaces that need more than 25,000,000 records can contact their Growth Strategist to raise the cap.
 
 ### Can I add a "notes" or "memo" field to an Audience record?
 
