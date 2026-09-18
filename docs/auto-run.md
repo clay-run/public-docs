@@ -46,6 +46,8 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
 
 **Note:** There is no workspace-wide setting to disable auto-run across all tables at once. Auto-run must be configured individually for each table.
 
+**Note:** Clay does not automatically switch a table from auto-run to manual when enrichments finish running. The Auto-run toggle is always a manual setting — there is no column completion event or rule that flips it automatically. To prevent completed rows from being re-enriched while auto-run stays on, use **Keep existing results** (on by default): only new, empty, or errored cells run automatically, and cells that already have successful results are skipped. To stop enrichments entirely, toggle Auto-run off manually via the `⛭` icon → **Run Settings**.
+
 **To enable or disable table-level auto-run:**
 
 **Note:** The Auto-run toggle cannot be changed while the table is actively running. Stop the run first by clicking the **Stop** button in the run summary panel at the bottom-right. If the toggle remains greyed out after stopping, try a hard refresh (`Cmd+Shift+R` on Mac, `Ctrl+Shift+R` on Windows/Linux) to clear stale browser state.
