@@ -120,3 +120,16 @@ Per-table row limits by plan:
 -   **Launch, Growth, and Enterprise plans:** 50,000 rows per table
 
 To proceed: delete some rows from the destination table to free up capacity, switch the destination to **Create new table** to import into a fresh table, or upgrade your plan to increase the per-table row limit (click **Upgrade your plan** in the top right of your workspace).
+
+**If AI column text is cut off in the exported CSV:**
+
+Use AI and Claygent columns store their output as a structured object containing multiple fields — Response, Reasoning, Confidence, and others. Each cell in the table displays only a short text preview of the Response field, which is why longer values trail off with "..." in the table view. When you export to CSV, the exported value is that same short preview, so AI column text can be cut off mid-sentence in the downloaded file.
+
+To export the complete response text from an AI column:
+
+1.  Click any cell in the AI column to open the cell details panel.
+2.  Hover over the **Response** field.
+3.  Click **Add to column** — Clay creates a new column that extracts the full Response text for every row.
+4.  Export the table; the new column contains the complete, untruncated text.
+
+You only need to do this once per AI column — not once per row. For each additional AI column whose full output you want to export, repeat the same four steps. When you create new AI columns in the future, add the Response field to its own column before exporting so your CSV always captures the complete text.
