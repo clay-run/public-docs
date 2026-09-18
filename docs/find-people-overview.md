@@ -1,6 +1,6 @@
 ---
 title: Find People in Clay
-description: Discover relevant contacts and professional posts using Clay's Find People and Find professional posts sources, then enrich results with work email, mobile phone, and a person's professional posts and shares.
+description: Discover relevant contacts and professional posts using Clay's Find People and Find professional posts sources, then enrich results with work email, mobile phone, and a person's professional posts and shares. Also covers how to import contacts from a LinkedIn Sales Navigator people search using Find people from external search.
 last_synced: 2026-04-26T01:39:58.803Z
 ---
 
@@ -11,6 +11,8 @@ Discover relevant contacts matching your criteria within Clay's database.
 The `Find People` source helps you search for people using criteria like job title, company, location, and experience.
 
 This tool is ideal for building targeted sales prospect lists, identifying potential hires, and conducting market research.
+
+To import contacts from a LinkedIn Sales Navigator people search into Clay, use the **Find people from external search** source — see [Importing from a Sales Navigator search URL](#importing-from-a-sales-navigator-search-url) below.
 
 **Note:** You can get up to 500 results per cell by reducing the data you're requesting. Click the column name and select **Edit column → Reduce Data for More Results**.
 
