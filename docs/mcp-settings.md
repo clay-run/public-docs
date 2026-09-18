@@ -170,7 +170,12 @@ MCP usage appears in the main credit usage dashboard at `Settings → Credit Usa
 
 Yes. MCP calls draw from the same shared workspace credit pool as table enrichments, workflows, and all other Clay activity — there is no separate credit allocation for MCP. The **MCP tab** under `Settings → Usage` is a filtered view of that shared balance broken down by user, not a separate bucket of credits.
 
-If a per-user credit limit is set (see [Setting credit limits](#setting-credit-limits)), that limit caps how much of the workspace balance that user can consume via MCP each month. Without a per-user limit, MCP calls draw from the workspace balance with no additional per-user cap — only the workspace's total credit balance acts as the ceiling.
+Two independent per-user controls can cap how much of the workspace balance a specific user consumes via MCP:
+
+-   **Per-user credit limit** — set from the `MCP users` table (see [Setting credit limits](#setting-credit-limits)). This monthly cap resets on the 1st of each month and is available on all paid plans.
+-   **Credit Budget** (Enterprise, currently in beta) — on workspaces with [Credit Budgets](/docs/credit-budgets) enabled, admins can assign a named budget to each MCP user from the **Budget** column in the `MCP users` table. The user's MCP spend counts against that budget's balance.
+
+If neither a credit limit nor a budget is configured for a user, MCP calls draw from the workspace balance with no additional per-user cap — only the workspace's total credit balance acts as the ceiling.
 
 ### What's the difference between the default credit limit and a per-user override?
 
