@@ -214,6 +214,12 @@ Sculptor can be helpful throughout the building process, and you can freely turn
 -   **Message Drafting** — Not yet supported
 -   **Filters & Sorting** — Not yet supported
 
+### Does duplicating a workflow share steps between the original and the copy?
+
+No. When you duplicate a workflow in Clay, the copy is fully independent. Every step is recreated with a new ID and assigned exclusively to the new workflow — no step data is shared with the original. Editing a step in the duplicate does not affect the original, and editing the original does not affect the duplicate.
+
+If you notice that two workflows appear to be producing the same output after one is modified, check whether either workflow is calling a shared [Function](https://university.clay.com/docs/functions). Functions are intentionally designed to update everywhere they are used — so editing a Function used by multiple workflows will affect all of them. To give each workflow its own independent logic, edit each workflow's Function call to point to a separate copy of the Function.
+
 ### How can I use Sculptor to replicate an existing workflow's logic in a new workflow?
 
 Open the existing workflow and click the Sculptor button to open the chat panel. Ask Sculptor to describe the workflow — for example: *"Explain step by step everything this workflow does."* Sculptor reads the full workflow graph and returns a description of each node, its configuration, and how the nodes connect.
