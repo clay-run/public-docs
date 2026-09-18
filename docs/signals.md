@@ -2,7 +2,7 @@
 title: Signals in Clay
 description: Learn about Signals, a way to monitor changes to your contacts like
   promotions, job changes, or new hires.
-last_synced: 2026-04-26T01:40:40.844Z
+last_synced: 2026-09-18T03:51:09.234Z
 ---
 
 # Signals in Clay
@@ -26,7 +26,7 @@ To start a signal, you'll **need a table with** companies or contacts you want t
 
 **While in your table:**
 
-1.  Click `Tools`, then select one of the `Monitor for...` options—new hires, job changes, or promotions.
+1.  Click `Tools` → `Signals`, then select one of the `Monitor for...` options—new hires, job changes, or promotions.
 2.  Select the **company table** you want to monitor, then select a **view** from that table — the signal will only check rows visible in that view (not the entire table). Identify the correct company identifiers (website, LinkedIn URL, etc.).
     -   **Note:** The table and view cannot be changed after the signal is saved. To monitor a different set of companies, create a new signal.
 3.  Configure filters for the Signal.
