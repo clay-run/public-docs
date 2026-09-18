@@ -17,7 +17,7 @@ To run an email campaign in Clay, you need two things ready before creating the 
 
 **1. A table with work email addresses for your leads**
 
-The campaign's lead list comes from a Clay table that has a column containing each contact's work email address. If you already have a CSV with contacts and emails, you can import it directly (see step 1 of [Create a new email campaign](#create-a-new-email-campaign)).
+The campaign's lead list comes from a Clay table that has a column containing each contact's work email address. If you already have a CSV with contacts and emails, you can import it directly (see step 1 of [Create a new email sequence](#create-a-new-email-sequence)).
 
 If you're starting from a list of companies and don't yet have individual contact emails, the typical path is:
 
@@ -48,13 +48,13 @@ Connect and enable warmup on your sender account as early as possible so it's re
 9.  Review the summary and click `Finish`.
 10.  Back in Clay, click `Continue` in the modal, then click `Connect your Google account` and complete the OAuth sign-in.
 
-## Create a new email campaign
+## Create a new email sequence
 
 1.  Start in a table that contains the lead emails you want to contact.
     -   If you haven't done this yet, click `Tools` → `Import` to add emails from a third party or CSV.
-2.  Click `Tools` → `Exports` → `Create Clay email campaign`
-    -   The `Sync lead data to campaign` column automatically pushes 10 rows from your parent table into the campaign to draft with
-    -   Tip: You can customize the `Sync lead data to campaign` column to only send leads with an email address using `Only run if`.
+2.  Click `Tools` → `Exports` → `Create Clay email sequence`
+    -   The `Sync lead data to sequence` column automatically pushes 10 rows from your parent table into the campaign to draft with
+    -   Tip: You can customize the `Sync lead data to sequence` column to only send leads with an email address using `Only run if`.
 3.  In the `Setup` tab, you can set:
     -   `Lead email address`: We automatically detect email address columns, but confirm this before proceeding.
     -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links. **Important:** This choice is permanent once the campaign is launched — you cannot switch a campaign between plaintext and HTML after launch. If you need HTML features (such as images in sender signatures) in an existing plaintext campaign, create a new campaign and enable HTML before launching it.
@@ -81,7 +81,7 @@ Connect and enable warmup on your sender account as early as possible so it's re
         -   `Update send limit`: Change the daily number of emails the account can send per day
         -   `Update sender variables`: Change the sender variable values for the account
     -   **Searching and bulk actions:** Use the **search bar** and **Filter** control in `Sender accounts` to quickly find accounts by email address or name. Filter by account type (Google OAuth, Outlook, or SMTP) or status (Ready, Warming up, Not warming, or Auth error). Select multiple accounts to bulk-enable warmup or remove them from the campaign at once.
-    -   **Assign sender account field to lead (optional):** At the bottom of the `Sender accounts` section, you can optionally map a column to assign a specific sending account to each lead. When this field is set, Clay uses the email address in that column as the sender for each lead — that address must match one of the sender accounts already configured in the campaign. If the mapped column contains an email that is not a configured sender account, that lead's row in the `Sync lead data to campaign` column will fail with a validation error when it runs. Leads where the column is blank (no value) are distributed evenly across all configured sender accounts. If you are not deliberately routing leads to specific senders, leave this field empty.
+    -   **Assign sender account field to lead (optional):** At the bottom of the `Sender accounts` section, you can optionally map a column to assign a specific sending account to each lead. When this field is set, Clay uses the email address in that column as the sender for each lead — that address must match one of the sender accounts already configured in the campaign. If the mapped column contains an email that is not a configured sender account, that lead's row in the `Sync lead data to sequence` column will fail with a validation error when it runs. Leads where the column is blank (no value) are distributed evenly across all configured sender accounts. If you are not deliberately routing leads to specific senders, leave this field empty.
 6.  Adjust your `Schedule settings`:
     -   `Timezone`: Select the timezone to send from (we recommend matching your prospects').
     -   `Days of the week`: Choose which days emails are sent.
@@ -195,7 +195,7 @@ Our sequencer is powered by Smartlead, but everything runs on Clay credits. You 
 
 ### Why does my campaign only show 10 leads after launching?
 
-When a campaign is created, the `Sync lead data to campaign` column pushes 10 rows so you can preview and configure your messages. After launching, the rest of your source table is not pushed automatically. To add all remaining rows, open your source table (the table where you created the campaign — not the campaign events table) and run the `Sync lead data to campaign` column manually — click the run button in the column header.
+When a campaign is created, the `Sync lead data to sequence` column pushes 10 rows so you can preview and configure your messages. After launching, the rest of your source table is not pushed automatically. To add all remaining rows, open your source table (the table where you created the campaign — not the campaign events table) and run the `Sync lead data to sequence` column manually — click the run button in the column header.
 
 ### Why did my campaign stop sending before reaching all my leads?
 
@@ -253,13 +253,13 @@ To shorten the estimated time:
 -   **Add more sender accounts** — each account adds its own independent daily capacity.
 -   **Increase the account send limit** — in `Sender accounts`, click the three-dot (⋯) menu next to an account and select `Update send limit`.
 
-### My "Sync lead data to campaign" column is showing a warning. What does it mean?
+### My "Sync lead data to sequence" column is showing a warning. What does it mean?
 
 This usually means the Clay table that the column points to was deleted. Hover over the warning icon to confirm — the error reads *"Destination table was deleted. Please either restore that table from the trash, or create a new Send table data column."*
 
 To fix it, open `Trash` from the bottom-left of your workspace sidebar, find the deleted table, and click `Restore`. The column will reconnect once the table is back.
 
-If the table was permanently deleted from Trash and can't be recovered, create a new campaign: click `Tools` → `Exports` → `Create Clay email campaign` in your source table.
+If the table was permanently deleted from Trash and can't be recovered, create a new campaign: click `Tools` → `Exports` → `Create Clay email sequence` in your source table.
 
 Deleting a campaign through the column header's settings (the **Delete campaign** option) is permanent — it removes the campaign from the sending platform and all associated columns with no recovery option.
 
@@ -278,23 +278,23 @@ To use the AI output as a personalization variable in your message sequence:
 1. In your source table, click a populated cell in the Claygent column to open the cell details panel.
 2. Hover over the **Response** value — an **Add to column** button appears.
 3. Click **Add to column** and give the new column a name (for example, "First Name").
-4. Re-run the `Sync lead data to campaign` column in your source table so the new column's data is pushed to the campaign.
+4. Re-run the `Sync lead data to sequence` column in your source table so the new column's data is pushed to the campaign.
 5. Open the campaign's **Message sequence**, type `/` where you want the personalization, select **Clean variable**, and pick the new column from the list.
 
 **Editing a live campaign:** If your campaign is already running, you must pause it before changing the message template — open the campaign's `Setup` tab and click **Pause**. Make your edits to the message sequence, then relaunch the campaign.
 
 ### Why is a source table column showing under a different name in the campaign variable picker?
 
-The campaign variable picker shows columns using the labels assigned in the **Sync lead data to campaign** column's field mapping — not necessarily the original column names in your source table. When you set up the mapping, each selected field has an editable label. If a field's label was left as the default placeholder ("New Column") or was manually renamed to something else, the variable picker shows that label instead of the source column name.
+The campaign variable picker shows columns using the labels assigned in the **Sync lead data to sequence** column's field mapping — not necessarily the original column names in your source table. When you set up the mapping, each selected field has an editable label. If a field's label was left as the default placeholder ("New Column") or was manually renamed to something else, the variable picker shows that label instead of the source column name.
 
 For example, if your source table has a "First Name" column but its label was set to "New Column" during mapping setup, the variable picker lists it as "New Column" — not "First Name."
 
 **To fix this:**
 
-1. In your source table, click the **Sync lead data to campaign** column header and select **Edit column**.
+1. In your source table, click the **Sync lead data to sequence** column header and select **Edit column**.
 2. In the field mapping section, find the field showing the unexpected name.
 3. Click the edit icon next to it and update the label to the name you expect to see in the variable picker (for example, "First Name").
-4. Click **Save**, then re-run the `Sync lead data to campaign` column to push the updated label to the campaign.
+4. Click **Save**, then re-run the `Sync lead data to sequence` column to push the updated label to the campaign.
 5. If you already referenced the old label as a variable in your message template, update those variable references in the campaign's **Message sequence** to use the corrected name.
 
 ### Can I delete or remove an email step from a launched campaign?
@@ -404,7 +404,7 @@ If your emails are going out from an unexpected account, the most likely cause i
 
 ### Why are some leads failing with "Sender email address is not a configured sender account in this campaign"?
 
-This error fires in the `Sync lead data to campaign` column when the **Assign sender account field to lead** setting (in the `Sender accounts` tab) is mapped to an email column, and the email address in that column for a lead does not match any of the sender accounts configured in your campaign.
+This error fires in the `Sync lead data to sequence` column when the **Assign sender account field to lead** setting (in the `Sender accounts` tab) is mapped to an email column, and the email address in that column for a lead does not match any of the sender accounts configured in your campaign.
 
 Two common causes:
 
@@ -413,9 +413,9 @@ Two common causes:
 
 **To fix it:**
 
--   **If you do not intend to route specific leads to specific senders:** Remove the field mapping — open the `Sender accounts` tab, scroll to the `Assign sender account field to lead` section, and clear the selection. Leads will then be distributed evenly across all your configured sender accounts. After clearing it, re-run the `Sync lead data to campaign` column for the affected rows to re-enroll them.
--   **If you are using the wrong column:** Make sure the column you selected contains one of your configured sending account email addresses — not the lead's own email. Add those sender accounts to the campaign first if they are not already there, then re-run the `Sync lead data to campaign` column.
--   **If the issue is a case mismatch:** Add a formula column in your source table — enter `{{Your Sender Email Column}}.toLowerCase()` — and select that column in **Assign sender account field to lead** instead. Re-run the `Sync lead data to campaign` column for the affected rows.
+-   **If you do not intend to route specific leads to specific senders:** Remove the field mapping — open the `Sender accounts` tab, scroll to the `Assign sender account field to lead` section, and clear the selection. Leads will then be distributed evenly across all your configured sender accounts. After clearing it, re-run the `Sync lead data to sequence` column for the affected rows to re-enroll them.
+-   **If you are using the wrong column:** Make sure the column you selected contains one of your configured sending account email addresses — not the lead's own email. Add those sender accounts to the campaign first if they are not already there, then re-run the `Sync lead data to sequence` column.
+-   **If the issue is a case mismatch:** Add a formula column in your source table — enter `{{Your Sender Email Column}}.toLowerCase()` — and select that column in **Assign sender account field to lead** instead. Re-run the `Sync lead data to sequence` column for the affected rows.
 
 ### Can I connect a third-party email provider (such as LiteMail) as a sender account?
 
