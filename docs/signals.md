@@ -26,7 +26,7 @@ To start a signal, you'll **need a table with** companies or contacts you want t
 
 **While in your table:**
 
-1.  Click `Tools` → `Signals`, then select one of the `Monitor for...` options—new hires, job changes, or promotions.
+1.  In the workbook's **Create** panel (click `+` to expand it if collapsed), select **Signals**, then choose a signal type — **New hire**, **Job change**, or **Promotion**.
 2.  Select the **company table** you want to monitor, then select a **view** from that table — the signal will only check rows visible in that view (not the entire table). Identify the correct company identifiers (website, LinkedIn URL, etc.).
     -   **Note:** The table and view cannot be changed after the signal is saved. To monitor a different set of companies, create a new signal.
 3.  Configure filters for the Signal.
@@ -80,7 +80,7 @@ Signals require a connected data source to run against — either a source table
 
 When a signal is attached directly to a segment in Clay Audiences, its results are written as signal data on each matching record — not as new rows in a separate editable table. The view you see on the audience surface is read-only: you cannot add AI columns to it or chain Clay table write actions (such as Slack messages, Google Sheets updates, or Salesforce writes) directly off it.
 
-To analyze, score, or act on signal results, run the signal from a Clay table instead. Create or use a Clay table that contains the same companies you are monitoring — imported from your CRM, a CSV, or the same source that populated your audience segment — then click **Tools** → **Signals** → **Monitor for news & fundraising** (or the relevant signal type) in that table to set up the signal there. Each matching event lands as a new row in the table, where you can add AI scoring columns, apply filters, and chain write actions to Slack, Google Sheets, or Salesforce normally.
+To analyze, score, or act on signal results, run the signal from a Clay table instead. Create or use a Clay table that contains the same companies you are monitoring — imported from your CRM, a CSV, or the same source that populated your audience segment — then, in the workbook's **Create** panel, select **Signals** and choose the relevant signal type to set up the signal there. Each matching event lands as a new row in the table, where you can add AI scoring columns, apply filters, and chain write actions to Slack, Google Sheets, or Salesforce normally.
 
 **Two things to keep in mind:**
 
@@ -119,7 +119,7 @@ Because the table ID hasn't changed, all downstream signal workflows remain conn
 
 The signal's Company Table, View, and Company Identifier fields are locked after the signal is created and cannot be updated via **Edit signal**. If Option 1 is not feasible — for example, if you need to monitor a fundamentally different set of companies — you will need to rebuild each affected signal.
 
-**To preserve your enrichment columns when rebuilding**, save the existing signal results table as a template first: click the table title → scroll to **Share as template** → toggle it on and copy the link. Open the link to create a new table — the new table will include all your enrichment column configurations. Then set up your signal from scratch in your source company table (via **Tools** → **Signals** → the relevant signal type), targeting the new source table.
+**To preserve your enrichment columns when rebuilding**, save the existing signal results table as a template first: click the table title → scroll to **Share as template** → toggle it on and copy the link. Open the link to create a new table — the new table will include all your enrichment column configurations. Then set up your signal from scratch in your source company table (via the workbook's **Create** panel → **Signals** → the relevant signal type), targeting the new source table.
 
 ### How do I extend my signal to cover more companies?
 
@@ -138,7 +138,7 @@ When editing an existing company-based signal (New Hire, Job Posting, etc.), the
 
 Because these source fields cannot be re-pointed after creation, the fix is to rebuild the signal:
 
-1.  Open your current company table → click **Tools** → **Signals** → select the signal type (e.g., **Monitor for new hires**).
+1.  In the workbook, expand the **Create** panel (click `+` if collapsed), select **Signals**, then choose the signal type (e.g., **New hire**).
 2.  Configure your filters and set the desired run frequency.
 3.  Click **Save and run**.
 
@@ -234,7 +234,7 @@ You can review all active signals and their individual credit spend in the `Sign
 
 ### Why does my signal keep writing results to a new table instead of my existing one?
 
-Signals always write their matching events to a **new dedicated results table** — one row per event. Whether you start signal setup from inside an existing table (via `Tools` → `Signals`) or from the Signals section / Workbook overview, the existing table you select is used as the **input source** that supplies the companies or contacts to monitor; it is not the destination for the events. Clay creates a fresh output table to capture matching events.
+Signals always write their matching events to a **new dedicated results table** — one row per event. Whether you start signal setup from the workbook's **Create** panel (select **Signals**, then the signal type) or from the global **Signals** sidebar, the existing table you select is used as the **input source** that supplies the companies or contacts to monitor; it is not the destination for the events. Clay creates a fresh output table to capture matching events.
 
 Signals always add **new rows** for each matching event — one row per event, not a new column on existing rows. If your goal is to see signal data (such as a recent funding round) alongside your existing contacts, see the next FAQ.
 
@@ -303,7 +303,7 @@ A common net-new discovery workflow:
 
 ### How do I configure the Monitor Professional Posts signal?
 
-The **Monitor Professional Posts** signal discovers professional posts matching your criteria and adds new results to your table on a recurring schedule. It is a custom signal available under **Tools → Signals → Professional Posts**.
+The **Monitor Professional Posts** signal discovers professional posts matching your criteria and adds new results to your table on a recurring schedule. It is a custom signal available in the workbook's **Create** panel under **Signals**.
 
 **Signal inputs:**
 
