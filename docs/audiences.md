@@ -1090,82 +1090,68 @@ CSV imports are one-time — there is no way to "re-import" or overwrite a previ
 
 Once the old records are archived and the new import completes, your Audience will reflect only the corrected data.
 
-### Why is `Upsert Audiences Record` creating duplicate people instead of updating existing ones?
+### How does the Audiences record limit work? What counts toward it?
 
-When an `Upsert Audiences Record` action runs, it looks up an existing person by the field(s) you configured under **Look up fields** — typically Email, professional network URL, or Phone. If the lookup fails to find a match, the action creates a new record instead of updating one.
+The Audiences record limit is a **per-workspace cap** on the total number of unique records stored in your Audience, regardless of which source they came from. Growth plans cap at 250,000 records; Enterprise plans cap at 25,000,000.
 
-The most common cause of unexpected duplicates: **the look-up field doesn't match how those people were originally registered in Audiences.**
+Records that count toward the limit:
 
-**How `Upsert Audiences Record` finds the existing record**
+-   All records in **All People** (contacts and leads from any source)
+-   All records in **All Companies** (accounts from any source)
 
-The **Look up fields** you configure (Email, professional network URL, or Phone for People) are matched against **identifiers that were registered on each person when they first entered your Audience** — not against the email address or other field values stored in your Audience columns.
+Records that do **not** count:
 
-People who entered Audiences through a Clay table import (via **Add data → Clay table** or **Continue → Save to People**) are registered under a source identifier, not an email identifier. An email-based lookup cannot find those records, so instead of updating the existing person the action creates a new duplicate on every run.
+-   Archived records (moved to the Archived section; not counted toward the limit while archived)
+-   Segment memberships (a record in 10 different segments still counts as one record)
 
-**To update existing records without creating duplicates:**
+If your workspace reaches the limit, Clay will stop importing new records from your connected sources until the count drops below the cap. To free up space: archive records you no longer need (see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above), or upgrade your plan.
 
-1. Add a **`Lookup in Audiences`** column to your table first — this returns each person's Audiences record ID.
-2. In your **`Upsert Audiences Record`** column, set **Look up fields** to **Audiences record ID**. A record-ID write always updates the matched record and can never create a new one.
+Growth plans have a hard cap — there is no add-on to increase the limit without upgrading to Enterprise.
 
-### Why is `Upsert Audiences Record` not finding existing records even though the email matches?
+### Can I add a "notes" or "memo" field to an Audience record?
 
-See [Why is `Upsert Audiences Record` creating duplicate people instead of updating existing ones?](#why-is-upsert-audiences-record-creating-duplicate-people-instead-of-updating-existing-ones) above — the email lookup matches against identifiers registered at entry time, not the current email field value. If the record entered Audiences through a source that registered it under a source identifier (not an email identifier), email-based lookups will fail even when the email column shows the correct address.
+Yes — you can create a custom text field in Audiences and update it from a Clay table using `Update Audiences Record` or `Upsert Audiences Record`. There is no built-in "notes" column, but a custom field works the same way.
 
-### How can I check which identifier a person record in Audiences was registered under?
+**To set this up:**
 
-Open the person's detail view and look at the **External record IDs** section. Each entry shows the source system (for example, `salesforce`) and the ID value used to register this record. If the record was imported from Salesforce, you'll see a `salesforce` entry with the `003…` Contact ID. If it was imported from a Clay table send, you'll see a `clay_table` entry (or similar) with a source-specific identifier — an email-based `Upsert Audiences Record` lookup cannot resolve to that entry.
+1.  Create a custom Audience text field — see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) above.
+2.  In your Clay table, add an `Update Audiences Record` or `Upsert Audiences Record` column.
+3.  Map the text column in your table to the custom notes field in Audiences.
+4.  Run the column — the value writes permanently to the Audience record.
 
-### Why is my audience segment empty or missing records I expect to see?
+You can then filter segments on this field, export it to Salesforce, or use it as input for enrichments.
 
-The most common causes:
+### Why does my Databricks import fail with a schema or permission error?
 
--   **Import hasn't completed yet** — If your Salesforce, Snowflake, or other source import is still running (especially for large datasets), records that haven't synced yet won't appear in your segments. Check the import status in Settings → Sources.
--   **Segment filter is too narrow** — Double-check each filter condition. A filter on a field that isn't populated for most records — for example, a custom Salesforce field that's null by default — will exclude most records. Try removing filters one by one to identify which condition is causing the exclusion.
--   **Field not mapped** — If you're filtering on a Salesforce field that wasn't included in your import field mapping, no records will have a value for that field and the filter will return zero results. Add the field to your import mapping and wait for the next sync.
--   **Entity resolution hasn't run yet** — For new imports, entity resolution runs in the background after records arrive. Records matched and merged from multiple sources may not appear under the expected segment filter until entity resolution completes. This typically takes a few minutes for small imports and longer for large ones.
--   **Records are archived** — Archived records don't appear in any segment view. If records you expect to see are missing, check whether they were previously archived.
+Databricks imports in Audiences use the Unity Catalog. Two common causes of failure:
 
-### How do I add a people or companies search to an audience that already has records?
+**1. The service principal lacks SELECT on the target table.**
 
-When you run a **Find People** or **Find Companies** search and reach the final step, the wizard gives you two options:
+In Databricks, grant the service principal read access to the catalog, schema, and table you're importing:
 
--   **Add to existing**: merges results into your existing All People / All Companies audience. Records already in the audience are excluded from the merge automatically.
--   **Create new**: creates a fresh audience starting from the search results only.
+```sql
+GRANT USE CATALOG ON CATALOG <catalog_name> TO `<service-principal-id>`;
+GRANT USE SCHEMA ON SCHEMA <catalog_name>.<schema_name> TO `<service-principal-id>`;
+GRANT SELECT ON TABLE <catalog_name>.<schema_name>.<table_name> TO `<service-principal-id>`;
+```
 
-To add records from a new search to an audience that already has records, select **Add to existing** at the final step. This is a one-time import — it does not re-run the search on a schedule or update the audience when search results change. To refresh the results over time, run the search again and repeat the merge.
+Replace `<service-principal-id>` with the application ID of the service principal connected to Clay.
 
-### How do I handle Audiences data in compliance with GDPR or CCPA?
+**2. The table is not registered in Unity Catalog.**
 
-If a contact or company requests deletion under GDPR or CCPA, you must remove their data from Audiences:
+Audiences can only import from tables registered in Unity Catalog — it cannot query tables or views defined in the legacy Hive metastore. To migrate a legacy table, use `CREATE TABLE ... AS SELECT` in Unity Catalog to register a copy, or move the underlying data to a Unity Catalog volume.
 
-1.  Search for the contact or company by name or email in your People or Companies audience.
-2.  Open the record and archive it — click the **⋮** menu on the record detail view and select **Archive**.
-3.  For a full data purge (if the contact or company requests erasure, not just opt-out), contact Clay support. Clay support can perform a hard deletion of the record from Clay's systems, including removing it from audit logs and backups, on request.
+If neither of these applies and the import still fails, contact Clay support with the error message shown in the import setup.
 
-Archiving the record from Audiences does not automatically remove the contact's data from your connected Salesforce or HubSpot org — you must perform the deletion in your CRM separately.
+### How do I archive records that no longer match my Snowflake import query?
 
-### Can Audiences write data back to Salesforce Opportunities?
+When you update your Snowflake SQL query to exclude records — for example, removing rows below a revenue threshold — those records are marked **Deleted in source** in your Audience on the next full sync (within 7 days). They are not automatically archived; they remain in All People or All Companies with a **Deleted in source** status.
 
-No. Audiences does not support exporting data back to Salesforce Opportunities through the native Audiences export sync. The export sync is limited to Salesforce Contacts and Accounts.
+To remove them from your Audience, archive them manually:
 
-To update Opportunity fields in Salesforce from data in Audiences, use a **Salesforce Update Record** action column in a bulk enrichment table:
+1.  Go to **All People** or **All Companies** in your Audiences view.
+2.  Add a filter: **Source** → select your Snowflake import → set status to **Deleted in source**.
+3.  Select all returned rows.
+4.  Click **Archive** in the bottom toolbar and confirm.
 
-1.  In Audiences, navigate to a Companies segment that includes the accounts associated with the opportunities you want to update.
-2.  Click **Enrich** → **Add bulk enrich** to create a bulk enrichment table.
-3.  In the enrichment table, add a **Salesforce Update Record** column.
-4.  Set the **Salesforce Object** to **Opportunity**.
-5.  Set **Record ID** to the Salesforce Opportunity ID column. If you don't have the Opportunity ID in Audiences, add a **Salesforce Lookup Records via SOQL** column first to retrieve it using the Account ID.
-6.  Map the fields you want to update.
-7.  Click **Start Run**.
-
-### How do I track email sequence engagement (opens, clicks, replies) in Audiences?
-
-Clay's email sequencing integration (for tools like Instantly, Smartlead, and Clay's own email sequencer) does not automatically write engagement signals back to Audiences. To track opens, clicks, and replies in Audiences, you need to push those events manually.
-
-**General approach:**
-
-1.  Set up a webhook in your email sequence tool that fires when an engagement event occurs (open, click, reply).
-2.  Route the webhook payload to a Clay table — use the Clay API or a webhook source in a Clay table.
-3.  In the Clay table, add an **`Update Audiences Record`** action column that maps the engagement data (for example, last\_replied\_at, email\_opened, click\_count) to corresponding Audiences fields on the matching contact.
-
-This approach requires a custom Audiences field for each engagement metric you want to track. Create the field first via the `Update Audiences Record` field mapper — see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) for steps.
+Archived records can be restored at any time from the **Archived** section in the left sidebar.
