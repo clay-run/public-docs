@@ -65,6 +65,7 @@ The **Message Drafting Panel** is composed of several key components that work t
 
 -   Toggle **Auto-update** to refresh message drafts automatically with updated data.
 -   Configure the **Only Run If** condition to control when the action should execute (e.g., only if a specific field exists).
+-   Toggle **Auto-run AI snippets** to control whether AI snippet columns in your draft run automatically when rows are added or their inputs change. This toggle appears only when your draft contains at least one AI snippet. When off, AI snippet cells do not auto-run and the footer shows a plain **Save** button instead of the save-and-run dropdown. Auto-run is on by default for new drafts.
 
 ## **AI Snippets**
 
