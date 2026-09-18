@@ -253,6 +253,23 @@ A second factor: if Enhanced Matching is enabled, it uses a professional profile
 
 **To fix this:** Because field mapping cannot be changed after an Ad Sync is created, you'll need to delete the current sync and create a new one. **Note: Deletion is permanent — the sync cannot be restored afterward. Deleting the sync does not affect your underlying audience segment.** Map at least one email column, and configure Enhanced Matching inputs if using that feature. See [Why should I use personal emails instead of work emails?](#why-should-i-use-personal-emails-instead-of-work-emails) for guidance on which email type gives the best results.
 
+### **Why is my LinkedIn company account audience showing a 0% match rate?**
+
+A 0% match rate on a LinkedIn Account list means LinkedIn could not match any of the companies you sent to its member database. Two figures to distinguish when troubleshooting this:
+
+-   **Records sent** — how many companies Clay actually exported to LinkedIn in that sync run. Visible as "records sent" in the Sync history panel.
+-   **Audience size** — the LinkedIn-reported figure for how many LinkedIn members are associated with your matched companies. This is reported by LinkedIn after matching and is not the same as records sent.
+
+Common causes and fixes:
+
+1.  **Domain format** — LinkedIn expects bare company domains such as `example.com`. Domain column values that are email addresses (`user@example.com`) or include URL paths (`example.com/products`) may not match. Verify your domain column contains bare domains before mapping. If the column contains email addresses, use a formula column to extract the domain portion first.
+
+2.  **Subsidiary, acquired, or regional domains** — LinkedIn matches on the canonical domain registered to a company in LinkedIn's own system. Subsidiaries and acquired companies may use a domain that LinkedIn associates with the parent entity, and regional domains (`example.co.uk`) may not match if LinkedIn's system uses a different primary domain. Verify that your domain values correspond to how those companies are listed on LinkedIn.
+
+3.  **Legacy table-based Ad Sync** — If your sync was created before the current Audiences Ads flow (you will see a deprecation notice on the sync), there may be a field mapping issue in the legacy sync. To test whether the problem is with the data or the sync configuration, run the same audience — or a smaller sample of 300 to 1,000 companies — through the current Audiences Ads flow. If the new sync matches successfully, the legacy sync's field mapping is the source of the problem. Create a new Audiences-based Ad Sync to replace it.
+
+4.  **LinkedIn company URL can improve matching** — The optional **Company URL** field in the LinkedIn Account list mapping supplements domain-based matching. If your audience doesn't already include LinkedIn company page URLs, you can enrich them from company domains using Clay enrichment providers such as Icypeas ("Find Company LinkedIn Profile"), Reverse Contact ("Find Company LinkedIn Profile"), or Smarte ("Find Company LinkedIn URL"). Search for these in Clay's enrichment actions, add the resulting LinkedIn URL as a column, and include it in your Ad Sync field mapping.
+
 ### **Why am I getting a 403 error when I click Continue on an ad sync?**
 
 A 403 error when clicking **Continue** means Clay blocked the save before ever contacting the ad platform. When you click **Continue**, Clay checks whether the current user has permission to use every connection linked to the sync. If any connection is private — not shared with the workspace or with you individually — the entire save is rejected, even if you are a workspace admin.
