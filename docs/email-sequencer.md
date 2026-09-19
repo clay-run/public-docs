@@ -321,7 +321,7 @@ If you've paused a campaign but the options to add or remove messages are still 
 
 ### How much does the sequencer cost?
 
-The Clay email sequencer is available on all plans. Each lead sequenced consumes 1 Action (platform orchestration work). If you use AI snippets in your messages, those consume 1 Action per run and Data Credits for AI generation in addition to the Action for sending the email.
+The Clay email sequencer is available on paid plans (Launch plan and above). Free plan workspaces do not have access to the email sequencer — upgrade to a paid plan to get started. Each lead sequenced consumes 1 Action (platform orchestration work). If you use AI snippets in your messages, those consume 1 Action per run and Data Credits for AI generation in addition to the Action for sending the email.
 
 ### Can I send multiple sequences to the same email address?
 
