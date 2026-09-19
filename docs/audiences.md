@@ -564,6 +564,12 @@ To test a workflow on hand-picked records — rather than an automatic sample �
 
 Selected records are merged with any existing test records for the trigger — duplicates across sources are removed automatically. You can add records from multiple connected audience segments.
 
+**Processing audience members in batches**
+
+Scheduled audience source triggers support a **Process audience in batches** option that controls how many audience members are processed per scheduled run. When enabled, each run takes the next set of members who haven't been processed yet — the trigger pauses automatically once every member in the audience has been processed.
+
+To enable batch processing when setting up a scheduled audience source trigger, toggle on **Process audience in batches** and set the **Members per run** count. You can also edit these settings at any time after the trigger has been created: in the workflow editor, click **Edit** on the scheduled audience source trigger card to update the **Members per run** value or toggle batch processing on or off. The trigger card displays the current batch processing status — including the batch size, when processing started, and whether the full audience has been completed.
+
 ### **Syncing audiences to ad platforms**
 
 When you have a segment ready, you can sync it to an ad platform to run account-based advertising across your highest-fit contacts and companies.
