@@ -1,6 +1,6 @@
 ---
 title: Account settings
-description: Update your Clay profile picture, name, password, and login method, manage your API key, and delete your account.
+description: Change your login email address, switch sign-in methods, update your profile picture and name, manage your API key, and delete your account.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -43,15 +43,26 @@ To change your theme:
 
 ## Change your account email address
 
-The email address field in `Settings` > `Account` is read-only and cannot be changed directly in the UI. To change the email associated with your Clay account, contact Clay support via the in-app chat.
+You can change the email address tied to your Clay account directly from your account settings.
 
-**Who can request this change:** Email address changes are processed by Clay's support team and handled internally. Support will only honor requests that originate from the workspace admin's registered email address — if you are not the workspace admin, coordinate with them to submit the request.
+_This flow is available for accounts that sign in with email and password. Google users can change which Google account they use to sign in — see the note below._
 
-**If the new email address is already linked to another Clay account:** That existing account must be resolved (for example, deleted) before the change can be made.
+To change your login email:
 
-Changing your email address does not affect your workspace data or your password.
+1.  Go to `Settings` and select `Account` from the left-hand menu.
+2.  Open the **Security** tab under **Your profile**.
+3.  Click **Change how you sign in**.
+4.  Select **Change your login email** and click **Continue**.
+5.  Clay sends a verification code to your current email address — enter it to confirm it's you.
+6.  Enter your new email address. Check **Also change your password** if you also want to update your password at the same time; your existing password continues to work with the new email if you leave it unchecked.
+7.  Clay sends a second verification code to the new address — enter it to confirm you control that inbox.
+8.  Click **Continue to sign in** to apply the change. You will be signed out of all active sessions.
 
-**If you sign in with Google:** After your email address is changed by support, sign in using the Google account associated with the new email address. Clay matches Google sign-ins by email — signing in with the Google account tied to your previous email address will no longer find your Clay account.
+**"This email can't be used." error:** If you see this message when entering a new email, the address is already linked to a different Clay account. The conflicting account must be resolved before the change can go through — contact Clay support via the in-app chat and they can help.
+
+Changing your email address does not affect your workspace data or your password (unless you chose to also change your password during the flow).
+
+**If you sign in with Google:** To change which Google account you use to sign in, select **Change your Google account** in the **Change how you sign in** modal. Clay redirects you to Google to choose a different account, and your login email updates to match the new Google account's address. After the change, sign in using the new Google account — the previous address will no longer work for Clay sign-in.
 
 **If your Google account email changed externally and you now see a blank workspace**
 
