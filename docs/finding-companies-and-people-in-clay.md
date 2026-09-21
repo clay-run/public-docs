@@ -567,6 +567,29 @@ This most often happens when a column containing emails, names, company names, o
 
 After correcting the mapping, right-click the column header → **Run column** → **Run [N] empty or out-of-date rows** to re-run the affected cells.
 
+### Enrich Person returns "No profile found" when enriching from email
+
+**"No profile found"** means the enrichment ran successfully but the provider could not find a matching profile for the email address in its dataset. This is a data coverage gap, not a configuration error — the enrichment worked correctly.
+
+**Why email-only lookups can miss profiles**
+
+When Enrich Person runs with only an email mapped to the **Email** field and the **Professional URL** field left empty, providers must locate the profile by reverse-matching the email against their indexed data. This has lower coverage than lookups that start from a professional profile URL, because direct URL-based lookups don't rely on the email being indexed by the provider.
+
+**How to improve match rates**
+
+If you have a professional network profile URL available for any contact, map it to Enrich Person's **Professional URL** field (see [valid input formats above](#getting-invalid-input-invalid-person-identifier-from-enrich-person)). Rows that include a profile URL consistently achieve higher match rates than rows using email alone.
+
+**Recommended workflow: find the profile URL first, then enrich**
+
+If you have email addresses but no professional profile URLs, add a profile URL lookup step before Enrich Person:
+
+1.  **Keep your email mapped** in Enrich Person's **Email** input — email-only lookups still work and find profiles for many contacts.
+2.  **Add a professional profile URL enrichment column** before Enrich Person — click **Add enrichment** and search for a profile URL waterfall. Map your email column to its email input. This searches multiple providers for a matching professional profile URL.
+3.  **Map the returned profile URL** from step 2 to Enrich Person's **Professional URL** input.
+4.  **Rerun Enrich Person** on the affected rows (right-click the column header → **Run column → Run empty or out-of-date rows**).
+
+When a profile URL is found in step 2, Enrich Person uses it to look up the contact directly and returns richer results. When no URL is found for a row, Enrich Person falls back to the email-only lookup — so adding this step improves overall coverage without losing email-based matches you already have.
+
 ### "Your source has exceeded your plan's limit" error on Find Companies or Find People
 
 If you see **"Your source has exceeded your plan's limit of [N], so future runs will not add new records. Consider creating a new source or moving onto a higher tier plan"**, the source has reached a per-source cumulative record limit enforced by your billing plan.
