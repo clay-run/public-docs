@@ -1064,28 +1064,35 @@ No. The record limit — 250,000 for Growth plans and 25,000,000 for Enterprise 
 
 ### I changed a field value in Salesforce but it's not updating in Clay
 
-Clay's incremental sync picks up Salesforce changes via `SystemModstamp`. If a field value in Salesforce changed but the corresponding Audiences field hasn't updated, the most likely cause is that `SystemModstamp` was not updated when the field changed.
+Clay's incremental sync picks up Salesforce changes via `SystemModstamp` — any modification to a Salesforce record triggers a re-sync of all its mapped fields on the next incremental cycle (every 15 minutes on Enterprise, once daily on Growth). However, if the field's current value in Clay was set by a **bulk enrichment** or **Upsert Audiences Record**, Clay's conflict resolution keeps that bulk-enriched value rather than accepting the incoming CRM value. Bulk enrichments and Upsert Audiences Record are Priority 1; Salesforce Account/Contact/Opportunity imports are Priority 2 (see **Conflict resolution when sources provide different field values** under [Entity resolution and deduplication](#entity-resolution-and-deduplication) above).
 
-**When does `SystemModstamp` not update?**
+This means: if you clear or change a field in Salesforce that was previously populated by a bulk enrichment, Clay's import sync will pick up the Salesforce change — but discard it in favor of the existing higher-priority bulk-enriched value.
 
--   **Formula fields and roll-up summary fields** recalculate automatically in Salesforce but do not update `SystemModstamp`. Changes to these fields are only reflected in Audiences after the next weekly full sync (every 7 days).
--   **Indirect updates** — for example, a field that changes because a related record changed — also do not update `SystemModstamp` on the record you are importing.
+**To make Salesforce the source of truth for that field, use one of these approaches:**
 
-**Workaround for specific records:** Make a small edit to any other field on the affected record in Salesforce (for example, add and remove a space in a text field). This updates `SystemModstamp`, and Clay picks up the record — with all its current field values — on the next incremental sync.
+-   **Delete and recreate the field mapping.** Removing the existing field mapping clears the bulk-enriched value for that field. After you add the mapping back, the next Salesforce sync will set the field value from CRM with no competing bulk-enriched value. This is the most reliable approach when you want to reset a field to match its current Salesforce value.
+-   **Override the field with a new bulk enrichment.** Use **Update Audiences Record** in a bulk enrichment table to explicitly write the value you want (for example, `0` or null). Because `Update Audiences Record` is also Priority 1, this new value replaces the old bulk-enriched one and stays unless overwritten by another enrichment. See [Adding enrichments](#adding-enrichments).
 
-**If the field never updates, even after `SystemModstamp` changes:** The field may not be included in your import's field mapping. See [A Salesforce field isn't appearing in my audience filters — how do I add it?](#a-salesforce-field-isnt-appearing-in-my-audience-filters--how-do-i-add-it) for how to add the field to your mapping.
+**Note:** If your workspace requires Salesforce values to always take precedence over bulk-enriched values for a given field, contact Clay support — a workspace-level field precedence configuration is available.
 
 ### I enriched data in my Audience. Why hasn't it appeared in Salesforce yet?
 
-Enriched data writes back to Salesforce on the Audiences export schedule — once every 24 hours. The export does not run immediately after an enrichment completes; it fires at your workspace's next scheduled export time, which may be up to 24 hours away.
+Clay Audiences syncs in two separate directions on different schedules:
 
-If the expected data still hasn't appeared in Salesforce after a full 24-hour cycle:
+-   **CRM → Clay (import):** Runs every **15 minutes** on Enterprise plans, or **once daily** on Growth plans.
+-   **Clay → CRM (export):** Runs once every **24 hours**, on a fixed schedule assigned per workspace.
 
-1.  Confirm **Export sync is enabled** for the relevant object (Contacts or Accounts) in your Salesforce source settings — see [Writing back to your CRM](#writing-back-to-your-crm).
-2.  Check the **write rule** on the mapped field. A field set to **Write if empty** only writes when the Salesforce field is currently blank — if Salesforce already has a value for that field, Clay skips the update silently. Change the rule to **Always write** if you want Clay to overwrite the existing Salesforce value.
-3.  Check the **Exports** panel in your Salesforce source settings. It shows the last export time and any errors. If the export ran but specific records are missing, the issue may be a field-level permission in Salesforce — the connected user must have Edit access to the fields you're trying to write.
+These two directions are independent. Enriched data written into your Audience is not immediately pushed to Salesforce — it waits for the next export cycle, which may be up to 24 hours away.
 
-**If you need to push data immediately** (for example, for a specific set of contacts before the next scheduled export): Use a **Salesforce Update Record** action column in a bulk enrichment table. See [How do I write enriched fields back to existing Salesforce records from a bulk enrichment?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-bulk-enrichment) for the steps. This bypasses the 24-hour cycle and writes directly in the same run as your enrichment.
+**To verify the export is configured correctly:**
+
+1.  Go to **Settings** → **Sources / Destinations** and click your Salesforce connection.
+2.  Confirm **Export sync** is enabled for the relevant object (Contacts or Accounts).
+3.  Check the **Exports** panel — it shows when the last export ran and any errors.
+
+If the expected data still isn't in Salesforce after a full 24-hour cycle, check the **write rule** for the field. A field set to **Write if empty** only sends its value when the corresponding Salesforce field is currently blank. If that Salesforce field already has a value, Clay skips the update silently — this is expected behavior, not a bug. Change the rule to **Always write** to overwrite existing Salesforce values.
+
+**If you need to push data immediately** (for example, for a specific set of contacts before the next scheduled export): use a **Salesforce Update Record** action column in a bulk enrichment table. This bypasses the 24-hour cycle and writes directly in the same run. See [How do I write enriched fields back to existing Salesforce records from a bulk enrichment?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-bulk-enrichment) for the steps.
 
 ### Can the Audiences export sync write data back to Salesforce Lead records?
 
@@ -1126,17 +1133,16 @@ The old records are archived and the new records from the updated file are added
 
 ### How do I archive records that no longer match my Snowflake import query?
 
-When a record is no longer returned by your Snowflake import query — for example, because you tightened a filter in the SQL, or the underlying data changed — Clay marks the record's Snowflake source association as **Deleted in source** during the next full sync. The Audience record itself is **not removed**.
+When you update your Snowflake SQL query to exclude records — for example, removing rows below a revenue threshold — those records are marked **Deleted in source** in your Audience on the next full sync (within 7 days). They are not automatically archived; they remain in All People or All Companies with a **Deleted in source** status.
 
-To clean up records marked **Deleted in source** from a Snowflake import:
+To remove them from your Audience, archive them manually:
 
-1.  In your Audience, add a filter for **Source status → is → Deleted in source**.
-2.  (Optional) Also filter by **Source** to narrow to just the Snowflake import you modified.
-3.  Select the filtered records and click **Archive**.
+1.  Go to **All People** or **All Companies** in your Audiences view.
+2.  Add a filter: **Source** → select your Snowflake import → set status to **Deleted in source**.
+3.  Select all returned rows.
+4.  Click **Archive** in the bottom toolbar and confirm.
 
-This removes them from your active audience while retaining them in the system (archived) in case you need to reference them later.
-
-**Before archiving at scale:** Confirm that the records you're about to archive are not associated with other active sources (for example, a Salesforce sync that also imports the same companies). Archiving removes the entire entity, not just its association with the Snowflake source. If the same company or person exists in both Snowflake and Salesforce, archiving it removes it from both — the Salesforce data will not re-import automatically after archiving.
+Archived records can be restored at any time from the **Archived** section in the left sidebar.
 
 ### Why do I see duplicate people in my Audiences after merging from multiple sources?
 
@@ -1191,3 +1197,69 @@ Clay MCP's `get_audiences_activity` tool and the Audiences Activity tab in the p
 **To check whether activity exists:** Use `get_audiences_activity` in Clay MCP with explicit parameters — set `days_lookback` to 365 and `max_activities_per_type` to 50 to retrieve the broadest possible set. If results appear there but not in the UI, the difference is in the display window, not the underlying data.
 
 **If no activity appears in either place:** The contact may not have any signal events in Audiences. Signal events are written when a signal fires for a record — if the record has never matched a signal condition (for example, no new hires detected, no web intent visits, no job postings), the Activity tab will be empty. Confirm that the relevant signals are configured and active for your workspace in **Audiences → Data Hub → Signals**.
+
+### How does the Audiences record limit work? What counts toward it?
+
+The Audiences record limit is a **per-workspace cap** on the total number of unique records stored in your Audience, regardless of which source they came from. Growth plans cap at 250,000 records; Enterprise plans cap at 25,000,000.
+
+Records that count toward the limit:
+
+-   All records in **All People** (contacts and leads from any source)
+-   All records in **All Companies** (accounts from any source)
+
+Records that do **not** count:
+
+-   Archived records (moved to the Archived section; not counted toward the limit while archived)
+-   Segment memberships (a record in 10 different segments still counts as one record)
+
+If your workspace reaches the limit, Clay will stop importing new records from your connected sources until the count drops below the cap. To free up space: archive records you no longer need (see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above), or upgrade your plan.
+
+Growth plans have a hard cap — there is no add-on to increase the limit without upgrading to Enterprise.
+
+### Can I add a "notes" or "memo" field to an Audience record?
+
+Yes — you can create a custom text field in Audiences and update it from a Clay table using `Update Audiences Record` or `Upsert Audiences Record`. There is no built-in "notes" column, but a custom field works the same way.
+
+**To set this up:**
+
+1.  Create a custom Audience text field — see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) above.
+2.  In your Clay table, add an `Update Audiences Record` or `Upsert Audiences Record` column.
+3.  Map the text column in your table to the custom notes field in Audiences.
+4.  Run the column — the value writes permanently to the Audience record.
+
+You can then filter segments on this field, export it to Salesforce, or use it as input for enrichments.
+
+### Why does my Databricks import fail with a schema or permission error?
+
+Databricks imports in Audiences use the Unity Catalog. Two common causes of failure:
+
+**1. The service principal lacks SELECT on the target table.**
+
+In Databricks, grant the service principal read access to the catalog, schema, and table you're importing:
+
+```sql
+GRANT USE CATALOG ON CATALOG <catalog_name> TO `<service-principal-id>`;
+GRANT USE SCHEMA ON SCHEMA <catalog_name>.<schema_name> TO `<service-principal-id>`;
+GRANT SELECT ON TABLE <catalog_name>.<schema_name>.<table_name> TO `<service-principal-id>`;
+```
+
+Replace `<service-principal-id>` with the application ID of the service principal connected to Clay.
+
+**2. The table is not registered in Unity Catalog.**
+
+Audiences can only import from tables registered in Unity Catalog — it cannot query tables or views defined in the legacy Hive metastore. To migrate a legacy table, use `CREATE TABLE ... AS SELECT` in Unity Catalog to register a copy, or move the underlying data to a Unity Catalog volume.
+
+If neither of these applies and the import still fails, contact Clay support with the error message shown in the import setup.
+
+### How do I archive records that no longer match my Snowflake import query?
+
+When you update your Snowflake SQL query to exclude records — for example, removing rows below a revenue threshold — those records are marked **Deleted in source** in your Audience on the next full sync (within 7 days). They are not automatically archived; they remain in All People or All Companies with a **Deleted in source** status.
+
+To remove them from your Audience, archive them manually:
+
+1.  Go to **All People** or **All Companies** in your Audiences view.
+2.  Add a filter: **Source** → select your Snowflake import → set status to **Deleted in source**.
+3.  Select all returned rows.
+4.  Click **Archive** in the bottom toolbar and confirm.
+
+Archived records can be restored at any time from the **Archived** section in the left sidebar.
