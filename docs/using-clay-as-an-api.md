@@ -85,16 +85,18 @@ Use the same workspace-scoped API key in the `clay-api-key` request header. Read
 
 **Note:** A `413` (`Payload Too Large`) from `POST /search/filters-mode/{search_id}/run` means the requested page of results exceeds the API's internal output cap. Reduce the `limit` parameter in your request and retry — the error is deterministic, so retrying at the same `limit` will always fail.
 
-**Note:** Clay caps how many search results your workspace can return through the Public API, CLI, and MCP server per billing period. These quotas apply to Clay's People & Company Search API — they do not apply to in-app table enrichments or Routines API runs.
+**Note:** Clay caps how many search results your workspace can return through the Public API, CLI, and MCP server per period. These quotas apply to Clay's People & Company Search API — they do not apply to in-app table enrichments or Routines API runs. The quota counts **results returned**, not searches run — a search that returns 0 results does not consume any quota.
 
 | Plan | Results per period | Period window |
 | ---- | ------------------ | ------------- |
 | Free | 100 | Monthly (resets on the 1st of each month, UTC) |
 | Trial | 10,000 | 14 days from plan start |
-| Paid | 1,000,000 | Annual (resets January 1 UTC) |
-| Enterprise | 10,000,000 | Annual (resets January 1 UTC) |
+| Paid | 1,000,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
+| Enterprise | 10,000,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
 
-When you exceed the period limit, Clay returns `400` with a message naming the limit and when it resets — for example: `"This request would exceed your workspace's annual limit of 1,000,000 results. You have already requested X results during the current period, which resets on January 1, [year] (UTC). Contact support to raise this limit."` To monitor your usage before hitting the limit, open the **API and CLI** page in your workspace (`Settings → API`). The **Search API usage** section shows your current period's results used out of your limit, the next reset date, and a progress bar that turns orange at 70% usage and red at 90%. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
+When you exceed the period limit, Clay returns `400` with a message naming the limit, the number of results already used, and the next daily midnight UTC reset timestamp. To monitor your usage before hitting the limit, open the **API and CLI** page in your workspace (`Settings → API`). The **Search API usage** section shows your current period's results used out of your limit, the next reset date, and a progress bar that turns orange at 70% usage and red at 90%. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
+
+**Note:** Workspaces on legacy (pre-2026) non-Enterprise plans retain the annual quota window (resets January 1 UTC) rather than the rolling 30-day window.
 
 **Note:** Credits consumed by Routines API runs appear in the **Workbooks** tab of the credit usage dashboard — not the **API** tab. Each run processes records in the function's table, and those credits are attributed to that table, the same as any other table enrichment. To see this credit spend, go to `Settings → Usage → Workbooks` and find the table associated with your routine. The **API** tab in the credit usage dashboard covers only direct People & Company Search API and Exportly calls — not Routines API enrichments.
 
