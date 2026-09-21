@@ -641,6 +641,8 @@ To change a field's write rule, click the **pencil (edit) icon** next to any map
 
 **Important:** Because **Never write** is the default, a newly mapped field will not export data until you explicitly change its write rule. If a specific field isn't showing up in Salesforce after enabling Export sync, confirm its write rule is set to **Always write** or **Write if empty**.
 
+**These write rules apply uniformly to all records — there is no native option to make a write conditional on a per-row field value match.** For example, there is no built-in way to write a field to Salesforce only when a contact's Salesforce Account ID matches the Account ID on the Audience Company Record. For conditional write-back logic, connect a [Workflow to your audience segment](#connecting-a-workflow-to-a-segment): a workflow can include lookup steps, branch (conditional) nodes, and a Salesforce Update Record action that evaluates the condition per record and writes only when it passes. See [How do I make my Salesforce export conditional on a field match?](#how-do-i-make-my-salesforce-export-conditional-on-a-field-match) in the FAQs below.
+
 **Note: Scheduled export rules apply to Contacts and Accounts only.** The Salesforce Lead field mapping does not include a Scheduled export rule column — Lead records imported into Audiences are import-only and do not support the automated export sync. To push enriched data from Audiences back to Salesforce Leads, use a Salesforce Update Record action column in a bulk enrichment table — see [Can the Audiences export sync write data back to Salesforce Lead records?](#can-the-audiences-export-sync-write-data-back-to-salesforce-lead-records) in the FAQs below.
 
 Export settings also control whether Clay **creates new Salesforce records** for Audience records that don't yet have an SFDC match, or **only updates existing ones**.
@@ -943,6 +945,20 @@ To allow Clay to overwrite existing Salesforce values for a field:
 5.  Click **Save and review** → **Confirm**.
 
 The updated value will be pushed to Salesforce on the next export cycle (within 24 hours).
+
+### How do I make my Salesforce export conditional on a field match?
+
+The native Audiences export write rules — **Never write**, **Always write**, and **Write if empty** — apply uniformly to all records in the export. There is no per-row condition that prevents a field from being written based on a value comparison, such as "only update this contact if its Salesforce Account ID matches the Account ID on the Audience Company Record."
+
+For that kind of conditional write-back, connect a **Workflow** to your audience segment:
+
+1. Navigate to the segment and click **Send** → **Send to workflow**.
+2. In the workflow editor, add a **Lookup** step to retrieve the values you want to compare — for example, the contact's current Salesforce Account ID and the Account ID from the Audience Company Record.
+3. Add a **Branch (conditional)** node that checks whether the two values match.
+4. On the matching branch, add a **Salesforce Update Record** action to write the data back to Salesforce.
+5. Publish the workflow. Contacts that don't pass the check are skipped at the branch node and are not written to Salesforce.
+
+If your goal is to control which contacts are *imported* into Audiences from Salesforce in the first place — for example, importing only contacts whose `AccountId` belongs to a specific set of accounts — use a **SOQL record subset** import rather than importing all records. A SOQL filter on `AccountId` limits which contacts enter Audiences and therefore which contacts are candidates for export. See [Importing a record subset using SOQL](#importing-a-record-subset-using-soql) for setup steps.
 
 ### How do I create new Salesforce Accounts or Contacts from an Audience?
 
