@@ -402,6 +402,8 @@ If your emails are going out from an unexpected account, the most likely cause i
 3. Click the field and select the column in your source table that contains the sending account's email address for each lead. The values in that column must match one of the sender accounts already configured in the campaign.
 4. Click **Save settings**. Future sends will use each lead's designated sender account. Leads whose column value is blank are distributed evenly across all configured accounts.
 
+**If the Assign sender account field is already mapped and emails are still going out from an unexpected account**, the assigned sender may have had a connection or authentication problem at the time the email was scheduled. When an assigned sender account has an auth issue, Smartlead may use another active account from the campaign rather than holding the email. Check `Campaigns → Email Accounts` for any account showing an **Auth error** status — the campaign builder also shows a generic **Email auth error** badge when at least one account in the campaign has an authentication failure, but does not identify which specific account is affected. Reconnect any accounts showing **Auth error** to restore correct sender routing for future emails in the sequence.
+
 ### Why are some leads failing with "Sender email address is not a configured sender account in this campaign"?
 
 This error fires in the `Sync lead data to campaign` column when the **Assign sender account field to lead** setting (in the `Sender accounts` tab) is mapped to an email column, and the email address in that column for a lead does not match any of the sender accounts configured in your campaign.
