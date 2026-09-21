@@ -300,6 +300,8 @@ A common workflow: run a lookup step (for example, \"Look up Company in HubSpot\
 
 When you save a run condition, Clay validates that the column referenced in the condition does not depend — directly or through a chain of other columns — on the column being gated. If a cycle is detected, Clay shows a **\"Circular dependency error\"** modal and prevents saving. The modal lists the specific column(s) that complete the loop.
 
+**A reference in a run condition creates the same dependency edge as a column input reference.** Clay's dependency graph treats both identically — there is no distinction between "this column uses Column X as an input" and "this column has a run condition that references Column X." If the column you want to reference is downstream of the column being gated (even through a chain of intermediate columns), the cycle is real and Clay will block saving.
+
 **This check covers indirect chains, not just direct self-reference.** Even if the condition column doesn't visibly reference the gated column, the error can still occur if the condition column's value is derived from other columns that themselves depend on the gated column's output.
 
 **Example**: You want Work Email to run only when a Status field is not \"customer\". But Status is written by a matching step that reads from Apollo Contact, which depends on Work Email. The full dependency chain is:
@@ -317,6 +319,13 @@ Clay blocks this and lists Status (or the intermediate column completing the cyc
 **How to fix**: Find the step in the dependency chain that uses the gated column as an input, and replace that input with an equivalent identifier that comes from your import source — one that exists before the gated enrichment runs. Common substitutes: Company Domain, Company Name, professional profile URL, First Name, Last Name.
 
 Alternatively, restructure so the condition-determining step happens fully upstream using only pre-enrichment data as inputs, with no dependency on the gated column.
+
+**Waterfall pattern — gating a column on a waterfall output it feeds into**: If your column is part of the input chain that feeds a waterfall column (directly or through one or more intermediate columns), you cannot gate it on that waterfall's output — the output is downstream of your column, and the run condition reference closes the loop. Two options:
+
+1. **Move your column into the waterfall as its last step.** Waterfall steps only run when earlier steps came back empty, so you get "only if nothing else found it" for free. Gate the waterfall itself on the pre-enrichment condition instead (for example, using your import source fields directly).
+2. **Break the dependency chain.** Find the intermediate column that uses your column as an input, and switch that reference to an equivalent identifier from your import data — one that does not depend on your column's output. Once your column is no longer in the chain of inputs feeding the waterfall, the cycle is broken and the run condition saves.
+
+**Note on timing**: When your run condition references a waterfall output column, the gated column waits until the waterfall has *finished running* for that row. The condition evaluates against the waterfall's terminal state — a row where the waterfall finished with no value (because all steps found nothing, or a step errored) looks the same to the run condition as a genuinely empty result. The gated column fires for any row where the condition is true once the waterfall's run completes.
 
 **If the error appears but the column you are configuring does not visibly depend on the gated column**: The circular dependency check traverses the full column graph of your entire table at save time. If another column in the table has accumulated stale dependency information — for example, from a prior column deletion or recreation — the traversal can flag an apparent cycle in those other columns and block your save, even though your run condition itself is not the source of the cycle. In this case, the error modal may not name any specific column completing the loop.
 
