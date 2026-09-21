@@ -1,15 +1,6 @@
----
-title: Does Clay have an API?
-description: Clay doesn't have a traditional API, but you can send data via
-  webhooks, wrap Clay with Make or Zapier, use the Enterprise API for people &
-  company lookups, connect AI tools via MCP, or build workflows via the CLI
-  agent plugin.
-last_synced: 2026-04-26T01:40:52.256Z
----
-
 # Does Clay have an API?
 
-Clay doesn't have a traditional API, but you can send data via webhooks, wrap Clay with Make or Zapier, use the Enterprise API for people & company lookups, or connect AI tools via MCP.
+Clay doesn't have a traditional API, but you can send data via webhooks, wrap Clay with Make or Zapier, use the Enterprise API for people & company lookups, connect AI tools via MCP, or build workflows via the CLI agent plugin.
 
 It's one of the most common questions we get — and the honest answer is: not in the traditional sense. Clay isn't built like a typical SaaS tool where you send a request to an endpoint and get data back in milliseconds. Instead, Clay is an enrichment and automation platform designed around tables, workflows, and integrations.
 
@@ -66,7 +57,7 @@ The same workspace-level beta access also unlocks a Routines endpoint for trigge
 -   `POST /routines/{routine_id}/run` — submit input records to a Clay function and start an enrichment run.
 -   `GET /routines/run/{routine_run_id}/results` — poll for results once the run completes.
 
-Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is under **Settings → Account → API keys** and is distinct from the personal API key on your profile page.
+Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is on the **API and CLI** page in the left sidebar — click **API keys** to create or manage keys. This key is distinct from the personal API key on your profile page.
 
 **Public HTTP API — Credit Balance**
 
@@ -81,7 +72,7 @@ The response includes:
 
 Use the same workspace-scoped API key in the `clay-api-key` request header. Reading balances does not consume credits.
 
-**Note:** A 401 (`Authentication required`) from `api.clay.com/public/v0` means your workspace hasn't been provisioned for the Public HTTP API — this applies even if your API key is visible in settings. Regenerating the key will not fix a provisioning 401. [Contact Clay support](https://www.clay.com/contact-form) to request workspace enablement.
+**Note:** A 401 (`Authentication required`) from `api.clay.com/public/v0` means the API key in your `clay-api-key` header is missing, invalid, or belongs to a different workspace. Use a workspace-scoped API key from the **API and CLI → API keys** page — the personal API key from your profile page will not authenticate here.
 
 **Note:** A `413` (`Payload Too Large`) from `POST /search/filters-mode/{search_id}/run` means the requested page of results exceeds the API's internal output cap. Reduce the `limit` parameter in your request and retry — the error is deterministic, so retrying at the same `limit` will always fail.
 
