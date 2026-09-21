@@ -183,11 +183,11 @@ If you need to add a platform to a sync that is already active, the workaround i
 
 -   Google Ads and Bing Ads are only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience includes contacts from Clay's company/people search data, Google Ads and Bing Ads will not be available as destination options. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) for details.
 
-### **If I already have my own hashed emails, will I be re-charged when I migrate to Audience Ads?**
+### **How do I carry over hashed emails I already have when migrating from Table Ads to Audience Ads?**
 
-No — if you found personal emails for your contacts yourself (for example, using the `Hashed Email for Ads` waterfall or another enrichment), you can carry those values into Audiences without re-paying for enrichment.
+If you found personal emails for your contacts yourself (for example, using the `Hashed Email for Ads` waterfall or another enrichment), you can bring those values into Audiences when migrating.
 
-When adding your Clay table as a data source in Audiences, map your existing hashed email column(s) to the **Hashed Email 1**, **Hashed Email 2**, and **Hashed Email 3** Audience fields in the field mapping step. Enhanced Matching then charges credits only for contacts whose hashed email fields are empty — contacts that already have hashed email values populated are skipped.
+When adding your Clay table as a data source in Audiences, map your existing hashed email column(s) to the **Hashed Email 1**, **Hashed Email 2**, and **Hashed Email 3** Audience fields in the field mapping step. This stores your existing hashed email values on the Audience records.
 
 Once your records are in an Audience, create a segment and set up a new ad sync via **Send → Sync to ad platforms**. Creating the new sync itself does not consume any credits. Because a new sync creates a fresh audience list on the ad platform (LinkedIn, Meta, or Google), you will need to update any existing campaigns to target the new audience once it is live.
 
