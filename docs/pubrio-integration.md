@@ -28,10 +28,10 @@ Filters are organized into the following groups. At least one filter from any gr
 -   **Company** — Company name (partial match), company domains, company professional profile URLs, or company search IDs returned by other Pubrio actions.
 -   **Location** — Filter by HQ country (include or exclude) and by city or region (include or exclude).
 -   **Industry and technology** — Filter by industry, industry category, industry sub-category, technology, technology category, or company keywords. Unrecognized terms are ignored by Pubrio and do not cause an error.
--   **Firmographics** — Filter by employee headcount band, estimated annual revenue in USD, founded year range, or social media presence (LinkedIn, Twitter/X, Facebook, Instagram, TikTok, GitHub, Wantedly, RocketPunch).
+-   **Firmographics** — Filter by employee headcount band, estimated annual revenue in USD, founded year range, or social media presence (professional network, Facebook, Instagram, TikTok, GitHub, Wantedly, RocketPunch, and other platforms).
 -   **Hiring** — Filter by job posting country (include or exclude), job title (similar titles also match — "software engineer" returns "senior software engineer"), or job posted date range.
 -   **News** — Filter by news category or news publication date range.
--   **Advertising** — Filter by ad platform (LinkedIn, Meta, Google, TikTok, Apple), Meta ad surface, ad format, ad status, ad search terms, ad headline keywords, ad target countries, date ranges (ad start, end, and active dates), and volume metrics (active ads, running ads, total ads, platform count, format count, estimated impressions).
+-   **Advertising** — Filter by ad platform (professional network, Meta, Google, TikTok, Apple), Meta ad surface, ad format, ad status, ad search terms, ad headline keywords, ad target countries, date ranges (ad start, end, and active dates), and volume metrics (active ads, running ads, total ads, platform count, format count, estimated impressions).
 -   **Advertising in a specific country** — Scope advertising filters to a single country. Adds per-country rank, percentile, volume score, and impression metrics, along with first/last seen dates for ads in that country.
 -   **Cloud footprint** — Filter by cloud or hosting provider (include, exclude, or primary provider only), cloud region, city, and country. Includes metrics such as host count, server count, and provider count, as well as first/last seen dates. Enable **Cross-border infrastructure only** to limit results to companies running infrastructure outside their home market.
 -   **Cloud footprint in a specific country** — Scope cloud footprint filters to a single country. Adds per-country host count, server count, region count, city count, and first/last seen dates.
@@ -47,9 +47,9 @@ Filters are organized into the following groups. At least one filter from any gr
 
 Each company row includes:
 
--   **Identity** — Company name, domain, company URL, company URL active status, LinkedIn URL, LinkedIn handle, LinkedIn company ID, company search ID
+-   **Identity** — Company name, domain, company URL, company URL active status, professional network URL, professional network handle, professional network company ID, company search ID
 -   **Profile** — Industry, location, country, country code, employee count (number), employee count range (text), founded year, company ranking, specialties (list), company keywords (list)
--   **Social links** — Twitter/X, Facebook, Instagram, YouTube, TikTok, GitHub, Crunchbase, Wantedly, and RocketPunch profile URLs
+-   **Social links** — Social profile URLs including Facebook, Instagram, YouTube, TikTok, GitHub, Crunchbase, Wantedly, and RocketPunch
 
 ## **Enriching data with Pubrio**
 
