@@ -468,6 +468,25 @@ This gates B on whether A returned any result for that row, regardless of which 
 
 **To gate strictly on a specific field:** Leave that input variable's **Required to run** toggle on in B. B will only run for rows where that specific field from A has a value.
 
+### Every row in my Claygent column is failing with "Error. Please retry or contact Clay support." — what should I check?
+
+A generic **"Error. Please retry or contact Clay support."** error on every row — especially when the column was running correctly before — is almost always caused by an invalid output JSON Schema. Clay's column editor accepts and saves the schema without flagging the problem; the error only appears when the column actually runs, because the AI provider rejects the malformed schema at that point.
+
+Open the column settings (**click the column name → Edit column**) and go to the **Define column outputs** section to inspect the schema.
+
+The most common cause is an array field missing its `items` property. Any field with `"type": "array"` must include an `"items"` object that specifies the element type. For example:
+
+```json
+"providersFound": {
+  "type": "array",
+  "items": { "type": "string" }
+}
+```
+
+For the full list of schema issues that can produce this error — including trailing commas, `object` fields without a `properties` map, and model-specific enum restrictions — see the **Output schema** section above.
+
+If you are not sure where to start, click **Generate from prompt** in the **Define column outputs** section — Clay will regenerate a valid schema from your existing prompt.
+
 ### My Claygent columns are showing an error or returning blank results — what does that mean?
 
 If your Claygent columns are failing with an error like **"This action is no longer operational as a data provider. Please use another action."** — or are running and consuming credits but returning blank, empty cells — it means those columns are using an older version of the Claygent action that is no longer supported. The column settings panel may still appear editable, but the column cannot produce results.
