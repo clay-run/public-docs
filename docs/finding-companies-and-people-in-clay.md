@@ -567,6 +567,35 @@ This most often happens when a column containing emails, names, company names, o
 
 After correcting the mapping, right-click the column header → **Run column** → **Run [N] empty or out-of-date rows** to re-run the affected cells.
 
+### Enrich Person returns "No profile found" when enriching from email
+
+**"No profile found"** means the enrichment ran successfully but the provider could not find a matching profile for the email address in its dataset. This is a data coverage gap, not a configuration error — the enrichment worked correctly.
+
+**Why email-only lookups miss some profiles**
+
+When Enrich Person runs with only an email mapped to the **Email** field and the **Professional URL** field left empty, providers search their indexed data using the email as the matching signal. Email-only matching has lower coverage than lookups that include a LinkedIn profile URL, because the action description explicitly notes "Use LinkedIn URLs for best results" — providers that receive a profile URL can look up the contact directly rather than reversing from an email.
+
+**How to improve match rates: add a professional profile URL**
+
+The **Professional URL** field in Enrich Person accepts:
+
+-   LinkedIn profile URL: `https://www.linkedin.com/in/<slug>`
+-   Sales Navigator profile URL: `https://www.linkedin.com/sales/people/<id>`
+-   LinkedIn numeric user ID
+
+If you have a LinkedIn URL available for any contact, map it to **Professional URL** in your Enrich Person column. Rows that include a profile URL achieve higher match rates than rows using email alone.
+
+**Recommended workflow: find the LinkedIn URL first, then enrich**
+
+When you have email addresses but not LinkedIn profile URLs, add a **Find LinkedIn URL** step before Enrich Person:
+
+1.  **Keep your email mapped** in Enrich Person's **Email** input — email-only lookups still work and find profiles for many contacts.
+2.  **Add a "Find LinkedIn URL" enrichment column** before Enrich Person in your table. This enrichment searches for a professional profile URL using available context — email address, full name, company name, and/or company domain.
+3.  **Map the returned LinkedIn URL** from the Find LinkedIn URL column to Enrich Person's **Professional URL** input.
+4.  **Rerun Enrich Person** on the affected rows (right-click the column header → **Run column → Run empty or out-of-date rows**).
+
+When a LinkedIn URL is found in step 2, Enrich Person uses it to look up the profile directly and returns richer results. When Find LinkedIn URL returns no result for a row, Enrich Person falls back to the email-only lookup for that row — so adding this step improves overall coverage without losing the email-based matches you already have.
+
 ### "Your source has exceeded your plan's limit" error on Find Companies or Find People
 
 If you see **"Your source has exceeded your plan's limit of [N], so future runs will not add new records. Consider creating a new source or moving onto a higher tier plan"**, the source has reached a per-source cumulative record limit enforced by your billing plan.
