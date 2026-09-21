@@ -155,6 +155,8 @@ To call a custom or additional LLM from Clay, use the [HTTP API enrichment](http
 -   You will not have access to Use AI's built-in features such as structured output configuration, model comparison, or web research (Claygent) mode.
 -   Each table row generates one API call to your LLM endpoint.
 
+**Note — Azure OpenAI and other hosted model deployments:** Azure OpenAI API keys are not supported as a native bring-your-own-key provider in Claygent. If you connect your own API key from a provider that appears natively in Claygent's model picker (such as OpenAI, Anthropic, Google Gemini, Mistral, or xAI), you retain all of Claygent's research capabilities (web search, website crawling, and contact finding); only the billing changes — model usage is charged to your provider account instead of Clay Data Credits. Azure OpenAI requires a custom deployment endpoint and Azure-specific authentication that Claygent's native account system does not support, so it must go through the HTTP API enrichment instead — which means the limitations above apply and Claygent's web research features are not available.
+
 ## AI confidence indicators
 
 When a Use AI or Claygent column completes successfully, a small colored icon appears inside each result cell to indicate the AI's confidence level in its output:
