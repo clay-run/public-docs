@@ -192,16 +192,16 @@ The Plugin also gives you access to:
 
 ## Plan availability and limits
 
-The developer platform is available across all Clay plans, including free and trial plans. Legacy plans also have access for a limited time.
+Searches are available across all Clay plans, including free plans. The tables API requires a paid or trial plan. Legacy plans also have access.
 
 Search result limits vary by plan:
 
 | Plan | Search results per request | Total search results |
 | --- | --- | --- |
-| Free | 50 | 100/mo |
-| Trial | 50 | 10k per 14 days |
-| Paid self-serve plans | 500 | 1M/yr |
-| Enterprise | 500 | 10M/yr |
+| Free | 50 | 100/30 days (rolling) |
+| Trial | 50 | 10k for trial duration |
+| Paid self-serve plans | 500 | 1M/30 days (rolling) |
+| Enterprise | 500 | 10M/30 days (rolling) |
 
 ## FAQs
 
@@ -225,7 +225,7 @@ MCP for Reps is a different connection, set up separately by an admin for seller
 
 No. The CLI builds logic via Workflows, not tables. `Tables` in the Public API is read-only — you can query and read rows, but not create tables, add fields, or write records.
 
-Basic row reads work on any plan. Structured queries — joins, ranges, and paging past 100 rows — need API table sync, an Enterprise feature. There are no current plans to support table building from the API or CLI.
+Basic row reads work on paid and trial plans. Structured queries — joins, ranges, and paging past 100 rows — require API table sync, which is available on paid, trial, and enterprise plans. There are no current plans to support table building from the API or CLI.
 
 ### Can I build Workflows with the API or CLI?
 
