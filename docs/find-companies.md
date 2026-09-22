@@ -26,6 +26,7 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
     -   **Industries** to include and exclude
     -   **Company size** — The self-reported size band on the company's profile (e.g., 11–50, 51–200). Select one or more bands from the dropdown.
     -   **Annual revenue ranges** — Filter by revenue brackets from $0–$500K up to $100B+.
+    -   **Funding raised** — Filter by total funding raised across all known rounds, in pre-set ranges (for example, $1M–$5M, $5M–$10M). This reflects cumulative funding across all rounds, not the most recent round alone. To target companies that raised recently, use a signal (such as **Monitor for news & fundraising**) or enrich for the latest funding round with an integration like Crunchbase.
     -   **Company types** — Privately Held, Public Company, Partnership, Self Employed, Non Profit, Educational, Self Owned, or Government Agency. These values reflect how companies self-classify on their profiles.
     -   **Description keywords to include** and **Description keywords to exclude** — Filter companies by keywords that appear in their description.
         -   **Exact phrase matching:** Wrap multi-word terms in double quotes to match that exact phrase. For example, `"Google Cloud"` finds companies with that phrase in their description — not just companies that mention Google and cloud separately. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are stripped out even with quoted phrases.
@@ -175,6 +176,15 @@ To match the intended entity, enrich from the company's professional network com
 **Clay's employee count methodology differs from compiled-headcount providers.** Clay's count reflects the number of professional network profiles discoverable for the matched company — the same measurement described in [What does the Estimated employee count filter measure?](#what-does-the-estimated-employee-count-filter-measure) above. Providers like ZoomInfo publish compiled or self-reported figures that may draw from regulatory filings, surveys, or other sources. For organizations with low professional-network presence — government agencies, military branches, educational institutions, and many non-Western companies — Clay's count will run substantially below a compiled headcount figure, and this is expected.
 
 For size-based segmentation (for example, filtering to companies with more than 1,000 employees), use the self-reported **Company size** band rather than an exact enriched count, or cross-validate against a second source — exact counts near a threshold are too sensitive to methodology differences to use as a reliable cut-off on their own.
+
+### What does the Funding raised filter measure?
+
+**Funding raised** reflects a company's total cumulative funding across all known rounds — not just the most recent or latest round alone. Selecting a range (for example, $1M–$5M) returns companies whose total funding falls in that range.
+
+The filter is not a recency filter — it does not narrow results by when a company raised. To target companies that raised recently, use one of these approaches instead:
+
+-   **Monitor for news & fundraising** signal — fires when a company in your table appears in fundraising-related news, including new round announcements.
+-   **Enrich a company's latest funding round** (Crunchbase integration) — returns the date, type, and amount of a company's most recent round.
 
 ### Why do companies sourced with a revenue filter have different enriched revenue values?
 
