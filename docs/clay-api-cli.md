@@ -224,7 +224,7 @@ MCP for Reps is a different connection, set up separately by an admin for seller
 
 No. The CLI builds logic via Workflows, not tables. `Tables` in the Public API is read-only — you can query and read rows, but not create tables, add fields, or write records.
 
-All table queries require API table sync. This is available on Enterprise plans by default; customers on other paid plans can contact support to request access. There are no current plans to support table building from the API or CLI.
+All table queries require API table sync, which is currently in limited rollout — available on Enterprise plans by default. If you're on another paid plan and want access, contact support to request it. There are no current plans to support table building from the API or CLI.
 
 ### Can I build Workflows with the API or CLI?
 
