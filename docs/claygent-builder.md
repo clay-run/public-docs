@@ -474,7 +474,9 @@ A generic **"Error. Please retry or contact Clay support."** error on every row 
 
 Open the column settings (**click the column name → Edit column**) and go to the **Define column outputs** section to inspect the schema.
 
-The most common cause is an array field missing its `items` property. Any field with `"type": "array"` must include an `"items"` object that specifies the element type. For example:
+**The fastest fix is to click Generate from prompt** in the **Define column outputs** section — Clay sends your existing prompt to AI and rebuilds the schema from scratch. This is more reliable than editing the JSON by hand, and is especially helpful if you've already tried a manual fix and the error persists.
+
+The most common underlying cause is an array field missing its `items` property. Any field with `"type": "array"` must include an `"items"` object that specifies the element type. For example:
 
 ```json
 "providersFound": {
@@ -484,8 +486,6 @@ The most common cause is an array field missing its `items` property. Any field 
 ```
 
 For the full list of schema issues that can produce this error — including trailing commas, `object` fields without a `properties` map, and model-specific enum restrictions — see the **Output schema** section above.
-
-If you are not sure where to start, click **Generate from prompt** in the **Define column outputs** section — Clay will regenerate a valid schema from your existing prompt.
 
 ### My Claygent columns are showing an error or returning blank results — what does that mean?
 
