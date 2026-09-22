@@ -29,7 +29,7 @@ An allowlist is a named set of IP addresses or CIDR ranges. Each allowlist appli
 
 To restrict both browser and API access, create a separate allowlist for each category. A workspace can have up to **50 allowlists in total** across both categories.
 
-Each allowlist can contain up to **50 IP addresses or CIDR ranges**. Accepted formats: IPv4 addresses (e.g. `203.0.113.5`), IPv6 addresses, IPv4 CIDR ranges (e.g. `198.51.100.0/24`), and IPv6 CIDR ranges. Enter one address or range per line.
+Each allowlist can contain up to **50 IP addresses or CIDR ranges**. Accepted formats: individual IPv4 addresses, individual IPv6 addresses, IPv4 CIDR ranges, and IPv6 CIDR ranges. Enter one address or range per line.
 
 ## Adding an allowlist
 
