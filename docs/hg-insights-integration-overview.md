@@ -97,6 +97,14 @@ If you already have a list of companies — for example, accounts imported from 
 3.  Under **Products**, use the filter to select the specific product or competitor you want to check for.
 4.  Click **Save and run** to execute the check across your rows.
 
+**Credit cost**
+
+The `Verify technology usage` action charges credits **per technology result returned**, not a flat amount per row. Each matched technology costs 8 credits.
+
+The estimate shown in the column settings (for example, ~80 / row) is the **maximum possible cost** — calculated as 8 credits × your **Max product** limit. With the default Max product of 10, Clay estimates up to 80 credits per row. A row where HG Insights finds no matching technologies costs **0 credits** — the base charge is automatically refunded when no data is returned.
+
+**To reduce the maximum cost per row:** Lower the **Max product** limit in the enrichment configuration. Setting Max product to 2 caps the estimate at 16 credits/row; setting it to 3 caps it at 24 credits/row. If most companies in your table have 1 or 2 technology matches, setting Max product to match your expected maximum is the most credit-efficient approach.
+
 ### `Action` **Find company corporate structure**
 
 Find all corporate parents, domestic parents, and lower level entities managed by a group headquarters company.
