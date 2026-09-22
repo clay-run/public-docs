@@ -23,7 +23,7 @@ Before you can enable restrictions for a category, add at least one allowlist th
 1. In the **IP access restrictions** card, click **Add allowlist**.
 2. Give the allowlist a name (up to 100 characters) — for example, "Corporate office" or "VPN range".
 3. Choose whether this allowlist applies to **Web app** (browser sessions) or **API** (API keys, webhooks, and integrations).
-4. Enter your allowed IP addresses or CIDR ranges, one per line or separated by commas. Both IPv4 and IPv6 are supported; both plain addresses (e.g. `203.0.113.1`) and CIDR notation (e.g. `203.0.113.0/24`) are valid. You can include up to 50 entries per allowlist.
+4. Enter your allowed IP addresses or CIDR ranges, one per line or separated by commas. Both IPv4 and IPv6 are supported, and both plain addresses and CIDR notation are valid. You can include up to 50 entries per allowlist.
 5. Click **Save**.
 
 You can create multiple allowlists for the same category — their entries are merged into a single effective allowlist for that category.
