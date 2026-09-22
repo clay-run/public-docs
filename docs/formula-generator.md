@@ -3,7 +3,7 @@ title: Formulas
 description: Generate formulas with AI to transform your data. Includes how to
   use today's date in a formula, pull error messages with getCellErrorMessagePreview(),
   check cell status with getCellStatus(), and keep date comparisons current automatically.
-last_synced: 2026-04-26T01:40:01.000Z
+last_synced: 2026-04-26T01:40:01.780Z
 ---
 
 # Formulas
