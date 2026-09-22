@@ -143,9 +143,9 @@ Group workspace members (for example, by team) to manage access at scale. Granti
 
 Restrict which users or groups can configure workflows using specific integrations (for example, limit who can build with your Salesforce or Google Sheets connection). Admins can also require approval before any member adds a new connection to the workspace. See [Access settings for connections](https://university.clay.com/docs/access-settings-for-connections).
 
-**IP access restrictions** _(Enterprise)_
+**IP access restrictions** _(Enterprise, currently in beta)_
 
-Restrict which IP addresses can reach the workspace — separately for browser sessions and API access (API keys, webhooks, integrations, and MCP requests). Workspace admins configure named allowlists in `Settings` → `Workspace settings` → **Security**. See [IP access restrictions](https://university.clay.com/docs/workspace-settings) in the workspace settings guide.
+Restrict which IP addresses can reach the workspace — separately for browser sessions and API access (API keys, webhooks, integrations, and MCP requests). Currently in beta — contact your Growth Strategist or Clay support to have it enabled for your workspace. Workspace admins configure named allowlists in `Settings` → `Workspace settings` → **Security**. See [IP access restrictions](https://university.clay.com/docs/workspace-settings) in the workspace settings guide.
 
 **Credit spend limits** _(Enterprise)_
 
