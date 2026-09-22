@@ -149,7 +149,7 @@ Start `codex` again, open `Plugins`, and install `clay`.
 -   **`wsl --install` says `requires elevation`** — run it from `Terminal (Admin)`, or ask IT.
 -   **You pasted the sign-in code and nothing happened** — press `Enter`.
 -   **The sign-in link won't load** — it likely broke when copied across lines. Ask your agent to copy it to your clipboard with `clip.exe`.
--   **The browser shows an error on `127.0.0.1` after you click `Authorize`** — usually a corporate VPN. Sign in with `clay login --device` instead (see below).
+-   **The browser shows an error on the localhost redirect after you click `Authorize`** — usually a corporate VPN. Sign in with `clay login --device` instead (see below).
 -   **Anything else** — the Mac troubleshooting fixes above apply on Windows too.
 
 ## Signing in without a browser
@@ -190,7 +190,7 @@ The Plugin also gives you access to:
 
 ## Plan availability and limits
 
-The developer platform is available across all Clay plans, including free and trial plans. Legacy plans also have access for a limited time.
+The developer platform is available across all Clay plans, including free and trial plans. Legacy plans also have access.
 
 Search result limits vary by plan:
 
@@ -198,8 +198,9 @@ Search result limits vary by plan:
 | --- | --- | --- |
 | Free | 50 | 100/mo |
 | Trial | 50 | 10k per 14 days |
-| Paid self-serve plans | 500 | 1M/yr |
-| Enterprise | 500 | 10M/yr |
+| Flex | 500 | 50k/30 days |
+| Launch and Growth | 500 | 1M/30 days |
+| Enterprise | 500 | 10M/30 days |
 
 ## FAQs
 
