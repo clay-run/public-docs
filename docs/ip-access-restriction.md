@@ -8,7 +8,9 @@ last_synced: 2026-09-22T19:00:00.000Z
 
 IP access restriction lets Enterprise workspace admins control which IP addresses are allowed to connect to their workspace. Browser sessions and API requests (API keys, webhooks, and MCP) are controlled independently, so you can lock down programmatic access without affecting your team's browser workflows — or restrict both at once.
 
-IP access restriction is available on **Enterprise plans** and is visible only to workspace admins.
+**This feature is available on Enterprise plans and is currently rolling out to all Enterprise workspaces.** If you do not yet see the **IP access restrictions** card in your Workspace settings, contact your Growth Strategist or [Clay support](https://www.clay.com/support) to have it enabled.
+
+Only workspace admins can view or edit IP access restriction settings.
 
 ## Navigating to the setting
 
