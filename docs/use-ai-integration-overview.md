@@ -475,3 +475,22 @@ If your AI column runs without using the PDF you uploaded to **Document context*
 3.  Re-upload the PDF.
 4.  Wait until the file status shows **Completed**.
 5.  Click **Save**, then re-run the column.
+
+### Cells showing "Your API key does not have permission to use the specified resource" with your own Google Gemini key
+
+If your Claygent or Use AI cells show **"AI action task completed with status: ERROR — Your API key does not have permission to use the specified resource."** and you have your own Google Gemini API key connected, the error comes from Google, not Clay. Clay routes requests through different Google APIs depending on how your key was created:
+
+-   **Keys created in Google Cloud (Vertex AI):** Clay calls the Vertex AI API (`aiplatform.googleapis.com`) using API key Express Mode. If the Vertex AI API is not enabled on the GCP project associated with your key, Google returns this 403 error.
+-   **Keys created in Google AI Studio:** Clay calls the Generative Language API (`generativelanguage.googleapis.com`). This endpoint is enabled by default for AI Studio keys, so this error is uncommon with them.
+
+**Resolution options:**
+
+1.  **Switch to the Clay-managed Google Gemini account (recommended).** Open the column settings, click the **Account** dropdown, and select **Clay-managed Google Gemini account**. This uses Clay's shared infrastructure and does not require your own API key.
+
+2.  **Enable the Vertex AI API on your GCP project.** If your key was created in Google Cloud: in [Google Cloud Console](https://console.cloud.google.com/), go to **APIs & Services → Enable APIs & Services**, search for "Vertex AI API," and enable it for the project associated with your key. After enabling, re-open your column settings, click the **Account** dropdown, and re-select your key to trigger re-validation.
+
+3.  **Check your API key restrictions.** If you restricted your key to specific APIs, ensure the allowed list includes the API Clay uses for that key type — **Vertex AI API** (`aiplatform.googleapis.com`) for keys generated in Google Cloud, or **Generative Language API** (`generativelanguage.googleapis.com`) for AI Studio keys. See [Restricting your Gemini key](ai-tokens.md) for full details on safe restrictions.
+
+4.  **Remove any IP address or application restrictions.** Adding an IP address restriction to your Google Gemini API key will block Clay's requests and produce this same permission error — Clay makes outbound calls from dynamic IPs with no fixed range to allowlist. Remove IP restrictions from any key used with Clay.
+
+5.  **Switch to a Google AI Studio key.** Create a new API key at [Google AI Studio](https://aistudio.google.com/). AI Studio keys use the Generative Language API, which is enabled by default and requires no additional GCP project setup. Connect it in Clay by opening the column settings, clicking the **Account** dropdown, clicking **+ Add account**, and following the prompts.
