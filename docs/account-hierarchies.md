@@ -31,9 +31,9 @@ Find parent companies and subsidiaries for a company, using a Clay company ID or
 Required:
 
 -   **Clay company ID (recommended):** The company's numeric Clay company ID, for example `111521557`. When it's filled in, every field under `Other company identifiers` is ignored. (Required if no other company identifier is provided.)
--   **LinkedIn URL:** The company's page on LinkedIn. (Required if no Clay company ID, `Company domain`, or `Company name` is provided.)
--   **Company domain:** The company's domain, for example `clay.com`. (Required if no Clay company ID, LinkedIn URL, or `Company name` is provided.)
--   **Company name:** The company's name, for example `Clay`. (Required if no Clay company ID, LinkedIn URL, or `Company domain` is provided.)
+-   **Company profile URL:** The company's page on its professional network. (Required if no Clay company ID, `Company domain`, or `Company name` is provided.)
+-   **Company domain:** The company's domain, for example `clay.com`. (Required if no Clay company ID, company profile URL, or `Company name` is provided.)
+-   **Company name:** The company's name, for example `Clay`. (Required if no Clay company ID, company profile URL, or `Company domain` is provided.)
 -   **Hierarchy data:** A run needs at least one of the two settings below.
     -   **Parent companies:** How far up the hierarchy to look. `All parent companies` returns every available level above the company, `Immediate parents` returns one level above, and `Ultimate parent` returns the top of the hierarchy. Defaults to `All parent companies`.
     -   **Subsidiaries:** How far down the hierarchy to look. `All subsidiaries` returns every available level below the company, and `Immediate subsidiaries` returns one level below. Defaults to `All subsidiaries`.
