@@ -200,8 +200,10 @@ Search result limits vary by plan:
 | --- | --- | --- |
 | Free | 50 | 100/mo |
 | Trial | 50 | 10k per 14 days |
-| Paid self-serve plans | 500 | 1M/yr |
-| Enterprise | 500 | 10M/yr |
+| Flex | 500 | 50k per 30-day rolling window |
+| Launch / Growth | 500 | 1M per 30-day rolling window |
+| Legacy paid (Starter, Explorer, Pro) | 500 | 1M/yr |
+| Enterprise | 500 | 10M per 30-day rolling window |
 
 ## FAQs
 
