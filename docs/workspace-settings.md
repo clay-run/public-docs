@@ -1,6 +1,6 @@
 ---
 title: Workspace settings
-description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, IP access restrictions, agency setups, AI Context, deletion, and recovering a previous workspace.
+description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, agency setups, AI Context, deletion, and recovering a previous workspace.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -96,29 +96,6 @@ To update your billing email:
 SSO is not configured through the Clay workspace settings UI — there is no self-serve configuration panel. To set up SSO for your workspace, contact Clay support. SSO is available on **Enterprise** plans at no additional cost, and as a paid add-on on annual Pro and annual Growth plans.
 
 See [Single Sign-On (SSO)](./single-sign-on.md) for full details on eligibility, the setup process (handled by Clay's support team via WorkOS), how login behavior changes once SSO is enabled, and important notes on user provisioning.
-
-## IP access restrictions _(Enterprise)_
-
-**Available on Enterprise plans.** Only workspace admins can configure IP access restrictions.
-
-IP access restrictions let you control which IP addresses can reach your workspace. You create named allowlists of IPv4 addresses, IPv6 addresses, or CIDR ranges, then enable restrictions independently for browser sessions and API access. When restrictions are enabled for a category, requests from addresses not on any allowlist are blocked.
-
-**To configure IP access restrictions:**
-
-1.  Go to `Settings` → `Workspace settings`.
-2.  In the **Security** section, find the **IP access restrictions** card.
-3.  Click **+ Add allowlist**, give it a name (for example, "NYC HQ"), and enter one IPv4 address, IPv6 address, or CIDR range per line. Each allowlist supports up to 50 entries.
-4.  Enable the toggle for **Web app**, **API**, or both to enforce the allowlist.
-    -   **Web app** — restricts browser sign-in and table access.
-    -   **API** — restricts Clay API keys, webhooks, and integrations (including MCP requests).
-5.  Review the confirmation dialog that summarizes which addresses will be allowed, then click **Turn on**.
-
-**Important:**
-
--   Clay prevents you from saving a configuration that would block your own current IP address from the workspace.
--   Clay support sessions are not affected by these restrictions — support staff can still access your workspace if needed.
--   Changes can take up to 10 minutes to take effect.
--   If a workspace member sees an "Access restricted" screen, they are connecting from an IP address not on any allowlist. Ask them to connect via VPN or corporate network, or add their address to an allowlist.
 
 ## Beta Program
 
