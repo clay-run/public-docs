@@ -1,7 +1,7 @@
 ---
 title: Audiences
 description: "Clay Audiences is available on Growth and Enterprise plans. Launch workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above. Trial workspaces do not have access to Audiences."
-last_synced: 2026-08-20T01:53:27.941Z
+last_synced: 2026-09-22T14:05:06.325Z
 ---
 
 # Audiences
@@ -170,6 +170,8 @@ A record subset import works alongside any standard Salesforce import. You can a
     -   Deal data is associated with both your Companies and People records. In a Companies audience, you can filter by deal attributes. In a People audience, only contacts directly linked to a deal via HubSpot contact associations appear when you filter on deal attributes — not all contacts at the company that owns the deal.
 10.  Name the corresponding Clay fields.
 11.  Click `Save and Preview`, then `Confirm`.
+
+**Note: HubSpot is currently import-only.** Clay imports HubSpot records and enriches them in your Audience, but does not currently write enriched data or segment membership back to HubSpot. Salesforce is the only native write-back destination — see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
 
 **Troubleshooting — "Export permission required":** If the HubSpot account you select is missing the **Export CRM data** permission, Clay displays a warning and disables the Connect button. Click **Re-authorize HubSpot** in the warning to reconnect your account with the required permission enabled, then continue setup.
 
