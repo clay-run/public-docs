@@ -12,7 +12,7 @@ Kernel is an entity resolution and company data provider. It works out which rea
 
 Kernel's data is grounded in legal entities rather than domains, and that difference shows up in your results. Resolved entities, their hierarchies, and their firmographics all arrive with a confidence level and a written explanation attached, so you can see how Kernel reached an answer before you act on it.
 
-**Note:** Kernel is available to workspaces with Kernel enabled, on the Enterprise plan, and needs a Kernel subscription of your own. Your Clay rep can get you set up.**Cost per run:**`Resolve company entity` — 5 data credits + 1 action credit`Resolve company hierarchy` — 10 data credits + 1 action credit`Enrich company firmographics` — 7.5 data credits + 1 action creditRuns that come back with no data are **refunded**.
+**Note:** Kernel is available to workspaces with Kernel enabled and needs a Kernel subscription of your own. Your Clay rep can get you set up.**Cost per run:**`Resolve company entity` — 5 data credits + 1 action credit`Resolve company hierarchy` — 10 data credits + 1 action credit`Enrich company firmographics` — 7.5 data credits + 1 action creditRuns that come back with no data are **refunded**.
 
 ## KERN IDs
 
