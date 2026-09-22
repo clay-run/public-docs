@@ -489,7 +489,47 @@ For **Companies** audiences, five built-in signal types are available:
 -   **New Hire** — detect new hires at monitored companies within the last three months.
 -   **News & Fundraising** — monitor funding rounds, mergers and acquisitions, strategic partnerships, product launches, and leadership changes.
 -   **Job Posting** — alert when a monitored company posts a new job opening; Clay analyzes job descriptions for urgency indicators and geographic expansion signals.
--   **Company Topic Intent** (open beta) — monitor when companies show buying intent for topics you care about, with High, Medium, and Low scoring tiers. Cost: approximately 0.2 credits per account monitored. Contact your Growth Strategist to enable this signal for your workspace.
+-   **Company Topic Intent** (open beta) — monitor when companies show buying intent for topics you care about, using Intentsify, Delivr, or Bombora as the data provider. Cost: approximately 0.2 credits per account monitored. Contact your Growth Strategist to enable this signal for your workspace.
+
+For **People** audiences, one additional signal type is available:
+
+-   **Person Topic Intent** (open beta) — monitor when specific people show buying intent for topics you care about, using Intentsify or Delivr as the data provider. Cost: approximately 0.2 credits per person monitored. Contact your Growth Strategist to enable this signal for your workspace.
+
+**How Topic Intent signals work**
+
+Topic Intent signals let you select one or more data providers — Intentsify, Delivr, and Bombora for companies; Intentsify and Delivr for people — and the topics you want to monitor.
+
+**Person-level vs. company-level signal**
+
+Intentsify and Delivr both surface person-level intent — they identify specific individuals who are actively researching the topics you selected, not by mapping a company-level signal down to a list of known employees at a company. Bombora measures intent at the company level only.
+
+How each provider identifies people:
+
+-   **Intentsify** — matches individuals via their professional profile URL.
+-   **Delivr** — matches individuals via hashed email (HEM); a professional profile URL is also returned when Delivr holds a profile for the person.
+-   **Bombora** — company-level only; intent is attributed to the company domain, not to a specific person.
+
+**Scoring**
+
+The 0–100 score on each intent result is supplied by the provider — Clay does not calculate or normalize the underlying number. Clay derives a tier label (High, Medium, or Low) from each score for display and filtering:
+
+| Provider | High | Medium | Low |
+|---|---|---|---|
+| Intentsify | 61 and above | 40–60 | 39 and below |
+| Bombora | 60 and above | 40–59 | Below 40 |
+| Delivr | Top percentile tier | Middle percentile tier | Not reported |
+
+For Intentsify and Bombora, the composite score is relative to a 12-week baseline — a score of 50 represents average research activity for that account or person; anything above 50 indicates increasing activity. Delivr uses a percentile-based model and does not report a Low tier.
+
+**Timeframe**
+
+The Timeframe setting controls how far back Clay looks for qualifying intent activity — it is a lookback filter, not a score-decay control. A shorter window returns more recent signals; a wider window broadens reach but may include older activity.
+
+| Provider | Timeframe options |
+|---|---|
+| Intentsify | 7, 14, 30, or 60 days |
+| Bombora | 7, 14, 30, 60, or 90 days |
+| Delivr | Fixed lookback; Timeframe setting does not apply |
 
 **Custom signals are not available within Audiences.** To track a more specific or custom signal (for example, website changes, RSS feed mentions, or technology adoption), build that logic in a bulk enrichment on the audience segment using Claygent or scheduled enrichment columns — see [Adding enrichments](#adding-enrichments) above.
 
