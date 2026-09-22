@@ -10,9 +10,14 @@ Use this article to create and switch between Clay workspaces, manage workspace 
 
 ## Creating a new workspace
 
-Creating an additional workspace is not available through in-app settings for most accounts. To create a new workspace, sign up using a **different email address** at [app.clay.com](https://app.clay.com) — this starts a new workspace where you are the admin from day one.
+Each Clay account can create one workspace. If your email is already associated with any workspace — whether you created it or were invited as a member — the option to create an additional workspace is blocked by default.
 
-You do not need to leave any workspaces you're already a member of. Your existing workspace memberships stay intact, and each workspace is independent with its own tables, credits, and billing.
+**To get a new workspace linked to your existing email, you have two options:**
+
+-   **Contact Clay support** via the in-app chat and ask to have multi-workspace creation enabled on your account. Once enabled, an **Add workspace** button appears in the workspace switcher. Workspaces created this way start with no trial credits; billing and credits are configured per workspace after creation.
+-   **Have a colleague create the workspace and invite you as admin.** Ask them to sign up at [app.clay.com/signup](https://app.clay.com/signup), create the workspace, then invite you from **Settings → Members**. Once you accept, the workspace appears in your workspace switcher alongside your others.
+
+If you want a completely separate Clay account with a distinct login, sign up at [app.clay.com](https://app.clay.com) with a **different email address** — this creates an independent account and workspace.
 
 ## Switching between workspaces
 
