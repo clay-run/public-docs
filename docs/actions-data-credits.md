@@ -370,7 +370,7 @@ You must upgrade to a higher action tier. Actions cannot be topped up separately
 
 If your billing cycle resets soon, waiting is also an option — your full Actions allotment replenishes automatically at your next renewal. You can check your exact renewal date in `Settings` → `Plan & billing`.
 
-**What happens when you reach the Action limit depends on your plan.** On many plans, hitting the Action limit shows a warning banner but does not stop enrichments — you can continue running enrichments as long as you have Data Credits remaining. On other plans, reaching the Action limit stops enrichments even if Data Credits are still available.
+**What happens when you reach the Action limit depends on your plan.** On most current plans, hitting the Action limit shows a warning banner but does not stop enrichments — you can continue running enrichments as long as you have Data Credits remaining. **Note: Clay is rolling out stricter Action limit enforcement to additional plan types — on some plans, reaching the Action limit stops enrichments even if Data Credits are still available.**
 
 If your enrichments are stopped after hitting the Action limit and you still have Data Credits, contact Clay support via the in-app chat. If Data Credits are available in your account, the support team may be able to help you continue until your billing cycle resets.
 
