@@ -149,7 +149,7 @@ Start `codex` again, open `Plugins`, and install `clay`.
 -   **`wsl --install` says `requires elevation`** — run it from `Terminal (Admin)`, or ask IT.
 -   **You pasted the sign-in code and nothing happened** — press `Enter`.
 -   **The sign-in link won't load** — it likely broke when copied across lines. Ask your agent to copy it to your clipboard with `clip.exe`.
--   **The browser shows an error on `127.0.0.1` after you click `Authorize`** — usually a corporate VPN. Sign in with `clay login --device` instead (see below).
+-   **The browser shows an error on the localhost redirect after you click `Authorize`** — usually a corporate VPN. Sign in with `clay login --device` instead (see below).
 -   **Anything else** — the Mac troubleshooting fixes above apply on Windows too.
 
 ## Signing in without a browser
