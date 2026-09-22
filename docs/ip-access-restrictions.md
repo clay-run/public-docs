@@ -24,7 +24,7 @@ When a restriction is on, requests from an address that isn't on an allowlist fo
 1.  Go to `Settings` → `Workspace` and scroll to the `Security` section.
 2.  In the `IP access restrictions` card, click `Add allowlist`.
 3.  Enter an `Allowlist name`, such as `NYC HQ` or `VPN range`.
-4.  Under `IP addresses`, enter one IPv4 address, IPv6 address, or CIDR range per line (for example, `198.51.100.0/24`).
+4.  Under `IP addresses`, enter one IPv4 address, IPv6 address, or CIDR range per line (for example, a `/24` subnet block for your network range).
     -   Click `Add it` next to `You're connecting from…` to add the address you're using right now.
     -   Each allowlist holds up to 50 addresses or ranges.
 5.  Under `Applies to`, choose `Web app` or `API`, then click `Add allowlist`.
@@ -66,4 +66,4 @@ Yes. Clay support sessions aren't affected by IP access restrictions, so support
 
 ### What if I need more than 50 addresses?
 
-Create another allowlist for the same access type. Access is allowed from any address on any of that access type's allowlists. A CIDR range such as `203.0.113.0/24` also counts as a single entry.
+Create another allowlist for the same access type. Access is allowed from any address on any of that access type's allowlists. A CIDR range also counts as a single entry.
