@@ -23,7 +23,7 @@ Only workspace admins can view and edit these settings. The configuration is sel
 2.  Scroll to the **Security** section.
 3.  On the **IP access restrictions** card, click **Add allowlist**.
 4.  Enter a name for the allowlist (for example, "HQ network" or "VPN range").
-5.  Enter IP addresses or CIDR ranges — one per line. IPv4, IPv6, and CIDR notation are all accepted (for example, `198.51.100.0/24`). The modal displays your current IP address and lets you add it with one click.
+5.  Enter IP addresses or CIDR ranges — one per line. IPv4, IPv6, and CIDR notation are all accepted. The modal displays your current IP address and lets you add it with one click.
 6.  Under **Applies to**, choose **Web app** or **API**. An allowlist covers one path — to restrict both, create a separate allowlist for each.
 7.  Click **Add allowlist** to save.
 8.  Back on the IP access restrictions card, toggle **Web app** and/or **API** to the **Restricted** state to begin enforcing the allowlist.
@@ -48,7 +48,7 @@ From the blocked screen, they can switch to another Clay workspace they have acc
 
 Each allowlist accepts up to **50** IP addresses or CIDR ranges. Allowlist names can be up to **100 characters**.
 
-Accepted formats: individual IPv4 or IPv6 addresses, CIDRv4 ranges (for example, `198.51.100.0/24`), and CIDRv6 ranges. Enter one address or range per line.
+Accepted formats: individual IPv4 or IPv6 addresses, IPv4 CIDR ranges (slash notation, for example `/24`), and IPv6 CIDR ranges. Enter one address or range per line.
 
 ## Allowlisting automation and agent IPs
 
