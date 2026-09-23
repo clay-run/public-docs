@@ -36,6 +36,7 @@ _Note: Personal email addresses significantly improve match rates when syncing t
     -   **For contacts:** Hashed email + first name/last name (required for optimal matching)
     -   **For accounts:** Company name + company website (required for optimal matching)
     -   **Note:** When syncing a LinkedIn **Account list**, a **Company URL** field is also available in the mapping step and can improve match rates. This field does not appear for Contact list audiences — LinkedIn does not support company URL matching for contacts.
+    -   **Note:** Meta and Reddit audiences support **Mobile Advertiser ID (MAID)** as an optional contact-matching field. If you have MAID data — for example, from mobile app installs — map it alongside email to give the platform an additional identifier to match on.
     -   **Important:** Email is the primary field ad platforms use to match contacts. If no email column is mapped, the platform will process the sync but return an audience size of 0 — even for tens of thousands of contacts. This appears as a "too small for use in campaigns" status. Because field mapping cannot be changed after an Ad Sync is created, verify at least one email column is mapped before sending your audience.
 4.  **Review enrichment and sync status** in the Sync panel. Your audience starts syncing automatically after you complete field mapping.
     -   If Enhanced Matching is configured, the Sync panel shows enrichment progress while personal email addresses are being found for your contacts.
