@@ -1,6 +1,6 @@
 ---
 title: Find your Clay API key
-description: Utilize your Clay-native enrichments with your personal key.
+description: Create a Clay API key via the API and CLI page or the Clay CLI to enable Clay-native integrations.
 last_synced: 2026-04-26T01:40:06.072Z
 ---
 
@@ -19,8 +19,14 @@ Your Clay API key enables you to:
 
 ### Find your Clay API key
 
-1.  In the top bar, click your account name and select `Settings`
-2.  Under `Account`, locate `API key`. You'll find your API key here for integrations.
+You can create an API key two ways:
+
+-   With Clay's Agent Plugin installed, ask your coding agent to create one for you — or run `clay api-keys create --name "<key name>"` yourself using the Clay CLI.
+-   In Clay, open `API and CLI` in the left sidebar (under `Orchestration`), select the `API keys` tab, and click `Add API key`.
+
+The key is shown only once when you create it — copy it somewhere safe.
+
+**Note:** Some older integrations, such as Zapier, still use the legacy single-token key. To find it, go to `Settings` → `Account` → `API key (legacy)`.
 
 ### Using your API key with external tools
 
