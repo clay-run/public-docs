@@ -301,3 +301,59 @@ See [HG Insights integration](hg-insights-integration-overview.md) for more deta
 **Claygent** supplements database-backed tech stack enrichment by searching the web for signals of technology adoption. It is most useful for open-source or infrastructure frameworks — such as LangChain or AWS Bedrock — that leave no footprint in website source code and may not appear in database provider catalogs. Add a Claygent column to your table, use the company domain as an input variable, and write a mission prompt such as: *"Does {{company_domain}} use [technology name]? Search the company's website, blog posts, GitHub repositories, case studies, and press mentions, and return yes or no with the evidence found."* See [Claygent](claygent-builder.md) for setup details.
 
 **Note:** 6sense is not available as a waterfall provider in Clay. Store Leads enriches e-commerce site traffic data and is not part of any technographic waterfall.
+
+## Personal Email waterfall
+
+The **Personal Email** waterfall finds a person's personal (non-work) email address by querying multiple data providers in sequence — stopping as soon as one returns a result for that contact.
+
+You only pay credits for the provider that successfully returns an email. Providers that are attempted but return nothing for a row do not charge credits for that row, making the Personal Email waterfall one of the most credit-efficient ways to build personal email coverage at scale.
+
+### Setting up the Personal Email waterfall
+
+Available on all plans, including Trial.
+
+1.  In your table, click **Tools** in the top right corner, then select the **Enrich** tab.
+2.  Search for `Personal Email` and select the **Personal Email** waterfall.
+3.  Choose between **Quick setup** and **Full configuration**.
+4.  Map your input columns and click **Save**.
+
+**Inputs**
+
+The stronger the identifiers you provide, the higher your match rate:
+
+-   **LinkedIn profile URL** — the single most accurate identifier; include it whenever available.
+-   **Full name + company domain** (or company name) — a reliable fallback when no LinkedIn URL is available.
+
+Map whichever columns you have. Providing both a LinkedIn URL and a name/company combination gives more providers enough data to attempt a match.
+
+**Output:** Personal email address
+
+### How credit cost works
+
+Each provider in the **Waterfall sequence** shows its per-row credit cost. You are only charged for the provider that returns a result — if the first provider in the sequence finds a match, only that provider's credit cost applies to that row, and no further providers are called or charged.
+
+The average expected cost shown next to the waterfall in the Tools panel reflects historical coverage across providers — it is not a guaranteed per-row price. Your actual cost per row depends on which provider finds a match first, which varies based on your list.
+
+### Provider order: quality vs. cost
+
+The default provider sequence is optimized for **data quality** (the "Outreach with personal email" preset), not lowest cost. Providers are ordered to maximize coverage and accuracy, which means a higher-cost provider may appear early in the sequence.
+
+To reduce average credit spend, reorder providers so lower-cost options appear earlier:
+
+1.  Click the waterfall tab to open the waterfall menu and select **Edit group**.
+2.  In the **Full configuration** tab, go to the **Waterfall sequence** section.
+3.  Drag providers up or down to reorder them. The credit cost per row is shown next to each provider.
+4.  Toggle off any providers you want to skip without removing from the sequence.
+5.  Click **Save**.
+
+**Tip:** Moving a lower-cost provider earlier reduces average spend when it finds a match — but if that provider has lower coverage for your specific audience, the waterfall may fall through to higher-cost providers anyway, resulting in similar or higher spend overall. Test on a small sample before reordering at scale.
+
+### Avoiding duplicate enrichment
+
+If some contacts already have a personal email in another column or from a previous run, use a run condition to skip those rows:
+
+1.  In the waterfall's **Run settings**, click **Only run if**.
+2.  Enter a condition such as `[Personal Email column] is empty`.
+3.  Click **Save**.
+
+Clay skips the waterfall for any row where the output column already contains a value, preventing duplicate enrichment and unnecessary credit spend.
