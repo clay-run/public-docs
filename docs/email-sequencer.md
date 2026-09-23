@@ -91,7 +91,7 @@ Connect and enable warmup on your sender account as early as possible so it's re
     -   `Campaign start date` (optional): Set a future launch date, or start immediately based on your settings.
 7.  Explore `Advanced settings` if needed:
     -   `Webhooks`: Route campaign events to a specific Webhook destination instead of the default Campaign Events Clay table. Example: Send Smartlead metrics to tools like OutboundSync or Enrichley for downstream routing.
-    -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled)
+    -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled). By default, tracking redirect links use a shared domain — if recipients at companies with strict email security see a "blocked" page when clicking your links, see [My tracking links are being blocked by corporate email security tools](#my-tracking-links-are-being-blocked-by-corporate-email-security-tools-what-should-i-do).
     -   `Pause leads at the same company on reply`: When a lead replies, automatically pause other leads with the same email domain. Off by default.
 8.  Go to `Leads` to preview the messages for all people in your campaign
     -   `Send test email` to verify your template looks right
@@ -524,6 +524,18 @@ To view and manually manage your blocklist—including adding individual email a
 **What about leads who reply asking not to be contacted?**
 
 If a lead *replies* to your email — rather than clicking an HTML unsubscribe link — their response is categorized by Smartlead (e.g., as `Do Not Contact` or `Not Interested`), but they are **not** automatically added to the blocklist. The `Add email to blocklist` column in the campaign events table is a button by default: you can click it manually for a specific row, or automate it by setting an `Only run if` condition on the column. To trigger the blocklist action for reply-based opt-outs, set the condition to run when `Event type` equals `LEAD_CATEGORY_UPDATED` — this event fires whenever Smartlead categorizes a lead's reply. See [How are replies categorized in the Campaign Events table?](#how-are-replies-categorized-in-the-campaign-events-table) for the full list of reply categories.
+
+### My tracking links are being blocked by corporate email security tools. What should I do?
+
+When open/click tracking is enabled, Clay rewrites every link in your emails to pass through a tracking redirect domain before landing on your destination URL — this is how clicks get counted. By default, those redirect links use a shared tracking domain. Some corporate email security tools flag and block this shared domain, showing recipients a "blocked" page instead of your link destination. When tracking is disabled, links go out unmodified, which is why they work correctly with tracking off.
+
+**The fix: set a custom tracking domain on each sender inbox.** Routing tracking redirects through your own subdomain uses your domain's reputation instead of the shared one.
+
+1. In your DNS provider, add a CNAME record on a subdomain of your sending domain — for example, `track.yourdomain.com` pointing to `emailstats.clay-mail.com`.
+2. Once the record has propagated (usually within an hour), go to **Campaigns → Email Accounts**, click the **⋮** menu on the sender inbox, and select **Set custom tracking domain**. Enter the subdomain you created (for example, `track.yourdomain.com`).
+3. **Repeat step 2 for every sender inbox used in your campaigns.** The custom tracking domain is set per inbox — any inbox you skip will continue to send tracking links through the shared domain.
+
+A custom tracking domain reduces the likelihood of link blocking, but some corporate email security systems may still block tracking links regardless of the domain. If you previously disabled tracking as a workaround, you can re-enable **Track email opens** and **Track link clicks** in your campaign's **Advanced settings → Email tracking** once the custom domain is configured. If links continue to be blocked, disabling click and open tracking entirely means links go out unmodified and won't be flagged.
 
 ### What happens if I manually add a lead to the Global Blocklist while they're already in an active campaign?
 
