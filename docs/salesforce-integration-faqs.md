@@ -482,7 +482,7 @@ If all new contacts belong to the same account, pass the Salesforce Account ID d
 
 When new contacts span multiple accounts — for example, prospecting contacts across companies already in your book of business — add a **Lookup Record** step to resolve each person's account before creating the contact:
 
-1. **Look up the Salesforce Account by company domain.** Add a **Lookup Record** column, set the Salesforce object to **Account**, and search by company website or domain. In **Object Field(s)**, add `Id`, `Name`, and `ParentId` to return them from the matched account.
+1. **Look up the Salesforce Account by company domain.** Add a **Lookup Record** column, set the Salesforce object to **Account**, and search by company website or domain. The action returns all fields from the matched account — including `Id`, `Name`, and `ParentId`.
 2. **Map the Account ID.** In the **Create Record** step for the contact, add `AccountId` in **Map fields** and map the `Id` returned by the Account Lookup column. The company name or domain alone will not link the contact — Salesforce requires the actual record ID.
 3. **Map the contact's email.** Add `Email` in **Map fields** and map the work email from your enrichment waterfall. Many Salesforce orgs have custom validation rules that require both `AccountId` and `Email` before a contact can be created.
 4. **Add a run condition.** Gate the Create Record step so it only fires when both `AccountId` and `Email` are resolved. Open the column's **Run settings** → **Only run if**, and enter a condition such as:
