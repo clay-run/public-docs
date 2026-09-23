@@ -87,6 +87,8 @@ The out-of-date clock indicator on a cell means the cell is stale — it has an 
 
 A cell also shows as out of date when its inputs have changed since it last ran — for example, if an upstream column with auto-run enabled re-ran and updated its values, or if the column's own configuration was modified (such as editing a prompt). In these cases the indicator is informational: the existing value is still valid and usable downstream. In many cases re-running would produce the same result, so only trigger a re-run if you specifically need fresh output.
 
+**AI column prompt references create live dependencies — including hidden and optional inputs.** In AI and enrichment columns, any column you reference using the `{{Column Name}}` syntax (inserted with the `/` shortcut in the prompt editor) becomes an input dependency. This dependency is active regardless of whether the referenced column is hidden from the table view or whether the input is marked as optional (Required to run: off). Each time the referenced column writes a new value to a row, Clay marks the downstream AI column as out of date for that row. Hiding the referenced column does not remove the dependency — only removing the `{{Column Name}}` reference from the prompt itself breaks the link.
+
 **Manual tables and sequential column runs:** In Manual mode, running a column does not automatically trigger downstream columns — even if those columns have run conditions that are currently met. Without Auto-run enabled, Clay does not cascade a run from an upstream column to any column that depends on it. Each column in your workflow must be triggered separately, in the order they appear in your table (left to right).
 
 When you run enrichment columns one at a time from left to right in Manual mode, you may also see the out-of-date indicator appear across most columns — including ones you've already run. This is expected behavior, not a bug. Every time you run an upstream column, Clay immediately marks all downstream columns that depend on it as out of date, because their inputs may have changed. In a table where columns feed sequentially into each other (for example, a scoring table), running them in order creates a wave of stale indicators that propagates forward as you work. **Your data is not broken**: cell values marked out of date because auto-run is off are still valid and can be referenced by other columns without blocking downstream runs.
@@ -104,6 +106,14 @@ If a cell **keeps** showing as out of date even after you re-run it, check wheth
 -   **Disable auto-run on the downstream column** — the column will only run when you trigger it manually. This is the most targeted fix and leaves the upstream column untouched.
 -   **Disable auto-run on the upstream column** — stops the cascade at its source, but means the upstream column also switches to manual-only mode.
 -   **Enable "Keep existing results"** at the table level — cells with existing results are no longer automatically re-run, so the stale indicator appears but no credits are consumed re-running the column on every upstream change.
+
+**'Run N empty or out-of-date rows' appears to do nothing for cells that already have results**
+
+If clicking **Run column → Run [N] empty or out-of-date rows** produces no visible activity — no credits consumed, no progress update, cells remain flagged — and the column has Auto-run switched off, the most likely cause is that all flagged cells already have a successful result. A standard column run targets only cells that are empty, errored, or have never run. With Auto-run off, cells that already have a result are skipped even when they are marked as out of date — the run sees nothing to do and immediately re-applies the flag instead of clearing it.
+
+To re-run these cells, use **Force run on all rows** from the column header menu (**Run column → Force run all [N] rows**). Force run bypasses the success-skip and re-executes every cell regardless of its current state. The UI shows the estimated credit cost before you confirm.
+
+**Sequencing tip:** If the upstream column driving the out-of-date flag is still actively running — for example, only a quarter of its rows have completed — force-running the downstream column now will clear the flag temporarily, but it will return on each new upstream write. Let the upstream column finish running across all its rows first, then force-run the downstream column once to settle the state. Alternatively, turn Auto-run on for the downstream column after the upstream finishes, so future updates are handled automatically.
 
 ### Understanding the manually-overwritten indicator
 
