@@ -165,7 +165,7 @@ Cells show a **Queued** status when they are waiting to be processed. This is no
 
 If cells remain Queued for an extended period, common causes include:
 
--   **High concurrency in progress** — Clay runs many rows at once; if a large number are queued simultaneously, later rows wait while earlier ones complete. The queue will clear on its own.
+-   **Workspace concurrency limit reached** — Clay allows up to **1,000 enrichment requests to run simultaneously across all tables in your workspace**. When this limit is reached, additional queued rows wait for in-flight requests to complete before starting. The queue clears automatically as slots free up. Running multiple large tables at the same time — or triggering a very large run across many columns — all draw from the same workspace-wide pool of 1,000 concurrent slots.
 -   **External API rate limits** — Integrations such as OpenAI or HubSpot enforce per-minute request limits. For Clay's managed integrations (where Clay provides the API key), Clay handles this automatically and the queue resumes once the rate-limit window resets. If you are using your own API key, Clay may send requests faster than your account's tier allows — rows that exhaust the retry window return a **"Rate limit wait time exceeded"** error. To prevent this on enrichment columns that support it (such as HTTP API), configure the **Custom rate limit** setting on the column to match your provider's tier; see [Enrichments](enrichments.md) for details. For AI enrichments using a personal API key, see [AI tokens](ai-tokens.md).
 -   **API quota exhausted** — If you've hit a quota ceiling (e.g., OpenAI, Google), new runs are blocked until the quota resets or is increased in the provider's dashboard.
 -   **Auto-run settings** — If auto-run is enabled and triggering repeated re-runs, rows may accumulate in the queue unexpectedly. See [Auto-run](auto-run.md) for how to adjust auto-run and scheduled run behavior.
@@ -308,7 +308,7 @@ If the error persists after clearing the cache and refreshing, visit [status.cla
 
 ## Troubleshooting: slow cell loading with multiple workbook tables
 
-Cell data may take longer to appear when a workbook contains large tables and multiple enrichments are running at the same time. Enrichment runs share a fixed pool of concurrency slots across your workspace — when many enrichments are active simultaneously, incoming requests queue behind earlier ones, which manifests as visible latency in loading cell data.
+Cell data may take longer to appear when a workbook contains large tables and multiple enrichments are running at the same time. Enrichment runs share a pool of up to **1,000 concurrent slots** across your workspace — when many enrichments are active simultaneously, incoming requests queue behind earlier ones, which manifests as visible latency in loading cell data.
 
 Performance impact is more pronounced with larger tables and more complex workflows, such as workbooks where tables are linked together (for example, a companies table feeding into a people table).
 
