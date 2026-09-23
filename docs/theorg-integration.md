@@ -82,6 +82,22 @@ Use this action to retrieve the full org chart for a company given its domain. T
 
 For setup details on the HTTP API enrichment column, see [HTTP API](http-api-integration-overview.md).
 
+#### Surfacing the hierarchy and building an org chart
+
+After running **Find company org chart**, the table may initially show only Name, Title, Work Email, and Professional profile URL as columns. Manager ID and Position ID are returned by the source but need to be added explicitly — click `+` to add a column and select those fields from the source output.
+
+**How the hierarchy is encoded:** Each row represents one position. Position ID is that person's unique identifier. Manager ID contains the Position ID of their manager (another row in the same table). The person at the top of the org — typically the CEO — has no Manager ID. This parent-child link is the complete reporting structure returned by the source.
+
+**Connecting each person to their manager by name:** Add a Lookup column that finds the row whose Position ID matches the current row's Manager ID and returns that row's Full Name. This gives you a readable "reports to" label you can group and filter by.
+
+**Clay has no built-in org chart view.** Tables display as a grid — there is no tree or hierarchical view inside Clay. To visualize the reporting structure, export the table with Full Name, Title, Position ID, and Manager ID, then use an external tool such as Claude or ChatGPT to generate a visual chart. The Position ID and Manager ID columns are all a charting tool needs to build the tree; names and titles become the labels.
+
+**Teams and departments are not available from this source.** The Org does not return team or department fields directly. To group people by function:
+-   Add a **Use AI** column that classifies each person's Title into functional labels (for example: Engineering, Sales, Marketing).
+-   Use **ZoomInfo** enrichment to add seniority, departments, and sub-departments as structured fields.
+
+**Coverage:** Manager links are not complete for every person at every company. Some rows will return without a Manager ID even where name and title are present. Coverage varies by company size and how well-indexed the company is in The Org's data.
+
 ### **Run settings**
 
 -   **Auto-update**
