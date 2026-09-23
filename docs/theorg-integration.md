@@ -67,8 +67,8 @@ Use this action to retrieve the full org chart for a company given its domain. T
     -   **Title:** Job title
     -   **Work Email:** Work email address (if available)
     -   **Professional profile URL:** Professional network profile URL (if available)
-    -   **Manager ID:** Internal reference ID of the person's manager
-    -   **Id / Position ID:** Internal identifiers for the position node
+    -   **Manager ID:** Internal reference ID of the person's manager (string format, e.g. `p-12345`)
+    -   **Id / Position ID:** Internal identifiers for the position node — **Id** is a string (e.g. `p-12345`) used for hierarchy linking; **Position ID** is a separate numeric identifier
 
 #### Enriching a list of companies with org charts
 
@@ -81,6 +81,22 @@ Use this action to retrieve the full org chart for a company given its domain. T
 5.  Parse the JSON response to extract the org chart fields you need.
 
 For setup details on the HTTP API enrichment column, see [HTTP API](http-api-integration-overview.md).
+
+#### Surfacing the hierarchy and building an org chart
+
+After running **Find company org chart**, the table may initially show only Name, Title, Work Email, and Professional profile URL as columns. Manager ID, Id, and Position ID are returned by the source but need to be added explicitly — click `+` to add a column and select those fields from the source output.
+
+**How the hierarchy is encoded:** Each row represents one position. The **Id** field (a string in the format `p-NNNNN`) is that person's unique node identifier. Manager ID on each row contains the **Id** of their manager — pointing to another row in the same table. The person at the top of the org — typically the CEO — has no Manager ID. Position ID is a separate numeric field and is not used for the hierarchy link.
+
+**Connecting each person to their manager by name:** Add a Lookup column that finds the row whose **Id** matches the current row's Manager ID and returns that row's Full Name. This gives you a readable "reports to" label you can group and filter by.
+
+**Clay has no built-in org chart view.** Tables display as a grid — there is no tree or hierarchical view inside Clay. To visualize the reporting structure, export the table with Full Name, Title, Id, and Manager ID, then use an external tool such as Claude or ChatGPT to generate a visual chart. The Id and Manager ID columns are all a charting tool needs to build the tree; names and titles become the labels.
+
+**Teams and departments are not available from this source.** The Org does not return team or department fields directly. To group people by function:
+-   Add a **Use AI** column that classifies each person's Title into functional labels (for example: Engineering, Sales, Marketing).
+-   Use **ZoomInfo** enrichment to add seniority, departments, and sub-departments as structured fields.
+
+**Coverage:** Manager links are not complete for every person at every company. Some rows will return without a Manager ID even where name and title are present. Coverage varies by company size and how well-indexed the company is in The Org's data.
 
 ### **Run settings**
 
