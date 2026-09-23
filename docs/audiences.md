@@ -482,6 +482,19 @@ Four Clay actions let you move data between a Clay table and your Audience direc
     -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls. By default, signal data is returned for the past **90 days** and the action returns **5 signal results** per record by default — adjust the **Signal data to include (days)** setting in the column settings to retrieve older signals, or increase the result limit (up to 50) when you need more results per record. Use `Get Audiences Activity` when you need a larger set of results.
     -   `Get Audiences Activity` retrieves signal and activity data for an Audiences record — including signal events and, if Gong is connected to your workspace, Gong call records. Use it when you need more results or want to query a longer time window than `Lookup in Audiences` provides by default. Set **Object type** (People or Companies) and map the Audiences **Record ID**; optionally filter by **Activity types** — for example, select `Job posting` to retrieve only job posting events, or leave it empty to return all types. Configure **Max activities per type** (default 5, max 200) and **Days lookback** (default 90, max 365). For job posting signals, each event includes the job title, URL, location, posted date, seniority, description, company name, and company domain — data you can parse in downstream columns to qualify and route companies based on the specific roles they are hiring for. Every signal event returned by `Get Audiences Activity` includes an `eventId` that uniquely identifies that event — use `eventId` as your deduplication key to determine whether a workflow has already processed a specific event. For **New Hire** signal events, each event also includes an `isInitialCheck` boolean: `isInitialCheck: true` means the event was generated the first time the signal monitor evaluated that record (no prior snapshot existed for that record); `isInitialCheck: false` means the event came from a later scheduled check after a snapshot existed. This value is set once at event-creation time and does not change afterward — it is scoped to the signal monitor and record, not to any individual workflow or consumer. Do not use `isInitialCheck` as a dedup key: every record's first-evaluation events share the value `true`, so it cannot identify whether a specific event has already been processed by your workflow.
 
+**How `Upsert Audiences Record` finds the existing record**
+
+The **Look up fields** you configure (Email, professional network URL, or Phone for People) are matched against **identifiers that were registered on each person when they first entered your Audience** — not against the email address or other field values stored in your Audience columns.
+
+People who entered Audiences through a Clay table import (via **Add data → Clay table** or **Continue → Save to People**) are registered under a source identifier, not an email identifier. An email-based lookup cannot find those records, so instead of updating the existing person the action creates a new duplicate on every run.
+
+**To update existing records without creating duplicates:**
+
+1. Add a **`Lookup in Audiences`** column to your table first — this returns each person's Audiences record ID.
+2. In your **`Upsert Audiences Record`** column, set **Look up fields** to **Audiences record ID**. A record-ID write always updates the matched record and can never create a new one.
+
+See [Why is `Upsert Audiences Record` creating duplicate people instead of updating existing ones?](#why-is-upsert-audiences-record-creating-duplicate-people-instead-of-updating-existing-ones) in the FAQs below for more detail.
+
 **Note:** `Upsert Audiences Record` and `Update Audiences Record` support scalar field types only (text, number, date, boolean). Audiences has no native array or object field type, and JSON array columns cannot be selected as write targets in the field mapper. To expand a JSON array field into individual records in another Audience, see [How do I expand a JSON array field in one Audience into individual records in another?](#how-do-i-expand-a-json-array-field-in-one-audience-into-individual-records-in-another) in the FAQs below.
 
 ### Reviewing enrichment results
@@ -1191,6 +1204,19 @@ Two behaviors to keep in mind:
 -   **Empty fields count as non-matches.** If a field value in your Audience record is empty (null), it will not match any filter condition on that field — including equality checks. For example, filtering by `Profile URL = <value>` will not return records that have an empty Profile URL field, even if the Email matches.
 
 If you need to look up a record that may be missing one of your identifier fields, filter by the field most likely to be populated (typically `Email` or `Profile URL`), and use a single-field filter rather than combining multiple conditions.
+
+### Why is `Upsert Audiences Record` creating duplicate people instead of updating existing ones?
+
+The most common cause: **Look up fields** is set to Email (or professional network URL or Phone), but the people already in your Audience were not registered with that value as an identifier.
+
+`Upsert Audiences Record` resolves an existing person by matching the lookup field value against **identifiers registered at import time** — not against the email address or other field values stored on your audience record. People who entered Audiences through a Clay table import are registered under a source identifier (not an email identifier). An email-based lookup finds nothing, so a new duplicate record is created on every run.
+
+**Fix:**
+
+1. Add a **`Lookup in Audiences`** column to your table — this returns each person's Audiences record ID.
+2. In your **`Upsert Audiences Record`** column, set **Look up fields** to **Audiences record ID**. A record-ID write always updates the matched record and can never create a new one.
+
+**To clean up duplicates already created:** filter your Audiences view by the duplicate import source using the **Person source** filter, select the unwanted records, then archive them. See [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) below for steps.
 
 ### How do I remove records from an audience?
 
