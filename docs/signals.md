@@ -72,19 +72,6 @@ The signal runs on its scheduled cadence and checks all rows in the destination 
 
 Most Signals — Clay's automated monitors for events like job changes, promotions, and news and fundraising — are available on any paid plan.
 
-### Are there workspace-level limits on how many Signals I can run?
-
-Yes. Active Signals on a schedule count toward your workspace's **scheduled sources** limit:
-
--   **Launch and Growth plans:** 100 active scheduled sources
--   **Enterprise plans:** 1,000 active scheduled sources
-
-**Paused Signals do not count.** Once a Signal is paused, it is excluded from this limit — only Signals actively running on a schedule count toward the total.
-
-**Enrichment columns configured to re-run on a schedule** (for example, a weekly column refresh) count toward a **separate** limit of 100 scheduled tables (1,000 on Enterprise). These two limits are tracked independently. Unused tables with no scheduled runs do not count toward either limit. See [Scheduled sources](scheduled-sources.md) and [Scheduled columns](scheduled-columns.md) for full plan details on each limit.
-
-There is currently no page in Clay where you can see your workspace's count against either limit. For a rough picture of your recurring activity, go to **Settings → Credit Usage → Usage tab** and filter by **Recurring** — this covers both scheduled sources and columns with scheduled re-runs, which is useful for identifying old recurring items to clean up. To discuss raising the limit for your workspace, contact Clay support.
-
 ### Why is my Signal returning 0 results?
 
 Signals require a connected data source to run against — either a source table containing the companies or contacts you want to monitor, or an audience segment. Without a linked source table or audience segment (or if the linked table is empty or has been deleted), the Signal has nothing to check and will return 0 results. Confirm that your Signal is connected to an active Clay table with valid company identifiers (domain or LinkedIn URL) or contact LinkedIn URLs, or to a populated audience segment.
@@ -247,18 +234,13 @@ You can review all active signals and their individual credit spend in the `Sign
 
 ### What happens when my Signal results table reaches 50,000 rows?
 
-Each Signal results table is capped at 50,000 rows. Once the table is full:
+Each Signal results table is capped at 50,000 rows. When the table is full, new matching events stop being added.
 
--   **New matching events stop being written** — rows are no longer added once the limit is reached.
--   **There is no in-app warning** when a table is approaching or has hit the 50,000-row cap. The rows simply stop being added with no notification.
--   **The Signal itself does not stop or pause.** It continues running on its configured schedule and continues consuming credits for every record it checks — even though no new rows can be written to the full table.
+To stay ahead of the limit:
 
-To avoid missing results or unexpected credit charges as your Signal results tables grow:
-
--   Monitor row counts manually by clicking the **rows** button in the table toolbar (it shows the current count, for example **49,800/50,000 rows**).
--   When a table is approaching the limit, archive or delete older rows to free up capacity.
--   Alternatively, enable [Passthrough mode](table-management-settings.md) on the results table — when active, passthrough automatically forwards processed rows and deletes them from the table, bypassing the 50,000-row cap for signal sources.
--   To pause the Signal while you manage capacity: click the `📡` signal column header → **Edit signal** → disable the signal → save.
+-   **Monitor row counts manually** by clicking the **rows** button in the table toolbar (it shows the current count, for example **49,800/50,000 rows**).
+-   **Enable per-table row limit alerts.** Table Alerts can notify you before the table fills — the default alert threshold is 45,000 rows. Row limit alerts are off by default and must be enabled individually per table in the table's alert settings.
+-   **Bypass the limit with Passthrough mode.** Enable [Passthrough mode](table-management-settings.md) on the results table — when active, passthrough automatically forwards and deletes processed rows so the table never fills up. Passthrough is supported for signal source tables.
 
 ### Can I update settings for multiple Signals at once?
 
