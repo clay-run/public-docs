@@ -31,7 +31,7 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
     -   **Description keywords to include** and **Description keywords to exclude** — Filter companies by keywords that appear in their description.
         -   **Exact phrase matching:** Wrap multi-word terms in double quotes to match that exact phrase. For example, `"Google Cloud"` finds companies with that phrase in their description — not just companies that mention Google and cloud separately. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are stripped out even with quoted phrases.
     -   **Semantic company description** — Enter a free-text description to help rank results based on how closely they match your ideal company profile (e.g., "B2B fintech company selling to mid-market banks").
-    -   **Location** — Filter by company office location. Sub-filters: **Country**, **City**, **State or province**, **Region** (EMEA, NAM, APAC, or LATAM), and **Postal code**. Use **Is Headquarters** to restrict results to companies whose primary office is in the specified location. All sub-filters support include and exclude.
+    -   **Location** — Filter by company office location. Sub-filters: **Country**, **City**, **State or province**, **Region** (EMEA, NAM, APAC, or LATAM), and **Postal code**. Without **Is headquarters?**, any matching office qualifies — including branch offices and satellite locations, not just the headquarters. To restrict results to companies whose *headquarters* is in the specified location, add **Is headquarters?** (set to `true`) as a sub-filter within the location condition: click the options icon on the location row, select **Add filter**, search for "head", and choose **Is headquarters?**. Note that **Is headquarters?** does not appear in the top-level filter search bar — it is only accessible as a sub-filter within an existing location condition. All sub-filters support include and exclude.
     -   **Estimated employee count** — Filter by a numeric count of estimated employees (enter a minimum and/or maximum). This is a separate field from **Company size** — see the [FAQ below](#why-do-company-sizes-and-estimated-employee-count-return-different-results-for-the-same-range) for why the same numeric range can surface different companies.
     -   **AI filters** — Clay-generated attributes applied to company profiles:
         -   **Industries** and **Subindustries** (include or exclude) — see [the FAQ below](#what-are-the-available-ai-subindustry-filter-values) for the full list of AI Subindustry values
@@ -113,6 +113,21 @@ Each company record also includes a **Locations** section in the cell details wi
 
 **For confirmed street-level HQ address (highest accuracy):**
 None of Clay's native location fields return a verified street-level headquarters address on their own. For that level of precision, run a Claygent or AI research column that looks up the company's HQ from public sources. To reduce research cost, use **Structured Location where Is Headquarters = true** as a seed — it narrows the research to the right city and country without requiring a full web search from scratch.
+
+### Why does my location filter return companies outside my target country?
+
+The location filter — `≥ 1 location is:` — matches companies that have **any** office in the specified location, including branch offices and satellite locations. A company headquartered outside your target country still appears if it has any office there.
+
+To limit results to companies **headquartered** in your target location, add **Is headquarters?** (set to `true`) within the location condition:
+
+1.  Click the options icon (≡) on the location condition row.
+2.  Select **Add filter**.
+3.  Search for "head" and select **Is headquarters?**.
+4.  Set the value to `true` and click **Confirm filter**.
+
+Your location condition will then match only companies with an office in your target location that is also the company headquarters.
+
+**Note:** Searching for "headquarter" or "headquarters location" in the top-level filter search bar returns no results — **Is headquarters?** is only accessible as a sub-filter within an existing location condition, not as a standalone filter.
 
 ### What if the industry I'm looking for isn't in the dropdown?
 
