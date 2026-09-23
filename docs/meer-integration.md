@@ -26,7 +26,7 @@ With this integration, you can check phone numbers against regularly updated DNC
 
 ### `Action` Screen phone number against DNC registries
 
-Check if a phone number appears in National Do Not Call registries. Currently supports US (National DNC Registry), UK (TPS/CTPS), Germany ([Robinsonliste.de](http://robinsonliste.de/)), Ireland ([comreg.ie](http://comreg.ie/)), Spain ([Lista Robinson](http://listarobinson.es)), Indiana (Indiana No-Call List), Florida (Florida Do Not Call Program), Massachusetts (Massachusetts DNC Registry), and Colorado (Colorado No-Call List), refreshed weekly. Returns DNC status and source information if found.
+Check if a phone number appears in National Do Not Call registries. Currently supports US (National DNC Registry and select state registries), UK (TPS/CTPS), Ireland ([comreg.ie](http://comreg.ie/)), Belgium (DNCM), Germany ([Robinsonliste.de](http://robinsonliste.de/)), Spain ([Lista Robinson](http://listarobinson.es)), New Zealand, and Australia, refreshed weekly. Returns DNC status and source information if found.
 
 **Inputs**
 
@@ -34,7 +34,7 @@ Check if a phone number appears in National Do Not Call registries. Currently su
 
 **Output**
 
--   **Do Not Call:** Boolean value indicating whether the phone number is on a DNC registry (`true`) or not (`false`).
+-   **Do Not Call:** Boolean value indicating whether the phone number is on a DNC registry (`true`) or not (`false`). A `false` result — shown as **Can call** in the Clay cell preview — means only that the number was **not found on the relevant suppression list**. It does not mean the number is legally eligible for outbound calling. Meer's screening result is a suppression signal only; it does not establish country-specific legal basis, presumed consent, or calling eligibility. Apply your own country-level calling rules and risk policies before routing numbers into call-first sequences, especially in markets such as Germany where regulations may require additional legal basis (for example, presumed consent for B2B telephone advertising) beyond registry absence.
 -   **Timestamp:** The date and time when the DNC status was checked.
 -   **DNC List Source:** URL of the official registry where the phone number was found (if applicable).
 
@@ -56,6 +56,7 @@ Check if a phone number appears in National Do Not Call registries. Currently su
 ## Compliance notes
 
 -   You are responsible for your own compliance. Do Not Call Suppression is a risk-mitigation tool. It does not ensure compliance. It's always your job to assess your compliance obligations and ensure you meet them. For more guidance, see our [DNC compliance best practices](https://university.clay.com/docs/dnc-compliance) and [B2B email marketing best practices](https://university.clay.com/docs/direct-marketing-best-practices).
+-   **Do Not Call = false is a suppression signal, not a call-eligibility clearance.** A result of `false` — shown as **Can call** in the Clay cell preview — means only that the number was not found on the relevant suppression list. It does not establish country-specific legal basis, presumed consent, or calling eligibility. You must apply your own country-level calling rules, particularly in markets such as Germany where B2B telephone advertising may require additional legal basis beyond registry absence.
 -   Clay and its third-party providers are not liable for any fines or costs associated with any DNC violations you might commit.
 -   You are responsible for adding the DNC screening actions into your Clay workflows and refreshing the data in your CRM on a regular basis to avoid calling DNC numbers.
 -   Clay's third-party providers may submit your company name to the applicable governing bodies for the purpose of proving that you are using a screening tool to help respect DNC rules.
