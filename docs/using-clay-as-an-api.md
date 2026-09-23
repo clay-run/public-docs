@@ -13,7 +13,7 @@ Clay doesn't have a traditional API, but you can send data via webhooks, wrap Cl
 
 It's one of the most common questions we get — and the honest answer is: not in the traditional sense. Clay isn't built like a typical SaaS tool where you send a request to an endpoint and get data back in milliseconds. Instead, Clay is an enrichment and automation platform designed around tables, workflows, and integrations.
 
-But that doesn't mean you're stuck. Depending on what you're trying to do, there are several ways to interact with Clay programmatically and get results that feel a lot like working with an API. You can pipe data into Clay automatically via webhooks, wrap Clay's functionality using tools like Make or Zapier, connect AI tools like Claude or ChatGPT directly to your Clay workspace via MCP, or — if you have beta access enabled — access Clay's native People and Company API directly.
+But that doesn't mean you're stuck. Depending on what you're trying to do, there are several ways to interact with Clay programmatically and get results that feel a lot like working with an API. You can pipe data into Clay automatically via webhooks, wrap Clay's functionality using tools like Make or Zapier, connect AI tools like Claude or ChatGPT directly to your Clay workspace via MCP, or access Clay's native People and Company API directly.
 
 **Don't confuse this with the HTTP API integration.** Clay's [HTTP API integration](https://university.clay.com/docs/http-api-integration-overview) is an enrichment column (or table source) that your Clay table uses to call **external** APIs — requests go from Clay out to another service. This page covers the opposite direction: calling **Clay** from your own systems — sending data in, searching Clay's data, or triggering Clay from code. If you want a Clay table to hit your CRM, data provider, or custom endpoint, use the HTTP API integration; if you want your app to talk to Clay, keep reading here.
 
@@ -59,14 +59,14 @@ Clay offers a fast API for searching its proprietary People and Company data. Yo
 
 [Contact our GTM engineers for more information.](https://www.clay.com/contact-form)
 
-**Public HTTP API — Routines (same beta access)**
+**Public HTTP API — Routines**
 
-The same workspace-level beta access also unlocks a Routines endpoint for triggering Clay enrichment functions programmatically:
+The Routines endpoint lets you trigger Clay enrichment functions programmatically:
 
 -   `POST /routines/{routine_id}/run` — submit input records to a Clay function and start an enrichment run.
 -   `GET /routines/run/{routine_run_id}/results` — poll for results once the run completes.
 
-Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is under **Settings → Account → API keys** and is distinct from the personal API key on your profile page.
+Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is in **API and CLI** in the left sidebar → **API keys** tab, and is distinct from the personal API key on your profile page.
 
 **Public HTTP API — Credit Balance**
 
@@ -92,9 +92,9 @@ Use the same workspace-scoped API key in the `clay-api-key` request header. Read
 | Free | 100 | Monthly (resets on the 1st of each month, UTC) |
 | Trial | 10,000 | 14 days from plan start |
 | Paid | 1,000,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
-| Enterprise | 10,000,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
+| Enterprise | 10,000,000 | Rolling 30-day (usage aging out daily at midnight UTC) |
 
-When you exceed the period limit, Clay returns `400` with a message naming the limit, the number of results already used, and the next daily midnight UTC reset timestamp. To monitor your usage before hitting the limit, open the **API and CLI** page in your workspace (`Settings → API`). The **Search API usage** section shows your current period's results used out of your limit, the next reset date, and a progress bar that turns orange at 70% usage and red at 90%. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
+When you exceed the period limit, Clay returns `400` with a message naming the limit, the number of results already used, and the next daily midnight UTC reset timestamp. To monitor your usage before hitting the limit, open the **API and CLI** page in the left sidebar. The **Search API usage** section shows your current period's results used out of your limit, the next reset date, and a progress bar that turns orange at 70% usage and red at 90%. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
 
 **Note:** Workspaces on legacy (pre-2026) non-Enterprise plans retain the annual quota window (resets January 1 UTC) rather than the rolling 30-day window.
 
