@@ -92,7 +92,7 @@ Use the same workspace-scoped API key in the `clay-api-key` request header. Read
 | Free | 100 | Monthly (resets on the 1st of each month, UTC) |
 | Trial | 10,000 | 14 days from plan start |
 | Paid | 1,000,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
-| Enterprise | 10,000,000 | Rolling 30-day (usage aging out daily at midnight UTC) |
+| Enterprise | 10,000,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
 
 When you exceed the period limit, Clay returns `400` with a message naming the limit, the number of results already used, and the next daily midnight UTC reset timestamp. To monitor your usage before hitting the limit, open the **API and CLI** page in the left sidebar. The **Search API usage** section shows your current period's results used out of your limit, the next reset date, and a progress bar that turns orange at 70% usage and red at 90%. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
 
