@@ -306,7 +306,7 @@ See [HG Insights integration](hg-insights-integration-overview.md) for more deta
 
 The **Personal Email** waterfall finds a person's personal (non-work) email address by querying multiple data providers in sequence — stopping as soon as one returns a result for that contact.
 
-You only pay credits for the provider that successfully returns an email. Providers that are attempted but return nothing for a row do not charge credits for that row, making the Personal Email waterfall one of the most credit-efficient ways to build personal email coverage at scale.
+You won't be charged by most providers that don't return a result for a row, making the Personal Email waterfall one of the most credit-efficient ways to build personal email coverage at scale.
 
 ### Setting up the Personal Email waterfall
 
@@ -330,7 +330,7 @@ Map whichever columns you have. Providing both a LinkedIn URL and a name/company
 
 ### How credit cost works
 
-Each provider in the **Waterfall sequence** shows its per-row credit cost. You are only charged for the provider that returns a result — if the first provider in the sequence finds a match, only that provider's credit cost applies to that row, and no further providers are called or charged.
+Each provider in the **Waterfall sequence** shows its per-row credit cost. Most providers charge credits only when they return a result for a row — if the first provider finds a match, only that provider's cost applies and no further providers are called. A small number of providers charge per row regardless of whether they return a result.
 
 The average expected cost shown next to the waterfall in the Tools panel reflects historical coverage across providers — it is not a guaranteed per-row price. Your actual cost per row depends on which provider finds a match first, which varies based on your list.
 
