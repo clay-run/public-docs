@@ -43,7 +43,7 @@ Because this step costs zero credits, it can meaningfully reduce per-row spend w
 **Inputs**
 
 -   `Email Pattern` (required): The naming pattern used to construct the email address. Defaults to `first.last@domain.com`.
--   `Domain` (required): The company domain to use when constructing the email (e.g. `clay.com`).
+-   `Domain` (required): The company domain to use when constructing the email (e.g. `clay.run`).
 -   `Name Inputs` (at least one required, depending on the pattern selected):
     -   `First Name`.
     -   `Last Name`.
@@ -92,6 +92,19 @@ To run the waterfall on multiple contacts at once — without running the full t
 - **Run all empty or out-of-date rows:** Click the ▶ button in the Work Email waterfall column header and select **Run empty or out-of-date rows**. This processes every row in the column that hasn't yet returned a result or is marked as out-of-date.
 
 For a full reference on run options — including a row limit and starting row — see [Run progress](run-progress.md).
+
+### Can I use the Work Email waterfall in Clay Workflows?
+
+In Clay Workflows, the Work Email waterfall runs as a **Clay-managed function** rather than a standalone enrichment step. When the managed waterfall function is installed in your workspace, it appears in the **Enrich** step search results alongside the individual providers — selecting it runs the full provider cascade, not a single provider.
+
+**If you search for "work email" in a Workflow Enrich step and only see individual providers** (Findymail, LeadMagic, Hunter, etc.) with no waterfall option, the Clay-managed Work Email function is not yet installed in your workspace. To add it:
+
+1.  In the left sidebar, click **Functions**.
+2.  Click **+ New** in the top right corner.
+3.  In the **Browse Clay managed functions** dialog, select **Waterfalls** on the left to filter, then find **Work Email** and click **Setup as managed**.
+4.  Return to your Workflow, add an **Enrich** step, and search for "work email" — the waterfall now appears in the results.
+
+**Alternative — build the waterfall in a table:** The Work Email waterfall is always available natively in Clay tables. Click **Add enrichment**, search for `Work Email`, and select it. The full provider cascade runs as a column in your table without any additional setup. See [Setting up the Work Email waterfall](#setting-up-the-work-email-waterfall) above.
 
 ### What does it mean if no email is found?
 
