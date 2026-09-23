@@ -321,10 +321,10 @@ Available on all plans, including Trial.
 
 The stronger the identifiers you provide, the higher your match rate:
 
--   **LinkedIn profile URL** — the single most accurate identifier; include it whenever available.
--   **Full name + company domain** (or company name) — a reliable fallback when no LinkedIn URL is available.
+-   **Professional social profile URL** — the single most accurate identifier; include it whenever available.
+-   **Full name + company domain** (or company name) — a reliable fallback when no social profile URL is available.
 
-Map whichever columns you have. Providing both a LinkedIn URL and a name/company combination gives more providers enough data to attempt a match.
+Map whichever columns you have. Providing both a social profile URL and a name/company combination gives more providers enough data to attempt a match.
 
 **Output:** Personal email address
 
