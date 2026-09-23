@@ -109,7 +109,7 @@ Lodash also provides `_.sortBy()`, `_.flatMap()`, `_.groupBy()`, and `_.uniq()` 
 
 **In Clay Workflows:** Clay Workflows has no standalone "for loop" or "while loop" node type. To implement iteration in a workflow, use one of these approaches:
 
--   **Code node:** Add a code node and write a Python `handler` function. You can use `for` loops, `while` loops, list comprehensions, and any other Python iteration construct within the node. The node receives named inputs from upstream nodes and returns a dictionary to the next node.
+-   **Code node:** Add a code node and write a Python `handler` function. You can use `for` loops, `while` loops, list comprehensions, and any other Python iteration construct within the node. The node receives named inputs from upstream nodes and returns a dictionary to the next node. The required function signature is `def handler(context):` — the function name must be exactly `handler`. Access each input with `context.get_input("name")`, where `"name"` matches the label you gave that input in the node's **Inputs** panel. If a validation warning appears when wiring inputs ("Enrichment output paths must start with $.result"), see the troubleshooting entry below.
 -   **Conditional loop:** Draw an edge from a later node back to an earlier node in the workflow. As long as the cycle includes at least one conditional node, Clay allows the loop — the conditional node controls when execution exits the loop. Conditional loops are limited to 50 uninterrupted steps; the conditional node displays a warning when this limit applies.
 
 ### **How do I use today's date in a formula?**
@@ -293,3 +293,21 @@ There are three approaches to work around the limit:
 -   **Extract only the fields you need (no cost).** Instead of stringifying the entire enrichment object, reference the specific sub-fields your workflow requires — for example, `{{Enrich Person}}?.name`, `{{Enrich Person}}?.title`, or `{{Enrich Person}}?.summary`. Individual field values are almost always well under 8 kB. Formula columns have no credit or action cost.
 -   **Split across multiple formula columns (no cost).** If you need several nested sections of the data, create one formula column per section — for example, `JSON.stringify({{Enrich Person}}?.experience)` in one column and `JSON.stringify({{Enrich Person}}?.education)` in another. Each column stores its slice independently within the 8 kB limit.
 -   **Use an HTTP API column (1 action per row, no data credits).** An HTTP API column that echoes its request payload stores the full response as an action column cell — and action columns support up to 200 kB per cell. This uses 1 action per row but no data credits. Avoid this approach for sensitive or private data. For the full breakdown of what consumes actions vs. data credits, see [Actions and data credits](actions-data-credits.md).
+
+### **Why does my workflow code node show "Enrichment output paths must start with $.result"?**
+
+This validation warning appears on a code node input when the input is mapped to an **entire upstream enrichment node** rather than to a **specific output field** within it.
+
+Each workflow node stores its run result as an envelope — `$` is the whole envelope, and the action's data sits one level deeper under `$.result`. Mapping an input to the upstream node itself (path `$`) hands your handler the whole envelope object instead of the field you need, so `context.get_input("name")` receives an object rather than the expected value.
+
+**To fix it:**
+
+1. In the code node's **Inputs** panel, click the input showing the warning.
+2. Open the reference picker (click the field or type `/`).
+3. Expand the upstream enrichment node by clicking the arrow next to its name to reveal its individual output fields.
+4. Select the specific field you need — for example, **Job Openings**. Clay fills in the correct path (such as `$.result["Job Openings"]`) automatically; you do not need to type it by hand.
+5. Save the node.
+
+Once a specific field is selected rather than the whole node, the warning clears and the input receives the expected value. This fix applies to any workflow node input that shows this warning — not just code nodes.
+
+**Why the path is spelled `$.result["Field Name"]`:** Clay wraps every node's run output in an envelope object. `$` is the envelope; `$.result` is where the action's own data lives; `$.result["Field Name"]` is one specific field inside that data. The picker assembles this path for you automatically when you drill into a specific field — you see the label (for example, "Job Openings") in the picker, not the raw path string.
