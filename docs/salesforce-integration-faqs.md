@@ -470,6 +470,33 @@ To set the correct Account ID, you need the Salesforce Account record's ID — n
 
 In both cases, map the returned Account ID to the **Account ID** field in your **Create Record** or **Update Record** column for the Contact — never to a text "Account Name" field. Salesforce displays the account name automatically once the Account ID is linked. For a step-by-step example of the lookup approach, see [Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?](#why-am-i-seeing-a-malformed_id-error-when-creating-or-updating-a-salesforce-record).
 
+## How do I link new contacts to the correct Salesforce account when prospecting?
+
+When your prospecting function creates new Salesforce contacts, Salesforce requires the contact's `AccountId` — the Salesforce record ID of the account the person belongs to. The account name, company domain, or any other identifier will not satisfy this requirement. How you resolve that ID depends on whether you're prospecting under a single account or across many.
+
+**Scenario 1: Single-account prospecting**
+
+If all new contacts belong to the same account, pass the Salesforce Account ID directly as a fixed input. Map that value to `AccountId` in the **Map fields** section of your **Create Record** step — no per-row lookup is needed.
+
+**Scenario 2: Multi-account prospecting**
+
+When new contacts span multiple accounts — for example, prospecting contacts across companies already in your book of business — add a **Lookup Record** step to resolve each person's account before creating the contact:
+
+1. **Look up the Salesforce Account by company domain.** Add a **Lookup Record** column, set the Salesforce object to **Account**, and search by company website or domain. The action returns all fields from the matched account — including `Id`, `Name`, and `ParentId`.
+2. **Map the Account ID.** In the **Create Record** step for the contact, add `AccountId` in **Map fields** and map the `Id` returned by the Account Lookup column. The company name or domain alone will not link the contact — Salesforce requires the actual record ID.
+3. **Map the contact's email.** Add `Email` in **Map fields** and map the work email from your enrichment waterfall. Many Salesforce orgs have custom validation rules that require both `AccountId` and `Email` before a contact can be created.
+4. **Add a run condition.** Gate the Create Record step so it only fires when both `AccountId` and `Email` are resolved. Open the column's **Run settings** → **Only run if**, and enter a condition such as:
+
+   `/Account Lookup is not empty AND /Work Email is not empty`
+
+   Replace the column names with your actual column names. Rows where either field is missing are skipped — no Salesforce record is attempted and no credits are consumed for those rows.
+
+5. **Route unmatched rows for review.** Rows where the Account Lookup returned no match, or where no email was found after enrichment, should be flagged for manual review rather than retried — retrying won't help if the account isn't in Salesforce or no email exists for that person.
+
+**Parent-child account hierarchies**
+
+If your Salesforce org uses parent-child accounts (for example, subsidiaries reporting to a parent company), set `AccountId` to the **child account** — the account that represents the person's actual employer in your hierarchy. You do not need to map `ParentId` on the contact itself. Salesforce maintains the relationship to the parent automatically through the child account's own `ParentId` field.
+
 ## Why does Clay show "✅ Record created" but the record doesn't appear in Salesforce?
 
 When Clay's Create Record action receives a valid record ID back from Salesforce, it marks the action as successful and displays **"✅ Record created"** with a link to the new record. Clay does not perform a follow-up check to verify the record still exists in Salesforce — so if Salesforce discards or removes the record after the initial creation response, the cell still shows success with the original URL.
