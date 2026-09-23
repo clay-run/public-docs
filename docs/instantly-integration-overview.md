@@ -78,4 +78,12 @@ Add leads to an Instantly campaign.
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
 
+## Troubleshooting
+
+### "Add lead to campaign" column shows an error about reaching a lead limit
+
+When the **Add lead to campaign** enrichment fails, the error message shown in the Clay column comes directly from Instantly's API. If the error indicates that your account has reached its limit for adding new leads, your connected Instantly account has hit the maximum number of leads allowed on your current plan.
+
+To resolve this, log into your Instantly account and check your usage against your plan limit. Upgrading your Instantly plan will increase your lead capacity and allow the enrichment to run successfully again.
+
 ### ‍
