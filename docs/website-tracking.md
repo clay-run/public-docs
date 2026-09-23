@@ -187,13 +187,30 @@ Common causes:
 
 ### Web intent connection stopped or shows as disabled
 
-This happens when:
+If your Web Intent table has stopped receiving new rows, or you see a **"Signal is disabled"** tooltip on the workbook column header while the **Enabled** toggle in Run settings is on, the website tracking connection is likely disabled. The connection and the signal's enabled state are two separate controls.
 
--   The signal hit its credit spend limit.
+**Why the UI looks contradictory:** Web Intent Signals have two independent settings:
+
+-   The **Enabled** toggle (column header → **Edit signal** → **Run settings**) controls the signal's run status. When this is on and the signal is healthy, the Signals overview page shows **"Monitoring"**.
+-   The **website tracking connection** controls whether Clay's tracking script is actively processing visits. This can be turned off independently of the signal's run status. When the connection is off, the workbook column header shows **"Signal is disabled"** and the panel displays **"Your website connection is disabled. No visits will be processed."**
+
+Toggling the Enabled toggle off and back on will not fix a disabled connection — it only changes the signal's run status, not the connection's active state. You would see the status briefly flip to **"Signal is paused"** and then return to **"Signal is disabled."**
+
+**The connection is disabled automatically when:**
+
 -   Your workspace ran out of credits.
--   The table reached the 50,000 row limit (enable passthrough tables to avoid this).
+-   The signal hit its credit spend limit.
+-   The table reached the 50,000-row limit (enable passthrough tables to avoid this).
 
-You'll need to manually re-enable the connection after addressing the issue — it won't resume automatically.
+Credits being restored does not re-enable the connection automatically — you must re-enable it manually.
+
+**To re-enable the website connection:**
+
+1.  Click the signal column header (📡 icon) in your workbook to open the right-hand panel.
+2.  Click **Edit website connection** in the panel.
+3.  Confirm the **Connection enabled** toggle is on, then click **Save**.
+
+New visits will start flowing into the table as they arrive. Data from the period while the connection was off will not be backfilled.
 
 ### Unexpected companies showing up in results
 
