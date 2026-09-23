@@ -120,3 +120,11 @@ When Clay imports Airtable records, each row stores the underlying Airtable Reco
 Click any **1 Record Found** result to open **Cell details**. All Airtable fields for that record are listed. Hover the field you want and click **Add to column** to create a new Clay column from it. Repeat for any additional fields you need.
 
 Once you've extracted all the fields you need, you can delete the Lookup Record column if you no longer need it.
+
+## Troubleshooting
+
+### Rate limiting
+
+Airtable enforces a rate limit of approximately 5 requests per second per base. When a Clay table runs many rows simultaneously — for example, running more than 5 Create record, Update record, or Upsert record rows at once against the same Airtable base — some requests receive a 429 Too Many Requests response from Airtable.
+
+Clay automatically retries rate-limited requests after a 30-second delay. While a row is waiting to retry, its cell shows **"Airtable rate limit reached (429 Too Many Requests). Retrying..."**. The row does not fail permanently — no manual re-run is needed. Once Airtable's cool-down period passes, Clay retries the request automatically and the cell updates to show the result.
