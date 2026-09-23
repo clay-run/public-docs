@@ -242,10 +242,9 @@ You can review all active signals and their individual credit spend in the `Sign
 
 Each Clay table holds a maximum of 50,000 rows on Launch, Growth, and Pro plans. When a Signal's results table reaches this cap, new matching events stop being written to the table — but **the Signal itself does not stop or pause**. It continues running on its scheduled cadence and continues consuming credits for every company or contact it checks, even though no new rows can be written.
 
-There is currently no in-app notification when a table is approaching or has reached 50,000 rows. You will need to monitor row counts manually: click the row counter in the table toolbar (for example, **50,000/50,000 rows**) to check current capacity.
-
 To manage this before the table fills up:
 
+-   **Monitor row counts manually** by clicking the row counter in the table toolbar (for example, **50,000/50,000 rows**) to check current capacity.
 -   **Delete older rows** to free up space — filter the results table by event date, select the oldest rows, and bulk-delete them to make room for new events.
 -   **Export and clear** — export the table to CSV or Google Sheets, then delete all rows to start fresh.
 -   **Pause the Signal** directly from the signal column settings (click the 📡 column header → **Edit signal** → disable or pause the signal) when you no longer need new results added. A full results table does not automatically pause the Signal — credits will keep being consumed until you pause it manually.
