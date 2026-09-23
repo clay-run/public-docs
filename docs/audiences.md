@@ -297,6 +297,30 @@ Records saved from tables are automatically deduplicated and merged with your ex
 
 **To add enriched data to existing Audience records:** If you enriched companies or people in a Clay table — for example, adding website traffic, technographic data, or any other enrichment — and want those values to appear on records already in your Audience, use `Upsert Audiences Record` (available on Launch, Growth, and Enterprise plans) as an action column in the table instead. In the table, click `Add enrichment` and search for `Upsert Audiences Record` — it creates a new record in Audiences if no match is found, or updates the matching record's fields if one is found. See [Using Audiences from a Clay table](#adding-enrichments) below for the full list of table ↔ Audience actions.
 
+### Understanding source import statuses
+
+Each source listed in **Settings → Sources / Destinations** shows an **Import status** badge. The status tells you whether records are actively flowing from that source into Audiences.
+
+**For CRM and data warehouse sources** (Salesforce, HubSpot, Snowflake, BigQuery, Databricks):
+
+| Status | Meaning |
+|--------|---------|
+| **Sync on** | The source is actively syncing. New and updated records flow into Audiences on the standard sync schedule — every 15 minutes on Enterprise plans, or once daily on Growth plans. |
+| **Sync off** | Syncing is paused. New and updated records from this source will not flow into Audiences until sync is turned back on. Records already imported remain in Audiences. |
+| **Syncing** | An import run is actively in progress right now. |
+| **Not syncing** | The last sync attempt returned an error. Check your connection settings and try reconnecting the source. |
+| **Paused** | Clay has temporarily paused the Salesforce sync because your Salesforce account is approaching its API request quota. Clay resumes the sync automatically once the quota refreshes. |
+| **Incomplete** | Field mapping has not been configured for this source yet. Open the source settings to complete setup before records can sync. |
+
+To turn sync on or off for a source, open its settings by clicking the **⋮** menu next to the source row and selecting **Settings**, then toggle the **Import sync** switch.
+
+**For people and companies search sources:**
+
+| Status | Meaning |
+|--------|---------|
+| **Search on** | The live search is enabled. Clay continues to add new matching contacts or companies to Audiences on each refresh. |
+| **Search off** | The live search is paused. No new results are added until you turn it back on. Contacts already imported remain in Audiences. |
+
 ### Entity resolution and deduplication
 
 Audiences uses two systems to prevent duplicate records:
@@ -391,6 +415,19 @@ The operators available when building a filter depend on the field's data type, 
 -   **Boolean (true/false) fields** — support **`is true`** and **`is false`** operators. To apply OR logic across two boolean conditions (for example, `field A is true OR field B is true`), add both filters inside a filter group and click the **`and`** connector between them to switch it to **`or`**.
 
 **Note:** A field that appears numeric may have been imported as text (shown by a T icon rather than #). Text fields — such as "Annual revenue range" synced from Salesforce as a string — will not show range operators. To use range filtering on a field, contact Clay support to have the field's type changed to Number (#). Range operators will then appear when you add a filter on that field.
+
+### Excluding contacts from a specific source (suppression)
+
+To build a segment of people who are **not** already in your CRM — for example, to find net-new prospects who don't yet exist in Salesforce — use the **Origin source** filter with an exclusion operator:
+
+1. Click **People** in the left sidebar and click **New audience**.
+2. Click **+ Filter** and search for **Origin source**.
+3. Set the operator to **is not**.
+4. Select the source whose contacts you want to suppress — for example, your Salesforce "All contacts" import.
+
+Any contact whose primary source matches the selected source is excluded from this segment. As your CRM syncs on its regular schedule, contacts added to Salesforce automatically drop out of this segment on the next sync, keeping the suppression list current without any manual effort.
+
+**Keep sync on to keep the suppression list current.** If the source's **Import status** shows **Sync off**, new contacts added to your CRM won't flow into Audiences and won't be suppressed from this segment. Make sure sync is enabled for the source you're using as a suppression list — see [Understanding source import statuses](#understanding-source-import-statuses) above.
 
 ## Finding people from a Companies Audience
 
