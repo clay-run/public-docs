@@ -951,6 +951,14 @@ The Audiences screen does not have a direct CSV download button. To download aud
 
 If your segment has an exclusion condition (e.g., Account Type ≠ "Customer"), the contact is automatically **removed** from the synced ad audience as soon as that condition is met. See [Clay Ads](https://university.clay.com/docs/clay-ads) for platform-specific guidance.
 
+### Why is my LinkedIn Ads audience sync showing "Audience failed to sync to Ad destination"?
+
+LinkedIn requires at least **300 matchable records** before it accepts an audience upload. Clay validates this count before sending any data to LinkedIn — if your segment produces fewer than 300 matchable entries after validation, Clay stops the sync and shows **"Audience failed to sync to Ad destination"** in the Sync panel. The detailed error message shows the exact count your sync produced.
+
+**What counts as matchable:** Not every record in your segment counts toward the 300. For contact audiences, LinkedIn matches on email address — contacts without a mapped email value are excluded from the matchable count. For company audiences, LinkedIn matches on company name, company domain, company website, or LinkedIn company page URL — companies missing all of these identifiers are not counted.
+
+**To resolve this:** Widen your segment to include more contacts or companies, or map additional identifier fields so more records qualify as matchable, then sync again.
+
 ### Will my Salesforce Account ID appear on web visitor records?
 
 Yes — this is expected behavior. When a web intent visitor's company domain matches the domain of a Salesforce Account you have synced into Audiences, Clay merges the two into a single entity using normalized domain matching. Salesforce Account data — including the Account ID — becomes available on that unified company record automatically.
