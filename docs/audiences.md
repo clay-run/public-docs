@@ -826,6 +826,8 @@ If an existing record had a value for the field in Salesforce before you added t
 
 **To fill in missing data immediately for specific records:** In Salesforce, make a small change to any field on the affected accounts or contacts (for example, add and remove a space in a text field). This updates `SystemModstamp` and Clay will pick up those records — with all their current field values including the newly mapped field — on the next incremental sync.
 
+**To avoid this problem in the future:** Add new fields to your Audiences mapping *before* any Salesforce workflow or bulk update populates them. Because Clay's incremental sync only re-reads records whose `SystemModstamp` changed after the mapping was saved, setting up the mapping first ensures those field values are captured automatically on the next sync cycle — approximately every 15 minutes on Enterprise plans, or daily on Growth plans.
+
 ### I removed and re-added my Salesforce source in Audiences and my field mappings are gone — how do I restore them?
 
 Field mappings cannot be recovered once a Salesforce import is removed. The mappings are tied to the specific import configuration — when that import is deleted and a new one is created, the previous mappings are not retained. There is no restore or mapping-history option, so you will need to add the fields back manually.
