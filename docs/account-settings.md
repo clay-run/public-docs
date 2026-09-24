@@ -1,6 +1,6 @@
 ---
 title: Account settings
-description: Update your Clay profile picture, name, password, and login method, manage your API key, and delete your account.
+description: Update your Clay profile picture, name, password, and login method, manage your legacy API key, and delete your account.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -145,13 +145,15 @@ If you also tried **Forgot password?** and did not receive a reset email, this c
 
 To switch to email and password login instead, see [Switch from Google login to email and password](#switch-from-google-login-to-email-and-password) above — this requires a brief support action and cannot be done through your account settings.
 
-## Clay API key access
+## Clay API key (legacy)
 
-Your Clay API key enables Clay-specific integrations and external connections. To manage your API key, go to `Settings` > `Your profile` > `API key`.
+Your Clay API key (legacy) is a personal single-token key that enables Clay-native integrations and some older third-party connections such as Zapier. To manage this key, go to `Settings` > `Account` > `API key (legacy)`.
 
 Your full API key is shown **once** immediately after it is generated or regenerated — copy it from the modal that appears and store it somewhere safe. After you close the modal, only a redacted version is visible in settings and the full key cannot be retrieved without regenerating.
 
 -   **To create or replace your key:** click `Regenerate key`. The new key is shown once in the modal; your previous key is invalidated immediately.
+
+**Note:** This personal key is for Clay-native integrations only. If you need a workspace-scoped key to authenticate with Clay's Public HTTP API, open **API and CLI** in the left sidebar, select the **API keys** tab, and click **Add API key**.
 
 ## Delete your account
 
