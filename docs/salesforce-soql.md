@@ -47,13 +47,12 @@ A common pattern with the SOQL source is to import a filtered set of Salesforce 
 
 **Step 1: Build your SOQL query**
 
-Write a query that selects only the records needing enrichment — and all the fields your enrichments will use as inputs. For example, to target Leads with no email from LinkedIn:
+Write a query that selects only the records needing enrichment — and all the fields your enrichments will use as inputs. For example, to target Leads with no email address:
 
 ```sql
-SELECT Id, FirstName, LastName, Company, Title, LeadSource
+SELECT Id, FirstName, LastName, Company, Title
 FROM Lead
 WHERE Email = null
-AND LeadSource = 'LinkedIn'
 LIMIT 50000
 ```
 
