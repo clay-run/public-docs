@@ -72,6 +72,12 @@ The signal runs on its scheduled cadence and checks all rows in the destination 
 
 Most Signals — Clay's automated monitors for events like job changes, promotions, and news and fundraising — are available on any paid plan.
 
+### Do Signals count toward my workspace's scheduled sources limit?
+
+No. Signals run on a separate scheduling system from Clay's regular scheduled sources and do not count against the [scheduled sources limit](scheduled-sources.md). The scheduled sources limit — 100 on Launch and Growth plans, 1,000 on Enterprise — applies only to source-based scheduled imports such as CRM imports, Find People, Find Jobs, or Salesforce SOQL queries configured to run on a schedule.
+
+Enrichment columns configured to re-run on a schedule (via **Re-run columns on a schedule** in table settings) count toward a separate [scheduled tables limit](scheduled-columns.md) — also 100 tables for Launch and Growth plans, 1,000 for Enterprise — which is also distinct from the scheduled sources limit.
+
 ### Why is my Signal returning 0 results?
 
 Signals require a connected data source to run against — either a source table containing the companies or contacts you want to monitor, or an audience segment. Without a linked source table or audience segment (or if the linked table is empty or has been deleted), the Signal has nothing to check and will return 0 results. Confirm that your Signal is connected to an active Clay table with valid company identifiers (domain or LinkedIn URL) or contact LinkedIn URLs, or to a populated audience segment.
@@ -231,6 +237,17 @@ To stop a signal from consuming credits, you must pause or disable it directly f
 3.  Disable or pause the signal, then save.
 
 You can review all active signals and their individual credit spend in the `Signals` tab of the [credit usage dashboard](/docs/credit-usage) (`Settings` → `Usage`).
+
+### What happens when my Signal's results table reaches the 50,000-row limit?
+
+Each Clay table holds a maximum of 50,000 rows on Launch, Growth, and Pro plans. When a Signal's results table reaches this cap, new matching events stop being written to the table — but **the Signal itself does not stop or pause**. It continues running on its scheduled cadence and continues consuming credits for every company or contact it checks, even though no new rows can be written.
+
+To manage this before the table fills up:
+
+-   **Monitor row counts manually** by clicking the row counter in the table toolbar (for example, **50,000/50,000 rows**) to check current capacity.
+-   **Delete older rows** to free up space — filter the results table by event date, select the oldest rows, and bulk-delete them to make room for new events.
+-   **Export and clear** — export the table to CSV or Google Sheets, then delete all rows to start fresh.
+-   **Pause the Signal** directly from the signal column settings (click the 📡 column header → **Edit signal** → disable or pause the signal) when you no longer need new results added. A full results table does not automatically pause the Signal — credits will keep being consumed until you pause it manually.
 
 ### Why does my signal keep writing results to a new table instead of my existing one?
 
