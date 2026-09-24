@@ -256,9 +256,13 @@ To connect Segment to Clay web intent:
 
 Using the Segment tag and Clay's own JavaScript snippet are equivalent — you get the same web intent data and features either way.
 
+### Does the tracking script work on single-page apps (SPAs)?
+
+Yes. The Claydar tracking script fires on SPA history changes using `pushState` and `replaceState`, so page views are tracked for client-side navigation in addition to full page loads. No extra configuration is needed — the same snippet that works on traditional multi-page sites automatically handles SPA routing.
+
 ### Is visitor tracking data shown in real-time?
 
-No. Clay waits for a visitor's session to finish before processing and delivering the data. Sessions are finalized after a period of inactivity, so data can be delayed up to 30 minutes after a visitor's last page view.
+No. Clay waits for a visitor's session to finish before processing and delivering the data. The session inactivity timeout is 30 minutes — after 30 minutes with no new page views, Claydar finalizes the session and passes it to the processing pipeline. This timeout is fixed and cannot be configured. Data can be delayed up to 30 minutes after a visitor's last page view.
 
 This means **same-session personalization is not supported** — if a visitor hits your website and you immediately query your Clay table, that session's data won't be there yet. The information only becomes available after the session ends and the pipeline has processed it.
 
@@ -302,9 +306,21 @@ This lets you reach real people at high-intent companies, even though Clay's tra
 
 Clay can support hundreds of thousands of daily visitors for even the largest enterprise customers.
 
+### How long is visit data retained in my Web Intent table?
+
+Visit session rows are not pruned automatically. The only retention cap is the 50,000-row table limit — once reached, the website tracking connection is automatically disabled and no new sessions are recorded until you free up space. To avoid hitting the limit, enable passthrough tables in your table settings, which routes old rows out before new ones are blocked.
+
 ### Is the visitor data consistent across different providers?
 
 Yes, de-anonymized website data is in a consistent format across various providers.
+
+### What data does the Web Intent payload include?
+
+Each Web Intent session record includes the following top-level fields: `sessionId`, `domain`, `startTime`, `engagementTime`, `referrer`, `utm`, and `ipGeo`. It also contains a `websiteEvents` array where each entry represents a single page view with `url`, `path`, `title`, `domain`, `timestamp`, `totalTimeOnPage`, and `engagedTimeOnPage`.
+
+`startTime` is always the timestamp when the session began and is always reported in UTC (ISO 8601 format).
+
+The payload tracks page views only. Resource downloads, form submissions, and other on-page interactions (such as clicks on pricing pages) are not tracked and do not appear as distinct fields in the payload.
 
 ### What do "Total Time On Page" and "Engaged Time On Page" mean, and what are the units?
 
@@ -328,7 +344,7 @@ Two approaches work well for cross-session analysis:
 
 For completely separate root domains, you can create a dedicated signal per domain. Note that using the same signal across different root domains does **not** merge a visitor's journey across those sites. Because the tracking relies on first-party cookies scoped to each domain, visitors on `company-a.com` and `company-b.com` will have separate session and visitor IDs even if they are the same person.
 
-For subdomain tracking questions (for example, `shop.company.com` and `blog.company.com`), contact Clay support to confirm how your configuration handles cross-subdomain sessions.
+For subdomain tracking (for example, `shop.company.com` and `blog.company.com`): you can add a subdomain to your existing Web Intent connection — no separate connection or signal is needed. You do need to install the Claydar tracking snippet separately on each subdomain using the same code from your connection settings.
 
 ### What do I need to know about GDPR and cookie consent for web intent?
 
