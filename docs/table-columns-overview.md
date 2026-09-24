@@ -148,6 +148,8 @@ A common example: you have a "Postal Code" column and a "Postal Code (AI Fallbac
 
 To visualize the full dependency chain and identify where the loop originates, open **Graph view**: click the view selector dropdown in your table toolbar and choose **Graph view**.
 
+**If the error appears when saving a run condition formula** — rather than a column input — the run condition is creating the cycle. Run conditions create the same dependency edges as input references: if the column you reference in a run condition depends (directly or through a chain of intermediate columns) on the column being gated, Clay blocks the save. See [Conditional runs](conditional-runs.md) for guidance specific to run-condition circular dependencies, including the waterfall pattern and fix options.
+
 ### Find the parent column of your child column
 
 You can identify the parent column of a child column to better understand its data context. Follow these steps:
