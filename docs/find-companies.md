@@ -194,6 +194,16 @@ When you enrich revenue afterward — using Clay's built-in enrichments, Clearbi
 
 As a result, filtering for revenue above a threshold (for example, above $500M) and then enriching can surface a significant share of companies where the enriched value falls below that threshold — this is expected behavior, not a data error. Treat **Annual revenue ranges** as a broad directional signal for initial scoping and use your post-enrichment provider's figures as the source of truth for final qualification.
 
+### What are the specific `annual_revenue` values returned by company data?
+
+The `annual_revenue` field in Clay's company data — used as the **Annual revenue ranges** filter in Find Companies and returned as an output field in company enrichments — is a text string drawn from a fixed set of 12 range values:
+
+`0-500K`, `500K-1M`, `1M-5M`, `5M-10M`, `10M-25M`, `25M-75M`, `75M-200M`, `200M-500M`, `500M-1B`, `1B-10B`, `10B-100B`, `100B-1T`
+
+These are revenue estimates sourced from Explorium. When no revenue data is available for a company, the `annual_revenue` field returns empty — not an error or a default value.
+
+Because `annual_revenue` is a text range string rather than a numeric value, map it to a **text or picklist field** in downstream systems. For example, Salesforce's standard `AnnualRevenue` field is a currency number and cannot store these range strings directly — use a custom text or picklist field instead, populated with the 12 values above.
+
 ### Re-running Find Companies shows far fewer results than my original run
 
 This is expected behavior. The Find Companies source deduplicates new results against rows already in your table — re-running returns only the net-new companies not yet present in the table.
