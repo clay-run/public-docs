@@ -41,6 +41,44 @@ Build lists of Salesforce records using custom SOQL queries. Query across object
 
 **Pro tip:** Keep Salesforce's [**SOQL documentation**](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql.htm) open while building queries. You can also use AI tools like Claude or ChatGPT to help generate SOQL queries from natural language descriptions.
 
+## Workflow: enrich Salesforce records and write them back on a schedule
+
+A common pattern with the SOQL source is to import a filtered set of Salesforce records, enrich them with Clay data providers, and write the enriched data back to Salesforce automatically on a recurring schedule. For example: import all Leads with no email address, find their work emails using Clay enrichments, then push those emails back onto the Lead record in Salesforce weekly.
+
+**Step 1: Build your SOQL query**
+
+Write a query that selects only the records needing enrichment — and all the fields your enrichments will use as inputs. For example, to target Leads with no email from LinkedIn:
+
+```sql
+SELECT Id, FirstName, LastName, Company, Title, LeadSource
+FROM Lead
+WHERE Email = null
+AND LeadSource = 'LinkedIn'
+LIMIT 50000
+```
+
+Include every field an enrichment will read as an input. If an email-finding provider needs a company domain and your Leads don't have one, include `Website` in the `SELECT` clause so it's available in your table.
+
+**Step 2: Schedule the source**
+
+In the source settings, set **Run this source** to **On a schedule** and choose a frequency. To run weekly, select **Week**. To have Clay refresh the data for records already in your table on each run, enable **Update existing rows**.
+
+See [Scheduled sources](scheduled-sources.md) for all available frequencies and plan limits.
+
+**Step 3: Add enrichment columns**
+
+Add enrichment columns for the data you want to find. For email, a Work Email Waterfall — which tries multiple email-finding providers in sequence — maximizes coverage. If a provider requires a company domain that isn't already in your table, add a company domain enrichment first and use its output as input to the email waterfall.
+
+**Step 4: Write back with Salesforce Update Record**
+
+Add a Salesforce **Update Record** action column. Set **Record ID** to the `Id` column returned by your SOQL source. In **Map fields**, add the fields you want to write back to Salesforce and map them to the enriched columns in your Clay table — for example, map your found email column to the **Email** field on the Lead object.
+
+Add a [conditional run](conditional-runs.md) to the Update Record column so it only fires when enrichment returned a result — for example, when the found email column is not empty. This prevents overwriting existing Salesforce data with blank values on rows where enrichment didn't find anything.
+
+**50,000-record limit**
+
+Each SOQL source run imports a maximum of 50,000 records. If your filtered Lead population could exceed this, add a `WHERE` condition to keep each run under the limit — for example, `AND CreatedDate >= LAST_N_DAYS:90` to process a recent subset. Expand the date range over subsequent runs until all records are covered.
+
 ## Best practices
 
 ### Start with test queries
@@ -126,7 +164,7 @@ WHERE Status__c = 'Active'
 
 ### Can I schedule SOQL queries to run automatically?
 
-Yes. In your source settings, set **Run this source** to **On a schedule** and choose a frequency (hourly on Enterprise, or daily/weekly/monthly on other plans). Enable **Update existing rows** to have Clay refresh the data for any record returned by each run.
+Yes. In your source settings, set **Run this source** to **On a schedule** and choose a frequency — hourly (Enterprise only), or daily, weekly, monthly, quarterly, or custom (all plans). Enable **Update existing rows** to have Clay refresh the data for any record returned by each run.
 
 **Important:** Only records returned by the SOQL query during a given run are created or updated. If a record is not returned — for example, because it no longer satisfies your `WHERE` clause — it will not be updated, and the row in your Clay table will retain its previous values. See below for details.
 
