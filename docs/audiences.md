@@ -1174,7 +1174,7 @@ Clay MCP (the AI agent interface) and the Audiences Activity tab query different
 
 If the same contact exists under multiple record IDs (for example, from two imports that weren't deduplicated), Clay MCP may surface activities tied to the other record ID while the Activity tab on the record you're viewing shows nothing.
 
-To investigate: check whether there is a duplicate record for this contact in your Audiences (search by email or LinkedIn URL). If there is, the activity likely lives on the other record.
+To investigate: check whether there is a duplicate record for this contact in your Audiences (search by email or professional network URL). If there is, the activity likely lives on the other record.
 
 ### How does filtering work in Lookup in Audiences when I select multiple fields?
 
