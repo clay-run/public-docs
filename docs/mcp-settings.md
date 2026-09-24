@@ -1,7 +1,7 @@
 ---
 title: MCP settings
 description: Connect your Clay workspace to AI tools.
-last_synced: 2026-04-26T01:40:20.821Z
+last_synced: 2026-09-24T21:26:14.668Z
 ---
 
 # MCP settings
@@ -59,7 +59,7 @@ MCP credit usage also appears in the main credit usage dashboard at `Settings �
 
 ## Audiences controls
 
-If your workspace uses Clay Audiences, two additional workspace-level toggles appear on the `MCP users` page:
+If your workspace uses Clay Audiences, two additional workspace-level toggles appear on the `MCP` page:
 
 -   **Sync user IDs from audiences** — continuously syncs audience data to match MCP users to the Salesforce accounts they own. Updates run incrementally every 15 minutes, with a full sync once a week.
 -   **Restrict account querying by Salesforce owner** — when enabled (the default when Salesforce is connected), reps can only query accounts they own in Salesforce. When disabled, reps can query any account in the synced audience.
@@ -141,7 +141,7 @@ Your Clay workspace data and workflows are unaffected — only the connection fr
 
 ### Can admins remove a rep's access to Clay in ChatGPT or Claude?
 
-Yes, by removing them from your workspace. While admins cannot directly revoke a rep's MCP connection from the `MCP users` page, they can remove the rep from the workspace entirely. If a rep is not added to your workspace, they won't have access to the data and workflows in your Clay instance. Alternatively, to limit usage without removing access, set their credit limit to a low value.
+Yes, by removing them from your workspace. While admins cannot directly revoke a rep's MCP connection from the `MCP` page, they can remove the rep from the workspace entirely. If a rep is not added to your workspace, they won't have access to the data and workflows in your Clay instance. Alternatively, to limit usage without removing access, set their credit limit to a low value.
 
 ### When do credits reset?
 
