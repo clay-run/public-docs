@@ -358,7 +358,7 @@ When setting up a Snowflake or BigQuery import, you also define a `Unique Identi
 **Other deduplication behaviors**
 
 -   **Cross-source deduplication** — merge the same person from multiple sources.
--   **Whitespace detection** — when importing from a Find People or Find Companies search, or saving results from a Clay table to your Audience, records that already exist in All People or All Companies are automatically excluded from the merge. The draft shows a banner with the count of excluded records, and clicking **All people** or **All people** will only add net-new records. For Companies, exclusion matches on Clay's internal company identifier (CPJ ID). Existing Audience records need entity resolution to have completed — records missing a recognized domain or professional network URL may not yet have been assigned a CPJ ID, which can cause them to slip through as apparent duplicates. Ensuring your Companies audience records have accurate domains and professional network URLs helps entity resolution complete and improves deduplication coverage.
+-   **Whitespace detection** — when importing from a Find People or Find Companies search, or saving results from a Clay table to your Audience, records that already exist in All People or All Companies are automatically excluded from the merge. The draft shows a banner with the count of excluded records, and clicking **All people** or **All companies** will only add net-new records. For Companies, exclusion matches on Clay's internal company identifier (CPJ ID). Existing Audience records need entity resolution to have completed — records missing a recognized domain or professional network URL may not yet have been assigned a CPJ ID, which can cause them to slip through as apparent duplicates. Ensuring your Companies audience records have accurate domains and professional network URLs helps entity resolution complete and improves deduplication coverage.
 -   **Country-code domain variants** — Clay's entity matching normalizes domains by stripping subdomains and `www` prefixes, but does not automatically merge country-code TLD variants. A company at `swarovski.co.uk` and a company at `swarovski.com` are treated as separate entities by default — this reflects how many enterprises maintain distinct regional accounts. If a regional variant appears as net new in your search results and you want to exclude it, use the **Exclude companies** filter in your Find Companies source. See [Find Companies](find-companies.md) for how to set up exclusions.
 -   **Secondary domains from your CRM** — Clay entity matching uses only the primary domain field mapped from your CRM source. If your CRM stores additional domains for a company (for example, HubSpot's secondary domain fields), those alternate domains are not imported into the Audiences company record and are not used for entity matching. A Find Companies search result for a secondary domain may appear as net new even if the same company exists in your audience under a different primary domain. To exclude known secondary domains from appearing as net new, add them to the **Exclude companies** filter in your Find Companies source.
 
@@ -1314,28 +1314,24 @@ Databricks imports in Audiences use the Unity Catalog. Two common causes of fail
 In Databricks, grant the service principal read access to the catalog, schema, and table you're importing:
 
 ```sql
-GRANT USE CATALOG ON CATALOG <catalog_name> TO `<service_principal_id>`;
-GRANT USE SCHEMA ON SCHEMA <catalog_name>.<schema_name> TO `<service_principal_id>`;
-GRANT SELECT ON TABLE <catalog_name>.<schema_name>.<table_name> TO `<service_principal_id>`;
+GRANT USE CATALOG ON CATALOG <catalog_name> TO `<service-principal-id>`;
+GRANT USE SCHEMA ON SCHEMA <catalog_name>.<schema_name> TO `<service-principal-id>`;
+GRANT SELECT ON TABLE <catalog_name>.<schema_name>.<table_name> TO `<service-principal-id>`;
 ```
 
-Replace `<service_principal_id>` with the application ID of the service principal you used when connecting Databricks in Clay. If you're unsure which service principal Clay is using, disconnect and reconnect the Databricks integration — Clay prompts you to authenticate and shows the service principal ID during setup.
+Replace `<service-principal-id>` with the application ID of the service principal connected to Clay.
 
-**2. A required column is missing or mismatched.**
+**2. The table is not registered in Unity Catalog.**
 
-Clay maps Databricks columns to Audiences fields during setup. If you later modify the underlying Databricks table — renaming a column, changing a data type, or removing a column — the import will fail when Clay tries to sync that field.
+Audiences can only import from tables registered in Unity Catalog — it cannot query tables or views defined in the legacy Hive metastore. To migrate a legacy table, use `CREATE TABLE ... AS SELECT` in Unity Catalog to register a copy, or move the underlying data to a Unity Catalog volume.
 
-To fix a schema mismatch:
-
-1.  In Clay, go to **Settings → Sources / Destinations** and open your Databricks connection.
-2.  Click **Edit** on the affected import and update the field mapping to reflect the current table schema.
-3.  Click **Save** — Clay validates the connection against the updated schema and resumes importing.
+If neither of these applies and the import still fails, contact Clay support with the error message shown in the import setup.
 
 ### How do I archive records that no longer match my Snowflake import query?
 
-When a Snowflake import query is updated — for example, adding a `WHERE` clause to narrow the result set — records that no longer match the query are marked **Deleted in source** in Audiences after the next full sync (every 7 days). These records are not automatically archived; they remain in your Audience with the deleted-in-source status until you remove them.
+When you update your Snowflake SQL query to exclude records — for example, removing rows below a revenue threshold — those records are marked **Deleted in source** in your Audience on the next full sync (within 7 days). They are not automatically archived; they remain in All People or All Companies with a **Deleted in source** status.
 
-To remove them from your Audience:
+To remove them from your Audience, archive them manually:
 
 1.  Go to **All People** or **All Companies** in your Audiences view.
 2.  Add a filter: **Source** → select your Snowflake import → set status to **Deleted in source**.
