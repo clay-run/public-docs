@@ -546,6 +546,8 @@ After you add a signal:
 -   Multiple signals each get their own column; the `Signal Summary` column aggregates all results. Click any row to see per-signal detail.
 -   Any other segment that filters on this signal type will also surface these results.
 
+**Note:** The three auto-created draft segments have different entity types. **New hires** is a **People** segment — each record is an individual new hire contact detected at a monitored company. **Companies of job changers** and **Web visitors** are **Companies** segments — each record is a company where a job change or website visit was detected.
+
 **Monitoring signal progress**
 
 While the signal is processing its initial run, its status shows **Running**. Once the initial run completes, the status flips to **Monitoring** and displays a **Last run** timestamp. To see how many records were detected, go to **Audiences** → **Data Hub** → **Signals** — the **Signals fired (30d)** column shows the count of events the signal emitted over the past 30 days.
