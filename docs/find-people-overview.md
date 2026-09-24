@@ -164,6 +164,15 @@ If your Sales Navigator search matches more than 2,500 leads, the 2,500 cap is e
 
 Collect the resulting Sales Navigator URLs and add them to your Clay table one at a time.
 
+If your search is dynamic — where new people continuously match your criteria over time — you can schedule the source to re-run automatically and accumulate leads across multiple runs instead of splitting:
+
+1.  Click the source column header in your table and expand **Run settings**.
+2.  Switch from **Manually** to **On a schedule** and choose a frequency (Daily or Weekly are most common).
+3.  Toggle on **Update existing rows** — when the source re-runs, contacts already in your table are updated in place rather than added as duplicate rows.
+4.  In **Table settings** (gear icon, top right), enable **Auto-dedupe rows** on a unique column such as the professional profile URL — this removes any duplicate entries that slip through across runs.
+
+Each scheduled run imports up to 2,500 leads from the search. Contacts already in your table are refreshed in place; contacts new to your search since the last run are added as new rows. See [Scheduled sources](scheduled-sources.md) for full configuration details.
+
 ## Finding LinkedIn posts by keyword or profile
 
 To find LinkedIn posts matching your criteria, use the **Find professional posts** source — a separate source from Find People that returns posts rather than people profiles.
