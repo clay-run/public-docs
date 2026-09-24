@@ -68,6 +68,8 @@ The same workspace-level beta access also unlocks a Routines endpoint for trigge
 
 Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is under **Settings → Account → API keys** and is distinct from the personal API key on your profile page.
 
+**Note:** Routine run `inputs` fields and item `id` values must not contain NUL characters (`\u0000`) or unpaired Unicode surrogates. Sending such characters to `POST /routines/{routine_id}/run` returns a `400` error — for example, `inputs: Inputs must not contain NUL characters (\u0000) or unpaired Unicode surrogates.` Batch runs with these characters produce a `validation_failed` status with a per-line field detail. If your data comes from a database export, file-parsing pipeline, or encoding-mismatched source, strip null bytes before calling the API.
+
 **Public HTTP API — Credit Balance**
 
 Check your workspace's current credit balance without consuming any credits:
