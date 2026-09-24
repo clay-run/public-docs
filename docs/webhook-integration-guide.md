@@ -255,3 +255,18 @@ You can confirm this is the case if the field appears in the webhook column's **
 Once the field is selectable in your prompt, you can remove the temporary filter or sort to restore your original view.
 
 **Alternative:** If you frequently need to reference a webhook sub-field in prompts across multiple columns, extract it as a standalone column. Click a cell in the webhook column, open **Cell details**, hover over the field, and select **Add as column → Create column**. The extracted column is then always available in the `/` picker without needing to sort the view first.
+
+### My Salesforce sandbox is sending test data to my live Clay webhook table — how do I prevent this?
+
+Clay does not distinguish between production and sandbox Salesforce orgs at the webhook level. When a Salesforce Flow in your sandbox org posts to a Clay webhook URL, it triggers your Clay table the same as a post from your production org — Clay has no built-in mechanism to detect or filter by Salesforce org type.
+
+There are three ways to prevent sandbox test data from entering your live table:
+
+**Option 1 — Add an `IsSandbox` condition to your Salesforce Flow (recommended):**
+In Salesforce Flow Builder, add a **Decision** element before the action that posts to Clay. Set the decision rule so the Flow only proceeds to the Clay callout when `{!$Organization.IsSandbox}` equals `False`. The Flow continues to run in the sandbox, but the step that sends data to Clay is skipped — so your live Clay table only receives records from your production Salesforce org.
+
+**Option 2 — Point your sandbox Flow to a separate Clay test table:**
+Create a dedicated Clay table with its own webhook URL for sandbox testing (see [Creating a table with webhook](#creating-a-table-with-webhook)). Configure your sandbox Salesforce Flow to post to that test webhook URL instead of the production one. Your live Clay table only receives data from the production Flow; sandbox test records land in the separate test table where they don't affect your live workbook.
+
+**Option 3 — Disable the Flow in your sandbox org when not actively testing:**
+In Salesforce, deactivate the Flow in the sandbox org after each testing session. Reactivate it when you need to run tests again. This prevents any accidental sandbox submissions to your live Clay table between testing sessions.
