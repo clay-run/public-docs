@@ -161,6 +161,16 @@ To fix:
 2.  Open the Claude desktop app, go to Connectors, and add Clay — completing the authentication flow in your browser. (Or go directly to [claude.com/connectors/clay](https://claude.com/connectors/clay).)
 3.  Once connected through the desktop app, Claude Code can call the Clay MCP.
 
+**Troubleshooting: Prompted to log in via SSO or Okta through Claude, and authentication is failing**
+
+If your Clay connector prompts for an SSO or Okta login inside Claude and authentication is failing, the connection needs to be reset. Clay's connector uses its own OAuth flow — it doesn't accept a separate SSO login attempt from within Claude. (If your workspace uses SSO, you'll authenticate through your identity provider as part of the OAuth flow when you reconnect, not as a separate step.)
+
+To fix:
+
+1.  In Claude, go to **Settings → Connectors**.
+2.  Find Clay and disconnect it.
+3.  Go to [claude.com/connectors/clay](https://claude.com/connectors/clay) and complete the OAuth flow again.
+
 **When I run an action in Claude, does it count as a Clay action?**
 
 Yes. Everything runs on a Clay table behind the scenes, so actions taken through Claude count as Clay actions and draw from your credit balance accordingly.
