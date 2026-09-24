@@ -1028,44 +1028,48 @@ To push net-new Accounts or Contacts to Salesforce:
 
 Once the toggle is on, Clay will create new Accounts or Contacts in Salesforce for any Audience record that doesn't already have a matching SFDC entry. (Leads and Opportunities do not support record creation through this toggle.) This toggle is admin-only.
 
-**What happens when you first enable this toggle:** Clay will attempt to create Salesforce records for *all* Audience records that currently lack a matching SFDC entry — not only records that enter the Audience going forward. For example, if your Companies Audience already contains 60,000 companies with only a subset matched to existing Salesforce Accounts, the first export will attempt to create Account records for all currently-unmatched companies. Test on a small, filtered segment first and verify your matching fields, required Salesforce fields, and permissions before enabling for a large Audience — see [How do I create new Salesforce Accounts or Contacts from an Audience?](#how-do-i-create-new-salesforce-accounts-or-contacts-from-an-audience) below for Clay ID field setup steps.
+**What about existing contacts?** Records already imported from Salesforce are tracked by their Salesforce Object IDs — Clay updates them directly without using the Clay ID field. The Clay ID field stays empty on those records and only comes into play for net-new records Clay creates.
+
+To track which contacts in Salesforce came from a specific Audience enrichment, create a custom Audience text field (for example, an "Audience Source" field set to a label like `"Q2-enrichment"`), and map it to a Salesforce field (a custom field, campaign tag, or lead status) in your export settings. You can then filter on that value directly in Salesforce.
 
 ### How do I write enriched fields back to existing Salesforce records from a bulk enrichment?
 
-**Enriched data is not automatically pushed to Salesforce.** Running a bulk enrichment in Audiences writes the results back to the Audiences record — but it does not push those updated values to Salesforce on its own.
+Add a **Salesforce Update Record** action column directly inside your bulk enrichment table. This pushes enriched values to matching Salesforce records in the same run, without waiting for the Audiences export cycle:
 
-To get enriched data from Audiences into Salesforce, you need to map the enriched field to a Salesforce field in your export settings and set its write rule to **Always write**:
+1.  In your bulk enrichment, add your data enrichment columns as usual (for example, `Enrich Person` to find professional profile URLs, email, or industry).
+2.  Click `Add enrichment` and search for **Salesforce** → select **Update Record**.
+3.  Set **Record ID** to the Salesforce Contact, Lead, or Account ID already stored in your Audience (the field imported from Salesforce or from your original SOQL import).
+4.  Map each enriched field to the corresponding Salesforce field you want to populate.
+5.  Click `Start Run` — the Update Record column fires alongside your enrichment columns and writes the enriched values directly to Salesforce.
 
-1.  Go to **Settings** → **Sources / Destinations** and click your Salesforce source.
-2.  Under the **Contacts** or **Accounts** tab, click **Add field** in the field mapping section.
-3.  Map the enriched Audiences field (for example, `Work Email`) to the target Salesforce field (for example, `Email`).
-4.  Click the **pencil (edit) icon** next to the field and set the write rule to **Always write**.
-5.  Make sure **Export sync** is toggled on.
-6.  Click **Save and review** → **Confirm**.
-
-The enriched value will be pushed to Salesforce on the next scheduled export cycle (within 24 hours). If a field is already mapped but the data still hasn't appeared in Salesforce, check whether the write rule is **Write if empty** — this only sends data when the Salesforce field is blank. Change it to **Always write** if you want Clay to overwrite existing values.
+If you have the Audiences Salesforce export enabled, enriched fields also sync back to Salesforce automatically on the next 24-hour export cycle (see [Writing back to your CRM](#writing-back-to-your-crm)). Adding Update Record directly in the enrichment table is useful when you need immediate write-back or when you are not using the native Audiences Salesforce import.
 
 ### How do I write enriched data back to HubSpot from Audiences?
 
-The HubSpot source in Audiences is currently import-only — there is no native export sync for HubSpot equivalent to the Salesforce Export sync. To push enriched data from Audiences to HubSpot, use a Bulk Enrichment Table with a HubSpot action column:
+Audiences does not have a native HubSpot export destination — Salesforce is currently the only built-in CRM export. To push enriched data to HubSpot, use a Bulk Enrichment with a HubSpot action column directly from within your audience segment:
 
-1.  In Audiences, open the segment you want to export.
-2.  Click `Enrich` → `Add bulk enrich` to create an enrichment table sourced from this segment.
-3.  In the enrichment table, click `Add enrichment` and search for **HubSpot Update Contact** (or the relevant HubSpot action for your object type).
-4.  Configure the action to map Audiences fields to HubSpot fields.
-5.  Click `Start Run`.
+1.  Navigate to an audience segment and click **Enrich** → **Add bulk enrich**.
+2.  In the bulk enrichment table, add your data enrichment columns as usual (for example, `Enrich Person` to find phone numbers or professional profile URLs).
+3.  Click `Add enrichment` and search for **HubSpot** → select **HubSpot: Update object** (to update an existing HubSpot contact or company) or **HubSpot: Create object** (to create a new contact or company in HubSpot).
+4.  Map each enriched field to the corresponding HubSpot property you want to populate.
+5.  Click **Start Run** — the HubSpot action column fires alongside your enrichment columns and writes the values directly to HubSpot.
 
-The HubSpot action writes data directly to HubSpot records using the HubSpot integration. Because this is a table-based action rather than a native sync, it runs on demand (or on a scheduled basis if you configure re-runs) rather than on the Audiences 24-hour export schedule.
+This approach supports batching and works for both contacts and companies. To automatically push data for new records entering the segment going forward, enable the **auto-enrich toggle** on the bulk enrichment.
 
 ### My HubSpot has more records than my plan limit — how do I limit what gets imported into Audiences?
 
-There is no option to pre-filter records at the HubSpot source level — the connector imports all records of the selected object type. If your HubSpot org has more records than your plan allows (250,000 for Growth; 25,000,000 for Enterprise), records are imported up to the limit and additional records are not processed.
+The Audiences HubSpot connector imports all records for the selected object type (Contacts, Companies, or Deals) — there is no option to select a specific HubSpot list within the Audiences source setup. If your HubSpot object has more than 250,000 records (the Growth plan limit), the import will pull all records for that object. Filtering in Audiences after the import won't reduce your record count against the plan limit — the records have already been imported.
 
-To stay within your limit, consider:
+To import only a filtered subset of HubSpot records into Audiences:
 
--   **Removing records you no longer need** — archive old or duplicate contacts in Audiences (these do not count toward the record limit once archived).
--   **Upgrading your plan** — contact Clay support or your Growth Strategist about increasing your record limit.
--   **Using a SOQL-style approach via Clay table** — bring only the HubSpot contacts you need into a Clay table using the HubSpot integration, then push selected records to Audiences using `Upsert Audiences Record`.
+1.  In a **Clay table**, add a source and select **Import objects from HubSpot**.
+2.  Under **List to pull objects from**, select the specific HubSpot list containing the contacts or companies you want.
+3.  Map and format the fields you need in the table.
+4.  Add **Upsert Audiences Record** as an action column — this pushes each row from your scoped, mapped table directly into Audiences without going through the full-object Audiences import.
+
+This gives you control over both which records enter Audiences and how their fields are mapped, independent of the native Audiences HubSpot source connector.
+
+**Note:** There is no add-on available to increase the Audiences record limit above 250,000 while staying on the Growth plan. To increase the limit, upgrade to the Enterprise plan, which supports up to 25,000,000 CRM/DWH records.
 
 ### Do Activities or Opportunities count toward my plan's record limit?
 
@@ -1109,7 +1113,7 @@ To access Company-level fields from a People segment:
 
 **Option 1: Use the Company filter in a People segment**
 
-When building filters in a People segment, you can filter on Company-level fields (such as Company name, Domain, LinkedIn URL, or any CRM account property) without needing to join the tables manually. Clay automatically resolves the Company association for each contact and applies the filter against the matching Company record.
+When building filters in a People segment, you can filter on Company-level fields (such as Company name, Domain, or any CRM account property) without needing to join the tables manually. Clay automatically resolves the Company association for each contact and applies the filter against the matching Company record.
 
 For example, to find contacts at companies in the Technology industry: in your People segment, click **+ Filter**, search for **Company industry**, and set the value to `Technology`. Contacts at companies without a Company association, or companies without an Industry value, will not match this filter.
 
@@ -1174,7 +1178,7 @@ Clay MCP (the AI agent interface) and the Audiences Activity tab query different
 
 If the same contact exists under multiple record IDs (for example, from two imports that weren't deduplicated), Clay MCP may surface activities tied to the other record ID while the Activity tab on the record you're viewing shows nothing.
 
-To investigate: check whether there is a duplicate record for this contact in your Audiences (search by email or professional network URL). If there is, the activity likely lives on the other record.
+To investigate: check whether there is a duplicate record for this contact in your Audiences (search by email or professional network profile URL). If there is, the activity likely lives on the other record.
 
 ### How does filtering work in Lookup in Audiences when I select multiple fields?
 
