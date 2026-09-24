@@ -1,7 +1,7 @@
 ---
 title: Custom Signals
 description: Create unique signals to monitor changes to your team's data sources.
-last_synced: 2026-04-26T01:39:50.046Z
+last_synced: 2026-04-26T01:39:50.006Z
 ---
 
 # Custom Signals
@@ -74,6 +74,22 @@ The social network brand mentions source — along with several related social l
 **To monitor brand mentions going forward, use the Monitor Professional Posts signal.** Go to **Tools → Monitor for... → Professional Posts** in your table, set the **Companies filter** to **Mentions companies**, and provide your company domain or professional profile URL as the identifier. Up to 5 domains or URLs are supported per run.
 
 For additional alternatives — including Claygent and third-party social listening tools — see the [Signals in Clay](/docs/signals) documentation.
+
+### Why does the Slack channel dropdown show "No options found" when I add a Slack enrichment?
+
+The Slack channel dropdown only lists channels where the Clay app has been added as a member. Adding the Clay app to your Slack workspace alone is not enough — Clay must be invited to each channel individually before that channel appears in the dropdown.
+
+To add Clay to a channel and populate the dropdown:
+
+1. Open the channel in Slack and type `/invite @Clay` in the message box, then press Enter.
+2. Return to Clay, open the enrichment configuration, and click **Refresh fields** to reload the channel list.
+
+Alternatively, if you don't want to add the Clay app to the channel, you can enter the channel ID directly:
+
+1. In Slack, right-click the channel name and select **Get channel details** (or **Copy link**). The channel ID starts with `C` — for example, `C04F8AWK44T`.
+2. In the Clay enrichment config, click the gear icon next to the **Slack channel** field, switch to **Text with tokens**, and paste the channel ID.
+
+For additional Slack troubleshooting — including reconnecting your Slack account and verifying OAuth scopes — see [Slack integration troubleshooting](slack-integration-overview.md#new-channels-not-appearing-in-the-channel-picker).
 
 ## Guide: Turning enrichments into signals
 
