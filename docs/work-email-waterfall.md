@@ -257,6 +257,20 @@ To permanently show provider and validation columns going forward, click the wat
 
 If you need to use an email that a later provider found despite an earlier invalid result, you can manually paste it into your output column, or create a formula column that pulls directly from the individual provider result columns.
 
+### If I enable "Require validation success" after the waterfall has already run, will it update existing results?
+
+Yes — for rows that already have validation data stored. Enabling **Require validation success** and saving immediately updates the waterfall's output column by re-evaluating the merge formula against the validation results already stored in your table. No re-run is needed and no credits are charged for this update.
+
+- **Rows where validation already confirmed the email as valid** continue to show that email in the output column — no change.
+- **Rows where validation returned "invalid," "catch-all," or an inconclusive result** will have the email removed from the output column. The individual provider cell still shows the found email, but the final output column becomes blank because the stricter setting now filters it out.
+
+**To find a different email for rows that are now blank**, a re-run is needed — no re-run is required just to apply the filter, but one is required if you want to search for a new email that passes the stricter validation gate:
+
+1. Filter your table to show only the rows where the Work Email column is now empty.
+2. Select those rows in the Work Email waterfall column and right-click → **Run [N] cells**. The waterfall re-runs only on that subset, searching for a different email that passes validation.
+
+**Exception — if no validation column exists:** If your waterfall was originally configured without a validation provider (no "Validate" step was added), there is no stored validation data for the setting to evaluate against. In this case, you do need to rerun the waterfall on those rows to first collect validation data before the stricter gate can take effect.
+
 ### Why does the Work Email output column show "Waiting for another column to finish"?
 
 When the Work Email output column shows **"Waiting for another column to finish"**, a provider or validation step within the waterfall is still running or queued for that row. The output column updates automatically once those steps complete — no action is needed if the waterfall is actively processing.
