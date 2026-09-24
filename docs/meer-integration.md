@@ -2,7 +2,7 @@
 title: Meer integration
 description: Screen phone numbers against national do-not-call registries before
   initiating outbound calls.
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-09-24T19:43:53.173Z
 ---
 
 # Meer integration
@@ -20,13 +20,13 @@ With this integration, you can check phone numbers against regularly updated DNC
 
 ## Using Meer in Clay
 
-1.  While in a Clay table, click `Tools` and search for `Meer`.
-2.  Under `Enrichments`, select `Screen phone number against DNC registries`.
+1.  While in a Clay table, click `Add enrichment` and search for `Meer`.
+2.  Under `Integrations`, select `Screen phone number against DNC registries`.
 3.  Choose to use your own Meer API key or the Clay-managed account.
 
 ### `Action` Screen phone number against DNC registries
 
-Check if a phone number appears in National Do Not Call registries. Currently supports US (National DNC Registry and select state registries), UK (TPS/CTPS), Ireland ([comreg.ie](http://comreg.ie/)), Belgium (DNCM), Germany ([Robinsonliste.de](http://robinsonliste.de/)), Spain ([Lista Robinson](http://listarobinson.es)), New Zealand, and Australia, refreshed weekly. Returns DNC status and source information if found.
+Check if a phone number appears in National Do Not Call registries. Currently supports US (National DNC Registry and select state registries), UK (TPS/CTPS), Ireland ([comreg.ie](http://comreg.ie/)), Belgium (DNCM), Germany ([Robinsonliste.de](http://robinsonliste.de/)), Spain ([Lista Robinson](http://listarobinson.es)), New Zealand, and Australia, refreshed weekly. Returns DNC status and source information if found. Clay doesn't cache these results, so re-running the action screens the number again rather than replaying an earlier answer.
 
 **Inputs**
 
@@ -40,7 +40,7 @@ Check if a phone number appears in National Do Not Call registries. Currently su
 
 **Pricing**
 
-2 Clay credits per call (charged even if the number is not on the list).
+Screening a number costs 0.6 credits per record on current Clay plans, or 0.9 credits on older plans that predate Clay's latest pricing update. You're charged whether or not the number turns out to be on a registry.
 
 **Rate Limits**
 
@@ -55,7 +55,7 @@ Check if a phone number appears in National Do Not Call registries. Currently su
 
 ## Compliance notes
 
--   You are responsible for your own compliance. Do Not Call Suppression is a risk-mitigation tool. It does not ensure compliance. It's always your job to assess your compliance obligations and ensure you meet them. For more guidance, see our [DNC compliance best practices](https://university.clay.com/docs/dnc-compliance) and [B2B email marketing best practices](https://university.clay.com/docs/direct-marketing-best-practices).
+-   You are responsible for your own compliance. Do Not Call Suppression is a risk-mitigation tool. It does not ensure compliance. It's always your job to assess your compliance obligations and ensure you meet them. For more guidance, see our [DNC compliance best practices](https://university.clay.com/docs/dnc-compliance) and [direct marketing best practices](https://university.clay.com/docs/direct-marketing-best-practices).
 -   **Do Not Call = false is a suppression signal, not a call-eligibility clearance.** A result of `false` — shown as **Can call** in the Clay cell preview — means only that the number was not found on the relevant suppression list. It does not establish country-specific legal basis, presumed consent, or calling eligibility. You must apply your own country-level calling rules, particularly in markets such as Germany where B2B telephone advertising may require additional legal basis beyond registry absence.
 -   Clay and its third-party providers are not liable for any fines or costs associated with any DNC violations you might commit.
 -   You are responsible for adding the DNC screening actions into your Clay workflows and refreshing the data in your CRM on a regular basis to avoid calling DNC numbers.
