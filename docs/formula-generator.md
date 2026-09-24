@@ -112,6 +112,27 @@ Lodash also provides `_.sortBy()`, `_.flatMap()`, `_.groupBy()`, and `_.uniq()` 
 -   **Code node:** Add a code node and write a Python `handler` function. You can use `for` loops, `while` loops, list comprehensions, and any other Python iteration construct within the node. The node receives named inputs from upstream nodes and returns a dictionary to the next node.
 -   **Conditional loop:** Draw an edge from a later node back to an earlier node in the workflow. As long as the cycle includes at least one conditional node, Clay allows the loop — the conditional node controls when execution exits the loop. Conditional loops are limited to 50 uninterrupted steps; the conditional node displays a warning when this limit applies.
 
+### **Why does my workflow code node fail with "No module named 'urllib'"?**
+
+If your code node uses `from urllib.parse import urlparse` or any other import from Python's standard library `urllib` module, it may fail with `ModuleNotFoundError: No module named 'urllib'` — even though `urllib` is part of Python's standard library. Not all standard library modules are available in every code node execution environment.
+
+To parse URLs without `urllib.parse`, replace the import with string operations:
+
+```python
+def handler(context):
+    raw = str(context.get_input("url") or "").strip()
+    # Strip scheme (https://, http://)
+    work = raw.split("://")[-1]
+    # Remove query string and fragment
+    work = work.split("?")[0].split("#")[0]
+    # Extract path
+    path = "/" + work.split("/", 1)[1] if "/" in work else ""
+    path = path.rstrip("/")
+    return {"url_path": path}
+```
+
+This handles the same inputs as `urllib.parse.urlparse`: full URLs with a scheme, bare paths without a scheme, trailing slashes, and query strings.
+
 ### **How do I use today's date in a formula?**
 
 Use `moment()` with no arguments to get the current date and time at the moment the formula evaluates. For example, to return `"Yes"` if an event date is more than 6 months in the future from today:
