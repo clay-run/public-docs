@@ -28,7 +28,7 @@ Once your table has a populated email column, you're ready to create a campaign.
 
 **2. A sender account connected and warmed up**
 
-Campaigns send from a connected email account (Google Workspace, Microsoft Outlook, or SMTP). Newly connected accounts need to warm up before you can safely send cold email — the initial warmup phase typically takes **3 weeks**. The account's status shows **Warming up** in `Campaigns → Email Accounts` during this phase and changes to **Ready** once warmup completes.
+Campaigns send from a connected email account (Google Workspace, Microsoft Outlook, or SMTP). Newly connected accounts need to warm up before you can safely send cold email — the initial warmup phase typically takes **3 weeks**. The account's status shows **Warming up** in `Sequencer → Email Accounts` during this phase and changes to **Ready** once warmup completes.
 
 Connect and enable warmup on your sender account as early as possible so it's ready when you're ready to launch. See [buying email accounts](buying-email-accounts.md) if you need to add a dedicated sending address.
 
@@ -36,7 +36,7 @@ Connect and enable warmup on your sender account as early as possible so it's re
 
 **Note:** This setup requires Google Workspace admin access and only needs to be done once per domain. Changes can take up to 24 hours to apply.
 
-1.  In Clay, go to `Campaigns` → `Email Accounts` → `Add email accounts` → `Google OAuth`.
+1.  In Clay, go to `Sequencer` → `Email Accounts` → `Add email accounts` → `Google OAuth`.
 2.  Copy the Clay Sequencer Client ID from the `Search for Clay Sequencer` step in the modal.
 3.  Go to your [Google Workspace Admin Panel](https://admin.google.com/) and navigate to `Security` → `API Controls` → `App Access Control`.
 4.  Click `Configure new app`.
@@ -162,9 +162,9 @@ The `Lead status` column is populated by the sequencing provider behind the camp
 
 ## Managing campaigns
 
-You can view and manage all campaigns from the `Campaigns` tab on your home screen. This view summarizes every campaign in your workspace and shows you the workbook it belongs to.
+You can view and manage all campaigns from the **Sequencer** tab in the left sidebar, under **Orchestration**. If you're looking for a "Campaigns" tab and can't find it, it was renamed to **Sequencer** — your campaigns are all still there. This view summarizes every campaign in your workspace and shows you the workbook it belongs to.
 
-In the Campaigns homepage, you can access the `Global inbox` which centralizes replies across all campaigns, giving you one place to review and manage every response. `Global analytics` shows you how all of your campaigns are performing.
+In the Sequencer homepage, you can access the `Global inbox` which centralizes replies across all campaigns, giving you one place to review and manage every response. `Global analytics` shows you how all of your campaigns are performing.
 
 Check out the `Email accounts` tab to manage your fleet of sender accounts and `Global blocklist` to add or remove entries.
 
@@ -341,7 +341,7 @@ Email providers like Google and Microsoft occasionally revoke access due to inac
 
 If you've moved to a new email provider (for example, switching from a third-party address to Google Workspace), update your Clay campaigns in these steps:
 
-1.  **Connect the new email account.** Go to `Campaigns` → `Email Accounts` → `Add email accounts` and choose the connection method for your new provider:
+1.  **Connect the new email account.** Go to `Sequencer` → `Email Accounts` → `Add email accounts` and choose the connection method for your new provider:
     -   Google Workspace: select `Gmail (OAuth)`. If you see an "Access blocked" error, your Google Workspace admin must first authorize Clay Sequencer for your domain — follow the steps in [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth).
     -   Microsoft Outlook: select `Microsoft Outlook OAuth`.
     -   Other providers (including third-party email hosting): select `SMTP` and enter your SMTP and IMAP credentials.
@@ -352,17 +352,17 @@ If you've moved to a new email provider (for example, switching from a third-par
 
 Warmup is the process of automatically sending and receiving emails from other inboxes in Smartlead's warmup pool so your actual campaign traffic looks similar to the emails you're already sending. We recommend you keep warmup on at all times for email accounts in the sequencer to maximize deliverability.
 
-The initial warmup phase typically takes **3 weeks**, during which the account's status shows as **Warming up** in Campaigns → Email Accounts. Once the initial phase completes, the status switches to **Ready**. Warmup emails continue to run in the background even after the status shows **Ready** — the Ready label means the account has been warming for at least 3 weeks and is ready for campaigns, not that warmup has stopped.
+The initial warmup phase typically takes **3 weeks**, during which the account's status shows as **Warming up** in Sequencer → Email Accounts. Once the initial phase completes, the status switches to **Ready**. Warmup emails continue to run in the background even after the status shows **Ready** — the Ready label means the account has been warming for at least 3 weeks and is ready for campaigns, not that warmup has stopped.
 
 When you add accounts via OAuth, we will automatically set up labels and filters to make it clear what emails are warmups and reduce clutter in your inbox. Your workspace has a unique two-word filter key (e.g., `clever-rocket`) that marks all warmup emails so you can apply these labels and filters.
 
 During warmup, your inbox will receive emails from other accounts in Smartlead's warmup pool. These emails often look random or spam-like in content — this is intentional, as the warmup engine simulates natural human email activity. They are automatically filed under your warmup label (named **Clay sequencer warmup email**), so they won't clutter your main inbox. Receiving them is not a sign of unauthorized account access or phishing activity.
 
-Warmup is enabled during the account connection flow: after connecting your email account, Clay shows a prompt with all newly added accounts pre-selected for warmup. Clicking **Enable warming** activates it — warmup emails will then appear in your inbox (filed under your warmup label/filter) even if you haven't launched a campaign yet. If you enabled warmup by accident or want to stop it, go to `Campaigns` → `Email Accounts`, find the account, click the ⋯ options menu, and select **Disable warming**.
+Warmup is enabled during the account connection flow: after connecting your email account, Clay shows a prompt with all newly added accounts pre-selected for warmup. Clicking **Enable warming** activates it — warmup emails will then appear in your inbox (filed under your warmup label/filter) even if you haven't launched a campaign yet. If you enabled warmup by accident or want to stop it, go to `Sequencer` → `Email Accounts`, find the account, click the ⋯ options menu, and select **Disable warming**.
 
 ### What does the Reputation percentage mean?
 
-The **Reputation** percentage shown next to each email account in `Campaigns → Email Accounts` is the percentage of warm-up emails from that mailbox that landed in the inbox — not in spam or promotions. It reflects how successfully that specific warmed mailbox is delivering warm-up emails through Smartlead's warmup pool.
+The **Reputation** percentage shown next to each email account in `Sequencer → Email Accounts` is the percentage of warm-up emails from that mailbox that landed in the inbox — not in spam or promotions. It reflects how successfully that specific warmed mailbox is delivering warm-up emails through Smartlead's warmup pool.
 
 A high Reputation score (for example, 100%) means the vast majority of warm-up sends for that mailbox are reaching the inbox. This is a useful directional health signal for the warmup process itself. It is **not** an authoritative, provider-level domain-reputation score from Google Postmaster Tools, Microsoft SNDS, or similar services — those reflect your actual campaign traffic, not the simulated warmup activity.
 
@@ -423,7 +423,7 @@ Yes — Clay's email sequencer sends campaigns directly and supports any email p
 
 To connect a provider like LiteMail:
 
-1.  In your campaign, go to the **Sender accounts** tab (or `Campaigns → Email Accounts` globally).
+1.  In your campaign, go to the **Sender accounts** tab (or `Sequencer → Email Accounts` globally).
 2.  Click **Add email accounts** and select **SMTP**.
 3.  Enter the SMTP credentials your provider supplies: host, port, username, and password.
 4.  Enter your **IMAP credentials** (host and port) — Clay uses these to surface replies from recipients inside the platform. Most business email providers include IMAP access alongside SMTP.
@@ -519,7 +519,7 @@ When HTML is enabled, you can turn on an unsubscribe link in `Advanced` settings
 -   They are removed from all active campaigns.
 -   Future emails to that address from any campaign in your workspace are blocked.
 
-To view and manually manage your blocklist—including adding individual email addresses or domains—go to the **Campaigns** tab on your home screen and click the `Blocklist` tab. You can also block leads programmatically using the `Add email to blocklist` enrichment in the campaign events table.
+To view and manually manage your blocklist—including adding individual email addresses or domains—go to the **Sequencer** tab in the left sidebar and click the `Blocklist` tab. You can also block leads programmatically using the `Add email to blocklist` enrichment in the campaign events table.
 
 **What about leads who reply asking not to be contacted?**
 
@@ -565,11 +565,11 @@ If your admin has already completed those steps and you still see the error, see
 
 ### How do I authorize Clay's app in the Google Admin panel?
 
-Follow the steps in [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth) to complete the authorization. **Important:** Searching by the app name "Clay Sequencer" in the Google Admin Console returns no results — your admin must paste the Clay Sequencer **Client ID** into the search bar instead. Get the Client ID from within Clay: go to `Campaigns` → `Email Accounts` → `Add email accounts` → `Google OAuth` and copy the ID shown in the **Search for Clay Sequencer** step of the modal. After pasting the Client ID and clicking Search, the app appears as **Clay Sequencer (Web)** — the `(Web)` suffix indicates the web client type and refers to the same Clay Sequencer app. Have your admin set it to `Trusted` — not `Specific Google Data`. Selecting `Specific Google Data` will not grant all the permissions Clay needs, and the access error will persist. Despite its name, `Trusted` only allows Clay to request Gmail-specific permissions (full email access, basic email settings, OpenID, and your profile) — it does not grant access to Google Drive, Calendar, Docs, or any other Google service. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the Clay sequencer.
+Follow the steps in [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth) to complete the authorization. **Important:** Searching by the app name "Clay Sequencer" in the Google Admin Console returns no results — your admin must paste the Clay Sequencer **Client ID** into the search bar instead. Get the Client ID from within Clay: go to `Sequencer` → `Email Accounts` → `Add email accounts` → `Google OAuth` and copy the ID shown in the **Search for Clay Sequencer** step of the modal. After pasting the Client ID and clicking Search, the app appears as **Clay Sequencer (Web)** — the `(Web)` suffix indicates the web client type and refers to the same Clay Sequencer app. Have your admin set it to `Trusted` — not `Specific Google Data`. Selecting `Specific Google Data` will not grant all the permissions Clay needs, and the access error will persist. Despite its name, `Trusted` only allows Clay to request Gmail-specific permissions (full email access, basic email settings, OpenID, and your profile) — it does not grant access to Google Drive, Calendar, Docs, or any other Google service. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the clay sequencer.
 
 ### Does the Trusted admin setting give Clay access to all Google accounts in my domain?
 
-No — the Trusted setting is not domain-wide delegation. Marking Clay Sequencer as Trusted in the Google Workspace Admin Console removes the verification block that would otherwise prevent users in your domain from connecting their accounts, but it does not give Clay access to any mailbox automatically. Each person who wants to use the sequencer must still connect their own Google account individually: go to `Campaigns` → `Email Accounts` → `Add email accounts` → `Google OAuth` and complete the OAuth flow for their own account. Clay can only access a mailbox after that individual user explicitly authorizes it.
+No — the Trusted setting is not domain-wide delegation. Marking Clay Sequencer as Trusted in the Google Workspace Admin Console removes the verification block that would otherwise prevent users in your domain from connecting their accounts, but it does not give Clay access to any mailbox automatically. Each person who wants to use the sequencer must still connect their own Google account individually: go to `Sequencer` → `Email Accounts` → `Add email accounts` → `Google OAuth` and complete the OAuth flow for their own account. Clay can only access a mailbox after that individual user explicitly authorizes it.
 
 ### I followed the admin setup steps but still see "Access blocked: clay.com has not completed the Google verification process." What should I do?
 
