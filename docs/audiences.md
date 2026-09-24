@@ -1026,7 +1026,11 @@ To push net-new Accounts or Contacts to Salesforce:
 3.  In the **Record matching** section, select the Clay ID field you created (for example, `Clay_ID__c`) from the **Select Clay ID field** dropdown. If the field doesn't appear, confirm it is marked as **External ID** in Salesforce, then close and reopen the settings panel.
 4.  Confirm your field mappings and save.
 
-Once the toggle is on, Clay will create new Accounts or Contacts in Salesforce for any Audience record that doesn't already have a matching SFDC entry. (Leads and Opportunities do not support record creation through this toggle.) The first export after enabling the toggle attempts to create records for *all* currently-unmatched Audience records — not only new ones going forward. Test on a small, filtered segment first.
+Once the toggle is on, Clay will create new Accounts or Contacts in Salesforce for any Audience record that doesn't already have a matching SFDC entry. (Leads and Opportunities do not support record creation through this toggle.)
+
+**What about existing contacts?** Records already imported from Salesforce are tracked by their Salesforce Object IDs — Clay updates them directly without using the Clay ID field. The Clay ID field stays empty on those records and only comes into play for net-new records Clay creates.
+
+To track which contacts in Salesforce came from a specific Audience enrichment, create a custom Audience text field (for example, an "Audience Source" field set to a label like `"Q2-enrichment"`), and map it to a Salesforce field (a custom field, campaign tag, or lead status) in your export settings. You can then filter on that value directly in Salesforce.
 
 ### How do I write enriched fields back to existing Salesforce records from a bulk enrichment?
 
@@ -1215,11 +1219,19 @@ To remove records from your Audience, you archive them. Archiving moves a record
 3.  Select **Archive record**.
 4.  Confirm the action. The record is immediately moved to the Archived section and removed from all active segments.
 
-**To archive records in bulk:**
+**To archive multiple records using row selection:**
 
-1.  In your Audiences view, select the records you want to archive by checking the boxes on the left side of each row.
-2.  In the selection toolbar that appears at the bottom, click **Archive**.
-3.  Confirm the action.
+1.  In your Audiences view, select the rows you want to archive by clicking the checkboxes to the left of each row.
+2.  With rows selected, a toolbar appears at the bottom of the screen.
+3.  Click **Archive** in the toolbar.
+4.  Confirm the action. All selected records are moved to the Archived section.
+
+**To bulk-archive all records from a specific source (recommended for large-scale cleanup):**
+
+1.  In your Audiences view, add a filter: **Origin source** → **is** → the name of the source you want to remove records from.
+2.  Select all filtered records (check all rows).
+3.  Click **Archive** in the selection toolbar.
+4.  Confirm the action.
 
 **To restore archived records:**
 
@@ -1251,60 +1263,63 @@ The updated records will appear in Audiences under the new import source name.
 
 Your Audiences plan limit applies to **active imported records** — records that are currently present in your Audience from CRM or data warehouse sources. Specifically:
 
-**Counts toward the limit:**
--   Salesforce Account, Contact, and Lead records actively synced into Audiences.
--   HubSpot Contact and Company records actively synced into Audiences.
--   Snowflake, BigQuery, and Databricks records actively synced into Audiences.
+All records in **All People** (contacts and leads from any source)
 
-**Does not count toward the limit:**
--   Salesforce Activities (Tasks and Events) — even if imported via the Activities toggle on your Salesforce Accounts import.
--   Salesforce Opportunities — even if imported and associated with your Companies records.
--   Records found via Clay's people or companies search (CPJ data).
--   Records sourced from CSV imports.
--   Records imported from Clay tables (via `Upsert Audiences Record` or `Save to People/Companies`).
--   Archived records.
+-   All records in **All Companies** (accounts from any source)
 
-The limit is evaluated against the count of active, non-archived records from CRM and data warehouse sources at any given time. To stay within your plan limit, you can archive records you no longer need — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above.
+Records that do **not** count:
 
-**Growth plans** support up to **250,000** CRM/DWH records. **Enterprise plans** support up to **25,000,000** records. If you need a higher limit, contact your Growth Strategist.
+-   Archived records (moved to the Archived section; not counted toward the limit while archived)
+-   Segment memberships (a record in 10 different segments still counts as one record)
+
+If your workspace reaches the limit, Clay will stop importing new records from your connected sources until the count drops below the cap. To free up space: archive records you no longer need (see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above), or upgrade your plan.
+
+Growth plans have a hard cap — there is no add-on to increase the limit without upgrading to Enterprise.
+
+### Can I add a "notes" or "memo" field to an Audience record?
+
+Yes — you can create a custom text field in Audiences and update it from a Clay table using `Update Audiences Record` or `Upsert Audiences Record`. There is no built-in "notes" column, but a custom field works the same way.
+
+**To set this up:**
+
+1.  Create a custom Audience text field — see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) above.
+2.  In your Clay table, add an `Update Audiences Record` or `Upsert Audiences Record` column.
+3.  Map the text column in your table to the custom notes field in Audiences.
+4.  Run the column — the value writes permanently to the Audience record.
+
+You can then filter segments on this field, export it to Salesforce, or use it as input for enrichments.
+
+### Why does my Databricks import fail with a schema or permission error?
+
+Databricks imports in Audiences use the Unity Catalog. Two common causes of failure:
+
+**1. The service principal lacks SELECT on the target table.**
+
+In Databricks, grant the service principal read access to the catalog, schema, and table you're importing:
+
+```sql
+GRANT USE CATALOG ON CATALOG <catalog_name> TO `<service-principal-id>`;
+GRANT USE SCHEMA ON SCHEMA <catalog_name>.<schema_name> TO `<service-principal-id>`;
+GRANT SELECT ON TABLE <catalog_name>.<schema_name>.<table_name> TO `<service-principal-id>`;
+```
+
+Replace `<service-principal-id>` with the application ID of the service principal connected to Clay.
+
+**2. The table is not registered in Unity Catalog.**
+
+Audiences can only import from tables registered in Unity Catalog — it cannot query tables or views defined in the legacy Hive metastore. To migrate a legacy table, use `CREATE TABLE ... AS SELECT` in Unity Catalog to register a copy, or move the underlying data to a Unity Catalog volume.
+
+If neither of these applies and the import still fails, contact Clay support with the error message shown in the import setup.
 
 ### How do I archive records that no longer match my Snowflake import query?
 
-When a record is no longer returned by your Snowflake import query — because it was deleted from the underlying Snowflake table, or because you updated the SQL to exclude it — Clay marks that record's Snowflake source association as **Deleted in source** during the next full sync. The Audience record itself is **not automatically archived or removed**.
+When you update your Snowflake SQL query to exclude records — for example, removing rows below a revenue threshold — those records are marked **Deleted in source** in your Audience on the next full sync (within 7 days). They are not automatically archived; they remain in All People or All Companies with a **Deleted in source** status.
 
-To clean up these records, archive them manually:
+To remove them from your Audience, archive them manually:
 
-1.  In your Audience view, add a filter: **Source status** → **Deleted in source**.
-    -   Optionally, also filter by **Origin source** → your Snowflake import name to scope the cleanup to records from that specific source.
-2.  Select all filtered records.
-3.  Click **Archive** in the selection toolbar.
+1.  Go to **All People** or **All Companies** in your Audiences view.
+2.  Add a filter: **Source** → select your Snowflake import → set status to **Deleted in source**.
+3.  Select all returned rows.
+4.  Click **Archive** in the bottom toolbar and confirm.
 
-Archiving removes those records from all segments and from the All People / All Companies view. They are retained in Audiences with an **Archived** status and can be restored if needed.
-
-**Note:** If the record still exists in other sources (for example, the same company or person was also imported from Salesforce), archiving from within Audiences removes it from all views — it does not remove the other source associations. To prevent the record from reappearing, remove the other source associations or ensure the other sources no longer include that record.
-
-### Can the Audiences export sync write data back to Salesforce Lead records?
-
-No. The Audiences Export sync — the scheduled 24-hour write-back that pushes enriched data from Audiences to Salesforce — applies to **Contacts and Accounts only**. The Salesforce Lead field mapping in Audiences does not include a scheduled export rule column, and Lead records imported into Audiences are treated as import-only for the purpose of the automated export sync.
-
-To write enriched data from Audiences back to Salesforce Lead records, use a **Salesforce Update Record** action column inside a bulk enrichment table. This lets you push values to Lead records directly without relying on the scheduled export:
-
-1.  From your People audience segment, click **Enrich** → **Add bulk enrich**.
-2.  Add your data enrichment columns (for example, phone, title, or LinkedIn URL).
-3.  Click `Add enrichment` and search for **Salesforce** → select **Update Record**.
-4.  Set **Record type** to `Lead`.
-5.  Set **Record ID** to the Salesforce Lead ID field imported from Salesforce (the `00Q…` ID).
-6.  Map each enriched column to the corresponding Salesforce Lead field.
-7.  Click **Start Run**.
-
-The Update Record column writes enriched values directly to your Salesforce Lead records in the same run, without waiting for the 24-hour export cycle.
-
-### How do I archive records imported from a Snowflake query that I've now updated?
-
-When you update your Snowflake SQL query to exclude records that were previously imported, Clay marks those records' Snowflake source association as **Deleted in source** during the next full sync. To remove them from your active Audiences view, archive them manually:
-
-1.  Apply a filter: **Source status** → **Deleted in source** (and optionally filter by **Origin source** → your Snowflake import name).
-2.  Select all filtered records.
-3.  Click **Archive** in the selection toolbar.
-
-Archived records are kept in Audiences with an **Archived** status and can be restored at any time from the **Archived** section in the left sidebar.
+Archived records can be restored at any time from the **Archived** section in the left sidebar.
