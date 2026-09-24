@@ -163,6 +163,8 @@ Cells show a **Queued** status when they are waiting to be processed. This is no
 
 **If enrichments across multiple tables or workbooks appear stuck at the same time**, check **[status.clay.com](https://status.clay.com/)** before troubleshooting individual tables — simultaneous stalling across tables is often caused by a platform-wide incident. If an incident is active, the Clay team is already working on a fix and no further action is needed on your end.
 
+**If you need enrichment results before the incident resolves**, you can add a column using a different provider for the same enrichment type. For example, if an **Enrich Person** column is stuck, click **Tools** in the top-right corner of your table, search `Enrich person`, and select a different provider from the results — Clay connects to many providers offering the same enrichment type, including Apollo, Datagma, and others. To avoid duplicate enrichment on rows that already have a result from your primary column, open the new column's **Run settings**, expand **Add run condition**, and set the condition so it only runs when your original enrichment column is empty (for example, `[Original Enrich Column] is empty`). The alternative provider then runs only on rows the primary hasn't yet returned a result for. See [Waterfalls](building-a-data-waterfall.md) for more on chaining providers with run conditions.
+
 If cells remain Queued for an extended period, common causes include:
 
 -   **High concurrency in progress** — Clay runs many rows at once; if a large number are queued simultaneously, later rows wait while earlier ones complete. The queue will clear on its own.
