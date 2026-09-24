@@ -385,6 +385,30 @@ Clay Value: `Technology;Healthcare;Finance`
 | Values not updating | Wrong delimiter used | Use semicolons (;), not commas |
 | Field not accepting value | Using display label instead of API name | Verify API name in Salesforce Setup |
 
+### Why does a picklist value that looks correct still get rejected?
+
+If a picklist write fails with `INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST` even though the value appears correct in Salesforce, the most likely cause is that your Clay column contains the picklist **Label** rather than the **API Name**.
+
+Every Salesforce picklist entry has two identifiers:
+
+-   **Label** — the text users see in Salesforce dropdowns and record forms
+-   **API Name** (shown as **Value** in Salesforce Setup) — the identifier Salesforce validates when you write data via the API
+
+When you use Clay's built-in **Dropdown** mode for a picklist field in **Map fields**, Clay automatically sends the API Name for the option you selected. When you switch to **Text with tokens** mode and reference a Clay column, Clay passes the column's value to Salesforce exactly as-is — no translation between Label and API Name is applied. If that column contains Labels instead of API Names, Salesforce rejects the write even though the values look correct in the Salesforce UI.
+
+**Common example:** A picklist entry may display `Food & Bev` in Salesforce but have an API Name of `Food_Bev`. Sending `Food & Bev` from a Clay column fails; sending `Food_Bev` succeeds. Labels that contain spaces, slashes, ampersands, or parentheses often have API Names that replace those characters with underscores or remove them entirely.
+
+**To find the API Name for each picklist value:**
+
+1. In Salesforce, go to **Setup** → **Object Manager** → select the object (for example, `Account`).
+2. Click **Fields & Relationships** in the left sidebar, then click the picklist field name.
+3. Scroll to the **Values** section — you will see a table with both a **Label** column and a **Value** (API Name) column.
+4. Use the string in the **Value** column in your Clay table, character-for-character, including capitalization.
+
+After identifying the correct API Names, update the Clay column that feeds the picklist field and re-run the failing rows.
+
+**Note:** When the Label and API Name are identical — common for values created with simple alphanumeric text — this distinction does not matter. Mismatches are most common for picklist values whose labels include spaces, slashes, ampersands, or other special characters.
+
 ### New picklist value still rejected after being added to Salesforce
 
 If you added a new value to a Salesforce restricted picklist and are still seeing a "bad value for restricted picklist field" error when Clay tries to write that value, the cause is almost always a Salesforce Record Type configuration issue — not a Clay problem and not a timing delay.
