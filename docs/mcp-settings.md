@@ -40,7 +40,7 @@ Credit limits cap how many Clay credits a rep can spend through ChatGPT, Claude,
 
 There are two levels of control:
 
--   **Default credit limit** — applies automatically to all new MCP users when they first connect ChatGPT, Claude, or Glean. Click `Set default limit` to configure. Reps without an individual override inherit this limit.
+-   **Default credit limit** — applies at the moment a user completes the OAuth connection to ChatGPT, Claude, or Glean (not when they are added to the workspace). Click `Set default limit` to configure. When setting or updating the default, check **Apply to existing users** in the modal to immediately push the limit to all users who have already connected — otherwise only future connections will pick it up. Reps without an individual override inherit this limit.
 -   **Per-user override** — find the rep in the user table and click the pencil icon next to their `Credit limit` to set an individual amount. Their current usage tracks against this limit in real time (e.g., `0 / 1,000`). Reps showing `No limit` have no cap applied.
 
 ## Monitoring usage
@@ -169,3 +169,9 @@ MCP usage appears in the main credit usage dashboard at `Settings → Credit Usa
 ### What's the difference between the default credit limit and a per-user override?
 
 The default limit is a workspace-wide setting that applies automatically to any new rep who connects ChatGPT, Claude, or Glean. A per-user override replaces the default for a specific rep. Reps showing `No limit` have neither a default nor an override applied.
+
+### Why do some users still show "No limit" after I set a default credit limit?
+
+The default limit is applied at the moment a user completes the OAuth connection to Claude, ChatGPT, or Glean — not when they are added to your workspace. Users who connected before the default was configured will show "No limit" and are not automatically updated when you set or change the default.
+
+To apply the default to all existing users at once: click `Set default limit`, enter the amount, and check **Apply to existing users** before saving. Users who have been added to the workspace but haven't yet connected an AI tool will automatically receive the current default when they do complete their OAuth connection.
