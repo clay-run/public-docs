@@ -622,6 +622,18 @@ When you have a segment ready, you can sync it to an ad platform to run account-
 
 -   **Account-based advertising** — sync company segments to the professional network, which is the only ad platform that supports account-level (company) targeting. Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co support People (contact-level) segments only — to use those platforms, sync a People segment instead. Contacts who no longer qualify are automatically removed.
 
+**Troubleshooting — "Accept the terms of service in your ads manager to select this account":** This message appears in the Meta Ads account selector when Meta's Custom Audience terms have not yet been accepted for the ad account you are connecting. Clay reads the acceptance status from Meta's API and cannot accept these terms on your behalf — you must complete this step directly in Meta Ads Manager.
+
+To accept the terms:
+
+1.  Open Meta Ads Manager and select the ad account you are connecting in Clay.
+2.  Navigate to **Audiences**, then choose **Create audience → Custom audience → Customer list**.
+3.  Accept Meta's terms when prompted.
+
+You can also go directly to `https://business.facebook.com/ads/manage/customaudiences/tos?act=YOUR_AD_ACCOUNT_ID` (replace `YOUR_AD_ACCOUNT_ID` with the numeric ID of the ad account) to accept from there.
+
+After accepting, return to Clay and hard-refresh your browser (Mac: **Cmd + Shift + R**; Windows: **Ctrl + F5**) to reload the account list. Meta's API may take a few minutes to reflect the accepted terms — if the message still appears immediately after accepting, wait a moment and refresh again. Make sure you accepted the terms for the specific ad account you are connecting; terms must be accepted separately for each Meta Ads account.
+
 **Syncing to multiple ad platforms**
 
 You can add multiple ad platforms to a single audience sync. After your initial sync is active, an **Expand your reach** section appears on the Sync tab showing available platforms you haven't yet connected. Click **Add** next to any platform to configure field mappings for that provider — it will sync on the same schedule as your existing provider.
