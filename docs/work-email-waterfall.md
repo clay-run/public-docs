@@ -259,16 +259,17 @@ If you need to use an email that a later provider found despite an earlier inval
 
 ### If I enable "Require validation success" after the waterfall has already run, will it update existing results?
 
-No. Enabling **Require validation success** does not retroactively update emails that were already found and stored by a previous waterfall run. The setting is applied as a run condition during the waterfall run itself — changing the configuration only affects rows when the waterfall re-runs on those rows.
+Yes — for rows that already have validation data stored. Enabling **Require validation success** and saving immediately updates the waterfall's output column by re-evaluating the merge formula against the validation results already stored in your table. No re-run is needed and no credits are charged for this update.
 
-To apply the setting to rows that already have results without rerunning your entire table:
+- **Rows where validation already confirmed the email as valid** continue to show that email in the output column — no change.
+- **Rows where validation returned "invalid," "catch-all," or an inconclusive result** will have the email removed from the output column. The individual provider cell still shows the found email, but the final output column becomes blank because the stricter setting now filters it out.
 
-1. Open the Work Email waterfall settings (**Tools → Work Email → Edit group → Full configuration**) and toggle on **Require validation success**.
-2. When saving, choose **Save, don't run** so the configuration updates without rerunning enrichment across the full table and spending credits unnecessarily.
-3. Filter your table to show only the rows you want to re-check — for example, rows where the validation column shows "invalid," "risky," or "catch-all," or rows where you're not confident in the email quality.
-4. Select those rows in the Work Email waterfall column and right-click → **Run [N] cells**. The waterfall re-runs only on that subset, applying the new setting.
+**To find a different email for rows that are now blank**, a re-run is needed — no re-run is required just to apply the filter, but one is required if you want to search for a new email that passes the stricter validation gate:
 
-This avoids spending credits re-running the entire table — only the rows you filter and select are reprocessed.
+1. Filter your table to show only the rows where the Work Email column is now empty.
+2. Select those rows in the Work Email waterfall column and right-click → **Run [N] cells**. The waterfall re-runs only on that subset, searching for a different email that passes validation.
+
+**Exception — if no validation column exists:** If your waterfall was originally configured without a validation provider (no "Validate" step was added), there is no stored validation data for the setting to evaluate against. In this case, you do need to rerun the waterfall on those rows to first collect validation data before the stricter gate can take effect.
 
 ### Why does the Work Email output column show "Waiting for another column to finish"?
 
