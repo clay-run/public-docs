@@ -49,7 +49,7 @@ Optional — under `Company information`. None of these are needed on their own,
     -   Full name, First name, Last name
     -   Headline, Profile summary, Profile photo
     -   Professional profile URL, Professional profile ID, Sales Navigator URL
-    -   Personal website, Twitter URL, Followers
+    -   Personal website, Social profile URL, Followers
     -   Confidence score, Enrich CRM's own score for how sure it is of the match
 -   **Current role:**
     -   Role, Seniority
