@@ -106,6 +106,30 @@ Editing a saved JWT account will affect every enrichment column across your work
 
 The enrichment will fail with the message `Please fill out your auth fields.` If you see this error, double-check the `Location of JWT token in auth response` field against the actual JSON structure returned by your token endpoint.
 
+### Does HTTP API with JWT Authentication support APIs that require HTTP Basic authentication at the token endpoint?
+
+No. When Clay calls your token endpoint, it sends the stored username and password as **body parameters** — it does not construct an `Authorization: Basic` header from those credentials. If your token endpoint authenticates by expecting credentials in an HTTP Basic Auth header (for example, `Authorization: Basic <base64-encoded username:password>`), the request arrives without that header and authentication fails. This can show up as the error "An error occurred while creating the account. Please check your credentials and try again." even when the same credentials work in tools like Postman with Basic Auth enabled.
+
+**How to tell if your endpoint requires HTTP Basic authentication:** In Postman, set the **Authorization** type to **Basic Auth**. If that produces a successful token response but no other auth type does, your endpoint requires HTTP Basic authentication and the JWT Auth action is not compatible.
+
+**Workaround — use a standard HTTP API column:** Call the token endpoint directly using a standard HTTP API enrichment column with a manually constructed Basic Auth header:
+
+1.  In a Clay table, add an **HTTP API** enrichment column (not HTTP API with JWT Authentication).
+2.  Set the method to **POST** and the endpoint to your token URL, including any query parameters the endpoint requires (for example, `https://auth.example.com/oauth/token?grant_type=client_credentials`).
+3.  Under **Headers**, add:
+    -   **Key:** `Authorization` | **Value:** `Basic <your base64-encoded credentials>`
+    -   **Key:** `Content-Type` | **Value:** `application/x-www-form-urlencoded`
+4.  In **Field paths to return**, enter `access_token` (or the path where the token appears in the response).
+5.  Add a second HTTP API column for your actual API call and reference the token from the first column in its `Authorization: Bearer <token>` header.
+
+To generate the base64 value from your username and password, run the following in your terminal:
+
+```
+printf '%s' 'username:password' | base64
+```
+
+For full instructions on constructing the Basic Auth header — including the `printf` vs. `echo` pitfall — see [Step 5: Header fields](https://university.clay.com/docs/http-api-integration-overview) in the HTTP API guide. Because tokens from these endpoints typically expire after about an hour, re-run the token column at the start of each batch run or on a schedule matching the token's lifetime.
+
 ### Does HTTP API with JWT Authentication support OAuth 2.0 client_credentials?
 
 No. This action does not perform a formal OAuth 2.0 `client_credentials` grant. When Clay calls your token endpoint, the request body contains only `username` and `password` — it does not include `grant_type=client_credentials`. If your token endpoint requires `grant_type=client_credentials` as an explicit body parameter, authentication will fail.
