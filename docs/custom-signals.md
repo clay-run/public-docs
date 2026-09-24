@@ -1,7 +1,7 @@
 ---
 title: Custom Signals
 description: Create unique signals to monitor changes to your team's data sources.
-last_synced: 2026-04-26T01:39:50.006Z
+last_synced: 2026-04-26T01:39:50.046Z
 ---
 
 # Custom Signals
