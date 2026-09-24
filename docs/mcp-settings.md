@@ -1,7 +1,7 @@
 ---
 title: MCP settings
 description: Connect your Clay workspace to AI tools.
-last_synced: 2026-04-26T01:40:20.821Z
+last_synced: 2026-09-24T20:36:12.683Z
 ---
 
 # MCP settings
