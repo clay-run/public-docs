@@ -232,6 +232,22 @@ To stop a signal from consuming credits, you must pause or disable it directly f
 
 You can review all active signals and their individual credit spend in the `Signals` tab of the [credit usage dashboard](/docs/credit-usage) (`Settings` → `Usage`).
 
+### What happens when my Signal results table reaches 50,000 rows?
+
+Each Signal results table is capped at 50,000 rows. When the table is full, new matching events stop being added.
+
+To stay ahead of the limit:
+
+-   **Monitor row counts manually** by clicking the **rows** button in the table toolbar (it shows the current count, for example **49,800/50,000 rows**).
+-   **Enable per-table row limit alerts.** Table Alerts can notify you before the table fills — the default alert threshold is 45,000 rows. Row limit alerts are off by default and must be enabled individually per table in the table's alert settings.
+-   **Bypass the limit with Passthrough mode.** Enable [Passthrough mode](table-management-settings.md) on the results table — when active, passthrough automatically forwards and deletes processed rows so the table never fills up. Passthrough is supported for signal source tables.
+
+### Can I update settings for multiple Signals at once?
+
+No. There is currently no way to bulk-edit settings across multiple Signals. Run frequency, search period, keyword list, deduplication settings, and all other signal configuration must be opened and changed on each Signal individually.
+
+To update a Signal's settings: click the `📡` signal column header → **Edit signal** → make your changes → click **Save** (or **Save and re-run** to immediately apply the updated settings to previously checked records).
+
 ### Why does my signal keep writing results to a new table instead of my existing one?
 
 Signals always write their matching events to a **new dedicated results table** — one row per event. Whether you start signal setup from the workbook's **Create** panel (select **Signals**, then the signal type) or from the global **Signals** sidebar, the existing table you select is used as the **input source** that supplies the companies or contacts to monitor; it is not the destination for the events. Clay creates a fresh output table to capture matching events.
