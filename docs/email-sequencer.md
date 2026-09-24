@@ -564,7 +564,7 @@ These are disclosed when you add your account via OAuth. Clay requests the follo
 -   `https://mail.google.com/` — full Gmail access (read, send, delete, manage)
 -   `https://www.googleapis.com/auth/gmail.settings.basic` — read/manage Gmail settings (filters, send-as aliases, etc.)
 
-Additionally, you will need to have a Google Workspace admin authorize our app to request these permissions for the domain(s) you want to add to the sequencer.
+Clay does not request access to Google Drive, Calendar, Docs, or any other Google Workspace service — only the Gmail-specific scopes listed above. Additionally, you will need to have a Google Workspace admin authorize our app to request these permissions for the domain(s) you want to add to the sequencer.
 
 ### I'm seeing "Access blocked: clay.com has not completed the Google verification process" when I try to connect my Google account. What does this mean?
 
