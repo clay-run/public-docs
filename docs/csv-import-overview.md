@@ -133,3 +133,18 @@ To export the complete response text from an AI column:
 4.  Export the table; the new column contains the complete, untruncated text.
 
 You only need to do this once per AI column — not once per row. For each additional AI column whose full output you want to export, repeat the same four steps. When you create new AI columns in the future, add the Response field to its own column before exporting so your CSV always captures the complete text.
+
+**If your imported values appear as date strings when they were not meant to be dates:**
+
+If a column in your imported table shows values like `9-Jan` when the original data was a label such as `1-9`, the conversion happened in your spreadsheet tool before the CSV was exported — not during Clay's import.
+
+Spreadsheet applications such as Excel and Google Sheets automatically reformat values that match date patterns. If you enter `1-9` into a cell whose column is formatted as General or Date, the application displays it as a date string like `9-Jan`. When you export to CSV, the file contains that already-formatted value, not the original text. Clay's CSV parser stores values exactly as they appear in the file — there is no date coercion in Clay's import — so `9-Jan` is stored as the text string `9-Jan`.
+
+**Changing the column type in Clay will not recover the original value.** Switching a column between types (for example, Text → Date → Text) preserves whatever string is already stored. Clay cannot reconstruct a value it never received.
+
+To fix affected rows without re-importing the table or re-running enrichment:
+
+-   **Add a formula column to remap the values.** Open the [Formula Generator](formula-generator.md) and describe what you need — for example: *"If the Segment column contains '9-Jan', return '1-9'. If the Segment column is empty, return blank. Otherwise return the value as-is."* Clay generates the expression and runs it row-by-row. A formula column used purely for text remapping does not re-trigger enrichment actions on other columns.
+-   **Import a corrected file and use Lookup Single Row.** If the original source spreadsheet is available, format the affected column as **Text** in Excel or Google Sheets before re-entering or re-pasting the correct labels, then re-export as a new CSV. Import the corrected file as a separate new table in Clay (choose **Create new table** at step 3 of the import flow). Then, in your original table, add a [Lookup Single Row in Other Table](lookup-rows.md) column — match on a unique identifier such as a record ID or company name — to pull the corrected values across without duplicating rows or re-running enrichments.
+
+To prevent this on future imports: in Excel or Google Sheets, format the column as **Text** before entering values that could be misread as dates (such as `1-9`, `3-4`, or `Jan`). In Excel, you can also force a cell to treat its value as text by prefixing the entry with an apostrophe (for example, type `'1-9` and Excel stores it as the text `1-9`).
