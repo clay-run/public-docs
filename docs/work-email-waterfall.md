@@ -257,6 +257,19 @@ To permanently show provider and validation columns going forward, click the wat
 
 If you need to use an email that a later provider found despite an earlier invalid result, you can manually paste it into your output column, or create a formula column that pulls directly from the individual provider result columns.
 
+### If I enable "Require validation success" after the waterfall has already run, will it update existing results?
+
+No. Enabling **Require validation success** does not retroactively update emails that were already found and stored by a previous waterfall run. The setting is applied as a run condition during the waterfall run itself — changing the configuration only affects rows when the waterfall re-runs on those rows.
+
+To apply the setting to rows that already have results without rerunning your entire table:
+
+1. Open the Work Email waterfall settings (**Tools → Work Email → Edit group → Full configuration**) and toggle on **Require validation success**.
+2. When saving, choose **Save, don't run** so the configuration updates without rerunning enrichment across the full table and spending credits unnecessarily.
+3. Filter your table to show only the rows you want to re-check — for example, rows where the validation column shows "invalid," "risky," or "catch-all," or rows where you're not confident in the email quality.
+4. Select those rows in the Work Email waterfall column and right-click → **Run [N] cells**. The waterfall re-runs only on that subset, applying the new setting.
+
+This avoids spending credits re-running the entire table — only the rows you filter and select are reprocessed.
+
 ### Why does the Work Email output column show "Waiting for another column to finish"?
 
 When the Work Email output column shows **"Waiting for another column to finish"**, a provider or validation step within the waterfall is still running or queued for that row. The output column updates automatically once those steps complete — no action is needed if the waterfall is actively processing.
