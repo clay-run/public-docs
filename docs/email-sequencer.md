@@ -337,6 +337,19 @@ To avoid losing leads this way, deduplicate your source table before launching. 
 
 Email providers like Google and Microsoft occasionally revoke access due to inactivity, security checks, or suspicious activity detection. To fix this, delete the disconnected account from your sequencer settings and re-authenticate it.
 
+### Why aren't replies being detected for my SMTP email account? The sequence keeps sending follow-ups even after leads reply.
+
+For SMTP email accounts, Clay uses the **IMAP connection** to detect incoming replies. If the IMAP settings were not filled in correctly when the account was first added — or were left blank — replies are not tracked, and sequences continue sending follow-up emails as if no reply occurred. This can happen even if the account shows as **Ready** and outgoing emails are sending without errors: SMTP handles sending and IMAP handles reply detection independently.
+
+**The IMAP settings on an SMTP account cannot be viewed or edited after the account is created.** To fix a misconfigured IMAP connection:
+
+1. **Pause all active campaigns** that use the affected email account — open each campaign, go to `Setup`, and click **Pause**.
+2. **Delete the email account** — go to `Sequencer` → `Email Accounts`, find the account, click the ⋯ menu, and select **Remove**.
+3. **Re-add the account** via `Add email accounts` → `SMTP`. When filling in the form, carefully enter the **IMAP settings** (IMAP host, port, and encryption type) provided by your email provider — Clay uses these to detect replies. If these fields are blank or wrong, reply detection will not work.
+4. **Resume your paused campaigns** once the account is reconnected and shows as **Ready**.
+
+Your email provider's documentation lists the correct IMAP host, port, and encryption type (for example, Google Workspace uses `imap.gmail.com` on port 993 with SSL; Microsoft 365 uses `outlook.office365.com` on port 993 with SSL). If you are unsure, contact your email provider's support.
+
 ### How do I switch my campaign's sending email to a new provider or address?
 
 If you've moved to a new email provider (for example, switching from a third-party address to Google Workspace), update your Clay campaigns in these steps:
