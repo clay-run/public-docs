@@ -67,3 +67,34 @@ The Initial check does not compare against your current CRM data. It scans each 
 For example: if a contact changed companies 5 months ago and your CRM was updated at the time, a 6-month Initial check will still flag that contact, because the signal is reporting what it found in the contact's work history, not what currently differs from your CRM.
 
 To filter out job changes your CRM has already captured, add a filter on your results table to exclude rows where the contact's **email domain** already matches their **Most Recent Company Domain** column. This limits your results to contacts whose job change is not yet reflected in your CRM.
+
+### How do I flag accounts where a key contact has recently changed jobs?
+
+When a tracked contact's job change is detected, Clay records the event on **both** the contact record and the company they left (matched by domain or LinkedIn URL). You can use this to build a Companies audience segment — an "at-risk accounts" view — showing every account where a key contact has recently departed.
+
+**Step 1 — Track the contacts you care about**
+
+Turn on the Job Change signal for the people at your target accounts: for example, your Salesforce contacts at those accounts, or a People audience segment filtered to champion titles. Each contact must have a LinkedIn URL to be monitored.
+
+**Step 2 — Create an at-risk Companies segment**
+
+Once the signal has run, open your Companies audience and click **+ Filter**. Under **People signals → Job change**, add conditions such as:
+
+-   Results in the last 90 days
+-   Previous employment title contains your persona keywords (e.g., "VP", "Director")
+-   Confidence ≥ 70
+
+Save the filtered view as a named segment — for example, **At-risk: key contact left**. Clay also auto-creates a **Companies of job changers** draft segment (pinned at the top of the Audiences sidebar) showing every company where any monitored contact changed jobs, without additional title or confidence filters.
+
+Each job change event on a company record includes the contact's **confidence score**, **previous company**, and **new company** — accessible as filter conditions in your audience and via the `Get Audiences Activity` action in workflows.
+
+**Step 3 — Act on the segment with a workflow**
+
+Connect a workflow to the segment (**Send → Send to workflow**). When a new company enters the segment, the workflow can:
+
+-   Update your CRM: mark the contact as departed and create a follow-up task for the account owner
+-   Optionally start a Job Change signal on the contact at their new company to keep tracking them
+
+**Step 4 — Find a successor (best-effort)**
+
+After 30–90 days, run the **New hire** or **Promotion** signals on the account, or use **Find People** at the company to surface contacts who now hold a similar role. Detecting a departure is reliable; identifying who inherited the relationship requires human confirmation — build your workflow to propose candidates rather than auto-assign them.
