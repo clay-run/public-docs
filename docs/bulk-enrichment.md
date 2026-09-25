@@ -141,10 +141,12 @@ Turn field mapping off when you want to run enrichments and route results somewh
 
 The **Auto-enrich new records** toggle determines whether records that newly qualify for the segment are enriched automatically after the initial run.
 
--   **On** — any record that enters the segment after the initial run is automatically enriched in the background, typically within 15 minutes of joining the segment. This includes records that newly qualify because you updated your audience filters.
--   **Off** — only records present at the time of the initial run are enriched. Records that join the segment later are not enriched automatically.
+-   **On** — any record that enters the segment after the initial run is automatically enriched in the background, typically within 15 minutes of joining the segment. This includes records that newly qualify because you updated your audience filters. All action columns in the enrichment run for each new record — including any **Send table data** action. For example, if your enrichment sends segment members to a Clay table, new segment members will be automatically sent to that destination table within 15 minutes of joining the segment.
+-   **Off** — only records present at the time of the initial run are enriched. Records that join the segment later are not enriched automatically. To pick up new segment members on a recurring schedule, use **Recurring enrichments** (see below) instead.
 
 **To change this setting while a run is active:** click **Pause** first. The toggle is locked while the enrichment is running and can only be changed when the enrichment is paused or not yet started.
+
+**Send table data and duplicate rows:** If your enrichment includes a **Send table data** action and **Auto-enrich new records** is on, each new segment member triggers the Send table data action when they join the segment. To control how those records land in the destination table, check the **Update existing rows on re-run** setting in the Send table data column's configuration — when enabled (the default), re-sending a record updates the existing destination row rather than creating a duplicate. Sending list-type data always creates a new row regardless of this setting.
 
 ### Recurring enrichments
 
