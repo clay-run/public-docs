@@ -342,3 +342,18 @@ If post URLs are flowing in from another Clay source — such as **Find professi
 Job description keywords use phrase matching — your search term must appear as a contiguous sequence of words in the job description. Hyphens in your search terms are treated as word separators, so "K-12" and "K 12" produce the same search (both look for the phrase "k 12" in the description). If you want to search for a compound term as a single unbroken token, enter it without separators (for example, use "k12" instead of "K-12").
 
 For filtering that keywords alone cannot capture, run **Find Active Job Openings** first and then add a **Use AI** column to verify which results match your actual criteria.
+
+### Do title keyword includes and excludes use the same matching logic in Find Jobs?
+
+Yes. The **Job title keywords** (include) and **Job title keywords to exclude** fields in a Find Jobs source use identical matching logic — the same text processing and search algorithm. Any job title matched by an include keyword will also be matched by the same keyword in an exclude list. The two fields are symmetric.
+
+This means splitting one broad Find Jobs source into multiple keyword-segmented workflows returns the same combined universe as the original single workflow, provided each workflow's exclude list contains all the include keywords from every other segment. For example:
+
+-   **Sales workflow**: include Sales keywords, exclude Marketing + Engineering keywords
+-   **Marketing workflow**: include Marketing keywords, exclude Sales + Engineering keywords
+-   **Engineering workflow**: include Engineering keywords, exclude Sales + Marketing keywords
+-   **General workflow**: no includes, exclude Sales + Marketing + Engineering keywords
+
+With this setup, the four workflows together cover the same total universe as a single undivided search over the same source.
+
+**If your total count appears lower after splitting**, check the **Max results** and **Max per company** settings in each workflow. Each workflow enforces its own cap independently — if a segment returns more matches than its per-workflow cap, results are truncated for that segment only. A lower per-company limit than the original workflow had reduces results proportionally across all segments.
