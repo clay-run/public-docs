@@ -37,14 +37,12 @@ _Note: Personal email addresses significantly improve match rates when syncing t
     -   **For accounts:** Company name + company website (required for optimal matching)
     -   **Note:** When syncing a LinkedIn **Account list**, a **Company URL** field is also available in the mapping step and can improve match rates. This field does not appear for Contact list audiences — LinkedIn does not support company URL matching for contacts.
     -   **Note:** Meta and Reddit audiences support **Mobile Advertiser ID (MAID)** as an optional contact-matching field. If you have MAID data — for example, from mobile app installs — map it alongside email to give the platform an additional identifier to match on.
-    -   **Important:** Email is the primary field ad platforms use to match contacts. If no email column is mapped, the platform will process the sync but return an audience size of 0 — even for tens of thousands of contacts. This appears as a "too small for use in campaigns" status. Because field mapping cannot be changed after an Ad Sync is created, verify at least one email column is mapped before sending your audience.
+    -   **Important:** Email is the primary field ad platforms use to match contacts. If no email column is mapped, the platform will process the sync but return an audience size of 0 — even for tens of thousands of contacts. This appears as a "too small for use in campaigns" status. Verify at least one email column is mapped before sending your audience.
 4.  **Review enrichment and sync status** in the Sync panel. Your audience starts syncing automatically after you complete field mapping.
     -   If Enhanced Matching is configured, the Sync panel shows enrichment progress while personal email addresses are being found for your contacts.
     -   If Enhanced Matching encounters an error, the Sync panel shows **Enhanced Match could not be completed.** Click **Open bulk enrichment** to open the underlying enrichment table and review errors.
     -   **Sync destinations** shows a status card for each connected ad platform with details from the most recent and previous sync runs. To view the full sync history, click **Sync history** at the top of this section. The Sync history panel shows past runs grouped by date — each row displays match rate, records sent, matched count, and the change in match rate since the previous run.
     -   Your audience will be available in your ad platform's campaign manager within **48 hours** of the first sync.
-
-**Note:** The Sync panel is currently in beta and rolling out progressively to Growth and Enterprise workspaces. Contact [Clay support](https://www.clay.com/contact) if you'd like early access.
 
 Once synced, your audience updates automatically as data changes in your Clay table. Contacts and accounts are added or removed based on your criteria, keeping your ad targeting aligned with your latest data.
 
@@ -162,9 +160,19 @@ When you open the ad sync setup from a Companies segment, only the professional 
 
 To target contacts at your company accounts on those platforms, use **Find people from this list** on your Companies segment to build a corresponding People segment, then sync the People segment to the ad platform of your choice.
 
+### **Can I pause a recurring Ad Sync?**
+
+Yes. You can pause a recurring Ad Sync from the **Ads** homepage by clicking the **⋮** (three-dot) menu next to a sync and selecting **Pause**. Pausing stops future scheduled sync runs and puts the sync in an editable state, allowing you to update the sync name, field mapping, destinations, or schedule.
+
+To resume after pausing, open the sync and complete the **Match** step by clicking **Enrich and sync**. The sync restarts and continues on its configured schedule.
+
+**Note:** Completed one-time Ad Syncs cannot be paused or edited — they run once and are marked done. Only workspace members with the ability to manage ads can pause a sync.
+
 ### **Can I edit the field mapping after setting up an Ad Sync?**
 
-No. Field mapping is configured when you create the Ad Sync and cannot be changed afterward. To use a different field mapping, delete the current sync and create a new Ad Sync with your updated configuration. **Deletion is permanent — the sync cannot be restored afterward.** Deleting the sync does not affect your underlying audience segment. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for details.
+**For recurring Ad Syncs**, field mapping can be updated by pausing the sync first. From the **Ads** homepage, click the **⋮** (three-dot) menu next to the sync and select **Pause**. Once paused, open the sync and update the field mapping in the Match step, then click **Enrich and sync** to resume on the configured schedule. Only workspace members with the ability to manage ads can pause a sync.
+
+**For completed one-time Ad Syncs**, field mapping cannot be changed after the sync runs. To use a different field mapping, delete the current sync and create a new Ad Sync with your updated configuration. **Deletion is permanent — the sync cannot be restored afterward.** Deleting the sync does not affect your underlying audience segment. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for details.
 
 ### **Can I permanently delete an Ad Sync?**
 
@@ -176,9 +184,9 @@ Deleting an ad sync does **not** delete the underlying audience segment — your
 
 ### **Can I add another ad platform to an existing Ad Sync?**
 
-Not directly — once an ad sync is active, its destination platforms are locked. Ad sync configuration can only be changed while the sync is still in draft state. Configure all desired destinations when you first create the Ad Sync, before activating it.
+For **recurring Ad Syncs**, you can add or change destinations by pausing the sync first. From the **Ads** homepage, click the **⋮** (three-dot) menu next to the sync and select **Pause**. Once paused, update the destinations in the Setup step, then complete the Match step to resume. Configure all desired destinations when you first create an Ad Sync to avoid needing to pause and re-configure later.
 
-If you need to add a platform to a sync that is already active, the workaround is to delete the current sync and create a new Ad Sync with all desired destinations included from the start. **Deletion is permanent — a deleted sync cannot be restored or reactivated.** Deleting the sync does not affect your underlying audience segment; your segment and its contacts remain intact, and you can create a new Ad Sync from the same segment immediately. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for how to delete and [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for credit implications.
+For **completed one-time Ad Syncs**, destination platforms are locked after activation. To add a new platform, delete the current sync and create a new Ad Sync with all desired destinations included from the start. **Deletion is permanent — a deleted sync cannot be restored or reactivated.** Deleting the sync does not affect your underlying audience segment; your segment and its contacts remain intact, and you can create a new Ad Sync from the same segment immediately. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for how to delete and [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for credit implications.
 
 **Notes:**
 
@@ -252,7 +260,7 @@ Ad platforms enforce a minimum number of matched members before an audience can 
 
 A second factor: if Enhanced Matching is enabled, it uses a professional profile URL or Work Email column you designate to look up personal emails before syncing. If those input columns are not configured, Enhanced Matching cannot improve your match rate.
 
-**To fix this:** Because field mapping cannot be changed after an Ad Sync is created, you'll need to delete the current sync and create a new one. **Note: Deletion is permanent — the sync cannot be restored afterward. Deleting the sync does not affect your underlying audience segment.** Map at least one email column, and configure Enhanced Matching inputs if using that feature. See [Why should I use personal emails instead of work emails?](#why-should-i-use-personal-emails-instead-of-work-emails) for guidance on which email type gives the best results.
+**To fix this:** For **recurring Ad Syncs**, you can pause the sync and update the field mapping — from the **Ads** homepage, click **⋮** > **Pause**, then open the sync and map at least one email column in the Match step before clicking **Enrich and sync** to resume. For **completed one-time Ad Syncs**, you will need to delete the current sync and create a new one. **Note: Deletion is permanent — the sync cannot be restored afterward. Deleting the sync does not affect your underlying audience segment.** Configure Enhanced Matching inputs if using that feature. See [Why should I use personal emails instead of work emails?](#why-should-i-use-personal-emails-instead-of-work-emails) for guidance on which email type gives the best results.
 
 ### **Why am I getting a 403 error when I click Continue on an ad sync?**
 
