@@ -37,3 +37,12 @@ If you need programmatic access to Clay from an external tool or CLI, Clay offer
 **Note:** While the Public HTTP API is available on all plans, CLI table-inspection commands — `clay tables list`, `clay tables get`, `clay tables rows list`, and `clay tables rows get` — require an Enterprise plan. These commands use the public observability API; on non-Enterprise plans you receive the error: "The public observability API is not enabled for this workspace (available on Enterprise plans)." All other CLI features — running searches, running functions, and building or running workflows — are available on all plans. If you need a table ID without Enterprise access, find it in the table's URL: it is the segment after `/tables/` (for example, `t_0te5b6rGsW6WAJW22cD` in `app.clay.com/workspaces/.../tables/t_0te5b6rGsW6WAJW22cD/views/...`).
 
 **Naming note:** The Public HTTP API (calling *Clay* from your own code) is unrelated to the [HTTP API integration](https://university.clay.com/docs/http-api-integration-overview), which is an enrichment column your Clay table uses to call *external* APIs. Neither the personal API key nor the workspace-scoped Public API key is used in the HTTP API integration — there you supply the external service's own credentials. For an overview of all the ways to interact with Clay programmatically, see [Does Clay have an API?](https://university.clay.com/docs/using-clay-as-an-api)
+
+### Search usage on the API and CLI page
+
+The **Search usage** section on the API and CLI page shows how many search results your workspace has returned through the Public API, CLI, and MCP server in the current quota period. The label below the progress bar tells you which window applies to your workspace:
+
+-   **Counts the last 30 days** — your workspace is on a rolling 30-day window. Usage ages out continuously as the window advances; there is no single hard reset date.
+-   **Resets on [date]** — your workspace is on a fixed window (monthly, 14-day, or annual) that resets on that specific date.
+
+For the full quota by plan — including how many results each plan allows per period — see [Does Clay have an API?](https://university.clay.com/docs/using-clay-as-an-api). If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
