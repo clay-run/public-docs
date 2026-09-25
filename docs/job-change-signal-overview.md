@@ -70,11 +70,11 @@ To filter out job changes your CRM has already captured, add a filter on your re
 
 ### How do I flag accounts where a key contact has recently changed jobs?
 
-When a tracked contact's job change is detected, Clay records the event on **both** the contact record and the company they left (matched by domain or LinkedIn URL). You can use this to build a Companies audience segment — an "at-risk accounts" view — showing every account where a key contact has recently departed.
+When a tracked contact's job change is detected, Clay records the event on **both** the contact record and the company they left (matched by domain or professional profile URL). You can use this to build a Companies audience segment — an "at-risk accounts" view — showing every account where a key contact has recently departed.
 
 **Step 1 — Track the contacts you care about**
 
-Turn on the Job Change signal for the people at your target accounts: for example, your Salesforce contacts at those accounts, or a People audience segment filtered to champion titles. Each contact must have a LinkedIn URL to be monitored.
+Turn on the Job Change signal for the people at your target accounts: for example, your Salesforce contacts at those accounts, or a People audience segment filtered to champion titles. Each contact must have a professional profile URL to be monitored.
 
 **Step 2 — Create an at-risk Companies segment**
 
