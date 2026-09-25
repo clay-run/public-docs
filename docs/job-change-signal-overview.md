@@ -72,7 +72,7 @@ To filter out job changes your CRM has already captured, add a filter on your re
 
 To flag accounts where a tracked champion or key contact has changed jobs, combine the Job Change signal with Clay Audiences.
 
-**Requirement:** Each contact you want to monitor must have a LinkedIn URL — contacts without one are not checked.
+**Requirement:** Each contact you want to monitor must have a professional profile URL — contacts without one are not checked.
 
 1.  **Create a People segment** of the contacts you want to track, narrowed to the titles that represent your key contacts — for example, your Salesforce contacts at target accounts, filtered to VP, Director, or Head-of-level titles. Scoping by title ensures that only departures of high-priority personas surface in the account-level output.
 
