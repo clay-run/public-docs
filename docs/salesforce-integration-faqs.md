@@ -689,6 +689,18 @@ Please check with your Salesforce admin before making any changes to your Salesf
 
 No, one of Clay's benefits is that you can update any object and any field in Salesforce.
 
+## Can I connect to a second Salesforce org or instance in Clay?
+
+Yes, for Clay table actions (Lookup Record, Create Record, Update Record, etc.), you can add as many Salesforce connections as you need — including connections to entirely different Salesforce orgs. Each connection is independent and authenticated separately. To add a second connection:
+
+1.  In Clay, go to `Settings` → `Connections`.
+2.  Click `Add connection`, search for `Salesforce`, and complete the authentication flow for the second org.
+3.  When setting up a Salesforce action column in any table, select which connection to use from the account dropdown.
+
+**Note on Audiences:** Audiences supports only one Salesforce connection per workspace. If you also use the Audiences Salesforce source, adding a second connection in Clay's Connections settings does not affect which Salesforce org Audiences syncs — Audiences keeps its own reference to the originally connected account. See [Can I connect multiple Salesforce accounts to Audiences?](audiences.md#can-i-connect-multiple-salesforce-accounts-to-audiences) for the full details and workarounds.
+
+**Connected app approval for the second org:** Each Salesforce org is an independent environment, and Clay's connected app must be approved separately in each org before users in that org can authenticate. If a user from the second org cannot sign in, the org's Salesforce admin may need to install and approve Clay's connected app there. See [Do I need to install Clay's Connected App in my Salesforce org?](#do-i-need-to-install-clays-connected-app-in-my-salesforce-org) for the step-by-step setup.
+
 ## Can I use a Salesforce API-only or Integration User license with Clay?
 
 It depends on which connection method you use.
