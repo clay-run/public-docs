@@ -90,7 +90,6 @@ Connect and enable warmup on your sender account as early as possible so it's re
     -   `Maximum new leads per day`: Caps the number of new leads contacted daily (in addition to account send limits).
     -   `Campaign start date` (optional): Set a future launch date, or start immediately based on your settings.
 7.  Explore `Advanced settings` if needed:
-    -   `Webhooks`: Route campaign events to a specific Webhook destination instead of the default Campaign Events Clay table. Example: Send Smartlead metrics to tools like OutboundSync or Enrichley for downstream routing.
     -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled)
     -   `Pause leads at the same company on reply`: When a lead replies, automatically pause other leads with the same email domain. Off by default.
 8.  Go to `Leads` to preview the messages for all people in your campaign
@@ -108,7 +107,7 @@ Once all your settings are saved, you can launch your campaign. Launching a camp
 -   Your campaign becomes live, which means:
     -   Any new leads routed into the campaign will automatically be sequenced, enabling "always-on" campaigns for inbound routing.
     -   All campaign settings become locked.
--   If you haven't set up custom webhooks in the `Advanced` section, a campaign events table will be created to capture all activity as it occurs.
+-   A campaign events table is created to capture all activity as it occurs.
 
 At any point, you can pause or complete a campaign:
 
@@ -164,7 +163,7 @@ The `Lead status` column is populated by the sequencing provider behind the camp
 
 You can view and manage all campaigns from the **Sequencer** tab in the left sidebar, under **Orchestration**. If you're looking for a "Campaigns" tab and can't find it, it was renamed to **Sequencer** — your campaigns are all still there. This view summarizes every campaign in your workspace and shows you the workbook it belongs to.
 
-In the Sequencer homepage, you can access the `Global inbox` which centralizes replies across all campaigns, giving you one place to review and manage every response. `Global analytics` shows you how all of your campaigns are performing.
+In the Sequencer homepage, you can access the `Global inbox` which centralizes replies across all campaigns, giving you one place to review and manage every response. `Global analytics` shows you how all of your campaigns are performing. The **Events** button opens a workspace-wide campaign events table that consolidates all event data — sends, replies, bounces, and more — across every campaign in one place; you can filter by campaign ID to isolate events for a specific campaign and build automations on top of it the same way you would with a per-campaign events table. Events is available on Launch, Growth, and Enterprise plans (Campaigns V2).
 
 Check out the `Email accounts` tab to manage your fleet of sender accounts and `Global blocklist` to add or remove entries.
 
@@ -607,7 +606,7 @@ The **Analytics** tab shows open rate, click-through rate, and other engagement 
 
 For per-step analysis, use the campaign events table. Each event includes a `sequence_number` value identifying which email in the sequence it came from:
 
--   **Bounce rate per step**: `EMAIL_BOUNCE` events always carry `sequence_number`. Filter the events table by `sequence_number` and compare sent versus bounced counts for that step.
+-   **Bounce rate per step**: `EMAIL_BOUNCE` events always carry `sequence_number`. Filter the events table by `sequence_number` and compare sent versus bounced counts for that step.\
 -   **Open rate and click-through rate per step**: `EMAIL_OPEN` and `EMAIL_LINK_CLICK` events also carry `sequence_number`, but only appear when HTML email tracking is enabled (`Advanced settings` → `Email tracking`). With tracking on, filter by `sequence_number` to calculate open and click rates per step.
 
 To extract `sequence_number` as a standalone column, click any Campaign event cell, find `sequence_number` in the Cell details panel, and click **Add as column**.
