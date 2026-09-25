@@ -254,13 +254,13 @@ A second factor: if Enhanced Matching is enabled, it uses a professional profile
 
 **To fix this:** Because field mapping cannot be changed after an Ad Sync is created, you'll need to delete the current sync and create a new one. **Note: Deletion is permanent — the sync cannot be restored afterward. Deleting the sync does not affect your underlying audience segment.** Map at least one email column, and configure Enhanced Matching inputs if using that feature. See [Why should I use personal emails instead of work emails?](#why-should-i-use-personal-emails-instead-of-work-emails) for guidance on which email type gives the best results.
 
-### **Why does my professional network ad sync show a "Timed out" status?**
+### **Why does my ad sync show a "Timed out" status?**
 
-A **Timed out** status (yellow indicator) means Clay successfully sent your audience data to the professional network, but the platform did not return match rate data within Clay's 5-day polling window. The audience data was synced — the timeout reflects Clay stopping its wait on the platform's response, not a failure to send your contacts.
+A **Timed out** status (yellow indicator) means Clay successfully sent your audience data to the ad platform, but the platform did not return match rate data within its polling window. The audience data was synced — the timeout reflects Clay stopping its wait on the platform's response, not a failure to send your contacts.
 
 When you see this status, Clay shows the message: **"Audience synced. No matches came back in time."** Check your campaign manager on the ad platform directly for the latest match rate and audience size — the platform may have processed the data without returning results to Clay in the expected window.
 
-The **Timed out** status applies only to professional network syncs. Other platforms use shorter polling windows and show a **Failed** status if they do not respond in time.
+The polling window before a sync times out varies by platform: the professional network uses a 5-day window, Bing Ads uses a 7-day window, and other platforms use a 3-day window.
 
 ### **Why am I getting a 403 error when I click Continue on an ad sync?**
 
