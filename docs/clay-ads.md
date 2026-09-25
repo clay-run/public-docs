@@ -256,7 +256,7 @@ A second factor: if Enhanced Matching is enabled, it uses a professional profile
 
 ### **Why does my ad sync show a "Timed out" status?**
 
-A **Timed out** status (yellow indicator) means Clay successfully sent your audience data to the ad platform, but the platform did not return match rate data within its polling window. The audience data was synced — the timeout reflects Clay stopping its wait on the platform's response, not a failure to send your contacts.
+A **Timed out** status (yellow indicator) means Clay successfully sent your audience data to the ad platform, but the platform did not return match rate data within its polling window. The **Timed out** status can appear for any ad platform sync — it is not limited to any single platform. The audience data was synced — the timeout reflects Clay stopping its wait on the platform's response, not a failure to send your contacts.
 
 When you see this status, Clay shows the message: **"Audience synced. No matches came back in time."** Check your campaign manager on the ad platform directly for the latest match rate and audience size — the platform may have processed the data without returning results to Clay in the expected window.
 
