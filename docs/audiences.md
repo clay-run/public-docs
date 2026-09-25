@@ -791,7 +791,7 @@ No. Audiences supports one Salesforce connection per workspace. Once a Salesforc
 
 You can still add multiple imports from the same connected Salesforce account — for example, separate imports for Contacts, Accounts, and SOQL-filtered subsets — but all imports come from the same Salesforce org.
 
-**To switch to a different Salesforce account** (for example, moving from a UAT org to a production org): remove the existing Salesforce source from Audiences, then reconnect with the new account. Before removing, note down your current field mappings — field mapping configurations cannot be recovered after a source is removed. See [I removed and re-added my Salesforce source in Audiences and my field mappings are gone — how do I restore them?](#i-removed-and-re-added-my-salesforce-source-in-audiences-and-my-field-mappings-are-added-my-field-mappings-are-gone--how-do-i-restore-them) for the full implications.
+**To switch to a different Salesforce account** (for example, moving from a UAT org to a production org): remove the existing Salesforce source from Audiences, then reconnect with the new account. Before removing, note down your current field mappings — field mapping configurations cannot be recovered after a source is removed. See [I removed and re-added my Salesforce source in Audiences and my field mappings are gone — how do I restore them?](#i-removed-and-re-added-my-salesforce-source-in-audiences-and-my-field-mappings-are-gone--how-do-i-restore-them) for the full implications.
 
 If you need data from a second Salesforce org in Audiences without removing the existing connection, the available workaround is: connect the second org under **Settings → Connections**, bring its records into a Clay table using Salesforce actions, then push those records into Audiences using `Upsert Audiences Record`. Note that Clay table row limits apply in this path.
 
@@ -1026,11 +1026,11 @@ To push net-new Accounts or Contacts to Salesforce:
 3.  In the **Record matching** section, select the Clay ID field you created (for example, `Clay_ID__c`) from the **Select Clay ID field** dropdown. If the field doesn't appear, confirm it is marked as **External ID** in Salesforce, then close and reopen the settings panel.
 4.  Confirm your field mappings and save.
 
-Once the toggle is on, Clay will create new Accounts or Contacts in Salesforce for any Audience record that doesn't already have a matching SFDC entry. (Leads and Opportunities do not support record creation through this toggle.) This toggle is admin-only.
+Once the toggle is on, Clay will create new Accounts or Contacts in Salesforce for any Audience record that doesn't already have a matching SFDC entry. (Leads and Opportunities do not support record creation through this toggle.)
 
 **What about existing contacts?** Records already imported from Salesforce are tracked by their Salesforce Object IDs — Clay updates them directly without using the Clay ID field. The Clay ID field stays empty on those records and only comes into play for net-new records Clay creates.
 
-To track which contacts in Salesforce came from a specific Audience enrichment, use a custom Salesforce field (for example, `Clay_Source__c`) — map it in your Audiences export settings with an **Always write** rule and set its value in a bulk enrichment using `Update Audiences Record`.
+To track which contacts in Salesforce came from a specific Audience enrichment, create a custom Audience text field (for example, an "Audience Source" field set to a label like `"Q2-enrichment"`), and map it to a Salesforce field (a custom field, campaign tag, or lead status) in your export settings. You can then filter on that value directly in Salesforce.
 
 ### How do I write enriched fields back to existing Salesforce records from a bulk enrichment?
 
@@ -1040,29 +1040,36 @@ Add a **Salesforce Update Record** action column directly inside your bulk enric
 2.  Click `Add enrichment` and search for **Salesforce** → select **Update Record**.
 3.  Set **Record ID** to the Salesforce Contact, Lead, or Account ID already stored in your Audience (the field imported from Salesforce or from your original SOQL import).
 4.  Map each enriched field to the corresponding Salesforce field you want to populate.
-5.  Run the column.
+5.  Click `Start Run` — the Update Record column fires alongside your enrichment columns and writes the enriched values directly to Salesforce.
 
-This gives you control over both which records enter Audiences and how their field values flow back to Salesforce — without waiting for the 24-hour Audiences export sync.
+If you have the Audiences Salesforce export enabled, enriched fields also sync back to Salesforce automatically on the next 24-hour export cycle (see [Writing back to your CRM](#writing-back-to-your-crm)). Adding Update Record directly in the enrichment table is useful when you need immediate write-back or when you are not using the native Audiences Salesforce import.
 
-### Can the Audiences export sync write data back to Salesforce Lead records?
+### How do I write enriched data back to HubSpot from Audiences?
 
-No. The Salesforce export sync in Audiences applies only to **Contacts** and **Accounts**. The Lead field mapping does not include a Scheduled export rule column — Lead records imported into Audiences are effectively import-only: they can be enriched in Audiences and those values are available for filtering, but the automated export sync does not write enriched data back to Salesforce Lead records.
+Audiences does not have a native HubSpot export destination — Salesforce is currently the only built-in CRM export. To push enriched data to HubSpot, use a Bulk Enrichment with a HubSpot action column directly from within your audience segment:
 
-**Why:** Salesforce Leads have a different status lifecycle from Contacts and Accounts. Writing enriched data back to a Lead that may have already been converted (or is about to be) can create data consistency issues in Salesforce. For this reason, the export sync is limited to Contacts and Accounts by design.
+1.  Navigate to an audience segment and click **Enrich** → **Add bulk enrich**.
+2.  In the bulk enrichment table, add your data enrichment columns as usual (for example, `Enrich Person` to find phone numbers or professional profile URLs).
+3.  Click `Add enrichment` and search for **HubSpot** → select **HubSpot: Update object** (to update an existing HubSpot contact or company) or **HubSpot: Create object** (to create a new contact or company in HubSpot).
+4.  Map each enriched field to the corresponding HubSpot property you want to populate.
+5.  Click **Start Run** — the HubSpot action column fires alongside your enrichment columns and writes the values directly to HubSpot.
 
-**To push enriched data back to Salesforce Lead records:** Use a Salesforce Update Record action column inside a bulk enrichment table. Add an enrichment to your audience segment, include a Salesforce Update Record column targeting the Lead object, map the Lead ID (stored in your Audience from the original import), and run the enrichment. This writes directly to the Lead record without going through the Audiences export sync.
+This approach supports batching and works for both contacts and companies. To automatically push data for new records entering the segment going forward, enable the **auto-enrich toggle** on the bulk enrichment.
 
-### My HubSpot has more records than my plan limit — how do I limit what's imported?
+### My HubSpot has more records than my plan limit — how do I limit what gets imported into Audiences?
 
-The HubSpot Audiences connector imports all records for the object type you select — there is no option to pre-filter to a specific HubSpot list within the Audiences source setup. If your HubSpot instance has more Contacts or Companies than your plan's limit (250,000 for Growth; 25,000,000 for Enterprise), records will be imported until the limit is reached — after that, new records are not added.
+The Audiences HubSpot connector imports all records for the selected object type (Contacts, Companies, or Deals) — there is no option to select a specific HubSpot list within the Audiences source setup. If your HubSpot object has more than 250,000 records (the Growth plan limit), the import will pull all records for that object. Filtering in Audiences after the import won't reduce your record count against the plan limit — the records have already been imported.
 
-**To limit which HubSpot records enter Audiences:**
+To import only a filtered subset of HubSpot records into Audiences:
 
-1.  **Use a SOQL-style filter at import time (not available for HubSpot):** Unlike Salesforce, HubSpot does not support a record subset query in Audiences — you cannot filter at the source level.
-2.  **Manage via HubSpot lists:** Before connecting HubSpot to Audiences, reduce the number of active Contacts or Companies in HubSpot by filtering in HubSpot itself — for example, using HubSpot's active lists to exclude records you don't need in Clay.
-3.  **Upgrade your plan:** If your HubSpot instance is genuinely larger than your current limit and you need all records, upgrading from Growth to Enterprise raises the cap from 250,000 to 25,000,000.
+1.  In a **Clay table**, add a source and select **Import objects from HubSpot**.
+2.  Under **List to pull objects from**, select the specific HubSpot list containing the contacts or companies you want.
+3.  Map and format the fields you need in the table.
+4.  Add **Upsert Audiences Record** as an action column — this pushes each row from your scoped, mapped table directly into Audiences without going through the full-object Audiences import.
 
-Once the limit is reached, Clay stops importing new records and displays a warning in the Sources panel. Existing records already in Audiences remain and continue to sync — only net-new records are blocked.
+This gives you control over both which records enter Audiences and how their fields are mapped, independent of the native Audiences HubSpot source connector.
+
+**Note:** There is no add-on available to increase the Audiences record limit above 250,000 while staying on the Growth plan. To increase the limit, upgrade to the Enterprise plan, which supports up to 25,000,000 CRM/DWH records.
 
 ### Do Activities or Opportunities count toward my plan's record limit?
 
@@ -1201,34 +1208,61 @@ If you need to look up a record that may be missing one of your identifier field
 
 ### How do I remove records from an audience?
 
-Archiving in Audiences is a segment-level operation — you archive all records currently in a named segment at once. There is no option to archive an individual record directly from the record detail panel. To archive a single record, create a segment that filters to just that one record, then archive it using the same steps:
+To remove records from your Audience, you archive them. Archiving moves a record to the **Archived** section in the left sidebar — it is no longer visible in any active segment, including All People or All Companies. Archived records can be restored from the **Archived** section at any time.
 
-1.  In **People** or **Companies**, apply filters to identify the records you want to archive.
-2.  Click **Create segment** to save this as a named segment. The **Archive records in segment** option only appears on saved segments — it is not available while the filter is in unsaved (draft) state.
+**Note:** Removing a data source from your import settings (for example, disconnecting HubSpot from your Sources) does not remove the contacts or companies already imported — records persist in Audiences even after their source is removed. To remove those records, archive them manually using one of the methods below.
+
+**To archive a single record:**
+
+1.  Open any record in your Audiences view by clicking on it.
+2.  In the record detail panel, click the **⋮** (three-dot) menu in the top right.
+3.  Select **Archive record**.
+4.  Confirm the action. The record is immediately moved to the Archived section and removed from all active segments.
+
+**To archive multiple records using row selection:**
+
+1.  In your Audiences view, select the rows you want to archive by clicking the checkboxes to the left of each row.
+2.  With rows selected, a toolbar appears at the bottom of the screen.
+3.  Click **Archive** in the toolbar.
+4.  Confirm the action. All selected records are moved to the Archived section.
+
+**To bulk-archive all records from a specific source (recommended for large-scale cleanup):**
+
+The fastest way to archive many records at once — for example, to remove all contacts imported from a HubSpot account you have disconnected — is to create a segment filtered by that source, then archive all records in the segment at once:
+
+1.  In **People** or **Companies**, click **+ Filter** and add a filter on **Origin source**. Select the source you want to clear (for example, `HubSpot Contact - [your account name]`).
+2.  Click **Create segment** to save this as a named segment. The **Archive records** option only appears on saved segments — it is not available while the filter is in unsaved (draft) state.
 3.  In the left sidebar, click the **⋮** (three-dot) menu next to the segment's name.
-4.  Select **Archive records in segment** and confirm. All records currently in the segment are moved to the Archived section and removed from all active segments.
+4.  Select **Archive records** and confirm. All records currently in the segment are moved to the Archived section and removed from all active segments.
 
-**To restore archived records:**
+**Note:** **Delete list** in the same segment menu removes the segment from the sidebar but does not archive the records. Use **Archive records** when you want to remove the contact or company records themselves.
 
-1.  In the left sidebar, click **Archived** to open the archived records view.
-2.  Select the records you want to restore.
-3.  Click **Restore** in the selection toolbar.
-
-Restored records re-enter all segments whose filter conditions they currently meet — they do not automatically re-enter segments they were previously excluded from.
+**Note:** Archived records can be restored from the **Archived** section in the left sidebar. If a previously archived record enters Audiences again from a source (for example, if the underlying Salesforce record is modified and re-synced), it will appear as a new record without the archived record's enrichment data.
 
 ### How do I replace a CSV import with updated data?
 
-CSV imports are one-time — they do not re-sync automatically. If the original CSV contained errors and you want to replace those records with a corrected dataset:
+CSV imports are one-time — they do not re-sync automatically. If your CSV contained errors and you want to replace it with corrected data, follow these steps to avoid duplicating records:
 
-1.  In your Audiences workspace, go to the **People** or **Companies** view.
-2.  Filter by the **Person source** (or **Company source**) and select the name of the original CSV import. This shows all records from that import.
-3.  Click **Create segment** to save this as a named segment.
-4.  Archive the segment — click **⋮** next to the segment in the sidebar and select **Archive records in segment**.
-5.  Import the corrected CSV — click **Add data → Add source → CSV** and follow the import wizard.
+**1. Archive the old records:**
+
+Before importing the corrected file, remove the incorrect records from your Audience:
+
+1.  Go to **All People** or **All Companies** in your Audiences view.
+2.  Filter by the source of the old CSV import (use the **Person source** or **Company source** filter and select the original CSV import name).
+3.  Select all rows returned by the filter.
+4.  Click **Archive** in the toolbar that appears at the bottom.
+5.  Confirm. All records from the old CSV are removed from your Audience.
+
+**2. Import the corrected CSV:**
+
+1.  Click `Add data` → `Add Source` → select **CSV**.
+2.  Upload the corrected file and complete the import steps as usual.
 
 The corrected records are imported fresh without duplicating the old ones.
 
-### My plan's record limit
+**Note:** If your Audience record count appears higher than expected after importing a corrected CSV — even after archiving — it may mean some records from the original import were merged with records from another source (for example, Salesforce) during entity resolution. Archived records that matched a non-CSV source may still appear in your Audience under that source. In this case, contact Clay support to assist with cleanup.
+
+### How does the Audiences record limit work? What counts toward it?
 
 The Audiences record limit is a **per-workspace cap** on the total number of unique records stored in your Audience, regardless of which source they came from. Growth plans cap at 250,000 records; Enterprise plans cap at 25,000,000.
 
@@ -1283,13 +1317,13 @@ If neither of these applies and the import still fails, contact Clay support wit
 
 ### How do I archive records that no longer match my Snowflake import query?
 
-When you update a Snowflake import query to exclude certain records — for example, removing a date filter to stop importing older records — those records are not automatically removed from Audiences. Clay marks them as **Deleted in source** but keeps them in your Audience.
+When you update your Snowflake SQL query to exclude records — for example, removing rows below a revenue threshold — those records are marked **Deleted in source** in your Audience on the next full sync (within 7 days). They are not automatically archived; they remain in All People or All Companies with a **Deleted in source** status.
 
 To remove them from your Audience, archive them manually:
 
-1.  In **People** or **Companies**, add a filter: **Origin source → is → [your Snowflake source name]** AND **Source status → is → Deleted in source**.
-2.  Click **Create segment** to save this as a named segment.
-3.  Click **⋮** next to the segment in the left sidebar and select **Archive records in segment**.
+1.  Go to **All People** or **All Companies** in your Audiences view.
+2.  Add a filter: **Source** → select your Snowflake import → set status to **Deleted in source**.
+3.  Select all returned rows.
 4.  Click **Archive** in the bottom toolbar and confirm.
 
 Archived records can be restored at any time from the **Archived** section in the left sidebar.
