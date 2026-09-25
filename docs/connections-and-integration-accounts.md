@@ -70,13 +70,13 @@ To add a new account for an integration:
 
 ### Viewing resources that use a connection
 
-The **Resources** column on the Connections table shows how many workbooks, tables, and functions reference each connection. To see the full list for a specific connection:
+The **Resources** column on the Connections table shows how many resources — workbooks, tables, functions, Claygents, Audiences, Signals, and Ads — reference each connection. To see the full list for a specific connection:
 
 1.  Navigate to `Settings` > `Connections`.
 2.  Find the connection you want to inspect.
 3.  Click the `…` menu next to the account and select **View resources**.
 
-A panel opens listing every workbook, table, and function that uses that connection. You can filter the list by resource type (workbooks, tables, functions) to narrow the results.
+A panel opens listing every workbook, table, function, Claygent, Audience, Signal, and Ad that uses that connection. You can filter the list by resource type to narrow the results. Each resource row shows an external-link icon — click it to open that resource in a new tab while keeping the panel open.
 
 Use this before rotating credentials, reconnecting with new credentials, or removing a connection — it shows exactly which parts of your workspace will be affected. It is also the recommended first step when a team member who owns connections is leaving and you need to identify which connections to update before their account is deactivated (see the FAQ below).
 
@@ -161,7 +161,7 @@ For some integrations, only Clay-managed accounts are supported. For others, you
 Before the member's account is deactivated, a workspace admin should:
 
 1.  Navigate to `Settings` > `Connections` and search or filter by the departing member's name (use the **Added by** column to identify connections they own).
-2.  Click `…` > **View resources** for each of their connections to see which tables, workbooks, and functions depend on it.
+2.  Click `…` > **View resources** for each of their connections to see which tables, workbooks, functions, Claygents, Audiences, Signals, and Ads depend on it.
 3.  Click `…` > **Reconnect** to re-authenticate using a service account or another team member's credentials. All tables and workflows that reference that connection will automatically use the new credentials on their next run — you do not need to update each table individually.
 
 Once the member's account is deactivated, their personal credentials are disabled. Any connections that were not reconnected to new credentials will stop working.
