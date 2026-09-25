@@ -71,7 +71,28 @@ Scheduled sources are not available on the Free plan. For paid plans, the limit 
 -   Growth: 100 sources
 -   Enterprise: 1,000 sources
 
+If your workspace has reached its limit, you can remove schedules from sources you no longer need, or contact Clay support to request a higher limit.
+
 ## Troubleshooting
+
+### What should I do when I see "workspace has reached the scheduled sources limit for your plan"?
+
+This error appears when your workspace has reached the scheduled sources limit for its plan. It can occur when you try to schedule a source or when copying a table that contains scheduled sources.
+
+To resolve it:
+
+1.  **Remove the schedule from sources you no longer need.** Click the source column title in any table, then switch the source to run **Manually** (or delete the source entirely) to free up a slot. See [How can I find which tables have scheduled sources?](#how-can-i-find-which-tables-have-scheduled-sources) below for tips on identifying candidates.
+2.  **Contact Clay support to request a higher limit.** Support can increase your workspace's scheduled sources limit on request.
+
+### How can I find which tables have scheduled sources?
+
+There is currently no dedicated view that lists all scheduled sources across a workspace. Two workarounds can help you identify candidates:
+
+**Credit usage page:** Go to **Settings → Credit Usage** and filter by **Recurring**. This shows all tables with any recurring activity — scheduled sources, scheduled enrichment columns, or signals. Use this as a starting point to find tables to review.
+
+**Connections page:** Go to **Settings → Connections** and filter by **Workbooks**. This shows all tables associated with a particular integration (for example, Salesforce). Tables named "Import records from [Provider]" are typically scheduled sources, though not all tables listed will have an active schedule.
+
+Neither method produces a definitive list of only scheduled sources. If you need an exact count of your workspace's scheduled sources, contact Clay support.
 
 ### Can I filter the table to see only rows affected by a specific source run?
 
