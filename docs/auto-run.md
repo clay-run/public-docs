@@ -81,6 +81,15 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
 -   **Run from the column header**: right-click the enrichment column header → **Run column** → **Run [N] empty or out-of-date rows**.
 -   **Re-trigger auto-run**: toggle Auto-run off, then back on, and choose **Update cells** to queue all currently stale cells.
 
+**Ran an upstream column but dependent columns didn't re-run**
+
+When you trigger or force-run an upstream column and the downstream columns with auto-run on still don't re-run their existing cells, "Keep existing results" is the reason. Clay marks downstream cells as out of date but skips re-executing any cell that already has a **successful** result — even when the upstream column's output just changed. The protection is cell-scoped: empty, errored, or never-run cells still execute normally; only previously successful cells are preserved.
+
+To refresh downstream cells after running an upstream column:
+
+-   **Force-run the downstream column**: right-click the column header → **Run column → Force run all [N] rows**. Force run re-executes every cell regardless of its current state, bypassing the keep-existing check.
+-   **Turn off "Keep existing results"** (⛭ icon → **Run Settings** → uncheck **Keep existing results**), then right-click the downstream column header → **Run column → Run [N] empty or out-of-date rows**. You can re-enable "Keep existing results" after the downstream columns have finished running.
+
 ### Understanding the out-of-date indicator
 
 The out-of-date clock indicator on a cell means the cell is stale — it has an existing result but auto-run is not re-running it. The most common cause is "Keep existing results" being enabled: Clay skips cells that already have a result rather than overwriting them and spending credits. The cell's current value is still usable downstream; other columns can reference it normally.
