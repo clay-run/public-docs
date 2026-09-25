@@ -397,12 +397,10 @@ There is no countdown timer or progress indicator in the UI showing time remaini
 
 ### I see an error: "This email address is already connected to Smartlead." What do I do?
 
-Clay's email sequencer runs on shared Smartlead infrastructure, and Smartlead only allows each email address to be connected once across the entire system. To fix it, you have two options:
+Clay's email sequencer runs on shared Smartlead infrastructure, and Smartlead only allows each email address to be connected once across the entire system. This means the email you're trying to add is already registered in Clay's sequencer — most commonly because it was connected in a different Clay workspace. You do not need a personal Smartlead account to resolve this. You have two options:
 
--   **If you have access to your Smartlead account:** Delete the email address from Smartlead directly.
--   **If you don't have direct Smartlead access:** Contact Clay support with the email address you want to add, and we'll remove it from Smartlead on your end.
-
-Once removed from Smartlead, you can add it to the current workspace.
+-   **If the email is connected in a Clay workspace you have access to:** Go to that workspace's `Sequencer → Email Accounts`, find the email address, click the ⋯ menu next to it, and select **Delete account**. Once removed, you can add it to your current workspace.
+-   **If you're not sure which workspace has the email, or you no longer have access to that workspace:** Contact Clay support with the email address you want to connect, and we'll locate and remove it from our system so you can reconnect it.
 
 ### Why was my campaign email sent from a different sender account than I expected?
 
