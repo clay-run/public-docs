@@ -33,3 +33,22 @@ Viewing and filtering audience data is available to all workspace roles. Most wr
 | Upsert or update records from a Clay table into Audiences | ✓ | — | — |
 
 To change someone's role, go to **Settings** → **Team** and use the dropdown next to their name. Changes apply immediately. Editors and Viewers who need to create segments, run bulk enrichments, or manage data sources should have their role upgraded to Admin, or ask a workspace Admin to perform those actions on their behalf.
+
+### How do I permanently delete archived records?
+
+**Currently in beta — contact support to enable this feature for your workspace.**
+
+Workspace admins can permanently delete all archived contacts or companies matching the current filter in the Archived view. Unlike archiving, permanent deletion cannot be undone from Clay.
+
+**Availability:** Workspace admin role required. Available for People (contacts and leads) and Companies audiences. Only accessible in the **Archived** section — this button does not appear in the live audience view.
+
+**To permanently delete archived records by filter:**
+
+1.  In the left sidebar, click **Archived** under **People** or **Companies**.
+2.  Apply filters to narrow the archived view to the records you want to delete. Clear any text search first — the **Delete records** button is disabled while a search is active.
+3.  Click **Delete records** in the header.
+4.  A confirmation dialog shows the count of archived records matching your current filter. Review the count carefully.
+5.  Check **I have reviewed the [contacts/companies] matching this filter and want to permanently delete them.**
+6.  Click **Delete** to confirm. The deletion runs in the background and cannot be undone from Clay.
+
+**Note:** If any deleted records originated from a source that is still syncing (for example, an active Salesforce or HubSpot connection), a future sync may re-import them as new records without the previously deleted record's enrichment history.
