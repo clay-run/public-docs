@@ -280,6 +280,10 @@ To get started, enable **Web search** in your Claygent's **Configuration** panel
 
 Agent access follows your workspace permissions. Editors can create and modify agents, while viewers can reference approved agents in tables.
 
+### Can I duplicate a Claygent?
+
+Yes. From the Agents homepage, click the **⋯** (three-dot) menu on any agent and select **Duplicate**. Clay creates a copy named `{original name} (Copy)` in the same workspace. Duplication is available to workspace admins and members; viewers cannot duplicate agents.
+
 ### Can I move a Claygent to a different workspace or account?
 
 No. Claygents are scoped to the workspace they are created in, and there is no built-in export, import, or transfer feature.
