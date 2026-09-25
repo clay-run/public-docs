@@ -123,13 +123,29 @@ So if your source displays more rows than your table (for example, 162 vs. 92), 
 
 ### My webhook is sending data successfully but new rows aren't visible in my table
 
-If your external tool reports a successful delivery (for example, a `200 OK` response from Clay's webhook endpoint) but new rows aren't showing up in your table view, the most likely cause is an **active view filter** hiding the incoming rows.
+If your external tool reports a successful delivery (for example, a `200 OK` response from Clay's webhook endpoint) but new rows aren't showing up in your table view, the two most common causes are an **active view filter** hiding the rows or **auto-dedupe rows** silently removing them.
 
-Filters in Clay are display-only — they control which rows appear in the current view, but they do not block or drop incoming webhook data. Every accepted payload creates a row in your table regardless of any active filters. Rows that don't match the filter criteria are still stored; they simply don't appear in the filtered view.
+**Active view filter:** Filters in Clay are display-only — they control which rows appear in the current view, but they do not block or drop incoming webhook data. Every accepted payload creates a row in your table regardless of any active filters. Rows that don't match the filter criteria are still stored; they simply don't appear in the filtered view.
 
 **To check for an active filter:** Look at the table toolbar — when a filter is active, you'll see a number badge on the filter icon and the row count will display as **X/Y rows**, where X is the filtered count and Y is the total. Open the filter panel and click **Clear filters** to remove all active filters and see every row.
 
-If you clear the filters and the expected rows still don't appear, see [Why aren't any rows arriving in my webhook table?](#why-arent-any-rows-arriving-in-my-webhook-table) for configuration-level troubleshooting.
+**Auto-dedupe rows:** If **Auto-dedupe rows** is enabled on the table and a webhook payload arrives with a value in the dedupe column that already exists in the table, Clay accepts the request and returns `200 OK` — but the new row is immediately removed by deduplication and never appears in the table. This is especially easy to miss because your sending tool shows a successful delivery even though no row was created.
+
+To check whether auto-dedupe is removing your rows:
+
+1. Open **Table settings → Edit table settings** (or click the gear icon in the top toolbar) and look at the **Deduplication** section. If **Auto-dedupe rows** is toggled on, note which column is selected as the dedupe column.
+2. Check whether your incoming payloads contain a value in that column that already exists in the table.
+3. To see rows that were removed by auto-dedupe, open the **History** panel (bottom-right of the table) and select **Row deduplication**.
+
+**To fix it,** open **Table settings → Edit table settings → Deduplication** and choose one of:
+
+- **Toggle auto-dedupe off** — every incoming webhook payload creates a new row, with no deduplication.
+- **Change the dedupe column** to a field that is unique per event (such as a message ID or event timestamp), so only true duplicate records are removed.
+- **Switch from Keep oldest row to Keep newest row** — when a duplicate arrives, the existing row is replaced by the new one instead of being discarded. Note that the replacement row starts empty, so any enrichment columns will re-run on it and consume credits.
+
+**Note:** A simple test payload like `{"test": "hello"}` will always create a row even when auto-dedupe is enabled — because it contains no value in the dedupe column, and blank dedupe column values are always skipped by auto-dedupe. If your test payload creates a row but your real payload does not, auto-dedupe is the likely cause.
+
+If you clear the filters and auto-dedupe is not the cause, see [Why aren't any rows arriving in my webhook table?](#why-arent-any-rows-arriving-in-my-webhook-table) for configuration-level troubleshooting.
 
 ### Why aren't any rows arriving in my webhook table?
 
@@ -161,7 +177,7 @@ curl -X POST YOUR_CLAY_WEBHOOK_URL \
   -d '{"test": "hello"}'
 ```
 
-If a row appears in your table, the issue is in your original request's formatting, headers, or auth token. If no row appears on a brand-new webhook, contact support.
+If a row appears for the simple test but not for your real payload, the issue is either in your real request's formatting, headers, or auth token — or **auto-dedupe is removing rows** whose dedupe column value already exists in the table. A simple `{"test": "hello"}` payload always creates a row even when auto-dedupe is on, because blank dedupe column values are skipped. See [My webhook is sending data successfully but new rows aren't visible](#my-webhook-is-sending-data-successfully-but-new-rows-arent-visible-in-my-table) for how to diagnose and fix auto-dedupe. If no row appears on a brand-new webhook, contact support.
 
 ### How can I tell which webhook source a row came from?
 
