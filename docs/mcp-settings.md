@@ -143,6 +143,12 @@ Your Clay workspace data and workflows are unaffected — only the connection fr
 
 Yes, by removing them from your workspace. While admins cannot directly revoke a rep's MCP connection from the `MCP` page, they can remove the rep from the workspace entirely. If a rep is not added to your workspace, they won't have access to the data and workflows in your Clay instance. Alternatively, to limit usage without removing access, set their credit limit to a low value.
 
+### Can I disable Sales Rep access to the Clay Sequencer?
+
+Yes, using the **Disable Sales Rep sequencer access** toggle in `Settings → Sequencer`. When enabled, sequencer controls (email accounts and inbox) are hidden from the Sales Rep interface for every Sales Rep in your workspace — including reps who have already connected their email accounts. The change takes effect immediately for all reps; individual email account connections do not need to be removed separately.
+
+This toggle is workspace-wide — there is no per-user control to disable an individual rep's sequencer access. To limit a specific rep's ability to run enrichments through MCP without affecting others, set their individual credit limit to 0 from the `MCP users` table (see [Setting credit limits](#setting-credit-limits)). Setting the limit to 0 prevents them from spending any Clay credits through ChatGPT, Claude, or Glean, but does not hide sequencer controls from their interface.
+
 ### When do credits reset?
 
 The MCP user credit limit is a rolling monthly limit. Credit spend automatically resets on the 1st of each month at midnight UTC.
