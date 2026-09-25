@@ -108,7 +108,7 @@ Once all your settings are saved, you can launch your campaign. Launching a camp
 -   Your campaign becomes live, which means:
     -   Any new leads routed into the campaign will automatically be sequenced, enabling "always-on" campaigns for inbound routing.
     -   All campaign settings become locked.
--   If you haven't set up custom webhooks in the `Advanced` section, a campaign events table will be created to capture all activity as it occurs.
+-   If you haven't set up custom webhooks in the `Advanced` section, campaign events are captured in the global campaign events table shared across your workspace (see [Campaign events table](#campaign-events-table)).
 
 At any point, you can pause or complete a campaign:
 
@@ -117,9 +117,11 @@ At any point, you can pause or complete a campaign:
 
 ### Campaign events table
 
-When a campaign launches, a dedicated campaign events table is created. It records key actions such as sends, bounces, and replies. Because this is a Clay table, you can build automations around these events. Reply events may appear with a 15–30 minute delay.
+In Sequencer v2, campaign events are captured in a single **global events table** shared across all campaigns in your workspace — not a separate table per campaign. This table records key actions such as sends, bounces, and replies. Because it is a standard Clay table, you can build automations on top of it. Reply events may appear with a 15–30 minute delay.
 
-The events table can also be created before launching the campaign if you'd like to set up any automations in Clay.
+**Accessing the events table:** Click the campaign name at the top of any campaign page and select **View events** from the dropdown. Each campaign gets its own view within the shared table, pre-filtered to that campaign's events. You can also click the **Events** button in the header of the Sequencer homepage — note that the homepage Events button shows events from segment-based (Audiences-powered) sequences only; for table-based campaigns, use **View events** from the campaign menu instead.
+
+**Campaign-specific automation:** Because all campaigns share one events table, add an `Only run if` condition to your action columns and filter on the **Campaign ID** column to target automations at a single campaign's events — for example, routing replies from a specific campaign to a Slack channel or CRM.
 
 Special sequencer enrichments available in the table include:
 
