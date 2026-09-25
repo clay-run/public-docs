@@ -297,6 +297,8 @@ Records saved from tables are automatically deduplicated and merged with your ex
 
 **To add enriched data to existing Audience records:** If you enriched companies or people in a Clay table — for example, adding website traffic, technographic data, or any other enrichment — and want those values to appear on records already in your Audience, use `Upsert Audiences Record` (available on Launch, Growth, and Enterprise plans) as an action column in the table instead. In the table, click `Add enrichment` and search for `Upsert Audiences Record` — it creates a new record in Audiences if no match is found, or updates the matching record's fields if one is found. See [Using Audiences from a Clay table](#adding-enrichments) below for the full list of table ↔ Audience actions.
 
+**Pushing enriched data to Audiences does not automatically update Salesforce.** Sending records from a Clay table back to Audiences — whether via `Continue → Save to People`, `Upsert Audiences Record`, or any other table → Audience action — writes values into Audiences only. It does not trigger a Salesforce write. Salesforce write-back is a separate process controlled by your Audiences **Export sync** settings and **field-level write rules** — see [Writing back to your CRM](#writing-back-to-your-crm). Whether an enriched value reaches Salesforce, and whether it overwrites an existing value, depends on each field's configured write rule: **Never write** (the default for all new field mappings) means the field is never exported; **Write if empty** fills only blank Salesforce fields while preserving existing values; **Always write** updates Salesforce on the next 24-hour export cycle.
+
 ### Understanding source import statuses
 
 Each source listed in **Settings → Sources / Destinations** shows an **Import status** badge. The status tells you whether records are actively flowing from that source into Audiences.
@@ -1228,47 +1230,43 @@ To remove records from your Audience, you archive them. Archiving moves a record
 
 **To bulk-archive all records from a specific source (recommended for large-scale cleanup):**
 
-The fastest way to archive many records at once — for example, to remove all contacts imported from a HubSpot account you have disconnected — is to create a segment filtered by that source, then archive all records in the segment at once:
+1.  In your Audiences view, add a filter: **Origin source** → **is** → the name of the source you want to remove records from.
+2.  Select all filtered records (check all rows).
+3.  Click **Archive** in the selection toolbar.
+4.  Confirm the action.
 
-1.  In **People** or **Companies**, click **+ Filter** and add a filter on **Origin source**. Select the source you want to clear (for example, `HubSpot Contact - [your account name]`).
-2.  Click **Create segment** to save this as a named segment. The **Archive records** option only appears on saved segments — it is not available while the filter is in unsaved (draft) state.
-3.  In the left sidebar, click the **⋮** (three-dot) menu next to the segment's name.
-4.  Select **Archive records** and confirm. All records currently in the segment are moved to the Archived section and removed from all active segments.
+**To restore archived records:**
 
-**Note:** **Delete list** in the same segment menu removes the segment from the sidebar but does not archive the records. Use **Archive records** when you want to remove the contact or company records themselves.
-
-**Note:** Archived records can be restored from the **Archived** section in the left sidebar. If a previously archived record enters Audiences again from a source (for example, if the underlying Salesforce record is modified and re-synced), it will appear as a new record without the archived record's enrichment data.
+1.  In the left sidebar, click **Archived** to open the archived records view.
+2.  Select the records you want to restore.
+3.  Click **Restore** in the selection toolbar.
 
 ### How do I replace a CSV import with updated data?
 
-CSV imports are one-time — they do not re-sync automatically. If your CSV contained errors and you want to replace it with corrected data, follow these steps to avoid duplicating records:
+CSV imports are one-time — they do not re-sync automatically. To update your Audience with corrected or refreshed CSV data, you need to archive the records from the old import before importing the updated file, to avoid duplicate records in Audiences.
 
-**1. Archive the old records:**
+**Step 1: Archive records from the old CSV import**
 
-Before importing the corrected file, remove the incorrect records from your Audience:
+1.  In your Audiences view, apply a filter on **Origin source** → **is** → the name of your old CSV import (the source name you gave it when you set it up).
+2.  Select all filtered records (check all rows).
+3.  Click **Archive** in the selection toolbar.
 
-1.  Go to **All People** or **All Companies** in your Audiences view.
-2.  Filter by the source of the old CSV import (use the **Person source** or **Company source** filter and select the original CSV import name).
-3.  Select all rows returned by the filter.
-4.  Click **Archive** in the toolbar that appears at the bottom.
-5.  Confirm. All records from the old CSV are removed from your Audience.
+**Step 2: Import the updated CSV**
 
-**2. Import the corrected CSV:**
+1.  Click `Add data` → `Add Source` → **CSV**.
+2.  Upload the corrected CSV file, name the import, and map your columns.
+3.  Click **Import**.
 
-1.  Click `Add data` → `Add Source` → select **CSV**.
-2.  Upload the corrected file and complete the import steps as usual.
+The updated records will appear in Audiences under the new import source name.
 
-The corrected records are imported fresh without duplicating the old ones.
-
-**Note:** If your Audience record count appears higher than expected after importing a corrected CSV — even after archiving — it may mean some records from the original import were merged with records from another source (for example, Salesforce) during entity resolution. Archived records that matched a non-CSV source may still appear in your Audience under that source. In this case, contact Clay support to assist with cleanup.
+**Note:** Archiving records from the old import does not remove the old CSV source entry from the **Sources** tab — there is no self-serve option to delete a CSV source listing. The listing remains for audit and filtering purposes. Archived records are retained in Audiences with an **Archived** status and can be restored if needed.
 
 ### How does the Audiences record limit work? What counts toward it?
 
-The Audiences record limit is a **per-workspace cap** on the total number of unique records stored in your Audience, regardless of which source they came from. Growth plans cap at 250,000 records; Enterprise plans cap at 25,000,000.
+Your Audiences plan limit applies to **active imported records** — records that are currently present in your Audience from CRM or data warehouse sources. Specifically:
 
-Records that count toward the limit:
+All records in **All People** (contacts and leads from any source)
 
--   All records in **All People** (contacts and leads from any source)
 -   All records in **All Companies** (accounts from any source)
 
 Records that do **not** count:
