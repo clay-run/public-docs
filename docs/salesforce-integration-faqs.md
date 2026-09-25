@@ -365,6 +365,22 @@ This is expected behavior. The Salesforce Analytics API caps the number of recor
 - **Salesforce List source (recommended):** Create a Salesforce list view that matches your report criteria and use Clay's **Import records from a Salesforce list** source instead. SOQL-compatible list views support up to 50,000 records per import — list views that are not SOQL-compatible are still capped at 2,000 rows. See the [Salesforce integration overview](salesforce-integration-overview.md) for setup steps.
 - **Salesforce SOQL source:** Write a custom SOQL query that pulls the exact records you need. The SOQL source also supports up to 50,000 records per import and gives you full control over filtering and field selection. See [Salesforce SOQL](salesforce-soql.md) for details.
 
+## Why does my Salesforce report import fail with "The action function output exceeded the size limit" even when the report has fewer than 2,000 rows?
+
+The error "The action function output exceeded the size limit" is a data size error, not a row count error. Clay's **Import records from a Salesforce report** source fetches all report results in a single pull. If the total payload from that pull exceeds approximately 5 MB, the run fails — regardless of whether the report is under the Salesforce 2,000-row API cap.
+
+How large the payload is depends on how many rows the report returns **and** how wide each row is. Reports that include long text fields — such as Account Description, Qualification Summary, or large URL fields — generate a much larger payload per row than reports with only short fields. A report with 1,500–1,800 rows containing several long text fields can exceed the 5 MB limit, while the same report at fewer rows or with narrower columns succeeds.
+
+**The 2,000-row Salesforce API cap and the 5 MB size limit are separate.** You can hit the size limit well before reaching 2,000 rows if your report includes wide or text-heavy columns.
+
+**To fix this:**
+
+1. **Remove unused long text columns from the Salesforce report.** In Salesforce, edit the report and remove any columns you do not actually use in Clay — especially long text fields like Account Description and Qualification Summary. This is the quickest fix and gives you significant headroom on the same report.
+
+2. **Switch to a Salesforce List or SOQL source.** The **Import records from a Salesforce list** (using a Salesforce list view) and **Import records from a Salesforce SOQL query** sources pull records in batches instead of all at once. They are not subject to the single-pull size limit and can handle up to 50,000 records. You can keep the same daily schedule after switching. See the [Salesforce integration overview](salesforce-integration-overview.md) for setup steps, or [Salesforce SOQL](salesforce-soql.md) for query-based imports.
+
+Even after switching sources, removing long text columns you do not use in Clay keeps each batch smaller and reduces the chance of hitting any per-row size limits.
+
 ## Why did my scheduled "Import records from a Salesforce list" stop running?
 
 The most common cause is that the source reached the 50,000 total records processed limit. Each "Import records from a Salesforce list" source tracks the cumulative number of records it has ever pulled over its entire lifetime — not the number of rows currently visible in the table. Once that running total reaches 50,000, scheduled refreshes stop importing new records, even if the table appears to have space.
