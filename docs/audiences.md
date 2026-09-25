@@ -516,6 +516,8 @@ To resolve errored rows:
 -   **Rerun failed rows** — in the bulk enrichment table, right-click the failing column header → **Run column** → **Run [N] empty or out-of-date rows** to retry only records that didn't get a result.
 -   **Remove non-critical provider columns** — if a provider consistently fails to match your records and the data isn't essential, removing that column from the bulk enrichment table means its failures will no longer mark rows as errored.
 
+**Note:** Configurable error threshold notifications — available for Clay tables on Enterprise plans via [Table Alerts](table-alerts.md) — are not available for Audience bulk enrichments. There is no self-serve option to receive an automated alert when errored rows in a segment or bulk enrichment exceed a set threshold.
+
 ### Signals
 
 Signals monitor your audience for key changes and write results permanently to each matching record so you can segment on them.
