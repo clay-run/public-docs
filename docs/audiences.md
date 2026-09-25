@@ -10,7 +10,7 @@ last_synced: 2026-09-22T14:05:06.325Z
 
 Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
 
-Use it to build dynamic segments across millions of records, run automated enrichment and signal workflows at scale, and sync results back to Salesforce without managing dozens of separate targets.
+Use it to build dynamic segments across millions of records, run automated enrichment and signal workflows at scale, and sync results back to Salesforce without managing dozens of separate tables.
 
 Setting up Audiences is four major steps:
 
@@ -304,7 +304,7 @@ Each source listed in **Settings → Sources / Destinations** shows an **Import 
 **For CRM and data warehouse sources** (Salesforce, HubSpot, Snowflake, BigQuery, Databricks):
 
 | Status | Meaning |
-|--------|---------| 
+|--------|---------|
 | **Sync on** | The source is actively syncing. New and updated records flow into Audiences on the standard sync schedule — every 15 minutes on Enterprise plans, or once daily on Growth plans. |
 | **Sync off** | Syncing is paused. New and updated records from this source will not flow into Audiences until sync is turned back on. Records already imported remain in Audiences. |
 | **Syncing** | An import run is actively in progress right now. |
@@ -317,7 +317,7 @@ To turn sync on or off for a source, open its settings by clicking the **⋮** m
 **For people and companies search sources:**
 
 | Status | Meaning |
-|--------|---------| 
+|--------|---------|
 | **Search on** | The live search is enabled. Clay continues to add new matching contacts or companies to Audiences on each refresh. |
 | **Search off** | The live search is paused. No new results are added until you turn it back on. Contacts already imported remain in Audiences. |
 
@@ -791,7 +791,7 @@ No. Audiences supports one Salesforce connection per workspace. Once a Salesforc
 
 You can still add multiple imports from the same connected Salesforce account — for example, separate imports for Contacts, Accounts, and SOQL-filtered subsets — but all imports come from the same Salesforce org.
 
-**To switch to a different Salesforce account** (for example, moving from a UAT org to a production org): remove the existing Salesforce source from Audiences, then reconnect with the new account. Before removing, note down your current field mappings — field mapping configurations cannot be recovered after a source is removed. See [I removed and re-added my Salesforce source in Audiences and my field mappings are gone — how do I restore them?](#i-removed-and-re-added-my-salesforce-source-in-audiences-and-my-field-mappings-are-gone--how-do-i-restore-them) for the full implications.
+**To switch to a different Salesforce account** (for example, moving from a UAT org to a production org): remove the existing Salesforce source from Audiences, then reconnect with the new account. Before removing, note down your current field mappings — field mapping configurations cannot be recovered after a source is removed. See [I removed and re-added my Salesforce source in Audiences and my field mappings are gone — how do I restore them?](#i-removed-and-re-added-my-salesforce-source-in-audiences-and-my-field-mappings-are-added-my-field-mappings-are-gone--how-do-i-restore-them) for the full implications.
 
 If you need data from a second Salesforce org in Audiences without removing the existing connection, the available workaround is: connect the second org under **Settings → Connections**, bring its records into a Clay table using Salesforce actions, then push those records into Audiences using `Upsert Audiences Record`. Note that Clay table row limits apply in this path.
 
