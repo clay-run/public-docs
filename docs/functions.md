@@ -109,6 +109,10 @@ This happens because the function's Live view retains at most 1,000 rows total, 
 
 To view historical rows that have aged out, click **Archive** in the function table's toolbar. The Archive section shows processed rows organized by timeline and can be exported as a CSV.
 
+### Can I search the archive view by row content?
+
+The archive view lets you filter rows by the date and time they were archived, but does not support searching or filtering by field values — for example, by company name or domain. To find a specific row, click **Export full archive** in the archive toolbar to download all archived rows as a CSV, then filter the file in your preferred spreadsheet tool.
+
 ### What's the difference between an input and a column in a function?
 
 Inputs are the values that change from table to table — typically identifiers like a company domain, a person's full name, or a LinkedIn URL. You define them when saving the function, and map them when calling the function from a different table. Columns that aren't marked as inputs are fixed enrichment logic that runs the same way every time.
