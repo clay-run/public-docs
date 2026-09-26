@@ -389,6 +389,14 @@ To call your Custom MCP Server from a table:
 
 The API key you entered for the Custom MCP Server connection is only the credential Clay uses to authenticate to your server. You also need a supported third-party model account connected in the **Account** dropdown for the Claygent itself.
 
+### Can I use OAuth to connect to a custom MCP server?
+
+No. Custom MCP connections in Claygent — any server you add yourself via **Configuration → Tools → Add custom MCP server** or **Settings → Connections → + Add connection → Custom MCP Server** — only support API key authentication or open (unauthenticated) endpoints. OAuth is not supported for user-added custom MCP servers.
+
+If the provider you want to connect (for example, Gong) requires OAuth to authenticate via MCP, there is no supported workaround — you would need an API key-based endpoint for that provider instead.
+
+Clay's built-in MCP integrations (Notion, Linear, and Intercom) do use OAuth internally, but these are preconfigured by Clay and are not available as options when you add a custom server. They cannot be substituted with other providers.
+
 ### Why does my Claygent show "Tools are not available for the selected model"?
 
 This message appears when you have a Clay parallel model (Neon, Argon, Helium, or similar) selected. These models don't support tool calling — including custom MCP servers, the "Find contacts and jobs" tool, and other tool-based features.
