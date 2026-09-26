@@ -49,7 +49,7 @@ When the Job Change Signal fires for a monitored contact, Clay records the event
 
 Your target accounts automatically receive the job change event when a tracked contact departs, with no additional configuration beyond monitoring the contact itself.
 
-**Requirement:** Each contact needs a LinkedIn URL to be monitored by the Job Change Signal.
+**Requirement:** Each contact needs a professional profile URL to be monitored by the Job Change Signal.
 
 ### Step 1: Track your key contacts in a People audience
 
