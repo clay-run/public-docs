@@ -35,6 +35,48 @@ To set up Job Change Signals in your table:
 
 **Need regular data updates instead of specific change monitoring through Signals?** Check out [scheduled columns](https://www.clay.com/university/guide/scheduled-columns) and [scheduled sources](https://www.clay.com/university/guide/scheduled-sources).
 
+## Detecting key contact turnover at the account level
+
+If you track champions or key contacts at target accounts, the Job Change Signal lets you flag accounts where a critical contact has departed — a common trigger for renewal risk, re-engagement, or successor outreach.
+
+### How job change events surface on account records
+
+When the Job Change Signal fires for a monitored contact, Clay records the event on three records in [Audiences](audiences.md):
+
+-   The **contact's person record** (the person who changed jobs)
+-   The **account record for the company they LEFT** — if that account already exists in your Audiences
+-   The **account record for the company they JOINED** — if that account already exists in your Audiences
+
+Your target accounts automatically receive the job change event when a tracked contact departs, with no additional configuration beyond monitoring the contact itself.
+
+**Requirement:** Each contact needs a LinkedIn URL to be monitored by the Job Change Signal.
+
+### Step 1: Track your key contacts in a People audience
+
+In [Audiences](audiences.md), open a People segment containing the contacts you want to monitor — for example, your Salesforce contacts at Big Rock accounts filtered to champion titles. Click **Enrich** → **Signals** → **Job change**, set a lookback period and recurrence, and save. The signal runs on a schedule and writes job change events permanently to each matching person record.
+
+For table-based setup instead of Audiences, see [Monitoring job changes](#monitoring-job-changes) above.
+
+### Step 2: Identify accounts that lost a key contact
+
+When the Job Change Signal runs, Clay automatically creates and maintains a **Companies of job changers** Companies segment pinned in your Audiences left sidebar. This segment contains all accounts in your Audiences where a tracked contact recently changed jobs.
+
+To narrow results to specific departures — for example, only contacts whose previous title matched a champion persona — open your People audience, click **+ Filter**, choose **People Signals → Job change**, and apply conditions such as **Previous employment title(s) contains "VP"** or **Job change confidence ≥ 70**. Save this filtered view as a named segment to use as a standing "at-risk contacts" list.
+
+### Step 3: Act on the departure
+
+From the **Companies of job changers** segment — or a workflow triggered on job change events — you can:
+
+-   **Update your CRM**: mark the departed contact's record as inactive and create a follow-up task for the account owner
+-   **Follow the champion**: add the contact's new company to a target-account list and continue monitoring them with a new Job Change signal
+-   **Trigger re-engagement**: route the account to an outreach sequence tailored to champion-departure scenarios
+
+### Step 4: Find a successor (best-effort)
+
+After 30–90 days, use a **New hire** signal on that account to surface recent joiners who may have inherited the departing contact's role. If you already track existing contacts at the account with a **Promotion** signal, it can catch internal successors as well. You can also run the **Find People** enrichment on the account domain to pull a current contact list and filter by relevant titles.
+
+**Important:** New hire and Promotion signals must be configured for those accounts before a departure occurs — they do not activate retroactively when a job change event fires. Detecting the departure is reliable; identifying who inherited the relationship is not deterministic, so keep a human in the loop to confirm fit before outreach.
+
 ## FAQs
 
 ### Does Clay have a built-in persistent contact ID that follows someone across job changes?
