@@ -97,12 +97,6 @@ SSO is not configured through the Clay workspace settings UI — there is no sel
 
 See [Single Sign-On (SSO)](./single-sign-on.md) for full details on eligibility, the setup process (handled by Clay's support team via WorkOS), how login behavior changes once SSO is enabled, and important notes on user provisioning.
 
-## Trusted domain access
-
-Trusted domain access lets workspace admins add their company email domain so that anyone who signs up for Clay with that domain can join the workspace in one click — no invite required. Trusted domain access is available on **Enterprise** plans.
-
-See [Trusted domain access](./trusted-domain-access.md) for setup steps, how the join flow works for new teammates, and how to configure the default role.
-
 ## Beta Program
 
 The Clay Beta Program gives your workspace early access to experimental and cutting-edge features before they reach general availability. Beta features are marked throughout the app with a **Beta** tag.
