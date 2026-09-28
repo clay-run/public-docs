@@ -107,7 +107,7 @@ Optional, with `Company details` selected:
     -   **Keywords** and **Orientation:** Descriptive keywords for the company and its market orientation, for example `B2B`.
     -   **Register:** The company's commercial-register ID, register location, and registration status.
     -   **Role:** Leadfeeder's role classification for the company, for example `group`.
-    -   **Social Media Profiles:** The company's profiles on Facebook, Instagram, Twitter, and YouTube.
+    -   **Social Media Profiles:** The company's social media profiles, including Facebook, Instagram, YouTube, and others.
     -   **Meta:** Whether the company is marked do not contact, how many contacts Leadfeeder holds for it, and whether its ID has been updated.
     -   **Previous Ids:** Earlier Leadfeeder IDs for the company.
     -   **Custom Fields:** Custom field values Leadfeeder returns for the company.
@@ -148,7 +148,7 @@ Under `Additional filters`, all optional:
     -   **Emails:** Each email address Leadfeeder holds, with the source it came from.
     -   **Phones:** Each phone number, with its type, for example `mobile`.
     -   **Address:** The contact's city, region, and country.
-    -   **Social media profiles:** The contact's professional profile, plus any Facebook, Instagram, Twitter, YouTube, Pinterest, and Xing profiles.
+    -   **Social media profiles:** The contact's professional profile, plus any Facebook, Instagram, YouTube, Pinterest, Xing, and other social profiles.
     -   **Public sources:** Other links Leadfeeder holds for the contact, each with its type.
     -   **Custom fields:** Custom field values Leadfeeder returns for the contact.
 -   **Relationships:** The **Company** record for the contact's employer, with the same attributes `Enrich company` returns.
