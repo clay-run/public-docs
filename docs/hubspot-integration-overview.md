@@ -372,7 +372,13 @@ HubSpot companies can have multiple domains on a single record — one primary d
 
 **One exception:** When filtering by **Domain Name**, Clay automatically searches both the bare domain and its `www.` variant — for example, both `example.com` and `www.example.com`. You do not need to add the `www.` prefix manually.
 
-**Workaround:** If you are searching by a domain that is a secondary domain in HubSpot (not the primary Company domain name), the lookup will not find the company. To resolve this, update the company's primary Company domain name in HubSpot to match the domain you are searching, or use the HubSpot Object ID to look up the record directly instead.
+**Workaround:** If your contacts match a secondary domain in HubSpot rather than the primary Company domain name, the Lookup Object will not find those companies. The most practical Clay-side approach is to add a second **Lookup Object** column that searches an alternate domain property in HubSpot:
+
+1. In HubSpot, create a custom company property to store the secondary domain (for example, a text property called "Secondary Domain") and populate it for the relevant companies.
+2. In Clay, add a second **HubSpot → Lookup object** column. Set **Object type** to Company and set **Fields to filter by** to your custom secondary domain property.
+3. Set the second column to run only when the first Lookup Object returns no result: open **Run settings → Only run if** and add a condition that the first Lookup Object column is empty. This turns the second column into a fallback that fires only when the primary domain lookup finds nothing.
+
+You can also update the company's **Company domain name** in HubSpot to match the domain you are searching by, or use the HubSpot Object ID to look up the record directly.
 
 ### Why do I get an `INVALID_OWNER_ID` or `INVALID_INTEGER` error when setting `hubspot_owner_id`?
 
