@@ -1,8 +1,9 @@
 ---
 title: Run progress
 description: Clay provides multiple ways to track and monitor run progress
-  across your tables, including how to use the built-in Errored rows view to
-  filter to failed rows, set a row limit to control which rows are processed,
+  across your tables and workflows, including how to use the built-in Errored
+  rows view to filter to failed rows, bulk re-run many workflow runs at once
+  from the runs dashboard, set a row limit to control which rows are processed,
   manually trigger unrun enrichment cells, run enrichments on a specific subset
   of rows, troubleshoot cells stuck in Queued status, recover action column cells
   stuck in Queued status when the Stop button is grayed out, diagnose enrichments
@@ -87,6 +88,26 @@ To re-run only the errored rows, select them (click a row number, then **Shift+c
 To return to the full table, click the view selector again and choose **Default view** or **All rows**.
 
 **For automated error monitoring:** Enterprise workspaces can use [table alerts](table-alerts.md) to receive notifications when a column's failure rate exceeds a configured threshold — so you're alerted to errors without checking the table manually.
+
+## Bulk re-run for Workflows
+
+Bulk re-run lets you re-run many workflow runs at once, straight from the workflow runs dashboard. Available on all plans.
+
+Filter or select the runs you care about, choose how to restart them, and kick them all off in a single action — without opening each run individually.
+
+**To bulk re-run workflow runs:**
+
+1.  Open the **Runs** dashboard for your workflow.
+2.  Use the dashboard filters — for example, filter by **Failed** status or by time range — to scope to the runs you want to re-run, or select individual runs by checking them manually.
+3.  A bulk actions bar appears at the top of the runs list when runs are selected. Click **Re-run** in that bar.
+4.  Choose a restart mode:
+    -   **From where they failed** — Each run restarts at its failed step. Steps that already completed successfully are not re-run, so no credits are spent repeating work that already succeeded.
+    -   **From a specific node** — Each run restarts from a workflow step you choose. Useful when you want to resume from a particular point rather than only from the point of failure.
+    -   **From the top** — Each run restarts fresh from its original trigger. Runs that were created manually or via API (without a trigger) are excluded from this mode and will not be re-run.
+5.  Review the **preview** before confirming. The preview shows exactly how many new runs will be created and an estimated credit cost, so you can verify the scope before committing any credits.
+6.  Click **Confirm** to start the bulk re-run.
+
+**No duplicate work.** Bulk re-run deduplicates runs by record — if the same person or company appears in multiple selected runs, only one new run is created for them. The preview's run count already reflects this deduplication, so the number of runs created may be lower than the number you selected.
 
 ## Stopping a run
 
