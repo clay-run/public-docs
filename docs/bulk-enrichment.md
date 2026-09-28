@@ -83,6 +83,16 @@ Check both the **Queued rows** and **Errored rows** tabs for rows with **Run Sto
 
 For more options on re-running specific rows or cells, see [Run progress](run-progress.md).
 
+### Rows appear as errored but enrichment ran successfully
+
+If rows accumulate in the **Errored rows** tab but your enrichment columns show no visible errors, the issue may be with your **Deletion criteria** configuration rather than with enrichment itself.
+
+In a bulk enrichment, a row is only considered complete and removed from the table when its deletion criteria is met — not simply when enrichment columns finish running. If the deletion condition cannot be satisfied, rows that have finished enrichment cannot be deleted and may accumulate in the Errored rows tab.
+
+A common cause is a deletion criterion set to a condition your rows can never satisfy. For example, a conditional rule set to match a specific date (such as "Created At equal to [a past date]") will not match any rows added after that date — so no rows can ever be deleted and every completed row stays in the table as errored.
+
+**To fix this:** Open your bulk enrichment settings and review the **Deletion criteria** configuration. Make sure the condition is one your rows can actually satisfy. For most bulk enrichments, the recommended approach is to set the deletion criteria to the column that writes data to your destination — for example, the column that updates Salesforce or exports to Snowflake. That way a row is deleted as soon as its data is saved, which is the expected completion point.
+
 ### Understanding count differences between Clay and your destination
 
 When a bulk enrichment contains multiple enrichment steps, the record count shown in Clay and the count in your downstream destination (Snowflake, Salesforce, Google Sheets, etc.) will often differ while a run is in progress. **This is expected behavior, not a bug.**
