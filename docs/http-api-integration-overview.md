@@ -966,3 +966,14 @@ Map each part as follows:
 
 -   **Pulling records in as rows** (e.g. fetching a list from an API to start a table): use **HTTP API as source** (Tools → View all sources → Import data from an HTTP API).
 -   **Calling an API once per row** (e.g. enriching existing records): use the **HTTP API enrichment column** (Add enrichment → HTTP API).
+
+### Does Clay's HTTP API support OAuth 2.0 Client Credentials flow?
+
+No. Neither the standard HTTP API action nor the HTTP API with JWT Authentication action performs an OAuth 2.0 `client_credentials` grant. The standard HTTP API action requires static auth inputs — a fixed API key or a permanent bearer token. The JWT Authentication action fetches a fresh token from your endpoint, but its request body contains only `username` and `password` — it does not include `grant_type=client_credentials`. Endpoints that require this parameter will reject the request.
+
+**Workarounds:**
+
+-   **Chained HTTP API columns:** Use a standard HTTP API column to POST `grant_type=client_credentials`, `client_id`, and `client_secret` to your token endpoint and store the resulting access token. Reference that token in a second HTTP API column for your actual API call. Note that fetching a new token per row can affect table run performance and may hit rate limits on the auth endpoint — for large tables, the recommended pattern is to centralize the token in a dedicated single-row cache table that refreshes on a schedule, then look up that token in your main table. See [Token-fetch HTTP API column skipping rows](#token-fetch-http-api-column-skipping-rows----bearer-undefined-or-401-on-new-rows) for full setup steps including the cache table pattern.
+-   **Middleware proxy:** Use an external service (such as a serverless function) to handle the OAuth 2.0 token exchange, then have it return a ready-to-use bearer token to Clay or proxy the downstream API request on Clay's behalf.
+
+For full technical detail on the JWT Authentication action's incompatibility with `client_credentials`, see [Does HTTP API with JWT Authentication support OAuth 2.0 client_credentials?](https://university.clay.com/docs/http-api-with-jwt-authentication-integration-overview).
