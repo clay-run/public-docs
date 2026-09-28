@@ -395,6 +395,30 @@ The most common cause is that the source reached the 50,000 total records proces
 
 For a full explanation of which source types are compatible with auto-delete's continuous passthrough mode, see [Auto-delete in tables](auto-delete.md).
 
+## Why does importing Salesforce records into Clay only show a limited number of fields?
+
+This is expected behavior. When you use the **Import records from a Salesforce list** source, Clay imports exactly the fields that are configured as columns in your selected Salesforce list view — not all fields on the Salesforce object. A default list view in Salesforce (such as "All Contacts" or "All Accounts") typically includes only a small set of system fields — for example, Name, Owner, Created Date, and the record ID — so only those fields appear in your Clay table after the import.
+
+**The fastest way to get all fields: add a Lookup Record enrichment**
+
+The Salesforce **Lookup Record** action, when given the Salesforce Object ID of a record, returns the full record — all fields the connected Salesforce user has Read access to — regardless of what columns were in the list view. Because the record ID is always included in a list view import, you can use it as the lookup key without any additional setup:
+
+1. In your Clay table, click **Add enrichment** and search for **Salesforce Lookup record**.
+2. Set **Salesforce Object** to match the object type you imported (for example, **Contact** or **Account**).
+3. Under **Object Field(s)**, select **Salesforce Object ID** (or any specific fields you want returned).
+4. Under **Salesforce Object ID to search for**, select the `Id` column from your Clay table.
+5. Save and run the column. Click into any cell in the Lookup Record column to see and extract individual fields.
+
+Make sure the Lookup Record column uses the **same Salesforce connection** as your import source. If they point to different accounts, the lookup returns "No records found" even when the record exists in Salesforce.
+
+**If the Lookup Record column also shows only a limited number of fields**
+
+The connected Salesforce user may not have Read access to those fields. Salesforce field-level security (FLS) controls which fields the integration user can read — fields without Read permission are not returned by the lookup regardless of whether they exist in Salesforce. See [Why are some Salesforce fields missing from the Object Field(s) selector in the Lookup Record action?](#why-are-some-salesforce-fields-missing-from-the-object-fields-selector-in-the-lookup-record-action) for instructions on granting the necessary permissions.
+
+**Alternative: add the missing fields to your Salesforce list view**
+
+In Salesforce, edit the list view to include the fields you need, then re-run the source in Clay — new columns will be picked up on the next sync. For fields stored on a related object (such as Account Name on a Contact record), create a formula field on the Contact object that copies the related value, then add that formula field to the list view. See [Fields not in your Salesforce list view](salesforce-integration-overview.md#source-import-records-from-a-salesforce-list) in the Salesforce integration overview for details.
+
 ## Will Clay create duplicate records in Salesforce?
 
 Clay does not create duplicate records by default. However, you can allow duplicates by enabling the "Duplicate Rule Override" in the Create Record enrichment.
