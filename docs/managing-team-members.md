@@ -60,8 +60,10 @@ To invite a new member to your workspace:
 
 -   Go to `Settings` > `Team`.
 -   Click the `+ Invite` button in the top-right corner.
--   Enter the email address of the person you want to invite, then press **Enter** (or type a comma) to confirm it. You can add multiple addresses this way.
--   Select the appropriate role (Editor or Admin) from the dropdown.
+-   Enter the email addresses of the people you want to invite, pressing **Enter** (or typing a comma) to confirm each one. You can add up to 15 email addresses per invite batch.
+-   Select the appropriate role from the dropdown for each invitee.
+-   If your workspace has user groups enabled, you can optionally assign each invitee to a user group directly in the invite modal — new members automatically inherit access to all resources that group has been granted.
+-   If your workspace has credit budgets enabled, you can optionally assign each invitee to a credit budget in the same step.
 -   Click `Send invite`.
 
 The invited person will receive an email to join the workspace with the specified role. The person will appear in your team list with a **Pending** status until they accept.
