@@ -146,6 +146,21 @@ You can then delete the old signal. Rebuilding does not reprocess previously see
 
 **Tip — preserve your enrichment columns during a rebuild:** If your existing signal results table has enrichment columns you've built out, save the table as a template before rebuilding. Click the table title → scroll to **Share as template** → toggle it on and copy the link. Open the link to create a new table — the new table will include all your enrichment column configurations, so you don't have to rebuild them from scratch.
 
+### Is it safe to delete a View that my Signal is using?
+
+No — deleting a View that a Signal references will break the Signal. Each Signal stores a reference to the specific View ID selected during setup and re-evaluates that View's current membership at the start of every run. If the referenced View is deleted, the Signal's next scheduled run will fail — it will not automatically fall back to the Default View or any other View in the table.
+
+**Before deleting any View, check whether a Signal is using it:**
+
+1.  Open each active Signal's column header (the `📡` icon) → **Edit signal** and note the View shown for that Signal.
+2.  If the View is not referenced by any active Signal, it is safe to delete.
+3.  If the View is referenced by an active Signal, rebuild the Signal before deleting the old View:
+    -   In the workbook's **Create** panel, set up a new Signal of the same type, selecting your new View as the source.
+    -   Confirm the new Signal is running correctly.
+    -   Delete the old Signal, then delete the old View.
+
+**Note:** Deleting a View only removes the saved filter and display configuration — it does not delete any rows, company data, enrichments, or other table settings.
+
 ### I want to find job postings by location or title — is that a Signal?
 
 No. Signals monitor changes at companies or contacts already in your data source (new hires joining, contacts getting promoted, contacts changing jobs, etc.). They are not a way to search for job postings from scratch.
