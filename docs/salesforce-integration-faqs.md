@@ -75,20 +75,24 @@ If both concerns apply — you want resilience to employee turnover and prefer a
 
 ## How do I switch from User Sign In to Client Credentials?
 
-Switching authentication methods requires adding a new Salesforce connection in Clay — you cannot convert an existing User Sign In connection to Client Credentials in place. Here is what to expect:
+You can switch an existing User Sign In connection to Client Credentials in place using **Reconnect** — you do not need to add a new connection or update individual Clay tables. All tables, columns, and workflows that reference the connection automatically use the updated credentials on their next run.
 
 **Your existing Clay tables will not be disrupted**, as long as the Salesforce user configured as the "Run As" user in your Salesforce External Client App has the same object and field permissions as the user currently connected via User Sign In.
 
+**Optional — see which resources use this connection before switching.** Navigate to `Settings` → `Connections` → `Salesforce`, click `…` next to the connection, and select **View resources**. A panel lists every workbook, table, function, Claygent, Audience, Signal, and Ad that references this connection — useful to confirm the scope before changing credentials.
+
 **Step 1: Set up Client Credentials in Salesforce.** Your Salesforce admin needs to create an External Client App and configure it for Client Credentials. See [Client Credentials setup instructions](salesforce-integration-overview.md#client-credentials-integration-user) in the Salesforce integration overview for the full steps.
 
-**Step 2: Add a new Salesforce connection in Clay.**
+**Step 2: Reconnect the existing connection in Clay.**
 
 1.  In the home sidebar, click `Settings` → `Connections`.
-2.  Click `Add connection`, search for `Salesforce`, and select `Client Credentials`.
-3.  Fill in your **My Domain URL**, **Consumer key**, and **Consumer secret** from your External Client App.
-4.  Click `Authenticate` to save the connection.
+2.  Select `Salesforce` and find the User Sign In connection you want to switch.
+3.  Click `…` next to it and choose **Reconnect**.
+4.  In the reconnect modal, select **Client Credentials**.
+5.  Fill in your **My Domain URL**, **Consumer key**, and **Consumer secret** from your External Client App.
+6.  Click `Authenticate` to save.
 
-**Step 3: Update your existing Clay tables.** After adding the new connection, existing tables continue to use the original User Sign In connection — they do not switch automatically. Open each Salesforce action column (Lookup Record, Create Record, Update Record, etc.) in your table and change the selected Salesforce account to your new Client Credentials connection. All column configuration — field mappings, run conditions, and settings — is preserved. Only the connection reference changes.
+The connection updates in place — every Clay table and column that referenced the original User Sign In connection will automatically use the new Client Credentials on its next run. No table-by-table update is needed.
 
 ## How do I verify which Salesforce user is associated with my connection?
 
