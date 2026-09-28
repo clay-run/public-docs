@@ -47,7 +47,7 @@ Build lists of companies based on what technology they use, including "back of h
 
 **Credit cost**
 
-If you connect your own HG Insights API key, runs do not consume Clay credits. The costs below apply when using the Clay provided key.
+**Note:** These credit charges apply when using the Clay provided key. If you bring your own HG Insights API key, no Clay credits are consumed for this source.
 
 The `Source Companies by product usage with HG Insights` action charges **8 credits per company per product matched**, capped at your **Max products per company** setting. A company that uses only 1 of your selected products costs 8 credits — the same as a company that uses all 7. Selecting more products only increases total credit spend if companies actually match those additional products.
 
