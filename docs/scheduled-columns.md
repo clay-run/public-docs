@@ -26,7 +26,7 @@ This keeps your data current without manual updates (e.g., keeping enrichment da
 
 **Note:** If the Hour option is not visible in your Run Settings, your current plan does not include hourly scheduling. On non-Enterprise plans, Day is the most frequent schedule available.
 
-**Note:** Only enrichment and action columns can be selected for scheduled runs. Formula columns are not shown in the column selector and do not re-run when a schedule fires — even when "All columns" is selected. If you need a formula that uses today's date to stay current on a schedule, see [Formula column value didn't update after a scheduled run](#formula-column-value-didnt-update-after-a-scheduled-run) below.
+**Note:** When using **Only selected columns**, formula columns are not available in the column picker — only enrichment and action columns can be selected. If you need a date value (such as today's date) to update reliably on a schedule, use an enrichment column instead of a formula column. See [Formula column date value didn't update after a scheduled run](#formula-column-date-value-didnt-update-after-a-scheduled-run) for the recommended approach.
 
 ## Action columns and scheduled re-runs
 
@@ -67,13 +67,11 @@ Scheduled column reruns force-run every cell in the selected columns — they do
 
 **Note:** A scheduled run completing successfully across the whole table does not guarantee every cell re-ran. The run itself fires for all rows, but individual cells with the issues above are skipped regardless.
 
-### Formula column value didn't update after a scheduled run
+### Formula column date value didn't update after a scheduled run
 
-Formula columns cannot be scheduled. Clay does not include formula columns in the "Only selected columns" picker, and a scheduled run — even one set to run "All columns" — does not re-evaluate formula columns. The formula column keeps whatever value it held when it last ran manually or as a downstream effect of an enrichment column.
+Formula columns cannot be manually selected in the **Only selected columns** picker — only enrichment and action columns appear there. When a formula uses `moment()` or similar date functions to generate today's date, it may not reliably recalculate on a schedule because there is no enrichment column dependency to trigger recalculation.
 
-This is the most common cause when a formula column used as a date reference (for example, an "As-of date" or "today's date" column using `moment()`) shows a stale date after a scheduled run.
-
-**Workaround:** Use an enrichment/action column as a daily "clock" and reference it in your formula. Because formula columns automatically re-evaluate when a referenced enrichment column updates (with table-level Auto-run on), the formula recalculates each time the enrichment runs.
+The reliable approach is to use an enrichment/action column as a daily "clock" and reference it in your formula. Because formula columns automatically re-evaluate when a referenced enrichment column updates (with table-level Auto-run on), the formula recalculates each time the enrichment runs.
 
 1.  Add an **HTTP API** column (GET, no authentication) pointed at a free time API — for example, `https://timeapi.io/api/time/current/zone?timeZone=UTC`. This column returns the current date and time each time it runs.
 2.  Reference the HTTP API column's output in your formula instead of calling `moment()` directly — for example:
