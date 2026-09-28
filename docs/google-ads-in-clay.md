@@ -53,7 +53,7 @@ Unlike Meta, Google matches acceptably on work emails as well as personal ones, 
 
 ## Google requirements
 
--   **1,000 matched contacts minimum** before a customer list can be used in campaigns.
+-   **500 matched contacts minimum** — if Google reports fewer than 500 matched contacts, Clay shows a `Too small` status and the list can't be used in campaigns.
 -   **1,000,000-member maximum.** A Google sync carries up to a million members. When a single sync targets several destinations at once, the lowest maximum among them applies to the whole sync — so pairing Google with a destination that caps lower trims the list to that smaller number for every destination in the sync.
 -   **First-party data only.** Records you sourced from Clay's own people and company data don't qualify; records you brought from your CRM, warehouse, or a CSV do, even after you enrich them in Clay.
 
@@ -107,7 +107,7 @@ Customer Match becomes available once an account has enough history and is in go
 
 ### The audience uploads but won't activate
 
-Check the matched count. Google needs 1,000 matched contacts before a customer list can be used in campaigns, and Clay's `Too small` status is a narrower signal — it appears once Google reports the audience under 500. So a list between 500 and 1,000 can look healthy in Clay and still not be usable in Google. Broadening the segment or improving match rate is the fix either way.
+Check the matched count. Clay's `Too small` status appears once Google reports the audience under 500 matched contacts, at which point the list can't be used in campaigns. Broadening the segment or improving match rate is the fix either way.
 
 ## Related
 
