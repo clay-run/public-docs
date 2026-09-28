@@ -62,7 +62,7 @@ To update an audience, simply modify the data in your Clay table. The audience w
 ## **Glossary**
 
 -   **Match rate** — The percent of contacts or accounts your ad platform can match to real users. Personal emails usually improve match rates (often ~40–60%+ on Meta and up to ~95% on LinkedIn).
--   **Ad audience** — A list of contacts or accounts synced from Clay to an ad platform for use in campaigns. Audiences can be used for targeting (showing ads to people on the list) or exclusion (preventing ads from reaching people on the list).
+-   **Ad audience** — A list of contacts or accounts synced from Clay to an ad platform for use in campaigns. Audiences can be used for targeting (showing ads to people on the list) or exclusion (preventing ads from reaching people on the list)list.
 -   **Exclusion list** — An ad audience configured to prevent a group of people from seeing your ads. Common exclusion lists include existing customers, current employees, or open pipeline opportunities — helping eliminate wasted ad spend.
 -   **Hashed email** — A privacy-safe version of an email address encrypted using a one-way algorithm (SHA-256) before being sent to an ad platform. Ad platforms use hashed emails to match contacts without ever seeing the raw address. Clay's `Hashed Email for Ads` waterfall finds and hashes personal emails automatically to maximize match rates.
 -   **Audience sync** — The process of sending a Clay table's contacts or accounts to an ad platform and keeping them continuously updated. When rows are added or removed from your Clay table, the synced audience updates accordingly — no manual re-exports needed.
@@ -254,20 +254,20 @@ A second factor: if Enhanced Matching is enabled, it uses a professional profile
 
 **To fix this:** Because field mapping cannot be changed after an Ad Sync is created, you'll need to delete the current sync and create a new one. **Note: Deletion is permanent — the sync cannot be restored afterward. Deleting the sync does not affect your underlying audience segment.** Map at least one email column, and configure Enhanced Matching inputs if using that feature. See [Why should I use personal emails instead of work emails?](#why-should-i-use-personal-emails-instead-of-work-emails) for guidance on which email type gives the best results.
 
-### **Why is my LinkedIn ad sync showing "Audience failed to sync to Ad destination"?**
+### **Why is my professional network ad sync showing "Audience failed to sync to Ad destination"?**
 
-This error means LinkedIn rejected the upload because your segment produced fewer than 300 matchable entries after validation. The full error reads: *"LinkedIn requires at least 300 matchable entries in an audience list, but this sync produced X after validation. Widen your segment or map more identifier fields, then sync again."*
+This error means the professional network rejected the upload because your segment produced fewer than 300 matchable entries after validation. The detailed error message shows the exact count your sync produced.
 
-**This is a segment size issue, not a connection problem.** Reconnecting your LinkedIn account or creating a new connection will not resolve it.
+**This is a segment size issue, not a connection problem.** Reconnecting your professional network account or creating a new connection will not resolve it.
 
 **To fix this, choose one of the following, then sync again:**
 
 -   **Widen your segment** — add more contacts so the segment has at least 300 people with matchable identifiers.
--   **Map more identifier fields** — email is the primary identifier LinkedIn uses to match contacts; ensuring an email column is mapped increases the number of matchable entries Clay can send.
+-   **Map more identifier fields** — email is the primary identifier the professional network uses to match contacts; ensuring an email column is mapped increases the number of matchable entries Clay can send.
 
 You do not need to delete and recreate the ad sync. Once you've addressed the segment size, run the sync again from the Sync destinations panel.
 
-**Note:** This error is distinct from the "too small for use in campaigns" status. The "Audience failed to sync to Ad destination" error means the sync failed before LinkedIn created the audience at all. For the related case where LinkedIn creates the audience but cannot activate it for ad serving, see [Why does my ad audience show "too small for use in campaigns"?](#why-does-my-ad-audience-show-too-small-for-use-in-campaigns).
+**Note:** This error is distinct from the "too small for use in campaigns" status. The "Audience failed to sync to Ad destination" error means the sync failed before the professional network created the audience at all. For the related case where the professional network creates the audience but cannot activate it for ad serving, see [Why does my ad audience show "too small for use in campaigns"?](#why-does-my-ad-audience-show-too-small-for-use-in-campaigns).
 
 ### **Why does my professional network ad sync show a "Timed out" status?**
 
