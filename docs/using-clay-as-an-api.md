@@ -66,7 +66,7 @@ The same workspace-level beta access also unlocks a Routines endpoint for trigge
 -   `POST /routines/{routine_id}/run` — submit input records to a Clay function and start an enrichment run.
 -   `GET /routines/run/{routine_run_id}/results` — poll for results once the run completes.
 
-Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is under **API and CLI** in the left sidebar — select the **API keys** tab and is distinct from the personal API key on your profile page.
+Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is under **API and CLI** in the left sidebar (select the **API keys** tab) — distinct from the personal API key on your profile page.
 
 **Note:** Routine run `inputs` fields and item `id` values must not contain NUL characters (`\u0000`) or unpaired Unicode surrogates. Sending such characters to `POST /routines/{routine_id}/run` returns a `400` error — for example, `inputs: Inputs must not contain NUL characters (\u0000) or unpaired Unicode surrogates.` Batch runs with these characters produce a `validation_failed` status with a per-line field detail. If your data comes from a database export, file-parsing pipeline, or encoding-mismatched source, strip null bytes before calling the API.
 
