@@ -149,7 +149,19 @@ Yes. Ask _"What functions do you have?"_ or _"What workflows has RevOps built fo
 
 **Does Clay work with Claude Code?**
 
-Yes. Once you connect Clay via Claude's connector system at `claude.com/connectors/clay`, it will also work in Claude Code.
+Yes. Once you connect Clay via Claude's connector system at `claude.com/connectors/clay`, it will also work in Claude Code — for search, enrichment, and running your team's pre-built Functions. The connector cannot build tables, add columns, or create workflows. To build workflows from Claude Code, see the question below.
+
+**Can Clay in Claude build tables, columns, or workflows?**
+
+No. The Clay connector is for finding contacts, enriching data, running pre-built Functions, and drafting outreach — it cannot create tables, add columns, or build workflows.
+
+To build Clay workflows from a coding environment like Claude Code, use the **Clay Agent Plugin** instead. The Agent Plugin includes the Clay CLI, which lets you create and manage workflows programmatically. Workflow building via the Agent Plugin is currently in open beta. For setup instructions, see the [CLI agent plugin](https://university.clay.com/docs/using-clay-as-an-api) section of the API guide.
+
+A few things to know when using the Agent Plugin to build:
+
+-   The CLI builds workflows but cannot create tables or add columns — those still happen in the Clay app.
+-   When using the Agent Plugin with Claude Code, remove the Clay MCP connector first. With both connected, Claude may invoke the wrong tool.
+-   You need Editor or Admin access in your Clay workspace.
 
 **Troubleshooting: "SDK auth failed: Client name must not impersonate a known platform"**
 
