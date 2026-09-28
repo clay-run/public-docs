@@ -25,7 +25,7 @@ When a workbook (or other resource) is assigned to a budget, all credit-consumin
 
 **Budgets are shared pools, not per-user caps.** When you add a user group to a budget, all members draw from the same credit limit — it is not divided per person. A budget with a 10,000-credit limit shared across a 20-person team has 10,000 credits total, not 10,000 per rep. To give each user their own individual credit cap, create one budget per user and assign only that user to it. There is no maximum number of budgets you can create in a workspace.
 
-**Using Clay through MCP instead?** If your team accesses Clay through Claude, ChatGPT, or Glean (via the MCP integration), MCP credit limits are the right tool for per-user monthly caps — not budgets. MCP credit limits give each rep an individual monthly allowance that resets automatically on the 1st of each month, and can be set as a workspace default or overridden per user from `Settings` → `MCP`. See [MCP settings](/docs/mcp-settings) for details.
+**Need per-user individual caps for MCP users?** Budgets are shared pools — adding a user group to a budget does not give each member their own individual cap. For teams using Clay through Claude, ChatGPT, or Glean (via the MCP integration), **MCP credit limits** provide per-user monthly caps that reset on the 1st of each month. Each rep gets their own individual allowance (not shared). MCP credit limits and budgets can coexist: a rep can have both a per-user monthly MCP cap and a budget assigned simultaneously. Set MCP credit limits from `Settings` → `MCP`. See [MCP settings](/docs/mcp-settings) for details.
 
 **Function calls and budget attribution:** When a workbook assigned to a budget calls a Function, the credits consumed by that Function run count against the **calling workbook's budget** — not against the Function itself or the Function creator's workbook. For example, if a marketing team's workbook calls a Function built by RevOps, those credits count against the marketing workbook's budget. This means that assigning a user's workbook to a budget automatically captures all spend from that workbook, including any Function calls it makes. Note: this attribution is one level deep — if a Function calls another Function, the inner Function's spend is attributed to the outer Function rather than the original calling workbook.
 
@@ -88,14 +88,14 @@ When a budget is deleted, you can reassign all of its resources to a different b
 
 ## Credit budgets vs. credit spend limits
 
-Clay has two distinct credit governance features for Enterprise workspaces:
+Clay has three credit governance tools for Enterprise workspaces:
 
 | Feature | What it does | Where to find it |
 |---|---|---|
-| **Credit budgets** | Named credit pools — assign workbooks to a budget and track spend across teams. | `Settings` → `Budgets` |
+| **Credit budgets** | Named shared credit pools — assign workbooks or MCP users to a budget and track spend across teams. All members draw from the same pool. | `Settings` → `Budgets` |
 | **Credit spend limits** | Per-workbook credit caps — set a maximum spend for a single workbook or table. | `Settings` → `Usage` → `Workbook limits` |
-| **MCP credit limits** | Per-user monthly credit caps for team members using Clay through Claude, ChatGPT, or Glean. Resets on the 1st of each month. | `Settings` → `MCP` |
+| **MCP credit limits** | Per-user individual monthly caps for reps using Clay through Claude, ChatGPT, or Glean. Each rep gets their own cap (not shared). Resets on the 1st of each month. | `Settings` → `MCP` |
 
-These features are complementary. You can use spend limits to cap individual workbooks while also assigning them to a budget for team-level cost attribution.
+These features are complementary. You can use spend limits to cap individual workbooks while also assigning them to a budget for team-level cost attribution. For MCP users, you can combine a per-user MCP credit limit with a budget assignment — both apply simultaneously.
 
 **Note:** Neither credit budgets nor credit spend limits can be applied directly to a Function. Credit limits apply to a workbook as a whole — including all Function calls that workbook makes. There is no per-Function credit cap. To limit how much a specific workbook spends (including its Function calls), assign it to a budget with a credit limit or set a per-workbook credit spend limit on it.
