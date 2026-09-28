@@ -12,40 +12,6 @@ Adyntel Integration allows users to gather comprehensive advertising data from m
 
 With this integration, you can analyze ad content, campaign duration, media types, and ad counts to personalize marketing efforts and enhance lead generation campaigns.
 
-## **Creating a table with Adyntel**
-
-Currently in beta — contact support to enable it.
-
-1.  In a workbook, click `+ Add` at the bottom.
-2.  Search for `Adyntel` and select from the results.
-3.  In the modal, you will be asked to `Select Adyntel account`.
-    -   If you have your own account, click `+ Add account` and go through authentication. Otherwise, use the Clay provided key.
-
-**Note:** The keyword ad-search sources import one row per ad and are scheduled to re-run once a day by default. Each ad is tracked by its own ID, so a re-run only adds ads Clay hasn't imported before — you won't get duplicate rows for ads that are still running. To import once and stop, set `Run this source` to `Manually` in the source's `Run settings`.
-
-### `Source` Find Meta ads by keyword with Adyntel
-
-Search the Meta ad library for ads matching a keyword and import them along with the companies running them.
-
-**Inputs**
-
--   **Keywords:** One or more keywords to search the ad library for, for example `webinar` or `ai sdr`. Each keyword runs its own search, and matching ads are combined and deduplicated. You can include up to 20 keywords per import.
--   **Country (optional):** Limit results to ads shown in one country. If this is not added, the search covers all countries.
--   **Limit (optional):** The maximum number of ads to import. Defaults to 100, and the maximum is 1,000.
-
-### `Source` Find professional social media ads by keyword
-
-Search the professional social media ad library for ads matching a keyword and import them along with the companies running them, optionally filtered by country or date range.
-
-**Inputs**
-
--   **Keywords:** One or more keywords to search the ad library for, for example `webinar` or `ai sdr`. Each keyword runs its own search, and matching ads are combined and deduplicated. You can include up to 20 keywords per import.
--   **Country (optional):** Limit results to ads shown in one country. If this is not added, the search covers all countries.
--   **Date range (optional):** Filter returned ads by the date they ran — `Last 30 days`, `Current month`, `Current year`, `Last year`, or `Custom date range`. If this is not added, the search covers ads from any date.
--   **Start date (optional):** The start of the custom date range. Only used when `Date range` is set to `Custom date range`.
--   **End date (optional):** The end of the custom date range, which has to be before today. A custom range can span up to 364 days. Only used when `Date range` is set to `Custom date range`.
--   **Limit (optional):** The maximum number of ads to import. Defaults to 100, and the maximum is 1,000.
-
 ## **Enriching data with Adyntel**
 
 1.  While in a Clay table, click `Add enrichment` and search for `Adyntel`.
