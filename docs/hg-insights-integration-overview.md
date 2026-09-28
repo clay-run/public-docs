@@ -2,7 +2,7 @@
 title: HG Insights integration
 description: Uncover enterprise-grade technographic and parent company data
   while enriching foundational company data.
-last_synced: 2026-04-26T01:40:07.697Z
+last_synced: 2026-09-28T16:56:51.180Z
 ---
 
 # HG Insights integration
@@ -46,6 +46,8 @@ Build lists of companies based on what technology they use, including "back of h
 -   **Include product first verified date**
 
 **Credit cost**
+
+If you connect your own HG Insights API key, runs do not consume Clay credits. The costs below apply when using the Clay provided key.
 
 The `Source Companies by product usage with HG Insights` action charges **8 credits per company per product matched**, capped at your **Max products per company** setting. A company that uses only 1 of your selected products costs 8 credits — the same as a company that uses all 7. Selecting more products only increases total credit spend if companies actually match those additional products.
 
