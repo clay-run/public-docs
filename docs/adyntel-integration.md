@@ -29,9 +29,9 @@ Search the Meta ad library for ads matching a keyword and import them along with
 -   **Country (optional):** Limit results to ads shown in one country. If this is not added, the search covers all countries.
 -   **Limit (optional):** The maximum number of ads to import. Defaults to 100, and the maximum is 1,000.
 
-### `Source` Find LinkedIn ads by keyword with Adyntel
+### `Source` Find professional social media ads by keyword with Adyntel
 
-Search for LinkedIn ads matching a keyword and import them along with the companies running them, optionally filtered by country or date range.
+Search for professional social media ads matching a keyword and import them along with the companies running them, optionally filtered by country or date range.
 
 **Inputs**
 
