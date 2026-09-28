@@ -1036,48 +1036,52 @@ New Salesforce records are not created automatically when you run a bulk enrichm
 To push net-new Accounts or Contacts to Salesforce:
 
 1.  Open your Audiences workspace and go to your Salesforce source settings.
-2.  Under the export section, enable the **`Create new Salesforce records`** toggle.
-3.  In the **Clay ID field** selector, choose the External ID field you created in Salesforce (for example, `Clay_ID__c`).
-4.  Confirm the field mapping is complete and click **Save and review** → **Confirm**.
+2.  Under the export section, enable the **`Create new Salesforce records`** toggle. (Admin access required — the toggle is off by default.)
+3.  In the **Record matching** section, select the Clay ID field you created (for example, `Clay_ID__c`) from the **Select Clay ID field** dropdown. If the field doesn't appear, confirm it is marked as **External ID** in Salesforce, then close and reopen the settings panel.
+4.  Confirm your field mappings and save.
 
-Once enabled, Clay will create new Salesforce records for all Audience records that currently lack a matching SFDC entry — not just future ones. See [What happens when you first enable this toggle](#writing-back-to-your-crm) for details on the initial batch behavior.
+Once the toggle is on, Clay will create new Accounts or Contacts in Salesforce for any Audience record that doesn't already have a matching SFDC entry. (Leads and Opportunities do not support record creation through this toggle.)
+
+**What about existing contacts?** Records already imported from Salesforce are tracked by their Salesforce Object IDs — Clay updates them directly without using the Clay ID field. The Clay ID field stays empty on those records and only comes into play for net-new records Clay creates.
+
+To track which contacts in Salesforce came from a specific Audience enrichment, create a custom Audience text field (for example, an "Audience Source" field set to a label like `"Q2-enrichment"`), and map it to a Salesforce field (a custom field, campaign tag, or lead status) in your export settings. You can then filter on that value directly in Salesforce.
 
 ### How do I write enriched fields back to existing Salesforce records from a bulk enrichment?
 
-If you want Audiences bulk enrichment results to update existing Salesforce records — for example, to push a newly enriched `Work Email` field back to matching Salesforce Contacts — the path is through Audiences **Export sync** field-level write rules, not through the bulk enrichment table itself.
+Add a **Salesforce Update Record** action column directly inside your bulk enrichment table. This pushes enriched values to matching Salesforce records in the same run, without waiting for the Audiences export cycle:
 
-The bulk enrichment writes data to Audiences. Salesforce sees those values only when the Audiences → Salesforce **Export sync** runs and pushes the field, based on the write rule you've configured for it.
+1.  In your bulk enrichment, add your data enrichment columns as usual (for example, `Enrich Person` to find LinkedIn URL, email, or industry).
+2.  Click `Add enrichment` and search for **Salesforce** → select **Update Record**.
+3.  Set **Record ID** to the Salesforce Contact, Lead, or Account ID already stored in your Audience (the field imported from Salesforce or from your original SOQL import).
+4.  Map each enriched field to the corresponding Salesforce field you want to populate.
+5.  Click `Start Run` — the Update Record column fires alongside your enrichment columns and writes the enriched values directly to Salesforce.
 
-**To write an enriched field back to Salesforce:**
-
-1.  Make sure Export sync is enabled in your Salesforce source settings (see [Writing back to your CRM](#writing-back-to-your-crm)).
-2.  In the Salesforce source settings, find the field you enriched (for example, `Work Email`) in the field mapping section.
-3.  Click the **pencil (edit) icon** next to it and set the write rule to **Always write** (to overwrite existing Salesforce values) or **Write if empty** (to fill only blank Salesforce fields).
-4.  Click **Save and review** → **Confirm**.
-
-The enriched value will be pushed to Salesforce on the next 24-hour export cycle.
-
-**Note:** If the field doesn't appear in the Salesforce field mapping section, it wasn't included in the original import field mapping. Add it to the import mapping first (see [A Salesforce field isn't appearing in my audience filters — how do I add it?](#a-salesforce-field-isnt-appearing-in-my-audience-filters--how-do-i-add-it)), then configure the write rule.
+If you have the Audiences Salesforce export enabled, enriched fields also sync back to Salesforce automatically on the next 24-hour export cycle (see [Writing back to your CRM](#writing-back-to-your-crm)). Adding Update Record directly in the enrichment table is useful when you need immediate write-back or when you are not using the native Audiences Salesforce import.
 
 ### How do I write enriched data back to HubSpot from Audiences?
 
-Unlike Salesforce, the HubSpot source in Audiences does not include a write-back configuration — there is no Export sync toggle or field-level write rules in the HubSpot source settings panel. To push enriched data from Audiences to HubSpot, use a Clay table with a HubSpot action column:
+Audiences does not have a native HubSpot export destination — Salesforce is currently the only built-in CRM export. To push enriched data to HubSpot, use a Bulk Enrichment with a HubSpot action column directly from within your audience segment:
 
-1.  Click **Enrich** → **Add bulk enrich** from your Audiences segment to create a bulk enrichment table sourced by that segment.
-2.  In the enrichment table, add a **HubSpot** action column (for example, **Update Contact** or **Update Company**) and map the enriched Audiences fields to the corresponding HubSpot properties.
-3.  Run the enrichment. Each row in the table triggers the HubSpot action column, writing the mapped values to the matching HubSpot record.
+1.  Navigate to an audience segment and click **Enrich** → **Add bulk enrich**.
+2.  In the bulk enrichment table, add your data enrichment columns as usual (for example, `Enrich Person` to find phone numbers or professional profile URLs).
+3.  Click `Add enrichment` and search for **HubSpot** → select **HubSpot: Update object** (to update an existing HubSpot contact or company) or **HubSpot: Create object** (to create a new contact or company in HubSpot).
+4.  Map each enriched field to the corresponding HubSpot property you want to populate.
+5.  Click **Start Run** — the HubSpot action column fires alongside your enrichment columns and writes the values directly to HubSpot.
 
-This path requires the Bulk Enrichment table as an intermediary — there is no direct Audiences → HubSpot sync.
+This approach supports batching and works for both contacts and companies. To automatically push data for new records entering the segment going forward, enable the **auto-enrich toggle** on the bulk enrichment.
 
 ### My HubSpot has more records than my plan limit — how do I limit what gets imported into Audiences?
 
-HubSpot's Audiences connector imports all records for the selected object type — there is no filter step built into the source setup itself. To limit what flows into Audiences, add a suppression filter on the Audiences side instead:
+The Audiences HubSpot connector imports all records for the selected object type (Contacts, Companies, or Deals) — there is no option to select a specific HubSpot list within the Audiences source setup. If your HubSpot object has more than 250,000 records (the Growth plan limit), the import will pull all records for that object. Filtering in Audiences after the import won't reduce your record count against the plan limit — the records have already been imported.
 
-1.  After connecting HubSpot, open your **People** or **Companies** audience.
-2.  Click **+ Filter** and build a segment that targets only the records you want to work with — for example, filter by HubSpot lifecycle stage, owner, or any other field you imported.
-3.  Save this as your working segment. Bulk enrichments and workflows connected to this segment will run only on the records that match these filters — not on your full HubSpot import.
+To import only a filtered subset of HubSpot records into Audiences:
 
-This approach imports your full HubSpot dataset into Audiences (subject to your plan's record limit) but lets you scope enrichments and workflows to a filtered subset. If your HubSpot record count exceeds your plan limit, contact your Growth Strategist to discuss options.
+1.  In a **Clay table**, add a source and select **Import objects from HubSpot**.
+2.  Under **List to pull objects from**, select the specific HubSpot list containing the contacts or companies you want.
+3.  Map and format the fields you need in the table.
+4.  Add **Upsert Audiences Record** as an action column — this pushes each row from your scoped, mapped table directly into Audiences without going through the full-object Audiences import.
+
+This gives you control over both which records enter Audiences and how their fields are mapped, independent of the native Audiences HubSpot source connector.
 
 ### Do Activities or Opportunities count toward my plan's record limit?
 
