@@ -494,6 +494,24 @@ To fix it:
 
 If you haven't renamed or deleted any columns recently, the reference may have become stale after a table update — the remap will resolve it either way.
 
+### Why does my function return "no inputs could be resolved" when Claude (or another AI tool) passes an email value?
+
+If your function has an input whose **Semantic type** is **Email**, Clay validates that the value must be a plain email address string (e.g., `jane@example.com`). When an AI tool like Claude maps a value that arrives wrapped in an object — for example, `{"Work Email": "jane@example.com"}` instead of just `"jane@example.com"` — every contact fails the check. When all contacts fail, the function returns the error **"no inputs could be resolved."**
+
+**Why this happens:** When a function input is created from an existing column, Clay automatically copies that column's semantic type. An email-type column produces an input with the **Email** semantic type, which enforces email-format validation on every value passed to it. The semantic type is shown in the **Edit input** panel (look for the `@` icon next to the input in the inputs list). It is set automatically and is read-only — you cannot change the semantic type of an existing input through the UI.
+
+**How to fix it:**
+
+1.  Open the function and click **Enter edit mode**.
+2.  Click **Function inputs** and find the affected input (e.g., **Email**).
+3.  Click the input, then click **Remove input**.
+4.  Click **+ Add input** and create a new input with the exact same name (e.g., **Email**). A freshly created input has no semantic type restriction and accepts any string value, including values that arrive as objects.
+5.  Click **Publish Changes**.
+
+Columns inside the function that reference this input by name continue to work without modification — inputs are looked up by name.
+
+**Tip:** If the data source your AI tool is mapping from is a regular Clay table (rather than a function), email values may arrive wrapped in an object. Rebuilding that lookup as a Clay function that returns just the plain address is a more durable fix.
+
 ### What happens when I try to edit a Clay-managed function?
 
 Clay-managed functions receive automatic updates from Clay in the background — you don't need to maintain them yourself. When you try to enter edit mode on a Clay-managed function, you'll see a **"Detach from Clay updates?"** prompt before the editor opens. The prompt reads: *"Editing this function will detach it from Clay's managed updates. This action cannot be undone."*
