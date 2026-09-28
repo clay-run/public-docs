@@ -318,8 +318,10 @@ To turn sync on or off for a source, open its settings by clicking the **⋮** m
 
 | Status | Meaning |
 |--------|---------|
-| **Search on** | The live search is enabled. Clay continues to add new matching contacts or companies to Audiences on each refresh. |
+| **Search on** | The live search is enabled. Clay re-runs the search once per day and adds any new matching contacts or companies to Audiences. |
 | **Search off** | The live search is paused. No new results are added until you turn it back on. Contacts already imported remain in Audiences. |
+
+**Live search runs on a daily cadence, independently of any signal cadence.** If your audience has a signal that runs on a monthly schedule, the Find People or Find Companies search still re-runs once per day. To get a point-in-time result instead of continuously growing results, turn live search off: click the **⋮** menu next to the search source in the audience sidebar, or go to **Settings → Sources / Destinations**, click **⋮** next to the source row, and select **Turn live search off**. Contacts already imported remain in your audience — only new daily additions stop.
 
 ### Entity resolution and deduplication
 
@@ -936,6 +938,12 @@ When you edit a search's criteria and click **Save**, a dropdown appears with tw
 -   **Replace existing results**: discards the current results and rebuilds the segment using only contacts that match the updated criteria (contacts previously imported are excluded to avoid re-importing them).
 
 To work with only the narrower set, open the search, tighten your filters, click **Save**, and select **Replace existing results**.
+
+### Why did my people (or companies) search audience count keep growing without any changes?
+
+If you saved a Find People or Find Companies search to Audiences and the count continues to grow — even though you haven't changed the search criteria — live search is likely enabled. Live search re-runs the search **once per day** and adds any new matching contacts or companies. This runs independently of any signal cadence you have set on the audience: a monthly signal and a daily live search are entirely separate schedules. Turning off or modifying the signal does not stop the live search from running.
+
+To stop the audience from growing, turn live search off: click the **⋮** menu next to the search source in the audience sidebar, or go to **Settings → Sources / Destinations**, click **⋮** next to the source row, and select **Turn live search off**. Contacts already imported remain in your audience — only new daily additions stop. You can always turn live search back on later if you want to resume continuous sourcing.
 
 ### Can I sync an audience to multiple ad platforms?
 
