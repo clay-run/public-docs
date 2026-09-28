@@ -275,7 +275,7 @@ CSV imports are one-time — they do not re-sync automatically. To update your A
 
 **To replace a CSV import with corrected data:** If the imported CSV contained errors and you want to start fresh, archive the old records before importing the updated file — see [How do I replace a CSV import with updated data?](#how-do-i-replace-a-csv-import-with-updated-data) in the FAQs below.
 
-**Note:** CSV source entries remain listed in the Sources tab after import. There is no self-serve option to remove or disconnect a CSV source listing — it is retained for filtering and audit purposes.
+**Note:** CSV source entries remain listed in the Sources tab after import. There is no self-serve option to remove or disconnect a CSV source listing, and the source name cannot be changed after the import is set up — both are retained for filtering and audit purposes.
 
 ### Sending data from Clay table
 
