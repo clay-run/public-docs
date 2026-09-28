@@ -1,7 +1,7 @@
 ---
 title: SMARTe integration
 description: Enrich company details and find emails/phone numbers.
-last_synced: 2026-04-26T01:40:41.821Z
+last_synced: 2026-09-28T16:45:50.833Z
 ---
 
 # SMARTe integration
@@ -69,3 +69,9 @@ Use this action to find a person's work email using their social URL, personal e
 
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
+
+## FAQs
+
+### Am I charged when SMARTe doesn't find a result?
+
+Rows where SMARTe finds nothing are refunded, so they don't cost you anything.
