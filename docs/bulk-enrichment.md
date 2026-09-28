@@ -201,3 +201,11 @@ All rows currently in the bulk enrich table are cleared, and the enrichment rest
 ### Monitoring run progress
 
 After an Audiences bulk enrichment has run, opening the enrichment panel shows a run status bar in the review step — completed rows in green, failed rows in red. Click the bar to navigate to the **Runs** view for that enrichment, where you can inspect individual run history and row-level results.
+
+### Re-running a single column
+
+Audiences bulk enrichment runs all enrichment columns together — there is no way to update a setting on one column and rerun only that column in isolation. Changing a column setting (for example, toggling **Ignore blank values** on an export action) after a run has already processed rows requires either rerunning the entire enrichment or working around it with a duplicate.
+
+**Option 1 — Restart the full enrichment:** Update the column setting and click **Run from the beginning**. This reprocesses every row and spends credits on all enrichment steps, not just the one you changed.
+
+**Option 2 — Duplicate and add a run condition:** Duplicate the bulk enrichment and set a [conditional run](conditional-runs.md) formula on the column you changed so it only processes rows where the field is blank or needs to be updated. Rows that already have correct data are skipped, and you spend credits only on the corrected column for the rows that need it.
