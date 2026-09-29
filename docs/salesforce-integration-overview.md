@@ -161,7 +161,7 @@ To get a missing field into Clay, use one of these approaches:
 
 ### `Action` Lookup records via SOQL
 
-Look up records in Salesforce using a custom SOQL query. Use this when the standard **Lookup record** action returns too many matches, when you need to filter on multiple fields at once (e.g., website AND country code), or when the Lookup record action returns **"Error: Bad Request"** (which occurs when the object's schema has more than 15 cross-object field references — see [Salesforce integration FAQs](salesforce-integration-faqs.md) for details).
+Look up records in Salesforce using a custom SOQL query. Use this when the standard **Lookup record** action returns too many matches, when you need to filter on multiple fields at once (e.g., website AND country code), when you need more than 5 results per lookup (for example, all contacts linked to a given account), or when the Lookup record action returns **"Error: Bad Request"** (which occurs when the object's schema has more than 15 cross-object field references — see [Salesforce integration FAQs](salesforce-integration-faqs.md) for details).
 
 **Inputs:**
 
@@ -244,6 +244,8 @@ The **Exact match?** toggle controls how Clay queries Salesforce:
 **Note:** Each "field to search for" input accepts one search value at a time. If you add multiple values to a single search field, Clay concatenates them into one string rather than treating them as separate options — for example, adding both `"Acme Corp"` and `"Acme"` to the same "Account Name to search for" field causes Clay to search for `"Acme CorpAcme"` instead of either name. To search across multiple possible values for the same field, use two separate **Lookup record** columns, each with one value.
 
 **Tip:** When using a Lookup Record column to supplement a Salesforce list view source import, make sure both use the **same Salesforce account**. If they use different accounts, the lookup queries a different Salesforce org and returns `No records found` even when the record exists.
+
+**Note:** The Lookup record action returns at most **5 matching records** per row. This limit is built into the action and cannot be changed. If you need more than 5 records from a single lookup — for example, to retrieve all contacts linked to a given account — use the **Lookup records via SOQL** action instead. See [Why does the Lookup Record action return a maximum of 5 results?](salesforce-integration-faqs.md#why-does-the-lookup-record-action-return-a-maximum-of-5-results) for details and an example SOQL query.
 
 ### `Action` Upsert object
 
