@@ -2,7 +2,7 @@
 title: Meer integration
 description: Screen phone numbers against national do-not-call registries before
   initiating outbound calls.
-last_synced: 2026-09-24T19:43:53.173Z
+last_synced: 2026-09-28T16:43:58.044Z
 ---
 
 # Meer integration
