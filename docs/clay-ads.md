@@ -2,7 +2,7 @@
 title: Clay Ads
 description: Build and sync contact and account lists to LinkedIn, Meta, Google Ads, Bing
   Ads, Reddit Ads, and Vibe.co for precise ad targeting.
-last_synced: 2026-09-17T20:19:29.621Z
+last_synced: 2026-09-29T18:57:11.303Z
 ---
 
 # Clay Ads
@@ -112,6 +112,29 @@ When you connect your Google Ads account, Clay requests the following OAuth perm
 
 Access control is enforced at the Google Ads account level — the person connecting must have appropriate permissions on the ad account they link.
 
+## Legacy table ad syncs
+
+Earlier ad syncs were built from a Clay table rather than a segment. If your workspace has any, they appear under **Legacy ad syncs** on the **Ads** page. Creating new table-based ad syncs is no longer supported — build new syncs from an Audiences segment instead.
+
+Audiences is the more stable path long term, and it costs less to run — Enhanced matching results save onto the contact in Audiences and get reused by later syncs, rather than being stranded in one table.
+
+### Migrate a legacy table sync to a segment
+
+Migrating means writing the table's people into Audiences, then building the ad sync from a segment there. If the table already holds hashed emails you paid to find, bring those across in the same step so you don't pay for them twice.
+
+1.  Rename the table behind your legacy sync to something recognisable if it isn't already — its name is what you filter on in Audiences afterwards.
+2.  In that table, add the **Create or update Audiences record** action and set **Record Type** to **People**.
+3.  Under **Lookup fields**, choose the professional profile URL option and map the table's profile URL column. This is how Clay decides which Audiences record each row writes to.
+4.  Under **Fields to update**, select **Hashed email 1**, **Hashed email 2**, and **Hashed email 3**, then map your table's hashed email columns onto them. If the legacy sync used a single hashed email column, map it to **Hashed email 1** and leave the other two unselected.
+5.  Leave **Ignore blank values** on, so a row with no second or third hashed email doesn't blank out a value already in Audiences.
+6.  Run the action across every row in the table.
+7.  Click **People** in the left sidebar, add a **Sources** filter, set it to **Contains**, and enter the table's name. Save the result as the segment you'll sync from.
+8.  Create the ad sync from that segment.
+
+**Note:** Hashed emails you bring across are reused, not bought again. Enhanced matching skips any contact that already has a value in Hashed email 1, Hashed email 2, or Hashed email 3, so only the contacts still missing all three get enriched.
+
+A segment that already has a legacy sync can't take a new one — remove the legacy sync first, or build from a different segment.
+
 ## **FAQs**
 
 ### **What platforms are supported?**
@@ -176,9 +199,7 @@ Deleting an ad sync does **not** delete the underlying audience segment — your
 
 ### **Can I add another ad platform to an existing Ad Sync?**
 
-Not directly — once an ad sync is active, its destination platforms are locked. Ad sync configuration can only be changed while the sync is still in draft state. Configure all desired destinations when you first create the Ad Sync, before activating it.
-
-If you need to add a platform to a sync that is already active, the workaround is to delete the current sync and create a new Ad Sync with all desired destinations included from the start. **Deletion is permanent — a deleted sync cannot be restored or reactivated.** Deleting the sync does not affect your underlying audience segment; your segment and its contacts remain intact, and you can create a new Ad Sync from the same segment immediately. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for how to delete and [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for credit implications.
+Yes — for active recurring syncs, open the sync, click **Pause to edit**, add the new platform under **Sync destinations**, click **Save and continue** to reach the Match stage, then click **Enrich and sync** (or **Sync** if Enhanced matching is off). Destinations that have already synced cannot be removed. Completed one-time syncs and failed syncs cannot be paused — for those, delete the current sync and create a new one with all desired destinations included. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) and [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for implications.
 
 **Notes:**
 
@@ -234,7 +255,7 @@ To see exactly what each provider requires: open the waterfall setup panel, clic
 
 ### **Do audiences automatically update?**
 
-Yes! Once synced, your audiences automatically update as data changes in your Clay table. New rows that match your criteria are added, and rows that no longer match are removed. This keeps your ad targeting aligned with your latest data without manual updates.
+Yes! Once synced, your audiences automatically update as data changes in your Clay table. New rows that match your criteria are added, and rows that no longer match are removed. This keeps your ad targeting aligned with your latest data without manual updates. Recurring syncs run every 3 days, or every 7 days if Bing Ads is one of your destinations.
 
 ### **Can I see which contacts matched?**
 
