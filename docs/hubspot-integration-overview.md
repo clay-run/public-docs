@@ -104,6 +104,22 @@ Use this action to find a HubSpot owner by ID or email address.
 -   **Owner ID (Optional):** The HubSpot owner ID to search for. If both ID and email are provided, the email will be validated against the owner found by ID.
 -   **Email (Optional):** The email address to search for. If both ID and email are provided, the email will be validated against the owner found by ID.
 
+### `Action` Add record to list
+
+Use this action to add a HubSpot record to a static list so your team can work the results as a segment.
+
+**Note:** This action requires the `crm.lists.write` OAuth scope, which is **enabled by default** in Clay's HubSpot connection. If the List dropdown shows a blocking error, reconnect your HubSpot account and make sure the **Create and edit lists, including adding records to a list** scope is selected.
+
+**Inputs**
+
+-   **Object type:** The type of HubSpot record to add to the list (such as Contact, Company, or Deal). Options load dynamically from your HubSpot account.
+-   **List:** The static list to add the record to. Only static lists appear — HubSpot recalculates the membership of dynamic lists from their filters, so dynamic lists cannot be written to from Clay.
+-   **HubSpot record ID:** The unique identifier of the record to add to the list. Use the numeric record ID returned by a HubSpot **Create object** or **Lookup object** action.
+
+**Output**
+
+-   **Added to list:** Returns `true` if the record was successfully added to the list.
+
 ### `Action` Enroll a contact in a sequence
 
 Use this action to enroll a HubSpot contact in an automated follow-up sequence.
@@ -149,6 +165,7 @@ These permissions are requested by default but can be disabled:
 -   \[`crm.objects.deals](<http://crm.objects.deals>).write` — Create, delete, or edit deals.
 -   [`crm.schemas.deals.read`](http://crm.schemas.deals.read) — View deal property settings.
 -   `crm.export` — Export CRM records in bulk.
+-   `crm.lists.write` — Create and edit lists, including adding records to a list.
 
 ### Optional scopes (disabled by default)
 
