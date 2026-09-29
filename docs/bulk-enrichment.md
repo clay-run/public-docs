@@ -110,12 +110,12 @@ When a bulk enrichment is attached to an [Audiences](https://university.clay.com
 
 ### Audiences
 
-The **Audiences** row in the **Configuration** section shows which audience segments are connected to this bulk enrichment. You can connect one or more segments to run the same enrichment across different audiences from a single table.
+The **Audiences** section in the **Run Setup** panel shows which audience segments are connected to this bulk enrichment. You can connect one or more segments to run the same enrichment across different audiences from a single table.
 
 **To add or change the connected segments on an existing bulk enrichment:**
 
-1.  Click **Pause** if the enrichment is currently running. The Audiences row is locked while a run is active.
-2.  In the **Run setup** panel, click **Set up** next to **Audiences**.
+1.  Click **Pause** if the enrichment is currently running. The **Connected segments** button is locked while a run is active.
+2.  In the **Run setup** panel, click **Add segment** (or **Edit segments** if a segment is already connected) next to **Connected segments**.
 3.  In the **Connect audiences** modal, select the segments you want to include and click **Save selection**.
 4.  Click **Resume** to continue the run.
 
@@ -157,8 +157,8 @@ To set a schedule, click **Recurring enrichments** in the Run Setup panel and se
 A single bulk enrichment can run on multiple Audiences segments — you do not need to recreate it for each segment. To add another segment to an enrichment that is already connected to one segment:
 
 1.  Open the enrichment — navigate to a segment the enrichment is already attached to, click `Enrich` in the top-right toolbar to open the enrichments sidebar, and click the enrichment card to open the **Run Setup** panel. If you're viewing a different segment and don't see the enrichment listed, use the dropdown at the top of the sidebar to switch from the current-segment view to **All** to browse enrichments across all segments.
-2.  If the enrichment is actively running, click **Pause** first — the **Add segment** button is disabled while a run is in progress.
-3.  In the Run Setup panel, click **Add segment** and select the segment you want to include.
+2.  If the enrichment is actively running, click **Pause** first — the **Connected segments** button is disabled while a run is in progress.
+3.  In the Run Setup panel, click **Edit segments** next to **Connected segments** and select the additional segment.
 4.  Resume the enrichment. When prompted, choose **Continue where you left off** — members of the newly added segment are enqueued automatically.
 
 Once the segment is linked, navigating to that segment and clicking `Enrich` shows the enrichment in the sidebar. You can view its status and manage settings from either connected segment.
