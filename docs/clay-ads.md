@@ -2,7 +2,7 @@
 title: Clay Ads
 description: Build and sync contact and account lists to LinkedIn, Meta, Google Ads, Bing
   Ads, Reddit Ads, and Vibe.co for precise ad targeting.
-last_synced: 2026-09-17T20:19:29.621Z
+last_synced: 2026-09-29T18:57:11.306Z
 ---
 
 # Clay Ads
@@ -176,9 +176,9 @@ Deleting an ad sync does **not** delete the underlying audience segment — your
 
 ### **Can I add another ad platform to an existing Ad Sync?**
 
-Not directly — once an ad sync is active, its destination platforms are locked. Ad sync configuration can only be changed while the sync is still in draft state. Configure all desired destinations when you first create the Ad Sync, before activating it.
+Yes — you can add a new destination to an active sync using **Pause to edit**. Open the sync, click **Pause to edit**, add the platform under **Sync destinations**, then continue to **Enrich and sync**. Destinations that have already synced cannot be removed from an existing sync — only new ones can be added while paused.
 
-If you need to add a platform to a sync that is already active, the workaround is to delete the current sync and create a new Ad Sync with all desired destinations included from the start. **Deletion is permanent — a deleted sync cannot be restored or reactivated.** Deleting the sync does not affect your underlying audience segment; your segment and its contacts remain intact, and you can create a new Ad Sync from the same segment immediately. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for how to delete and [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for credit implications.
+**Pause to edit** is available when a sync is active, processing, or in a warning state. A finished one-time sync or a failed sync cannot be paused — for those, delete the current sync and create a new Ad Sync with all desired destinations included from the start. **Deletion is permanent — a deleted sync cannot be restored or reactivated.** Deleting the sync does not affect your underlying audience segment; your segment and its contacts remain intact, and you can create a new Ad Sync from the same segment immediately. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for how to delete and [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for credit implications.
 
 **Notes:**
 
@@ -234,7 +234,9 @@ To see exactly what each provider requires: open the waterfall setup panel, clic
 
 ### **Do audiences automatically update?**
 
-Yes! Once synced, your audiences automatically update as data changes in your Clay table. New rows that match your criteria are added, and rows that no longer match are removed. This keeps your ad targeting aligned with your latest data without manual updates.
+Yes. Once synced, your audiences automatically update as data changes in your Clay table. New rows that match your criteria are added, and rows that no longer match are removed. This keeps your ad targeting aligned with your latest data without manual updates.
+
+For recurring syncs, the update interval depends on your destinations: every 3 days by default, or every 7 days when Bing Ads is one of your destinations.
 
 ### **Can I see which contacts matched?**
 
