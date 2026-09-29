@@ -1,7 +1,7 @@
 ---
 title: Scheduled sources
 description: Automatically refresh data from sources on a set schedule.
-last_synced: 2026-04-26T01:40:37.604Z
+last_synced: 2026-09-29T18:48:45.433Z
 ---
 
 # Scheduled sources
@@ -69,7 +69,7 @@ Scheduled sources are not available on the Free plan. For paid plans, the limit 
 
 -   Launch: 100 sources
 -   Growth: 100 sources
--   Enterprise: 1,000 sources
+-   Enterprise: 1,000 sources by default (your contract may set a different limit)
 
 If your workspace has reached its limit, you can remove schedules from sources you no longer need, or contact Clay support to request a higher limit.
 
