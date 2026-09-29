@@ -1,7 +1,7 @@
 ---
 title: HubSpot integration
 description: All-in-one CRM platform for marketing, sales, and customer service.
-last_synced: 2026-04-26T01:40:09.362Z
+last_synced: 2026-09-29T16:17:52.785Z
 ---
 
 # HubSpot integration
@@ -104,6 +104,26 @@ Use this action to find a HubSpot owner by ID or email address.
 -   **Owner ID (Optional):** The HubSpot owner ID to search for. If both ID and email are provided, the email will be validated against the owner found by ID.
 -   **Email (Optional):** The email address to search for. If both ID and email are provided, the email will be validated against the owner found by ID.
 
+### `Action` Add record to list
+
+Use this action to add a HubSpot record to a static list, so your team can work it as a segment.
+
+**Inputs**
+
+-   **Object type:** The type of HubSpot record you want to add to a list. `Company`, `Contact`, `Deal`, and `Lead` are always there, with your portal's custom objects listed after them.
+-   **List:** The list to add the record to. Pick an `Object type` first — the dropdown fills in once you have, and shows the lists built on that type.
+-   **HubSpot record ID:** The unique identifier of the record to add, such as the record ID that `Create object` returns. It has to be HubSpot's numeric ID, so a row carrying an email address or a domain here won't run.
+
+**Outputs**
+
+-   **Added to list:** `true` when the record was added to the list, `false` when it wasn't.
+
+Only lists whose membership you can edit appear in `List`. HubSpot recalculates the membership of an active list from that list's filters, so those aren't offered — create a static list in HubSpot for the records you're sending over.
+
+A row can succeed with `Added to list` set to `false`, which means HubSpot took the request but didn't add the record, because it's already in the list or isn't eligible for it. A record ID that doesn't exist in your portal fails that row instead.
+
+**Note: this action needs the `Create and edit lists, including adding records to a list` permission.** HubSpot asks for it by default when you connect. If your connection doesn't have it, `List` shows an error asking you to reconnect your account and select it.
+
 ### `Action` Enroll a contact in a sequence
 
 Use this action to enroll a HubSpot contact in an automated follow-up sequence.
@@ -142,6 +162,7 @@ These permissions are requested by default but can be disabled:
 -   `crm.objects.companies.write` — Create, delete, or edit companies.
 -   `crm.objects.contacts.write` — Create, delete, or edit contacts.
 -   `crm.objects.leads.write` — Create, delete, or edit leads.
+-   `crm.lists.write` — Create and edit lists, including adding records to a list.
 -   [`crm.schemas.custom.read`](http://crm.schemas.custom.read) — View custom object definitions.
 -   [`crm.objects.custom.read`](http://crm.objects.custom.read) — View custom objects.
 -   `crm.objects.custom.write` — Create, delete, or edit custom objects.
