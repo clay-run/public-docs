@@ -29,8 +29,8 @@ One of the following is required: company domain or company professional profile
 | Input | Required | Description |
 |-------|----------|-------------|
 | **Company domain** | Conditional | Company domain, like clay.com. |
-| **Company professional URL** | Conditional | Company LinkedIn URL. |
-| **Company professional ID** | Conditional | Numeric company LinkedIn ID. |
+| **Company professional URL** | Conditional | Company professional profile URL. |
+| **Company professional ID** | Conditional | Numeric company professional ID. |
 | **Company Sales Navigator URL** | Optional | Company Sales Navigator URL. |
 | **Company Sales Navigator ID** | Optional | Numeric company Sales Navigator ID. |
 
@@ -80,7 +80,7 @@ One of the following is required: professional profile URL, email, or name with 
 
 | Input | Required | Description |
 |-------|----------|-------------|
-| **Professional profile URL** | Conditional | Person's LinkedIn URL. |
+| **Professional profile URL** | Conditional | Person's professional profile URL. |
 | **Sales Navigator URL** | Conditional | Person's Sales Navigator URL. |
 | **Sales Navigator ID** | Conditional | Numeric Sales Navigator ID. |
 | **Email** | Conditional | Person's email address. |
@@ -129,4 +129,4 @@ Given a SIREN or SIRET number (or domain/professional profile URL), returns full
 | **SIREN number** | Conditional | 9-digit SIREN number. |
 | **SIRET number** | Conditional | 14-digit SIRET number. |
 | **Company domain** | Conditional | Company domain. |
-| **Professional profile URL** | Conditional | Company LinkedIn URL. |
+| **Professional profile URL** | Conditional | Company professional profile URL. |
