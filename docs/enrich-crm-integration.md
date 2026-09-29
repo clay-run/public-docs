@@ -26,7 +26,7 @@ Enriches a contact record using any combination of professional profile URL, Sal
 
 Provide at least one identifier:
 
--   **Professional profile URL** (e.g. a LinkedIn URL)
+-   **Professional profile URL** (e.g. a professional network profile URL)
 -   **Sales Navigator URL or ID**
 -   **Email**
 -   **Full name** (optionally combined with company name or domain)
