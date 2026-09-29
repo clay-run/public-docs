@@ -117,6 +117,18 @@ Use this action to enroll a HubSpot contact in an automated follow-up sequence.
 -   **Sender email:** The email address of the user who will send the sequence emails.
 -   **Sender alias address (Optional):** An alternate address from which the sequence emails will appear to be sent. Alternate email addresses must be set up in HubSpot.
 
+### `Action` Add record to list
+
+Add a contact, company, deal, or other HubSpot record to a static list so your team can work the results as a segment.
+
+**Note:** This action requires the `crm.lists.write` OAuth scope. If you get an error saying your connection cannot write to lists, reconnect your HubSpot account and select the **Create and edit lists, including adding records to a list** scope.
+
+**Inputs**
+
+-   **Object type (Required):** The type of HubSpot record to add — Contact, Company, Deal, or a custom object type.
+-   **List (Required):** The static list to add the record to. Only static lists are shown; HubSpot recalculates membership for dynamic lists automatically from the list's filters, so they cannot be written to directly.
+-   **HubSpot record ID (Required):** The unique identifier of the record to add, such as the `hs_object_id` returned by a Create object, Lookup object, or Import objects action.
+
 ## OAuth scopes
 
 When connecting your HubSpot account, Clay uses optional OAuth scopes to give you fine-grained control over permissions.
@@ -156,6 +168,7 @@ These permissions are available but not requested by default:
 
 -   [`automation.sequences.read`](http://automation.sequences.read) — View sequence details.
 -   `automation.sequences.enrollments.write` — Enroll contacts in a sequence.
+-   `crm.lists.write` — Create and edit lists, including adding records to a list. Required by the **Add record to list** action.
 
 ### Run settings
 
