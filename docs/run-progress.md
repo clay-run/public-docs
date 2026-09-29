@@ -101,9 +101,9 @@ Filter or select the runs you care about, choose how to restart them, and kick t
 2.  Use the dashboard filters — for example, filter by **Failed** status or by time range — to scope to the runs you want to re-run, or select individual runs by checking them manually.
 3.  A bulk actions bar appears at the top of the runs list when runs are selected. Click **Re-run** in that bar.
 4.  Choose a restart mode:
-    -   **From where they failed** — Each run restarts at its failed step. Steps that already completed successfully are not re-run, so no credits are spent repeating work that already succeeded.
-    -   **From a specific node** — Each run restarts from a workflow step you choose. Useful when you want to resume from a particular point rather than only from the point of failure.
-    -   **From the top** — Each run restarts fresh from its original trigger. Runs that were created manually or via API (without a trigger) are excluded from this mode and will not be re-run.
+    -   **Resume from failed node** — Each run restarts at its failed step. Steps that already completed successfully are not re-run, so no credits are spent repeating work that already succeeded.
+    -   **Choose node to start from** — Each run restarts from a workflow step you choose. Useful when you want to resume from a particular point rather than only from the point of failure.
+    -   **Re-run from trigger** — Each run restarts fresh from its original trigger. Runs that were created manually or via API (without a trigger) are excluded from this mode and will not be re-run.
 5.  Review the **preview** before confirming. The preview shows exactly how many new runs will be created and an estimated credit cost, so you can verify the scope before committing any credits.
 6.  Click **Confirm** to start the bulk re-run.
 
