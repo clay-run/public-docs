@@ -761,15 +761,24 @@ The destination table serves as a processing bridge — the flattened records ar
 
 ### How do I create a custom Audience field that isn't tied to Salesforce?
 
-The `+ Add field` option is available in the `Update Audiences Record` column mapping inside a bulk enrichment table:
+There are two ways to create a custom Audience field:
+
+**Option 1 — Data Hub:**
+
+1.  In the left sidebar, click **Data Hub**.
+2.  Select the **Fields** tab (it opens by default).
+3.  Click the **+** button in the top right.
+4.  Name the new field, select a data type (Text, Number, Date, or Boolean), and click **Save**.
+
+**Option 2 — Bulk enrichment table:**
+
+The `+ Add field` option is also available in the `Update Audiences Record` column mapping inside a bulk enrichment table:
 
 1.  Navigate to a segment and click `Enrich` → `Add bulk enrich`.
 2.  In the bulk enrich table, click the `Update Audiences Record` column header to open the Configure panel.
 3.  In the `Column mapping` dropdown, click `+ Add field`, name the new field, and save.
 
 Once created, the field is immediately available as a filter in any segment and as a target for `Update Audiences Record` or `Upsert Audiences Record` from any Clay table.
-
-**Note:** There is no option to add new fields directly from the Audience screen — you must go through the `Update Audiences Record` column mapping in a bulk enrichment table.
 
 ### How do I delete a custom field from Audiences?
 
