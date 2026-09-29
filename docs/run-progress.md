@@ -189,7 +189,7 @@ Running the column directly rather than the rows bypasses the dependency timing 
 
 Remove the filter when the run finishes to return to the full table view.
 
-**If downstream enrichment columns show the out-of-date clock icon after you re-ran an upstream column, those cells have not been re-run and no credits have been consumed.** The clock icon means the cell is flagged as stale — it still holds its previous result and that result is preserved intact. Clay marks downstream cells as out of date when their inputs change, but does not automatically re-execute them. Credits are only consumed when a cell actually runs.
+**If downstream enrichment columns show the out-of-date clock icon after you re-ran an upstream column, those cells have not been re-run and no credits have been consumed.** The clock icon means the cell is flagged as stale — it still holds its previous result and that result is preserved intact. Cells only consume credits when they actually execute; if a downstream cell had re-run automatically, the clock icon would have cleared as it ran.
 
 If the existing downstream data is still accurate for your use case, you can leave those cells as-is. If you do want to refresh the downstream results, you can target only the stale rows instead of re-running the entire column:
 
