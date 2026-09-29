@@ -85,6 +85,15 @@ If you have a saved Sales Navigator search and want to pull those results into C
 
 **Note:** This source requires a Sales Navigator **people search URL** (`https://www.linkedin.com/sales/search/people/...`), not a saved lead list URL (`linkedin.com/sales/lists/people`) or a saved search URL (those containing `savedSearchId`). If you have a saved Sales Navigator lead list, recreate the equivalent filters as a fresh people search on Sales Navigator and copy that URL instead. Each imported result costs 1 Clay credit.
 
+If your Sales Navigator search matches more than 2,500 leads, the 2,500 cap is enforced by LinkedIn — there is no way to raise it within a single import. To bring in a larger set, split your search into smaller segments so each stays under the limit. Use any filter dimension to divide the results (for example, by seniority level, company headcount, or location) and add each resulting Sales Navigator URL to your Clay table one at a time.
+
+**To pick up new leads that appear in your search over time**, schedule the source to re-run periodically instead of — or in addition to — splitting:
+
+1.  Click the **source column header** in your table → **Edit column → Run settings** → switch from **Manually** to **On a schedule** and choose **Daily** or **Weekly**.
+2.  Enable **Auto-dedupe rows** in your table settings: open the table name dropdown → **Edit table settings**, turn on **Auto-dedupe rows**, and set the dedupe column to your **LinkedIn profile URL** column. This removes duplicates when the same lead is returned across multiple successive runs.
+
+Each scheduled run fetches up to 2,500 results from the same search URL and adds any leads not already in your table. To also refresh existing leads' data on each run — for example, to keep job titles current — turn on **Update existing rows** in the source column's Run settings; this re-imports and re-enriches existing rows and uses additional credits.
+
 ## Finding LinkedIn posts by keyword
 
 To find LinkedIn posts containing a specific keyword or hashtag, use the **Find professional posts** source — a separate source from Find People that returns posts rather than people profiles.
