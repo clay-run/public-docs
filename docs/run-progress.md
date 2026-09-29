@@ -109,6 +109,34 @@ Filter or select the runs you care about, choose how to restart them, and kick t
 
 **No duplicate work.** Bulk re-run deduplicates runs by record — if the same person or company appears in multiple selected runs, only one new run is created for them. The preview's run count already reflects this deduplication, so the number of runs created may be lower than the number you selected.
 
+### Retrying failed workflow runs via the CLI
+
+If you want an agent or script to catch and re-trigger failed workflow runs on a schedule — for example, when records fail due to provider outages — the Clay CLI's `clay workflows runs` command group covers this without opening the UI. Available on all plans; requires the [Clay CLI Agent Plugin](https://github.com/clay-run/agent-plugins) and a workspace API key with `cli:all` scope.
+
+**Typical agent-driven retry loop:**
+
+1.  **Find failed runs** for your workflow:
+    ```
+    clay workflows runs list <workflowId> --status failed
+    ```
+    Returns run IDs, timestamps, and status for each failed run. Paginate large result sets with `--cursor` and `--limit`.
+
+2.  **Inspect a specific failed run** to confirm the failure reason and see which step failed:
+    ```
+    clay workflows runs get <runId> --nodes
+    ```
+    Returns run status, per-node progress, and error messages. Add `--verbose` for full node inputs and outputs.
+
+3.  **Start a new run** to retry the record:
+    ```
+    clay workflows runs test <workflowId> --inputs '{"key": "value"}'
+    ```
+    This starts a new run — monitor it with `clay workflows runs get <runId> --wait` or check the **Runs** dashboard in the UI.
+
+Additional `clay workflows runs` subcommands: `steps <workflowId> <runId>` (list the execution steps of a run), `pause <workflowId> <runId>` (pause an active run), `resume <workflowId> <runId>` (resume a paused run).
+
+**Clay does not automatically re-run failed workflow runs.** To build a recurring retry loop, schedule the `list --status failed` → `test` sequence to run a few times a day using a cron job or your agent's scheduler. The agent lists failed runs, identifies which ones failed due to transient provider errors, and fires new runs for those records without manual intervention. For re-running many failed runs at once from the UI instead, use the **Bulk re-run** feature in the **Runs** dashboard described above.
+
 ## Stopping a run
 
 To stop a running table, click the **Stop** button in the run summary panel at the bottom-right of the table.
