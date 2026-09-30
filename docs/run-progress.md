@@ -3,7 +3,8 @@ title: Run progress
 description: Clay provides multiple ways to track and monitor run progress
   across your tables and workflows, including how to use the built-in Errored
   rows view to filter to failed rows, bulk re-run many workflow runs at once
-  from the runs dashboard, set a row limit to control which rows are processed,
+  from the runs dashboard, re-run a single workflow node from the runs Table
+  view, set a row limit to control which rows are processed,
   manually trigger unrun enrichment cells, run enrichments on a specific subset
   of rows, troubleshoot cells stuck in Queued status, recover action column cells
   stuck in Queued status when the Stop button is grayed out, diagnose enrichments
@@ -108,6 +109,24 @@ Filter or select the runs you care about, choose how to restart them, and kick t
 6.  Click **Confirm** to start the bulk re-run.
 
 **No duplicate work.** Bulk re-run deduplicates runs by record — if the same person or company appears in multiple selected runs, only one new run is created for them. The preview's run count already reflects this deduplication, so the number of runs created may be lower than the number you selected.
+
+### Re-running a single workflow node from the runs Table view
+
+You can re-run one specific workflow node — for example, a Function or Find People node you just updated — across many workflow runs at once from the **Table view** of your workflow's **Runs** dashboard. Available on all plans.
+
+**To re-run a workflow node from the Table view:**
+
+1.  Open your workflow and click **Runs** at the top of the page.
+2.  Switch the view from **Run log** to **Table view**. In the Table view, each workflow node appears as a column.
+3.  Scope the runs you want to re-run. Use the toolbar filters — for example, the status filter set to **Failed**, or the version, trigger, or time range filters — and optionally check individual runs.
+    -   If you check individual runs, the node re-run applies only to those runs.
+    -   If you don't check any runs, the node re-run applies to every run currently shown in the Table view (after filters).
+    -   If you use select-all-in-filter bulk selection, the play button doesn't appear in the node column headers. Check runs individually or clear the selection instead.
+4.  In the header of the node column you want to re-run, click the **play** button and choose one of the following:
+    -   **Run only this node** — Re-runs only that node for the runs in scope. Later nodes in the workflow don't run again.
+    -   **Run from this node** — Re-runs that node and then continues through all later nodes in the workflow.
+
+The node re-run starts as soon as you choose an option — there's no preview or confirmation step like the one in **Bulk re-run**, so check your filters and selection before clicking.
 
 ### Retrying failed workflow runs via the CLI
 
