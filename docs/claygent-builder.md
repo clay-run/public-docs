@@ -318,6 +318,20 @@ To limit cost when you only need to refresh one specific output field, create a 
 
 To prevent cells that already have results from being re-run automatically when new rows arrive, confirm that **Keep existing results** is on in your table's Run Settings (`⛭` → **Run Settings**). With **Keep existing results** enabled, auto-run only fires on empty or errored cells — rows with an existing result are skipped. See [Auto-run](auto-run.md) for details.
 
+### What happens to credits if my Claygent cells time out?
+
+Credits for rows that end with a "Timed out" error are automatically returned to your balance — you do not need to contact support or do anything to trigger the refund.
+
+The refund is not instant. Clay reconciles run results asynchronously, so credits may return gradually and can take several hours to fully appear, especially after a large table run. If you ran a large batch and the full refund hasn't appeared after many hours, contact [Clay support](https://app.clay.com) with the workbook and table details so the team can check whether the reconciliation is stuck.
+
+### How do I re-run only the rows that timed out or errored, without re-running rows that already completed?
+
+Right-click the column header → **Run column** → **Run N empty or out-of-date rows**. This option targets only cells that are empty or have an error (including "Timed out" cells) — rows that already have a successful result are skipped, so you won't be charged again for completed rows.
+
+Note that each re-run of an errored row is charged as a new run and consumes credits at the normal rate.
+
+**To reduce timeouts on large tables:** Claygent processes rows in concurrent batches. Running in smaller batches — for example, filtering the table to a subset of rows and running on that view with auto-run off — can reduce concurrency pressure and make large runs more stable. See [Ways to save Clay credits](clay-credit-conservation.md) for guidance on batch-based workflows.
+
 ### How much does it cost to run a Claygent in production?
 
 Credit cost depends on the AI model you select. Claygent defaults to **Argon** for web research — Clay's model for open-ended web lookups — which costs **3 credits per row**. Switching to **Helium** (1 credit per row) is a cost-effective alternative for simpler web research tasks. For a full model pricing reference, see [How AI is priced](ai-pricing.md).
