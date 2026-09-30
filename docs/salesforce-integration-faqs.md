@@ -131,7 +131,7 @@ For guidance on setting up an integration user with the right object access, see
 
 ## How do I get a field I just created in Salesforce to appear in Clay?
 
-The answer depends on where you want to use the new field in Clay.
+You never need to reconnect your Salesforce connection to see new Salesforce fields, new picklist values, or fields your integration user was just granted access to. Clay reads the object's fields and picklist values live from Salesforce (using the connected user's permissions) when you open a Salesforce action — it does not keep a stored copy from when the connection was created. What you do next depends on where you want to use the new field in Clay.
 
 **In a Create Record or Update Record enrichment (Clay table)**
 
@@ -192,7 +192,7 @@ Clay populates the Map fields picker by calling Salesforce's object describe API
 **How to fix it:**
 
 1. **Update field-level security in Salesforce.** Ask a Salesforce admin to go to `Setup` → `Profiles` (or `Permission Sets`) → find the profile or permission set assigned to the connected Salesforce user → `Object Settings` → select the relevant object (for example, `Lead`) → `Field Permissions`. Enable **Read** and **Edit** access for each field that should appear in the Map fields panel.
-2. **Refresh the field list in Clay.** After the permission change is saved, open the Update Record or Create Record column in your Clay table, scroll to the **Map fields** section, and click **Refresh**. This re-fetches the object's field definitions from Salesforce and adds the newly accessible fields to the picker. The same refresh is also needed when fields were recently created in your Salesforce org — Clay works from a cached copy of field definitions and does not pick up new fields automatically.
+2. **Refresh the field list in Clay.** After the permission change is saved, open the Update Record or Create Record column in your Clay table, scroll to the **Map fields** section, and click **Refresh**. This re-fetches the object's field definitions from Salesforce and adds the newly accessible fields to the picker. Use the same refresh for fields recently created in your Salesforce org. You do not need to reconnect your Salesforce connection — Clay reads field definitions and picklist values live from Salesforce.
 
 **To confirm which Salesforce user your connection is authenticated as**, go to `Settings` → `Connections` → `Salesforce`, click `…` next to your connection, and select `Test Connection`. Clay displays that user's email address — confirm the user has the correct FLS permissions for the fields you need.
 
@@ -660,6 +660,25 @@ The queries you see from Clay come from two sources: **Lookup Record columns** r
 **Note:** The **Run in batches** setting is not available on the standard **Lookup Record** or **Lookup records via SOQL** columns, so it cannot be used to throttle these read queries. The adjustments above are the levers for reducing read-query load.
 
 On the Salesforce side, asking your admin to add custom indexes on the fields Clay filters against will also help those queries run more efficiently.
+
+## Can Clay write a date (such as a last modified or last enriched date) to a custom Salesforce field?
+
+Yes. If you have a custom **Date** or **Date/Time** field in Salesforce to receive it, Clay can write a date or timestamp to that field with the **Update record** action (or **Create record** when you create the record). Salesforce's own `LastModifiedDate` field is system-managed and not writable, so it never appears in Clay's field picker — use a custom field instead.
+
+**Requirements:**
+
+-   The connected Salesforce user needs **Edit** access (field-level security) to the custom date field. Fields the user can't edit don't appear when you click **+ Add field** in the **Map fields** panel of the Update record action.
+-   The value must be in a format Salesforce accepts. Clay sends the mapped value to Salesforce as-is, without converting it. Use `YYYY-MM-DD` for a Date field (for example, `2026-09-30`) and ISO 8601 for a Date/Time field (for example, `2026-09-30T14:00:00Z`).
+
+**To write a date to a custom Salesforce field:**
+
+1.  Add a **formula column** to your Clay table that returns the date you want to write — for example, today's date — in the format your Salesforce field expects.
+2.  Open your **Update record** column and, in the **Map fields** section, click **+ Add field** and select your custom date field.
+3.  Map the field to your formula column, then run the column.
+
+If your custom date field doesn't appear in **+ Add field**, ask your Salesforce admin to grant the connected user **Edit** access to it — see [Why are some Salesforce fields missing from the Map fields panel?](#why-are-some-salesforce-fields-missing-from-the-map-fields-panel-in-the-update-record-or-create-record-action).
+
+**Avoid re-run loops:** Don't use the same date field you write from Clay (or `LastModifiedDate`) as an input or trigger for that same enrichment, or the record will keep re-running — see [Why does enriching a Salesforce timestamp field cause records to keep re-running?](#why-does-enriching-a-salesforce-timestamp-field-cause-records-to-keep-re-running).
 
 ## Why does enriching a Salesforce timestamp field cause records to keep re-running?
 
