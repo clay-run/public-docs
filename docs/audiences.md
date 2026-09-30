@@ -613,6 +613,20 @@ Scheduled audience source triggers support a **Process audience in batches** opt
 
 To enable batch processing when setting up a scheduled audience source trigger, toggle on **Process audience in batches** and set the **Members per run** count. You can also edit these settings at any time after the trigger has been created: in the workflow editor, click **Edit** on the scheduled audience source trigger card to update the **Members per run** value or toggle batch processing on or off. The trigger card displays the current batch processing status — including the batch size, when processing started, and whether the full audience has been completed.
 
+**Re-running workflow runs in bulk**
+
+Currently in beta — contact your Clay team to enable this feature.
+
+From the runs dashboard in Workflows, you can select many runs at once — by filtering the dashboard or checking specific runs — and restart them all in a single action.
+
+**Three restart modes are available:**
+
+-   **Resume from failed node** — restarts each run at the step where it failed, skipping steps that already succeeded. Use this to recover from errors without re-running work that completed correctly.
+-   **Choose node to start from** — restarts each run from a node you specify. Upstream results from each run's original execution are carried forward; runs that never reached the chosen node are skipped.
+-   **Re-run from trigger** — re-runs each run fresh from its original trigger. Runs that were started manually or via API (and therefore have no trigger) are excluded from this mode automatically.
+
+**Before committing:** a preview shows the number of runs matched, the number of unique records after deduplication (runs are deduplicated by audience entity so the same person or company is not processed twice), and an estimated credit cost. Confirm the preview before the re-runs start.
+
 ### **Syncing audiences to ad platforms**
 
 When you have a segment ready, you can sync it to an ad platform to run account-based advertising across your highest-fit contacts and companies.
