@@ -144,6 +144,30 @@ To retrieve actual contact data, add a dedicated enrichment column instead:
 -   **Phone numbers** — click `Add enrichment`, search for `Phone`, and select the waterfall option for your region under **Waterfalls** — `Mobile Phone (US and Canada)`, `Mobile Phone (EMEA)`, `Mobile Phone (APAC)`, or `Mobile Phone (Global)`. See [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md) for provider recommendations by region.
 -   **Full profile data (job title, company, professional profile URL, and more)** — click `Add enrichment` and search for `Enrich Person` to browse provider-specific integrations. Each provider connects to a different data source — choose the one that fits your needs, or stack several as a [waterfall](building-a-data-waterfall.md) for broader coverage.
 
+### "My Enrich Person rows are returning 'Invalid person identifier' — what does that mean?"
+
+This error means Clay could not recognize the LinkedIn URL or identifier in the enrichment's input field. The most common cause is a **legacy LinkedIn public profile URL** — the old `/pub/` format that LinkedIn deprecated years ago. These URLs look like:
+
+```
+https://www.linkedin.com/pub/firstname-lastname/ab/12/cde
+```
+
+Clay's person enrichments only accept the modern LinkedIn profile URL format:
+
+```
+https://www.linkedin.com/in/username
+```
+
+**To fix affected rows:**
+
+1.  Add a formula column to flag rows that contain the old format: use a formula that checks whether the LinkedIn URL column contains `/pub/`. Rows where the formula returns `True` are the ones causing the error.
+2.  For each flagged row, find the person's current LinkedIn profile and copy their modern `linkedin.com/in/username` URL.
+3.  Update the URL in your table with the correct modern URL, then re-run the enrichment on those rows.
+
+**Note:** There is no automatic way to convert a legacy `/pub/` URL into its modern `/in/` equivalent — the modern URL is a vanity username the person set on LinkedIn and cannot be derived from the old URL structure. You need to look up the person's current profile to get the correct URL.
+
+Other accepted identifier formats (besides `linkedin.com/in/username` URLs) include numeric LinkedIn member IDs and Sales Navigator profile URLs. If you are passing one of these and still see the error, check that the value is not truncated, contains no extra whitespace, and is a valid identifier for that person.
+
 ### "What accuracy or match rate can I expect from data enrichment in Clay?"
 
 Clay does not publish a single universal accuracy percentage because match rates vary based on several factors:
