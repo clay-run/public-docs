@@ -60,7 +60,7 @@ Once your visitor table is populated, you can enrich those companies to find con
 
 1.  **Find the right contacts** — in your visitor table, add a **Find People** enrichment to pull relevant people at each visiting company.
 2.  **Get their email addresses** — add an email enrichment (such as the Work Email Waterfall) to retrieve verified work emails for those contacts.
-3.  **Create an email campaign** — from your enriched table, create a Clay email campaign (see the [Email sequencer](https://university.clay.com/docs/email-sequencer) doc for setup steps). Map the email column and draft your message sequence.
+3.  **Create an email sequence** — from your enriched table, create a Clay email sequence (see the [Email sequencer](https://university.clay.com/docs/email-sequencer) doc for setup steps). Map the email column and draft your message sequence.
 4.  **Launch and let it run** — new visitors matching your tracking filters will flow into the table automatically, keeping your outreach loop always-on.
 
 ## Using a third-party website visitor identification tool
@@ -72,7 +72,7 @@ If you already use a separate website visitor identification tool to track and i
 1.  In a Clay workbook, click `+ Add`, search for `Webhooks`, and select **Monitor webhook** to create a table with a webhook source.
 2.  Copy the webhook URL Clay generates.
 3.  In your visitor identification tool, configure it to POST visitor data to that URL whenever a new visitor is identified.
-4.  Once records arrive in your Clay table, add enrichment columns — for example, **Find People** to find contacts at visiting companies — and set up a [Clay email campaign](https://university.clay.com/docs/email-sequencer) for personalized outreach.
+4.  Once records arrive in your Clay table, add enrichment columns — for example, **Find People** to find contacts at visiting companies — and set up a [Clay email sequence](https://university.clay.com/docs/email-sequencer) for personalized outreach.
 
 See [Webhooks in Clay](webhook-integration-guide.md) for plan availability, payload format requirements, and throughput limits.
 
