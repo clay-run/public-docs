@@ -204,6 +204,8 @@ Clay syncs data from HubSpot automatically on the following schedules:
 7.  Review and click `Confirm` — Clay begins importing immediately.
 8.  Monitor the import. If records don't appear immediately, refresh the page to see the latest count.
 
+**Change log tables produce unpredictable field values.** The Audiences import deduplicates rows using the Unique Identifier you define — when multiple rows share the same identifier value (for example, a change log with one row per enrichment event per company), the sync keeps only the last row in query-result order per identifier and silently discards the rest. No error is reported. To control which field values appear in Clay, create a Snowflake view or subquery that aggregates history into one row per entity before importing — for example, `SELECT domain, MAX(enriched_at) AS last_enriched_at FROM enrichment_log GROUP BY domain`. For a strictly one-time historical backfill, a CSV import is simpler.
+
 **Sync timing and behavior**
 
 Clay syncs data from Snowflake on the following schedules:
