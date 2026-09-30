@@ -338,6 +338,22 @@ Yes. Switch models in the configuration panel and rerun tests to compare output 
 
 No — you do not need to remove and re-add a Claygent after making changes in Claygent builder. Updates are picked up automatically without any changes to the table column. New runs use the latest saved version of the agent. If a run is already in progress when you save an update, that run continues using the version it started with and completes normally before any new runs pick up the change.
 
+Saving a Claygent does **not** re-run rows that already have results, so existing cells keep their old output until you re-run the column. See **I updated my Claygent but my table still shows the old results** below.
+
+### I updated my Claygent but my table still shows the old results — is the update not reflected in my table?
+
+Your update did reach the table. A table column that uses a saved Claygent always runs the latest saved version of that Claygent — the column does not pin to an older version. However, saving a new version of a Claygent does **not** automatically re-run rows that already have results. Those rows keep the output from the version they originally ran with, which can make it look like the update didn't take.
+
+You don't need to delete and re-add the Claygent column. To refresh rows that already have results with your updated Claygent:
+
+1.  In Claygent builder, click **Save** so your changes are stored as a new version. Unsaved edits in the Claygent editor are not used by any table.
+2.  In your table, right-click the Claygent column header → **Run column** → **Force run all [N] rows**.
+3.  The rows re-run with the latest saved version of the Claygent and their cells update with the new output.
+
+**Note:** **Run [N] empty or out-of-date rows** does not refresh these rows. Saving a Claygent doesn't mark existing results as out-of-date, so that option only runs empty and errored cells. Use **Force run all [N] rows** to refresh cells that already have results. Re-running rows costs credits — see **If I re-run a Claygent column on rows that already have results, am I still charged credits?** above.
+
+New rows added to the table, and future runs in every table that uses the Claygent, pick up the latest saved version automatically.
+
 ### I switched to a cheaper model in my Claygent column but new runs still charge the old price — why?
 
 When you change the model in a Claygent column's settings and close the panel, Clay prompts you with a **"Save changes?"** dialog. If you clicked **"Don't save"** in that dialog, the model selection was discarded and new runs continue using the previous model and its credit cost.
