@@ -114,11 +114,25 @@ Use webhooks to send data from Marketo to Clay for real-time lead enrichment. Th
     -   `Request type`: POST
     -   `Request token encoding`: None
     -   `Response format`: JSON
-    -   `Payload template`: Use the JSON template below, customizing fields as needed.
+    -   `Payload template`: Use the JSON template below, customizing fields as needed. Marketo webhook tokens use each field's display name (for example, `{{lead.First Name}}`, not `{{lead.FirstName}}`), and company fields use the `company.` prefix. To add other fields, use `Insert Token` in the Marketo webhook editor so the token matches your instance.
 
-`{ "id": "{{lead.Id}}", "first_name": "{{lead.FirstName}}", "last_name": "{{lead.LastName}}", "email": "{{lead.EmailAddress}}", "title": "{{lead.JobTitle}}", "company": "{{lead.CompanyName}}", "industry": "{{lead.Industry}}", "country_code": "{{lead.Country}}" }`
+`{ "id": "{{lead.Id}}", "first_name": "{{lead.First Name}}", "last_name": "{{lead.Last Name}}", "email": "{{lead.Email Address}}", "title": "{{lead.Job Title}}", "company": "{{company.Company Name}}", "industry": "{{company.Industry}}", "country_code": "{{lead.Country}}" }`
 
 ## Troubleshooting
+
+### Marketo webhook rows arrive in Clay but most fields are blank
+
+If your Marketo webhook creates rows in your Clay webhook table but only a few fields have values — for example, only `Id` and `Country Code` show values in **Cell details** while Email, First Name, Last Name, Title, Company, and Industry are blank — the Marketo tokens in your payload template aren't resolving. Marketo sends an empty value for a token it can't resolve instead of returning an error. Clay stores the payload exactly as received, so each key still appears in the row, just without a value.
+
+The most common cause is tokens written with the field's API name (such as `{{lead.FirstName}}` or `{{lead.EmailAddress}}`) instead of its display name. Tokens such as `{{lead.Id}}` and `{{lead.Country}}` still resolve because those fields' display names are a single word, which is why those fields arrive while the others are blank. To fix the Marketo payload template:
+
+1.  In Marketo, go to **Admin** → **Webhooks** and open the webhook that sends data to Clay.
+2.  Edit the payload template and replace each token with the display-name version, for example `{{lead.First Name}}`, `{{lead.Last Name}}`, `{{lead.Email Address}}`, and `{{lead.Job Title}}`.
+3.  Use the `company.` prefix for company fields, for example `{{company.Company Name}}` and `{{company.Industry}}`.
+4.  For any other standard or custom field, use `Insert Token` in the webhook editor rather than typing the token by hand, so the token matches the field's name in your Marketo instance.
+5.  Save the webhook, trigger it for a test lead, and open the new row's webhook cell in Clay. The fields should now show values in **Cell details**.
+
+If a field is still blank after this, check that the lead actually has a value for that field in Marketo.
 
 ### Custom fields are missing from Lookup object results
 
@@ -149,8 +163,8 @@ Correct (no manual quotes around token values — JSON encoding adds them):
 ```
 {
   "id": {{lead.Id}},
-  "email": {{lead.EmailAddress}},
-  "form_comments": {{lead.WebformComments}}
+  "email": {{lead.Email Address}},
+  "form_comments": {{lead.Webform Comments}}
 }
 ```
 
@@ -159,8 +173,8 @@ Incorrect (manual quotes combined with JSON encoding produces invalid JSON):
 ```
 {
   "id": "{{lead.Id}}",
-  "email": "{{lead.EmailAddress}}",
-  "form_comments": "{{lead.WebformComments}}"
+  "email": "{{lead.Email Address}}",
+  "form_comments": "{{lead.Webform Comments}}"
 }
 ```
 
