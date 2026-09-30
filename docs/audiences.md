@@ -125,6 +125,8 @@ Clay pulls data from Salesforce on two schedules:
 
 In both cases, the record is not removed from Audiences — it persists with **Deleted in source** status, which you can filter on in any segment to exclude it from your active audiences. If a Salesforce record is deleted and recreated (assigning it a new Salesforce ID), it will temporarily appear as a duplicate entry until the next weekly full sync resolves it. There is no self-serve option to trigger an early full sync — contact Clay support if you need an expedited cleanup.
 
+**Merged records:** When you merge duplicate Accounts, Contacts, or Leads in Salesforce, the losing record is deleted in Salesforce and follows the same deletion behavior above — it is marked **Deleted in source** rather than combined into the surviving record. See [What happens in Audiences when I merge duplicate accounts in Salesforce?](#what-happens-in-audiences-when-i-merge-duplicate-accounts-in-salesforce) in the FAQs below.
+
 **Salesforce activities:** To import Salesforce Tasks and Events associated with your Accounts, go to your Salesforce source settings, select `Accounts`, and enable the **Also import activities (tasks and events) associated with these accounts** toggle. Accounts are associated automatically in the background. The Activity tab on each record's detail view then shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp. This toggle is only available for Accounts — there is no equivalent option for Contacts, Leads, or the People object. Even if your Salesforce CRM has Tasks or Events associated with contacts or leads, those activities will not appear in the People Activity tab in Audiences.
 
 #### Importing a record subset using SOQL
@@ -1222,6 +1224,27 @@ Two behaviors to keep in mind:
 -   **Empty fields count as non-matches.** If a field value in your Audience record is empty (null), it will not match any filter condition on that field — including equality checks. For example, filtering by `Profile URL = <value>` will not return records that have an empty Profile URL field, even if the Email matches.
 
 If you need to look up a record that may be missing one of your identifier fields, filter by the field most likely to be populated (typically `Email` or `Profile URL`), and use a single-field filter rather than combining multiple conditions.
+
+### What happens in Audiences when I merge duplicate accounts in Salesforce?
+
+When you merge duplicate Accounts in Salesforce, Salesforce keeps the winning (master) Account and deletes the losing one. Audiences does **not** automatically combine the two corresponding company records when this happens:
+
+-   **The surviving Salesforce Account** keeps syncing into its existing Audiences company record as normal.
+-   **The losing Salesforce Account** is marked **Deleted in source** on its Audiences company record the next time a Salesforce sync detects the deletion. If the merged-away record is still in the Salesforce Recycle Bin (queryable with `IsDeleted=true`), the incremental sync picks it up — every 15 minutes on Enterprise plans, or once daily on Growth plans. If it has been permanently purged from Salesforce, the weekly full sync marks it. See [Importing from Salesforce](#importing-from-salesforce) for sync timing.
+-   **The losing company record is not removed from Audiences.** It stays in All Companies with a **Deleted in source** sync status until you archive it.
+
+The same behavior applies when you merge duplicate Contacts or Leads in Salesforce — the losing person record in your People audience is marked **Deleted in source**.
+
+**To clean up records left behind by Salesforce merges**, filter on sync status and archive the matching records in bulk:
+
+1.  Go to **All Companies** (or **All People** for merged Contacts and Leads).
+2.  Click **Filters** to open the filter panel, then click **Filter** to add a rule.
+3.  Under **Sync status**, select your Salesforce source and set the value to **Deleted in source**.
+4.  Click **Create segment** to save the filter as a named segment.
+5.  In the left sidebar, click the **⋮** (three-dot) menu next to the segment's name.
+6.  Select **Archive records in segment** and confirm by clicking **Archive**.
+
+The archived records are moved to the **Archived** section in the left sidebar and no longer appear in active segments.
 
 ### How do I remove records from an audience?
 
