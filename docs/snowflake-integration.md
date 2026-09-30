@@ -222,6 +222,7 @@ Any valid `SELECT` works — tables, views, joins, and aggregations are all supp
 
 -   **Use fully qualified table names** (`DATABASE.SCHEMA.TABLE`). Snowflake doesn't always default to the database and schema you expect based on your connection settings.
 -   **Test your query in a Snowflake worksheet first** to confirm it returns the rows you expect before connecting it to Clay.
+-   **Use a view or aggregation if your source has multiple rows per entity.** The Audiences import deduplicates rows by the Unique Identifier — when a source has multiple rows per company or person (for example, a change log with one row per enrichment run), only the last row in query-result order is kept per identifier, with no error reported. To control which values are imported, use a `GROUP BY` with aggregate functions (`MAX`, `MIN`, etc.) in your SQL, or point the import at a Snowflake view that collapses each entity's rows into one.
 
 Click `Test` to preview results, then click `Continue`.
 
