@@ -150,6 +150,14 @@ For example, Zoho CRM's OAuth2 flow exchanges a long-lived refresh token for a o
 
 **To reduce to 1 Action per row:** Centralize the token fetch in a dedicated single-row cache table that refreshes on a schedule. A [Lookup Single Row in Other Table](https://university.clay.com/docs/lookup-rows) column in your main table pulls the cached token in — lookups don't consume an Action. Each row then pays only 1 Action for the actual write, plus a small near-fixed cost for the periodic token refreshes. See the [shared token cache table pattern](https://university.clay.com/docs/http-api-integration-overview) in the HTTP API guide for full setup steps.
 
+### Can I enable IP allowlisting (static egress IPs) for HTTP API with JWT Authentication columns?
+
+Yes. HTTP API with JWT Authentication enrichment columns support the same **Use static IP** toggle as standard HTTP API enrichment columns. When enabled, requests from that column route through Clay's fixed egress IP addresses, which you can add to your server or firewall's allowlist.
+
+**Availability:** This feature is available for Enterprise customers. Contact your Clay account team or support before enabling — static IP must be activated for your workspace first. Your account team can provide the current list of IP addresses to add to your allowlist. Static IP is per column, not workspace-wide — you control exactly which columns route through fixed IPs.
+
+For full setup steps and information on other integrations that automatically route through static IPs (Salesforce, Snowflake, Databricks), see [IP allowlisting](https://university.clay.com/docs/http-api-integration-overview#ip-allowlisting) in the HTTP API guide.
+
 ### How do I call ZoomInfo API endpoints that the native integration doesn't support?
 
 The native ZoomInfo integration in Clay supports four actions: **Enrich Company**, **Enrich Contact**, **Enrich contact(s) by ID** (enrich up to 25 contacts at once using their ZoomInfo contact IDs), and **Search contacts**. For ZoomInfo API endpoints not covered by these native actions, use **HTTP API with JWT Authentication** with the following ZoomInfo-specific settings.
