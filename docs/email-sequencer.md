@@ -479,16 +479,37 @@ For Google Workspace accounts on adjacent or alternate domains, you'll need to:
 
 ### Does connecting via OAuth automatically add my email aliases?
 
-No — connecting a mailbox via OAuth only adds the specific email account you authenticate with. Email aliases associated with that account are **not** automatically connected as separate sender accounts. Warmup and campaign rotation apply per connected account, so aliases you haven't explicitly added do not participate in sending or warmup.
+No — connecting a mailbox via OAuth only adds the specific email account you authenticate with. Email aliases associated with that account are **not** automatically connected as separate sender accounts. Warmup and campaign rotation apply per connected account, so aliases you haven't explicitly added do not participate in sending or warmup. For example, if `name@yourcompany.com` is warming up in Clay and `name@otherdomain.com` is an alias on the same Google Workspace mailbox, warmup covers only `name@yourcompany.com`.
+
+Signing in to Google OAuth again with the same Google account does not add the alias — Clay reconnects the primary mailbox address, and no second account appears in `Sequencer` → `Email accounts`.
 
 To use an alias as a distinct sender, connect it as its own account:
 
--   **SMTP:** Go to `Settings` → `Add email accounts` → `SMTP`. Set the "From" email to the alias address and enter your primary account's server credentials (username, password, SMTP host, and port).
+-   **SMTP:** Go to `Sequencer` → `Email accounts` → `Add email account` → `Bring your own accounts` → `Manual SMTP & IMAP setup`. Set **Sender email** to the alias address, set **Username** to your primary mailbox's login address, and enter your primary account's server credentials (password, SMTP host, and IMAP host). For Google Workspace aliases, see [Connecting a Google Workspace alias via SMTP](#connecting-a-google-workspace-alias-via-smtp) below.
 -   **Bulk CSV upload:** Use the `Bulk CSV upload` option to add multiple aliases at once. Set each row's `from_email` to the alias address and fill in the remaining SMTP and IMAP fields using your primary account's server settings.
 
 **For Microsoft 365 aliases:** The SMTP and bulk CSV paths work with Microsoft 365, provided your tenant has SMTP AUTH enabled and the alias has "Send As" permissions configured in your Microsoft 365 admin settings.
 
 **Note:** If your aliases are simple forwarding addresses that route to the same underlying mailbox (rather than independent inboxes with their own SMTP access), connecting them separately does not increase your total daily sending capacity — they share the same inbox. To scale sending volume, add accounts that each have a dedicated inbox. See [Buying email accounts](buying-email-accounts.md) for a faster path to additional inboxes.
+
+### Connecting a Google Workspace alias via SMTP
+
+To warm up and send from a Google Workspace alias (for example, an address on a second domain in the same Google Workspace), add the alias in Clay through the manual SMTP form, authenticating with the primary mailbox's Google login and a Google app password. Clay does not prefill Gmail server settings, so enter them yourself:
+
+1.  Go to `Sequencer` → `Email accounts` → `Add email account` → `Bring your own accounts` → `Manual SMTP & IMAP setup`.
+2.  **Sender name**: the name recipients should see.
+3.  **Sender email**: the alias address (for example, `name@otherdomain.com`).
+4.  **Username**: the primary mailbox address you sign in to Google with (for example, `name@yourcompany.com`).
+5.  **Password**: a Google app password for the primary mailbox — not your normal Google password. Generate one in your Google Account under `Security` → `2-Step Verification` → `App passwords` (2-Step Verification must be turned on).
+6.  **SMTP host**: `smtp.gmail.com`. Set **SMTP type** to `SSL` (port 465) or `TLS` (port 587) — Clay fills in the port based on the type you choose.
+7.  **IMAP host**: `imap.gmail.com`. Set **IMAP type** to `SSL` (port 993).
+8.  Submit the form. On the next screen, the new SMTP account is pre-selected for warmup — click **Enable warming**.
+
+The alias now appears as its own account in `Sequencer` → `Email accounts` and warms up independently of the primary address; the initial warmup phase typically takes **3 weeks**.
+
+If Clay shows **"Login was rejected. Check the password — Gmail accounts need an app password, not your normal password."**, Google rejected the credentials. Generate a new app password for the primary mailbox and confirm **Username** is the primary mailbox address, not the alias.
+
+If the alias is actually a separate Google Workspace mailbox with its own login (not an alias), connect it through `Google OAuth` instead by signing in as that mailbox directly.
 
 ### Are personal email accounts supported (e.g., Gmail, Hotmail)?
 
