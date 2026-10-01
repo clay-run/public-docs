@@ -683,6 +683,11 @@ To connect to a Salesforce sandbox:
 
 Once connected, select your sandbox connection when adding any Salesforce enrichment or source in your Clay tables.
 
+**Can Clay be connected to a Salesforce sandbox and Salesforce production at the same time?** Yes, for Clay tables. Your Salesforce sandbox connection and your Salesforce production connection are separate connections in `Settings` → `Connections`, and both can be active in the same workspace at the same time. A common testing setup is one table that pulls sandbox data using the sandbox connection, and a separate table that pulls production data using the production connection. Choose the connection for each Salesforce action or source from its account dropdown. Two things to keep in mind:
+
+-   **Audiences uses only one Salesforce connection.** Audiences supports one Salesforce connection per workspace, so Audiences can sync with either your sandbox org or your production org, not both. See [Can I connect multiple Salesforce accounts to Audiences?](audiences.md#can-i-connect-multiple-salesforce-accounts-to-audiences).
+-   **You can restrict who uses the production connection.** On Enterprise plans, use [Access settings for connections](access-settings-for-connections.md) to set your production Salesforce connection to `Specific people and groups`, so only the members who need it can build columns or workflows with it.
+
 ## Can I reverse my Salesforce enrichment?
 
 No, once you update or create an object in Salesforce from Clay, you cannot undo these actions.
