@@ -66,7 +66,7 @@ The same workspace-level beta access also unlocks a Routines endpoint for trigge
 -   `POST /routines/{routine_id}/run` — submit input records to a Clay function and start an enrichment run.
 -   `GET /routines/run/{routine_run_id}/results` — poll for results once the run completes.
 
-Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is under **Settings → Account → API keys** and is distinct from the personal API key on your profile page.
+Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. To create your workspace key, open **API and CLI** in the left sidebar (under **Orchestration**), select the **API keys** tab, and click **Add API key**. This key is distinct from the personal API key on your profile page.
 
 **Note:** Routine run `inputs` fields and item `id` values must not contain NUL characters (`\u0000`) or unpaired Unicode surrogates. Sending such characters to `POST /routines/{routine_id}/run` returns a `400` error — for example, `inputs: Inputs must not contain NUL characters (\u0000) or unpaired Unicode surrogates.` Batch runs with these characters produce a `validation_failed` status with a per-line field detail. If your data comes from a database export, file-parsing pipeline, or encoding-mismatched source, strip null bytes before calling the API.
 
@@ -96,7 +96,7 @@ Use the same workspace-scoped API key in the `clay-api-key` request header. Read
 | Paid | 1,000,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
 | Enterprise | 10,000,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
 
-When you exceed the period limit, Clay returns `400` with a message naming the limit, the number of results already used, and the next daily midnight UTC reset timestamp. To monitor your usage before hitting the limit, open the **API and CLI** page in your workspace (`Settings → API`). The **Search API usage** section shows your current period's results used out of your limit, the next reset date, and a progress bar that turns orange at 70% usage and red at 90%. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
+When you exceed the period limit, Clay returns `400` with a message naming the limit, the number of results already used, and the next daily midnight UTC reset timestamp. To monitor your usage before hitting the limit, open the **API and CLI** page from the left sidebar (under **Orchestration**). The **Search API usage** section shows your current period's results used out of your limit, the next reset date, and a progress bar that turns orange at 70% usage and red at 90%. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
 
 **Note:** Workspaces on legacy (pre-2026) non-Enterprise plans retain the annual quota window (resets January 1 UTC) rather than the rolling 30-day window.
 
