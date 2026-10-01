@@ -83,7 +83,7 @@ The Salesforce import flow in Audiences has been redesigned. You can import **al
 
 SOQL queries for Audiences must be valid SELECT statements and must include `Id`, `SystemModstamp`, and `IsDeleted`. Clay uses these fields to handle incremental syncing and soft-delete detection. For Contact queries, also include `AccountId`; for Lead queries, also include `ConvertedContactId`. The AI query generator includes these fields automatically.
 
-**No semi-joins (nested sub-selects in `WHERE` clauses).** Salesforce's Bulk API 2.0 — which handles the initial full import and weekly re-sync — does not support SOQL semi-joins: queries that filter using `WHERE Id IN (SELECT ... FROM ...)`. A query containing a semi-join passes Clay's **Preview** step but causes the Bulk API import job to fail immediately with **"Salesforce Bulk API job [ID] failed. Records processed: 0"** and zero records imported. Use direct field filters on the imported object only. To filter contacts by opportunity or contact-role attributes, import all contacts and apply that filter as an audience segment condition after importing.
+**No semi-joins (nested sub-selects in `WHERE` clauses).** Salesforce's Bulk API 2.0 — which handles the initial full import and weekly re-sync — does not support SOQL semi-joins: queries that filter using `WHERE Id IN (SELECT ... FROM ...)`. A query containing a semi-join passes Clay's **Preview** step but causes the Bulk API import job to fail immediately with **"Salesforce Bulk API job [ID] failed. Records processed: 0"** and zero records imported. Use direct field filters on the imported object only. To filter contacts by opportunity attributes (such as Stage or Amount), import all contacts and your Opportunities, then apply that filter as an audience segment condition after importing. Fields on the Opportunity Contact Role record itself (such as **Role**) aren't available as segment filters — see [How do I segment contacts by a field on their Opportunity Contact Role?](#how-do-i-segment-contacts-by-a-field-on-their-opportunity-contact-role).
 
 **Importing a Salesforce record subset with SOQL**
 
@@ -880,7 +880,29 @@ WHERE Id IN (SELECT ContactId FROM OpportunityContactRole WHERE ...)
 
 A semi-join passes Clay's **Preview** step (which uses Salesforce's standard REST API to estimate matching records) but causes the Bulk API job to fail immediately, surfacing as **"Salesforce Bulk API job [ID] failed. Records processed: 0"** with no records imported.
 
-**Fix:** Remove the nested sub-select and use only direct field filters on the object you are importing. Open the import settings, update the SOQL query to eliminate the semi-join, and re-run the sync. For example, instead of filtering contacts by `WHERE Id IN (SELECT ContactId FROM OpportunityContactRole WHERE ...)`, import all contacts and apply the opportunity contact-role condition as an **audience segment filter** after importing — segment filters evaluate cross-object lookups using a separate query path that supports them.
+**Fix:** Remove the nested sub-select and use only direct field filters on the object you are importing. Open the import settings, update the SOQL query to eliminate the semi-join, and re-run the sync. For example, instead of filtering contacts by `WHERE Id IN (SELECT ContactId FROM OpportunityContactRole WHERE ...)`, import all contacts and your Opportunities and apply the opportunity condition (for example, Stage or Amount) as an **audience segment filter** after importing — segment filters evaluate cross-object lookups using a separate query path that supports them. If the condition is on a field of the Opportunity Contact Role record itself (such as **Role**), see [How do I segment contacts by a field on their Opportunity Contact Role?](#how-do-i-segment-contacts-by-a-field-on-their-opportunity-contact-role).
+
+### Why can't I find Opportunity Contact Role (or another standard Salesforce object) in the Custom objects dropdown?
+
+When you add records from Salesforce in Audiences and choose **Custom objects**, the **Salesforce object** dropdown only lists Salesforce custom objects and external objects — objects whose API name ends in `__c` or `__x` (for example, `Territory_Mapping__c`). Standard Salesforce objects don't appear in the Custom objects dropdown, including junction objects such as **Opportunity Contact Role** (`OpportunityContactRole`).
+
+The only standard Salesforce objects you can import into Audiences are the four with their own object type option: **Accounts**, **Contacts**, **Leads**, and **Opportunities**. Other standard objects can't be imported into Audiences directly.
+
+A **Record subset** SOQL query can't pull other standard objects in either. The query's root object (the object after `FROM`) must match the object type you selected — Account, Contact, Lead, or Opportunity — otherwise Clay shows an error such as **"The query must select from Contact."** A query using `FROM OpportunityContactRole` fails this check.
+
+To segment contacts by a field on Opportunity Contact Role, see [How do I segment contacts by a field on their Opportunity Contact Role?](#how-do-i-segment-contacts-by-a-field-on-their-opportunity-contact-role) below.
+
+### How do I segment contacts by a field on their Opportunity Contact Role?
+
+When you import Opportunities into Audiences, Clay uses Salesforce's Opportunity Contact Role (OCR) records only to link contacts to their opportunities. That link lets you filter a People audience by opportunity attributes such as Stage or Amount — see [Why does filtering my People audience by deal attributes return fewer contacts than expected?](#why-does-filtering-my-people-audience-by-deal-attributes-return-fewer-contacts-than-expected). Fields on the OCR record itself — such as **Role** or a custom field on Opportunity Contact Role — aren't stored as People fields and can't be used as segment filters.
+
+To segment contacts by an Opportunity Contact Role value, copy that value onto each contact's People record from a Clay table:
+
+1.  In a workbook, create a table with the [**Salesforce SOQL**](https://university.clay.com/docs/salesforce-soql) source. Unlike the Audiences record subset import, the Salesforce SOQL table source accepts any Salesforce object as the root, so you can query Opportunity Contact Role directly — for example, `SELECT ContactId, Contact.Email, Role FROM OpportunityContactRole WHERE Role = 'Decision Maker'`.
+2.  In Audiences, go to **Data Hub** → **Fields**, click **+**, and create a People field to hold the value (for example, a Text field named "Opportunity Contact Role").
+3.  In the table, add the `Upsert Audiences Record` action. Set the lookup field to **Email**, map the contact's email column, and map the OCR value column to the field you created.
+4.  Run the action. Each matching contact's People record now holds the OCR value. If no People record matches an email, `Upsert Audiences Record` creates a new record for it.
+5.  In your People audience, add a filter on the new field (for example, **Opportunity Contact Role equals Decision Maker**).
 
 ### Why do some of my Salesforce Lead records not appear as separate person records in Clay?
 
