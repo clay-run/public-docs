@@ -431,6 +431,20 @@ Any contact whose primary source matches the selected source is excluded from th
 
 **Keep sync on to keep the suppression list current.** If the source's **Import status** shows **Sync off**, new contacts added to your CRM won't flow into Audiences and won't be suppressed from this segment. Make sure sync is enabled for the source you're using as a suppression list — see [Understanding source import statuses](#understanding-source-import-statuses) above.
 
+### Removing overlapping records between two segments or sources
+
+If two of your segments are built from different sources (for example, two Find People searches) and some people appear in both, you can make one segment contain only the records unique to its own source. Use the **Sources** filter. It matches every source a record came from, and a person imported by two searches is a single record that lists both sources.
+
+To keep only the people who came from Source 2 and not Source 1:
+
+1. Open the segment in **People** (or **Companies**) and click **Filters**.
+2. Click **+ Filter**, choose **Sources**, set the operator to **contains**, and select **Source 2**.
+3. Click **+ Filter** again, choose **Sources**, set the operator to **doesn't contain**, and select **Source 1**.
+4. Make sure the connector between the two filters reads **and**. Click it to switch between **and** and **or**.
+5. Click **Save filters** to update the existing segment. If you're building a new view, the button reads **Create segment** instead.
+
+The segment now excludes anyone who also appears in Source 1, so it contains only records unique to Source 2.
+
 ## Finding people from a Companies Audience
 
 Once you have a Companies Audience segment, you can run a people search scoped strictly to the companies in that segment — without needing a separate company table.
@@ -1149,7 +1163,14 @@ Two approaches that do not apply to the Lead → Company case:
 
 To filter your People audience by company attributes for Lead records, map company-related fields directly from the Lead object in your Salesforce import field mapping — for example, the Lead's built-in **Company**, **Industry**, or **Annual Revenue** text fields. Mapped Lead fields are available as People audience filter options immediately after the next sync.
 
-**People records from other sources (CSV, people search, Clay table):** If your People audience records were imported via CSV, a people search, or a Clay table send — rather than Salesforce Contacts — company name is not automatically carried over as a field on those records. People audience records do not have a built-in Company Name field, and there is no path in Audiences to copy company-level fields directly onto People records.
+**People records from a Find People search — why is the Company name blank?** People audience records have a built-in **Company** column (cube icon) that shows the name of the company record the person is linked to in your Companies audience. When you import people from a Find People search, Clay links each person to their current company only if that company is also in your Companies audience. If it isn't, the person has no linked company and the **Company** column shows blank (—), even though the company name appeared in the Find People search results.
+
+To fill in the Company name for people from a Find People search:
+
+1. Import those companies into your Companies audience — for example, run a Find Companies search using the same criteria as your people search.
+2. Once the companies are in your Companies audience, turn on **Live search** for your Find People source (so it re-runs automatically) or run a new Find People search. People are linked to matching companies when they are imported, and the company name appears in the **Company** column.
+
+**People records sent from a Clay table:** The company linking described above applies to people imported from a Find People search. People sent from a Clay table are not linked to Companies audience records through the **Company** column, and there is no path in Audiences to copy company-level fields directly onto People records.
 
 If you need company name alongside each person in a table workflow, the recommended approach is to build that association in Clay Tables:
 
