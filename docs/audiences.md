@@ -573,6 +573,12 @@ Enrichment results write permanently back to All People — they are available a
 
 In a **Companies** audience, columns written by a Claygent display a four-diamond icon in the column header. Workspace admins and members can click the column header and select **View Claygent** from the dropdown to open the configuration for the Claygent that populates that column. This option does not appear in People audiences or in archived audiences.
 
+**Working with contact list outputs from an Account Research Agent**
+
+If your Account Research Agent is configured to output contacts or buying committee members — for example, the people identified during account research — those contacts are stored as a text field on each Company Audience record. Audiences has no native list field type, so the agent serializes multiple contacts as a JSON-formatted value in a scalar text field.
+
+To work with each contact individually — for example, to look up email and phone for each person, or to upsert them into your People Audience or Salesforce — you need to expand that field into one row per contact using a Clay table as an intermediate step. See [How do I expand a JSON array field in one Audience into individual records in another?](#how-do-i-expand-a-json-array-field-in-one-audience-into-individual-records-in-another) for the step-by-step workflow. When setting up the list field in step 2, click the gear icon to switch to formula mode and enter `JSON.parse(/YourContactField)` — replacing `YourContactField` with the name of your agent output field using the `/` field picker — to convert the stored JSON text into a native list.
+
 ### Connecting a workflow to a segment
 
 Connect a Clay workflow to a named audience segment — or to the entire workspace audience (**All People** or **All Companies**) — to automatically run it on every new member that enters. When a contact or company matches the segment's filters, the connected workflow starts within minutes. To run a workflow across your full workspace audience instead of a specific segment, open the trigger segment picker and select **All People** or **All Companies** from the top of the **All** tab — the workflow then triggers for every new person or company entering the workspace-wide audience.
@@ -750,7 +756,7 @@ Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data 
 
 ### How do I expand a JSON array field in one Audience into individual records in another?
 
-Audiences has no native array or object field type. The `Upsert Audiences Record` and `Update Audiences Record` field mappers expose only scalar field types (text, number, date, boolean) — JSON array columns cannot be selected as write targets. To expand a JSON array field — for example, a `providers` array on a Company record — into individual records in another Audience (for example, People records), use a table as an intermediate processing step:
+Audiences has no native array or object field type. The `Upsert Audiences Record` and `Update Audiences Record` field mappers expose only scalar field types (text, number, date, boolean) — JSON array columns cannot be selected as write targets. To expand a JSON array field — for example, a contact list populated by an Account Research Agent, or a `providers` array on a Company record — into individual records in another Audience (for example, People records), use a table as an intermediate processing step:
 
 1.  **Get the source records into a Clay table.** If starting from an Audience, click **Enrich → Add bulk enrich** from your segment view to create a bulk enrichment table sourced by that segment.
 2.  **Flatten the array using Send Table Data.** In the table, add a **Send Table Data** column (**Tools → Export → Send table data**) and choose **"Send row for each item in a list"**. Select the column holding your JSON array. If the array is stored as a JSON string (a text value that looks like `[{"name": "Alice"}, ...]`), click the gear icon on the list field and enter `JSON.parse(/YourColumn)` to convert it to a native list. **Note:** This method sends a maximum of 20 items per source row per run — see [Send table data](send-table-data.md) for more on this limit.
