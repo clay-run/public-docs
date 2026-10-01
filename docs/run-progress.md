@@ -100,7 +100,7 @@ Workflows don't support continuing past an errored node or routing to a backup n
 
 A **Conditional** node can route on a node that succeeds but finds nothing. When a provider runs successfully but returns no data (for example, Apollo finds no phone number for the person), the node completes normally. A downstream **Conditional** can then check for the empty result and send the run to a fallback provider.
 
-To recover runs that ended because a node failed, use **Bulk re-run** (below) with the **From where they failed** mode once the underlying issue is fixed.
+To recover runs that ended because a node failed, fix the underlying issue (for example, re-authenticate the connection), then use **Bulk re-run** (below) to restart the failed runs at their failed step.
 
 ### Continuing past failed items in Repeat mode
 
