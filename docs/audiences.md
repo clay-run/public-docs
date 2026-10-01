@@ -1,12 +1,12 @@
 ---
 title: Audiences
 description: "Clay Audiences is available on Growth and Enterprise plans. Launch workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above. Trial workspaces do not have access to Audiences."
-last_synced: 2026-09-22T14:05:06.325Z
+last_synced: 2026-09-29T18:58:00.744Z
 ---
 
 # Audiences
 
-**Plan availability:** Clay Audiences is available on **Growth** and **Enterprise** plans (including legacy Enterprise). Launch workspaces have access to core Audiences features — importing via CSV, people/company search, and Clay table sends — but connecting a CRM or data warehouse as a data source requires **Growth or above**. Free, Trial, and legacy non-Enterprise plan workspaces do not have access to Audiences. Growth plans can sync up to 250,000 CRM/DWH records; Enterprise plans support up to 25,000,000 records. Only imported Account, Contact, and Lead records count toward this limit — Activities (Salesforce Tasks and Events) and Opportunities associated with those accounts do not count toward the record limit. Records imported via CSV upload, Clay People/Company search, or Clay table sends are not counted against the CRM/DWH record limit (250,000 for Growth; 25,000,000 for Enterprise).
+**Plan availability:** Clay Audiences is available on **Growth** and **Enterprise** plans (including legacy Enterprise). Launch workspaces have access to core Audiences features — importing via CSV, people/company search, and Clay table sends — but connecting a CRM or data warehouse as a data source requires **Growth or above**. Free, Trial, and legacy non-Enterprise plan workspaces do not have access to Audiences. Growth plans can sync up to 250,000 CRM/DWH records; Enterprise plans support up to 25,000,000 records. Only imported Account, Contact, and Lead records count toward this limit — Activities (Salesforce Tasks and Events) and Opportunities associated with those accounts do not count toward the record limit. Records imported via CSV upload, Clay People/Company search, or Clay table sends are not counted against the CRM/DWH record limit (250,000 for Growth; 25,000,000 for Enterprise). Audiences fields are budgeted in four independent type buckets — text (which also covers email and URL), number, date, and checkbox — with People and Companies each getting their own budget. Roughly 70 fields of each type on non-Enterprise plans and 135 of each on Enterprise; filling one bucket doesn't consume capacity in the others.
 
 Clay Audiences is the unified data layer for your workspace.  It combines your CRM, data warehouse, and third-party enrichments into one persistent profile per contact and account, updated in real time.
 
@@ -50,6 +50,7 @@ You can import data from:
 -   Google BigQuery
 -   Salesforce
 -   HubSpot
+-   Gong (contact your Growth Strategist to enable)
 
 ### Importing from Salesforce
 
@@ -170,6 +171,10 @@ A record subset import works alongside any standard Salesforce import. You can a
     -   Deal data is associated with both your Companies and People records. In a Companies audience, you can filter by deal attributes. In a People audience, only contacts directly linked to a deal via HubSpot contact associations appear when you filter on deal attributes — not all contacts at the company that owns the deal.
 10.  Name the corresponding Clay fields.
 11.  Click `Save and Preview`, then `Confirm`.
+
+**Connecting more than one HubSpot account.** A workspace can hold several HubSpot connections at once, which helps when different business functions run in separate HubSpot accounts. Repeat the steps above for each account — every connection keeps its own source settings and field mappings. The `Sources` tab in Audiences settings lists every import alongside an `Account` column naming the HubSpot account it came from, so you can manage each one independently.
+
+Within a single HubSpot account, each record type takes one import — Clay tells you when that record type has already been added for that account. To combine records that represent the same person or company across two HubSpot accounts, configure `Import record matching` on each import — see [Entity resolution and deduplication](#entity-resolution-and-deduplication) below.
 
 **Note: HubSpot is currently import-only.** Clay imports HubSpot records and enriches them in your Audience, but does not currently write enriched data or segment membership back to HubSpot. Salesforce is the only native write-back destination — see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
 
@@ -461,14 +466,14 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
 
 **To add an enrichment:**
 
-1.  Navigate to an audience and click `Enrich` → `Add bulk enrich`.
+1.  Navigate to an audience and click `Enrich`, then `Add enrichment table` in the sidebar that opens.
 2.  Add enrichment columns as you normally would (e.g., `Enrich Person` for LinkedIn URL, title, phone).
 3.  Test on a small batch first — click `Run on 10 rows` to verify output before running at scale.
 4.  Open `Field Mapping` and map each column you want to save back to Audiences:
     -   Enable the auto-enrich toggle so that any new record entering this segment is automatically passed through the enrichment — typically within 15 minutes.
 5.  Click `Start Run`.
 
-**Note:** To run a bulk enrichment on Audience data, always start from within the Audience — click `Enrich` → `Add bulk enrich` from any segment view. When creating a new Bulk Enrichment from the Clay homepage (`New` → `Bulk enrichment`), the source type options are CSV and Salesforce CRM only — there is no "Audiences" source type in that dialog. The Audience segment serves as the source when you add the enrichment from within Audiences.
+**Note:** To run a bulk enrichment on Audience data, always start from within the Audience — click `Enrich`, then `Add enrichment table` from any segment view. When creating a new Bulk Enrichment from the Clay homepage (`New` → `Bulk enrichment`), the source type options are CSV and Salesforce CRM only — there is no "Audiences" source type in that dialog. The Audience segment serves as the source when you add the enrichment from within Audiences.
 
 **Note:** Clay does not impose rate limits on Audiences bulk enrichments — the system is built to handle large lists at scale. Third-party data providers (such as Clearbit or Apollo) apply their own rate limits, but Clay queues requests and manages these automatically in the background. If you supply personal API keys for a provider, those keys' own rate limits apply.
 
@@ -536,16 +541,16 @@ For **Companies** audiences, five built-in signal types are available:
 
 1.  Navigate to an audience and click `Enrich`.
 2.  Click `Signals` → select a signal type (e.g., `New Hire`).
-3.  Set the `look-back period` for the initial run: `3 months`, `6 months`, or `1 year`.
-4.  Set the `recurrence frequency` — how often it re-runs going forward.
-5.  Review the `cost preview per record` shown before the run begins.
-6.  Click `Save and Run`.
+3.  Set the look-back period for the initial run: `3 months`, `6 months`, or `1 year`. (The label varies by signal type — for example, **Include new hires within the last** for New Hire signals, **Include changes within the last** for Job Change signals.)
+4.  Set the `Frequency` — how often it re-runs going forward. Options are Quarterly, Monthly, Biweekly, Weekly, and Daily.
+5.  Review the `Cost` shown before the run begins.
+6.  Click `Save and run`, or `Save and re-run` if the signal has run before.
 
 After you add a signal:
 
 -   Results write to a `dedicated signal column` on each matching record — stored permanently and globally (not scoped to this segment).
 -   Clay **automatically creates a draft segment** for each signal type — named **New hires** (for New Hire signals), **Companies of job changers** (for Job Change signals), or **Web visitors** (for Web Intent signals). This segment is pinned at the top of the Audiences left sidebar and shows all records in your workspace that matched that signal type. It is a segment within Audiences, not a separate table.
--   Multiple signals each get their own column; the `Signal Summary` column aggregates all results. Click any row to see per-signal detail.
+-   Multiple signals each get their own column; the `Signal summary` column aggregates all results. Click any row to see per-signal detail.
 -   Any other segment that filters on this signal type will also surface these results.
 
 **Note:** The three auto-created draft segments have different entity types. **New hires** is a **People** segment — each record is an individual new hire contact detected at a monitored company. **Companies of job changers** and **Web visitors** are **Companies** segments — each record is a company where a job change or website visit was detected.
@@ -563,7 +568,7 @@ To see which specific records in your audience were picked up by the signal, add
 To run an enrichment on the people who matched a signal:
 
 1.  In Audiences, open the draft segment for your signal type — **New hires**, **Companies of job changers**, or **Web visitors** — pinned at the top of the Audiences left sidebar.
-2.  Inside the segment, click **Enrich** → **Add bulk enrich**.
+2.  Inside the segment, click **Enrich** → **Add enrichment table**.
 3.  Add your enrichment columns (for example, `Enrich Person` for LinkedIn URL, phone, or work email).
 4.  Click `Start Run`.
 
@@ -752,7 +757,7 @@ Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data 
 
 Audiences has no native array or object field type. The `Upsert Audiences Record` and `Update Audiences Record` field mappers expose only scalar field types (text, number, date, boolean) — JSON array columns cannot be selected as write targets. To expand a JSON array field — for example, a `providers` array on a Company record — into individual records in another Audience (for example, People records), use a table as an intermediate processing step:
 
-1.  **Get the source records into a Clay table.** If starting from an Audience, click **Enrich → Add bulk enrich** from your segment view to create a bulk enrichment table sourced by that segment.
+1.  **Get the source records into a Clay table.** If starting from an Audience, click **Enrich** → **Add enrichment table** from your segment view to create a bulk enrichment table sourced by that segment.
 2.  **Flatten the array using Send Table Data.** In the table, add a **Send Table Data** column (**Tools → Export → Send table data**) and choose **"Send row for each item in a list"**. Select the column holding your JSON array. If the array is stored as a JSON string (a text value that looks like `[{"name": "Alice"}, ...]`), click the gear icon on the list field and enter `JSON.parse(/YourColumn)` to convert it to a native list. **Note:** This method sends a maximum of 20 items per source row per run — see [Send table data](send-table-data.md) for more on this limit.
 3.  **Extract fields in the destination table.** In the destination table, click the **"Rows from: …"** cell on any row and use **Add to column** to extract individual fields from each item (for example, first name, last name, phone). Run any enrichments you need at this stage.
 4.  **Write to your target Audience.** Add an **`Upsert Audiences Record`** action column in the destination table to push each flattened record into your target Audience — creating a new record if no match exists, or updating an existing one if it does.
@@ -774,7 +779,7 @@ There are two ways to create a custom Audience field:
 
 The `+ Add field` option is also available in the `Update Audiences Record` column mapping inside a bulk enrichment table:
 
-1.  Navigate to a segment and click `Enrich` → `Add bulk enrich`.
+1.  Navigate to a segment and click `Enrich`, then `Add enrichment table`.
 2.  In the bulk enrich table, click the `Update Audiences Record` column header to open the Configure panel.
 3.  In the `Column mapping` dropdown, click `+ Add field`, name the new field, and save.
 
@@ -963,7 +968,7 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 The Audiences screen does not have a direct CSV download button. To download audience data as a CSV, use the **Enrich** flow to create an enrichment table from the segment, then export that table. **Admin access is required.**
 
 1. Open the audience segment you want to export.
-2. Click `Enrich` to open the enrichment panel, then create a new enrichment table for this segment. (The exact button label varies by workspace — you may see **Add bulk enrich** or a `+` button with a **Create Enrichment Table** option.)
+2. Click `Enrich` to open the enrichment panel, then click **Add enrichment table** to create a new enrichment table for this segment.
 3. In the enrichment setup, skip adding enrichment columns and turn off field mapping if you only need the raw segment data.
 4. Open the resulting table. If any rows are checked, uncheck them first — the toolbar shows **Tools** only when no rows are selected.
 5. Click **Tools** → **Export** → **Download CSV**.
@@ -1065,7 +1070,7 @@ If you have the Audiences Salesforce export enabled, enriched fields also sync b
 
 Audiences does not have a native HubSpot export destination — Salesforce is currently the only built-in CRM export. To push enriched data to HubSpot, use a Bulk Enrichment with a HubSpot action column directly from within your audience segment:
 
-1.  Navigate to an audience segment and click **Enrich** → **Add bulk enrich**.
+1.  Navigate to an audience segment and click **Enrich**, then **Add enrichment table**.
 2.  In the bulk enrichment table, add your data enrichment columns as usual (for example, `Enrich Person` to find phone numbers or professional profile URLs).
 3.  Click `Add enrichment` and search for **HubSpot** → select **HubSpot: Update object** (to update an existing HubSpot contact or company) or **HubSpot: Create object** (to create a new contact or company in HubSpot).
 4.  Map each enriched field to the corresponding HubSpot property you want to populate.
