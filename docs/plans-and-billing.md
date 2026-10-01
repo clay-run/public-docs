@@ -2,7 +2,7 @@
 title: Plans & billing
 description: We'll walk through each of our pricing plans and information around
   billing your workspace.
-last_synced: 2026-04-26T01:40:29.319Z
+last_synced: 2026-09-29T19:50:37.101Z
 ---
 
 # Plans & billing
@@ -24,25 +24,22 @@ This separation gives you transparency and control over exactly what you're payi
 
 Every AI prompt counts as **one action**. Data credits are consumed based on the model you select—Clay offers both fixed and variable AI pricing. For details on how AI pricing works, see our guide on [how AI is priced](https://university.clay.com/docs/ai-pricing).
 
-For more details on actions and data credits, see our comprehensive guide on [actions and data credits](https://www.clay.com/university/guide/actions-and-data-credits).
+For more details on actions and data credits, see our comprehensive guide on [actions and data credits](https://university.clay.com/docs/actions-data-credits).
 
 ## **Upgrade your plan**
 
 To upgrade your Clay workspace plan:
 
 1.  Click your profile picture in the top-right corner and select `Settings`.
-2.  In the left sidebar, navigate to `Plans & billing`, then click `Switch plan`.
+2.  In the left sidebar, navigate to `Plan & billing`, then click `Switch plan`.
 3.  Select the plan you want to upgrade to and review the details.
-4.  Confirm your selection by clicking `Review change → Continue to payment`.
+4.  Confirm your selection by clicking `Review changes → Continue to payment`.
 
 Your new plan will activate immediately, and any applicable charges will be applied.
 
-**How upgrade billing works:**
+When you upgrade a paid self-serve plan partway through a billing period, Clay credits you for the data credits and actions you haven't used from that period. It shows up as an `Unused plan credit` deduction on the checkout summary, taken off after the subtotal and before tax. The `Unused plan credit details` section lists how many unused data credits and unused actions were counted, and how many your new plan includes.
 
--   Plan upgrades are **not prorated** — you pay the full price of the new tier immediately, not a partial amount for remaining days in your current cycle.
--   You receive the **full** Actions and Data Credits for your new plan right away.
--   Unused Actions from your previous plan are not carried over (Actions reset each billing cycle and do not roll over).
--   Your existing unused Data Credits are preserved when you upgrade.
+The credit lowers what you pay for the upgrade rather than returning money to your card, and it's capped so the upgrade invoice always leaves an amount to pay. Because those balances are credited back to you, they don't also carry over — your data credit and action balances reset to the new plan's allowance once the upgrade completes.
 
 ### Free plan
 
@@ -92,7 +89,7 @@ When your 14-day trial ends, your workspace automatically moves to the Free plan
 To downgrade your Clay workspace plan:
 
 1.  Click your profile picture in the top-right corner, then select `Settings`.
-2.  Navigate to `Plans & billing` and click `Switch plan`.
+2.  Navigate to `Plan & billing` and click `Switch plan`.
 3.  Choose the plan you'd like to downgrade to and confirm your selection.
 
 **How downgrade billing works:** Plan downgrades are deferred to the end of your current billing cycle — your existing plan stays active until then, and you keep receiving its current Actions and Data Credit allocation. At renewal, your workspace switches to the new plan and your monthly Actions and Data Credit allocation resets to the new plan's level.
@@ -137,7 +134,7 @@ For instructions on deleting tables and permanently removing them from Trash, se
 To update your billing address, payment method, or billing email:
 
 1.  Click your profile picture in the top-right corner and select `Settings`.
-2.  In the sidebar, navigate to `Plans & billing`.
+2.  In the sidebar, navigate to `Plan & billing`.
 3.  Click the `Edit` dropdown.
     -   Select `Edit billing info...` to update your name, billing email, and country. If your billing address is in the United States, this modal also lets you edit your address, city, state, and ZIP code.
     -   Select `Edit payment method...` to update your credit card or payment method. If you are outside the United States and need to update your billing address, use this option — it opens a Stripe-hosted page where you can enter your updated details.
@@ -163,7 +160,7 @@ When your trial ends, your account automatically moves to the free plan — you 
 
 ### How do I track my actions and data credits usage?
 
-You can track both actions and data credits usage in the `Usage Dashboard`, which you can access from the `Settings` menu in the app. You can also track usage at the table level via `Table history`.
+You can track both actions and data credits usage in the `Usage` section, which you can access from the `Settings` menu in the app. You can also track usage at the table level via `Table history`.
 
 ### Do credits roll over?
 
@@ -173,21 +170,29 @@ You can track both actions and data credits usage in the `Usage Dashboard`, whic
 
 **If you cancel or downgrade your plan:** When the plan change takes effect, your Data Credit balance is reduced to the rollover cap of your new plan — 2× that plan's monthly credit limit. For example, canceling to the free plan (100 credits/month) caps your balance at 200 credits; any credits above 200 are forfeited. You can continue spending your existing credits up until the plan change takes effect.
 
-For more details, see our guide on [actions and data credits](https://www.notion.so/Actions-and-data-credits-2a77e66eb01480b798f2ddca99d45e80?pvs=21).
+**Upgrading mid-cycle:** Rollover applies when a plan refreshes on its normal schedule. If you upgrade partway through a billing period and receive an `Unused plan credit`, those unused data credits and actions are paid back on the upgrade invoice instead of rolling over.
+
+For more details, see our guide on [actions and data credits](https://university.clay.com/docs/actions-data-credits).
 
 ### Is upgrading my plan prorated?
 
-No. Plan upgrades are not prorated. When you upgrade to a higher tier, you are charged the full price for the new plan immediately — not a partial amount for remaining days in your current billing cycle. In return, you receive the **full** Actions and Data Credits for your new tier right away, not just the incremental difference over your current plan.
+When you upgrade a paid self-serve plan, Clay applies an **Unused plan credit** to the checkout — a deduction for the data credits and actions you haven't used from your current billing period. The credit lowers what you pay for the upgrade and appears as a line item on the checkout summary, taken off after the subtotal and before tax. It's applied to the invoice rather than refunded to your card, and it's capped so the upgrade invoice always shows a positive amount due.
 
-Unused Actions from your previous plan are not refunded or carried over (Actions reset each billing cycle and do not roll over). Your existing unused Data Credits are preserved when you upgrade.
+Because those unused balances are credited back on the invoice, they don't also carry over — your data credit and action balances reset to the new plan's allowance once the upgrade completes.
 
 Upgrading also resets your billing cycle to the date of the upgrade — for example, if you upgrade on the 15th, your plan will renew on the 15th of the following month.
 
 If you're unsure whether you need a higher tier, check your current usage in `Settings` → `Usage` to see how many Actions and Data Credits you've consumed this billing cycle before committing to an upgrade.
 
+### Which plan upgrades include a credit for unused credits and actions?
+
+The credit applies when you move from one paid self-serve plan to a higher-priced one, and the new plan's total price is above what you pay today. Your subscription needs to be active and billed automatically to a card on file, with your most recent invoice already paid.
+
+If you're on an annual plan, the credit is capped at the value of the time remaining in your term. On the Enterprise plan, your account team handles plan changes directly.
+
 ### What if I need more actions or data credits?
 
-**Actions:** Actions cannot be purchased as one-time top-ups — they represent fixed platform capacity tied to your action tier. To increase your Actions limit, you must upgrade to a higher action tier in `Settings` → `Plans & billing`.
+**Actions:** Actions cannot be purchased as one-time top-ups — they represent fixed platform capacity tied to your action tier. To increase your Actions limit, you must upgrade to a higher action tier in `Settings` → `Plan & billing`.
 
 **Data Credits:** You have two options:
 
@@ -207,7 +212,7 @@ Each fully enriched record typically costs 6-20 data credits (including company 
 There is no minimum contract commitment — you can cancel at any time. To cancel:
 
 1.  Click your profile picture in the top-right corner and select `Settings`.
-2.  Navigate to `Plans & billing`.
+2.  Navigate to `Plan & billing`.
 3.  Click `Cancel plan` and follow the prompts to confirm.
 
 Cancellations take effect at the end of your current billing cycle. Until then, you retain access to your paid plan's features and credit allocation. At the end of the cycle, your workspace moves to the Free plan and your Data Credit balance is reduced to the Free plan's rollover cap (200 credits — see [Do credits roll over?](#do-credits-roll-over) for how the credit cap works). Any credits above that cap are forfeited.
@@ -232,7 +237,7 @@ Several common issues can prevent a payment from going through:
 -   **Card issuer block:** Your card issuer may flag or decline the transaction due to security concerns. Contact your card issuer to authorize the charge, or try a different payment method.
 -   **3D Secure authentication:** Some cards require an additional authentication step when completing a purchase. If you don't complete this step when prompted, the payment won't process. Retry the payment and complete the 3D Secure prompt when it appears, or try a card that doesn't require it.
 -   **Card velocity limit:** If your card has been charged too frequently in a short window, your card provider may block further charges. Wait before retrying, or contact your card provider to increase or reset the limit.
--   **Mismatched card details:** Even after updating your payment method, the details you entered may not match what's on file with your card issuer. Double-check the information you entered under `Settings` → `Plans & billing` and verify with your issuer if the problem persists.
+-   **Mismatched card details:** Even after updating your payment method, the details you entered may not match what's on file with your card issuer. Double-check the information you entered under `Settings` → `Plan & billing` and verify with your issuer if the problem persists.
 
 If your payment continues to fail after addressing these issues, contact [Clay support](https://app.clay.com).
 
