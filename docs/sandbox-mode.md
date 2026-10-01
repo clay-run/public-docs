@@ -89,3 +89,19 @@ When you are ready to publish the changes in your sandbox to your regular table,
 
 -   `Publish and don't Run` will sync all your column configuration changes to all data but will _not start_ a run for any of these columns. You would need to manually run them later.
 -   `Publish and run` will sync all column configuration changes to all data **and** run all affected columns on all rows in the full table.
+
+## Testing a workflow before publishing (Workflows don't use sandbox mode)
+
+Sandbox mode is only for tables. The workflow editor doesn't have a **Sandbox mode** button. To try a draft workflow on a small set of records before it runs on everything, use the **Test** button and the **Test data** panel. Workflows is currently in beta — if you don't see Workflows in your workspace, contact your Clay account team or support to enable it.
+
+To test a workflow before you publish it:
+
+1.  Open the draft workflow in the workflow editor (**Graph** view).
+2.  Hover over the trigger node and click **Test** above the trigger card. The **Test data** panel opens at the bottom of the editor.
+3.  Clay automatically adds up to **10** sample records from your trigger. For example, an audience segment trigger adds 10 members of the segment. Signal triggers add **3** sample records.
+4.  Optional: click **Add data** to hand-pick more records. Each trigger can have up to **50** test records.
+5.  Click **Run [N] rows** to run the draft workflow on only those test records. With the default sample, the button reads **Run 10 rows**. Results appear in the panel's columns.
+
+Clicking **Publish** doesn't run your test records. Publishing makes the workflow live, so it runs on records that match the trigger (for example, new members that join the segment). For more on running workflows on existing segment members, see [Connecting a workflow to a segment](audiences.md#connecting-a-workflow-to-a-segment).
+
+To get help building or editing a workflow, open [Sculptor](sculptor.md#how-do-i-open-sculptor-in-a-workflow) from the workflow editor's top-right toolbar.
