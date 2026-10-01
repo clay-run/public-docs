@@ -189,6 +189,14 @@ Running the column directly rather than the rows bypasses the dependency timing 
 
 Remove the filter when the run finishes to return to the full table view.
 
+**If downstream enrichment columns show the out-of-date clock icon after you re-ran an upstream column, those cells have not been re-run and no credits have been consumed.** The clock icon means the cell is flagged as stale — it still holds its previous result and that result is preserved intact. Cells only consume credits when they actually execute; if a downstream cell had re-run automatically, the clock icon would have cleared as it ran.
+
+If the existing downstream data is still accurate for your use case, you can leave those cells as-is. If you do want to refresh the downstream results, you can target only the stale rows instead of re-running the entire column:
+
+1.  Click **Filter** in the table toolbar, select the downstream enrichment column, and set the condition to **is stale**. Only the rows where that column is stale are now visible.
+2.  Right-click the downstream column header and choose **Run column → Run [N] empty or out-of-date rows**. This runs only the visible stale rows — rows that already have current results are not re-run.
+3.  Remove the filter when the run finishes to return to the full table view.
+
 ## Setting a row limit
 
 If you want to process only a portion of your table — for example, to find emails for the first 1,000 rows before committing credits to a full run — use the **Row limit** and **Starting row** settings in the toolbar.
