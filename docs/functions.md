@@ -109,6 +109,14 @@ This happens because the function's Live view retains at most 1,000 rows total, 
 
 To view historical rows that have aged out, click **Archive** in the function table's toolbar. The Archive section shows processed rows organized by timeline and can be exported as a CSV.
 
+### Why does my function show fewer rows than my calling table, and how do I see which rows got enriched?
+
+Functions are pass-through by design: data comes in from the calling table, runs through the enrichment steps, and results are written back to the rows that called the function. The function view is an execution log — it shows all rows that passed through it, not just those that returned enriched values. A row appears in the function whether or not enrichment found data for it.
+
+That is also why the row count in the function can differ from your calling table. If your calling table has 1,414 rows but the function view shows 1,008, it means 1,008 rows have been processed so far — others may still be queued — and the function's live view caps at 1,000 rows, so older records age out as newer ones arrive.
+
+To see the enriched output, look at the function column in your calling table. Each row shows its own returned value there. To find only the rows that received data back, filter the function column by **"has results"** in the table's filter panel.
+
 ### What's the difference between an input and a column in a function?
 
 Inputs are the values that change from table to table — typically identifiers like a company domain, a person's full name, or a LinkedIn URL. You define them when saving the function, and map them when calling the function from a different table. Columns that aren't marked as inputs are fixed enrichment logic that runs the same way every time.
@@ -267,6 +275,19 @@ Every function includes a built-in **"Send data back"** column — the final ste
 6.  Click **Publish Changes** to apply.
 
 If a column's data is not appearing in the calling table, check whether that column is selected here — it may exist in the function but be unchecked in this list.
+
+### How do I push a missing output field to the calling table for rows that have already run?
+
+If a field existed inside your function but wasn't included in the "Send data back" checklist when the function first processed a row, changes to that checklist do not automatically backfill the calling table. To push the missing field to already-processed rows:
+
+1.  Open the function in edit mode (from your Clay homepage → **Functions**, click **Edit function**).
+2.  In the **"Send data back"** column, check the missing field in the **"Choose output data to send"** checklist.
+3.  Click **Publish Changes**.
+4.  In the calling table, re-run the function column for the rows that need the new field.
+
+Because **"Update existing rows on re-run"** is on by default in the "Send data back" step, the calling table rows are updated in place — no duplicate rows are created.
+
+**Note on credits:** Re-running the function column dispatches a full function invocation, which may re-execute enrichment steps and consume credits. To limit spend, open the function in edit mode and check each enrichment column's **Run settings**. If **"Keep existing results"** is enabled on those columns, cells that already have data will be skipped — only the newly added "Send data back" field will execute for those rows.
 
 ### Why doesn't my function output appear in the formula column's `/` field picker?
 
