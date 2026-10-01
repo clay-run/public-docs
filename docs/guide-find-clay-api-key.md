@@ -28,6 +28,21 @@ The key is shown only once when you create it — copy it somewhere safe.
 
 **Note:** Some older integrations, such as Zapier, still use the legacy single-token key. To find it, go to `Settings` → `Account` → `API key (legacy)`.
 
+### Can't find "API keys (beta)" in Settings → Account?
+
+The **API keys (beta)** tab that used to appear in `Settings` → `Account` has been retired. Clay API keys — including the workspace-scoped keys used with the Public HTTP API — are now created and managed on the **API and CLI** page, which lives in the main app's left sidebar rather than in Settings. If you open an old link to the API keys (beta) tab (one ending in `accountTab=api-keys-beta`), you'll see an empty page instead of your keys.
+
+The API and CLI page is available to all workspaces. You don't need to join the Beta Program or request access to see it. Workspace Admins, Members, and Viewers can create API keys there; users with the Sales Rep role can't.
+
+To find or create your API keys:
+
+1.  Leave Settings and return to the main Clay app.
+2.  In the left sidebar, under **Orchestration**, click **API and CLI**.
+3.  Select the **API keys** tab. Your existing keys are listed here.
+4.  To create a new key, click **Add API key**, enter a **Name**, choose the **Scopes** (which APIs the key can access), and click **Add API key**.
+
+The **API key (legacy)** tab in `Settings` → `Account` is a separate personal key. It won't show keys you create on the API and CLI page.
+
 ### Using your API key with external tools
 
 This personal API key is designed for use **within Clay** — specifically for Clay-native integrations such as cross-table lookups. It is not supported for use with external CLI tools, custom MCP clients, or direct REST API calls made from outside of Clay. If you attempt to use it in those contexts, you will receive an authentication error; this is expected behavior.
