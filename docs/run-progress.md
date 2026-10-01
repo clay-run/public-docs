@@ -2,7 +2,8 @@
 title: Run progress
 description: Clay provides multiple ways to track and monitor run progress
   across your tables and workflows, including how to use the built-in Errored
-  rows view to filter to failed rows, bulk re-run many workflow runs at once
+  rows view to filter to failed rows, what happens when a workflow node fails
+  (and how Repeat mode's "If an item fails" setting works), bulk re-run many workflow runs at once
   from the runs dashboard, set a row limit to control which rows are processed,
   manually trigger unrun enrichment cells, run enrichments on a specific subset
   of rows, troubleshoot cells stuck in Queued status, recover action column cells
@@ -88,6 +89,25 @@ To re-run only the errored rows, select them (click a row number, then **Shift+c
 To return to the full table, click the view selector again and choose **Default view** or **All rows**.
 
 **For automated error monitoring:** Enterprise workspaces can use [table alerts](table-alerts.md) to receive notifications when a column's failure rate exceeds a configured threshold — so you're alerted to errors without checking the table manually.
+
+## What happens when a workflow node fails
+
+In Clay Workflows, when a node returns an error, the node is marked **Failed** and the whole run ends with **Failed** status. One example is an Apollo enrichment node failing because its connection needs to be re-authenticated. Nodes after the failed node don't run, and any other branches of the same run that haven't finished are stopped too.
+
+### Can a workflow continue or fall back to another provider when a node errors?
+
+Workflows don't support continuing past an errored node or routing to a backup node when a node errors. A **Conditional** node placed after the failed node never runs, because the run has already ended. This means you can't use a Conditional to build "if Apollo errors, try another provider" logic.
+
+A **Conditional** node can route on a node that succeeds but finds nothing. When a provider runs successfully but returns no data (for example, Apollo finds no phone number for the person), the node completes normally. A downstream **Conditional** can then check for the empty result and send the run to a fallback provider.
+
+To recover runs that ended because a node failed, use **Bulk re-run** (below) with the **From where they failed** mode once the underlying issue is fixed.
+
+### Continuing past failed items in Repeat mode
+
+The **If an item fails** setting is available to all Workflows customers. When a node has **Repeat** turned on, it runs once for each item in a list. The node's **If an item fails** setting controls what happens when individual items error:
+
+-   **Continue the run** — The node completes, failed items are left out of its output, and the run keeps going.
+-   **Mark the run as failed** — The run is marked **Failed** after all items finish.
 
 ## Bulk re-run for Workflows
 
