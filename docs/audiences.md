@@ -528,14 +528,14 @@ For **Companies** audiences, five built-in signal types are available:
 -   **New Hire** — detect new hires at monitored companies within the last three months.
 -   **News & Fundraising** — monitor funding rounds, mergers and acquisitions, strategic partnerships, product launches, and leadership changes.
 -   **Job Posting** — alert when a monitored company posts a new job opening; Clay analyzes job descriptions for urgency indicators and geographic expansion signals.
--   **Company Topic Intent** (open beta) — monitor when companies show buying intent for topics you care about, with High, Medium, and Low scoring tiers. Cost: approximately 0.2 credits per account monitored. Contact your Growth Strategist to enable this signal for your workspace.
+-   **Company Topic Intent** (beta) — monitor when companies show buying intent for topics you care about, with High, Medium, and Low intent tiers. Company Topic Intent is available on Launch, Growth, and Enterprise plans — you don't need to contact Clay to turn it on. See [Setting up Company Topic Intent](#setting-up-company-topic-intent) below for setup steps and pricing.
 
 **Custom signals are not available within Audiences.** To track a more specific or custom signal (for example, website changes, RSS feed mentions, or technology adoption), build that logic in a bulk enrichment on the audience segment using Claygent or scheduled enrichment columns — see [Adding enrichments](#adding-enrichments) above.
 
 **To add a signal to a segment:**
 
-1.  Navigate to an audience and click `Enrich`.
-2.  Click `Signals` → select a signal type (e.g., `New Hire`).
+1.  Navigate to an audience and click `Signals` in the top toolbar. `Signals` is a separate button from `Enrich` — signals are not listed in the `Enrich` menu. In a Companies audience, this opens the **Company signals** panel.
+2.  Click `Add signal` next to the signal type you want (e.g., `New Hire`).
 3.  Set the `look-back period` for the initial run: `3 months`, `6 months`, or `1 year`.
 4.  Set the `recurrence frequency` — how often it re-runs going forward.
 5.  Review the `cost preview per record` shown before the run begins.
@@ -568,6 +568,38 @@ To run an enrichment on the people who matched a signal:
 4.  Click `Start Run`.
 
 Enrichment results write permanently back to All People — they are available as filters in any other segment going forward.
+
+#### Setting up Company Topic Intent
+
+Company Topic Intent is a signal, so you set it up from the `Signals` button on your audience, not from `Enrich`. If you click `Enrich` on an audience and can't find topic intent, that's expected — use `Signals` instead.
+
+Company Topic Intent is currently in beta and is available on Launch, Growth, and Enterprise plans.
+
+To set up Company Topic Intent on a Companies audience:
+
+1.  Open the Companies audience and click `Signals` in the top toolbar to open the **Company signals** panel.
+2.  Find **Company topic intent** (marked **Beta**) and click `Add signal`.
+3.  Search for the topics you want to monitor — for example, type `MDR` to see topics such as "Managed Detection and Response (MDR)". Topics come from three intent data providers — Delivr, Bombora, and Intentsify — so the same subject can appear more than once, once per provider. Delivr is selected by default, and you can add Bombora and Intentsify.
+4.  Review the cost estimate and save the signal.
+
+**Company Topic Intent pricing:** Company Topic Intent is charged per topic, per account checked, at a rate that depends on the provider and your plan. The table below lists the credits charged for each topic checked on one account:
+
+| Provider | Modern plans | Legacy plans |
+|---|---|---|
+| Delivr | 0.2 credits | 0.5 credits |
+| Intentsify | 0.2 credits | 0.5 credits |
+| Bombora | 0.3 credits | 0.6 credits |
+
+The cost shown on the **Company topic intent** card in the **Company signals** panel (for example, "~0.5 / account monitored" on a legacy plan) is the lowest provider rate for a single topic. Your actual cost multiplies by the number of topics and providers you select. For example, monitoring 5 topics with Delivr on a legacy plan costs 5 × 0.5 = 2.5 credits per account per check. For more on modern and legacy plans, see [Legacy plans](legacy-plans.md).
+
+**Company Topic Intent results:** Results appear in the **Topics showing intent** column on each company — for example, "2 topics". Click the cell to see one row per topic match, covering the last 90 days, with these details:
+
+-   **Topic** — the intent topic name.
+-   **Provider** — the intent data provider that reported it (Delivr, Bombora, or Intentsify).
+-   **Intent tier** — High, Medium, or Low.
+-   **Intent score** — the provider's own score. Each provider uses its own scale, so the same topic can have different scores from different providers.
+-   **Last seen** — the most recent date the provider reported intent.
+-   **Times seen** — how many times the provider reported intent for that topic.
 
 ### Claygent-managed columns
 
