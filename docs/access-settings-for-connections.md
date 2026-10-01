@@ -133,6 +133,20 @@ Yes. Controls are enforced at configuration time, not run time. Users can run ex
 
 You can swap the restricted connection out for any connection you're allowlisted for. This lets you run the same logic under your own credentials without changing it for others.
 
+**Can I give some users read-only access and others write access to a connection (for example, Salesforce)?**
+
+Not within a single connection. Connection access settings are all-or-nothing: a workspace member who has access to a connection can configure any action that integration offers. For Salesforce, that means both read actions (such as Lookup Record) and write actions (such as Create Record or Update Record). Clay has no separate "read-only" or "write" permission level on a connection.
+
+What a connection can actually read or write is set by the permissions of the account that authenticated it. For Salesforce, Clay's actions run as the Salesforce user who connected the account, so that user's Salesforce profile and permission sets decide whether a create or update succeeds.
+
+To limit write access to Salesforce to selected users:
+
+1.  Connect a Salesforce account whose Salesforce user has read-only permissions. See [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user) for how to scope a Salesforce user's permissions.
+2.  Set that read-only connection's access to `Anyone in the workspace` so all members can build with it.
+3.  On the Salesforce connection that has read and write permissions, choose `Specific people and groups` and add only the members or user groups who should be able to write to Salesforce.
+
+Because controls are enforced at configuration time, members who aren't on the allowlist for the read/write connection can't build new columns or workflows with it, but they can still run existing columns that already use it.
+
 **What happens when an employee leaves the workspace?**
 
 When a user is deactivated, their personal credentials are disabled by default.
