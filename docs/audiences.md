@@ -686,7 +686,7 @@ To change a field's write rule, click the **pencil (edit) icon** next to any map
 
 **These write rules apply uniformly to all records — there is no native option to make a write conditional on a per-row field value match.** For example, there is no built-in way to write a field to Salesforce only when a contact's Salesforce Account ID matches the Account ID on the Audience Company Record. For conditional write-back logic, connect a [Workflow to your audience segment](#connecting-a-workflow-to-a-segment): a workflow can include lookup steps, branch (conditional) nodes, and a Salesforce Update Record action that evaluates the condition per record and writes only when it passes. See [How do I make my Salesforce export conditional on a field match?](#how-do-i-make-my-salesforce-export-conditional-on-a-field-match) in the FAQs below.
 
-**Note: Scheduled export rules apply to Contacts and Accounts only.** The Salesforce Lead field mapping does not include a Scheduled export rule column — Lead records imported into Audiences are import-only and do not support the automated export sync. To push enriched data from Audiences back to Salesforce Leads, use a Salesforce Update Record action column in a bulk enrichment table — see [Can the Audiences export sync write data back to Salesforce Lead records?](#can-the-audiences-export-sync-write-data-back-to-salesforce-lead-records) in the FAQs below.
+**Note: Scheduled export rules apply to Contacts and Accounts only.** The Salesforce Lead field mapping does not include a Scheduled export rule column — Lead records imported into Audiences are import-only and do not support the automated export sync. To push enriched data from Audiences back to Salesforce Leads, connect a [workflow to your audience segment](#connecting-a-workflow-to-a-segment) whose final step is a Salesforce **Update record** action with **Lead** as the object, or use a Salesforce Update Record action column in a bulk enrichment table — see [Can the Audiences export sync write data back to Salesforce Lead records?](#can-the-audiences-export-sync-write-data-back-to-salesforce-lead-records) in the FAQs below.
 
 Export settings also control whether Clay **creates new Salesforce records** for Audience records that don't yet have an SFDC match, or **only updates existing ones**.
 
@@ -1060,6 +1060,20 @@ Add a **Salesforce Update Record** action column directly inside your bulk enric
 5.  Click `Start Run` — the Update Record column fires alongside your enrichment columns and writes the enriched values directly to Salesforce.
 
 If you have the Audiences Salesforce export enabled, enriched fields also sync back to Salesforce automatically on the next 24-hour export cycle (see [Writing back to your CRM](#writing-back-to-your-crm)). Adding Update Record directly in the enrichment table is useful when you need immediate write-back or when you are not using the native Audiences Salesforce import.
+
+### Can the Audiences export sync write data back to Salesforce Lead records?
+
+No. The Audiences Salesforce export sync (the native destination sync configured in your Salesforce source settings) supports only the **Contact** and **Account** objects. Salesforce **Lead** records can be imported into Audiences as people, but the Audiences export sync cannot write enriched data back to the Lead object — even when those people were originally synced into Audiences from Salesforce Leads. The **`Create new Salesforce records`** toggle also does not create Leads.
+
+To enrich Salesforce Leads in Audiences and write the results back to the Lead object, connect a workflow to the audience segment and make a Salesforce write action the final step:
+
+1.  Navigate to the audience segment that contains your Lead-sourced people and click `Send` → **Send to workflow**.
+2.  In the workflow editor, add your enrichment steps (for example, a step that fills in a persona field).
+3.  Add a Salesforce **Update record** action as the final step, set the Salesforce object to **Lead**, and set the record ID to the Salesforce Lead ID (the `00Q…` value) stored on the person record in your Audience.
+4.  Map each enriched value to the Lead field you want to populate.
+5.  Publish the workflow. To also process people already in the segment, check **Run on all members now** in the publish dialog, or use **Run all [X] [members]** on the trigger card.
+
+You can also use the Salesforce **Create record** or **Create or update object** actions with **Lead** as the object if you need to create Leads rather than update existing ones. For a one-off run instead of an always-on workflow, add a Salesforce Update Record action column to a bulk enrichment table — see [How do I write enriched fields back to existing Salesforce records from a bulk enrichment?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-bulk-enrichment).
 
 ### How do I write enriched data back to HubSpot from Audiences?
 
