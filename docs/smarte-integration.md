@@ -76,6 +76,11 @@ You must provide at least one company identifier **and** at least one technology
 -   **Company name, Company URL, or Company LinkedIn URL** (at least one required)
 -   **Product, Category, or Vendor** filters (at least one required)
 
+### **Run settings**
+
+-   **Auto-update**
+-   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
+
 ## SMARTe technographics credit cost
 
 With the Clay-managed SMARTe account, the Enrich company technographics action costs 4 credits for each technology returned in a row. The following examples show the cost per row:
@@ -98,11 +103,6 @@ To check the same companies for additional technologies:
 2.  Re-run the column on the rows you want to check.
 
 Re-running the column charges credits again for every row, based on the number of technologies returned in the new run. If you add more filters and more technologies match, the re-run can cost more than the first run.
-
-### **Run settings**
-
--   **Auto-update**
--   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
 
 ## FAQs
 
