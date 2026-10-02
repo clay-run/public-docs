@@ -137,6 +137,17 @@ To turn field mapping off, click **Set up** in the Run Setup panel, then toggle 
 
 Turn field mapping off when you want to run enrichments and route results somewhere else — for example, writing directly to Salesforce via an action column — without also writing the data back to Audiences.
 
+### "This field is already being enriched and column mapped in…" notice
+
+When you map a column to an Audience field (for example, mapping `title` to **Title**), the **Field mappings** panel may show the notice *"This field is already being enriched and column mapped in [enrichment name]"*. This notice means another bulk enrichment in your workspace already maps a column to that same Audience field for the same record type (People or Companies).
+
+-   **Workspace-wide, not per segment.** Clay checks every Audiences bulk enrichment in your workspace, not just enrichments on the segment you're working in. If one enrichment already writes to **Title**, the notice appears whenever you map **Title** in any other enrichment, on any segment. It does not mean the other enrichment runs on your current segment's records — that enrichment only enriches the segments it's connected to.
+-   **Informational only.** The notice doesn't block you. You can still save the mapping and start the run.
+-   **The link opens the other enrichment.** Click the enrichment name in the notice to open that bulk enrichment table in a new tab and see what it maps.
+-   **Both enrichments write to the same field.** If a record is enriched by both bulk enrichments, the Audience field keeps the most recently written value. Bulk enrichments share the same source priority, so neither one takes precedence over the other (see [entity resolution and deduplication](audiences.md#entity-resolution-and-deduplication)).
+
+To avoid two enrichments overwriting each other, map the field in only one bulk enrichment. To run that enrichment on more segments, connect them to it instead of creating a new enrichment (see [Adding a segment to an existing enrichment](#adding-a-segment-to-an-existing-enrichment)).
+
 ### Auto-enrich new records
 
 The **Auto-enrich new records** toggle determines whether records that newly qualify for the segment are enriched automatically after the initial run.
