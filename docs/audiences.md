@@ -968,7 +968,7 @@ The Audiences segment view does not have a direct CSV download button. To downlo
 
 1. Open the audience segment you want to export, with the filters you want already applied.
 2. Click `Send` → `Export action` → **Add to workbook**. A **Send to workbook** dialog opens — name the table and confirm.
-3. Open the new table. It starts with three columns: **Name**, **Domain**, and **LinkedIn URL** for a Companies segment, or **Name**, **Email**, and **LinkedIn URL** for a People segment.
+3. Open the new table. It starts with three columns: **Name**, **Domain**, and the company's professional network URL for a Companies segment, or **Name**, **Email**, and the person's professional network URL for a People segment.
 4. To include more audience fields (including custom fields), click a cell in the table's Audiences source column, hover over the field you want, and click **Add as column**. Repeat for each field you need in the CSV.
 5. If any rows are checked, uncheck them first — the toolbar shows **Tools** only when no rows are selected.
 6. Click **Tools** → **Export** → **Download CSV**.
