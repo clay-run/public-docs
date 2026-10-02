@@ -156,11 +156,14 @@ To verify the script is loading at the browser level:
 
 **Include filter not matching pages you expect:** URL paths use exact matching, so `/blog` only matches `/blog` exactly — not `/blog/`, `/blog/post-title`, or any sub-path. To include a section of your site and all pages under it, append a wildcard: `/blog*` matches `/blog`, `/blog/`, and every page whose path starts with `/blog`.
 
-**Exclude filter not working as expected:** Exclude filters apply at the session level. A session is blocked only if every page the visitor viewed during that session matches at least one exclude pattern. If a visitor toured multiple pages and only some of them match your exclude filter, the session will still appear in your table.
+**Excluded page (like `/careers`) still showing up or triggering alerts:** There are two common causes when a page you excluded in **URL paths to exclude** still shows up in your table or triggers web intent signal alerts:
+
+1.  **The exclude path is missing a wildcard.** Exclude paths use the same exact matching as include paths, so `/careers` blocks only the page at exactly `/careers` — not `/careers/` (with a trailing slash) or sub-pages like `/careers/jobs/123`. To exclude a whole section of your site, add a `*` to the end of the path: `/careers*` excludes `/careers`, `/careers/`, `/careers/jobs/123`, and every other page whose path starts with `/careers`. Apply the same fix to your other excluded sections (for example, `/about-us*` or `/news*`). Paths are case-sensitive, so `/careers*` does not match `/Careers/jobs`.
+2.  **The visitor also viewed pages that aren't excluded.** Exclude filters apply at the session level. A session is blocked only if every page the visitor viewed during that session matches at least one exclude pattern. If a visitor reads a job post under `/careers` and then visits `/pricing` in the same session, the session still appears in your table and still triggers the signal.
 
 **All rows show '/' as the page path, or fewer visitors than expected:** The "URL paths to include" filter operates at the session level — a session is tracked only if at least one page the visitor viewed matches an include pattern. If your include list contains only `/`, Clay tracks sessions where the visitor hit the homepage at any point, but sessions where the visitor never visited the homepage are excluded entirely. Visitors who entered your site directly on an interior page (for example, from a search result or ad) without navigating to `/` will not appear in your table, which can make it look like everyone only visited the homepage. To track all visitor sessions regardless of entry page, remove the `/` entry from "URL paths to include" (Settings → Web intent → Tracker → Tracking filters). Leaving the field empty tracks all sessions by default.
 
-Filter changes only apply to new data — existing rows aren't affected. Make sure you haven't accidentally omitted wildcards on paths you want to include.
+Filter changes only apply to new data — existing rows aren't affected. Make sure you haven't accidentally omitted wildcards on paths you want to include or exclude.
 
 ### Content Security Policy blocking the script
 
