@@ -90,7 +90,6 @@ Connect and enable warmup on your sender account as early as possible so it's re
     -   `Maximum new leads per day`: Caps the number of new leads contacted daily (in addition to account send limits).
     -   `Campaign start date` (optional): Set a future launch date, or start immediately based on your settings.
 7.  Explore `Advanced settings` if needed:
-    -   `Webhooks`: Route campaign events to a specific Webhook destination instead of the default Campaign Events Clay table. Example: Send Smartlead metrics to tools like OutboundSync or Enrichley for downstream routing.
     -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled)
     -   `Pause leads at the same company on reply`: When a lead replies, automatically pause other leads with the same email domain. Off by default.
 8.  Go to `Leads` to preview the messages for all people in your campaign
@@ -108,7 +107,7 @@ Once all your settings are saved, you can launch your campaign. Launching a camp
 -   Your campaign becomes live, which means:
     -   Any new leads routed into the campaign will automatically be sequenced, enabling "always-on" campaigns for inbound routing.
     -   All campaign settings become locked.
--   If you haven't set up custom webhooks in the `Advanced` section, campaign events are captured in the global campaign events table shared across your workspace (see [Campaign events table](#campaign-events-table)).
+-   Campaign events are captured in the global campaign events table shared across your workspace (see [Campaign events table](#campaign-events-table)).
 
 At any point, you can pause or complete a campaign:
 
@@ -548,6 +547,20 @@ Because the campaign events table is a standard Clay table, you can add CRM enri
 6.  **Enable Auto-run for ongoing campaigns.** Turn on `Auto-run` on your CRM action column so new events continuously trigger write-backs as the campaign runs — otherwise, the column only processes rows that are manually triggered.
 
 7.  **Test before scaling.** Turn off `Auto-run` and manually run 5–10 rows first to validate your field mappings before enabling full automation.
+
+### How do I send Sequencer campaign data to Snowflake or another data warehouse?
+
+Clay's email sequencer has no native scheduled export or sync of campaign analytics to Snowflake or any other data warehouse. To report on Sequencer activity in your own warehouse and BI tool, send the data out of the [campaign events table](#campaign-events-table), which records every send, open, click, bounce, reply, and reply category across all campaigns in your workspace. Because the campaign events table is a standard Clay table, you can add an action column to it that runs on each new event row.
+
+**Option 1: Write Sequencer events directly to Snowflake (Enterprise plans only).** Add a Snowflake action column to the campaign events table — `Insert row`, `Create or update row`, or `Update row` — and map the event fields you want to report on (for example, event type, Campaign ID, campaign name, lead email, and event timestamp) to columns in a dedicated Snowflake table. Each event is its own row in the campaign events table, so `Insert row` logs one Snowflake row per event. Snowflake write actions require an Enterprise plan. See [Snowflake integration](snowflake-integration.md) for connection setup and action details.
+
+**Option 2: Send Sequencer data to Snowflake without giving Clay write access.** If your security or data team doesn't allow Clay to write to your Snowflake database, use one of these alternatives:
+
+-   **HTTP API to a webhook or middleware service:** Add an `HTTP API` action column to the campaign events table that sends each event row as JSON to an HTTPS endpoint your team controls — for example, a webhook in an approved middleware, ETL, or internal service. That service then writes the data into Snowflake with its own credentials, so Snowflake access stays outside Clay. The `HTTP API` action is available on Growth and Enterprise plans (Explorer and above on legacy plans). See [HTTP API](http-api-integration-overview.md).
+-   **Google Sheets as an intermediary:** Add a Google Sheets `Add row` action column to the campaign events table to append each event to a Google Sheet, then load the sheet into Snowflake with an approved ETL process. Google Sheets actions are available on all plans. This works well for testing or lower-volume reporting. See [Google Sheets integration](google-sheets-integration-overview.md).
+-   **CSV export:** Open the campaign events table and download it as a CSV (**Export** → **Download CSV**), then load the file into Snowflake through your existing file-ingestion process. The CSV includes only the rows and columns visible in your current view, and downloading it doesn't consume Actions or Data Credits. CSV export is a manual, point-in-time batch rather than a continuous sync. See [Exporting your Clay table as CSV](csv-import-overview.md#exporting-downloading-your-clay-table-as-csv).
+
+**Keep the export running as events arrive.** The campaign events table keeps up to 10,000 rows for your whole workspace; once it passes that limit, the oldest rows are deleted automatically. A later CSV export or backfill only includes the events still in the table, so turn on `Auto-run` for your Snowflake, `HTTP API`, or Google Sheets column to send each event as soon as it's recorded. To export events from specific campaigns only, add an `Only run if` condition that filters on the **Campaign ID** column. Reply events can appear in the campaign events table with a 15–30 minute delay.
 
 ### How do unsubscribes work in the sequencer?
 
