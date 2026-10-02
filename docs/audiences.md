@@ -1030,6 +1030,37 @@ For that kind of conditional write-back, connect a **Workflow** to your audience
 
 If your goal is to control which contacts are *imported* into Audiences from Salesforce in the first place — for example, importing only contacts whose `AccountId` belongs to a specific set of accounts — use a **SOQL record subset** import rather than importing all records. A SOQL filter on `AccountId` limits which contacts enter Audiences and therefore which contacts are candidates for export. See [Importing a record subset using SOQL](#importing-a-record-subset-using-soql) for setup steps.
 
+### Why does the same workflow appear several times in a segment's Send panel?
+
+A segment's **Send** panel lists every workflow trigger connected to that segment, grouped under **Active workflows** and **Inactive workflows**. Each card in the Send panel is one trigger, not one workflow. The label under the workflow name shows the trigger type:
+
+-   **Segment membership** — runs the workflow when a record enters the segment.
+-   **Scheduled run** — runs the workflow on a schedule.
+-   **Manual run** — tracks runs that someone started manually from a segment trigger (for example, with the **Run** dropdown on the trigger card).
+
+Because each trigger gets its own card, one workflow with several triggers appears several times in the Send panel. This doesn't mean the workflow is duplicated.
+
+**Why the Send panel shows more triggers than the workflow canvas:** When you run a segment trigger manually, Clay creates a hidden **Manual run** trigger for that trigger node so the manual runs are tracked. Clay creates one Manual run trigger per trigger node. Manual run triggers don't appear on the workflow canvas, but the Send panel lists them. For example, a workflow with two triggers on the canvas (one for new records entering the segment and one scheduled run) that has been run manually from both triggers appears as four cards in the Send panel: **Segment membership**, **Scheduled run**, and two **Manual run** cards. A Manual run trigger only runs the workflow when someone runs it manually.
+
+The Send panel is view-only for triggers. The **⋮** menu on a Send panel card has one option, **Open in Workflows**. To edit, pause, or remove a trigger, open the workflow in Workflows.
+
+### Why does my segment's Send panel show "Unknown workflow"?
+
+A Send panel card reads **Unknown workflow**, with the warning "Workflow not found. It may have been deleted.", when its trigger belongs to a workflow that's hidden from your Workflows list — for example, a workflow Clay creates automatically when you set up an **Account Agent** on the segment. Deleting a workflow also removes its triggers, so workflows you delete yourself don't leave Unknown workflow cards in the Send panel.
+
+Unknown workflow cards have no **⋮** menu and can't be removed from the Send panel. If you see Unknown workflow cards you don't recognize and haven't set up an Account Agent on that segment, contact Clay support.
+
+### How do I move a workflow from the Send panel to Enrich?
+
+You can't move or convert an existing workflow so that it appears under **Enrich**. The **Enrichments** sidebar (click **Enrich** on a segment) only lists enrichment workflows that were created from that sidebar. Workflows created any other way — in Workflows, or from the segment with **Send** → **Send to workflow** — only appear in the Send panel. Changing the workflow's segment trigger doesn't move it to Enrich.
+
+To run the same steps as an enrichment workflow, recreate it from the Enrichments sidebar. Enrichment workflows are currently in beta — if you don't see **Create enrichment workflow**, contact Clay support.
+
+1.  Open the segment and click **Enrich**.
+2.  In the Enrichments sidebar header, click **Add enrichment** and select **Create enrichment workflow**.
+3.  Rebuild the steps from your existing workflow.
+4.  Once the new enrichment workflow is running, open the old workflow in Workflows and pause or delete it, so records aren't enriched twice.
+
 ### How do I create new Salesforce Accounts or Contacts from an Audience?
 
 New Salesforce records are not created automatically when you run a bulk enrichment. Record creation is not driven by a Create Contact or Create Account action inside the enrichment table — it is controlled by the **`Create new Salesforce records`** toggle in your Audiences Salesforce export settings.
