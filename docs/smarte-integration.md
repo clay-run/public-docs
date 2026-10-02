@@ -73,7 +73,7 @@ Use the SMARTe Enrich company technographics action to check whether a company u
 
 You must provide at least one company identifier **and** at least one technology filter.
 
--   **Company name, Company URL, or Company LinkedIn URL** (at least one required)
+-   **Company name, Company URL, or Company social URL** (at least one required)
 -   **Product, Category, or Vendor** filters (at least one required)
 
 ### **Run settings**
