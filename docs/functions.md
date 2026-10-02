@@ -443,6 +443,7 @@ To allow a field to have no value, make the input optional — see [How do I mak
 -   **Rate limit:** 300 requests per minute across all public API endpoints in your workspace.
 -   **Inline run (single request):** Up to 100 items per call. Submit your items as a JSON array and Clay returns results asynchronously — poll the run ID to retrieve them.
 -   **File upload batch:** Up to 100,000 items per batch. Upload a JSONL file, start the batch run, then poll for a downloadable results file when processing is complete.
+-   **Concurrent batch runs:** Up to 20 file upload batch runs can be in progress at once per workspace. If 20 batches are already running, starting another returns a `429` error: *"Workspace has 20 batch runs in progress (limit 20). Wait for one to finish before starting another."* A batch stops counting toward the limit once it completes or fails. Wait for an in-progress batch to finish, then start the next one. Inline runs don't count toward this limit.
 
 **Note:** Processing speed is subject to workspace-level throttling. If you upload several large batches at once, expect slower completion rates as Clay distributes the workload across your workspace.
 
