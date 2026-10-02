@@ -240,6 +240,14 @@ To estimate how many inboxes you need, divide your target daily send count by 20
 
 Clay's sequencer is built for **targeted, personalized sales outbound** — high-quality sequences to well-researched lists. For very large-scale sends (e.g., 1M+ contacts), a dedicated bulk or marketing email platform is generally a better fit for delivery volume. Clay works well as the enrichment and list-building layer in that setup.
 
+### Does Clay limit how many emails go to the same company or domain per day?
+
+No — Clay's email sequencer has no daily cap on how many emails go to recipients at the same company or the same recipient email domain. This applies to both self-connected accounts and SmartSenders accounts purchased through Clay. The only daily sending caps are set **per email account (inbox)** — the value you set with `Update send limit` for that inbox.
+
+**Example:** If an inbox has a limit of 30 emails per day and every eligible lead queued for it works at the same company (for example, `@jpmorgan.com`), the inbox can use all 30 of its daily sends on contacts at that company. Some other sales engagement tools cap sends per target company per day; Clay's sequencer does not.
+
+To stop emailing other contacts at a company once someone there replies, use the `Pause leads at the same company on reply` campaign setting. When this setting is on and a lead replies, Clay pauses the other leads in that same campaign who share the replying lead's email domain. The setting is configured per campaign, is off by default, and does not pause leads in your other campaigns.
+
 ### Why is the expected campaign completion time so long?
 
 The **Expected time to complete campaign** shown at the top of Schedule settings estimates how many days it will take to reach all leads based on your sending window, per-account limits, and schedule.
