@@ -244,7 +244,7 @@ Clay's sequencer is built for **targeted, personalized sales outbound** — high
 
 No — Clay's email sequencer has no daily cap on how many emails go to recipients at the same company or the same recipient email domain. This applies to both self-connected accounts and SmartSenders accounts purchased through Clay. The only daily sending caps are set **per email account (inbox)** — the value you set with `Update send limit` for that inbox.
 
-**Example:** If an inbox has a limit of 30 emails per day and every eligible lead queued for it works at the same company (for example, `@jpmorgan.com`), the inbox can use all 30 of its daily sends on contacts at that company. Some other sales engagement tools cap sends per target company per day; Clay's sequencer does not.
+**Example:** If an inbox has a limit of 30 emails per day and every eligible lead queued for it works at the same company (for example, `@example.com`), the inbox can use all 30 of its daily sends on contacts at that company. Some other sales engagement tools cap sends per target company per day; Clay's sequencer does not.
 
 To stop emailing other contacts at a company once someone there replies, use the `Pause leads at the same company on reply` campaign setting. When this setting is on and a lead replies, Clay pauses the other leads in that same campaign who share the replying lead's email domain. The setting is configured per campaign, is off by default, and does not pause leads in your other campaigns.
 
