@@ -569,13 +569,30 @@ After correcting the mapping, right-click the column header → **Run column** �
 
 ### "Your source has exceeded your plan's limit" error on Find Companies or Find People
 
-If you see **"Your source has exceeded your plan's limit of [N], so future runs will not add new records. Consider creating a new source or moving onto a higher tier plan"**, the source has reached a per-source cumulative record limit enforced by your billing plan.
+If you see **"Your source has exceeded your plan's limit of [N], so future runs will not add new records. Consider creating a new source or moving onto a higher tier plan"**, the source has reached a per-source cumulative record limit enforced by your billing plan. The error appears on the source as **Invalid input**.
+
+**Common symptom:** You click **Add new results to table** in the Find People (or Find Companies) search, the preview shows matching people, but nothing is added to your table — even when the preview shows only a handful of results. Once a source has reached its plan limit, it can't add any more records, no matter how few new results the current search returns.
 
 **The limit is cumulative across all runs of the same source** — not per search. Each time the source imports records, the count accumulates. Once the limit is hit, the source stops adding new records regardless of how many times you re-run it.
 
+**The per-source limit does not reset monthly.** It is a lifetime total for that individual source. Running the same source again next month does not free up capacity.
+
+**This limit is separate from the Limit results setting.** The **Limit results** panel in the search (for example, "You can import up to 5K results to tables and up to 1M to Audiences") caps how many results a single run imports. The per-source limit counts every record the source has added across all of its runs. Both use your plan's number, so a Starter-plan source can import up to 5,000 results in one run, but it also stops adding records once all of its runs together reach 5,000.
+
 **This limit is a row count, not a Data Credits limit.** The number shown (e.g., 100) refers to how many records the source can import in total — not how many Data Credits you have available. Your Data Credits balance is tracked separately and is used for enrichments such as finding emails or company data. Even after a source hits its row limit, your remaining Data Credits are still available for enrichments on rows already in your table.
 
-The limit varies by plan tier and is shown in the error message itself (for example, 100 on free workspaces, 25,000 on Explorer-tier plans, 50,000 on Pro plans and above).
+The per-source limit for Find People and Find Companies sources varies by plan and is shown in the error message itself. The table below lists the limit for each plan:
+
+| Plan | Per-source record limit |
+| --- | --- |
+| Free | 100 |
+| Trial | 1,000 |
+| Starter | 5,000 |
+| Launch | 15,000 |
+| Explorer | 25,000 |
+| Pro and above | 50,000 |
+
+**To check how many records a source has added:** open the table, click the Find People (or Find Companies) source column, and select **View Run History**. The run history lists each run's date and the number of rows imported and added. Run history shows only the 10 most recent runs, so older runs that also count toward the limit may not appear.
 
 **To continue importing beyond the limit:**
 
