@@ -150,7 +150,7 @@ Each record exported or synced consumes 1 action. Data credits apply for any enr
 
 The 50,000 row limit applies to ad audiences exported from tables. For larger audiences, create multiple tables and attach multiple audiences to your campaigns in the ad platform.
 
-Each audience segment supports only one ad sync. If a segment already has an active or previously-exported ad sync, the option to create a new ad sync from that segment will not appear. To sync the same audience to a different ad platform, clone the segment and create a new ad sync from the clone.
+Each audience segment supports only one ad sync. If a segment already has an active or previously-exported ad sync, the option to create a new ad sync from that segment will not appear. To sync the same audience to a different ad platform, duplicate the segment (select **Duplicate** from the segment's menu) and create a new ad sync from the duplicated segment.
 
 Company (account-level) segments are supported by the professional network only. Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co support People (contact-level) segments only. To run campaigns on those platforms targeting contacts at your company accounts, use **Find people from this list** on your Companies segment to build a People segment, then create an ad sync from that People segment.
 
@@ -178,11 +178,20 @@ Deleting an ad sync does **not** delete the underlying audience segment — your
 
 Yes — you can add a new destination to an active sync using **Pause to edit**. Open the sync, click **Pause to edit**, add the platform under **Sync destinations**, then continue to **Enrich and sync**. Destinations that have already synced cannot be removed from an existing sync — only new ones can be added while paused.
 
-**Pause to edit** is available when a sync is active, processing, or in a warning state. A finished one-time sync or a failed sync cannot be paused — for those, delete the current sync and create a new Ad Sync with all desired destinations included from the start. **Deletion is permanent — a deleted sync cannot be restored or reactivated.** Deleting the sync does not affect your underlying audience segment; your segment and its contacts remain intact, and you can create a new Ad Sync from the same segment immediately. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for how to delete and [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for credit implications.
+**Pause to edit** is available when a sync is active, processing, or in a warning state. A failed sync, or a one-time sync that has finished and shows the **Exported** status on the Ads page, cannot be paused, and the **Add sync destinations** option no longer appears on it. For those syncs, delete the current sync and create a new Ad Sync with all desired destinations included from the start. **Deletion is permanent — a deleted sync cannot be restored or reactivated.** Deleting the sync does not affect your underlying audience segment; your segment and its contacts remain intact, and you can create a new Ad Sync from the same segment immediately. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for how to delete and [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for credit implications.
 
 **Notes:**
 
 -   Google Ads and Bing Ads are only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience includes contacts from Clay's company/people search data, Google Ads and Bing Ads will not be available as destination options. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) for details.
+
+### **Can I change a one-time Ad Sync to recurring?**
+
+No. You choose an Ad Sync's schedule (**One-time** or **Recurring**) in the **Schedule** section when you set up the sync. When a one-time Ad Sync finishes, its status changes to **Exported** on the Ads page (recurring syncs show **Active** instead). An exported Ad Sync is read-only: you can't change its schedule, add destinations, or edit its settings, and **Pause to edit** is not available.
+
+To keep an audience updating on a schedule, create a new Ad Sync with **Recurring** selected and include every destination you want — including any destination the exported one-time sync already sent to, such as Meta. Because each audience segment supports only one Ad Sync, use one of these options:
+
+1.  **Delete and recreate:** Delete the exported Ad Sync, then create a new Ad Sync from the same segment. Deletion is permanent, but it does not affect your segment or its contacts. If you used Enhanced Match, contacts that were already enriched are not enriched again — see [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync).
+2.  **Duplicate the segment:** Keep the exported Ad Sync, select **Duplicate** from the segment's menu, then create the new recurring Ad Sync from the duplicated segment.
 
 ### **Will I be charged again if I deactivate and recreate an Ad Sync?**
 
