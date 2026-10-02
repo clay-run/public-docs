@@ -265,7 +265,7 @@ To shorten the estimated time:
 
 ### How do I set my sequence's sending pace to "as fast as possible" (ASAP)?
 
-In the new sequence page — the one with the `Sequence`, `Sender accounts`, `Analytics`, `Activity`, and `Replies` tabs — there is no separate `Settings` tab like in legacy sequences. The sequence's schedule and sending pace live in the **Settings** modal, which you open from the sequence name menu. The new sequence page is available to workspaces on paid or trial plans; if you don't see it, contact support.
+In the new sequence page — the one with the `Sequence`, `Sender accounts`, `Analytics`, `Activity`, and `Replies` tabs — there is no separate `Settings` tab like in legacy sequences. The sequence's schedule and sending pace live in the **Settings** modal, which you open from the sequence name menu. The new sequence page is currently in beta and may not be enabled for your workspace yet; contact support if you don't see it.
 
 To set the sending pace to as fast as possible:
 
