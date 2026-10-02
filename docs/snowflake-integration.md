@@ -135,7 +135,7 @@ The Lookup row action supports **Run in batches** mode. When enabled, Clay combi
 
 When batch mode is active, if any sub-query returns many rows, the combined result across all batched lookups can exceed a backend size limit — producing the error "The action function output exceeded the size limit" — even if each lookup runs without error when executed individually. To avoid this, include a `LIMIT` clause in your query to cap how many rows each sub-query returns. You can also lower the **Number of rows per batch** setting to reduce how many queries are combined per request.
 
-### `Action` Upsert row
+### `Action` Create or update row (upsert)
 
 Upsert a row into a Snowflake database using a single field as a unique identifier. If the identifier exists, the row will be updated. If not, a new row will be created.
 
@@ -150,7 +150,7 @@ Upsert a row into a Snowflake database using a single field as a unique identifi
 
 **Batching**
 
-The Upsert row action supports **Run in batches** mode. When enabled, Clay groups up to 1,000 rows into a single `MERGE INTO` statement — combining one `SELECT` per row via `UNION ALL` — and sends it to Snowflake in one request instead of running each upsert individually.
+The Create or update row action supports **Run in batches** mode. When enabled, Clay groups up to 1,000 rows into a single `MERGE INTO` statement — combining one `SELECT` per row via `UNION ALL` — and sends it to Snowflake in one request instead of running each upsert individually.
 
 If a batch fails, the error message will include **"Note: Try reducing the batch size"**. This occurs when the generated SQL becomes too large for Snowflake to handle, typically when running at the default maximum of 1,000 rows with many columns. To fix it, lower the **Number of rows per batch** setting in the action's run options: 500 is a good starting point; if errors persist, try 250.
 
