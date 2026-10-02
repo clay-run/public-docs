@@ -794,6 +794,18 @@ The field is permanently removed and cannot be recovered.
 
 **Note:** Only custom fields — fields you created yourself — can be deleted. Built-in fields from Salesforce, HubSpot, or other connected sources have the Delete field button disabled. To stop a field from appearing in your column view without deleting it, use **Hide field** instead (available from the same sidebar, or by clicking the column header and selecting **Hide**).
 
+### Why does my People audience have both Title and Job Title (or State and State/Region)?
+
+In a People audience, **Title**, **City**, **State**, and **Country** are Clay's default fields. Fields such as **Job Title**, **State/Region**, and **Country/Region** usually come from your HubSpot import. When you add a HubSpot contact property to the import field mapping, Clay tries to match it to an existing Clay field. If no match is found, Clay creates a new custom field using the HubSpot property's name. That's how you end up with two fields for the same information.
+
+To keep title and location data in one set of fields, map the HubSpot properties to the Clay default fields:
+
+1.  Open your HubSpot source settings in Audiences and select `Contacts`.
+2.  For each HubSpot property (for example, `Job Title`), open the Clay field dropdown.
+3.  Under **Default fields**, select the matching field (for example, **Title**). Don't use the custom field or **+ Create field**.
+
+**Note:** The HubSpot source in Audiences is import-only. Mapping fields this way keeps your Audience data consistent, but it doesn't write anything back to HubSpot. To send enriched title and location data to HubSpot, see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences)
+
 ### Can I connect multiple Salesforce accounts to Audiences?
 
 No. Audiences supports one Salesforce connection per workspace. Once a Salesforce account is connected, the Salesforce source panel shows that account as a read-only field — there is no dropdown or `+ Add account` option to switch to or add a second Salesforce org.
