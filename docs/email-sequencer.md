@@ -263,6 +263,28 @@ To shorten the estimated time:
 -   **Add more sender accounts** — each account adds its own independent daily capacity.
 -   **Increase the account send limit** — in `Sender accounts`, click the three-dot (⋯) menu next to an account and select `Update send limit`.
 
+### How do I set my sequence's sending pace to "as fast as possible" (ASAP)?
+
+In the new sequence page — the one with the `Sequence`, `Sender accounts`, `Analytics`, `Activity`, and `Replies` tabs — there is no separate `Settings` tab like in legacy sequences. The sequence's schedule and sending pace live in the **Settings** modal, which you open from the sequence name menu. The new sequence page is available to workspaces on paid or trial plans; if you don't see it, contact support.
+
+To set the sending pace to as fast as possible:
+
+1.  Open the sequence.
+2.  Click the sequence name at the top left (next to the status badge, such as `Draft`) to open the dropdown menu.
+3.  Select **Settings**.
+4.  In the **Schedule type** field, choose **As fast as possible**. Clay describes this option as: *"Send emails 24/7 as soon as possible based on email account limits. Recommended for inbound or transactional use cases only."*
+5.  Save your changes.
+
+The **Schedule type** field has three options:
+
+-   **As fast as possible**: Sends all 7 days, 00:00–23:59, with a 3-minute minimum between emails from each sender account.
+-   **Optimized for deliverability**: Sends Monday–Friday, 9:00–17:00, with a 20-minute minimum between emails from each sender account.
+-   **Custom schedule**: You choose the days, start and end times, timezone, min time between emails (3–30 minutes), and an optional start date.
+
+**As fast as possible still respects each sender account's daily send limit.** Once an inbox reaches its limit, it stops sending until the next day. To send more emails per day, raise the limit on each inbox: go to the `Sender accounts` tab, click the three-dot (⋯) menu next to the account, select `Update send limit`, and enter a value in the **Limit** field (10 to 500 emails per day for self-connected accounts; up to 30 for SmartSenders accounts). The send limit belongs to the email account, so it applies across every sequence that uses that inbox — not just this one. Repeat this for each sender account in the sequence.
+
+For cold outreach, a fast schedule and high per-inbox limits can hurt deliverability — see [Best practices](#best-practices) and [How many emails can I send per day](#how-many-emails-can-i-send-per-day-and-is-the-sequencer-right-for-large-volume-campaigns).
+
 ### My "Sync lead data to campaign" column is showing a warning. What does it mean?
 
 This usually means the Clay table that the column points to was deleted. Hover over the warning icon to confirm — the error reads *"Destination table was deleted. Please either restore that table from the trash, or create a new Send table data column."*
