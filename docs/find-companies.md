@@ -150,18 +150,18 @@ To capture the full universe, split your search into smaller segments so each im
 
 Each segmented search imports into its own table.
 
-### How do I get a company's LinkedIn employee count as a number?
+### How do I get a company's employee count (associated members) as a number?
 
-To get the employee count a LinkedIn company page shows (for example, "19,470 associated members" on the company's People tab) for every account in your table, add the **Enrich company** enrichment as a column. This enrichment is available on all plans.
+To get the employee count a company's professional network page shows (for example, "19,470 associated members" on the company's People tab) for every account in your table, add the **Enrich company** enrichment as a column. This enrichment is available on all plans.
 
 1.  In your company table, add an **Enrich company** column.
-2.  Under **Match companies using**, choose the identifier type. Pick the LinkedIn company URL if you have it.
-3.  Under **Select column**, choose the column that holds the LinkedIn company URL (or domain).
+2.  Under **Match companies using**, choose the identifier type. Pick the professional network company URL if you have it.
+3.  Under **Select column**, choose the column that holds the company profile URL (or domain).
 4.  Run the column. In the results, **Employee Count** is a whole number, such as `19470`. Map it to its own column so you can sort and filter by it.
 
 Enrich company also returns a separate **Size** field. Size is the text size band the company picked for its own profile, such as "11-50 employees". Use **Employee Count** when you need the exact number and **Size** when you need the band.
 
-**Employee Count** is the number of LinkedIn profiles associated with the matched company. That's the same measure as the **Estimated employee count** filter, described in the next section. It isn't an official headcount. If the number looks wrong, check that Clay matched the company you meant. A domain can resolve to a subsidiary or regional entity, so enriching from the LinkedIn company URL gives the most reliable match. See [Why does enriched employee count differ from ZoomInfo or other sources?](#why-does-enriched-employee-count-differ-from-zoominfo-or-other-sources) for details.
+**Employee Count** is the number of professional profiles associated with the matched company. That's the same measure as the **Estimated employee count** filter, described in the next section. It isn't an official headcount. If the number looks wrong, check that Clay matched the company you meant. A domain can resolve to a subsidiary or regional entity, so enriching from the company profile URL gives the most reliable match. See [Why does enriched employee count differ from ZoomInfo or other sources?](#why-does-enriched-employee-count-differ-from-zoominfo-or-other-sources) for details.
 
 ### What does the Estimated employee count filter measure?
 
