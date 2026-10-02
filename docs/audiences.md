@@ -748,6 +748,21 @@ The simplest framing: Tables are how you _work on_ data. Audiences is where your
 
 Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data into a Clay table from any source, then use Upsert to push those records permanently into your Audience. This works for any source Audiences doesn't yet natively support.
 
+### How do I remove accounts that are already in my Audience (for example, my Salesforce accounts) from a Clay table?
+
+This applies to workspaces on a plan that includes Audiences (Launch, Growth, or Enterprise). To check each row in a Clay table against your Audience, for example to remove accounts that already exist in your Salesforce-synced Companies audience, add the `Look up in Audiences` enrichment column to the table. In some places it's labeled `Lookup in Audiences`. The column doesn't cost any credits.
+
+An Audience is not a Clay table. It doesn't appear in the table picker for **Lookup single row in other table** or **Lookup multiple rows in other table**, and you don't need to copy the Audience into a table first. `Look up in Audiences` reads your Audience directly.
+
+To find and remove table rows that already exist in your Audience:
+
+1.  In your Clay table, click `Add enrichment` and search for `Look up in Audiences`.
+2.  Set **Object type** to **Companies** for accounts, or **People** for contacts.
+3.  In **Fields to filter by**, select the Audience field to match on, for example your company domain field. Then map it to the column in your table that holds the same value. The options are the fields that exist in your Audience, plus **Company ID** or **Person ID**.
+4.  Run the column. Rows with no matching Audience record show **No records found**. Rows that match show the matched record.
+5.  Click any cell in the column and add `totalMatched` to the table as its own column. `totalMatched` is `0` when the account isn't in your Audience, and `1` or higher when it is.
+6.  Filter the table view on `totalMatched`. Filter for `0` to see only accounts that aren't in your Audience yet. Filter for values greater than `0` to find the rows to delete.
+
 ### How do I expand a JSON array field in one Audience into individual records in another?
 
 Audiences has no native array or object field type. The `Upsert Audiences Record` and `Update Audiences Record` field mappers expose only scalar field types (text, number, date, boolean) — JSON array columns cannot be selected as write targets. To expand a JSON array field — for example, a `providers` array on a Company record — into individual records in another Audience (for example, People records), use a table as an intermediate processing step:
