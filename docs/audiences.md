@@ -613,6 +613,20 @@ Scheduled audience source triggers support a **Process audience in batches** opt
 
 To enable batch processing when setting up a scheduled audience source trigger, toggle on **Process audience in batches** and set the **Members per run** count. You can also edit these settings at any time after the trigger has been created: in the workflow editor, click **Edit** on the scheduled audience source trigger card to update the **Members per run** value or toggle batch processing on or off. The trigger card displays the current batch processing status — including the batch size, when processing started, and whether the full audience has been completed.
 
+### Triggering a workflow when an activity is recorded
+
+**Currently in beta — not yet available in every workspace. Contact Clay support to ask about access.** In workspaces with access, the workflow trigger picker includes an **Activity** source (shown as **On an activity** in the trigger type dropdown). An Activity trigger starts a workflow run each time a new activity of a selected activity type is recorded for a person or company in Audiences — instead of running when a record enters a segment.
+
+**To set up an Activity trigger:**
+
+1.  In the workflow editor, open the trigger picker and select **Activity**.
+2.  Choose the activity type that should start the workflow, for people or for companies.
+3.  Optionally, scope the trigger to an audience segment. With a segment selected, the workflow only runs for activities on members of that segment; with no segment, it runs for every person or company that gets an activity of that type.
+
+The Activity trigger's activity type, people-or-companies setting, and segment are fixed once the trigger is created — the trigger card shows them read-only.
+
+**Testing an Activity trigger:** the test data panel loads recent activities of the selected type from the last 90 days. If no activity of that type was recorded in the last 90 days, the panel shows **No recent activities**.
+
 ### **Syncing audiences to ad platforms**
 
 When you have a segment ready, you can sync it to an ad platform to run account-based advertising across your highest-fit contacts and companies.
