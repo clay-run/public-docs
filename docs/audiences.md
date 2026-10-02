@@ -960,13 +960,24 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 ### How do I export my audience data to CSV?
 
-The Audiences screen does not have a direct CSV download button. To download audience data as a CSV, use the **Enrich** flow to create an enrichment table from the segment, then export that table. **Admin access is required.**
+The Audiences segment view does not have a direct CSV download button. To download an audience segment as a CSV, first send the segment to a Clay workbook table with **Add to workbook**, then download a CSV from that table.
 
-1. Open the audience segment you want to export.
-2. Click `Enrich` to open the enrichment panel, then create a new enrichment table for this segment. (The exact button label varies by workspace — you may see **Add bulk enrich** or a `+` button with a **Create Enrichment Table** option.)
-3. In the enrichment setup, skip adding enrichment columns and turn off field mapping if you only need the raw segment data.
-4. Open the resulting table. If any rows are checked, uncheck them first — the toolbar shows **Tools** only when no rows are selected.
-5. Click **Tools** → **Export** → **Download CSV**.
+**Availability:** The **Add to workbook** option is not enabled on every workspace — it is turned on by request. If you click `Send` → `Export action` and the menu shows only options like **Send to workflow** and **Sync to ad platforms** (no **Add to workbook**), contact Clay support or your Growth Strategist to request it for your workspace.
+
+**To export an audience segment to CSV:**
+
+1. Open the audience segment you want to export, with the filters you want already applied.
+2. Click `Send` → `Export action` → **Add to workbook**. A **Send to workbook** dialog opens — name the table and confirm.
+3. Open the new table. It starts with three columns: **Name**, **Domain**, and **LinkedIn URL** for a Companies segment, or **Name**, **Email**, and **LinkedIn URL** for a People segment.
+4. To include more audience fields (including custom fields), click a cell in the table's Audiences source column, hover over the field you want, and click **Add as column**. Repeat for each field you need in the CSV.
+5. If any rows are checked, uncheck them first — the toolbar shows **Tools** only when no rows are selected.
+6. Click **Tools** → **Export** → **Download CSV**.
+
+**Row limit:** Add to workbook imports up to **50,000 records** per segment. If your segment has more than 50,000 records, only the first 50,000 are imported into the table. For example, a segment of 26,638 companies is imported in full.
+
+**Columns:** The workbook table does not copy the columns you have selected in the Audiences segment view. Only the three starter columns are created automatically — add any other fields with **Add as column** (step 4) before you download the CSV.
+
+**Note:** The **Enrich** → **Add enrichment table** flow is not a way to export a segment. Enrichment tables process records in batches and remove each row once it has been processed, so they never hold your full segment at once — a CSV downloaded from an enrichment table contains only the rows currently in the queue.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
