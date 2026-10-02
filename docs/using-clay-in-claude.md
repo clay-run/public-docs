@@ -104,7 +104,7 @@ If you need additional data points or more advanced workflows, access the full C
 
 **Can I search for companies?**
 
-Yes — company search is available in Clay in Claude. Ask Clay to find companies that match criteria such as location, industry, or employee count (for example, `Find companies based in New York with 201–500 employees`), and Clay returns the matching companies. You can also research companies by asking Clay questions about target accounts—tech stack, funding, hiring trends, leadership changes, and more. Clay surfaces information that's otherwise hard to find: org charts, job changes, funding history, social context, and tech stack signals.
+Company search is not currently supported. However, you can research companies by asking Clay questions about target accounts—tech stack, funding, hiring trends, leadership changes, and more. Clay surfaces information that's otherwise hard to find: org charts, job changes, funding history, social context, and tech stack signals.
 
 **Can I query my Audiences data or run analytical queries like "group by seller"?**
 
