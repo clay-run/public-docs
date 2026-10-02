@@ -81,6 +81,8 @@ You can use Snowflake as a source for a new or existing table.
 -   **Snowflake warehouse**
 -   **Role** (optional)
 
+**Editing an Import from Snowflake source:** To change the query or inputs after the source is created, open the source panel and click **Edit inputs**. If the button is greyed out with the tooltip "Editing sources is disabled for Import from Snowflake", the source has reached 50,000 records or failed 5 runs in a row — add a new Import from Snowflake source to the same table with your updated settings instead. See [Why is "Edit inputs" greyed out on my Snowflake (or other) source?](sources.md#why-is-edit-inputs-greyed-out-on-my-snowflake-or-other-source) for details.
+
 ### Scheduling imports
 
 The Import from Snowflake source supports scheduled refreshes. To configure a schedule, click the source column title → **Sources** → **Run this source** → **On a schedule**, then choose your frequency. Available options depend on your plan:
