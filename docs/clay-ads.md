@@ -312,6 +312,10 @@ Google reports two different measurements in your Clay Ads sync results:
 
 This means a 30% overall match rate can coexist with a Search or Display audience size of 0 — if none of the matched contacts meet the eligibility requirements for those networks at the time of matching. This is expected behavior from Google's Customer Match API, not an indication that your sync failed.
 
+**Search and Display often show 0 right after a Google Ads sync finishes, even when the Google Ads card shows Ready and a match rate.** Google can report the upload as complete before it calculates the Search and Display counts, so those numbers can take a day or two to appear. You don't need to re-run the sync. After each sync, Clay checks Google for updated results every 30 minutes for up to 72 hours and updates the Search and Display counts on the Google Ads card as Google reports them. The check icon next to Search or Display means Google has marked the audience as eligible for that network. An X icon means it isn't eligible.
+
+Clay doesn't publish a typical range for Search and Display counts. They depend on how many of your matched contacts are signed in to Google and have opted into personalized ads on each network, which Google controls. These counts are always a subset of your matched contacts.
+
 If Search and Display remain at 0 after 48 hours, check the audience status in your Google Ads account under **Tools & Settings → Audience Manager**. See [Why is my Google Ads audience sync showing a "Failed to update audience" error?](#why-is-my-google-ads-audience-sync-showing-a-failed-to-update-audience-error) if the sync itself shows an error.
 
 ### **How do I connect my LinkedIn, Meta, or Google Ads account?**
