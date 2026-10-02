@@ -371,6 +371,25 @@ Clay's source continues to run normally after the limit is reached — the sched
 
 For large ongoing Salesforce, HubSpot, Snowflake, or other CRM/database imports that regularly approach or exceed 50,000 records, consider [Audiences](audiences.md) instead of a standard table. Audiences scale to millions of records without the per-source limit.
 
+### Why is "Edit inputs" greyed out on my Snowflake (or other) source?
+
+**You can normally edit an Import from Snowflake source — or any other action source — after it's created.** Open the source panel (click the **Edit source** icon in the source column header) and click **Edit inputs** to change the query or other source settings.
+
+If the **Edit inputs** button is greyed out and hovering over it shows the tooltip "Editing sources is disabled for [source name]" (for example, "Editing sources is disabled for Import from Snowflake"), the source has been locked for one of these reasons:
+
+-   **The source has accumulated 50,000 records.** This is the source's lifetime record count, not your table's visible row count — rows you've deleted still count. See [My Salesforce, HubSpot, Snowflake, or CRM import is returning 0 new records](#my-salesforce-hubspot-snowflake-or-crm-import-is-returning-0-new-records).
+-   **The source failed 5 runs in a row.** After 5 consecutive failed runs, Clay stops running the source automatically and locks its inputs.
+
+The disabled **Edit inputs** button is the only indicator of this state — the source panel doesn't show a separate status banner. A locked source stays locked even if a later **Run now** succeeds or you change its **Run this source** setting.
+
+**To change the query or inputs on a locked source:**
+
+1.  In the same table, add a new source of the same type (for example, a new **Import from Snowflake** source) with your updated query or settings. A table's source column can hold up to 20 sources, and the new source starts at a fresh 0/50,000 record count.
+2.  Before running the new source, enable [auto-dedupe](table-management-settings.md) on a unique identifier column (such as email or company domain) so records already in your table aren't duplicated.
+3.  Delete the old source once the new one is working.
+
+Find People and Find Companies list-builder sources aren't locked this way — their **Edit inputs** button stays available.
+
 ### Why did my source run automatically even though it's set to "Run manually"?
 
 **"Run this source: Manually" only prevents the source from running on a recurring schedule — it does not prevent all forms of automatic triggering.**
