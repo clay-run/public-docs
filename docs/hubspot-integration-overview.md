@@ -449,7 +449,7 @@ The Sequence field populates dynamically from your HubSpot account, but it requi
 4.  Complete the reconnection flow.
 5.  Return to your "Enroll a contact in a sequence" column — the Sequence dropdown will now show your available HubSpot sequences.
 
-**Note:** If after enabling these scopes you see an "Authorization failed" error, your HubSpot plan may not include the Sequences feature. See [Why do I get "Authorization failed because your account lacks access to the required scopes"?](#why-do-i-get-authorization-failed-because-your-account-lacks-access-to-the-required-scopes-automationsequencesenrollmentswrite-automationsequencesread) below.
+**Note:** If after enabling these scopes you see an "Authorization failed" error, check the wording. "Your account lacks access to the required scopes" means your HubSpot plan may not include the Sequences feature — see [Why do I get "Authorization failed because your account lacks access to the required scopes"?](#why-do-i-get-authorization-failed-because-your-account-lacks-access-to-the-required-scopes-automationsequencesenrollmentswrite-automationsequencesread) below. "This app hasn't been approved to access the required scopes" means HubSpot App Governance is blocking the scopes — see [Why do I get "Authorization failed because this app hasn't been approved to access the required scopes"?](#why-do-i-get-authorization-failed-because-this-app-hasnt-been-approved-to-access-the-required-scopes-for-example-crmexport-or-automationsequencesenrollmentswrite-crmlistswrite-automationsequencesread) below.
 
 ### Why do I get "Authorization failed because your account lacks access to the required scopes [automation.sequences.enrollments.write, automation.sequences.read]"?
 
@@ -466,19 +466,23 @@ If these scopes were checked during setup and your HubSpot subscription doesn't 
 
 You only need to enable these scopes if you're specifically using Clay to enroll contacts in HubSpot Sequences. For standard CRM syncing, contact and company management, or Audiences setup, leave them unchecked.
 
-### Why do I get "Authorization failed because this app hasn't been approved to access the required scopes [crm.export]"?
+### Why do I get "Authorization failed because this app hasn't been approved to access the required scopes" (for example, [crm.export] or [automation.sequences.enrollments.write, crm.lists.write, automation.sequences.read])?
 
-This error comes from HubSpot when your organization has **App Governance** (also called App Permissions) enabled and the Clay app has not been approved to use the `crm.export` scope. App Governance is a HubSpot feature that lets super admins control which OAuth scopes third-party apps are permitted to access — even when your HubSpot plan supports those scopes. Until a super admin grants approval for the Clay app, the OAuth connection fails with this error.
+This error comes from HubSpot when your organization has **App Governance** (also called App Permissions) enabled and the Clay app has not been approved to use one or more of the scopes listed in the error. App Governance is a HubSpot feature that lets super admins control which OAuth scopes third-party apps are permitted to access — even when your HubSpot plan supports those scopes. Until the scopes are approved for the Clay app in App Governance, the HubSpot OAuth connection fails with this error. Being a HubSpot super admin doesn't bypass App Governance: the scopes still have to be approved for the Clay app in HubSpot's App Governance settings before the connection succeeds.
 
-Clay uses `crm.export` to export CRM records in bulk (for example, when importing records via the HubSpot source or the Audiences HubSpot import). This scope is enabled by default in Clay's HubSpot connection.
+The scopes in the error message are the ones Clay requested during that connection attempt. Common examples:
+
+-   `crm.export` — used to export CRM records in bulk (for example, when importing records via the HubSpot source or the Audiences HubSpot import). Enabled by default in Clay's HubSpot connection.
+-   `crm.lists.write` — used by the **Add record to list** action. Enabled by default in Clay's HubSpot connection.
+-   `automation.sequences.read` and `automation.sequences.enrollments.write` — used by the **Enroll a contact in a sequence** action. Disabled by default; they're only requested if you check them under **Optional scopes** when connecting or reconnecting HubSpot.
 
 **To fix:**
 
 1.  In HubSpot, go to **Settings → Integrations → Connected Apps** (or search "App Governance" in HubSpot Settings).
 2.  Find **Clay** in the list and click **Manage**.
 3.  On the app detail page, expand **App access and permissions**.
-4.  Under **Conditionally required** permissions, find `crm.export` and enable it.
-5.  Return to Clay, go to **Settings → Connections**, find your HubSpot connection, and click **Reconnect** to complete the authorization.
+4.  Under **Conditionally required** permissions, enable every scope listed in the error message (for example, `crm.export`, or `automation.sequences.read`, `automation.sequences.enrollments.write`, and `crm.lists.write`).
+5.  Return to Clay, go to **Settings → Connections**, find your HubSpot connection, and click **Reconnect** to complete the authorization. If you're setting up **Enroll a contact in a sequence**, make sure both sequence scopes are checked under **Optional scopes** in the reconnect modal — they stay unchecked on reconnect unless you select them.
 
 **Note:** Only a HubSpot super admin can approve permissions in App Governance. If you are not a super admin, ask your HubSpot account administrator to complete steps 1–4.
 
@@ -554,3 +558,17 @@ HubSpot Activities — including calls, emails, meetings, notes, and tasks — a
 **Workaround — rollup properties:** Create HubSpot rollup properties on your Contact or Company objects to capture the activity data you need. For example, to track completed meetings for a contact, create a Contact property in HubSpot that stores the most recent completed meeting date — populated by a HubSpot workflow or rollup. Once those properties are in place, import the Contact or Company into Clay using the **Import objects from HubSpot** source or a **Lookup object** action; Clay reads the rollup property like any other contact or company field. Using date-based rollup properties (rather than booleans) lets you compute recency-based values in Clay with a formula, such as the number of days since the last completed meeting.
 
 **Advanced workaround — HTTP API:** To fetch raw Activity records directly, use Clay's **HTTP API** integration with a HubSpot Private App token to call HubSpot's Engagements endpoints — for example, `https://api.hubapi.com/crm/v3/objects/calls` for calls or `https://api.hubapi.com/crm/v3/objects/meetings` for meetings. This requires configuring the HTTP API action manually and does not use Clay's native HubSpot connection.
+
+### Can I create HubSpot tasks from Clay?
+
+Clay's HubSpot integration does not include a native action for creating Tasks — tasks aren't one of the object types available in the HubSpot **Create object** action. To create HubSpot tasks from Clay, use the **HTTP API** integration with a HubSpot Private App token to call HubSpot's Tasks API directly.
+
+**Setup:**
+
+1.  In HubSpot, go to **Settings → Integrations → Private Apps**, create a private app with permission to create tasks, and copy its access token.
+2.  In your Clay table, add an **HTTP API** column.
+3.  In the column's **Account** section, open **Select account** and click **Add account**. Under **API Request Headers**, add a key-value pair with the key `Authorization` and the value `Bearer <your-private-app-token>`. See [HTTP API integration](https://university.clay.com/docs/http-api-integration-overview) for details.
+4.  Set the method, endpoint, and JSON body as described in [HubSpot's Tasks API guide](https://developers.hubspot.com/docs/api-reference/legacy/crm/activities/tasks/guide).
+5.  Save the column and test it on 1 row before running it on the whole table.
+
+To create HubSpot notes instead, see [How can I create HubSpot notes from Clay?](#how-can-i-create-hubspot-notes-from-clay)
