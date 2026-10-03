@@ -726,6 +726,21 @@ This error typically occurs when:
 2.  If your org enforces SSO, temporarily allow direct username/password login for this user, or create a non-SSO service account for authorization.
 3.  In `Setup` → `Connected Apps OAuth Usage`, verify the Clay app is listed and not blocked. If your org uses App Access Control, pre-install or whitelist the app first.
 
+If the Salesforce error page or URL also says `missing required code challenge`, the fixes above won't resolve it — see [Why am I seeing "missing required code challenge" when connecting Salesforce with User Sign In?](#why-am-i-seeing-missing-required-code-challenge-when-connecting-salesforce-with-user-sign-in).
+
+## Why am I seeing "missing required code challenge" when connecting Salesforce with User Sign In?
+
+Salesforce returns `invalid_request: missing required code challenge` when your Salesforce org requires PKCE (Proof Key for Code Exchange — an extra OAuth security check) for browser sign-ins and the sign-in request doesn't include a PKCE code challenge. Clay's **User Sign In** connection method doesn't send a PKCE code challenge. When your Salesforce org requires PKCE, Salesforce rejects the User Sign In request before the approval screen, and the Clay connection or reconnect fails with a general connection error. The Salesforce error page may also show `OAUTH_APPROVAL_ERROR_GENERIC`.
+
+Because Salesforce rejects the request for the missing code challenge, the fixes for other `OAUTH_APPROVAL_ERROR_GENERIC` causes — using a full Salesforce user license, pre-approving Clay's connected app, adjusting SSO, or granting "Approve uninstalled connected apps" — don't resolve this error.
+
+**How to fix:** Connect Salesforce with **Client Credentials** instead of User Sign In. Client Credentials gets a token server-to-server using your external client app's consumer key and consumer secret, with no browser sign-in step, so Salesforce's PKCE requirement doesn't apply. You don't need to turn off PKCE or weaken other OAuth security settings in Salesforce.
+
+1.  **Set up Client Credentials in Salesforce.** Your Salesforce admin creates an External Client App with the Client Credentials flow enabled. See [Client Credentials setup instructions](salesforce-integration-overview.md#client-credentials-integration-user) in the Salesforce integration overview.
+2.  **Reconnect the existing connection in Clay.** In the home sidebar, click `Settings` → `Connections` → `Salesforce`, click `…` next to the connection, and choose **Reconnect**. Select **Client Credentials**, enter your **My Domain URL**, **Consumer key**, and **Consumer secret**, then click `Authenticate`. If you don't have a Salesforce connection yet, click `Add connection` instead.
+
+**Reconnect your Salesforce connection — don't delete it.** Reconnect updates the credentials on the same Salesforce connection, so every table, column, and source that uses it keeps working on its next run. Deleting the connection and adding a new one doesn't move anything over: tables, columns, and sources that referenced the deleted connection stay pointed at it and may stop working until you repoint each one to the new connection. For the full walkthrough, see [How do I switch from User Sign In to Client Credentials?](#how-do-i-switch-from-user-sign-in-to-client-credentials).
+
 ## Do I need to install Clay's Connected App in my Salesforce org?
 
 Yes. Since Salesforce's August 2025 security policy update, all Connected Apps — including Clay's — must be pre-installed in your org before users can authenticate. If Clay is not installed, Salesforce blocks the OAuth flow with an `OAUTH_APPROVAL_ERROR_GENERIC` error.
