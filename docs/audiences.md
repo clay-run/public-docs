@@ -1377,3 +1377,5 @@ To remove them from your Audience, archive them manually:
 2.  Add a filter: **Source** → select your Snowflake import → set status to **Deleted in source**.
 3.  Select all returned rows.
 4.  Click **Archive** in the bottom toolbar and confirm.
+
+Archived records can be restored at any time from the **Archived** section in the left sidebar.
