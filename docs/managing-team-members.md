@@ -1,12 +1,12 @@
 ---
 title: Managing team members
-description: Understand Clay's Admin, Editor, and Viewer roles and learn how to invite, update, and remove team members in your workspace.
+description: Understand Clay's Admin, Editor, and Viewer roles and learn how to invite, update, and remove team members in your workspace, or let teammates on your company email domain join without an invite using trusted domain access.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
 # Managing team members
 
-Use this article to understand Clay's user roles and permissions and to invite team members to your workspace, change their roles, remove members, and cancel pending invites.
+Use this article to understand Clay's user roles and permissions and to invite team members to your workspace, let teammates on your company email domain join with trusted domain access, change their roles, remove members, and cancel pending invites.
 
 ## Roles and permissions
 
@@ -50,7 +50,7 @@ Clay offers three user roles with different permission levels to help manage you
 
 ## Add a team member to your workspace
 
-Workspace access in Clay is invitation-only. When a new user signs up for Clay, they are automatically placed in their own workspace — they will not join yours unless you explicitly invite them. Your workspace remains private to you until you send an invite.
+By default, workspace access in Clay is invitation-only. When a new user signs up for Clay, they are automatically placed in their own workspace — they will not join yours unless you explicitly invite them. Your workspace remains private to you until you send an invite. Enterprise workspaces can also turn on [trusted domain access](#let-teammates-join-without-an-invite-trusted-domain-access) so teammates with your company email domain can join without an invite.
 
 **If your workspace uses SSO (such as Okta or another SAML identity provider):** Clay's SSO handles authentication only — it does not provision users or add them to your workspace. Adding a user in your identity provider does not create a Clay account or grant access to your organization's workspace. You must send a Clay workspace invite before a user can log in via SSO and be directed to your workspace. If a user clicks the SSO tile before receiving a Clay invite, they will be routed to a new, empty workspace of their own instead of your organization's workspace. Sending a Clay invite after the fact still works — once the user accepts the invite and logs in via SSO, they will be directed to the correct workspace.
 
@@ -78,6 +78,40 @@ This error appears when the invitee tries to sign up using a password with a plu
 2. The invitee should then sign up using that plain email address.
 
 Alternatively, if the invitee has a Google account at that email address, they can sign up using **Continue with Google** instead — the plus-address restriction applies only to password-based signup, not to Google OAuth.
+
+## Let teammates join without an invite (trusted domain access)
+
+**Trusted domain access** lets anyone who signs up for Clay with an email address at your company domain join your workspace in one click — no invite needed. This helps new teammates get started right away and keeps your organization from ending up with many separate workspaces.
+
+**Who can use trusted domain access:** Trusted domain access is available for **Enterprise** workspaces, and only **workspace admins** can set it up. If you're an admin on an Enterprise workspace and don't see the **Trusted domain access** section, contact Clay support via the in-app chat.
+
+### Add a trusted domain
+
+To add your company email domain to trusted domain access:
+
+1.  Go to `Settings` > `Workspace`.
+2.  Find the **Trusted domain access** section.
+3.  Add your company email domain (for example, `yourcompany.com`).
+
+Once added, the domain appears in the **Trusted domain access** section, and new teammates with an email at that domain can join your workspace without an invite.
+
+**Domain rules for trusted domain access:**
+
+-   **You can only add the domain of your own verified email address.** There is no DNS verification step — Clay checks that the domain matches the email on your own Clay account and that your email is verified. If your domain doesn't match, you'll see the error "You can only add a domain that matches your own verified email address." If you don't have a verified company email, you'll see "Only admins with a verified company email address can add a domain."
+-   **Public email providers can't be added.** Domains like `gmail.com` are blocked, and you'll see "Public email providers like gmail.com can't be added. Use a company domain instead."
+-   **A workspace can have more than one trusted domain.** Because each admin can only add the domain of their own email, adding a second domain (for example, a subsidiary's domain) requires an admin with a verified email at that domain to add it.
+
+### Choose the default role for people who join
+
+People who join your workspace through trusted domain access are given the **Editor** role by default. On Enterprise plans, admins can change this default role in the **Trusted domain access** section to either **Editor** or **Viewer**. The **Admin** role can't be assigned automatically — to make someone an admin, [change their role](#change-a-team-members-role) after they join.
+
+### How teammates join with trusted domain access
+
+When a teammate signs up or logs in to Clay with a verified email at a trusted domain and doesn't belong to any workspace yet, they see a **Join a Clay workspace** screen listing the workspaces that match their email domain. They click **Join** next to your workspace to join it with the default role. They can also choose **Create new workspace instead** if they want their own workspace. A teammate must verify their email address before they can join through trusted domain access.
+
+### Remove a trusted domain
+
+To stop people at a domain from joining without an invite, click the **X** on the domain in the **Trusted domain access** section and confirm by clicking **Remove**. Removing a trusted domain does not remove anyone from your workspace — existing members keep their access. After removal, people at that domain need an invite to join.
 
 ## Change a team member's role
 
