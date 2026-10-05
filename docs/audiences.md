@@ -57,6 +57,8 @@ The Salesforce import flow in Audiences has been redesigned. You can import **al
 
 **Supported object types:** Contacts (appear in People), Accounts (appear in Companies), Leads (appear in People), Opportunities (appear in Companies), and Custom Objects.
 
+The **Custom objects** option lists only Salesforce custom objects (API names ending in `__c`) and external objects (API names ending in `__x`), each mapped to a Clay activity type. Other standard Salesforce objects — such as Campaign and Campaign Member — can't be imported into Audiences. See [Can I import Salesforce Campaigns or Campaign Members into Audiences?](#can-i-import-salesforce-campaigns-or-campaign-members-into-audiences) for workarounds.
+
 **Step 1: Connect your Salesforce account**
 
 1.  Click `Add data` → `Add Source` → select your [**Salesforce integration**](https://university.clay.com/docs/salesforce-integration-overview).
@@ -819,6 +821,27 @@ You can still add multiple imports from the same connected Salesforce account �
 If you need data from a second Salesforce org in Audiences without removing the existing connection, the available workaround is: connect the second org under **Settings → Connections**, bring its records into a Clay table using Salesforce actions, then push those records into Audiences using `Upsert Audiences Record`. Note that Clay table row limits apply in this path.
 
 **If you need to keep each Salesforce org's audiences completely separate — with no cross-org record merging — use a separate Clay workspace for each Salesforce org.** Records in a shared workspace go through the same entity resolution pool, so contacts or companies from one org may be merged with records from the other if they share a matching identifier (professional network URL, email, or domain). Separate workspaces keep each org's Audience data fully independent.
+
+### Can I import Salesforce Campaigns or Campaign Members into Audiences?
+
+No. The Audiences Salesforce import supports Accounts, Contacts, Leads, and Opportunities as object types, plus **Custom objects**. The **Custom objects** option (under **Object mapping** → **Salesforce object**) lists only Salesforce custom objects (API names ending in `__c`) and external objects (API names ending in `__x`), which you map to a Clay activity type. Standard Salesforce objects such as **Campaign** and **Campaign Member** don't appear in that dropdown and can't be imported into Audiences — even if your Salesforce integration user can access them in Clay tables.
+
+To build an Audiences segment based on Salesforce campaign membership, use one of these workarounds:
+
+**Option 1: Copy campaign values onto Contacts or Leads (stays in sync)**
+
+1.  In Salesforce, add custom fields for the campaign information you need to the Contact and/or Lead object — for example, `Campaign_Name__c`, `Campaign_Status__c`, or `Campaign_Date__c`.
+2.  In Audiences, open your Salesforce Contacts or Leads import, add the new fields to the field mapping, and save.
+3.  In Salesforce, use a Flow or other automation to copy the campaign values onto those Contact or Lead fields.
+4.  Updating these fields changes the record's `SystemModstamp`, so the next incremental sync (every 15 minutes on Enterprise plans, daily on Growth plans) brings the new values into Audiences. You can then filter any People segment on these fields.
+
+**Option 2: Upload a one-time list of campaign members as a CSV**
+
+1.  Export the campaign's members (for example, their email addresses) from Salesforce.
+2.  In Audiences, click `Add data` → `Add Source` → **CSV** and import the file as **People**. On the mapping screen, map the email column to the Audiences **Email** field — this is what matches each row to an existing person in Audiences. Setting email as the **Unique identifier** alone doesn't match rows to records from other sources such as Salesforce; without the **Email** field mapping, the import creates duplicate people. When the email is mapped, people who already exist in Audiences are matched to their existing records, and the CSV import is added to each matching record's sources.
+3.  Create a segment with the filter **Sources** contains *[your CSV import name]*, then sync the segment wherever you need it — for example, to your ad platforms.
+
+CSV imports don't re-sync, so people added to the campaign later won't be included until you import an updated file. CSV source entries also can't be removed from the Sources tab after import — see [Importing from CSV](#importing-from-csv).
 
 ### A Salesforce field isn't appearing in my audience filters — how do I add it?
 
