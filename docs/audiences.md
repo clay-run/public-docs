@@ -834,11 +834,27 @@ To add a missing field to an "All records" import:
 4.  In the field mapping section, add the Salesforce field you want and name the corresponding Clay column.
 5.  Click **Save and review** → **Confirm**.
 
-**Record subset (SOQL) imports:** Fields are determined by the `SELECT` clause of your SOQL query — only fields listed in the SELECT statement are imported. To add a new field, edit the SOQL query for that import to include the field in the SELECT clause, then reconfirm the import.
+**Record subset (SOQL) imports:** Fields are determined by the `SELECT` clause of your SOQL query — only fields listed in the SELECT statement are imported. The SOQL import's field mapping only lists fields from the SELECT clause, and any field you want to write back to Salesforce through Export sync must also be in the SELECT clause. To add a new field, edit the SOQL query for that import to include the field in the SELECT clause, then reconfirm the import. Editing the query on a configured import replaces the import and resets its field mappings — see [What happens when I edit the SOQL query on an existing Salesforce record subset import?](#what-happens-when-i-edit-the-soql-query-on-an-existing-salesforce-record-subset-import) below before you confirm.
 
 The filter option for the field becomes available after the next incremental sync (typically within 15 minutes). However, if you added this field to the mapping after your initial import, records that haven't been modified in Salesforce since the mapping was saved won't have data for the new field yet — see [I added a new Salesforce field to my mapping but some records are missing data for it](#i-added-a-new-salesforce-field-to-my-mapping-but-some-records-are-missing-data-for-it) below. Read-only Salesforce fields — fields shown with a lock icon in the mapping because Salesforce does not allow Clay to write them — can still be imported and used as filters. They will show a **Never write (Read-only)** export rule.
 
 **If a field doesn't appear in the Settings mapping dropdown** (not just in the filter options): Clay fetches the available field list live from Salesforce each time you open the mapping settings — no reconnect or reauth is required for newly created Salesforce fields to appear. If a field you recently created in Salesforce still does not show up in the dropdown, the most likely cause is that the connected Salesforce OAuth user's profile lacks Field-Level Security (FLS) Read access to that field. Salesforce's describe API only returns fields the connected user can read, so any field blocked by FLS will be absent from Clay's dropdown regardless of when it was created. To fix it, ask your Salesforce admin to grant **Read** access to the field via **Setup** → **Profiles** (or **Permission Sets**) → the user's profile → **Object Settings** → **Field Permissions**. After permissions are updated, reopen the mapping settings and the field will appear.
+
+### What happens when I edit the SOQL query on an existing Salesforce record subset import?
+
+This applies to Salesforce **Record subset** (SOQL) imports in Audiences, available on Growth and Enterprise plans.
+
+When you change the SOQL query on a record subset import that's already set up with field mappings and save, Clay shows a **Confirm your changes** dialog. Clicking **Confirm** does the following:
+
+1.  Stops and deletes the existing Salesforce SOQL import, including its field mappings.
+2.  Creates a new import with the updated SOQL query. The new import starts with no field mappings — you map your fields again in the next step.
+3.  Matches records returned by the new query to existing Audience records by their Salesforce record ID. Matching records are merged into the existing Audience records instead of being created as new records.
+
+**Before you confirm:** note down your current field mappings so you can re-add them to the new import. Make sure the new `SELECT` clause includes every field you want to map — both fields you want to use in Clay and fields you want to write back to Salesforce through Export sync.
+
+**Will editing the SOQL query re-trigger workflows that run when a record is added to an audience?** No. Records that the new query still returns are matched to their existing Audience records by Salesforce record ID and stay in your audience throughout the change, so workflows triggered when a record is added to an audience don't fire again for them. Only records that weren't already in your audience fire the trigger.
+
+**What if the new query returns fewer records?** If you change the `WHERE` clause so the new query returns fewer records, records the new query no longer returns are disconnected from the Salesforce SOQL import and stop receiving updates from Salesforce. If you only add fields to the `SELECT` clause and leave the `WHERE` clause unchanged, the new query returns the same records, and they all merge back into their existing Audience records.
 
 ### I added a new Salesforce field to my mapping but some records are missing data for it
 
