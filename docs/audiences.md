@@ -407,6 +407,16 @@ To create a new audience:
 
 **Filtering by CRM and data warehouse properties:** All fields synced from your CRM (Salesforce, HubSpot) or data warehouse are available as filter options alongside Clay's built-in fields — you are not limited to Clay's native properties. When you click **+ Filter**, type the property name in the search box to find it. For example, to build a Companies segment of your existing customers, add a filter on the field in your CRM that tracks account type (such as **Account Type** in Salesforce) and set the value to `Customer`. Any field included in your import field mapping appears in the filter picker after the next sync completes. If a CRM field isn't showing up in the filter list, see [A Salesforce field isn't appearing in my audience filters — how do I add it?](#a-salesforce-field-isnt-appearing-in-my-audience-filters--how-do-i-add-it) in the FAQs below.
 
+### Saving filter changes to a segment
+
+Filter changes on an Audiences segment aren't saved automatically. When you add, edit, or remove a filter on a saved segment, a **Save filters** button appears next to **Filters**. Until you click **Save filters**, the segment keeps its last saved filters — anyone else opening the segment, and you after you come back, sees the last saved version.
+
+-   Click **Save filters** to save the filter changes to the current segment.
+-   Click the arrow next to **Save filters** and select **Create segment** to save the current filters as a new segment instead, leaving the original segment unchanged.
+-   Select **Reset to last save** from the same menu to discard your filter changes.
+
+If you try to leave Audiences or close or refresh the browser tab with unsaved filter changes, Clay shows an **Unsaved filter changes** prompt — click **Keep editing** to go back and save, or **Discard changes** to leave. Moving between views inside Audiences (for example, to the **Archived** view) doesn't show this prompt — your unsaved filter changes stay in place for that browser session and reappear when you return to the segment, but they still aren't saved until you click **Save filters**. If you click **Discard changes** or close or refresh the tab, unsaved filter changes are lost and can't be recovered, because Clay never stored them.
+
 ### Filter operators by field type
 
 The operators available when building a filter depend on the field's data type, shown by the icon next to the field name:
@@ -948,6 +958,12 @@ Yes. Segments update in real time as records enter or exit your filter criteria.
 The 15-minute (or daily) cadence applies to the **import direction only** — it reflects changes from your CRM in Clay. The reverse direction — exporting enriched data from Clay back to Salesforce — runs on a **separate 24-hour schedule**. See [I enriched data in my Audience. Why hasn't it appeared in Salesforce yet?](#i-enriched-data-in-my-audience-why-hasnt-it-appeared-in-salesforce-yet) for details.
 
 Enrichments configured with `Continuous Enrichment` enabled automatically process new records entering a segment, typically within 15 minutes. No manual runs are required after initial setup.
+
+### Why did my segment's filters reset or disappear?
+
+Audiences segment filters only persist after you click **Save filters**. If you added filters to a segment but didn't save them, the segment still has its last saved filters (or no filters, if it was never saved with any) — so when you come back, the filters look like they were cleared and the record count goes back up. Clay doesn't reset or remove saved segment filters on its own.
+
+Unsaved filters can't be restored. To fix the segment, add the filters again and click **Save filters** before closing or refreshing the tab or leaving Audiences. See [Saving filter changes to a segment](#saving-filter-changes-to-a-segment) for how saving works.
 
 ### Why didn't my audience count change after I tightened my search filters?
 
