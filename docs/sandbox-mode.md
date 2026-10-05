@@ -30,6 +30,7 @@ Sandbox mode is a special table mode that lets you safely build, test, and publi
 
 -   Your regular table becomes read-only and cannot be updated directly — the **All data** tab shows a **View-only** indicator while sandbox is active.
 -   You can switch between your sandbox and the read-only production table using the tabs menu.
+-   Lookup columns in other tables (`Lookup single row in other table` and `Lookup multiple rows in other table`) that point at this table keep reading your regular (live) table, not the sandbox copy. Sandbox copies don't appear in the lookup's `Table to search` picker. Edits you make in the sandbox aren't visible to those lookups until you publish them — see [Lookup Rows](lookup-rows.md#lookup-keeps-returning-old-values-after-you-edited-the-other-table-sandbox-mode).
 -   All recurring sources ([webhooks](https://www.clay.com/university/guide/webhook-integration-guide), [signals](https://www.clay.com/university/guide/signals), etc.) and [scheduled runs](https://www.clay.com/university/guide/scheduled-columns) will still run while sandbox mode is active — under the same rate limits as your production table.
 
 **Sculptor and sandbox mode:** [Sculptor](https://www.clay.com/university/guide/sculptor) automatically puts your table into sandbox mode whenever it builds new columns. This lets you review and validate Sculptor's changes before they go live.
@@ -80,7 +81,8 @@ Click `Review changes` — visible in the tab bar above your table, to the right
 **Notes on publishing changes:**
 
 -   Visual updates (such as pinned columns, column ordering, and colors) won't appear in the list, **but** **_will_** **be applied when you publish**.
--   Manually added rows and manual overrides to individual cell data **will not be published**.
+-   Cell values in your sandbox rows — including values you typed or edited manually — **are copied to the matching rows in your regular table when you publish**, replacing any updates made to those rows since the sandbox was created. Rows you added manually in the sandbox are also added to your regular table if they contain data; empty rows are skipped, and rows that are still running when you publish are not copied.
+-   Cell edits can't be published on their own. Publishing requires at least one column change, so if you've only edited cell values in the sandbox, `Review changes` stays greyed out. To change cell values in your regular table without a column change, click **Exit Sandbox** (this discards your sandbox changes) and make the edits directly in your regular table.
 -   Changes to a column that affect downstream columns are shown in a nested format to clearly indicate which other columns may be impacted.
 
 ### Publishing changes
