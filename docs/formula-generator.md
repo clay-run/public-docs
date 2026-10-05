@@ -2,7 +2,8 @@
 title: Formulas
 description: Generate formulas with AI to transform your data. Includes how to
   use today's date in a formula, pull error messages with getCellErrorMessagePreview(),
-  check cell status with getCellStatus(), and keep date comparisons current automatically.
+  check cell status with getCellStatus(), keep date comparisons current automatically,
+  and export a combined list from a formula as JSON text.
 last_synced: 2026-04-26T01:40:01.780Z
 ---
 
@@ -283,6 +284,22 @@ This appears when a formula references an entire enrichment or AI column — suc
 -   **Using dot notation:** Access the field directly in the expression — for example, `{{My AI Column}}.response` or `{{My Enrichment Column}}?.fieldName`.
 
 For Use AI and Claygent columns specifically, the main text output is stored in the `.response` field. See [AI column output shows as a JSON object](use-ai-integration-overview.md#troubleshooting) for more on navigating AI column fields.
+
+### **Why does my formula that combines lists show a warning on every row?**
+
+A formula that merges or dedupes lists — for example, combining the job postings returned by several job-source columns into one array — returns a JavaScript array. Formula columns don't have a **List** or **Array** data type: the options in the formula column's data type dropdown are Text, Paragraph, Number, URL, Date, Select, Multi-select, Assigned To, Email, Image from URL, Currency, and Checkbox. When an array lands in a **Text** column, Clay can't convert it, so each cell shows a yellow warning icon with the tooltip *"Whoops! This value could not be converted to this column's data type (text)"*. Cells in this state export as **blank** in a CSV export.
+
+**To fix it**, wrap the whole formula in `JSON.stringify( ... )`, keep the column's data type as **Text**, and re-run the column:
+
+```javascript
+JSON.stringify(_.uniqBy([...({{Job Source A}}?.jobs || []), ...({{Job Source B}}?.jobs || [])], "url"))
+```
+
+Each cell then holds the combined list as JSON text, and the CSV export includes that JSON exactly as it appears in the cell. To read the list back in another formula, use `JSON.parse({{Combined Jobs}})`. Keep the result under the 8 kB cell limit described below.
+
+**Tip — deduplicating:** `_.uniqBy(list, "title")` keeps only one posting per job title, so the same role posted in two cities appears once. Dedupe by a unique field such as the job URL if you want to keep both.
+
+**Formula vs. AI column for list details:** A formula column runs fixed JavaScript with no AI, at no credit cost, so it can only copy or reshape fields the source columns already return (for example, job title, link, location, posted date, and salary). Details that have to be judged or written for each item — such as seniority, job function, work arrangement, a summary, or required skills — still need an AI column. To keep costs down, use a formula for the merged list and the plain fields, and add an **Only run if** condition to the AI column so it runs only on the rows where you need the extra details. See [Conditional runs](conditional-runs.md).
 
 ### **Why does my formula column show "Cell data size exceeds limit (8 kB)"?**
 
