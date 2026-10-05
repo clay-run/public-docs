@@ -282,3 +282,27 @@ A lookup reads the target table at the exact moment it runs — it doesn't wait 
 -   **Restructure to a sequential flow:** Make sure the source table fully finishes running before the dependent table reads from it. For scheduled tables, offset the second table's schedule by enough time for the first to complete — see [Custom signals](custom-signals.md) for an example of staggering table schedules.
 -   **Use a scheduled lookup:** A table run on a schedule reads other tables that have already completed their prior runs, so it is less susceptible to this issue than a lookup triggered in real time alongside an in-progress enrichment.
 -   **Add a delay:** Insert a delay column before the lookup (up to 600 seconds). This reduces failures but does not guarantee they disappear, since enrichment time varies per row.
+
+### **Lookup keeps returning old values after you edited the other table (sandbox mode)**
+
+If you edited the table your lookup searches — for example, changed a value or filled in a column — but force running the lookup column still returns the old record, check whether you made those edits in **sandbox mode**.
+
+When you turn on [sandbox mode](sandbox-mode.md) for a table, Clay creates a separate copy of it with "(Sandbox)" added to the name — for example, "Companies (Sandbox)". Lookup Rows columns (`Lookup single row in other table` and `Lookup multiple rows in other table`) always read the original (live) table, never its sandbox copy — sandbox copies don't appear in the `Table to search` picker. Edits made only in the sandbox stay invisible to your lookup until you publish them to the live table.
+
+**Signs your lookup is reading the live table while your edits are in the sandbox:**
+
+-   Force running the lookup column returns the same old values every time.
+-   The table you've been editing has "(Sandbox)" in its name, or you've been working in its **Test data** tab.
+-   A field you filled in doesn't appear in the lookup result, so **Add as column** isn't offered for it — the field is still empty in the live table.
+
+**To get your sandbox edits into the lookup:**
+
+1.  Open the sandbox copy of the table you edited (the **Test data** tab).
+2.  Click **Review changes** in the tab bar above the table.
+3.  In the **Sandbox review** window, click **Publish and run** or **Publish and don't run**. Your column changes are applied to the live table, and the cell values in your sandbox rows are copied to the matching live rows.
+4.  Go to the table with the lookup column. Click the lookup column's header name to open its menu, hover over **Run column**, and select **Force run all N rows** (N is your row count).
+5.  Open a lookup cell and confirm it shows the new values. Fields that now have values can be added with **Add as column**.
+
+**If `Review changes` is greyed out:** Publishing requires at least one column change (adding, renaming, or reconfiguring a column). If you only edited cell values in the sandbox, those edits can't be published on their own. Click **Exit Sandbox** — this discards your sandbox changes — then make the same edits directly in the live table and force run the lookup column.
+
+Don't click **Exit Sandbox** before publishing if you want to keep your sandbox changes — exiting discards everything that hasn't been published.
