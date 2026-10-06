@@ -1023,8 +1023,8 @@ For this to work, you need both:
 
 When you create a Clay table from an Audiences segment, Clay adds one source column, named after the segment (for example, **Web visitors**). It also adds three default formula columns that pull values out of that source column:
 
--   **Companies segments:** Name, Domain, and LinkedIn URL
--   **People segments:** Name, Email, and LinkedIn URL
+-   **Companies segments:** Name, Domain, and the company's professional network URL
+-   **People segments:** Name, Email, and the person's professional network URL
 
 The segment's other fields are not created as table columns automatically. They're stored inside the source column's cell on each row, and you can pull any of them into its own column:
 
