@@ -359,7 +359,7 @@ Other things that affect the Target companies count and the number of people ret
 
 1.  In your company table, add the **Find people at company (SMB)** enrichment (from Openmart) as a column and map your domain column to the **Company domain** input. This enrichment looks up people through Openmart rather than Clay's own people database, and covers both the small business and its parent company.
 2.  Optionally set **Max people to find** (up to 8; the default is 1).
-3.  Run it on a small batch of rows first to check results and credit use, then run the rest. It costs 1 credit per row, refunded when no one is found.
+3.  Run it on a small batch of rows first to check results and credit use, then run the rest. **Find people at company (SMB)** charges per person found: 1 credit per person, plus 2 credits per person if **Include emails** is on, plus 20 credits per person if **Include phone numbers** is on. No credits are charged for a row when no one is found. For example, a row that returns 8 people with **Include emails** on costs 24 credits (8 × 3).
 4.  To turn each person found into its own row in a people table, use **Send Table Data** with **Send row for each item in a list**. See [Send table data](send-table-data.md).
 
 ### Re-running Find Companies shows far fewer results than my original run
