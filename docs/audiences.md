@@ -1012,9 +1012,9 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 1. Open the **People** or **Companies** segment you want to export.
 2. Click **Enrich**, then click **Add enrichment table** to create a bulk enrichment from the segment.
 3. In the setup, select the **Audience fields** you want included as columns in your export.
-4. If you only need a CSV export, skip adding enrichment columns.
+4. If you only need a CSV export, skip adding enrichment columns. Enrichment columns are optional — you can run the bulk enrichment without any.
 5. Turn **Field mapping** off so nothing is written back to Audiences. The setup summary shows **Field mapping off**.
-6. Click **Start Run** and wait for the bulk enrichment to process every record in the segment.
+6. On the final **Review** step of the setup, click **Finish setup and run**, then wait for the bulk enrichment to process every record in the segment.
 7. In the bulk enrichment table, click **View archive** in the footer at the bottom of the table, then choose the archive run from the dropdown.
 8. In the archive view, click **Export full archive** in the top-right of the toolbar. Clay downloads a .zip file containing your records split into multiple CSV files of up to 50,000 rows each.
 
