@@ -88,8 +88,10 @@ To update your workspace name:
 
 To update your billing email:
 
--   In `Workspace settings`, edit the `Billing email` field to update the email address used for all billing-related communication.
+-   In `Workspace settings`, edit the `Billing email` field.
 -   Click `Save` to ensure the new email is recorded.
+
+This `Billing email` field in `Workspace settings` does not change the email shown on the Stripe checkout page or the email that Clay invoices and receipts are sent to. To change that email, a workspace admin can go to `Settings` > `Plan & billing`, click `Edit`, select `Edit billing info...`, update `Billing email`, and click `Save Changes`. See [Change the email shown at checkout and on invoices](./plans-and-billing.md#change-the-email-shown-at-checkout-and-on-invoices).
 
 ## Single Sign-On (SSO)
 
