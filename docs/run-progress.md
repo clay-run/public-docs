@@ -4,7 +4,8 @@ description: Clay provides multiple ways to track and monitor run progress
   across your tables and workflows, including how to use the built-in Errored
   rows view to filter to failed rows, what happens when a workflow node fails
   (and how Repeat mode's "If an item fails" setting works), bulk re-run many workflow runs at once
-  from the runs dashboard, set a row limit to control which rows are processed,
+  from the runs dashboard, stop workflow runs from the runs dashboard (paused runs
+  aren't cancelled), set a row limit to control which rows are processed,
   manually trigger unrun enrichment cells, run enrichments on a specific subset
   of rows, troubleshoot cells stuck in Queued status, recover action column cells
   stuck in Queued status when the Stop button is grayed out, diagnose enrichments
@@ -166,6 +167,12 @@ To stop a running table, click the **Stop** button in the run summary panel at t
 **If the Stop button appears greyed out with the tooltip "No runs are in progress for this table" while cells still show Running or Synthesizing status, this is expected during AI column runs.** The Stop button only becomes active when requests are actively in-flight (already dispatched to a data provider). During large Claygent or AI column runs, Clay dispatches rows in small concurrent batches through a rate limiter. Between batches, no requests are in-flight, so the button temporarily deactivates even though queued cells remain. The run will continue automatically — to stop it, wait for the Stop button to become active between batches and click it then.
 
 To prevent unintended credit usage before it starts, turn off [auto-run](auto-run.md) before importing large batches of rows. This prevents enrichments from triggering automatically on new data.
+
+### Stopping workflow runs from the Runs dashboard
+
+In Clay Workflows, you can stop many workflow runs at once from the **Runs** dashboard for your workflow. Select the runs you want to stop, then click **Stop** in the bulk actions bar at the top of the runs list.
+
+**Stop only cancels workflow runs that are pending, running, or waiting — paused workflow runs are not cancelled.** If you select a mix of running and paused runs and click **Stop**, only the pending, running, and waiting runs are cancelled. The paused runs stay paused.
 
 ## Manually running unrun cells
 
