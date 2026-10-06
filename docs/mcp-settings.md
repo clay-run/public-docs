@@ -151,6 +151,22 @@ The MCP user credit limit is a rolling monthly limit. Credit spend automatically
 
 Further actions through ChatGPT, Claude, or Glean are hard-blocked until the monthly reset — the rep won't be able to run enrichments or invoke Functions. Admins can increase the per-user limit at any time from the `MCP users` table to restore access immediately.
 
+### Why am I seeing `ERROR_WORKSPACE_SALES_REP_CREDIT_LIMIT_REACHED` in Claude or ChatGPT?
+
+The error `ERROR_WORKSPACE_SALES_REP_CREDIT_LIMIT_REACHED` means the Clay user making the request has reached their monthly MCP credit limit — the per-user cap on credits spent through ChatGPT, Claude, Glean, or other AI tools connected to Clay. Inside Clay, the same limit shows as `Monthly user credit limit reached`.
+
+Despite `SALES_REP` in the error name, the MCP credit limit applies to every workspace member who uses Clay through an AI tool — including workspace admins, Members, and Viewers — not only users with the Sales Rep role. The MCP credit limit is available on all modern paid plans (Launch, Growth, Enterprise) and Legacy Enterprise.
+
+This error is not caused by workbook credit limits under `Settings → Usage → Workbook limits`. The MCP credit limit is managed only on the `MCP` page.
+
+To remove the error, a workspace admin raises the user's MCP credit limit:
+
+1.  From the Clay homepage, click `MCP` under **Orchestration** in the left sidebar.
+2.  In the `MCP users` table, find the user (search by name or email — admins can find themselves here too).
+3.  Click the pencil icon next to their `Credit limit` and enter a higher amount. The user can run enrichments again on their next request in Claude or ChatGPT.
+
+The **Default credit limit** card at the top of the `MCP` page (1,000 credits unless an admin has changed it) sets the limit applied to new MCP users when they first connect an AI tool. If you don't change the limit, MCP credit spend resets on the 1st of each month at midnight UTC. If you aren't a workspace admin, you won't see the `MCP` page — ask your workspace admin to raise your limit.
+
 ### Why does a rep's credit usage appear higher than the number of prompts they sent?
 
 Credits are charged per record enriched, not per MCP request or prompt. A rep who sends a small number of prompts can consume many more credits than the prompt count suggests, for two reasons:
