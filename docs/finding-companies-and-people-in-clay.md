@@ -549,6 +549,20 @@ This gives you clusters of matching domains from your list, even if it does not 
 
 **Tip:** When you have a company's professional profile URL available, use it as the identifier instead of a domain. Professional profile URLs map directly to the intended company profile and skip the domain resolution step — which can occasionally surface the wrong entity, especially for large companies with many subsidiary or regional domains.
 
+### Enrich Company returned an unexpected result for a personal email domain (e.g., gmail.com)
+
+If **Enrich Company** returns a company record for a personal email domain — such as `gmail.com`, `yahoo.com`, or `hotmail.com` — treat the result as unreliable. Personal email domains are not company identifiers. When passed as the **Company Identifier**, the enrichment treats the domain as a company website and an underlying data provider may return a low-confidence or incorrect record for an entity associated with that domain name. A "No company found" result is the more appropriate outcome for a personal email domain.
+
+Results for personal email domains can also differ run-to-run — the same input may return a company record in one run and no result in another. This is not evidence of a data provider change: because the domain is not a genuine company identifier, the underlying data is inherently inconsistent and low-confidence.
+
+**To prevent this when your Company Identifier is derived from email addresses:**
+
+Use the **Identify email type and extract domain** enrichment to classify each domain before running Company Enrichment:
+
+1.  In your table, click **Add enrichment**, search for **Identify email type and extract domain**, and add it. Map the **Email or Domain** input to your email or domain column. The enrichment returns a **Domain** field and an **Is Likely Company Email** boolean.
+2.  In your **Enrich Company** column, open **Run settings** and set the **Only run if** condition to the **Is Likely Company Email** output from step 1 (it must evaluate to `true`).
+3.  Company Enrichment will now skip any row where the domain belongs to a personal or free-mail provider, avoiding unreliable results and unnecessary credit spend.
+
 ### Getting "Invalid input: Invalid person identifier" from Enrich person
 
 If cells in your **Enrich person** column show this error, the value in the **Professional URL** field cannot be parsed as a valid LinkedIn profile URL, Sales Navigator URL, or LinkedIn user ID.
