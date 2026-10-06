@@ -122,6 +122,17 @@ In Sequencer v2, campaign events are captured in a single **global events table*
 
 **Campaign-specific automation:** Because all campaigns share one events table, add an `Only run if` condition to your action columns and filter on the **Campaign ID** column to target automations at a single campaign's events — for example, routing replies from a specific campaign to a Slack channel or CRM.
 
+**Using campaign events in another table (audience-based campaigns):** For audience-based campaigns, the workspace campaign events table doesn't appear in the table picker for `Lookup rows in other table` or `Lookup single row in other table`, and it has no table name you can search for — so you can't look it up from your leads or contacts table. To use campaign events (such as replies or opens) in another table, push them out of the campaign events table instead:
+
+1.  Open the campaign events table from the **Events** button on the Sequencer homepage, or from **View events** in a campaign's name dropdown.
+2.  Select **Tools > Export > Send table data** and choose the table you want event rows written to. See [Send table data](send-table-data.md).
+3.  Add an `Only run if` condition on **Event type** (for example, `EMAIL_REPLY` or `EMAIL_OPEN`) or **Campaign ID** so only the events you need are sent.
+4.  Turn on `Auto-run` for the column so new events are sent as they arrive.
+
+The destination table is a regular Clay table, so you can reference it from other tables with `Lookup rows in other table` — for example, to find contacts who replied or opened two or more emails before syncing them to HubSpot. Because one campaign events table covers every campaign in your workspace, a single Send table data column handles events from all your audience-based campaigns; you don't need a separate setup per campaign. The campaign events table also includes an `Audience record` column that looks up each lead's Audiences record from the Audience ID. Table-based campaigns create their own events table in the workbook, which you can select directly in `Lookup rows in other table`.
+
+**Campaign events table row limit:** The campaign events table keeps up to 10,000 rows for your whole workspace. Once it passes that limit, the oldest rows are removed automatically to make room for new events, so send events to another table (or your CRM) with `Auto-run` on if you need a long-term record.
+
 Special sequencer enrichments available in the table include:
 
 -   `Reply to lead`: Automate responses to any email reply event using a pre-built HTML template, AI-generated snippet, or booking link.
@@ -643,7 +654,7 @@ Clay's campaign events table doesn't include a dedicated "sequence completed" ev
 -   **They replied** — when a lead replies to any email, an `EMAIL_REPLY` event is recorded and the sequence automatically stops for that lead. Check whether any row in the campaign events table for that lead has `Event type = EMAIL_REPLY`.
 -   **They received all emails** — each `EMAIL_SENT` event includes a `sequence_number` value nested inside the Campaign event data. When this number equals the total steps in your campaign, the lead has received all emails without replying. Click a Campaign event cell, find the `sequence_number` field in the Cell details panel, and click **Add as column** to extract it into a standalone column you can filter on.
 
-To check this from your leads table, add a **Lookup rows in other table** column pointing to your campaign events table, matching on email address. You can then use a formula column to evaluate whether any matched event has `Event type = EMAIL_REPLY`, or whether the extracted sequence number equals your campaign's total step count.
+To check this from your leads table, add a **Lookup rows in other table** column pointing to your campaign events table, matching on email address. You can then use a formula column to evaluate whether any matched event has `Event type = EMAIL_REPLY`, or whether the extracted sequence number equals your campaign's total step count. This works for table-based campaigns, whose events table appears in the Lookup rows table picker. For audience-based campaigns, the workspace campaign events table isn't available in Lookup rows — first send the events to another table with **Send table data**, then point Lookup rows at that table (see [Using campaign events in another table](#campaign-events-table)).
 
 ### Can I see open rate, click-through rate, or bounce rate broken out per email step in my sequence?
 
