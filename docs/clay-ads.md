@@ -251,6 +251,17 @@ For recurring syncs, the update interval depends on your destinations: every 3 d
 
 No, LinkedIn and Meta don't provide contact-level match visibility for privacy reasons. However, Clay shows aggregate match rates and total audience size after each sync.
 
+### **How do I export the contacts in my ad sync to CSV?**
+
+The ad sync page does not have a CSV download button. The **People** (or **Companies**) list shown next to the Setup, Match, and Sync steps is a read-only preview of the segment you're syncing. To download the contacts in an ad sync as a CSV, open the ad sync's source segment in Audiences and export it from there:
+
+1. Open the ad sync from the **Ads** page and click **Setup** at the top of the page. This works for active syncs too — the Setup step opens in read-only mode.
+2. In the **Segment** card, click the **⋮** (three-dot) menu and select **Open segment in new tab**. The segment opens in Audiences.
+3. Click `Enrich`, then click **Add enrichment table**. (In some workspaces, the enrichment panel shows a `+` button instead — click it and select **Create enrichment table**.) You don't need to add enrichment columns.
+4. Open the new table, make sure no rows are selected, then click **Tools**, open the **Export** tab, and click **Download CSV**.
+
+Workspace Admins and Editors can create the enrichment table; Workspace Viewers can't.
+
 ### **Why is my matched count higher than the number of contacts I sent?**
 
 This is expected on platforms that match on multiple identifiers per contact. Clay sends up to 3 hashed personal email addresses per contact (via Enhanced Matching) rather than a single email, giving the ad platform more identifiers to match against. The platform counts each matched identifier separately in its reporting — not each unique contact. A single contact with 3 matching hashed emails contributes 3 to the matched count, which is why the matched count can exceed your total contact count.
