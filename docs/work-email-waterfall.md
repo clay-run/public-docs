@@ -26,8 +26,8 @@ You only pay credits for the provider that finds a match, making it one of the m
 **What the Work Email input fields mean:** In addition to **Full Name** and **Company Domain**, the Work Email waterfall's input mapping shows these additional inputs. Mapping them gives more providers enough data to run:
 
 -   **Company Name** — the name of the person's company.
--   **Social Profile URL** — the URL of the person's profile on the professional social network.
--   **Company Social Profile URL** — the URL of the company's page on the professional social network.
+-   **Social Profile URL** — the URL of the person's social profile.
+-   **Company Social Profile URL** — the URL of the company's social profile page.
 
 The Work Email waterfall includes two advanced settings — `Infer Email` and `Validation` — that work together to give you more control over credit efficiency and result quality.
 
