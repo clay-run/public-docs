@@ -1019,6 +1019,30 @@ For this to work, you need both:
 
 **If visitors arrived before your Salesforce sync was connected:** Web intent records added to Audiences before you connected Salesforce may not automatically merge with existing SFDC records. To resolve this, use the **Import record matching** option in your Salesforce import settings and select domain as the match key (this feature is currently in beta — contact your Growth Strategist to enable it). This matching applies to records coming in after the setting is enabled — it does not retroactively merge records already in Audiences.
 
+### I created a table from my Web visitors segment and only a few columns came over — where are the other fields?
+
+When you create a Clay table from an Audiences segment, Clay adds one source column, named after the segment (for example, **Web visitors**). It also adds three default formula columns that pull values out of that source column:
+
+-   **Companies segments:** Name, Domain, and LinkedIn URL
+-   **People segments:** Name, Email, and LinkedIn URL
+
+The segment's other fields are not created as table columns automatically. They're stored inside the source column's cell on each row, and you can pull any of them into its own column:
+
+1.  Click a cell in the source column (for example, **Web visitors**) to open the **Cell details** panel. The panel has four sections: **Fields**, **Signals**, **Related Ids**, and **Connected Sources**.
+2.  Find the field you want and hover over it.
+3.  Click **Add as column**, or click **Add to column**, enter a column name, and click **Create column**.
+
+The new column appears in the table with that field's value for every row.
+
+**Web intent fields like website page path are under Signals, not Fields.** Web intent data comes from the Web Intent signal, not from regular segment fields. That's why fields such as **Web intent (90 days)** or **Website page path** from the segment view don't appear in the **Fields** list of the source cell. To find them, collapse **Fields**, then expand **Signals** → **Website Visitor Tracking**. It contains:
+
+-   **Total Count** — the number of website sessions recorded for that company in the lookback window.
+-   **Latest Events** — up to 5 of the most recent sessions. Each session includes session details such as **Start Time**, **Referrer**, and **Utm** parameters, plus a **Website Events** list of the pages viewed with **Url**, **Path**, **Title**, **Domain**, **Timestamp**, **Total Time On Page**, and **Engaged Time On Page**.
+
+Use **Add as column** on any of these signal fields (for example, **Path** under **Website Events**) to add web intent data to your table.
+
+**Rows without recent website visits have no Web intent data.** Signal data in the source cell covers the past **90 days** by default. If a company had no recorded website visits in that window, **Website Visitor Tracking** won't appear under **Signals** for that row. When adding web intent columns, open the Cell details on a row with recent visits.
+
 ### I've mapped fields to Salesforce but the data isn't syncing — why?
 
 The most common cause is that the **Export sync toggle is off**. Even if your field mappings are fully configured and individual fields are set to "Always write," no data flows to Salesforce until Export sync is enabled. This toggle is off by default.
