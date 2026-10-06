@@ -23,6 +23,12 @@ You only pay credits for the provider that finds a match, making it one of the m
 
 **Note:** Most providers need at minimum a **full name** and **company domain** for each row — make sure those fields are populated in your table before running. Providing a LinkedIn URL or company name as additional inputs gives more providers enough data to run.
 
+**What the Work Email input fields mean:** In addition to **Full Name** and **Company Domain**, the Work Email waterfall's input mapping shows these additional inputs. Mapping them gives more providers enough data to run:
+
+-   **Company Name** — the name of the person's company.
+-   **Social Profile URL** — the person's LinkedIn profile URL (for example, `https://www.linkedin.com/in/username`).
+-   **Company Social Profile URL** — the company's LinkedIn page URL (for example, `https://www.linkedin.com/company/clay-run`).
+
 The Work Email waterfall includes two advanced settings — `Infer Email` and `Validation` — that work together to give you more control over credit efficiency and result quality.
 
 `Infer Email` attempts a free email guess before calling any paid provider, while `Validation` settings let you define what counts as a valid result and when the waterfall should stop searching. Both are available in `Full configuration` mode.
@@ -86,10 +92,13 @@ Make sure the contact's row has the required input data (full name and company d
 
 ### How do I run the Work Email waterfall on a specific set of rows?
 
-To run the waterfall on multiple contacts at once — without running the full table — you have two options:
+To run the Work Email waterfall on multiple contacts at once — without running the full table — you have these options:
 
 - **Select and run specific cells:** Click the Work Email cell for the first row you want to run, then drag (or **Shift+click**) to extend the selection across additional rows in that column. Right-click the selection and choose **Run [N] cells**. The waterfall runs only on the selected rows.
-- **Run all empty or out-of-date rows:** Click the ▶ button in the Work Email waterfall column header and select **Run empty or out-of-date rows**. This processes every row in the column that hasn't yet returned a result or is marked as out-of-date.
+- **Test on the first 10 rows:** Click the ▶ (Run column) button in the Work Email waterfall column header and select **Run first 10 rows**. This runs the waterfall on the top 10 rows of your current view, as currently filtered and sorted. If the view has fewer than 10 rows, the option runs all of them (for example, **Run first 5 rows**). Testing on 10 rows first lets you check results before spending credits on the whole table.
+- **Run all empty or out-of-date rows:** Click the ▶ (Run column) button in the Work Email waterfall column header and select **Run [N] empty or out-of-date rows**. This processes every row in the column that hasn't yet returned a result or is marked as out-of-date.
+
+The ▶ (Run column) button in the column header offers only those two options — **Run first 10 rows** and **Run [N] empty or out-of-date rows**. To re-run every row, including rows that already have a result, open the column header dropdown and choose **Run column** → **Force run all [N] rows**.
 
 For a full reference on run options — including a row limit and starting row — see [Run progress](run-progress.md).
 
