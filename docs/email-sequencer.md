@@ -630,7 +630,15 @@ No — the Trusted setting is not domain-wide delegation. Marking Clay Sequencer
 
 This error is expected — Clay's sequencer uses automated warmup sends, which prevents the app from passing Google's standard verification process. Admin approval in your Google Workspace Admin panel is the intended workaround; Clay's app will not become Google-verified.
 
+If your IT team says they already allowed Clay Sequencer but you still see this error, have your Google Workspace admin confirm these three things in Google Admin → Security → API Controls → App Access Control:
+
+1.  **The exact Clay Sequencer Client ID is the one configured.** The app entry must match the Client ID shown in Clay's `Google OAuth` modal (`Sequencer` → `Email Accounts` → `Add email accounts` → `Google OAuth`, **Search for Clay Sequencer** step). Marking a different Clay app or any other "Clay" entry as Trusted does not unblock the sequencer.
+2.  **The access level is `Trusted`**, not `Specific Google Data`.
+3.  **The mailbox you're connecting is inside a configured org unit.** If the Clay Sequencer app shows `Configured for 1 Org Unit` (or any specific org units), only users in those org units are covered — a mailbox in a different org unit still sees "Access blocked." Either move the mailbox into a configured org unit, or set the app to `Trusted` at the top-level organization (`All in [your org] (all users)`).
+
 If the error persists more than 24 hours after your admin marked the app as `Trusted`, confirm that they approved the app for the exact domain of the email account you're connecting (e.g., for `ryan@company.com`, the admin must approve for `company.com` specifically — not a different domain they manage). If you're connecting accounts from multiple domains, each domain requires its own separate Trusted configuration — having one domain approved does not automatically cover the others. Your admin can verify which org units are currently configured by going to Google Admin → Security → API Controls → App Access Control and checking the Clay Sequencer app's org unit count. If it's still blocked after verifying the domain, contact support.
+
+If you need to start sending the same day while your admin's Google changes take effect, connect the inbox via SMTP instead of Google OAuth: go to `Sequencer` → `Email accounts` → `Add email account` → `Bring your own accounts` → `Manual SMTP & IMAP setup`. For Google Workspace inboxes, use a Google app password — see [Connecting a Google Workspace alias via SMTP](#connecting-a-google-workspace-alias-via-smtp) for the Gmail server settings.
 
 ### What exact Microsoft permissions does sequencer require?
 
