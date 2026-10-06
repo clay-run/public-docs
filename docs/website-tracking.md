@@ -40,6 +40,7 @@ This tracking provides insights into how visitors engage with your content and h
         2.  Select the website data source in Segment you want to connect to Clay.
         3.  In your Clay website connection, click the **Twilio Segment** tab. Your `Connection key` is shown there automatically. If you haven't generated a `Secret key` yet, click **Create secret key** to generate one. Copy both keys and paste them into the Segment destination settings.
         4.  Enable your Clay destination to begin sending events.
+        5.  Make sure Segment sends **Page** calls (`analytics.page()`) to the Clay destination. Clay's web intent only builds website visits from Segment Page calls — Track, Identify, Group, Alias, and Screen calls are ignored. See [Segment shows events delivered but my Web Intent table is empty](#segment-shows-events-delivered-but-my-web-intent-table-is-empty).
 4.  Configure which de-anonymization providers you'd like to use. Clay provides a recommended selection or you can manually choose your own provider settings.
     -   **Note:** Pricing is based on unique IP addresses that successfully retrieve data. You'll be charged at most once per 30-day period for each visitor with the same IP address who visits your website.
 5.  Add filters for specific countries or pages.
@@ -182,8 +183,23 @@ Common causes:
 -   **A returning company visited** — By default, Web Intent creates one row per company domain. When a company that has previously visited returns, Clay updates the existing row with new session data (including the `lastSeen` date) rather than creating a new row. If your recent visitors are companies already in your table, no new rows will appear. Check the `lastSeen` field on your existing rows to confirm recent activity.
 -   The connection is disabled or was just enabled (allow 30 minutes for data to appear).
 -   The snippet isn't installed on the relevant pages.\
+-   **You're using Twilio Segment and sending Track calls instead of Page calls** — Clay's web intent only builds visits from Segment Page calls. See [Segment shows events delivered but my Web Intent table is empty](#segment-shows-events-delivered-but-my-web-intent-table-is-empty).
 -   Connection-level or table-level filters are too restrictive.
 -   Your site hasn't had enough live traffic yet.
+
+### Segment shows events delivered but my Web Intent table is empty
+
+If you connected web intent through Twilio Segment and Segment reports thousands of events delivered to the Clay destination, but no web intent data shows up in your Clay table (or in Audiences web intent filters), check which Segment event type you're sending.
+
+Clay's web intent builds website visits only from Segment **Page** calls (`analytics.page()`). Segment **Track** calls — and Identify, Group, Alias, and Screen calls — are accepted by the Clay destination but discarded without an error, so they never become visits, no companies are matched, and no web intent credits are spent. Segment still counts these events as delivered, which is why the Segment dashboard looks healthy while your Clay table stays empty.
+
+**To fix it:**
+
+1.  In Segment, make sure the website source connected to the Clay destination sends Page calls — for example, by calling `analytics.page()` on each page view.
+2.  If your page views are currently sent as Track events, map them to Page calls for the Clay destination instead.
+3.  Wait for new sessions to complete. Clay processes a visit only after the session ends (after 30 minutes of inactivity), so new rows can take up to 30 minutes to appear.
+
+Earlier Track events are not reprocessed — only Page calls received after the change become visits.
 
 ### Web intent connection stopped or shows as disabled
 
@@ -254,7 +270,7 @@ To connect Segment to Clay web intent:
 3.  Click the **Twilio Segment** tab. Your `Connection key` is shown automatically. If you haven't generated a `Secret key` yet, click **Create secret key**. Copy both keys.
 4.  Paste the `Connection key` and `Secret key` into the Clay destination settings in Segment, then enable the destination.
 
-Using the Segment tag and Clay's own JavaScript snippet are equivalent — you get the same web intent data and features either way.
+Using the Segment tag and Clay's own JavaScript snippet are equivalent — you get the same web intent data and features either way. When using Segment, Clay builds website visits only from Segment **Page** calls (`analytics.page()`); Track and other event types are ignored. See [Segment shows events delivered but my Web Intent table is empty](#segment-shows-events-delivered-but-my-web-intent-table-is-empty).
 
 ### Does the tracking script work on single-page apps (SPAs)?
 
