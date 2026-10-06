@@ -340,6 +340,28 @@ Clay uses stored snapshot data rather than live LinkedIn search, so results will
 
 If profiles still appear to be missing after switching to LinkedIn URLs, use **Claygent** to find the missing profiles via Google search, then pass those LinkedIn URLs directly into `Enrich Person`. This uses a live-scraping fallback that isn't constrained by the stored dataset.
 
+### What does "100 valid rows (out of 469)" mean in the Find People Target companies filter?
+
+When you select a Clay table as your company list under **Target companies** in Find People, Clay shows a count under the table name such as **"100 valid rows (out of 469)"**, and the **Target companies** header shows **"100 companies"**. This count is **not** a plan limit or a cap on your search. (This count appears in the new Find People filters panel, which is currently in beta for some workspaces.)
+
+-   **"out of 469"** is the number of rows in the selected **View** that have a value in the column you chose under **Select column** (for example, your Domain column).
+-   **"100 valid rows"** is the number of unique companies in Clay's company database that those values matched. Values that don't match a company in Clay's database are skipped, and rows that match the same company are counted once.
+
+Find People only searches for people at the matched companies. Rows that don't match a company in Clay's database never return people, regardless of your other filters — in this example, Find People searches 100 companies, not 469. Low match rates are common for small local businesses (see [Limitations](#limitations)).
+
+Other things that affect the Target companies count and the number of people returned:
+
+-   **The selected view.** Find People reads rows through the view chosen under **View**, including that view's filters. Selecting a different view can show a different valid-row count.
+-   **Up to 50,000 rows** from the selected view are considered.
+-   **Your people filters.** Seniority, job title, location, and **People per company** still apply. A matched company where no one fits your filters returns no people, so the number of people returned can be much lower than the number of matched companies multiplied by **People per company**.
+
+**To find people at companies that didn't match**, look them up row by row from your company table instead of the Find People search:
+
+1.  In your company table, add the **Find people at company (SMB)** enrichment (from Openmart) as a column and map your domain column to the **Company domain** input. This enrichment looks up people through Openmart rather than Clay's own people database, and covers both the small business and its parent company.
+2.  Optionally set **Max people to find** (up to 8; the default is 1).
+3.  Run it on a small batch of rows first to check results and credit use, then run the rest. It costs 1 credit per row, refunded when no one is found.
+4.  To turn each person found into its own row in a people table, use **Send Table Data** with **Send row for each item in a list**. See [Send table data](send-table-data.md).
+
 ### Re-running Find Companies shows far fewer results than my original run
 
 This is expected behavior. The Find Companies source deduplicates new results against rows already in your table — re-running returns only the net-new companies not yet present in the table.
