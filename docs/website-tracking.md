@@ -197,7 +197,7 @@ Clay's web intent builds website visits only from Segment **Page** calls (`analy
 
 1.  In Segment, make sure the website source connected to the Clay destination sends Page calls — for example, by calling `analytics.page()` on each page view.
 2.  If your page views are currently sent as Track events, map them to Page calls for the Clay destination instead.
-3.  Wait for new sessions to complete. Clay processes a visit only after the session ends (after 30 minutes of inactivity), so new rows can take up to 30 minutes to appear.
+3.  Wait for new sessions to complete. For Segment connections, Clay finalizes a session after 15 minutes with no new Page calls, or earlier once the session reaches 100 Page calls or is 1 hour old. New rows can take about 15 minutes after a visitor's last page view to appear.
 
 Earlier Track events are not reprocessed — only Page calls received after the change become visits.
 
