@@ -1005,6 +1005,25 @@ To stop the audience from growing, turn live search off: click the **⋮** menu 
 
 Yes — you can add multiple ad platforms to a single audience sync. After your initial sync is active, an **Expand your reach** section appears on the Sync tab. Click **Add** next to any available platform to configure field mappings for that provider. The new platform will sync on the same schedule as your existing provider.
 
+### How do I export an audience segment with more than 50,000 records?
+
+**Download CSV** on a Clay table exports at most 50,000 rows, because a Clay table holds up to 50,000 active rows at a time. To export every record in a People or Companies segment that has more than 50,000 records, run a bulk enrichment on the segment and then use **Export full archive**. As the bulk enrichment processes the segment, finished rows move out of the table into an archive, and **Export full archive** exports all of those archived rows.
+
+1. Open the **People** or **Companies** segment you want to export.
+2. Click **Enrich**, then click **Add enrichment table** to create a bulk enrichment from the segment.
+3. In the setup, select the **Audience fields** you want included as columns in your export.
+4. If you only need a CSV export, skip adding enrichment columns. Enrichment columns are optional — you can run the bulk enrichment without any.
+5. Turn **Field mapping** off so nothing is written back to Audiences. The setup summary shows **Field mapping off**.
+6. On the final **Review** step of the setup, click **Finish setup and run**, then wait for the bulk enrichment to process every record in the segment.
+7. In the bulk enrichment table, click **View archive** in the footer at the bottom of the table, then choose the archive run from the dropdown.
+8. In the archive view, click **Export full archive** in the top-right of the toolbar. Clay downloads a .zip file containing your records split into multiple CSV files of up to 50,000 rows each.
+
+**Things to know about exporting the full archive:**
+
+-   **Archiving is automatic for Audiences bulk enrichments.** You don't need to turn on an archive setting — bulk enrichment tables created from an Audiences segment archive processed rows automatically.
+-   **Archived rows are kept for 30 days.** Export the archive within 30 days of the run. After 30 days, archived rows are deleted and you need to run the bulk enrichment again to export them.
+-   **The export is a .zip file, not a single CSV.** Each CSV file inside the .zip holds up to 50,000 rows. A single **Export full archive** download supports up to 1,000 CSV files (50,000,000 rows).
+
 ### How do I export my audience data to CSV?
 
 The Audiences screen does not have a direct CSV download button. To download audience data as a CSV, use the **Enrich** flow to create an enrichment table from the segment, then export that table. **Admin access is required.**
