@@ -575,7 +575,7 @@ In a **Companies** audience, columns written by a Claygent display a four-diamon
 
 ### Connecting a workflow to a segment
 
-Connect a Clay workflow to a named audience segment — or to the entire workspace audience (**All People** or **All Companies**) — to automatically run it on every new member that enters. When a contact or company matches the segment's filters, the connected workflow starts within minutes. To run a workflow across your full workspace audience instead of a specific segment, open the trigger segment picker and select **All People** or **All Companies** from the top of the **All** tab — the workflow then triggers for every new person or company entering the workspace-wide audience.
+Connect a Clay workflow to a named audience segment — or to the entire workspace audience (**All People** or **All Companies**) — to automatically run it on every new member that enters. When a contact or company matches the segment's filters, the connected workflow starts after Clay's next scheduled segment check: within about 20 minutes on Enterprise plans, and within about 60 minutes on Growth and other plans. See **How long does it take for a segment-triggered workflow to start?** below. To run a workflow across your full workspace audience instead of a specific segment, open the trigger segment picker and select **All People** or **All Companies** from the top of the **All** tab — the workflow then triggers for every new person or company entering the workspace-wide audience.
 
 **To connect a workflow:**
 
@@ -595,6 +595,25 @@ To manually run the workflow on segment members already in the segment, open the
 -   **Run all [X] [members]** — runs the workflow on all current segment members.
 
 The **Run** button is available in any trigger state — draft, live, or paused — so you can run the workflow on existing members before or after publishing.
+
+**How long does it take for a segment-triggered workflow to start?**
+
+A workflow connected to an audience segment does not start the instant a contact or company joins the segment. Clay re-checks segment membership on a recurring schedule, and the segment-triggered workflow starts only for members that are new since the previous check. How often Clay checks a segment depends on your plan:
+
+-   **Enterprise plan:** every 20 minutes.
+-   **Growth plan (and other non-Enterprise plans):** about every 60 minutes.
+
+For example, on a Growth plan, a contact that joins a segment just after a check waits until the next check — up to about an hour — before the workflow starts. A contact that joins just before a check starts shortly after that check. That is why the delay between a contact joining a segment and the workflow starting can vary from a few minutes to about an hour on Growth.
+
+If you need a workflow to start closer to real time, use a webhook trigger or a Clay table trigger instead of a segment trigger. Webhook and table triggers start a workflow when the event happens, rather than on a schedule.
+
+**Why didn't my segment-triggered workflow start for some contacts?**
+
+If a segment-triggered workflow never started for a contact or company, check the following:
+
+-   **The member joined before the workflow was connected and published.** A segment trigger only fires for members that join the segment after the trigger is live. Members already in the segment are not run automatically — use the **Run** dropdown on the trigger card, or check **Run on all members now** when you publish, to run the workflow on them.
+-   **The segment has no workflow connected.** Contacts joining a segment only start a workflow if a published workflow uses that segment as its trigger. Open the segment and check the **Workflows** section of the sidebar.
+-   **The segment was deleted.** If the segment a workflow trigger points to is deleted, the trigger stops firing. The trigger card in the workflow editor shows **"Segment not found. It may have been deleted."** To fix it, open the workflow, select a different segment on the trigger, and publish the workflow again.
 
 **Testing a workflow on specific records**
 
