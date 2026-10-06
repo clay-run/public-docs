@@ -143,7 +143,7 @@ Open the Lookup Record column and click **Refresh fields** in the **Object Field
 
 **In Audiences (Salesforce sync field mapping)**
 
-Open the Salesforce source settings in Audiences — Clay fetches the available field list live from Salesforce each time you open the settings panel, so no reconnect or refresh is needed. Add your new field to the import mapping, then save. The new field's values will appear after the next incremental sync (typically within 15 minutes on Enterprise plans).
+Open the Salesforce source settings in Audiences — Clay fetches the available field list live from Salesforce each time you open the settings panel, so no reconnect or refresh is needed. Add your new field to the import mapping, then save. When you save, Clay fills in the new field on records already in your audience from each record's most recently synced copy. Records whose value in Salesforce was set or changed after Clay last synced them get the value when they're next modified in Salesforce or at the weekly full sync — see [I added a new Salesforce field to my mapping but some records are missing data for it](audiences.md#i-added-a-new-salesforce-field-to-my-mapping-but-some-records-are-missing-data-for-it).
 
 **If the new field still doesn't appear after refreshing**
 
