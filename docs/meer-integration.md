@@ -53,6 +53,26 @@ Screening a number costs 0.6 credits per record on current Clay plans, or 0.9 cr
 -   **"Missing input"** — the Phone Number field is empty or references a column with no value. Check that the Meer action's **Phone Number** input is mapped to a column that contains data, and that any upstream normalization step completed successfully.
 -   **"Error: Failed to enrich phone number"** — the phone number is valid but its country is not currently supported by Meer. Credits are not charged for this error. To avoid it entirely, add an **Only run if** conditional on this action to restrict it to supported country codes (e.g., `+1` for US, `+44` for UK, `+49` for Germany, `+353` for Ireland, `+34` for Spain).
 
+## Why are so many mobile numbers flagged as Do Not Call?
+
+It's common for a large share of US mobile numbers from a phone waterfall to come back from Meer with **Do Not Call = true**. Consumers can add their mobile numbers to the US National Do Not Call Registry, and the registry doesn't record whether a number is used personally or for business — so a mobile number someone registered as a consumer is still on the registry if they also use it for work. When Meer finds a number on a supported registry, it returns **Do Not Call = true** along with the **DNC List Source**, regardless of how the number is used.
+
+The Meer screening action does not tell you:
+
+-   Whether the number is a business line or a personal (consumer) line.
+-   Whether an exemption — such as the US exemption for business-to-business (B2B) sales calls — applies to your call.
+
+Meer only reports whether the number appears on a supported DNC registry.
+
+### Can I call DNC-flagged numbers for B2B outreach?
+
+Treat a Meer **Do Not Call = true** result as a compliance signal, not a final decision on whether you can use the number for B2B outreach. Common approaches:
+
+-   **Conservative policy:** suppress every DNC-flagged number, for example with an **Only run if** condition so only contacts where **Do Not Call = false** reach your dialer or CRM.
+-   **Legal review:** have your legal or compliance team decide whether specific genuine B2B calls to flagged numbers can go ahead.
+
+Federal DNC rules are separate from other rules that can apply to mobile numbers, such as rules on autodialed calls, prerecorded or artificial voice messages, and text messages. State-specific rules and your own internal opt-out list may also be stricter than federal B2B treatment. Clay's Meer integration helps with screening and suppression, but it isn't a legal determination or a guarantee of compliance — confirm how you handle DNC-flagged mobile numbers with your legal or compliance team.
+
 ## Compliance notes
 
 -   You are responsible for your own compliance. Do Not Call Suppression is a risk-mitigation tool. It does not ensure compliance. It's always your job to assess your compliance obligations and ensure you meet them. For more guidance, see our [DNC compliance best practices](https://university.clay.com/docs/dnc-compliance) and [direct marketing best practices](https://university.clay.com/docs/direct-marketing-best-practices).
