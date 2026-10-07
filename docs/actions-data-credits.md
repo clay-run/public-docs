@@ -156,7 +156,7 @@ Each fully enriched record typically costs **6–20 Data Credits**, depending on
 
 ### How to get more Data Credits
 
-Three options:
+Two options:
 
 **1\\. Upgrade your Data Credits tier** (recommended)
 
@@ -171,12 +171,6 @@ Three options:
 -   Available for emergency needs during your billing cycle.
 -   **30% premium** applies (on modern plans; **50% premium** on legacy plans).
 -   Subject to the 2× rollover cap: at renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap — including purchased top-ups — are dropped.
-
-**3\\. Auto top-ups**
-
--   Available to billing admins on self-serve paid plans — not available on the free plan or trials.
--   Go to `Settings` → `Usage` and turn on `Auto top-ups`.
--   Clay automatically buys a set number of Data Credits whenever your balance drops below a threshold you choose. See [Set up auto top-ups for Data Credits](#set-up-auto-top-ups-for-data-credits).
 
 ### Data Credits for AI
 
@@ -286,50 +280,6 @@ For emergency Data Credit needs during your billing cycle (not available for Act
 Credits are added to your balance immediately upon purchase. Top-ups do not change your plan or billing cycle — your existing subscription and renewal date are unaffected.
 
 **Note:** One-time top-ups have a **30% premium** on modern plans (**50% premium** on legacy plans). Top-up credits are subject to the 2× rollover cap: at your next renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap are dropped — including credits you purchased. For example, on a plan with 2,500 credits/month, your maximum balance at renewal is 5,000; if you buy a 15,000-credit top-up and don't spend it all before renewal, only up to 5,000 credits carry over. Check your current balance and upcoming renewal date before purchasing a large top-up. For regular needs, upgrading your Data Credits tier is more cost-effective.
-
-### Set up auto top-ups for Data Credits
-
-Auto top-ups automatically purchase more Data Credits whenever your Data Credit balance drops below a threshold you choose, so your enrichments keep running without a manual purchase. Each auto top-up is a separate charge to the payment method on file.
-
-**Who can use auto top-ups:** Auto top-ups are available on self-serve paid plans (such as Launch and Growth) and can be managed by members who have billing access in the workspace. Auto top-ups are not available on the free plan, on trials, or on Enterprise contracts billed by invoice. If your plan doesn't support them, the auto top-ups settings show "Auto top-ups aren't available for this plan."
-
-To turn on auto top-ups:
-
-1.  Go to `Settings` → `Usage`.
-2.  Open the `Auto top-ups` settings.
-3.  Set the **threshold** — when your Data Credit balance drops below this number, an auto top-up is triggered. The threshold must be at least 15% of your plan's monthly Data Credits. For example, on a plan with 2,500 Data Credits per month, the minimum threshold is 375 credits.
-4.  Set the **number of Data Credits** to add with each auto top-up (minimum 250 credits). The price per credit depends on your plan.
-5.  Optionally, set a **daily spend limit** to cap how much auto top-ups can charge in any rolling 24-hour period.
-6.  Click `Turn on auto top-ups`. You'll see the confirmation "Auto top-ups turned on."
-
-To change or stop auto top-ups, return to the `Auto top-ups` settings in `Settings` → `Usage`. When you turn them off, you'll see "Auto top-ups turned off," and no further auto top-up charges are made.
-
-Auto top-ups count toward the same monthly purchase limit as one-time top-ups. If you've reached that limit, auto top-ups can't be turned on until it resets. If auto top-ups are already on when you reach the limit, your settings stay active and auto top-up purchases resume when your monthly limit resets.
-
-### Why was I charged for several auto top-ups in a row?
-
-An auto top-up is triggered every time your Data Credit balance drops below your threshold. Auto top-ups run one at a time: after each one completes, Clay checks your balance again, and if it is still below the threshold, another auto top-up is triggered. Each auto top-up is a separate charge.
-
-This means one large run can trigger several auto top-ups within minutes. For example, an AI column run on 1,000+ rows can spend more than a plan's entire monthly allowance in a single run. On a plan with 2,500 Data Credits per month, a threshold of 375 credits, and 250 credits per auto top-up, a run that keeps spending after your balance falls below 375 triggers a new auto top-up each time the balance drops below 375 again. If that happens five times, you see five separate charges, adding 1,250 Data Credits in total (5 × 250).
-
-The following limits cap how much auto top-ups can charge:
-
--   **Daily spend limit** (optional): the maximum auto top-ups can charge in any rolling 24-hour period, if you set one.
--   **Rolling 7-day limit:** auto top-ups can't charge more than $5,000 in any rolling 7-day period.
--   **Monthly purchase limit:** shared with one-time top-ups.
-
-To find what spent the credits, open `Settings` → `Usage` and check which table and column used the most Data Credits. Make sure the date range you select covers your whole billing period — a shorter range (for example, only the last two days) won't include earlier spend that reduced your balance. To avoid repeated charges from a large run, test new columns on a small batch first, set a daily spend limit, or turn off auto top-ups.
-
-### What happens if an auto top-up payment fails?
-
-If an auto top-up payment fails — for example, because your card is declined — Clay automatically turns off auto top-ups for your workspace. Auto top-ups stay off, and no further auto top-up charges are attempted, until someone with billing access turns them back on.
-
-Members with billing access see a banner saying "Auto-top-ups have been disabled" with the reason ("Your last payment failed."), plus a `Manage auto top-ups` link.
-
-To start auto top-ups again:
-
-1.  Update your payment method in `Settings` → `Plan & billing`.
-2.  Go to `Settings` → `Usage`, open the `Auto top-ups` settings, and turn auto top-ups back on.
 
 ### Downgrade or cancel your plan
 
@@ -508,6 +458,22 @@ Common causes:
 -   Turn off `Auto-run` when not needed.
 -   Pause AI columns that aren't providing value.
 -   Check table settings before re-running enrichments.
+
+### Why was I charged for several automatic top-ups in a row?
+
+If automatic top-ups are on (`Auto top-ups` in `Settings` → `Usage`), Clay buys Data Credits every time your Data Credit balance drops below the threshold you set. Automatic top-ups run one at a time: after each one completes, Clay checks your balance again, and if it is still below the threshold — for example, because a large run is still spending credits — another automatic top-up is triggered. Each automatic top-up is a separate charge to your card.
+
+This means one large run can trigger several automatic top-ups within minutes. For example, an AI column run on 1,000+ rows can spend more than a plan's entire monthly allowance in a single run. On a plan with 2,500 Data Credits per month, a threshold of 375 credits, and 250 credits per automatic top-up, a run that keeps spending after your balance falls below 375 triggers a new automatic top-up each time the balance drops below 375 again. If that happens five times, you see five separate charges, adding 1,250 Data Credits in total (5 × 250).
+
+The following limits cap how much automatic top-ups can charge:
+
+-   **Daily spend limit** (optional): the maximum automatic top-ups can charge in any rolling 24-hour period, if you set one in your `Auto top-ups` settings.
+-   **Rolling 7-day limit:** automatic top-ups can't charge more than $5,000 in any rolling 7-day period.
+-   **Monthly purchase limit:** shared with one-time top-ups.
+
+To find what spent the credits, open `Settings` → `Usage` and check which table and column used the most Data Credits. Make sure the date range you select covers your whole billing period — a shorter range (for example, only the last two days) won't include earlier spend that reduced your balance.
+
+To avoid repeated automatic top-up charges from a large run, test new columns on a small batch first, set a daily spend limit, or turn off automatic top-ups in `Settings` → `Usage`.
 
 ### What happens when I downgrade or cancel my plan?
 
