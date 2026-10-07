@@ -873,6 +873,16 @@ The filter option for the field becomes available after the next incremental syn
 
 **If a field doesn't appear in the Settings mapping dropdown** (not just in the filter options): Clay fetches the available field list live from Salesforce each time you open the mapping settings — no reconnect or reauth is required for newly created Salesforce fields to appear. If a field you recently created in Salesforce still does not show up in the dropdown, the most likely cause is that the connected Salesforce OAuth user's profile lacks Field-Level Security (FLS) Read access to that field. Salesforce's describe API only returns fields the connected user can read, so any field blocked by FLS will be absent from Clay's dropdown regardless of when it was created. To fix it, ask your Salesforce admin to grant **Read** access to the field via **Setup** → **Profiles** (or **Permission Sets**) → the user's profile → **Object Settings** → **Field Permissions**. After permissions are updated, reopen the mapping settings and the field will appear.
 
+### Which Salesforce Contact field do I map to the required Clay "Name" field?
+
+In the Audiences Salesforce **Contact field mapping**, the Clay People **Name** (full name) row is required. It shows a red asterisk instead of a delete icon, and you can't save the mapping until a Salesforce field is selected for it. You might not see a full-name field among the writeable Salesforce Contact fields, only **First Name** and **Last Name**. If so, map Clay's **Name** to Salesforce's standard **Full Name** field (API name `Name`):
+
+1.  In the **Salesforce Contacts** dropdown on the **Name** row, scroll to the **Read-only fields** section at the bottom of the list (or type `name` to filter).
+2.  Select **Full Name** (`Name`).
+3.  Click **Save and review**.
+
+Salesforce fills in the **Full Name** field automatically from First Name and Last Name, so it is populated even if your team doesn't maintain a separate full-name field. Because **Full Name** is a read-only field in Salesforce, Clay imports its value but never writes to it. If your mapping shows a **Scheduled export rule** column, the rule for this row switches to **Never write (Read-only)** and can't be changed. The same approach works for the required **Name** row on Salesforce Leads.
+
 ### What happens when I edit the SOQL query on an existing Salesforce record subset import?
 
 This applies to Salesforce **Record subset** (SOQL) imports in Audiences, available on Growth and Enterprise plans.
