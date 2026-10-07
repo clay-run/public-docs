@@ -143,12 +143,16 @@ Your search filters are saved on the source, not on the table rows. To update th
 
 If you have a saved Sales Navigator search and want to pull those results into Clay, use the **Find people from external search** source — not the standard Find People source described above.
 
+**Find people from external search** is a table source: you add it from a workbook or table with **+ Add**. It is not available in the **Find Leads** view under Audiences, which uses a different import workflow — if you're looking for the option to import from an external list or paste a Sales Navigator URL, open the workbook or table where you want the leads and add the source from there.
+
 1.  In a workbook, click `+ Add` at the bottom.
 2.  Search for `external search`.
 3.  Select **Find people from external search**.
 4.  Paste your Sales Navigator people search URL (e.g., `https://www.linkedin.com/sales/search/people/...`).
 5.  Optionally set a **Max Count** (default and maximum is 2,500 — this is a Sales Navigator limit).
 6.  Click **Import to new table**.
+
+**How long the Sales Navigator import takes:** The Find people from external search source usually takes about 30 minutes to process, but it can take up to 90 minutes. You can keep working in Clay or close the window while it runs — the results are added to your table automatically when they're ready.
 
 **Note:** This source requires a Sales Navigator **people search URL** (`https://www.linkedin.com/sales/search/people/...`), not a saved lead list URL (`linkedin.com/sales/lists/people`) or a saved search URL (those containing `savedSearchId`). If you have a saved Sales Navigator lead list, recreate the equivalent filters as a fresh people search on Sales Navigator and copy that URL instead. Each imported result costs 1 Clay credit.
 
