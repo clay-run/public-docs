@@ -115,7 +115,7 @@ So if you use a webhook to bring data into Clay (for example, from RB2B or anoth
 
 **Why does my Company Topic Intent signal fail with "Credit balance too low" when my workspace has plenty of credits?**
 
-An Audiences signal can have its own **Credit spend limit**, which is separate from workbook limits. Before a Company Topic Intent signal runs, Clay estimates the full cost of the run. It then checks that estimate against the lowest credit balance that applies to the signal: your workspace balance, any budget, and the signal's own credit spend limit.
+An Audiences signal can have its own **Credit spend limit**, which is separate from workbook limits. Before a Company Topic Intent signal runs, Clay estimates the full cost of the run. It then checks that estimate against the lowest credit balance that applies to the signal: your workspace balance, your workspace's Audiences credit budget (if one is set), and the signal's own credit spend limit.
 
 If the signal's credit spend limit is lower than the estimated run cost, Clay blocks the run before processing any records:
 
@@ -125,7 +125,9 @@ If the signal's credit spend limit is lower than the estimated run cost, Clay bl
 
 This happens even when your workspace has hundreds of thousands of Data Credits available. Retrying the signal fails the same way until the limit changes.
 
-For example, a Company Topic Intent signal on 819 companies at 4 credits per company has an estimated run cost of about 3,276 credits (819 × 4). With a 100-credit spend limit on the signal, Clay compares 100 against 3,276, so the run fails. The same signal on a 5-company segment costs about 20 credits (5 × 4). That's under the 100-credit limit, so the run succeeds.
+The same check applies to the credit budget assigned to Audiences for your workspace, if one is set. If that budget has less remaining than the estimated run cost, the run is blocked with the same error. If the signal has no credit spend limit, check your workspace's Audiences budget. See [Credit budgets](/docs/credit-budgets).
+
+For example, take a Company Topic Intent signal on 819 companies where the estimated rate is 4 credits per company. That gives an estimated run cost of about 3,276 credits (819 × 4). The per-company rate depends on your plan, which data providers you enable, and how many topics you select for each provider. Each topic adds that provider's per-topic rate, so check your signal's own estimate. With a 100-credit spend limit on the signal, Clay compares 100 against 3,276, so the run fails. The same signal on a 5-company segment costs about 20 credits (5 × 4). That's under the 100-credit limit, so the run succeeds.
 
 **How do I fix a signal blocked by its credit spend limit?**
 
