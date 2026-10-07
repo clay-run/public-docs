@@ -2,7 +2,7 @@
 title: How AI is priced
 description: This guide explains how each works, which models they apply to, and
   how credits are calculated.
-last_synced: 2026-04-26T01:39:39.981Z
+last_synced: 2026-10-07T03:01:37.606Z
 ---
 
 # How AI is priced
@@ -26,20 +26,22 @@ The table below lists the data credit cost per task for select AI models availab
 | Provider | Model | Content Generation | Web Research |
 | --- | --- | --- | --- |
 | Clay | Helium | — | 1 |
-| Argon | — | 3 |
+| Clay | Argon | — | 3 |
 | OpenAI | GPT-4o | 1 | variable |
-| GPT-4.1 | 1 | variable |
-| GPT-5.1 | 2 | variable |
-| GPT-5 Mini | 0.4 | 1 |
-| GPT-5 Nano | 0.2 | 0.5 |
-| o3 | 5 | variable |
+| OpenAI | GPT-4.1 | 1 | variable |
+| OpenAI | GPT-5.1 | 2 | variable |
+| OpenAI | GPT-5 Mini | 0.4 | 1 |
+| OpenAI | GPT-5 Nano | 0.2 | 0.5 |
+| OpenAI | o3 | 5 | variable |
 | Anthropic | Claude 4.5 Haiku | 1 | variable |
-| Claude 4.5 Sonnet | 1.5 | variable |
-| Claude 4.6 Sonnet | 1 | variable |
-| Claude 4.6 Opus | 7.5 | variable |
+| Anthropic | Claude 4.5 Sonnet | 1.5 | variable |
+| Anthropic | Claude 4.6 Sonnet | 1 | variable |
+| Anthropic | Claude 4.6 Opus | 7.5 | variable |
 | Gemini | 2.5 Pro | 3 | variable |
-| 2.5 Flash | 0.5 | 1 |
-| 2.5 Flash Lite | 0.5 | 1 |
+| Gemini | 2.5 Flash | 0.5 | 1 |
+| Gemini | 2.5 Flash Lite | 0.5 | 1 |
+| Kimi | Kimi K2.6 | 2 | variable |
+| Z.ai | GLM 5.2 | 2 | variable |
 
 _Costs are in data credits._
 
@@ -89,6 +91,8 @@ For models from OpenAI, Anthropic, Google, and other third-party providers, you 
 **How do I know if a model uses fixed or variable pricing?**
 
 The product displays the pricing type when you select a model. Fixed-price models show a flat credit cost (e.g., `3/row`). Variable-price models display `/ model` instead of a fixed number, with a tooltip indicating that credits vary per run. In the pre-run cost estimate and during active runs, a `~` prefix on the cost (e.g., `~2/row`) indicates an approximate amount — the actual charge is calculated after each row completes and may be higher or lower.
+
+![Example of how pricing appears when selecting a model in Clay](https://cdn.prod.website-files.com/687e604972375496b891fe58/69b17b4dae3ccfe64cf05df8_Screenshot%202026-03-11%20at%2010.12.18%E2%80%AFAM.png)
 
 **Will I always know what a task will cost before I run it?**
 
