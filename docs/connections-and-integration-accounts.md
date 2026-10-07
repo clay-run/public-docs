@@ -45,7 +45,9 @@ To add a new account for an integration:
 -   (Optional) Set it as the default account. Enrichments using this integration will default to this account in your workspace.
 -   Once completed, the account will appear under the corresponding service in the `Connections` list.
 
-### Why an integration doesn't show up when I search the Connections page
+### Why an integration doesn't show up on the Connections page
+
+The `Settings` > `Connections` page only lists connections your workspace has already added. An integration you haven't connected yet — for example, HubSpot or Salesloft — doesn't appear in the list until you add an account for it with the `Create` button.
 
 The search bar on the `Settings` > `Connections` page (next to the `Create` button) only filters connections your workspace has already added. It does not search the integrations available to connect. If you search for an integration you haven't connected yet — for example, typing "salesloft" before adding a Salesloft API key — the Connections page shows **No connections match your filters** and "Try adjusting your search or filters." This doesn't mean the integration is unavailable.
 
