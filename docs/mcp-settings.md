@@ -143,6 +143,20 @@ Your Clay workspace data and workflows are unaffected — only the connection fr
 
 Yes, by removing them from your workspace. While admins cannot directly revoke a rep's MCP connection from the `MCP` page, they can remove the rep from the workspace entirely. If a rep is not added to your workspace, they won't have access to the data and workflows in your Clay instance. Alternatively, to limit usage without removing access, set their credit limit to a low value.
 
+### How do I make sure reps only send ICP accounts from Claude to Clay?
+
+Clay doesn't have a setting that limits Claude, ChatGPT, or Glean to your ideal customer profile (ICP) accounts, and Clay doesn't offer a pre-built ICP skill or Function. Every company defines its ICP differently. Writing "only send ICP accounts" in a Claude prompt is an instruction, not a guardrail, so Claude won't always follow it.
+
+To apply the same ICP check every time a rep uses Clay from Claude, put your ICP logic in a Clay Function:
+
+1.  In the `Functions` tab, build a Function that holds your fixed ICP qualification logic.
+2.  Give the Function outputs such as `is_icp`, `icp_score`, and `qualification_reason`. When a rep runs the Function from Claude, these output fields come back in the conversation.
+3.  Check `MCP for reps` on the Function so reps can run it from Claude, ChatGPT, or Glean (see [Enabling a function for MCP](#enabling-a-function-for-mcp)).
+4.  Have reps run the ICP Function first, and only go on to enrichment or outreach when `is_icp` is true.
+5.  For reps who only use Clay through AI tools, assign the **Sales Rep** role (currently in beta — contact support to request access for your workspace). This role gives them MCP access without access to tables, workbooks, or other workspace resources (see [What role should I assign to team members who will only use Clay through MCP?](#what-role-should-i-assign-to-team-members-who-will-only-use-clay-through-mcp)).
+
+**Limitation:** Turning on `MCP for reps` adds the Function alongside Clay's built-in MCP tools. It doesn't replace them. Reps can still search for people and add contact or company data points straight from Claude, without going through your ICP Function. Clay has no setting that turns off the built-in tools or limits a rep to specific Functions. To cap what a rep can spend, set their credit limit in the `MCP users` table. A credit limit of `0` blocks enrichments and Functions through AI tools. Searches that don't add paid data points still run.
+
 ### When do credits reset?
 
 The MCP user credit limit is a rolling monthly limit. Credit spend automatically resets on the 1st of each month at midnight UTC.
