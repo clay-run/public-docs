@@ -2,7 +2,7 @@
 title: Sandbox mode
 description: Learn about sandbox mode, a playground to safely iterate +
   experiment with your data!
-last_synced: 2026-04-26T01:40:36.624Z
+last_synced: 2026-10-07T01:17:19.137Z
 ---
 
 # Sandbox mode
@@ -18,10 +18,10 @@ Sandbox mode is a special table mode that lets you safely build, test, and publi
 
 ## **Enabling sandbox mode**
 
-1.  Click the `Sandbox mode` button in the toolbar.
+1.  Click the `Sandbox Mode` button in the toolbar.
 2.  After a few seconds, a new sandbox will be set up with sample rows, ready for you to make changes.
     -   **To discard changes and start a fresh copy of the sandbox:** Click `⚙️` → `Reset sandbox`.
-    -   **To turn off sandbox mode:** Click `Exit sandbox` in the toolbar. This will return you to your normal table and discard all unpublished changes in your sandbox.
+    -   **To turn off sandbox mode:** Click `Exit Sandbox` in the toolbar. This will return you to your normal table and discard all unpublished changes in your sandbox.
     -   **If you close your browser tab or navigate away:** Your sandbox is saved automatically — no changes are discarded. When you return to the table, Clay redirects you back to your sandbox where you left off.
 
 **Note on tables created from a source:** Sandbox mode requires a table that already has data in it — the **Sandbox Mode** button is disabled on empty tables. If you are creating a new table from a credit-consuming source (for example, a "Companies by product usage with HG Insights" table), the initial source run happens before sandbox mode is available. Use the **Maximum credit cost per run** setting in the source setup to cap spending during that first run. Once the table is created and rows are imported, enable sandbox mode before running any enrichment columns.
@@ -89,5 +89,5 @@ Click `Review changes` — visible in the tab bar above your table, to the right
 
 When you are ready to publish the changes in your sandbox to your regular table, you have two options:
 
--   `Publish and don't Run` will sync all your column configuration changes to all data but will _not start_ a run for any of these columns. You would need to manually run them later.
+-   `Publish and don't run` will sync all your column configuration changes to all data but will _not start_ a run for any of these columns. You would need to manually run them later.
 -   `Publish and run` will sync all column configuration changes to all data **and** run all affected columns on all rows in the full table.
