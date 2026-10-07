@@ -38,12 +38,25 @@ An **integration account** is a configured connection between your workspace and
 To add a new account for an integration:
 
 -   Navigate to `Settings` > `Connections`.
--   Click `+ Add connection` in the top-right corner.
--   Use the search bar to locate the service you want to integrate with.
+-   Click `Create` in the top-right corner. The `Connect an account` modal opens.
+-   Use the `Search` field in the `Connect an account` modal to locate the service you want to integrate with.
 -   Follow the on-screen instructions to authenticate and configure the connection — through an API key or by signing in to the service.
 -   Name your integration account so it's easy to identify later.
 -   (Optional) Set it as the default account. Enrichments using this integration will default to this account in your workspace.
 -   Once completed, the account will appear under the corresponding service in the `Connections` list.
+
+### Why an integration doesn't show up when I search the Connections page
+
+The search bar on the `Settings` > `Connections` page (next to the `Create` button) only filters connections your workspace has already added. It does not search the integrations available to connect. If you search for an integration you haven't connected yet — for example, typing "salesloft" before adding a Salesloft API key — the Connections page shows **No connections match your filters** and "Try adjusting your search or filters." This doesn't mean the integration is unavailable.
+
+To find and add an integration you haven't connected yet:
+
+1.  On the `Settings` > `Connections` page, click `Create` in the top-right corner.
+2.  In the `Connect an account` modal, type the integration's name (for example, "Salesloft") into the `Search` field.
+3.  Select the integration and follow the prompts to authenticate — for API key integrations, paste your API key and name the account.
+4.  Save the account. It now appears in the `Connections` list, and searching the Connections page for it will return it.
+
+You can also add an account from inside a table: open an action for that integration, go to the `Account` section in the action's sidebar, open the account dropdown, and select `Add account`. Accounts added this way are saved to your workspace, appear in the `Connections` list, and can be reused across every action for that integration.
 
 ## Managing existing accounts
 
