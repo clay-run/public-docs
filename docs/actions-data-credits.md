@@ -2,7 +2,7 @@
 title: Actions & Data Credits
 description: Learn about credits, the virtual currency system used for running
   actions in Clay.
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-10-07T01:07:26.923Z
 ---
 
 # Actions & Data Credits
@@ -174,19 +174,19 @@ Two options:
 
 ### Data Credits for AI
 
-Data Credit pricing varies for AI models in [Use AI](https://www.clay.com/university/guide/use-ai-integration-overview), with rates determined by which model you select. Find out more in [AI pricing](https://university.clay.com/docs/ai-pricing) doc.
+Data Credit pricing varies for AI models in [Use AI](https://university.clay.com/docs/use-ai-integration-overview), with rates determined by which model you select. Find out more in [AI pricing](https://university.clay.com/docs/ai-pricing) doc.
 
 -   Data Credit costs are based on prompt and token usage.
 -   You can control spending by setting custom budgets for each run.
 
 ## Action and Data Credit usage
 
-To see detailed Data Credit consumption across your workspace, workbooks, and tables, visit the **credit usage** dashboard:
+To see detailed Data Credit consumption across your workspace, workbooks, and tables, open the `Usage` page:
 
 1.  Click your account name in the corner
 2.  Go to `Settings` → `Usage`.
 
-For a complete guide on tracking and analyzing your Data Credit spend, see [this doc](https://www.clay.com/university/guide/credit-usage).
+For a complete guide on tracking and analyzing your Data Credit spend, see [this doc](https://university.clay.com/docs/credit-usage).
 
 ### Workbook credit limits (Enterprise only)
 
@@ -196,8 +196,8 @@ Admins can set **Data Credit spend limits** for individual workbooks to control 
 
 **How to enable workbook credit limits:**
 
-1.  Open your workbook. In the settings panel, under `Credit spend limit`, click `Manage`.
-2.  Toggle `Enabled credit spend limit` and add a number to `Workbook limit`.
+1.  Open your workbook. In the settings panel, under `Workbook credit limit`, click `Manage`.
+2.  Toggle `Enable workbook credit limit` and add a number to `Workbook limit`.
 3.  Click `Save changes`.
 
 Once enabled, all Actions run within that workbook will contribute to the workbook's Data Credit spend. When the limit is reached, you'll see an error message preventing further Actions from running.
@@ -253,16 +253,16 @@ _Note: Your rollover and renewal happen on the same day and at the same time you
 
 ## Managing your plan and credits
 
-You can adjust your Clay plan, Actions, and Data Credits at any time to match your usage needs. For complete details on plan features, pricing, and billing management, see [Plans & billing](https://www.notion.so/Plans-billing-1537e66eb014807e86a3e586aeb7c164?pvs=21).
+You can adjust your Clay plan, Actions, and Data Credits at any time to match your usage needs. For complete details on plan features, pricing, and billing management, see [Plans & billing](https://university.clay.com/docs/plans-and-billing).
 
 ### Upgrade your plan or add more credits
 
 If you need ongoing increases in capacity:
 
 1.  Go to `Settings` → `Plan & billing`.
-2.  Click `Upgrade` (on a free plan) or `Switch plan` (on a paid plan) to upgrade your plan tier, or adjust your Actions and Data Credits limits.
+2.  Open the `Plan options` dropdown and select `Switch plan` to upgrade your plan tier or adjust your Actions and Data Credits limits. On a free or trial plan, this menu item reads `Upgrade` instead.
 3.  Select the higher tier or credit amount that fits your needs.
-4.  Click `Upgrade` to confirm.
+4.  Click `Review changes` to confirm.
 
 Your new plan or credit limits will activate immediately, and any applicable charges will be applied to your billing cycle.
 
@@ -286,7 +286,7 @@ Credits are added to your balance immediately upon purchase. Top-ups do not chan
 To downgrade your Clay workspace plan:
 
 1.  Click your profile picture in the top-right corner and select `Settings`.
-2.  Navigate to `Plan & billing` and click `Switch plan` (or `Upgrade` if you're currently on a free plan).
+2.  Navigate to `Plan & billing`, open the `Plan options` dropdown, and select `Switch plan`.
 3.  Choose the plan you'd like to downgrade to and confirm your selection.
 
 **If you downgrade:**
