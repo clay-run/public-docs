@@ -267,7 +267,7 @@ You can import a CSV file of people or companies as a one-time import into Audie
 1.  Click `Add data` → `Add Source` → select **CSV**.
 2.  Name your import, select whether you're importing **People** or **Companies**, and upload your CSV file.
 3.  On the mapping screen, set the **Unique identifier** — the CSV column that uniquely identifies each record (such as email for People or domain for Companies). This determines whether an incoming row updates an existing record or creates a new one.
-    -   On a people import, a **Company association** field appears as an optional setting. Point it at the column holding each person's company ID to link them to their company records in Audiences.
+    -   On a people import, a **Company association** setting appears as an optional field. It shows a fixed **Company ID** label next to a column picker — select the CSV column that holds each person's company identifier. The value must match the **Unique identifier** value used for that company when it was imported into Audiences (for example, the value from the column you chose as the Unique identifier in your Companies CSV import). It is not the Clay company ID shown on the company record. See [Why isn't my person linked to their company after a CSV import?](#why-isnt-my-person-linked-to-their-company-after-a-csv-import).
 4.  Map your remaining CSV columns to Audience fields. Click **Auto-map** to automatically suggest mappings based on column names, or **Add mapping** to add a row and configure it manually.
 5.  Click **Import** to complete the import.
 
@@ -1384,6 +1384,23 @@ Before importing the corrected file, remove the incorrect records from your Audi
 The corrected records are imported fresh without duplicating the old ones.
 
 **Note:** If your Audience record count appears higher than expected after importing a corrected CSV — even after archiving — it may mean some records from the original import were merged with records from another source (for example, Salesforce) during entity resolution. Archived records that matched a non-CSV source may still appear in your Audience under that source. In this case, contact Clay support to assist with cleanup.
+
+### Why isn't my person linked to their company after a CSV import?
+
+When you import people from a CSV into Audiences, the **Company association** setting links each person to a company in your Companies audience. The value in the column you map to **Company ID** must exactly match the company's **Unique identifier** from its import — the value from the column you selected as the Unique identifier when you imported that company (for example, a Companies CSV column like `Company Unique ID`). Clay does not match Company association against the Clay company ID shown on the company record, so entering that number won't link the person.
+
+Linking also isn't instant. Person-to-company linking from a CSV import runs in the background on a 15-minute cycle, so a correctly mapped person can take up to about 25 minutes to appear on the company's **People** tab.
+
+To fix a person who isn't linked to their company:
+
+1.  Find the Unique identifier value for the company. Clay stores the Unique identifier for matching only — it isn't shown as a field on the company record and can't be exported from Audiences — so look it up in the original file you used to import the company.
+2.  Put that exact value in the person's Company association column in your People CSV.
+3.  Re-import the People CSV using the same Unique identifier column for people as before. Clay updates the existing person record instead of creating a duplicate, and links the person to the company.
+4.  Wait up to about 25 minutes, then refresh the company's **People** tab.
+
+A company link created by an earlier import isn't removed when you re-import with a different company value. If an earlier import linked the person to the wrong company, contact support to remove that link.
+
+**Tip: keep the Unique identifier visible for future imports.** When you import companies, map the column you select as the Unique identifier to a regular Audience field as well (for example, a custom field called `External Company ID`). The same column can be both the Unique identifier and a mapped field, so the value appears on each company record and you can copy it into future People CSVs without the original file.
 
 ### How does the Audiences record limit work? What counts toward it?
 
