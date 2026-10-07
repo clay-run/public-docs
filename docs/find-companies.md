@@ -2,7 +2,7 @@
 title: Find Companies in Clay
 description: Find companies that match your specific criteria within Clay's
   proprietary dataset.
-last_synced: 2026-04-26T01:39:58.486Z
+last_synced: 2026-10-07T01:08:33.057Z
 ---
 
 # Find Companies in Clay
@@ -48,7 +48,7 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
         -   **Domain redirects to another domain** — Whether the domain redirects elsewhere.
     -   **Exclude companies:** Exclude up to 3 different sets of companies from your search using Clay tables, CSVs, or manual lists. You can exclude up to 300,000 companies total (100,000 per source). Exclusions require a company domain or professional network company URL. Available on Launch plan and above.
     -   **Limit results** — Defaults to 10,000. Maximum 10,000.
-2.  Click `Preview companies` and `Import to new table` when the results look good.
+2.  Results update as you change your filters. When they look right, click `Continue` and choose `Save to new table`.
 3.  Select import options:
     -   Add additional enrichments like `Company Headcount Growth` or `Most Recent News`. Any enrichments you select here run on import and **consume Data Credits** (the wizard shows the estimated cost per row). To avoid credit spend at this step, skip optional enrichments and add them as table columns after the table is created instead.
     -   **For trial accounts:** The **Enrich Company** enrichment is pre-selected and cannot be removed during import.
@@ -132,7 +132,7 @@ Any enrichments you select during the import wizard, or add to the table afterwa
 
 ### Why does my table show fewer rows than the preview count?
 
-**The import may still be in progress.** Find Companies imports process asynchronously — rows are added in batches. If you check right after clicking Import, the row count will be lower than the final total. Wait a minute and refresh to see the complete count.
+**The import may still be in progress.** Find Companies imports process asynchronously — rows are added in batches. If you check right after choosing `Save to new table`, the row count will be lower than the final total. Wait a minute and refresh to see the complete count.
 
 If the count still doesn't match after the import finishes, the **preview count** (e.g., "Showing 50 of ~39,869 results") is an approximate figure — the `~` tilde prefix in the UI indicates the total is estimated using a fast approximate count, not an exact query. The actual import can return a slightly different total, and this is normal.
 
