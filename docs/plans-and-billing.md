@@ -189,11 +189,10 @@ If you're unsure whether you need a higher tier, check your current usage in `Se
 
 **Actions:** Actions cannot be purchased as one-time top-ups — they represent fixed platform capacity tied to your action tier. To increase your Actions limit, you must upgrade to a higher action tier in `Settings` → `Plans & billing`.
 
-**Data Credits:** You have three options:
+**Data Credits:** You have two options:
 
 -   **Upgrade your Data Credits tier** (recommended for ongoing needs) — no premium charged.
 -   **Purchase a one-time top-up** — available on paid plans only; not available on the free plan. For emergency needs during your billing cycle at a 30% premium (50% on legacy plans), subject to rollover limits. Go to `Settings` → `Usage` and click `Add one-time data credits`.
--   **Turn on auto top-ups** — available on self-serve paid plans; not available on the free plan or trials. Clay automatically buys a set number of Data Credits whenever your balance drops below a threshold you choose. Go to `Settings` → `Usage` and open `Auto top-ups`. See [Set up auto top-ups for Data Credits](actions-data-credits.md#set-up-auto-top-ups-for-data-credits).
 
 ### How many actions and data credits do I need?
 
@@ -247,8 +246,6 @@ If a payment fails, Clay retries the charge automatically before canceling your 
 Once downgraded to the Free plan, your Data Credit balance is capped at **200 credits** (the Free plan's rollover limit) — any credits above that cap are forfeited at the end of your billing cycle.
 
 To avoid an interruption, keep your payment information current in `Settings` → `Plan & billing`.
-
-**Auto top-up payments:** The retry window above applies to subscription payments. If an auto top-up payment fails, Clay turns off auto top-ups for your workspace until someone with billing access turns them back on — see [What happens if an auto top-up payment fails?](actions-data-credits.md#what-happens-if-an-auto-top-up-payment-fails).
 
 ### Why was my account locked?
 
