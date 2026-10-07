@@ -54,6 +54,27 @@ If you need different tables to have different levels of access — for example,
 
 For guidance on creating a Salesforce integration user with scoped access, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
 
+## How much data does Clay read from Salesforce, and can I limit it to only the records I enrich?
+
+Clay does not read or sync your whole Salesforce org. The Salesforce integration only reads the records you point it at, so you control how many Salesforce rows Clay reads. For example, if you only enrich 15,000 accounts per day, you can scope Clay so that only those 15,000 accounts are read.
+
+**What Clay reads from Salesforce depends on how you use the integration:**
+
+-   **Import sources:** The **Import records from a Salesforce list**, **Import records from a Salesforce report**, and **Import records from a Salesforce SOQL query** sources read only the records returned by the list view, report, or SOQL query you select. Records outside that list view, report, or query are not read.
+-   **Lookup actions:** The **Lookup record** and **Lookup records via SOQL** actions run a separate query for each Clay row that runs, using that row's search values. Salesforce reads from lookups scale with the number of rows you run, not with the total number of records in your Salesforce org. The **Lookup record** action returns at most 5 matching records per row.
+-   **Connected user permissions:** Every read is made with the connected Salesforce user's credentials, so Clay can only read the objects, fields, and records that user can access in Salesforce.
+
+**How to limit the number of Salesforce records Clay reads:**
+
+1.  Filter the Salesforce list view or report you import so it only includes the records you want to enrich, or write a SOQL query with a `WHERE` clause and a `LIMIT` clause (for example, `SELECT Id, Name, Website FROM Account WHERE Enrich_Today__c = true LIMIT 15000`). The import sources don't have a separate "row limit" setting — the list view, report, or query is how you scope the import.
+2.  Add [run conditions](https://university.clay.com/docs/conditional-runs) to Lookup columns so they only run on rows that need them.
+
+**Import limits:** The SOQL source imports up to 50,000 records per import, and the report source imports up to 2,000 rows. See [Why did my Salesforce report import only bring in 2,000 rows when my report has more?](#why-did-my-salesforce-report-import-only-bring-in-2000-rows-when-my-report-has-more) for details.
+
+**Re-syncs:** By default, Salesforce imports re-sync every 24 hours, and each re-sync reads the records currently in your list view, report, or query. To change this, see [What are the default sync settings for CRM integrations?](#what-are-the-default-sync-settings-for-crm-integrations)
+
+**Writing to Salesforce:** Connecting Salesforce or importing records into a Clay table never writes to Salesforce. Clay tables only write to Salesforce when you add a **Create record**, **Update record**, **Create or update object** (upsert), or **Convert lead** action, and those actions only send the fields you map. [Clay Audiences](audiences.md) has its own optional Salesforce export, which is configured separately in Audiences settings.
+
 ## What Salesforce license type is required to connect Clay?
 
 The license requirement depends on which connection method you use:
