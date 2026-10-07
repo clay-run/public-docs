@@ -1,7 +1,7 @@
 ---
 title: MCP settings
 description: Connect your Clay workspace to AI tools.
-last_synced: 2026-09-24T21:26:14.668Z
+last_synced: 2026-10-07T00:16:31.176Z
 ---
 
 # MCP settings
@@ -30,7 +30,7 @@ Functions are reusable enrichment workflows built in Clay that reps can invoke d
 
 1.  Go to the `Functions` tab in your workspace and find the function you want (or click `+ New function` to create a new one.)
 2.  Click the function to open it's settings and check `MCP for reps` in the Integrations section.
-    -   Set a name and description for the MCP app — this is what reps see when browsing available functions, so make it actionable (e.g., _"Company enrichment waterfall"_ or _"Outbound email generator"_).
+    -   Set a `Routine name` and `Description` for the function — this is what reps see when browsing available functions, so make it actionable (e.g., _"Company enrichment waterfall"_ or _"Outbound email generator"_).
 
 _For more information about functions, check out our_ [_full doc_](https://university.clay.com/docs/functions)_._
 
@@ -62,7 +62,7 @@ MCP credit usage also appears in the main credit usage dashboard at `Settings �
 If your workspace uses Clay Audiences, two additional workspace-level toggles appear on the `MCP` page:
 
 -   **Sync user IDs from audiences** — continuously syncs audience data to match MCP users to the Salesforce accounts they own. Updates run incrementally every 15 minutes, with a full sync once a week.
--   **Restrict account querying by Salesforce owner** — when enabled (the default when Salesforce is connected), reps can only query accounts they own in Salesforce. When disabled, reps can query any account in the synced audience.
+-   **Restrict account querying by Salesforce owner** — when enabled (the default when Salesforce is connected), reps can only query accounts they own in Salesforce. When disabled, reps can query any account in the synced audience. This toggle requires a Salesforce audience connection — without one, the toggle is disabled and shows the tooltip "Connect Salesforce to your audience to enable this setting."
 
 **Troubleshooting — error: "Contact queries are not available in this workspace":** If a rep using Clay through Claude or ChatGPT sees the error `Contact queries are not available when account ownership restriction is enabled. Disable "Restrict account querying by Salesforce owner" in workspace MCP settings to use contact queries`, the **Restrict account querying by Salesforce owner** toggle is on. Click `MCP` under **Orchestration** in the left sidebar and disable it. The MCP page is only visible to workspace admins — if you don't see it in the sidebar, ask your workspace admin to make the change.
 
