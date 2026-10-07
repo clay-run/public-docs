@@ -28,7 +28,24 @@ To get set up with Salesloft, you'll need to obtain an API key and have an exist
 
 To set up Salesloft within Clay, you'll need to first obtain a Salesloft API Key. You can request for an API key within Salesloft's [New API Key](https://developers.salesloft.com/docs/platform/external-calendars/setup-api-key/) Page.
 
-Once you've obtained your API key, navigate to your enrichment panel and paste your API key when creating a new account.
+Once you've obtained your API key, you can add it to Clay in either of two ways. Salesloft is available on all plans, and Salesloft accounts are saved to your workspace, so a Salesloft API key added either way can be reused across every Salesloft action.
+
+**Option 1: Add your Salesloft API key from Settings → Connections**
+
+1.  Go to `Settings` → `Connections`.
+2.  Click `Create` in the top-right corner.
+3.  In the `Connect an account` modal, type "Salesloft" into the `Search` field and select Salesloft.
+4.  In the `Add Salesloft API Key` window, paste your key into the `API key` field, name the account, and save.
+
+The Salesloft account then appears in your `Connections` list.
+
+> **Note:** The search bar on the Connections page itself only filters connections you've already added. If you search "salesloft" there before adding a Salesloft API key, you'll see **No connections match your filters** — use the `Create` button instead to find Salesloft.
+
+**Option 2: Add your Salesloft API key from a Salesloft action**
+
+1.  In a Clay table, add a Salesloft action column (for example, **Create account** or **Add person to cadence**).
+2.  In the action's sidebar, go to the `Account` section and open the account dropdown.
+3.  Select `Add account`, paste your Salesloft API key, and save.
 
 **Set up Cadence within Salesloft**
 
