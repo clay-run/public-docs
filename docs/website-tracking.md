@@ -185,6 +185,23 @@ Common causes:
 -   Connection-level or table-level filters are too restrictive.
 -   Your site hasn't had enough live traffic yet.
 
+### Why do I see fewer rows than website visitors (for example, after an email campaign)?
+
+It's normal for your Web intent table to show fewer rows than the number of people who clicked through to your website. Every completed visitor session goes through the following steps, and only sessions that make it through all of them become rows in your table:
+
+1.  **The tracking snippet records the visit.** Web intent only sees visits to pages where the tracking snippet is installed. If a campaign link points to a page, subdomain, or landing-page tool that doesn't have the snippet, those visits are never recorded.
+2.  **Advanced filters are checked.** Sessions shorter than your **Minimum session duration (seconds)** or with fewer pages than your **Minimum unique pages visited** are dropped. The minimum session duration defaults to 5 seconds, and minimum unique pages visited has no minimum when left blank. Dropped sessions aren't sent for company lookup and don't use credits.
+3.  **Company lookup (de-anonymization) runs.** Clay tries to match the visitor's IP address to a company using your selected de-anonymization providers. Some IP addresses — such as home or mobile connections — can't be tied to a business. When no company is found, no row is created and you aren't charged.
+4.  **A row is created or updated.** Matched sessions create a new row for the company, or update the existing row if that company has visited before.
+
+**Example:** If 20 sessions are recorded, 9 last under 5 seconds and are dropped, and 6 of the remaining 11 sessions match a company, your table shows 6 rows (or fewer, if some of those companies already have a row).
+
+**To capture more of your traffic:**
+
+-   Confirm the tracking snippet is installed on every page of your website, including the homepage and the specific pages your campaign links to.
+-   Install the snippet on any other subdomains or landing-page tools that receive traffic.
+-   Review your advanced filters. Lowering the minimum session duration mostly adds short bounce visits rather than higher-intent companies.
+
 ### Web intent connection stopped or shows as disabled
 
 If your Web Intent table has stopped receiving new rows, or you see a **"Signal is disabled"** tooltip on the workbook column header while the **Enabled** toggle in Run settings is on, the website tracking connection is likely disabled. The connection and the signal's enabled state are two separate controls.
