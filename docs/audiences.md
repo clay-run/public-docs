@@ -309,7 +309,7 @@ Each source listed in **Settings → Sources / Destinations** shows an **Import 
 | **Sync off** | Syncing is paused. New and updated records from this source will not flow into Audiences until sync is turned back on. Records already imported remain in Audiences. |
 | **Syncing** | An import run is actively in progress right now. |
 | **Not syncing** | The last sync attempt returned an error. Check your connection settings and try reconnecting the source. |
-| **Paused** | Clay has temporarily paused the Salesforce sync because your Salesforce account is approaching its API request quota. Clay resumes the sync automatically once the quota refreshes. |
+| **Paused** | Clay has temporarily paused the Salesforce sync because your Salesforce account has reached 90% of its daily API request quota. Clay resumes the sync automatically once usage drops back below that threshold. See [Why is my Salesforce sync paused because of API limits?](#why-is-my-salesforce-sync-paused-because-of-api-limits-is-there-a-workaround) |
 | **Incomplete** | Field mapping has not been configured for this source yet. Open the source settings to complete setup before records can sync. |
 
 To turn sync on or off for a source, open its settings by clicking the **⋮** menu next to the source row and selecting **Settings**, then toggle the **Import sync** switch.
@@ -914,6 +914,17 @@ No. The Clay UI shows only that the Salesforce full sync runs weekly — it does
 There is no self-serve option to trigger a full sync manually. If you need an expedited full sync — for example, to pick up formula field updates that are not captured by incremental syncs — contact Clay support.
 
 **Workaround for specific records:** The incremental sync (every 15 minutes for Enterprise, once daily for Growth) picks up any Salesforce record whose `SystemModstamp` has been updated. To re-sync specific records sooner, make a small edit to those records in Salesforce — for example, add and remove a space in any field. This updates `SystemModstamp` and Clay will pick up those records on the next incremental sync, without waiting for the weekly full sync.
+
+### Why is my Salesforce sync paused because of API limits? Is there a workaround?
+
+If your Salesforce source in Audiences shows **Paused** with the message "Your Salesforce account has reached 90% of its API request quota. Clay will automatically resume this sync once the quota refreshes," Clay has stopped importing Salesforce records to protect your org's remaining API capacity. This is a fixed safeguard, not an error:
+
+-   **Threshold:** Clay pauses the Salesforce Audiences sync when your Salesforce org has used more than 90% of its daily API request limit (less than 10% remaining). The 90% threshold is the same for every workspace and can't be changed.
+-   **Automatic resume:** While the sync is paused, Clay re-checks your Salesforce API usage about every 15 minutes and resumes the sync on its own once usage drops back below 90%. There is no manual override to resume the sync while your org is still above the threshold.
+-   **What stops:** New and updated Salesforce records (for example, Accounts) stop flowing into Audiences, so segments built on that Salesforce source — and any workflows triggered by those segments — don't receive new members until the sync resumes. Records already imported remain in Audiences.
+-   **What isn't affected:** Data you send into Clay tables through a webhook doesn't go through the Salesforce Audiences sync, so webhook-fed tables keep receiving records while the Salesforce sync is paused.
+
+**Find what's using your Salesforce API quota.** Clay's Salesforce Audiences sync is usually a small share of your org's API usage — after the initial import, the incremental sync only pulls records that changed since the last sync, in batches. If your org stays above 90%, ask your Salesforce admin to open **Setup → System Overview → API Usage** in Salesforce to see which integrations or users are consuming the quota, then reduce that call volume (for example, by batching updates from another integration or workflow). Once your org's usage falls below 90%, the Clay sync resumes automatically.
 
 ### Why is my Salesforce Audiences import failing with "Salesforce Bulk API job failed. Records processed: 0"?
 
