@@ -364,7 +364,7 @@ When setting up a Snowflake or BigQuery import, you also define a `Unique Identi
 -   **Country-code domain variants** — Clay's entity matching normalizes domains by stripping subdomains and `www` prefixes, but does not automatically merge country-code TLD variants. A company at `swarovski.co.uk` and a company at `swarovski.com` are treated as separate entities by default — this reflects how many enterprises maintain distinct regional accounts. If a regional variant appears as net new in your search results and you want to exclude it, use the **Exclude companies** filter in your Find Companies source. See [Find Companies](find-companies.md) for how to set up exclusions.
 -   **Secondary domains from your CRM** — Clay entity matching uses only the primary domain field mapped from your CRM source. If your CRM stores additional domains for a company (for example, HubSpot's secondary domain fields), those alternate domains are not imported into the Audiences company record and are not used for entity matching. A Find Companies search result for a secondary domain may appear as net new even if the same company exists in your audience under a different primary domain. To exclude known secondary domains from appearing as net new, add them to the **Exclude companies** filter in your Find Companies source.
 
-Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs — org duplicates carry over as-is.
+Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs — org duplicates are imported as separate records. However, because entity resolution matches companies by domain, Salesforce Accounts that share the same domain can be merged into a single company record in Audiences — see [Why does a company in my Companies audience show the wrong Salesforce Account name, type, or owner?](#why-does-a-company-in-my-companies-audience-show-the-wrong-salesforce-account-name-type-or-owner).
 
 **Record persistence when a source is removed**
 
@@ -1170,6 +1170,21 @@ This means: if you clear or change a field in Salesforce that was previously pop
 -   **Override the field with a new bulk enrichment.** Use **Update Audiences Record** in a bulk enrichment table to explicitly write the value you want (for example, `0` or null). Because `Update Audiences Record` is also Priority 1, this new value replaces the old bulk-enriched one and stays unless overwritten by another enrichment. See [Adding enrichments](#adding-enrichments).
 
 **Note:** If your workspace requires Salesforce values to always take precedence over bulk-enriched values for a given field, contact Clay support — a workspace-level field precedence configuration is available.
+
+### Why does a company in my Companies audience show the wrong Salesforce Account name, type, or owner?
+
+If a company in your Companies audience shows a stale or unexpected Salesforce Account Name, Type, or Account Owner — even though you sync those fields — the usual cause is duplicate Accounts in Salesforce that share the same website (domain). For example, a duplicate Account, or a partner or subsidiary Account that uses the same domain as the Account you expect.
+
+Audiences imports each Salesforce Account as its own record, keyed by its Salesforce Account ID, so duplicate Accounts in your org are imported as separate records. However, entity resolution matches companies by domain, so Salesforce Accounts that share the same domain can be merged into a single company record in Audiences. When that happens, the company record shows field values (such as Account Name, Type, and Account Owner) from whichever of those Accounts was synced most recently — which may be the duplicate rather than the Account you expect.
+
+To fix wrong Account Name, Type, or Owner values caused by duplicate Salesforce Accounts:
+
+1.  In Salesforce, search for other Accounts with the same website as the affected company.
+2.  Merge or delete the duplicate Accounts in Salesforce.
+3.  Wait for the next sync. The merged-away Account is marked **Deleted in source** in Audiences — soft-deleted records on the next incremental sync (every 15 minutes on Enterprise, once daily on Growth), hard-deleted records on the next weekly full sync — and the remaining Account keeps syncing normally.
+4.  If the company still shows the duplicate's values after the next incremental sync, make a small edit to the remaining Account in Salesforce (for example, add and remove a space in any text field). This updates `SystemModstamp`, so Clay re-syncs that Account and writes its values to the company record.
+
+**Note:** Duplicate Salesforce Accounts are merged only inside Clay — Audiences never merges or changes Accounts in your Salesforce org. To stop this from recurring, clean up duplicate Accounts in Salesforce.
 
 ### I enriched data in my Audience. Why hasn't it appeared in Salesforce yet?
 
