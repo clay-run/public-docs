@@ -268,6 +268,21 @@ Every function includes a built-in **"Send data back"** column — the final ste
 
 If a column's data is not appearing in the calling table, check whether that column is selected here — it may exist in the function but be unchecked in this list.
 
+### Why doesn't my function send back large outputs that show "Cell data size exceeds limit (8 kB)"?
+
+Functions follow Clay's standard cell size limits: formula, text, and other basic columns hold up to **8 kB** per cell, while action columns — such as enrichments, **Run workflow**, and the function's own **"Send data back"** column — hold up to **200 kB** per cell. See [Manage cell data](manage-cell-data.md) for the full list of limits.
+
+If a formula or text column inside your function goes over 8 kB — for example, a `Csv` column that pulls a large CSV string out of a Clay Workflow's output — that cell shows **"Cell data size exceeds limit (8 kB)"** and its value isn't saved. The **"Send data back"** column can still show **"Data sent successfully"** for that row, but the value it returns for the oversized column is empty. The calling table — or an AI agent (such as Claude) calling the function over MCP — doesn't receive the data.
+
+**Fix: send the field directly from the action column with Additional outputs.** Instead of returning the oversized formula column, return the field straight from the action column that produced it:
+
+1.  Open the function in edit mode (from your Clay homepage → **Functions**, then click **Edit function**).
+2.  In the function's settings panel, go to the **Outputs** section.
+3.  Under **Additional outputs**, click **Add field** and use the field picker to select the specific field inside the action column's output — for example, the `Csv` field inside your **Run workflow** column.
+4.  Click **Review changes**, then click **Publish to function** (or **Publish** if the function has never been published).
+
+Because the value is read from the action column's stored output, it isn't subject to the 8 kB formula-column limit. The total data sent back for each row must still fit within the **200 kB** limit of the "Send data back" column. If your output can exceed 200 kB, return only the fields your calling table or agent actually needs.
+
 ### Why doesn't my function output appear in the formula column's `/` field picker?
 
 When you type `/` in a formula column to reference another column, Clay scans the first **100 rows** of the table to determine which column outputs are available. If your function column has no populated results in those first 100 rows — for example, because the function has only run on rows further down the table — its outputs won't appear in the picker even if they're correctly configured.
