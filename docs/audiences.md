@@ -643,6 +643,20 @@ When you have a segment ready, you can sync it to an ad platform to run account-
 
 -   **Account-based advertising** — sync company segments to the professional network, which is the only ad platform that supports account-level (company) targeting. Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co support People (contact-level) segments only — to use those platforms, sync a People segment instead. Contacts who no longer qualify are automatically removed.
 
+**Ad syncs require a saved segment.** You can only create an ad sync from a saved segment — **Sync to ad platforms** is disabled when you're viewing the full **All People** or **All Companies** list. If you don't see a way to create an ad sync, save your contacts as a segment first.
+
+**Creating an ad sync from a CSV upload**
+
+Contacts imported into Audiences from a CSV file can be synced to ad platforms like any other contacts — but because ad syncs only run from a saved segment, you first need to put the CSV contacts into a segment:
+
+1.  In Audiences, open **All People**.
+2.  Click **+ Filter**, choose **Sources**, keep the operator as **contains**, and select your CSV import (it's listed by the name you gave the upload).
+3.  Click **Create segment** to save the filtered list as a named segment.
+4.  With the new segment open, click **Send** and choose **Sync to ad platforms**.
+5.  Pick your ad platform, finish the setup, and click **Create ad sync**.
+
+The same steps work for any source listed in the Sources tab — for example, to sync only the contacts from one Salesforce import or SOQL record subset.
+
 **Syncing to multiple ad platforms**
 
 You can add multiple ad platforms to a single audience sync. After your initial sync is active, an **Expand your reach** section appears on the Sync tab showing available platforms you haven't yet connected. Click **Add** next to any platform to configure field mappings for that provider — it will sync on the same schedule as your existing provider.
