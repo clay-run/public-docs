@@ -14,6 +14,20 @@ With this integration, you can import, create, update, and manage HubSpot object
 
 **Heads up!** The HubSpot integration requires a **Growth plan** or higher. See [Plans & billing](plans-and-billing.md) for details.
 
+## Connect your HubSpot account in Settings
+
+The HubSpot integration requires a **Growth plan** or higher. You can connect your HubSpot account from **Settings → Connections** before you build anything in a table.
+
+The `Connections` list only shows accounts your workspace has already added. If you've never connected HubSpot, you won't see HubSpot in that list — you add it with the `Create` button instead:
+
+1.  Go to `Settings` > `Connections`.
+2.  Click `Create` in the top-right corner. The `Connect an account` modal opens.
+3.  Type "HubSpot" into the `Search` field and select **HubSpot**.
+4.  Click `Sign in with HubSpot` and complete the authorization in HubSpot. See [OAuth scopes](#oauth-scopes) for the permissions Clay requests.
+5.  Your HubSpot account now appears in the `Connections` list and can be selected in any HubSpot source or action.
+
+**If the `Sign in with HubSpot` button is disabled:** HubSpot still appears in the `Connect an account` modal on plans below Growth, but the modal shows an upgrade banner and the `Sign in with HubSpot` button can't be clicked. Upgrade your workspace to the Growth plan or higher to connect HubSpot.
+
 ## Enriching data with HubSpot
 
 1.  While in a Clay table, click `Add enrichment` and search for `HubSpot`.
