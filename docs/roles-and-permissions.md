@@ -1,7 +1,7 @@
 ---
 title: Roles and permissions
 description: Roles, permissions, and access control tools available in Clay workspaces.
-last_synced: 2026-04-26T01:40:33.352Z
+last_synced: 2026-10-07T01:55:09.539Z
 ---
 
 # Roles and permissions
@@ -109,7 +109,7 @@ To remove a member from your workspace:
 -   Find the member you wish to remove.
 -   Click the `…` (three-dot) menu at the end of their row.
 -   Select `Remove member`.
--   Confirm the removal in the dialog that appears.
+-   Confirm the removal by clicking `Remove` in the dialog that appears.
 
 **What happens when you remove a member:**
 
@@ -119,12 +119,12 @@ To remove a member from your workspace:
 
 ## Edit access levels in a workbook _(Enterprise only)_
 
-**Note:** Workbook-level access restriction is available on Enterprise plan workspaces only. Non-Enterprise workspaces do not have the `Edit Access` settings shown below.
+**Note:** Workbook-level access restriction is available on Enterprise plan workspaces only. Non-Enterprise workspaces do not have the `Edit access` settings shown below.
 
 Workspace admins can edit access levels for specific workbooks. This helps prevent accidental changes to important tables.
 
 1.  In a workbook, click the title → `Edit workbook settings`.
-2.  Under `Edit Access`, select one of the following access levels:
+2.  Under `Edit access`, select one of the following access levels:
     -   **Admins and editors in this workspace** — all admins and editors in the workspace can access the workbook.
     -   **Admins and invited collaborators only** — restricts access to admins and any collaborators you explicitly invite.
 3.  If `Admins and invited collaborators only` is selected, an option to `+ Add collaborators` will appear.
