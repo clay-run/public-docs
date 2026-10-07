@@ -171,6 +171,18 @@ To fix:
 2.  Find Clay and disconnect it.
 3.  Go to [claude.com/connectors/clay](https://claude.com/connectors/clay) and complete the OAuth flow again.
 
+**Troubleshooting: No workspace to select on the "Authorize Claude" page, and the Authorize button is greyed out**
+
+When you connect Clay to Claude, Clay opens an **Authorize Claude** page that says "Please select the workspace you want to connect." The Clay workspace selector, labeled **Which workspace should Claude connect to?**, sits below the **This application will be able to:** permissions list, inside a scrollable area of the page. The **Deny** and **Authorize** buttons stay pinned at the bottom, so on smaller screens or at higher browser zoom levels the workspace selector can be hidden below the visible part of the page. The **Authorize** button stays greyed out until you select a workspace.
+
+To fix:
+
+1.  On the **Authorize Claude** page, scroll down inside the page card (above the **Deny** and **Authorize** buttons), or zoom out in your browser (`Cmd` + `-` on Mac, `Ctrl` + `-` on Windows).
+2.  Find the **Which workspace should Claude connect to?** dropdown and select your Clay workspace.
+3.  Click **Authorize**. The button becomes clickable once a workspace is selected.
+
+The dropdown lists every Clay workspace you're a member of, with any role (Admin, Member, Viewer, or Sales Rep). If the dropdown is visible but your team workspace isn't in it, make sure you're signed in to Clay with the email that was invited to that workspace, and that you've accepted the workspace invite.
+
 **When I run an action in Claude, does it count as a Clay action?**
 
 Yes. Everything runs on a Clay table behind the scenes, so actions taken through Claude count as Clay actions and draw from your credit balance accordingly.
