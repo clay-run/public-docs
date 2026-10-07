@@ -431,6 +431,18 @@ Any contact whose primary source matches the selected source is excluded from th
 
 **Keep sync on to keep the suppression list current.** If the source's **Import status** shows **Sync off**, new contacts added to your CRM won't flow into Audiences and won't be suppressed from this segment. Make sure sync is enabled for the source you're using as a suppression list — see [Understanding source import statuses](#understanding-source-import-statuses) above.
 
+### Creating a segment from the records in a specific Clay table
+
+To build an audience segment that contains the companies or people from one Clay table — for example, a list of target accounts you researched and enriched in a table — send the table's records to Audiences, then filter the audience on **Origin source** set to that table. Creating segments requires workspace Admin access.
+
+1.  Send the table's records to Audiences, using **Continue** → **Save to Companies** (or **Save to People**), or an `Upsert Audiences Record` action column — see [Sending data from Clay table](#sending-data-from-clay-table) above. Writing records from a table into Audiences with the upsert action column doesn't cost credits, so enrichment work you already did in the table carries over without re-enriching. Keep **Ignore blank values** on so blank table cells don't overwrite values already stored in Audiences.
+2.  Click **Companies** (or **People**) in the left sidebar.
+3.  Click **+ Filter** and search for **Origin source**. It appears under both **Company attributes** and **People attributes**.
+4.  Leave the operator as **contains any of** and select your Clay table by its name. The view now shows only the records that came from that table.
+5.  Click **Create segment** to save the filtered view as a named segment. The new segment appears in the left sidebar.
+
+The Origin source segment is dynamic: it selects matching records live, so its membership updates as Audiences data changes. Your Clay table, by contrast, stays a point-in-time snapshot of the rows you sent.
+
 ## Finding people from a Companies Audience
 
 Once you have a Companies Audience segment, you can run a people search scoped strictly to the companies in that segment — without needing a separate company table.
@@ -980,11 +992,11 @@ These refer to the same field. In the Salesforce import field mapping, the Linke
 
 The underlying field and data are identical. If you mapped Salesforce's Account LinkedIn URL field and named it "LinkedIn URL" in your import settings, filtering on "Company LinkedIn URL" in your Companies audience targets that same mapped field.
 
-### Why doesn't my Clay table appear in the Person source filter?
+### Why doesn't my Clay table appear in the Origin source filter?
 
-The **Person source** filter lists each source by its display name. If you sent records from a Clay table to Audiences using **Continue → Save to People**, look for the table's display name in the Person source dropdown — the same name that appears in the **Source** column on each record.
+The **Origin source** filter lists each source by its display name. If you sent records from a Clay table to Audiences using **Continue → Save to People**, look for the table's display name in the Origin source dropdown — the same name that appears in the **Source** column on each record.
 
-Tables that have an `Upsert Audiences Record` column configured for People also appear in the **Person source** filter by the table's display name — look for the table's name in the same dropdown. (The equivalent filter for Companies audiences shows tables that have an `Upsert Audiences Record` column configured for Companies.) If your table still doesn't appear in the dropdown after checking both display names, contact Clay support.
+Tables that have an `Upsert Audiences Record` column configured for People also appear in the **Origin source** filter by the table's display name — look for the table's name in the same dropdown. The same **Origin source** filter is available in Companies audiences, where it lists tables that have an `Upsert Audiences Record` column configured for Companies. If your table still doesn't appear in the dropdown after checking both display names, contact Clay support.
 
 ### How do I find which Clay table a lead in Audiences came from?
 
@@ -992,7 +1004,7 @@ Each record in Audiences has a **Source** column that shows the display name of 
 
 The Source column is plain text — there is no direct link from the Source column to open the originating table. To open the table, use its name to find it in your workspace's tables list.
 
-**Note:** To filter your audience to show only records that came from a specific table, use the **Person source** filter — see [Why doesn't my Clay table appear in the Person source filter?](#why-doesnt-my-clay-table-appear-in-the-person-source-filter) above.
+**Note:** To filter your audience to show only records that came from a specific table, use the **Origin source** filter — see [Creating a segment from the records in a specific Clay table](#creating-a-segment-from-the-records-in-a-specific-clay-table) and [Why doesn't my Clay table appear in the Origin source filter?](#why-doesnt-my-clay-table-appear-in-the-origin-source-filter) above.
 
 ### My CRM is messy. Should I clean it up before setting up Audiences?
 
@@ -1371,7 +1383,7 @@ CSV imports are one-time — they do not re-sync automatically. If your CSV cont
 Before importing the corrected file, remove the incorrect records from your Audience:
 
 1.  Go to **All People** or **All Companies** in your Audiences view.
-2.  Filter by the source of the old CSV import (use the **Person source** or **Company source** filter and select the original CSV import name).
+2.  Filter by the source of the old CSV import (use the **Origin source** filter and select the original CSV import name).
 3.  Select all rows returned by the filter.
 4.  Click **Archive** in the toolbar that appears at the bottom.
 5.  Confirm. All records from the old CSV are removed from your Audience.
