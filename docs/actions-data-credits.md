@@ -281,6 +281,26 @@ Credits are added to your balance immediately upon purchase. Top-ups do not chan
 
 **Note:** One-time top-ups have a **30% premium** on modern plans (**50% premium** on legacy plans). Top-up credits are subject to the 2× rollover cap: at your next renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap are dropped — including credits you purchased. For example, on a plan with 2,500 credits/month, your maximum balance at renewal is 5,000; if you buy a 15,000-credit top-up and don't spend it all before renewal, only up to 5,000 credits carry over. Check your current balance and upcoming renewal date before purchasing a large top-up. For regular needs, upgrading your Data Credits tier is more cost-effective.
 
+### Set up automatic Data Credit top-ups (auto top-up)
+
+Auto top-up automatically buys more Data Credits whenever your workspace credit balance drops below a threshold you choose, so enrichments don't stop when you run low. Auto top-up is available to workspaces on a paid, self-serve plan with a card on file. It isn't available on the free plan, on trials, or for workspaces billed by invoice.
+
+To turn on or manage auto top-up:
+
+1.  Go to `Settings` → `Usage`.
+2.  Click `Set up auto top-ups`. If auto top-up is already on, the button reads `Manage auto top-ups` and shows an `On` badge.
+3.  Configure the settings below and save.
+
+The auto top-up settings are:
+
+-   **Trigger below** — the credit balance that triggers a top-up. The minimum is 15% of your plan's credits per billing cycle.
+-   **Buy each time** — how many Data Credits each auto top-up buys. The minimum is 250 credits, and the maximum is $1,000 worth of credits per top-up.
+-   **Daily limit (optional)** — the most auto top-up can spend in a rolling 24-hour window, in US dollars (up to $5,000). Once this limit is reached, no more auto top-ups are charged until enough spend falls outside the 24-hour window.
+
+To turn off auto top-up, go to `Settings` → `Usage`, click `Manage auto top-ups`, and then click `Turn off auto top-ups`.
+
+**How often auto top-up can charge you:** There's no waiting period between auto top-ups. Clay checks your balance every time credits are spent, and a new top-up can be charged as soon as the previous one completes. If credits are being used quickly — for example, while a large table is running — auto top-up can fire several times in a row within minutes. Each auto top-up is billed as its own separate charge and invoice. To cap how much auto top-up can spend in a day, set a **Daily limit**.
+
 ### Downgrade or cancel your plan
 
 To downgrade your Clay workspace plan:
@@ -458,6 +478,12 @@ Common causes:
 -   Turn off `Auto-run` when not needed.
 -   Pause AI columns that aren't providing value.
 -   Check table settings before re-running enrichments.
+
+### Why was I charged for several credit top-ups in a short time?
+
+If you see several credit top-up charges close together (for example, six 250-credit charges within about 20 minutes) and you only bought credits once, they most likely came from **auto top-up**. Auto top-up buys your chosen number of Data Credits each time your balance drops below your threshold, and it has no waiting period between purchases — so while a large table is running, it can fire several times in a row. Each auto top-up appears as a separate charge.
+
+To check or change your auto top-up settings, go to `Settings` → `Usage` and click `Manage auto top-ups`. From there you can change the **Trigger below** threshold or the **Buy each time** amount, set a **Daily limit** in dollars, or click `Turn off auto top-ups`. See [Set up automatic Data Credit top-ups (auto top-up)](#set-up-automatic-data-credit-top-ups-auto-top-up) for details.
 
 ### What happens when I downgrade or cancel my plan?
 
