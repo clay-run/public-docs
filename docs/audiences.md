@@ -935,6 +935,20 @@ There is no self-serve option to trigger a full sync manually. If you need an ex
 
 **Workaround for specific records:** The incremental sync (every 15 minutes for Enterprise, once daily for Growth) picks up any Salesforce record whose `SystemModstamp` has been updated. To re-sync specific records sooner, make a small edit to those records in Salesforce — for example, add and remove a space in any field. This updates `SystemModstamp` and Clay will pick up those records on the next incremental sync, without waiting for the weekly full sync.
 
+### What does the API usage percentage on my Salesforce settings page mean? Is that all Clay's usage?
+
+No. The **API usage** card on your Salesforce source settings page in Audiences shows your Salesforce org's **total** API usage. That total covers every integration, connected app, and user in your Salesforce org, not just Clay. If the card shows, for example, 14%, that's your whole org's usage. It doesn't mean Clay made 14% of your org's calls.
+
+How the Salesforce API usage card works:
+
+-   **Where the numbers come from:** Clay reads your org's daily API request limit and remaining requests directly from Salesforce. Clay doesn't calculate these numbers itself.
+-   **What the card shows:** A percentage ring labeled **API usage** with the subtitle **Last 24 hours**, plus a **Calls used** count shown as used / limit (for example, `14,032 / 100,000`).
+-   **How fresh it is:** Clay caches the figure for up to 15 minutes, so the card can be up to 15 minutes behind what Salesforce shows.
+
+**Why Clay shows your org's total Salesforce API usage:** Your Salesforce daily API request limit is shared by everything connected to your org. If other tools use up most of the limit, Clay's Salesforce sync is affected too. Clay pauses the Salesforce Audiences sync when your org has used more than 90% of its daily API request limit. See [Why is my Salesforce sync paused because of API limits?](#why-is-my-salesforce-sync-paused-because-of-api-limits-is-there-a-workaround) below.
+
+**To see what's using the rest of your Salesforce API quota,** ask your Salesforce admin to open **Setup → System Overview → API Usage** in Salesforce, or run Salesforce's API usage report. Both show which integrations and users are making calls.
+
 ### Why is my Salesforce sync paused because of API limits? Is there a workaround?
 
 If your Salesforce source in Audiences shows **Paused** with the message "Your Salesforce account has reached 90% of its API request quota. Clay will automatically resume this sync once the quota refreshes," Clay has stopped importing Salesforce records to protect your org's remaining API capacity. This is a fixed safeguard, not an error:
