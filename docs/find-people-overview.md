@@ -203,6 +203,8 @@ Each row includes the post URL, post text, author name, author LinkedIn URL, aut
 
 > **Important:** These actions require the original post URL — a URL containing `-activity-` in the path (e.g., `https://www.linkedin.com/posts/clay-hq_...-activity-7212099008951975937-ezPv`). Share URLs containing `-share-` are not valid and return an error. To get the original URL for any post: open the post on LinkedIn, click **•••** (three dots) at the top right of the post, and select **Copy link to post**. If the post is a repost of someone else's content, open the original underlying post first and copy its link.
 
+**Get reactions on a professional post returns up to 50 reactions per post:** The **Get reactions on a professional post** enrichment returns at most 50 reactions for each post. Use the optional **Max reactions** input to choose how many reactions to return — any number from 1 to 50 (default is 10). If a post has more than 50 reactions, reactions beyond the first 50 are not returned by this enrichment. To capture every reaction on a post with more than 50 reactions, use the **Get interactions with professional posts** source instead — see [Getting people who interacted with a post](#getting-people-who-interacted-with-a-post).
+
 ## Getting people who interacted with a post
 
 To build a table of people who liked, commented on, or shared a specific post, use the **Get interactions with professional posts** source. Each interaction is included as a separate row, and you choose how duplicate interactions are handled via the required **duplicate interaction behavior** setting:
@@ -210,6 +212,8 @@ To build a table of people who liked, commented on, or shared a specific post, u
 -   **One row per person globally** (`interactor`): a given person appears at most once across all results.
 -   **One row per person per post** (`post-interactor`): a given person appears at most once per post, but can appear across multiple posts.
 -   **Include all interactions** (`no-dedupe`): every interaction is returned as its own row, so the same person can appear in many rows.
+
+**Get interactions with professional posts is not limited to 50 reactions:** Unlike the **Get reactions on a professional post** enrichment, which returns at most 50 reactions per post, the **Get interactions with professional posts** source pages through all interactions on each post — comments, reactions, and shares, depending on which interaction types you select. The source can return up to 50,000 rows, the Clay table row limit. Because each interaction becomes its own row rather than one row per post, getting a reaction count per post requires additional processing after import.
 
 **To set up this source:**
 
