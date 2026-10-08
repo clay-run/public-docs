@@ -314,9 +314,30 @@ To run a shorter sequence, create a new campaign with just the emails you want. 
 
 ### Can I switch my campaign from plaintext to HTML (or vice versa) after launching?
 
-No. The plaintext or HTML mode you choose in the campaign `Setup` tab is locked when the campaign launches and cannot be changed afterward. Even if the `Enable HTML` toggle appears available in a launched campaign's settings, toggling it does not change how emails are sent — HTML content such as inline images and formatted sender signatures will still be stripped from campaigns that were originally launched in plaintext mode.
+No. The plaintext or HTML mode you choose in the campaign `Setup` tab is locked when the campaign launches and cannot be changed afterward. The `Enable HTML` toggle can only be changed while a campaign is still a draft — once the campaign leaves draft, the toggle is disabled in the campaign's settings, including while the campaign is paused.
 
 To use HTML features — including images in sender signatures, bold text, or hyperlinks — create a new campaign and enable HTML in the **Setup** tab before launching it. Your sender account and signature settings carry over automatically and do not need to be recreated.
+
+### Why am I not seeing email opens or clicks in my campaign?
+
+Email open and link click tracking is off by default in Clay's email sequencer. A campaign only records opens and clicks if tracking was turned on in the campaign's settings, under **Email format**:
+
+-   `Enable HTML`: New campaigns send plaintext, so this toggle is off by default.
+-   `Track email opens`: Tracks opens with a tracking pixel. Off by default and requires HTML.
+-   `Track link clicks`: Tracks clicks with URL redirects. Off by default and requires HTML.
+
+If `Enable HTML` is off, the `Track email opens` and `Track link clicks` toggles are disabled, and the campaign doesn't record any open or click events. In that case, the campaign's `Activity` tab shows no results when you set the `Email type` filter to `Opened` or `Clicked` (the other `Email type` options are `Sent`, `Replied`, `Bounced`, and `Unsubscribed`), and the `Analytics` tab has no opens or clicks to report.
+
+To check a campaign's tracking settings, open the campaign's settings and look at the **Email format** section.
+
+### Can I turn on open or click tracking after my campaign has launched?
+
+It depends on whether the campaign was launched with HTML enabled:
+
+-   **HTML was enabled before launch:** Pause the campaign, turn on `Track email opens` or `Track link clicks` in the **Email format** section of the campaign's settings, save, and relaunch the campaign. While a campaign is paused, you can also change its schedule settings and enrollment settings such as `Pause leads at the same company on reply`.
+-   **HTML was off at launch (plaintext campaign):** You can't turn on open or click tracking for this campaign. Tracking requires HTML, and `Enable HTML` can only be changed while a campaign is a draft — the toggle stays disabled after launch, even if you pause the campaign. To track opens and clicks, create a new campaign (or use **Duplicate campaign** to copy this one into a new draft), turn on `Enable HTML` and the tracking toggles, and then launch it.
+
+Keep in mind that HTML can hurt deliverability for cold outbound — see [Best practices](#best-practices).
 
 ### Why can't I see or edit the Message sequence section?
 
