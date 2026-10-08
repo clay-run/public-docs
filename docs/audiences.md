@@ -1,7 +1,7 @@
 ---
 title: Audiences
 description: "Clay Audiences is available on Growth and Enterprise plans. Launch workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above. Trial workspaces do not have access to Audiences."
-last_synced: 2026-09-22T14:05:06.325Z
+last_synced: 2026-10-08T17:37:34.526Z
 ---
 
 # Audiences
@@ -156,7 +156,7 @@ A record subset import works alongside any standard Salesforce import. You can a
 
 ### Importing from HubSpot
 
-**Note:** Setup must be completed separately for Contacts, Companies, and Deals. HubSpot Deal import is currently in early access — contact your Growth Strategist to enable it for your workspace.
+**Note:** Setup must be completed separately for Contacts, Companies, and Deals. Run through the steps once per connected HubSpot account. HubSpot Deal import is currently in early access — contact your Growth Strategist to enable it for your workspace.
 
 1.  Click `Add data` → `Add Source` → select your [**HubSpot integration**](https://university.clay.com/docs/hubspot-integration-overview).
 2.  Select `Contacts` at the top of the sync panel.
@@ -486,6 +486,12 @@ Four Clay actions let you move data between a Clay table and your Audience direc
 
 **Note:** `Upsert Audiences Record` and `Update Audiences Record` support scalar field types only (text, number, date, boolean). Audiences has no native array or object field type, and JSON array columns cannot be selected as write targets in the field mapper. To expand a JSON array field into individual records in another Audience, see [How do I expand a JSON array field in one Audience into individual records in another?](#how-do-i-expand-a-json-array-field-in-one-audience-into-individual-records-in-another) in the FAQs below.
 
+### Enrichment run order
+
+Each enrichment on an audience is queued as its own job, and several run at the same time. Clay doesn't sequence Audiences enrichments, so one enrichment can't wait for another to finish and then read its output. Add them in whatever order suits you — the results land on the record either way.
+
+When one step genuinely depends on another, such as a second enrichment that needs the first one's result as an input, build the chain in Workflows, Clay's automation builder, or as columns in a Clay table. In both, a step that reads another step's output waits for that step to finish before it runs. The [Workflows documentation](https://university.clay.com/docs/workflows) covers how to wire one step into the next.
+
 ### Reviewing enrichment results
 
 After a bulk enrichment runs, there are two ways to see which records were successfully enriched:
@@ -689,7 +695,7 @@ With **Premium** or **Standard**, Clay queries its provider network to find and 
 
 **Note:** Salesforce is currently the only native export destination in Audiences. HubSpot export from Audiences is not yet available — to write data to HubSpot, see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
 
-Audiences supports **bidirectional sync** with Salesforce. To push data from Audiences back to Salesforce, you must first enable the **Export sync** toggle in your Salesforce source settings — this is the master switch for all outbound writes. Even if individual fields are configured with an "Always write" rule, no data flows to Salesforce until Export sync is enabled.
+Audiences supports **bidirectional sync** with Salesforce. Write-back covers Salesforce `Accounts` and `Contacts`. To push data from Audiences back to Salesforce, you must first enable the **Export sync** toggle in your Salesforce source settings — this is the master switch for all outbound writes. Even if individual fields are configured with an "Always write" rule, no data flows to Salesforce until Export sync is enabled.
 
 **To enable Export sync (admin-only):**
 
@@ -1163,6 +1169,12 @@ Audiences does not have a native HubSpot export destination — Salesforce is cu
 5.  Click **Start Run** — the HubSpot action column fires alongside your enrichment columns and writes the values directly to HubSpot.
 
 This approach supports batching and works for both contacts and companies. To automatically push data for new records entering the segment going forward, enable the **auto-enrich toggle** on the bulk enrichment.
+
+**If the records are already in a Clay table:** you can route Audience data to HubSpot from any Clay table instead of starting from a segment.
+
+1.  In the table holding the records you want to update, click `Add enrichment` and add `Lookup in Audiences`. It returns the fields and signal results stored on each matching Audience record.
+2.  Add **HubSpot: Update object** (to update an existing HubSpot record) or **HubSpot: Create object** (to create a new one), and map its inputs to the values `Lookup in Audiences` returned.
+3.  Run the column to write the values to HubSpot.
 
 ### My HubSpot has more records than my plan limit — how do I limit what gets imported into Audiences?
 
