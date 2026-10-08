@@ -307,6 +307,20 @@ Clay's visitor tracking identifies unique accounts visiting your website, not in
 
 To reach specific individuals after a company visit is detected, use **Find People** in your web intent table to search for the roles you want to target at that company, then enrich and sequence those contacts.
 
+### Why does a company appear in my Audiences Web intent page path filter when its page path doesn't match?
+
+This is expected. In a Companies audience, a **Web intent** filter on **Website page path** (for example, `Website page path` → `contains any of` → `pricing`, `demo`, `contact`) checks every website session in the filter's lookback window. A company matches if **any page in any session** within that window matches your filter. Not every session, or every page, has to match.
+
+The **Website page path** column in your Audiences view shows the pages from the company's **most recent session only**. If a company visited `/pricing` in an earlier session and only `/product` in its latest session, it still appears in your segment because of the earlier `/pricing` visit, but the column shows only `/product`. The number in the column header, for example **Web intent (5d)**, is the lookback window set in your filter (here, 5 days). You can change this window in the filter.
+
+**Combining Web intent conditions:** All conditions inside one Web intent filter (for example, **Website page path** and **Session duration**) must be true for the **same session**. For example, if a company's `/pricing` session was short and its long session was on a different page, it won't match a filter that requires `/pricing` and a minimum session duration together.
+
+**To see every page a company visited across sessions:** You can't add columns or formulas directly in the Audiences view. Create a bulk enrichment table from the segment instead:
+
+1.  Open the segment and click **Enrich** in the top-right corner.
+2.  Click **Add enrichment table** to create a bulk enrichment table from the segment.
+3.  In the bulk enrichment table, add a formula column that lists the pages each company visited across all its sessions (for example, a "Unique Visited Pages" column).
+
 ### Why do I see multiple overlapping sessions from the same company?
 
 This is expected behavior, not a data error. Claydar tracks each visitor's session in their browser's `localStorage`, scoped to that specific browser. When two or more people at the same company browse your site simultaneously, each browser generates its own session with a distinct `sessionId` — resulting in multiple rows for the same company `domain` with overlapping timestamps.
