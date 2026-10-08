@@ -622,6 +622,19 @@ If your admin has already completed those steps and you still see the error, see
 
 Follow the steps in [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth) to complete the authorization. **Important:** Searching by the app name "Clay Sequencer" in the Google Admin Console returns no results — your admin must paste the Clay Sequencer **Client ID** into the search bar instead. Get the Client ID from within Clay: go to `Sequencer` → `Email Accounts` → `Add email accounts` → `Google OAuth` and copy the ID shown in the **Search for Clay Sequencer** step of the modal. After pasting the Client ID and clicking Search, the app appears as **Clay Sequencer (Web)** — the `(Web)` suffix indicates the web client type and refers to the same Clay Sequencer app. Have your admin set it to `Trusted` — not `Specific Google Data`. Selecting `Specific Google Data` will not grant all the permissions Clay needs, and the access error will persist. Despite its name, `Trusted` only allows Clay to request Gmail-specific permissions (full email access, basic email settings, OpenID, and your profile) — it does not grant access to Google Drive, Calendar, Docs, or any other Google service. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the clay sequencer.
 
+### Why does Google Admin show "No results" when I search for the Clay Sequencer Client ID?
+
+If your Google Workspace admin pastes the Clay Sequencer Client ID into the `Configure new app` search bar in Google Admin and sees **No results**, the pasted Client ID most likely contains extra hidden characters (such as an invisible zero-width space or a line break). This often happens when the ID is copied from an email, chat message, or formatted document. Google Admin only finds Clay Sequencer when the Client ID matches exactly.
+
+To fix the "No results" search:
+
+1.  In Clay, go to `Sequencer` → `Email Accounts` → `Add email accounts` → `Google OAuth`.
+2.  If you're asked whether Clay Sequencer is already configured, choose `No, I need to configure it now`. Then, in the **Search for Clay Sequencer** step of the modal, click the copy icon next to the Client ID. You'll see a "Copied to Clipboard" confirmation.
+3.  In Google Admin (`Security` → `API Controls` → `App Access Control` → `Configure new app`), clear the search bar, paste the Client ID, and click `Search`.
+4.  Select **Clay Sequencer (Web)** from the results and continue with the steps in [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth).
+
+If the search still shows **No results**, paste the Client ID into a plain-text editor first to remove any formatting, then copy it again from there into Google Admin.
+
 ### Does the Trusted admin setting give Clay access to all Google accounts in my domain?
 
 No — the Trusted setting is not domain-wide delegation. Marking Clay Sequencer as Trusted in the Google Workspace Admin Console removes the verification block that would otherwise prevent users in your domain from connecting their accounts, but it does not give Clay access to any mailbox automatically. Each person who wants to use the sequencer must still connect their own Google account individually: go to `Sequencer` → `Email Accounts` → `Add email accounts` → `Google OAuth` and complete the OAuth flow for their own account. Clay can only access a mailbox after that individual user explicitly authorizes it.
