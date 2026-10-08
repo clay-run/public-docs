@@ -419,6 +419,21 @@ To check your current tier: go to **platform.openai.com → Settings → Limits*
 
 Until your key is on Tier 2 or higher, use **Clay's managed account** (the default selection in the model picker) — Claygent runs as normal and deducts Data Credits instead of charging your API key.
 
+### My Claygent fails with "The API key is invalid" even though I'm using Clay's Claude Sonnet model — what's wrong?
+
+If a Claygent column (or a function or template built on a Claygent) fails with **"The API key is invalid. Please check your API key and try again."** while you're using a Clay-managed Claude model such as Claude Sonnet, check which account the column is connected to. The account must come from the same provider as the selected model. A Claude model only runs on an Anthropic account. If the column is connected to **Clay-managed OpenAI account** instead, Anthropic rejects the request and every row fails with this error. This is a configuration mismatch, not an outage.
+
+The Claygent account dropdown is labeled for the provider of the model you selected. For a Claude model it reads **Select Anthropic account**. Check the account shown in that dropdown, not just the label.
+
+To fix the account mismatch on a Claygent column:
+
+1.  Open the column settings (click the column name → **Edit column**).
+2.  In the **API key** section, open the **Select Anthropic account** dropdown.
+3.  Select **Clay-managed Anthropic account**, or an Anthropic account with your own API key. To connect your own key, click **+ Add account**.
+4.  Click **Save** and re-run the failed rows.
+
+The same rule applies to other providers. GPT models need an OpenAI account (for example, **Clay-managed OpenAI account**), and Gemini models need a Google Gemini account. To review or add accounts, click **Manage accounts** next to the dropdown.
+
 ### How do I mark a Claygent input as optional?
 
 Each input in the Claygent builder shows **(required)** or **(optional)** next to its name. To change whether an input is required:
