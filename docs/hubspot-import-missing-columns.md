@@ -66,32 +66,40 @@ column yet.
 
 If you create a new property in HubSpot after setting up the **Import objects
 from HubSpot** source, the new property won't appear on rows Clay already
-imported — not in a column, and not inside the **Import object** cell.
-Re-running the source or waiting for its next scheduled run doesn't fix this:
-later runs of the HubSpot source only pull records that were added to HubSpot
-since the previous run, and they don't re-fetch records that are already in the
-table. Records the source imports from then on do include the new property,
-because Clay loads your current list of HubSpot properties each time the source
-runs.
+imported — not in a column, and not inside the **Import object** cell. By
+default, later runs of the HubSpot source (scheduled runs or **Run now**) only
+pull records that were added to HubSpot since the previous run, and they don't
+re-fetch records that are already in the table. Records the source imports from
+then on do include the new property, because Clay loads your current list of
+HubSpot properties each time the source runs.
 
-Changing your HubSpot integration settings or re-authenticating your HubSpot
-connection does not add the new property to existing rows either.
+To get the new property onto rows that are already in your table, turn on
+**Update existing rows** for the HubSpot source and run it again.
 
 ### How to pull a new HubSpot property into existing rows
 
-To get a new HubSpot property onto records that are already in your table, add
-the HubSpot source again:
+1.  Click the **Import object** column header and choose **Edit source**.
+2.  In the source panel, open the **Run settings** section.
+3.  Turn on **Update existing rows**. This setting is off by default for the
+    HubSpot source. When it's on, existing rows are updated with any new
+    information each time the source runs.
+4.  Click **Run now**.
+5.  When the run finishes, click a cell in the **Import object** column, find
+    the new property, and click **Add as column** to extract it into its own
+    column.
 
-1.  Add the **Import objects from HubSpot** source to the table again, for the
-    same object type (for example, Companies or Contacts).
-2.  When the new source finishes running, click a cell in its **Import object**
-    column and find the new property.
-3.  Click **Add as column** to extract the new property into its own column.
+With **Update existing rows** on, the HubSpot source re-fetches every record
+with your current HubSpot properties and updates the matching rows in place
+(matched by HubSpot record ID) — it does not add duplicate rows.
 
-> **Important:** Adding the HubSpot source again creates duplicate rows. Each
-> HubSpot source only checks for duplicates against its own records, so a
-> second source for the same object adds a second row for every HubSpot record
-> that's already in the table — it does not merge with the existing rows.
+**Update existing rows** stays on for future scheduled runs of that source. If
+you only want new records on later runs, turn it off again after the run
+finishes.
+
+> **Important:** Don't add the **Import objects from HubSpot** source to the
+> table a second time to pick up a new property. Each HubSpot source only checks
+> for duplicates against its own records, so a second source for the same
+> object adds a second row for every HubSpot record that's already in the table.
 
 ### How to remove an extra HubSpot source
 
