@@ -48,6 +48,10 @@ Clay offers three user roles with different permission levels to help manage you
 
 **Note:** The Viewer role is available on the Enterprise plan only.
 
+## Give a colleague access to your tables instead of sharing your login
+
+If a colleague needs access to your tables, workbooks, or other data in your Clay workspace, invite them to your workspace instead of having them log in with your email and password. Once they accept the invite, your colleague signs in with their own Clay account and can work in your workspace with the role you assign — Editor is the default role. Follow the steps in [Add a team member to your workspace](#add-a-team-member-to-your-workspace) below to send the invite.
+
 ## Add a team member to your workspace
 
 Workspace access in Clay is invitation-only. When a new user signs up for Clay, they are automatically placed in their own workspace — they will not join yours unless you explicitly invite them. Your workspace remains private to you until you send an invite.
@@ -59,10 +63,10 @@ Workspace access in Clay is invitation-only. When a new user signs up for Clay, 
 To invite a new member to your workspace:
 
 -   Go to `Settings` > `Team`.
--   Click the `+ Invite` button in the top-right corner.
+-   Click the `Invite` button in the top-right corner.
 -   Enter the email address of the person you want to invite, then press **Enter** (or type a comma) to confirm it. You can add multiple addresses this way.
 -   Select the appropriate role (Editor or Admin) from the dropdown.
--   Click `Send invite`.
+-   Click `Send invites`.
 
 The invited person will receive an email to join the workspace with the specified role. The person will appear in your team list with a **Pending** status until they accept.
 

@@ -89,8 +89,8 @@ Admins control which Functions reps can access (via the Functions settings page)
 To invite a new member to your workspace:
 
 -   Go to `Settings` → `Team`.
--   Click the `+ Invite` button, enter the email address of the person you want to invite, then press **Enter** (or type a comma) to confirm it. You can add multiple addresses this way.
--   Select the appropriate role from the dropdown and click `Send invite`.
+-   Click the `Invite` button, enter the email address of the person you want to invite, then press **Enter** (or type a comma) to confirm it. You can add multiple addresses this way.
+-   Select the appropriate role from the dropdown and click `Send invites`.
 -   The invited person will receive an email to join the workspace with the specified role.
 
 ### **Change a team member's role**
