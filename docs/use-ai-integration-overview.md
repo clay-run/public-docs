@@ -171,6 +171,18 @@ The underlying value is stored in the `confidence` sub-field of each cell (`low`
 
 > **Note:** For the keyboard icon (⌨️) that appears above basic columns with no formulas, see [Run progress](run-progress.md).
 
+### Is the red or orange triangle next to an AI output an error?
+
+The triangle icon next to a value in an AI column is not an error message. A small orange triangle (which can look red) is the `medium` confidence indicator. The cell ran successfully and the value next to the triangle is the AI's answer.
+
+The confidence icon in an AI column is display-only:
+
+-   It does not change the cell's value.
+-   It does not mark the cell as errored. Cells that fail show a status message instead of a confidence icon.
+-   It does not trigger, block, or change downstream columns or run conditions, unless you explicitly reference the `confidence` sub-field in a formula.
+
+To see why the AI was less certain about a specific row, click the cell to open it and review the `reasoning` field in the output. If many rows come back with an orange triangle, add clearer instructions or examples to your prompt.
+
 ## Troubleshooting
 
 ### How do I change the prompt on an AI column after it has already run?
