@@ -273,6 +273,8 @@ You can import a CSV file of people or companies as a one-time import into Audie
 
 CSV imports are one-time — they do not re-sync automatically. To update your Audience with new CSV data, repeat the import process with an updated file.
 
+**CSV records go into your overall audience, not into a segment.** Even if you start the upload while viewing a segment, the records are added to **All People** or **All Companies**. They appear in every segment whose filters they match, including segments with no filters. To keep an uploaded list in its own segment, filter the segment on **Sources** and select the CSV import. See [Why did my uploaded list show up in the wrong segment (or in every segment)?](#why-did-my-uploaded-list-show-up-in-the-wrong-segment-or-in-every-segment) in the FAQs below.
+
 **To replace a CSV import with corrected data:** If the imported CSV contained errors and you want to start fresh, archive the old records before importing the updated file — see [How do I replace a CSV import with updated data?](#how-do-i-replace-a-csv-import-with-updated-data) in the FAQs below.
 
 **Note:** CSV source entries remain listed in the Sources tab after import. There is no self-serve option to remove or disconnect a CSV source listing, and the source name cannot be changed after the import is set up — both are retained for filtering and audit purposes.
@@ -1028,6 +1030,22 @@ Yes. Segments update in real time as records enter or exit your filter criteria.
 The 15-minute (or daily) cadence applies to the **import direction only** — it reflects changes from your CRM in Clay. The reverse direction — exporting enriched data from Clay back to Salesforce — runs on a **separate 24-hour schedule**. See [I enriched data in my Audience. Why hasn't it appeared in Salesforce yet?](#i-enriched-data-in-my-audience-why-hasnt-it-appeared-in-salesforce-yet) for details.
 
 Enrichments configured with `Continuous Enrichment` enabled automatically process new records entering a segment, typically within 15 minutes. No manual runs are required after initial setup.
+
+### Why did my uploaded list show up in the wrong segment (or in every segment)?
+
+When you upload a CSV or add any other data source in Audiences, the records go into your overall People or Companies audience (**All People** or **All Companies**). They are not added to the segment you happen to be viewing. The import asks only for the record type (**People** or **Companies**); you can't pick a destination segment.
+
+A segment is a saved, filtered view of that overall audience, not a separate list. A segment's records are whatever matches its filters. A segment with no filters shows every record in the audience. For example, if you create a **Customers** segment and a **Net New Accounts** segment without adding filters, then upload your customer list, both segments show the same full list. Nothing was mapped to the wrong place; neither segment has filters to tell the companies apart.
+
+**To split an uploaded list into separate segments:**
+
+1.  Open the segment (for example, **Customers**) from the left sidebar.
+2.  Click **Filters**, then click **+ Filter** (or **+ Filter group**).
+3.  Choose a field from one of the filter categories, such as **Company attributes**, **Company Signals**, **People attributes**, or **People Signals**. For example, to keep only the companies from your customer upload, pick **Sources** and select your CSV import by the name you gave it. Or use a CRM field such as **Account Type** set to `Customer`.
+4.  Click **Save filters** to save the filters to the segment. To save the filtered view as a new segment instead, open the dropdown next to **Save filters** and select **Create segment**.
+5.  Repeat for the other segment (for example, **Net New Accounts**) with filters that exclude your customers.
+
+As you add or change filters, the **Total records** count at the top of the segment updates live to preview how many records match. Click **Save filters** to keep those filters on the segment. See [Creating an audience](#creating-an-audience) for how filters and filter groups work.
 
 ### Why didn't my audience count change after I tightened my search filters?
 
