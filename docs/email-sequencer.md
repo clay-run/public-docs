@@ -649,6 +649,26 @@ If the error persists more than 24 hours after your admin marked the app as `Tru
 
 These are disclosed when you add your account via OAuth. We request: offline\_access, openid, email, profile, Mail.Send, Mail.Send.Shared, Mail.ReadWrite, Mail.ReadWrite.Shared, [User.Read](http://User.Read), MailboxSettings.ReadWrite.
 
+### Does Microsoft 365 admin consent give Clay access to all mailboxes in my organization?
+
+No — admin consent is not domain-wide mailbox access. Granting consent for the Clay Sequencer app in your Microsoft 365 tenant authorizes the app to request the listed permissions in your organization, but it does not give Clay access to any mailbox automatically. Each person who wants to use the sequencer must still individually connect their own Outlook account: in Clay, go to `Sequencer` → `Email Accounts` → `Add email accounts` → `Microsoft Outlook OAuth` and complete the OAuth sign-in for that specific mailbox. Clay can only access a mailbox after that individual user explicitly authorizes it through that process. Mailboxes that have not been individually connected are not visible to Clay, regardless of admin consent status.
+
+### Can admin consent be restricted to specific mailboxes or email addresses?
+
+No. Microsoft's OAuth delegated permissions apply at the tenant and application level, not the mailbox level — admin consent cannot create an allowlist limited to specific email addresses. What you can control is which mailboxes your team explicitly connects to Clay: only mailboxes that go through the individual OAuth sign-in are accessible. Any mailbox that has not been connected through that process is not accessible to Clay.
+
+If your IT policy requires a strictly send-only integration, note that the Microsoft Outlook OAuth connection requests read and write mail permissions — these are used to process campaign replies, bounces, and related mailbox activity. For a send-only setup, the `SMTP` connection option is an alternative: SMTP credentials let you configure Clay to send from a mailbox without the broader OAuth mail permissions. Note that SMTP AUTH must be enabled on your Microsoft 365 tenant for this to work, as it is disabled by default on modern tenants.
+
+### My IT admin got a 502 error when opening the Microsoft admin consent URL. What should I do?
+
+The 502 error appears on the redirect page that loads after Microsoft processes the consent step — it originates from the OAuth callback service, not from Microsoft itself. Because Microsoft records the consent grant before redirecting, the authorization may have already landed in your Azure tenant even if the redirect page shows an error.
+
+1. **Check whether consent was already recorded.** In the [Microsoft Entra Admin Center](https://entra.microsoft.com), go to `Enterprise applications` and search for "Clay Sequencer – Smartlead". If the app appears with granted permissions, consent is complete — do not re-run the consent URL.
+2. **Try connecting the mailbox in Clay.** Go to `Sequencer` → `Email Accounts` → `Add email accounts` → `Microsoft Outlook OAuth`. On the "Is your Microsoft 365 already configured?" screen, select **Yes, it's already set up** and click **Continue**. Complete the OAuth sign-in for the mailbox you want to connect.
+3. **If the mailbox connects successfully**, no further action is needed from your IT admin.
+4. **If the connection still fails**, have your admin re-run the consent URL from a different network using a private browser window signed in with their Microsoft 365 administrator account. After the admin completes the consent step, try connecting the mailbox again.
+5. **If the issue continues**, contact Clay support with the approximate time of the failed attempt.
+
 ### How can I tell if a lead has finished a campaign sequence?
 
 Clay's campaign events table doesn't include a dedicated "sequence completed" event type. You can infer whether a lead has finished the sequence using two signals:
