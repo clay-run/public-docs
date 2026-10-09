@@ -268,22 +268,22 @@ Every function includes a built-in **"Send data back"** column — the final ste
 
 If a column's data is not appearing in the calling table, check whether that column is selected here — it may exist in the function but be unchecked in this list.
 
-### Why does my function return fields like "Website (2)", and how do I get that value into my "Website" column?
+### Why does my function output a field like "Website (2)", and how do I get that value into my "Website" column?
 
-When you open the **Cell details** panel for a function column in your table, you may see two fields with the same name, one with a number added, for example an empty **Website** field and a populated **Website (2)** field. Every field a function returns must have a unique name. Clay names each output after the function column (or the nested field) it comes from. If two outputs would end up with the same name, Clay adds a numeric suffix to the second one, such as **Website (2)**, **Name (2)**, or **Size (2)**. This is expected: the suffixed field is a separate output that comes from a different column or field inside the function.
+A function's output fields are named after the columns inside the function. Column names in a Clay table must be unique, so when a column is added to the function with a name that's already taken — for example, a second **Website** column extracted from another enrichment — Clay automatically names it **Website (2)**. Both columns then show up in the function's output (and in the **Cell details** panel in your calling table) under those names: one called **Website** and one called **Website (2)**, which may hold the value you actually want. The **"Choose output data to send"** checklist doesn't let you rename an output; each output uses its function column's name.
 
-The function's **Outputs** settings let you choose which outputs are returned and add fields, but you can't rename an output there. To get the **Website (2)** value into your table's existing **Website** column, map it in the table that calls the function:
+To put the **Website (2)** value into an existing **Website** column in your calling table:
 
 1.  In the calling table, click any populated cell in the function column to open the **Cell details** panel.
-2.  Hover over the suffixed field (for example, **Website (2)**) and click **Add to column**.
-3.  Under **Map to an existing column**, select your **Website** column.
+2.  Hover over the **Website (2)** field.
+3.  Click **Add to column**, then under **Map to an existing column**, select your **Website** column.
 
-What happens next depends on the **Website** column:
+What happens to the destination column depends on what's already in it:
 
--   **If the Website column already has a formula**, Clay adds the function field as a fallback, so values already in the column are kept.
--   **If the Website column has no formula** (for example, values you typed or imported from a CSV), Clay shows a **"Data overwrite"** warning. If you confirm, the column is replaced with a formula that reads from the function field. This can't be undone.
+-   **The Website column already has a formula:** Clay keeps the existing formula and adds the function's **Website (2)** value as a fallback. Rows keep their current value and only use **Website (2)** when the existing formula returns nothing.
+-   **The Website column holds manually entered or imported data (no formula):** Clay shows a **Data overwrite** warning — "Mapping to this destination column will overwrite all of its existing data. This action cannot be undone." If you need to keep that data, add **Website (2)** as a new column instead of mapping it.
 
-To keep the existing values and add the function's values as well, choose **Create new column** instead and combine the two columns with a Merge column. For details, see [Map child columns to an existing column](table-columns-overview.md#map-child-columns-to-an-existing-column).
+For details, see [Map child columns to an existing column](table-columns-overview.md#map-child-columns-to-an-existing-column).
 
 ### Why doesn't my function send back large outputs that show "Cell data size exceeds limit (8 kB)"?
 
