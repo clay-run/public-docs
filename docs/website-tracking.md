@@ -379,6 +379,30 @@ Keep in mind that exclude filters are session-level: a session is blocked only i
 
 To remove homepage visits from your results without changing your tracking settings, add a view filter in your Clay table that excludes rows where the page URL is `/`. Configure table filters using the **page paths** field under your table's filter options.
 
+### How do I filter out test traffic from a QA or staging site?
+
+Web intent tracks every page where the Clay tracking snippet is installed, so if the snippet is also on your QA or staging site, your team's test visits can show up in your Web intent table and use credits. Web intent doesn't have a hostname or domain filter — **URL paths to include** and **URL paths to exclude** match only the path portion of a URL (for example, `/pricing`), not the hostname, so they can't separate `qa.example.com` from `www.example.com`.
+
+Use one of these options to keep test traffic out of Web intent:
+
+1.  **Don't install the tracking snippet on your QA or staging site (recommended).** Web intent only records visits to pages where the snippet is installed.
+2.  **Exclude the IP addresses your team tests from.** Go to `Settings` → `Web intent`, open your website connection, expand **Advanced filters**, and add your office or VPN IP addresses to **Excluded IP addresses**. Visits from these IP addresses are not de-anonymized and their session data is excluded. Enter each IP address exactly — IP ranges (such as CIDR notation) and wildcards aren't supported, so this works best when testing happens from a small set of fixed IP addresses. Click `Save` when you're done.
+3.  **Load the tracking script only on your production domain.** If you have to keep a single snippet across environments, replace the Clay tracking snippet with a version that only loads the script when the visitor is on your production hostname. Replace the hostnames with your own domains, and replace `YOUR_ID` with the `id` value from your existing Clay snippet:
+
+```html
+<script>
+  if (['example.com', 'www.example.com'].indexOf(window.location.hostname) !== -1) {
+    var s = document.createElement('script');
+    s.src = 'https://static.claydar.com/init.v1.js?id=YOUR_ID';
+    document.head.appendChild(s);
+  }
+</script>
+```
+
+After your web team updates the snippet, go to `Settings` → `Web intent`, open your connection, and click `Verify installation` to confirm the tracking script is detected on your production site.
+
+Exclusion settings only apply to new visits — rows already in your Web intent table aren't removed.
+
 ### What cookies and local storage items does the tracking script use?
 
 All storage keys are prefixed with `claydar_`. The script uses `localStorage` by default and falls back to cookies if `localStorage` is unavailable.
