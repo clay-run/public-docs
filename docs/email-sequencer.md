@@ -278,6 +278,24 @@ Be sure to press `Save settings` after making edits. Note: deleting a campaign s
 
 If you added or edited a **Clean variable** and it is not appearing in your message, check that the **Fallback** field ("Simple text to display if variable is empty") is filled in — this field is required, and the variable will not save if left blank.
 
+### What does "Fix these sections to launch: Messages" mean when I click Launch campaign?
+
+When you click `Launch campaign`, Clay checks that each part of the campaign is complete. If anything is missing, a toast appears that starts with "Fix these sections to launch:" and lists every section that needs attention, separated by commas — for example, "Fix these sections to launch: Messages" or "Fix these sections to launch: Messages, Sender accounts".
+
+The following table lists each section name that can appear in the "Fix these sections to launch" toast and what you need to fix for it:
+
+| Section in the toast | Why the campaign can't launch |
+|---|---|
+| `Messages` | The message sequence has no messages, or the first message is set up as a reply to an existing email thread. The first message in a sequence must start a new email thread. |
+| `Leads` | No `Lead email address` column is selected in the campaign setup. |
+| `Sender accounts` | No sender accounts are selected for the campaign. |
+| `Schedule settings` | No timezone is selected, no sending days are selected, the start time is not earlier than the end time, or `Min time between emails (min)` is outside 3–30 minutes. |
+| `Advanced settings` | HTML is enabled and the unsubscribe link is turned on, but the unsubscribe text is empty. |
+
+**Messages made entirely of variables can launch.** The `Messages` check does not require typed text in the message editor. A message whose subject is only a variable (such as an `email_subject` column from your lead data) and whose body is only a variable (such as an `email_body` column) passes the check — you don't need to add a placeholder line or static text to launch a fully personalized campaign.
+
+If your first message is drafted and saved and the toast still lists `Messages`, contact Clay support and include the campaign URL.
+
 ### Why doesn't my Claygent or AI column appear as a variable in the email template?
 
 Claygent (web research AI) columns store their output as a structured object with multiple sub-fields — Response, Reasoning, Confidence, Steps Taken, and others. Even if the column appears in the email template's variable picker, its value renders as raw JSON rather than the clean text you want. To get just the response text as a usable personalization variable, extract it to a standalone plain-text column first.
