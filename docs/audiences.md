@@ -21,18 +21,18 @@ Setting up Audiences is four major steps:
 
 ## Roles and permissions
 
-Viewing and filtering audience data is available to all workspace roles. Most write operations require workspace **Admin** access. The table below shows the full breakdown:
+Viewing and filtering audience data is available to all workspace roles. The table below shows the full breakdown:
 
 | Action | Admin | Editor | Viewer |
 |---|---|---|---|
 | View, browse, and filter audience data | ✓ | ✓ | ✓ |
 | Create and edit audience segments | ✓ | — | — |
-| Run bulk enrichments | ✓ | — | — |
+| Create and run enrichment workflows and bulk enrichments | ✓ | ✓ | — |
 | Add or configure data sources | ✓ | — | — |
 | Export individual records to Salesforce | ✓ | — | — |
 | Upsert or update records from a Clay table into Audiences | ✓ | — | — |
 
-To change someone's role, go to **Settings** → **Team** and use the dropdown next to their name. Changes apply immediately. Editors and Viewers who need to create segments, run bulk enrichments, or manage data sources should have their role upgraded to Admin, or ask a workspace Admin to perform those actions on their behalf.
+To change someone's role, go to **Settings** → **Team** and use the dropdown next to their name. Changes apply immediately. Editors who need to create segments or manage data sources should have their role upgraded to Admin, or ask a workspace Admin to perform those actions on their behalf. Viewers cannot create enrichment workflows or tables — they need to be upgraded to at least Editor.
 
 ## Importing your data
 
@@ -269,7 +269,7 @@ You can import a CSV file of people or companies as a one-time import into Audie
 1.  Click `Add data` → `Add Source` → select **CSV**.
 2.  Name your import, select whether you're importing **People** or **Companies**, and upload your CSV file.
 3.  On the mapping screen, set the **Unique identifier** — the CSV column that uniquely identifies each record (such as email for People or domain for Companies). This determines whether an incoming row updates an existing record or creates a new one.
-    -   On a people import, a **Company association** field appears as an optional setting. Point it at the column holding each person's company ID to link them to their company records in Audiences.
+    -   On a people import, a **Company association** field appears as an optional setting. Point it at the CSV column that holds the company identifier (for example, a company ID or domain) matching a company already in your Companies audience. This links each person record to the correct company record in Audiences, populating the Company field on each person.
 4.  Map your remaining CSV columns to Audience fields. Click **Auto-map** to automatically suggest mappings based on column names, or **Add mapping** to add a row and configure it manually.
 5.  Click **Import** to complete the import.
 
@@ -459,18 +459,17 @@ The search is scoped to the exact companies in the segment at run time. In the f
 
 Bulk enrichments add contact data, firmographics, technographics, and more to your audience records at scale. They run on an audience and write results permanently back to All People — not just the segment you ran them from. This means any enriched field is immediately available as a filter in any other segment.
 
-**Admin access required.** Adding and managing bulk enrichments requires workspace Admin access.
+**Admin and Editor access required.** Creating and running enrichment workflows and bulk enrichments requires at least workspace Editor access. Viewers cannot create or run enrichments.
 
 **To add an enrichment:**
 
-1.  Navigate to an audience and click `Enrich` → `Add bulk enrich`.
-2.  Add enrichment columns as you normally would (e.g., `Enrich Person` for LinkedIn URL, title, phone).
-3.  Test on a small batch first — click `Run on 10 rows` to verify output before running at scale.
-4.  Open `Field Mapping` and map each column you want to save back to Audiences:
-    -   Enable the auto-enrich toggle so that any new record entering this segment is automatically passed through the enrichment — typically within 15 minutes.
-5.  Click `Start Run`.
+1.  Navigate to an audience segment and click `Enrich`.
+2.  Click `Create enrichment workflow` to open the workflow-based enrichment builder (currently in open beta — available on most workspaces). The audience segment is automatically set as the source, and results are written back to the audience when the workflow runs.
+    -   If your workspace has previously created bulk enrichments, you may also see a `Create enrichment table` option labeled **Legacy bulk enrichment**. Both work; the enrichment workflow experience is recommended for new enrichments. Workspaces that have only ever used the workflow experience will not see the legacy option.
+3.  Set up your enrichment steps (for example, add a **Work Email** enrichment to find verified email addresses).
+4.  Test on a small batch first, then click `Start Run`.
 
-**Note:** To run a bulk enrichment on Audience data, always start from within the Audience — click `Enrich` → `Add bulk enrich` from any segment view. When creating a new Bulk Enrichment from the Clay homepage (`New` → `Bulk enrichment`), the source type options are CSV and Salesforce CRM only — there is no "Audiences" source type in that dialog. The Audience segment serves as the source when you add the enrichment from within Audiences.
+**Note:** To run an enrichment on Audience data, always start from within the Audience — click `Enrich` from any segment view and select `Create enrichment workflow` or `Create enrichment table`. When creating a new Bulk Enrichment from the Clay homepage (`New` → `Bulk enrichment`), the source type options are CSV and Salesforce CRM only — there is no "Audiences" source type in that dialog. The Audience segment serves as the source when you add the enrichment from within Audiences.
 
 **Note:** Clay does not impose rate limits on Audiences bulk enrichments — the system is built to handle large lists at scale. Third-party data providers (such as Clearbit or Apollo) apply their own rate limits, but Clay queues requests and manages these automatically in the background. If you supply personal API keys for a provider, those keys' own rate limits apply.
 
@@ -571,7 +570,7 @@ To see which specific records in your audience were picked up by the signal, add
 To run an enrichment on the people who matched a signal:
 
 1.  In Audiences, open the draft segment for your signal type — **New hires**, **Companies of job changers**, or **Web visitors** — pinned at the top of the Audiences left sidebar.
-2.  Inside the segment, click **Enrich** → **Add bulk enrich**.
+2.  Inside the segment, click **Enrich** → **Create enrichment workflow** (or **Create enrichment table** for the legacy experience).
 3.  Add your enrichment columns (for example, `Enrich Person` for LinkedIn URL, phone, or work email).
 4.  Click `Start Run`.
 
@@ -793,7 +792,7 @@ Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data 
 
 Audiences has no native array or object field type. The `Upsert Audiences Record` and `Update Audiences Record` field mappers expose only scalar field types (text, number, date, boolean) — JSON array columns cannot be selected as write targets. To expand a JSON array field — for example, a `providers` array on a Company record — into individual records in another Audience (for example, People records), use a table as an intermediate processing step:
 
-1.  **Get the source records into a Clay table.** If starting from an Audience, click **Enrich → Add bulk enrich** from your segment view to create a bulk enrichment table sourced by that segment.
+1.  **Get the source records into a Clay table.** If starting from an Audience, click **Enrich** → **Create enrichment table** from your segment view to create a bulk enrichment table sourced by that segment.
 2.  **Flatten the array using Send Table Data.** In the table, add a **Send Table Data** column (**Tools → Export → Send table data**) and choose **"Send row for each item in a list"**. Select the column holding your JSON array. If the array is stored as a JSON string (a text value that looks like `[{"name": "Alice"}, ...]`), click the gear icon on the list field and enter `JSON.parse(/YourColumn)` to convert it to a native list. **Note:** This method sends a maximum of 20 items per source row per run — see [Send table data](send-table-data.md) for more on this limit.
 3.  **Extract fields in the destination table.** In the destination table, click the **"Rows from: …"** cell on any row and use **Add to column** to extract individual fields from each item (for example, first name, last name, phone). Run any enrichments you need at this stage.
 4.  **Write to your target Audience.** Add an **`Upsert Audiences Record`** action column in the destination table to push each flattened record into your target Audience — creating a new record if no match exists, or updating an existing one if it does.
@@ -815,7 +814,7 @@ There are two ways to create a custom Audience field:
 
 The `+ Add field` option is also available in the `Update Audiences Record` column mapping inside a bulk enrichment table:
 
-1.  Navigate to a segment and click `Enrich` → `Add bulk enrich`.
+1.  Navigate to a segment and click `Enrich` → `Create enrichment table`.
 2.  In the bulk enrich table, click the `Update Audiences Record` column header to open the Configure panel.
 3.  In the `Column mapping` dropdown, click `+ Add field`, name the new field, and save.
 
@@ -1073,10 +1072,10 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 ### How do I export my audience data to CSV?
 
-The Audiences screen does not have a direct CSV download button. To download audience data as a CSV, use the **Enrich** flow to create an enrichment table from the segment, then export that table. **Admin access is required.**
+The Audiences screen does not have a direct CSV download button. To download audience data as a CSV, use the **Enrich** flow to create an enrichment table from the segment, then export that table. **Admin or Editor access is required.**
 
 1. Open the audience segment you want to export.
-2. Click `Enrich` to open the enrichment panel, then create a new enrichment table for this segment. (The exact button label varies by workspace — you may see **Add bulk enrich** or a `+` button with a **Create Enrichment Table** option.)
+2. Click `Enrich` to open the enrichment panel, then create a new enrichment table for this segment. (Look for **Create enrichment workflow** or **Create enrichment table**, labeled Legacy bulk enrichment — the option shown depends on your workspace. Workspaces that have only ever used the workflow experience will see only the workflow option.)
 3. In the enrichment setup, skip adding enrichment columns and turn off field mapping if you only need the raw segment data.
 4. Open the resulting table. If any rows are checked, uncheck them first — the toolbar shows **Tools** only when no rows are selected.
 5. Click **Tools** → **Export** → **Download CSV**.
@@ -1192,7 +1191,7 @@ To write Clay enrichments to fields on a Salesforce custom object, use a Salesfo
 
 Audiences does not have a native HubSpot export destination — Salesforce is currently the only built-in CRM export. To push enriched data to HubSpot, use a Bulk Enrichment with a HubSpot action column directly from within your audience segment:
 
-1.  Navigate to an audience segment and click **Enrich** → **Add bulk enrich**.
+1.  Navigate to an audience segment and click **Enrich** → **Create enrichment table** (Legacy bulk enrichment).
 2.  In the bulk enrichment table, add your data enrichment columns as usual (for example, `Enrich Person` to find phone numbers or professional profile URLs).
 3.  Click `Add enrichment` and search for **HubSpot** → select **HubSpot: Update object** (to update an existing HubSpot contact or company) or **HubSpot: Create object** (to create a new contact or company in HubSpot).
 4.  Map each enriched field to the corresponding HubSpot property you want to populate.
