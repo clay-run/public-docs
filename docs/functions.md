@@ -268,6 +268,23 @@ Every function includes a built-in **"Send data back"** column — the final ste
 
 If a column's data is not appearing in the calling table, check whether that column is selected here — it may exist in the function but be unchecked in this list.
 
+### Why does my function return fields like "Website (2)", and how do I get that value into my "Website" column?
+
+When you open the **Cell details** panel for a function column in your table, you may see two fields with the same name, one with a number added, for example an empty **Website** field and a populated **Website (2)** field. Every field a function returns must have a unique name. Clay names each output after the function column (or the nested field) it comes from. If two outputs would end up with the same name, Clay adds a numeric suffix to the second one, such as **Website (2)**, **Name (2)**, or **Size (2)**. This is expected: the suffixed field is a separate output that comes from a different column or field inside the function.
+
+The function's **Outputs** settings let you choose which outputs are returned and add fields, but you can't rename an output there. To get the **Website (2)** value into your table's existing **Website** column, map it in the table that calls the function:
+
+1.  In the calling table, click any populated cell in the function column to open the **Cell details** panel.
+2.  Hover over the suffixed field (for example, **Website (2)**) and click **Add to column**.
+3.  Under **Map to an existing column**, select your **Website** column.
+
+What happens next depends on the **Website** column:
+
+-   **If the Website column already has a formula**, Clay adds the function field as a fallback, so values already in the column are kept.
+-   **If the Website column has no formula** (for example, values you typed or imported from a CSV), Clay shows a **"Data overwrite"** warning. If you confirm, the column is replaced with a formula that reads from the function field. This can't be undone.
+
+To keep the existing values and add the function's values as well, choose **Create new column** instead and combine the two columns with a Merge column. For details, see [Map child columns to an existing column](table-columns-overview.md#map-child-columns-to-an-existing-column).
+
 ### Why doesn't my function send back large outputs that show "Cell data size exceeds limit (8 kB)"?
 
 Functions follow Clay's standard cell size limits: formula, text, and other basic columns hold up to **8 kB** per cell, while action columns — such as enrichments, **Run workflow**, and the function's own **"Send data back"** column — hold up to **200 kB** per cell. See [Manage cell data](manage-cell-data.md) for the full list of limits.
