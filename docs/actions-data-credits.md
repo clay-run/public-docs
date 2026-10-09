@@ -281,6 +281,32 @@ Credits are added to your balance immediately upon purchase. Top-ups do not chan
 
 **Note:** One-time top-ups have a **30% premium** on modern plans (**50% premium** on legacy plans). Top-up credits are subject to the 2× rollover cap: at your next renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap are dropped — including credits you purchased. For example, on a plan with 2,500 credits/month, your maximum balance at renewal is 5,000; if you buy a 15,000-credit top-up and don't spend it all before renewal, only up to 5,000 credits carry over. Check your current balance and upcoming renewal date before purchasing a large top-up. For regular needs, upgrading your Data Credits tier is more cost-effective.
 
+### Set up auto top-ups (rolling out to paid self-serve plans)
+
+_Auto top-ups are currently rolling out to paid self-serve plans (Launch, Explorer, Pro, and Growth). Free plans, Trial plans, and Enterprise plans are not eligible. If you don't see this option in your workspace, contact support to check availability._
+
+Auto top-ups let you automatically purchase additional Data Credits when your balance drops below a set threshold — so enrichments continue running without interruption.
+
+**How to set up auto top-ups:**
+
+1.  Go to `Settings` → `Usage`.
+2.  Click `Set up auto top-ups`. (If auto top-ups are already enabled, you'll see `Manage auto top-ups` with an **On** badge.)
+3.  Set a **trigger threshold** — the credit balance level that triggers an automatic purchase. The minimum threshold is 15% of your plan's monthly credit allotment.
+4.  Set the **top-up amount** — how many dollars of Data Credits to add each time the threshold is hit ($30–$1,000 per purchase).
+5.  Optionally set a **daily cap** — the maximum you're willing to spend on auto top-ups in a single day (up to $5,000).
+6.  Click **Turn on** to enable.
+
+When your balance reaches the threshold, Clay charges your payment method on file and adds the purchased credits to your workspace balance immediately.
+
+**To manage or disable auto top-ups:**
+
+Once active, open `Manage auto top-ups` from `Settings` → `Usage` to adjust your settings, or click **Turn off auto top-ups** to disable.
+
+**Notes:**
+
+-   Auto top-ups are not available on workspaces billed by invoice (custom contract billing).
+-   Purchased credits are added to your Data Credit balance and are subject to the 2× rollover cap — credits that would push your balance above the cap at your next renewal are dropped.
+
 ### Downgrade or cancel your plan
 
 To downgrade your Clay workspace plan:
