@@ -1082,6 +1082,8 @@ The Audiences screen does not have a direct CSV download button. To download aud
 4. Open the resulting table. If any rows are checked, uncheck them first — the toolbar shows **Tools** only when no rows are selected.
 5. Click **Tools** → **Export** → **Download CSV**.
 
+**Note:** The **Add to workbook** option is currently available to select workspaces. If you only see **Export to workflow** when you click **Send** → **Export action**, this feature has not yet been enabled for your workspace. Contact Clay support to request access.
+
 ### What happens to a contact's ad targeting when they become a customer?
 
 If your segment has an exclusion condition (e.g., Account Type ≠ "Customer"), the contact is automatically **removed** from the synced ad audience as soon as that condition is met. See [Clay Ads](https://university.clay.com/docs/clay-ads) for platform-specific guidance.
