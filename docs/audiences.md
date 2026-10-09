@@ -57,6 +57,8 @@ The Salesforce import flow in Audiences has been redesigned. You can import **al
 
 **Supported object types:** Contacts (appear in People), Accounts (appear in Companies), Leads (appear in People), Opportunities (appear in Companies), and Custom Objects.
 
+**Salesforce custom objects are imported as activities.** When you import a Salesforce custom object into Audiences, the **Object mapping** step ("Connect your Salesforce object to a Clay activity type.") asks you to pick the **Salesforce object** and a **Clay activity** type — for example Calls, Emails, Tasks, Meetings, Transcripts, Messages, Events, Workflow runs, or Other — or to click **Create custom activity**. Custom object records come into Audiences as activities of that type; they are not mapped to individual Clay fields. To send Clay enrichments into fields on a Salesforce custom object, see [How do I send Clay enrichments to a custom Salesforce object?](#how-do-i-send-clay-enrichments-to-a-custom-salesforce-object) in the FAQs below.
+
 **Step 1: Connect your Salesforce account**
 
 1.  Click `Add data` → `Add Source` → select your [**Salesforce integration**](https://university.clay.com/docs/salesforce-integration-overview).
@@ -1171,6 +1173,20 @@ Add a **Salesforce Update Record** action column directly inside your bulk enric
 5.  Click `Start Run` — the Update Record column fires alongside your enrichment columns and writes the enriched values directly to Salesforce.
 
 If you have the Audiences Salesforce export enabled, enriched fields also sync back to Salesforce automatically on the next 24-hour export cycle (see [Writing back to your CRM](#writing-back-to-your-crm)). Adding Update Record directly in the enrichment table is useful when you need immediate write-back or when you are not using the native Audiences Salesforce import.
+
+### How do I send Clay enrichments to a custom Salesforce object?
+
+You can't map Clay enrichment fields to a Salesforce custom object from the Audiences Salesforce settings. In Audiences, a custom object import only maps the Salesforce object to a Clay activity type (such as Tasks, Events, or Workflow runs), and the Audiences Salesforce export writes only to Contacts and Accounts.
+
+To write Clay enrichments to fields on a Salesforce custom object, use a Salesforce action column in a Clay table:
+
+1.  In your Clay table (for example, a table of the standard Salesforce records you enriched in your audience), click `Add enrichment` and search for **Salesforce**.
+2.  Select **Create record** to create new custom object records, **Update record** to update existing ones by Record ID, or **Create or update object** to upsert using an external ID field on the object.
+3.  In **Salesforce Object**, choose your custom object. The list includes every object the connected Salesforce user can access, including custom objects (API names ending in `__c`).
+4.  Map each Clay enrichment column to the custom object field you want to populate.
+5.  Run the column. Each row writes its mapped values to Salesforce.
+
+**Permissions:** Clay writes to Salesforce as the connected Salesforce user. Make sure that user has create or edit access to the custom object and to each field you map — fields the user can't edit don't appear in the field mapping. See the [Salesforce integration FAQs](salesforce-integration-faqs.md) for details.
 
 ### How do I write enriched data back to HubSpot from Audiences?
 
