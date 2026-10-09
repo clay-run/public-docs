@@ -123,7 +123,7 @@ Clay pulls data from Salesforce on two schedules:
 -   **Soft-deleted records** (records moved to the Salesforce Recycle Bin, still queryable with IsDeleted=true): Picked up by the **15-minute incremental sync** and marked **Deleted in source** in your audience within that cycle.
 -   **Hard-deleted records** (records permanently purged from Salesforce, no longer queryable): Not visible to the incremental sync. Clay marks these **Deleted in source** during the next **weekly full sync**.
 
-In both cases, the record is not removed from Audiences — it persists with **Deleted in source** status, which you can filter on in any segment to exclude it from your active audiences. If a Salesforce record is deleted and recreated (assigning it a new Salesforce ID), it will temporarily appear as a duplicate entry until the next weekly full sync resolves it. There is no self-serve option to trigger an early full sync — contact Clay support if you need an expedited cleanup.
+In both cases, the record is not removed from Audiences — it persists with **Deleted in source** status, which you can filter on in any segment to exclude it from your active audiences. If a Salesforce record is deleted and recreated (assigning it a new Salesforce ID), it will temporarily appear as a duplicate entry until the next weekly full sync resolves it. There is no self-serve option to trigger an early full sync — contact Clay support if you need an expedited cleanup. To remove records deleted in Salesforce from your Audience, see [Records I deleted in Salesforce are still in my Audience — how do I remove them?](#records-i-deleted-in-salesforce-are-still-in-my-audience--how-do-i-remove-them) in the FAQs below.
 
 **Salesforce activities:** To import Salesforce Tasks and Events associated with your Accounts, go to your Salesforce source settings, select `Accounts`, and enable the **Also import activities (tasks and events) associated with these accounts** toggle. Accounts are associated automatically in the background. The Activity tab on each record's detail view then shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp. This toggle is only available for Accounts — there is no equivalent option for Contacts, Leads, or the People object. Even if your Salesforce CRM has Tasks or Events associated with contacts or leads, those activities will not appear in the People Activity tab in Audiences.
 
@@ -1380,13 +1380,27 @@ To remove records from your Audience, you archive them. Archiving moves a record
 The fastest way to archive many records at once — for example, to remove all contacts imported from a HubSpot account you have disconnected — is to create a segment filtered by that source, then archive all records in the segment at once:
 
 1.  In **People** or **Companies**, click **+ Filter** and add a filter on **Origin source**. Select the source you want to clear (for example, `HubSpot Contact - [your account name]`).
-2.  Click **Create segment** to save this as a named segment. The **Archive records** option only appears on saved segments — it is not available while the filter is in unsaved (draft) state.
+2.  Click **Create segment** to save this as a named segment. The **Archive records in segment** option only appears on saved segments — it is not available while the filter is in unsaved (draft) state.
 3.  In the left sidebar, click the **⋮** (three-dot) menu next to the segment's name.
-4.  Select **Archive records** and confirm. All records currently in the segment are moved to the Archived section and removed from all active segments.
+4.  Select **Archive records in segment** and confirm. All records currently in the segment are moved to the Archived section and removed from all active segments.
 
-**Note:** **Delete list** in the same segment menu removes the segment from the sidebar but does not archive the records. Use **Archive records** when you want to remove the contact or company records themselves.
+**Note:** **Delete list** in the same segment menu removes the segment from the sidebar but does not archive the records. Use **Archive records in segment** when you want to remove the contact or company records themselves.
 
 **Note:** Archived records can be restored from the **Archived** section in the left sidebar. If a previously archived record enters Audiences again from a source (for example, if the underlying Salesforce record is modified and re-synced), it will appear as a new record without the archived record's enrichment data.
+
+### Records I deleted in Salesforce are still in my Audience — how do I remove them?
+
+When you delete an Account, Contact, or Lead in Salesforce, Clay Audiences does not automatically delete or archive the matching record. This is by design: Clay keeps the record so you can decide what to do with its data. Instead, Clay detects the Salesforce deletion and sets the record's **Sync status** for that Salesforce import to **Deleted in source**. Records deleted to the Salesforce Recycle Bin are marked on the next incremental sync (every 15 minutes on Enterprise plans, once daily on Growth plans); records permanently purged from Salesforce are marked on the next weekly full sync — see [Importing from Salesforce](#importing-from-salesforce).
+
+To remove records deleted in Salesforce from your Audience, archive them in bulk with a segment:
+
+1.  In **People** or **Companies**, click **+ Filter** and select the filter named after your Salesforce import (for example, your Salesforce Contacts import). This filter checks each record's sync status for that import.
+2.  Set the value to **Deleted in source**.
+3.  Click **Create segment** to save the filtered list as a named segment. The archive option only appears on saved segments.
+4.  In the left sidebar, click the **⋮** (three-dot) menu next to the segment's name and select **Archive records in segment**.
+5.  Click **Archive** to confirm. The records are removed from all segments and won't be included in any future activity.
+
+Clay does not archive **Deleted in source** records automatically, so repeat these steps whenever you want to clean up newly deleted Salesforce records. To keep records deleted in Salesforce out of a specific segment without archiving them, add a filter to that segment that excludes the **Deleted in source** sync status for your Salesforce import.
 
 ### How do I replace a CSV import with updated data?
 
