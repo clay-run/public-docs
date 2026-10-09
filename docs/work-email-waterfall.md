@@ -93,6 +93,25 @@ To run the waterfall on multiple contacts at once — without running the full t
 
 For a full reference on run options — including a row limit and starting row — see [Run progress](run-progress.md).
 
+### Can I use the Work Email waterfall in Clay Workflows?
+
+Yes. In Clay Workflows, the Work Email waterfall is available as a **Clay-managed function**. To add it to a Workflow:
+
+1.  In your Workflow, add a **Run enrichment** step.
+2.  In the step picker, click the **For you** tab and look for the **Waterfalls** card — clicking it opens a list of Clay-managed waterfall functions installed in your workspace.
+3.  Select **Work Email** from the list. The step runs the full provider cascade, not a single provider.
+
+**Note:** Searching for "work email" in the **Enrich** tab of the step picker returns individual providers (Findymail, LeadMagic, Hunter, etc.) — not the waterfall. The Work Email waterfall is accessed through the **Waterfalls** card on the **For you** tab, not through the provider search.
+
+**If the Waterfalls card doesn't appear** in the "For you" tab, the Clay-managed Work Email function hasn't been installed in your workspace yet. To add it:
+
+1.  In the left sidebar, click **Functions**.
+2.  Click **+ New** in the top right corner.
+3.  In the **Browse Clay managed functions** dialog, click **Waterfalls** on the left to filter the list, find **Work Email**, and click **Setup as managed**.
+4.  Return to your Workflow — the **Waterfalls** card now appears in the **For you** tab of the Run enrichment step picker.
+
+**Alternative — build the waterfall in a table:** The Work Email waterfall is always available natively in Clay tables without any additional setup. Click **Add enrichment**, search for `Work Email`, and select it. See [Setting up the Work Email waterfall](#setting-up-the-work-email-waterfall) above.
+
 ### What does it mean if no email is found?
 
 An empty Work Email cell after the waterfall has run is **expected behavior** — it means the waterfall completed but could not find a valid email for that person. This is different from a **"Missing input"** error, which appears only when the required inputs (such as a full name or company domain) were missing before the waterfall could attempt to run at all.
