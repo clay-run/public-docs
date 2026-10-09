@@ -202,6 +202,10 @@ If you're unsure whether you need a higher tier, check your current usage in `Se
 
 Each fully enriched record typically costs 6-20 data credits (including company and person profile, email, phone number, and custom AI enrichments). The more private API keys you use, the fewer data credits you'll spend per record.
 
+### Can I pause my subscription?
+
+Clay does not offer a subscription pause option. Your two options are to keep your current plan active or cancel it. If you cancel, your plan stays active through the end of your current billing cycle, after which your workspace moves to the Free plan — your tables and previously enriched data are not deleted. See [Cancel your plan](#cancel-your-plan) for full details on what changes when you cancel.
+
 ### How do I cancel my subscription?
 
 There is no minimum contract commitment — you can cancel at any time. To cancel:

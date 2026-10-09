@@ -177,3 +177,9 @@ If you're on Explorer (Legacy) and considering a move to Enterprise, here is a s
 | Support | Standard support queue | Dedicated Slack channel |
 
 Modern plans also include ~50% cheaper data costs on 70+ enrichments compared to legacy pricing — your data credits go further on Enterprise.
+
+**Is there a cheaper modern plan available if I want to reduce costs?**
+
+The lowest-priced modern plan is Launch, starting at $185/month (see [Plans & billing](./plans-and-billing.md) for current pricing). If your current legacy plan subscription is priced below $185/month, switching to any modern plan would increase your monthly cost. If keeping your monthly price low is your primary goal, staying on your legacy plan preserves your current pricing and all the features you have today.
+
+Keep in mind that after April 10, 2026, any plan change permanently migrates you to a modern plan — you cannot return to a legacy plan once you leave. See [What happens if a legacy customer changes their plan?](#what-happens-if-a-legacy-customer-changes-their-plan) for details.
