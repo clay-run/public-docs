@@ -66,6 +66,20 @@ Each result includes one or more **Structured Location** entries in the cell det
 -   **Postal Code**
 -   **Is Headquarters**
 
+## Using natural language to build a Find Companies search (Upgraded search, beta)
+
+**Upgraded search is currently in beta** and is not yet enabled for every workspace. It is available in the `Find Companies` and `Find People` sources (not `Find Jobs`). If you don't see the options below, contact support to request access.
+
+With Upgraded search on, you can describe the companies you want in plain English and let Clay set up the search for you, instead of picking each filter by hand:
+
+1.  Open a `Find Companies` search (in a workbook, click `+ Add` and search for `Find Companies`).
+2.  Check that Upgraded search is on: click the **settings button** (gear icon with a dropdown arrow) in the filter panel header. The popover shows **Upgraded search is on** — "Custom queries across people, companies, & jobs" — with a **Beta** badge. If it shows **Upgraded search is off**, switch the toggle on and confirm.
+3.  Click the **Chat** button in the upper-right corner of the page. A chat panel opens.
+4.  Type a natural-language prompt describing your target companies. Clay generates the search criteria from your prompt and fills in the filter panel, and the **Preview** updates with matching companies.
+5.  Review the criteria. In the filter panel header, use **Editor mode** (funnel icon) to adjust the criteria as filters, or **Query mode** (code icon) to view and edit the underlying query directly. Click **Chat** again to close the chat panel.
+
+**Don't see a natural-language prompt box?** In the current Upgraded search layout, the natural-language prompt lives behind the **Chat** button in the upper-right corner — it isn't shown in the filter panel by default. If Upgraded search is on and there's still no **Chat** button, your workspace may not have the full beta experience yet; contact support.
+
 ## FAQs
 
 ### When should I use Find Companies vs a custom table?
