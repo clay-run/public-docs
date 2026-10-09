@@ -19,8 +19,7 @@ The typical setup process:
 1.  Contact Clay support to initiate SSO setup.
 2.  Clay support creates your organization in WorkOS and sends a configuration link to your IT contact.
 3.  Your IT team follows the link to connect your identity provider and complete the setup.
-4.  Once your IT team confirms the WorkOS setup is complete, notify Clay support. **Note:** If you test by clicking the Clay tile in your IdP dashboard at this point, you may see `{"type":"BadRequest","message":"Unable to login","details":null}` — this is expected and means SSO activation is still pending on Clay's side.
-5.  Clay support activates (enforces) SSO on your workspace.
+4.  Once your IT team completes and tests the WorkOS setup, SSO activates automatically on your workspace — the sync typically completes within a few minutes. You do not need to contact Clay support to trigger activation. **Note:** If you test by clicking the Clay tile in your IdP dashboard immediately after completing setup, you may briefly see `{"type":"BadRequest","message":"Unable to login","details":null}` — this is expected while the automatic activation is in progress and typically resolves within a few minutes. If the error persists beyond a few minutes, contact Clay support.
 
 **Note:** The email domain used for SSO authentication is configured on Clay's side. If you receive an error during the WorkOS setup stating that your domain is not recognized or not allowed, contact Clay support — only the support team can update the allowed domain setting.
 
@@ -38,10 +37,12 @@ In the WorkOS setup portal, look for the **Service Provider Details** section, w
 
 ## What happens when SSO is enabled
 
+SSO activation applies to your entire verified domain at once — there is no staged rollout or dual-authentication mode where some users use SSO and others continue using a different method. Once active, the following takes effect for all users whose email matches your verified domain:
+
 -   All users whose email address is on your verified domain are redirected to sign in through SSO when they type their email on the Clay login page. **Note:** This redirect is handled in the browser — users who have an existing email + password Clay account can still log in using their password directly, which bypasses the SSO redirect. Clay does not block password-based login at the backend for SSO-configured domains.
 -   Google OAuth sign-in is disabled for users on your domain. Clicking the **Sign in with Google** button on the login page will return an error (`Google OAuth is disabled for this account`) — this button uses Google OAuth, which is a separate authentication path from SSO.
 -   SSO is configured at the email domain level — if your organization uses multiple Clay workspaces, users on your domain will be routed through SSO for all of them.
--   Once SSO is activated, users can sign in from either the Clay login page or directly from your IdP dashboard (for example, clicking the Clay tile in your Okta launcher). If clicking the IdP tile returns `{"type":"BadRequest","message":"Unable to login","details":null}`, SSO has likely not yet been activated on Clay's side — contact Clay support to complete activation.
+-   Once SSO is activated, users can sign in from either the Clay login page or directly from your IdP dashboard (for example, clicking the Clay tile in your Okta launcher). If clicking the IdP tile returns `{"type":"BadRequest","message":"Unable to login","details":null}`, SSO is likely still syncing — the automatic activation typically completes within a few minutes. If the error persists beyond a few minutes, contact Clay support.
 
 **How SSO users should sign in:** On the Clay login page, type your **email address** into the email field and click **Continue** — do **not** click the `Sign in with Google` button. Entering your email triggers domain detection, which redirects you to your SSO provider automatically.
 
