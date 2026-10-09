@@ -28,13 +28,36 @@ This feature is especially useful when you're building lists with similar criter
 2.  Click `Saved by you` to find your saved searches (ones you explicitly saved), `Recents` to find your last 5-10 searches, or `Workspace` to find searches saved by anyone.
 3.  Select a saved search to load its filter criteria.
 4.  Make any adjustments if needed, or use it as-is.
-5.  Click `Continue` and `Import` to add your results to the table.
+5.  Click `Next` through the remaining setup steps, then click `Save` (the button may read `Save and run N rows`) to add the results to your table. If you're running the search outside an existing table, the save menu offers `Save to new table` (when you're in a workbook) or `Save to new workbook and table` instead.
 
 ## FAQs
 
 ### What's the difference between saved searches and recent searches?
 
 Recent searches automatically track your last 5-10 searches and are temporary. Saved searches are ones you explicitly save with a name and description for long-term reuse.
+
+### How do I add people from a saved search or my People audience to a Clay table?
+
+Clay Audiences doesn't have an "add to table" or "send to table" action on a People or Companies segment. The segment's **Send** menu offers options such as **Send to workflow** and **Sync to ad platforms**, but none of them copy the segment's records into a Clay table. If you ran a people search, saved it, and then saved the results to **People** in Audiences, use one of the options below to get the same people into a Clay table.
+
+**Option 1 — Import your saved search into a table.** Because the people came from a saved people search, you can pull the same search results directly into a table, including an existing table that already has your enrichment columns set up:
+
+1.  Open the table and add a `Find people` source.
+2.  Click `Browse past searches`.
+3.  Open `Saved by you` (or `Workspace` for searches your teammates saved) and select your saved search.
+4.  Click `Next` through the setup steps, then click `Save` (the button may read `Save and run N rows`) to import the search results into the table.
+
+If you run the search outside an existing table, the save menu offers `Save to new table` (when you're in a workbook) or `Save to new workbook and table` instead.
+
+**Option 2 — Create an enrichment table from the Audiences segment.** This option is only available if your workspace has created a bulk enrichment before.
+
+1.  Open the People segment in Audiences, click `Enrich`, then click the `+` button in the Enrich sidebar.
+2.  Select `Create enrichment table` (described as "Legacy bulk enrichment").
+3.  Go through the setup steps: **Audience fields** → **Add enrichments** → **Field mapping** → **Review**. Adding enrichment columns is optional. Turn **Field mapping** off if you don't want anything written back to Audiences.
+
+If your workspace has never created a bulk enrichment, the `+` menu shows only `Create enrichment workflow` (marked Beta) and the `Create enrichment table` option isn't available — use Option 1 instead.
+
+**Note:** A Clay table holds up to 50,000 rows, while Audiences holds millions of records. For large or ongoing lists, keep the people in Audiences and use **Send** → **Send to workflow** to run your steps on them — see [Connecting a workflow to a segment](audiences.md#connecting-a-workflow-to-a-segment).
 
 ### Who can see my saved searches?
 
