@@ -1,7 +1,7 @@
 ---
 title: Email sequencer
 description: Run outbound campaigns directly from your table.
-last_synced: 2026-09-01T01:27:12.565Z
+last_synced: 2026-10-07T03:54:33.001Z
 upstream_hash: 3d3db81ae3036812b3d4dc0b56f1ae7fff367acb652370008e4fdffc6f91fa96
 ---
 
@@ -52,7 +52,7 @@ Connect and enable warmup on your sender account as early as possible so it's re
 
 1.  Start in a table that contains the lead emails you want to contact.
     -   If you haven't done this yet, click `Tools` → `Import` to add emails from a third party or CSV.
-2.  Click `Tools` → `Exports` → `Create Clay email campaign`
+2.  Click `Tools` → `Exports` → `Create Clay email sequence`
     -   The `Sync lead data to campaign` column automatically pushes 10 rows from your parent table into the campaign to draft with
     -   Tip: You can customize the `Sync lead data to campaign` column to only send leads with an email address using `Only run if`.
 3.  In the `Setup` tab, you can set:
@@ -72,8 +72,8 @@ Connect and enable warmup on your sender account as early as possible so it's re
         -   ⚠️ Note: You or your Google Workspace admin must authorize Clay Sequencer as a Trusted app for your domain before connecting. If you or a teammate sees **"Access blocked: clay.com has not completed the Google verification process" (Error 403: access_denied)** when connecting, follow [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth) for the required admin setup steps. Until this is done, all users in your domain will see this error.
     -   `Microsoft Outlook OAuth` (recommended): Connect your Outlook account via OAuth.
         -   ℹ️ Note: Unlike Google OAuth, no Clay-side admin setup is required upfront. If your Microsoft 365 / Entra tenant requires admin approval for third-party apps, your admin may need to grant consent for "Clay Sequencer – Smartlead" in the [Microsoft Entra Admin Center](https://entra.microsoft.com).
-    -   `SMTP`: Connect a single account via SMTP credentials directly. The form requires both SMTP settings (host, port, username, password) and IMAP settings (host, port) — Clay does not provide a built-in inbox, so your IMAP credentials must come from an existing IMAP-capable mailbox under your domain (such as Google Workspace, Microsoft 365, Zoho, or Fastmail). If your sending service is send-only (for example, SendGrid or another transactional email relay), you must pair it with a separate IMAP-enabled mailbox.
-    -   `Bulk CSV upload`: Add multiple accounts at once by uploading a CSV. Download the example template from the modal and fill in the following eight columns for each account: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`. For Google Workspace accounts, generate an app password for each account (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` value. **Note:** Bulk CSV upload uses SMTP/IMAP credentials — it does not work for Microsoft 365 / Outlook accounts unless your Microsoft 365 admin has enabled SMTP AUTH (disabled by default). If SMTP AUTH is not enabled, use `Microsoft Outlook OAuth` to connect those accounts instead — each account must be connected one at a time via OAuth.
+    -   `Manual SMTP & IMAP setup`: Connect a single account via SMTP and IMAP credentials directly. The form requires both SMTP settings (host, port, username, password) and IMAP settings (host, port) — Clay does not provide a built-in inbox, so your IMAP credentials must come from an existing IMAP-capable mailbox under your domain (such as Google Workspace, Microsoft 365, Zoho, or Fastmail). If your sending service is send-only (for example, SendGrid or another transactional email relay), you must pair it with a separate IMAP-enabled mailbox.
+    -   `Bulk CSV SMTP & IMAP upload`: Add multiple accounts at once by uploading a CSV. Download the example template from the modal and fill in the following eight columns for each account: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`. For Google Workspace accounts, generate an app password for each account (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` value. **Note:** Bulk CSV upload uses SMTP/IMAP credentials — it does not work for Microsoft 365 / Outlook accounts unless your Microsoft 365 admin has enabled SMTP AUTH (disabled by default). If SMTP AUTH is not enabled, use `Microsoft Outlook OAuth` to connect those accounts instead — each account must be connected one at a time via OAuth.
     -   You can also [buy email accounts directly in Clay](https://university.clay.com/docs/buying-email-accounts) if you want to increase your sending capacity.
     -   After setup, you can:
         -   `Enable warmup`: Sends and receives automated emails from the linked account to build reputation. Each account uses a unique two-word keyphrase (e.g., `clever-rocket`) to identify warmup emails. Follow the in-app instructions to set up a label and filter to easily ignore warmup messages.
@@ -89,8 +89,10 @@ Connect and enable warmup on your sender account as early as possible so it's re
     -   `Min time between emails (min)`: Minimum gap between consecutive sends from a single account (3–30 minutes, Custom schedule only). Shorter gaps increase daily throughput; longer gaps improve deliverability.
     -   `Maximum new leads per day`: Caps the number of new leads contacted daily (in addition to account send limits).
     -   `Campaign start date` (optional): Set a future launch date, or start immediately based on your settings.
-7.  Explore `Advanced settings` if needed:
-    -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled)
+7.  Explore `Advanced settings` if needed. The first three controls require HTML to be enabled:
+    -   `Track email opens (Requires HTML)`: Track the number of recipients who open your emails using a tracking pixel.
+    -   `Track link clicks (Requires HTML)`: Track link clicks automatically using URL redirects.
+    -   `Enable unsubscribe link (Requires HTML)`: Add a link at the bottom of every email allowing the recipient to unsubscribe.
     -   `Pause leads at the same company on reply`: When a lead replies, automatically pause other leads with the same email domain. Off by default.
 8.  Go to `Leads` to preview the messages for all people in your campaign
     -   `Send test email` to verify your template looks right
@@ -268,7 +270,7 @@ This usually means the Clay table that the column points to was deleted. Hover o
 
 To fix it, open `Trash` from the bottom-left of your workspace sidebar, find the deleted table, and click `Restore`. The column will reconnect once the table is back.
 
-If the table was permanently deleted from Trash and can't be recovered, create a new campaign: click `Tools` → `Exports` → `Create Clay email campaign` in your source table.
+If the table was permanently deleted from Trash and can't be recovered, create a new campaign: click `Tools` → `Exports` → `Create Clay email sequence` in your source table.
 
 Deleting a campaign through the column header's settings (the **Delete campaign** option) is permanent — it removes the campaign from the sending platform and all associated columns with no recovery option.
 
@@ -489,7 +491,7 @@ Because SendGrid is a send-only relay, you must also fill in the **IMAP section*
 
 ### How do I add multiple email accounts at once?
 
-Use the `Bulk CSV upload` option on the `Add email accounts` screen (it's a top-level choice, not nested under SMTP). Download the example template from the modal and fill in one row per account with eight columns: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`.
+Use the `Bulk CSV SMTP & IMAP upload` option on the `Add email accounts` screen (it's a top-level choice, not nested under SMTP). Download the example template from the modal and fill in one row per account with eight columns: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`.
 
 For Google Workspace accounts on adjacent or alternate domains, you'll need to:
 1. Enable SMTP access for each domain in your Google Workspace Admin panel (Apps → Google Workspace → Gmail → End User Access → Enable IMAP and SMTP).
@@ -506,7 +508,7 @@ Signing in to Google OAuth again with the same Google account does not add the a
 To use an alias as a distinct sender, connect it as its own account:
 
 -   **SMTP:** Go to `Sequencer` → `Email accounts` → `Add email account` → `Bring your own accounts` → `Manual SMTP & IMAP setup`. Set **Sender email** to the alias address, set **Username** to your primary mailbox's login address, and enter your primary account's server credentials (password, SMTP host, and IMAP host). For Google Workspace aliases, see [Connecting a Google Workspace alias via SMTP](#connecting-a-google-workspace-alias-via-smtp) below.
--   **Bulk CSV upload:** Use the `Bulk CSV upload` option to add multiple aliases at once. Set each row's `from_email` to the alias address and fill in the remaining SMTP and IMAP fields using your primary account's server settings.
+-   **Bulk CSV upload:** Use the `Bulk CSV SMTP & IMAP upload` option to add multiple aliases at once. Set each row's `from_email` to the alias address and fill in the remaining SMTP and IMAP fields using your primary account's server settings.
 
 **For Microsoft 365 aliases:** The SMTP and bulk CSV paths work with Microsoft 365, provided your tenant has SMTP AUTH enabled and the alias has "Send As" permissions configured in your Microsoft 365 admin settings.
 
@@ -665,7 +667,7 @@ The **Analytics** tab shows open rate, click-through rate, and other engagement 
 For per-step analysis, use the campaign events table. Each event includes a `sequence_number` value identifying which email in the sequence it came from:
 
 -   **Bounce rate per step**: `EMAIL_BOUNCE` events always carry `sequence_number`. Filter the events table by `sequence_number` and compare sent versus bounced counts for that step.
--   **Open rate and click-through rate per step**: `EMAIL_OPEN` and `EMAIL_LINK_CLICK` events also carry `sequence_number`, but only appear when HTML email tracking is enabled (`Advanced settings` → `Email tracking`). With tracking on, filter by `sequence_number` to calculate open and click rates per step.
+-   **Open rate and click-through rate per step**: `EMAIL_OPEN` and `EMAIL_LINK_CLICK` events also carry `sequence_number`, but only appear when HTML email tracking is enabled (`Advanced settings` → `Track email opens (Requires HTML)` and `Track link clicks (Requires HTML)`). With tracking on, filter by `sequence_number` to calculate open and click rates per step.
 
 To extract `sequence_number` as a standalone column, click any Campaign event cell, find `sequence_number` in the Cell details panel, and click **Add as column**.
 
