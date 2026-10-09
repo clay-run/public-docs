@@ -413,6 +413,14 @@ HubSpot companies can have multiple domains on a single record — one primary d
 2. In Clay, add a second **HubSpot → Lookup object** column. Set **Object type** to Company and set **Fields to filter by** to your custom secondary domain property.
 3. Set the second column to run only when the first Lookup Object returns no result: open **Run settings → Only run if** and add a condition that the first Lookup Object column is empty. This turns the second column into a fallback that fires only when the primary domain lookup finds nothing.
 
+**Alternative workaround — match against HubSpot's additional domains in a Clay table:** HubSpot stores a company's secondary domains in its built-in `hs_additional_domains` property, as a semicolon-separated list (for example, `examplelaw.com;example-group.com`). The HubSpot Lookup Object matches each filter field exactly and has no "contains" option, so it can't find one domain inside that list. Instead, import your HubSpot companies into a Clay table and use Clay's **Lookup Single Row in Other Table** (or **Lookup Multiple Rows in Other Table**) enrichment, which supports a `Contains` filter operator:
+
+1. Create a companies table with the **Import objects from HubSpot** source, with **Object type** set to Company. Each imported row includes the company's additional domains (in the source data, this appears as the **Hs Additional Domains** field).
+2. In the companies table, add a Formula column that combines the primary **Company domain name** and the additional domains into one semicolon-separated value (for example, `example.co.uk;examplelaw.com`).
+3. In your contacts table, add a **Lookup Single Row in Other Table** column. Set **Table to Search** to the HubSpot companies table, **Target Column** to the combined domains column, **Filter Operator** to `Contains`, and **Row Value** to the contact's domain column.
+
+`Contains` is a case-insensitive substring match, so a contact domain such as `examplelaw.com` matches a company row whose combined domains column includes it, even if that isn't the primary domain in HubSpot. Because it's a substring match, a short domain can also match a longer one that contains it (for example, `law.com` would match `examplelaw.com`). Check the matched rows if your domains overlap like this. For more on these enrichments, see [Lookup rows](lookup-rows.md).
+
 You can also update the company's **Company domain name** in HubSpot to match the domain you are searching by, or use the HubSpot Object ID to look up the record directly.
 
 ### Why do I get an `INVALID_OWNER_ID` or `INVALID_INTEGER` error when setting `hubspot_owner_id`?
