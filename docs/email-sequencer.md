@@ -346,6 +346,15 @@ To avoid losing leads this way, deduplicate your source table before launching. 
 
 Email providers like Google and Microsoft occasionally revoke access due to inactivity, security checks, or suspicious activity detection. To fix this, delete the disconnected account from your sequencer settings and re-authenticate it.
 
+### Can I manually make my campaign check for replies?
+
+No — Clay's email sequencer has no button, action, or API to manually run a reply check or force a campaign to look for new replies. Reply detection in the sequencer is automatic: replies are read from the connected sender account's mailbox, and each detected reply appears in the campaign's `Replies` tab, the `Global inbox`, and the [campaign events table](#campaign-events-table) as an `EMAIL_REPLY` event. Reply events can appear in the campaign events table with a 15–30 minute delay.
+
+If you can see a reply in your own inbox but the campaign still hasn't recognized it well after that window (for example, hours later), the reply is not waiting for a manual check — Clay has not received it from the sender account. To troubleshoot a reply the sequencer hasn't detected:
+
+1. Go to `Sequencer` → `Email accounts` and check the sender account's status. **Auth error** means the account's sending (SMTP) or receiving (IMAP) connection failed.
+2. If the sender account was connected with SMTP, check its IMAP connection — the sequencer uses IMAP to detect replies on SMTP accounts. See [Why aren't replies being detected for my SMTP email account?](#why-arent-replies-being-detected-for-my-smtp-email-account-the-sequence-keeps-sending-follow-ups-even-after-leads-reply) for how to fix a misconfigured IMAP connection.
+
 ### Why aren't replies being detected for my SMTP email account? The sequence keeps sending follow-ups even after leads reply.
 
 For SMTP email accounts, Clay uses the **IMAP connection** to detect incoming replies. If the IMAP settings were not filled in correctly when the account was first added — or were left blank — replies are not tracked, and sequences continue sending follow-up emails as if no reply occurred. This can happen even if the account shows as **Ready** and outgoing emails are sending without errors: SMTP handles sending and IMAP handles reply detection independently.
