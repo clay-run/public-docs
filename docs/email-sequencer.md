@@ -28,7 +28,7 @@ Once your table has a populated email column, you're ready to create a campaign.
 
 **2. A sender account connected and warmed up**
 
-Campaigns send from a connected email account (Google Workspace, Microsoft Outlook, or SMTP). Newly connected accounts need to warm up before you can safely send cold email — the initial warmup phase typically takes **3 weeks**. The account's status shows **Warming up** in `Sequencer → Email Accounts` during this phase and changes to **Ready** once warmup completes.
+Campaigns send from a connected email account (Google Workspace, Microsoft Outlook, or SMTP). Newly connected accounts need to warm up before you can safely send cold email — the initial warmup phase typically takes **3 weeks**. The account's status shows **Warming** in `Sequencer → Email Accounts` during this phase and changes to **Ready** once warmup completes.
 
 Connect and enable warmup on your sender account as early as possible so it's ready when you're ready to launch. See [buying email accounts](buying-email-accounts.md) if you need to add a dedicated sending address.
 
@@ -80,7 +80,7 @@ Connect and enable warmup on your sender account as early as possible so it's re
         -   `Restrict access`: Limit the account to your use only (e.g., for a personal business address). Otherwise, accounts are available to anyone with edit access in your workspace.
         -   `Update send limit`: Change the daily number of emails the account can send per day
         -   `Update sender variables`: Change the sender variable values for the account
-    -   **Searching and bulk actions:** Use the **search bar** and **Filter** control in `Sender accounts` to quickly find accounts by email address or name. Filter by account type (Google OAuth, Outlook, or SMTP) or status (Ready, Warming up, Not warming, or Auth error). Select multiple accounts to bulk-enable warmup or remove them from the campaign at once.
+    -   **Searching and bulk actions:** Use the **search bar** and **Filter** control in `Sender accounts` to quickly find accounts by email address or name. Filter by account type (Google OAuth, Outlook, or SMTP) or status (Ready, Warming, Not warming, or Auth error). Select multiple accounts to bulk-enable warmup or remove them from the campaign at once.
     -   **Assign sender account field to lead (optional):** At the bottom of the `Sender accounts` section, you can optionally map a column to assign a specific sending account to each lead. When this field is set, Clay uses the email address in that column as the sender for each lead — that address must match one of the sender accounts already configured in the campaign. If the mapped column contains an email that is not a configured sender account, that lead's row in the `Sync lead data to campaign` column will fail with a validation error when it runs. Leads where the column is blank (no value) are distributed evenly across all configured sender accounts. If you are not deliberately routing leads to specific senders, leave this field empty.
 6.  Adjust your `Schedule settings`:
     -   `Timezone`: Select the timezone to send from (we recommend matching your prospects').
@@ -374,13 +374,26 @@ If you've moved to a new email provider (for example, switching from a third-par
 
 Warmup is the process of automatically sending and receiving emails from other inboxes in Smartlead's warmup pool so your actual campaign traffic looks similar to the emails you're already sending. We recommend you keep warmup on at all times for email accounts in the sequencer to maximize deliverability.
 
-The initial warmup phase typically takes **3 weeks**, during which the account's status shows as **Warming up** in Sequencer → Email Accounts. Once the initial phase completes, the status switches to **Ready**. Warmup emails continue to run in the background even after the status shows **Ready** — the Ready label means the account has been warming for at least 3 weeks and is ready for campaigns, not that warmup has stopped.
+The initial warmup phase typically takes **3 weeks**, during which the account's status shows as **Warming** in Sequencer → Email Accounts. Once the initial phase completes, the status switches to **Ready**. Warmup emails continue to run in the background even after the status shows **Ready** — the Ready label means the account has been warming for at least 3 weeks and is ready for campaigns, not that warmup has stopped.
 
 When you add accounts via OAuth, we will automatically set up labels and filters to make it clear what emails are warmups and reduce clutter in your inbox. Your workspace has a unique two-word filter key (e.g., `clever-rocket`) that marks all warmup emails so you can apply these labels and filters.
 
 During warmup, your inbox will receive emails from other accounts in Smartlead's warmup pool. These emails often look random or spam-like in content — this is intentional, as the warmup engine simulates natural human email activity. They are automatically filed under your warmup label (named **Clay sequencer warmup email**), so they won't clutter your main inbox. Receiving them is not a sign of unauthorized account access or phishing activity.
 
 Warmup is enabled during the account connection flow: after connecting your email account, Clay shows a prompt with all newly added accounts pre-selected for warmup. Clicking **Enable warming** activates it — warmup emails will then appear in your inbox (filed under your warmup label/filter) even if you haven't launched a campaign yet. If you enabled warmup by accident or want to stop it, go to `Sequencer` → `Email Accounts`, find the account, click the ⋯ options menu, and select **Disable warming**.
+
+### What does the "Warming" status mean in my campaign's Analytics tab?
+
+The orange **Warming** badge next to a sender account means email warmup is turned on for that account and it is still in its initial 3-week warmup phase. It is a warmup status, not an error or a warning (the label reads "Warming", not "Warning").
+
+In a campaign, the badge appears in the `Analytics` tab: scroll to the **Deliverability** section and open the **Email accounts** table, which lists each sender account under **Account** with its badge under **Status**. The same badge appears in `Sequencer → Email Accounts`. The possible statuses are:
+
+-   **Warming**: warmup is on and it was enabled less than 3 weeks ago.
+-   **Ready**: warmup is on and the account has been warming for at least 3 weeks.
+-   **Not warming**: warmup is turned off for the account.
+-   **Auth error**: the account's sending (SMTP) or receiving (IMAP) connection failed and needs to be fixed before the account can send reliably.
+
+A **Warming** account can still send campaign emails. Once 3 weeks have passed since warmup was enabled, the status changes to **Ready** automatically. See [What is email account warmup?](#what-is-email-account-warmup) for how warmup works.
 
 ### What does the Reputation percentage mean?
 
@@ -392,17 +405,17 @@ A high Reputation score (for example, 100%) means the vast majority of warm-up s
 
 Warmup automatically disables when your emails are being throttled by your email provider. This protects your sender reputation. You can manually turn warmup back on from the `Sender Accounts` tab once the throttling issue is resolved.
 
-### Can I send campaign emails from an inbox that shows "Warming up"?
+### Can I send campaign emails from an inbox that shows "Warming"?
 
-Yes — a **Warming up** inbox is not blocked from campaign sending. However, it is not recommended. The 3-week warmup period builds your sender reputation with email providers; sending before warmup completes risks lower deliverability and emails landing in spam. If you do send before warmup finishes, keep daily volume low to minimize the impact on your domain reputation.
+Yes — a **Warming** inbox is not blocked from campaign sending. However, it is not recommended. The 3-week warmup period builds your sender reputation with email providers; sending before warmup completes risks lower deliverability and emails landing in spam. If you do send before warmup finishes, keep daily volume low to minimize the impact on your domain reputation.
 
-The only status that triggers a warning in the campaign UI is **Auth error** — that indicates a connection problem that needs to be resolved before that inbox can send reliably. **Warming up** and **Not warming** inboxes carry no campaign-level block or warning.
+The only status that triggers a warning in the campaign UI is **Auth error** — that indicates a connection problem that needs to be resolved before that inbox can send reliably. **Warming** and **Not warming** inboxes carry no campaign-level block or warning.
 
 Once the 3-week warmup period is complete, the status automatically changes to **Ready**, signaling the inbox is ready for full campaign volume.
 
 ### How can I tell how much longer my inbox needs to warm up?
 
-There is no countdown timer or progress indicator in the UI showing time remaining in warmup. To estimate when warmup will complete, note the date you connected the account and enabled warmup — the initial warmup phase is 3 weeks from that point. Once that window passes, the status automatically switches from **Warming up** to **Ready**.
+There is no countdown timer or progress indicator in the UI showing time remaining in warmup. To estimate when warmup will complete, note the date you connected the account and enabled warmup — the initial warmup phase is 3 weeks from that point. Once that window passes, the status automatically switches from **Warming** to **Ready**.
 
 ### I see an error: "This email address is already connected to Smartlead." What do I do?
 
