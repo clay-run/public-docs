@@ -96,6 +96,14 @@ There is no way to wait for the workflow to finish or return a custom response b
 
 **If you need results delivered back to your system:** Build an outbound step into the workflow itself — for example, an HTTP API call or a CRM update action — to push the processed results back to your external system once the run completes.
 
+**Rate limiting:** Workflow webhook triggers have a rate limit of **100 requests per second per trigger**, with a burst capacity of 100 requests. This limit is separate from the [Monitor webhook throughput limit](#limits) and applies per individual trigger — it is not shared across your workspace. When requests arrive faster than 100 per second, Clay returns HTTP `429` instead of `202`:
+
+```json
+{"error": "TooManyRequests", "message": "Rate limit exceeded. Too many webhook requests.", "retryAfter": 1}
+```
+
+A `429` means the request was not accepted and no workflow run was created for it. Clay does not retry on your behalf — implement retry logic in your sending system and wait at least the number of seconds in the `retryAfter` field before resending. If you are syncing a large volume of records in a burst — for example, pushing 2,000 Salesforce records at once — pace your requests to 100 per second or fewer and ensure your system retries on `429` responses to avoid dropping records.
+
 ## FAQs
 
 ### How can I see webhook logs?
