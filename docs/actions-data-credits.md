@@ -488,9 +488,16 @@ In some situations, Clay's support team can manually restore Data Credits that w
 **What support cannot restore:**
 
 -   Credits dropped above the 2× rollover cap — the system enforces this cap at renewal and cannot retroactively recover credits removed by it.
--   Credits forfeited when downgrading to the free plan above the 200-credit rollover cap.
 
 To request a review, contact [Clay support](https://www.clay.com/contact) with details about your plan, when the credits were lost, and the reason.
+
+### If I resubscribe to a paid plan after canceling, will I get my old credits back?
+
+Not automatically. When you resubscribe, your current balance — whatever credits remain in your account after the free plan's 200-credit rollover cap was applied — rolls over into your new plan alongside your new plan's credits, following the standard 2× rollover rules.
+
+Credits that were forfeited when your balance was capped at 200 at the end of your last billing cycle are not automatically restored by resubscribing. For example, if you had 1,500 credits when you cancelled and they were reduced to 200, the 1,300 forfeited credits do not come back on their own.
+
+If you resubscribe and want those forfeited credits considered for restoration, contact [Clay support](https://app.clay.com) promptly after reactivating — see [Can Data Credits be restored after an unexpected loss?](#can-data-credits-be-restored-after-an-unexpected-loss) for how restoration requests work.
 
 ### **I have a trial, when do the Data Credits expire?**
 
