@@ -1512,6 +1512,20 @@ Audiences can only import from tables registered in Unity Catalog — it cannot 
 
 If neither of these applies and the import still fails, contact Clay support with the error message shown in the import setup.
 
+### I accidentally imported records with bad or missing data — how do I clean up my Audiences?
+
+If you imported people or companies you didn't intend to keep — for example, records with mostly empty fields from a test import or a data experiment — you can clean up by removing the records and deleting any custom fields the import created.
+
+**Remove the imported records**
+
+Archive the records to remove them from all audience segments and enrichments. To target just the records from a specific import, create a segment with an **Origin source** filter set to the import's source name, then click **⋮** next to the segment name and select **Archive records**. See [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) for full steps.
+
+**Remove the custom fields the import created**
+
+If the import added new fields to your Audiences that you no longer need, you can delete them from the **Data Hub**: go to **Data Hub → Fields**, click the field you want to remove, then click **Delete field** at the bottom of the sidebar. See [How do I delete a custom field from Audiences?](#how-do-i-delete-a-custom-field-from-audiences) for full steps. Built-in system fields (such as Email and LinkedIn URL) cannot be deleted — if you want to declutter your column view without deleting a field, click the column header and select **Hide**.
+
+**There is no self-serve reset option.** There is no single action to restore your Audiences workspace to a blank state. To undo a bad import, archive the records and delete any custom fields it created using the steps above. For a large-scale cleanup, contact Clay support.
+
 ### How do I archive records that no longer match my Snowflake import query?
 
 When you update your Snowflake SQL query to exclude records — for example, removing rows below a revenue threshold — those records are marked **Deleted in source** in your Audience on the next full sync (within 7 days). They are not automatically archived; they remain in All People or All Companies with a **Deleted in source** status.
