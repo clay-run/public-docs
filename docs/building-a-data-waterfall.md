@@ -135,6 +135,8 @@ By default, auto-run is **on** for every table — waterfall columns (such as a 
 
 **To prevent a waterfall from re-running on rows that already have a result**, add an **"Only run if"** condition to the waterfall column — for example, `Email is empty`. Clay skips the waterfall for any row where the output field is already populated, preventing duplicate enrichment and unnecessary credit spend.
 
+**Per-provider credit costs:** Each provider in the **Waterfall sequence** configuration shows its credit cost next to the provider name (for example, 5 / row or 10 / row). Running a high-cost provider on a large table can exhaust your credit balance quickly — for example, a provider at 10 credits per row running on 500 rows consumes 5,000 credits, regardless of how many rows return results. Review these costs in the waterfall configuration before running at scale, and toggle off expensive providers or test on a small batch first.
+
 For more ways to control credit usage, see [Ways to save Clay credits](clay-credit-conservation.md).
 
 ## How waterfall validation works
@@ -159,6 +161,19 @@ After a waterfall runs, click the **»** arrow on the waterfall column header to
 -   Click into any individual provider sub-column cell to open that provider's details panel for that specific row.
 
 To add a dedicated column per row showing the winning provider's name, enable **Output name of successful provider?** in the waterfall's output settings.
+
+### Finding results after a partial run
+
+When a waterfall run stops because your credit balance is exhausted, the rows that received results may appear scattered throughout your table rather than concentrated at the top. Clay processes rows concurrently across multiple workers — not strictly from top to bottom — so credits are consumed across many rows in parallel, and the rows that complete first are not predictable by position.
+
+To find which rows got data from a specific provider after a partial run:
+
+1.  Click the **»** arrow on the waterfall column header to expand the waterfall and reveal each provider's sub-column.
+2.  Click **Filter** in the table toolbar, select that provider's sub-column (for example, "Find mobile phone number via Forager"), and set the condition to **has results**.
+
+Only rows that returned data from that provider appear. To see which rows still need to run, set the condition to **is empty** instead — then re-run those rows once your credits are replenished.
+
+**Note:** The merged waterfall output column stays empty for any row the waterfall never reached — because credits ran out before that row was processed, or because the run was stopped. A row that looks blank in the merged column may still have data in an individual provider's sub-column. Expanding and filtering the provider sub-columns is the most reliable way to audit what was actually collected.
 
 ## Expanding contacts from a people waterfall into a new table
 
