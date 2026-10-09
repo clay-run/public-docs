@@ -1388,6 +1388,17 @@ The fastest way to archive many records at once — for example, to remove all c
 
 **Note:** Archived records can be restored from the **Archived** section in the left sidebar. If a previously archived record enters Audiences again from a source (for example, if the underlying Salesforce record is modified and re-synced), it will appear as a new record without the archived record's enrichment data.
 
+### Why does Upsert Audiences Record fail with "Record was not upserted"?
+
+If an `Upsert Audiences Record` column in your Clay table shows the error **"Record was not upserted"** on some rows, the most common cause is that those rows match a contact or company that was previously archived (removed) from your Audience. This applies to both People and Companies records. Clay does not automatically recreate or overwrite an archived record, so the upsert for that row is skipped and the cell errors — other rows in the same column continue to upsert normally. This often shows up when you use a table as a master list (for example, for lead routing) and keep re-upserting the same contacts after some of them were removed from Audiences.
+
+To fix rows that fail with "Record was not upserted" because they match archived records, choose one of the following options, then re-run the failed rows:
+
+-   **Restore the archived records.** Click **Archived** in the Audiences left sidebar, find the records, and click **Restore**. Restoring keeps the record's existing data, and upserts to it work again right away. Restore isn't available on every plan — if you see an upgrade prompt instead of the **Restore** button, contact Clay support.
+-   **Permanently delete the archived records.** In the **Archived** view, click **Delete records** (or open a single record, click the **⋮** menu, and select **Delete record**), then click **Delete permanently** to confirm. Permanent deletion runs in the background and can't be undone — the record and its enrichment data are gone. Once the deletion finishes, re-running the row creates a brand-new Audience record. Permanent deletion is in limited availability and only workspace Admins can use it; if you don't see **Delete records**, contact Clay support.
+
+After restoring or permanently deleting the records, re-run the errored cells in your `Upsert Audiences Record` column — they will go through.
+
 ### How do I replace a CSV import with updated data?
 
 CSV imports are one-time — they do not re-sync automatically. If your CSV contained errors and you want to replace it with corrected data, follow these steps to avoid duplicating records:
