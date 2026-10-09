@@ -171,6 +171,7 @@ Two options:
 -   Available for emergency needs during your billing cycle.
 -   **30% premium** applies (on modern plans; **50% premium** on legacy plans).
 -   Subject to the 2× rollover cap: at renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap — including purchased top-ups — are dropped.
+-   **Monthly purchase limit:** You can purchase up to **4× your plan's monthly credit allotment** in top-ups per billing month. For example, on a 10,000 credits/month plan, the monthly top-up limit is 40,000 credits. The limit resets at the start of each billing month. If you reach the limit, upgrade your Data Credits tier instead — tier upgrades have no monthly cap.
 
 ### Data Credits for AI
 
@@ -281,6 +282,8 @@ Credits are added to your balance immediately upon purchase. Top-ups do not chan
 
 **Note:** One-time top-ups have a **30% premium** on modern plans (**50% premium** on legacy plans). Top-up credits are subject to the 2× rollover cap: at your next renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap are dropped — including credits you purchased. For example, on a plan with 2,500 credits/month, your maximum balance at renewal is 5,000; if you buy a 15,000-credit top-up and don't spend it all before renewal, only up to 5,000 credits carry over. Check your current balance and upcoming renewal date before purchasing a large top-up. For regular needs, upgrading your Data Credits tier is more cost-effective.
 
+**Monthly purchase limit:** One-time top-up purchases are subject to a monthly cap of **4× your plan's monthly credit allotment** per billing month. For example, on a 10,000 credits/month plan, you can purchase up to 40,000 additional credits in a single billing month. This limit resets at the start of each billing month. If you have reached the limit, you will see: *"You've reached your monthly limit for additional data credits. Upgrade your plan to purchase more credits."* To get more credits within the same billing month, upgrade your Data Credits tier — tier upgrades take effect immediately and have no monthly purchase cap.
+
 ### Downgrade or cancel your plan
 
 To downgrade your Clay workspace plan:
@@ -355,12 +358,18 @@ If you see an in-product pricing summary comparing old and new enrichment costs 
 
 Actions represent the platform orchestration Clay performs—ingesting, storing, and routing your data. Even with your own API keys, Clay is doing work to integrate that data into your workflows.
 
+### Why can't I purchase more data credit top-ups this month?
+
+One-time top-up purchases are subject to a monthly cap of **4× your plan's monthly credit allotment** per billing month. When you reach this limit, the purchase UI shows: *"You've reached your monthly limit for additional data credits. Upgrade your plan to purchase more credits."*
+
+The limit resets at the start of each billing month. If you need more credits before then, upgrade your Data Credits tier — tier upgrades take effect immediately and have no monthly purchase cap. Go to `Settings` → `Plan & billing` to upgrade.
+
 ### What happens if I run out of Data Credits but not Actions?
 
 You can either:
 
 1.  Upgrade your Data Credits tier (no premium).
-2.  Purchase a one-time top-up (30% premium on modern plans; 50% on legacy plans).
+2.  Purchase a one-time top-up (30% premium on modern plans; 50% on legacy plans), subject to the monthly purchase limit.
 
 You don't need to change your Actions tier.
 
