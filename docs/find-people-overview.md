@@ -55,7 +55,7 @@ To add more profiles from the same search to an existing people table without cr
 -   **Languages:** Filter by specific languages spoken.
 -   **Education:** Search for specific school names.
 -   **Companies:** Find people at specific companies using an existing Clay table or a custom list. By default, this matches people who **currently** work at those companies.
-    -   **Locked after creation:** The filter type (Clay table vs. custom list), which table is linked, and — when using a custom list — the specific company identifiers entered cannot be changed once the source exists. This is what the "Can only be changed during source creation" tooltip means. If you need to target a different set of companies (for example, to correct a mistyped domain), create a new Find People source with the corrected identifiers. The linked Clay table's row contents are not frozen, however: adding or removing rows from the linked table is reflected each time the source runs. When re-run after new companies are added, the source searches across all companies currently in the table, not just the newly added ones.
+    -   **Locked after creation:** The filter type (Clay table vs. custom list), which table is linked, the view and column used to match companies from that table, and — when using a custom list — the specific company identifiers entered cannot be changed once the source exists. This is what the "Can only be changed during source creation" tooltip means. If your search is matching on the wrong column, see [Why does Find People return so few people when my company table has many more companies?](#why-does-find-people-return-so-few-people-when-my-company-table-has-many-more-companies). If you need to target a different set of companies (for example, to correct a mistyped domain), create a new Find People source with the corrected identifiers. The linked Clay table's row contents are not frozen, however: adding or removing rows from the linked table is reflected each time the source runs. When re-run after new companies are added, the source searches across all companies currently in the table, not just the newly added ones.
     -   **Run settings:** The source runs **Manually** by default — adding new companies to the linked table does not automatically trigger a new run. To automatically pick up new companies on a recurring basis, click the source column header in your people table, expand **Run settings**, and switch from **Manually** to **On a schedule**. Choose a frequency (Daily is most common) and click **Save schedule**. You can also click **Run now** at any time for an immediate on-demand run.
     -   **Company identifier type:** The identifier in your linked table or custom list determines how companies are resolved. **Domains** (e.g., `acme.com`) match at the root-domain level — useful for broader coverage, but may return people from a parent company or other entities that share that domain. **Company profile URLs** from the professional network match the exact company page, limiting results to that specific entity. Company profile URLs return fewer but more precise results; domains return more but may include unintended companies.
 -   **Exclude people:** Exclude up to 3 different sets of people from your search using Clay tables, CSVs, or manual lists. You can exclude up to 300,000 people total (100,000 per source). Exclusions match by **professional profile URL** — each row in your exclusion table must contain the person's profile URL from the professional network. Clay extracts the profile slug from the URL, so common format variations like `www.` prefixes, trailing slashes, and query parameters are automatically normalized. Email addresses, company names, domains, company page URLs, and job titles in your exclusion table will **not** suppress those people from the results.
@@ -120,6 +120,24 @@ Also check your **Limit results** setting: the import won't exceed whatever limi
 When you use domains (e.g., `acme.com`) as company identifiers, Clay maps each domain to internal company records at the root-domain level. This mapping can occasionally include people from a parent company, subsidiary, or other entity associated with that domain — resulting in contacts from companies you didn't explicitly target.
 
 To limit results to a specific company only, use **company profile URLs from the professional network** instead of domains as your identifier. Profile URLs map directly to a single company page, so only people from that exact company appear in your results. See [Use profile URLs, not domains, as company identifiers](finding-companies-and-people-in-clay.md) for the full guidance and valid URL formats.
+
+### Why does Find People return so few people when my company table has many more companies?
+
+When a Find People search targets companies from a Clay table, it only searches the companies it can match from **the column you selected** for that table. If that column is mostly empty, or holds the wrong kind of value — for example, a "Suborganization Domains" column instead of the column with each company's main website or domain — Find People searches only a handful of your companies and returns far fewer people than you expect.
+
+**To check which column your Find People search uses:**
+
+1.  Open the filters for your Find People search and find the card for your linked company table (under target companies).
+2.  Read the row count under the table name — for example, "9 valid rows (out of 9)". The second number is how many rows in the selected view have a value in the selected column. The first number is how many of those Clay matched to a known company. If both numbers are much lower than the number of companies in your table, the search is matching on the wrong column.
+3.  Expand the card to see which view and column are selected.
+
+Each cell in the selected column should contain one company identifier (a domain such as `acme.com` or a company profile URL). A cell that holds several domains is read as a single value and won't match a company.
+
+**To fix it, create a new Find People search.** The linked table, view, and column can't be changed on an existing search — those fields are greyed out and the delete icon is disabled, with the tooltip "Create a new search to use different target companies."
+
+1.  In your workbook, click **+ Add** at the bottom and select **Find people**.
+2.  Under target companies, choose your company table and select the column that holds each company's website/domain (or company profile URL).
+3.  Set your other filters, then click **Continue** and choose **Save to new table** from the dropdown.
 
 ### Why does someone from my exclusion list still appear in my Find People results?
 
