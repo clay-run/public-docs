@@ -278,6 +278,26 @@ Be sure to press `Save settings` after making edits. Note: deleting a campaign s
 
 If you added or edited a **Clean variable** and it is not appearing in your message, check that the **Fallback** field ("Simple text to display if variable is empty") is filled in — this field is required, and the variable will not save if left blank.
 
+### Why does my campaign say "Fix these sections to launch: Messages"?
+
+When you click **Launch campaign**, Clay checks every section of the campaign before it starts sending. If a section is incomplete, the campaign doesn't launch and a message lists the sections to fix — for example, *"Fix this section to launch: Messages"* or *"Fix these sections to launch: Messages, Sender accounts"*. The sections that can appear in this message, and what blocks each one, are:
+
+-   **Messages**: the message sequence has no messages, or the first message is set to reply in an existing thread. The first message in a sequence must start a new email thread.
+-   **Leads**: no lead email address column is selected.
+-   **Sender accounts**: no sender accounts are added to the campaign.
+-   **Schedule settings**: the timezone or sending days are missing, the start/end time range is invalid, or `Min time between emails (min)` is outside 3–30 minutes.
+-   **Advanced settings**: HTML is enabled and the unsubscribe link is turned on, but the unsubscribe text is empty.
+
+**Messages made only of variables are valid.** A message whose subject line and body consist entirely of variables — for example, an `email_subject` column variable in the subject and an `email_body` column variable in the body, with no typed text — passes the launch check. If your table already holds fully personalized subject lines and email copy, you don't need to add static text to the campaign message for it to launch.
+
+To clear the "Messages" error:
+
+1.  Open the campaign's `Sequence` tab and confirm the sequence contains at least one message. If it doesn't, click `Add a message` and add your subject and body.
+2.  Save the campaign. Unsaved changes also prevent launch — the save button at the bottom of the Campaign setup panel shows **Saved** once everything is saved.
+3.  Click **Launch campaign** again.
+
+If the message still lists "Messages" after you've confirmed the sequence has a saved first message, contact support.
+
 ### Why doesn't my Claygent or AI column appear as a variable in the email template?
 
 Claygent (web research AI) columns store their output as a structured object with multiple sub-fields — Response, Reasoning, Confidence, Steps Taken, and others. Even if the column appears in the email template's variable picker, its value renders as raw JSON rather than the clean text you want. To get just the response text as a usable personalization variable, extract it to a standalone plain-text column first.
