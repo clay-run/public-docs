@@ -634,9 +634,11 @@ When using the experience filter with a "job title doesn't contain" exclusion â€
 
 For example: someone who is simultaneously a "Technical Project Manager" at their main employer and a "Founder" at a side company passes a "Project Manager" exclusion because their Founder role satisfies "doesn't contain Project Manager" â€” even though their primary role matches the excluded term.
 
-There is no built-in option to require that *all* current experiences satisfy an exclusion condition.
+In the standard search filters, there is no built-in option to require that *all* current experiences satisfy an exclusion condition.
 
-**Workaround:** After importing your results, add a **Use AI** column that reviews all of the person's current roles and flags anyone whose active titles include the excluded terms. Use a prompt such as:
+**If you have Advanced Search (Search DSL mode, currently in closed beta):** set the experience group's quantifier to **no** and flip the condition to *contains*: `no current experience where job title contains "Project Manager"`. This excludes anyone who holds any current role containing that term. For a related example, see [How do I exclude out-of-scope people, like famous executives, from a broad Find People search?](find-people-overview.md#how-do-i-exclude-out-of-scope-people-like-famous-executives-from-a-broad-find-people-search). Contact support to request access to the closed beta.
+
+**Workaround in the standard search:** After importing your results, add a **Use AI** column that reviews all of the person's current roles and flags anyone whose active titles include the excluded terms. Use a prompt such as:
 
 *"The person's current job titles are: {{Experiences}}. Does any current role contain any of these terms: [your excluded terms]? Answer Yes if any match, No if none do."*
 
