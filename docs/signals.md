@@ -76,6 +76,19 @@ Most Signals — Clay's automated monitors for events like job changes, promotio
 
 Signals require a connected data source to run against — either a source table containing the companies or contacts you want to monitor, or an audience segment. Without a linked source table or audience segment (or if the linked table is empty or has been deleted), the Signal has nothing to check and will return 0 results. Confirm that your Signal is connected to an active Clay table with valid company identifiers (domain or LinkedIn URL) or contact LinkedIn URLs, or to a populated audience segment.
 
+### Why is my new hire signal returning fewer results than expected?
+
+The most common cause is having **multiple people filters active at the same time**. The new hire signal adds a row only when a hire matches **all** of your active filters simultaneously — each additional filter narrows the result pool independently.
+
+A pattern that frequently narrows results more than intended: using a **Seniority** filter set to **Is exactly** alongside a **Job Title** filter. "Is exactly" matches only hires whose seniority is classified as one of the precise values you selected (for example, "C-suite," "VP," "Director," or "Head"). Because both filters must be satisfied at the same time, hires who match your Job Title list but whose seniority isn't categorized as one of those exact values are excluded from results.
+
+**To broaden your results:**
+
+-   **Remove the Seniority filter** if your Job Title list already captures the right level. Titles like "Chief People Officer," "CHRO," or "VP of HR" already encode seniority — a separate Seniority "Is exactly" filter adds a redundant constraint that can exclude otherwise valid matches.
+-   **Add more Job Title variations** to capture the same role described in different ways — for example, "Chief HR Officer," "CHRO," "Head of People," and "HR Director" alongside "Chief People Officer."
+-   **Switch Seniority from "Is exactly" to "Is similar to"** to use AI-powered matching that recognizes equivalent seniority levels even when the exact classification doesn't match your selected values.
+-   **Enable the "Search raw location field" toggle** if you are also filtering by location. The toggle appears in the Location section of your signal's filter settings. Turning it on broadens location matching to include free-text location data in addition to structured fields, which can recover hires whose locations are stored in non-standard formats.
+
 ### My signal results on an Audience segment appear read-only — how do I analyze or act on them?
 
 When a signal is attached directly to a segment in Clay Audiences, its results are written as signal data on each matching record — not as new rows in a separate editable table. The view you see on the audience surface is read-only: you cannot add AI columns to it or chain Clay table write actions (such as Slack messages, Google Sheets updates, or Salesforce writes) directly off it.
