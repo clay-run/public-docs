@@ -556,15 +556,15 @@ A company's **Clay Company ID** can change over time — for example, when two c
 **To get the right company when you pass a Clay Company ID into Enrich Company:**
 
 1.  In your **Enrich Company** column, open **Column mapping**.
-2.  Under **Match companies using**, select **Clay Company ID**. The other options are **LinkedIn URL** and **Company domain**.
+2.  Under **Match companies using**, select **Clay Company ID**. The other options are the company's professional profile URL and **Company domain**.
 3.  Under **Select column**, map the column that contains the Clay Company ID (for example, the ID returned by Find Companies).
 4.  Run the column. Enrich Company converts an older Clay Company ID to the company's current ID before the lookup, and returns the current ID in its output.
 
-If **Match companies using** is left blank, Enrich Company guesses the identifier type from the value: a LinkedIn URL is matched as a LinkedIn URL, a whole number is matched as a Clay Company ID, and anything else is matched as a company domain.
+If **Match companies using** is left blank, Enrich Company guesses the identifier type from the value: a company profile URL is matched as a profile URL, a whole number is matched as a Clay Company ID, and anything else is matched as a company domain.
 
-**If your Enrich Company column has no "Match companies using" setting**, it's an older version of the Enrich Company action. The older version reads a plain number as a LinkedIn company ID, not a Clay Company ID — so a Clay Company ID can return **Company Not Found** or match an unrelated company. Add a new **Enrich Company** column that shows the **Match companies using** setting and use it instead.
+**If your Enrich Company column has no "Match companies using" setting**, it's an older version of the Enrich Company action. The older version reads a plain number as a professional-network company ID, not a Clay Company ID — so a Clay Company ID can return **Company Not Found** or match an unrelated company. Add a new **Enrich Company** column that shows the **Match companies using** setting and use it instead.
 
-**Use a stable key for downstream systems:** If your data pipeline joins companies by ID, store the Clay Company ID that Enrich Company returns rather than the one from Find Companies, or key on the company's LinkedIn URL or domain. In rare cases where a company's ID changed very recently, Enrich Company can return **Company Not Found** for a Clay Company ID — rerun the row using the company's LinkedIn URL or domain instead.
+**Use a stable key for downstream systems:** If your data pipeline joins companies by ID, store the Clay Company ID that Enrich Company returns rather than the one from Find Companies, or key on the company's professional profile URL or domain. In rare cases where a company's ID changed very recently, Enrich Company can return **Company Not Found** for a Clay Company ID — rerun the row using the company's professional profile URL or domain instead.
 
 ### Getting "Invalid input: Invalid person identifier" from Enrich person
 
