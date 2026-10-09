@@ -70,6 +70,45 @@ Authenticate by passing your workspace-scoped API key in the `clay-api-key` requ
 
 **Note:** Routine run `inputs` fields and item `id` values must not contain NUL characters (`\u0000`) or unpaired Unicode surrogates. Sending such characters to `POST /routines/{routine_id}/run` returns a `400` error — for example, `inputs: Inputs must not contain NUL characters (\u0000) or unpaired Unicode surrogates.` Batch runs with these characters produce a `validation_failed` status with a per-line field detail. If your data comes from a database export, file-parsing pipeline, or encoding-mismatched source, strip null bytes before calling the API.
 
+**Finding a routine_id**
+
+There is no REST endpoint to list routines — use one of these two methods to discover the `routine_id` for a function:
+
+-   **Via the URL:** Open the function in your Clay workspace. The segment after `/tables/` in the URL is the function's table ID (for example, `t_0te5b6rGsW6WAJW22cD`). Prefix it with `function:` to get the `routine_id` — for example, `function:t_0te5b6rGsW6WAJW22cD`.
+-   **Via the CLI:** Run `clay routines list` to list all routines in your workspace. IDs are returned in `function:t_abc` format and can be passed directly to the API. Only functions with **API & CLI integration enabled** appear in this output (see below).
+
+Before a function can be called via the Routines API or appear in `clay routines list`, you must enable **API & CLI integration** for it: open the function from your Clay homepage → **Functions**, then in the function's settings panel toggle on **API & CLI** under **Integrations**.
+
+**What to include in `items.inputs`**
+
+The keys in your `inputs` object must match the function's `inputName` values, which follow snake\_case convention (for example, `domain`, `linkedin_url`). These are not the display column names shown in the Clay UI. To inspect the exact input schema for a function before submitting a run, use the CLI:
+
+```
+clay functions get <functionId>
+```
+
+This returns `inputSchema` and `outputSchema` as JSON Schema objects. The `inputSchema` lists every expected key and its type. Pass either the raw table ID (for example, `t_0te5b6rGsW6WAJW22cD`) or the full `function:t_0te5b6rGsW6WAJW22cD` form — both are accepted.
+
+**Result format**
+
+When polling `GET /routines/run/{routine_run_id}/results` for an inline run, the response body is:
+
+```json
+{
+  "routine_run_id": "...",
+  "total": 10,
+  "finished": 10,
+  "status": "complete",
+  "data": [
+    { "id": "row-1", "status": "complete", "result": { } },
+    { "id": "row-2", "status": "failed", "error": "..." }
+  ],
+  "cursor": "..."
+}
+```
+
+Item-level `status` values inside `data[]` are `complete` and `failed`. For batch runs, the top-level terminal statuses are `complete`, `validation_failed`, and `processing_failed`. When a batch run completes, the response includes a `result_url` field — a pre-signed URL (no additional auth required) pointing to a JSONL file with one result object per line.
+
 **Public HTTP API — Credit Balance**
 
 Check your workspace's current credit balance without consuming any credits:
