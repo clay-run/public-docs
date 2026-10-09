@@ -121,6 +121,21 @@ When you use domains (e.g., `acme.com`) as company identifiers, Clay maps each d
 
 To limit results to a specific company only, use **company profile URLs from the professional network** instead of domains as your identifier. Profile URLs map directly to a single company page, so only people from that exact company appear in your results. See [Use profile URLs, not domains, as company identifiers](finding-companies-and-people-in-clay.md) for the full guidance and valid URL formats.
 
+### How do I exclude out-of-scope people, like famous executives, from a broad Find People search?
+
+A broad Find People search — for example, founders and C-suite in the United States at companies with 51–1,000 employees — can return well-known executives you don't expect. This happens because Find People matches a person if **any one of their current experiences** meets your filters. A famous executive who also currently holds a founder role at a smaller company matches your search through that smaller company, even though they're best known for a role at a much larger one.
+
+**Option 1 — Exclude people whose past experience was at much larger companies (Advanced Search, closed beta).** The experience group filters used below are part of the Advanced Search (Search DSL) mode, which is currently in closed beta. Contact support to request access to the closed beta.
+
+1.  In your Find People search filters, find the experience group that holds your current-role criteria (for example, `≥ 1 current experience is all of: Company: Company size is 51–200 employees… and Seniority is Founder, Owner, C-suite`).
+2.  Click the **⋮** menu on that experience group and select **Duplicate**. The copy is added as a second group, joined to your other filters with **and**.
+3.  In the copied group, change the **≥** quantifier to **no**, and change **current** to **past**. The group header now reads `no past experiences are:`.
+4.  Edit the copied group so it only checks company size: remove the other conditions (such as **Seniority**), and set **Company: Company size** to the sizes *larger* than your target range.
+
+Your search now returns people who meet your current-role criteria **and** have no past experience at a company in the larger size ranges — which removes executives whose earlier careers were at much bigger companies.
+
+**Option 2 — Exclude specific people by profile URL.** If only a handful of individuals are out of scope, add their professional profile URLs to the **Exclude people** setting in your search (available on Launch plan and above). See the **Exclude people** input in the Find People inputs list above for how exclusion matching works and its limits.
+
 ### Why does someone from my exclusion list still appear in my Find People results?
 
 **Exclusion matching is based on professional profile URL only.** Clay extracts the profile slug — the identifier after `/in/` in the URL — from each row in your exclusion table. Common format variations like `www.` prefixes, trailing slashes, and query parameters are normalized automatically, so two different URL formats that resolve to the same profile slug are treated as the same person. Email addresses in your exclusion table are not used for matching.
