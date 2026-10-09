@@ -129,6 +129,17 @@ Filter or select the runs you care about, choose how to restart them, and kick t
 
 **No duplicate work.** Bulk re-run deduplicates runs by record — if the same person or company appears in multiple selected runs, only one new run is created for them. The preview's run count already reflects this deduplication, so the number of runs created may be lower than the number you selected.
 
+### Why some runs show Failed after a bulk re-run from a chosen node
+
+When you bulk re-run from a node you choose (the **Choose node to start from** option in the **Re-run** menu), a selected run can only restart from that node if it has the earlier node outputs the chosen node needs. If a selected run doesn't have them — for example, the selected run stopped before an upstream node ran — Clay doesn't drop that run from the bulk re-run. Instead, it creates a new run with **Failed** status that runs no steps and doesn't consume credits, so the run still shows up in the **Runs** dashboard with a reason instead of disappearing. (Runs removed by record deduplication, described above, are still not created.)
+
+Open the failed run to read its message, which names the missing node output and how to fix it. For example:
+
+-   `Can't run from "Write email": "Write email" needs input from "Enrich person", but the selected run stopped before "Enrich person" ran. Select a completed run.`
+-   `Can't run from "Write email": "Write email" needs input from "Enrich person", which didn't run in the selected run. Select a run where it completed.`
+
+To resolve it, follow the fix in the message — for example, select runs where the upstream node completed, then bulk re-run those from the same node again.
+
 ### Retrying failed workflow runs via the CLI
 
 If you want an agent or script to catch and re-trigger failed workflow runs on a schedule — for example, when records fail due to provider outages — the Clay CLI's `clay workflows runs` command group covers this without opening the UI. Available on all plans; requires the [Clay CLI Agent Plugin](https://github.com/clay-run/agent-plugins) and a workspace API key with `cli:all` scope.
