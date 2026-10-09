@@ -106,6 +106,8 @@ Each enrichment column shows a progress bar you can hover over to see how many r
 
 ## Run Setup settings (Audiences)
 
+**Note:** For new workspaces, Audiences enrichment is now backed by Workflows (currently in open beta — contact your Growth Strategist to enable it). Workspaces that already have bulk enrichments continue to see the experience described in this section. See [Enrichment in Workflows](audiences.md#adding-enrichments) for details on the new experience.
+
 When a bulk enrichment is attached to an [Audiences](https://university.clay.com/docs/audiences) segment (available on Growth and Enterprise plans), clicking the enrichment card opens a **Run Setup** panel with additional settings for ongoing enrichment behavior.
 
 ### Audiences
