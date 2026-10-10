@@ -886,6 +886,25 @@ If you open Salesforce under **Add source** in Audiences and see your sandbox (o
 -   **Imports and field mappings for that account are removed.** The Salesforce import configurations on the disconnected account, including their field mappings, are deleted. Note your current field mappings before you disconnect so you can recreate them on the new account.
 -   **Your Salesforce connection itself is not deleted.** Disconnecting only removes the link between Audiences and that Salesforce account. Clay tables and workbooks that use the same Salesforce connection keep working.
 
+### How do I delete an Audience field to free up column capacity?
+
+Audiences enforces a field limit per entity type (People and Companies separately). Enterprise workspaces default to **135 fields per entity type**; Growth workspaces default to **70 fields per entity type**. When you reach the limit, Clay displays a "field limit reached" error and blocks new fields from being added until existing ones are removed.
+
+**Before deleting a field:**
+
+If the field is mapped to a data source import — for example, a Snowflake column that writes to this Audience field — go to that source's import settings and remove the field mapping first. If you delete the Audience field without removing the source mapping, the source will continue trying to write data to the deleted field on each sync. To remove the mapping, navigate to **Settings** → **Sources / Destinations**, open the relevant source (for example, your Snowflake import), and remove the specific field mapping before proceeding.
+
+**To delete a field:**
+
+1.  Click **Data Hub** in the left sidebar.
+2.  Click the **Fields** tab.
+3.  Click on the field you want to delete to open its sidebar.
+4.  Review the **Enrichments** section in the sidebar — any bulk enrichment writing data to this field will stop updating it after deletion.
+5.  Click **Delete field** at the bottom of the sidebar.
+6.  In the confirmation dialog, review any audience **segments** listed — segment filters that reference this field are automatically removed when you confirm. Click **Delete** to confirm.
+
+Deletion is permanent. The field slot is reclaimed, allowing new fields to be added up to your plan's limit. **Admin access is required** to delete Audience fields.
+
 ### A Salesforce field isn't appearing in my audience filters — how do I add it?
 
 The answer depends on which type of Salesforce import you are using:
