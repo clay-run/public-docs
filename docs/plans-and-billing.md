@@ -95,6 +95,8 @@ To downgrade your Clay workspace plan:
 2.  Navigate to `Plans & billing` and click `Switch plan`.
 3.  Choose the plan you'd like to downgrade to and confirm your selection.
 
+**Downgrading to the Free plan:** The Free plan does not appear in the `Switch plan` menu — only paid plan tiers (Launch, Growth, Enterprise) are listed there. To move your workspace to the Free plan, use the [Cancel plan](#cancel-your-plan) flow instead. Your current paid plan stays active until the end of the billing cycle, and your workspace automatically moves to Free at that point.
+
 **How downgrade billing works:** Plan downgrades are deferred to the end of your current billing cycle — your existing plan stays active until then, and you keep receiving its current Actions and Data Credit allocation. At renewal, your workspace switches to the new plan and your monthly Actions and Data Credit allocation resets to the new plan's level.
 
 **What happens to your Data Credits:** When the plan change takes effect, your credit balance is reduced to the rollover cap of your new plan — 2× its monthly credit limit. For the free plan (100 credits/month), that cap is 200 credits. Any credits above the cap are forfeited. If you have a large balance, spend it down before the change takes effect.
