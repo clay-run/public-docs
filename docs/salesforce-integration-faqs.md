@@ -371,6 +371,31 @@ Because the propagation delay from your Salesforce automations may not be fixed,
 
 **Avoid using a row-age run condition for this pattern.** A conditional formula that checks how long ago a row arrived will cause cells to show **"Run condition not met"** if the condition is not satisfied at run time — those cells do not retry automatically. Use Delay run instead; it defers the run without requiring condition re-evaluation.
 
+## Why doesn't my Salesforce report show up in the List View dropdown?
+
+Salesforce reports and Salesforce list views are separate things in Clay, and each one has its own import source. The **List View** dropdown only lists Salesforce list views for the Salesforce object you selected — Salesforce reports never appear there. If you're looking for a report in the **List View** dropdown, you'll only see list views (such as "My Accounts" or "All Accounts"), which can include old list views you created long ago.
+
+This applies to both places that use a **List View** dropdown:
+
+-   The **Import from CRM** flow (the "Start with CRM data" screen), which asks for **Salesforce Object** and **List View** only. The Import from CRM flow does not offer Salesforce reports.
+-   The **Import records from a Salesforce list** source.
+
+**To import a Salesforce report into Clay:**
+
+1.  In a workbook, click `+ Add` (or create a new table) and search for `Salesforce report`.
+2.  Select **Import records from a Salesforce report**.
+3.  Select your Salesforce account.
+4.  Choose your report from the **Report to Run** dropdown.
+5.  Optionally, pick **Uniqueness Fields** to prevent duplicate rows when the report re-syncs, then click `Submit`.
+
+**If your report is missing from the Report to Run dropdown:**
+
+-   **Report format:** The Report to Run dropdown only shows **Tabular** and **Matrix** reports. Summary and Joined reports are hidden. See [Why is my Salesforce report data not populating in Clay?](#why-is-my-salesforce-report-data-not-populating-in-clay) for how to change the format.
+-   **Connected user's access:** The dropdown lists the reports that the Salesforce user behind your selected Salesforce account can see. If you created the report under your own Salesforce login but Clay is connected as a different user (for example, an API or integration user), save the report in a folder that user can access, or select a Salesforce account connected as a user who can see the report.
+-   **Large orgs:** The Report to Run dropdown shows up to 2,000 reports, sorted by most recently run, then most recently modified. If your org has more than 2,000 reports, run your report in Salesforce so it moves to the top of the list, then reopen the dropdown in Clay.
+
+The same connected-user rule applies to the **List View** dropdown: it lists the list views the connected Salesforce user can see for the selected object.
+
 ## Why is my Salesforce report data not populating in Clay?
 
 The most likely cause is the report's format. Clay's **Import records from a Salesforce report** source only supports **Tabular** and **Matrix** report formats. Reports in **Summary** or **Joined** format are not supported and will return an error when Clay tries to run them.
