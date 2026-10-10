@@ -110,6 +110,14 @@ Insert a row into a Snowflake database.
 -   **Snowflake warehouse**
 -   **Role** (optional)
 
+**Tips**
+
+-   **Packaging column values as JSON for Snowflake:** Clay formula columns always produce text output — there is no native "object" column type in Clay. To combine multiple column values into a JSON-formatted string for use in the Insert Row action, use `JSON.stringify()` in a formula column:
+
+    `JSON.stringify({accountName: {{Account Name}}, country: {{Country}}, id: {{SFDC Account ID}}})`
+
+    This produces a JSON string that you can map to a Snowflake field using the Insert Row action. A formula that returns a raw JavaScript object without `JSON.stringify()` will display `[object Object]` in the column and cannot be mapped to Snowflake correctly.
+
 ### `Action` Lookup row
 
 Check if a row exists in your Snowflake database.
