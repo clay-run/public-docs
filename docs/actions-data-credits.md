@@ -347,6 +347,16 @@ Actions measure platform work (what you do). Data Credits measure data purchases
 
 Unlike Actions (always 1 per enrichment), Data Credits reflect the real-world value of each data point. You'll see the exact cost displayed next to each enrichment option in the product.
 
+### Why does the ratio of Actions to Data Credits vary across my workbooks?
+
+Different activities in Clay consume Actions and Data Credits in different proportions, which is why the ratio varies workbook-to-workbook:
+
+-   **Export and GTM execution workbooks** — CRM syncs, sending leads to sequencers, Slack messages, HTTP API calls, and ads audience exports each consume **1 Action per record but no Data Credits**. A workbook that primarily exports or sends data will have far more Actions than Data Credits.
+-   **Heavy data enrichment workbooks** — Enrichments like mobile phone numbers cost 5–10+ Data Credits per row. With only 1 Action per enrichment, expensive data workbooks end up with much higher Data Credits relative to Actions.
+-   **Mixed workbooks** — Most enrichments consume both 1 Action and a variable number of Data Credits, so the ratio falls somewhere between the two extremes.
+
+To identify exactly which columns are driving the difference in a specific table, open the **table credit dashboard** (click the chart icon next to any table name in `Settings → Usage`) and select **Column view** — it shows credit and Action spend broken down per column. See [Credit usage](/docs/credit-usage) for details on using the table dashboard.
+
 ### Why do I see lower enrichment prices in my account but I'm still being charged the old rate?
 
 If you see an in-product pricing summary comparing old and new enrichment costs (for example, ZeroBounce Validate Email showing 1 → 0.1 credits), those reduced rates apply to modern plans (Launch, Growth, or Enterprise) only. Customers on legacy plans continue to pay the original credit costs. To start benefiting from the lower data credit prices, go to `Settings` → `Plan & billing` and switch to a current plan. See [Legacy plans](./legacy-plans.md) for a full comparison of what changes when you migrate.
