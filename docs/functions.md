@@ -93,7 +93,7 @@ When a function contains a waterfall, the estimated cost shown (marked with a `~
 
 ### Is there a row limit for functions?
 
-No. As of General Availability, functions support unlimited rows via passthrough. Functions also include a 10x speedup and fair sharding for parallel execution, so large workloads are distributed efficiently instead of queuing. Prior to GA, Functions had a 50,000-row limit.
+No. As of General Availability, functions support unlimited rows via passthrough. Functions also include a 10x speedup and fair sharding for parallel execution, so large workloads are distributed efficiently instead of queuing. Prior to GA, Functions had a 50,000-row limit. If you have a function that was created before the GA release, passthrough auto-delete may not be enabled on it — rows accumulate rather than auto-deleting after processing, and the function will stop accepting new records once it reaches capacity. If your function is hitting this limit, create a new function to replace it.
 
 **Note:** The function's live view displays only the most recent **1,000 rows** at a time. This limit is intentional: functions are passthrough tables, and keeping the active row count low ensures there is enough space for new incoming records to be processed. All rows are fully processed and their results returned to the calling table regardless of this limit. When the function is called from multiple tables, the live view allocates up to **50 rows per calling table** (prioritizing the most recently active tables first), with any remaining capacity filled by the globally newest rows.
 
