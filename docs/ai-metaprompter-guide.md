@@ -87,6 +87,26 @@ Bad output (uses a question): have you considered how your expansion strategy co
 
 You can also add examples through the Clay UI without editing the prompt text directly: in the **Configure** tab of any Use AI column, click `Examples` → `Add examples`. See [Use AI](https://www.clay.com/university/lesson/use-ai-integration-overview) for details.
 
+## Model choice and prompting conventions
+
+The CONTEXT / OBJECTIVE / STEPS / INPUTS / OUTPUT prompt structure works well across all Clay AI use cases and all models. That said, the model you select affects what to emphasize in your prompt and what kind of output to expect.
+
+**Clay parallel models (Argon, Neon, Helium) — Claygent web research only**
+
+Clay's parallel models are available only in Claygent (web research) columns, where web search is always active. They differ in depth and cost:
+
+-   **clay-argon** — Recommended for deep, multi-step web research: visiting multiple pages, following links, and cross-referencing sources. Argon is the default Claygent model for complex open-ended research.
+-   **clay-neon** — A balance of depth and speed for moderately complex research tasks.
+-   **clay-helium** — Fastest and most cost-effective; well-suited for simpler web lookups.
+
+In Claygent prompts for Clay parallel models, be specific about which sources to consult, in what order, and what to do when a source doesn't return useful data. Explicit step-by-step instructions and fallback logic ("if not found on the website, search Google for…") help Argon and Neon stay on track across multi-page research paths.
+
+If your task is classification or categorization of data **already in your Clay table** — not web research — switch to a lighter model (clay-helium, GPT-4o mini, or Claude Haiku) or use **Create or modify content** mode in Use AI instead of Claygent. Argon is built for research and tends to return multi-sentence explanations rather than clean single-value outputs on categorization tasks. See [Claygent builder](claygent-builder.md) for a full model comparison.
+
+**Third-party models (Claude, GPT-4o, Gemini, and others)**
+
+Third-party models are available in both Claygent (web research) and Use AI (Create or modify content) columns. When using a third-party model, that provider's own prompting conventions are worth consulting in addition to the CONTEXT / OBJECTIVE / STEPS / INPUTS / OUTPUT structure above. For example, Anthropic and OpenAI each publish prompting guidance specific to their models. For links to each provider's documentation, see the [Use AI](use-ai-integration-overview.md) doc.
+
 ## Using the AI help tool
 
 1.  While configuring the "Use AI" enrichment, click `Generate with prompt`**.**
