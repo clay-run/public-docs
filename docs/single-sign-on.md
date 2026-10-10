@@ -84,6 +84,8 @@ SCIM Directory Sync is in active development — contact Clay support or your Gr
 
 **Clay does not have a user management API.** There is no API endpoint to programmatically create, update roles for, or deactivate workspace members. All user management must be performed through the Clay UI at `Settings` > `Team`.
 
+**Clay does not have a user management API.** There is no API endpoint to programmatically create, update roles for, or deactivate workspace members. All user management must be performed through the Clay UI at `Settings` > `Team`.
+
 **Clay user roles are not managed through SSO or SAML.** Enabling SSO does not change existing team members' roles in your workspace. Clay reads only the user's email address from the SAML assertion, with `firstName` and `lastName` as optional attributes — no role or group attributes from your identity provider are mapped to Clay workspace roles. To assign or update a team member's role after SSO is enabled, go to `Settings` > `Team` and use the role dropdown next to their name.
 
 ## Disabling or re-enabling SSO
