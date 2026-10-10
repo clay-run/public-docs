@@ -63,7 +63,7 @@ The Salesforce import flow in Audiences has been redesigned. You can import **al
 
 1.  Click `Add data` → `Add Source` → select your [**Salesforce integration**](https://university.clay.com/docs/salesforce-integration-overview).
     -   If you don't see a Salesforce integration listed, contact your Growth Strategist.
-2.  If no Salesforce account is connected yet, select an account from the dropdown or click `+ Add account` to authenticate one. If your workspace already has a Salesforce account connected in Audiences, the panel shows the connected account as a read-only field — **Audiences supports one Salesforce connection per workspace**. You can add multiple imports (different object types or SOQL subsets) from that one connected org, but you cannot switch to or add a second Salesforce account.
+2.  If no Salesforce account is connected yet, select an account from the dropdown or click `+ Add account` to authenticate one. If your workspace already has a Salesforce account connected in Audiences, the panel shows it as a read-only **Connected Salesforce account** field with **Add records** and **View settings** buttons — **Audiences uses one connected Salesforce account at a time**. You can add multiple imports (different object types or SOQL subsets) from that one connected org, but you cannot add a second Salesforce account alongside it. To use a different Salesforce account instead, disconnect the current one first — see [How do I switch the Salesforce account connected to Audiences?](#how-do-i-switch-the-salesforce-account-connected-to-audiences-for-example-from-a-sandbox-to-production).
 3.  Once connected, you land on the Salesforce source settings page.
 
 **Step 2: Add a Salesforce import**
@@ -850,17 +850,41 @@ To keep title and location data in one set of fields, map the HubSpot properties
 
 ### Can I connect multiple Salesforce accounts to Audiences?
 
-No. Audiences supports one Salesforce connection per workspace. Once a Salesforce account is connected, the Salesforce source panel shows that account as a read-only field — there is no dropdown or `+ Add account` option to switch to or add a second Salesforce org.
+No. Audiences uses one connected Salesforce account at a time. Once a Salesforce account is connected, the Salesforce source panel shows that account as a read-only **Connected Salesforce account** field — there is no dropdown or `+ Add account` option to add a second Salesforce org alongside it.
 
 **Note:** Changing your workspace's default Salesforce connector in **Settings → Connections** does not affect which Salesforce account Audiences uses. Audiences stores a direct reference to the account that was originally connected — the Add Source panel will continue to show that account as read-only regardless of which connector is set as the workspace default.
 
 You can still add multiple imports from the same connected Salesforce account — for example, separate imports for Contacts, Accounts, and SOQL-filtered subsets — but all imports come from the same Salesforce org.
 
-**To switch to a different Salesforce account** (for example, moving from a UAT org to a production org): remove the existing Salesforce source from Audiences, then reconnect with the new account. Before removing, note down your current field mappings — field mapping configurations cannot be recovered after a source is removed. See [I removed and re-added my Salesforce source in Audiences and my field mappings are gone — how do I restore them?](#i-removed-and-re-added-my-salesforce-source-in-audiences-and-my-field-mappings-are-gone--how-do-i-restore-them) for the full implications.
+**To switch to a different Salesforce account** (for example, moving from a UAT or sandbox org to a production org): disconnect the current Salesforce account from Audiences, then add Salesforce again and select the new account. See [How do I switch the Salesforce account connected to Audiences?](#how-do-i-switch-the-salesforce-account-connected-to-audiences-for-example-from-a-sandbox-to-production) for step-by-step instructions.
 
 If you need data from a second Salesforce org in Audiences without removing the existing connection, the available workaround is: connect the second org under **Settings → Connections**, bring its records into a Clay table using Salesforce actions, then push those records into Audiences using `Upsert Audiences Record`. Note that Clay table row limits apply in this path.
 
 **If you need to keep each Salesforce org's audiences completely separate — with no cross-org record merging — use a separate Clay workspace for each Salesforce org.** Records in a shared workspace go through the same entity resolution pool, so contacts or companies from one org may be merged with records from the other if they share a matching identifier (professional network URL, email, or domain). Separate workspaces keep each org's Audience data fully independent.
+
+### How do I switch the Salesforce account connected to Audiences (for example, from a sandbox to production)?
+
+If you open Salesforce under **Add source** in Audiences and see your sandbox (or another wrong org) in the read-only **Connected Salesforce account** field with no way to pick your production org, Audiences is still linked to that first Salesforce account. Audiences uses one connected Salesforce account at a time, so to switch accounts you disconnect the current one from Audiences and then connect the new one. Adding a second Salesforce connection under **Settings → Connections** does not change which account Audiences uses.
+
+**Who can do this:** Disconnecting and adding Audiences sources requires the **Admin** workspace role. Editors and Viewers don't see these controls.
+
+**Audiences settings have moved.** Audiences no longer has a separate Settings page. Audiences sources are managed from the **Sources** tab on the **All People** and **All Companies** pages.
+
+**To switch the Salesforce account connected to Audiences:**
+
+1.  In Audiences, open **All People** or **All Companies** and click the **Sources** tab.
+2.  Open the Salesforce source settings page. Either click **Add source**, select **Salesforce** in the **Browse sources** panel, and click **View settings**, or click the **⋮** menu next to any Salesforce import row on the Sources tab and select **Settings**.
+3.  In the header of the Salesforce settings page, click **Manage** and select **Disconnect**.
+4.  In the **Disconnect Salesforce account from Audiences?** dialog, click **Disconnect**.
+5.  Back on the **Sources** tab, click **Add source** and select **Salesforce**. Now that no Salesforce account is linked, the **Select Salesforce account** dropdown appears. Choose the account you want to use, for example your production org.
+6.  Set up your Salesforce imports and field mappings again on the new account.
+
+**What happens when you disconnect a Salesforce account from Audiences:**
+
+-   **Disconnecting is permanent.** You can't undo it, but you can connect a Salesforce account again afterward.
+-   **Records already imported stay in Audiences.** People, companies, leads, opportunities, and custom objects imported through that connection remain in Audiences. They are marked as unsynced and no longer sync with Salesforce. To remove them, archive them. See [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience).
+-   **Imports and field mappings for that account are removed.** The Salesforce import configurations on the disconnected account, including their field mappings, are deleted. Note your current field mappings before you disconnect so you can recreate them on the new account.
+-   **Your Salesforce connection itself is not deleted.** Disconnecting only removes the link between Audiences and that Salesforce account. Clay tables and workbooks that use the same Salesforce connection keep working.
 
 ### A Salesforce field isn't appearing in my audience filters — how do I add it?
 
