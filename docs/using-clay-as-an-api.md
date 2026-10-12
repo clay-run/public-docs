@@ -83,6 +83,49 @@ The response includes:
 
 Use the same workspace-scoped API key in the `clay-api-key` request header. Reading balances does not consume credits.
 
+**Public HTTP API — Read (pull) rows from a Clay table**
+
+To pull existing rows out of a Clay table programmatically, use the tables query endpoint:
+
+-   `POST https://api.clay.com/public/v0/tables/query` — returns rows from one or more Clay tables.
+
+**Note: The old `/v1/tables/{table_id}/records` endpoint is deprecated.** Every request to a legacy `https://api.clay.com/v1/...` URL — including `GET /v1/tables/{table_id}/records` — returns a `404` with the response `{"success": false, "message": "deprecated API endpoint"}`. Changing your API key or header will not fix this. Switch to `POST /public/v0/tables/query` instead.
+
+Before you call the tables query endpoint:
+
+1.  Turn on **Enable for API** in the table's settings (**Table Settings → Integrations → Enable for API**). Querying a table that doesn't have Enable for API turned on returns a `400` error.
+2.  Create a workspace-scoped API key (see the Routines section above) and pass it in the `clay-api-key` request header — not the `Authorization` header.
+
+Here's an example request that pulls two columns from a table:
+
+```
+curl --request POST \
+  --url https://api.clay.com/public/v0/tables/query \
+  --header "Content-Type: application/json" \
+  --header "clay-api-key: $CLAY_API_KEY" \
+  --data '{
+    "query": {
+      "tables": [{"id": "t_your_table_id"}],
+      "select": [
+        {"field": "Company Name", "as": "company_name"},
+        {"field": "Domain", "as": "domain"}
+      ],
+      "field_mode": "names"
+    },
+    "limit": 100
+  }'
+```
+
+How the tables query request works:
+
+-   **`query.tables`** — the table(s) to read, by table ID (1 to 5 tables). Find a table's ID in its URL: it's the segment after `/tables/` (for example, `t_0te5b6rGsW6WAJW22cD`).
+-   **`query.select`** — the columns to return (up to 20). Use `as` to rename a column in the response.
+-   **`query.field_mode`** — `"names"` to reference columns by their display name, or `"ids"` to reference them by field ID.
+-   **`limit`** — rows per page. The maximum is `100`; if you leave it out, the default is `50`.
+-   **`cursor`** — pagination. If the response includes a `cursor`, more rows are available: send the same request again with that value as a top-level `cursor` field (next to `query` and `limit`) to get the next page. When the response has no `cursor`, you've reached the last page.
+
+Pulling rows with `POST /public/v0/tables/query` is read-only and does not consume Data Credits or Actions.
+
 **Note:** A 401 (`Authentication required`) from `api.clay.com/public/v0` means your workspace hasn't been provisioned for the Public HTTP API — this applies even if your API key is visible in settings. Regenerating the key will not fix a provisioning 401. [Contact Clay support](https://www.clay.com/contact-form) to request workspace enablement.
 
 **Note:** A `413` (`Payload Too Large`) from `POST /search/filters-mode/{search_id}/run` means the requested page of results exceeds the API's internal output cap. Reduce the `limit` parameter in your request and retry — the error is deterministic, so retrying at the same `limit` will always fail.
@@ -149,3 +192,15 @@ All three return `auth_forbidden` (exit 3) if Audiences is not enabled for the w
 **Note: `clay workflows runs` subcommands let you list, inspect, pause, and trigger workflow runs from the CLI.** All subcommands are on the stable channel, available on all plans, and require a workspace API key with `terracotta:cli` or `cli:all` scope. `clay workflows runs list <workflowId>` lists runs newest-first with optional `--status` filter (`pending`, `running`, `waiting`, `paused`, `completed`, `failed`), `--created-after` datetime, `--search` text, and `--cursor`/`--limit` for pagination. `clay workflows runs get <runId>` fetches status, progress, and per-node summary for a single run; add `--nodes` to include all workflow nodes, `--verbose` for full per-node inputs and outputs, and `--wait` to poll until the run reaches a terminal state. `clay workflows runs test <workflowId>` starts a new run via the manual trigger — pass `--inputs '<json>'` to supply input values, `--audience-segment <segmentId> --limit <n>` to run members of an audience segment, or `--trigger <triggerId>` to fire a source trigger. `clay workflows runs steps <workflowId> <runId>` lists the execution steps of a run with optional `--node-id`, `--status`, `--parent-only`, and `--entries-only` filters. `clay workflows runs pause <workflowId> <runId>` pauses an active run; `clay workflows runs resume <workflowId> <runId>` resumes a paused run. Common errors: `auth_forbidden` (exit 3) if the key lacks the required scope; `not_found` (exit 6) if no run or workflow with that id exists in the workspace. See [Run progress](run-progress.md#retrying-failed-workflow-runs-via-the-cli) for a full example of building an agent-driven retry loop using these commands.
 
 **Note: `clay workflows ensure-audience-writeback` creates or reconnects the shared Audiences upsert node for an audience enrichment workflow.** `clay workflows ensure-audience-writeback <workflowId>` calls the server-side helper to create or reuse the single `upsert-audiences-record` terminal node for a workflow of type `audience_enrichment`, and wires every eligible terminal route to it. The command is available on both the stable and experimental channels; it requires `cli:all` or `terracotta:cli` scope on your API key and workspace Admin or Member role (Viewers cannot use this command). Workflow commands (`clay workflows get`, `list`, `create`, `update`, `publish`) now include a `type` field in their output with three possible values: `audience_enrichment` (created by the audience enrichment experience; writes results back to Audiences), `account_agents` (managed by the account agents experience), or `null`/omitted for general workflows. Common errors: `validation_error` (exit 2) if the workflow is not of type `audience_enrichment` or has no eligible terminal route; `auth_forbidden` (exit 3) if the API key lacks the required scope or the caller does not have Admin or Member access; `not_found` (exit 6) if no workflow with that id exists.
+
+### Can I export Clay table data to an SFTP server?
+
+Clay doesn't support exporting table data to an SFTP server. There is no native SFTP export, SFTP integration, or SFTP action in Clay, so SSH key (public/private key pair) authentication for SFTP isn't available either.
+
+If you need Clay data delivered to an SFTP server, use an intermediary service that handles the final SFTP upload, and get the data to it in one of these ways:
+
+-   **Pull rows from Clay** with the tables query endpoint (`POST /public/v0/tables/query`) described under **Public HTTP API — Read (pull) rows from a Clay table** earlier on this page, then have your intermediary write the file to SFTP.
+-   **Push rows from Clay** to your intermediary's endpoint with an [HTTP API](https://university.clay.com/docs/http-api-integration-overview) column as each row runs.
+-   **Download the table as a CSV** (**Tools → Export → Download CSV**) and upload the file to your SFTP server. See [How to import your CSV into Clay](csv-import-overview.md#exporting-downloading-your-clay-table-as-csv).
+
+If your goal is to land Clay data in a data warehouse, you can skip SFTP entirely and write directly to your warehouse with Clay's [Snowflake](snowflake-integration.md) or [Google BigQuery](google-bigquery-integration.md) integrations.
