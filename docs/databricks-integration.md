@@ -151,6 +151,31 @@ After you select the Databricks catalog, schema, and table, the action loads you
 
 ## Troubleshooting
 
+### How do I tell when a row was last refreshed from Databricks?
+
+Clay does not surface a built-in per-row "last refreshed" timestamp for source data. There is no system column that records when a specific row was most recently pulled from Databricks.
+
+**Recommended approach — include a timestamp column in your SQL query**
+
+If your Databricks table has a column tracking when each record was last updated — such as `updated_at`, `last_modified`, or a similar field — include it in your SQL SELECT statement. That column becomes a regular column in your Clay table and shows exactly how fresh each row's Databricks data is.
+
+For example:
+
+```sql
+SELECT *, updated_at FROM my_schema.my_table
+```
+
+This is the most reliable way to diagnose timing mismatches between Databricks and Clay: compare the `updated_at` value on a row in Clay against what Databricks shows for the same record.
+
+**If your Databricks table has no timestamp column**
+
+Clay maintains two system timestamps on every row, available in the row detail panel:
+
+-   **Created At** — set once when the row is first inserted into the Clay table. This timestamp does not update when a subsequent source run refreshes the row's column values.
+-   **Updated At** — updated whenever any column on the row is written, by any source run or enrichment. Because enrichments and source refreshes both update this field, it cannot reliably isolate when the Databricks source specifically ran.
+
+For a run-level view of source activity, open the source column header and click **View Run History**. This shows a log of past runs — including status, rows added, and timestamps — but does not let you filter the table to show which rows a specific run affected.
+
 ### "Missing column data" error on Upsert Row
 
 The error `Missing input: Missing column data` on a row means the action has no column values to write — either because no columns are mapped in the Column mapping section, or because all mapped Clay columns are empty for that row.
