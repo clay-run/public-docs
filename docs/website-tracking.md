@@ -2,7 +2,7 @@
 title: Web intent
 description: Collect visitor information including pages visited, time spent,
   and traffic sources. Includes workflow for sending emails to identified visitors.
-last_synced: 2026-04-26T01:40:54.567Z
+last_synced: 2026-10-07T03:49:05.838Z
 ---
 
 # Web intent
@@ -20,8 +20,8 @@ This tracking provides insights into how visitors engage with your content and h
 ### **Creating the connection**
 
 1.  Click on your account name → `Settings` → `Web intent`.
-2.  Click `Add connection` and give the connection a unique name – you'll need this later.
-3.  Copy the code under `Install tracking snippet` and install with one of the two methods.
+2.  Click `Add connection` and give the connection a unique name in the `Website name` field – you'll need this later.
+3.  In the `Web intent setup` section, copy the code from the `JavaScript Snippet` tab and install it with one of the methods below.
     -   **Directly installing a tracking snippet (Recommended):**
         -   We recommend installing the tracking snippet before the closing `</body>` tag on **all pages** of your website to collect comprehensive data. This snippet loads tracking scripts asynchronously, ensuring it won't affect your page loading time.
     -   **Installing via** [**Google Tag Manager**](https://support.google.com/tagmanager/answer/6107167#CustomHTML)**:**
@@ -29,7 +29,7 @@ This tracking provides insights into how visitors engage with your content and h
         -   _Note: While this method works, we recommend installing directly as ad blockers often disable Tag Manager._
 
         1.  Navigate to the `Tags` section in your GTM account.
-        2.  Click `New` in the top-left to create a new tag..
+        2.  Click `New` in the top-left to create a new tag.
         3.  Add a name like `Clay Visitor Tracking`.
         4.  Edit your `Tag Configuration`, and select `Custom HTML` as the tag type.
         5.  Paste the JavaScript snippet from Clay into the text box.
@@ -44,8 +44,8 @@ This tracking provides insights into how visitors engage with your content and h
     -   **Note:** Pricing is based on unique IP addresses that successfully retrieve data. You'll be charged at most once per 30-day period for each visitor with the same IP address who visits your website.
 5.  Add filters for specific countries or pages.
     -   You can include a `*` to match any page paths (e.g., `/blog*`).
-6.  Make sure `Connection enabled` is toggled and click `Save`.
-7.  In a workbook, under `Create`, click `Website visitor tracking`.
+6.  Make sure `Enable connection` is selected and click `Save`.
+7.  In a workbook, under `Create`, click `Web intent`.
 8.  Select your website connection from the dropdown and adjust your filters.
     -   Configure your table filters using page paths, session time, referrer, or UTM tags to show only relevant visitor data.
     -   For advanced filtering, create filter groups and adjust visit frequency parameters to refine results.
@@ -111,7 +111,7 @@ To minimize credit usage while maintaining quality results, adjust your **advanc
 
 These filters help narrow your results to visitors who spend more time on site and engage with multiple pages, indicating genuine interest.
 
-**Use Waterfall instead of Best Match:** `Waterfall` stops after the first provider match, while `Best Match` tests all providers and can cost 5-10 times more. Remember that IPs are cached for 30 days to avoid repeat costs.
+**Use Waterfall instead of Best match:** `Waterfall` runs your selected providers in sequence and stops at the first match, while `Best match` runs them all together and selects the highest-confidence result. Because `Best match` queries every provider, it costs more per visitor. Remember that IPs are cached for 30 days to avoid repeat costs.
 
 ### Writing website visits to Salesforce
 
@@ -216,16 +216,16 @@ Toggling the Enabled toggle off and back on will not fix a disabled connection �
 **The connection is disabled automatically when:**
 
 -   Your workspace ran out of credits.
--   The signal hit its credit spend limit.
+-   The signal hit its monthly credit spend limit.
 -   The table reached the 50,000-row limit (enable passthrough tables to avoid this).
 
-Credits being restored does not re-enable the connection automatically — you must re-enable it manually.
+If the signal hit its monthly credit spend limit, new visit sessions resume on their own at the start of the next month. For the other two causes, re-enable the connection yourself once you've addressed them — credits being restored does not re-enable the connection automatically.
 
 **To re-enable the website connection:**
 
 1.  Click the signal column header (📡 icon) in your workbook to open the right-hand panel.
-2.  Click **Edit website connection** in the panel.
-3.  Confirm the **Connection enabled** toggle is on, then click **Save**.
+2.  Click **Edit website connection** in the panel. Your connection opens in `Settings` → `Web intent` in a new tab.
+3.  Select **Enable connection**, then click **Save changes**.
 
 New visits will start flowing into the table as they arrive. Data from the period while the connection was off will not be backfilled.
 
@@ -250,7 +250,7 @@ Note: Some very niche or newly formed businesses may have no coverage across any
 
 ### Credit spend higher than expected
 
-The most common cause is using `Best Match` instead of `Waterfall` for de-anonymization. `Waterfall` stops after the first match, while `Best Match` tests all providers and can cost 5-10 times more. Remember that IPs are cached for 30 days to avoid repeat costs.
+The most common cause is using `Best match` instead of `Waterfall` for de-anonymization. `Waterfall` stops at the first provider match, while `Best match` queries every selected provider, so it costs more per visitor. Remember that IPs are cached for 30 days to avoid repeat costs.
 
 Other common causes: adding new pages to tracking, removing exclusions, loosening filters, or surges in site traffic.
 
@@ -298,6 +298,12 @@ Charges begin after you install the tracking snippet and Clay starts receiving e
 **Cost:** Each successful IP enrichment consumes 1 action plus the applicable data credits (based on the de-anonymization provider). Results are cached for 30 days to avoid repeat costs.
 
 You can view your credit spend for signals underneath the `Signals` tab of the [credit usage dashboard](https://www.clay.com/university/guide/credit-usage). To access, click on your account name → `Settings` → `Usage`.
+
+### How is web intent different from topic intent?
+
+Web intent tracks visitors on your own website, so it tells you which accounts are already engaging with your content.
+
+`Topic intent` is a separate signal that finds people and companies researching your topics across a provider's intent network, which surfaces net-new accounts that have not visited your site yet. The two signals are configured independently, and you can run both.
 
 ### Can I track person-level information?
 
