@@ -3,7 +3,7 @@ title: Run progress
 description: Clay provides multiple ways to track and monitor run progress
   across your tables and workflows, including how to use the built-in Errored
   rows view to filter to failed rows, what happens when a workflow node fails
-  (and how Repeat mode's "If an item fails" setting works), bulk re-run many workflow runs at once
+  (including why action nodes fail with timeout errors, and how Repeat mode's "If an item fails" setting works), bulk re-run many workflow runs at once
   from the runs dashboard, set a row limit to control which rows are processed,
   manually trigger unrun enrichment cells, run enrichments on a specific subset
   of rows, troubleshoot cells stuck in Queued status, recover action column cells
@@ -102,6 +102,17 @@ A **Conditional** node can route on a node that succeeds but finds nothing. When
 
 To recover runs that ended because a node failed, fix the underlying issue (for example, re-authenticate the connection), then use **Bulk re-run** (below) to restart the failed runs at their failed step.
 
+### Why do workflow nodes fail with timeout errors?
+
+In Clay Workflows, an action node that calls an outside provider — for example, adding a lead to an Instantly campaign, finding a personal email, or looking up a phone number — times out if the provider doesn't respond within **100 seconds**. 100 seconds is the default limit for action nodes; some actions have longer limits. A timed-out node shows an error such as `Tool execution failed with status: ERROR_TIMEOUT`.
+
+A timed-out node is marked **Failed** like any other node error, so the run ends at that node and the nodes after it don't run. A timeout means the provider took longer than 100 seconds to answer that node's request, so changing how the node is batched doesn't change the timeout limit. Workflows don't have a setting to skip a node that times out and continue the run.
+
+To recover runs that failed with a timeout:
+
+-   **From the UI:** use **Bulk re-run** (below) to restart the failed runs at their failed step. Steps that already completed successfully are not re-run, so no credits are spent repeating them.
+-   **On a schedule:** use the Clay CLI to find failed runs and re-run them automatically — see **Retrying failed workflow runs via the CLI** (below).
+
 ### Continuing past failed items in Repeat mode
 
 The **If an item fails** setting is available to all Workflows customers. When a node has **Repeat** turned on, it runs once for each item in a list. The node's **If an item fails** setting controls what happens when individual items error:
@@ -147,15 +158,19 @@ If you want an agent or script to catch and re-trigger failed workflow runs on a
     ```
     Returns run status, per-node progress, and error messages. Add `--verbose` for full node inputs and outputs.
 
-3.  **Start a new run** to retry the record:
+3.  **Re-run the failed runs** from the node where they failed:
     ```
-    clay workflows runs test <workflowId> --inputs '{"key": "value"}'
+    clay workflows runs rerun <workflowId> <runIds...> --from failed
     ```
-    This starts a new run — monitor it with `clay workflows runs get <runId> --wait` or check the **Runs** dashboard in the UI.
+    `--from failed` is the default: each run restarts at the node it failed on, and runs that didn't fail are skipped. Use `--from node --node <nodeId>` to start every run at a node you choose, or `--from trigger` to recreate each run from its trigger (runs with no trigger are skipped). To re-run every failed run in one command, pipe the list into `rerun`:
+    ```
+    clay workflows runs list <workflowId> --status failed | jq -r '.data[].runId' | xargs clay workflows runs rerun <workflowId>
+    ```
+    Monitor the new runs with `clay workflows runs get <runId> --wait` or check the **Runs** dashboard in the UI.
 
 Additional `clay workflows runs` subcommands: `steps <workflowId> <runId>` (list the execution steps of a run), `pause <workflowId> <runId>` (pause an active run), `resume <workflowId> <runId>` (resume a paused run).
 
-**Clay does not automatically re-run failed workflow runs.** To build a recurring retry loop, schedule the `list --status failed` → `test` sequence to run a few times a day using a cron job or your agent's scheduler. The agent lists failed runs, identifies which ones failed due to transient provider errors, and fires new runs for those records without manual intervention. For re-running many failed runs at once from the UI instead, use the **Bulk re-run** feature in the **Runs** dashboard described above.
+**Clay does not automatically re-run failed workflow runs.** To build a recurring retry loop, schedule the `list --status failed` → `rerun --from failed` sequence to run a few times a day using a cron job or your agent's scheduler. The agent lists failed runs, identifies which ones failed due to transient provider errors (such as timeouts), and re-runs them from their failed node without manual intervention. For re-running many failed runs at once from the UI instead, use the **Bulk re-run** feature in the **Runs** dashboard described above.
 
 ## Stopping a run
 
