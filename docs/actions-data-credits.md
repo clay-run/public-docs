@@ -25,7 +25,7 @@ The table below summarizes the key differences between Actions and Data Credits.
 | What it measures | Platform usage capacity | Data marketplace purchases |
 | Cost per enrichment | Always 1 action | Varies (0.5–10+ credits based on data type) |
 | How to get more | Upgrade action capacity tier | Upgrade tier OR purchase one-time top-up |
-| Rollover | No | Yes (up to 2× monthly limit) |
+| Rollover | No | Yes (monthly and annual limits differ; see below) |
 
 ## How Actions and Data Credits work together
 
@@ -170,7 +170,7 @@ Two options:
 -   Go to `Settings` → `Usage` and click `Add one-time data credits`.
 -   Available for emergency needs during your billing cycle.
 -   **30% premium** applies (on modern plans; **50% premium** on legacy plans).
--   Subject to the 2× rollover cap: at renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap — including purchased top-ups — are dropped.
+-   On monthly plans, subject to the 2× rollover cap: at renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap — including purchased top-ups — are dropped.
 
 ### Data Credits for AI
 
@@ -247,9 +247,9 @@ If you are on a **monthly plan**, unused Data Credits will roll over and accumul
 -   For example, if your plan includes 50,000 credits per month, your maximum balance is 100,000. If you already have 82,000 credits when your plan renews, your balance becomes 100,000 — not 132,000. The 32,000 excess is dropped.
 -   If you cancel or downgrade, you can use any excess Data Credits until your current billing cycle ends. After the billing cycle ends, your balance will be reduced to the **Data Credit rollover limit** of your new plan.
 
-If you are on an **annual plan**, your full year's Data Credits are deposited into your account immediately at purchase — they are not distributed in monthly installments. You can run a bulk enrichment right away without waiting for credits to accumulate. You are also eligible for a **15% Data Credit rollover** of unused Data Credits when you renew, provided you renew on the same or a higher-tier plan.
+If you are on an **annual plan**, your full year's Data Credits are deposited into your account immediately at purchase — they are not distributed in monthly installments. You can run a bulk enrichment right away without waiting for credits to accumulate. For a standard renewal on the same or a higher-tier plan, unused credits can carry over up to **15% of the annual credit allotment**. The percentage sets a cap; it is not multiplied by your unused balance. For example, with an unchanged 100,000-credit annual allotment and 40,000 credits left, up to 15,000 carry over. If only 8,000 remain, all 8,000 are within that cap. Enterprise and other custom contracts can have different rollover terms; check your contract and renewal or checkout details.
 
-_Note: Your rollover and renewal happen on the same day and at the same time you originally subscribed (this timestamp is now shown in your billing details). Credits are updated via a payment-processor webhook and typically appear within a few minutes of that timestamp._
+_Note: Renewal is scheduled for the subscription’s billing timestamp, shown in billing details. A scheduled date is not confirmation that payment or the credit grant succeeded. If rollover or a renewal grant is missing, check the invoice for that renewal and contact support to verify the credit history, especially after a failed payment._
 
 ## Managing your plan and credits
 
@@ -279,7 +279,7 @@ For emergency Data Credit needs during your billing cycle (not available for Act
 
 Credits are added to your balance immediately upon purchase. Top-ups do not change your plan or billing cycle — your existing subscription and renewal date are unaffected.
 
-**Note:** One-time top-ups have a **30% premium** on modern plans (**50% premium** on legacy plans). Top-up credits are subject to the 2× rollover cap: at your next renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap are dropped — including credits you purchased. For example, on a plan with 2,500 credits/month, your maximum balance at renewal is 5,000; if you buy a 15,000-credit top-up and don't spend it all before renewal, only up to 5,000 credits carry over. Check your current balance and upcoming renewal date before purchasing a large top-up. For regular needs, upgrading your Data Credits tier is more cost-effective.
+**Note:** One-time top-ups have a **30% premium** on modern plans (**50% premium** on legacy plans). Top-up credits are subject to your plan’s rollover rules. On monthly plans, the 2× cap applies: at your next renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap are dropped — including credits you purchased. For example, on a plan with 2,500 credits/month, your maximum balance at renewal is 5,000; if you buy a 15,000-credit top-up and don't spend it all before renewal, only up to 5,000 credits carry over. Check your current balance and upcoming renewal date before purchasing a large top-up. For regular needs, upgrading your Data Credits tier is more cost-effective.
 
 ### Downgrade or cancel your plan
 
@@ -378,13 +378,13 @@ Actions represent fixed platform capacity tied to your action tier. To get more 
 
 Actions reset each billing cycle and don't roll over, since they reflect the platform capacity your plan includes. Each plan includes enough Actions to cover 90% of customer usage, and if you need more, you can increase your Action tier.
 
-Data Credits work more like a currency and do roll over. On Launch and Growth plans, unused credits can accumulate up to 2x your monthly credit amount (e.g., a 10,000 credit plan can bank up to 20,000 total). Enterprise customers can roll over up to 15% of their prior year's purchased credits, provided they renew at an equal or higher commitment.
+Data Credits work more like a currency and do roll over. The billing interval determines the standard rule, including for legacy Starter, Explorer, and Pro plans. Monthly paid plans have a total balance cap of 2× the monthly allotment, including the new grant. Annual plans can carry unused credits up to 15% of the annual allotment at an eligible renewal. A plan name such as Launch, Growth, or Pro does not establish the billing interval. See [Rollover Data Credits](#rollover-data-credits) for examples and eligibility.
 
 **Trial plans:** Trial Data Credits are handled differently — see the [*I have a trial, when do the Data Credits expire?*](#i-have-a-trial-when-do-the-data-credits-expire) section below for details.
 
 ### Why do I see a warning that credits are "over the rollover limit" when my current balance is below the 2× cap?
 
-The warning appears when your current balance is already high enough that adding your next monthly renewal would push the total over the 2× rollover cap — not because you are over it right now.
+On a monthly plan, the warning appears when your current balance is already high enough that adding your next monthly renewal would push the total over the 2× rollover cap — not because you are over it right now.
 
 When your plan renews, your credit balance is capped at 2× your monthly allotment. If your current balance plus the credits you will receive at renewal would exceed that cap, you will see a warning showing how many credits are projected to fall above the cap at renewal.
 
