@@ -36,7 +36,7 @@ The table below compares feature availability between legacy plans and modern pl
 | Feature Category | Legacy Plans | Modern Plans |
 | --- | --- | --- |
 | New Features (post-Feb 2026) | ❌ Not available | ✅ Available |
-| Ads (Clay Ads) | ❌ Not available | ✅ Growth (1 sync), Enterprise (2 syncs) |
+| Ads (Clay Ads) | ❌ Not available | ✅ Available on Growth and Enterprise (unlimited Audiences-based ad syncs) |
 | New Integrations | ❌ Future integrations blocked | ✅ All new integrations |
 | Advanced Orchestration | Current features only | ✅ New releases prioritized |
 | Functions (Repeatable Workflows) | ✅ Available | ✅ Available |
@@ -59,7 +59,7 @@ These features are available on Growth but not on Starter (Legacy):
 -   **Email campaign integrations** — Clay Sequencer and supported sending tools (Customer.io, LaGrowthMachine, Heyreach, Instantly, Reply.io, Lemlist, Smartlead, Salesloft, Za-zu)
 -   **HTTP API integrations**
 -   **CRM integrations** — Salesforce, HubSpot, Dynamics 365, Pipedrive, Close, Loxo
--   **Clay Ads** — up to 1 ads audience sync
+-   **Clay Ads** — unlimited Audiences-based ad syncs
 -   **SSO** — available as a paid add-on on annual Growth plans
 
 ### No features are removed
