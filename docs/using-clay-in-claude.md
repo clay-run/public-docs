@@ -104,7 +104,28 @@ If you need additional data points or more advanced workflows, access the full C
 
 **Can I search for companies?**
 
-Company search is not currently supported. However, you can research companies by asking Clay questions about target accounts—tech stack, funding, hiring trends, leadership changes, and more. Clay surfaces information that's otherwise hard to find: org charts, job changes, funding history, social context, and tech stack signals.
+Company search in Claude is rolling out gradually, so it may not be available in your workspace yet. If your workspace has it, Claude can search Clay's company data with the Clay `search-companies` tool — for example, by industry, company size, or location. If Claude doesn't have the `search-companies` tool, you can still research specific companies by asking Clay questions about target accounts—tech stack, funding, hiring trends, leadership changes, and more. Clay surfaces information that's otherwise hard to find: org charts, job changes, funding history, social context, and tech stack signals.
+
+Some workspaces also have Advanced Search (also called Search DSL) for `search-companies`, which lets Claude write queries such as `select from companies where ...`. Advanced Search is also rolling out gradually. Without Advanced Search, `search-companies` uses standard search filters instead of a query. See the next question for the company location fields in Advanced Search.
+
+**How do I filter companies by headquarters country or state in Advanced Search (`search-companies`)?**
+
+In Clay's Advanced Search (Search DSL) for companies, location is not a top-level field. Field names like `country`, `state`, `city`, `region`, `location_country`, `hq_country`, or `hq_state` return the error `Unknown field '<field>' for entity 'companies'`. (`location_country` works only for people searches through `search-contacts`, not for companies.)
+
+Company locations are stored per office in a `locations` list. Filter that list with `locations.any(...)`. For example, this query finds companies headquartered in Texas or Nevada:
+
+```
+select from companies where locations.any(is_headquarters = true and country_name = "United States" and state_or_province in ("Texas", "Nevada"))
+```
+
+The following fields are available inside `locations.any(...)`:
+
+-   `country_name`: the full country name, written exactly as listed (for example, `"United States"`). Abbreviations like `"US"` or `"USA"` return an `Invalid value` error. Supports `=`, `!=`, `in`, and `not_in`.
+-   `state_or_province`: the full state or province name (for example, `"Texas"`). Use full names, not abbreviations like `"TX"` or `"NV"`. Also supports `contains`, `starts_with`, and `ends_with`.
+-   `city`, `region`, and `postal_code`: other location values for each office.
+-   `is_headquarters`: set `is_headquarters = true` to match only the company's headquarters. Without it, the search returns any company with an office in the locations you specify.
+
+If Claude can't see the company location fields, your AI tool may be cutting off the end of the `search-companies` tool description. The `locations` fields come last in that description. Ask Claude to list all the company fields it can filter on, or use the field names above directly.
 
 **Can I query my Audiences data or run analytical queries like "group by seller"?**
 
