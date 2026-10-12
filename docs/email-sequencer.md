@@ -47,6 +47,7 @@ Connect and enable warmup on your sender account as early as possible so it's re
     -   **Important:** You must choose `Trusted`, not `Specific Google Data`. Selecting `Specific Google Data` will not grant all the permissions Clay needs, and the access error will persist. Despite the name, `Trusted` only allows Clay to request Gmail-specific permissions (full email access, basic email settings, OpenID, and your profile) — it does **not** grant Clay access to Google Drive, Calendar, Docs, or any other Google service.
 9.  Review the summary and click `Finish`.
 10.  Back in Clay, click `Continue` in the modal, then click `Connect your Google account` and complete the OAuth sign-in.
+    -   The modal asks **Is your Google Workspace already configured?** Choose `Yes, it's already set up` if your admin has already set Clay Sequencer to `Trusted`, or `No, I need to configure it now` to show the admin setup steps in the modal. Either choice takes you to the same Google sign-in step when you click `Continue`. See [Does choosing "Yes, it's already set up" skip the Google Workspace admin approval?](#does-choosing-yes-its-already-set-up-skip-the-google-workspace-admin-approval)
 
 ## Create a new email campaign
 
@@ -638,6 +639,17 @@ Follow the steps in [Connecting Google Workspace via OAuth](#connecting-google-w
 ### Does the Trusted admin setting give Clay access to all Google accounts in my domain?
 
 No — the Trusted setting is not domain-wide delegation. Marking Clay Sequencer as Trusted in the Google Workspace Admin Console removes the verification block that would otherwise prevent users in your domain from connecting their accounts, but it does not give Clay access to any mailbox automatically. Each person who wants to use the sequencer must still connect their own Google account individually: go to `Sequencer` → `Email Accounts` → `Add email accounts` → `Google OAuth` and complete the OAuth flow for their own account. Clay can only access a mailbox after that individual user explicitly authorizes it.
+
+### Does choosing "Yes, it's already set up" skip the Google Workspace admin approval?
+
+No. When you add a Google account in Clay Sequencer (`Sequencer` → `Email accounts` → `Add email account` → `Google OAuth`), the `Add email accounts` modal asks **Is your Google Workspace already configured?** and notes that "This setup only needs to happen once per Workspace." Your answer only controls what the Clay modal shows you:
+
+-   `Yes, it's already set up` — goes straight to the Google sign-in step when you click `Continue`.
+-   `No, I need to configure it now` — shows the four admin setup steps (open the Google Workspace Admin Panel, click `Configure new app`, search for Clay Sequencer by its Client ID, and set the app to `Trusted` for the email domain(s) you want to send from), then goes to the same Google sign-in step when you click `Continue`.
+
+Choosing `Yes, it's already set up` doesn't change anything in your Google Workspace and doesn't get around your Google Workspace admin's app access controls. Google decides whether the connection is allowed during sign-in. If Clay Sequencer hasn't been set to `Trusted` for your domain, Google shows the "Access blocked" error no matter which option you chose in Clay.
+
+**How to confirm the Google Workspace setup is complete:** If Google sign-in finishes and your mailbox appears in `Sequencer` → `Email accounts` with the type `Gmail` and source `OAuth`, the connection worked and you can start using that account in Clay Sequencer. If teammates on other email domains will connect accounts later, have your admin confirm that Clay Sequencer is set to `Trusted` for each of those domains — each domain needs its own Trusted configuration.
 
 ### I followed the admin setup steps but still see "Access blocked: clay.com has not completed the Google verification process." What should I do?
 
