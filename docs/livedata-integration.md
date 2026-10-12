@@ -39,7 +39,7 @@ Use this action to find a person's professional profile using their work email o
 -   **School name (Optional)**
 -   **Limit (Optional):** The maximum and default is 5.
 
-**Multiple matches:** Find Professional Profile can return more than one candidate person for the same input. When it does, the cell shows **✅ Found 2 profiles** (or a higher number). If you use this action as a step in a LinkedIn URL waterfall, the waterfall uses the first person in that list and does not compare the candidates against your inputs. See [Why did my LinkedIn URL waterfall return the wrong person?](building-a-data-waterfall.md#why-did-my-linkedin-url-waterfall-return-the-wrong-person) for how to check affected rows and pick the right person.
+**Multiple matches:** Find Professional Profile can return more than one candidate person for the same input. When it does, the cell shows **✅ Found 2 profiles** (or a higher number). If you use this action as a step in a professional profile URL waterfall, the waterfall uses the first person in that list and does not compare the candidates against your inputs. See [Why did my professional profile URL waterfall return the wrong person?](building-a-data-waterfall.md#why-did-my-professional-profile-url-waterfall-return-the-wrong-person) for how to check affected rows and pick the right person.
 
 ### **Run settings**
 
