@@ -184,6 +184,20 @@ Yes — you can add a new destination to an active sync using **Pause to edit**.
 
 -   Google Ads and Bing Ads are only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience includes contacts from Clay's company/people search data, Google Ads and Bing Ads will not be available as destination options. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) for details.
 
+### **My Ad Sync failed — why can't I find "Pause to edit" to resync it?**
+
+**Pause to edit** doesn't appear on an Ad Sync with the **Failed** status. It's only available when a sync is active, processing, or in a warning state. A failed Ad Sync can't be paused, edited, or retried from the **Ads** page — the only option in its **⋮** (three-dot) menu is **Delete**.
+
+You can tell a destination failed when the Ads page shows **Failed** next to the sync, and the destination's card under **Sync destinations** shows **Failed** with the message **"Audience failed to sync to Ad destination."**
+
+**To resync a failed Ad Sync:**
+
+1.  Fix the cause of the failure before you recreate the sync. If the failed destination is Google Ads or Bing Ads, check where your segment's contacts came from. Contacts sourced only from Clay's Find People search aren't eligible for Google Ads or Bing Ads, so a new sync built from the same contacts won't sync them either. Use a segment sourced from your own first-party data, such as your CRM or data warehouse. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync).
+2.  Delete the failed Ad Sync: on the **Ads** page, click the **⋮** menu next to the sync and select **Delete**. Deletion is permanent, but your audience segment and its contacts stay intact.
+3.  Create a new Ad Sync with every destination you want included.
+
+See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for more on deleting.
+
 ### **Can I change a one-time Ad Sync to recurring?**
 
 No. You choose an Ad Sync's schedule (**One-time** or **Recurring**) in the **Schedule** section when you set up the sync. When a one-time Ad Sync finishes, its status changes to **Exported** on the Ads page (recurring syncs show **Active** instead). An exported Ad Sync is read-only: you can't change its schedule, add destinations, or edit its settings, and **Pause to edit** is not available.
