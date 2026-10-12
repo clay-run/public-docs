@@ -143,7 +143,7 @@ Your search filters are saved on the source, not on the table rows. To update th
 
 If you add people to a Find People table by hand — typing or pasting their work email and professional profile URL into a new row — and then run **Enrich person** on that row, the cell can show **Missing input** even though the email and profile URL are visible in the row. The cell details message asks you to include either a professional profile URL, a professional network user ID, a Sales Navigator URL, or an email.
 
-**Why it happens:** When Clay adds the Enrich person column to a table built from a Find People search (the column may be named **Enrich LI Profile**), its **Professional URL** input is mapped to the Find People source column — the people search column your table was built from — not to your own profile URL or Work email columns. Rows you add manually didn't come from that search, so their source cell is blank. Enrich person then has no Professional URL and no Email to work with, and stops with Missing input. No credits are charged for a Missing input cell.
+**Why it happens:** When Clay adds the Enrich person column to a table built from a Find People search (the auto-added enrichment column may have a different name), its **Professional URL** input is mapped to the Find People source column — the people search column your table was built from — not to your own profile URL or Work email columns. Rows you add manually didn't come from that search, so their source cell is blank. Enrich person then has no Professional URL and no Email to work with, and stops with Missing input. No credits are charged for a Missing input cell.
 
 **To fix it, point Enrich person at your own profile URL and Work email columns:**
 
