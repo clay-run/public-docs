@@ -329,6 +329,20 @@ If Search and Display remain at 0 after 48 hours, check the audience status in y
 
 When you create your first ad audience, you'll be prompted to authenticate with LinkedIn Campaign Manager, Meta Business Manager, or your Google Ads account via OAuth. Make sure you have admin access to the ad account you want to use. Note that Google Ads syncing is currently in closed beta — contact [Clay support](https://www.clay.com/contact) to request access.
 
+### **Why does Google say "This app is blocked" when I connect my Google Ads account?**
+
+The **"This app is blocked"** message ("This app tried to access sensitive info in your Google Account. To keep your account safe, Google blocked this access.") comes from Google, not from Clay. It appears after you click **Sign in with Google Ads** in Clay and verify your identity with Google. Google shows it when your company's Google Workspace only allows approved third-party apps to connect to company Google accounts. Google treats the permissions the Google Ads connection requests as sensitive, so Google blocks the sign-in until a Google Workspace admin approves Clay.
+
+**To fix the "This app is blocked" error, your Google Workspace admin needs to mark Clay's Google Ads app as Trusted:**
+
+1. Sign in to the Google Admin console with a Google Workspace admin account.
+2. Go to **Security → Access and data control → API controls → Manage Third-Party App Access**.
+3. Click **Configure new app** and search for Clay's Google Ads app ID: `772715894173-dgjjqidujm6fj7rvgq1m9ik8rk73h33a.apps.googleusercontent.com`
+4. Set the app's access to **Trusted**. The **Specific Google data** option is not enough — Google still blocks the Google Ads sign-in even when the requested permissions are selected.
+5. Save the change.
+
+Google notes that Admin console access changes can take up to 24 hours to apply, but they typically apply more quickly. Once the change is active, return to Clay and click **Sign in with Google Ads** again — the Google Ads connection should complete without the "This app is blocked" screen. If you're not a Google Workspace admin, share these steps with your IT or Google Workspace admin. If Google still shows "This app is blocked" after the app is set to Trusted and 24 hours have passed, contact [Clay support](https://www.clay.com/contact).
+
 ### **Why did I receive an email saying my Meta account will disconnect soon?**
 
 This is expected behavior. Meta enforces a 60-day expiry on OAuth tokens — when you connect your Meta account to Clay using "Sign in with Facebook," the connection stays active for 60 days before it needs to be renewed. Clay sends a warning email 7 days before expiry and again 1 day before expiry so you can take action before any Ad Syncs are interrupted.
