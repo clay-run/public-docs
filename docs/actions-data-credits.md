@@ -364,6 +364,17 @@ You can either:
 
 You don't need to change your Actions tier.
 
+### Will enrichments that failed due to insufficient credits automatically re-run after I add more credits?
+
+No. Adding credits — whether through a one-time top-up, a plan upgrade, or your plan's monthly renewal — does not automatically re-run enrichments that were skipped or errored because of insufficient credits. Those cells remain in their errored state and will not retry on their own.
+
+If Auto-run is enabled on the table, new rows arriving after the credit addition will enrich normally — but the credit replenishment itself does not trigger a retry of previously failed cells.
+
+To re-run the affected rows after credits are added:
+
+-   **Right-click the enrichment column header** → **Run column** → **Run N empty or out-of-date rows** — this re-runs all cells that are empty or in an error state for that column.
+-   **Select the affected rows**, right-click → **Run N rows** — to re-run only specific rows across all enrichment columns.
+
 ### What happens if I run out of Actions but not Data Credits?
 
 You must upgrade to a higher action tier. Actions cannot be topped up separately because they're tied to your action tier's capacity.
