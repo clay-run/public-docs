@@ -96,17 +96,55 @@ By default, alerts appear inside the `Table alerts` panel. You can also receive 
 
 ### **Slack notifications**
 
-1.  Go to your `Workspace Settings`.
-2.  Connect your Slack workspace to Clay's delivery system (workspace admin access required).
-3.  Return to the `Table alerts` panel.
-4.  Click `Connect Channel`.
-5.  Select the Slack channel where you want to receive alerts.
-6.  Choose your notification frequency:
-    -   **Immediately** (default) — alerts sent to Slack as they trigger
-    -   **Daily digest** — a single message per day with all alerts
-    -   **Weekly digest** — a weekly summary of all alerts
+Slack alerts for a table are sent by the **Clay Alerts Bot**, a separate Slack app from the Clay app used by the [Slack integration](slack-integration-overview.md) actions in your tables. Setting up Slack alerts takes two parts: a Clay workspace admin connects Slack to the Clay workspace once, and then you choose a Slack channel for each table you want alerts from.
+
+**Step 1: Connect Slack to your Clay workspace (one time, workspace admins only)**
+
+1.  Go to `Workspace settings`.
+2.  In the `Notifications` section, click `Connect to Slack`.
+3.  Authorize the Clay Alerts Bot in Slack. If you see _"Apologies, but Clay Alerts Bot can't be installed"_, see [Clay Alerts Bot can't be installed](#clay-alerts-bot-cant-be-installed-in-slack) below.
+
+Only Clay workspace admins can connect Slack. Other members see _"Only workspace admins can configure notifications."_ The connection applies to the whole Clay workspace, so nobody needs to connect it again for each table or user. Connecting Slack under **Settings → Connections** adds the Slack integration account used by table actions, and it does **not** turn on Slack alerts.
+
+**Step 2: Choose a Slack channel for a table's alerts**
+
+1.  In your table, click the **⚠️ warning icon** in the bottom-right corner, then open `Alert settings`.
+2.  Click the **🔔 bell icon** in the header.
+3.  Under `Slack alerts`, click `Connect`.
+4.  Enter the ID of the Slack channel where you want the alerts to go. To find a channel ID, right-click the channel name in Slack and click **Copy link**. The ID (it starts with `C`) is the last part of the copied URL.
+5.  Choose your notification frequency:
+    -   **Immediately** (default): alerts are sent to Slack as they trigger
+    -   **Daily**: one message per day with all alerts
+    -   **Weekly**: a weekly summary of all alerts
+
+If you see _"Slack is not connected for this workspace. Connect Slack in workspace settings."_, a workspace admin needs to finish Step 1 first.
+
+Slack alerts for a table are posted by the Clay Alerts Bot to the channel you selected. They don't come from your personal Slack account. To use a private channel, invite the Clay Alerts Bot to it first. Otherwise you'll get the error _"Bot is not a member of this channel. Please invite the bot to the channel."_
+
+Slack alerts are set up table by table. There's no workspace-wide setting that turns on alerts for every table, so repeat Step 2 (and enable alerts, as described in [Setting up table alerts](#setting-up-table-alerts)) on each table you want to monitor.
 
 ## **FAQs**
+
+### **Clay Alerts Bot can't be installed in Slack**
+
+When you click `Connect to Slack`, Slack may show _"Apologies, but Clay Alerts Bot can't be installed. This app isn't listed in the Slack Marketplace, so only workspace owners can install it."_ The Clay Alerts Bot isn't listed in the Slack Marketplace, which means your IT team can't search for it there. Instead, it's installed directly through the `Connect to Slack` OAuth flow in Clay. To install it:
+
+1.  Ask a Slack workspace owner (or whoever approves apps in your Slack workspace) to approve or install the Clay Alerts Bot. Your security team may need to review the scopes listed in the next FAQ.
+2.  After it's approved, have a Clay workspace admin who is signed in to the right Slack workspace in the same browser click `Connect to Slack` in `Workspace settings` → `Notifications`.
+
+### **Which Slack permissions (scopes) does the Clay Alerts Bot request?**
+
+The Clay Alerts Bot asks for these Slack bot scopes, which are needed to post table alerts to a channel:
+
+-   `chat:write`: post alert messages as the Clay Alerts Bot
+-   `chat:write.public`: post to public channels the bot hasn't joined
+-   `channels:read`: view public channels and their basic info
+-   `groups:read`: view private channels the bot has been invited to
+-   `users:read`: view basic info about workspace members
+-   `users:read.email`: look up workspace members by email address
+-   `im:write`: open direct messages with workspace members
+
+The Clay Alerts Bot doesn't ask for any user scopes. These scopes are separate from the ones requested by the Clay Slack integration used in table actions. Those are listed in [Slack integration: Permissions & security](slack-integration-overview.md#permissions--security).
 
 ### **How do I get more or fewer alerts?**
 
