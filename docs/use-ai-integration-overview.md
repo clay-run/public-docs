@@ -139,6 +139,8 @@ While you don't need your own GPT, Claude, or Gemini API key to use the AI featu
 
 **Note:** Connecting your own OpenAI API key does not enable OpenAI's Batch API. Clay sends all AI column requests in real-time using the standard API — regardless of which account is connected. You will not get OpenAI's batch pricing (50% discount) or the extended processing window (up to 24 hours). If you need to process a large volume of data at batch pricing, the workaround is to export your data from Clay, run it through the OpenAI Batch API externally, then re-import the results.
 
+**Note:** Prompt caching is a separate feature from batch processing. For **Claygent** columns using Clay-managed accounts (Clay credits), Clay adds explicit prompt-caching support for Anthropic models — runs that share a static prompt prefix benefit from reduced processing time and cost at the provider level. When using your own Anthropic API key for Claygent, Clay does not inject these caching markers; any savings depend on the provider's own automatic behavior. **Use AI** columns do not receive explicit prompt caching from Clay, regardless of which account is connected.
+
 ## Using additional or custom LLMs
 
 Use AI supports a fixed set of built-in AI providers (such as GPT, Claude, Gemini, and DeepSeek). Custom or additional LLMs — including open-source models like LLaMA, or models accessed through a proxy such as LiteLLM — cannot be added directly to the Use AI enrichment interface.
