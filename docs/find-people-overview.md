@@ -139,6 +139,21 @@ Your search filters are saved on the source, not on the table rows. To update th
 
 **Note:** Re-running after a filter change imports only *new* contacts that match your updated criteria and are not already in the table. Contacts that were previously imported remain in the table and are not re-evaluated against the new criteria. If you need to start fresh with the updated filters, create a new Find People table.
 
+### Why does Enrich person show "Missing input" on people I added manually to my Find People table?
+
+If you add people to a Find People table by hand — typing or pasting their work email and professional profile URL into a new row — and then run **Enrich person** on that row, the cell can show **Missing input** even though the email and profile URL are visible in the row. The cell details message asks you to include either a professional profile URL, a professional network user ID, a Sales Navigator URL, or an email.
+
+**Why it happens:** When Clay adds the Enrich person column to a table built from a Find People search (the auto-added enrichment column may have a different name), its **Professional URL** input is mapped to the Find People source column — the people search column your table was built from — not to your own profile URL or Work email columns. Rows you add manually didn't come from that search, so their source cell is blank. Enrich person then has no Professional URL and no Email to work with, and stops with Missing input. No credits are charged for a Missing input cell.
+
+**To fix it, point Enrich person at your own profile URL and Work email columns:**
+
+1.  Add a [Merge column](table-columns-overview.md#merge-columns): click **Add column** → **Merge columns**, then in the formula field type `/` and select your profile URL column first, followed by the people search (source) column's profile URL as the fallback. A Merge column returns the first non-empty value per row, so rows imported by the search and rows you added by hand both get a profile URL. Click **Save**.
+2.  Open the **Enrich person** column settings and map the **Professional URL** input to the new Merge column.
+3.  If some manually added rows have a work email but no profile URL, either paste the profile URL into those rows or map your **Work email** column to the **Email** input. Enrich person accepts either a Professional URL or an Email — at least one is required.
+4.  Save the column, then click the column header → **Run column** → **Run [N] empty or out-of-date rows**. This option also includes cells that errored with Missing input, but skips cells that already have successful, up-to-date results — so you don't re-spend credits on rows that already worked.
+
+For other Enrich person input errors, see [Getting "Invalid input: Invalid person identifier" from Enrich person](finding-companies-and-people-in-clay.md#getting-invalid-input-invalid-person-identifier-from-enrich-person).
+
 ## Importing from a Sales Navigator search URL
 
 If you have a saved Sales Navigator search and want to pull those results into Clay, use the **Find people from external search** source — not the standard Find People source described above.
