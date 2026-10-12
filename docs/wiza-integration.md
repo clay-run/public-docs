@@ -29,7 +29,7 @@ Use the Wiza **Find personal email** action to find a person's personal email ad
 
 **Inputs**
 
--   **Professional profile URL:** The person's LinkedIn profile URL. Can be used on its own instead of name and company.
+-   **Professional profile URL:** A link to the person's professional social profile. Can be used on its own instead of name and company.
 -   **Full name:** The person's full name. Must be paired with a company name or a company domain.
 -   **Company name:** The person's company name.
 -   **Company domain:** The company's website domain. A full website URL such as `https://www.example.com` also works: Wiza's Find personal email action strips the `https://` and `www.` parts and uses the bare domain (`example.com`).
@@ -97,7 +97,7 @@ Yes. You don't need to fill every input in the Wiza **Find personal email** enri
 Things to know before you run it:
 
 -   **Other columns aren't used.** Wiza Find personal email only accepts four inputs: Professional profile URL, Full name, Company name, and Company domain. Extra columns such as location, job title, or work environment are not sent to Wiza and won't improve personal email results.
--   **Adding a LinkedIn URL can improve matches.** If you only have names and a domain, you can first add a [Use AI](use-ai-integration-overview.md) column that looks up each person's LinkedIn URL from the information in your table. Then map that column to **Professional profile URL**.
+-   **Adding a professional profile URL can improve matches.** If you only have names and a domain, you can first add a [Use AI](use-ai-integration-overview.md) column that looks up each person's professional profile URL from the information in your table. Then map that column to **Professional profile URL**.
 -   **No email found isn't charged.** When Wiza returns no email, the cell shows **No email found** and the credits for that row are refunded.
 -   **Rows missing a valid combination fail without charge.** If a row has no professional profile URL and is missing either the full name or both the company name and company domain, the Wiza cell errors with "You must include a professional profile URL or a full name and company name or domain." Credits for that row are refunded.
 -   **Test on a few rows first.** Right-click the Wiza column header and choose **Run column** → **Choose number of rows to run** to check results on a handful of rows before running the whole table.
