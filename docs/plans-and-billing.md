@@ -119,7 +119,22 @@ To request a refund for a recent charge, contact [Clay support](https://app.clay
 
 ## Workspace row limit
 
-All workspaces have a global row limit of **10 million rows** across all tables. This cap counts rows in every table in your workspace, regardless of plan. If you reach this limit, you may see the error **"Your Subscription Does Not Allow Any More Records."**
+All workspaces have a global row limit across all tables. The default workspace row limit is **10 million rows**, regardless of plan. Some workspaces have a different limit set for them. The row limit alerts in your workspace always show the limit that applies to your workspace (for example, "16M").
+
+The workspace row limit counts every row in every table in your workspace, including blank rows. Records stored in [Audiences](audiences.md) don't count toward the workspace row limit, because Audiences is a separate data layer with its own limits.
+
+### "You're approaching your workspace row limit" alert
+
+Clay shows these alerts as your workspace gets close to its total row limit:
+
+-   **At 95% of the limit:** "You're approaching your workspace row limit of [limit] total rows. Consider deleting unused tables." You can still add rows at this point.
+-   **At the limit:** "Your workspace has reached the [limit] total row limit. Additional operations may fail until you delete unused tables."
+
+When your workspace reaches its row limit, Clay blocks new rows from being added to any table, including imports and sources, until you free up space. Imports show **"Workspace limit reached"**, and API requests return the error **"Your plan does not allow any more records."**
+
+### Is the workspace row limit a hard limit? Can I increase it?
+
+The workspace row limit is enforced. Once you hit it, new rows can't be added. To get back under the limit, delete tables you no longer need (see below). If you've cleaned up your workspace and still need more room, contact [Clay support](https://app.clay.com). Tell them roughly how many rows you expect to need and what you're using them for, and they can look into raising the workspace row limit for your workspace.
 
 Deleting a table removes its rows from your workspace row count immediately — rows are freed as soon as the table is moved to Trash, without requiring permanent deletion from Trash.
 
