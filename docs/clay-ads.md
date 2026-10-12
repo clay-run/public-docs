@@ -350,7 +350,7 @@ This is expected behavior. Meta enforces a 60-day expiry on OAuth tokens — whe
 2.  Click **Add assets** and assign your ad account to the system user with **Full Control** — not Partial Access.
 3.  Also confirm the token was generated with the `ads_management` permission selected (step 10 of [Creating a system user token](#creating-a-system-user-token)).
 
-After updating the asset assignments in Meta, generate a new token and reconnect the account in Clay.
+You don't need to generate a new system user token after updating the asset assignments in Meta. Clay loads your Meta ad accounts live from Meta each time the Configure ad accounts step opens, so close and reopen the Configure ad accounts step with the same token selected — the newly assigned ad account appears in the **Meta Ads account** dropdown.
 
 **Using OAuth (Sign in with Facebook):** Confirm that the Meta account you authenticated with has admin access to the ad account you want to use. If you can see the account in **Manage accounts** but it doesn't appear in the dropdown, the ad account may be inactive or restricted in Meta Business Manager.
 
@@ -362,4 +362,4 @@ Yes, you can connect multiple LinkedIn or Meta ad accounts and choose which acco
 
 ### **How much does it cost to sync audiences?**
 
-Each record exported or synced to an ad platform consumes 1 action (for the export/sync work). Data credits are consumed for any enrichments you run in the table to build your audience (e.g., finding emails, enriching profiles). The export itself does not consume additional data credits.
+Each record exported or synced to an ad platform consumes 1 action (for the export/sync work). Data credits apply for any enrichments you run in the table to build your audience (e.g., finding emails, enriching profiles). The export itself does not consume additional data credits.
