@@ -397,12 +397,14 @@ Merging two Audience records into one happens only at the time of a record upser
 
 After importing, you will want to create new audiences, so you can appropriately target the right contacts.
 
+Audiences segments filter records that are already in your workspace — they don't find new people or companies from Clay's database. To search Clay's database for new people or companies, use **Find leads** instead — see [Where to search for people and companies in Clay](finding-companies-and-people-in-clay.md#where-to-search-for-people-and-companies-in-clay).
+
 **Admin access required.** Creating, editing, and deleting audience segments is available to workspace Admins only. Editors and Viewers can view and filter existing segments but cannot create new ones.
 
 To create a new audience:
 
 1.  Click `People` or `Companies` in the left sidebar.
-2.  Click **New audience** in the top-right corner of the list, or click the `+` next to `My Audiences` in the sidebar.
+2.  Click **New segment** in the top-right corner of the list, or click the `+` next to `My Audiences` in the sidebar.
 3.  Select `Criteria` and then add a `Filter` or `Filter group`.
     -   **Filters** evaluate a single condition at a time. All top-level filters are joined with AND — a record must match every one.
     -   **Filter groups** combine multiple conditions using their own AND/OR logic. Within a single filter group, all conditions share the same operator — all AND or all OR; changing the operator in the group header switches all conditions at once. To mix AND and OR, use a nested filter group. For example, to build `A AND B AND (C OR D)`: add A and B as top-level filters, click **`+ Filter group`**, then add C and D inside the group. Once the group contains two or more conditions, a small **`and`** button appears between them — click it to switch to **`or`**.
@@ -425,7 +427,7 @@ The operators available when building a filter depend on the field's data type, 
 
 To build a segment of people who are **not** already in your CRM — for example, to find net-new prospects who don't yet exist in Salesforce — use the **Origin source** filter with an exclusion operator:
 
-1. Click **People** in the left sidebar and click **New audience**.
+1. Click **People** in the left sidebar and click **New segment**.
 2. Click **+ Filter** and search for **Origin source**.
 3. Set the operator to **is not**.
 4. Select the source whose contacts you want to suppress — for example, your Salesforce "All contacts" import.

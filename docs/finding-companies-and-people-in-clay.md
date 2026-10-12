@@ -1,6 +1,6 @@
 ---
 title: "Guide: Finding companies and people in Clay"
-description: Best practices to Clay's company and people search features, including valid LinkedIn URL formats for the company identifier and troubleshooting common errors.
+description: Where to search for people and companies in Clay (Find leads, + Add, Workflows, Find with query) and best practices for Clay's company and people search features, including valid URL formats for the company identifier and troubleshooting common errors.
 last_synced: 2026-04-26T01:39:59.452Z
 ---
 
@@ -11,6 +11,48 @@ Best practices to Clay's company and people search features.
 Clay's `Find Companies` and `Find People` sources give you instant access to billions of company and people profiles — all in one place. Here are the best practices we recommend to streamline your searches and surface the strongest results.
 
 > **Note:** Find People at These Companies is currently in **Beta** — a Beta badge is shown on the panel header in the product UI.
+
+## Where to search for people and companies in Clay
+
+To find new people or companies from Clay's database, use Clay's native **Find people** and **Find companies** searches. You can open them from any of these places:
+
+-   **Find leads (left sidebar or home page):** Click **Find leads** in the left sidebar, or use the **Find leads** card on your workspace home page, then choose **People**, **Companies**, or **Jobs**. On the Find leads page, you can also describe what you want in plain English in the search box (for example, under "What kind of people would you like to find?") and Clay's AI builds the search for you.
+-   **Inside a workbook:** Click **+ Add** and choose **Find people**, **Find companies**, or **Find jobs**.
+-   **In Workflows:** Add a **Find people** or **Find companies** node. Workflows is currently in beta and may not be enabled in every workspace.
+
+There is no **Add Table** button in Clay. To start a new people or company search, use one of the entry points above.
+
+Running a standard Find people or Find companies search doesn't charge credits per search. Enrichments you add to the results afterward use credits as usual, and technographics filters in company search cost credits per company returned — see [Does importing from Find Companies cost credits?](find-companies.md#does-importing-from-find-companies-cost-credits).
+
+### Find leads searches one record type at a time
+
+Clay's Find leads searches return one type of record per search: **People**, **Companies**, or **Jobs**. A single search can't return people, companies, and job postings together.
+
+A Find people search can still filter on the attributes of each person's employer — such as industry, company size, annual revenue, and company keywords. For example, one Find people search can return sales leaders at software companies above a certain size. Job postings can't be searched with a query — use the **Find Jobs** filters instead.
+
+### Searching with a query (Find with query)
+
+Find people and Find companies offer a **Find with query** mode for writing advanced search queries, such as `select from people where experiences.any(...)`. Query syntax only works in Find with query mode — you can't paste it into the plain-English Find leads search box.
+
+To switch to Find with query:
+
+1.  Open a **Find people** or **Find companies** search.
+2.  Click the mode dropdown at the top of the search panel, which shows **Find with filters** by default.
+3.  Select **Find with query**.
+
+Find with query has these limitations:
+
+-   It's available for people and companies only, not jobs.
+-   It's in beta, and pricing is subject to change.
+
+If you don't see **Find with query** in the mode dropdown, use **Find with filters**, or describe your search in plain English in the Find leads search box.
+
+### Find AI and Audiences are different from Find people and Find companies
+
+Two other Clay features are sometimes confused with Clay's native people and company search:
+
+-   **Find AI** is a separate, deprecated third-party integration — not Clay's native Find people or Find companies search. Find AI charged 1 credit per result, and new Find AI sources can no longer be added. See [Find AI integration](find-ai-integration-overview.md).
+-   **Audiences** (**People** and **Companies** in the left sidebar, in workspaces with Audiences) filters records that are already in your workspace. Audiences doesn't find new people or companies from Clay's database. See [Audiences](audiences.md).
 
 ## Company search
 
