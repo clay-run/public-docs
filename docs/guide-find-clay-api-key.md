@@ -30,7 +30,7 @@ The key is shown only once when you create it — copy it somewhere safe.
 
 ### Can't find "API keys (beta)" in Settings → Account?
 
-The **API keys (beta)** tab that used to appear in `Settings` → `Account` has been retired. Clay API keys — including the workspace-scoped keys used with the Public HTTP API — are now created and managed on the **API and CLI** page, which lives in the main app's left sidebar rather than in Settings. If you open an old link to the API keys (beta) tab (one ending in `accountTab=api-keys-beta`), you'll see an empty page instead of your keys.
+The **API keys (beta)** tab that used to appear in `Settings` → `Account` has been retired. Clay API keys — including the workspace-scoped keys used with the Public HTTP API — are now created and managed on the **API and CLI** page, which lives in the main app's left sidebar rather than in Settings. If you open an old link to the API keys (beta) tab (one ending in `accountTab=api-keys-beta`), Clay opens the **Your details** tab of `Settings` → `Account` instead — your API keys aren't shown there. Go to the **API and CLI** page as described below to find them.
 
 The API and CLI page is available to all workspaces. You don't need to join the Beta Program or request access to see it. Workspace Admins, Members, and Viewers can create API keys there; users with the Sales Rep role can't.
 
