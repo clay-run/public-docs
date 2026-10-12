@@ -137,6 +137,30 @@ By default, auto-run is **on** for every table — waterfall columns (such as a 
 
 For more ways to control credit usage, see [Ways to save Clay credits](clay-credit-conservation.md).
 
+## How waterfall credits are charged per provider
+
+A waterfall doesn't charge you the combined cost of every provider in it. Clay runs the providers one at a time, in the order shown in the **Waterfall sequence** section, and each provider charges its own credit cost only when it runs.
+
+-   **Each provider has its own credit cost.** In the waterfall's **Waterfall sequence** section, each provider has a badge next to its name showing its credit cost per row (a coin icon plus a number, for example `2 / row`). Costs differ by provider and data point, so a waterfall's cost per row depends on which provider finds the result.
+-   **The waterfall stops at the first valid result.** Once a provider returns a result that passes validation, the providers after it don't run for that row (their cells show **Run condition not met**) and aren't charged.
+-   **Default providers refund credits when they find nothing.** The default providers in the pre-built Work Email and Mobile Phone waterfalls automatically refund their credits when they return no result. Refund behavior is set per provider, so if you add a provider that isn't in the default lineup, check how it bills before running at scale.
+-   **Email waterfalls charge for a found email even if validation rejects it.** When a provider returns an email, you pay for that provider's lookup and for the validation step that checks the email. If validation rejects it, the waterfall moves on to the next provider. See [How waterfall validation works](#how-waterfall-validation-works).
+
+To see a waterfall's total estimated cost, hover over the credit badge next to the run button at the bottom of the waterfall panel. The tooltip shows the **Average credit cost** and **Max credit cost** per row.
+
+### Should I put the most expensive providers last in my waterfall?
+
+Yes, if lowering credit spend is your goal. Because a waterfall stops at the first provider that returns a valid result, ordering providers from lowest to highest credit cost lowers your average cost per row: rows that an inexpensive provider can resolve never reach the expensive ones.
+
+For example, suppose Provider A costs 1 credit per row and Provider B costs 3 credits per row, and both would find a valid email for a given contact:
+
+-   **Provider A first:** the waterfall stops after Provider A, so the row costs 1 credit.
+-   **Provider B first:** the waterfall stops after Provider B, so the row costs 3 credits.
+
+To reorder providers, follow the steps in [Editing an existing waterfall](#editing-an-existing-waterfall) and drag providers up or down in the **Waterfall sequence** section.
+
+Cost isn't the only factor. Provider coverage and accuracy vary by region and data type, so a higher-cost provider may be worth placing earlier if it finds more valid results for your contacts. To compare providers, see [[Data test] Work email providers](data-test-work-email-providers.md) and [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md).
+
 ## How waterfall validation works
 
 Email waterfalls include a validation step after each provider to confirm whether the email found is valid. However, validators are designed to skip if the same email address has already been returned and found invalid by an earlier step in the sequence.
@@ -311,6 +335,6 @@ See [HG Insights integration](hg-insights-integration-overview.md) for more deta
 
 **Sumble** is available as a standalone enrichment action (not part of a pre-built waterfall). It validates whether a company uses specific technologies you select, charging 6 credits per technology found. Use it when you need targeted confirmation of named tools rather than a broad technology scan. See [Sumble integration](sumble-integration.md).
 
-**Claygent** supplements database-backed tech stack enrichment by searching the web for signals of technology adoption. It is most useful for open-source or infrastructure frameworks — such as LangChain or AWS Bedrock — that leave no footprint in website source code and may not appear in database provider catalogs. Add a Claygent column to your table, use the company domain as an input variable, and write a mission prompt such as: *"Does {{company_domain}} use [technology name]? Search the company's website, blog posts, GitHub repositories, case studies, and press mentions, and return yes or no with the evidence found."* See [Claygent](claygent-builder.md) for setup details.
+**Claygent** supplements database-backed tech stack enrichment by searching the web for signals of technology adoption. It is most useful for open-source or infrastructure frameworks — such as LangChain or AWS Bedrock — that leave no footprint in website source code and may not appear in database provider catalogs. Add a Claygent column to your table, use the company domain as an input variable, and write a mission prompt such as: *"Does {{company_domain}} use [technology name]? Search the company's website, blog posts, GitHub repositories, case studies, and press mentions, and return yes or no with the evidence found.*" See [Claygent](claygent-builder.md) for setup details.
 
 **Note:** 6sense is not available as a waterfall provider in Clay. Store Leads enriches e-commerce site traffic data and is not part of any technographic waterfall.
