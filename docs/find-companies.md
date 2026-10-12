@@ -54,7 +54,7 @@ For advanced query syntax, use [Find with query](finding-companies-and-people-in
         -   **Has domain** — Whether a company has a resolved domain.
         -   **Domain is live** — Whether the company's domain is currently active.
         -   **Domain redirects to another domain** — Whether the domain redirects elsewhere.
-    -   **Exclude companies:** Exclude up to 3 different sets of companies from your search using Clay tables, CSVs, or manual lists. You can exclude up to 300,000 companies total (100,000 per source). Exclusions require a company domain or professional network company URL. Available on Launch plan and above.
+    -   **Exclude companies:** Exclude up to 3 different sets of companies from your search using Clay tables, CSVs, or manual lists. CSV and manual list sources are limited to 100,000 entries each; Clay table sources have no fixed row cap. Exclusions require a company domain or professional network company URL. Available on Launch plan and above. For step-by-step guidance, see [Excluding companies and people](finding-companies-and-people-in-clay.md#excluding-companies-and-people).
     -   **Limit results** — Defaults to 10,000. Maximum 10,000.
 2.  Click `Preview companies` and `Import to new table` when the results look good.
 3.  Select import options:
