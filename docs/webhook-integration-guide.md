@@ -46,6 +46,8 @@ The following limits apply to all webhook sources in your workspace:
 
 **Enterprise Plan — run a webhook indefinitely:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) (also called passthrough tables). When passthrough mode is active, the webhook source takes a separate code path that **bypasses the 50,000 submission limit entirely** — a single webhook URL can keep accepting data indefinitely without ever hitting the cap. This is the recommended approach for automated enrichment pipelines. Auto-delete is available on Enterprise plans and only works for webhook, send-table-data, and signal sources. Learn more in [table management settings](https://www.clay.com/university/guide/table-management-settings).
 
+**Enterprise Plan — warning when auto-delete is off:** On Enterprise plans, if a table has a webhook source and auto-delete is disabled, Clay displays a warning banner: *"This table is receiving data continuously without auto-delete enabled."* The banner prompts you to enable auto-delete before the table reaches the 50,000-record limit and incoming webhook submissions are rejected with a `403` error. To resolve it, [enable auto-delete](auto-delete.md) on the table.
+
 ## Request body format
 
 **One record per POST:** Each HTTP POST to Clay's webhook endpoint creates exactly one new row in your table — Clay does not split array payloads. If you send a JSON array (`[{...}, {...}]`), the entire array becomes the data for a single row rather than one row per element.
