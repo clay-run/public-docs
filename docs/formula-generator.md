@@ -3,7 +3,9 @@ title: Formulas
 description: Generate formulas with AI to transform your data. Includes how to
   use today's date in a formula, pull error messages with getCellErrorMessagePreview(),
   check cell status with getCellStatus(), keep date comparisons current automatically,
-  and export a combined list from a formula as JSON text.
+  and export a combined list from a formula as JSON text. Also covers supported
+  JavaScript syntax, saving a pasted formula exactly as written, and reading Claygent
+  JSON output safely.
 last_synced: 2026-04-26T01:40:01.780Z
 ---
 
@@ -50,14 +52,62 @@ Clay formulas are powered by **Clayscript**, a JavaScript-based language that ev
 
 **What's available in formulas:**
 
--   **Standard JavaScript**: All standard JavaScript objects and methods including `Math`, `String`, `Array`, `Date`, `RegExp`, `Number`, `Object`, and more.
+-   **Standard JavaScript**: Standard JavaScript objects and methods including `Math`, `String`, `Array`, `Date`, `RegExp`, `Number`, `Object`, `JSON`, `Set`, and `URL`. `Map`, `Promise`, `fetch`, `console`, `eval`, `Function`, `setTimeout`, and `setInterval` aren't available in formulas.
 -   **Lodash**: Access the full [Lodash](https://lodash.com) library using `_` for advanced data manipulation.
 -   **Moment.js**: Use [Moment.js](https://momentjs.com) with `moment` for powerful date and time operations.
 -   **Excel and Google Sheets functions**: Clay supports hundreds of familiar spreadsheet functions like `VLOOKUP`, `IF`, `SUM`, `CONCATENATE`, and many more through the [FormulaJS](https://formulajs.info) library.
 -   **Column references**: When you reference a column like {{Email}}, Clay automatically passes the value from that column into your expression.
 -   **Clay utilities**: A set of Clay-specific helper functions under the `Clay.*` namespace for reading cell metadata — for example, `Clay.getCellErrorMessagePreview()` and `Clay.getCellStatus()`.
 
+### What JavaScript syntax can I use in a Clay formula?
+
+A Clay formula is a single JavaScript **expression**, not a full script. Clay parses the whole formula as one expression and evaluates it once per row; the result of that expression becomes the cell value.
+
+Clay formula syntax rules:
+
+-   **No statements.** `const`, `let`, `var`, `for`, `while`, `try`/`catch`, and a top-level `return` can't be used in a formula. Use ternaries (`condition ? a : b`), `&&` / `||` / `??`, optional chaining (`?.`), and array methods like `.map()`, `.filter()`, and `.reduce()` instead.
+-   **`if()` works as a function, not a statement.** `if({{Score}} > 50, "High", "Low")` works like the spreadsheet `IF` function. A JavaScript `if (...) { ... }` block doesn't.
+-   **Functions can contain only one expression or one `return`.** `(() => value)()` and `(() => { return value; })()` both work. A function body with more than one statement — for example `(() => { const x = 5; return x; })()` — doesn't.
+-   **Template literals can't contain `${...}`.** A static backtick string like `` `hello` `` works, but `` `Hello ${name}` `` doesn't. Join text with `+` or `[a, b].join(" ")` instead.
+
+Clay doesn't set a maximum character or line count for formulas. A long formula written as a multi-line script — declaring variables, then looping, then returning a value — isn't a single expression, so Clay can't parse it, regardless of its length.
+
+**Splitting complex logic across formula columns:** For multi-step logic such as account scoring, use one formula column per step and reference earlier formula columns with `{{Column Name}}`. For example: one column per AI agent to extract and validate its JSON output, one column to recalculate and cap scores, one column to total the score, and one column to build the text explanation. Each column also gets its own 8 kB cell limit (see below).
+
 ### FAQs
+
+### **Can I save a formula exactly as written, without the AI formula generator rewriting it?**
+
+Yes. Clay saves the JavaScript expression in the **Formula** section exactly as you typed or pasted it. Clicking **Save column** doesn't send your formula through the AI formula generator.
+
+To save a formula you wrote yourself:
+
+1.  Add or open a formula column to open the **Formula generator** sidebar.
+2.  Expand the **Formula** section below the description box.
+3.  Paste or type your expression into the formula editor.
+4.  Click **Save column**. Don't click **Generate** or **Regenerate** — those create a new AI-generated expression from the description box.
+
+The error *"Something went wrong while generating the formula. Please try again."* appears only when an AI **Generate** or **Regenerate** request fails. It's not related to the code you pasted into the **Formula** section. If saving the column fails, Clay shows *"Something went wrong while saving the formula. Please try again."* instead.
+
+### **Does Clay have a "Run JavaScript" or code enrichment for tables?**
+
+No. Clay tables don't have a standalone "Run JavaScript", Python, or code enrichment. The formula column is the way to run custom JavaScript on row data, and formula output is subject to the 8 kB per-cell limit. To produce longer output, split it across several formula columns. For Python code in Clay Workflows, see the **Code node** under *Can I loop or iterate over a list of items in a formula?* below.
+
+### **How do I safely read Claygent JSON output in a formula?**
+
+When a Claygent or Use AI column returns structured JSON, the formula receives it as an already-parsed object, so you don't need `JSON.parse`. Read fields with optional chaining (`?.`) at every level and add a fallback with `??` or `||`. That way a missing or misnamed field returns the fallback instead of breaking the formula:
+
+```javascript
+{{Agent 1}}?.response?.score ?? 0
+```
+
+If the JSON is stored as text instead (for example, in a Text column), parse it first: `JSON.parse({{Column}})?.score`. To handle both cases in one formula:
+
+```javascript
+(typeof {{Column}} === "string" ? JSON.parse({{Column}}) : {{Column}})?.response?.score
+```
+
+Because formulas can't use `try`/`catch`, `JSON.parse` can't recover from malformed JSON text inside the formula. Where possible, have Claygent return its output as structured fields so the column holds a parsed object.
 
 ### **Can I create or change my formula without running it?**
 
@@ -303,7 +353,7 @@ Each cell then holds the combined list as JSON text, and the CSV export includes
 
 ### **Why does my formula column show "Cell data size exceeds limit (8 kB)"?**
 
-Formula, text, and number columns are limited to **8 kB** of data per cell. Enrichment and action columns (columns that call an external data source) can hold up to **200 kB** per cell. When you use a formula column to convert a large enrichment result to a string — for example, `JSON.stringify({{Enrich Person}})` on a full person enrichment profile — the output often exceeds the 8 kB ceiling, and Clay shows this error.
+Formula, text, and number columns are limited to **8 kB** of data per cell. This limit is fixed for all workspaces and plans and can't be raised. Enrichment and action columns (columns that call an external data source) can hold up to **200 kB** per cell. When you use a formula column to convert a large enrichment result to a string — for example, `JSON.stringify({{Enrich Person}})` on a full person enrichment profile — the output often exceeds the 8 kB ceiling, and Clay shows this error.
 
 There are three approaches to work around the limit:
 
