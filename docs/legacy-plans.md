@@ -1,7 +1,7 @@
 ---
 title: Legacy plans
 description: Comparing legacy plans to our new plans
-last_synced: 2026-04-26T01:40:14.933Z
+last_synced: 2026-09-16T16:01:37.523Z
 ---
 
 # Legacy plans
@@ -10,7 +10,37 @@ Comparing legacy plans to our new plans
 
 In March 2026, Clay introduced a new pricing model to give you more flexibility and value. The new model uses two simple usage meters: **Actions** (measures platform usage of enrichments and GTM execution) and **Data credits** (for accessing data from our marketplace).
 
-**What this means for you:** If you're on and choose to stay on your legacy plan, you'll keep your familiar pricing and all the features you have today. However, you won't have access to new features and integrations that we build going forward.
+**What this means for you:** If you're on a legacy plan and choose to stay on it, you'll keep your familiar pricing and all the features you have today. Several of the features we've built for modern plans are available on legacy Starter, Explorer, and Pro plans too, for a limited time. Think of it as try before you buy: you get real use of each one on your current plan, and moving to a modern plan is what makes it permanent.
+
+## **Modern features on legacy plans**
+
+Legacy Starter, Explorer, and Pro plans include a set of features built for modern plans at no extra cost, through December 31, 2026. They're switched on for you, so there's nothing to set up. If you don't see them yet, they may still be rolling out to your workspace — contact support to confirm.
+
+**Note:** Legacy Enterprise plans are no longer sold, and existing legacy Enterprise workspaces are grandfathered indefinitely. Your plan and your feature access stay as they are, with no end date.
+
+Once that period ends, these features are available on modern plans only. Moving to a Launch, Growth, or Enterprise plan keeps them permanently.
+
+Here's what's included, and the level of access each legacy plan gets:
+
+-   **Audiences:** Legacy Pro gets Growth-level access — unlimited Audiences storage, up to 250,000 CRM and data warehouse synced records, and daily syncs. Legacy Starter and Explorer get Launch-level access — unlimited Audiences storage, without CRM or data warehouse syncs.
+-   **Sequencer v2 via Audiences:** Growth-level access on all legacy plans.
+-   **Workflows:** Growth-level access on all legacy plans.
+-   **MCP, CLI, and API:** Growth-level access on all legacy plans.
+
+Clay Ads isn't part of this limited-time access — it stays a modern-plan feature.
+
+### **What happens when the limited-time access ends**
+
+You keep your data and you keep your work — nothing is deleted, and everything you've built in Audiences stays where it is. Most of these features step down to their free-plan version rather than switching off.
+
+You'll need a modern plan to:
+
+-   **Audiences:** run signals and account agents, sync with a CRM or data warehouse, and send segments to ads
+-   **Sequencer v2 via Audiences:** keep sending campaigns from Audiences, since there's no free-plan version of the sequencer
+    -   Table-based campaigns aren't part of this — campaigns you run from a Clay table keep working on legacy Explorer and Pro, because they come with those plans rather than with the limited-time access.
+-   **Workflows:** lift the cap of 100 runs per workflow, keep more than one month of run history, and use the `Run code` node and the AI and code modes of the `Conditional` node
+
+Everything else stays on your legacy plan: uploading records, building segments, opening your workflows, and MCP, CLI, and API at free-plan limits.
 
 ## **Key differences between legacy and modern plans**
 
@@ -35,10 +65,10 @@ The table below compares feature availability between legacy plans and modern pl
 
 | Feature Category | Legacy Plans | Modern Plans |
 | --- | --- | --- |
-| New Features (post-Feb 2026) | ❌ Not available | ✅ Available |
+| New Features (post-Feb 2026) | Audiences, Workflows, Sequencer v2 via Audiences, and MCP/CLI/API through December 31, 2026 (Starter, Explorer, Pro) | ✅ Available |
 | Ads (Clay Ads) | ❌ Not available | ✅ Growth (1 sync), Enterprise (2 syncs) |
-| New Integrations | ❌ Future integrations blocked | ✅ All new integrations |
-| Advanced Orchestration | Current features only | ✅ New releases prioritized |
+| New Integrations | Your current integrations keep working | ✅ All new integrations |
+| Advanced Orchestration | Current features only, plus Workflows through December 31, 2026 | ✅ New releases prioritized |
 | Functions (Repeatable Workflows) | ✅ Available | ✅ Available |
 | HTTP API | Explorer+ | Growth+ |
 | CRM Integrations | Pro+ | Growth+ |
@@ -92,7 +122,7 @@ Legacy plans will be supported for the foreseeable future with bug fixes, securi
 
 **Can legacy customers get new features if they pay extra?**
 
-No. New features (Ads, new integrations, advanced orchestration) are only available on modern plans. Legacy customers must migrate to modern plans to access them.
+There's no add-on that extends the limited-time access or unlocks Clay Ads on a legacy plan. Migrating to a modern plan is the way to keep these features long term and to pick up the ones legacy plans don't include.
 
 **What happens if a legacy customer changes their plan?**
 
