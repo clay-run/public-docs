@@ -22,9 +22,10 @@ Follow these steps to set up auto-delete:
 
 1.  Open a table.
     -   Note: To fully bypass the 50,000 record source limit, the table source must be **webhooks**, **send table data**, a **signal source**, or an **Audiences source**. For all other source types, the source will still accumulate rows toward the 50,000 limit even with auto-delete enabled. A warning appears during setup if your table includes incompatible sources.
-2.  Open the auto-delete settings using either access path:
+2.  Open the auto-delete settings using any of these access paths:
     -   Click the **table title** and select **Enable auto-delete** from the dropdown, or
-    -   Click the **auto-delete icon** (archive icon) in the bottom toolbar of the table.
+    -   Click the **auto-delete icon** (archive icon) in the bottom toolbar of the table, or
+    -   Click **Set up auto-delete** in the warning banner that appears when your table uses only compatible continuous sources (such as webhooks) and auto-delete is not yet enabled. This button is visible only to users with edit access to the table.
 3.  In the dialog that appears, check **This table uses a webhook, send table data, signal, or Audiences source.**, then click **Configure auto-delete**.
     -   If your table uses an incompatible source type, auto-delete will still delete rows, but the source record count continues accumulating toward the 50,000 limit.
 4.  Under **Auto-delete mode**, select one of the following options:
