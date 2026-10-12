@@ -10,7 +10,7 @@ Connect your Clay workspace to AI tools.
 
 MCP (Model Context Protocol) is how Clay connects your workspace to AI tools like ChatGPT, Claude, Codex, and Glean. Clay lets workspace admins set credit limits and monitor usage for team members who access Clay through these platforms.
 
-Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory — not a generic server URL you configure manually.
+For supported platforms, Clay's MCP integrations are pre-built apps within each platform's native connector or app directory — not a generic server URL you configure manually. Other MCP clients and gateways can connect to Clay's MCP endpoint through Dynamic Client Registration (see [Can I connect Clay's MCP server through a third-party MCP gateway or client?](#can-i-connect-clays-mcp-server-through-a-third-party-mcp-gateway-or-client)).
 
 Navigate to it from the Clay homepage by clicking `MCP` under **Orchestration** in the left sidebar. The MCP settings page is only visible to workspace admins — if you don't see it in the sidebar, ask your workspace admin.
 
@@ -80,7 +80,7 @@ The `MCP for reps` option requires a modern Launch, Growth, Enterprise, or Legac
 
 ### Does Clay provide an MCP server URL I can paste into any AI tool?
 
-No. Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory. Connect through:
+For the supported platforms below, don't paste a URL — Clay's MCP integrations are pre-built apps within each platform's native connector or app directory. Connect through:
 
 -   **Claude:** [claude.com/connectors/clay](https://claude.com/connectors/clay)
 -   **ChatGPT:** Type `@Clay` (browser) or `/Clay` (desktop) in a prompt
@@ -89,19 +89,50 @@ No. Clay's MCP integrations are pre-built apps within each supported platform's 
 
 Each connector uses Clay's OAuth flow for authentication — when you click through to connect, you're redirected to log in to your Clay workspace to complete the authorization.
 
-There is no generic Clay MCP server URL to enter manually. The "Add MCP server" configuration screen in tools like Glean is for custom third-party servers — Clay's integration connects through Glean's built-in app directory, not that form.
+For these supported platforms, use the pre-built connector rather than entering Clay's MCP server URL manually. The "Add MCP server" configuration screen in tools like Glean is for custom third-party servers — Clay's integration connects through Glean's built-in app directory, not that form.
+
+For any other MCP client or gateway, the Clay MCP server URL is `https://api.clay.com/v3/mcp` — see [Can I connect Clay's MCP server through a third-party MCP gateway or client?](#can-i-connect-clays-mcp-server-through-a-third-party-mcp-gateway-or-client).
 
 **Note on `mcp.clay.earth`:** You may encounter `mcp.clay.earth/mcp` while searching for Clay's MCP endpoint. That URL belongs to a separate, unaffiliated product — a personal CRM tool previously called Clay.earth, now rebranded to Mesh. It is not Clay's MCP server.
 
 ### Can I connect Clay's MCP server through a third-party MCP gateway or client?
 
-Not currently. Clay's MCP OAuth flow only accepts redirect URIs from supported platforms. If you try to register a client via Dynamic Client Registration through a third-party MCP gateway, you will see this error:
+Yes. Any MCP client or gateway that supports OAuth with Dynamic Client Registration (DCR) — for example, a LiteLLM MCP gateway or a custom agent framework — can connect to Clay's MCP server. The client registers itself automatically, so you don't need to request a client ID, client secret, or redirect URI allowlist entry from Clay.
 
-```
-redirect_uris.0: redirect_uri must be from an allowed domain
-```
+Use these values when configuring the Clay MCP server in your client or gateway:
 
-There is no self-service way to add a custom redirect URI to Clay's OAuth allowlist. If your organization needs to connect Clay through a specific third-party MCP client or gateway, reach out to Clay support with the redirect URI(s) you require. Adding a new platform requires a code change on Clay's side.
+-   **MCP server URL:** `https://api.clay.com/v3/mcp`
+-   **OAuth flow:** Authorization Code with PKCE (`S256`), including refresh tokens
+-   **OAuth scope:** `mcp`
+-   **Dynamic Client Registration endpoint:** `https://api.clay.com/oauth/register`
+-   **Authorization endpoint:** `https://app.clay.com/oauth/authorize`
+-   **Token endpoint:** `https://api.clay.com/oauth/token`
+
+The person completing the Clay login during the OAuth flow must already be a member of your Clay workspace.
+
+Clients that connect through DCR show up as **Unknown** in Clay. A workspace admin controls whether Unknown clients can connect in the `Allowed MCP clients` section of the `MCP` page (click `MCP` under **Orchestration** in the left sidebar). The `Unknown` toggle ("Use this for any other MCP client not listed above") is on by default. If an admin turns it off, Clay blocks new connections and token refreshes from all DCR-registered clients, including gateways that were already connected.
+
+### Why does my MCP gateway say "OAuth metadata discovery timed out" or "Cannot GET /.well-known/oauth-authorization-server/v3/mcp"?
+
+This error means your MCP client or gateway is looking for Clay's OAuth configuration at a URL where Clay doesn't publish it. It is not a Clay outage and not a credentials problem.
+
+Clay publishes its OAuth discovery documents at these exact URLs:
+
+-   **OAuth authorization server metadata:** `https://api.clay.com/.well-known/oauth-authorization-server` (root URL only)
+-   **OAuth protected resource metadata for the MCP server:** `https://api.clay.com/.well-known/oauth-protected-resource/v3/mcp`. Clay's MCP server also points to this URL in the `WWW-Authenticate` header of its `401` response.
+
+Clay does not serve these discovery URLs, so requests to them fail with `Cannot GET` (a `404` error):
+
+-   `https://api.clay.com/.well-known/oauth-authorization-server/v3/mcp` (path-based authorization server discovery)
+-   `https://api.clay.com/.well-known/openid-configuration` (OpenID Connect discovery)
+
+Some gateways, such as LiteLLM, try the path-based URL and time out instead of falling back to the root URL. To fix this:
+
+1.  In your gateway's settings for the Clay MCP server, turn off automatic OAuth discovery if it has that option.
+2.  Enter the endpoints manually, using the values listed in [Can I connect Clay's MCP server through a third-party MCP gateway or client?](#can-i-connect-clays-mcp-server-through-a-third-party-mcp-gateway-or-client). If your gateway asks for an authorization server or issuer URL, use `https://api.clay.com`.
+3.  Reconnect the Clay MCP server and complete the Clay login in your browser.
+
+If the connection still fails after discovery succeeds, ask a workspace admin to confirm the `Unknown` toggle under `Allowed MCP clients` on the `MCP` page is on.
 
 ### What role should I assign to team members who will only use Clay through MCP?
 
