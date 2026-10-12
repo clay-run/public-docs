@@ -179,6 +179,24 @@ curl -X POST YOUR_CLAY_WEBHOOK_URL \
 
 If a row appears for the simple test but not for your real payload, the issue is either in your real request's formatting, headers, or auth token — or **auto-dedupe is removing rows** whose dedupe column value already exists in the table. A simple `{"test": "hello"}` payload always creates a row even when auto-dedupe is on, because blank dedupe column values are skipped. See [My webhook is sending data successfully but new rows aren't visible](#my-webhook-is-sending-data-successfully-but-new-rows-arent-visible-in-my-table) for how to diagnose and fix auto-dedupe. If no row appears on a brand-new webhook, contact support.
 
+### My webhook rows are arriving but enrichment columns aren't running automatically
+
+This happens when the table's run mode is set to **Manual** — Auto-run is disabled. You can confirm this by looking at the table toolbar: if it shows **Manual** instead of **Auto-run**, enrichment columns will not fire when new webhook rows arrive. The rows land in the table, but each enrichment cell is marked as stale and waits for a manual trigger.
+
+To re-enable automatic enrichment on incoming rows:
+
+1. Click the `⛭` icon in the top toolbar → **Run Settings**.
+2. Toggle **Auto-run** on.
+3. Choose:
+   - `Continue without running` — leave rows that arrived during the pause unprocessed for now.
+   - `Update cells` — immediately queue all empty or out-of-date enrichment cells to run.
+
+Once Auto-run is back on, every new row from the webhook will automatically trigger your enrichment columns.
+
+**Note:** Rows that arrived while the table was in Manual mode are **not** automatically queued when you re-enable Auto-run. To process them, choose `Update cells` when re-enabling — or right-click the enrichment column header and select **Run column → Run N empty or out-of-date rows**.
+
+See [Auto-run](auto-run.md) for the full run decision tree and all available controls, including how to enable Auto-run on specific columns only.
+
 ### How can I tell which webhook source a row came from?
 
 Clay records which webhook source sent each row at ingestion time, so you can filter the table by source without any extra setup.
