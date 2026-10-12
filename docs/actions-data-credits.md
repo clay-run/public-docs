@@ -417,7 +417,13 @@ Note that credits are not refunded for enrichments where the system operated as 
 
 ### Are Data Credits charged when a provider finds no result?
 
-It depends on the provider's billing model. In some cases, a data provider may not charge when no data is found — in those cases, your credits will be refunded automatically. Other providers charge Clay for the API call regardless of whether data is found, so credits are deducted either way. You can see the exact credit cost for each enrichment in the enrichment panel before running.
+By default, yes. Clay's credit system charges when a provider successfully returns an empty result — for example, when a company enrichment runs but no matching record exists. This happens because Clay has already made the API call to the provider on your behalf, and most providers bill for the request regardless of the outcome.
+
+A number of providers override this default and refund credits automatically when no result is found. These refunds happen without any action on your part.
+
+**Technical errors are handled separately.** If an enrichment fails due to a timeout, invalid credentials, a rate limit, or an infrastructure error, your credits are automatically refunded — you are not charged for a run that could not complete due to a technical problem.
+
+To understand the cost behavior of a specific enrichment before running at scale, test on a small batch (10–20 rows) first and check your credit usage in **Settings → Usage**.
 
 ### What happens to credits if an enriched email fails validation or turns out to be undeliverable?
 
