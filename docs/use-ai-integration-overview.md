@@ -157,6 +157,19 @@ To call a custom or additional LLM from Clay, use the [HTTP API enrichment](http
 
 **Note — Azure OpenAI and other hosted model deployments:** Azure OpenAI API keys are not supported as a native bring-your-own-key provider in Claygent. If you connect your own API key from a provider that appears natively in Claygent's model picker (such as OpenAI, Anthropic, Google Gemini, Mistral, or xAI), you retain all of Claygent's research capabilities (web search, website crawling, and contact finding); only the billing changes — model usage is charged to your provider account instead of Clay Data Credits. Azure OpenAI requires a custom deployment endpoint and Azure-specific authentication that Claygent's native account system does not support, so it must go through the HTTP API enrichment instead — which means the limitations above apply and Claygent's web research features are not available.
 
+### Can I route OpenAI requests through a custom base URL, proxy, or internal LLM gateway?
+
+No. Clay's OpenAI connection does not support a custom base URL, proxy, or internal LLM gateway — for example, an OpenAI-compatible gateway your company uses to route requests to third-party AI providers. When you add your own OpenAI API key in Clay, the connection form only asks for the **API key** and a connection name (**Name your connection**); there is no field for a custom endpoint URL. Use AI and the other AI columns always send requests made with your OpenAI key directly to OpenAI's standard API at `api.openai.com`.
+
+To send LLM requests through your own gateway or proxy, use the [HTTP API enrichment](https://university.clay.com/docs/http-api-integration-overview) instead:
+
+1.  Add an HTTP API enrichment column to your table.
+2.  Set the endpoint URL to your gateway's OpenAI-compatible endpoint.
+3.  Add the authentication header your gateway requires.
+4.  Pass your prompt and any `{{Column Name}}` references in the request body.
+
+Each row's response is written to the HTTP API column like any other enrichment. The limitations compared to Use AI listed above apply — for example, Claygent's web research features are not available through the HTTP API enrichment.
+
 ## AI confidence indicators
 
 When a Use AI or Claygent column completes successfully, a small colored icon appears inside each result cell to indicate the AI's confidence level in its output:
