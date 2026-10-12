@@ -1,6 +1,6 @@
 ---
 title: Workspace settings
-description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, agency setups, AI Context, deletion, and recovering a previous workspace.
+description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, IP access restriction, agency setups, AI Context, deletion, and recovering a previous workspace.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -96,6 +96,12 @@ To update your billing email:
 SSO is not configured through the Clay workspace settings UI — there is no self-serve configuration panel. To set up SSO for your workspace, contact Clay support. SSO is available on **Enterprise** plans at no additional cost, and as a paid add-on on annual Pro and annual Growth plans.
 
 See [Single Sign-On (SSO)](./single-sign-on.md) for full details on eligibility, the setup process (handled by Clay's support team via WorkOS), how login behavior changes once SSO is enabled, and important notes on user provisioning.
+
+## IP access restriction
+
+IP access restriction is a self-serve feature available to **Enterprise** workspace admins. It lets you define IP allowlists — separately for browser sessions and API keys — so only connections from approved IP addresses or CIDR ranges can reach your workspace.
+
+See [IP access restriction](./ip-access-restriction.md) for full setup instructions, allowlist configuration, and details on what members see when their IP is blocked.
 
 ## Beta Program
 
