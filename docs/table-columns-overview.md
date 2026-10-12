@@ -236,7 +236,7 @@ You can merge data from multiple columns into a new column. "Merge columns" uses
 1.  Click `Add column` → `Merge columns`.
 2.  Select a `Data type` from the dropdown.
 3.  In the formula field, type `/` to open the column picker and select each column you want to include as a fallback step.
-4.  Click `Save settings`.
+4.  Click `Save`.
 
 **Note:** There is no "List" column data type in Clay. A Merge column always returns a **single value** (the first non-empty result across your columns), not an array of all values.
 
