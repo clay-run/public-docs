@@ -106,10 +106,22 @@ Use the drag-fill handle (small square in the bottom-right corner of a selected 
 
 ## Workflow canvas shortcuts
 
-These shortcuts apply in the Clay **Workflows editor** — the node-based workflow builder.
+These shortcuts apply in the Clay **Workflows editor** — the node-based workflow builder. Clay Workflows is currently in beta, so these shortcuts are available only in workspaces that have access to the Workflows editor.
 
 -   `Click and drag` on empty canvas area — Draw a selection rectangle to select multiple nodes at once
 -   `Space` + `drag` — Pan the canvas in any direction
+
+### Zoom the workflow canvas with Z
+
+Hold `Z` to use the zoom tool on the Workflows canvas. Hold `Option/Alt` + `Z` to zoom out instead.
+
+-   `Z` + `click` — Zoom in one step around the point you clicked (the same step as the canvas's zoom-in button)
+-   `Z` + `drag` — Draw a rectangle and zoom in so that area fills the canvas
+-   `Option/Alt` + `Z` + `click` — Zoom out one step around the point you clicked
+-   `Option/Alt` + `Z` + `drag` — Zoom out one step around the center of the rectangle you drew
+-   `Esc` while dragging with `Z` held — Cancel the zoom rectangle without zooming
+
+The `Z` zoom tool only works when the canvas has focus. It doesn't trigger while you're typing in a text field or using a dialog or menu, and it isn't available on an empty workflow with no steps to zoom.
 
 ## FAQs
 
