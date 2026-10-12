@@ -61,6 +61,8 @@ Clay enforces three types of cell size limits:
 
 When a basic column's data exceeds the 8 kB limit, the cell shows **"Cell data size exceeds limit (8 kB)"**. The final step of a waterfall returns a basic column with an 8 kB limit. If your waterfall contains large amounts of data, it may exceed this limit.
 
+When an action column's response exceeds the 200 kB limit, the cell shows **"Cell data size exceeds limit (200 kB)"**. The action still ran — for action columns that write to an external system (such as Airtable Create record, HubSpot Create contact, or Salesforce Upsert record), the record was created or updated in the destination. However, Clay cannot store the API response in the cell: the cell value is empty, and any downstream Clay columns referencing this action column receive no data for that row.
+
 **Common scenarios where cell size limits are encountered:**
 
 -   **Gong transcripts:** Often exceed the 200 kB limit.
