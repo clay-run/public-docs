@@ -28,6 +28,16 @@ We'll configure all three to ensure Clay has just the access it needs.
     -   `License`: Salesforce
 3.  Click `Save`
 
+### **If your Clay user has a Salesforce Integration user license**
+
+If the dedicated Salesforce user you're connecting to Clay has the **Salesforce Integration** user license (the API-only integration license), a standard permission set can't grant it object and field access. Salesforce requires the **Salesforce API Integration** permission set license first:
+
+1.  In Salesforce, go to `Setup` → `Users` and open the integration user.
+2.  Under `Permission Set License Assignments`, assign `Salesforce API Integration`.
+3.  When you create the custom permission set above, set `License` to `Salesforce API Integration` instead of `Salesforce`, then assign the permission set to the integration user.
+
+Users with the Salesforce Integration license can only connect to Clay with the **Client Credentials** connection method — see [Can I use an integration-only or API-only user license for this?](#can-i-use-an-integration-only-or-api-only-user-license-for-this)
+
 ## **Set object-level permissions**
 
 1.  Within your new permission set, go to `Object Settings`
@@ -90,6 +100,10 @@ Everything else should remain hidden.
     -   `Modify All Data`
     -   `Customize Application`
 
+`API Enabled` is the only system permission Clay's Salesforce connection requires. Beyond that, the Clay user only needs object- and field-level permissions for the data you want Clay to use: `Read` for lookups and imports, plus `Edit` if Clay will write data back to Salesforce. Admin-level permissions such as `View All Data` and `Modify All Data` aren't needed.
+
+**Optional — `View Setup and Configuration` for the Audiences API usage card:** If you use Clay Audiences with a Salesforce source, the **API usage** card on the Salesforce source settings page shows your org's daily Salesforce API usage. Clay reads that figure from Salesforce's Limits API, which Salesforce only makes available to users with the `View Setup and Configuration` permission. Enable `View Setup and Configuration` on the Clay user's permission set if you want the API usage card to show your org's usage; Clay's lookups and write-backs don't need it.
+
 ## **Restrict record visibility (optional)**
 
 If you only want Clay to see a subset of your `Accounts` (e.g., certain regions or segments), configure record-level sharing:
@@ -122,6 +136,8 @@ On **Enterprise plans**, Salesforce connections in Clay automatically route thro
 ### **Can I use an integration-only or API-only user license for this?**
 
 It depends on the connection method. Integration User and API-only licenses cannot complete the browser-based OAuth flow used by **User Sign In** — attempting this produces an `OAUTH_APPROVAL_ERROR_GENERIC` error. To use an integration or API-only license, switch to the **Client Credentials** connection method instead, which works server-to-server without a browser login. See [Salesforce integration](https://university.clay.com/docs/salesforce-integration-overview) for setup instructions.
+
+If you use the Salesforce Integration user license, also assign the `Salesforce API Integration` permission set license to the user before assigning your permission set — see [If your Clay user has a Salesforce Integration user license](#if-your-clay-user-has-a-salesforce-integration-user-license).
 
 ### **What if I need Clay to access multiple objects?**
 
