@@ -59,7 +59,18 @@ Viewers can be granted Editor access to specific tables or workbooks, or added a
 
 1.  In the workbook, go to workbook settings on the right side.
 2.  Under `Access permissions`, change `Edit access` to `Admins and invited collaborators only`.
-3.  Click `+ Add collaborator` and select the Viewer.
+3.  Click `+ Add collaborators` and select the Viewer.
+
+### Can Viewers get edit access to a whole folder?
+
+No. Clay doesn't support folder-level permissions, so you can't give a Viewer edit access to a folder or to everything inside it. Edit access is set one workbook at a time, and a folder's workbooks don't share or inherit access settings.
+
+To let Viewers edit the workbooks in one folder while staying view-only everywhere else (Enterprise only):
+
+1.  Open each workbook in the folder and add the Viewer as a workbook collaborator using the steps above.
+2.  Repeat the same setup for any workbook you later create in or move into that folder. New workbooks don't automatically pick up the folder's existing collaborators.
+
+**Giving each Viewer their own workbook:** Viewers can't create workbooks themselves. An admin or editor creates the workbook, then adds the Viewer as a collaborator. The Viewer can then edit that workbook and create tables inside it.
 
 ## Sales rep _(Beta)_
 
