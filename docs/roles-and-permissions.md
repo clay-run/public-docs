@@ -78,6 +78,7 @@ The sales rep role is designed for team members who need to set up email account
 
 -   Access tables, workbooks, or any other part of the standard Clay interface
 -   Create or edit workflows directly in Clay
+-   View their own credit usage in-platform — Sales Rep users are redirected away from all workspace settings pages. All other roles (Admin, Editor, Viewer) can view credit consumption, including per-user MCP spend, at `Settings → Usage`
 
 Admins control which Functions reps can access (via the Functions settings page) and can set per-user credit limits. See [MCP settings](https://university.clay.com/docs/mcp-settings) for details.
 **If you were assigned the Sales Rep role but need access to the standard Clay workspace**, contact your workspace admin and ask them to change your role. Admins can update roles at `Settings` → `Team`.
