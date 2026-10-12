@@ -1,6 +1,6 @@
 ---
 title: "Guide: Finding companies and people in Clay"
-description: Where to search for people and companies in Clay (Find leads, + Add, Workflows, Find with query) and best practices for Clay's company and people search features, including valid LinkedIn URL formats for the company identifier and troubleshooting common errors.
+description: Where to search for people and companies in Clay (Find leads, + Add, Workflows, Find with query) and best practices for Clay's company and people search features, including valid URL formats for the company identifier and troubleshooting common errors.
 last_synced: 2026-04-26T01:39:59.452Z
 ---
 
