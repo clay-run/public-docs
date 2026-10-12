@@ -210,6 +210,19 @@ When enriching a person or company, providers match on name or profile data — 
 1. Filter the table to rows where the domain-match column is `false`.
 2. Re-enrich the company using the email domain as the primary input instead of the company name. A validated work email domain is a more reliable signal than a profile-based best-match result.
 
+### Why did my professional profile URL waterfall return the wrong person?
+
+A waterfall that finds a professional profile URL can return the wrong person when one of its providers finds more than one possible match for the same contact. For example, when the LiveData **Find professional profile** step finds several matches, its cell shows **✅ Found 2 profiles** (or any number above 1), and its results hold a list of candidate people.
+
+When **Find professional profile** returns several people, the waterfall uses the professional profile URL of the first person in that list. The waterfall does not compare the candidates against the contact's company, email, or email domain. If the provider lists a different person with the same name first, that person's professional profile URL ends up in your waterfall's output column. Because the waterfall stops at the first provider that returns a result, the providers after that step don't run for that row.
+
+**To check whether a row was affected:** expand the waterfall (click the **»** arrow on the column header) and open the **Find professional profile** cell for that row. If the cell shows more than 1 profile, click into it and review each person's name, company, and job titles to find the right one.
+
+**To get the right person more consistently, use one of these options:**
+
+-   **Move or remove the Find professional profile step (quickest).** Open the waterfall's **Waterfall sequence** (see [Editing an existing waterfall](#editing-an-existing-waterfall)) and drag **Find professional profile** lower in the sequence so that other providers get the first try. You can also toggle it off or delete it.
+-   **Pick the best match from all candidates (most accurate).** For rows where **Find professional profile** found more than 1 profile, add an AI column (such as Use AI or Claygent) that reads that step's full list of people and compares each candidate's name, company, and email domain against your row's inputs. Have it return the professional profile URL of the best match, and use that column's result instead of the waterfall's output for those rows.
+
 ## Trial plan and provider restrictions
 
 Waterfall enrichments are available on all plans, including the Trial plan. However, some individual providers within a waterfall require a paid plan.
