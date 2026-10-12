@@ -117,6 +117,8 @@ When setting up a table source — for example, importing records from a Salesfo
 
 To allow all workspace members to import from the same connected account, change the connection's access setting to **Anyone in the workspace**.
 
+**Troubleshooting — "You do not have the proper access for this app account":** If an existing source or import was configured using a connection that is private to the connection owner (not shared with the workspace), other workspace members will see this error when they try to run it — even if they can view the source configuration. To fix this, ask the connection owner (or a workspace admin) to go to `Settings` → `Connections`, find the connection used by the import, and change the access setting to **Anyone in the workspace**. Workspace admins can update any connection in the workspace from that same settings page.
+
 ## FAQs
 
 **Can admins access every connection in the workspace?**Admins do not, by default, have access to build workflows with every connection in the workspace. All admins can, however, add themselves to any connection in the workspace. Admins are always able to manage and view all connections in the workspace.
