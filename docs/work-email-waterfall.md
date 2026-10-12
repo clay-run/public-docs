@@ -322,3 +322,32 @@ You can chain as many validators as needed this way. Each column's **Only run if
 **Tip:** Before running at scale, test by right-clicking a single row and choosing **Run 1 cell**, or enable [sandbox mode](sandbox-mode.md) to try your full validation sequence without consuming live credits.
 
 For a full reference on writing conditional run formulas, see [Conditional runs](conditional-runs.md).
+
+### Does email validation confirm that a work email belongs to the right person or company?
+
+No. Validation in the Work Email waterfall checks **deliverability** — whether an address can receive mail — not **identity**, meaning whether the email actually belongs to the person and company in your row. The validation provider (for example, ZeroBounce, Debounce, NeverBounce, or Hunter) returns a status such as valid, invalid, catch-all, or unknown, and your `Validation strategy` uses that status to decide whether the waterfall stops. A deliverable email can still be the wrong email for your contact.
+
+The Work Email waterfall's validation step does **not**:
+
+-   Check that the email domain matches the company domain you mapped as an input.
+-   Exclude free or personal email domains such as `@yahoo.com` or `@gmail.com`.
+-   Check that the name in the email address matches the person's name in your row.
+
+This matters most when you use enriched emails for CRM routing — for example, matching leads to Accounts in Salesforce or Marketo by email domain. A wrong domain can route a lead to the wrong Account. Low-quality inputs, such as placeholder company names like `xxx` or `N/A`, increase the risk of a deliverable email at the wrong company.
+
+**To check work email accuracy before syncing to your CRM**, add your own "safe to sync" checks after the waterfall:
+
+1.  **Keep the original fields unchanged.** Write the enriched email and enriched company to separate columns instead of overwriting the submitted email, company name, or account fields.
+2.  **Exclude free or personal email domains.** Add a formula column that flags emails on free email domains (such as `yahoo.com`, `gmail.com`, or `hotmail.com`), and exclude those rows. See [Conditional statements](conditional-statements.md) for an example formula that matches free email domains.
+3.  **Confirm the email domain matches the company.** Add a formula column that extracts the domain after `@` and compares it to the contact's company domain or an approved subsidiary domain. See [Handling email/company domain mismatches](building-a-data-waterfall.md#handling-emailcompany-domain-mismatches) for this setup.
+4.  **Flag name mismatches.** Compare the part of the email before `@` with the person's first and last name, and send mismatches to review instead of syncing them automatically.
+5.  **Exclude risky validation results.** Use the `Conservative` validation strategy, which excludes catch-all emails. For more control, choose `Advanced`, leave `Include catch-all` off, and turn on `Exclude role-based emails` and `Exclude disposable emails`.
+6.  **Sync only rows that pass every check.** Use an **Only run if** condition on your CRM sync column so only rows that pass all checks are sent. Filter the remaining rows into a review view. See [Conditional runs](conditional-runs.md).
+
+### Is there a confidence score for work emails I can filter on?
+
+No. The Work Email waterfall does not return a single confidence score for each email. The waterfall output column contains only the email the waterfall accepted. If you turn on `Output name of successful provider?`, you also get a column showing which provider found the email, but there is no score.
+
+Some individual providers include their own score in their columns. For example, Hunter returns a `score` from 0 to 100 in its email finder and email verification results. These scores come from that provider alone, aren't available for every provider in the waterfall, and measure deliverability rather than whether the email belongs to the right person.
+
+To filter out weak matches before syncing to your CRM, build your own "safe to sync" status from the checks in [Does email validation confirm that a work email belongs to the right person or company?](#does-email-validation-confirm-that-a-work-email-belongs-to-the-right-person-or-company) instead of relying on deliverability alone. For general ways to improve reliability across waterfall enrichments, see [Waterfall results and data quality](building-a-data-waterfall.md#waterfall-results-and-data-quality).
