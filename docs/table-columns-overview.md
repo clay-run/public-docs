@@ -1,6 +1,6 @@
 ---
 title: Table columns
-description: Learn how to navigate columns in your Clay table, including column types, system columns (Created At and Updated At), limits, child column mapping, and how to resolve circular dependency errors.
+description: Learn how to navigate columns and views in your Clay table, including column types, system columns, limits, child column mapping, table views (filters, sorts, auto-save), and how to resolve circular dependency errors.
 last_synced: 2026-04-26T01:40:46.052Z
 ---
 
@@ -154,6 +154,43 @@ You can identify the parent column of a child column to better understand its da
 
 1.  Click on the child column to open the dropdown menu.
 2.  Within the menu, select `Go to parent column`.
+
+## Table views
+
+A **view** is a saved perspective of your table. Each table can have multiple views, and each view independently stores its own filters, sort order, column visibility, column order, and column colors. Switching between views changes how the table looks without affecting the underlying data — every row remains in the table regardless of what a view's filter hides.
+
+**Views are automatically saved.** There is no Save button — as soon as you apply a filter, change a sort, or adjust column visibility in a view, that change is persisted. The URL for each view is shareable: anyone with access to the workspace can open the link and see the same view configuration.
+
+### Switch between views
+
+The current view's name appears in the table toolbar next to a table icon. Click it to open the view selector and choose a different view.
+
+### Create a new view
+
+To create a new view, click the current view name in the toolbar, then choose **Duplicate view**. The new view starts as a copy of the current one — you can then adjust its filters, sorts, and column settings independently without affecting the original. Double-click the view name in the toolbar to rename it.
+
+You can also auto-generate one view per option in a Select column: click the Select column header and choose **Split into views**. Clay creates a filtered view for each select option (up to 30 views at once) — useful for slicing a table by a field like Account Tier or Segment.
+
+### Manage views
+
+From the view selector (click the view name in the toolbar), you can:
+
+-   **Rename view** — change the current view's name
+-   **Edit description** — add a description explaining what the view shows, visible to teammates
+-   **Duplicate view** — create a copy of the current view
+-   **Delete view** — remove the current view (requires at least one remaining custom view)
+
+### Preconfigured views
+
+Every table includes built-in system views that cannot be renamed or deleted:
+
+-   **All rows** — shows every row in the table with no view filter applied
+-   **Errored rows** — shows rows where at least one enrichment column returned an error
+-   **Fully enriched rows** — shows rows where all enrichment columns completed successfully
+
+### Export a view's data as CSV
+
+To download the rows visible in the current view as a CSV file, click **Tools** in the top-right toolbar → navigate to the **Export** tab → click **Download CSV**. The export respects the view's active filters (only matching rows are included) and includes only the columns currently visible in the view. The file downloads automatically and is also saved in the **Exports** section of your workspace homepage for later access. CSV export does not consume any credits.
 
 ## Sort columns
 
