@@ -19,6 +19,19 @@ Build and sync contact and account lists to LinkedIn, Meta, Google Ads, Bing Ads
 -   Advertise to executives who recently changed jobs or got promoted
 -   Target leads that aren't in your CRM to expand total addressable market
 
+## Workflow: target Director-level contacts at high-intent accounts
+
+To run an ads campaign targeting Director-level and above contacts at accounts actively researching topics relevant to your business:
+
+1.  **Import your target accounts into a Companies Audience.** Sync from Salesforce, HubSpot, or a data warehouse, or use Clay company search — see [Audiences](audiences.md).
+2.  **Add a Company Topic Intent signal to monitor those accounts.** In your Companies Audience segment, click **Enrich** → **Signals** → **Company Topic Intent** (open beta, available on all paid plans). Select the topics you want to track and set a run frequency.
+3.  **Filter to high-intent accounts.** After the signal runs, add a filter on **Company Topic Intent results** and select High or Medium — these are the accounts actively researching your topics.
+4.  **Find Director-level contacts at the intent-matched companies.** From the filtered segment, click the **⋮** menu → **Find people from this list**. Apply seniority filters (Director, VP, C-Level) or job title keywords. Click **Continue** → **Send to Audiences** to add the contacts to your People Audience at no credit cost.
+5.  **Enrich contacts for better match rates (optional).** In your People Audience, run a bulk enrichment to add personal emails — use the `Hashed Email for Ads` waterfall or enable Enhanced Matching for the highest possible match rates.
+6.  **Push to ads.** From your People Audience segment, click **Send** → **Sync to ad platforms** and select your destination ad platform. See [Syncing audiences to ad platforms](audiences.md#syncing-audiences-to-ad-platforms) for field mapping details.
+
+The signal re-runs on schedule — contacts from newly intent-matched companies are found and added to the synced audience automatically, keeping your ad targeting current.
+
 **Note:** Table ads (Ad Sync tables created directly from a Clay table) are being deprecated. All existing table-based ad syncs now show a deprecation notice, and creating new recurring table ad syncs is no longer supported. For new ad targeting workflows, use Audience Ads instead — see [Syncing audiences to ad platforms](https://university.clay.com/docs/audiences#syncing-audiences-to-ad-platforms).
 
 ## **Creating and syncing ad audiences**
