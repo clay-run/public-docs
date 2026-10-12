@@ -14,6 +14,8 @@ Single Sign-On (SSO) is available to **Enterprise plan** customers at no additio
 
 SSO setup is managed by Clay's support team — there is no self-serve configuration in the Clay UI. To get started, contact Clay support.
 
+**Before you begin:** To see who currently has access to your workspace, go to `Settings` > `Team`. This is the list of users you will need to assign to the Clay app in your identity provider (for example, by adding them to the Clay tile in Okta) so they can sign in via SSO after it is activated.
+
 The typical setup process:
 
 1.  Contact Clay support to initiate SSO setup.
