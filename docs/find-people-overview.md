@@ -16,6 +16,14 @@ To import contacts from a LinkedIn Sales Navigator people search into Clay, use 
 
 **Note:** You can get up to 500 results per cell by reducing the data you're requesting. Click the column name and select **Edit column → Reduce Data for More Results**.
 
+## Where to start
+
+Open **Find leads** in the left sidebar or on your home page and choose **People**. In a workbook, use **+ Add → Find people**. In a Workflow, add a **Find people** node.
+
+Use **Find with filters** when available, or describe the people you want in the search assistant and review its suggested search. Clay's built-in search is separate from the deprecated **Find AI** integration. **People** and **Companies** under Audiences show records already in your workspace; filtering those records does not discover new prospects.
+
+For advanced query syntax, use [Find with query](finding-companies-and-people-in-clay.md#find-with-filters-and-find-with-query) inside the built-in search, if your workspace has access.
+
 ## **Creating a table with Find People**
 
 1.  In a workbook, click `+ Add` at the bottom.

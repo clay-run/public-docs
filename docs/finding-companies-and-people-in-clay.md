@@ -12,6 +12,30 @@ Clay's `Find Companies` and `Find People` sources give you instant access to bil
 
 > **Note:** Find People at These Companies is currently in **Beta** — a Beta badge is shown on the panel header in the product UI.
 
+## Where to start a search
+
+To discover new prospects in Clay's database, use **Find leads**:
+
+- **On the home page:** click the **Find leads** card and choose **People** or **Companies**. You can also use **Find leads** in the left sidebar.
+- **Inside a workbook:** click **+ Add** and choose **Find people** or **Find companies**.
+- **In Workflows:** add a **Find people** or **Find companies** node.
+
+The workbook's **+ Add** control is inside a workbook; on the home page, start from **Find leads** instead. The deprecated **Find AI** integration is a separate third-party source and is not the entry point for Clay's built-in search.
+
+Choose one result type at a time: **People**, **Companies**, or **Jobs**. A people search can use company criteria to find people at matching employers; it still returns people, not a combined people, companies, and jobs list. Some advanced filters depend on your workspace's access.
+
+**Already in Audiences?** The **People** and **Companies** lists there contain records already in your workspace. Segment filters organize those records. To discover additional prospects, start a **Find leads** search and import its results. See [Creating an audience](audiences.md#creating-an-audience).
+
+## Find with filters and Find with query
+
+Start with **Find with filters** when it is available, or describe what you want in the search assistant. For example: “Find sales leaders at software companies with at least 500 employees.” Review the criteria and preview before importing.
+
+For an advanced query such as `select from people ...` or `select from companies ...`, open **Find people** or **Find companies**, then use the mode menu in the search panel header to switch from **Find with filters** to **Find with query**, if offered. Enter the query in that mode's query editor. Query syntax is not a table formula or a Find AI input.
+
+**Find with query is in beta, and pricing is subject to change.** Availability and the layout of the filter/query controls vary by workspace. Some workspaces open directly in the query experience; others do not offer it. If you do not see the option, use the available filters or search assistant rather than looking for Find AI. The **Jobs** search UI uses filters and does not offer **Find with query**.
+
+Standard people and company table searches do not have a per-search Data Credit charge. Paid options, such as technographics in the standard company import flow, and enrichments can add charges. Workflow search execution can also use Actions. Review the displayed estimate before importing or running a Workflow; do not assume that every search option or follow-up action is free.
+
 ## Company search
 
 ### Anchor on description keywords

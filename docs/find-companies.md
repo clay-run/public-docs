@@ -15,6 +15,14 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
 
 **Looking for similarity-based discovery?** You can switch to **Find lookalikes** mode using the mode dropdown in the filter panel header. See [Clay Lookalikes](clay-lookalikes.md) for documentation on the lookalike source and enrichments.
 
+## Where to start
+
+Open **Find leads** in the left sidebar or on your home page and choose **Companies**. In a workbook, use **+ Add → Find companies**. In a Workflow, add a **Find companies** node.
+
+Use **Find with filters** when available, or describe the companies you want in the search assistant and review its suggested search. Clay's built-in search is separate from the deprecated **Find AI** integration. **People** and **Companies** under Audiences show records already in your workspace; filtering those records does not discover new prospects.
+
+For advanced query syntax, use [Find with query](finding-companies-and-people-in-clay.md#find-with-filters-and-find-with-query) inside the built-in search, if your workspace has access.
+
 ## **Creating a table with Find Companies**
 
 1.  In a workbook, click `+ Add` at the bottom.
