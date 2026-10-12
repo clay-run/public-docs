@@ -127,7 +127,7 @@ Special sequencer enrichments available in the table include:
 -   `Reply to lead`: Automate responses to any email reply event using a pre-built HTML template, AI-generated snippet, or booking link.
 -   `Pause lead in campaign`: This can be called from any Clay table to pause a lead on an incoming event (e.g. event signup, or if the recipient filled in a form).
 -   `Add email to blocklist`: Stop an email address from receiving emails across all campaigns in your workspace — including any campaigns that address is currently active in.
--   `Forward lead email in campaign`: Route an email thread from the global inbox to any email address — including addresses outside Clay (recipients do not need a Clay seat). Map Campaign ID and Lead ID from the event row, set Recipient email addresses to the column holding the target inbox, and add a run condition so it only fires on `EMAIL_REPLY` events. When using Clay-purchased SmartSender accounts, add the **Get rep data** enrichment to the campaign events table — it looks up the rep assigned to each sending account and returns their email as `repEmail`. Map that output to Recipient email addresses to route each reply directly to the recruiter's inbox without building a column on your leads table.
+-   `Forward lead email in campaign`: Route an email thread from the global inbox to any email address — including addresses outside Clay (recipients do not need a Clay seat). Map Campaign ID and Lead ID from the event row, set Recipient email addresses to the column holding the target inbox, and add a run condition so it only fires on `EMAIL_REPLY` events. When using Clay-purchased SmartSender accounts, add the **Get rep data** enrichment to the campaign events table — it looks up the rep assigned to each sending account and returns their email as `repEmail`. Map that output to Recipient email addresses to route each reply directly to the recruiter's inbox without building a column on your leads table. Rep assignment is available for SmartSender accounts only — for sending accounts you connected through Outlook or Google OAuth, see [Why does Get rep email show "No rep assigned" for my Outlook or Google sending accounts?](#why-does-get-rep-email-show-no-rep-assigned-for-my-outlook-or-google-sending-accounts).
 
 ## Managing leads in campaigns
 
@@ -688,6 +688,18 @@ Smartlead assigns leads into one of the following categories:
 ### How do I handle replies from leads?
 
 Replies are available in the `Replies` tab of your campaign and in the campaign events table. You can reply directly from Clay using the `Reply to lead` enrichment in the campaign events table.
+
+### Why does Get rep email show "No rep assigned" for my Outlook or Google sending accounts?
+
+The **Get rep data** enrichment (the `Get rep email` column in the campaign events table) only returns a rep for SmartSender accounts purchased through Clay. Assigning a rep to a sending account is supported for SmartSender accounts only — sending accounts you connect yourself through `Microsoft Outlook OAuth` or `Google OAuth` can't have a rep assigned. For those accounts, the `Get rep email` column shows **No rep assigned**, so a `Forward lead email in campaign` column that uses its output has no recipient to forward replies to.
+
+If a connected sending account is the rep's own inbox, replies already arrive in that inbox and no forwarding is needed. To forward replies from connected Outlook or Google sending accounts to each rep's primary email, build your own sender-to-rep mapping:
+
+1.  Create a separate Clay table with two columns: `Sender email` and `Rep primary email`. Add one row for each sending account. If a rep owns several sending accounts, map each one to the same primary email.
+2.  In the campaign events table, add a **Lookup single row in other table** column that matches the event's `Sender email address` column (the sending account — not the lead's email) to the `Sender email` column in your mapping table.
+3.  In your `Forward lead email in campaign` column, set **Recipient email addresses** to the `Rep primary email` value returned by the lookup, instead of the `Get rep email` output. Keep Campaign ID and Lead ID mapped from the event row.
+4.  Run the forward column on one `EMAIL_REPLY` row and confirm the email reaches the correct rep's inbox.
+5.  Add an `Only run if` condition so the forward column only runs on `EMAIL_REPLY` events where the lookup returned a primary email, then turn on `Auto-run`. Replies from sending accounts that aren't in your mapping table are skipped instead of forwarded.
 
 ### Why does the reply body show HTML instead of plain text?
 
