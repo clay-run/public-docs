@@ -19,24 +19,24 @@ With this integration, you can streamline contact enrichment workflows, reducing
 3.  In the modal, select or add your Wiza account.
     -   If you have your own account, click `+ Add account` and go through authentication. Otherwise, use the Clay provided key.
 
-### `Action` Find email
+### `Action` Find personal email
 
-Use this action to locate and verify a person's work email address using their name and company information.
+Use the Wiza **Find personal email** action to find a person's personal email address. Wiza needs enough information to identify the person, so the enrichment panel groups the inputs under **Personal identifiers** and asks for one of these input combinations:
+
+-   **Professional profile URL** on its own, or
+-   **Full name** + **Company name**, or
+-   **Full name** + **Company domain**
 
 **Inputs**
 
--   **Full Name:** The full name of the person (required with company information)
--   **Company Name:** The person's company name
--   **Company Domain:** The company's domain name
--   **Professional Profile URL:** LinkedIn profile URL (can be used instead of name/company)
--   **Email Options:** Choose from:
-    -   Work Email (default)
-    -   Personal Email
-    -   Both
+-   **Professional profile URL:** The person's LinkedIn profile URL. Can be used on its own instead of name and company.
+-   **Full name:** The person's full name. Must be paired with a company name or a company domain.
+-   **Company name:** The person's company name.
+-   **Company domain:** The company's website domain. A full website URL such as `https://www.example.com` also works: Wiza's Find personal email action strips the `https://` and `www.` parts and uses the bare domain (`example.com`).
 
 **Output**
 
--   Returns email addresses based on the selected options.
+-   Returns the personal email addresses Wiza found for the person, along with details such as name, company, and company domain. If Wiza finds no email, the cell shows **No email found**.
 
 ### `Action` Find professional profile
 
@@ -89,6 +89,18 @@ Use this action to locate and enrich contact records with phone numbers using Li
 Yes — **Awaiting Callback** is the expected status while Wiza processes your email lookup. Wiza delivers results asynchronously: when Clay triggers a lookup, Wiza processes it in the background and sends the results back to Clay via a webhook. Your column stays in **Awaiting Callback** until that callback arrives, which typically takes a few minutes. This status does not indicate downtime.
 
 If a cell has been in **Awaiting Callback** for more than 5 minutes, Clay's timeout has likely elapsed and the cell will have moved to an error state. To retry, re-run those rows from your table: right-click the affected cells in the Wiza column and choose **Run selected rows** to dispatch fresh lookups.
+
+### Can I run Wiza Find personal email with only a full name and a website domain?
+
+Yes. You don't need to fill every input in the Wiza **Find personal email** enrichment. A **Full name** column plus a **Company domain** column is one of the three accepted input combinations, so once both are mapped you can save the enrichment and run it. The other combinations are **Professional profile URL** on its own, or **Full name** + **Company name**. Your website domain column can contain full URLs (for example, `https://www.example.com`); Wiza uses the bare domain.
+
+Things to know before you run it:
+
+-   **Other columns aren't used.** Wiza Find personal email only accepts four inputs: Professional profile URL, Full name, Company name, and Company domain. Extra columns such as location, job title, or work environment are not sent to Wiza and won't improve personal email results.
+-   **Adding a LinkedIn URL can improve matches.** If you only have names and a domain, you can first add a [Use AI](use-ai-integration-overview.md) column that looks up each person's LinkedIn URL from the information in your table. Then map that column to **Professional profile URL**.
+-   **No email found isn't charged.** When Wiza returns no email, the cell shows **No email found** and the credits for that row are refunded.
+-   **Rows missing a valid combination fail without charge.** If a row has no professional profile URL and is missing either the full name or both the company name and company domain, the Wiza cell errors with "You must include a professional profile URL or a full name and company name or domain." Credits for that row are refunded.
+-   **Test on a few rows first.** Right-click the Wiza column header and choose **Run column** → **Choose number of rows to run** to check results on a handful of rows before running the whole table.
 
 ### Wiza times out on large batches, causing waterfall fallthrough and extra credits
 
