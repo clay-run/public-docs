@@ -42,7 +42,7 @@ Your new plan will activate immediately, and any applicable charges will be appl
 -   Plan upgrades are **not prorated** — you pay the full price of the new tier immediately, not a partial amount for remaining days in your current cycle.
 -   You receive the **full** Actions and Data Credits for your new plan right away.
 -   Unused Actions from your previous plan are not carried over (Actions reset each billing cycle and do not roll over).
--   Your existing unused Data Credits are preserved when you upgrade.
+-   Your existing unused Data Credits are preserved when you upgrade. **Note:** If you are upgrading from a **trial plan**, your trial Data Credits do not carry over — your balance is set to the Data Credits included with your new paid plan (see [When do trial credits expire?](actions-data-credits.md#i-have-a-trial-when-do-the-data-credits-expire)).
 
 ### Free plan
 
@@ -153,7 +153,7 @@ If phone number enrichment doesn't appear immediately after upgrading, refresh t
 
 If your team wants to do a trial, each team member can create their own trial account to explore Clay independently.
 
-Trial tables can hold up to **1,000 rows each**. The table view also displays only the first **50 rows** — rows beyond that are blurred in the UI until you upgrade to a paid plan. When you export to CSV, only these first 50 rows are included in the download. Sending data through third-party integrations (such as Google Sheets) is not subject to this row limit.
+Trial tables can hold up to **1,000 rows each**. The table view also displays only the first **50 rows** — rows beyond that are blurred in the UI until you upgrade to a paid plan. When you export to CSV, only these first 50 rows are included in the download. Columns that push rows to external tools — including email sequencer integrations — also run only on the first 50 visible rows; rows beyond the display cap are not processed and will not be sent to your sequence. *(This 50-row display cap and its effect on column runs are currently rolling out to all trial workspaces — if your trial table shows all rows without a cap, contact [Clay support](https://app.clay.com).)* Bulk data export to Google Sheets is not subject to this limit and includes all rows in the table.
 
 When your trial ends, your account automatically moves to the free plan — you won't be charged unless you actively choose to upgrade to a paid plan. Clay does not auto-upgrade you. For details on what happens to your trial data credits at that point, see [Actions and data credits](actions-data-credits.md).
 
