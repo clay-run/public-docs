@@ -295,6 +295,13 @@ Scheduled column re-runs force-run every row in the selected columns regardless 
 
     **For continuous high-volume workflows** that will routinely exceed 50,000 rows, consider enabling [auto-delete in passthrough mode](auto-delete.md) from the start (Enterprise plan). This bypasses the 50,000-row cap entirely for Send Table Data sources, allowing a destination table to keep accepting rows indefinitely.
 
+-   **A Send Table Data column fails with "Record limit reached" even though the destination table has fewer than 50,000 rows:** Each Send Table Data connection can send up to **50,000 records** to its destination table. A connection is one Send Table Data column plus the source it creates in the destination table. Clay tracks this limit separately for each connection, apart from the destination table's total row count. That means one Send Table Data connection can reach its 50,000-record limit while the destination table holds fewer than 50,000 rows. Webhook sources follow the same 50,000-records-per-source limit (see [Webhooks in Clay](webhook-integration-guide.md#limits)). Upgrading to a higher non-Enterprise plan does not raise the Send Table Data 50,000-record limit.
+
+    **To keep sending after a Send Table Data connection hits "Record limit reached," use one of these options:**
+
+    1.  **Create a new Send Table Data column.** Select **Tools → Export → Send table data** and choose a destination. The new column registers a new source with a fresh 50,000-record limit. In most cases, point the new column at a **new destination table**, and use a **Lookup single row** plus a run condition so rows already sent by the old connection aren't sent twice (see the lookup-and-condition steps in the entry above).
+    2.  **Enterprise plan: enable [auto-delete (passthrough)](auto-delete.md) on the destination table.** With auto-delete on, the destination table skips the 50,000-record source limit for Send Table Data sources, so a single Send Table Data connection can keep sending indefinitely.
+
 -   **Some rows fail with "Your payload is too large. Please reduce the size and try again."** This error means the combined size of all columns selected in a Send row exceeds the 100 kB per-row payload limit. Rows with smaller values in the same run succeed; only rows whose combined column values tip over 100 kB are rejected. The most common cause is sending a large free-text field — such as a full call transcript or an accumulated call history — alongside many other columns in a single Send action.
 
     **To reduce the payload size, use one or more of these approaches:**
