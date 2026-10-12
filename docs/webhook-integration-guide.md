@@ -234,6 +234,20 @@ When Auto-run is enabled on a table (the default for new tables), each new row t
 
 See [Auto-run](auto-run.md) for full details on table-level and column-level controls, and [Ways to save Clay credits](clay-credit-conservation.md) for additional cost-management strategies.
 
+### Why did my webhook table receive fewer records than I sent?
+
+If you sent records to a Clay webhook in bulk (for example, from a custom script pushing thousands of records) and your webhook table has fewer rows than you sent, the most common cause is the webhook rate limit. Clay accepts up to 10 webhook requests per second per workspace, with a burst of up to 20 requests. Any request above that limit gets a `429 Too Many Requests` response. Clay doesn't store, queue or retry rejected requests, so those records never become rows. If your sending system doesn't retry on `429`, the records are lost and have to be re-sent from your side.
+
+**To get the missing records into your webhook table:**
+
+1.  **Slow down the sending.** Send one record per request at a steady pace of 10 requests per second or fewer, rather than sending everything at once. All webhook sources in your workspace share this limit, so don't send to other webhook tables in the same workspace at the same time.
+2.  **Retry on `429`.** When Clay responds with `429`, wait at least 1 second (the response includes a `Retry-After: 1` header) and re-send that same record, increasing the wait on each retry. A `200` response means Clay accepted the record.
+3.  **Avoid duplicating the records already in the table.** Every webhook request creates a new row, so re-sending your full list would duplicate the rows that already arrived. Choose one of these options:
+    -   Send only the records that aren't in the table yet.
+    -   Turn on auto-dedupe first, then re-send the full list. Open the table name dropdown → **Edit table settings** → **Deduplication**, toggle **Auto-dedupe rows** on, and under **Dedupe via column** pick a column with a unique value per record (for example, **Domain**, an email address or a record ID). Incoming rows whose value in that column already exists in the table are deleted, and by default Clay keeps the oldest row. This setting can't be changed while the table is running. For details, see [Auto-dedupe](table-management-settings.md#auto-dedupe).
+
+**Alternative: import a CSV.** If you'd rather not change your sending script, export the missing records and import them into the same table as a CSV. CSV imports don't go through the webhook endpoint, so the webhook rate limit doesn't apply to them.
+
 ### Can Clay replay webhook events that were acknowledged but not processed?
 
 No — Clay does not have a built-in replay function for webhook events. Once Clay returns a `200 OK` for an incoming payload, that acknowledgment is final. There is no admin endpoint, UI control, or automatic retry that can reprocess or re-deliver those events from within Clay.
