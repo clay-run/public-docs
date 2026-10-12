@@ -977,3 +977,27 @@ No. Neither the standard HTTP API action nor the HTTP API with JWT Authenticatio
 -   **Middleware proxy:** Use an external service (such as a serverless function) to handle the OAuth 2.0 token exchange, then have it return a ready-to-use bearer token to Clay or proxy the downstream API request on Clay's behalf.
 
 For full technical detail on the JWT Authentication action's incompatibility with `client_credentials`, see [Does HTTP API with JWT Authentication support OAuth 2.0 client_credentials?](https://university.clay.com/docs/http-api-with-jwt-authentication-integration-overview).
+
+### Can I connect an enrichment provider that uses an asynchronous (async) API?
+
+Yes. You can connect an enrichment provider that doesn't have a native Clay integration — including a provider whose API is asynchronous (you send a request, and the result is ready later) — using HTTP API.
+
+The HTTP API action is synchronous: it sends one request and writes back whatever the provider returns in that response. HTTP API has no built-in polling, callback, or "wait for result" setting, so how you connect an async API depends on how the provider hands back results.
+
+**If the provider can send results to a callback URL (webhook):**
+
+1.  Create a Clay webhook URL to receive the results — either a table that uses the **Webhook** source (`Monitor webhook`) or a workflow that starts with the **On webhook call** trigger. See [Webhooks in Clay](webhook-integration-guide.md) for setup steps, plan availability, and limits such as the 100 KB maximum payload per request.
+2.  Give the provider that Clay webhook URL as its callback URL, then submit your request to the provider with an HTTP API enrichment column or HTTP API step.
+3.  When the provider finishes, it sends the results to the Clay webhook URL, and the data shows up in Clay — as a new row in the webhook table, or as a new run of the webhook-triggered workflow.
+
+**If you have to check back (poll) for the result:**
+
+Build the async API call in a Clay workflow:
+
+1.  Add an **HTTP API** step that submits the request. The provider typically returns a job ID.
+2.  Add a **Delay** step to wait before checking for the result. The Delay step accepts seconds, minutes, or hours, up to a maximum of 24 hours.
+3.  Add a second **HTTP API** step that fetches the result, referencing the job ID from the first HTTP API step's output.
+
+**Note:** The **Delay** step in Workflows is currently in beta and may not be available in every workspace. If you don't see it, contact Clay support.
+
+Clay tables don't have a delay setting between columns, so for providers that require polling, use a workflow rather than chaining HTTP API columns in a table.
