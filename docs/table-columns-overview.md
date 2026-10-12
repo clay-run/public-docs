@@ -108,7 +108,8 @@ Enrichment (action) columns include any column that runs an integration, waterfa
 
 -   **Delete unused enrichment columns.** Click the column header dropdown → `Delete column` for any enrichment columns you no longer need. Hidden enrichment columns still count toward the limit, so open the columns panel to check for any hidden ones.
 -   **Consolidate with Functions.** [Functions](https://university.clay.com/docs/functions) run multiple enrichment steps in a background mini-table and return a single column to your main table — collapsing 20–50 enrichment columns into one. This is the most effective way to stay within the limit while keeping your workflows intact.
--   **Request a higher limit.** Tables using email or phone waterfalls can have the enrichment column limit raised to 60. Contact support if you need a higher limit for your use case.
+-   **Split your workflow across two tables using Send Table Data.** Create a second table and add a [Send Table Data](send-table-data.md) column to your first table to pipe rows into the destination table. The destination table has its own independent column limits, giving you a fresh set of enrichment columns for additional steps. This is a common approach for large, multi-step enrichment pipelines that exceed a single table's column cap.
+-   **Contact support to raise your limits.** The column limits above are workspace defaults that Clay support can increase on request. For tables with email or phone waterfall columns, the enrichment limit also extends automatically above 40 — proportional to the number of waterfall columns in that table, up to a maximum of 60 — without needing to contact support. For limits beyond those defaults, reach out to support to describe your use case and request an increase.
 
 ## Create child columns from a parent column
 
