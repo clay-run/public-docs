@@ -18,9 +18,10 @@ For example, you could:
 
 ## Using Sculptor
 
-1.  **Launch Sculptor.** You can do this in two ways:
+1.  **Launch Sculptor.** You can do this in three ways:
     -   From the **homepage** of [app.clay.com](http://app.clay.com/) using the large open text box.
     -   From **within any table** using the `Chat with Sculptor` button.
+    -   From **within a workflow** using the Sculptor button in the top-right toolbar of the workflow editor, to the left of **Analytics**. See [How do I open Sculptor in a workflow?](#how-do-i-open-sculptor-in-a-workflow)
 2.  **State your problem clearly.** Enter the type of table you want Sculptor to create (e.g., "I want to source a total addressable market (TAM) for franchisors in Canada").
     -   Adding details such as geography, industry, or company size helps Sculptor generate better results.
 3.  **Iterate and review.** Sculptor will propose a workflow with integrations, enrichments, and conditions.
@@ -214,6 +215,14 @@ Sculptor can be helpful throughout the building process, and you can freely turn
 -   **Run Conditions** — Read and configure on new columns; when Sculptor sets a run condition automatically, review it in column settings before running at scale to ensure it matches your data.
 -   **Message Drafting** — Not yet supported
 -   **Filters & Sorting** — Not yet supported
+
+### How do I open Sculptor in a workflow?
+
+Sculptor is available inside the workflow editor, including on draft workflows you haven't published yet. Workflows is currently in beta — if you don't see Workflows in your workspace, contact your Clay account team or support to enable it. To open Sculptor in a workflow:
+
+1.  Open the workflow in the workflow editor (**Graph** view).
+2.  In the top-right toolbar, click the Sculptor button to the left of **Analytics**. Depending on your workspace, this button is labeled **Chat** or shows only an icon (its tooltip reads **Tasks**).
+3.  The Sculptor chat panel opens for the workflow you're viewing. Your past Sculptor conversations for this workflow are available from the **chat history** button (clock icon) in the panel.
 
 ### How can I use Sculptor to replicate an existing workflow's logic in a new workflow?
 
