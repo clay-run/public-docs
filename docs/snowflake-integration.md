@@ -262,3 +262,18 @@ After your query runs, Clay displays the columns it pulled in and lets you map t
 
 -   Click `Auto-map` to automatically match Snowflake columns to existing Clay fields.
 -   To add additional mappings, click `+ Add mapping`. If the destination Clay field doesn't exist yet, select `Create field`, choose a field type (Text, Email, URL, Number, Date, or Checkbox), and name it.
+
+## Troubleshooting
+
+### Authentication error: Snowflake service user account is disabled
+
+If your Snowflake connection returns an authentication error and your key file and username are correct, one possible cause is that the Snowflake user account used in the Clay connection has been disabled by a Snowflake administrator. When this happens, Snowflake rejects the login with error 390101 ("User access disabled. Contact your local system administrator.") even though the key pair itself is valid — Clay will show a generic authentication failure in this case.
+
+**How to resolve:**
+
+1.  Ask your Snowflake admin to check whether the user account is disabled and, if so, re-enable it: `ALTER USER <your_username> SET DISABLED = FALSE;`
+2.  Confirm that the role specified in your Clay connection is still granted to that user.
+3.  In Clay, go to `Settings` > `Connections`, find your Snowflake Key-Pair connection, click the `…` menu, and select **Reconnect**. Re-enter your credentials and click **Save**.
+4.  Re-run your Snowflake source or enrichment column.
+
+If the error persists after re-enabling the user, verify that the RSA public key assigned to your Snowflake user matches the private key (`.p8` file) stored in your Clay connection. A mismatch between the public and private keys will also produce an authentication failure.
