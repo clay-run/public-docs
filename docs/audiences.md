@@ -85,6 +85,7 @@ The Salesforce import flow in Audiences has been redesigned. You can import **al
 6.  To add another import (a different object type or a new SOQL subset), click **Add records** again and repeat.
     -   Lead records are automatically merged with matching Contact records into a single person record in your People audience. The primary matching key is the `ConvertedContactId` field — see [Why do some of my Salesforce Lead records not appear as separate person records in Clay?](#why-do-some-of-my-salesforce-lead-records-not-appear-as-separate-person-records-in-clay) in the FAQs below for details.
     -   Opportunity data is associated with your Companies records and becomes available as a filter in any Companies audience.
+    -   To turn on **Import sync** for a Salesforce Opportunities import, your Accounts import and your Contacts import must both have **Import sync** turned on first. See [Why can't I turn on Import sync for my Salesforce Opportunities?](#why-cant-i-turn-on-import-sync-for-my-salesforce-opportunities) in the FAQs below.
 
 **SOQL requirements for record subset imports**
 
@@ -1250,6 +1251,20 @@ To import only a filtered subset of HubSpot records into Audiences:
 This gives you control over both which records enter Audiences and how their fields are mapped, independent of the native Audiences HubSpot source connector.
 
 **Note:** There is no add-on available to increase the Audiences record limit above 250,000 while staying on the Growth plan. To increase the limit, upgrade to the Enterprise plan, which supports up to 25,000,000 CRM/DWH records.
+
+### Why can't I turn on Import sync for my Salesforce Opportunities?
+
+In Audiences, Salesforce Opportunities link to the accounts and contacts they belong to. Because of that link, the **Import sync** toggle for a Salesforce Opportunities import stays disabled until **both** your Salesforce Accounts import and your Salesforce Contacts import have **Import sync** turned on. Having an Accounts or Contacts import set up isn't enough on its own — if either one shows **Sync off**, the Opportunities toggle can't be switched on. This requirement applies to Salesforce only.
+
+The Opportunities import settings show this reminder under **Import sync**: "Contacts and Accounts imports are required." When the toggle is disabled, hovering over it shows "Opportunities require Accounts and Contacts to be imported first."
+
+**To turn on Import sync for Salesforce Opportunities:**
+
+1.  Open your Salesforce source settings and select your Accounts import under **Records**. If **Import status** shows **Sync off**, turn on **Import sync** and save.
+2.  Select your Contacts import and do the same.
+3.  Select your Opportunities import and turn on **Import sync**. The toggle is now available.
+
+**Turning off Accounts or Contacts sync also turns off Opportunities sync.** If you later turn off **Import sync** for your Salesforce Accounts or Contacts import, Clay also turns off Import sync for every Opportunities import from that Salesforce account. Before you save, Clay warns you, for example "Opportunities import will be disabled." To resume Opportunities syncing, turn Accounts and Contacts sync back on, then turn Opportunities sync back on.
 
 ### Do Activities or Opportunities count toward my plan's record limit?
 
