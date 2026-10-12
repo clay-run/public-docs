@@ -395,15 +395,15 @@ Merging two Audience records into one happens only at the time of a record upser
 
 ## Creating an audience
 
-After importing, you will want to create new audiences, so you can appropriately target the right contacts.
+Audience segments filter people or companies already in your workspace. Creating a segment does not search Clay's database for new prospects. To discover new records, use **Find leads → People** or **Companies**, then import the results. See [Where to start a search](finding-companies-and-people-in-clay.md#where-to-start-a-search).
 
-**Admin access required.** Creating, editing, and deleting audience segments is available to workspace Admins only. Editors and Viewers can view and filter existing segments but cannot create new ones.
+**Segment-edit permission required.** The create controls are shown only to users who can edit segments. If they are missing, ask a workspace admin to check your permissions.
 
-To create a new audience:
+To create a new audience segment:
 
-1.  Click `People` or `Companies` in the left sidebar.
-2.  Click **New audience** in the top-right corner of the list, or click the `+` next to `My Audiences` in the sidebar.
-3.  Select `Criteria` and then add a `Filter` or `Filter group`.
+1.  Open **People** or **Companies** in Audiences.
+2.  Click the **+** control labeled **Create segment** in the Audiences sidebar.
+3.  Add a **Filter** or **Filter group** to define which existing records belong in the segment. When editing filters on an existing list, **Create segment** also becomes available after valid filter changes, if you have segment-edit permission and are not editing a draft segment.
     -   **Filters** evaluate a single condition at a time. All top-level filters are joined with AND — a record must match every one.
     -   **Filter groups** combine multiple conditions using their own AND/OR logic. Within a single filter group, all conditions share the same operator — all AND or all OR; changing the operator in the group header switches all conditions at once. To mix AND and OR, use a nested filter group. For example, to build `A AND B AND (C OR D)`: add A and B as top-level filters, click **`+ Filter group`**, then add C and D inside the group. Once the group contains two or more conditions, a small **`and`** button appears between them — click it to switch to **`or`**.
     -   **Filter limit:** An audience segment can have up to **15 top-level filters**, and each filter group can hold up to **15 conditions**. When you reach the limit, the add-filter button is disabled and shows "You can have up to 15 top-level filters at a time. Remove some filters to add more."
@@ -423,9 +423,9 @@ The operators available when building a filter depend on the field's data type, 
 
 ### Excluding contacts from a specific source (suppression)
 
-To build a segment of people who are **not** already in your CRM — for example, to find net-new prospects who don't yet exist in Salesforce — use the **Origin source** filter with an exclusion operator:
+To build a segment of people who are **not** already in your CRM — for example, to select people already in Audiences who are not in your Salesforce import — use the **Origin source** filter with an exclusion operator:
 
-1. Click **People** in the left sidebar and click **New audience**.
+1. Open **People** in Audiences and use the sidebar **+** control labeled **Create segment** (requires segment-edit permission).
 2. Click **+ Filter** and search for **Origin source**.
 3. Set the operator to **is not**.
 4. Select the source whose contacts you want to suppress — for example, your Salesforce "All contacts" import.
