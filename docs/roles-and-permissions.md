@@ -143,6 +143,10 @@ Group workspace members (for example, by team) to manage access at scale. Granti
 
 Restrict which users or groups can configure workflows using specific integrations (for example, limit who can build with your Salesforce or Google Sheets connection). Admins can also require approval before any member adds a new connection to the workspace. See [Access settings for connections](https://university.clay.com/docs/access-settings-for-connections).
 
+**IP access restrictions** _(Enterprise, currently in beta)_
+
+Restrict which IP addresses can reach the workspace — separately for browser sessions and API access (API keys, webhooks, integrations, and MCP requests). Currently in beta — contact your Growth Strategist or Clay support to have it enabled for your workspace. Workspace admins configure named allowlists in `Settings` → `Workspace settings` → **Security**. See [IP access restrictions](https://university.clay.com/docs/workspace-settings) in the workspace settings guide.
+
 **Credit spend limits** _(Enterprise)_
 
 Set workbook-level credit caps to prevent overspending. Admins can configure a workspace default limit that automatically applies to all new workbooks. For members accessing Clay through AI tools (Claude, ChatGPT, or Glean) via the MCP integration, admins can also set per-user credit limits. See [Credit spend limits FAQ](https://university.clay.com/docs/credit-spend-limits-faq) and [MCP settings](https://university.clay.com/docs/mcp-settings).
