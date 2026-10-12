@@ -155,6 +155,16 @@ You can identify the parent column of a child column to better understand its da
 1.  Click on the child column to open the dropdown menu.
 2.  Within the menu, select `Go to parent column`.
 
+### Duplicating an enrichment column that has child output columns
+
+When you right-click an enrichment column (such as a Use AI or Claygent column with JSON output schema fields mapped to separate columns) and select **Duplicate column**, Clay copies the enrichment column itself but does **not** duplicate its mapped child output columns. Those child output columns remain connected to the **original** enrichment column, not the new duplicate.
+
+The duplicate is inserted immediately after the original in the table — which means it lands between the original column and its existing child output columns. This can make it appear as though the child output columns are receiving results from the duplicate, when they are still reading from the original.
+
+**To confirm which enrichment column a child output column is connected to:** click the child column's header and select **Go to parent column** from the dropdown. You can also click the child column's header → **Edit column** to open its settings and see the source mapping directly.
+
+**If you want the duplicate to have its own separate output columns:** after duplicating, manually re-extract the output fields from the duplicate. Click any populated cell in the duplicate column → **Cell details** → hover over each field in the response → click **Add as column** → create new columns for each output field you need. This creates fresh child columns connected to the duplicate.
+
 ## Sort columns
 
 You can sort your table by any column to arrange rows in ascending (A → Z / 0 → 9) or descending (Z → A / 9 → 0) order. Sorts are view-specific — each view of a table can have its own independent sort configuration.
