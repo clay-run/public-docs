@@ -97,7 +97,7 @@ To downgrade your Clay workspace plan:
 
 **How downgrade billing works:** Plan downgrades are deferred to the end of your current billing cycle — your existing plan stays active until then, and you keep receiving its current Actions and Data Credit allocation. At renewal, your workspace switches to the new plan and your monthly Actions and Data Credit allocation resets to the new plan's level.
 
-**What happens to your Data Credits:** When the plan change takes effect, your credit balance is reduced to the rollover cap of your new plan — 2× its monthly credit limit. For the free plan (100 credits/month), that cap is 200 credits. Any credits above the cap are forfeited. If you have a large balance, spend it down before the change takes effect.
+**What happens to your Data Credits:** When the plan change takes effect, your credit balance is reduced to the applicable rollover cap of your new plan. For a monthly plan, that is 2× its monthly credit limit. For the free plan (100 credits/month), that cap is 200 credits. Any credits above the cap are forfeited. If you have a large balance, spend it down before the change takes effect.
 
 ### Cancel your plan
 
@@ -169,9 +169,13 @@ You can track both actions and data credits usage in the `Usage Dashboard`, whic
 
 **Monthly plans:** When your plan refreshes, unused data credits will roll over and accumulate. The maximum accumulation is capped at 2× your plan's monthly credit limit — and this cap includes the newly added renewal credits. For example, if your plan includes 50,000 credits per month, your maximum balance is 100,000. If you already have 82,000 credits when your plan renews, you will end up with 100,000 credits, not 132,000.
 
-**Annual plans:** On annual plans, your full year's Data Credits are deposited into your account immediately at purchase — they are not distributed in monthly installments. You can run a bulk enrichment right away without waiting for credits to accumulate. When your plan renews, you can roll over up to 15% of your annual data credits in addition to the new credits you receive, provided you renew on the same or a higher-tier plan.
+**Annual plans:** On annual plans, your full year's Data Credits are deposited into your account immediately at purchase — they are not distributed in monthly installments. You can run a bulk enrichment right away without waiting for credits to accumulate. At a standard eligible renewal on the same or a higher-tier plan, unused credits carry over up to a cap of 15% of the annual credit allotment, in addition to the new grant. This is a cap based on the allotment, not 15% of the unused balance. Enterprise and other custom contracts can have different rollover terms; check your contract and renewal details.
 
-**If you cancel or downgrade your plan:** When the plan change takes effect, your Data Credit balance is reduced to the rollover cap of your new plan — 2× that plan's monthly credit limit. For example, canceling to the free plan (100 credits/month) caps your balance at 200 credits; any credits above 200 are forfeited. You can continue spending your existing credits up until the plan change takes effect.
+**Confirm the billing interval:** These rules apply to both current and legacy paid plans. A plan name such as Pro or Growth does not tell you whether billing is monthly or annual. Check your workspace billing details before using a rollover example.
+
+**Missing rollover after renewal:** Check the invoice for the renewal you expected. A future period-end date alone does not establish whether the previous payment succeeded or credits were granted. If payment failed, update the payment method; contact support to confirm the related grant and rollover. If the invoice is paid but credits are still missing, support can investigate the credit history.
+
+**If you cancel or downgrade your plan:** When the plan change takes effect, your Data Credit balance is reduced to the applicable rollover cap of your new plan. The 2× monthly cap applies only when the new plan is monthly. For example, canceling to the free plan (100 credits/month) caps your balance at 200 credits; any credits above 200 are forfeited. You can continue spending your existing credits up until the plan change takes effect.
 
 For more details, see our guide on [actions and data credits](https://www.notion.so/Actions-and-data-credits-2a77e66eb01480b798f2ddca99d45e80?pvs=21).
 
