@@ -131,7 +131,7 @@ If you updated the filter conditions on an existing connected segment (rather th
 The **Field mapping** setting controls whether enriched data is written back to your Audiences records after each row runs.
 
 -   **On (default)** — enriched data is sent to Audiences. Click **Set up** to configure which columns map to which Audience fields. At least one column must be mapped before you can start the run — clicking **Start Run** without completing this step shows an inline error: *"Map at least one column, or turn off field mapping."*
--   **Off** — the Send to Audiences step is skipped for every row. No data is written back to Audiences, and each row shows **✅ Skipped** in the results column.
+-   **Off** — the Send to Audiences step is skipped for every row. No data is written back to Audiences, and each row shows **✅ Skipped** in the results column. **Important: turning Field mapping off does not stop the enrichment from running.** Enrichment columns still execute and credits are still consumed for every row — Field mapping off only skips the final write-back to Audiences.
 
 To turn field mapping off, click **Set up** in the Run Setup panel, then toggle **Field mapping** off at the top of the configuration panel.
 
