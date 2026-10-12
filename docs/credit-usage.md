@@ -231,6 +231,27 @@ If table-level auto-run is disabled but credits are still being consumed, the mo
 
 To identify what triggered a specific run, use the **Run view** in the [table credit usage dashboard](#understanding-table-specific-credit-usage). Each entry shows whether the run was manual, automated, or scheduled, along with a timestamp.
 
+### Enrichment or waterfall ran on the whole table instead of my filtered view
+
+Manual runs that you start from a filtered view only process the rows that match that view's filters, not every row in the table. This applies to:
+
+-   **Run column** in the column's right-click menu: **Choose number of rows to run**, **Run {X} empty or out-of-date rows**, and **Force run all {X} rows**. Here, {X} is the number of rows in your current filtered view, not the table total.
+-   The run button on the column header: **Run first N rows** and **Run {X} empty or out-of-date rows**.
+-   Saving an edited waterfall or enrichment column (for example, after you disable a provider in a waterfall). The **Save** dropdown offers **Save and run 10 rows** (shown when the view has more than 10 rows), **Save and run {X} rows in this view**, and **Save and don't run**. **Save and run {X} rows in this view** only runs the rows in your current filtered view.
+
+**Auto-run is not limited by filtered views.** If auto-run is on, either for the whole table or for an individual column, an enrichment or waterfall can run on every row in the table that has empty or out-of-date cells. Rows outside your view are included. This often happens when one of the column's input columns is updated and its downstream cells become out of date. So if a waterfall or enrichment ran on rows outside your view, the usual causes are:
+
+-   Auto-run was on, or was turned on at some point, and the column's inputs changed. This queued the column across the full table.
+-   The view's filters didn't match the rows you expected, so the view contained more rows than you intended.
+
+To keep a run limited to the rows you intend:
+
+1.  Turn off table-level auto-run (click `⛭` → toggle **Auto-run** off). Also check that auto-run is off on the column itself: click the column name → **Edit column** → **Run settings**.
+2.  Apply your filter, then check the row counter in the table toolbar (to the left of the filter count) before you run. The counter reads `rows in view / total rows in table`. For example, `141/500` means 141 rows match the filter out of 500 rows in the table, and the row count in every run option should match the first number.
+3.  Run the column from the filtered view with **Run column** → **Run {X} empty or out-of-date rows**. If you've edited the column, use **Save** → **Save and run {X} rows in this view**.
+
+To check how many rows a past run actually processed, open the table's `History` → `Usage history` and select the **Run** view. Each run lists its start time, a description such as "51,008 cells across 18 columns", and the credits it used. Use the cell count to see how many cells that run processed.
+
 ### Credits consumed after clicking Stop or Cancel
 
 Clicking **Stop** on a running table or canceling a column run does not immediately halt all enrichments. Clay cancels cells that are still queued (not yet dispatched), but any requests already sent to an external data provider will run to completion and consume credits. You may see a brief delay before the table fully halts while these in-progress calls finish.
