@@ -481,7 +481,7 @@ Bulk enrichments add contact data, firmographics, technographics, and more to yo
 
 **Note:** Clay does not impose rate limits on Audiences bulk enrichments — the system is built to handle large lists at scale. Third-party data providers (such as Clearbit or Apollo) apply their own rate limits, but Clay queues requests and manages these automatically in the background. If you supply personal API keys for a provider, those keys' own rate limits apply.
 
-**To run an existing enrichment on another segment without recreating it:** A single bulk enrichment can be connected to multiple segments — you do not need to recreate it for each one. Open the enrichment from the **Enrich** sidebar and use the **Add segment** option in the Run Setup panel to include additional segments. See [Adding a segment to an existing enrichment](bulk-enrichment.md#adding-a-segment-to-an-existing-enrichment) for full steps.
+**To run an existing enrichment on another segment without recreating it:** A single bulk enrichment can be connected to multiple segments — you do not need to recreate it for each one. Open the enrichment from the **Enrich** sidebar, pause it if it's running, and click the value next to **Connected segments** in the Run Setup panel to add segments in the **Connect segments** modal. An enrichment that has already completed must be reset before you can change its segments. See [Adding a segment to an existing enrichment](bulk-enrichment.md#adding-a-segment-to-an-existing-enrichment) and [Reusing a completed bulk enrichment on a new segment](bulk-enrichment.md#reusing-a-completed-bulk-enrichment-on-a-new-segment) for full steps.
 
 **Using Audiences from a Clay table:**
 
@@ -1148,7 +1148,7 @@ To enable it (admin-only):
 
 Once enabled, the first export does not run immediately — it fires at your workspace's next scheduled export time, which may be up to 24 hours away. See [Writing back to your CRM](#writing-back-to-your-crm) for the full schedule and behavior details.
 
-If Export sync is enabled but **specific fields** are still not updating in Salesforce — and you see no export errors — check each field's **write rule**. A field set to **Write if empty** only sends its value to Salesforce when the corresponding Salesforce field is blank. If that Salesforce field already contains a value, Clay skips the update silently without recording an error. Your data may look correct in Audiences while those fields remain unchanged in Salesforce.
+If Export sync is enabled but **specific fields** are still not updating in Salesforce, and Salesforce isn't rejecting the record (see [Why did none of my enriched fields update on a Salesforce record when only one field had a problem?](#why-did-none-of-my-enriched-fields-update-on-a-salesforce-record-when-only-one-field-had-a-problem)), check each field's **write rule**. A field set to **Write if empty** only sends its value to Salesforce when the corresponding Salesforce field is blank. If that Salesforce field already contains a value, Clay skips the update silently without recording an error. Your data may look correct in Audiences while those fields remain unchanged in Salesforce.
 
 To allow Clay to overwrite existing Salesforce values for a field:
 
@@ -1159,6 +1159,19 @@ To allow Clay to overwrite existing Salesforce values for a field:
 5.  Click **Save and review** → **Confirm**.
 
 The updated value will be pushed to Salesforce on the next export cycle (within 24 hours).
+
+### Why did none of my enriched fields update on a Salesforce record when only one field had a problem?
+
+When the Audiences export to Salesforce sends a record, Salesforce accepts or rejects the **whole record**. If even one mapped field on that record fails Salesforce's validation, Salesforce rejects the entire update and none of the record's mapped fields are written. Partial updates don't happen, so a field can stay stale in Salesforce even when its own value, such as a number like fleet size, is valid. Other records in the same export are not affected.
+
+A common cause is a **restricted picklist** field. If Clay sends a value that isn't an allowed option for that field, Salesforce returns the error `INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST` and rejects the record. In that case, the Audiences record in Clay shows the enriched values, but the Salesforce record does not.
+
+**How to see which records failed:** The list of failed export records isn't available in your workspace settings. Contact Clay support with your workspace and the Salesforce object (for example, Accounts) to get it. Support can pull a sample of failed records, up to **10 per Salesforce export job**, with the Salesforce error for each one. The sample comes from your **most recent** export run only. Failures usually repeat the same error, so the sample typically shows what you need to fix.
+
+**To fix rejected records:**
+
+1.  Use the Salesforce error to find the field that's causing the rejection. For a restricted picklist, add the missing values to the picklist in Salesforce (and to the relevant Record Types), or set that field's write rule to **Never write** in your Audiences Salesforce export settings.
+2.  Get the record exported again. The scheduled export is incremental and only includes records whose Audiences data has changed since the last export. A rejected record is retried automatically only after its Audiences data changes. To re-send a record right away, use the **Export** button on the record (admin-only). See [How can I export records to Salesforce immediately without waiting for the 24-hour sync?](#how-can-i-export-records-to-salesforce-immediately-without-waiting-for-the-24-hour-sync)
 
 ### How do I make my Salesforce export conditional on a field match?
 
