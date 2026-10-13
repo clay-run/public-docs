@@ -137,6 +137,36 @@ The most common cause of slip-throughs is a **profile slug change**: if a person
 
 **To troubleshoot:** Check whether the URL in your exclusion table matches the person's current profile URL on the professional network. Update the row with their current URL and re-run the source.
 
+### How do I exclude famous people or big-company executives from a broad Find People search?
+
+A broad Find People search, such as Founder, Owner, or C-suite seniority in the United States at companies with 51–200 employees, can return well-known people you would never reach out to. A famous founder can show up because one of their roles, for example at a smaller company they also founded, technically meets your filters. Find People returns everyone who matches your criteria and has no "exclude famous people" setting. To remove these people, use one of the following options.
+
+**Option 1: Exclude people with past roles at larger companies (Advanced Search, in beta)**
+
+Advanced Search is Clay's upgraded filter builder for Find People. It's in beta, and the layout you see depends on whether your workspace has access. If you see a settings (⚙️) menu in the search setup, turn on **Upgraded search** there. If you don't see that option, contact support to request access. Putting a **Company size** filter inside an experience group requires a paid plan or a trial. Free plans can't use company filters inside an experience group.
+
+In Advanced Search, an experience group filters people by the roles in their work history. A new group reads **≥ 1 current experience is all of:**. To exclude anyone who previously worked at a larger company:
+
+1.  Open the search setup for your Find People search.
+2.  Find the experience group that holds your current-role filters. It reads **≥ 1 current experience is all of:** and contains filters such as **Company: Company size** and **Seniority**.
+3.  Click the **⋮** menu on the group and select **Duplicate**. Clay adds a copy of the group to the same **People match all of:** list, joined to your other filters with **and**.
+4.  In the duplicated group, change **≥** to **no**. The count field disappears.
+5.  Change **current** to **past**. The group now reads **no past experiences are:**.
+6.  In the duplicated group, set **Company: Company size** to the larger company sizes you want to rule out, and remove any other filters you don't want to apply to past roles.
+7.  Check the preview. Your results now leave out anyone who matches your original filters but has a past role at a company of one of the sizes you excluded.
+
+The count operator in an experience group can be **≥**, **>**, **≤**, **<**, **=**, **≠**, or **no**. The time setting can be **current**, **past**, or **current or past**.
+
+In the standard (non-Advanced) Find People filters, you can't build this exclusion. The **Include past experiences** toggle doesn't work with **Company attributes** filters such as company size (see [Past experiences](#source-find-people)).
+
+**Option 2: Exclude specific people by profile URL**
+
+If only a handful of people keep showing up, add their professional profile URLs to an exclusion list. See **Exclude people** under [Source Find People](#source-find-people) for how exclusion matching works.
+
+**Option 3: Filter after import**
+
+Import your results, then add a **Use AI** or formula column that scores each person against criteria your team agrees on, such as audience fit or company prominence. Filter the table on that column to hide the people you don't want.
+
 ### How do I adjust or refine my search criteria on an existing Find People table?
 
 Your search filters are saved on the source, not on the table rows. To update them after initial setup:
