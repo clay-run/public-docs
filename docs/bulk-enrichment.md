@@ -114,17 +114,42 @@ The **Audiences** section in the **Run Setup** panel shows which audience segmen
 
 **To add or change the connected segments on an existing bulk enrichment:**
 
-1.  Click **Pause** if the enrichment is currently running. The **Connected segments** button is locked while a run is active.
-2.  In the **Run setup** panel, click **Add segment** (or **Edit segments** if a segment is already connected) next to **Connected segments**.
-3.  In the **Connect audiences** modal, select the segments you want to include and click **Save selection**.
+1.  Click **Pause** if the enrichment is currently running. While a run is active, the **Connected segments** row is locked and shows the tooltip *"Pause this bulk enrichment to edit segments."*
+2.  In the **Run setup** panel, click the value next to **Connected segments**. If segments are already connected, the value is the number of connected segments (for example, `1`). If no segment is connected, the button reads **Set up**.
+3.  In the **Connect segments** modal, select the segments you want to include and click **Save selection**.
 4.  Click **Resume** to continue the run.
 
 **What happens on resume:**
 
 -   **Newly added segments** — records in any newly added segment are automatically enqueued when you resume.
 -   **Removed segments** — removing a segment does not cancel records already queued from it. Those records continue processing.
+-   **Records in more than one segment** — if a record belongs to more than one connected segment, the bulk enrichment enriches it only once.
 
 If you updated the filter conditions on an existing connected segment (rather than adding a new one), see [Resuming after changing segment filters](#resuming-after-changing-segment-filters).
+
+### When can I edit an Audiences bulk enrichment's segments and settings?
+
+You can edit the connected segments and other **Run setup** settings of an Audiences bulk enrichment in only two states:
+
+-   **Before the first run starts** (setup).
+-   **While the enrichment is paused.** When it's paused, the action buttons are **Reset** and **Resume**.
+
+In every other state, including while a run is in progress and after a run has completed, the **Run setup** settings are locked.
+
+### Reusing a completed bulk enrichment on a new segment
+
+A common pattern is to test a bulk enrichment on a small pilot segment first, then run the same enrichment columns on a larger or different segment. Once an Audiences bulk enrichment has **completed**, you can't pause it, and its **Run setup** settings (including **Connected segments**) are locked. The only action available is **Reset**.
+
+To run a completed bulk enrichment on a new segment:
+
+1.  Open the enrichment from the **Enrich** sidebar and click **Reset**.
+2.  In the **Reset to setup?** dialog, click **Confirm and reset**. This clears the rows currently in the bulk enrichment table and returns the enrichment to its setup configuration.
+3.  In the **Run setup** panel, click the value next to **Connected segments**, select the new segment in the **Connect segments** modal, and click **Save selection**.
+4.  Click **Start Run**.
+
+Reset keeps your enrichment columns and Run setup configuration, so you don't need to rebuild them or duplicate the enrichment. Reset doesn't affect archived rows from earlier runs, which stay in the archive. Running the enrichment again after a reset costs credits for the rows it enriches.
+
+If you want to add a segment *without* clearing the table, do it before the run completes: pause the enrichment, add the segment as described in [Audiences](#audiences) above, and resume.
 
 ### Field mapping
 
@@ -169,8 +194,8 @@ A single bulk enrichment can run on multiple Audiences segments — you do not n
 
 1.  Open the enrichment — navigate to a segment the enrichment is already attached to, click `Enrich` in the top-right toolbar to open the enrichments sidebar, and click the enrichment card to open the **Run Setup** panel. If you're viewing a different segment and don't see the enrichment listed, use the dropdown at the top of the sidebar to switch from the current-segment view to **All** to browse enrichments across all segments.
 2.  If the enrichment is actively running, click **Pause** first — the **Connected segments** button is disabled while a run is in progress.
-3.  In the Run Setup panel, click **Edit segments** next to **Connected segments** and select the additional segment.
-4.  Resume the enrichment. When prompted, choose **Continue where you left off** — members of the newly added segment are enqueued automatically.
+3.  In the Run Setup panel, click the value next to **Connected segments** (the number of connected segments). In the **Connect segments** modal, select the additional segment and click **Save selection**.
+4.  Click **Resume** and choose **From where you stopped**. Members of the newly added segment are enqueued automatically.
 
 Once the segment is linked, navigating to that segment and clicking `Enrich` shows the enrichment in the sidebar. You can view its status and manage settings from either connected segment.
 
@@ -191,23 +216,23 @@ This means if you updated your audience segment filters after creating a bulk en
 
 If you pause a bulk enrichment and update your audience segment before resuming, the resume option you choose determines which records are picked up next.
 
-**Continue where you left off**
+**From where you stopped**
 
 Records already in the queue finish processing first. What happens to newly-qualifying records depends on how you changed your segment:
 
 -   If you **added a new segment** to the bulk enrichment while it was paused, members of the newly-added segment are enqueued automatically when you resume.
 -   If you **edited the filter conditions on an existing connected segment** (same segment, narrowed or changed the filters), records that newly match the updated filters are **not** automatically enqueued on resume. Clay tracks which segment IDs were connected at the time the run was paused — it does not re-evaluate membership changes from in-place filter edits when resuming.
 
-If you edited an existing segment's filters and want those newly-qualifying records to be enriched, use **Run from the beginning** instead. Alternatively, if **Auto-enrich new records** is enabled, newly-qualifying records will be picked up automatically in the background within 15 minutes of joining the segment.
+If you edited an existing segment's filters and want those newly-qualifying records to be enriched, use **From the beginning** instead. Alternatively, if **Auto-enrich new records** is enabled, newly-qualifying records will be picked up automatically in the background within 15 minutes of joining the segment.
 
-**Run from the beginning**
+**From the beginning**
 
 All rows currently in the bulk enrich table are cleared, and the enrichment restarts fresh using your current segment configuration — including any filter changes you made to existing connected segments. Previously archived rows from the completed portion of the run are not affected — they remain in the archive. Note: restarting costs credits again for the newly seeded rows.
 
 **Which option to use:**
 
--   Choose **Continue where you left off** if you want to finish processing records already in the queue. Note that if you edited an existing segment's filter conditions (rather than adding a new segment), those newly-qualifying records will not be pulled in automatically on resume.
--   Choose **Run from the beginning** if you edited the filter conditions on an existing connected segment and want the enrichment to start fresh using your updated filters. This clears the current queue and seeds the run from your current segment configuration.
+-   Choose **From where you stopped** if you want to finish processing records already in the queue. Note that if you edited an existing segment's filter conditions (rather than adding a new segment), those newly-qualifying records will not be pulled in automatically on resume.
+-   Choose **From the beginning** if you edited the filter conditions on an existing connected segment and want the enrichment to start fresh using your updated filters. This clears the current queue and seeds the run from your current segment configuration.
 
 ### Monitoring run progress
 
