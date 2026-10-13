@@ -440,6 +440,31 @@ Any contact whose primary source matches the selected source is excluded from th
 
 **Keep sync on to keep the suppression list current.** If the source's **Import status** shows **Sync off**, new contacts added to your CRM won't flow into Audiences and won't be suppressed from this segment. Make sure sync is enabled for the source you're using as a suppression list — see [Understanding source import statuses](#understanding-source-import-statuses) above.
 
+### Why do my uploaded records show up in every segment?
+
+When you add a source in Audiences — a CSV file, a CRM or data warehouse import, or a Clay table — the records go into your full audience (**All Companies** or **All People**), not into a specific segment. There is no option to upload a list directly into a segment.
+
+An Audiences segment is a saved set of filters over that full audience. A segment with no filters shows every record in **All Companies** or **All People**. For example, if you create two Companies segments named "Customers" and "Net New Accounts" without adding any filters and then upload your customer list, both segments show the same records: every company in your audience, including the uploaded customers. This is expected. To make each segment show only the right companies, add filters to each segment — see [How do I create a segment from one uploaded list?](#how-do-i-create-a-segment-from-one-uploaded-list) below.
+
+### How do I create a segment from one uploaded list?
+
+To build an Audiences segment that contains only the companies or people from one specific upload (for example, your customer list), import the list as a source, then filter the segment on that source:
+
+1.  Open **All Companies** (or **All People**), select the **Sources** tab, and click **Add source** to import your list — see [Importing from CSV](#importing-from-csv).
+2.  Open the segment you want to use, or create a new one with the sidebar **+** control labeled **Create segment** (requires segment-edit permission).
+3.  Click **Filters** → **+ Filter** → **Company attributes** (or **People attributes** in a People segment) → **Sources**.
+4.  Keep the operator as **contains** and select your import — it's listed by the name you gave it.
+5.  Click **Save filters** to save the filter on an existing segment, or **Create segment** to save it as a new segment.
+
+The segment now shows only records that came through that source.
+
+**Sources vs. Origin source:** Both filters appear under **Company attributes** and **People attributes**, but they match records differently:
+
+-   **Sources** matches every record that the selected import contributed to — including records that already existed in your audience before the upload and were merged with a row from your list.
+-   **Origin source** matches only records that the selected import **first created**. A record's Origin source is set when the record is created and never changes. If a company in your CSV already existed in your audience from an earlier source (for example, Salesforce), Clay merges the CSV row into that existing record and its Origin source stays the earlier source.
+
+For example, if you upload a list of 300 customer companies and 50 of them were already in your audience from Salesforce, **Sources contains [your CSV]** shows all 300 companies, while **Origin source is [your CSV]** shows only the 250 companies the upload newly added. To get your full uploaded list, use **Sources**.
+
 ## Finding people from a Companies Audience
 
 Once you have a Companies Audience segment, you can run a people search scoped strictly to the companies in that segment — without needing a separate company table.
