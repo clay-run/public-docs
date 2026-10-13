@@ -383,6 +383,21 @@ OpenAI's data residency keys require API calls to be routed to a regional hostna
 
    This routes to the correct regional hostname and works with data-residency keys, though you won't have access to Use AI's structured output configuration, model comparison, or web research features.
 
+### OpenAI returns "Your IP is not authorized to make this request" (IP allowlisting)
+
+If you connect your own OpenAI API key and see **"Your IP is not authorized to make this request."**, either when you add the key or when a Use AI column runs, your OpenAI project has IP allowlisting turned on and is rejecting requests from Clay.
+
+**Use AI and Claygent columns do not support static IPs.** Requests from Use AI and Claygent columns go out without a fixed set of IP addresses, and these columns have no **Use Static IP** setting. The check Clay runs when you add an OpenAI API key doesn't use static IPs either. This means Clay has no IP address list you can add to your OpenAI project's allowlist to make the native Use AI integration work.
+
+**Workarounds:**
+
+1.  **Use an OpenAI key that isn't IP-restricted.** Connect a key from an OpenAI project without IP allowlisting, or switch the column's **Account** dropdown to the default Clay-managed account.
+2.  **Call OpenAI through an HTTP API column with static IP turned on.** HTTP API columns have a **Use Static IP** toggle that sends requests from Clay's fixed IP addresses. Static IP has to be turned on for your workspace before the toggle appears, so contact Clay support or your account team first. They can also give you the current IP addresses to add to your OpenAI allowlist. To set it up:
+    -   Add an [HTTP API enrichment](http-api-integration-overview.md) column that sends a `POST` request to `https://api.openai.com/v1/chat/completions`. Add an `Authorization` header set to `Bearer <your-api-key>`, and use a chat completions body such as `{"model": "gpt-4o", "messages": [{"role": "user", "content": "{{YourColumn}}"}]}`.
+    -   In the column settings, open the **Static IP** section and toggle on **Use Static IP**.
+
+    HTTP API columns don't include Use AI's structured output configuration, model comparison, or web research features. See [IP allowlisting](http-api-integration-overview.md) in the HTTP API docs for full details on static IP.
+
 ### AI column stops working after editing with Sculptor
 
 If you used Sculptor to adjust an AI column and the column now shows an error or stops producing results, something in the prompt was likely broken during the Sculptor edit. Here's what to check:
