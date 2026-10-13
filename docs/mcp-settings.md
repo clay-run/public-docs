@@ -165,6 +165,35 @@ The MCP user credit limit is a rolling monthly limit. Credit spend automatically
 
 Further actions through ChatGPT, Claude, or Glean are hard-blocked until the monthly reset — the rep won't be able to run enrichments or invoke Functions. Admins can increase the per-user limit at any time from the `MCP users` table to restore access immediately.
 
+### I increased a user's credit budget, but Claude or ChatGPT still says they have no credits. Why?
+
+The MCP credit limit and credit budgets are separate settings. Raising a budget's limit in `Settings` → `Budgets`, or creating a second budget, does not raise a user's MCP credit limit. If the user has used up their MCP credit limit, Clay keeps blocking their requests from Claude, ChatGPT, or Glean until a workspace admin raises that limit on the `MCP` page. Otherwise the limit resets on the 1st of the month at midnight UTC.
+
+When a user spends credits through an AI tool, Clay checks three limits. The request goes through only if all three have credits left:
+
+-   **Workspace credits:** your workspace's overall credit balance.
+-   **MCP credit limit:** the user's monthly `Credit limit` in the `MCP users` table on the `MCP` page.
+-   **Credit budget, if one is assigned:** the budget the user's MCP usage is charged to, chosen in the `Budget` column of the `MCP users` table. Credit budgets are in beta and available to Enterprise plan workspaces. See [Credit budgets](https://university.clay.com/docs/credit-budgets).
+
+For example, say a user's MCP credit limit is 500 credits and they spent all 500 in one run. Raising their budget from 500 to 1,000 credits won't unblock them, because the 500-credit MCP credit limit is still used up. An admin also needs to raise the user's MCP credit limit.
+
+The message the user sees in Claude or ChatGPT tells you which limit was hit. Workspace admins see the first wording in each row, and other users see the second:
+
+| Limit reached | Message in the AI tool |
+|---|---|
+| MCP credit limit | "You've hit your monthly MCP credit limit. To raise it, open MCP in Clay and edit your limit or the default credit limit." or "You've hit your monthly user credit limit. Please contact your workspace admin to increase it." |
+| Credit budget | "The credit budget assigned to you is exhausted. To increase or reset it, open Settings > Budgets in Clay." or "The credit budget assigned to you is exhausted. Contact your workspace admin to increase or reset the budget." |
+| Workspace credits | "Credits are exhausted for this workspace. To add credits, open Settings > Usage in Clay, or change your plan in Settings > Plan & billing." or "Credits are exhausted for this workspace. Contact your workspace admin to add more credits before retrying." |
+
+To top up a user who has run out of MCP credits:
+
+1.  From the Clay homepage, click `MCP` under **Orchestration** in the left sidebar. Only workspace admins can see the `MCP` page.
+2.  In the `MCP users` table, search for the user by name or email.
+3.  Click the pencil icon next to their `Credit limit` and enter a higher amount.
+4.  If the user's MCP usage is charged to a budget that is also used up, raise or reset that budget in `Settings` → `Budgets`.
+
+The new limits apply on the user's next request in Claude or ChatGPT. The user doesn't need to reconnect Clay or start a new chat.
+
 ### Why am I seeing `ERROR_WORKSPACE_SALES_REP_CREDIT_LIMIT_REACHED` in Claude or ChatGPT?
 
 The error `ERROR_WORKSPACE_SALES_REP_CREDIT_LIMIT_REACHED` means the Clay user making the request has reached their monthly MCP credit limit — the per-user cap on credits spent through ChatGPT, Claude, Glean, or other AI tools connected to Clay. Inside Clay, the same limit shows as `Monthly user credit limit reached`.
