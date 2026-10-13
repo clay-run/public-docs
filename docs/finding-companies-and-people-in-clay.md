@@ -612,7 +612,7 @@ After correcting the mapping, right-click the column header â†’ **Run column** â
 
 No. Generic email aliases (also called role-based emails), such as `info@`, `sales@`, `support@`, or `hr@`, belong to a shared mailbox rather than a specific person, so **Enrich person** can't match them to a person profile:
 
--   If a generic email is mapped to the **Professional URL** field, the cell shows **"Invalid input: Invalid person identifier"**, because an email address isn't a LinkedIn profile URL or ID.
+-   If a generic email is mapped to the **Professional URL** field, the cell shows **"Invalid input: Invalid person identifier"**, because an email address isn't a professional profile URL or ID.
 -   If a generic email is mapped to the **Email** field, no person is matched and the cell shows **"No Profile Found"**.
 
 **To add generic emails for a company to your table**, look them up at the company level with a domain-based action instead of enriching the alias. Both of these actions only need a company domain column as input:
