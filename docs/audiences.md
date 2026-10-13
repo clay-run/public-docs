@@ -84,7 +84,7 @@ The Salesforce import flow in Audiences has been redesigned. You can import **al
 5.  Click **Confirm** to start the import. Clay immediately begins syncing records.
 6.  To add another import (a different object type or a new SOQL subset), click **Add records** again and repeat.
     -   Lead records are automatically merged with matching Contact records into a single person record in your People audience. The primary matching key is the `ConvertedContactId` field — see [Why do some of my Salesforce Lead records not appear as separate person records in Clay?](#why-do-some-of-my-salesforce-lead-records-not-appear-as-separate-person-records-in-clay) in the FAQs below for details.
-    -   Opportunity data is associated with your Companies records and becomes available as a filter in any Companies audience.
+    -   Opportunity data is associated with your Companies records and becomes available as a filter in any Companies audience. Opportunities aren't shown as individual records in Audiences — see [Can I see and work with individual Salesforce opportunity records in Audiences?](#can-i-see-and-work-with-individual-salesforce-opportunity-records-in-audiences) in the FAQs below.
     -   To turn on **Import sync** for a Salesforce Opportunities import, your Accounts import and your Contacts import must both have **Import sync** turned on first. See [Why can't I turn on Import sync for my Salesforce Opportunities?](#why-cant-i-turn-on-import-sync-for-my-salesforce-opportunities) in the FAQs below.
 
 **SOQL requirements for record subset imports**
@@ -1398,6 +1398,33 @@ This means the filter answers "find me everyone who is a contact role on these s
 3.  In your **People** audience, add a filter on **Account → [your flag field] equals your flag value**.
 
 This pulls every contact tied to those accounts, regardless of their OpportunityContactRole status.
+
+### Can I see and work with individual Salesforce opportunity records in Audiences?
+
+Salesforce Opportunities come into Audiences as their own Salesforce import, alongside Accounts, Contacts, and Leads, and each opportunity is linked to its Salesforce Account. In Audiences, opportunity data shows up at the **company (account) level**. You can't browse opportunities as a list of their own or build an audience segment where each record is an opportunity. Audiences segments are People or Companies segments only.
+
+**Where Salesforce opportunity data appears in Audiences:**
+
+-   **Deals filter group** — in a Companies audience, opportunity fields appear under the **Deals** group in the filter picker. Use them to build account-level segments from deal data, for example "companies with an open opportunity whose close date has passed."
+-   **Deals tab** — each company's record detail view has a **Deals** tab that lists the opportunities linked to that account.
+
+**Opportunity fields mapped by default:** A Salesforce Opportunities import maps these fields by default: **Deal name**, **Stage**, **Close date**, **Deal type**, **Amount**, **Is closed**, and **Is won**. Other Opportunity fields, such as Owner (`OwnerId`) or Next Step (`NextStep`), aren't mapped by default. To filter on them, add them to your Opportunities import's field mapping. They appear under the **Deals** filter group after the next sync. See [A Salesforce field isn't appearing in my audience filters — how do I add it?](#a-salesforce-field-isnt-appearing-in-my-audience-filters--how-do-i-add-it)
+
+**Example: a Companies segment of accounts with an overdue open opportunity**
+
+1.  Open **Companies** in Audiences and click **+ Filter**.
+2.  From the **Deals** group, add **Is closed → is false**.
+3.  Add a second **Deals** filter: **Close date → before →** the date you want to compare against (for example, today's date). The **before** operator uses the fixed date you enter. It doesn't move forward to "today" automatically, so update the date when you want to refresh the cutoff.
+
+When you combine several **Deals** filters, the same opportunity must match all of them. In this example, a company matches only if one of its opportunities is both open and has a close date before your cutoff. A company with one open opportunity and a different, closed opportunity with a past close date doesn't match. This is true whether the Deals filters are top-level filters or inside a filter group.
+
+**To act on the opportunities themselves** — for example, flagging an overdue close date or a missing next step on each deal — use Audiences to pick the accounts, then handle the opportunity-level logic in a Clay table or workflow:
+
+1.  **Use Audiences to pick the accounts.** Build a Companies segment with the Deals filters you care about, as in the example above.
+2.  **Pull the opportunities into a Clay table or workflow.** Look up the opportunities for those accounts in Salesforce by Account ID, or use a SOQL query (for example, with the **Lookup records via SOQL** action or the [Salesforce SOQL](salesforce-soql.md) source), such as `SELECT Id, Name, StageName, CloseDate, NextStep, AccountId FROM Opportunity WHERE IsClosed = false AND (CloseDate < TODAY OR NextStep = null)`.
+3.  **Flag and write back.** Add formula or AI columns to flag each opportunity, then write the result back to the Opportunity in Salesforce with a Salesforce **Update record** action.
+
+To connect a workflow to the Companies segment so it runs on each account that enters it, see [Connecting a workflow to a segment](#connecting-a-workflow-to-a-segment).
 
 ### Why does my HubSpot deal Stage filter return no results in a Companies audience?
 
