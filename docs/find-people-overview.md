@@ -166,6 +166,8 @@ For other Enrich person input errors, see [Getting "Invalid input: Invalid perso
 
 If you have a saved Sales Navigator search and want to pull those results into Clay, use the **Find people from external search** source — not the standard Find People source described above.
 
+**How it works:** No LinkedIn or Sales Navigator account connection is needed. Clay passes your search URL's filters to a third-party data partner, which runs the search and returns the matching contacts — Clay does not query its own people database for this source.
+
 1.  In a workbook, click `+ Add` at the bottom.
 2.  Search for `external search`.
 3.  Select **Find people from external search**.
