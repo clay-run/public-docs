@@ -343,6 +343,18 @@ Run new workflows on 10–20 records to validate results before scaling to avoid
 
 Actions measure platform work (what you do). Data Credits measure data purchases (what you buy). Every enrichment typically consumes both—1 Action for the platform work, plus variable Data Credits for the data itself.
 
+### Do I need Actions or Data Credits to find emails for my contacts?
+
+On modern plans such as Launch and Growth, finding a contact's email uses both: **1 Action** for each row the email enrichment runs on, plus the **Data Credits** the email provider charges for that row.
+
+-   **Data Credits per email:** Costs vary by provider. On modern plans, many work email providers cost 0.2–0.5 Data Credits per row (for example, Enrow 0.2, LeadMagic 0.3, Findymail 0.5, Wiza 0.5), while others cost more (for example, BetterContact 1.5, FullEnrich 1.5). The exact cost is shown next to each provider in the enrichment panel.
+-   **No email found:** Most work email providers automatically refund both the Data Credits and the Action when no email is found for a row.
+-   **Waterfalls:** In a work email waterfall, providers that run and find nothing are automatically refunded — you only pay for the provider that finds an email.
+
+**Example:** You enrich 30,000 contacts with a single work email provider that costs 0.5 Data Credits per row and refunds rows with no result. If it finds emails for 24,000 contacts, you use 24,000 Actions and 12,000 Data Credits (24,000 × 0.5). The 6,000 rows with no email found are refunded.
+
+**Legacy plans:** If your workspace is on a legacy plan, Actions are not charged or shown in the product — finding emails uses Data Credits only, at legacy rates (for example, Findymail and Wiza cost 2 Data Credits per row, and Enrow and LeadMagic cost 1).
+
 ### Why do Data Credits cost different amounts?
 
 Unlike Actions (always 1 per enrichment), Data Credits reflect the real-world value of each data point. You'll see the exact cost displayed next to each enrichment option in the product.
@@ -398,8 +410,8 @@ No credits are affected before your renewal date — you can use them freely unt
 
 **Once you have an account:** The enrichment panel shows costs before you run:
 
--   Actions: Always 1 per result.
--   Data Credits: Displayed next to each enrichment option.
+-   Actions: Always 1 per row, shown with a four-pointed star icon. Workspaces on legacy plans don't see an Action cost.
+-   Data Credits: Displayed next to each enrichment option, with a green coin icon.
 
 For complex workflows, run a small test batch (10–50 records) to understand full costs.
 
