@@ -16,7 +16,6 @@ Clay's Prospeo integration includes the following actions:
 
 -   Find Work Email
 -   Find Mobile Number
--   Find Email Addresses Associated with a Domain
 -   Find Work Email and Enrich Person from LinkedIn URL
 -   Find people at company
 
@@ -89,22 +88,9 @@ By default, Prospeo will auto-update the integration every 24 hours. Make sure t
 **Step 4 (Optional): Select Conditional Run Criteria**  
 If you want to only run this enrichment under set circumstances, you are able to input formulas where the column runs only if the formula is true. Learn more about conditional runs in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101#:~:text=Conditional%20runs%20\(which%20make%20use,personal%20emails%20for%20all%20rows\).).
 
-## `Action` Find Email Addresses Associated with a Domain
+## Find Email Addresses Associated with a Domain is no longer available
 
-The **Find Email Addresses Associated with a Domain** action lets you find email addresses associated with a company domain and can also be used to find generic email addresses for a given domain.
-
-**Step 1: Choose the Prospeo account you want to use**  
-You can use either the Clay-managed Prospeo account or bring your own key.  
-If you use the Clay-managed Prospeo account you will be charged at 2 credits per enriched cell.
-
-**Step 2: Select Required and Optional Setup Inputs**  
-To find the email addresses associated with a given domain using Prospeo's email database, you will need to provide the domain and email type which you want to receive (generic, professional). Even though these are marked as optional, it's best advised to enter both fields.
-
-**Step 3 (Optional): Select Auto-update**  
-By default, Prospeo will auto-update the integration every 24 hours. Make sure to toggle this step off if you do not want to auto-update. However if you do so, you might run into stale data problems.
-
-**Step 4 (Optional): Select Conditional Run Criteria**  
-If you want to only run this enrichment under set circumstances, you are able to input formulas where the column runs only if the formula is true. Learn more about conditional runs in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101#:~:text=Conditional%20runs%20\(which%20make%20use,personal%20emails%20for%20all%20rows\).).
+The Prospeo **Find Email Addresses Associated with a Domain** action can no longer be added to tables, because Prospeo disabled this functionality. Existing columns that use this action return **No Emails Found**. To find generic or role-based email addresses (such as `info@` or `sales@`) for a company domain, use Hunter's **Find emails by company** action with **Type** set to **Generic**, or Icypeas's **Find emails for domain** action instead. See [Can I enrich generic emails like info@, sales@, or hr@ with Enrich person?](finding-companies-and-people-in-clay.md#can-i-enrich-generic-emails-like-info-sales-or-hr-with-enrich-person).
 
 ## `Action` Find Work Email and Enrich Person from LinkedIn URL
 

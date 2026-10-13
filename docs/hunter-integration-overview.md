@@ -68,6 +68,8 @@ If you use the Clay-managed Hunter account, you will be charged at 2 credits per
 
 Next, you'll select the company domain so you can identify people from that organization. Optionally, you can then select what department you'd like to search to find people.
 
+To return only generic or role-based email addresses (such as `info@`, `sales@`, or `support@`) for the domain, set **Type** to **Generic**. Set **Type** to **Personal** to return only individuals' email addresses.
+
 Follow the step-by-step walkthrough in this interactive lesson for an example:
 
 **Step 3 (Optional): Select Auto-update**

@@ -608,6 +608,18 @@ This most often happens when a column containing emails, names, company names, o
 
 After correcting the mapping, right-click the column header → **Run column** → **Run [N] empty or out-of-date rows** to re-run the affected cells.
 
+### Can I enrich generic emails like info@, sales@, or hr@ with Enrich person?
+
+No. Generic email aliases (also called role-based emails), such as `info@`, `sales@`, `support@`, or `hr@`, belong to a shared mailbox rather than a specific person, so **Enrich person** can't match them to a person profile:
+
+-   If a generic email is mapped to the **Professional URL** field, the cell shows **"Invalid input: Invalid person identifier"**, because an email address isn't a professional profile URL or ID.
+-   If a generic email is mapped to the **Email** field, no person is matched and the cell shows **"No Profile Found"**.
+
+**To add generic emails for a company to your table**, look them up at the company level with a domain-based action instead of enriching the alias. Both of these actions only need a company domain column as input:
+
+-   **Hunter → Find emails by company:** map your company domain column to **Company domain** and set **Type** to **Generic** to return only role-based addresses. You can also filter by **Department** (for example, HR, Sales, or Support). See [Hunter](hunter-integration-overview.md).
+-   **Icypeas → Find emails for domain:** map your company domain column to **Company domain**. This action returns valid role-based email addresses for the domain.
+
 ### "Your source has exceeded your plan's limit" error on Find Companies or Find People
 
 If you see **"Your source has exceeded your plan's limit of [N], so future runs will not add new records. Consider creating a new source or moving onto a higher tier plan"**, the source has reached a per-source cumulative record limit enforced by your billing plan. The error appears on the source as **Invalid input**.
