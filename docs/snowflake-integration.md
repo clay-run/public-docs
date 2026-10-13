@@ -256,6 +256,18 @@ Click `Edit` next to `Import record matching (optional)`, then:
 
 ![](https://cdn.prod.website-files.com/687e604972375496b891fe58/69d69a4ceb012f4e97a8ad42_Snowflake%20Integration%20Image%20\(1\).webp)
 
+Import record matching is currently in beta — contact your Growth Strategist to enable it for your workspace. Matching settings apply only to records imported after you save them; records already in Audiences are not merged retroactively.
+
+#### What if my Snowflake source doesn't have a domain column for Import record matching?
+
+In the Import record matching dialog, each source under `In` gets one dropdown, and you can select one field per source. You don't have to map every source. If your Snowflake query doesn't return a column that matches the alias field — for example, no domain or website column when matching on `Domain` — leave the Snowflake dropdown blank and click `Done`. Import record matching still runs for the sources you did map, such as Salesforce and CSV imports.
+
+Keep in mind:
+
+-   **An unmapped Snowflake source isn't deduplicated against your other sources.** Import record matching can't merge Snowflake records with matching records from your other sources when the Snowflake dropdown is blank, so the same company may appear as separate records.
+-   **You can map the Snowflake column later.** Once your team confirms which column holds the domain (or you add one to your SQL query), click `Edit` next to `Import record matching` and select it. The change applies only to records imported after you save.
+-   **Domains are normalized before they're compared.** When the alias field is `Domain`, Clay strips the protocol (`https://`), `www.`, any path or query string, and subdomains before comparing values, so `https://www.acme.com/about` and `acme.com` match. Different top-level domains (for example, `acme.com` and `acme.io`) do not match.
+
 ### Mapping fields
 
 After your query runs, Clay displays the columns it pulled in and lets you map them to Audiences fields.
