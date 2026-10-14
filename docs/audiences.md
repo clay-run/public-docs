@@ -1170,11 +1170,11 @@ The **Write if empty** rule is checked separately for each mapped field on each 
 -   **The Salesforce field already has a value:** Clay skips that field and leaves the Salesforce value unchanged. No error is recorded.
 -   **Audiences has no value for the field:** Clay writes nothing for that field.
 
-For example, with **LinkedIn URL** mapped to a Salesforce **LinkedIn Profile Link** field set to **Write if empty**, a Contact with a blank LinkedIn Profile Link in Salesforce gets the LinkedIn URL from Audiences. A Contact that already has a LinkedIn Profile Link keeps its existing value.
+For example, say a person's professional network profile URL is mapped to a custom Salesforce Contact field set to **Write if empty**. A Contact whose profile URL field is blank in Salesforce gets the URL from Audiences. A Contact that already has a profile URL in that field keeps its existing value.
 
 **How Clay checks whether the Salesforce field is empty:** Clay doesn't monitor Salesforce continuously. Right before each scheduled export that includes **Write if empty** fields, Clay runs an incremental sync from Salesforce and then checks the refreshed Salesforce values. A field counts as empty when it is missing, null, or blank text. Values like `0` or `false` count as filled in.
 
-**The Salesforce export doesn't run enrichments.** The export only sends values that are already stored in Audiences. If a record doesn't have a LinkedIn URL (or any other mapped value) in Audiences yet, the export won't look it up. Run the enrichment first, and the next scheduled export will send the value.
+**The Salesforce export doesn't run enrichments.** The export only sends values that are already stored in Audiences. If a record doesn't have a value for a mapped field (for example, a profile URL) in Audiences yet, the export won't look it up. Run the enrichment first, and the next scheduled export will send the value.
 
 **Changing a field's rule doesn't push anything right away.** When you change a field from **Never write** to **Write if empty** (or **Always write**), nothing is sent to Salesforce until the next scheduled export, which runs once every 24 hours. That next export checks the field for all existing records in the export, not only records that changed recently. Export sync must be turned on for the object. If it's off, no fields are exported no matter what their rules are. See [I've mapped fields to Salesforce but the data isn't syncing — why?](#ive-mapped-fields-to-salesforce-but-the-data-isnt-syncing--why) above.
 
