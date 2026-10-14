@@ -87,18 +87,24 @@ Use the same workspace-scoped API key in the `clay-api-key` request header. Read
 
 **Note:** A `413` (`Payload Too Large`) from `POST /search/filters-mode/{search_id}/run` means the requested page of results exceeds the API's internal output cap. Reduce the `limit` parameter in your request and retry — the error is deterministic, so retrying at the same `limit` will always fail.
 
-**Note:** Clay caps how many search results your workspace can return through the Public API, CLI, and MCP server per period. These quotas apply to Clay's People & Company Search API — they do not apply to in-app table enrichments or Routines API runs. The quota counts **results returned**, not searches run — a search that returns 0 results does not consume any quota.
+**Note:** Clay caps how many search results your workspace can return through the Public API and the Clay CLI (some searches run through the MCP server also count) per period. This search results quota applies to Clay's People & Company Search API only. Searches you run inside the Clay app don't count toward the quota and aren't blocked by it, and the quota doesn't apply to in-app table enrichments or Routines API runs. The quota counts **results returned**, not searches run — a search that returns 0 results does not consume any quota.
+
+The following table shows the default search results quota and period window for each plan:
 
 | Plan | Results per period | Period window |
 | ---- | ------------------ | ------------- |
-| Free | 100 | Monthly (resets on the 1st of each month, UTC) |
+| Free | 100 | Rolling 30-day (legacy pre-2026 Free plans: monthly, resetting on the 1st of each month, UTC) |
 | Trial | 10,000 | 14 days from plan start |
-| Paid | 1,000,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
+| Flex | 50,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
+| Launch and Growth | 1,000,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
+| Legacy (pre-2026) paid plans, such as Pro or Explorer | 1,000,000 | Annual (resets January 1, UTC) |
 | Enterprise | 10,000,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
 
-When you exceed the period limit, Clay returns `400` with a message naming the limit, the number of results already used, and the next daily midnight UTC reset timestamp. To monitor your usage before hitting the limit, open the **API and CLI** page from the left sidebar (under **Orchestration**). The **Search API usage** section shows your current period's results used out of your limit, the next reset date, and a progress bar that turns orange at 70% usage and red at 90%. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
+For example, a workspace on a legacy paid plan that has used 273,406 of its 1,000,000 results has 726,594 results left until the quota resets on January 1 (UTC).
 
-**Note:** Workspaces on legacy (pre-2026) non-Enterprise plans retain the annual quota window (resets January 1 UTC) rather than the rolling 30-day window.
+Every page of search results (each `run` call) includes a `period_quota` object with your workspace's `limit`, `used`, `remaining`, and `resets_at` values. The response that creates a search doesn't include it.
+
+When a request would exceed the period limit, Clay returns `402` (`Payment Required`) with a message naming the limit, the number of results already used, and when usage resets — the next daily midnight UTC age-out for rolling 30-day windows, or the reset date for fixed windows. To monitor your usage before hitting the limit, open the **API and CLI** page from the left sidebar (under **Orchestration**). The **Search usage** card shows your results used out of your limit (for example, "273,406 of 1,000,000 results"), the window that applies to your workspace ("Counts the last 30 days" or "Resets on [date]"), and a progress bar that turns orange at 70% usage and red at 90%. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
 
 **Note:** Credits consumed by Routines API runs appear in the **Workbooks** tab of the credit usage dashboard — not the **API** tab. Each run processes records in the function's table, and those credits are attributed to that table, the same as any other table enrichment. To see this credit spend, go to `Settings → Usage → Workbooks` and find the table associated with your routine. The **API** tab in the credit usage dashboard covers only direct People & Company Search API and Exportly calls — not Routines API enrichments.
 
