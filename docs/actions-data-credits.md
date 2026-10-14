@@ -382,6 +382,8 @@ Data Credits work more like a currency and do roll over. The billing interval de
 
 **Trial plans:** Trial Data Credits are handled differently — see the [*I have a trial, when do the Data Credits expire?*](#i-have-a-trial-when-do-the-data-credits-expire) section below for details.
 
+**Free plan:** Unused Free plan Data Credits do not carry over when you upgrade to a paid plan. When you upgrade from the Free plan to a paid plan (such as Launch or Growth), your Data Credit balance is set to the Data Credits included with your new paid plan.
+
 ### Why do I see a warning that credits are "over the rollover limit" when my current balance is below the 2× cap?
 
 On a monthly plan, the warning appears when your current balance is already high enough that adding your next monthly renewal would push the total over the 2× rollover cap — not because you are over it right now.
@@ -483,7 +485,7 @@ In some situations, Clay's support team can manually restore Data Credits that w
 
 -   **Accidental usage**: If credits were consumed unintentionally (for example, by a run you did not mean to trigger), support may grant a one-time exception.
 -   **Reactivating a paid plan after a lapse**: If you let a subscription lapse and then reactivate a paid plan, credits forfeited during the lapse may be eligible for restoration. Contact support after reactivating to request a review.
--   **Missing rollover credits after a plan upgrade**: If credits you expected to carry over are missing after upgrading your plan, contact support — this can be verified and manually corrected.
+-   **Missing rollover credits after a plan upgrade**: If credits you expected to carry over are missing after upgrading from one paid plan to another, contact support — this can be verified and manually corrected.
 
 **What support cannot restore:**
 
