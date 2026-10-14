@@ -359,7 +359,7 @@ To configure:
 3. Under `In`, map the alias field to the corresponding field in each connected source.
 4. When a new record arrives, Audiences checks whether the alias value already exists. If it does, the new data is merged with the existing record instead of creating a duplicate.
 
-You can configure one alias field per entity type (one for People, one for Companies). This setting applies to records imported *after* it is enabled — it does not retroactively merge records already in Audiences.
+You can configure one alias field per entity type (one for People, one for Companies). This setting applies to records imported *after* it is enabled — it does not retroactively merge records already in Audiences. To clean up duplicates that already existed before you turned it on, see [I turned on Import record matching but my existing duplicate records weren't merged](#i-turned-on-import-record-matching-but-my-existing-duplicate-records-werent-merged--how-do-i-clean-them-up).
 
 **Unique Identifier vs. alias field (Snowflake and BigQuery imports)**
 
@@ -1298,6 +1298,28 @@ To fix wrong Account Name, Type, or Owner values caused by duplicate Salesforce 
 
 **Note:** Duplicate Salesforce Accounts are merged only inside Clay — Audiences never merges or changes Accounts in your Salesforce org. To stop this from recurring, clean up duplicate Accounts in Salesforce.
 
+### I turned on Import record matching but my existing duplicate records weren't merged — how do I clean them up?
+
+Import record matching (beta) only runs when a record is imported into Audiences for the first time. Later syncs of records that already exist in Audiences update their field values but don't re-run matching, so duplicates that existed before you saved your matching settings stay separate. For example, if you add the rule `When Domain, In Website_Domain__c, Then Merge record` to a Salesforce Accounts import that has already synced, the next sync can write the Salesforce Account ID to every company with that domain while the duplicate company records stay separate. This is expected.
+
+**Is merging a separate step I need to trigger?** No. Import record matching merges records automatically at import time, and Audiences doesn't have a "merge now" or "re-run matching" action for records that are already in your Audience.
+
+**How to remove existing duplicate companies or people:**
+
+1.  Open the duplicate records and decide which one to keep. Keep the record that comes from your Salesforce import, and check that it has the field values you want — the record you archive doesn't pass its field values to the one you keep.
+2.  Archive the other duplicate records — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience).
+3.  Wait for the next sync. The record you kept keeps receiving updates from Salesforce.
+
+Archive the non-Salesforce duplicate, not the record linked to your Salesforce Account. Archived records stay archived when Salesforce syncs again, so if you archive the Salesforce-linked record, updates from that Salesforce Account stop reaching your Audience.
+
+**Will an archived duplicate come back on the next sync?** No. An archived record stays archived when its Salesforce record syncs again — Clay skips it rather than re-creating it. This also means that pausing an import, archiving its records, and turning the import back on doesn't re-import those records or re-run matching on them.
+
+**Which Salesforce Account ID and field values are kept when records merge?** Fields that only one of the merged records has carry over to the merged record. When both records have a value for the same field, Audiences uses the source priority order described in **Conflict resolution when sources provide different field values** under [Entity resolution and deduplication](#entity-resolution-and-deduplication). Salesforce Accounts share the same priority tier, so when two Salesforce Accounts are merged into one company record, each field shows the value that was updated most recently — including the Salesforce Account ID.
+
+**Can a merge be undone?** No. Merges in Audiences are one-way — merged records can't be unmerged.
+
+**How to prevent duplicates from building up:** Set up Import record matching before the first sync of a new Salesforce or Snowflake import, so every record is matched when it is first imported. To stop duplicate Salesforce Accounts from merging into one company with mixed values, clean up duplicate Accounts in Salesforce — see [Why does a company in my Companies audience show the wrong Salesforce Account name, type, or owner?](#why-does-a-company-in-my-companies-audience-show-the-wrong-salesforce-account-name-type-or-owner).
+
 ### I enriched data in my Audience. Why hasn't it appeared in Salesforce yet?
 
 Clay Audiences syncs in two separate directions on different schedules:
@@ -1464,7 +1486,7 @@ The fastest way to archive many records at once — for example, to remove all c
 
 **Note:** **Delete list** in the same segment menu removes the segment from the sidebar but does not archive the records. Use **Archive records in segment** when you want to remove the contact or company records themselves.
 
-**Note:** Archived records can be restored from the **Archived** section in the left sidebar. If a previously archived record enters Audiences again from a source (for example, if the underlying Salesforce record is modified and re-synced), it will appear as a new record without the archived record's enrichment data.
+**Note:** Archived records can be restored from the **Archived** section in the left sidebar. An archived record stays archived when its source record syncs again — for example, if the underlying Salesforce Account or Contact is modified and re-synced, Clay skips it instead of re-creating it in your Audience. To bring an archived record back, restore it from the **Archived** section.
 
 ### Records I deleted in Salesforce are still in my Audience — how do I remove them?
 
