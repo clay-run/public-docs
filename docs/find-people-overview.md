@@ -162,6 +162,23 @@ If you add people to a Find People table by hand — typing or pasting their wor
 
 For other Enrich person input errors, see [Getting "Invalid input: Invalid person identifier" from Enrich person](finding-companies-and-people-in-clay.md#getting-invalid-input-invalid-person-identifier-from-enrich-person).
 
+### How do I change a workflow's Find people trigger from Manual to Scheduled?
+
+A workflow trigger's type (**Manual**, **Scheduled**, or **On event**) is set when you create the trigger and can't be changed afterward. When you click an existing trigger in the workflow editor, the **Type** picker shows the trigger's current type and greys out the other types. This applies to draft and live workflows alike, and it isn't a plan or permission limit.
+
+A Find people trigger set to **Manual** runs only when you start it. It won't keep adding people to your audience on its own, for example people at companies that newly enter the Companies segment your search targets. To run the same Find people search on a schedule, replace the Manual trigger with a new Scheduled trigger:
+
+1.  Save the current search so you can reuse it. In the workflow editor, click the existing trigger, click the **⋮** menu on the Find people source card in the trigger sidebar, and select **Edit**. In the search panel, click the save icon in the **Setup** section header and select **Save**.
+2.  Add a new Find people trigger to the workflow and choose **Scheduled** as its type while you create it. Pick a frequency (**Hourly**, **Daily**, **Weekly**, **Monthly**, **Quarterly**, or **Custom**) and set up the same search. Once you have saved searches, the save icon's dropdown in the **Setup** section includes **View saved searches**, where you can find the search you saved in step 1.
+3.  Connect the new Scheduled trigger to the same next step as the old trigger (for example, **Write to Audiences**).
+4.  Remove the old Manual trigger.
+5.  Publish the workflow. A Scheduled trigger only starts running once the workflow is published and live.
+
+Here's what happens to people the old Manual trigger already found:
+
+-   **They stay in your audience.** Removing a Find people trigger deletes that trigger's search source and schedule. It doesn't remove any contacts already written to Audiences or to your People segment.
+-   **The new trigger's first run may pull them again.** Each scheduled run of a Find people trigger adds only people that trigger hasn't already pulled. The new trigger has no record of what the old trigger found, so its first run can return people who are already in your segment. To avoid this, add your existing People segment under **Excluded people** in the new trigger's search. Clay re-checks the exclusion on every scheduled run. Audience exclusions match by LinkedIn URL or email only, so contacts without either can still be pulled again. See "Excluding people (or companies) from your search" under [Importing from people and companies search](audiences.md#importing-from-people-and-companies-search).
+
 ## Importing from a Sales Navigator search URL
 
 If you have a saved Sales Navigator search and want to pull those results into Clay, use the **Find people from external search** source — not the standard Find People source described above.
