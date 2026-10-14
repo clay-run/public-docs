@@ -36,6 +36,25 @@ For an advanced query such as `select from people ...` or `select from companies
 
 Standard people and company table searches do not have a per-search Data Credit charge. Paid options, such as technographics in the standard company import flow, and enrichments can add charges. Workflow search execution can also use Actions. Review the displayed estimate before importing or running a Workflow; do not assume that every search option or follow-up action is free.
 
+## How do I check if upgraded search is on?
+
+Upgraded search (also called advanced search) is Clay's newer search experience in **Find leads**, described in the product as "Custom queries across people, companies, & jobs." **Upgraded search is currently in beta and is turned on per workspace by Clay, so not every workspace has it.** Pricing for upgraded search is subject to change while it is in beta.
+
+To check whether upgraded search is on in your workspace:
+
+1.  In the left sidebar, click **Find leads**.
+2.  Choose **Companies** or **People**.
+3.  In the top right of the search page, click the **gear icon** (Search settings).
+4.  The dropdown shows the upgraded search toggle with a **Beta** badge:
+    -   **Upgraded search is on** — "Custom queries across people, companies, & jobs." You're using upgraded search.
+    -   **Upgraded search is off** — "Less filtering, limited flexibility." Click the toggle to turn upgraded search on.
+
+You can use the same toggle to switch upgraded search off and go back to the standard search. Clay remembers your choice the next time you open Find leads.
+
+**If you don't see the gear icon or the upgraded search toggle:** your workspace either doesn't have upgraded search yet, or is set up to always use upgraded search, in which case there's no toggle to switch it off. If a Clay course or your Clay contact asked you to confirm you have upgraded search and you can't tell, contact Clay support.
+
+**Upgraded search is not Find AI or Sculptor.** The **Find AI** integration is a deprecated third-party source, and Sculptor is Clay's go-to-market co-pilot that you chat with to build workflows. Neither one is upgraded search, so you don't need to add a Find AI source or open Sculptor to turn it on.
+
 ## Company search
 
 ### Anchor on description keywords
