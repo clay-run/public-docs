@@ -1106,11 +1106,35 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 
 The Audiences screen does not have a direct CSV download button. To download audience data as a CSV, use the **Enrich** flow to create an enrichment table from the segment, then export that table. **Admin access is required.**
 
+To send audience data to Google Sheets instead — including your full **All Companies** or **All People** list — use a workflow export from the **Exports** tab. See [How do I export my audience to Google Sheets?](#how-do-i-export-my-audience-to-google-sheets) below.
+
 1. Open the audience segment you want to export.
 2. Click `Enrich` to open the enrichment panel, then create a new enrichment table for this segment. (The exact button label varies by workspace — you may see **Add bulk enrich** or a `+` button with a **Create Enrichment Table** option.)
 3. In the enrichment setup, skip adding enrichment columns and turn off field mapping if you only need the raw segment data.
 4. Open the resulting table. If any rows are checked, uncheck them first — the toolbar shows **Tools** only when no rows are selected.
 5. Click **Tools** → **Export** → **Download CSV**.
+
+### How do I export my audience to Google Sheets?
+
+You can export audience records — including your full **All Companies** or **All People** list — to Google Sheets with a workflow export from the **Exports** tab in Audiences. The **Records** tab on All Companies and All People has no export or **Download CSV** button; audience exports are set up as workflows instead. Adding a workflow export does not require Admin access.
+
+**To export an audience to Google Sheets:**
+
+1.  In Audiences, open **All Companies** (or **All People**) and click the **Exports** tab.
+2.  Click **Add workflow export**. Clay creates a new workflow with an audience trigger step and an empty export step.
+3.  In the trigger step, choose which records to export. To export every record, select **All Companies** (or **All People**) at the top of the **All** tab in the segment picker — you don't need to create a segment first. To export only part of your audience, select a saved segment instead.
+4.  In the export step, choose **Export to Google Sheets**. To see the other export destinations available in this step, click **Browse all exports**.
+5.  Connect your Google account, then under **Google Spreadsheet URL** click **Select a spreadsheet** (or paste the spreadsheet's URL).
+6.  Under **Column Mapping**, pick the tab to write to in **Sheet ID**, then map an audience field to each column header in that tab.
+7.  Click **Publish**.
+8.  On the trigger step, click **Run** and choose **Entire segment**. The option shows the record count — for example, **Entire segment (9,059 companies)**. The other run options run on a sample only (10 records by default, or a **Custom sample**).
+
+When the run finishes, your audience records are in the Google Sheet. To get an Excel or CSV file, download the sheet from Google Sheets.
+
+**Things to know about exporting an audience to Google Sheets:**
+
+-   **Add column headers to your sheet first.** **Column Mapping** lists the column headers that already exist in the selected tab — it doesn't create new columns. Add a header for each field you want (for example, Company name and Domain) in Google Sheets before you set up the mapping. If you add a header later, reopen the export step to map it.
+-   **"Enrich → Create enrichment table" is a different path.** The **Enrich** button opens bulk enrichment setup, which is for adding data to your audience records. To download a CSV through a bulk enrichment table instead of using Google Sheets, see [How do I export my audience data to CSV?](#how-do-i-export-my-audience-data-to-csv) above.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
