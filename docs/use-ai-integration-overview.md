@@ -345,15 +345,29 @@ If a Use AI or Claygent column completes without error — and the cell shows a 
 
 **To fix:** Open the column settings (click the column header → **Edit column**), go to the **Configure** tab, and check the **Outputs** section. Add any fields you want to populate with the correct name and data type. For example, if you set up a column to identify a CEO's name and want it in a field called `ceo_name`, that field must be listed in **Outputs** — otherwise the value won't be captured. See [Claygent builder](claygent-builder.md) for output schema details and common configuration errors.
 
-### Cells showing "Budget Credit Limit Reached"
+### Cells showing "This request exceeds your budget limit" (Clay Credit Budget)
 
-For AI columns using variable-priced models (such as GPT-4.1, Claude Sonnet, or Gemini 2.5 Pro) with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. This sets the maximum number of Clay credits that can be spent on a single row. If the estimated cost of running a row exceeds this limit, the cell shows **"Budget Credit Limit Reached"** and does not complete. Clicking the cell reveals the full message with the estimated cost and your current budget.
+For Use AI columns using variable-priced models (such as GPT-4o, GPT-4.1, Claude Sonnet, or Gemini 2.5 Pro) with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. The Clay Credit Budget sets the maximum number of Clay credits that a single row can spend.
 
-**When the Clay Credit Budget field is left blank, it defaults to the model's base cost** (for example, 7.5 credits for Claude Opus). This means any prompt whose estimated cost exceeds that base cost — because the prompt is long or references many columns — will be blocked, even though you never explicitly set a limit.
+Before running each row, Clay estimates the row's cost from the length of your prompt, including the column values you insert into it. If the estimated cost is higher than the Clay Credit Budget, the row does not run and the cell shows an error like this one:
 
-To fix this, open the column settings and increase the **Clay Credit Budget** value above the estimated cost shown in the error. Set it high enough to give some headroom for prompt length variation — for example, if the error shows an estimated cost of 8.5 credits, a budget of 11 credits gives comfortable room. You are only charged the actual cost per run; the budget is a ceiling, not a prepaid amount.
+`Error: This request exceeds your budget limit. The estimated cost is 1.5 credits, but your budget is set to 1 credits. Please increase your budget for this model to proceed.`
 
-**Note:** This setting only applies to expensive variable-priced models when using Clay's managed account. Users who connect their own API key are billed directly by the AI provider and this cap does not apply.
+Click the cell to see the full message in the **Cell details** panel. Rows blocked by the Clay Credit Budget check are not charged credits.
+
+**The Clay Credit Budget is a per-row cap on the AI column itself.** It is not a workspace [credit budget](credit-budgets.md) or a workbook credit spend limit, so the "exceeds your budget limit" error can appear even when no budget or limit is set on your workspace or workbook.
+
+**When the Clay Credit Budget field is left blank, it defaults to the model's base cost — blank does not mean unlimited.** For example, a blank budget is 1 credit per row for GPT-4o and 7.5 credits per row for most Claude Opus models. Any row whose estimated cost exceeds that base cost — because the prompt is long or inserts large column values, such as a full JSON record — will be blocked, even though you never explicitly set a budget.
+
+To fix the "exceeds your budget limit" error:
+
+1.  Open the column settings (click the column name → **Edit column**).
+2.  Increase the **Clay Credit Budget** value above the estimated cost shown in the error. Leave some headroom for rows with longer inputs — for example, if the error shows an estimated cost of 1.5 credits, set the budget to 2 credits or more.
+3.  Click **Save**, then rerun the rows that errored.
+
+You are only charged the actual cost per run; the Clay Credit Budget is a ceiling, not a prepaid amount. If you'd rather keep each row at the model's base cost, shorten the prompt or insert fewer columns, or switch to a model that doesn't use variable pricing.
+
+**Note:** The Clay Credit Budget only applies to expensive variable-priced models when using Clay's managed account. Users who connect their own API key are billed directly by the AI provider and this cap does not apply.
 
 ### Cells showing "Invalid credentials: API key is missing"
 
