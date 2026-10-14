@@ -279,6 +279,15 @@ Be sure to press `Save settings` after making edits. Note: deleting a campaign s
 
 If you added or edited a **Clean variable** and it is not appearing in your message, check that the **Fallback** field ("Simple text to display if variable is empty") is filled in — this field is required, and the variable will not save if left blank.
 
+### Why does my campaign say "Fix these sections to launch: Messages"?
+
+The "Fix these sections to launch: Messages" message appears when you try to launch a campaign and its message sequence doesn't pass the launch check. In table-based campaigns (created with `Tools` → `Exports` → `Create Clay email campaign`), the Messages launch check looks at two things only:
+
+1.  **The sequence has at least one message.** If the `Sequence` tab has no message steps, click `Add a message`, write or insert your content, and save.
+2.  **The first message starts a new email thread.** Only follow-up messages can be sent as a reply in the same thread as an earlier email. If the first message in your sequence is set up as a reply, the campaign can't launch. If you see this message even though your first message looks complete and is saved, create a new campaign from your source table (`Tools` → `Exports` → `Create Clay email campaign`) with the same message setup.
+
+The Messages launch check doesn't look at the text inside your subject or body. A message whose subject and body are made up entirely of variables is valid. For example, you can write a fully personalized email for each lead in `email_subject` and `email_body` columns in your source table, then insert just those two variables into message #1. You don't need to add typed text alongside the variables to launch the campaign. Toggle `Preview` to confirm that each lead's subject and body render the way you expect.
+
 ### Why doesn't my Claygent or AI column appear as a variable in the email template?
 
 Claygent (web research AI) columns store their output as a structured object with multiple sub-fields — Response, Reasoning, Confidence, Steps Taken, and others. Even if the column appears in the email template's variable picker, its value renders as raw JSON rather than the clean text you want. To get just the response text as a usable personalization variable, extract it to a standalone plain-text column first.
