@@ -197,7 +197,21 @@ A few important notes:
 
 -   **The formula preview sidebar will show nothing** — this is expected. `Clay.*` functions are evaluated on the backend and cannot run in the preview. Save the column and the values will populate.
 -   **Only works for enrichment (action) columns.** The function reads the cell's stored status; it returns `"UNKNOWN"` for formula columns or cells that have never been processed. Cells that were skipped due to a run condition return `"ERROR_RUN_CONDITION_NOT_MET\"`, not `"UNKNOWN"`.
--   The function reflects the cell's **current** status — including in-progress states. A cell actively retrying returns `"RETRY"`, a cell waiting to execute returns `"QUEUED"`.
+-   The function returns the cell's **stored** status at the moment the formula evaluates, and in-progress values such as `"RETRY"` or `"QUEUED"` are possible return values. However, a formula that references an action column does not recalculate while that action is in progress — see the next question.
+
+### **Can `Clay.getCellStatus()` show a "busy" or "please wait" message while an action column is running?**
+
+No. A formula using `Clay.getCellStatus()` cannot show a busy message while the referenced action column is in progress, and it does not replace the old result when a rerun starts.
+
+A formula column that references an action column depends on that column. While the action cell is `"QUEUED"`, `"RUNNING"`, `"RATE_LIMITED"`, `"RETRY"`, or `"AWAITING_CALLBACK"`, Clay holds the dependent formula and does not recalculate it. The formula keeps its previous output for the whole run. It recalculates once, after the action finishes with a final success or error status. For example, this formula will **not** show "Busy, please wait" at the start of a run:
+
+```javascript
+Clay.getCellStatus({{Action Column}}) === "RUNNING" ? "Busy, please wait" : {{Action Column}}
+```
+
+When you click to run or rerun the action, the formula column keeps its old value. When the action finishes, the formula updates to the new result on its own, without an extra click or refresh. The formula never sees the `"RUNNING"` status, so the busy branch is never shown.
+
+There is currently no setting that clears a dependent formula column's previous output when an upstream action rerun starts, and no "on start" event that writes a value to a cell before the action begins processing.
 
 ### **Why does my regex formula work in the preview but fail when the table runs?**
 
