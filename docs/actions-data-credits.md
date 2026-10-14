@@ -2,7 +2,7 @@
 title: Actions & Data Credits
 description: Learn about credits, the virtual currency system used for running
   actions in Clay.
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-09-14T17:33:55.656Z
 ---
 
 # Actions & Data Credits
@@ -516,3 +516,7 @@ Only CRM **write** operations consume Actions: Create Record, Update Record, Ups
 Yes. Clay charges **1 Action** (and the associated Data Credits) per enrichment row run, regardless of whether that person has been enriched in another table. There is no cross-table deduplication — each row runs independently. If the same contact appears in two tables and you run an enrichment such as Enrich Person in both, you will be charged for each run separately.
 
 **To avoid double-charging on overlapping lists:** Merge your lists into a single table first and use the **Dedupe** feature (click a text, email, or URL column header → **Dedupe**) to remove duplicate entries based on a unique identifier such as a profile URL or email address. Enriching the merged, deduplicated table ensures each person is processed and charged only once.
+
+### **What happens if an automatic top-up payment fails?**
+
+Data Credits are granted once payment succeeds, so a declined charge won't add credits — and rather than retry the card, Clay turns automatic top-ups off. Update your card in `Settings` → `Plan & billing`, then re-enable automatic top-ups in `Settings` → `Usage`. A missing billing address can also block a top-up, so add one there if your card details are already up to date.
