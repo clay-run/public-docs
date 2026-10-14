@@ -42,7 +42,7 @@ The following limits apply to all webhook sources in your workspace:
 
 **Payload size:** Each HTTP POST to Clay's webhook endpoint must be 100 KB or smaller.
 
-**Submission limit:** Each webhook source accepts up to 50,000 submissions. This is a cumulative lifetime count — every accepted submission increments the counter, and neither deleting nor archiving rows from the table reduces it. Once you reach this limit, Clay returns a `403 Record limit reached for webhook` error and you'll need to create a new webhook to continue receiving data.
+**Submission limit:** Each webhook source accepts up to 50,000 submissions. This is a cumulative lifetime count — every accepted submission increments the counter, and neither deleting nor archiving rows from the table reduces it. Once you reach this limit, Clay returns a `403 Record limit reached for webhook` error. To keep receiving data, either add a new webhook source (each new webhook source starts with its own 50,000-submission allowance) or contact Clay support to raise the limit on your existing webhook source — you can't change the submission limit yourself.
 
 **Enterprise Plan — run a webhook indefinitely:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) (also called passthrough tables). When passthrough mode is active, the webhook source takes a separate code path that **bypasses the 50,000 submission limit entirely** — a single webhook URL can keep accepting data indefinitely without ever hitting the cap. This is the recommended approach for automated enrichment pipelines. Auto-delete is available on Enterprise plans and only works for webhook, send-table-data, and signal sources. Learn more in [table management settings](https://www.clay.com/university/guide/table-management-settings).
 
@@ -120,6 +120,20 @@ So if your source displays more rows than your table (for example, 162 vs. 92), 
 -   **Table filters.** If a filter is active on your table, only the rows matching that filter are shown in the table count. The source count always reflects all stored records, regardless of any filters.
 
 **Note:** Records that Clay rejected with a `429` rate limit error were never stored and do not appear in either count. See the [Limits](#limits) section above for guidance on keeping requests within the 10/second throughput limit to avoid dropped records.
+
+### How do I know when my webhook is about to reach the 50,000 submission limit?
+
+Clay doesn't send you an email or in-app notification when a webhook source is approaching or has reached its 50,000-submission limit. Once the limit is reached, the webhook starts rejecting requests with a `403` response whose body is `{"type":"Forbidden","message":"Record limit reached for webhook"}`, and those records are dropped, not queued.
+
+On Enterprise plans, a table that receives data continuously with auto-delete turned off shows a warning banner: **"This table is receiving data continuously without auto-delete enabled."** with a **Set up auto-delete** button. This banner is a standing reminder and isn't triggered by how close the webhook is to the limit.
+
+To avoid hitting the webhook submission limit without checking the table every day, use one of these options:
+
+1.  **Enterprise plan: enable auto-delete.** With [auto-delete](auto-delete.md) (passthrough mode) turned on, the webhook source skips the 50,000-submission limit entirely, so there's no limit to track. See [Limits](#limits).
+2.  **Count submissions on your sending system.** Keep a counter in the tool or script that sends to Clay, increment it on every `200` response from the webhook, and set an alert at a safe threshold below 50,000 (for example, 45,000).
+3.  **Watch for the `403` response.** If your sending system can read Clay's responses, alert on a `403` with the message `Record limit reached for webhook`. If your sending system can't read responses, use option 1 or 2 instead.
+
+When a webhook source reaches the limit, add a new webhook source (it starts with a fresh 50,000-submission allowance) and point your sending system to its URL, or contact Clay support to raise the limit on the existing webhook source.
 
 ### My webhook is sending data successfully but new rows aren't visible in my table
 
