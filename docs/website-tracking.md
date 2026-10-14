@@ -185,6 +185,24 @@ Common causes:
 -   Connection-level or table-level filters are too restrictive.
 -   Your site hasn't had enough live traffic yet.
 
+### Tracking script is installed, but I don't see any website visits in Clay
+
+If your Web intent tracking script is installed and working (for example, another visitor-tracking tool shows traffic on your site), but no website visits show up in Clay, your Web intent connection's filters are usually screening the visits out. Check these two settings first:
+
+1.  **Full URLs in "URL paths to include"** — the page filter compares each entry to the page *path* only (the part after your domain, such as `/pricing/`), and the match is exact. An entry written as a full URL, like `https://www.example.com/pricing/`, never matches a visit, so if every entry is a full URL, no visits get through.
+    -   **Fix:** enter just the path, such as `/pricing/`. Add a `*` to include subpages (for example, `/solutions/*` matches `/solutions/` and every page under it). Add `/` if you also want to include sessions that visit your homepage. To track every page, leave "URL paths to include" empty — by default, all pages are included.
+2.  **Minimum session duration (seconds)** — under **Advanced filters**, sessions shorter than this value are skipped and never appear in your table. New connections default to 5 seconds.
+    -   **Fix:** lower the value to let shorter visits through.
+
+**To change these filters:**
+
+1.  Click on your account name → `Settings` → `Web intent`.
+2.  Open your website connection.
+3.  Update the page paths under **Tracking filters** (**URL paths to include**), and the session duration under **Advanced filters** (**Minimum session duration (seconds)**).
+4.  Click **Save changes**.
+
+Filter changes apply to new visits only. Once you save, new visits that match your filters start adding rows to your table. Visits that were filtered out before the change aren't added afterward.
+
 ### Why do I see fewer rows than website visitors (for example, after an email campaign)?
 
 It's normal for your Web intent table to show fewer rows than the number of people who clicked through to your website. Every completed visitor session goes through the following steps, and only sessions that make it through all of them become rows in your table:
