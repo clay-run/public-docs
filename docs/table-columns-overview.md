@@ -1,6 +1,6 @@
 ---
 title: Table columns
-description: Learn how to navigate columns in your Clay table, including column types, system columns (Created At and Updated At), limits, child column mapping, how to fix enrichment inputs flagged as an invalid domain or LinkedIn URL, and how to resolve circular dependency errors.
+description: Learn how to navigate columns in your Clay table, including column types, system columns (Created At and Updated At), limits, child column mapping, how to fix enrichment inputs flagged as an invalid domain or social profile URL, and how to resolve circular dependency errors.
 last_synced: 2026-04-26T01:40:46.052Z
 ---
 
@@ -69,16 +69,16 @@ You can switch the data type of your column within your table. To do this:
 
 Changing a column's data type doesn't rewrite the values already stored in its cells.
 
-### Enrichment says a company domain or LinkedIn URL input is invalid
+### Enrichment says a company domain or social profile URL input is invalid
 
-When you map a column to an enrichment input that expects a company domain or a LinkedIn profile URL, Clay checks the values in that column against the format the input expects. If some values don't match, Clay shows the warning **"Some rows may not resemble a {input name}"**, and the enrichment fails on rows whose value isn't in a valid format.
+When you map a column to an enrichment input that expects a company domain or a person's social profile URL, Clay checks the values in that column against the format the input expects. If some values don't match, Clay shows the warning **"Some rows may not resemble a {input name}"**, and the enrichment fails on rows whose value isn't in a valid format.
 
 The formats each input expects:
 
 -   **Company domain:** a valid domain or URL, such as `example.com` or `https://example.com`.
--   **LinkedIn profile URL:** a LinkedIn person profile URL that contains `linkedin.com/in/`, such as `https://www.linkedin.com/in/jane-doe`.
+-   **Social profile URL:** a person's profile URL from the professional network, including the `/in/` profile path (for example, `.../in/jane-doe`). Company page URLs and other non-profile links aren't accepted.
 
-To fix rows flagged as an invalid domain or LinkedIn URL, check the values in the flagged rows of your input column and correct them to match these formats. Switching the input column's data type (for example, from **Text** to **URL**) doesn't change the value Clay sends to the enrichment. A value that's in an invalid format stays invalid until you correct the value itself.
+To fix rows flagged as an invalid domain or social profile URL, check the values in the flagged rows of your input column and correct them to match these formats. Switching the input column's data type (for example, from **Text** to **URL**) doesn't change the value Clay sends to the enrichment. A value that's in an invalid format stays invalid until you correct the value itself.
 
 ## Column input types
 
