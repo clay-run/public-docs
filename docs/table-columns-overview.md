@@ -1,6 +1,6 @@
 ---
 title: Table columns
-description: Learn how to navigate columns in your Clay table, including column types, system columns (Created At and Updated At), limits, child column mapping, and how to resolve circular dependency errors.
+description: Learn how to navigate columns in your Clay table, including column types, system columns (Created At and Updated At), limits, child column mapping, how to fix enrichment inputs flagged as an invalid domain or LinkedIn URL, and how to resolve circular dependency errors.
 last_synced: 2026-04-26T01:40:46.052Z
 ---
 
@@ -63,9 +63,22 @@ You can add a new column to your table in a few ways:
 
 You can switch the data type of your column within your table. To do this:
 
-1.  Click on the column title.
-2.  Hover over the current data type to see the dropdown of other options.
-3.  Select your new input type.
+1.  Click the header of the column you want to change and select **Edit column** from the dropdown.
+2.  In the column settings panel, open the **Data type** dropdown and select the new data type.
+3.  Click **Save**, or click **Save and don't run enrichments** to save the new data type without re-running the enrichment columns that depend on this column.
+
+Changing a column's data type doesn't rewrite the values already stored in its cells.
+
+### Enrichment says a company domain or LinkedIn URL input is invalid
+
+When you map a column to an enrichment input that expects a company domain or a LinkedIn profile URL, Clay checks the values in that column against the format the input expects. If some values don't match, Clay shows the warning **"Some rows may not resemble a {input name}"**, and the enrichment fails on rows whose value isn't in a valid format.
+
+The formats each input expects:
+
+-   **Company domain:** a valid domain or URL, such as `example.com` or `https://example.com`.
+-   **LinkedIn profile URL:** a LinkedIn person profile URL that contains `linkedin.com/in/`, such as `https://www.linkedin.com/in/jane-doe`.
+
+To fix rows flagged as an invalid domain or LinkedIn URL, check the values in the flagged rows of your input column and correct them to match these formats. Switching the input column's data type (for example, from **Text** to **URL**) doesn't change the value Clay sends to the enrichment. A value that's in an invalid format stays invalid until you correct the value itself.
 
 ## Column input types
 
