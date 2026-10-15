@@ -160,6 +160,24 @@ When prospecting existing accounts, contacts can leave a company, change roles, 
 
 **Scaling to multiple workbooks**: Save the lookup and coverage-check logic as a [Function](functions.md). Define the company domain as the input and the coverage count as the output, then call that function from any account table without rebuilding the lookup each time.
 
+**Example: Tailor a case-study line to each account by industry and company size**
+
+To write outreach copy that cites a relevant case study for each account, such as a one-sentence proof point matched to the account's industry, company size, or webinar or event topic, keep your case studies in their own Clay table. Then pull the matching ones into your accounts table with **Lookup Multiple Rows in Other Table** and pass them to a **Use AI** column. A Use AI column runs once per row and only sees the data you reference in its prompt. It can't read documents (such as case-study PDFs) that you've uploaded to Knowledge Hub, so for bulk copy across many accounts, store each case study as a row in a table.
+
+1. **Create a case-study table** with one row per case study. Add columns for customer name, industry, company size, use case or topic, summary, approved results, and source link. Include the full summary and results text, because the AI column can only write from what's in the table.
+
+2. In your accounts table, add a **Lookup Multiple Rows in Other Table** column:
+   - `Table to search` → your case-study table
+   - `Target column` → the industry column in your case-study table
+   - `Filter operator` → `Equals`
+   - `Row value` → the account's industry column in this table
+
+   This step only finds the matching case studies. It doesn't write any copy. Use the same industry labels in both tables so `Equals` finds the matches.
+
+3. Add a **Use AI** column to write the case-study line. In the prompt, insert column references (don't just type the column names) for the account's company size, the webinar or event topic, and the lookup results. For example: *"From the supplied case studies, choose the most relevant example based on this account's company size and webinar topic. Write one short sentence for an outreach email. Only use the supplied customer facts and results. If there's no suitable match, return 'No suitable match.'"*
+
+4. Run the Use AI column on a few rows first. Check that it picks the right case studies and that the results it quotes are accurate, then run it on the rest of the table.
+
 ### **Using lookups in the same table**
 
 You can also use `Lookup multiple rows` within the same table to find duplicates, count related records, or group rows by shared traits.
