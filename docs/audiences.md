@@ -1160,6 +1160,26 @@ To allow Clay to overwrite existing Salesforce values for a field:
 
 The updated value will be pushed to Salesforce on the next export cycle (within 24 hours).
 
+### How does the "Write if empty" export rule decide whether to update a Salesforce field?
+
+This applies to the Audiences **Export sync** to Salesforce Contacts and Accounts. The Export sync and its **Scheduled export rule** column are only available in workspaces that already have the native Salesforce export set up. If you don't see Export sync in your Salesforce source settings, use a [Workflow connected to your segment](#connecting-a-workflow-to-a-segment) with a Salesforce **Update Record** action instead.
+
+The **Write if empty** rule is checked separately for each mapped field on each record, every time the scheduled export runs:
+
+-   **The Salesforce field is blank and Audiences has a value:** Clay writes the Audiences value to Salesforce.
+-   **The Salesforce field already has a value:** Clay skips that field and leaves the Salesforce value unchanged. No error is recorded.
+-   **Audiences has no value for the field:** Clay writes nothing for that field.
+
+For example, say a person's professional network profile URL is mapped to a custom Salesforce Contact field set to **Write if empty**. A Contact whose profile URL field is blank in Salesforce gets the URL from Audiences. A Contact that already has a profile URL in that field keeps its existing value.
+
+**How Clay checks whether the Salesforce field is empty:** Clay doesn't monitor Salesforce continuously. Right before each scheduled export that includes **Write if empty** fields, Clay runs an incremental sync from Salesforce and then checks the refreshed Salesforce values. A field counts as empty when it is missing, null, or blank text. Values like `0` or `false` count as filled in.
+
+**The Salesforce export doesn't run enrichments.** The export only sends values that are already stored in Audiences. If a record doesn't have a value for a mapped field (for example, a profile URL) in Audiences yet, the export won't look it up. Run the enrichment first, and the next scheduled export will send the value.
+
+**Changing a field's rule doesn't push anything right away.** When you change a field from **Never write** to **Write if empty** (or **Always write**), nothing is sent to Salesforce until the next scheduled export, which runs once every 24 hours. That next export checks the field for all existing records in the export, not only records that changed recently. Export sync must be turned on for the object. If it's off, no fields are exported no matter what their rules are. See [I've mapped fields to Salesforce but the data isn't syncing — why?](#ive-mapped-fields-to-salesforce-but-the-data-isnt-syncing--why) above.
+
+To send a record before the next scheduled export, see [How can I export records to Salesforce immediately without waiting for the 24-hour sync?](#how-can-i-export-records-to-salesforce-immediately-without-waiting-for-the-24-hour-sync)
+
 ### How do I make my Salesforce export conditional on a field match?
 
 The native Audiences export write rules — **Never write**, **Always write**, and **Write if empty** — apply uniformly to all records in the export. There is no per-row condition that prevents a field from being written based on a value comparison, such as "only update this contact if its Salesforce Account ID matches the Account ID on the Audience Company Record."
