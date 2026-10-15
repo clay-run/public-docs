@@ -19,7 +19,7 @@ Only admins can create and manage groups, but all workspace members can view the
 
 To create a user group:
 
-1.  Go to `Settings` → `Team` → `User groups` tab.
+1.  Go to `Settings` → `Teams` → `Groups` tab.
 2.  Click `Create group`.
 3.  In the modal, enter a `Group name`. Names must be unique across your workspace and cannot exceed 50 characters.
 4.  Optionally, use the `Add members` field to search for and select workspace members. You can leave this empty and add members later — groups do not need members to be saved.
@@ -31,13 +31,13 @@ To create a user group:
 
 ### Viewing groups
 
-All workspace members — admins, editors, and viewers — can view the group directory at `Settings` → `Team` → `User groups` tab. You can see each group's name and member count, and click into any group to see its full membership list. Use the search bar to filter groups by name.
+All workspace members — admins, editors, and viewers — can view the group directory at `Settings` → `Teams` → `Groups` tab. You can see each group's name and member count, and click into any group to see its full membership list. Use the search bar to filter groups by name.
 
 You can also view groups from the member perspective by navigating to `Settings` → `Members`. From this view, you can see which groups each member belongs to. Clicking on a group name will take you to that group's detail page.
 
 ### Editing a group
 
-To edit a group's name or members, navigate to `Settings` → `Team` → `User groups` tab and click the group you want to edit. From the group detail page, admins can:
+To edit a group's name or members, navigate to `Settings` → `Teams` → `Groups` tab and click the group you want to edit. From the group detail page, admins can:
 
 -   Update the group name or description.
 -   Add new members by searching for workspace users in the `Add members` field.
@@ -49,7 +49,7 @@ Changes take effect immediately. When you add someone to a group, they automatic
 
 To delete a group:
 
-1.  Navigate to `Settings` → `Team` → `User groups` tab and click the group you want to delete.
+1.  Navigate to `Settings` → `Teams` → `Groups` tab and click the group you want to delete.
 2.  Click `Delete group`.
 3.  Review the confirmation modal to acknowledge that this group will be permanently removed from all resources, revoking access for all members.
 4.  Click `Delete group` to confirm.
@@ -108,4 +108,4 @@ No. Groups are flat lists with no hierarchy or nesting.
 
 **Can I bulk-create groups from a CSV?**
 
-Not currently. Groups must be created individually through `Settings` → `Team` → `User groups` tab.
+Not currently. Groups must be created individually through `Settings` → `Teams` → `Groups` tab.
