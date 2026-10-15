@@ -74,29 +74,14 @@ Clay workspaces with SSO can add users in two ways: automatically through **SCIM
 
 ### SCIM provisioning (automatic user provisioning)
 
-SCIM provisioning is available on **Enterprise plans**. SCIM provisioning lets your identity provider (IdP) automatically add users to your Clay workspace and assign their workspace role. SCIM provisioning is set up separately from SSO: Clay support configures your SSO connection, but a workspace admin sets up SCIM provisioning directly from Clay's workspace settings. Only workspace admins can see and manage the SCIM provisioning section.
+SCIM provisioning is available on **Enterprise plans**. SCIM provisioning lets your identity provider (IdP) automatically add users to your Clay workspace with a mapped workspace role. A workspace admin sets it up from the **SCIM provisioning** section at `Settings` > `Workspace` by clicking `Set up SCIM`, which opens a guided WorkOS setup portal. SCIM provisioning is set up separately from SSO — Clay support configures your SSO connection.
 
-To set up SCIM provisioning:
+When SCIM provisioning is connected, users you assign in your IdP join your Clay workspace as follows — you don't need to invite them first:
 
-1.  In Clay, go to `Settings` > `Workspace`.
-2.  In the **SCIM provisioning** section, click `Set up SCIM`.
-3.  Follow the guided WorkOS setup portal to connect your identity provider's directory.
-4.  Once the directory is connected, the button in the **SCIM provisioning** section changes to `Manage`, which you can use to update the connection later.
+-   **Users who don't have a Clay account yet:** Clay creates a pending invite for that email address. The user joins your workspace as soon as they sign up for Clay with that email. This also applies to existing Clay accounts whose email address hasn't been verified yet.
+-   **Users who already have a verified Clay account:** Clay adds the user to your workspace directly with their mapped role.
 
-How SCIM provisioning adds users to your Clay workspace:
-
--   **New users:** When you assign a user in your IdP who doesn't have a Clay account, Clay creates a pending invite for that email address. The user joins your workspace as soon as they sign up for Clay with that email — they don't need to accept a separate invite first. This also applies to existing Clay accounts whose email address hasn't been verified yet.
--   **Existing users:** If the email address already belongs to a verified Clay account, the user is added to your workspace directly with their mapped role.
-
-SCIM provisioning maps the role you assign in your IdP to a Clay workspace role as follows:
-
-| Role assigned in your IdP | Clay workspace role |
-| --- | --- |
-| `admin` | Admin |
-| `member` | Editor |
-| `viewer` | Viewer |
-
-Users who are assigned no role, or a role other than `admin`, `member`, or `viewer`, are added to your Clay workspace as **Editor**. SCIM provisioning syncs workspace membership and workspace roles only — it does not sync Clay user groups (see [User groups](./user-groups.md)).
+SCIM provisioning maps roles from your IdP to Clay workspace roles: `admin` becomes **Admin**, `member` becomes **Editor**, and `viewer` becomes **Viewer**. Users with no role, or any other role, are added as **Editor**.
 
 ### Adding users without SCIM provisioning (invite first)
 
