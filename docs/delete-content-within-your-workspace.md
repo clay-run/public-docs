@@ -58,6 +58,8 @@ When you restore a table, all of your row data and column configurations are ful
 
 When you restore a workbook, all of its tables are automatically restored as well.
 
+**Note:** Sandbox copies of a table don't go to Trash. When you exit [sandbox mode](sandbox-mode.md#can-i-recover-a-sandbox-after-exiting-sandbox-mode) without publishing, the sandbox and its unpublished changes are discarded and can't be restored from Trash.
+
 ## Recover deleted rows
 
 If you accidentally delete a row within a table, a brief confirmation alert appears immediately after deletion — click **Undo** in that alert to restore the row before it disappears.
