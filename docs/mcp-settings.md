@@ -51,6 +51,7 @@ The `MCP users` table lists all workspace members, including those who haven't y
 -   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, Glean, or a combination). Members who haven't connected yet show no platform icons.
 -   **Credit limit** — the rep's current limit, either the workspace default or a per-user override
 -   **Credits used** — live usage tracked against the rep's limit
+-   **Budget** — the [credit budget](https://university.clay.com/docs/credit-budgets) the rep's MCP spend draws from, if one is assigned. This column appears only in workspaces with Credit Budgets, which is currently in beta and automatically available to all Enterprise plan workspaces.
 -   **Salesforce ID** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
 
 Use the search bar at the top of the table to find a specific rep by name or email.
@@ -180,6 +181,28 @@ To remove the error, a workspace admin raises the user's MCP credit limit:
 3.  Click the pencil icon next to their `Credit limit` and enter a higher amount. The user can run enrichments again on their next request in Claude or ChatGPT.
 
 The **Default credit limit** card at the top of the `MCP` page (1,000 credits unless an admin has changed it) sets the limit applied to new MCP users when they first connect an AI tool. If you don't change the limit, MCP credit spend resets on the 1st of each month at midnight UTC. If you aren't a workspace admin, you won't see the `MCP` page — ask your workspace admin to raise your limit.
+
+### Why is Clay in Claude or ChatGPT blocked by my monthly user credit limit when my budget still has credits?
+
+A rep's MCP credit limit and their assigned credit budget are two separate checks. Every enrichment or Function run through Claude, ChatGPT, or Glean must pass all three of the following:
+
+-   **Workspace credits** — your workspace has credits available.
+-   **MCP credit limit** — the rep's `Credits used` is below their `Credit limit` in the `MCP users` table.
+-   **Budget** (workspaces with Credit Budgets only) — the budget shown in the rep's `Budget` column has credits remaining.
+
+If the rep's MCP credit limit is used up, runs are blocked even when the workspace and the assigned budget (for example, an "SDRs" budget) still have credits. The AI tool shows `You've hit your monthly user credit limit. Please contact your workspace admin to increase it.` Asking Claude or ChatGPT to "use the budget credits instead" doesn't help: Clay decides which limits apply based on the signed-in Clay user, and the AI tool can't choose a different credit pool. Disconnecting and reconnecting the connector doesn't reset the limit either.
+
+**The new credit limit must be higher than `Credits used`.** A rep is blocked whenever `Credits used` equals the `Credit limit`. For example, a rep showing `2,500 / 2,500` with a 2,500-credit limit is still blocked. Raising the limit to 3,000 gives that rep 500 more credits for the month.
+
+To unblock the rep, a workspace admin does one of the following:
+
+1.  From the Clay homepage, click `MCP` under **Orchestration** in the left sidebar.
+2.  In the `MCP users` table, search for the rep by name or email.
+3.  Either click the pencil icon next to their `Credit limit` and enter an amount higher than their current `Credits used`, or click the reset icon next to `Credits used` to reset that rep's credit spend to zero.
+
+The change applies on the rep's next request — no need to reconnect Claude or ChatGPT. Ask the AI tool to rerun the credits check and continue. If the admin makes no change, the rep's MCP credit spend resets automatically on the 1st of the month at midnight UTC.
+
+If the AI tool instead reports `The credit budget assigned to you is exhausted`, the rep's MCP credit limit is fine and the assigned budget is out of credits. An admin can increase or reset the budget from `Settings` → `Budgets` (see [Credit budgets](https://university.clay.com/docs/credit-budgets)).
 
 ### Why does a rep's credit usage appear higher than the number of prompts they sent?
 
