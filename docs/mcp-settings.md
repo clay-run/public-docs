@@ -43,6 +43,21 @@ There are two levels of control:
 -   **Default credit limit** — applies automatically to all new MCP users when they first connect ChatGPT, Claude, or Glean. Click `Set default limit` to configure. Reps without an individual override inherit this limit.
 -   **Per-user override** — find the rep in the user table and click the pencil icon next to their `Credit limit` to set an individual amount. Their current usage tracks against this limit in real time (e.g., `0 / 1,000`). Reps showing `No limit` have no cap applied.
 
+## Assigning an MCP user to a credit budget
+
+Assigning MCP users to a credit budget is available on Enterprise plans, where [credit budgets](https://university.clay.com/docs/credit-budgets) are turned on automatically. The `Budget` column only appears in the `MCP users` table when your workspace has credit budgets.
+
+Workspace admins can route a team member's Clay MCP spend — the credits they use through Claude, ChatGPT, or other AI tools connected to Clay — through a credit budget. Only that member's MCP spend counts against the budget. Credits the same member spends in Clay tables, workbooks, or workflows count against whatever budget those resources are assigned to.
+
+1.  From the Clay homepage, click `MCP` under **Orchestration** in the left sidebar.
+2.  In the `MCP users` table, find the team member and open the dropdown in their `Budget` column.
+3.  Select a budget. The dropdown lists `No budget` plus the budgets that team member has access to.
+4.  In the `Change budget` dialog that appears, click `Change budget` to confirm. You'll see a `Budget updated` message.
+
+To stop routing a member's MCP spend through a budget, select `No budget` in the `Budget` column, then click `Remove budget` in the dialog that appears.
+
+To see which members route MCP spend through a budget, go to `Settings` → `Budgets`, open the menu on the budget's row, click `View resources`, and open the `MCP users` tab.
+
 ## Monitoring usage
 
 The `MCP users` table lists all workspace members, including those who haven't yet connected Clay to an external platform. Connected members appear at the top; remaining workspace members appear below, sorted by name. Admins can pre-assign credit limits and Salesforce IDs for any member before the member connects an MCP client.
@@ -51,6 +66,7 @@ The `MCP users` table lists all workspace members, including those who haven't y
 -   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, Glean, or a combination). Members who haven't connected yet show no platform icons.
 -   **Credit limit** — the rep's current limit, either the workspace default or a per-user override
 -   **Credits used** — live usage tracked against the rep's limit
+-   **Budget** — Enterprise plans only: the credit budget the member's MCP spend routes through, or `No budget` (see [Assigning an MCP user to a credit budget](#assigning-an-mcp-user-to-a-credit-budget))
 -   **Salesforce ID** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
 
 Use the search bar at the top of the table to find a specific rep by name or email.
@@ -199,3 +215,9 @@ MCP usage appears in the main credit usage dashboard at `Settings → Credit Usa
 ### What's the difference between the default credit limit and a per-user override?
 
 The default limit is a workspace-wide setting that applies automatically to any new rep who connects ChatGPT, Claude, or Glean. A per-user override replaces the default for a specific rep. Reps showing `No limit` have neither a default nor an override applied.
+
+### Can I control reps' credit spend in Claude separately from their other Clay usage?
+
+Yes, for credits spent through the Clay connector. A rep's MCP credit limit (and, on Enterprise plans, their MCP budget) applies only to Clay credits spent through Claude, ChatGPT, or other AI tools connected to Clay. It doesn't cap or reduce what the same rep can spend in Clay tables, workbooks, or workflows. Clay's MCP controls only cover usage that goes through the Clay connector — they don't apply to other connectors or data-provider apps installed directly in Claude or ChatGPT.
+
+To set these controls, see [Setting credit limits](#setting-credit-limits) and [Assigning an MCP user to a credit budget](#assigning-an-mcp-user-to-a-credit-budget).
