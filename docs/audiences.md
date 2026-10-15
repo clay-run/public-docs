@@ -746,8 +746,8 @@ The **`Create new Salesforce records`** toggle is in your Salesforce source sett
 
 Export sync behavior:
 
--   **Export frequency:** Once every 24 hours. Clay assigns each workspace a stable export time automatically — the schedule is not user-configurable.
--   **First export:** After you enable Export Sync, the first export does not run immediately — it fires at your workspace's next scheduled export time, which may be up to 24 hours away. The Exports panel shows **Not set up** until the first export completes successfully.
+-   **Export frequency:** Once every 24 hours. Clay automatically assigns each connected Salesforce source its own daily export time, which stays the same every day. Export times differ between sources and are spread across the day, so there is no single export time shared by all workspaces. The scheduled export time is not shown in the Clay UI and is not user-configurable — see [When does my scheduled Salesforce export run? Can I see the export time?](#when-does-my-scheduled-salesforce-export-run-can-i-see-the-export-time)
+-   **First export:** After you enable Export Sync, the first export does not run immediately — it fires at your Salesforce source's next scheduled export time, which may be up to 24 hours away. The Exports panel shows **Not set up** until the first export completes successfully.
 -   **Export batch size:** ~10,000 records per batch.
 -   **Subsequent syncs:** Incremental — only changed records are processed.
 
@@ -968,6 +968,14 @@ There is no self-serve option to trigger a full sync manually. If you need an ex
 
 **Workaround for specific records:** The incremental sync (every 15 minutes for Enterprise, once daily for Growth) picks up any Salesforce record whose `SystemModstamp` has been updated. To re-sync specific records sooner, make a small edit to those records in Salesforce — for example, add and remove a space in any field. This updates `SystemModstamp` and Clay will pick up those records on the next incremental sync, without waiting for the weekly full sync.
 
+### When does my scheduled Salesforce export run? Can I see the export time?
+
+Audiences exports to Salesforce (the scheduled export that applies your **Always write** and **Write if empty** export rules) run **once every 24 hours**. Clay automatically assigns each connected Salesforce source its own export time, and that time stays the same every day. Export times differ between sources and are spread across the day, so there is no single export time that applies to every workspace — if your workspace has more than one connected Salesforce source, each source can export at a different time of day.
+
+The Clay UI does not show the scheduled export time, and you can't change it. If you need to know when the scheduled Salesforce export runs for your source, contact Clay support.
+
+To push records to Salesforce before the next scheduled export, see [How can I export records to Salesforce immediately without waiting for the 24-hour sync?](#how-can-i-export-records-to-salesforce-immediately-without-waiting-for-the-24-hour-sync)
+
 ### What does the API usage percentage on my Salesforce settings page mean? Is that all Clay's usage?
 
 No. The **API usage** card on your Salesforce source settings page in Audiences shows your Salesforce org's **total** API usage. That total covers every integration, connected app, and user in your Salesforce org, not just Clay. If the card shows, for example, 14%, that's your whole org's usage. It doesn't mean Clay made 14% of your org's calls.
@@ -1146,7 +1154,7 @@ To enable it (admin-only):
 3.  Under **Export [Object] data**, toggle on **Export sync**.
 4.  Click **Save and review** → **Confirm**.
 
-Once enabled, the first export does not run immediately — it fires at your workspace's next scheduled export time, which may be up to 24 hours away. See [Writing back to your CRM](#writing-back-to-your-crm) for the full schedule and behavior details.
+Once enabled, the first export does not run immediately — it fires at your Salesforce source's next scheduled export time, which may be up to 24 hours away. See [Writing back to your CRM](#writing-back-to-your-crm) for the full schedule and behavior details.
 
 If Export sync is enabled but **specific fields** are still not updating in Salesforce — and you see no export errors — check each field's **write rule**. A field set to **Write if empty** only sends its value to Salesforce when the corresponding Salesforce field is blank. If that Salesforce field already contains a value, Clay skips the update silently without recording an error. Your data may look correct in Audiences while those fields remain unchanged in Salesforce.
 
@@ -1307,7 +1315,7 @@ Clay Audiences syncs in two separate directions on different schedules:
 
 The 15-minute (or daily) sync applies to the **import direction only** — it reflects Salesforce changes in your Audience. Enriched data written in Clay flows back to Salesforce on the 24-hour export cycle.
 
-After you enable Export sync, the first export does not run immediately — it fires at your workspace's next scheduled export time, which may be up to 24 hours away. Subsequent exports run on the same 24-hour schedule. See [Writing back to your CRM](#writing-back-to-your-crm) for the full export schedule and behavior.
+After you enable Export sync, the first export does not run immediately — it fires at your Salesforce source's next scheduled export time, which may be up to 24 hours away. Subsequent exports run on the same 24-hour schedule. See [Writing back to your CRM](#writing-back-to-your-crm) for the full export schedule and behavior.
 
 To push enriched data to Salesforce before the next scheduled export, see [How can I export records to Salesforce immediately without waiting for the 24-hour sync?](#how-can-i-export-records-to-salesforce-immediately-without-waiting-for-the-24-hour-sync)
 
