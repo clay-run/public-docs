@@ -1,6 +1,6 @@
 ---
 title: Lookup Rows
-description: Bring in data into your table from other tables.
+description: Bring in data into your table from other tables, and replicate table lookups in Clay Workflows.
 last_synced: 2026-04-26T01:40:17.543Z
 ---
 
@@ -306,3 +306,20 @@ When you turn on [sandbox mode](sandbox-mode.md) for a table, Clay creates a sep
 **If `Review changes` is greyed out:** Publishing requires at least one column change (adding, renaming, or reconfiguring a column). If you only edited cell values in the sandbox, those edits can't be published on their own. Click **Exit Sandbox** — this discards your sandbox changes — then make the same edits directly in the live table and force run the lookup column.
 
 Don't click **Exit Sandbox** before publishing if you want to keep your sandbox changes — exiting discards everything that hasn't been published.
+
+### **Replicating lookup columns in Clay Workflows**
+
+Clay Workflows (currently in beta) supports the same lookups you use in Clay tables. If you're rebuilding a table that uses Lookup Rows columns as a workflow, add each lookup as an Enrich node instead of a column:
+
+1.  In the workflow editor, add an **Enrich** node.
+2.  In the Enrich node's search bar, type `lookup`.
+3.  Select the lookup action you need:
+    -   `Look up single row in other table` or `Look up multiple rows in other table` (By Clay) — the same lookups as Lookup Rows columns in a table.
+    -   `Look up in Audiences` — finds a record stored in your Clay Audiences. Requires Audiences on your plan; workspaces without it see an upgrade prompt instead.
+    -   CRM lookups, such as Salesforce `Look up record`, which look up the record directly in your CRM.
+
+**Choosing where to look up records in a workflow:** A lookup node reads from wherever the data lives. If the records you used to look up in a Clay table already exist in Audiences or your CRM, look them up there directly with `Look up in Audiences` or your CRM's lookup action. When the records exist in Audiences, `Look up in Audiences` is the recommended option because it keeps your data and your workflow orchestration in one place. `Look up in Audiences` only finds values stored on Audience records — if a helper column in your table produced a value you match on, store that value in an Audiences field so the lookup can find it.
+
+**Replacing formula columns in a workflow:** Formula and normalization logic between lookups and enrichments goes in a **Code** node (searching `formula` in the node picker also finds it). Code nodes run Python (standard library only, no third-party packages) on the inputs passed from upstream nodes — for example, to clean up enrichment results or pick one item out of a comma-separated value before the next step.
+
+**Converting a whole table with Import a workbook:** When you create a new workflow, the start screen shows an **Import a workbook** option. Select an existing workbook, and Sculptor (Clay's AI assistant) builds a workflow based on that workbook's schema. Sculptor decides how to represent each column, so lookup columns aren't guaranteed to become lookup nodes one-to-one — review each node in the generated workflow and adjust it before you publish.
