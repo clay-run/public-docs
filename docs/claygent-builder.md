@@ -363,6 +363,17 @@ When Sculptor rewrites your prompt, it saves the new prompt text and shows a "Pr
 
 For Clay parallel models (Argon, Neon, Helium, and similar), web search is always on and cannot be toggled off — it's a required part of how these models work. The greyed-out toggle is expected; web search is active. If you want to turn web search off, switch to a non-parallel model in the model selector.
 
+### Which websites won't Clay parallel models use as sources?
+
+Clay parallel models (Argon, Neon, Helium, and similar) skip a fixed list of websites during Claygent web research. These are sites that carry high legal risk to scrape. Claygent answers from these models won't cite or draw on these domains or any of their subdomains:
+
+-   zoominfo.com
+-   costar.com, loopnet.com, apartments.com, homes.com, land.com
+-   bureauxlocaux.com, businessimmo.com, thomas-daily.de, onthemarket.com, domain.com.au, bizbuysell.com
+-   g2.com, capterra.com, getapp.com, softwareadvice.com
+
+This exclusion list applies to every workspace and can't be turned off or edited. If your prompt asks a Clay parallel model for information that only appears on one of these sites (for example, a product's review rating on one of the listed review sites), the Claygent researches other public sources instead.
+
 ### Can I connect my own self-hosted MCP server to give Claygent access to my first-party data?
 
 Yes. Custom MCP server connections accept any MCP-compatible endpoint — including servers you host yourself. To connect your own self-hosted MCP server, open your Claygent's **Configuration** panel, scroll to the **Tools** section, click **Add custom MCP server**, and enter your server's URL and API key (if required). Claygent can then call your server as a tool to read from your organization's proprietary systems and data.
