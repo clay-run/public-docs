@@ -134,6 +134,13 @@ In both cases, the record is not removed from Audiences — it persists with **D
 
 **Salesforce activities:** To import Salesforce Tasks and Events associated with your Accounts, go to your Salesforce source settings, select `Accounts`, and enable the **Also import activities (tasks and events) associated with these accounts** toggle. Accounts are associated automatically in the background. The Activity tab on each record's detail view then shows Salesforce Tasks and Events alongside other connected activity sources (for example, Gong calls or email sequence activity). Each entry displays the activity type (Task or Event), title, and timestamp. This toggle is only available for Accounts — there is no equivalent option for Contacts, Leads, or the People object. Even if your Salesforce CRM has Tasks or Events associated with contacts or leads, those activities will not appear in the People Activity tab in Audiences.
 
+**Which Salesforce Task and Event fields Audiences imports:** When **Import activities** is enabled on a Salesforce Accounts import, Clay Audiences imports Salesforce Tasks and Events with a fixed set of fields. You can't add or change these fields — there is no field mapping for Salesforce Tasks or Events in Audiences.
+
+-   **Tasks:** Subject, Type, Subtype (`TaskSubtype`), Status, and Priority, plus Title, Created at, and Updated at.
+-   **Events:** Subject, Type, Subtype (`EventSubtype`), and Location, plus Title, Created at, and Updated at.
+
+Other Salesforce Task and Event fields — including the Task `Description` field that holds the email body of a logged email — are not shown in Audiences. For example, a logged email appears in the account's Activity tab with its subject as the title, but not the text of the email. Adding the field to your Accounts field mapping won't bring it in either: Account field mappings only write company fields, not activity fields. To read the full content of a Task, such as the body of an email, open the Task in Salesforce.
+
 #### Importing a record subset using SOQL
 
 **Available on Enterprise plans.** If you don't need to import your entire Salesforce org — or if privacy, compliance, or data-ownership requirements make an all-or-nothing CRM import a non-starter — you can use a SOQL query to bring only a specific subset of records into Audiences.
