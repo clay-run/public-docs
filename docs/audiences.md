@@ -355,7 +355,7 @@ When importing from Salesforce or Snowflake, you can configure **Import record m
 To configure:
 
 1. In your import settings, find **Import record matching (optional)** and click **Set up** — or **Edit** if matching is already configured. The **Import record matching for Companies** (or **Import record matching for People**) modal opens.
-2. Under `When`, choose an **alias field** — typically `Domain` for Companies or `Email` for People (additional options include LinkedIn URL, phone number, and others). For Companies, the options are **External record ID**, **Domain**, **LinkedIn URL**, **Twitter handle**, and **Exact company name**.
+2. Under `When`, choose an **alias field** — typically `Domain` for Companies or `Email` for People (additional options include a professional network URL, phone number, and others). For Companies, the options include **External record ID** (the Salesforce record ID), **Domain**, **Exact company name**, and social profile fields.
 3. Under `In`, map the alias field to the corresponding field in each connected source.
 4. When a new record arrives, Audiences checks whether the alias value already exists. If it does, the new data is merged with the existing record instead of creating a duplicate.
 
