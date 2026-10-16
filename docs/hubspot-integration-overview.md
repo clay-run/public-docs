@@ -300,6 +300,35 @@ If a property exists in HubSpot but doesn't get updated when you run the Update 
 
 **A different HubSpot account is selected.** If multiple HubSpot accounts are connected to your workspace (for example, if teammates each added their own HubSpot connection), the Update Object action may be authenticating against a different instance than the one you intend to update. Open the column settings and confirm the HubSpot account shown is the correct one. You can verify by running a **Lookup object** action on the same record — if the property appears updated there, the write reached the right account.
 
+### How do I stop Clay from overwriting a HubSpot property that already has a value?
+
+If HubSpot already fills in a property on its own — for example, a contact's job title added by HubSpot's built-in enrichment — you can set up Clay to write its enriched value to HubSpot only when that HubSpot property is still empty. This setup uses three columns: a **Lookup object** column that checks the current HubSpot value, a Formula column that stays blank whenever HubSpot already has a value, and your **Update object** column with **Ignore blank values** enabled.
+
+**Step 1 — check the current HubSpot value with Lookup object**
+
+1.  Add a **HubSpot → Lookup object** column before your **Update object** column, using the same HubSpot account.
+2.  Filter by the same identifier your Update object column uses to find the record (for contacts, usually **Email**).
+3.  *(Optional)* If HubSpot fills in the property shortly after the record is created, give it time to finish first: open the Lookup object column's **Run settings**, set **Delay run** to **Run after delay**, and enter the number of seconds to wait — up to 600 seconds (10 minutes). The delay starts after the column's run conditions are met. Setting a delay doesn't cost extra credits — the lookup is charged normally when it actually runs.
+
+**Step 2 — add a Formula column that is blank when HubSpot already has a value**
+
+Add a Formula column that returns your Clay-enriched value only when the HubSpot property is empty. For a job title, the formula looks like this:
+
+`{{Lookup object}}?.jobtitle ? "" : {{Enriched title}}`
+
+Type `/` to open the column picker and insert the `jobtitle` field from your Lookup object column in place of `{{Lookup object}}?.jobtitle`, and your enriched title column in place of `{{Enriched title}}`. When HubSpot's job title is empty, the Lookup object result has no value for it — with **Remove blank values from results** on (the default), empty properties may be left out of the result entirely — so the formula returns the Clay-enriched title. When HubSpot already has a job title, the formula returns a blank value.
+
+**Step 3 — map the Formula column in Update object**
+
+In your **Update object** column, map the HubSpot property (for example, Job Title) to the Formula column from step 2 instead of the raw enrichment column, and leave **Ignore blank values** enabled (it's on by default). When the Formula column is blank, Clay doesn't send that property to HubSpot, so the existing HubSpot value stays unchanged. Any other non-blank properties mapped in the same Update object column still update normally.
+
+**If the HubSpot property shows the same value twice** (for example, a job title of "Director of Ops Director of Ops"), check whether the column you map to that property is a formula that joins two values together — such as the HubSpot title and the Clay-enriched title with a space between them. Replace it with the formula from step 2 so only one value is ever sent.
+
+**Limitations:**
+
+-   The delay in step 1 is capped at 600 seconds (10 minutes). If HubSpot fills in the property after the Lookup object column has already run, Clay sees an empty value for that row and writes the Clay-enriched value.
+-   If every property mapped in the Update object column is blank for a row, the column shows a "No properties found to update" error — see [Why does my HubSpot Update Object show "No properties found to update"?](#why-does-my-hubspot-update-object-show-no-properties-found-to-update-when-ignore-blank-values-is-enabled) for how to skip those rows with a run condition.
+
 ### Why does my HubSpot Update Object show "Required inputs missing" after I deleted a column?
 
 If the column that was previously mapped to the **HubSpot Object ID** field has been deleted from the table, the field retains a stale reference to that removed column. The action sees this as a missing required input and will not run.
