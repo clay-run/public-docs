@@ -258,10 +258,14 @@ Clay syncs data from Google BigQuery on the following schedules:
 
 1.  Click `Add data` → `Find people` or `Find companies` to open a search.
 2.  Narrow your search using parameters like `Job title` and `Experience`.
-3.  Click `Continue` → `Save to People/Companies`.
-    -   Note: This sends your search results to a draft version—it won't combine them with your existing Audience data.
-    -   If the draft shows a banner that says **"X records from this search are already in the All People list,"** those records are already excluded from the merge. Clicking **All people** in step 4 will only add net-new contacts — the existing records are not duplicated.
-4.  When your search data looks good, click `All people` to merge.
+3.  Click `Continue` → `Save to People` (or `Save to Companies`).
+    -   Note: This saves your search results to a **draft segment** first — it won't combine them with your existing Audience data. Records in the draft are not added to **All People** or **All Companies**, and don't count toward your audience's total records, until you turn on auto-save in step 4.
+    -   If the draft shows a banner that says **"X records from this search are already in the All People list,"** those records are already excluded from the merge. Turning on auto-save in step 4 will only add net-new contacts — the existing records are not duplicated.
+4.  When your search data looks good, click **Turn on auto-save** in the header of the draft segment, then click **Turn on** in the **Auto-save records to All People?** (or **All Companies?**) dialog. If you previously saved a filter to the draft segment, the button in the dialog reads **Continue to auto-save** instead. Turning on auto-save does two things:
+    -   It saves every record currently in the draft to **All People** or **All Companies**.
+    -   It keeps adding new matches from that search to your audience automatically.
+
+    While records are being saved, the draft banner shows **Saving records...** and the record count updates as records are committed. Once auto-save is on, the header button reads **Turn off auto-save**. To get back to a draft later, see [I saved a search to Audiences but can't find the records — where are they?](#i-saved-a-search-to-audiences-but-cant-find-the-records--where-are-they) in the FAQs below.
 5.  Create a named segment and use an [enrichment workflow](#adding-enrichments) to refine your data.
 
 **Note:** When you save a search to your Audience, only basic identity fields are carried over as columns — additional data fields visible in the search preview (such as Company Size or Annual Revenue for companies, or Job Title for people) are not automatically added to your Audience. To add one of these fields, create it as a custom Audience field first: see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
@@ -376,7 +380,7 @@ When setting up a Snowflake or BigQuery import, you also define a `Unique Identi
 **Other deduplication behaviors**
 
 -   **Cross-source deduplication** — merge the same person from multiple sources.
--   **Whitespace detection** — when importing from a Find People or Find Companies search, or saving results from a Clay table to your Audience, records that already exist in All People or All Companies are automatically excluded from the merge. The draft shows a banner with the count of excluded records, and clicking **All people** or **All companies** will only add net-new records. For Companies, exclusion matches on Clay's internal company identifier (CPJ ID). Existing Audience records need entity resolution to have completed — records missing a recognized domain or professional network URL may not yet have been assigned a CPJ ID, which can cause them to slip through as apparent duplicates. Ensuring your Companies audience records have accurate domains and professional network URLs helps entity resolution complete and improves deduplication coverage.
+-   **Whitespace detection** — when importing from a Find People or Find Companies search, or saving results from a Clay table to your Audience, records that already exist in All People or All Companies are automatically excluded from the merge. The draft shows a banner with the count of excluded records, and saving the draft to All People or All Companies will only add net-new records. For Companies, exclusion matches on Clay's internal company identifier (CPJ ID). Existing Audience records need entity resolution to have completed — records missing a recognized domain or professional network URL may not yet have been assigned a CPJ ID, which can cause them to slip through as apparent duplicates. Ensuring your Companies audience records have accurate domains and professional network URLs helps entity resolution complete and improves deduplication coverage.
 -   **Country-code domain variants** — Clay's entity matching normalizes domains by stripping subdomains and `www` prefixes, but does not automatically merge country-code TLD variants. A company at `swarovski.co.uk` and a company at `swarovski.com` are treated as separate entities by default — this reflects how many enterprises maintain distinct regional accounts. If a regional variant appears as net new in your search results and you want to exclude it, use the **Exclude companies** filter in your Find Companies source. See [Find Companies](find-companies.md) for how to set up exclusions.
 -   **Secondary domains from your CRM** — Clay entity matching uses only the primary domain field mapped from your CRM source. If your CRM stores additional domains for a company (for example, HubSpot's secondary domain fields), those alternate domains are not imported into the Audiences company record and are not used for entity matching. A Find Companies search result for a secondary domain may appear as net new even if the same company exists in your audience under a different primary domain. To exclude known secondary domains from appearing as net new, add them to the **Exclude companies** filter in your Find Companies source.
 
@@ -1048,6 +1052,22 @@ To work with only the narrower set, open the search, tighten your filters, click
 If you saved a Find People or Find Companies search to Audiences and the count continues to grow — even though you haven't changed the search criteria — live search is likely enabled. Live search re-runs the search **once per day** and adds any new matching contacts or companies. This runs independently of any signal cadence you have set on the audience: a monthly signal and a daily live search are entirely separate schedules. Turning off or modifying the signal does not stop the live search from running.
 
 To stop the audience from growing, turn live search off: click the **⋮** menu next to the search source in the audience sidebar, or go to **Settings → Sources / Destinations**, click **⋮** next to the source row, and select **Turn live search off**. Contacts already imported remain in your audience — only new daily additions stop. You can always turn live search back on later if you want to resume continuous sourcing.
+
+### I saved a search to Audiences but can't find the records — where are they?
+
+When you save a Find People or Find Companies search to Audiences (`Continue` → `Save to People` or `Save to Companies`), Clay saves the results to a **draft segment** first. Records in a draft segment are not added to **All People** or **All Companies** until you turn on auto-save, so your People or Companies audience can show **0** total records or **No records found** even though the search ran.
+
+To find the draft and save its records to your audience:
+
+1.  In Audiences, open **All Companies** (for a company search) or **All People** (for a people search).
+2.  Click the **Sources** tab.
+3.  Click the **⋮** menu next to the search source and select **View draft segment**.
+4.  In the header of the draft segment, click **Turn on auto-save**.
+5.  In the **Auto-save records to All Companies?** (or **All People?**) dialog, click **Turn on**. If you previously saved a filter to the draft segment, the button reads **Continue to auto-save** instead.
+
+Turning on auto-save saves every record currently in the draft to All Companies or All People, and keeps adding new matches from that search automatically. While the save runs, the draft banner shows **Saving records...** and the record count updates as records are committed. Once auto-save is on, the header button reads **Turn off auto-save**.
+
+**To create a segment from the saved records:** the auto-save dialog includes an **Also create a segment** toggle, which is on by default. You can also open All Companies or All People, add filters, and click **Create segment**. See [Creating an audience](#creating-an-audience).
 
 ### Can I sync an audience to multiple ad platforms?
 
