@@ -176,7 +176,7 @@ The built-in ZoomInfo integration is the easiest way to use ZoomInfo inside Clay
 -   **Enrich Contact** — Pull contact details using a name, email address, or company name
 -   **Enrich Company** — Get firmographic data like revenue, employee count, and competitors
 -   **Search contacts** — Find contacts using filters like job title, department, or country
--   **Enrich contact(s) by ID** — Bulk enrich up to 25 contacts at once using their ZoomInfo contact IDs
+-   **Enrich contact(s) by ID** — Enrich up to 25 contacts at once using their ZoomInfo contact IDs
 
 These actions handle authentication, rate limiting, and error handling automatically. Each run costs 1 Clay credit and draws on your connected ZoomInfo account. For most enrichment needs — contact data, company data, and prospecting searches — the built-in integration is the quickest path.
 

@@ -84,8 +84,8 @@ When your 14-day trial ends, your workspace automatically moves to the Free plan
 -   **Best for:** Teams enriching 10,000+ records per month
 -   **Actions:** 100,000+ per month (custom)
 -   **Data credits:** 100,000+ per month (custom)
--   **Table limit:** 50,000 rows per standard table (this limit applies by default and is not automatically removed on Enterprise); use [bulk enrichment](bulk-enrichment.md) to process larger datasets — rows are enriched in rolling batches and sent to your destination with no cumulative row cap
--   **Benefits:** Volume discounts on data credits at higher tiers, dedicated Growth Strategist, managed onboarding, data warehouse integrations, bulk enrichment, SSO, RBAC
+-   **Table limit:** 50,000 rows per standard table (this limit applies by default and is not automatically removed on Enterprise); use [Workflows](https://university.clay.com/docs/workflows) to process larger datasets
+-   **Benefits:** Volume discounts on data credits at higher tiers, dedicated Growth Strategist, managed onboarding, data warehouse integrations, SSO, RBAC
 
 ### Downgrade your plan
 
@@ -169,7 +169,7 @@ You can track both actions and data credits usage in the `Usage Dashboard`, whic
 
 **Monthly plans:** When your plan refreshes, unused data credits will roll over and accumulate. The maximum accumulation is capped at 2× your plan's monthly credit limit — and this cap includes the newly added renewal credits. For example, if your plan includes 50,000 credits per month, your maximum balance is 100,000. If you already have 82,000 credits when your plan renews, you will end up with 100,000 credits, not 132,000.
 
-**Annual plans:** On annual plans, your full year's Data Credits are deposited into your account immediately at purchase — they are not distributed in monthly installments. You can run a bulk enrichment right away without waiting for credits to accumulate. At a standard eligible renewal on the same or a higher-tier plan, unused credits carry over up to a cap of 15% of the annual credit allotment, in addition to the new grant. This is a cap based on the allotment, not 15% of the unused balance. Enterprise and other custom contracts can have different rollover terms; check your contract and renewal details.
+**Annual plans:** On annual plans, your full year's Data Credits are deposited into your account immediately at purchase — they are not distributed in monthly installments. You can start enriching records right away without waiting for credits to accumulate. At a standard eligible renewal on the same or a higher-tier plan, unused credits carry over up to a cap of 15% of the annual credit allotment, in addition to the new grant. This is a cap based on the allotment, not 15% of the unused balance. Enterprise and other custom contracts can have different rollover terms; check your contract and renewal details.
 
 **Confirm the billing interval:** These rules apply to both current and legacy paid plans. A plan name such as Pro or Growth does not tell you whether billing is monthly or annual. Check your workspace billing details before using a rollover example.
 

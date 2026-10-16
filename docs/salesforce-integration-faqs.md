@@ -439,7 +439,7 @@ The most common cause is that the source reached the 50,000 total records proces
 
 **Options to continue importing records:**
 
-- **Audiences with bulk enrichment (recommended for ongoing syncs).** Import your Salesforce records into a Clay Audience and run bulk enrichment on a schedule. Audiences are not subject to the 50,000-record source limit. For details, see [Audiences](audiences.md).
+- **Audiences with Workflows (for ongoing processing).** Import your Salesforce records into a Clay Audience and connect a [workflow](https://university.clay.com/docs/workflows) to the segment. Audiences are not subject to the 50,000-record source limit. For details, see [Audiences](audiences.md).
 - **Webhook source.** If you can configure Salesforce to push record changes to Clay via a webhook — for example, using a Salesforce Flow that triggers a callout when a record is saved — webhook sources do not accumulate toward the 50,000-record limit when auto-delete is enabled. This works well for event-driven workflows where Salesforce fires updates as they happen.
 - **Create a new source.** Deleting the existing source and adding a new "Import records from a Salesforce list" source on the same table resets the processed-record counter to zero, giving you a fresh 50,000 records. This is a short-term workaround — the new source will eventually reach the limit again as it processes records.
 

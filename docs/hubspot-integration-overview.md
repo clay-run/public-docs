@@ -251,13 +251,12 @@ For more on additive source behavior across all source types, see [Will rows alr
 
 The **Import objects from HubSpot** source is limited to 50,000 records. Enabling auto-delete does not bypass this limit for HubSpot imports — auto-delete only resets the record count for webhook and send-table-data sources, not for CRM imports.
 
-For large, one-time batch processing (for example, 100k companies), use [Bulk Enrichment](bulk-enrichment.md) instead of a standard table:
+For large, one-time batch processing, use [Workflows](https://university.clay.com/docs/workflows):
 
 1. Export your HubSpot list to CSV from HubSpot.
-2. Create a Bulk Enrichment table (`New` → `Bulk enrichment`) and select **Import from CSV** as the source type.
-3. Configure your enrichment columns and run.
+2. Use the **On CSV upload** trigger in Workflows to process the file. Follow the [Workflows setup guide](https://university.clay.com/docs/workflows) to configure your enrichment steps, test, and run.
 
-Bulk Enrichment handles large datasets without the 50,000-row limit. Note that HubSpot is not yet available as a direct Bulk Enrichment CRM import source (Salesforce and CSV only today); exporting to CSV first is the current workaround.
+For ongoing processing, connect HubSpot as an [Audiences source](audiences.md#importing-from-hubspot) and [connect a workflow to a segment](audiences.md#connecting-a-workflow-to-a-segment).
 
 ### Why does my HubSpot lifecycle stage column show an internal code instead of the display label?
 
