@@ -206,8 +206,8 @@ Clay syncs data from HubSpot automatically on the following schedules:
     -   For People: `email` or `user_id`.
     -   For Companies: `company_id` or `domain`.
 5.  (Optional) Configure a `Timestamp Field` for incremental syncing:
-    -   With a timestamp: syncs run every **15 minutes** and only import new/changed records.
-    -   Without a timestamp: the full query reruns every **12 hours**.
+    -   With a timestamp: syncs run every **15 minutes** on Enterprise plans (once **daily** on Growth plans) and only import new/changed records.
+    -   Without a timestamp: syncs run every **12 hours** on Enterprise plans (once **daily** on Growth plans).
 6.  Map your Snowflake columns to Audience fields.
 7.  Review and click `Confirm` — Clay begins importing immediately.
 8.  Monitor the import. If records don't appear immediately, refresh the page to see the latest count.
@@ -216,8 +216,10 @@ Clay syncs data from HubSpot automatically on the following schedules:
 
 Clay syncs data from Snowflake on the following schedules:
 
--   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured (for example, `updatedAt`), importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
+-   **Incremental sync:** When a `Timestamp Field` is configured (for example, `updatedAt`), runs every **15 minutes** on Enterprise plans or once **daily** on Growth plans, importing only rows whose timestamp changed since the last sync. Without a timestamp field, the sync runs every **12 hours** on Enterprise plans or once **daily** on Growth plans.
 -   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
+
+**Manual sync and "Last import sync":** There is no **Sync now** button for a Snowflake import in Audiences — new and changed rows come in on the schedule above. The **Last import sync** time on the Snowflake source page shows when the most recent successful sync run finished. If you added a new column to your Snowflake field mapping and the data isn't showing up yet, see [I added a new Snowflake column to my mapping — when will the data sync in?](#i-added-a-new-snowflake-column-to-my-mapping--when-will-the-data-sync-in) below.
 
 **Deleted records:** When a record is no longer returned by your Snowflake import query — either because it was physically removed from the underlying Snowflake table, or because you updated your SQL to exclude it — Clay marks the record's Snowflake source association as **Deleted in source** during the next full sync. The audience record itself is **not removed**. To clean up these records, see [How do I archive records that no longer match my Snowflake import query?](#how-do-i-archive-records-that-no-longer-match-my-snowflake-import-query) below.
 
@@ -234,8 +236,8 @@ Clay syncs data from Snowflake on the following schedules:
     -   For People: `email` or `user_id`.
     -   For Companies: `company_id` or `domain`.
 5.  (Optional) Configure a `Timestamp Field` for incremental syncing:
-    -   With a timestamp: syncs run every **15 minutes** and only import new/changed records.
-    -   Without a timestamp: the full query reruns every **12 hours**.
+    -   With a timestamp: syncs run every **15 minutes** on Enterprise plans (once **daily** on Growth plans) and only import new/changed records.
+    -   Without a timestamp: syncs run every **12 hours** on Enterprise plans (once **daily** on Growth plans).
 6.  Map your BigQuery columns to Audience fields.
 7.  Review and click `Confirm` — Clay begins importing immediately.
 
@@ -243,7 +245,7 @@ Clay syncs data from Snowflake on the following schedules:
 
 Clay syncs data from Google BigQuery on the following schedules:
 
--   **Incremental sync:** Runs every **15 minutes** when a `Timestamp Field` is configured, importing only records that are new or changed since the last sync. Without a timestamp field, the full SQL query reruns every **12 hours**.
+-   **Incremental sync:** When a `Timestamp Field` is configured, runs every **15 minutes** on Enterprise plans or once **daily** on Growth plans, importing only rows whose timestamp changed since the last sync. Without a timestamp field, the sync runs every **12 hours** on Enterprise plans or once **daily** on Growth plans.
 -   **Full sync (every 7 days):** Re-reads all records and reconciles deleted records — catching anything the incremental sync may have missed.
 
 ### Importing from people and companies search
@@ -1562,6 +1564,19 @@ Replace `<service-principal-id>` with the application ID of the service principa
 Audiences can only import from tables registered in Unity Catalog — it cannot query tables or views defined in the legacy Hive metastore. To migrate a legacy table, use `CREATE TABLE ... AS SELECT` in Unity Catalog to register a copy, or move the underlying data to a Unity Catalog volume.
 
 If neither of these applies and the import still fails, contact Clay support with the error message shown in the import setup.
+
+### I added a new Snowflake column to my mapping — when will the data sync in?
+
+When you add a new Snowflake column to your Audiences field mapping and click **Save and review** → **Confirm**, Clay re-processes every record already imported from that Snowflake import and fills in the new field from Clay's stored copy of each row. Clay stores every column your SQL query returned at each row's last sync — not only the mapped columns — so this backfill doesn't re-query Snowflake. It runs in the background right after you confirm, so values appear gradually rather than all at once.
+
+A record still shows an empty (or outdated) value for the new field if the value in Snowflake was added or changed after Clay last synced that row — for example, because the column was added to your Snowflake table, or populated, after the row's last sync. Those records get the current value when either:
+
+-   **The row's `Timestamp Field` value changes in Snowflake** — for example, when your pipeline updates a `LAST_UPDATED_AT` column. The row is picked up on the next incremental sync: within **15 minutes** on Enterprise plans, or on the next **daily** sync on Growth plans. If your timestamp column only updates once a day, the new values arrive after that daily update.
+-   **The weekly full sync runs** — every **7 days**, Clay re-reads all rows from your Snowflake query, regardless of the `Timestamp Field`.
+
+**Can I trigger a Snowflake sync manually?** No. There is no **Sync now** button for a Snowflake import in Audiences. To push specific rows through sooner, update their `Timestamp Field` value in Snowflake so the next incremental sync picks them up.
+
+Before building a segment, signal, or bulk enrichment that depends on the new field, check that the field is populated on your records — for example, by filtering the segment on the new field and confirming the record count matches what you expect.
 
 ### How do I archive records that no longer match my Snowflake import query?
 
