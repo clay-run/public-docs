@@ -231,10 +231,10 @@ Once your source is connected, toggle on `Import sync` to keep your Audiences da
 
 When enabled, `Import sync` runs:
 
--   **Incremental imports:** every **15 minutes** when a timestamp field (cursor) is configured — picks up new or changed records; every **12 hours** when no timestamp field is set — reruns the full SQL query
+-   **Incremental imports:** when a timestamp field (cursor) is configured, every **15 minutes** on Enterprise plans or once **daily** on Growth plans — picks up rows whose timestamp changed; when no timestamp field is set, every **12 hours** on Enterprise plans or once **daily** on Growth plans
 -   **A full sync once a week** — refreshes all data and reconciles deleted records
 
-You can also trigger a manual sync at any time from the source settings, which is useful when testing.
+There is no manual **Sync now** button for a Snowflake Audiences import. To get specific rows into Audiences sooner, update their timestamp field value in Snowflake so the next incremental sync picks them up. If you add a new column to your field mapping, see [I added a new Snowflake column to my mapping — when will the data sync in?](audiences.md#i-added-a-new-snowflake-column-to-my-mapping--when-will-the-data-sync-in).
 
 To check sync status or update settings, click `Add data` in your Audiences workspace, find the Snowflake integration, click the `⋯` menu, and select `Settings`.
 
