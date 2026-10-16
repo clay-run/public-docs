@@ -206,6 +206,19 @@ If you're unsure whether you need a higher tier, check your current usage in `Se
 
 Each fully enriched record typically costs 6-20 data credits (including company and person profile, email, phone number, and custom AI enrichments). The more private API keys you use, the fewer data credits you'll spend per record.
 
+### Is there a limit on seats or users per workspace?
+
+No. Every Clay plan, including Free, Launch, Growth, and Enterprise, includes unlimited users per workspace. Clay doesn't charge per seat, so you can invite as many team members to your workspace as you like at no extra per-user cost. Clay plans are priced by Actions and Data Credits, not by seats.
+
+### Which plan do I need to send leads to a CRM that Clay doesn't natively integrate with (such as Copper)?
+
+Clay doesn't have a native integration for every CRM. For example, there is no native Copper CRM integration. To push leads from Clay into a CRM like Copper, use one of these options:
+
+-   **HTTP API:** Add an [HTTP API](http-api-integration-overview.md) column that sends each row to your CRM's API endpoint.
+-   **A middleware tool such as Zapier:** Use an HTTP API column to send each row to a webhook URL in your middleware tool, then have that tool create or update the record in your CRM. See [Send Clay data to Zapier](clay-to-zapier.md).
+
+Both options use the HTTP API, which requires the **Growth plan or higher**. The HTTP API, webhooks, and CRM integrations aren't included on the Launch plan. Your 14-day trial includes HTTP API access, so you can test the setup before you choose a plan. If pushing leads into your CRM is your main use case, choose Growth (starting at $495/month, with 6,000 Data Credits and 40,000 Actions) rather than Launch (starting at $185/month, with 2,500 Data Credits and 15,000 Actions).
+
 ### How do I cancel my subscription?
 
 There is no minimum contract commitment — you can cancel at any time. To cancel:
