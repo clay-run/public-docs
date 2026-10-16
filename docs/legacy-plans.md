@@ -150,7 +150,6 @@ If you're on Explorer (Legacy) and considering a move to Enterprise, here is a s
 
 **Features you gain on Enterprise** (not available on Explorer Legacy):
 
--   **Bulk enrichment** — process large datasets in rolling batches with no cumulative row cap; see [Bulk enrichment](./bulk-enrichment.md)
 -   **Web intent signals** — access website visitor activity data
 -   **CRM integrations** — connect to Salesforce, HubSpot, Marketo, and other CRMs
 -   **Data warehouse connections** — sync with Snowflake and other data warehouses

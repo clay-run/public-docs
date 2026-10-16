@@ -16,23 +16,22 @@ Setting up Audiences is four major steps:
 
 1.  **Import your data** — connect Salesforce, HubSpot, Snowflake, or Google BigQuery and bring your records into Audiences.
 2.  **Create audiences** — build dynamic segments using filters to target the right contacts and accounts.
-3.  **Enrich and monitor** — run bulk enrichments and signals that write data permanently back to each record.
+3.  **Enrich and monitor** — run enrichment workflows and signals that write data permanently back to each record.
 4.  **Write back to your CRM** — sync enriched data and segment membership back to Salesforce.
 
 ## Roles and permissions
 
-Viewing and filtering audience data is available to all workspace roles. Most write operations require workspace **Admin** access. The table below shows the full breakdown:
+Admins, Editors, and Viewers can view and filter Audience data. Admins and Editors can create segments and enrichment workflows; managing data sources and Salesforce exports requires Admin access.
 
 | Action | Admin | Editor | Viewer |
 |---|---|---|---|
 | View, browse, and filter audience data | ✓ | ✓ | ✓ |
-| Create and edit audience segments | ✓ | — | — |
-| Run bulk enrichments | ✓ | — | — |
+| Create and edit audience segments | ✓ | ✓ | — |
+| Create enrichment workflows | ✓ | ✓ | — |
 | Add or configure data sources | ✓ | — | — |
 | Export individual records to Salesforce | ✓ | — | — |
-| Upsert or update records from a Clay table into Audiences | ✓ | — | — |
 
-To change someone's role, go to **Settings** → **Team** and use the dropdown next to their name. Changes apply immediately. Editors and Viewers who need to create segments, run bulk enrichments, or manage data sources should have their role upgraded to Admin, or ask a workspace Admin to perform those actions on their behalf.
+To change someone's role, go to **Settings** → **Team** and use the dropdown next to their name. Changes apply immediately. Ask a workspace Admin to manage data sources or exports if your role doesn't permit those actions.
 
 ## Importing your data
 
@@ -194,7 +193,7 @@ Clay syncs data from HubSpot automatically on the following schedules:
 
 **Record scope:** The HubSpot Audiences connector imports all records for the object type you select — there is no option to pre-filter to a specific HubSpot list within the Audiences source setup. If your HubSpot has more records than your plan's limit (250,000 for Growth; 25,000,000 for Enterprise), see [My HubSpot has more records than my plan limit — how do I limit what gets imported?](#my-hubspot-has-more-records-than-my-plan-limit--how-do-i-limit-whats-imported) in the FAQs below.
 
-**Write-back to HubSpot:** Unlike Salesforce, the HubSpot source in Audiences does not include per-field export rules or a scheduled export toggle — there is no write-back configuration in the HubSpot source settings panel. To push enriched data from Audiences to HubSpot, use a Bulk Enrichment Table with a HubSpot action column — see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
+**Write-back to HubSpot:** Unlike Salesforce, the HubSpot source in Audiences does not include per-field export rules or a scheduled export toggle — there is no write-back configuration in the HubSpot source settings panel. To push enriched data from Audiences to HubSpot, use a workflow with a HubSpot action — see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
 
 ### Importing from Snowflake
 
@@ -254,9 +253,9 @@ Clay syncs data from Google BigQuery on the following schedules:
 2.  Narrow your search using parameters like `Job title` and `Experience`.
 3.  Click `Continue` → `Save to People/Companies`.
     -   Note: This sends your search results to a draft version—it won't combine them with your existing Audience data.
-    -   If the draft shows a banner that says **"X records from this search are already in the All People list,"** those records are already excluded from the merge. Clicking **All people** in step 5 will only add net-new contacts — the existing records are not duplicated.
-4.  In your draft, click `Enrich` to bulk enrich and refine your data, keeping only high-quality leads.
-5.  When your search data looks good, click `All people` to merge.
+    -   If the draft shows a banner that says **"X records from this search are already in the All People list,"** those records are already excluded from the merge. Clicking **All people** in step 4 will only add net-new contacts — the existing records are not duplicated.
+4.  When your search data looks good, click `All people` to merge.
+5.  Create a named segment and use an [enrichment workflow](#adding-enrichments) to refine your data.
 
 **Note:** When you save a search to your Audience, only basic identity fields are carried over as columns — additional data fields visible in the search preview (such as Company Size or Annual Revenue for companies, or Job Title for people) are not automatically added to your Audience. To add one of these fields, create it as a custom Audience field first: see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
 
@@ -388,14 +387,14 @@ When two data sources write different values to the same field on an Audience re
 
 | Priority | Source types |
 |---|---|
-| 1 (highest) | Upsert Audiences Record, Bulk Enrichments |
+| 1 (highest) | Upsert Audiences Record |
 | 2 | Salesforce (Account, Contact, Opportunity), HubSpot |
 | 3 | Salesforce (Lead) |
 | 4 | Snowflake, BigQuery |
 | 5 | CSV |
 | 6 (lowest) | Find Companies / Find People search |
 
-There is an optional **CSV-first override** that, when enabled for a workspace, promotes CSV to priority tier 2 — above Salesforce and HubSpot but below Upsert Audiences Record and Bulk Enrichments. Contact your Growth Strategist to enable it.
+There is an optional **CSV-first override** that, when enabled for a workspace, promotes CSV to priority tier 2 — above Salesforce and HubSpot but below Upsert Audiences Record. Contact your Growth Strategist to enable it.
 
 **When merging happens**
 
@@ -454,7 +453,7 @@ Once you have a Companies Audience segment, you can run a people search scoped s
 4.  In the setup panel, apply filters for job title, seniority, location, and experience.
 5.  Click **Continue**. Clay searches for matching contacts at the companies currently in that segment.
 
-The search is scoped to the exact companies in the segment at run time. In the final step of the wizard, click **Send to Audiences** to add the contacts to your People Audience. You can then run bulk enrichments (for example, work email or phone) and export them to an ad platform — see [Syncing audiences to ad platforms](#syncing-audiences-to-ad-platforms).
+The search is scoped to the exact companies in the segment at run time. In the final step of the wizard, click **Send to Audiences** to add the contacts to your People Audience. You can then run enrichment workflows (for example, to find work email or phone) and export them to an ad platform — see [Syncing audiences to ad platforms](#syncing-audiences-to-ad-platforms).
 
 **Note:** **Find people from this list** is available only on Companies Audience segments — it does not appear on People Audience segments.
 
@@ -466,24 +465,17 @@ The search is scoped to the exact companies in the segment at run time. In the f
 
 ### Adding enrichments
 
-Bulk enrichments add contact data, firmographics, technographics, and more to your audience records at scale. They run on an audience and write results permanently back to All People — not just the segment you ran them from. This means any enriched field is immediately available as a filter in any other segment.
+Use [Workflows](https://university.clay.com/docs/workflows) to add contact data, firmographics, technographics, and other enrichment results to your Audience records.
 
-**Admin access required.** Adding and managing bulk enrichments requires workspace Admin access.
+Workflows is in open beta. If it isn't available in your workspace, contact Clay support. Enrichment workflow creation requires Admin or Editor access; Viewers can't create one. Segment triggers also depend on your plan.
 
-**To add an enrichment:**
+1. Open a saved Audience segment and click **Enrich**.
+2. Choose **Create enrichment workflow** from the **+** menu.
+3. Add the enrichment steps you need, then map their outputs to Audience fields in the setup guide.
+4. Test the workflow on a small set of records and check the results.
+5. Publish the workflow and choose whether to run it on existing segment members. See the run options below.
 
-1.  Navigate to an audience and click `Enrich` → `Add bulk enrich`.
-2.  Add enrichment columns as you normally would (e.g., `Enrich Person` for LinkedIn URL, title, phone).
-3.  Test on a small batch first — click `Run on 10 rows` to verify output before running at scale.
-4.  Open `Field Mapping` and map each column you want to save back to Audiences:
-    -   Enable the auto-enrich toggle so that any new record entering this segment is automatically passed through the enrichment — typically within 15 minutes.
-5.  Click `Start Run`.
-
-**Note:** To run a bulk enrichment on Audience data, always start from within the Audience — click `Enrich` → `Add bulk enrich` from any segment view. When creating a new Bulk Enrichment from the Clay homepage (`New` → `Bulk enrichment`), the source type options are CSV and Salesforce CRM only — there is no "Audiences" source type in that dialog. The Audience segment serves as the source when you add the enrichment from within Audiences.
-
-**Note:** Clay does not impose rate limits on Audiences bulk enrichments — the system is built to handle large lists at scale. Third-party data providers (such as Clearbit or Apollo) apply their own rate limits, but Clay queues requests and manages these automatically in the background. If you supply personal API keys for a provider, those keys' own rate limits apply.
-
-**To run an existing enrichment on another segment without recreating it:** A single bulk enrichment can be connected to multiple segments — you do not need to recreate it for each one. Open the enrichment from the **Enrich** sidebar and use the **Add segment** option in the Run Setup panel to include additional segments. See [Adding a segment to an existing enrichment](bulk-enrichment.md#adding-a-segment-to-an-existing-enrichment) for full steps.
+Values written back to Audience fields are available when filtering other segments. To connect an existing workflow or review the trigger's run options, see [Connecting a workflow to a segment](#connecting-a-workflow-to-a-segment).
 
 **Using Audiences from a Clay table:**
 
@@ -495,45 +487,17 @@ Four Clay actions let you move data between a Clay table and your Audience direc
     -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls. By default, signal data is returned for the past **90 days** and the action returns **5 signal results** per record by default — adjust the **Signal data to include (days)** setting in the column settings to retrieve older signals, or increase the result limit (up to 50) when you need more results per record. Use `Get Audiences Activity` when you need a larger set of results.
     -   `Get Audiences Activity` retrieves signal and activity data for an Audiences record — including signal events and, if Gong is connected to your workspace, Gong call records. Use it when you need more results or want to query a longer time window than `Lookup in Audiences` provides by default. Set **Object type** (People or Companies) and map the Audiences **Record ID**; optionally filter by **Activity types** — for example, select `Job posting` to retrieve only job posting events, or leave it empty to return all types. Configure **Max activities per type** (default 5, max 200) and **Days lookback** (default 90, max 365). For job posting signals, each event includes the job title, URL, location, posted date, seniority, description, company name, and company domain — data you can parse in downstream columns to qualify and route companies based on the specific roles they are hiring for. Every signal event returned by `Get Audiences Activity` includes an `eventId` that uniquely identifies that event — use `eventId` as your deduplication key to determine whether a workflow has already processed a specific event. For **New Hire** signal events, each event also includes an `isInitialCheck` boolean: `isInitialCheck: true` means the event was generated the first time the signal monitor evaluated that record (no prior snapshot existed for that record); `isInitialCheck: false` means the event came from a later scheduled check after a snapshot existed. This value is set once at event-creation time and does not change afterward — it is scoped to the signal monitor and record, not to any individual workflow or consumer. Do not use `isInitialCheck` as a dedup key: every record's first-evaluation events share the value `true`, so it cannot identify whether a specific event has already been processed by your workflow.
 
-**Note:** `Upsert Audiences Record` and `Update Audiences Record` support scalar field types only (text, number, date, boolean). Audiences has no native array or object field type, and JSON array columns cannot be selected as write targets in the field mapper. To expand a JSON array field into individual records in another Audience, see [How do I expand a JSON array field in one Audience into individual records in another?](#how-do-i-expand-a-json-array-field-in-one-audience-into-individual-records-in-another) in the FAQs below.
+**Note:** `Upsert Audiences Record` and `Update Audiences Record` support scalar field types only (text, number, date, boolean). Audiences has no native array or object field type, and JSON array columns cannot be selected as write targets in the field mapper. To expand a JSON array field into individual records in another Audience, see [How do I expand a JSON array from a Clay table into Audience records?](#how-do-i-expand-a-json-array-from-a-clay-table-into-audience-records) in the FAQs below.
 
 ### Enrichment run order
 
-Each enrichment on an audience is queued as its own job, and several run at the same time. Clay doesn't sequence Audiences enrichments, so one enrichment can't wait for another to finish and then read its output. Add them in whatever order suits you — the results land on the record either way.
-
-When one step genuinely depends on another, such as a second enrichment that needs the first one's result as an input, build the chain in Workflows, Clay's automation builder, or as columns in a Clay table. In both, a step that reads another step's output waits for that step to finish before it runs. The [Workflows documentation](https://university.clay.com/docs/workflows) covers how to wire one step into the next.
+When one enrichment step needs another step's result, connect those steps in the same workflow and use the earlier step's output as an input. See [Workflows](https://university.clay.com/docs/workflows) for connecting steps and configuring dependencies.
 
 ### Reviewing enrichment results
 
-After a bulk enrichment runs, there are two ways to see which records were successfully enriched:
+Open the workflow's **Runs** view to inspect run status and individual step inputs, outputs, and errors. See [Workflows](https://university.clay.com/docs/workflows) for testing and troubleshooting runs.
 
-**View enrichment status and row-level results**
-
-Click `Enrich` in the top-right toolbar to open the enrichments sidebar. The **Bulk enrichments** tab lists all your enrichments grouped as **Active** and **Inactive**. Each card shows a completion count — for example, "1,234 / 5,000 completed." Completed enrichments appear in the **Inactive** section.
-
-If you're viewing a specific segment, use the dropdown at the top of the list to toggle between enrichments on this segment and enrichments across all audiences.
-
-To inspect row-level results, click `⋮` on any enrichment card and select **Open bulk enrichment**. This opens the underlying bulk enrichment table where you can see each row's output and status.
-
-The bulk enrichment table has two tabs at the top — **Queued rows** and **Errored rows** — that let you switch between rows waiting to process and rows that encountered an error. It is not possible to filter within the bulk enrichment by specific error type; the Errored rows tab shows all rows with errors together. To see the error message for a specific row, open the bulk enrichment, click the **Errored rows** tab, and hover over the relevant cell.
-
-If a bulk enrichment was automatically paused after reaching a credit limit, click **Resume** in the bulk enrichment and select **From where you stopped** to continue processing the remaining rows without restarting from the beginning.
-
-**Filter the audience by the enriched field**
-
-Since enrichment results write permanently back to All People, you can filter any segment to see only records that received data:
-
-1.  Add a filter to your audience.
-2.  Select the enriched field (for example, `Phone` or `LinkedIn URL`).
-3.  Set the operator to **`is not empty`** to show only records where the enrichment returned a value.
-
-**Errored rows after a run**
-
-In Audiences bulk enrichment, a row appears in the **Errored rows** tab when any of its action columns fail — for example, if a data provider returns no match for a domain. This is true even if the **Update Audiences Record** step succeeded and your data was already written back to Audiences. This is expected behavior, not a bug — Audiences treats a row as complete only when all configured action columns succeed.
-
-To resolve errored rows:
--   **Rerun failed rows** — in the bulk enrichment table, right-click the failing column header → **Run column** → **Run [N] empty or out-of-date rows** to retry only records that didn't get a result.
--   **Remove non-critical provider columns** — if a provider consistently fails to match your records and the data isn't essential, removing that column from the bulk enrichment table means its failures will no longer mark rows as errored.
+To find Audience records that have a saved enrichment value, filter the relevant field with **is not empty**. This shows records with a value; use the workflow's run history to confirm which run produced it.
 
 ### Signals
 
@@ -547,7 +511,7 @@ For **Companies** audiences, five built-in signal types are available:
 -   **Job Posting** — alert when a monitored company posts a new job opening; Clay analyzes job descriptions for urgency indicators and geographic expansion signals.
 -   **Company Topic Intent** (open beta) — monitor when companies show buying intent for topics you care about, with High, Medium, and Low scoring tiers. Cost: approximately 0.2 credits per account monitored. Contact your Growth Strategist to enable this signal for your workspace.
 
-**Custom signals are not available within Audiences.** To track a more specific or custom signal (for example, website changes, RSS feed mentions, or technology adoption), build that logic in a bulk enrichment on the audience segment using Claygent or scheduled enrichment columns — see [Adding enrichments](#adding-enrichments) above.
+**Custom signals are not available within Audiences.** To track a more specific or custom signal (for example, website changes, RSS feed mentions, or technology adoption), build that logic in a workflow connected to the audience segment — see [Adding enrichments](#adding-enrichments) above.
 
 **To add a signal to a segment:**
 
@@ -577,14 +541,9 @@ To see which specific records in your audience were picked up by the signal, add
 
 **Enriching people who matched a signal**
 
-To run an enrichment on the people who matched a signal:
+Filter your Audience on the signal's results field and save the filtered view as a named segment. Then [connect a workflow to that segment](#connecting-a-workflow-to-a-segment) to enrich the matching records. Configure the workflow to write the results to Audience fields.
 
-1.  In Audiences, open the draft segment for your signal type — **New hires**, **Companies of job changers**, or **Web visitors** — pinned at the top of the Audiences left sidebar.
-2.  Inside the segment, click **Enrich** → **Add bulk enrich**.
-3.  Add your enrichment columns (for example, `Enrich Person` for LinkedIn URL, phone, or work email).
-4.  Click `Start Run`.
-
-Enrichment results write permanently back to All People — they are available as filters in any other segment going forward.
+The **Send to workflow** action is unavailable on draft segments, including the automatically created signal views. Use a saved segment for this setup.
 
 ### Claygent-managed columns
 
@@ -602,7 +561,7 @@ Connect a Clay workflow to a named audience segment — or to the entire workspa
 
 **Activating the workflow**
 
-The workflow card shows the current status — **Draft**, **Live**, or **Paused**. To activate it, click the **⋮** (three-dot) menu on the workflow card and select **Open in Workflows**, then click **Publish** in the top toolbar of the workflow editor. A dialog appears where you can name this version. If your workflow has an audience segment trigger, the dialog also shows a **Run on all members now** checkbox (with a count of the current segment members). Check this box to immediately run the workflow on every contact or company already in the segment as part of publishing — leave it unchecked to have the workflow trigger only for new members that join the segment going forward. Publishing the workflow activates all connected triggers — new segment members will run through the workflow automatically once it is live.
+The workflow card shows the current status — **Draft**, **Live**, or **Paused**. To activate it, click the **⋮** (three-dot) menu on the workflow card and select **Open in Workflows**, then click **Publish** in the top toolbar of the workflow editor. A dialog appears where you can name this version. For an audience segment trigger, enable **Run workflow after publishing** and select **Entire segment** to process existing members, or choose a smaller number of records. Leave **Run workflow after publishing** off to publish without starting that run. Publishing the workflow activates all connected triggers — new segment members will run through the workflow automatically once it is live.
 
 **Running a workflow on existing segment members**
 
@@ -611,7 +570,7 @@ To manually run the workflow on segment members already in the segment, open the
 -   **Run [X] [members]** — runs the workflow on a sample of up to 10 current segment members. Shown only when the segment has more than 10 members.
 -   **Run all [X] [members]** — runs the workflow on all current segment members.
 
-The **Run** button is available in any trigger state — draft, live, or paused — so you can run the workflow on existing members before or after publishing.
+For a connected segment trigger, the **Run** button is available in any trigger state — draft, live, or paused — so you can run the workflow on existing members before or after publishing.
 
 **How long does it take for a segment-triggered workflow to start?**
 
@@ -628,7 +587,7 @@ If you need a workflow to start closer to real time, use a webhook trigger or a 
 
 If a segment-triggered workflow never started for a contact or company, check the following:
 
--   **The member joined before the workflow was connected and published.** A segment trigger only fires for members that join the segment after the trigger is live. Members already in the segment are not run automatically — use the **Run** dropdown on the trigger card, or check **Run on all members now** when you publish, to run the workflow on them.
+-   **The member joined before the workflow was connected and published.** A segment trigger only fires for members that join the segment after the trigger is live. Members already in the segment are not run automatically — use the **Run** dropdown on the trigger card, or enable **Run workflow after publishing** and select **Entire segment** when you publish, to run the workflow on them.
 -   **The segment has no workflow connected.** Contacts joining a segment only start a workflow if a published workflow uses that segment as its trigger. Open the segment and check the **Workflows** section of the sidebar.
 -   **The segment was deleted.** If the segment a workflow trigger points to is deleted, the trigger stops firing. The trigger card in the workflow editor shows **"Segment not found. It may have been deleted."** To fix it, open the workflow, select a different segment on the trigger, and publish the workflow again.
 
@@ -736,7 +695,7 @@ To change a field's write rule, click the **pencil (edit) icon** next to any map
 
 **These write rules apply uniformly to all records — there is no native option to make a write conditional on a per-row field value match.** For example, there is no built-in way to write a field to Salesforce only when a contact's Salesforce Account ID matches the Account ID on the Audience Company Record. For conditional write-back logic, connect a [Workflow to your audience segment](#connecting-a-workflow-to-a-segment): a workflow can include lookup steps, branch (conditional) nodes, and a Salesforce Update Record action that evaluates the condition per record and writes only when it passes. See [How do I make my Salesforce export conditional on a field match?](#how-do-i-make-my-salesforce-export-conditional-on-a-field-match) in the FAQs below.
 
-**Note: Scheduled export rules apply to Contacts and Accounts only.** The Salesforce Lead field mapping does not include a Scheduled export rule column — Lead records imported into Audiences are import-only and do not support the automated export sync. To push enriched data from Audiences back to Salesforce Leads, use a Salesforce Update Record action column in a bulk enrichment table — see [Can the Audiences export sync write data back to Salesforce Lead records?](#can-the-audiences-export-sync-write-data-back-to-salesforce-lead-records) in the FAQs below.
+**Note: Scheduled export rules apply to Contacts and Accounts only.** The Salesforce Lead field mapping does not include a Scheduled export rule column — Lead records imported into Audiences are import-only and do not support the automated export sync. To push enriched data from Audiences back to Salesforce Leads, use a Salesforce Update Record action in a workflow — see [How do I write enriched fields back to existing Salesforce records from a workflow?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-workflow) in the FAQs below.
 
 Export settings also control whether Clay **creates new Salesforce records** for Audience records that don't yet have an SFDC match, or **only updates existing ones**.
 
@@ -790,7 +749,7 @@ The simplest framing: Tables are how you _work on_ data. Audiences is where your
 
 1.  In your Companies Audience segment, click **⋮** → **Find people from this list**. Apply job title, seniority, and location filters. At the end of the wizard, click **Send to Audiences** to add the contacts to your People Audience at no credit cost.
     -   Alternatively, use the standalone **Find People** source (also free) with your Companies Audience as the **Target companies** filter (requires Launch, Growth, or Enterprise plan). The same wizard opens — click **Send to Audiences** to send contacts to your People Audience, or **Import to Table** if you prefer to review results first (then click **Continue → Save to People** from the table).
-2.  From your People Audience, run **Bulk Enrich** to add the contact fields you need (for example, work email and phone number).
+2.  From your People Audience, [create an enrichment workflow](#adding-enrichments) to add the contact fields you need (for example, work email and phone number).
 3.  Build a filtered segment from your enriched People Audience.
 4.  Click **Send → Sync to ad platforms** to push the segment to LinkedIn Ads or Meta Ads. See [Syncing audiences to ad platforms](#syncing-audiences-to-ad-platforms).
 
@@ -798,11 +757,11 @@ The simplest framing: Tables are how you _work on_ data. Audiences is where your
 
 Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data into a Clay table from any source, then use Upsert to push those records permanently into your Audience. This works for any source Audiences doesn't yet natively support.
 
-### How do I expand a JSON array field in one Audience into individual records in another?
+### How do I expand a JSON array from a Clay table into Audience records?
 
-Audiences has no native array or object field type. The `Upsert Audiences Record` and `Update Audiences Record` field mappers expose only scalar field types (text, number, date, boolean) — JSON array columns cannot be selected as write targets. To expand a JSON array field — for example, a `providers` array on a Company record — into individual records in another Audience (for example, People records), use a table as an intermediate processing step:
+Audiences has no native array or object field type. The `Upsert Audiences Record` and `Update Audiences Record` field mappers expose only scalar field types (text, number, date, boolean) — JSON array columns cannot be selected as write targets. To expand a JSON array already stored in a Clay table into individual Audience records, use a second table as an intermediate processing step:
 
-1.  **Get the source records into a Clay table.** If starting from an Audience, click **Enrich → Add bulk enrich** from your segment view to create a bulk enrichment table sourced by that segment.
+1.  **Open the Clay table containing your JSON array.**
 2.  **Flatten the array using Send Table Data.** In the table, add a **Send Table Data** column (**Tools → Export → Send table data**) and choose **"Send row for each item in a list"**. Select the column holding your JSON array. If the array is stored as a JSON string (a text value that looks like `[{"name": "Alice"}, ...]`), click the gear icon on the list field and enter `JSON.parse(/YourColumn)` to convert it to a native list. **Note:** This method sends a maximum of 20 items per source row per run — see [Send table data](send-table-data.md) for more on this limit.
 3.  **Extract fields in the destination table.** In the destination table, click the **"Rows from: …"** cell on any row and use **Add to column** to extract individual fields from each item (for example, first name, last name, phone). Run any enrichments you need at this stage.
 4.  **Write to your target Audience.** Add an **`Upsert Audiences Record`** action column in the destination table to push each flattened record into your target Audience — creating a new record if no match exists, or updating an existing one if it does.
@@ -811,22 +770,12 @@ The destination table serves as a processing bridge — the flattened records ar
 
 ### How do I create a custom Audience field that isn't tied to Salesforce?
 
-There are two ways to create a custom Audience field:
-
-**Option 1 — Data Hub:**
+Create a custom Audience field in **Data Hub**:
 
 1.  In the left sidebar, click **Data Hub**.
 2.  Select the **Fields** tab (it opens by default).
 3.  Click the **+** button in the top right.
 4.  Name the new field, select a data type (Text, Number, Date, or Boolean), and click **Save**.
-
-**Option 2 — Bulk enrichment table:**
-
-The `+ Add field` option is also available in the `Update Audiences Record` column mapping inside a bulk enrichment table:
-
-1.  Navigate to a segment and click `Enrich` → `Add bulk enrich`.
-2.  In the bulk enrich table, click the `Update Audiences Record` column header to open the Configure panel.
-3.  In the `Column mapping` dropdown, click `+ Add field`, name the new field, and save.
 
 Once created, the field is immediately available as a filter in any segment and as a target for `Update Audiences Record` or `Upsert Audiences Record` from any Clay table.
 
@@ -1085,34 +1034,11 @@ To stop the audience from growing, turn live search off: click the **⋮** menu 
 
 Yes — you can add multiple ad platforms to a single audience sync. After your initial sync is active, an **Expand your reach** section appears on the Sync tab. Click **Add** next to any available platform to configure field mappings for that provider. The new platform will sync on the same schedule as your existing provider.
 
-### How do I export an audience segment with more than 50,000 records?
+### How do I send audience records to another tool?
 
-**Download CSV** on a Clay table exports at most 50,000 rows, because a Clay table holds up to 50,000 active rows at a time. To export every record in a People or Companies segment that has more than 50,000 records, run a bulk enrichment on the segment and then use **Export full archive**. As the bulk enrichment processes the segment, finished rows move out of the table into an archive, and **Export full archive** exports all of those archived rows.
+Connect a [workflow to your segment](#connecting-a-workflow-to-a-segment) and add an action for your destination. Map the Audience fields and enrichment outputs to that action's inputs, test the workflow on a small set of records, and check the destination before running the whole segment.
 
-1. Open the **People** or **Companies** segment you want to export.
-2. Click **Enrich**, then click **Add enrichment table** to create a bulk enrichment from the segment.
-3. In the setup, select the **Audience fields** you want included as columns in your export.
-4. If you only need a CSV export, skip adding enrichment columns. Enrichment columns are optional — you can run the bulk enrichment without any.
-5. Turn **Field mapping** off so nothing is written back to Audiences. The setup summary shows **Field mapping off**.
-6. On the final **Review** step of the setup, click **Finish setup and run**, then wait for the bulk enrichment to process every record in the segment.
-7. In the bulk enrichment table, click **View archive** in the footer at the bottom of the table, then choose the archive run from the dropdown.
-8. In the archive view, click **Export full archive** in the top-right of the toolbar. Clay downloads a .zip file containing your records split into multiple CSV files of up to 50,000 rows each.
-
-**Things to know about exporting the full archive:**
-
--   **Archiving is automatic for Audiences bulk enrichments.** You don't need to turn on an archive setting — bulk enrichment tables created from an Audiences segment archive processed rows automatically.
--   **Archived rows are kept for 30 days.** Export the archive within 30 days of the run. After 30 days, archived rows are deleted and you need to run the bulk enrichment again to export them.
--   **The export is a .zip file, not a single CSV.** Each CSV file inside the .zip holds up to 50,000 rows. A single **Export full archive** download supports up to 1,000 CSV files (50,000,000 rows).
-
-### How do I export my audience data to CSV?
-
-The Audiences screen does not have a direct CSV download button. To download audience data as a CSV, use the **Enrich** flow to create an enrichment table from the segment, then export that table. **Admin access is required.**
-
-1. Open the audience segment you want to export.
-2. Click `Enrich` to open the enrichment panel, then create a new enrichment table for this segment. (The exact button label varies by workspace — you may see **Add bulk enrich** or a `+` button with a **Create Enrichment Table** option.)
-3. In the enrichment setup, skip adding enrichment columns and turn off field mapping if you only need the raw segment data.
-4. Open the resulting table. If any rows are checked, uncheck them first — the toolbar shows **Tools** only when no rows are selected.
-5. Click **Tools** → **Export** → **Download CSV**.
+See [Workflows](https://university.clay.com/docs/workflows) for supported triggers, enrichment actions, and run controls.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
@@ -1178,7 +1104,7 @@ If your goal is to control which contacts are *imported* into Audiences from Sal
 
 ### How do I create new Salesforce Accounts or Contacts from an Audience?
 
-New Salesforce records are not created automatically when you run a bulk enrichment. Record creation is not driven by a Create Contact or Create Account action inside the enrichment table — it is controlled by the **`Create new Salesforce records`** toggle in your Audiences Salesforce export settings.
+For the native Audiences Salesforce export sync, record creation is controlled by the **`Create new Salesforce records`** toggle in your Salesforce export settings. Workflow actions that create Salesforce records are configured separately.
 
 **Before you enable the toggle, create a Clay ID field in Salesforce.** The Clay ID field is a custom External ID field in Salesforce — for example, `Clay_ID__c` — that must be marked as **External ID** in Salesforce so it appears as a selectable option in Clay. Clay uses this field to stamp each new record it creates with a unique identifier, so it can identify and update that record on future syncs without creating duplicates. Have your Salesforce admin create this field on the relevant object (Contact or Account) before proceeding.
 
@@ -1195,17 +1121,11 @@ Once the toggle is on, Clay will create new Accounts or Contacts in Salesforce f
 
 To track which contacts in Salesforce came from a specific Audience enrichment, create a custom Audience text field (for example, an "Audience Source" field set to a label like `"Q2-enrichment"`), and map it to a Salesforce field (a custom field, campaign tag, or lead status) in your export settings. You can then filter on that value directly in Salesforce.
 
-### How do I write enriched fields back to existing Salesforce records from a bulk enrichment?
+### How do I write enriched fields back to existing Salesforce records from a workflow?
 
-Add a **Salesforce Update Record** action column directly inside your bulk enrichment table. This pushes enriched values to matching Salesforce records in the same run, without waiting for the Audiences export cycle:
+[Connect a workflow to your Audience segment](#connecting-a-workflow-to-a-segment). Add your enrichment steps, then add a Salesforce **Update Record** action. Map the existing Salesforce record ID and the values you want to write. Connect the update step after the enrichment steps whose outputs it uses.
 
-1.  In your bulk enrichment, add your data enrichment columns as usual (for example, `Enrich Person` to find LinkedIn URL, email, or industry).
-2.  Click `Add enrichment` and search for **Salesforce** → select **Update Record**.
-3.  Set **Record ID** to the Salesforce Contact, Lead, or Account ID already stored in your Audience (the field imported from Salesforce or from your original SOQL import).
-4.  Map each enriched field to the corresponding Salesforce field you want to populate.
-5.  Click `Start Run` — the Update Record column fires alongside your enrichment columns and writes the enriched values directly to Salesforce.
-
-If you have the Audiences Salesforce export enabled, enriched fields also sync back to Salesforce automatically on the next 24-hour export cycle (see [Writing back to your CRM](#writing-back-to-your-crm)). Adding Update Record directly in the enrichment table is useful when you need immediate write-back or when you are not using the native Audiences Salesforce import.
+Test on a small set of records and verify the values in Salesforce before publishing and running the whole segment. This action writes to Salesforce during the workflow run, independently of the [Audiences export sync](#writing-back-to-your-crm).
 
 ### How do I send Clay enrichments to a custom Salesforce object?
 
@@ -1223,15 +1143,9 @@ To write Clay enrichments to fields on a Salesforce custom object, use a Salesfo
 
 ### How do I write enriched data back to HubSpot from Audiences?
 
-Audiences does not have a native HubSpot export destination — Salesforce is currently the only built-in CRM export. To push enriched data to HubSpot, use a Bulk Enrichment with a HubSpot action column directly from within your audience segment:
+To push enriched data to HubSpot, [connect a workflow to your Audience segment](#connecting-a-workflow-to-a-segment). Add your enrichment steps, then add a HubSpot **Update object** action for existing records or **Create object** for new records. Map the required record identifiers and properties to your Audience data and enrichment outputs.
 
-1.  Navigate to an audience segment and click **Enrich** → **Add bulk enrich**.
-2.  In the bulk enrichment table, add your data enrichment columns as usual (for example, `Enrich Person` to find phone numbers or professional profile URLs).
-3.  Click `Add enrichment` and search for **HubSpot** → select **HubSpot: Update object** (to update an existing HubSpot contact or company) or **HubSpot: Create object** (to create a new contact or company in HubSpot).
-4.  Map each enriched field to the corresponding HubSpot property you want to populate.
-5.  Click **Start Run** — the HubSpot action column fires alongside your enrichment columns and writes the values directly to HubSpot.
-
-This approach supports batching and works for both contacts and companies. To automatically push data for new records entering the segment going forward, enable the **auto-enrich toggle** on the bulk enrichment.
+Test on a small set of records and confirm the results in HubSpot before publishing. Use a segment trigger to process new members, or a scheduled segment trigger for recurring processing, subject to your plan's trigger access.
 
 **If the records are already in a Clay table:** you can route Audience data to HubSpot from any Clay table instead of starting from a segment.
 
@@ -1274,16 +1188,13 @@ No. The record limit — 250,000 for Growth plans and 25,000,000 for Enterprise 
 
 ### I changed a field value in Salesforce but it's not updating in Clay
 
-Clay's incremental sync picks up Salesforce changes via `SystemModstamp` — any modification to a Salesforce record triggers a re-sync of all its mapped fields on the next incremental cycle (every 15 minutes on Enterprise, once daily on Growth). However, if the field's current value in Clay was set by a **bulk enrichment** or **Upsert Audiences Record**, Clay's conflict resolution keeps that bulk-enriched value rather than accepting the incoming CRM value. Bulk enrichments and Upsert Audiences Record are Priority 1; Salesforce Account/Contact/Opportunity imports are Priority 2 (see **Conflict resolution when sources provide different field values** under [Entity resolution and deduplication](#entity-resolution-and-deduplication) above).
+Clay's incremental sync picks up Salesforce changes via `SystemModstamp` — any modification to a Salesforce record triggers a re-sync of all its mapped fields on the next incremental cycle (every 15 minutes on Enterprise, once daily on Growth). However, if the field's current value in Clay was set by **Upsert Audiences Record**, Clay's conflict resolution keeps that enriched value rather than accepting the incoming CRM value. Upsert Audiences Record writes are Priority 1; Salesforce Account/Contact/Opportunity imports are Priority 2 (see **Conflict resolution when sources provide different field values** under [Entity resolution and deduplication](#entity-resolution-and-deduplication) above).
 
-This means: if you clear or change a field in Salesforce that was previously populated by a bulk enrichment, Clay's import sync will pick up the Salesforce change — but discard it in favor of the existing higher-priority bulk-enriched value.
+This means: if you clear or change a field in Salesforce that was previously populated by Upsert Audiences Record, Clay's import sync will pick up the Salesforce change — but discard it in favor of the existing higher-priority enriched value.
 
-**To make Salesforce the source of truth for that field, use one of these approaches:**
+**To correct the stored value with a workflow:** Configure the workflow to write the intended value to the Audience field, then test on a record before running the segment. See [Adding enrichments](#adding-enrichments).
 
--   **Delete and recreate the field mapping.** Removing the existing field mapping clears the bulk-enriched value for that field. After you add the mapping back, the next Salesforce sync will set the field value from CRM with no competing bulk-enriched value. This is the most reliable approach when you want to reset a field to match its current Salesforce value.
--   **Override the field with a new bulk enrichment.** Use **Update Audiences Record** in a bulk enrichment table to explicitly write the value you want (for example, `0` or null). Because `Update Audiences Record` is also Priority 1, this new value replaces the old bulk-enriched one and stays unless overwritten by another enrichment. See [Adding enrichments](#adding-enrichments).
-
-**Note:** If your workspace requires Salesforce values to always take precedence over bulk-enriched values for a given field, contact Clay support — a workspace-level field precedence configuration is available.
+**Note:** If your workspace requires Salesforce values to always take precedence over enriched values for a given field, contact Clay support — a workspace-level field precedence configuration is available.
 
 ### Why does a company in my Companies audience show the wrong Salesforce Account name, type, or owner?
 
@@ -1313,14 +1224,14 @@ After you enable Export sync, the first export does not run immediately — it f
 
 To push enriched data to Salesforce before the next scheduled export, see [How can I export records to Salesforce immediately without waiting for the 24-hour sync?](#how-can-i-export-records-to-salesforce-immediately-without-waiting-for-the-24-hour-sync)
 
-**If a newly added field is still showing as `false` or empty in Clay:** The 24-hour export pushes whatever value a field holds in Clay at the time it runs — if a bulk enrichment that populates the field is still in progress (or hasn't been started yet), the export will push those in-progress or default values. There is no need to reconnect or reconfigure the sync. Wait for enrichment to finish and the field to hold its correct values; the next 24-hour export will then carry those values to Salesforce automatically.
+**If a newly added field is still showing as `false` or empty in Clay:** The 24-hour export pushes whatever value a field holds in Clay at the time it runs — if an enrichment workflow that populates the field is still in progress (or hasn't been started yet), the export will push those in-progress or default values. There is no need to reconnect or reconfigure the sync. Wait for enrichment to finish and the field to hold its correct values; the next 24-hour export will then carry those values to Salesforce automatically.
 
 ### How can I export records to Salesforce immediately without waiting for the 24-hour sync?
 
 The 24-hour export schedule is fixed and cannot be triggered manually. Two options let you push records to Salesforce sooner:
 
 -   **Export a single record on demand (admin-only):** Open any record in Audiences and click **Export** in the top right of the record panel. This sends that record to Salesforce immediately, without waiting for the next scheduled sync. The button appears only when the record has a Salesforce export configured.
--   **Export many records immediately:** Add a **Salesforce Update Record** action column to a bulk enrichment table — see [How do I write enriched fields back to existing Salesforce records from a bulk enrichment?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-bulk-enrichment) above.
+-   **Export many records immediately:** Add a **Salesforce Update Record** action to a workflow — see [How do I write enriched fields back to existing Salesforce records from a workflow?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-workflow) above.
 
 ### How do I access Account-level fields (like Company Name or Company Domain) from a People audience?
 
@@ -1576,7 +1487,7 @@ A record still shows an empty (or outdated) value for the new field if the value
 
 **Can I trigger a Snowflake sync manually?** No. There is no **Sync now** button for a Snowflake import in Audiences. To push specific rows through sooner, update their `Timestamp Field` value in Snowflake so the next incremental sync picks them up.
 
-Before building a segment, signal, or bulk enrichment that depends on the new field, check that the field is populated on your records — for example, by filtering the segment on the new field and confirming the record count matches what you expect.
+Before building a segment, signal, or workflow that depends on the new field, check that the field is populated on your records — for example, by filtering the segment on the new field and confirming the record count matches what you expect.
 
 ### How do I archive records that no longer match my Snowflake import query?
 
