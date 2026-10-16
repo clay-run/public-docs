@@ -281,7 +281,7 @@ You can import a CSV file of people or companies directly into Audiences as a on
 
 CSV imports are one-time — they do not re-sync automatically. To update your Audience with new CSV data, repeat the import process with an updated file.
 
-**To replace a CSV import with corrected data:** If the imported CSV contained errors and you want to start fresh, archive the old records before importing the updated file — see [How do I replace a CSV import with updated data?](#how-do-i-replace-a-csv-import-with-updated-data) in the FAQs below.
+**To add columns or correct values on records you already imported from a CSV:** Start a new CSV import and set the same **Unique identifier** column, with the same values, that you used in the original import. Matching rows update the existing records instead of creating duplicates, so you don't need to archive the old records first. Don't archive records before you re-import them: Audiences skips CSV rows that match archived records. See [How do I add columns to or update records from a CSV import?](#how-do-i-add-columns-to-or-update-records-from-a-csv-import) in the FAQs below.
 
 **Note:** CSV source entries remain listed in the Sources tab after import. There is no self-serve option to remove or disconnect a CSV source listing, and the source name cannot be changed after the import is set up — both are retained for filtering and audit purposes.
 
@@ -1464,7 +1464,7 @@ The fastest way to archive many records at once — for example, to remove all c
 
 **Note:** **Delete list** in the same segment menu removes the segment from the sidebar but does not archive the records. Use **Archive records in segment** when you want to remove the contact or company records themselves.
 
-**Note:** Archived records can be restored from the **Archived** section in the left sidebar. If a previously archived record enters Audiences again from a source (for example, if the underlying Salesforce record is modified and re-synced), it will appear as a new record without the archived record's enrichment data.
+**Note:** Archived records can be restored from the **Archived** section in the left sidebar. Archiving a record also stops sources from updating it. If a source sends an archived record again — for example, when the underlying Salesforce record is modified and re-synced, or when a CSV import includes the same **Unique identifier** value — Audiences skips it. The record isn't created again as a new record, and it stays in **Archived**. For a source to update the record again, restore it from **Archived** first.
 
 ### Records I deleted in Salesforce are still in my Audience — how do I remove them?
 
@@ -1480,28 +1480,35 @@ To remove records deleted in Salesforce from your Audience, archive them in bulk
 
 Clay does not archive **Deleted in source** records automatically, so repeat these steps whenever you want to clean up newly deleted Salesforce records. To keep records deleted in Salesforce out of a specific segment without archiving them, add a filter to that segment that excludes the **Deleted in source** sync status for your Salesforce import.
 
-### How do I replace a CSV import with updated data?
+### How do I add columns to or update records from a CSV import?
 
-CSV imports are one-time — they do not re-sync automatically. If your CSV contained errors and you want to replace it with corrected data, follow these steps to avoid duplicating records:
+Audiences CSV imports are one-time, and you can't re-upload, edit, rename, or delete an existing CSV source from the **Sources** tab. To add new columns (fields) to records you already imported from a CSV, or to correct their values, run a new CSV import that uses the same unique identifier. You don't need to archive the old records first.
 
-**1. Archive the old records:**
+1.  Prepare an updated CSV that contains the unique identifier column from your original import (for example, a company registration number such as SIREN, a domain, or an email), plus the new or corrected columns.
+2.  Open **All People** or **All Companies** → **Sources** → **Add source**, then select **CSV file**. If your workspace uses the **Add data** menu, choose **Add data** → **Add Source** → **CSV** instead.
+3.  Name the import, select **People** or **Companies** (the same type as the original import), and upload the updated file.
+4.  On the mapping screen, set **Unique identifier** to the same column you used in the original import.
+5.  Map the new and corrected columns to Audience fields.
+6.  Click **Import**.
 
-Before importing the corrected file, remove the incorrect records from your Audience:
+**How Audiences matches the rows in your new CSV import:**
 
-1.  Go to **All People** or **All Companies** in your Audiences view.
-2.  Filter by the source of the old CSV import (use the **Person source** or **Company source** filter and select the original CSV import name).
-3.  Select all rows returned by the filter.
-4.  Click **Archive** in the toolbar that appears at the bottom.
-5.  Confirm. All records from the old CSV are removed from your Audience.
+-   **Matching rows update existing records.** If a row's unique identifier value matches a record from an earlier CSV import, Audiences updates that record instead of creating a duplicate. Newly mapped fields are added. For fields that both CSV imports supply, the most recent CSV import's value is shown.
+-   **Matching works across all CSV imports.** Audiences matches the unique identifier value against every CSV import in your workspace, not only the import with the same name.
+-   **New values create new records.** If a row's unique identifier value doesn't match any existing record, Audiences creates a new record.
+-   **Both imports stay listed in the Sources tab.** The original CSV source stays in the **Sources** tab next to the new one.
 
-**2. Import the corrected CSV:**
+**CRM and data warehouse values take priority over CSV values.** By default, CSV ranks below Salesforce, HubSpot, Snowflake, and BigQuery in conflict resolution. If a field already has a value from one of those sources, Audiences keeps showing that value after a CSV import supplies a different one. See the conflict resolution priority table in [Entity resolution and deduplication](#entity-resolution-and-deduplication).
 
-1.  Click `Add data` → `Add Source` → select **CSV**.
-2.  Upload the corrected file and complete the import steps as usual.
+**Don't archive records before re-importing them.** Archiving a record also stops future imports from updating it. If you archive records and then import a CSV with the same unique identifier values, Audiences skips the matching rows. They aren't created again as new records, and the archived records aren't restored.
 
-The corrected records are imported fresh without duplicating the old ones.
+**If you already archived the records:** Restore them before you run the new CSV import.
 
-**Note:** If your Audience record count appears higher than expected after importing a corrected CSV — even after archiving — it may mean some records from the original import were merged with records from another source (for example, Salesforce) during entity resolution. Archived records that matched a non-CSV source may still appear in your Audience under that source. In this case, contact Clay support to assist with cleanup.
+1.  Open the **Archived** section in the Audiences left sidebar.
+2.  Click **Restore** to restore the records.
+3.  Run the new CSV import with the same unique identifier, following the steps above. The restored records are updated with the new columns.
+
+**To remove the records from a CSV import entirely** (for example, if you imported a file you don't want in Audiences), archive them in bulk with a saved segment filtered on that CSV source. See [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience).
 
 ### How does the Audiences record limit work? What counts toward it?
 
