@@ -705,7 +705,7 @@ Each mapped field has a write rule that controls whether and how Clay pushes its
 | Rule | Behavior |
 |------|----------|
 | **Never write** | Clay never exports this field to Salesforce. This is the **default** for all newly added field mappings. |
-| **Always write** | Clay writes the current Audiences value to Salesforce on every export cycle, overwriting whatever is in the Salesforce field. |
+| **Always write** | Clay writes the current Audiences value to Salesforce on every export cycle, overwriting whatever is in the Salesforce field. If the Audiences field is blank, Clay skips it and the existing Salesforce value is left unchanged — a blank never clears a Salesforce field. |
 | **Write if empty** | Clay writes the value only if the corresponding Salesforce field is currently empty. Existing Salesforce values are preserved. |
 
 To change a field's write rule, click the **pencil (edit) icon** next to any mapped field in your Salesforce source settings.
@@ -1106,6 +1106,16 @@ To allow Clay to overwrite existing Salesforce values for a field:
 5.  Click **Save and review** → **Confirm**.
 
 The updated value will be pushed to Salesforce on the next export cycle (within 24 hours).
+
+**"Bi-directional" doesn't mean every field is exported.** On your Salesforce source settings page, the **Overview** card shows **Sync direction: Bi-directional** when both **Import status** and **Export status** are **Sync on**. Even with a Bi-directional sync, the Audiences export only sends fields that are mapped to a Salesforce field and set to **Always write** or **Write if empty**. Audience fields that aren't mapped to a Salesforce field — for example, fields a workflow fills in on your Audience records — stay in Clay. To send one of those fields to Salesforce, create a matching field on the Salesforce object, map it in your Salesforce source settings, and set its write rule to **Always write** or **Write if empty**.
+
+### Will a blank Audience field overwrite my Salesforce value with NULL when the write rule is "Always write"?
+
+No. The Audiences export to Salesforce never sends blank values. Before each export, Clay drops any field whose Audiences value is blank, for both **Always write** and **Write if empty** fields, so a populated Salesforce field is left unchanged. This applies to every field type (text, number, date, and so on) and also applies when you first enable a field mapping and Clay sends all records for it.
+
+With **Always write**, Clay replaces an existing Salesforce value only with a non-blank Audiences value.
+
+**Workflows writing to your Audience:** The **Upsert Audiences record** workflow action has its own per-field write mode. The default, **If workflow value is present**, skips blank workflow values so they don't overwrite your Audience record. **If Audience field is empty** only writes when the Audience field is currently empty. Only the **Always** mode writes blank values into the Audience record — and even then, the blank is not sent on to Salesforce by the Audiences export.
 
 ### How do I make my Salesforce export conditional on a field match?
 
