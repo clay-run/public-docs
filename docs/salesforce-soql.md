@@ -153,6 +153,32 @@ Think of each scheduled run as Clay asking Salesforce: "Give me all records matc
 -   Add a condition to catch recently modified records: `WHERE ... OR SystemModstamp >= LAST_N_DAYS:30`.
 -   If you need to track a fixed set of accounts regardless of their field values, filter on a stable identifier instead (e.g., `WHERE Id IN ('001...', '001...')`).
 
+### Why did my SOQL source return 0 new rows after I deleted rows and clicked Run now?
+
+The Salesforce SOQL source keeps its own import history of every record it has already added to your table, and it skips those records on later runs — both **Run now** and scheduled runs. Deleting rows from the table does not clear the SOQL source's import history. So if Salesforce returns the same records again, the run shows **Success** with **0** rows added, even though the query itself returned results.
+
+Clay decides whether a record was already imported by hashing its **Uniqueness fields**:
+
+-   **No uniqueness fields selected:** Clay hashes the entire row — every field in your `SELECT`. A previously imported record comes back as a new row only if at least one selected field value has changed since it was imported.
+-   **Uniqueness fields selected:** Clay hashes only the selected fields. A record comes back as a new row only when that combination of values hasn't been imported before.
+-   **A uniqueness field is blank:** if any selected uniqueness field is empty or null on a record, Clay hashes the entire row for that record instead.
+
+There is no setting to clear a SOQL source's import history. To re-import records the source has already seen, add a new Salesforce SOQL source with the same query, uniqueness fields, and schedule, then delete the old source. A new source has no import history, so its first run imports every record the query returns. For more on how sources track deleted rows, see [I deleted rows from my table and re-ran the source, but they didn't reappear](sources.md#i-deleted-rows-from-my-table-and-re-ran-the-source-but-they-didnt-reappear).
+
+### How do I let a Salesforce record be imported again on a later scheduled SOQL run?
+
+If you run a recurring SOQL pull — for example, a daily "Top 25 eligible Accounts" query where Accounts come back after a cooldown period — choose **Uniqueness fields** that change when a record should be processed again:
+
+1.  Add the field that changes between cycles (for example, a custom cooldown date field such as `Outbound_Cooldown_Until__c`) to your `SELECT`.
+2.  In the SOQL source settings, set **Uniqueness fields** to `Id` plus that field.
+3.  Save and run the source.
+
+With `Id` plus the cooldown date as uniqueness fields, the SOQL source imports each Account once per cooldown cycle. If the same Accounts are returned on consecutive runs with unchanged cooldown dates, Clay skips them and reports 0 new rows. When an Account's cooldown date changes, it is imported again as a new row.
+
+Selecting only `Id` means each Account is imported once for the lifetime of the source. Selecting no uniqueness fields means any change to any selected field re-imports the record, even if it is already in your workflow.
+
+**Note:** With a `LIMIT` query such as a Top 25, Salesforce keeps returning the same records until they stop matching your `WHERE` clause, so new records behind them never reach Clay. Update the field your query filters on in Salesforce (for example, set the cooldown date) once a record is pulled or worked, so the next records come through.
+
 ### Why am I getting rate limit errors?
 
 Salesforce enforces API request limits. If you hit limits:
