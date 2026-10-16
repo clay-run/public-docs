@@ -3,7 +3,7 @@ title: Run progress
 description: Clay provides multiple ways to track and monitor run progress
   across your tables and workflows, including how to use the built-in Errored
   rows view to filter to failed rows, what happens when a workflow node fails
-  (including why action nodes fail with timeout errors, and how Repeat mode's "If an item fails" setting works), bulk re-run many workflow runs at once
+  (including why action nodes fail with timeout errors, and how Repeat mode's "If an item fails" setting works), how to monitor a workflow for failed runs, bulk re-run many workflow runs at once
   from the runs dashboard, set a row limit to control which rows are processed,
   manually trigger unrun enrichment cells, run enrichments on a specific subset
   of rows, troubleshoot cells stuck in Queued status, recover action column cells
@@ -119,6 +119,15 @@ The **If an item fails** setting is available to all Workflows customers. When a
 
 -   **Continue the run** — The node completes, failed items are left out of its output, and the run keeps going.
 -   **Mark the run as failed** — The run is marked **Failed** after all items finish.
+
+### Can I get notified when a workflow's runs fail or errors spike?
+
+Clay Workflows don't currently include built-in alerts or notifications (email or Slack) for failed workflow runs or for a spike in workflow errors. [Table alerts](table-alerts.md) monitor only Clay tables (column failure rate, row count limit, and data inactivity) and don't apply to workflow runs.
+
+To monitor a workflow for failed runs:
+
+-   **From the UI:** open the workflow's **Runs** dashboard and filter by **Failed** status. Combine it with the time range filter (**1d**, **1w**, or **1m**) to see how many runs failed recently — for example, select **1d** to check failures over the last day.
+-   **On a schedule:** run `clay workflows runs list <workflowId> --status failed` from the Clay CLI using a cron job or your agent's scheduler to check for new failed runs, and have your script or agent notify your team. See **Retrying failed workflow runs via the CLI** (below) for setup requirements and how to re-run failed runs automatically.
 
 ## Bulk re-run for Workflows
 
