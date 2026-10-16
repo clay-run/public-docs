@@ -68,6 +68,13 @@ When you duplicate a table, Clay copies the table structure and run settings —
 **What is not copied:**
 -   Enriched data — enrichment columns start empty in the duplicate
 -   Source import history — the duplicate starts with a fresh record count
+-   Unpublished sandbox mode changes — see the note below
+
+**Columns missing after you duplicate a table or workbook? Check for unpublished sandbox changes.** Duplicating a table or workbook copies the live, published version of each table. Columns you've added or edited in [sandbox mode](sandbox-mode.md) but haven't published yet are not part of the published table, so they don't come along — for example, the duplicate may contain only the source column (such as a Salesforce import) even though the original table shows many more columns in its sandbox. The duplicate itself worked; the sandbox columns never reached the live table. To include those columns in a copy:
+
+1.  Open the original table and click **Review changes (N)** in the tab bar above the table, where N is the number of unpublished column changes.
+2.  In the **Sandbox review** window, click **Publish and don't run** (publishes the column changes without starting a run) or **Publish and run** (publishes and runs the affected columns on all rows).
+3.  Duplicate the table or workbook again. The new copy includes the published columns. You can delete the earlier copy if you don't need it.
 
 **To copy existing enriched data without re-running enrichments:** Use [Send Table Data](send-table-data.md) to transfer rows from the original table to the duplicate. Add a Send Table Data column to the original table, select the columns you want to copy, and set the destination to the duplicate. This moves the already-computed cell values directly — the Send Table Data action itself consumes no credits. **Important:** Because auto-run carries over to the duplicate (see below), enrichment columns in the destination (such as Claygent) will automatically re-fire on incoming rows and consume credits unless you turn off auto-run in the duplicate — or disable it on individual enrichment columns you don't want to re-run — before sending data.
 
