@@ -12,15 +12,15 @@ Single Sign-On (SSO) is available to **Enterprise plan** customers at no additio
 
 ## Setting up SSO
 
-SSO setup is managed by Clay's support team — there is no self-serve configuration in the Clay UI. To get started, contact Clay support.
+SSO setup starts with Clay's support team — there is no self-serve SSO configuration in the Clay UI, and workspace admins can't generate an SSO setup link themselves. To get your SSO setup link (also called the SSO setup guide or configuration link), contact Clay support.
 
 The typical setup process:
 
-1.  Contact Clay support to initiate SSO setup.
-2.  Clay support creates your organization in WorkOS and sends a configuration link to your IT contact.
-3.  Your IT team follows the link to connect your identity provider and complete the setup.
-4.  Once your IT team confirms the WorkOS setup is complete, notify Clay support. **Note:** If you test by clicking the Clay tile in your IdP dashboard at this point, you may see `{"type":"BadRequest","message":"Unable to login","details":null}` — this is expected and means SSO activation is still pending on Clay's side.
-5.  Clay support activates (enforces) SSO on your workspace.
+1.  Contact Clay support to request an SSO setup link.
+2.  Clay support creates your organization in WorkOS and sends a configuration link (a WorkOS setup link) to your IT contact.
+3.  Your IT team opens the link, follows the on-screen instructions to connect your identity provider, and tests the connection in the WorkOS setup portal.
+4.  Once the connection is tested and active in WorkOS, SSO activates in Clay automatically for your email domain — you don't need to notify Clay support. Clay checks for newly activated SSO connections every minute, so SSO is usually live within a few minutes of a successful test. **Note:** If you click the Clay tile in your IdP dashboard before activation finishes, you may see `{"type":"BadRequest","message":"Unable to login","details":null}` — wait a few minutes and try again.
+5.  Make sure each user has been invited to your Clay workspace before they sign in with SSO (see [User provisioning](#user-provisioning)). Invited users go to app.clay.com, enter their work email address, and click **Continue** — Clay redirects them to your identity provider (for example, Okta) to authenticate.
 
 **Note:** The email domain used for SSO authentication is configured on Clay's side. If you receive an error during the WorkOS setup stating that your domain is not recognized or not allowed, contact Clay support — only the support team can update the allowed domain setting.
 
@@ -41,11 +41,11 @@ In the WorkOS setup portal, look for the **Service Provider Details** section, w
 -   All users whose email address is on your verified domain are redirected to sign in through SSO when they type their email on the Clay login page. **Note:** This redirect is handled in the browser — users who have an existing email + password Clay account can still log in using their password directly, which bypasses the SSO redirect. Clay does not block password-based login at the backend for SSO-configured domains.
 -   Google OAuth sign-in is disabled for users on your domain. Clicking the **Sign in with Google** button on the login page will return an error (`Google OAuth is disabled for this account`) — this button uses Google OAuth, which is a separate authentication path from SSO.
 -   SSO is configured at the email domain level — if your organization uses multiple Clay workspaces, users on your domain will be routed through SSO for all of them.
--   Once SSO is activated, users can sign in from either the Clay login page or directly from your IdP dashboard (for example, clicking the Clay tile in your Okta launcher). If clicking the IdP tile returns `{"type":"BadRequest","message":"Unable to login","details":null}`, SSO has likely not yet been activated on Clay's side — contact Clay support to complete activation.
+-   Once SSO is activated, users can sign in from either the Clay login page or directly from your IdP dashboard (for example, clicking the Clay tile in your Okta launcher). If clicking the IdP tile returns `{"type":"BadRequest","message":"Unable to login","details":null}`, SSO has likely not finished activating — activation happens automatically within a few minutes of your IT team successfully testing the connection in the WorkOS setup portal. If the error persists after that, contact Clay support.
 
 **How SSO users should sign in:** On the Clay login page, type your **email address** into the email field and click **Continue** — do **not** click the `Sign in with Google` button. Entering your email triggers domain detection, which redirects you to your SSO provider automatically.
 
-**If your Clay account was originally created with Google (no password set):** Once SSO is enabled for your domain, the `Sign in with Google` button will return an error — Google OAuth is disabled for SSO domains. Because your account was created through Google, you have no Clay email + password; attempting to enter a password or trigger a password reset will not work (there is no Clay password on your account to reset). To sign in, simply type your **email address** into the email field and click **Continue** to be redirected to your SSO provider. If the redirect does not work after SSO has been activated by Clay support, contact Clay support to verify the configuration.
+**If your Clay account was originally created with Google (no password set):** Once SSO is enabled for your domain, the `Sign in with Google` button will return an error — Google OAuth is disabled for SSO domains. Because your account was created through Google, you have no Clay email + password; attempting to enter a password or trigger a password reset will not work (there is no Clay password on your account to reset). To sign in, simply type your **email address** into the email field and click **Continue** to be redirected to your SSO provider. If the redirect does not work after SSO has been activated, contact Clay support to verify the configuration.
 
 ## MFA enforcement and compliance requirements
 
