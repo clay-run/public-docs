@@ -876,7 +876,7 @@ To add a missing field to an "All records" import:
 4.  In the field mapping section, add the Salesforce field you want and name the corresponding Clay column.
 5.  Click **Save and review** → **Confirm**.
 
-**Record subset (SOQL) imports:** Fields are determined by the `SELECT` clause of your SOQL query — only fields listed in the SELECT statement are imported. The SOQL import's field mapping only lists fields from the SELECT clause, and any field you want to write back to Salesforce through Export sync must also be in the SELECT clause. To add a new field, edit the SOQL query for that import to include the field in the SELECT clause, then reconfirm the import. Editing the query on a configured import replaces the import and resets its field mappings — see [What happens when I edit the SOQL query on an existing Salesforce record subset import?](#what-happens-when-i-edit-the-soql-query-on-an-existing-salesforce-record-subset-import) below before you confirm.
+**Record subset (SOQL) imports:** Fields are determined by the `SELECT` clause of your SOQL query — only fields listed in the SELECT statement are imported. The SOQL import's field mapping only lists fields from the SELECT clause, and any field you want to write back to Salesforce through Export sync must also be in the SELECT clause. To add a new field, edit the SOQL query for that import to include the field in the SELECT clause, then reconfirm the import. Editing the query on a configured import replaces the import and resets its field mappings — see [What happens when I edit the SOQL query on an existing Salesforce record subset import?](#what-happens-when-i-edit-the-soql-query-on-an-existing-salesforce-record-subset-import) below before you confirm. To add a field without resetting your existing mappings, add a second record subset for the same object instead — see [How do I add a field to a Salesforce SOQL record subset import without resetting my field mappings?](#how-do-i-add-a-field-to-a-salesforce-soql-record-subset-import-without-resetting-my-field-mappings).
 
 The filter option for the field becomes available after the next incremental sync (typically within 15 minutes). If you added this field to the mapping after your initial import, Clay fills it in on existing records from each record's most recently synced copy, but some records may still be missing data for it — see [I added a new Salesforce field to my mapping but some records are missing data for it](#i-added-a-new-salesforce-field-to-my-mapping-but-some-records-are-missing-data-for-it) below. Read-only Salesforce fields — fields shown with a lock icon in the mapping because Salesforce does not allow Clay to write them — can still be imported and used as filters. They will show a **Never write (Read-only)** export rule.
 
@@ -892,11 +892,36 @@ When you change the SOQL query on a record subset import that's already set up w
 2.  Creates a new import with the updated SOQL query. The new import starts with no field mappings — you map your fields again in the next step.
 3.  Matches records returned by the new query to existing Audience records by their Salesforce record ID. Matching records are merged into the existing Audience records instead of being created as new records.
 
-**Before you confirm:** note down your current field mappings so you can re-add them to the new import. Make sure the new `SELECT` clause includes every field you want to map — both fields you want to use in Clay and fields you want to write back to Salesforce through Export sync.
+**Before you confirm:** note down your current field mappings so you can re-add them to the new import. Make sure the new `SELECT` clause includes every field you want to map — both fields you want to use in Clay and fields you want to write back to Salesforce through Export sync. If you only need to add a field, you can avoid the reset by adding a second record subset instead — see [How do I add a field to a Salesforce SOQL record subset import without resetting my field mappings?](#how-do-i-add-a-field-to-a-salesforce-soql-record-subset-import-without-resetting-my-field-mappings).
 
 **Will editing the SOQL query re-trigger workflows that run when a record is added to an audience?** No. Records that the new query still returns are matched to their existing Audience records by Salesforce record ID and stay in your audience throughout the change, so workflows triggered when a record is added to an audience don't fire again for them. Only records that weren't already in your audience fire the trigger.
 
 **What if the new query returns fewer records?** If you change the `WHERE` clause so the new query returns fewer records, records the new query no longer returns are disconnected from the Salesforce SOQL import and stop receiving updates from Salesforce. If you only add fields to the `SELECT` clause and leave the `WHERE` clause unchanged, the new query returns the same records, and they all merge back into their existing Audience records.
+
+### How do I add a field to a Salesforce SOQL record subset import without resetting my field mappings?
+
+This applies to Salesforce **Record subset** (SOQL) imports in Audiences, available on Growth and Enterprise plans.
+
+Editing the SOQL query on a record subset import that already has field mappings replaces the import and resets its field mappings (see [What happens when I edit the SOQL query on an existing Salesforce record subset import?](#what-happens-when-i-edit-the-soql-query-on-an-existing-salesforce-record-subset-import)). To add one or two Salesforce fields — for example, the account owner's role (`Owner.UserRole.Name`) — without redoing your existing mappings, add a **second record subset** for the same Salesforce object that selects only the new field.
+
+A second record subset doesn't duplicate your records or change your existing import:
+
+-   **Records merge by Salesforce record ID.** Records the second subset returns are matched to the Audience records already imported from Salesforce by their Salesforce record ID and merged into them, not created as new records.
+-   **Your existing import stays as it is.** Each record subset has its own SOQL query and its own field mappings. The second subset only writes the fields mapped in it, so fields mapped in your first import are not cleared, and segments built on them keep working.
+
+**To add a field with a second record subset:**
+
+1.  Open your Salesforce source settings in Audiences and click **Add** in the **Records** sidebar.
+2.  Select the same object type as your existing import (for example, Account), then select **Record subset** and enter a **Subset name** (for example, `Account owner role`).
+3.  Write a SOQL query that includes the required sync fields plus the field you want to add. To cover every record of that object, leave out the `WHERE` clause. Example for Accounts:
+    ```
+    SELECT Id, SystemModstamp, IsDeleted, Owner.UserRole.Name FROM Account
+    ```
+4.  Click **Test** to confirm the field comes through, then click **Continue**.
+5.  In the field mapping, map only the new field to an Audience field.
+6.  Turn on **Import sync**. If you only want to bring the field into Clay, leave **Export sync** off.
+
+**Related (parent) fields work in SOQL record subsets.** You can select fields from a related record using dot notation, such as `Owner.Name` or `Owner.UserRole.Name` on Accounts — you don't need to import the Salesforce User object separately. In the field mapping, the field appears under its SOQL path (for example, `Owner.UserRole.Name`). Polymorphic relationships (lookups that can point to more than one object type) aren't supported. `LIMIT` isn't supported in saved SOQL queries.
 
 ### I added a new Salesforce field to my mapping but some records are missing data for it
 
