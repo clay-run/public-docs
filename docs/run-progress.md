@@ -126,7 +126,7 @@ Clay Workflows don't currently include built-in alerts or notifications (email o
 
 To monitor a workflow for failed runs:
 
--   **From the UI:** open the workflow's **Runs** dashboard and filter by **Failed** status. Combine it with the time range filter (**1d**, **1w**, or **1m**) to see how many runs failed recently — for example, select **1d** to check failures over the last day.
+-   **From the UI:** open the workflow's **Runs** dashboard, click **Filter**, and add a **Status** filter set to **Failed**. Add a **Date** filter as well (for example, **Date** is **after** yesterday's date) to see how many runs failed recently.
 -   **On a schedule:** run `clay workflows runs list <workflowId> --status failed` from the Clay CLI using a cron job or your agent's scheduler to check for new failed runs, and have your script or agent notify your team. See **Retrying failed workflow runs via the CLI** (below) for setup requirements and how to re-run failed runs automatically.
 
 ## Bulk re-run for Workflows
