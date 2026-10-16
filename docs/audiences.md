@@ -812,6 +812,34 @@ The field is permanently removed and cannot be recovered.
 
 **Note:** Only custom fields — fields you created yourself — can be deleted. Built-in fields from Salesforce, HubSpot, or other connected sources have the Delete field button disabled. To stop a field from appearing in your column view without deleting it, use **Hide field** instead (available from the same sidebar, or by clicking the column header and selecting **Hide**).
 
+### Can I merge two Audience fields into one (for example, after mapping columns to the wrong field)?
+
+No. Audiences has no option to merge two fields into one. You can delete a custom field, but you can't combine it with another field directly in your Audience. To consolidate two Audience fields — for example, when a table column was mapped to the wrong field and values are now split across two fields — combine the values in a Clay table and push them back:
+
+1.  In a Clay table that has both values, add a formula column that combines the two columns into the single value you want to keep.
+2.  Add an `Update Audiences Record` or `Upsert Audiences Record` column and map the formula column to the Audience field you're keeping.
+3.  Run the column on 10 rows, then check those records in your Audience to confirm the field shows the combined value.
+4.  Run the column on the remaining rows.
+5.  Delete the duplicate field from the **Data Hub** — see [How do I delete a custom field from Audiences?](#how-do-i-delete-a-custom-field-from-audiences) above.
+
+**Re-pushing with a corrected mapping updates records — it doesn't create duplicates.** `Upsert Audiences Record` matches each row to an existing Audience record using the **Lookup fields** you choose (for example, Domain for Companies or Email for People) and updates that record. A new record is created only when no match is found. See [Adding enrichments](#adding-enrichments) above for the full list of lookup fields.
+
+**Blank cells don't clear existing values.** `Upsert Audiences Record` and `Update Audiences Record` have an **Ignore blank values** setting that is on by default — an empty cell in your table is skipped, and the Audience record keeps its current value for that field. So fixing a mapping and re-pushing doesn't remove values already written to the wrong field; those values stay until you overwrite them or delete the field. A field you map also fills in only on rows where the source column has data.
+
+### How do I fill an Audience field with AI (for example, classify companies by channel) without using a table?
+
+Workflow enrichment from the Data Hub is currently in beta — if you don't see the **Create workflow** button described below, contact your Growth Strategist or Clay support to check whether it can be enabled for your workspace. It requires Audiences (Launch, Growth, or Enterprise plans) and is not available to Viewers.
+
+You can populate a People or Companies Audience field directly from that field in the **Data Hub**, without pulling records into a table and pushing them back. For example, to add a **Channel** field (Distributor, Retailer, E-commerce) and fill it with an AI classification for each company:
+
+1.  Create the field if it doesn't exist yet — see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) above.
+2.  In the left sidebar, click **Data Hub** and stay on the **Fields** tab.
+3.  Click the field's row to open the **Field details** sidebar.
+4.  In the **Enrichments** section, click **Create workflow**. (If the field has no enrichments yet, the section shows **No enrichments** above the button.)
+5.  Clay opens a new draft workflow with **All People** or **All Companies** already selected as the trigger audience and the field already selected as the destination the workflow writes to.
+6.  Add the steps that produce the value — for example, an AI step that classifies each company — and test them.
+7.  Publish the workflow. To run it on records already in your Audience, check **Run on all members now** when you publish — see [Connecting a workflow to a segment](#connecting-a-workflow-to-a-segment) above.
+
 ### Why does my People audience have both Title and Job Title (or State and State/Region)?
 
 In a People audience, **Title**, **City**, **State**, and **Country** are Clay's default fields. Fields such as **Job Title**, **State/Region**, and **Country/Region** usually come from your HubSpot import. When you add a HubSpot contact property to the import field mapping, Clay tries to match it to an existing Clay field. If no match is found, Clay creates a new custom field using the HubSpot property's name. That's how you end up with two fields for the same information.
