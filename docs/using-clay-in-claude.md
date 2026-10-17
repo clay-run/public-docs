@@ -112,6 +112,19 @@ If your workspace has Clay Audiences enabled, you can use natural language to fi
 
 The integration is designed for targeted, individual account research — not bulk data exports or analytical operations. SQL-style queries such as grouping accounts by owner or aggregating pipeline by territory are not supported. For complex analysis across your full Audiences dataset, use the Clay platform directly at [app.clay.com](http://app.clay.com).
 
+**Why does Clay return no accounts when I ask Claude about my Salesforce accounts?**
+
+When you ask Claude or Claude Code about your CRM accounts or contacts (for example, "Which accounts are owned by our CSM team?"), Clay answers with its `query-objects` and `ask-question-about-accounts` tools. These tools read CRM data from Clay Audiences. They don't read it directly from your Salesforce connection. Connecting Salesforce to Clay for tables and enrichments doesn't make your account data available to Claude on its own. If no Salesforce records have been synced into Audiences, Clay returns zero accounts instead of an error.
+
+To get results for Salesforce account questions in Claude:
+
+1.  **Make sure Clay Audiences is enabled for your workspace.** If it isn't, Clay returns the message `Clay Audiences is not enabled for this workspace, so no accounts are accessible through MCP.` Connecting a CRM or importing data won't fix this message. Contact Clay support to enable Audiences.
+2.  **Import your Salesforce records into Audiences.** This is a separate step from connecting Salesforce for tables. In Audiences, click `Add data` → `Add Source` → select your Salesforce integration, then add an import for the objects you want to ask about, such as Accounts or Contacts. See [Importing from Salesforce](https://university.clay.com/docs/audiences#importing-from-salesforce).
+3.  **Include every field you want to ask about in the import's field mapping.** Clay in Claude can only filter on fields that exist in your Audiences data. For example, to ask about accounts owned by your CSM team, add your CSM owner field (often a custom field) to the Account import's field mapping. See [A Salesforce field isn't appearing in my audience filters — how do I add it?](https://university.clay.com/docs/audiences#a-salesforce-field-isnt-appearing-in-my-audience-filters--how-do-i-add-it)
+4.  **If results are still empty**, check the `Restrict account querying by Salesforce owner` toggle on the `MCP` page. By default, Clay in Claude only returns accounts you own in Salesforce. A workspace admin can turn this toggle off from [MCP settings](https://university.clay.com/docs/mcp-settings).
+
+If your workspace doesn't use Audiences, you can still check Salesforce data in a Clay table. Use the **Lookup record** action, or import records from a Salesforce list view, report, or SOQL query. See [Salesforce integration FAQs](https://university.clay.com/docs/salesforce-integration-faqs).
+
 **How many credits do I get?**
 
 Credits for Clay in Claude draw from your standard Clay workspace credit balance — there is no separate credit pool for Claude usage. If you run out of credits, you can continue searching for people without enrichments, or upgrade to a paid plan for full functionality.
