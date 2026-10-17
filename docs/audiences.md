@@ -1061,9 +1061,11 @@ See [Workflows](https://university.clay.com/docs/workflows) for supported trigge
 
 ### How do I send people in a segment to a Clay table?
 
-To send the people or companies in an Audiences segment to a Clay table (for example, for outreach from a table instead of a workflow), use **Add to workbook**. **Send to workflow** connects the segment to a workflow trigger and does not write records to a table.
+**Send to workflow** connects an Audiences segment to a workflow trigger. It does not write the segment's people or companies to a Clay table.
 
-**Availability:** **Add to workbook** is in limited release. It is enabled only for select workspaces on paid plans and is not available on Free or Trial plans. If you don't see **Add to workbook** under **Export action**, contact Clay support.
+**Add to workbook** sends a segment's records to a Clay table, but it is a legacy option that only some existing workspaces have. It is not available on Free, Trial, or Flex plans. If **Add to workbook** doesn't appear under **Export action** on your segment, your workspace doesn't have this option.
+
+If your workspace has **Add to workbook**:
 
 1.  Open the saved Audiences segment and click `Send` → `Export action` → **Add to workbook**.
 2.  In the **Send to workbook** dialog, enter a **Table name** and confirm.
