@@ -21,6 +21,8 @@ Build and sync contact and account lists to LinkedIn, Meta, Google Ads, Bing Ads
 
 **Note:** Table ads (Ad Sync tables created directly from a Clay table) are being deprecated. All existing table-based ad syncs now show a deprecation notice, and creating new recurring table ad syncs is no longer supported. For new ad targeting workflows, use Audience Ads instead — see [Syncing audiences to ad platforms](https://university.clay.com/docs/audiences#syncing-audiences-to-ad-platforms).
 
+**Note:** Legacy audience-backed Ad Syncs (company and people syncs created before the Ad Syncs tab was introduced) have been migrated to the **Ads** homepage under the Ad Syncs tab. These syncs appear with a **"Legacy ad sync"** prefix in their name. Completed one-time legacy syncs are marked as done; recurring legacy syncs continue running on their existing schedule.
+
 ## **Creating and syncing ad audiences**
 
 _Note: Personal email addresses significantly improve match rates when syncing to ad platforms. Use the `Hashed Email for Ads` waterfall to find contact email addresses._
@@ -165,6 +167,16 @@ To target contacts at your company accounts on those platforms, use **Find peopl
 ### **Can I edit the field mapping after setting up an Ad Sync?**
 
 No. Field mapping is configured when you create the Ad Sync and cannot be changed afterward. To use a different field mapping, delete the current sync and create a new Ad Sync with your updated configuration. **Deletion is permanent — the sync cannot be restored afterward.** Deleting the sync does not affect your underlying audience segment. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for details.
+
+### **Can I pause or edit a recurring Ad Sync?**
+
+Yes. You can pause a recurring Ad Sync and resume it later — or edit its name and schedule — without deleting and rebuilding it.
+
+To pause or resume a sync, go to the **Ads** homepage, find your sync, and click the **⋮** (three-dot) menu next to it. Select **Pause** to stop future runs; select **Resume** when you're ready to restart. While paused, no enrichment or syncing runs. Existing audience members are not removed from the ad platform while a sync is paused.
+
+To edit a sync's name or schedule, select **Edit** in the same **⋮** menu.
+
+**Note:** Completed one-time syncs cannot be paused or edited. Field mapping cannot be changed on any Ad Sync after creation — see [Can I edit the field mapping after setting up an Ad Sync?](#can-i-edit-the-field-mapping-after-setting-up-an-ad-sync) for details.
 
 ### **Can I permanently delete an Ad Sync?**
 
