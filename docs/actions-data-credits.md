@@ -419,6 +419,12 @@ Note that credits are not refunded for enrichments where the system operated as 
 
 It depends on the provider's billing model. In some cases, a data provider may not charge when no data is found — in those cases, your credits will be refunded automatically. Other providers charge Clay for the API call regardless of whether data is found, so credits are deducted either way. You can see the exact credit cost for each enrichment in the enrichment panel before running.
 
+### Why does an enrichment show "Tool execution failed with status: SUCCESS\_BLOCKED\_DATA"?
+
+Clay checks every enrichment request against an internal compliance list before contacting any data provider. If a contact's email address, phone number, or professional profile identifier is on that list, the enrichment exits early — no lookup is attempted and no credits are charged (any credits tentatively held are automatically refunded). The cell detail panel shows the message "Data blocked — the data owner has requested for this information to be blocked in Clay."
+
+This is not a bug, a provider error, or anything specific to your account. Other contacts in the same workflow run are unaffected — the block applies only to the specific flagged identifier. Retrying will not change the outcome; the block is tied to the contact's identifier, not to run conditions or timing.
+
 ### What happens to credits if an enriched email fails validation or turns out to be undeliverable?
 
 Credits are charged when a provider returns a result — including email addresses that later fail a validation step or turn out to be undeliverable. There is no automatic credit refund when a returned email fails validation or bounces after sending; credits are deducted at the point the provider returns data, regardless of what happens to that address downstream.
