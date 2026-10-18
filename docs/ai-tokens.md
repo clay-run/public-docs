@@ -1,7 +1,7 @@
 ---
 title: AI Tokens
 description: Understand AI Tokens
-last_synced: 2026-04-26T01:39:40.311Z
+last_synced: 2026-10-07T02:13:01.385Z
 ---
 
 # AI Tokens
@@ -26,12 +26,6 @@ When working with AI models, you'll encounter two types:
 **TPM (Tokens Per Minute)** refers to how many tokens a model can process within one minute—across both input and output. Different features and providers have different TPM requirements, often tied to your API tier.
 
 ## API tier requirements
-
-### ChatGPT Generate Text
-
--   **Requirement**: 30,000 TPM
--   **Access**: Works with **any paid tier** as long as the API key has access to GPT-4 or GPT-4 Turbo
--   _(Note: Free-tier or unpaid OpenAI keys may not have access)_
 
 ### ClayGent Web Research
 
@@ -69,7 +63,7 @@ When using AI features in Clay, you'll consume both **Actions** and **Data Credi
 Clay uses two pricing structures for AI models:
 
 -   **Fixed pricing**: A flat number of data credits per task (applies to most models, including Clay's own models like Neon, Helium, and Argon)
--   **Variable pricing**: Data credits based on actual token usage plus a 20% premium (applies to advanced reasoning models used for sophisticated web research)
+-   **Variable pricing**: Data credits based on actual token usage, charged at cost with no markup (applies to advanced reasoning models used for sophisticated web research)
 
 You can control AI spending by:
 
