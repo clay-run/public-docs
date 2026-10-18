@@ -179,6 +179,14 @@ curl -X POST YOUR_CLAY_WEBHOOK_URL \
 
 If a row appears for the simple test but not for your real payload, the issue is either in your real request's formatting, headers, or auth token — or **auto-dedupe is removing rows** whose dedupe column value already exists in the table. A simple `{"test": "hello"}` payload always creates a row even when auto-dedupe is on, because blank dedupe column values are skipped. See [My webhook is sending data successfully but new rows aren't visible](#my-webhook-is-sending-data-successfully-but-new-rows-arent-visible-in-my-table) for how to diagnose and fix auto-dedupe. If no row appears on a brand-new webhook, contact support.
 
+### What should I do if my webhook hit the 50,000 limit while auto-delete was temporarily disabled?
+
+If you had auto-delete (passthrough mode) enabled on your webhook table, then disabled it temporarily, and the webhook hit the 50,000 submission limit during that window, you do not need to create a new webhook. **Re-enabling auto-delete on the existing table restores the webhook.** Once passthrough mode is active again, new submissions bypass the 50,000 check and start landing normally — this typically takes effect within about a minute.
+
+The source count remains at 50,000 after you re-enable auto-delete, but that does not block new submissions: when passthrough mode is active, Clay skips the submission limit check entirely for that webhook. As auto-delete processes and removes completed rows, the source count decreases over time.
+
+If you are not on an Enterprise plan and do not have access to auto-delete, the only option is to create a new webhook, which starts with a fresh counter at zero.
+
 ### How can I tell which webhook source a row came from?
 
 Clay records which webhook source sent each row at ingestion time, so you can filter the table by source without any extra setup.
