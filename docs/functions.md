@@ -34,7 +34,7 @@ Functions are built for workflows you'd otherwise rebuild from scratch in every 
     -   **Define your inputs** — the values that will change from table to table (e.g., `Domain`). Everything else is fixed logic that stays the same.
     -   **Define your outputs** — the value that you will return from the function.
     -   Note: You can change all the above settings after you create the function as well.
-5.  (Optional) Check `Replace columns with function` to swap out the original columns in your table with the new function
+5.  The `Replace columns with function` option is **checked by default**. If left checked, Clay replaces your selected columns with the new function column. **To keep your original columns in the table, uncheck this option before clicking Create.**
     1.  Clay will copy over all the existing data so nothing is lost. **This can take a few minutes for larger tables**.
 6.  Click `Create` → `Create`. Your function now appears in the left-hand column of your table.
     1.  You can also click `Create + Open in Function Editor` to view/edit the new functions immediately (See "Editing a function" for more details).
