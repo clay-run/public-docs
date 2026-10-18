@@ -38,7 +38,9 @@ When a workbook (or other resource) is assigned to a budget, all credit-consumin
 
 ## Assigning resources to a budget
 
-Once a budget exists, workbooks and other resources can be assigned to it. You can assign a single resource from its own settings, or use bulk assignment from the workspace homepage to move multiple resources to a budget at once.
+Once a budget exists, workbooks and other resources can be assigned to it — including workbooks that already exist and have prior credit spend. You can assign a single resource from its own settings, or use bulk assignment from the workspace homepage to move multiple resources to a budget at once.
+
+**Budget assignment is not retroactive.** Only credit spend that occurs after a workbook is assigned to a budget counts toward that budget's balance. Credits already consumed before the assignment are not applied retroactively, and the budget's balance starts tracking from the moment of assignment going forward.
 
 **From a workbook:**
 
