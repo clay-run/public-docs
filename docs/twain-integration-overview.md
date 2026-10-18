@@ -1,7 +1,7 @@
 ---
 title: Twain integration
 description: The accurate deep research API for GTM Engineers building agents.
-last_synced: 2026-04-26T01:40:49.969Z
+last_synced: 2026-09-28T16:43:58.104Z
 ---
 
 # Twain integration
