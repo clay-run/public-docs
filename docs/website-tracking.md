@@ -90,6 +90,9 @@ Use relative URL paths starting from the root domain:
 
 -   ✅ `/pricing` or `/blog*`
 -   ❌ `https://www.example.com/pricing`
+-   ❌ `/pricing?utm_source=google&gclid=...`
+
+Clay compares URL path filters only to the page path a visitor lands on (for example, `/products/demo/`). The domain and anything after the `?` (such as UTM parameters or ad click IDs) are never part of the path, so filter entries that contain them never match. If you paste a full URL into a URL path filter, Clay adds a leading `/` to it (for example, `/https://www.example.com/pricing?utm_term=...`), and that entry won't match any visit.
 
 URL path filters use exact matching with optional `*` wildcards:
 
@@ -159,6 +162,15 @@ To verify the script is loading at the browser level:
 **Exclude filter not working as expected:** Exclude filters apply at the session level. A session is blocked only if every page the visitor viewed during that session matches at least one exclude pattern. If a visitor toured multiple pages and only some of them match your exclude filter, the session will still appear in your table.
 
 **All rows show '/' as the page path, or fewer visitors than expected:** The "URL paths to include" filter operates at the session level — a session is tracked only if at least one page the visitor viewed matches an include pattern. If your include list contains only `/`, Clay tracks sessions where the visitor hit the homepage at any point, but sessions where the visitor never visited the homepage are excluded entirely. Visitors who entered your site directly on an interior page (for example, from a search result or ad) without navigating to `/` will not appear in your table, which can make it look like everyone only visited the homepage. To track all visitor sessions regardless of entry page, remove the `/` entry from "URL paths to include" (Settings → Web intent → Tracker → Tracking filters). Leaving the field empty tracks all sessions by default.
+
+**Settings say Clay is receiving data, but no rows appear in your table:** Check whether "URL paths to include" contains full URLs (for example, `/https://www.example.com/products/demo/?utm_term=...`). URL path filters compare only to the page path, with no domain and no query string, so full-URL entries never match a visit and every session is filtered out. To fix it:
+
+1.  Open your website connection (Settings → Web intent) and go to "URL paths to include."
+2.  Replace each entry with only the page path. Leave out the domain and everything after the `?`. For example, use `/products/demo/` instead of `https://www.example.com/products/demo/?utm_term=...`.
+3.  To include every page in a section, add `*` at the end (for example, `/products/demo*`). To include your homepage, add `/` as its own entry.
+4.  Click `Save changes`.
+
+A session is added to your table when any page in that session matches one of your include entries. The row still lists every page the visitor viewed in that session, including subpages that aren't in your include list, along with the time spent on each page.
 
 Filter changes only apply to new data — existing rows aren't affected. Make sure you haven't accidentally omitted wildcards on paths you want to include.
 
