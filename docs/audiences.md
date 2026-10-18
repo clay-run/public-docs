@@ -506,6 +506,8 @@ Open the workflow's **Runs** view to inspect run status and individual step inpu
 
 To find Audience records that have a saved enrichment value, filter the relevant field with **is not empty**. This shows records with a value; use the workflow's run history to confirm which run produced it.
 
+**Note:** Configurable error threshold notifications — available for Clay tables on Enterprise plans via [Table Alerts](table-alerts.md) — are not available for Audience bulk enrichments. There is no self-serve option to receive an automated alert when errored rows in a segment or bulk enrichment exceed a set threshold.
+
 ### Signals
 
 Signals monitor your audience for key changes and write results permanently to each matching record so you can segment on them.
