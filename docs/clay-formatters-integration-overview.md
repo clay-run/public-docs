@@ -1,6 +1,6 @@
 ---
 title: Clay formatters overview
-description: Normalize and format your Clay table data using Clay's built-in tools.
+description: Normalize and format your Clay table data, and map job titles to personas, using Clay's built-in tools.
 last_synced: 2026-04-26T01:39:44.557Z
 ---
 
@@ -164,3 +164,35 @@ By default, new rows within your Clay table will automatically run this enrichme
 To run enrichment only under specific conditions, use formulas that trigger the column when the formula is true. Learn more about AI formulas in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101).
 
 **Step 4:** Run your enrichment. The output includes a **Deduped List Object** (the unique values as an array) and a **Deduped String** (the unique values joined with commas).
+
+### `Action` Map Job Title to Persona
+
+Use the **Map job title to persona** action to tag each contact's job title with a persona (for example, "RevOps Leader" or "Engineering Leader") so you can segment your targeting and tailor messaging by role. Map job title to persona is built by Clay, runs at no credit cost, and doesn't require a connected account. To add it to your table, click **+ Add Column**, search for **"Map job title to persona,"** and select it.
+
+To map job titles to personas:
+
+**Step 1:** Input the **Job Title** column you want to map.
+
+**Step 2:** In **Personas & Keywords**, add one row per persona. Enter the persona label in the **Persona** column and a comma-separated list of job title keywords in the **Keywords** column. For example:
+
+- **RevOps Leader** → `RevOps, Revenue Operations, Sales Operations`
+- **Engineering Leader** → `VP Engineering, Head of Engineering, CTO`
+- **Marketing IC** → `Demand Gen, Growth Marketing, Content Marketing`
+
+**Step 3:** Configure run settings.
+
+By default, new rows within your Clay table will automatically run this enrichment. Learn more about auto-update in [this brief guide](https://docs.clay.com/en/articles/9642165-auto-update-and-auto-dedupe-table).
+
+To run enrichment only under specific conditions, use formulas that trigger the column when the formula is true. Learn more about AI formulas in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101).
+
+**Step 4:** Run your enrichment. The action outputs a **persona** field containing the matched persona label.
+
+**How Map job title to persona matches titles:**
+
+- Matching is keyword-based (no AI) and case-insensitive.
+- Keywords longer than 3 characters match anywhere in the job title. For example, `Revenue Operations` matches "VP of Revenue Operations."
+- Keywords of 3 characters or fewer (for example, `CTO` or `VP`) must match a whole word in the job title, so `CTO` doesn't match "Director."
+- If a job title matches more than one persona, the first matching persona in your list is returned.
+- If no keywords match, the action returns `Other`.
+
+Once each row has a persona, use the persona column in your messaging logic, campaigns, or [conditional copy](conditional-statements.md) to personalize outreach for each persona.
