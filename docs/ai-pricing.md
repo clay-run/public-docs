@@ -100,6 +100,16 @@ In most cases, the final cost will be at or below the estimate. Complex, multi-s
 
 Customers who are configuring complex, multi-step web research tasks may wish to run their prompt on 10 or 50 rows so they are able to see the credit charge for each row before running the prompt across their full table.
 
+**Why does "Total Input Tokens" in my cell details show far more than my prompt length?**
+
+For web research (Claygent) columns, the AI runs in multi-step agent mode — it can search the web and fetch pages up to the search budget you set in the column. Each search result or page it visits is added to the context the model reads, and that growing context is re-sent to the model at every subsequent step.
+
+"Total Input Tokens" is the cumulative sum of all tokens sent to the model across every step in the run — not just your original prompt. For example, if your prompt is 650 tokens and the column runs 3 steps, each step sends a progressively larger context window (your prompt plus all results gathered so far), so the total can easily reach 5,000–10,000 tokens even though your instruction text is under 1,000.
+
+Clay bills based on the actual token usage the AI provider reports for the full run, not the length of your original prompt — so the figure in cell details reflects real AI compute performed, not overhead Clay adds.
+
+To estimate cost going forward: run a small test batch (10–50 rows) and use the actual "Total Cost To AI Provider" figure shown in the cell details panel after those rows complete — multiply that per-row number by your total row count to project full-table spend. To reduce token usage, lower the maximum number of search or page-fetch steps in the column settings (fewer steps means less accumulated context re-sent per run), or switch to a fixed-price model when predictable cost matters more than deep research.
+
 **What happens if I run out of data credits mid-run?**
 
 Processing stops when your balance reaches zero. You won't be charged beyond your available credits. Rows that haven't started will not run; rows that completed successfully retain their results.
