@@ -157,6 +157,12 @@ To apply the same ICP check every time a rep uses Clay from Claude, put your ICP
 
 **Limitation:** Turning on `MCP for reps` adds the Function alongside Clay's built-in MCP tools. It doesn't replace them. Reps can still search for people and add contact or company data points straight from Claude, without going through your ICP Function. Clay has no setting that turns off the built-in tools or limits a rep to specific Functions. To cap what a rep can spend, set their credit limit in the `MCP users` table. A credit limit of `0` blocks enrichments and Functions through AI tools. Searches that don't add paid data points still run.
 
+### Can I disable Sales Rep access to the Clay Sequencer?
+
+Yes, using the **Disable Sales Rep sequencer access** toggle in `Settings → Sequencer`. When enabled, sequencer controls (email accounts and inbox) are hidden from the Sales Rep interface for every Sales Rep in your workspace — including reps who have already connected their email accounts. The change takes effect immediately for all reps; individual email account connections do not need to be removed separately.
+
+This toggle is workspace-wide — there is no per-user control to disable an individual rep's sequencer access. To limit a specific rep's ability to run enrichments through MCP without affecting others, set their individual credit limit to 0 from the `MCP users` table (see [Setting credit limits](#setting-credit-limits)). Setting the limit to 0 prevents them from spending any Clay credits through ChatGPT, Claude, or Glean, but does not hide sequencer controls from their interface.
+
 ### When do credits reset?
 
 The MCP user credit limit is a rolling monthly limit. Credit spend automatically resets on the 1st of each month at midnight UTC.
