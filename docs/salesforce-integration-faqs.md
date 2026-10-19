@@ -217,6 +217,23 @@ Clay populates the Map fields picker by calling Salesforce's object describe API
 
 **To confirm which Salesforce user your connection is authenticated as**, go to `Settings` → `Connections` → `Salesforce`, click `…` next to your connection, and select `Test Connection`. Clay displays that user's email address — confirm the user has the correct FLS permissions for the fields you need.
 
+## Why does Clay show my Salesforce checkbox field as a text field, and how do I update it?
+
+In the **Map fields** section of the Salesforce **Create record**, **Update record**, and **Create or update object** (upsert) actions, Salesforce checkbox fields are shown with a text ("T") icon instead of a checkbox. This is how Clay displays Salesforce checkbox fields — it doesn't mean your field is set up incorrectly in Salesforce.
+
+What matters is the value you send to the Salesforce checkbox field:
+
+-   **Typing `TRUE` (or `true`) directly into the Map fields box doesn't work.** Anything typed directly into a Map fields box is sent to Salesforce as text, and Salesforce rejects text for a checkbox field, so the row errors.
+-   **Mapping a column that holds a true/false value works.** Clay sends a true/false value from a column (for example, a formula column) to Salesforce as a checkbox value, which Salesforce accepts.
+
+**To update a Salesforce checkbox field from Clay:**
+
+1.  Add a formula column to your table that returns true or false. For example, if a text column called `Not_At_Company__c` holds the text `TRUE`, use the formula `{{Not_At_Company__c}} === "TRUE"`. The formula returns `true` for rows where the column says `TRUE` and `false` for every other row.
+2.  Open your **Update record** (or **Create record**) column, clear any text typed into the checkbox field's box in **Map fields**, type `/`, and select the new formula column.
+3.  Save, run a single row as a test, and confirm the checkbox is checked on that record in Salesforce.
+
+**Converting a text column to a Checkbox column:** if you change a text column's type to **Checkbox** instead of using a formula, Clay only recognizes the exact text `true` or `True` as checked and `false` or `False` as unchecked. Other values, such as `TRUE` in all caps, `yes`, or `1`, can't be converted. If your column holds values like `TRUE`, use the formula column approach above.
+
 ## How do I access address fields (street, city, state) from a Salesforce Lookup Record?
 
 When a **Lookup Record** action returns a Salesforce Account or Contact, the result includes Salesforce's compound address fields as nested objects in Clay's cell details panel. These appear as **Billing Address** and **Shipping Address**, each containing individual sub-fields: Street, City, State, Postal Code, Country, State Code, Country Code, Latitude, Longitude, and Geocode Accuracy.
@@ -554,7 +571,7 @@ If you have a name but not the Salesforce ID for a relationship field, add a **L
 
 **3. A field type mismatch**
 
-If a mapped value doesn't match the expected Salesforce field type — for example, text sent where a boolean or lookup ID is expected — the record can fail validation after creation. Review your **Map fields** configuration for type alignment.
+If a mapped value doesn't match the expected Salesforce field type — for example, text sent where a boolean or lookup ID is expected — the record can fail validation after creation. Review your **Map fields** configuration for type alignment. For checkbox fields, see [Why does Clay show my Salesforce checkbox field as a text field, and how do I update it?](#why-does-clay-show-my-salesforce-checkbox-field-as-a-text-field-and-how-do-i-update-it)
 
 **4. Duplicate rules on the object**
 
