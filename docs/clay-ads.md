@@ -59,6 +59,25 @@ You can view and manage all synced audiences from the `Exports` panel in your ta
 
 To update an audience, simply modify the data in your Clay table. The audience will automatically resync based on your configured schedule.
 
+### **How do I filter Ad Syncs by ad platform on the Ads page?**
+
+The **Ads** page (go to `Ads` from the Clay homepage) lists the Ad Syncs in your workspace. The **Destinations** column shows which ad platforms each Ad Sync exports to, so you can see where every audience is going without opening each sync.
+
+To show only the Ad Syncs that export to specific ad platforms:
+
+1.  On the **Ads** page, click the **Destination** filter above the list.
+2.  Select one or more ad platforms.
+
+The list then shows every Ad Sync that exports to at least one of the platforms you selected.
+
+### **What does "Legacy ad sync" at the start of an Ad Sync name mean?**
+
+Ad syncs created from Audiences company and people segments before the current Ad Sync experience (legacy audience ad syncs) have been migrated to the new Ad Sync format. Migrated Ad Syncs appear in the **Ad syncs** view of the Ads page, not the **Legacy ad syncs** view, and their names start with **Legacy ad sync** followed by the original name.
+
+-   **One-time legacy syncs** show the **Exported** status and are read-only. See [Can I change a one-time Ad Sync to recurring?](#can-i-change-a-one-time-ad-sync-to-recurring) to start syncing that audience on a schedule.
+-   **Recurring legacy syncs** show the **Active** status and keep syncing automatically every 3 days, whatever schedule the legacy sync originally had.
+-   **Table ads** (Ad Sync tables built directly from a Clay table) are not affected by this migration.
+
 ## **Glossary**
 
 -   **Match rate** — The percent of contacts or accounts your ad platform can match to real users. Personal emails usually improve match rates (often ~40–60%+ on Meta and up to ~95% on LinkedIn).
