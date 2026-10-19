@@ -253,12 +253,16 @@ No, LinkedIn and Meta don't provide contact-level match visibility for privacy r
 
 ### **How do I export the contacts in my ad sync to CSV?**
 
-The ad sync page does not have a CSV download button. The **People** (or **Companies**) list shown next to the Setup, Match, and Sync steps is a read-only preview of the segment you're syncing. To download the contacts in an ad sync as a CSV, open the ad sync's source segment in Audiences and export it from there:
+The ad sync page does not have a CSV download button, and Clay Audiences doesn't have a download or export-to-CSV option for segments. The **People** (or **Companies**) list shown next to the Setup, Match, and Sync steps is a read-only preview of the segment you're syncing.
+
+You can only get an ad sync's contacts into a CSV if your workspace still has legacy bulk enrichment in Audiences. In that case, copy the ad sync's source segment into a Clay table and download the table:
 
 1. Open the ad sync from the **Ads** page and click **Setup** at the top of the page. This works for active syncs too — the Setup step opens in read-only mode.
 2. In the **Segment** card, click the **⋮** (three-dot) menu and select **Open segment in new tab**. The segment opens in Audiences.
-3. Click `Enrich`, then click **Add enrichment table**. (In some workspaces, the enrichment panel shows a `+` button instead — click it and select **Create enrichment table**.) You don't need to add enrichment columns.
+3. Click `Enrich`, then click **Add enrichment table**. (In some workspaces, the enrichment panel shows a `+` button instead — click it and select **Create enrichment table**, labeled "Legacy bulk enrichment".) You don't need to add enrichment columns.
 4. Open the new table, make sure no rows are selected, then click **Tools**, open the **Export** tab, and click **Download CSV**.
+
+If the `Enrich` panel only offers **Create enrichment workflow** and has no enrichment table option, this CSV path isn't available in your workspace. See [Can I export an audience segment to CSV?](audiences.md#can-i-export-an-audience-segment-to-csv) for what you can do with the segment instead.
 
 Workspace Admins and Editors can create the enrichment table; Workspace Viewers can't.
 
