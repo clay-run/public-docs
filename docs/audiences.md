@@ -1032,6 +1032,23 @@ The 15-minute (or daily) cadence applies to the **import direction only** — it
 
 Enrichments configured with `Continuous Enrichment` enabled automatically process new records entering a segment, typically within 15 minutes. No manual runs are required after initial setup.
 
+### Why is a table connected to my audience segment updating Salesforce on its own?
+
+Sending an Audiences segment to a Clay table with **Add to workbook** isn't a one-time push. The table stays connected to the segment, and new records that join the segment later are added to the table automatically. The **Send to workbook** dialog has no option to make the send one-time.
+
+New rows that arrive from a connected segment behave like any other new rows in the table: every column with auto-run turned on runs for them. If the table has a Salesforce **Update Record** column with auto-run on, Clay writes to Salesforce each time new records join the segment, even if nobody has opened the table recently. In Salesforce field history, those changes show your Clay integration user as the user who made them.
+
+**To see which tables a segment feeds:**
+
+1.  Open the segment in Audiences.
+2.  Click **Send** in the top right.
+3.  The **Send** sidebar lists every connected table under **Tables**. Click the **⋮** menu on a table card to **Open table**, **Rename**, or **Delete** it.
+
+The **Send** sidebar has no pause or disconnect option for a connected table. To stop a connected table from writing to Salesforce without deleting the table, open the table and do one of the following:
+
+-   **Turn off auto-run on the Update Record column** to stop only the Salesforce writes. New segment records still arrive in the table, but they're no longer pushed to Salesforce.
+-   **Turn off auto-run for the whole table** in the table toolbar to stop every action column from running on new rows. New segment records still arrive in the table.
+
 ### Why didn't my audience count change after I tightened my search filters?
 
 By default, audience searches (Find People and Find Companies sources) use **Add new results** mode — the search only adds net-new contacts going forward and never removes contacts from an earlier, broader search. To narrow your results, use the **Replace existing results** option when saving.
