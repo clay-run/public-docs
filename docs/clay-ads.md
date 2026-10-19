@@ -329,6 +329,28 @@ If Search and Display remain at 0 after 48 hours, check the audience status in y
 
 When you create your first ad audience, you'll be prompted to authenticate with LinkedIn Campaign Manager, Meta Business Manager, or your Google Ads account via OAuth. Make sure you have admin access to the ad account you want to use. Note that Google Ads syncing is currently in closed beta — contact [Clay support](https://www.clay.com/contact) to request access.
 
+### **Why does Google show "This app is blocked" when I connect Google Ads to Clay?**
+
+Google shows **"This app is blocked. This app tried to access sensitive info in your Google Account. To keep your account safe, Google blocked this access."** when your company's Google Workspace admin settings don't let Clay's Google Ads connection access your Google account. This is a Google Workspace restriction set by your organization, not a problem with your Clay connection. Only a Google Workspace admin can lift it. The block can still appear when your organization already allows other Clay Google apps, such as Clay's Google sign-in, or allows unconfigured third-party apps.
+
+**Where to start the Google Ads connection in Clay:** You can't create a Google Ads connection from **Settings → Connections**. Start it from Clay Ads instead:
+
+1.  Open your ad sync from the **Ads** page and go to **Add sync destinations**.
+2.  On the **Sync to Google Ads** card, click **Add**.
+3.  In the account dropdown, select **Add account**.
+4.  Click **Sign in with Google Ads** and sign in with the Google account that has access to your Google Ads account.
+
+**How your Google Workspace admin unblocks the Clay Google Ads app:**
+
+1.  Start the Google Ads connection in Clay using the steps above. When the "This app is blocked" page appears, find `client_id=` in the browser's address bar and copy only that value.
+2.  In the [Google Admin console](https://admin.google.com/), go to **Security → Access and data control → API controls → App Access Control**.
+3.  Search for that exact client ID. If the app isn't listed yet, click **Configure new app**, search by the client ID, and select the matching app. Search by client ID, not by app name, so you configure the app the Google Ads connection actually uses.
+4.  Select the organizational unit that contains the Google account you use to connect Google Ads.
+5.  Set the app's access to **Trusted** and save. **Specific Google data** (limited) access isn't enough: even with the Google Ads scope selected, the connection can stay blocked until the app is set to **Trusted**.
+6.  Wait at least 15 minutes, then retry the Google Ads connection in Clay in a new browser window. Google Admin changes can take up to 24 hours to apply.
+
+The Clay Google Ads connection requests only the `https://www.googleapis.com/auth/adwords` scope. See [Google Ads OAuth authentication](#google-ads-oauth-authentication) for what this scope allows. When the connection works, Google sign-in completes, you return to Clay, and your Google Ads account appears in the account dropdown for the destination. If Google still shows "This app is blocked" more than 24 hours after your admin set the app to **Trusted**, check that it was approved for the organizational unit of the Google account you're signing in with, then contact [Clay support](https://www.clay.com/contact).
+
 ### **Why did I receive an email saying my Meta account will disconnect soon?**
 
 This is expected behavior. Meta enforces a 60-day expiry on OAuth tokens — when you connect your Meta account to Clay using "Sign in with Facebook," the connection stays active for 60 days before it needs to be renewed. Clay sends a warning email 7 days before expiry and again 1 day before expiry so you can take action before any Ad Syncs are interrupted.
