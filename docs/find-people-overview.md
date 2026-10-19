@@ -93,7 +93,7 @@ Each result includes a **Structured Location** object in the cell details with g
 
 ## Enriching your results
 
-**Note on data freshness:** Find People results come from a periodically refreshed index — not a live LinkedIn lookup at search time. A person's job title or company in the results may not reflect their most recent LinkedIn update. To get current employment data, run **Enrich Person** after importing — Enrich Person fetches the profile live from the data provider unless Clay already fetched the same profile within the last 14 days, so its job title and company information is at most 14 days old. See [Why does Enrich Person return older data than the person's LinkedIn profile?](finding-companies-and-people-in-clay.md#why-does-enrich-person-return-older-data-than-the-persons-linkedin-profile)
+**Note on data freshness:** Find People results come from a periodically refreshed index — not a live lookup on the professional network at search time. A person's job title or company in the results may not reflect their most recent profile update. To get current employment data, run **Enrich Person** after importing — Enrich Person fetches the profile live from the data provider unless Clay already fetched the same profile within the last 14 days, so its job title and company information is at most 14 days old. See [Why does Enrich Person return older data than the person's professional profile?](finding-companies-and-people-in-clay.md#why-does-enrich-person-return-older-data-than-the-persons-professional-profile)
 
 After importing Find People results, use Clay's enrichments to add contact information such as work email and mobile phone numbers.
 
