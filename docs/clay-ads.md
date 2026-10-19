@@ -270,7 +270,7 @@ Your actual ad reach is based on the audience size (unique contacts), not the ma
 
 ### **Why does my match rate show 95%+ instead of an exact number?**
 
-On LinkedIn Ads, Meta Ads, Reddit Ads, Bing Ads, and Vibe.co Ads, Clay displays any match rate of 95% or higher as `95%+` rather than an exact figure. This applies to the destination cards and to Sync history. Clay caps the display because it sends several identifiers per contact — up to three hashed personal emails from Enhanced Matching alongside the work email — and a platform can match more than one of them, so the calculated match rate can exceed 100%. Google Ads match rates are always shown as the exact percentage.
+On the professional network, Meta Ads, Reddit Ads, Bing Ads, and Vibe.co Ads, Clay displays any match rate of 95% or higher as `95%+` rather than an exact figure. This applies to the destination cards and to Sync history. Clay caps the display because it sends several identifiers per contact — up to three hashed personal emails from Enhanced Matching alongside the work email — and a platform can match more than one of them, so the calculated match rate can exceed 100%. Google Ads match rates are always shown as the exact percentage.
 
 ### **Why does my ad audience show "too small for use in campaigns"?**
 
