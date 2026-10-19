@@ -101,6 +101,12 @@ All other source types — such as CRM integrations (Salesforce, HubSpot), CSV a
 
 **Continuous-streaming workflows:** Auto-delete allows a table to keep importing new records indefinitely only when the source continuously pushes incoming data — specifically, webhook, send table data, and signal sources. For scheduled CRM or database imports (such as Gong, Salesforce, HubSpot, or Snowflake queries configured to run on a recurring schedule), enabling auto-delete will delete processed rows from the table, but the source will still stop importing after 50,000 records are reached. To process records continuously — for example, enriching every new Gong call as it completes — use a **webhook source** in Clay and configure the external system to push records to Clay as they are created. For Gong specifically, you can do this with Gong's automation rules: create a webhook source in Clay, copy the webhook URL, then set up a Gong rule to send the call ID to that URL whenever a new call is processed.
 
+### Does auto-delete work for the table that sends data or the table that receives it?
+
+The **send table data** option in auto-delete refers to the table's **source**, not to its action columns. It applies to the **receiving (destination) table**: the table whose source was created by a Send Table Data column in another table. When you add a Send Table Data column, Clay creates a send table data source on the destination table, so auto-delete on the destination table can process and delete the incoming rows there without hitting the 50,000-record source limit.
+
+Having a Send Table Data column does not make the **sending table** compatible with auto-delete. The sending table's compatibility depends only on its own source. For example, if the sending table's source is a CSV import or a HubSpot import, it still stops importing after 50,000 records even with auto-delete enabled. If the sending table's own source is a webhook, send table data, signal, or Audiences source, auto-delete lets the sending table keep importing past 50,000 records too.
+
 ## Archive deleted rows
 
 **Note:** Archive deleted rows is in early access. Contact your Clay account team to have it enabled for your workspace.
