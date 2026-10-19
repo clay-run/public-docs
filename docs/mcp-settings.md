@@ -1,7 +1,7 @@
 ---
 title: MCP settings
 description: Connect your Clay workspace to AI tools.
-last_synced: 2026-09-24T21:26:14.668Z
+last_synced: 2026-10-19T16:50:28.293Z
 ---
 
 # MCP settings
@@ -34,6 +34,12 @@ Functions are reusable enrichment workflows built in Clay that reps can invoke d
 
 _For more information about functions, check out our_ [_full doc_](https://university.clay.com/docs/functions)_._
 
+## How Actions are spent through MCP
+
+Work a rep triggers from ChatGPT, Claude, or Glean through Clay's MCP draws on the same Actions and Data Credits as the same work run inside Clay. There's no separate MCP allowance and no MCP surcharge.
+
+One prompt can turn into more than one charged operation, though. The AI tool decides which Clay tools to call to answer a request, so a single question might run a search, enrich what it finds, and invoke a Function — each charged as it runs. That makes MCP spend per prompt more variable than a single enrichment in a table, which is why it's worth setting a default credit limit before reps start.
+
 ## Setting credit limits
 
 Credit limits cap how many Clay credits a rep can spend through ChatGPT, Claude, or Glean in a given month. Credit spend automatically resets on the 1st of each month at midnight UTC.
@@ -55,7 +61,7 @@ The `MCP users` table lists all workspace members, including those who haven't y
 
 Use the search bar at the top of the table to find a specific rep by name or email.
 
-MCP credit usage also appears in the main credit usage dashboard at `Settings → Credit Usage`, alongside all other workspace credit consumption.
+MCP credit usage also appears at `Settings` → `Usage`, on the `MCP` tab. Spend there is grouped by rep — expand a rep's row to see their spend per Function, plus an `Other` row for usage outside your Functions. That `Other` row is where Clay's built-in tools, like company and contact search, land.
 
 ## Audiences controls
 
@@ -190,11 +196,11 @@ Credits are charged per record enriched, not per MCP request or prompt. A rep wh
 
 For Functions that run a provider waterfall, the cost per record also varies: the waterfall stops as soon as a provider returns a result, so each record is charged only for the providers that ran before a match was found. Records that resolve with an earlier, lower-cost provider cost less; records that fall through to later, higher-cost providers cost more.
 
-To see exactly what a rep spent and on which Functions: go to `Settings → Credit Usage → MCP tab`, then expand the rep's row to see a per-Function credit breakdown.
+To see exactly what a rep spent and on which Functions: go to `Settings` → `Usage` → `MCP` tab, then expand the rep's row to see a per-Function credit breakdown.
 
 ### Where else can I see MCP credit usage?
 
-MCP usage appears in the main credit usage dashboard at `Settings → Credit Usage`, which tracks all credit consumption across your workspace broken down by table, integration, and time period.
+MCP usage appears in the main credit usage dashboard at `Settings` → `Usage`, which tracks all credit consumption across your workspace broken down by table, integration, and time period.
 
 ### What's the difference between the default credit limit and a per-user override?
 

@@ -137,7 +137,7 @@ Credit pricing matches standard Clay plans. Claude serves as an alternative inte
 
 **Where can I track how many credits I've used through Clay in Claude?**
 
-Go to `Settings → Credit Usage → MCP tab`. Your usage appears there, broken down by user — expand your row to see which Clay functions you ran and how many credits each consumed.
+Go to `Settings` → `Usage` → `MCP` tab. Your usage appears there, broken down by user — expand your row to see which Clay functions you ran and how many credits each consumed.
 
 **Do I need to invoke Clay manually, or will Claude know to use it?**
 
