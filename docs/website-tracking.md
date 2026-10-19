@@ -351,7 +351,7 @@ For each visit, Web Intent records the following:
 
 -   **Company and location** — the visitor's company (`domain`) plus their city, region, and country (`ipGeo`).
 -   **Pages viewed and time on page** — each page they viewed (`websiteEvents`) and how long they spent on it (`totalTimeOnPage` and `engagedTimeOnPage`, in seconds).
--   **Referrer** — the site that sent them to you (`referrer`), for example `google.com` or `linkedin.com`. Web Intent stores only the referring site's domain and page path, not its query string, so search terms from a search engine aren't included.
+-   **Referrer** — the site that sent them to you (`referrer`), for example `google.com` or a social network's domain. Web Intent stores only the referring site's domain and page path, not its query string, so search terms from a search engine aren't included.
 -   **UTM tags** — any UTM tags on the link they clicked (`utm`): campaign, medium, source, content, and term.
 
 If your website's own search results page puts the search term in its URL (for example, `/search?q=pricing`), that full page URL appears in the page view's `url` field, because Web Intent stores each page's full URL. The `path` field contains only the page path, without the query string. Web Intent doesn't pull search terms out of the URL into a separate field.
