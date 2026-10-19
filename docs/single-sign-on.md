@@ -1,6 +1,6 @@
 ---
 title: Single Sign-On (SSO)
-description: Set up SSO for your Clay workspace, understand login behavior once enabled, and learn about MFA, provisioning, and disabling SSO.
+description: Set up SSO for your Clay workspace, verify your domain with a DNS TXT record, understand login behavior once enabled, and learn about MFA, provisioning, and disabling SSO.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -23,6 +23,25 @@ The typical setup process:
 5.  Clay support activates (enforces) SSO on your workspace.
 
 **Note:** The email domain used for SSO authentication is configured on Clay's side. If you receive an error during the WorkOS setup stating that your domain is not recognized or not allowed, contact Clay support — only the support team can update the allowed domain setting.
+
+### Verifying your domain for SSO (DNS TXT record)
+
+Your organization must have a verified domain before SSO can be activated in Clay. If the WorkOS setup portal shows the banner **"Your organization must have a verified domain in order to activate Single Sign-On. Verify your domain."** on the **Select your identity provider** screen, nothing is wrong. The banner means domain verification for SSO hasn't been completed yet.
+
+**Which domain to verify:** Verify the email domain your team uses to sign in to Clay. For example, if your users sign in as `name@yourcompany.com`, verify `yourcompany.com`. Clay routes users to SSO based on their email domain, so SSO only applies to users whose email address is on a verified domain.
+
+**The TXT record is not pre-assigned.** Clay doesn't give you a TXT record name or value ahead of time. The WorkOS setup portal generates them when you add your domain. Clay has no separate domain verification page, so you verify your domain for SSO entirely inside the WorkOS setup portal (from the configuration link Clay support sends you).
+
+To verify your domain for SSO:
+
+1.  Open the WorkOS setup portal from the configuration link Clay support sent you.
+2.  Click **Verify your domain** in the banner.
+3.  Enter your organization's email domain (for example, `yourcompany.com`).
+4.  Copy the TXT record name and value the portal generates, and publish the record in your domain's DNS settings.
+5.  Return to the portal to complete verification once the DNS record is live.
+6.  After your domain shows as verified, go back to **Select your identity provider** and continue setting up your identity provider (for example, click **Continue setup** next to Okta SAML if you've already started).
+
+If you need help with domain verification during SSO setup, contact Clay support.
 
 ### SAML configuration details (Entity ID and ACS URL)
 
