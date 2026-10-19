@@ -69,7 +69,7 @@ Clay's SSO routing is domain-based: when a user enters their email on the Clay l
 
 ## User provisioning
 
-**SCIM Directory Sync (automatic provisioning) is in active development and not yet generally available.** SSO (via WorkOS) is currently used for authentication only — Clay does not add users to your workspace automatically through SSO, and there is no JIT (Just-in-Time), SCIM, or domain-join provisioning for workspace membership. If an uninvited user with your email domain signs in via SSO, they will authenticate successfully and a Clay account will be created for them, but they will not be added to your enterprise workspace — instead, they will be placed into a new standalone personal workspace. To onboard a new team member:
+SSO (via WorkOS) is used for authentication only — Clay does not add users to your workspace automatically through SSO, and there is no JIT (Just-in-Time) or domain-join provisioning for workspace membership through SSO. Enterprise plan customers can automate workspace membership with SCIM provisioning instead — see [Automatic user provisioning with SCIM (Enterprise plan)](#automatic-user-provisioning-with-scim-enterprise-plan) below. If an uninvited user with your email domain signs in via SSO, they will authenticate successfully and a Clay account will be created for them, but they will not be added to your enterprise workspace — instead, they will be placed into a new standalone personal workspace. To onboard a new team member:
 
 1.  Invite them to your Clay workspace via `Settings` > `Team` > `+ Invite`.
 2.  Assign the Clay app to the user in your identity provider (for example, add them to the Clay tile in Okta).
@@ -80,11 +80,26 @@ Clay's SSO routing is domain-based: when a user enters their email on the Clay l
 
 **If a user has already landed in a personal workspace instead of the company workspace:** You can recover without contacting support. From your company workspace, go to `Settings` > `Team` > `+ Invite` and send them a workspace invite. Have them accept the Clay invite from their email first, then sign in through your IdP (for example, by clicking the Clay tile in Okta). SSO will match them to the workspace seat you created and place them in the correct workspace. The empty personal workspace they were initially placed in remains as an orphan but does not affect their access to the company workspace.
 
-SCIM Directory Sync is in active development — contact Clay support or your Growth Strategist for the latest status on this feature.
-
-**Clay does not have a user management API.** There is no API endpoint to programmatically create, update roles for, or deactivate workspace members. All user management must be performed through the Clay UI at `Settings` > `Team`.
+**Clay does not have a user management API.** There is no API endpoint to programmatically create, update roles for, or deactivate workspace members. User management is performed through the Clay UI at `Settings` > `Team`, or through your identity provider if your Enterprise workspace uses SCIM provisioning.
 
 **Clay user roles are not managed through SSO or SAML.** Enabling SSO does not change existing team members' roles in your workspace. Clay reads only the user's email address from the SAML assertion, with `firstName` and `lastName` as optional attributes — no role or group attributes from your identity provider are mapped to Clay workspace roles. To assign or update a team member's role after SSO is enabled, go to `Settings` > `Team` and use the role dropdown next to their name.
+
+### Automatic user provisioning with SCIM (Enterprise plan)
+
+SCIM provisioning lets you manage Clay workspace membership and roles through your identity provider (for example, Okta or Azure AD / Entra ID) instead of inviting each user by hand.
+
+**Who can use SCIM provisioning:** SCIM provisioning is available on the **Enterprise plan** only. It is not available on Pro, Growth, Launch, or free/trial plans — including annual Pro and Growth plans that have the paid SSO add-on. If you are not on the Enterprise plan, contact your Growth Strategist or Clay support to discuss upgrading. Setting up SCIM provisioning requires the workspace **Admin** role.
+
+**SSO is not required for SCIM.** You can set up SCIM provisioning without SSO, and SSO without SCIM provisioning.
+
+To set up SCIM provisioning on an Enterprise workspace:
+
+1.  Go to `Settings` > `Workspace` and find the **SCIM provisioning** section.
+2.  Click `Set up SCIM`. A setup portal opens in a new browser tab.
+3.  Follow the steps in the setup portal to connect your identity provider's directory.
+4.  Return to `Settings` > `Workspace`. The **SCIM provisioning** section now shows your directory connection, and the button changes to `Manage`.
+
+Enabling SCIM provisioning does not remove existing workspace members. If you don't see the **SCIM provisioning** section, your workspace is not on the Enterprise plan or your account is not a workspace Admin.
 
 ## Disabling or re-enabling SSO
 
