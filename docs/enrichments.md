@@ -150,9 +150,9 @@ To enrich a single person in Clay, use a Clay table. The **All People** list in 
 
 To enrich one person:
 
-1.  Create a new table (or use an existing one) and add a row with the person's identifier. A LinkedIn profile URL is the best input when you have one; an email address also works.
+1.  Create a new table (or use an existing one) and add a row with the person's identifier. The person's professional profile URL is the best input when you have one; an email address also works.
 2.  Click `Add enrichment`, search for `Enrich person`, and add it as a column.
-3.  Map the **Professional URL** input to your LinkedIn URL column (or map the **Email** input to your email column).
+3.  Map the **Professional URL** input to your profile URL column (or map the **Email** input to your email column).
 4.  Run the enrichment for only that row: check the row's checkbox, click **Actions**, and choose **Run 1 row**.
 
 The `Enrich person` column returns the person's full profile data — for example, job title, current company, and experience history — in that row.
