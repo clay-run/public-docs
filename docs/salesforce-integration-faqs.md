@@ -542,6 +542,24 @@ Three things cause this:
 -   **Stale ID — deleted or merged record (cause 2):** Add a **Lookup Record** step to find the current record (or confirm it no longer exists) and refresh the ID in your Clay table before updating.
 -   **Permissions restriction (cause 3):** Ask your Salesforce admin to confirm the integration user has write access to the affected records through their profile, permission sets, sharing rules, or record ownership settings. See [Creating a restricted Salesforce user](creating-a-restricted-salesforce-user.md) for guidance on setting up integration user permissions.
 
+## Why am I seeing "Make sure you include an upsert key. No value is mapped to the ... field." in the Salesforce Create or update record action?
+
+The Salesforce **Create or update record** (upsert) action returns `Make sure you include an upsert key. No value is mapped to the <field> field.` when the field chosen as the **Upsert Field** has no value mapped in the action's fields. The `<field>` part of the message is whatever was set as the **Upsert Field**.
+
+The **Upsert Field** must be the name of a Salesforce **external ID field** on the object. Clay matches existing records on that field's value. In the **Upsert Field** dropdown, Clay lists only fields marked as external IDs in Salesforce. The standard Salesforce record `Id` is not one of them. If a Salesforce record ID such as `003N200001O12nrIAB` appears in the error, the **Upsert Field** was pointed at a record ID value instead of a field name. For example, the **Upsert Field** may be mapped to a "Salesforce Record ID" column or function input.
+
+**If you already have the Salesforce record ID** (for example, from a **Lookup record** step or a function input), use the **Update record** action instead of **Create or update record**:
+
+1.  Add a Salesforce **Update record** action (or swap your **Create or update record** step for one).
+2.  Set **Salesforce Object** to the object you're writing to, for example **Contact**.
+3.  Map **Record ID** to the column or input that holds the Salesforce record ID.
+4.  In **Map fields**, add every field you want to write and map each one to its Clay column, for example **Email** to your work email column and **MobilePhone** to your mobile number column. Salesforce receives only the fields you map. A field that isn't mapped, such as a mobile number you enriched but never added in **Map fields**, is never sent.
+5.  If the step is inside a function, publish the function so the change takes effect.
+
+**Update record** only updates existing records. If Salesforce can't find the record ID, the row fails with an error and no new record is created.
+
+**If you need to create records that don't exist yet**, keep **Create or update record** and set **Upsert Field** to an external ID field on the object. Make sure that same field is mapped to a column with a value on every row. If the object has no external ID fields, Clay shows `No external id fields found for <object>`. In that case, either ask your Salesforce admin to add an external ID field, or use **Lookup record** followed by conditional **Create record** and **Update record** columns, as described in [Why am I seeing a `DUPLICATES_DETECTED` error when creating records in Salesforce?](#why-am-i-seeing-a-duplicates_detected-error-when-creating-records-in-salesforce)
+
 ## When creating a Salesforce contact, do I need to map Account Name in addition to Account ID?
 
 No. Mapping the **Account ID** field in the **Map fields** panel is sufficient to associate the new contact with an account. The Account Name you see displayed in Salesforce is not a separate field to create — Salesforce derives it from the Account ID relationship and shows it as a label in the record form. Because Account Name is a read-only derived field, it does not appear as an option in Clay's **Map fields** panel and cannot be mapped directly.
