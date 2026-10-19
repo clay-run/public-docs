@@ -695,17 +695,17 @@ Two main causes:
 
 The answer depends on which feature you're using:
 
--   **Enrich Person** — Clay stores each person profile it fetches from its data provider for up to 14 days. If Clay already fetched the same profile within the last 14 days, Enrich Person returns that stored copy instead of requesting the profile from the provider again. If there is no stored copy, or the stored copy is more than 14 days old, Enrich Person fetches the profile live from the provider at the moment of the run. See [Why does Enrich Person return older data than the person's LinkedIn profile?](#why-does-enrich-person-return-older-data-than-the-persons-linkedin-profile)
+-   **Enrich Person** — Clay stores each person profile it fetches from its data provider for up to 14 days. If Clay already fetched the same profile within the last 14 days, Enrich Person returns that stored copy instead of requesting the profile from the provider again. If there is no stored copy, or the stored copy is more than 14 days old, Enrich Person fetches the profile live from the provider at the moment of the run. See [Why does Enrich Person return older data than the person's professional profile?](#why-does-enrich-person-return-older-data-than-the-persons-professional-profile)
 -   **Enrich Company** — data is fetched close to real-time each time you run the enrichment, pulling the provider's latest available data at the moment of the run.
 -   **Find People / Find Companies / Find Contacts at Company (CPJ sourcing)** — these features draw from a pre-indexed dataset that providers refresh through bulk record processing. Results can show some deviation from what you see live on LinkedIn, because the index reflects the provider's most recent batch update rather than an immediate lookup. Data freshness has improved significantly over time, so deviation is rarely a problem in practice.
 
 Across both, high-importance profiles (frequently accessed records, decision-makers, active companies) refresh more often than long-tail profiles.
 
-### Why does Enrich Person return older data than the person's LinkedIn profile?
+### Why does Enrich Person return older data than the person's professional profile?
 
-Enrich Person results can be up to 14 days old. Clay stores each person profile it fetches from its data provider for up to 14 days, and any Enrich Person run on that same profile within those 14 days returns the stored copy rather than a new live lookup. If the person updated their LinkedIn profile — for example, a new job title or company — after the stored copy was fetched, Enrich Person keeps returning the earlier version until the stored copy is more than 14 days old. The next Enrich Person run after that fetches the profile live from the provider.
+Enrich Person results can be up to 14 days old. Clay stores each person profile it fetches from its data provider for up to 14 days, and any Enrich Person run on that same profile within those 14 days returns the stored copy rather than a new live lookup. If the person updated their profile on the professional network — for example, a new job title or company — after the stored copy was fetched, Enrich Person keeps returning the earlier version until the stored copy is more than 14 days old. The next Enrich Person run after that fetches the profile live from the provider.
 
-**Example:** Clay fetches a person's profile on March 1. The person changes their job title on LinkedIn on March 5. Enrich Person runs on that profile from March 1 through March 15 return the March 1 data. The first run after March 15 fetches the profile live and returns the new job title.
+**Example:** Clay fetches a person's profile on March 1. The person changes their job title on their professional profile on March 5. Enrich Person runs on that profile from March 1 through March 15 return the March 1 data. The first run after March 15 fetches the profile live and returns the new job title.
 
 Rerunning the Enrich Person column, or scheduling it to rerun daily, weekly, or monthly, controls how often Clay re-triggers the enrichment — it doesn't skip the 14-day stored copy. There is no setting to force Enrich Person to bypass the stored copy.
 
