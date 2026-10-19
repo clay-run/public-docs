@@ -1,6 +1,6 @@
 ---
 title: Workspace settings
-description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, agency setups, AI Context, deletion, and recovering a previous workspace.
+description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, IP access restrictions, agency setups, AI Context, deletion, and recovering a previous workspace.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -96,6 +96,49 @@ To update your billing email:
 SSO is not configured through the Clay workspace settings UI — there is no self-serve configuration panel. To set up SSO for your workspace, contact Clay support. SSO is available on **Enterprise** plans at no additional cost, and as a paid add-on on annual Pro and annual Growth plans.
 
 See [Single Sign-On (SSO)](./single-sign-on.md) for full details on eligibility, the setup process (handled by Clay's support team via WorkOS), how login behavior changes once SSO is enabled, and important notes on user provisioning.
+
+## IP access restrictions
+
+**IP access restrictions** let you limit which IP addresses can reach your Clay workspace. You can restrict browser access to the Clay web app and API access (API keys, webhooks, and integrations such as MCP connections) separately, each with its own allowlists of approved IP addresses.
+
+**Who can use IP access restrictions:** IP access restrictions are available on **Enterprise** plans, and only workspace admins can view or change them. The feature rolled out to all Enterprise workspaces on September 22, 2026. Non-admins don't see the **Security** section at all. If you're an admin on an Enterprise plan and don't see it, contact Clay support to have it enabled for your workspace.
+
+IP access restrictions are off by default — both the web app and the API stay open to every IP address until an admin turns them on.
+
+### Add an IP allowlist
+
+1.  Go to `Settings` > `Workspace settings` and scroll to the **Security** section.
+2.  In the **IP access restrictions** card, click `Add allowlist`.
+3.  Enter an `Allowlist name` (for example, "NYC HQ").
+4.  In `IP addresses`, enter one IPv4 address, IPv6 address, or CIDR range per line (for example, `198.51.100.0/24`).
+5.  Under `Applies to`, choose `Web app` or `API`. Each allowlist covers only one of the two. To allow the same addresses for both, create one allowlist for each.
+6.  Click `Add allowlist` to save.
+
+If Clay knows the IP address you're connecting from, the form shows "You're connecting from {your IP}" with an `Add it` button that adds your current IP address to the list.
+
+**IP allowlist limits:**
+
+-   Up to **50** IP addresses or CIDR ranges per allowlist.
+-   Up to **50** allowlists per workspace, counting web app and API allowlists together.
+-   Allowlist names can be up to **100** characters.
+
+### Turn on IP access restrictions
+
+The **IP access restrictions** card has two toggles: `Web app` (browser access) and `API` (keys, webhooks, and integrations). Each one shows **Restricted** or **Unrestricted**.
+
+1.  Add at least one allowlist for the web app or the API first. If you try to turn on a toggle without one, Clay asks you to add an allowlist first.
+2.  Turn on the `Web app` or `API` toggle.
+3.  In the confirmation dialog, click `Turn on`.
+
+Once the toggle is on, only the IP addresses in that path's allowlists can reach the workspace. Changes to IP access restrictions can take up to **10 minutes** to apply to all requests.
+
+**Lockout protection:** Clay won't let you save a web app setting that would block the IP address you're connecting from. If you try, you'll see "Performing this action would lock your current IP address (your IP) out of this workspace." Add your current IP address to a web app allowlist, then try again.
+
+Clay support sessions aren't affected by IP access restrictions.
+
+### What blocked users see
+
+When a request comes from an IP address that isn't on an allowlist, Clay rejects it with an HTTP **403** error and the message "Your IP address is not on the allowlist for this workspace." This applies to people using the web app from an unapproved network and to API, webhook, and integration requests sent from an unapproved IP address. To fix it, ask a workspace admin to add the IP address or CIDR range to the right allowlist (`Web app` or `API`).
 
 ## Beta Program
 
