@@ -144,6 +144,19 @@ To retrieve actual contact data, add a dedicated enrichment column instead:
 -   **Phone numbers** — click `Add enrichment`, search for `Phone`, and select the waterfall option for your region under **Waterfalls** — `Mobile Phone (US and Canada)`, `Mobile Phone (EMEA)`, `Mobile Phone (APAC)`, or `Mobile Phone (Global)`. See [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md) for provider recommendations by region.
 -   **Full profile data (job title, company, professional profile URL, and more)** — click `Add enrichment` and search for `Enrich Person` to browse provider-specific integrations. Each provider connects to a different data source — choose the one that fits your needs, or stack several as a [waterfall](building-a-data-waterfall.md) for broader coverage.
 
+### "How do I enrich just one person? Can I enrich someone directly from All People?"
+
+To enrich a single person in Clay, use a Clay table. The **All People** list in Audiences doesn't have a per-record enrich option — opening a person's record there won't let you run an enrichment on just that one contact.
+
+To enrich one person:
+
+1.  Create a new table (or use an existing one) and add a row with the person's identifier. A LinkedIn profile URL is the best input when you have one; an email address also works.
+2.  Click `Add enrichment`, search for `Enrich person`, and add it as a column.
+3.  Map the **Professional URL** input to your LinkedIn URL column (or map the **Email** input to your email column).
+4.  Run the enrichment for only that row: check the row's checkbox, click **Actions**, and choose **Run 1 row**.
+
+The `Enrich person` column returns the person's full profile data — for example, job title, current company, and experience history — in that row.
+
 ### "What accuracy or match rate can I expect from data enrichment in Clay?"
 
 Clay does not publish a single universal accuracy percentage because match rates vary based on several factors:
