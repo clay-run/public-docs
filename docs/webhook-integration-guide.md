@@ -22,7 +22,7 @@ Your table updates instantly with new data, eliminating manual entry. This featu
 3.  Copy the URL/cURL.
     -   **URL:** Paste this URL into the application sending data to Clay. This URL is where your data will be sent.
     -   **cURL:** Paste the cURL command into your command line to send data directly to Clay.
-4.  Optionally, add authentication token. To secure your webhook, you can include an authentication token in the header of your request.
+4.  Optionally, add authentication token. To secure your webhook, you can include an authentication token in the header of your request. Clay's webhook authentication header is named `x-clay-webhook-auth`; each webhook table generates its own unique token.
     -   Make sure to copy the token immediately, as you can only access authentication tokens once.
 
 ## Limits
@@ -165,7 +165,7 @@ If your webhook isn't creating rows — even on a brand-new webhook that has nev
 
 2. **Incorrect URL** — Confirm you copied the full webhook endpoint URL from the **Monitor webhook** section in your table source settings (not a partial URL or the cURL command itself).
 
-3. **Missing or wrong authentication token** — If you added an auth token when creating the webhook, it must be included in every request as a header. The token is only displayed once at creation — if you didn't copy it, you'll need to delete and recreate the webhook to generate a new one.
+3. **Missing or wrong authentication token** — If you added an auth token when creating the webhook, it must be included in every request as the `x-clay-webhook-auth` header. The token is only displayed once at creation — if you didn't copy it, you'll need to delete and recreate the webhook to generate a new one.
 
 4. **Submission limit reached** — See the [Limits](#limits) section. Once a webhook source hits 50,000 submissions, Clay returns a `403 Record limit reached for webhook` error and stops creating rows. This limit is cumulative — it counts all submissions since the webhook was created, and neither deleting nor archiving rows resets it. **Enterprise plan:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) to bypass this limit entirely — when passthrough mode is active, the 50,000 cap is skipped and the webhook can accept data indefinitely.
 
@@ -300,3 +300,14 @@ Create a dedicated Clay table with its own webhook URL for sandbox testing (see 
 
 **Option 3 — Disable the Flow in your sandbox org when not actively testing:**
 In Salesforce, deactivate the Flow in the sandbox org after each testing session. Reactivate it when you need to run tests again. This prevents any accidental sandbox submissions to your live Clay table between testing sessions.
+
+### How do I send data from multiple Salesforce objects to Clay using a single Named Credential?
+
+When using Salesforce Flows to send data from multiple objects — for example, Account, Lead, and Contact — into separate Clay webhook tables, each Clay table has its own unique `x-clay-webhook-auth` token. Salesforce Named Credentials do not support multiple values for the same header name, so adding all three tokens as separate `x-clay-webhook-auth` entries under one Named Credential will break the callouts for the other tables.
+
+**Recommended approach:** Point the Named Credential at the base domain only, and supply each table's token directly on the Flow callout:
+
+1. Create one Named Credential with the base URL set to `https://api.clay.com` and **no** authentication headers configured on it.
+2. In each Flow (Account, Lead, Contact), use an HTTP Callout action that references the shared Named Credential. On the callout action itself — not on the Named Credential — set the full Clay webhook URL as the endpoint and add the `x-clay-webhook-auth` header with that specific table's token.
+
+Each Flow supplies its own token at runtime, so there is no header conflict. The Named Credential handles only the base domain; each Flow manages its own authentication.
