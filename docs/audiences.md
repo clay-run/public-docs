@@ -266,8 +266,8 @@ Clay syncs data from Google BigQuery on the following schedules:
 
 **Note:** When you save a search to your Audience, Clay writes only a fixed set of fields to each imported record. You can't add other fields to a search import, and any field outside that set stays empty on the imported records:
 
--   **Find companies:** company name, domain, LinkedIn URL, HQ location, city, state, country, country ISO code, industry, and annual revenue. **Employee count is not filled in**, even if you filtered the search by company size or employee count. Search filters only decide which companies are imported. They don't save a value on each record. (Some workspaces use Clay's agent-based search experience, which Clay turns on per workspace. That experience writes a different set: it adds Employee count but leaves out industry.)
--   **Find people:** name, first name, last name, title, LinkedIn URL, location, city, state, country, and country ISO code.
+-   **Find companies:** company name, domain, professional network URL, HQ location, city, state, country, country ISO code, industry, and annual revenue. **Employee count is not filled in**, even if you filtered the search by company size or employee count. Search filters only decide which companies are imported. They don't save a value on each record. (Some workspaces use Clay's agent-based search experience, which Clay turns on per workspace. That experience writes a different set: it adds Employee count but leaves out industry.)
+-   **Find people:** name, first name, last name, title, professional network URL, location, city, state, country, and country ISO code.
 
 To fill in a field that a search import doesn't bring over, such as Employee count, see [Why is Employee count empty on companies I imported from a Find companies search?](#why-is-employee-count-empty-on-companies-i-imported-from-a-find-companies-search) in the FAQs below.
 
@@ -1056,7 +1056,7 @@ To stop the audience from growing, turn live search off: click the **⋮** menu 
 
 ### Why is Employee count empty on companies I imported from a Find companies search?
 
-An empty Employee count on companies saved to your Audience from a Find companies search is expected. It doesn't mean the import failed. A Find companies import writes a fixed set of fields to each Companies record: company name, domain, LinkedIn URL, HQ location, city, state, country, country ISO code, industry, and annual revenue. Employee count isn't one of them, and you can't add it to the import's field mapping.
+An empty Employee count on companies saved to your Audience from a Find companies search is expected. It doesn't mean the import failed. A Find companies import writes a fixed set of fields to each Companies record: company name, domain, professional network URL, HQ location, city, state, country, country ISO code, industry, and annual revenue. Employee count isn't one of them, and you can't add it to the import's field mapping.
 
 Filtering your search by company size or employee count doesn't fill in Employee count either. The size filter only decides which companies are imported. It doesn't save a headcount on each record.
 
