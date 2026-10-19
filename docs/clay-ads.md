@@ -61,13 +61,13 @@ To update an audience, simply modify the data in your Clay table. The audience w
 
 ## **How Clay reports match rates**
 
-Every destination card in an ad sync shows a match rate, but the figure doesn't come from the same place on every platform. Some ad platforms publish a match rate of their own, which Clay passes straight through. Others don't, so Clay works one out from the audience size they report. The card label tells you which you're looking at — a platform-reported figure carries the platform's name, like `Google match rate`, while a figure Clay worked out is labelled simply `Match rate`.
+Every destination card in an ad sync built from an Audiences segment shows a match rate, but the figure doesn't come from the same place on every platform. Some ad platforms publish a match rate of their own, which Clay passes straight through. Others don't, so Clay works one out from the audience size they report. The card label tells you which you're looking at — a platform-reported figure carries the platform's name, like `Google match rate`, while a figure Clay worked out is labelled simply `Match rate`.
 
 The table below shows where each destination's match rate comes from and how it's calculated.
 
 | Destination | Where the figure comes from | How it's calculated |
 | --- | --- | --- |
-| LinkedIn Ads | Reported by LinkedIn Ads | Matched count ÷ input records, both counted by LinkedIn Ads. The card shows Matched count alongside the rate. |
+| Professional network | Reported by the professional network | Matched count ÷ input records, both counted by the professional network. The card shows Matched count alongside the rate. |
 | Google Ads | Reported by Google Ads | Google Ads' own match rate. Where it returns a band rather than a single figure, Clay uses the midpoint of that band. |
 | Vibe.co Ads | Reported by Vibe.co Ads | Matched reach ÷ the profiles Vibe.co resolved from your list. |
 | Meta Ads | Calculated by Clay | Midpoint of the audience size range Meta Ads reports ÷ records sent. |
@@ -285,11 +285,7 @@ Workspace Admins and Editors can create the enrichment table; Workspace Viewers 
 
 This is expected on platforms that match on multiple identifiers per contact. Clay sends up to 3 hashed personal email addresses per contact (via Enhanced Matching) rather than a single email, giving the ad platform more identifiers to match against. The platform counts each matched identifier separately in its reporting — not each unique contact. A single contact with 3 matching hashed emails contributes 3 to the matched count, which is why the matched count can exceed your total contact count.
 
-Your actual ad reach is based on the audience size (unique contacts), not the matched count. The destination card in the Sync panel shows an info note explaining that these figures can exceed the number of contacts sent.
-
-### **Why does my match rate show 95%+ instead of an exact number?**
-
-Clay sends several identifiers for one contact — up to three hashed personal emails from Enhanced Matching, alongside the work email — and an ad platform can match more than one of them, which can push the raw match rate past 100%. To avoid showing a figure above 100%, Clay displays the match rate as `95%+` whenever it's 95% or higher on LinkedIn Ads, Meta Ads, Reddit Ads, Bing Ads, and Vibe.co Ads. Google Ads reports its own percentage, so Clay shows the exact Google Ads match rate.
+Your actual ad reach is based on the audience size (unique contacts), not the matched count. When this behavior is active, the Sync panel shows an info note explaining that matched count can exceed contacts sent.
 
 ### **Why does my ad audience show "too small for use in campaigns"?**
 
