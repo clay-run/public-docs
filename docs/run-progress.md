@@ -324,10 +324,18 @@ When a cell shows **"Waiting for another column to finish"**, the column depends
 
 This status most commonly appears on formula columns that extract values from a Clay Function column that is in **"Awaiting Callback"** state. Because the formula cannot calculate until the function returns a result, every row where the function is still processing shows **"Waiting for another column to finish"** in those dependent formula cells.
 
+"Waiting for another column to finish" also shows up in a waterfall's final output column (for example, **Work email**). That output column waits on the provider steps inside the waterfall, so its rows show "Waiting for another column to finish" until those steps return a result.
+
 **To confirm the upstream column is the cause:**
 
 1.  Look across the same row for an enrichment or function column whose cells show **"Awaiting Callback"**, **"Queued"**, or **"Running"** status.
 2.  Once that upstream column finishes processing for the row, the dependent cells automatically recalculate and the **"Waiting for another column to finish"** status clears on its own.
+
+**If the upstream column is stuck in Queued** and isn't actively processing, force-running the column that shows "Waiting for another column to finish" won't help. Clay doesn't run a cell while one of its inputs is still queued or running. Unblock the upstream column instead:
+
+1.  Click **Filter** in the table toolbar, select the upstream column (for example, the waterfall step that shows **Queued**), and set the condition to **is queued**.
+2.  Click that column's header → **Run column** → **Force run all [N] rows**. With the filter active, only the queued rows re-run.
+3.  Once the upstream cells finish, the waiting cells run automatically and the "Waiting for another column to finish" status clears.
 
 **If the upstream column is a Clay Function stuck in "Awaiting Callback"**, see [What does "Awaiting Callback" mean on a function column?](functions.md#what-does-awaiting-callback-mean-on-a-function-column) for how to re-run or unblock it.
 
