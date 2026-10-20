@@ -577,6 +577,8 @@ This gives you clusters of matching domains from your list, even if it does not 
 
 A company's **Clay Company ID** can change over time — for example, when two company profiles in Clay's company data are merged. **Enrich Company** always looks up and returns the company's current Clay Company ID, while **Find Companies** (company search) can still return an older Clay Company ID for the same company. So the same company can show one Clay Company ID in your search results (for example, `44626947`) and a different one after you run Enrich Company (for example, `24682710`). Both IDs point to the same company; the one Enrich Company returns is the current ID.
 
+**Which Clay Company ID survives a merge:** When Clay's company data merges two company profiles into one, the numerically smallest Clay Company ID is kept and the other IDs are retired. A retired Clay Company ID redirects to the surviving ID, which is why Enrich Company and the Enrich account hierarchies action convert an older Clay Company ID to the company's current ID before the lookup. For example, if profiles with Clay Company IDs `24682710` and `44626947` are merged, `24682710` survives.
+
 **To get the right company when you pass a Clay Company ID into Enrich Company:**
 
 1.  In your **Enrich Company** column, open **Column mapping**.
@@ -589,6 +591,19 @@ If **Match companies using** is left blank, Enrich Company guesses the identifie
 **If your Enrich Company column has no "Match companies using" setting**, it's an older version of the Enrich Company action. The older version reads a plain number as a professional-network company ID, not a Clay Company ID — so a Clay Company ID can return **Company Not Found** or match an unrelated company. Add a new **Enrich Company** column that shows the **Match companies using** setting and use it instead.
 
 **Use a stable key for downstream systems:** If your data pipeline joins companies by ID, store the Clay Company ID that Enrich Company returns rather than the one from Find Companies, or key on the company's professional profile URL or domain. In rare cases where a company's ID changed very recently, Enrich Company can return **Company Not Found** for a Clay Company ID — rerun the row using the company's professional profile URL or domain instead.
+
+**Keying on the professional profile URL doesn't avoid merges:** When two company profiles are merged, Clay also points every professional profile URL (slug) of the merged companies to the surviving Clay Company ID. Keying on the profile URL slug instead of the Clay Company ID doesn't avoid the merge — both identifiers end up resolving to the one surviving company.
+
+### Why is the Clay Company ID blank for some companies?
+
+The **Clay Company ID** is only filled in when a company in your table or import has been matched to a company in Clay's company data. If Clay can't match the company, the Clay Company ID stays blank.
+
+A blank Clay Company ID usually means the companies were imported without a **company domain** or **professional profile URL** — for example, a list that only has company names. Company domains and professional profile URLs match most reliably; company names match only when the name is unambiguous.
+
+**To fill in a blank Clay Company ID:**
+
+1.  Add a company domain or company professional profile URL to the rows where the Clay Company ID is blank. If you only have company names, use the **Find company domain** enrichment to get a domain first (see [Getting "Invalid company identifier." error from Enrich Company](#getting-invalid-company-identifier-error-from-enrich-company)).
+2.  Run **Enrich Company** on those rows, matching on the domain or professional profile URL. Enrich Company returns the company's current Clay Company ID in its output.
 
 ### Getting "Invalid input: Invalid person identifier" from Enrich person
 
@@ -655,6 +670,16 @@ The per-source limit for Find People and Find Companies sources varies by plan a
 **Note:** this limit is separate from the 50,000-row table limit. A source can hit its plan-based record limit even when the table shows fewer visible rows — the source tracks every record it has ever introduced, including rows you've since deleted from the table.
 
 ## FAQs
+
+### Does Clay provide parent company and ultimate parent company IDs?
+
+Yes. The **Enrich account hierarchies** action returns the parent companies and subsidiaries of a company, and every company it returns includes its own **Clay Company ID**. Account hierarchies is currently in beta.
+
+-   **Input:** Map the company's **Clay company ID (recommended)**. When a Clay company ID is provided, the other company identifiers are ignored. If you don't have a Clay Company ID, use the company's professional profile URL, **Company domain**, or **Company name** instead. If you pass a retired Clay Company ID, the action converts it to the company's current ID first.
+-   **Parent companies:** Choose **All parent companies**, **Immediate parents** (one level up), or **Ultimate parent** (the top of the hierarchy). Each parent company has a **Level** — Level `1` is the ultimate parent.
+-   **Subsidiaries:** Each subsidiary includes an **Immediate parent Clay company ID** — the Clay Company ID of that subsidiary's direct parent — so you can rebuild the full parent-child tree.
+
+For setup steps and coverage, see [Account hierarchies](https://university.clay.com/docs/account-hierarchies).
 
 ### Why is this person showing up despite having moved companies?
 
