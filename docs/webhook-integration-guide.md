@@ -108,6 +108,28 @@ Clay does not have a built-in webhook log UI. The two places to check webhook ac
 
 **Note:** Clay does not queue or retry incoming webhook requests. If a payload was rejected (for example, because of a `429` rate limit error or a `400` bad request), it is not stored and no row appears in the table. See [Why aren't any rows arriving in my webhook table?](#why-arent-any-rows-arriving-in-my-webhook-table) for troubleshooting.
 
+### How do I know when enrichments have finished running on rows I sent via webhook or API?
+
+Clay does not send a built-in notification or callback when enrichments finish running on rows that arrive through a webhook source. When you POST to a table's webhook URL, Clay's response only acknowledges that the payload was received — it does not include enrichment results, a row ID, or a run status field, and Clay does not call you back once the row's enrichment columns complete.
+
+To find out when enrichments on a webhook row are done, use one of these approaches:
+
+**Option 1 — Have Clay push the results to you when the row is done (recommended for automation):**
+
+1.  Add an **HTTP API** column (to POST to your own endpoint) or a **Slack** message action column as the last step in your webhook table.
+2.  Reference the enrichment columns you're waiting on in the column's request body or message. A column that references other columns as inputs re-runs automatically once those upstream values land.
+3.  In the column's **Run settings → Only run if**, require every enrichment column to have a value — for example, `/Column A is not empty AND /Column B is not empty`. This stops the column from firing until all of those enrichments have results for that row.
+
+The notification column fires once **per row**, not once per batch or per table. If you send 1,000 rows into the table, you'll receive 1,000 HTTP calls or Slack messages. For high-volume tables, point the HTTP API column at your own endpoint rather than a Slack channel. See [Running a downstream action only after all upstream columns have finished](conditional-runs.md#running-a-downstream-action-only-after-all-upstream-columns-have-finished) for more detail on gating an action column on upstream enrichments.
+
+**Option 2 — Add a per-row "enrichment complete" formula column:**
+
+Clay does not add a status field to your row data, but you can create one. Add a **Formula** column that returns `true` or `false` based on whether your enrichment columns have values — for example, `!!{{Column A}} && !!{{Column B}}`. Each row then carries its own completion flag, which you can include in the payload of your HTTP API column (Option 1) or check when you read the table later.
+
+**Option 3 — Read the table back on a schedule (Enterprise):**
+
+On Enterprise plans, you can read rows back out of a table that has **Enable for API** turned on (**Table Settings → Integrations → Enable for API**) using the public table query endpoint or the `clay tables` CLI commands, and check your completion flag column. See [Does Clay have an API?](using-clay-as-an-api.md) for details. If you can't read the table back programmatically, the fallback is to wait a fixed amount of time after sending rows before acting on the results.
+
 ### Why does my webhook source show a higher row count than my table?
 
 The webhook source node in the workbook view shows the **total number of records stored by the source** since it was created. This count increases with every accepted payload and does not decrease when you delete rows from the table.
