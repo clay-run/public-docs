@@ -162,6 +162,20 @@ If you add people to a Find People table by hand — typing or pasting their wor
 
 For other Enrich person input errors, see [Getting "Invalid input: Invalid person identifier" from Enrich person](finding-companies-and-people-in-clay.md#getting-invalid-input-invalid-person-identifier-from-enrich-person).
 
+### Can I pull an org chart of a company's IT department in Clay?
+
+**Clay doesn't have a built-in org chart view, and Find People results don't include a "reports to" or manager field.** You can still pull everyone in a company's IT department with the Find People source and organize them by seniority:
+
+1.  In a workbook, click `+ Add` at the bottom and search for `Find People`.
+2.  Under **Companies**, add the company you want to map, as a custom list or from a Clay table. Company profile URLs from the professional network give the most precise match.
+3.  Under **Job title**, open **Job functions** and select **Information Technology (IT) and Computer Science**.
+4.  Optionally, use the **Seniority** filter to pick specific levels (for example `c-suite`, `vp`, `director`, `head`, `manager`), or set a minimum level to return that level and above.
+5.  Set **Limit per company** (up to 100 people per company) or **Limit results**, check the preview, and click **Import**.
+
+**Grouping the IT team into seniority tiers:** In Find People, **Seniority** is a search filter only. The imported rows include each person's job title but no seniority column. To organize the IT department by level, either run a separate Find People search for each seniority level, or add a **Use AI** column that classifies each person's job title into a tier (for example: Executive, Director, Manager, Individual contributor).
+
+**Getting actual reporting lines:** To see who reports to whom, use the **Find company org chart** source from [The Org integration](theorg-integration.md). It returns every position The Org has for a company, with a Manager ID that links each person to their manager, and costs 25 credits per org chart (refunded if no org chart data is found). The Org doesn't return a department field, so to narrow the org chart to IT, add a **Use AI** column that classifies each person's title by function and filter on it. See [Surfacing the hierarchy and building an org chart](theorg-integration.md#surfacing-the-hierarchy-and-building-an-org-chart) for how to connect each person to their manager and turn the table into a visual chart.
+
 ### Can I get a contact's home address or direct mailing address in Clay?
 
 **No. Clay does not return home, residential, or personal mailing addresses for individual contacts.** This is intentional. For privacy reasons, Clay removes street-level personal addresses from person enrichment results, even when the underlying provider has them.
