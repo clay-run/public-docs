@@ -113,3 +113,17 @@ It can. Rejecting more numbers means the waterfall calls more providers per cont
 Enable **Output name of successful provider?** in your waterfall's **Additional column settings**. This adds a column to your table showing which provider returned the accepted number for each row. When reps flag a bad number, check that column to identify a pattern — if the same provider appears repeatedly on flagged rows, that provider may have stale data for your specific audience or geography.
 
 To compare providers directly before committing to a waterfall order, run individual provider enrichments on the same set of contacts rather than nesting waterfalls. Running them as separate columns makes each provider's result visible and attributable, so you can evaluate accuracy across sources side by side. Once you've identified which providers consistently return the most accurate results for your use case, reorder or disable underperformers in the waterfall's **Waterfall sequence** configuration (open via the waterfall tab → **Edit group** → **Full configuration** tab).
+
+**Is there a waterfall for work phone numbers or direct dials instead of mobile numbers?**
+No. The Mobile Phone waterfall is the only pre-built phone waterfall in Clay. It targets mobile (cell) numbers, so it can return personal mobiles. To find work phone numbers or direct dials (direct landlines), add individual provider enrichments to your table from `Add enrichment`:
+
+- **Bytemine — Find contact info:** turn on **Require direct dial** so Bytemine returns a result only when a direct dial is present. See [Bytemine](bytemine-integration.md).
+- **Lusha — Enrich person:** each returned phone number includes a **Type** and a **Do Not Call** indicator, so you can tell phone types apart and skip numbers flagged as Do Not Call. See [Lusha](lusha-integration.md).
+
+To keep credit usage efficient, combine a direct-dial enrichment with the Mobile Phone waterfall using a [run condition](conditional-runs.md) — for example, so the direct-dial enrichment only runs when your Mobile Phone column is empty.
+
+**How can I check whether a phone number is a mobile, a landline, or belongs to the contact?**
+Add a phone validation enrichment after your phone enrichment:
+
+- **ClearoutPhone — Check phone line type & status** returns the line type (for example, mobile or landline) for phone numbers worldwide. Include the country code for non-US numbers. See [ClearoutPhone](clearoutphone-integration-overview.md).
+- **Trestle — Verify contact** returns **Phone Name Match**, showing whether the number is associated with the contact's name. Trestle Verify contact only validates US and Canada numbers. See [Trestle](trestle-integration.md).
