@@ -102,7 +102,14 @@ Each option has different benefits and considerations in terms of cost, convenie
 -   You manage your own API billing directly with the provider
 -   No output token cap from Clay's side (the model's own context length still applies)
 
-**Note:** When using a personal API key, price breakdowns won't appear in the Clay UI. You'll need to monitor your usage and upgrade tiers manually.
+**Estimated provider cost with a personal API key:** When a Use AI or Claygent column runs with a personal API key, each cell's output includes the token counts for that run and an estimated provider cost, shown in the cell as **Total Cost To AI Provider** (`totalCostToAIProvider` when referenced in a formula column). You can view these output fields on the cell or reference them in a formula column. When the column runs on Clay credits instead, the cell shows the Clay credits charged rather than a provider cost. With a personal API key, you'll still need to monitor your usage and upgrade tiers manually with your provider.
+
+**Why Clay's estimated cost can differ from your provider bill:** The Total Cost To AI Provider value in Clay is an estimate for that single cell run. Clay calculates it by multiplying the input and output tokens the provider reports for the run by Clay's standard price for that model. For reasoning models such as gpt-5-mini, the output token count already includes reasoning tokens. Your provider's usage dashboard and invoice are the billing source of truth because they:
+
+-   Include all usage on your API key and provider account, including any other columns, tables, or tools that use the same key
+-   Use your account's actual rates, which may differ from the standard prices Clay uses for the estimate
+
+To check what you were actually billed, use your provider's usage dashboard (see "Monitoring API Usage" above).
 
 **If you see "Rate limit wait time exceeded" errors when running many rows simultaneously with a personal OpenAI API key:** Clay runs multiple rows in parallel, which can exhaust your OpenAI account's tokens-per-minute (TPM) or requests-per-minute (RPM) limits faster than expected. Clay automatically retries rate-limited requests, but if the limit persists, cells will return a **"Rate limit wait time exceeded"** error. To resolve this:
 
