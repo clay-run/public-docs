@@ -157,7 +157,7 @@ When checking whether a field has a value — in a run condition or a formula co
 - `/Email is not empty` — condition passes when the Email column has a value
 - `/Domain is empty` — condition passes when the Domain column is blank
 
-**You may also see `!{{column}}` syntax in existing run conditions.** The single `!` (negation operator) returns `true` for any falsy value — including an empty or blank cell, the boolean `false`, and the number `0` — and `false` for any truthy value. On text columns this behaves like `/column is empty`; on boolean columns it also fires when the value is `false`, not only when the cell is blank. For example, `!{{Verified}}` on a formula column that returns `true`/`false` means "only run when Verified is false or empty." A run condition of `!{{Email Address}}` on a text column means "only run when Email Address is blank." On rows where the column contains a truthy value, the condition evaluates to `false` and the cell shows **\"Run condition not met\"** — this is expected behavior, not an error. To understand why a specific row was skipped, click the cell and use the **Explain** button in the cell details panel. To change the run condition, click the column header → **Edit column** → scroll to **Run settings** → update the **Only run if** formula → click **Save**.
+**You may also see `!{{column}}` syntax in existing run conditions.** The single `!` (negation operator) returns `true` for any falsy value — including an empty or blank cell, the boolean `false`, and the number `0` — and `false` for any truthy value. On text columns this behaves like `/column is empty`; on boolean columns it also fires when the value is `false`, not only when the cell is blank. For example, `!{{Verified}}` on a formula column that returns `true`/`false` means \"only run when Verified is false or empty.\" A run condition of `!{{Email Address}}` on a text column means \"only run when Email Address is blank.\" On rows where the column contains a truthy value, the condition evaluates to `false` and the cell shows **\"Run condition not met\"** — this is expected behavior, not an error. To understand why a specific row was skipped, click the cell and use the **Explain** button in the cell details panel. To change the run condition, click the column header → **Edit column** → scroll to **Run settings** → update the **Only run if** formula → click **Save**.
 
 ### Avoid combining `!!` with equality checks on 0 or other falsy values
 
@@ -198,7 +198,7 @@ This means clicking **\"Run all rows\"** with a condition in place is safe: Clay
 
 **The credit estimate shown before running is based on the full row count** — it does not account for how many rows your condition will skip. Treat it as a worst-case ceiling: if only a portion of your rows satisfy the condition, your actual credit spend will be proportionally lower.
 
-### "Run condition not met" cells appear empty to downstream columns
+### \"Run condition not met\" cells appear empty to downstream columns
 
 When a run condition is not met, Clay skips the enrichment and stores **no output** for that row — the cell value is empty. Any downstream columns that reference this cell (formula columns, waterfall columns, CRM push columns, etc.) will receive an empty value for those rows.
 
@@ -206,7 +206,7 @@ When a run condition is not met, Clay skips the enrichment and stores **no outpu
 
 **Note:** If a row previously ran and produced output, that output is preserved when the condition is not met on a subsequent run — the run condition only gates new executions and does not clear existing cell data.
 
-### Using the "Explain" button to diagnose a skipped run condition
+### Using the \"Explain\" button to diagnose a skipped run condition
 
 When a cell shows **\"Run condition not met\"**, an **Explain** button appears next to the status message in the cell details panel. Clicking it triggers an AI analysis of your run condition formula and the current row's values, then returns a plain-language explanation of exactly why the condition evaluated to false for that row.
 
@@ -282,7 +282,7 @@ This keeps the run condition simple and is easier to maintain when checking many
 
 Turn off Auto-run on the action column (Edit column → Run settings → toggle Auto-run off). Once all other enrichments have finished, manually trigger the column: right-click its column header → **Run column** → **Run all rows**. This gives you complete control over when the action fires and is the simplest option when your workflow does not need to run automatically.
 
-### Gating a create action on a lookup finding no existing match ("create if not found")
+### Gating a create action on a lookup finding no existing match (\"create if not found\")
 
 A common workflow: run a lookup step (for example, \"Look up Company in HubSpot\") to check whether a record already exists, then run a create step only if the lookup found no match and a required field is populated. Set the create column's **Run settings → Only run if** using the condition builder:
 
@@ -296,7 +296,7 @@ A common workflow: run a lookup step (for example, \"Look up Company in HubSpot\
 
 **If \"Will run\" appears for a row where the lookup shows results**: this can occur when the lookup column is in an out-of-date state from a previous run — the prior result is still displayed, but the current run cycle hasn't yet started re-processing that cell. During this window, the run condition evaluates with no data for the lookup (as if it returned nothing), so the condition fires and \"Will run\" appears alongside the stale lookup result. Once the lookup re-runs for that row and produces a new result, the run condition re-evaluates and the status updates to **\"Run condition not met\"** if the lookup found a match. To confirm what the formula resolved to at runtime, click the action cell and use the **Explain** button after the run completes.
 
-### "Circular dependency error" when setting a run condition
+### \"Circular dependency error\" when setting a run condition
 
 When you save a run condition, Clay validates that the column referenced in the condition does not depend — directly or through a chain of other columns — on the column being gated. If a cycle is detected, Clay shows a **\"Circular dependency error\"** modal and prevents saving. The modal lists the specific column(s) that complete the loop.
 
@@ -343,6 +343,20 @@ With **Auto-run** enabled, Clay re-evaluates an action column's \"Only run if\" 
 **Consequence for webhook and HTTP API export columns**: If you gate a webhook on upstream enrichments being done, it can fire more than once per row. To ensure the action fires only once, use the guard-column pattern described in [Running a downstream action only after all upstream columns have finished](#running-a-downstream-action-only-after-all-upstream-columns-have-finished): gate the action on a formula column or multi-column condition that only becomes true once all required upstream work is finished.
 
 **When upstream enrichments have their own run conditions**: If an upstream enrichment was skipped because its own \"Only run if\" condition wasn't met, `Clay.getCellStatus()` returns `\"ERROR_RUN_CONDITION_NOT_MET\"` for that cell — not `\"SUCCESS\"` or `\"SUCCESS_NO_DATA\"`. To gate a downstream action on \"enrichment finished, whether it ran or was skipped,\" check for each possible final state explicitly. See [Formulas](formula-generator.md) for the full list of `getCellStatus()` return values.
+
+**Waiting for a waterfall step that may find nothing (for example, "No phone found")**: A waterfall step that finishes without finding anything returns `"SUCCESS_NO_DATA"`, and a later waterfall step that was skipped because an earlier step already found a value returns `"ERROR_RUN_CONDITION_NOT_MET"`. The step's output is empty in both cases — and also before the step has run — so checking the output for a value can't tell "not run yet" apart from "finished with nothing found." Check the step's status with `Clay.getCellStatus()` instead. Every final status starts with `SUCCESS` or `ERROR`; `"UNKNOWN"` (never run) and the in-progress statuses `"QUEUED"`, `"RUNNING"`, `"RATE_LIMITED"`, `"RETRY"`, and `"AWAITING_CALLBACK"` don't.
+
+For example, to let an HTTP API column run only after the "Find mobile phone number" step has finished in any way (found a number, found nothing, was skipped, or failed), add this to the HTTP API column's **Run settings → Only run if** condition, inserting the column with `/` rather than typing its name in quotes:
+
+```javascript
+(Clay.getCellStatus({{Find mobile phone number}}) || "").startsWith("SUCCESS") || (Clay.getCellStatus({{Find mobile phone number}}) || "").startsWith("ERROR")
+```
+
+Referencing the step column with `{{ }}` also makes the HTTP API column wait for that step. If a failed step should block the HTTP API column instead, allow only statuses that start with `SUCCESS` plus `"ERROR_RUN_CONDITION_NOT_MET"`:
+
+```javascript
+(Clay.getCellStatus({{Find mobile phone number}}) || "").startsWith("SUCCESS") || Clay.getCellStatus({{Find mobile phone number}}) === "ERROR_RUN_CONDITION_NOT_MET"
+```
 
 ### Gating a run on data from another table
 
