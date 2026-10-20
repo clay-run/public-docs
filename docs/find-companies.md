@@ -218,6 +218,19 @@ The **`Industry`** field in Clay's company data — returned by the Companies, P
 
 Because companies self-select their industry on the professional network, the values are open-ended text names rather than a fixed coded list. Clay recognizes approximately 457 common values. If a company has not set an industry on its professional network profile, the field returns empty.
 
+### Can Enrich Company classify government accounts as federal, state & local, or global government?
+
+No. The **Enrich Company** enrichment returns **Type** and **Industry** as single text values, and neither one splits government accounts into sub-categories such as Global Government, U.S. Federal, or U.S. State & Local. A government account shows a **Type** of **Government Agency**, and that is the most granular government value Enrich Company returns.
+
+The full set of **Type** values Enrich Company can return is: Educational, Government Agency, Non Profit, Partnership, Privately Held, Public Company, Self Employed, and Self Owned. These are the same values as the **Company types** filter in Find Companies.
+
+**To classify government accounts into your own categories (for example, Global Government, U.S. Federal, and U.S. State & Local):**
+
+1.  Run **Enrich Company** on your company domains.
+2.  Add a **Use AI** or Claygent column that takes the company domain (and optionally the company name and **Type**) as input.
+3.  In the prompt, list your categories and ask it to return exactly one category per company, plus a short reasoning note so you can spot-check the results. Domain endings such as `.gov` and `.mil` are useful signals for U.S. federal accounts.
+4.  To avoid spending credits on non-government companies, open **Run settings → Only run if** on the AI column and add a run condition — for example, only run when the domain ends in `.gov` or when the **Type** from Enrich Company is **Government Agency**. See [Conditional runs](conditional-runs.md) for how to write run conditions.
+
 ### What are the available AI Subindustry filter values?
 
 The **Industries** filter (the standard one at the top of the filter panel) and the **`Industry` output column** use a standardized industry taxonomy drawn from company profile data. Clay recognizes approximately 457 common values (examples: *Software Development, Financial Services, Insurance, Healthcare and Life Sciences, Information Technology and Services, Marketing and Advertising, Non-profit Organization Management*). Because these come from what companies set on their professional profiles, the list is open-ended rather than a fixed picklist.
