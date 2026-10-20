@@ -10,7 +10,21 @@ Comparing legacy plans to our new plans
 
 In March 2026, Clay introduced a new pricing model to give you more flexibility and value. The new model uses two simple usage meters: **Actions** (measures platform usage of enrichments and GTM execution) and **Data credits** (for accessing data from our marketplace).
 
-**What this means for you:** If you're on and choose to stay on your legacy plan, you'll keep your familiar pricing and all the features you have today. However, you won't have access to new features and integrations that we build going forward.
+**What this means for you:** If you're on and choose to stay on your legacy plan, you'll keep your familiar pricing and all the features you have today. However, you won't have access to new features and integrations that we build going forward. The one exception is a temporary offer that gives paid legacy Starter, Explorer, and Pro plans access to some newer features through December 31, 2026 — see [Which new features can legacy plans use until December 31, 2026?](#which-new-features-can-legacy-plans-use-until-december-31-2026)
+
+## Which new features can legacy plans use until December 31, 2026?
+
+Customers on paid legacy **Starter, Explorer, and Pro** plans have temporary "try before you buy" access to some newer Clay features through **December 31, 2026**. Legacy Enterprise plans and free plans are not part of this offer. In the product, a banner on each included feature reads "Your legacy plan now gets full access to a new feature, [feature name], until Dec 31, 2026."
+
+After December 31, 2026, a legacy Starter, Explorer, or Pro workspace needs to move to a modern plan to keep using the capabilities below:
+
+-   **Audiences:** Until December 31, 2026, legacy Starter and Explorer plans can run Signals, Account agents, and Sequencer campaigns from Audiences. Legacy Pro plans can also sync CRM and data warehouse data into Audiences. After December 31, 2026, move to a modern plan to keep running Signals, Account agents, and Sequencer from Audiences — and, on legacy Pro, to keep syncing CRM and warehouse data into Audiences. Ads syncs from Audiences are not included in the legacy offer on any plan.
+-   **Sequencer campaigns run from Audiences:** After December 31, 2026, Sequencer campaigns run from Audiences need a modern plan. Sequencer campaigns run from a Clay table remain available on your legacy plan.
+-   **Workflows:** After December 31, 2026, move to a modern plan to keep running more than 100 runs per workflow and to keep using Code nodes and AI Conditional nodes in Workflows.
+
+**What the end of the legacy offer doesn't change:** HTTP API access on legacy Explorer and Pro plans and API keys on legacy plans come with your legacy plan itself, not with the temporary offer, so they keep working after December 31, 2026.
+
+**Planning a build on a legacy plan:** If you're building something for a legacy Starter, Explorer, or Pro workspace that depends on any capability in the list above, and the workspace will stay on its legacy plan after December 31, 2026, that part of the build will need a modern plan to keep running. To compare what changes when you move, see the FAQs below.
 
 ## **Key differences between legacy and modern plans**
 
@@ -35,7 +49,7 @@ The table below compares feature availability between legacy plans and modern pl
 
 | Feature Category | Legacy Plans | Modern Plans |
 | --- | --- | --- |
-| New Features (post-Feb 2026) | ❌ Not available | ✅ Available |
+| New Features (post-Feb 2026) | ❌ Not available (temporary exceptions through Dec 31, 2026 — see above) | ✅ Available |
 | Ads (Clay Ads) | ❌ Not available | ✅ Growth (1 sync), Enterprise (2 syncs) |
 | New Integrations | ❌ Future integrations blocked | ✅ All new integrations |
 | Advanced Orchestration | Current features only | ✅ New releases prioritized |
