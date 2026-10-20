@@ -206,6 +206,13 @@ This is expected behavior. **Find Jobs returns one row per job posting**, not on
 
 If you want only one posting per company, apply **Auto-dedupe** to the imported table. In Table Settings (⛭ → **Edit table settings**), enable **Auto-dedupe rows**, select the company name or domain column as the deduplication key, and choose whether to keep the oldest or newest row. Clay will reduce the results to one row per unique company. See [Table management settings](table-management-settings.md) for details.
 
+### Why does my Find Jobs table show a Closed At date in the future?
+
+This is expected. The **Closed At** (`closed_at`) value on a Find Jobs result is the job posting's close date as collected by Clay's job postings data provider. When a company sets a posting to be taken down on a specific date, that date is collected ahead of time — so **Closed At** can show a future date, meaning the posting is scheduled to close on that date and is still open. For example, a job posted today that the company has scheduled to come down in 6 months shows a **Closed At** date 6 months from now.
+
+-   **Find Jobs returns open postings by default.** Results include job postings with no close date and postings whose close date is after the day the search runs. Postings whose close date has already passed are excluded, so any **Closed At** value in Find Jobs results is later than the day the search ran.
+-   **A future Closed At date isn't guaranteed.** The company can still close the posting earlier than its scheduled date. Clay's data provider re-checks postings periodically to catch postings that close early.
+
 ### Why did my signal use far more credits than I expected?
 
 The credit rate shown in a signal's settings covers only the **signal monitoring** itself — checking your tracked contacts or companies for new matches. It does not include any enrichment columns in your results table.
