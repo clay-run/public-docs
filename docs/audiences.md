@@ -264,7 +264,12 @@ Clay syncs data from Google BigQuery on the following schedules:
 4.  When your search data looks good, click `All people` to merge.
 5.  Create a named segment and use an [enrichment workflow](#adding-enrichments) to refine your data.
 
-**Note:** When you save a search to your Audience, only basic identity fields are carried over as columns — additional data fields visible in the search preview (such as Company Size or Annual Revenue for companies, or Job Title for people) are not automatically added to your Audience. To add one of these fields, create it as a custom Audience field first: see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
+**Note:** When you save a search to your Audience, Clay writes only a fixed set of fields to each imported record. You can't add other fields to a search import, and any field outside that set stays empty on the imported records:
+
+-   **Find companies:** company name, domain, professional network URL, HQ location, city, state, country, country ISO code, industry, and annual revenue. **Employee count is not filled in**, even if you filtered the search by company size or employee count. Search filters only decide which companies are imported. They don't save a value on each record. (Some workspaces use Clay's agent-based search experience, which Clay turns on per workspace. That experience writes a different set: it adds Employee count but leaves out industry.)
+-   **Find people:** name, first name, last name, title, professional network URL, location, city, state, country, and country ISO code.
+
+To fill in a field that a search import doesn't bring over, such as Employee count, see [Why is Employee count empty on companies I imported from a Find companies search?](#why-is-employee-count-empty-on-companies-i-imported-from-a-find-companies-search) in the FAQs below.
 
 **Note:** A search import only populates field values for companies or people that are **new** to your Audience. Records already in your Audience from Salesforce, Snowflake, or another higher-priority source keep their existing field values — Clay's search data has lower precedence and will not overwrite them. To populate or update a field (such as Industry) on records that already exist in your Audience, bring the search results into a Clay table and use the `Upsert Audiences Record` action to push those values to matching records.
 
@@ -1065,6 +1070,19 @@ To work with only the narrower set, open the search, tighten your filters, click
 If you saved a Find People or Find Companies search to Audiences and the count continues to grow — even though you haven't changed the search criteria — live search is likely enabled. Live search re-runs the search **once per day** and adds any new matching contacts or companies. This runs independently of any signal cadence you have set on the audience: a monthly signal and a daily live search are entirely separate schedules. Turning off or modifying the signal does not stop the live search from running.
 
 To stop the audience from growing, turn live search off: click the **⋮** menu next to the search source in the audience sidebar, or go to **Settings → Sources / Destinations**, click **⋮** next to the source row, and select **Turn live search off**. Contacts already imported remain in your audience — only new daily additions stop. You can always turn live search back on later if you want to resume continuous sourcing.
+
+### Why is Employee count empty on companies I imported from a Find companies search?
+
+An empty Employee count on companies saved to your Audience from a Find companies search is expected. It doesn't mean the import failed. A Find companies import writes a fixed set of fields to each Companies record: company name, domain, professional network URL, HQ location, city, state, country, country ISO code, industry, and annual revenue. Employee count isn't one of them, and you can't add it to the import's field mapping.
+
+Filtering your search by company size or employee count doesn't fill in Employee count either. The size filter only decides which companies are imported. It doesn't save a headcount on each record.
+
+To fill in Employee count on those Companies records:
+
+1.  Get the companies into a Clay table.
+2.  Add an employee count enrichment column to the table.
+3.  Click `Add enrichment` and add an `Upsert Audiences Record` column. Map the employee count column to the **Employee count** Audience field.
+4.  Run the column. Clay updates the matching Companies records in your Audience, and Employee count shows the enriched value.
 
 ### Can I sync an audience to multiple ad platforms?
 
