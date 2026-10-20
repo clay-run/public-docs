@@ -1,5 +1,5 @@
 ---
-title: LinkedIn Ads in Clay
+title: Professional network ads in Clay
 description: Sync people and account audiences from Clay to the professional network's Campaign Manager for B2B ad targeting, including setup, matching fields, and record limits.
 last_synced: 2026-10-20T14:56:12.867Z
 ---
