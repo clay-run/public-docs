@@ -162,6 +162,17 @@ If you add people to a Find People table by hand — typing or pasting their wor
 
 For other Enrich person input errors, see [Getting "Invalid input: Invalid person identifier" from Enrich person](finding-companies-and-people-in-clay.md#getting-invalid-input-invalid-person-identifier-from-enrich-person).
 
+### Can I get a contact's home address or direct mailing address in Clay?
+
+**No. Clay does not return home, residential, or personal mailing addresses for individual contacts.** This is intentional. For privacy reasons, Clay removes street-level personal addresses from person enrichment results, even when the underlying provider has them.
+
+Clay enrichments can return business addresses and work locations:
+
+-   **Company address:** Company enrichments such as **Enrich company** can return a company's headquarters or office location, including city, state, postal code, and sometimes a street address.
+-   **A contact's work location:** Some person enrichment providers return where a contact works, such as their city, state, country, or ZIP/postal code. A few providers also return the address of the office the contact works from. The output field names depend on the provider. Open a cell's details to see what that provider returned.
+
+If you already use a compliant residential address data provider, you can call it from your table with the [HTTP API](http-api-integration-overview.md) enrichment.
+
 ### How do I change a workflow's Find people trigger from Manual to Scheduled?
 
 A workflow trigger's type (**Manual**, **Scheduled**, or **On event**) is set when you create the trigger and can't be changed afterward. When you click an existing trigger in the workflow editor, the **Type** picker shows the trigger's current type and greys out the other types. This applies to draft and live workflows alike, and it isn't a plan or permission limit.
