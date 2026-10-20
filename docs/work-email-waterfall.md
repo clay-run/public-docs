@@ -281,6 +281,14 @@ When the Work Email output column shows **"Waiting for another column to finish"
 2. Look across that row for a cell showing **"Queued"**, **"Running"**, or **"Awaiting Callback"** — that is the step the output column is waiting on.
 3. Once all running steps complete, the "Waiting for another column to finish" status clears automatically and the Work Email output updates with the result.
 
+**If a provider step in the Work Email waterfall stays "Queued" and isn't progressing**, the Work Email output column keeps showing "Waiting for another column to finish" until that step runs. **Run column** → **Run [N] empty or out-of-date rows** skips cells that are already Queued. To unblock the stuck waterfall rows in one go:
+
+1. Click **Filter** in the table toolbar, select the stuck provider step column, and set the condition to **is queued**. Only the stuck rows are now visible.
+2. Right-click that provider step's column header and select **Run column** → **Force run all [N] rows**. With the filter active, this re-runs only the visible queued rows, so rows that already finished aren't re-run.
+3. Repeat for any other waterfall step that shows Queued, then remove the filter.
+
+Once the stuck steps finish, the Work Email output fills in automatically. If a column that uses Work Email as an input, such as a CRM lookup, is also stuck in Queued, unblock the waterfall steps first, then use the same filter and **Force run** steps on that column. For more on stuck queues, see [Troubleshooting cells stuck in Queued status](run-progress.md#troubleshooting-cells-stuck-in-queued-status).
+
 To permanently show provider and validation columns so you can monitor waterfall progress at a glance, click the waterfall tab, select **Edit group**, click the **Full configuration** tab, turn off `Hide provider columns?`, and re-run.
 
 ### Why does my own email address appear in the Work Email results?
