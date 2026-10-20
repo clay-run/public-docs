@@ -1311,6 +1311,18 @@ If you need company name alongside each person in a table workflow, the recommen
 
 This gives you company context directly alongside each person in the table without requiring company name to be stored as a field in Audiences.
 
+### Are linked Company fields (like Industry) available in a workflow triggered by a People segment?
+
+When a workflow runs from a **Segment on a schedule** trigger on a **Person** segment, the trigger's inputs are the person record's own Audiences fields. Fields from the person's linked Company record — for example, an Account-sourced field like Industry — are not included by default. Each person's trigger input does include an `accounts` list with the Clay Company ID (`id`) of each linked Company record, but not the company's field values.
+
+You have three ways to use linked Company fields in a segment-triggered workflow:
+
+- **Turn on Include company fields.** In the workflow editor, click the **Trigger** node. In the **Triggers** panel, under **Options**, turn on **Include company fields** ("Add fields from each person's company as workflow inputs."). Each entry in the `accounts` input then includes the linked company's name and all of its Company fields, so later steps can reference fields like Industry directly without an extra step. You can also turn this toggle on when you first add a segment trigger.
+- **Add a Lookup in Audiences step.** Add a `Lookup in Audiences` step after the trigger, set **Object type** to **Companies**, and map the company `id` from the trigger's `accounts` input to the **Company ID** filter. The step returns the full linked Company record.
+- **Trigger from a Company segment instead.** If the workflow mainly needs company context, choose **Company** instead of **Person** as the segment type on the **Segment on a schedule** trigger. The trigger inputs are then the Company record's fields.
+
+**Include company fields** applies only to Person segment triggers. Linked Company data is available only for people who have a Company association in Audiences — a person with no linked Company record has no entries in the `accounts` input, so neither the toggle nor a Company ID lookup returns company fields for them. For Salesforce Leads and other people records without a Company association, see [How do I access Account-level fields (like Company Name or Company Domain) from a People audience?](#how-do-i-access-account-level-fields-like-company-name-or-company-domain-from-a-people-audience) above.
+
 ### My Clay segment has far fewer records than my Salesforce report with the same filters — why?
 
 Clay audience segments count only the records that currently match your filters based on data that has been synced into Audiences — not live Salesforce data at query time. A large gap between your segment count and a matching Salesforce report usually traces to one of two causes.
