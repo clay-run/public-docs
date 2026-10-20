@@ -231,6 +231,22 @@ The full set of **Type** values Enrich Company can return is: Educational, Gover
 3.  In the prompt, list your categories and ask it to return exactly one category per company, plus a short reasoning note so you can spot-check the results. Domain endings such as `.gov` and `.mil` are useful signals for U.S. federal accounts.
 4.  To avoid spending credits on non-government companies, open **Run settings → Only run if** on the AI column and add a run condition — for example, only run when the domain ends in `.gov` or when the **Type** from Enrich Company is **Government Agency**. See [Conditional runs](conditional-runs.md) for how to write run conditions.
 
+### What country values does Enrich Company return?
+
+The **Country** field returned by the **Enrich Company** enrichment uses two-letter ISO 3166-1 alpha-2 country codes — for example, `US` (United States), `GB` (United Kingdom), `CA` (Canada), and `DE` (Germany). Enrich Company does not return full country names in the **Country** field.
+
+To match Enrich Company's **Country** values to the country values in your CRM (for example, a country picklist), map each two-letter code using the standard ISO 3166-1 alpha-2 list. The **Country** field can be empty when Clay's company data has no country on file for that company — handle blank values in your mapping.
+
+### What's the difference between Org Id, Company Id, and Clay Company Id in Enrich Company?
+
+The **Enrich Company** enrichment returns three different numeric IDs for each company. Each ID comes from a different system:
+
+-   **Org Id** — The company's ID on the professional network. It's the number that appears in the company's professional network profile URL when the URL uses a numeric ID (for example, `.../company/12345`).
+-   **Company Id** — The internal record ID used by Clay's underlying company data provider. It is not the professional network ID (that's **Org Id**) and not Clay's own ID (that's **Clay Company Id**). **Company Id** can be empty.
+-   **Clay Company Id** — Clay's own ID for the company. It's the recommended key for matching Enrich Company results to company records in your CRM.
+
+**Clay Company Id** doesn't depend on the company's domain or name, so a rebrand or domain change alone doesn't change it. In rare cases, a Clay Company Id can change when two company profiles in Clay's company data are merged — Enrich Company always returns the company's current Clay Company Id. See [Clay Company ID from Find Companies doesn't match the ID from Enrich Company](finding-companies-and-people-in-clay.md#clay-company-id-from-find-companies-doesnt-match-the-id-from-enrich-company) for how to handle older IDs.
+
 ### What are the available AI Subindustry filter values?
 
 The **Industries** filter (the standard one at the top of the filter panel) and the **`Industry` output column** use a standardized industry taxonomy drawn from company profile data. Clay recognizes approximately 457 common values (examples: *Software Development, Financial Services, Insurance, Healthcare and Life Sciences, Information Technology and Services, Marketing and Advertising, Non-profit Organization Management*). Because these come from what companies set on their professional profiles, the list is open-ended rather than a fixed picklist.
