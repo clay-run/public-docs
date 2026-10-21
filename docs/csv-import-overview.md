@@ -1,6 +1,6 @@
 ---
 title: How to import your CSV into Clay
-description: Import your CSV into Clay, and download (export) your Clay table as a CSV file.
+description: Import your CSV into Clay, download (export) your Clay table as a CSV file, and export an Audiences segment to CSV through a Google Sheets workflow.
 last_synced: 2026-04-26T01:39:49.725Z
 ---
 
@@ -47,6 +47,21 @@ A modal appears while your export is processing. Once it is ready, the CSV file 
 The exported CSV includes only the columns and rows visible in your current view. Columns hidden in the view and rows filtered out by active view filters are not included. To export your full table, make sure no view filters are active and all columns are visible before starting the download.
 
 Downloading a table as CSV does not consume any Actions or Data Credits.
+
+### Can I export an Audiences segment as a CSV?
+
+Clay Audiences has no **Download CSV** or **Export** button. You can't download a People or Companies segment, or **All People** / **All Companies**, as a CSV file directly from the Audiences screen. The **Download CSV** steps above work only for Clay tables. The **Enrich** button on a segment opens enrichment workflows and does not create a table you can download.
+
+To export Audiences records as they are, without enriching them, send the segment to a workflow that adds each record to a Google Sheet. Then download the sheet as a CSV:
+
+1.  Open the segment under **Audiences** → **People** or **Companies**, then click **Send** in the top right.
+2.  In the **Send** sidebar, open the **Export action** dropdown and select **Send to workflow**.
+3.  In the **Send to workflow** modal, select the **New workflow** tab, name the workflow, and click **Create workflow**.
+4.  Open the workflow in the editor, add a step, and search for **Add row** (Google Sheets). Connect your Google account, choose the spreadsheet, and map each Audience field you want to export to a sheet column. The Google Sheets **Add row** action is available on all plans.
+5.  On the trigger card, open the **Run** dropdown. To check your field mapping on a sample first, select **Run [X] [members]** (runs up to 10 members). When the mapping looks right, select **Run all [X] [members]** to add every current segment member to the sheet.
+6.  In Google Sheets, click **File** → **Download** → **Comma-separated values** to save the sheet as a CSV file.
+
+Each segment member runs through the workflow as a separate run. Clay adds rows to Google Sheets at up to 10 rows per second for each connected Google account, and Clay does not cap how many rows the **Add row** action writes. At that rate, a segment of 1,000,000 companies takes at least 100,000 seconds (about 28 hours) to finish writing to the sheet. Google Sheets also enforces its own maximum spreadsheet size. To send Audiences records to a CRM, a data warehouse, or another tool instead of a spreadsheet, add that tool's action in place of Google Sheets. See [How do I send audience records to another tool?](audiences.md#how-do-i-send-audience-records-to-another-tool).
 
 ## Next steps after importing
 
