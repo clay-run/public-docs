@@ -423,7 +423,12 @@ How Clay counts Actions in a table:
 2.  In waterfalls, put the providers most likely to return a result first, so fewer steps run per row.
 3.  Use formula columns instead of AI or enrichment columns wherever the logic is deterministic.
 
-**What happens when you reach your monthly Action limit:** Further Action-consuming runs are blocked, cells show **Action execution limit reached**, and you'll see a banner saying you've reached your action limit. Blocked runs aren't charged. Your Actions reset at your next billing cycle, or you can upgrade your Action tier in `Settings` → `Plan & billing` to continue right away.
+**What happens when you reach your Action limit depends on your plan:**
+
+-   **Launch, Growth, and Enterprise plans:** By default, the Action limit is a soft limit. After you reach it, runs keep going and keep using Actions, and workspace admins see a banner: *"You've reached your action limit for this month. Please upgrade your plan."* (The banner names your billing period, for example "year" on annual plans. Non-admins are asked to contact their admin to upgrade.)
+-   **Flex, Free, and trial plans:** The Action limit is a hard cap. Once you reach it, further Action-consuming runs are blocked, cells show **Action execution limit reached**, and blocked runs aren't charged.
+
+To get more Actions, upgrade your Action tier in `Settings` → `Plan & billing`. See [Actions: No rollover](#actions-no-rollover) for when unused Actions expire.
 
 ### What happens to my Data Credits if I get invalid data?
 
