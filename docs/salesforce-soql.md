@@ -33,6 +33,8 @@ Build lists of Salesforce records using custom SOQL queries. Query across object
 
     If no fields are selected, Clay uses the entire row content as the unique identifier, which can cause duplicate rows when individual field values change across syncs.
 
+    If any selected uniqueness field is empty (null) on a record, Clay falls back to using the entire row content as the unique identifier for that record.
+
 **Query requirements:**
 
 -   Must be a valid SELECT statement.
@@ -152,6 +154,39 @@ Think of each scheduled run as Clay asking Salesforce: "Give me all records matc
 -   Remove or broaden the `WHERE` condition that may now exclude the record (e.g., if you're filtering on a field that changed value).
 -   Add a condition to catch recently modified records: `WHERE ... OR SystemModstamp >= LAST_N_DAYS:30`.
 -   If you need to track a fixed set of accounts regardless of their field values, filter on a stable identifier instead (e.g., `WHERE Id IN ('001...', '001...')`).
+
+### Why does my scheduled SOQL source import fewer rows (or 0 rows) than my query returns in Salesforce?
+
+The Salesforce SOQL source keeps an import history of every record it has already imported, and it skips those records on later runs. Clay sends your SOQL query to Salesforce exactly as written. Any `WHERE`, `ORDER BY`, and `LIMIT` clauses are applied by Salesforce **before** Clay checks the import history. Clay does not exclude previously imported records from the query it sends to Salesforce.
+
+This means a query with a `LIMIT` can keep returning the same records. For example, if your query ends in `ORDER BY Score__c DESC LIMIT 25` and the same 25 accounts stay at the top:
+
+1.  Salesforce returns those same 25 accounts on every run.
+2.  The Salesforce SOQL source has already imported all 25, so it skips them.
+3.  The run reports **Success** with 0 rows added. The other eligible accounts behind the top 25 are never returned to Clay, even if the same query without `LIMIT` returns hundreds of records in Salesforce.
+
+If only some of the top 25 changed since the last run, only those records are added. For example, 9 new accounts in the top 25 means 9 rows added.
+
+In **Source history**, **Rows imported** and **Rows added** only count records that were new to the source's import history on that run. They do not count the total number of records your query returned in Salesforce.
+
+**To bring in the next set of records on each run**, choose one of the following:
+
+-   **Remove previously pulled records from the query in Salesforce.** Update a field on each record once it has been pulled or worked, either through your Salesforce process or with the Salesforce [Update record](salesforce-integration-overview.md#action-update-record) action at the end of your Clay workflow, and filter that field out in your `WHERE` clause. For example, set a cooldown date such as `Outbound_Cooldown_Until__c` and filter on `Outbound_Cooldown_Until__c = NULL OR Outbound_Cooldown_Until__c <= TODAY`. Each run then returns the next eligible records.
+-   **Remove the `LIMIT`** so Clay receives every record that matches your query. Each run adds every matching record that is new to the source, up to the 50,000-record maximum per import.
+
+**Note:** Deleting rows from your Clay table does not clear the source's import history, so re-running the same source will not re-add deleted records. To start with a clean import history, delete and re-add the source, or duplicate the table. See [I deleted rows from my table and re-ran the source, but they didn't reappear](sources.md#i-deleted-rows-from-my-table-and-re-ran-the-source-but-they-didnt-reappear).
+
+### How do I let a Salesforce record be imported again after it changes (for example, after a cooldown expires)?
+
+The Salesforce SOQL source re-imports a record as a new row whenever the values of its **Uniqueness fields** differ from every version it has already imported. Choose your Uniqueness fields based on when you want a record to come back:
+
+-   **No Uniqueness fields selected:** Clay uses the entire row content. A change to any field in your `SELECT` adds the record again as a new row.
+-   **`Id` only:** Each record is imported once per source. Later changes to the record do not add a new row. To refresh the data on existing rows instead, turn on **Update existing rows**.
+-   **`Id` plus a date field, for example `Id` and `Outbound_Cooldown_Until__c`:** While the date has a value, the record is added again as a new row only when that date changes, for example when a new cooldown is set. This gives you one row per cycle without re-adding the record on unrelated field changes.
+
+Every field you select as a Uniqueness field must also be in your `SELECT` clause. If a selected Uniqueness field is empty (null) on a record, Clay uses the entire row content for that record instead.
+
+If a record is returned with the same Uniqueness field values on consecutive runs, the Salesforce SOQL source skips it and that run adds 0 rows for it. The record is not permanently excluded. It comes back as a new row as soon as one of its Uniqueness field values changes.
 
 ### Why am I getting rate limit errors?
 
