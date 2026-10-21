@@ -331,7 +331,7 @@ When you create your first ad audience, you'll be prompted to authenticate with 
 
 ### **Why do I see "Access blocked: Your institution's admin needs to review Clay" when connecting Google Ads?**
 
-If you see **"Access blocked: Your institution's admin needs to review Clay"** with **Error 400: access_not_configured** (or a similar "This app is blocked" page) when connecting your Google Ads account to Clay, the message comes from Google, not Clay. Your company's Google Workspace settings block third-party apps until a Google Workspace admin at your company approves them, and Clay hasn't been approved yet. This is why Google Ads can fail to connect even when your other ad platforms, such as the professional network or Meta, connect without issues — the restriction only applies to apps that access your company's Google accounts.
+If you see **"Access blocked: Your institution's admin needs to review Clay"** with **Error 400: access_not_configured** (or a similar "This app is blocked" page) when connecting your Google Ads account to Clay, the message comes from Google, not Clay. Your company's Google Workspace settings block third-party apps until a Google Workspace admin at your company approves them, and Clay hasn't been approved yet. This is why Google Ads can fail to connect even when your other ad platforms, such as Meta, connect without issues — the restriction only applies to apps that access your company's Google accounts.
 
 **Where the "Request Access" request goes:** Clicking **Request Access** on Google's error page sends the request to your own company's Google Workspace admin, not to Clay. Clay support can't approve it on your behalf.
 
