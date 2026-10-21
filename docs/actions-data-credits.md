@@ -398,10 +398,32 @@ No credits are affected before your renewal date — you can use them freely unt
 
 **Once you have an account:** The enrichment panel shows costs before you run:
 
--   Actions: Always 1 per result.
+-   Actions: Always 1 per run, even when the provider returns no data.
 -   Data Credits: Displayed next to each enrichment option.
 
 For complex workflows, run a small test batch (10–50 records) to understand full costs.
+
+### How do I estimate how many Actions a table will use?
+
+The number of Actions a table uses is the number of enrichment, AI, and export cells that actually run — not simply the number of action columns multiplied by the number of rows. Multiplying columns by rows (for example, 8 action columns × 5,000 rows = 40,000 Actions) gives the maximum, which you only reach if every column runs on every row with no run conditions and no waterfalls.
+
+How Clay counts Actions in a table:
+
+-   **Each cell that runs costs 1 Action.** An enrichment, AI column, or export uses 1 Action per row it runs on.
+-   **Rows skipped by a run condition cost 0 Actions.** If a column's run condition isn't met for a row, that cell doesn't run and no Action is charged. See [Conditional runs](conditional-runs.md).
+-   **A run that returns no data still costs 1 Action.** For example, an email lookup that finds no email for a row still uses 1 Action for that row.
+-   **Waterfalls cost 1 Action per provider step that runs.** A waterfall tries providers in order and stops at the first one that returns a result; the remaining steps don't run and cost 0 Actions. A waterfall with 4 providers costs between 1 and 4 Actions per row. See [Waterfalls](building-a-data-waterfall.md).
+-   **Formula columns cost 0 Actions.**
+
+**Example:** A 5,000-row table has 8 action columns. If all 8 run on every row, the table uses 40,000 Actions. If you add a run condition so the AI copywriting column only runs on the 3,000 rows where an email was found, that column uses 3,000 Actions instead of 5,000, and the table uses 38,000 Actions. If the email column is instead a 4-provider waterfall and an average of 2 steps run per row, that column uses 10,000 Actions instead of 5,000.
+
+**To use fewer Actions in a table:**
+
+1.  Add run conditions so columns skip rows that don't need them — for example, skip company enrichment when there's no valid domain, or skip AI copywriting when no email was found.
+2.  In waterfalls, put the providers most likely to return a result first, so fewer steps run per row.
+3.  Use formula columns instead of AI or enrichment columns wherever the logic is deterministic.
+
+**What happens when you reach your monthly Action limit:** Further Action-consuming runs are blocked, cells show **Action execution limit reached**, and you'll see a banner saying you've reached your action limit. Blocked runs aren't charged. Your Actions reset at your next billing cycle, or you can upgrade your Action tier in `Settings` → `Plan & billing` to continue right away.
 
 ### What happens to my Data Credits if I get invalid data?
 
