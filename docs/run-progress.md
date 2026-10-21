@@ -142,7 +142,7 @@ Filter or select the runs you care about, choose how to restart them, and kick t
 
 ### Retrying failed workflow runs via the CLI
 
-If you want an agent or script to catch and re-trigger failed workflow runs on a schedule — for example, when records fail due to provider outages — the Clay CLI's `clay workflows runs` command group covers this without opening the UI. Available on all plans; requires the [Clay CLI Agent Plugin](https://github.com/clay-run/agent-plugins) and a workspace API key with `cli:all` scope.
+If you want an agent or script to catch and re-trigger failed workflow runs on a schedule — for example, when records fail due to provider outages — the Clay CLI's `clay workflows runs` command group covers this without opening the UI. Available on all plans; requires the [Clay CLI Agent Plugin](https://github.com/clay-run/agent-plugins), signed in with `clay login` as a workspace Admin or Editor. API keys don't include the `cli:all` scope these commands need. To run the loop from a cron job or server, see [Running the Clay CLI unattended](using-clay-as-an-api.md#running-the-clay-cli-unattended-cron-jobs-scheduled-scripts-and-servers).
 
 **Typical agent-driven retry loop:**
 
