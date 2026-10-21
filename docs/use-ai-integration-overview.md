@@ -375,10 +375,25 @@ If your AI column cells show an **"Invalid credentials"** error with the message
 
 There are two ways to resolve this:
 
--   **Switch to a Clay-managed account (recommended).** Open the column settings, find the **Account** dropdown, and select the default Clay-managed account. This uses Clay's shared credits and does not require your own API key.
+-   **Switch to a Clay-managed account (recommended).** Open the column settings, find the **Account** dropdown, and select the Clay-managed account for the selected model's provider — for example, the Clay-managed OpenAI account for GPT models or the Clay-managed Anthropic account for Claude models. This uses Clay's shared credits and does not require your own API key.
 -   **Connect your own API key.** If you prefer to use a specific provider (OpenAI, Anthropic, or Google Gemini), open the column settings, click the **Account** dropdown, click **+ Add account**, and follow the prompts to add your key.
 
 **Note:** If you updated the model using Sculptor and the error persists, the change may not have saved correctly. Open the column settings directly (click the column name → **Edit column**) and confirm the **Model** and **Account** fields reflect what you expect, then re-save and re-run.
+
+### Account field shows "This account can't serve the selected model"
+
+If the **Account** field in a Use AI column's **Configure** tab shows the warning **"This account can't serve the selected model. Choose a different account or model."**, the account saved on the column belongs to a different provider than the selected model. For example, the column may be set to a "Clay-managed Predict Leads account" while the model is Claude Sonnet 5.5, which needs an Anthropic account. Until you select a compatible account, every row in the column fails with an **"Invalid credentials"** error — editing the prompt or re-running the column does not fix it.
+
+The mismatched account still appears as the current selection in the **Account** field, even though it is not listed when you open the **Account** dropdown. The dropdown lists only accounts that can serve the selected model's provider.
+
+To fix the "This account can't serve the selected model" warning:
+
+1.  Click the column name → **Edit column**, then open the **Configure** tab.
+2.  Click the **Account** dropdown.
+3.  Select the Clay-managed account for the model's provider — for example, the Clay-managed Anthropic account for Claude models or the Clay-managed OpenAI account for GPT models — or select your own API key for that provider.
+4.  Confirm the warning no longer appears below the **Account** field, then click **Save** and re-run the affected rows.
+
+If several AI columns in your table show this warning, update the **Account** on each column separately: a column using a GPT model needs an OpenAI account, and a column using a Claude model needs an Anthropic account.
 
 ### OpenAI key shows "Success" but cells fail with "The API key is invalid"
 
