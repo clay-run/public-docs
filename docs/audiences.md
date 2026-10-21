@@ -1024,7 +1024,7 @@ To send leads from a Clay table into your Audience so your segment fills up:
 1.  Open the table that holds the leads.
 2.  Click `Add enrichment` and search for `Upsert Audiences Record`. The action is listed as **Create or update Audiences record**.
 3.  Choose **People** or **Companies**.
-4.  Pick the lookup fields Clay uses to match existing records. For **People**, the options are **Email**, **LinkedIn URL**, and **Phone**. For **Companies**, the options are **Domain** and **LinkedIn URL**.
+4.  Pick the lookup fields Clay uses to match existing records. For **People**, the options include **Email**, the person's professional network URL, and **Phone**. For **Companies**, the options include **Domain** and the company's professional network URL.
 5.  Map the table columns you want in your Audience. Include every field your segment filters on.
 6.  Run the column. Clay creates a new Audience record when no match is found and updates the matching record when one is found.
 7.  Open **All People** (or **All Companies**) and confirm your leads appear.
