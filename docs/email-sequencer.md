@@ -562,6 +562,17 @@ Because the campaign events table is a standard Clay table, you can add CRM enri
 
 7.  **Test before scaling.** Turn off `Auto-run` and manually run 5–10 rows first to validate your field mappings before enabling full automation.
 
+### Why does the Campaign ID in the campaign events table differ from the cam_ ID in my campaign's URL?
+
+A Clay email campaign has two IDs: the native Clay campaign ID that starts with `cam_` (shown in the campaign's URL in your browser), and the sequencing provider's numeric campaign ID. The **Campaign ID** column in the campaign events table shows the numeric provider ID, not the `cam_` ID.
+
+Every event row also carries the native `cam_` ID in a top-level `clay_campaign_id` field inside the raw event data in the **Campaign events** column. Clay adds this field to sent, open, link click, bounce, reply, unsubscribe, and lead category updated events whenever it can match the event to a Clay campaign. Use the `cam_` ID if your integration or CRM tracking record needs to match events back to Clay campaigns by the ID in the campaign URL:
+
+1.  Open the campaign events table (click the campaign name at the top of the campaign page and select **View events**).
+2.  Click any cell in the **Campaign events** column to open the Cell details panel, and find the `clay_campaign_id` field.
+3.  Click **Add as column** to extract it into its own column, or reference it in a formula as `{{Campaign events}}?.clay_campaign_id`.
+4.  Map that column (instead of **Campaign ID**) in your `Only run if` conditions, `HTTP API` columns, or CRM write-back columns.
+
 ### How do I send Sequencer campaign data to Snowflake or another data warehouse?
 
 Clay's email sequencer has no native scheduled export or sync of campaign analytics to Snowflake or any other data warehouse. To report on Sequencer activity in your own warehouse and BI tool, send the data out of the [campaign events table](#campaign-events-table), which records every send, open, click, bounce, reply, and reply category across all campaigns in your workspace. Because the campaign events table is a standard Clay table, you can add an action column to it that runs on each new event row.
