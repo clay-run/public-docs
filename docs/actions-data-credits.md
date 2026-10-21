@@ -375,7 +375,13 @@ To finish the run after you run out of Data Credits:
 
 ### Are Data Credits charged for enrichment cells that show an error?
 
-No. When an enrichment cell ends in an error status, Clay does not charge Data Credits for that cell. Credits held for the run are returned to your balance automatically. This applies, for example, to cells whose cell details panel says **The integration failed to run**, and to cells that show **Not enough Clay credits 😢**.
+Cells that show **Not enough Clay credits 😢** aren't charged Data Credits. Most other enrichment errors aren't charged either. For example, if an enrichment fails because of a provider or platform problem during the run, the credits held for that cell are returned to your balance automatically.
+
+A few error types are still charged Data Credits:
+
+-   The enrichment returns invalid output data.
+-   The enrichment returns an **Empty response**.
+-   The enrichment can't find the table, row, or column it writes its results to (for example, because it was deleted before the cell ran).
 
 To check what a single cell cost, click the cell and look at **Charged** at the bottom of the cell details panel. To retry errored cells, right-click the column header, click **Run column**, and choose **Run [N] empty or out-of-date rows**.
 
