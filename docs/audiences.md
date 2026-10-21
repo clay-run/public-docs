@@ -1015,6 +1015,26 @@ These refer to the same field. In the Salesforce import field mapping, the Linke
 
 The underlying field and data are identical. If you mapped Salesforce's Account LinkedIn URL field and named it "LinkedIn URL" in your import settings, filtering on "Company LinkedIn URL" in your Companies audience targets that same mapped field.
 
+### Why is my segment empty or not pulling leads from my Clay table or workbook?
+
+Audience segments don't read rows from Clay tables or workbooks directly. A segment is a saved set of filters over the records already in your Audience (**All People** or **All Companies**). A segment only shows people or companies that have already been added to your Audience. This also applies to any Sequencer campaign that uses the segment as its lead source. If the leads in your table were never sent to Audiences, the segment stays empty, even when the table has rows that match its filters.
+
+To send leads from a Clay table into your Audience so your segment fills up:
+
+1.  Open the table that holds the leads.
+2.  Click `Add enrichment` and search for `Upsert Audiences Record`. The action is listed as **Create or update Audiences record**.
+3.  Choose **People** or **Companies**.
+4.  Pick the lookup fields Clay uses to match existing records. For **People**, the options are **Email**, **LinkedIn URL**, and **Phone**. For **Companies**, the options are **Domain** and **LinkedIn URL**.
+5.  Map the table columns you want in your Audience. Include every field your segment filters on.
+6.  Run the column. Clay creates a new Audience record when no match is found and updates the matching record when one is found.
+7.  Open **All People** (or **All Companies**) and confirm your leads appear.
+
+Your segment then picks up the new records automatically on its next refresh, as long as the mapped values match the segment's filters. Segments refresh about every 20 minutes on Enterprise plans and about every 60 minutes on Launch and Growth plans. See [Does Audiences update automatically?](#does-audiences-update-automatically). If the leads show in **All People** but not in the segment after that, compare the segment's filters with the values you mapped.
+
+**Sequencer campaigns built on a segment:** a launched campaign enrolls new segment members on its own. During the first hour after launch, a one-time catch-up run enrolls them. After that, new members are enrolled on the campaign's daily enrollment run.
+
+**To keep this from happening as you build more campaigns and workbooks:** add an `Upsert Audiences Record` column to every new table whose leads should land in a segment, and run it before you launch the campaign. You can also send a table's rows to your Audience with **Continue → Save to People** or **Save to Companies**. See [Sending data from Clay table](#sending-data-from-clay-table).
+
 ### Why doesn't my Clay table appear in the Person source filter?
 
 The **Person source** filter lists each source by its display name. If you sent records from a Clay table to Audiences using **Continue → Save to People**, look for the table's display name in the Person source dropdown — the same name that appears in the **Source** column on each record.
@@ -1035,10 +1055,15 @@ You don't need a clean CRM to get started — CRM cleanup is often the first use
 
 ### Does Audiences update automatically?
 
-Yes. Segments update in real time as records enter or exit your filter criteria. The refresh frequency depends on your plan:
+Yes. Audience segments refresh automatically as records enter or exit your filter criteria. You don't need to refresh a segment by hand. Segment membership refreshes on a recurring cycle, not instantly:
 
--   **Enterprise plan:** CRM and data warehouse **imports** (CRM → Clay) run every 15 minutes, and segments update continuously.
--   **Growth plan:** CRM and data warehouse **imports** run daily, and segments update based on that daily refresh.
+-   **Enterprise plan:** segment membership refreshes about every 20 minutes.
+-   **Launch and Growth plans:** segment membership refreshes about every 60 minutes, so a change can take up to about 80 minutes to show in a segment.
+
+How often your CRM and data warehouse data reaches Audiences in the first place depends on your plan:
+
+-   **Enterprise plan:** CRM and data warehouse **imports** (CRM → Clay) run every 15 minutes.
+-   **Growth plan:** CRM and data warehouse **imports** run daily, so CRM changes reach your segments after that daily import.
 
 The 15-minute (or daily) cadence applies to the **import direction only** — it reflects changes from your CRM in Clay. The reverse direction — exporting enriched data from Clay back to Salesforce — runs on a **separate 24-hour schedule**. See [I enriched data in my Audience. Why hasn't it appeared in Salesforce yet?](#i-enriched-data-in-my-audience-why-hasnt-it-appeared-in-salesforce-yet) for details.
 
