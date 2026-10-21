@@ -88,7 +88,7 @@ For example, you can find out if a company uses Salesforce for their CRM or Nets
 -   **Include total product locations count (Optional)**
 -   **Include total product signals count (Optional)**
 -   **Include product first verified date (Optional)**
--   **Max product (Optional)**
+-   **Limit (Optional):** The maximum number of technology results returned per row. Defaults to **10**; maximum **100**.
 
 **Checking an existing account list for technology usage**
 
@@ -101,11 +101,30 @@ If you already have a list of companies — for example, accounts imported from 
 
 **Credit cost**
 
-The `Verify technology usage` action charges credits **per technology result returned**, not a flat amount per row. Each matched technology costs 8 credits.
+The HG Insights `Verify technology usage` action charges credits **per technology result returned**, not a flat amount per row. The price badge at the bottom of the column settings shows the rate as `/ result` — for example, `8 / result` means each matched technology costs 8 credits. The per-result rate can differ by billing plan, so check the badge in your workspace. By contrast, actions billed per row show `/ row` — for example, the BuyerCaddy `Verify technology usage` action shows `3 / row`.
 
-The estimate shown in the column settings (for example, ~80 / row) is the **maximum possible cost** — calculated as 8 credits × your **Max product** limit. With the default Max product of 10, Clay estimates up to 80 credits per row. A row where HG Insights finds no matching technologies costs **0 credits** — the base charge is automatically refunded when no data is returned.
+Hover over the `/ result` badge to see how the per-row maximum is calculated:
 
-**To reduce the maximum cost per row:** Lower the **Max product** limit in the enrichment configuration. Setting Max product to 2 caps the estimate at 16 credits/row; setting it to 3 caps it at 24 credits/row. If most companies in your table have 1 or 2 technology matches, setting Max product to match your expected maximum is the most credit-efficient approach.
+-   **Cost per result:** the credits charged for each technology found (for example, 8 credits).
+-   **Estimated results per row:** your **Limit** setting (10 by default).
+-   **Max cost per row:** cost per result × Limit — for example, 80 credits (8 × 10).
+
+**Are you charged when HG Insights finds no technology?**
+
+No. With the HG Insights `Verify technology usage` action, you're only charged for technologies that are found:
+
+-   A row where HG Insights finds no matching technologies costs **0 credits**. After the run, click the cell and the cell details show `Charged: 0 (Refunded)`.
+-   A row skipped by your run condition (the cell shows `Run condition not met`) is not charged.
+
+**Why the Save and run estimate for Verify technology usage looks so high**
+
+The `Save and run 10 rows` and `Save and run [N] rows in this view` options show a **worst-case total**: cost per result × Limit × number of rows. The estimate assumes every row returns the maximum number of results. For example, a table of 28,063 accounts with the default Limit of 10 at 8 credits per result shows an estimate of about 2.25M credits (28,063 × 10 × 8 = 2,245,040).
+
+Your actual spend is cost per result × the total number of technologies found across all rows. For example, if HG Insights finds 2,000 matching technologies across those 28,063 accounts, the run costs 16,000 credits (2,000 × 8).
+
+**To reduce the maximum cost per row:** Lower the **Limit** in the enrichment configuration. Setting Limit to 2 caps the maximum at 16 credits per row (2 × 8); setting it to 3 caps it at 24 credits per row (3 × 8). If you're checking for a specific set of competitor products, set Limit to the number of products you're checking.
+
+**To estimate actual spend before running a large table:** Run a sample first — select a few hundred rows, right-click, and choose **Run [N] rows**. Check the credits used and the results on that sample (which reflect your run condition and how often technologies are actually found) before running the rest of the table or writing results back to your CRM.
 
 ### `Action` **Find company corporate structure**
 
