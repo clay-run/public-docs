@@ -1076,6 +1076,22 @@ Connect a [workflow to your segment](#connecting-a-workflow-to-a-segment) and ad
 
 See [Workflows](https://university.clay.com/docs/workflows) for supported triggers, enrichment actions, and run controls.
 
+### How do I send people in a segment to a Clay table?
+
+**Send to workflow** connects an Audiences segment to a workflow trigger. It does not write the segment's people or companies to a Clay table.
+
+**Add to workbook** sends a segment's records to a Clay table, but it is a legacy option that only some existing workspaces have. It is not available on Free, Trial, or Flex plans. If **Add to workbook** doesn't appear under **Export action** on your segment, your workspace doesn't have this option.
+
+If your workspace has **Add to workbook**:
+
+1.  Open the saved Audiences segment and click `Send` → `Export action` → **Add to workbook**.
+2.  In the **Send to workbook** dialog, enter a **Table name** and confirm.
+3.  The new table appears under **Tables** in the segment's **Send** panel.
+
+New records that join the segment are added to that table automatically, usually within 20 minutes of joining the segment. You don't need to run an import manually.
+
+**Add to workbook always creates a new table.** You can't pick an existing Clay table as the destination for a segment. To get segment records into a table your team already uses, add a **Send table data** column to the table that **Add to workbook** created and point it at your existing table, mapping the columns you need. See [Send table data](send-table-data.md).
+
 ### What happens to a contact's ad targeting when they become a customer?
 
 If your segment has an exclusion condition (e.g., Account Type ≠ "Customer"), the contact is automatically **removed** from the synced ad audience as soon as that condition is met. See [Clay Ads](https://university.clay.com/docs/clay-ads) for platform-specific guidance.
