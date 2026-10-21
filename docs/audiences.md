@@ -598,6 +598,18 @@ If a segment-triggered workflow never started for a contact or company, check th
 -   **The segment has no workflow connected.** Contacts joining a segment only start a workflow if a published workflow uses that segment as its trigger. Open the segment and check the **Workflows** section of the sidebar.
 -   **The segment was deleted.** If the segment a workflow trigger points to is deleted, the trigger stops firing. The trigger card in the workflow editor shows **"Segment not found. It may have been deleted."** To fix it, open the workflow, select a different segment on the trigger, and publish the workflow again.
 
+**Why does my workflow's Runs list show many "Segment · 2,500 runs" rows?**
+
+An **On event** segment trigger (shown as **New member in segment** in the trigger picker) delivers new segment members to the workflow in groups of up to **2,500 records**. Each group appears as its own row in the workflow's **Runs** list, labeled **Segment · 2,500 runs**. The last group from a segment check can be smaller, for example **Segment · 1,318 runs**.
+
+When many records join a segment between two segment checks, every one of them is delivered after that check. For example, if 150,000 companies join a segment at once because a field used in the segment's filters was filled in for all of them, the Runs list shows 60 rows of **Segment · 2,500 runs** close together. This is expected behavior, and every new member runs through the workflow.
+
+How On event segment triggers handle large segments:
+
+-   **The 2,500-record group size is fixed.** You can't change it on an On event trigger.
+-   **Updating records already in the segment doesn't start new runs.** The On event segment trigger fires only for records that join the segment. Changing a field on a record that is already a member, for example through a workflow write-back or a CRM sync, doesn't start the workflow again for that record. There is no "on change" setting on the trigger.
+-   **To control how many records run at a time,** use a **Segment on a schedule** trigger (the **Scheduled** trigger type) with batch processing turned on. See **Processing audience members in batches** below.
+
 **Testing a workflow on specific records**
 
 To test a workflow on hand-picked records — rather than an automatic sample — use the **Add data** button in the test data panel at the bottom of the workflow editor:
