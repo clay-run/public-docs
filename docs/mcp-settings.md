@@ -74,6 +74,11 @@ If your workspace uses Clay Audiences, two additional workspace-level toggles ap
 
 **Troubleshooting — rep sees no results when querying Audiences:** When `Restrict account querying by Salesforce owner` is on, results are scoped to accounts the rep owns in Salesforce. A rep who owns no accounts (or whose Salesforce ownership hasn't synced yet) will receive empty results — which can look like the feature isn't working. To resolve: either disable `Restrict account querying by Salesforce owner` so the rep can see all workspace accounts, or ensure `Sync user IDs from audiences` is on and the rep's Salesforce account ownership is correctly mapped.
 
+**Troubleshooting — error: "Salesforce User sync is not configured for this workspace":** If a rep querying accounts through Claude or ChatGPT sees the error `Salesforce User sync is not configured for this workspace. Set up a Salesforce User sync in Clay Audiences.`, the two Audiences controls on the `MCP` page are working against each other. When `Restrict account querying by Salesforce owner` is on, Clay only returns accounts the rep owns in Salesforce. Clay finds each rep's Salesforce owner by matching their Clay email address to a Salesforce user, and that match comes from the user sync. If the restriction is on and user sync isn't set up, Clay can't tell which accounts belong to the rep. A workspace admin can fix this in one of two ways from the `MCP` page (click `MCP` under **Orchestration** in the left sidebar):
+
+1.  **Turn on `Sync user IDs from audiences`.** This is recommended if reps should only see the accounts they own. The toggle requires a Salesforce audience import in Companies. If that import is missing, the toggle is unavailable and its tooltip reads `Configure an audience import in Companies to enable this feature.` Once the sync matches a rep, their Salesforce ID appears in the `Salesforce ID` column of the users table on the `MCP` page.
+2.  **Turn off `Restrict account querying by Salesforce owner`.** This is the quickest unblock, but every rep can then query every account in the synced audience.
+
 ## FAQ
 
 ### Why does Clay MCP return different results than my Clay table?
