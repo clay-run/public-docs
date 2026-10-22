@@ -568,8 +568,6 @@ The **Map fields** section of the HubSpot **Create object** and **Update object*
     2.  In Clay, add a Formula column that joins the two names, such as `({{First Name}} || "") + " " + ({{Last Name}} || "")`. Type `/` to insert your first name and last name columns.
     3.  In your HubSpot **Create object** or **Update object** column, click **Refresh** in **Map fields**, then click **+ Add field**, select your new property, and map it to the Formula column.
 
-**If a new HubSpot property doesn't show up after you click Refresh:** Clay caches each HubSpot account's property list for up to 3 minutes. Wait 3 minutes after creating the property in HubSpot, then click **Refresh** again.
-
 ### How can I create HubSpot notes from Clay?
 
 Clay's HubSpot integration does not include a native action for creating Notes. To create notes from Clay, use the **HTTP API** integration with a HubSpot Private App token to call HubSpot's CRM objects endpoint directly.
