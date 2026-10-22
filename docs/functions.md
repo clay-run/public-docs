@@ -172,6 +172,21 @@ Yes. When you save columns as a function using **Save as function** from the rig
 
 **One edge case to be aware of:** If a run condition references a column that was not included in the function and is not wired as a function input, that reference is carried over verbatim but will point to the original table's field ID — which doesn't exist inside the function. In that situation the run condition needs to be updated manually. To access column settings inside a function: open the function in edit mode (click **Live function** → **Edit draft** from the function's live view, or **Edit function** from the settings panel), then click the column header and select **View column** to open the settings panel on the right.
 
+### Can I set a run condition on a function so it only runs when a column is populated?
+
+Yes. You set the run condition on the **function column in the table that calls the function**, not on the function itself. A function column has the same **Run settings** as any other enrichment column, so you can make a function run only on rows where another column has a value. For example, you can make an "Enrich Management Contact" function run only when the "Management Contact 2" column is populated.
+
+To add a run condition to a function column:
+
+1.  In the table that calls the function, click the function column header → **Edit column**.
+2.  Scroll to **Run settings** and check **Add run condition** ("Only run if this formula resolves to true").
+3.  Enter the condition. Type `/` to reference the column, for example `/Management Contact 2 is not empty`. See [Conditional runs](conditional-runs.md) for formula tips.
+4.  Click **Save**.
+
+Rows where the condition isn't met show **"Run condition not met"** in the function column, and those rows aren't sent to the function, so they use no credits.
+
+**Functions don't have a run condition at the function level.** The function's own settings panel has no run condition that applies everywhere the function is used. If you call the same function from several tables, add the run condition to the function column in each of those tables. The columns *inside* a function can also have their own run conditions, which you edit in the function's edit mode. These control which steps run within the function for each input it receives.
+
 ### What happened to my original columns and prompts after I used "Replace columns with function"?
 
 When you check **Replace columns with function** during function creation, Clay doesn't delete your original columns — it moves them inside the function. All column configurations, AI prompts, enrichment settings, and run conditions are preserved intact inside the function's internal table.
