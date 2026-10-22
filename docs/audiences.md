@@ -420,9 +420,9 @@ To create a new audience segment:
 1.  Open **People** or **Companies** in Audiences.
 2.  Click the **+** control labeled **Create segment** in the Audiences sidebar.
 3.  Add a **Filter** or **Filter group** to define which existing records belong in the segment. When editing filters on an existing list, **Create segment** also becomes available after valid filter changes, if you have segment-edit permission and are not editing a draft segment.
-    -   **Filters** evaluate a single condition at a time. All top-level filters are joined with AND — a record must match every one.
+    -   **Filters** evaluate a single condition at a time. Top-level filters are joined with AND by default — a record must match every one. To switch, click the **`and`** connector between two top-level filters to change it to **`or`**. This changes the connector for all top-level filters at once, so a record then matches if it meets any one of them.
     -   **Filter groups** combine multiple conditions using their own AND/OR logic. Within a single filter group, all conditions share the same operator — all AND or all OR; changing the operator in the group header switches all conditions at once. To mix AND and OR, use a nested filter group. For example, to build `A AND B AND (C OR D)`: add A and B as top-level filters, click **`+ Filter group`**, then add C and D inside the group. Once the group contains two or more conditions, a small **`and`** button appears between them — click it to switch to **`or`**.
-    -   **Filter limit:** An audience segment can have up to **15 top-level filters**, and each filter group can hold up to **15 conditions**. When you reach the limit, the add-filter button is disabled and shows "You can have up to 15 top-level filters at a time. Remove some filters to add more."
+    -   **Filter limit:** An audience segment can have up to **15 top-level filters**, and each filter group can hold up to **15 conditions**. A filter group counts as one top-level filter, and you can't add a filter group inside another filter group. When you reach the limit, the add-filter button is disabled and shows "You can have up to 15 top-level filters at a time. Remove some filters to add more."
 
 **Filtering by CRM and data warehouse properties:** All fields synced from your CRM (Salesforce, HubSpot) or data warehouse are available as filter options alongside Clay's built-in fields — you are not limited to Clay's native properties. When you click **+ Filter**, type the property name in the search box to find it. For example, to build a Companies segment of your existing customers, add a filter on the field in your CRM that tracks account type (such as **Account Type** in Salesforce) and set the value to `Customer`. Any field included in your import field mapping appears in the filter picker after the next sync completes. If a CRM field isn't showing up in the filter list, see [A Salesforce field isn't appearing in my audience filters — how do I add it?](#a-salesforce-field-isnt-appearing-in-my-audience-filters--how-do-i-add-it) in the FAQs below.
 
@@ -1417,7 +1417,19 @@ To match your Salesforce report, confirm your segment filter is using the field 
 
 ### How do I filter a segment by a long list of Salesforce Account IDs?
 
-The **`contains any of`** filter in Audiences accepts up to **10 values per filter**, and a segment can have up to **15 top-level filters**. Pasting a list of hundreds of Salesforce Account IDs (or any other IDs or domains) into one filter won't work. Splitting the list across filters won't fit it either. To build an Audiences segment from a long list, tag those records with a custom field through a CSV import, then filter on that one field:
+The **`contains any of`** filter in Audiences accepts up to **10 values per filter**, and a segment can have up to **15 top-level filters**. You don't need a separate filter for each Account ID. Don't put the IDs into one **`=`** (**equals**) filter either: **`=`** compares the field to the full text you enter, so a value like `0011U00001JaaJJQAZ, 0011U00000B4VmqQAF` only matches a record whose Account ID is that exact comma-separated text, and the filter returns 0 results.
+
+**For up to 150 Account IDs, split the list across `contains any of` filters inside one filter group set to OR:**
+
+1.  Click **`+ Filter group`**.
+2.  Inside the group, add a filter on the Account ID field, set the operator to **`contains any of`**, and enter the first 10 IDs.
+3.  Add another **`contains any of`** filter on the same field inside the group for the next 10 IDs. Repeat until every ID is entered. A filter group holds up to 15 filters, so one group fits up to 150 IDs (15 filters × 10 IDs).
+4.  Click the **`and`** connector between the filters inside the group to switch it to **`or`**. A record now matches if its Account ID is in any one of the filters.
+5.  Click **Create segment** to save the segment.
+
+For example, a list of 19 Account IDs needs two `contains any of` filters inside one OR filter group: 10 IDs in the first filter and 9 in the second. Don't add the two filters as separate top-level filters while the top-level connector is **`and`**. A record would then have to match both lists, so the segment returns 0 results. The filter group counts as one top-level filter, so you can still combine it with other conditions joined by AND, such as a filter on Title.
+
+**For more than 150 IDs**, pasting the list of Salesforce Account IDs (or any other IDs or domains) into filters won't fit. To build an Audiences segment from a long list, tag those records with a custom field through a CSV import, then filter on that one field:
 
 1.  **Prepare a CSV** with one row per account and two columns:
     -   `Salesforce Account ID` — the account's existing Salesforce ID.
