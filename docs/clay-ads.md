@@ -280,7 +280,7 @@ Before an ad sync sends data, Clay checks every value in the email fields you ma
 
 The ad sync only uses the fields you mapped. If the mapped hashed email field holds placeholder values, those contacts can't be matched by email, even if their audience record has a valid email address in a different field.
 
-**How the match rate relates to people sent:** The match rate is measured against the records the ad platform received, not your full segment. For LinkedIn, the match rate comes from LinkedIn's own counts of the records it received and matched. For other platforms, Clay calculates it as matched count ÷ records sent. For example, if a 13,000-contact segment sends 410 people and LinkedIn matches 372 of them, the match rate is about 91% (372 ÷ 410), not 372 ÷ 13,000 (about 3%).
+**How the match rate relates to people sent:** An ad sync's match rate is measured against the records sent to the ad platform, not your full segment. For example, if a 13,000-contact segment sends 410 people and the professional network matches 372 of them, the match rate is about 91% (372 ÷ 410), not 372 ÷ 13,000 (about 3%). A high match rate with a low people sent count means most of the contacts that were sent matched, but most of your segment was never sent.
 
 **To send more of your segment:**
 
@@ -288,7 +288,7 @@ The ad sync only uses the fields you mapped. If the mapped hashed email field ho
 2.  **Clear placeholder values from the audience field.** Use the **Upsert Audiences Record** action in a Clay table:
     1.  In Audiences, create a segment that contains only the affected contacts (for example, records where the hashed email field equals `true` or `false`).
     2.  Click `Enrich`, then click **Add enrichment table** to send the segment's records to a Clay table.
-    3.  Add an **Upsert Audiences Record** column. Map a lookup identifier so Clay updates the existing record rather than creating a new one, such as the Audiences record ID, email, LinkedIn URL, phone, or CRM record ID.
+    3.  Add an **Upsert Audiences Record** column. Map a lookup identifier so Clay updates the existing record rather than creating a new one, such as the Audiences record ID, email, professional network profile URL, phone, or CRM record ID.
     4.  Map an empty column to the hashed email field you want to clear.
     5.  Turn **Ignore blank values** off. It's on by default, and while it's on, blank values are skipped instead of clearing the field.
     6.  Run the column on a few rows first and confirm the field is empty in Audiences, then run it on the rest of the table.
