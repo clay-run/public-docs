@@ -161,7 +161,7 @@ A record subset import works alongside any standard Salesforce import. You can a
     ```
     -   To generate a query from a plain-language description, click **Generate with AI** and describe what you need (for example, "US accounts with annual revenue over $1M"). Clay drafts the SOQL for you — review and adjust the result before continuing.
     -   Click **Preview** to verify a sample of matching records before saving.
-6.  Map the SOQL fields to Audience columns.
+6.  Map the SOQL fields to Audience columns. Only fields you add to the field mapping (for example, **Account field mapping** for an Accounts import) appear on your Audience records as columns and filters — a field in your `SELECT` clause that has no row in the field mapping isn't written to your Audience records. Map every SOQL field you want to see or filter on in Audiences.
 7.  Click **Save** to activate the import.
 
 **Multiple subsets:** You can add more than one record subset for the same Salesforce object type. Each appears as a separate named entry under your Salesforce source in Settings and syncs independently.
@@ -362,10 +362,13 @@ When importing from Salesforce or Snowflake, you can configure **Import record m
 
 To configure:
 
-1. In your import settings, find `Import record matching` and click `Edit`.
+1. In your import settings, find `Import record matching` and click `Set up` (the button shows `Edit` once matching is already configured).
 2. Under `When`, choose an **alias field** — typically `Domain` for Companies or `Email` for People (additional options include LinkedIn URL, phone number, and others).
 3. Under `In`, map the alias field to the corresponding field in each connected source.
 4. When a new record arrives, Audiences checks whether the alias value already exists. If it does, the new data is merged with the existing record instead of creating a duplicate.
+5. Click `Done`, then click `Confirm` in the **Confirm changes** dialog. Records merged by import record matching can't be unmerged.
+
+**Import record matching for Companies only merges Company records.** If you set up import record matching on a Salesforce Accounts import (for example, merging Companies records when `Domain` matches), only Companies records are merged — People records (Salesforce Contacts and Leads) are not merged by a Companies alias field. People are matched with their own alias field, configured separately.
 
 You can configure one alias field per entity type (one for People, one for Companies). This setting applies to records imported *after* it is enabled — it does not retroactively merge records already in Audiences.
 
@@ -697,6 +700,8 @@ With **Premium** or **Standard**, Clay queries its provider network to find and 
 **Note:** Salesforce is currently the only native export destination in Audiences. HubSpot export from Audiences is not yet available — to write data to HubSpot, see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
 
 Audiences supports **bidirectional sync** with Salesforce. Write-back covers Salesforce `Accounts` and `Contacts`. To push data from Audiences back to Salesforce, you must first enable the **Export sync** toggle in your Salesforce source settings — this is the master switch for all outbound writes. Even if individual fields are configured with an "Always write" rule, no data flows to Salesforce until Export sync is enabled.
+
+**Don't see Export sync in your Salesforce source settings?** Native Salesforce export is not enabled for every workspace. If your Accounts or Contacts tab shows only import settings — no **Export [Object] data** section, no **Export sync** or **Create new Salesforce records** toggle, no export **Record matching** (**Clay ID in Salesforce**), and no **Scheduled export rule** column in the field mapping — native export isn't turned on for your workspace. You can't turn it on yourself; contact Clay support if you want it enabled. Otherwise, write data back to Salesforce with a workflow that uses a Salesforce action — see [How do I write enriched fields back to existing Salesforce records from a workflow?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-workflow) in the FAQs below.
 
 **To enable Export sync (admin-only):**
 
@@ -1138,7 +1143,7 @@ For this to work, you need both:
 
 ### I've mapped fields to Salesforce but the data isn't syncing — why?
 
-The most common cause is that the **Export sync toggle is off**. Even if your field mappings are fully configured and individual fields are set to "Always write," no data flows to Salesforce until Export sync is enabled. This toggle is off by default.
+The most common cause is that the **Export sync toggle is off**. Even if your field mappings are fully configured and individual fields are set to "Always write," no data flows to Salesforce until Export sync is enabled. This toggle is off by default. If you don't see an **Export sync** toggle at all, native Salesforce export isn't enabled for your workspace — see [Writing back to your CRM](#writing-back-to-your-crm).
 
 To enable it (admin-only):
 
@@ -1190,6 +1195,8 @@ If your goal is to control which contacts are *imported* into Audiences from Sal
 For the native Audiences Salesforce export sync, record creation is controlled by the **`Create new Salesforce records`** toggle in your Salesforce export settings. Workflow actions that create Salesforce records are configured separately.
 
 **Before you enable the toggle, create a Clay ID field in Salesforce.** The Clay ID field is a custom External ID field in Salesforce — for example, `Clay_ID__c` — that must be marked as **External ID** in Salesforce so it appears as a selectable option in Clay. Clay uses this field to stamp each new record it creates with a unique identifier, so it can identify and update that record on future syncs without creating duplicates. Have your Salesforce admin create this field on the relevant object (Contact or Account) before proceeding.
+
+**Do I need a Clay ID field in Salesforce?** Only if you use the **Create new Salesforce records** toggle in native export sync. The Clay ID field is used for export record matching — deciding whether an export updates an existing Salesforce record or creates a new one. Importing Salesforce records into Audiences doesn't require a Clay ID field, and if you write back to Salesforce with workflows instead of native export sync, you don't need one.
 
 To push net-new Accounts or Contacts to Salesforce:
 
