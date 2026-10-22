@@ -215,7 +215,13 @@ Once you're happy with the output:
 4.  Variables automatically map to your table columns.
 5.  Save and run.
 
-You can also deploy directly from Claygent builder by clicking `Add to table`.
+You can also deploy directly from Claygent builder:
+
+1.  Click **Deploy** at the top of the Claygent builder editor. The **Deploy agent** dialog opens.
+2.  Select **Tables**.
+3.  Choose the table, map the Claygent's inputs to your table columns, and click **Add to table**.
+
+**Deploy always adds a new column.** Clicking **Deploy** → **Tables** → **Add to table** creates a brand-new Claygent column every time — it never updates a column that's already in your table. If the Claygent is already used in the table you pick, Clay shows the warning "This Claygent is already being used in this table" but still lets you continue, and the new column gets a numbered name such as "Company Researcher (2)" with its own input mapping. To update a Claygent that's already on a table, click **Save** instead — see [What's the difference between Save and Deploy in Claygent builder?](#whats-the-difference-between-save-and-deploy-in-claygent-builder) below.
 
 ## Centralized management
 
@@ -337,6 +343,23 @@ Yes. Switch models in the configuration panel and rerun tests to compare output 
 ### Do I need to remove and re-add a Claygent from a table after updating it?
 
 No — you do not need to remove and re-add a Claygent after making changes in Claygent builder. Updates are picked up automatically without any changes to the table column. New runs use the latest saved version of the agent. If a run is already in progress when you save an update, that run continues using the version it started with and completes normally before any new runs pick up the change.
+
+**Note:** The AI model is an exception — it stays with the table column. A Claygent column keeps the model selected on that column, so changing the model in Claygent builder does not change the model an existing column runs on. To change the model for an existing column, open the column settings (click the column name → **Edit column**) and update the **Model** picker there.
+
+### What's the difference between Save and Deploy in Claygent builder?
+
+Claygent builder has two buttons at the top of the editor: **Save** and **Deploy**. They do different things, and you only need **Save** to update a Claygent that's already running in your tables.
+
+-   **Save** stores your edits as a new version of the Claygent. There is no separate draft — the saved version immediately becomes the current version, and every table column already using this Claygent picks it up the next time a cell runs (the column keeps its own model selection — see the note above).
+-   **Deploy** adds the Claygent to a new place (for example, a table you haven't used it in yet). Deploying to a table always creates a new column — it does not update existing columns.
+
+To apply prompt or configuration changes to a Claygent column that's already in your table:
+
+1.  Edit the Claygent in Claygent builder.
+2.  Click **Save** (not **Deploy**).
+3.  Go back to your table and re-run the existing Claygent column, or just the cells you want to refresh.
+
+You don't need to remap inputs or add the Claygent to the table again. If you clicked **Deploy** after each edit and now see duplicate columns such as "Company Researcher (2)" or "Company Researcher (3)", those are separate copies created by Deploy — your original column was already using your latest saved changes.
 
 ### I switched to a cheaper model in my Claygent column but new runs still charge the old price — why?
 
