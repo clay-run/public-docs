@@ -43,8 +43,18 @@ Functions are built for workflows you'd otherwise rebuild from scratch in every 
 **Create function from scratch:**
 
 1.  From the homepage, click on `Functions` in the sidebar.
-2.  Click on `+ New Function` on the top right.
-3.  This will create a blank function that you can directly edit, add inputs/outputs, etc.
+2.  Click `New`. If a menu appears, select `Function`.
+3.  In the window that opens, click `Create from scratch`.
+4.  This will create a blank table function that you can directly edit, add inputs/outputs, etc.
+
+**Create a workflow function from scratch (beta):**
+
+Workflow functions are currently in beta and available only to workspaces in the beta — contact support to request access. If your workspace has workflow functions enabled, `Create from scratch` opens a menu with two options:
+
+-   `Table function` — creates a blank table function, as described above.
+-   `Workflow function` — creates a new workflow function named "Untitled function" and opens it in the workflow editor with an `Input` node and an `Output` node. The function title is ready to rename as soon as the editor opens.
+
+A new workflow function shows as `Draft` in the Functions list until you publish it.
 
 ## Calling a function from a table
 
