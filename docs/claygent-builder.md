@@ -389,6 +389,27 @@ To call your Custom MCP Server from a table:
 
 The API key you entered for the Custom MCP Server connection is only the credential Clay uses to authenticate to your server. You also need a supported third-party model account connected in the **Account** dropdown for the Claygent itself.
 
+### My custom MCP server fails with "missing authorization header" or "Your API token is invalid" — how do I fix it?
+
+If a Claygent that uses a custom MCP server fails with an error like **"Streamable HTTP error: Error POSTing to endpoint: Your API token is invalid or auth token is invalid or missing authorization header"**, Clay reached the MCP server but sent no credentials. This happens when the custom MCP server connection was saved with only an **MCP URL** and an empty **MCP API key** field. Clay only sends an `Authorization` header when an API key is saved on the connection, and saving a URL by itself doesn't open any sign-in or authorization prompt.
+
+To add an API key to an existing custom MCP server connection:
+
+1.  Get an API key or access token for the MCP server from the service that hosts it.
+2.  Go to `Settings` → `Connections` and find your Custom MCP Server connection.
+3.  Edit the connection and paste the key into **MCP API key**. Enter only the key value, without a `Bearer ` prefix.
+4.  Save the connection and re-run your Claygent test.
+
+You don't need to delete and re-add the custom MCP server connection. Clay sends the saved key to the server as `Authorization: Bearer <your-key>`.
+
+Custom MCP server connections don't support:
+
+-   OAuth 2.0 sign-in, including browser authorization flows and Dynamic Client Registration (DCR).
+-   Manually entered OAuth client IDs, client secrets, token URLs, scopes, or redirect URIs.
+-   Custom header names or extra static headers.
+
+If an MCP server only accepts OAuth, or needs a header other than `Authorization: Bearer`, call that service's REST API from your table with an HTTP API column instead. See [HTTP API integration overview](http-api-integration-overview.md).
+
 ### Why does my Claygent show "Tools are not available for the selected model"?
 
 This message appears when you have a Clay parallel model (Neon, Argon, Helium, or similar) selected. These models don't support tool calling — including custom MCP servers, the "Find contacts and jobs" tool, and other tool-based features.
