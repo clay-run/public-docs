@@ -1113,20 +1113,6 @@ Connect a [workflow to your segment](#connecting-a-workflow-to-a-segment) and ad
 
 See [Workflows](https://university.clay.com/docs/workflows) for supported triggers, enrichment actions, and run controls.
 
-### Can I export an audience segment to CSV?
-
-There is no **Export** or **Download CSV** option on an Audiences segment. This applies to saved People and Companies segments. The segment's `Send` menu sends records to other places — for example **Send to workflow**, **Sync to ad platforms**, and **Export to email sequence** (People segments only) — but none of its options downloads a file. To download a segment's records as a CSV, first put them into a Clay table, then export the table:
-
-1.  Open the saved segment in Audiences and click `Enrich`.
-2.  Click **Add enrichment table**. (In some workspaces, the enrichment panel shows a `+` button instead — click it and select **Create enrichment table**.) You don't need to add enrichment columns.
-3.  Open the new enrichment table, make sure no rows are selected, then click **Tools**, open the **Export** tab, and click **Download CSV**.
-
-Workspace Admins and Editors can create an enrichment table; Workspace Viewers can't.
-
-**If you don't see Add enrichment table or Create enrichment table:** some workspaces only show **Create enrichment workflow** in the `+` menu of the enrichment panel. In those workspaces, segments can't be turned into enrichment tables, so this CSV path isn't available. Send the segment's records to the tool you need instead — see [How do I send audience records to another tool?](#how-do-i-send-audience-records-to-another-tool).
-
-**If your People segment is synced to an ad platform:** you can also download the ad sync's audience as a CSV from the ad sync's **Sync** step. See [How do I export the contacts in my ad sync to CSV?](https://university.clay.com/docs/clay-ads#how-do-i-export-the-contacts-in-my-ad-sync-to-csv).
-
 ### What happens to a contact's ad targeting when they become a customer?
 
 If your segment has an exclusion condition (e.g., Account Type ≠ "Customer"), the contact is automatically **removed** from the synced ad audience as soon as that condition is met. See [Clay Ads](https://university.clay.com/docs/clay-ads) for platform-specific guidance.
