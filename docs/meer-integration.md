@@ -2,7 +2,7 @@
 title: Meer integration
 description: Screen phone numbers against national do-not-call registries before
   initiating outbound calls.
-last_synced: 2026-09-24T19:43:53.173Z
+last_synced: 2026-09-28T16:43:58.054Z
 ---
 
 # Meer integration
@@ -26,7 +26,7 @@ With this integration, you can check phone numbers against regularly updated DNC
 
 ### `Action` Screen phone number against DNC registries
 
-Check if a phone number appears in National Do Not Call registries. Currently supports US (National DNC Registry and select state registries), UK (TPS/CTPS), Ireland ([comreg.ie](http://comreg.ie/)), Belgium (DNCM), Germany ([Robinsonliste.de](http://robinsonliste.de/)), Spain ([Lista Robinson](http://listarobinson.es)), New Zealand, and Australia, refreshed weekly. Returns DNC status and source information if found. Clay doesn't cache these results, so re-running the action screens the number again rather than replaying an earlier answer.
+Check if a phone number appears in National Do Not Call registries. Currently supports US (National DNC Registry and select state registries), UK (TPS/CTPS), Ireland ([comreg.ie](http://comreg.ie/)), Belgium (DNCM), Germany ([Robinsonliste.de](http://robinsonliste.de/)), Spain ([Lista Robinson](http://listarobinson.es)), New Zealand, and Australia, refreshed weekly. Returns DNC status and source information if found. Clay doesn't cache these results, so re-running the action screens the number again rather than replaying an earlier answer. You're charged whether or not the number turns out to be on a registry.
 
 **Inputs**
 
@@ -37,10 +37,6 @@ Check if a phone number appears in National Do Not Call registries. Currently su
 -   **Do Not Call:** Boolean value indicating whether the phone number is on a DNC registry (`true`) or not (`false`). A `false` result — shown as **Can call** in the Clay cell preview — means only that the number was **not found on the relevant suppression list**. It does not mean the number is legally eligible for outbound calling. Meer's screening result is a suppression signal only; it does not establish country-specific legal basis, presumed consent, or calling eligibility. Apply your own country-level calling rules and risk policies before routing numbers into call-first sequences, especially in markets such as Germany where regulations may require additional legal basis (for example, presumed consent for B2B telephone advertising) beyond registry absence.
 -   **Timestamp:** The date and time when the DNC status was checked.
 -   **DNC List Source:** URL of the official registry where the phone number was found (if applicable).
-
-**Pricing**
-
-Screening a number costs 0.6 credits per record on current Clay plans, or 0.9 credits on older plans that predate Clay's latest pricing update. You're charged whether or not the number turns out to be on a registry.
 
 **Rate Limits**
 
