@@ -95,6 +95,26 @@ When configuring the list field by hand, select the **list itself** (e.g., `Peop
 
 If your table has no rows with data yet, Clay skips this validation and accepts the formula as-is. In that case, run a few rows first so the enrichment column has real output, then re-open the Send Table Data configuration to confirm the list field is valid before running the full table.
 
+**Which sub-field to select when the list comes from a waterfall or a function**
+
+When your contacts come from a people waterfall, the **Send table data** list can't point at the waterfall's output as a whole. This applies both to a waterfall in your table and to a function that wraps one (for example, a "Find ICP People" function). A waterfall tries each contact provider in order, such as **Find Contacts at Company** and then **Find people at company**, and stops at the first provider that returns contacts. Each provider step keeps its own result, and that provider's contacts are in a `people` list inside it. On any given row, only the provider that found contacts has a filled `people` list. The providers after it didn't run.
+
+To pick the right sub-field in Send table data:
+
+1.  Choose **Send row for each item in a list**.
+2.  Click in the **Select a list** field and type `/`.
+3.  Open the waterfall or function column's output and pick one provider's result (for example, **Find Contacts at Company**).
+4.  Select that provider's `people` field, not the provider's whole result. Each person in the `people` list becomes its own row in the destination table.
+
+If you select a provider's whole result instead of its `people` field, Clay shows **"Please add a valid list."** because the result is an object, not a list. A function only shows per-provider sub-fields if the function returns each provider's result as an output. If the function returns a single combined `people` field, select that field instead.
+
+Because a different provider can fill the list on each row, one Send table data column only sends contacts from the provider you mapped. Rows where that provider didn't run fail with `Invalid send table data inputs … "listData" … "Required"`. To send contacts from every row, use one of these options:
+
+-   **Add one Send table data column per provider.** Map each column to a different provider's `people` field. Give each column a run condition so it only runs when that provider's `people` list has a value.
+-   **Send the first non-empty list.** Create a formula column that returns whichever provider's list is filled, for example `{{Provider A}}?.people || {{Provider B}}?.people`, with one entry per provider in waterfall order. Then select that formula column in **Select a list**. You can also enter the same expression directly in the list input's formula mode.
+
+**Avoid duplicate contacts when you re-run.** `Send row for each item in a list` always creates new rows, and **Update existing rows on re-run** doesn't apply to it. Re-running a row that already sent its contacts sends them again as duplicate rows in the destination table. When you fix the list mapping, re-run only the rows that errored or show **Sent 0 rows**. Don't re-run the whole column.
+
 ### Routing data conditionally with multiple Send table data columns
 
 You can add more than one Send table data column to the same source table. Each column can target the same destination table or a different one, and each can have its own **run condition** — so rows take different paths depending on conditions in your data.
