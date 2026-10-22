@@ -334,8 +334,10 @@ To turn sync on or off for a source, open its settings by clicking the **⋮** m
 
 | Status | Meaning |
 |--------|---------|
-| **Search on** | The live search is enabled. Clay re-runs the search once per day and adds any new matching contacts or companies to Audiences. |
-| **Search off** | The live search is paused. No new results are added until you turn it back on. Contacts already imported remain in Audiences. |
+| **On** | The live search is enabled. Clay re-runs the search once per day and adds any new matching contacts or companies to Audiences. |
+| **Importing** | A live search run is in progress right now. |
+| **Error** | The last live search run failed. |
+| **Off** | The live search is paused. No new results are added until you turn it back on. Contacts already imported remain in Audiences. |
 
 **Live search runs on a daily cadence, independently of any signal cadence.** If your audience has a signal that runs on a monthly schedule, the Find People or Find Companies search still re-runs once per day. To get a point-in-time result instead of continuously growing results, turn live search off: click the **⋮** menu next to the search source in the audience sidebar, or go to **Settings → Sources / Destinations**, click **⋮** next to the source row, and select **Turn live search off**. Contacts already imported remain in your audience — only new daily additions stop.
 
@@ -1102,6 +1104,41 @@ To work with only the narrower set, open the search, tighten your filters, click
 If you saved a Find People or Find Companies search to Audiences and the count continues to grow — even though you haven't changed the search criteria — live search is likely enabled. Live search re-runs the search **once per day** and adds any new matching contacts or companies. This runs independently of any signal cadence you have set on the audience: a monthly signal and a daily live search are entirely separate schedules. Turning off or modifying the signal does not stop the live search from running.
 
 To stop the audience from growing, turn live search off: click the **⋮** menu next to the search source in the audience sidebar, or go to **Settings → Sources / Destinations**, click **⋮** next to the source row, and select **Turn live search off**. Contacts already imported remain in your audience — only new daily additions stop. You can always turn live search back on later if you want to resume continuous sourcing.
+
+### Does a live search keep adding new people after I save it to Audiences?
+
+Yes. When you save a Find People or Find Companies search to Audiences, live search is on by default, and it isn't limited to the original batch of results. Clay re-runs the search every 24 hours, counted from when you first imported it (not at a fixed time of day). Each run adds people or companies who newly match the search criteria to **All People** or **All Companies**, and skips anyone the search already imported.
+
+**New live search matches flow into segments filtered on the search.** Every record a live search adds is tagged with that search as its source. A segment that filters on the search using the **Origin source** filter picks up the new matches automatically on its next refresh — no manual step is needed.
+
+To stop a live search from adding new matches, open the segment, click the **⋯** menu next to the segment name, and select **Turn live search off**.
+
+### How do I see the original criteria of a search I saved to Audiences?
+
+When you open a segment created from a saved Find People or Find Companies search, the page shows the segment's records and how many were saved to **All People** (or **All Companies**), but not the search filters. To view the original search criteria:
+
+1.  Open the segment created from the search.
+2.  Click the **⋯** menu next to the segment name.
+3.  Select **Edit search**. If you don't have permission to edit segments, this option is labeled **View search**.
+
+The search panel opens with the full search setup, including filters, target companies, excluded people, and result limits.
+
+### How do I check when a live search last ran?
+
+The segment page for a live search doesn't show when the search last ran. To check a live search's status and last run time:
+
+1.  In Audiences, open **All People** (or **All Companies**).
+2.  Click the **Sources** tab.
+3.  Find the row for your search source.
+
+The **Status** column shows one of the following:
+
+-   **On** — live search is enabled and waiting for its next daily run.
+-   **Importing** — a live search run is in progress.
+-   **Error** — the last live search run failed.
+-   **Off** — live search is turned off.
+
+The **Last import sync** column shows when the live search last ran.
 
 ### Can I sync an audience to multiple ad platforms?
 
