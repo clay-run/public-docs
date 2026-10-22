@@ -347,7 +347,7 @@ If a Use AI or Claygent column completes without error — and the cell shows a 
 
 ### Cells showing "This request exceeds your budget limit" (Clay Credit Budget)
 
-For Use AI columns using variable-priced models (such as GPT-4o, GPT-4.1, Claude Sonnet, or Gemini 2.5 Pro) with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. The Clay Credit Budget sets the maximum number of Clay credits that a single row can spend.
+For Use AI columns using higher-cost models (such as GPT-4o, GPT-4.1, Claude Sonnet, Claude Opus, Gemini 2.5 Pro, or Kimi K3) with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. The Clay Credit Budget sets the maximum number of Clay credits that a single row can spend.
 
 Before running each row, Clay estimates the row's cost from the length of your prompt, including the column values you insert into it. If the estimated cost is higher than the Clay Credit Budget, the row does not run and the cell shows an error like this one:
 
@@ -365,9 +365,20 @@ To fix the "exceeds your budget limit" error:
 2.  Increase the **Clay Credit Budget** value above the estimated cost shown in the error. Leave some headroom for rows with longer inputs — for example, if the error shows an estimated cost of 1.5 credits, set the budget to 2 credits or more.
 3.  Click **Save**, then rerun the rows that errored.
 
-You are only charged the actual cost per run; the Clay Credit Budget is a ceiling, not a prepaid amount. If you'd rather keep each row at the model's base cost, shorten the prompt or insert fewer columns, or switch to a model that doesn't use variable pricing.
+You are only charged the actual cost per run; the Clay Credit Budget is a ceiling, not a prepaid amount. If you'd rather keep each row at the model's base cost, shorten the prompt or insert fewer columns, or switch to a lower-cost model.
 
-**Note:** The Clay Credit Budget only applies to expensive variable-priced models when using Clay's managed account. Users who connect their own API key are billed directly by the AI provider and this cap does not apply.
+**Note:** The Clay Credit Budget only applies to higher-cost models when using Clay's managed account. Users who connect their own API key are billed directly by the AI provider and this cap does not apply.
+
+### Where do I find the Clay Credit Budget setting in a Use AI column?
+
+The **Clay Credit Budget** field is in the Use AI column's settings. To open it, click the column name → **Edit column**, go to the **Configure** tab, and look below the **Prompt** and system prompt fields. Whether you can see and edit the Clay Credit Budget depends on the model and account the column uses:
+
+-   **Higher-cost models (editable):** For models such as Kimi K3, Kimi K2.6, GPT-4o, GPT-4.1, Claude Sonnet, Claude Opus, and Gemini 2.5 Pro, the Clay Credit Budget field is editable. When you select one of these models, the field is pre-filled with the model's base cost per row — for example, 2 credits for Kimi K3. You can raise the budget in steps of 0.5 credits, but you can't set it lower than the model's base cost.
+-   **Lower-cost models (greyed out):** For models such as GPT-4o mini, GPT-4.1 mini, and GPT-5 mini, the Clay Credit Budget field is greyed out and reads **"Credit budgeting is not available for this model."** These models are not subject to the per-row budget check, so they don't return the "exceeds your budget limit" error.
+-   **Your own API key:** If the Use AI column uses your own API key instead of Clay's managed account, the Clay Credit Budget field does not appear, and no per-row budget check applies.
+-   **Claygent columns:** The Clay Credit Budget field appears only in Use AI columns. It does not appear in Claygent columns.
+
+For example, if a Use AI column on Kimi K3 has a Clay Credit Budget of 2 credits and some rows are estimated at 2.5 credits, those rows return the "exceeds your budget limit" error. Raise the Clay Credit Budget to 3 credits or more, click **Save**, and rerun the errored rows.
 
 ### Cells showing "Invalid credentials: API key is missing"
 
