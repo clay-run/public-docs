@@ -90,7 +90,7 @@ The Salesforce import flow in Audiences has been redesigned. You can import **al
 
 SOQL queries for Audiences must be valid SELECT statements and must include `Id`, `SystemModstamp`, and `IsDeleted`. Clay uses these fields to handle incremental syncing and soft-delete detection. For Contact queries, also include `AccountId`; for Lead queries, also include `ConvertedContactId`. The AI query generator includes these fields automatically.
 
-**No semi-joins (nested sub-selects in `WHERE` clauses).** Salesforce's Bulk API 2.0 — which handles the initial full import and weekly re-sync — does not support SOQL semi-joins: queries that filter using `WHERE Id IN (SELECT ... FROM ...)`. A query containing a semi-join passes Clay's **Preview** step but causes the Bulk API import job to fail immediately with **"Salesforce Bulk API job [ID] failed. Records processed: 0"** and zero records imported. Use direct field filters on the imported object only. To filter contacts by opportunity or contact-role attributes, import all contacts and apply that filter as an audience segment condition after importing.
+**Sub-selects (semi-joins) in `WHERE` clauses are supported.** A Salesforce record subset query can filter with a sub-select such as `IN (SELECT ...)` or `NOT IN (SELECT ...)`, for example `WHERE Type = 'Dealer' AND Id NOT IN (SELECT AccountId FROM Contact)` to import accounts that have no contacts. Clay runs your query as written for the initial full import and the weekly full sync. For incremental syncs, Clay adds a `SystemModstamp > <last sync time>` condition to your `WHERE` clause so only records changed since the last sync are fetched.
 
 **Importing a Salesforce record subset with SOQL**
 
@@ -977,17 +977,17 @@ If your Salesforce source in Audiences shows **Paused** with the message "Your S
 
 ### Why is my Salesforce Audiences import failing with "Salesforce Bulk API job failed. Records processed: 0"?
 
-This error means Salesforce's Bulk API 2.0 rejected the import job before processing any records. Audiences uses Bulk API 2.0 for all initial full imports and weekly re-syncs. The Bulk API does not support SOQL **semi-joins** — queries where the `WHERE` clause contains a nested `SELECT` statement, for example:
+The error **"Salesforce Bulk API job [ID] failed. Records processed: 0"** means Salesforce reported the Salesforce Audiences import job as failed or aborted before it processed any records. Your Salesforce source shows **Error** in the **Sources** tab. The same message appears whether the failed job was the initial full import, the weekly full sync, or an incremental sync.
 
-```sql
-SELECT Id, FirstName, LastName, AccountId, SystemModstamp, IsDeleted
-FROM Contact
-WHERE Id IN (SELECT ContactId FROM OpportunityContactRole WHERE ...)
-```
+A SOQL query can pass Clay's **Preview** / **Test** step and still fail in the import job. Preview runs your query through Salesforce's standard REST API and returns at most 100 records, while the import job runs the query as a Salesforce Bulk API 2.0 job. On incremental syncs, Clay also adds a `SystemModstamp > <last sync time>` condition to your `WHERE` clause.
 
-A semi-join passes Clay's **Preview** step (which uses Salesforce's standard REST API to estimate matching records) but causes the Bulk API job to fail immediately, surfacing as **"Salesforce Bulk API job [ID] failed. Records processed: 0"** with no records imported.
+Sub-selects (semi-joins) such as `Id NOT IN (SELECT AccountId FROM Contact)` are supported in Salesforce record subset queries, so you don't need to remove them.
 
-**Fix:** Remove the nested sub-select and use only direct field filters on the object you are importing. Open the import settings, update the SOQL query to eliminate the semi-join, and re-run the sync. For example, instead of filtering contacts by `WHERE Id IN (SELECT ContactId FROM OpportunityContactRole WHERE ...)`, import all contacts and apply the opportunity contact-role condition as an **audience segment filter** after importing — segment filters evaluate cross-object lookups using a separate query path that supports them.
+**To troubleshoot a failed Salesforce Audiences import:**
+
+1.  Copy the SOQL query from your Salesforce import settings.
+2.  Run it in Salesforce's Developer Console (**Setup → Developer Console → Query Editor**). If Salesforce returns an error there, fix the query (for example, a misspelled field name, a missing `__c` suffix on a custom field, or a field your connected Salesforce user can't access) and save the updated query in your import settings.
+3.  If the query runs in the Developer Console but the Clay import still fails, contact Clay support and include the link to the failing import.
 
 ### Why do some of my Salesforce Lead records not appear as separate person records in Clay?
 
