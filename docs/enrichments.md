@@ -124,6 +124,16 @@ You can use a boolean formula to check if an enrichment has finished, then use t
 
 You can track credit usage for your workspace in the [credit usage](https://www.clay.com/university/guide/credit-usage) dashboard. This shows detailed breakdowns of credit consumption by table, integration, and time period, helping you monitor and optimize your usage.
 
+### "Can I turn off an enrichment provider for my whole workspace?"
+
+Yes. Workspace admins can turn off an enrichment provider, or a single enrichment action from that provider, for the whole workspace. Only workspace admins can see the **Enrichments** settings page.
+
+1.  Go to **Settings → Enrichments**.
+2.  Open the **Enablement** tab.
+3.  Find the provider in the list and turn it off. To keep the provider's other actions available, turn off only the specific action you want to block.
+
+Clay blocks disabled enrichments when they try to run, without calling the provider, so a disabled enrichment doesn't charge credits. This applies to every table in the workspace, so you don't have to remove the enrichment from each table one by one.
+
 ### "My enrichment column only ran on the first 10 rows — why didn't it run on all rows?"
 
 There are two common causes:
