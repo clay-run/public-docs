@@ -488,17 +488,37 @@ To fix this, add a formula column after the enrichment that converts the text ra
 
 ## Batch processing
 
-The `Create record`, `Update record`, and `Upsert object` actions support a **Run in batches** mode. Batch mode is **off by default** — enable it in the action column's **Run settings** to reduce the number of simultaneous Salesforce calls Clay makes.
+The `Create record`, `Update record`, and `Upsert object` actions support a **Run in batches** mode in both Clay tables and Clay workflows. Batch mode is **off by default** — enable it in the action column's **Run settings** (in a table) or in the Salesforce step's **Run settings** (in a workflow) to reduce the number of Salesforce calls Clay makes.
 
 ### How batch mode works
 
-When **Run in batches** is enabled, Clay groups rows and sends them through Salesforce's Composite API in sequential batches (up to 200 records per batch) rather than firing calls for all rows concurrently. This reduces write concurrency, which can help avoid `UNABLE_TO_LOCK_ROW` errors when many rows write to Salesforce records that share a common parent (for example, contacts all belonging to the same Account). For troubleshooting row-lock errors, see [Salesforce integration FAQs](salesforce-integration-faqs.md).
+When **Run in batches** is enabled, Clay groups rows and sends them through Salesforce's Composite API in sequential batches (up to 200 records per batch) rather than firing calls for all rows concurrently. The batch size defaults to 200 and can be set anywhere from 1 to 200 — use **Number of rows per batch** in a table or **Number of runs per batch** in a workflow. This reduces write concurrency, which can help avoid `UNABLE_TO_LOCK_ROW` errors when many rows write to Salesforce records that share a common parent (for example, contacts all belonging to the same Account). For troubleshooting row-lock errors, see [Salesforce integration FAQs](salesforce-integration-faqs.md).
 
 **Benefits:**
 
 -   **Fewer concurrent calls:** Rows are sent in sequential groups rather than all at once
 -   **Reduced lock contention:** Useful when bulk-writing to records that share a parent object, such as contacts in the same Account
 -   **Individual error handling:** Each record in a batch is processed independently — if one fails, others in the same batch can still succeed
+
+### Salesforce concurrency limit
+
+Clay sends at most **20 concurrent requests** to Salesforce per connected Salesforce account. This limit is shared across everything that uses that connection in Clay — every Salesforce column in your tables and every Salesforce step in your workflows draws from the same 20 requests. Running more tables or workflows on the same Salesforce connection at once does not raise the limit.
+
+### Why are my Salesforce writes slow in a workflow (or table)?
+
+Clay workflows and Clay tables write to Salesforce through the same Salesforce actions, with the same 20-request concurrency limit, so the Salesforce write behaves the same in both. When writes to Salesforce are slow at volume (for example, thousands of records taking several minutes), a common cause is that **Run in batches** is turned off on the Salesforce write step:
+
+-   **Run in batches off:** Each record is sent to Salesforce as its own request, so 2,000 records means 2,000 requests, processed at most 20 at a time.
+-   **Run in batches on:** Records are grouped into batches of up to 200, so the number of requests drops by the batch size — 2,000 records at a batch size of 200 means 10 requests.
+
+To speed up Salesforce writes in a workflow:
+
+1.  Open your workflow and click the Salesforce step (for example, **Update record**).
+2.  Open the **Run settings** section of the step.
+3.  Turn on **Run in batches** and set **Number of runs per batch** (the default and maximum is 200).
+4.  Test on a small set of records first. Batching sends larger update volumes to Salesforce at once, so confirm that other tools and automations connected to your Salesforce org can handle it.
+
+In a table, the same **Run in batches** toggle is in the **Run settings** of the Salesforce action column. Because the concurrency limit is per Salesforce connection, you don't need to split a large job (for example, hundreds of thousands of leads) across multiple tables or workflows to speed it up — turning on batching is what reduces the number of requests.
 
 ## Best practices
 
