@@ -387,4 +387,4 @@ Yes, you can connect multiple LinkedIn or Meta ad accounts and choose which acco
 
 ### **How much does it cost to sync audiences?**
 
-Each record exported or synced to an ad platform consumes 1 action (for the export/sync work). Data credits are consumed for any enrichments used in the table to build your audience (e.g., finding emails, enriching profiles). The export itself does not consume additional data credits.
+Each record exported or synced to an ad platform consumes 1 action (for the export/sync work). Data credits are consumed for any enrichments you run in the table to build your audience (e.g., finding emails, enriching profiles). The export itself does not consume additional data credits.
