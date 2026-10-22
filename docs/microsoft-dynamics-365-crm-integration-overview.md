@@ -34,6 +34,8 @@ To set up the Dynamics 365 CRM Integration, follow these steps:
 
 **Step 2:** Click + Add Connection and select **Dynamics 365 CRM**.
 
+The **Add Dynamics 365 CRM account** window has two tabs: **User Sign In** (the default, which signs in with a Microsoft user account) and **Service Principal** (which connects with your own Microsoft Entra app registration — see [Connecting with a Service Principal](#connecting-with-a-service-principal-app-registration) below). The steps below are for **User Sign In**.
+
 **Step 3:** Enter the **domain** of your Dynamics 365 CRM and sign in to your Dynamics account.
 
 **Step 4:** Name your account key.
@@ -54,7 +56,39 @@ To connect with a service account, follow the same setup steps above and sign in
 
 **Note on MFA re-authentication:** The OAuth connection requires re-authentication when your Azure AD Conditional Access policies enforce MFA or sign-in frequency limits (commonly every 7 days). If the service account is not re-authenticated within your organization's required window, the connection will stop working. To avoid disruptions, re-authenticate proactively on schedule or work with your Azure AD administrator to configure a sign-in frequency exemption for the service account used with Clay.
 
-**Entra Service Principal (app-only) authentication is not currently supported.** The Dynamics 365 connection requires signing in with a Microsoft user account (personal or service account). If your organization requires app-only authentication without user account MFA dependencies, please reach out to Clay support to register your interest.
+If your organization requires app-only authentication without user account MFA dependencies, connect with a Service Principal instead (see below).
+
+## "Need admin approval" when signing in to Dynamics 365
+
+When you connect Dynamics 365 with the **User Sign In** tab, Microsoft may show a **Need admin approval** screen that says "Clay needs permission to access resources in your organization that only an admin can grant." This happens when your Microsoft organization doesn't let users approve third-party apps on their own.
+
+You have two ways to connect:
+
+-   **Ask a Microsoft admin to approve Clay.** A Microsoft (Entra ID) admin in your organization signs in through the **User Sign In** tab and approves the Clay app.
+-   **Use the Service Principal tab instead.** A Service Principal connection uses an app registration that your organization owns, so it doesn't go through the Clay app approval screen. See [Connecting with a Service Principal](#connecting-with-a-service-principal-app-registration).
+
+## Connecting with a Service Principal (app registration)
+
+The **Service Principal** option connects Clay to Dynamics 365 with a Microsoft Entra app registration (client credentials) for server-to-server integration. No individual user signs in, so the connection doesn't depend on a user's password, MFA, or sign-in frequency policies. Service Principal connections work with the Dynamics 365 Create Object, Lookup Object, and Update Object actions.
+
+**Before you start, in Microsoft Entra and Dynamics 365:**
+
+1.  Create an app registration in Microsoft Entra ID (see Microsoft's guide to [creating an app registration and service principal](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal)).
+2.  Create a client secret for the app registration under **Certificates & secrets**.
+3.  In the Power Platform admin center, add the app registration as an **Application User** in your Dynamics 365 environment and assign it a security role. The security role controls which records Clay can read and write.
+
+**To connect Dynamics 365 with a Service Principal in Clay:**
+
+1.  Go to **Settings > Connections**, click + Add Connection, and select **Dynamics 365 CRM**.
+2.  Select the **Service Principal** tab.
+3.  Fill in the following fields:
+    -   **Name your connection** (optional): a name to identify this connection in Clay.
+    -   **Environment URL**: your Dynamics 365 environment URL, for example `https://myorg.crm.dynamics.com`. Don't include a trailing slash.
+    -   **Directory (tenant) ID**: from your app registration's overview page.
+    -   **Application (client) ID**: from your app registration's overview page.
+    -   **Client secret**: the client secret you created for the app registration.
+4.  Optionally, turn on **Set as default** to auto-select this account where possible.
+5.  Click **Authenticate**.
 
 ## [‍](https://app.arcade.software/share/IiX3ez8JQvNmSDhn9F7w)Import your Microsoft Dynamics data into Clay
 
@@ -93,6 +127,15 @@ This can be **Account**, **Contact**, **Lead**, or **Opportunity.**
 **Step 3:** Map fields for created object.
 
 Match the relevant fields from your Clay table to the corresponding Dynamics properties, ensuring data types and formats align.
+
+**Mapping lookup fields (fields that link to another Dynamics record):** Some Dynamics 365 fields, such as a custom Country, Lead Source, or Parent Account field, don't take text. They link to a record in another Dynamics table, so they need that record's ID (a GUID such as `3f2a1c9e-...`), not its name. If you map plain text like "US" or "Digital Advertising" into one of these fields, Dynamics rejects the record with an error such as "Error in query syntax" or "')' or ',' expected ... in '(Digital Advertising)'". To fill a lookup field from a name:
+
+1.  Add a Dynamics 365 **Look up object** column before your Create Object column. Set **Object Type** to the table the field links to (custom tables are listed too), and filter by the name column using the value from your Clay table.
+2.  The lookup result includes the record's ID field (for example `accountid`, or `<table name>id` for a custom table).
+3.  In your Create Object column, map that ID into the lookup field instead of the text.
+4.  Make sure the Look up object column runs before the Create Object column.
+
+The same applies to lookup fields in the Update Object action.
 
 **Step 4:** Configure run settings.
 
