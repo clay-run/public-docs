@@ -262,7 +262,7 @@ The **People** (or **Companies**) list shown next to the Setup, Match, and Sync 
 3. Click `Enrich`, then click **Add enrichment table**. (In some workspaces, the enrichment panel shows a `+` button instead — click it and select **Create enrichment table**.) You don't need to add enrichment columns.
 4. Open the new table, make sure no rows are selected, then click **Tools**, open the **Export** tab, and click **Download CSV**.
 
-Workspace Admins and Editors can create the enrichment table; Workspace Viewers can't. If the enrichment panel only shows **Create enrichment workflow**, your workspace can't create enrichment tables from segments — see [Can I export an audience segment to CSV?](https://university.clay.com/docs/audiences#can-i-export-an-audience-segment-to-csv).
+Workspace Admins and Editors can create the enrichment table; Workspace Viewers can't.
 
 ### **Why is my matched count higher than the number of contacts I sent?**
 
