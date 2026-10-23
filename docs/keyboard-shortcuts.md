@@ -106,10 +106,30 @@ Use the drag-fill handle (small square in the bottom-right corner of a selected 
 
 ## Workflow canvas shortcuts
 
-These shortcuts apply in the Clay **Workflows editor** — the node-based workflow builder.
+These shortcuts apply in the Clay **Workflows editor** — the node-based workflow builder. To see the full list of workflow canvas shortcuts inside Clay, open the workflow title dropdown at the top of the editor and click `Keyboard shortcuts`. The canvas tooltips for select, pan, zoom in, zoom out, fit view, and auto-arrange also show each control's shortcut keys.
 
+Workflow canvas shortcuts only work when the canvas has focus — they don't fire while you're typing in a text field, menu, or dialog.
+
+### Zoom and view
+
+-   `+` (or `Z` + `click`) — Zoom in
+-   `-` (or `Alt/Option` + `Z` + `click`) — Zoom out
+-   `Cmd/Ctrl` + `0` — Zoom the canvas to 100%
+-   `Shift` + `1` — Fit the whole workflow in view
+
+### Select and pan
+
+-   `V` — Switch the canvas to select mode
+-   `H` — Switch the canvas to pan mode
+-   `Space` + `drag` — Pan the canvas temporarily in any direction
 -   `Click and drag` on empty canvas area — Draw a selection rectangle to select multiple nodes at once
--   `Space` + `drag` — Pan the canvas in any direction
+-   `Cmd/Ctrl` + `A` — Select all
+
+### Organize nodes
+
+-   `Cmd/Ctrl` + `G` — Create group
+-   `Cmd/Ctrl` + `Shift` + `G` — Ungroup
+-   `Shift` + `A` — Auto-arrange nodes: arranges the selected nodes when two or more are selected, otherwise arranges the whole workflow. Auto-arrange isn't available on read-only or empty workflows.
 
 ## FAQs
 
