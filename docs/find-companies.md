@@ -247,6 +247,17 @@ The **Enrich Company** enrichment returns three different numeric IDs for each c
 
 **Clay Company Id** doesn't depend on the company's domain or name, so a rebrand or domain change alone doesn't change it. In rare cases, a Clay Company Id can change when two company profiles in Clay's company data are merged — Enrich Company always returns the company's current Clay Company Id. See [Clay Company ID from Find Companies doesn't match the ID from Enrich Company](finding-companies-and-people-in-clay.md#clay-company-id-from-find-companies-doesnt-match-the-id-from-enrich-company) for how to handle older IDs.
 
+### How does Clay's AI industry taxonomy compare to the standard Industry list?
+
+Find Companies has two separate industry taxonomies. Both are available on all plans, and each comes from a different source. The table below compares the standard **Industry** filter with Clay's **AI · Industries** and **AI · Subindustries** filters:
+
+| Filter | Where to find it | Source of the values | Number of values |
+| --- | --- | --- | --- |
+| **Industry** | Company attributes | The industry each company self-selects on its professional network profile, passed through from Clay's data provider without extra classification by Clay | 457 |
+| **AI · Industries** and **AI · Subindustries** | AI filters | Clay's own taxonomy — Clay's AI model assigns each company a category | 16 industries and 110 subindustries |
+
+**There is no fixed mapping between the two industry taxonomies.** Clay's AI assigns each company its AI industry and subindustry separately from the industry the company set on its profile, so Clay doesn't publish a crosswalk from standard Industry values to AI Industries. The 16 AI Industries are the parent categories listed in [What are the available AI Subindustry filter values?](#what-are-the-available-ai-subindustry-filter-values) below, with their 110 subindustries grouped under each one.
+
 ### What are the available AI Subindustry filter values?
 
 The **Industries** filter (the standard one at the top of the filter panel) and the **`Industry` output column** use a standardized industry taxonomy drawn from company profile data. Clay recognizes approximately 457 common values (examples: *Software Development, Financial Services, Insurance, Healthcare and Life Sciences, Information Technology and Services, Marketing and Advertising, Non-profit Organization Management*). Because these come from what companies set on their professional profiles, the list is open-ended rather than a fixed picklist.
