@@ -246,14 +246,14 @@ This error blocks the column from running entirely. No rows will process until t
 **To fix:**
 
 1.  Click the column name → **Edit column** to open the settings panel.
-2.  Go to the **Configure** tab and find the **Prompt** field. Any reference pointing to a missing column appears as a **"(Deleted column)"** chip instead of the normal column name chip.
-3.  Click and delete each **"(Deleted column)"** chip.
+2.  Go to the **Configure** tab and find the **Prompt** field. Any reference that can't be matched to a column in your table — for example, a reference to a deleted or renamed column — appears as an **"(Invalid reference)"** chip with a warning icon instead of the normal column name chip. Hovering the warning icon shows: *"This reference couldn’t be matched to a column. Remove it and select a column again."*
+3.  Click and delete each **"(Invalid reference)"** chip.
 4.  Type `/` in the prompt editor to open the column picker, then select the correct column from your table.
 5.  Click **Save** and re-run the column.
 
 **Note:** Do not type the column reference as `{{Column Name}}` literal text — only references inserted via the `/` picker are substituted with real row data when the column runs. Text typed in `{{...}}` form is treated as a plain string.
 
-**Common cause — waterfall templates:** When you add a pre-built waterfall from the enrichment library (for example, the Funding Stage waterfall), the included Use AI step may reference column names from the template's original table — such as `Company Name` or `Company Domain` — which may not match the column names in your table. If your table uses different names (for example, `Name` and `Domain`), those references appear as deleted immediately. Replacing them with your table's actual columns resolves the error.
+**Common cause — waterfall templates:** When you add a pre-built waterfall from the enrichment library (for example, the Funding Stage waterfall), the included Use AI step may reference column names from the template's original table — such as `Company Name` or `Company Domain` — which may not match the column names in your table. If your table uses different names (for example, `Name` and `Domain`), those references appear as **"(Invalid reference)"** chips immediately. Replacing them with your table's actual columns resolves the error.
 
 ### AI column running but producing unexpected output
 
