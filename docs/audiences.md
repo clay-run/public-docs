@@ -740,8 +740,8 @@ The **`Create new Salesforce records`** toggle is in your Salesforce source sett
 
 Export sync behavior:
 
--   **Export frequency:** Once every 24 hours. Clay assigns each workspace a stable export time automatically — the schedule is not user-configurable.
--   **First export:** After you enable Export Sync, the first export does not run immediately — it fires at your workspace's next scheduled export time, which may be up to 24 hours away. The Exports panel shows **Not set up** until the first export completes successfully.
+-   **Export frequency:** Once every 24 hours. Clay automatically assigns each Salesforce export (for example, your Contacts export and your Accounts export) its own stable daily export time, so exports for different objects can run at different times of day. The schedule is not user-configurable.
+-   **First export:** After you enable Export Sync, the first export does not run immediately — it fires at that export's next scheduled export time, which may be up to 24 hours away. The Exports panel shows **Not set up** until the first export completes successfully.
 -   **Export batch size:** ~10,000 records per batch.
 -   **Subsequent syncs:** Incremental — only changed records are processed.
 
@@ -1186,7 +1186,7 @@ To enable it (admin-only):
 3.  Under **Export [Object] data**, toggle on **Export sync**.
 4.  Click **Save and review** → **Confirm**.
 
-Once enabled, the first export does not run immediately — it fires at your workspace's next scheduled export time, which may be up to 24 hours away. See [Writing back to your CRM](#writing-back-to-your-crm) for the full schedule and behavior details.
+Once enabled, the first export does not run immediately — it fires at that export's next scheduled export time, which may be up to 24 hours away. See [Writing back to your CRM](#writing-back-to-your-crm) for the full schedule and behavior details.
 
 If Export sync is enabled but **specific fields** are still not updating in Salesforce — and you see no export errors — check each field's **write rule**. A field set to **Write if empty** only sends its value to Salesforce when the corresponding Salesforce field is blank. If that Salesforce field already contains a value, Clay skips the update silently without recording an error. Your data may look correct in Audiences while those fields remain unchanged in Salesforce.
 
@@ -1242,6 +1242,21 @@ Once the toggle is on, Clay will create new Accounts or Contacts in Salesforce f
 **What about existing contacts?** Records already imported from Salesforce are tracked by their Salesforce Object IDs — Clay updates them directly without using the Clay ID field. The Clay ID field stays empty on those records and only comes into play for net-new records Clay creates.
 
 To track which contacts in Salesforce came from a specific Audience enrichment, create a custom Audience text field (for example, an "Audience Source" field set to a label like `"Q2-enrichment"`), and map it to a Salesforce field (a custom field, campaign tag, or lead status) in your export settings. You can then filter on that value directly in Salesforce.
+
+### Do people I save from Find People to All People sync to Salesforce automatically?
+
+Saving a Find People search to **All People** adds those people to your Clay Audience only. Whether they also reach Salesforce depends on the **`Create new Salesforce records`** toggle in your Audiences Salesforce export settings — you don't need to add a separate enrichment or Salesforce column to the search for the Audiences export sync to pick these people up. Salesforce export from Audiences is available on Growth and Enterprise plans and requires the workspace **Admin** role to configure.
+
+-   **`Create new Salesforce records` off (the default):** Export sync only updates Salesforce records that already match a record in your Audience. People who are net-new from a search have no matching Salesforce record, so they stay in Clay and nothing is created in Salesforce.
+-   **`Create new Salesforce records` on:** On the next export sync (exports run once every 24 hours), Clay creates a new Salesforce **Contact** for each person in your Audience who doesn't have a matching Salesforce record. Clay creates people as Contacts, not Leads — record creation isn't supported for Leads.
+
+To check the setting:
+
+1.  Open your Salesforce source settings and select the **Contacts** tab.
+2.  In the export section, confirm **Export sync** is on, then find the **`Create new Salesforce records`** toggle ("Allow new records to be created in Salesforce. If off, only existing records will follow the field mapping export rule.").
+3.  Before you can turn the toggle on, select a Clay ID field (a Salesforce field marked as **External ID**) in the **Record matching** section. If no Clay ID field is selected, the settings show "Create new records mapping is required when enabled" and won't save. See [How do I create new Salesforce Accounts or Contacts from an Audience?](#how-do-i-create-new-salesforce-accounts-or-contacts-from-an-audience) for setup steps.
+
+Turning on `Create new Salesforce records` applies to every person in your Audience without a Salesforce match, not only the people from one search. See **What happens when you first enable this toggle** in [Writing back to your CRM](#writing-back-to-your-crm) before you enable it.
 
 ### How do I write enriched fields back to existing Salesforce records from a workflow?
 
@@ -1342,7 +1357,7 @@ Clay Audiences syncs in two separate directions on different schedules:
 
 The 15-minute (or daily) sync applies to the **import direction only** — it reflects Salesforce changes in your Audience. Enriched data written in Clay flows back to Salesforce on the 24-hour export cycle.
 
-After you enable Export sync, the first export does not run immediately — it fires at your workspace's next scheduled export time, which may be up to 24 hours away. Subsequent exports run on the same 24-hour schedule. See [Writing back to your CRM](#writing-back-to-your-crm) for the full export schedule and behavior.
+After you enable Export sync, the first export does not run immediately — it fires at that export's next scheduled export time, which may be up to 24 hours away. Subsequent exports run on the same 24-hour schedule. See [Writing back to your CRM](#writing-back-to-your-crm) for the full export schedule and behavior.
 
 To push enriched data to Salesforce before the next scheduled export, see [How can I export records to Salesforce immediately without waiting for the 24-hour sync?](#how-can-i-export-records-to-salesforce-immediately-without-waiting-for-the-24-hour-sync)
 
