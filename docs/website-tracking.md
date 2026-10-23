@@ -280,6 +280,12 @@ Using the Segment tag and Clay's own JavaScript snippet are equivalent — you g
 
 Yes. The Claydar tracking script fires on SPA history changes using `pushState` and `replaceState`, so page views are tracked for client-side navigation in addition to full page loads. No extra configuration is needed — the same snippet that works on traditional multi-page sites automatically handles SPA routing.
 
+### Do I need to add `defer` or `async` to the web intent tracking snippet?
+
+No. Paste the web intent tracking snippet exactly as it appears in your website connection (**Settings → Web intent** → your connection → **JavaScript Snippet** tab) — you don't need to add `defer` or `async` to the `<script>` tag. The snippet loads `init.v1.js`, which then loads the main tracking script (`radar.min.js`) asynchronously, so the tracking script won't block or slow down your page load.
+
+For best results, place the snippet right before the closing `</body>` tag in your global site template so it loads on every page you want to track. To confirm the script is loading after installation, see [Verification says "Tracking script not found"](#verification-says-tracking-script-not-found).
+
 ### Is visitor tracking data shown in real-time?
 
 No. Clay waits for a visitor's session to finish before processing and delivering the data. The session inactivity timeout is 30 minutes — after 30 minutes with no new page views, Claydar finalizes the session and passes it to the processing pipeline. This timeout is fixed and cannot be configured. Data can be delayed up to 30 minutes after a visitor's last page view.
