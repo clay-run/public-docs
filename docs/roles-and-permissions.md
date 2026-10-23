@@ -1,6 +1,6 @@
 ---
 title: Roles and permissions
-description: Roles, permissions, and access control tools available in Clay workspaces.
+description: Roles, permissions, and access control tools available in Clay workspaces, including when Viewers can use credits.
 last_synced: 2026-10-07T01:55:09.539Z
 ---
 
@@ -60,6 +60,17 @@ Viewers can be granted Editor access to specific tables or workbooks, or added a
 1.  In the workbook, go to workbook settings on the right side.
 2.  Under `Access permissions`, change `Edit access` to `Admins and invited collaborators only`.
 3.  Click `+ Add collaborator` and select the Viewer.
+
+### Do Viewers use credits?
+
+Adding a Viewer to your workspace doesn't use any credits. By default, a Viewer can't spend credits in the Clay web app: Viewers can't create tables or workbooks, and they can't run enrichments or actions in tables owned by other workspace members.
+
+A Viewer can use credits in two cases:
+
+-   **Editor access to a specific table or workbook.** If you give a Viewer Editor access to a table or workbook, or add them as a workbook collaborator, they can run actions and enrichments there.
+-   **Clay MCP.** The Viewer role doesn't block Clay's MCP integration. A Viewer who connects Clay to an AI tool like Claude, ChatGPT, or Glean can run enrichments and functions from that tool.
+
+In both cases, credits come from your workspace's shared credit balance. To keep a Viewer view-only in the Clay web app, don't give them Editor access to tables or workbooks. To cap how many credits a Viewer can spend through AI tools, a workspace admin can set a per-user MCP credit limit for them on the `MCP` settings page. See [MCP settings](https://university.clay.com/docs/mcp-settings).
 
 ## Sales rep _(Beta)_
 
