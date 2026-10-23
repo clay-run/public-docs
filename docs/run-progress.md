@@ -224,6 +224,24 @@ Running the column directly rather than the rows bypasses the dependency timing 
 
 Remove the filter when the run finishes to return to the full table view.
 
+### Why did Run column run every row when I only highlighted a few?
+
+The run options on an enrichment column's header don't use the rows or cells you've highlighted. Column header runs cover every row in the current view: all rows in the table, unless you've applied a filter or [row limit](#setting-a-row-limit). For example, say you highlight rows 1–50 and then choose **Run [N] empty or out-of-date rows** from the column header. Clay runs that column on every empty, errored, or out-of-date row in the view, not just the 50 you highlighted, and uses credits for each one. If your workspace runs out of credits partway through, the remaining cells show **Not enough Clay credits 😢**.
+
+The column header has the following run options:
+
+-   **Run first [N] rows** (play button on the column header): runs the first 10 rows in the view, or every row if the view has fewer than 10.
+-   **Choose number of rows to run** (column header menu → **Run column**): opens a dialog where you enter how many rows to run and, optionally, a **Starting from row**. These rows are force-run, so rows that already have results run again and use credits again.
+-   **Run [N] empty or out-of-date rows** (column header menu → **Run column**): runs every empty, errored, or out-of-date row in the view.
+-   **Force run all [N] rows** (column header menu → **Run column**): re-runs every row in the view, including rows that already have results.
+
+To run a column only on the rows you've highlighted:
+
+1.  Select the cells in that column for the rows you want.
+2.  Right-click and choose **Run [N] cells**. Only the selected cells run.
+
+If you select whole rows instead (by clicking row numbers), the right-click option is **Run [N] rows**. It runs every enrichment column on those rows only.
+
 ## Setting a row limit
 
 If you want to process only a portion of your table — for example, to find emails for the first 1,000 rows before committing credits to a full run — use the **Row limit** and **Starting row** settings in the toolbar.
