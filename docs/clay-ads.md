@@ -329,6 +329,19 @@ If Search and Display remain at 0 after 48 hours, check the audience status in y
 
 When you create your first ad audience, you'll be prompted to authenticate with LinkedIn Campaign Manager, Meta Business Manager, or your Google Ads account via OAuth. Make sure you have admin access to the ad account you want to use. Note that Google Ads syncing is currently in closed beta — contact [Clay support](https://www.clay.com/contact) to request access.
 
+### **Why do I see "Need admin approval" when connecting my Bing Ads account?**
+
+When you connect Bing Ads (Microsoft Advertising) to Clay, you sign in through Microsoft. If Microsoft shows a **Need admin approval** screen saying Clay "needs permission to access resources in your organization that only an admin can grant," the block comes from Microsoft, not Clay. When you sign in with your work email, Microsoft checks your company's Microsoft Entra ID (formerly Azure AD) directory, and that directory is set to require an IT admin to approve third-party apps before employees can connect them. Your company can have an Entra ID directory even if you use Gmail rather than Outlook. Companies that use Microsoft services such as Microsoft Advertising or Azure with work emails typically have one.
+
+A **Super Admin** role in Microsoft Advertising, or an admin role in your Clay workspace, does not count as approval. Only an admin for your company's Microsoft Entra ID directory, usually your IT team, can approve Clay.
+
+To connect your Bing Ads account, ask your Microsoft admin to approve Clay in one of these ways:
+
+-   **During sign-in:** Start the Bing Ads connection in Clay again. On the **Need admin approval** screen, click **Have an admin account? Sign in with that account** and have your admin sign in. Your admin reviews the permissions, checks **Consent on behalf of your organization**, and clicks **Accept**.
+-   **From the Microsoft Entra admin center:** Your admin goes to [entra.microsoft.com](https://entra.microsoft.com), opens **Enterprise applications**, and searches for **Clay**. In **Permissions**, they click **Grant admin consent** and accept. In **Properties**, they make sure **Enabled for users to sign in** is set to **Yes**. If **Assignment required** is set to **Yes**, they add your account under **Users and groups**.
+
+Once Clay is approved, connect Bing Ads in Clay again. After you sign in with Microsoft, Clay asks for your Bing Ads **developer token**, which you can find in Microsoft Advertising under developer settings. If you still see **Need admin approval** after your admin has approved Clay, contact [Clay support](https://www.clay.com/contact) and include a screenshot.
+
 ### **Why did I receive an email saying my Meta account will disconnect soon?**
 
 This is expected behavior. Meta enforces a 60-day expiry on OAuth tokens — when you connect your Meta account to Clay using "Sign in with Facebook," the connection stays active for 60 days before it needs to be renewed. Clay sends a warning email 7 days before expiry and again 1 day before expiry so you can take action before any Ad Syncs are interrupted.
