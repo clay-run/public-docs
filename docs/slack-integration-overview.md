@@ -51,6 +51,17 @@ To send a Slack direct message to an individual user instead of posting to a cha
 3. To look up a user's Slack ID from their email address, add a **Find Slack user by email** action column and reference its result in the **Slack channel** field.
 4. Run one row first to confirm the DM reaches the correct user, then run the full table.
 
+#### Sending to a different Slack channel for each row
+
+If your Clay table stores a Slack channel ID for each row (for example, each account or domain mapped to its own channel), the **Send message to channel** action can post each row's message to that row's channel:
+
+1. In the **Slack channel** field, click the gear icon and switch to **Text with tokens** mode. The dropdown lists only channels the Clay app has been added to, so use **Text with tokens** to map channel IDs from a column.
+2. Insert the column that holds the channel IDs (for example, `C04F8AWK44T`) into the **Slack channel** field.
+3. Make sure the Clay app is a member of every private channel in that column — open each private channel in Slack and type `/invite @Clay`. Public channels don't need an invite as long as the optional `chat:write.public` scope was granted when you connected Slack (it's selected by default).
+4. Run one row first to confirm the message arrives, then run the full table.
+
+Slack delivery problems don't fail silently. If Slack rejects a message, that row's **Send message to channel** cell shows an error containing Slack's response, so you can spot delivery issues directly in the table. See [Slack errors when sending a message to a channel](#slack-errors-when-sending-a-message-to-a-channel) for what each error means.
+
 ### `Action` Find list of channel members
 
 Use this action to retrieve a list of members from a specified Slack channel.
@@ -252,15 +263,21 @@ Clay fetches your Slack channel list live each time you open the **Slack channel
    - `groups:read` — lists private channels the bot has been invited to
    - `chat:write` — sends messages as the Clay bot
 
-### `channel_not_found` error when posting to a private channel
+### Slack errors when sending a message to a channel
 
-Two Slack error codes can appear when a Clay action can't reach a private channel — they have different causes:
+When the **Send message to channel** action can't deliver a message, it does not fail silently: the cell for that row shows an error containing Slack's full response, for example `{"ok":false,"error":"channel_not_found"}`. Clay passes Slack's error through unchanged. The most common Slack errors are:
 
-**`{"ok":false,"error":"channel_not_found"}`** — the channel ID is wrong or does not exist. Verify the ID you provided. A valid channel ID starts with `C` and looks like `C04F8AWK44T`. To find a channel's ID: right-click the channel name in Slack → **Copy link** — the ID is the final segment of the copied URL.
+**`{"ok":false,"error":"channel_not_found"}`** — Slack can't find a channel the Clay bot has access to. Slack returns this same error for several different causes, so check each:
 
-**`{"ok":false,"error":"not_in_channel"}`** — the Clay bot has not been invited to the channel. Open the private channel in Slack and type `/invite @Clay`, or add the Clay app through the channel's member settings. The Clay bot must be a member of any private channel it posts to.
+-   **Private channel the Clay bot hasn't been invited to.** Slack hides private channels from apps that aren't members, so the channel looks like it doesn't exist. Open the private channel in Slack and type `/invite @Clay`, or add the Clay app through the channel's **Integrations** → **Add apps** settings. The Clay bot must be a member of any private channel it posts to.
+-   **Wrong channel ID.** A valid channel ID starts with `C` and looks like `C04F8AWK44T`. To find a channel's ID: right-click the channel name in Slack → **Copy link** — the ID is the final segment of the copied URL.
+-   **Channel in a different Slack workspace.** The channel must belong to the Slack workspace connected to the Slack account selected in the action.
 
-> **Note for "Send for approval":** The channel dropdown for this action shows only public channels. For a private channel, switch the **Slack channel** input to text mode and enter the channel ID directly.
+**`{"ok":false,"error":"not_in_channel"}`** — the channel is a public channel the Clay bot hasn't joined, and your Slack connection doesn't have the optional `chat:write.public` scope. Either add Clay to the channel (type `/invite @Clay` in the channel), or reconnect Slack in **Settings → Connections** and accept the `chat:write.public` scope.
+
+**Missing channel ID.** If a row's **Slack channel** value is empty, the Slack message isn't attempted. The cell shows a missing input error — *"You must include a destination slack channel to send your notification to."* — rather than a Slack error.
+
+> **Note for "Send for approval":** The **Send for approval to Slack channel** dropdown works the same way as **Send message to channel** — it lists public and private channels the Clay app has been added to. For a channel that isn't listed, switch the **Slack channel** input to text mode and enter the channel ID directly.
 
 ### My Slack workspace requires admin approval and the Slack Marketplace link shows an error
 
