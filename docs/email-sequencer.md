@@ -227,6 +227,33 @@ Several factors work together to pace delivery over multiple days rather than se
 
 If all your sender accounts have hit their daily limit, the campaign resumes automatically when the next sending window opens.
 
+### How often does a segment-based campaign enroll new segment members?
+
+A Sequencer campaign that uses an Audiences segment as its lead source does not enroll new segment members continuously. It enrolls them in the following ways:
+
+-   **When you launch or resume the campaign:** Clay runs an enrollment pass right away and enrolls every eligible member currently in the segment.
+-   **During the first hour after you launch or resume:** a one-time catch-up run enrolls members who join the segment in that hour, once Audiences next refreshes the segment.
+-   **After that first hour:** the campaign runs its enrollment once every 24 hours. New segment members wait until that daily run to be enrolled.
+
+The 24-hour enrollment interval doesn't depend on your plan. There is no campaign setting to change it or to turn on continuous enrollment.
+
+**Pausing and resuming resets the daily run.** The daily enrollment run doesn't happen at a fixed time of day. Pausing a segment-based campaign cancels the scheduled run. Resuming the campaign starts a new enrollment pass right away, and the next daily run is scheduled about 24 hours after that pass. If you pause and resume a campaign often, the daily run keeps moving later.
+
+**Example:** a table adds one new person to your segment every morning at 07:00, and you resume the campaign at 09:40. That morning's person is enrolled at 09:40 by the enrollment pass that runs on resume. The next morning's person joins at 07:00 and is enrolled by the daily run at about 09:40, roughly 2 hours and 40 minutes later.
+
+**To enroll new members soon after they join the segment:** resume the campaign once, shortly after the time your new members usually land in the segment. Then leave the campaign running, without pausing it, so the daily run keeps landing at that time.
+
+### What does "provider_rejected" mean when a lead fails to enroll?
+
+A lead shows the `provider_rejected` failure reason when the sending provider behind the Sequencer refuses to add that lead to the campaign. In the campaign, the lead shows this message: "We couldn't add this lead to the campaign. The email may be invalid, on a blocklist or suppression list, or the assigned sender account isn't connected. Check the address and sender account, then re-enroll."
+
+Clay doesn't store or show the provider's original rejection message, so Clay support can't look up a more specific reason after the enrollment attempt. To fix a `provider_rejected` lead:
+
+1.  Check that the lead's email address is valid.
+2.  Check that the address isn't on your [Global Blocklist](#what-happens-if-i-manually-add-a-lead-to-the-global-blocklist-while-theyre-already-in-an-active-campaign) or a suppression list.
+3.  Check that the sender account assigned to the lead is connected.
+4.  Re-enroll the lead.
+
 ### How many emails can I send per day, and is the sequencer right for large-volume campaigns?
 
 The daily send limit is set at the **email account level** and varies by account type:
