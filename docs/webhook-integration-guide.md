@@ -24,6 +24,8 @@ Your table updates instantly with new data, eliminating manual entry. This featu
     -   **cURL:** Paste the cURL command into your command line to send data directly to Clay.
 4.  Optionally, add authentication token. To secure your webhook, you can include an authentication token in the header of your request. Clay's webhook authentication header is named `x-clay-webhook-auth`; each webhook table generates its own unique token.
     -   Make sure to copy the token immediately, as you can only access authentication tokens once.
+    -   To add a token, click **+ Add auth token** under the webhook URL, then click **Create** in the **Create auth token?** dialog. A new token can take up to 60 seconds to become active.
+    -   The token applies only to this one webhook source. Your other webhook sources and tables are not affected — see [Does adding an auth token affect my other webhooks?](#does-adding-an-auth-token-affect-my-other-webhooks)
 
 ## Limits
 
@@ -165,7 +167,7 @@ If your webhook isn't creating rows — even on a brand-new webhook that has nev
 
 2. **Incorrect URL** — Confirm you copied the full webhook endpoint URL from the **Monitor webhook** section in your table source settings (not a partial URL or the cURL command itself).
 
-3. **Missing or wrong authentication token** — If you added an auth token when creating the webhook, it must be included in every request as the `x-clay-webhook-auth` header. The token is only displayed once at creation — if you didn't copy it, you'll need to delete and recreate the webhook to generate a new one.
+3. **Missing or wrong authentication token** — If you added an auth token when creating the webhook, it must be included in every request as the `x-clay-webhook-auth` header. The token is only displayed once at creation — if you didn't copy it, click **Refresh auth token** in the webhook source settings to generate a new one, then update the token in your sending system.
 
 4. **Submission limit reached** — See the [Limits](#limits) section. Once a webhook source hits 50,000 submissions, Clay returns a `403 Record limit reached for webhook` error and stops creating rows. This limit is cumulative — it counts all submissions since the webhook was created, and neither deleting nor archiving rows resets it. **Enterprise plan:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) to bypass this limit entirely — when passthrough mode is active, the 50,000 cap is skipped and the webhook can accept data indefinitely.
 
@@ -178,6 +180,21 @@ curl -X POST YOUR_CLAY_WEBHOOK_URL \
 ```
 
 If a row appears for the simple test but not for your real payload, the issue is either in your real request's formatting, headers, or auth token — or **auto-dedupe is removing rows** whose dedupe column value already exists in the table. A simple `{"test": "hello"}` payload always creates a row even when auto-dedupe is on, because blank dedupe column values are skipped. See [My webhook is sending data successfully but new rows aren't visible](#my-webhook-is-sending-data-successfully-but-new-rows-arent-visible-in-my-table) for how to diagnose and fix auto-dedupe. If no row appears on a brand-new webhook, contact support.
+
+### Does adding an auth token affect my other webhooks?
+
+No. A webhook auth token in Clay applies only to the single webhook source you create it on. When the **Create auth token?** dialog says "Existing workflows using this source will require the new authentication token," it means requests sent to *this* webhook URL — not every webhook in your workspace. Your other webhook sources and tables keep working as they do now, and webhook sources without a token keep accepting requests without the `x-clay-webhook-auth` header.
+
+Once a webhook source has an auth token:
+
+- Every request to that webhook URL must include the token in the `x-clay-webhook-auth` header. Requests with a missing or wrong token are rejected with a `401 Unauthorized` error and no row is created.
+- The token is shown only once, right after you click **Create** ("This is your only chance to copy the token."). Copy it immediately and paste it into the sending tool — for example, the **Authentication Token from Clay** field when connecting a Clay table to Chili Piper.
+- Creating, refreshing, or deleting a token can take up to 60 seconds to take effect.
+
+**To manage an existing webhook auth token,** open the webhook source settings. Under **Authentication token** you'll see two options:
+
+- **Refresh auth token** — invalidates the current token and generates a new one. The old token stops working, so update the new token in every tool that sends data to this webhook.
+- **Delete auth token** — removes the token, so this webhook source no longer requires the `x-clay-webhook-auth` header.
 
 ### How can I tell which webhook source a row came from?
 
