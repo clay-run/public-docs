@@ -625,7 +625,7 @@ Selected records are merged with any existing test records for the trigger — d
 
 **Why does my workflow's test data include records that don't match my segment's filters?**
 
-Workflows, including the workflow test data panel, is in open beta, with general availability scheduled for December 2, 2026. If Workflows or the test data panel isn't available in your workspace, contact Clay support.
+Workflows, including the workflow test data panel, is in open beta. If Workflows or the test data panel isn't available in your workspace, contact Clay support.
 
 Workflow test data is a fixed, saved list of records stored on the workflow. Clay doesn't re-check these test records against the segment's filters when you run a test, so a test run can include records that the segment excludes. For example, a company whose **Number of People** is 66 can still appear in the test data of a workflow triggered by a segment filtered to **Number of People = 0**.
 
