@@ -210,6 +210,8 @@ You can update an AI column's prompt at any time without losing the existing res
 
 To test the updated prompt on a small sample before committing to a full re-run, select a few rows, right-click, and choose **Run [N] rows**. This lets you validate the new output before spending credits on every row.
 
+**Why existing AI results don't change after you edit the prompt:** Saving a new prompt does not mark existing results as out of date. Cells that already have a result keep their old value until you re-run them, so an AI column can keep showing the same answer for a row no matter how many times you edit the prompt. **Run column → Run [N] empty or out-of-date rows** skips cells that already have a result. To apply the edited prompt to those rows, right-click the column header and select **Run column → Force run all [N] rows**. Force run re-runs every row, including rows that already have results, and uses credits again. The estimated cost is shown before you confirm.
+
 **If the Prompt field appears read-only:** the column is linked to a standalone agent managed in Claygent Builder. Click the **Edit** button in the settings panel to open the agent in Claygent Builder, update the prompt there, and save. The change applies to all tables using that agent. See [Claygent Builder](claygent-builder.md) for details.
 
 ### How do I edit the output of a single AI cell, or fix a cell that won't rerun correctly?
@@ -236,6 +238,8 @@ There are two ways to resolve this:
 
 -   **Fill in the missing data.** Ensure that the columns referenced in your prompt have values for the rows you want to run.
 -   **Make the inputs optional.** In the column prompt, hover your cursor over a `{{Column Name}}` reference token — a **Required to run** toggle appears inline on that token. Switch it off for any input you want to be optional. When toggled off, the cell will still run even if that column is blank — the empty field is simply omitted from the prompt for that row.
+
+**Writing "optional" in the prompt text does not make an AI column input optional.** Instructions such as "this field is optional" or "ignore if blank" only change what the AI reads. Before running, Clay checks only the **Required to run** toggle on each `{{Column Name}}` reference. Cells keep showing **"Some inputs missing"** until you switch that toggle off for every input that can be blank. After you save the change, re-run the affected rows.
 
 ### Column header shows "Settings contains deleted column" error
 
