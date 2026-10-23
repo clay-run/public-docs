@@ -74,6 +74,10 @@ This error appears during the OAuth flow and is most commonly caused by one of t
 -   **SSO enforcement:** If SSO is enforced, the OAuth approval screen may be blocked. Try a non-SSO user, or create a non-SSO service account.
 -   **Missing permission:** The user's profile may lack `Approve uninstalled connected apps`. Ask a Salesforce admin to grant it, or connect with a System Administrator account.
 
+-   **`missing required code challenge` when connecting via User Sign In**
+
+Salesforce returns `invalid_request: missing required code challenge` when your Salesforce org requires PKCE (Proof Key for Code Exchange) for browser sign-ins. Clay's User Sign In method doesn't send a PKCE code challenge, so the license, connected app, SSO, and permission fixes above don't resolve this error. Switch the connection to `Client Credentials`, which connects server-to-server with no browser sign-in. Use `Reconnect` on your existing Salesforce connection rather than deleting it, so the tables and columns that use it keep working — see [Why am I seeing "missing required code challenge" when connecting Salesforce with User Sign In?](salesforce-integration-faqs.md#why-am-i-seeing-missing-required-code-challenge-when-connecting-salesforce-with-user-sign-in) for the steps.
+
 -   **`invalid_grant: no valid scopes defined` when connecting via Client Credentials**
 
 This error means the Salesforce Connected App (or external client app) has no OAuth scopes configured, so Salesforce rejects Clay's token request entirely. To fix:
