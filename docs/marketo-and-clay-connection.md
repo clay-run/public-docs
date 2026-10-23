@@ -16,7 +16,7 @@ This guide outlines how to connect your Marketo instance to Clay.
 
 Step 1: Copying the Webhook URL from Clay
 
-In a new or existing Clay table, locate the **Webhook URL** option. Copy the Webhook URL provided. This is the URL where you will send data via a POST request to integrate with Clay.
+In your Clay workbook, click **+ Add**, search for **Webhooks**, and add a webhook source to create a table that receives data (see [Creating a table with webhook](https://www.clay.com/university/guide/webhook-integration-guide)). Once the webhook source is added, the table sidebar shows a **Webhook URL** section with **URL** and **cURL** tabs. Copy the value on the **URL** tab — this is the URL where you will send data via a POST request to integrate with Clay. To find the webhook URL again later, open the table, hover over the webhook source column header, and click the **Edit source** icon.
 
 ### Configure Marketo Webhook
 
