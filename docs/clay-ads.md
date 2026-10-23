@@ -268,6 +268,31 @@ This is expected on platforms that match on multiple identifiers per contact. Cl
 
 Your actual ad reach is based on the audience size (unique contacts), not the matched count. When this behavior is active, the Sync panel shows an info note explaining that matched count can exceed contacts sent.
 
+### **Why is the number of people sent to the ad platform much lower than my segment size?**
+
+The **People sent** (or **Records sent**) count on an ad sync's status card is the number of contacts Clay uploaded to the ad platform after checking their identifiers. It is not the total size of your audience segment. If your segment has 13,000 contacts but the card shows 410 people sent, most of the segment didn't have a usable value in the email field mapped for the ad sync.
+
+Before an ad sync sends data, Clay checks every value in the email fields you mapped:
+
+-   **A valid email address** is trimmed, lowercased, and hashed with SHA-256 by Clay before it's sent. You can map a plain email column; you don't need to hash it first.
+-   **A 64-character SHA-256 hash** is sent as-is.
+-   **Anything else is discarded.** This includes blank cells and placeholder text such as `true` or `false`, which can come from a CRM field imported into Audiences.
+
+The ad sync only uses the fields you mapped. If the mapped hashed email field holds placeholder values, those contacts can't be matched by email, even if their audience record has a valid email address in a different field.
+
+**How the match rate relates to people sent:** An ad sync's match rate is measured against the records sent to the ad platform, not your full segment. For example, if a 13,000-contact segment sends 410 people and the professional network matches 372 of them, the match rate is about 91% (372 ÷ 410), not 372 ÷ 13,000 (about 3%). A high match rate with a low people sent count means most of the contacts that were sent matched, but most of your segment was never sent.
+
+**To send more of your segment:**
+
+1.  **Map a field that holds real emails.** Plain email addresses work because Clay hashes them for you. Field mapping can't be changed after an Ad Sync is created, so delete the current sync and create a new one with the corrected mapping. See [Can I edit the field mapping after setting up an Ad Sync?](#can-i-edit-the-field-mapping-after-setting-up-an-ad-sync).
+2.  **Clear placeholder values from the audience field.** Use the **Upsert Audiences Record** action in a Clay table:
+    1.  In Audiences, create a segment that contains only the affected contacts (for example, records where the hashed email field equals `true` or `false`).
+    2.  Click `Enrich`, then click **Add enrichment table** to send the segment's records to a Clay table.
+    3.  Add an **Upsert Audiences Record** column. Map a lookup identifier so Clay updates the existing record rather than creating a new one, such as the Audiences record ID, email, professional network profile URL, phone, or CRM record ID.
+    4.  Map an empty column to the hashed email field you want to clear.
+    5.  Turn **Ignore blank values** off. It's on by default, and while it's on, blank values are skipped instead of clearing the field.
+    6.  Run the column on a few rows first and confirm the field is empty in Audiences, then run it on the rest of the table.
+
 ### **Why does my ad audience show "too small for use in campaigns"?**
 
 Ad platforms enforce a minimum number of matched members before an audience can serve. LinkedIn requires at least 300 matched members; Meta requires at least 1,000 matched contacts. The most common cause of falling below these thresholds is that no email column was mapped in the field mapping — ad platforms match contacts by email, so without it the platform processes all sent records but matches 0.
