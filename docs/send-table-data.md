@@ -10,6 +10,8 @@ Send data between tables to create simple multi-table setups.
 
 Send data between tables in Clay lets you route records between tables, making multi-table setups simple to manage and intuitive to use.
 
+**Cost:** Send Table Data does not consume Actions or Data Credits — sending or copying a row to another Clay table is free, on all plans. Only enrichments or other action columns that run on the copied rows in the destination table consume Actions and Data Credits.
+
 **Important:** Send Table Data is a point-in-time push — it captures each row's values at the moment the action runs, not a live sync. If source values change after a row has been sent, the destination row won't update automatically. Re-run the Send step with **Update existing rows on re-run** on (the default) to push the current values to the destination table.
 
 **Note:** Send Table Data replaces the deprecated [Write to Other Table](https://university.clay.com/docs/write-to-table-integration-overview) action. If you previously used Write to Other Table, use Send Table Data for all new multi-table workflows going forward.
@@ -261,7 +263,7 @@ Scheduled column re-runs force-run every row in the selected columns regardless 
 
 ## Best practices & troubleshooting
 
--   **Enrichment columns in the destination table will run on rows you send there.** When rows arrive in a destination table via Send Table Data, they are brand-new rows from that table's perspective — even if those records were already enriched in the source table. Any enrichment columns with **auto-run enabled** will fire on every incoming row and consume credits. This is a common source of unexpected credit spend when moving or reorganizing data across tables. Send Table Data itself costs 0 credits — only the destination enrichments that auto-run afterward consume credits.
+-   **Enrichment columns in the destination table will run on rows you send there.** When rows arrive in a destination table via Send Table Data, they are brand-new rows from that table's perspective — even if those records were already enriched in the source table. Any enrichment columns with **auto-run enabled** will fire on every incoming row and consume credits. This is a common source of unexpected credit spend when moving or reorganizing data across tables. Send Table Data itself consumes 0 Actions and 0 Data Credits — only the destination enrichments that auto-run afterward consume Actions and Data Credits.
 
     **To prevent unintended enrichments:** Before running Send Table Data, open the destination table and disable auto-run on any enrichment columns you don't want to re-run. You can re-enable auto-run selectively once the rows have arrived. Clay also shows a **"Send data to table with auto-run on"** confirmation dialog before sending — check the estimated cost displayed there before confirming.
 
