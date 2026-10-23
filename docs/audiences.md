@@ -612,6 +612,20 @@ How On event segment triggers handle large segments:
 -   **Updating records already in the segment doesn't start new runs.** The On event segment trigger fires only for records that join the segment. Changing a field on a record that is already a member, for example through a workflow write-back or a CRM sync, doesn't start the workflow again for that record. There is no "on change" setting on the trigger.
 -   **To control how many records run at a time,** use a **Segment on a schedule** trigger (the **Scheduled** trigger type) with batch processing turned on. See **Processing audience members in batches** below.
 
+**Why do "Segment" runs show up in my Runs list when I only started a manual run?**
+
+A Clay workflow can have more than one trigger at the same time, for example a manual trigger and an audience segment trigger. (Workflows is currently in beta.) Each row in the workflow's **Runs** list is labeled with the trigger that started it: a run you started yourself shows as **Manual · 5,000 runs**, and runs started by a segment trigger show as **Segment · 4 runs**. If **Segment** rows appear between your manual runs, the workflow also has a segment trigger.
+
+When a workflow with a segment trigger is published, the segment trigger starts the workflow for every record that joins the segment. This happens on its own, separately from any manual run you start. A segment trigger can be added in the workflow editor, from a segment with **Send** → **Send to workflow**, or with the Clay CLI (`clay workflows triggers create` with `"triggerType":"audience_segment"`). This means a workflow set up through the Clay CLI can have a segment trigger you never added in the editor.
+
+To make a workflow run only when you start it yourself:
+
+1.  Open the workflow and click the **Trigger** node to see all of its triggers.
+2.  Remove the segment trigger. To stop it temporarily instead, pause it. See **Pausing or stopping a workflow** below.
+3.  Click **Publish**. Changes to a live workflow don't take effect until you publish.
+
+After you publish, new members joining the segment no longer start the workflow, and only the runs you start yourself appear in the **Runs** list.
+
 **Testing a workflow on specific records**
 
 To test a workflow on hand-picked records — rather than an automatic sample — use the **Add data** button in the test data panel at the bottom of the workflow editor:
@@ -637,7 +651,7 @@ Clay Workflows does not have a dedicated "unpublish" button. To stop a workflow 
 2.  In the **Triggers** panel that opens on the right, find the trigger you want to stop.
 3.  Click **Pause** to stop that trigger from firing. The trigger's status changes from **Live** to **Paused** — the workflow keeps all its steps intact and stops processing new members for that trigger. Click **Resume** on the same card at any time to reactivate it.
 
-To remove a trigger permanently (without deleting the workflow or its other steps), click **Remove** on the trigger card. Removing a trigger deletes its configuration; the rest of the workflow remains unchanged.
+To remove a trigger permanently (without deleting the workflow or its other steps), click **Remove** on the trigger card. Removing a trigger deletes its configuration; the rest of the workflow remains unchanged. After removing a trigger from a live workflow, click **Publish**. Your live workflow doesn't change until you publish.
 
 To stop a workflow completely, pause or remove all of its triggers. The workflow and its steps are preserved and can be reactivated at any time.
 
