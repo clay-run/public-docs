@@ -117,6 +117,29 @@ When setting up a table source — for example, importing records from a Salesfo
 
 To allow all workspace members to import from the same connected account, change the connection's access setting to **Anyone in the workspace**.
 
+### Audiences Salesforce imports
+
+Connection access settings also apply when you add records from Salesforce into Audiences. Audiences uses one Salesforce connection for the whole workspace, shown in the read-only **Connected Salesforce account** field, no matter who runs the import. You can't pick a different Salesforce account in the import flow.
+
+**Why does adding Salesforce records to Audiences fail with "You do not have the proper access for this app account"?**
+
+You might see **"An error occurred. Please try again or contact support: You do not have the proper access for this app account"** when you click **Continue** in the **Add records from Salesforce** flow, even though **Test** and the SOQL query **Preview** work. If so, your Clay user doesn't have access to the Salesforce connection that Audiences uses. Your SOQL query isn't the cause, and neither are your Salesforce permissions. Clay checks connection access when you click **Continue**, but not when it previews records, so a query can preview correctly and still fail at this step.
+
+You can use the Audiences Salesforce connection if any of these is true:
+
+-   You added the connection yourself.
+-   The connection is set to **Anyone in the workspace**.
+-   The connection is set to **Specific people and groups**, and you or one of your user groups is on its list.
+
+**To fix the error:**
+
+1.  Ask the person who added the Salesforce connection, or a workspace admin, to go to `Settings` → `Connections` and open the Salesforce connection that Audiences uses.
+2.  Under access settings, have them choose **Anyone in the workspace**, or choose **Specific people and groups** and add you (or a user group you belong to).
+3.  Have them click `Save`.
+4.  Go back to **Add records from Salesforce** and click **Continue** again. The import now saves.
+
+If you don't see access settings on the connection, contact Clay support.
+
 ## FAQs
 
 **Can admins access every connection in the workspace?**Admins do not, by default, have access to build workflows with every connection in the workspace. All admins can, however, add themselves to any connection in the workspace. Admins are always able to manage and view all connections in the workspace.
