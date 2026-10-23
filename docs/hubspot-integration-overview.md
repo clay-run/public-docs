@@ -408,7 +408,9 @@ For full details on writing run conditions, see [Conditional runs](conditional-r
 
 ### Why does my Lookup Object return no results, but my Create Object still fails with "contact already exists"?
 
-This almost always means the **Lookup Object** and **Create Object** columns are searching and writing to **different email fields**. HubSpot has two separate email properties:
+This usually has one of two causes: the **Lookup Object** and **Create Object** columns use different email fields, or the same email address appears in more than one row of your Clay table.
+
+**Cause 1 — Lookup Object and Create Object use different email fields.** HubSpot has two separate email properties:
 
 -   **Email** (`email`) — the primary contact email address.
 -   **Work email** (`work_email`) — a separate secondary property for professional email.
@@ -416,6 +418,12 @@ This almost always means the **Lookup Object** and **Create Object** columns are
 If your Lookup Object filters by "Work email" but your Create Object maps data to the standard "Email" property (or vice versa), the lookup will return no results while the create still fails with a duplicate error — the same address already exists under the other field.
 
 **Fix:** Open both column settings and confirm they reference the **same email property**. If your contacts in HubSpot are stored under "Email," update your Lookup Object to filter by "Email" rather than "Work email."
+
+**Cause 2 — the same email address appears in more than one row.** Clay runs many rows of a column at the same time, not one row after another. If two rows in your table have the same email address, both rows' **Lookup Object** columns can run before either row's **Create Object** column has created the contact, so both lookups return "No objects found." The first row's Create Object then creates the contact in HubSpot. The second row's Create Object fails with HubSpot's "Contact already exists" error, because the contact now exists. In this case the Lookup Object → Create Object setup is working as expected: the first row created the contact, and the error on the duplicate row means HubSpot refused to create a second copy.
+
+To check for this cause, sort your table by the email column and look for repeated email addresses on the rows that show "Contact already exists."
+
+**Fix:** Remove duplicate rows before you send contacts to HubSpot. Turn on [Auto-dedupe](table-management-settings.md#auto-dedupe) for your email column so the table keeps one row per email address, or delete the duplicate rows manually.
 
 **Setting up a create-or-update (upsert) workflow**
 
