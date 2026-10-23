@@ -45,10 +45,11 @@ For advanced query syntax, use [Find with query](finding-companies-and-people-in
         -   **Industries** and **Subindustries** (include or exclude) — see [the FAQ below](#what-are-the-available-ai-subindustry-filter-values) for the full list of AI Subindustry values
         -   **Revenue streams** — e.g., Subscriptions/Recurring, Professional Services, Transaction Fees, Advertising, Licensing/IP
         -   **Business types** — B2B, B2C, or Nonprofit
-    -   **Technographics** — Filter by installed technology, powered by [BuyerCaddy](https://university.clay.com/docs/buyercaddy-integration). Costs **3 credits per matching company row** — cheaper in most cases than pulling a broad list and running a technographic enrichment afterward, since you pay only for companies that already match your tech criteria. Technographics data is also included when sending company rows to Audiences; the same 3-credit cost per matching row applies.
+    -   **Technographics** — Filter by installed technology, powered by [BuyerCaddy](https://university.clay.com/docs/buyercaddy-integration). Costs **3 credits per matching company row** — cheaper in most cases than pulling a broad list and running a technographic enrichment afterward, since you pay only for companies that already match your tech criteria. Technographics data is also included when sending company rows to Audiences; the same 3-credit cost per matching row applies. The Audiences **Technographics** field is filled in only when the Find Companies search used at least one Technographics filter, and it holds the technologies that matched your filter — not the company's full tech stack. Companies sent to Audiences from a search without a Technographics filter have an empty Technographics field. See [Why does my Technographics filter return no results in my Companies audience?](#why-does-my-technographics-filter-return-no-results-in-my-companies-audience).
         -   **Vendors** — e.g., AWS, Salesforce, HubSpot
         -   **Products** — e.g., Amazon EC2, Salesforce Sales Cloud
-        -   **Main categories** and **Parent categories**
+        -   **Categories** and **Subcategories** (labeled **Product categories** and **Product subcategories** in some search setups)
+        There is no vendor-domain filter — to target every product from one vendor, use **Vendors** and select the vendor by name.
         Product and vendor names in the filter come from BuyerCaddy's catalog and may not match a company's public brand name exactly. To identify what a product name refers to, run the search and check the **Vendor** field in the cell details for any returned row — it shows the company behind the product.
     -   **Domain filters:**
         -   **Has domain** — Whether a company has a resolved domain.
@@ -137,6 +138,19 @@ For more guidance on balancing industry and keyword filters, see [Guide: Finding
 If you enable **technographics filters**, each company row that matches your criteria costs **3 Data Credits**.
 
 Any enrichments you select during the import wizard, or add to the table afterward (e.g., finding emails, enriching headcount), consume their own Actions and Data Credits as usual — only pulling company records from Clay's dataset is free.
+
+### Why does my Technographics filter return no results in my Companies audience?
+
+In a Companies audience, **Technographics** is a text field (T icon) stored on each company record. The Technographics segment filter in Audiences uses the standard text operators — such as **`contains`** or **`contains any of`** — and matches against whatever value is saved in that field. It does not search Clay's technographics catalog, and it has no vendor, product, category, or vendor-domain mode.
+
+A "Technographics contains Trimble" audience filter returns no results when the companies in your audience have an empty Technographics field. The Technographics field is filled in only when companies are sent to Audiences from a Find Companies search that used at least one Technographics filter (**Vendors**, **Products**, **Categories**, or **Subcategories**). In that case, the field holds the technologies that matched your search filter, not the company's full tech stack. Companies sent to Audiences from a Find Companies search that used only other filters — for example industry, size, and location — have no technographics data in Audiences.
+
+To find companies that use a specific technology, use one of these options:
+
+-   **Run a new Find Companies search with a Technographics filter.** Reuse your industry, location, and size filters, add the **Vendors** or **Products** filter (for example, search for Trimble in **Vendors** or **Products**), and send the results to Audiences. The Technographics filter costs 3 credits per matching company row.
+-   **Fill in the Technographics field on companies already in your audience.** Bring the companies into a Clay table, run a technographics enrichment, and use `Upsert Audiences Record` to write the result to the **Technographics** field on the matching Audience records. Enrichments use credits, so test on a small batch first. See [Audiences](audiences.md#sending-data-from-clay-table).
+
+You can't use a Companies audience segment to limit which companies a Find Companies search returns. In Find Companies, audience segments can be used only to exclude companies from the results.
 
 ### Why does my table show fewer rows than the preview count?
 
