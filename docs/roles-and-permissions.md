@@ -142,6 +142,20 @@ Workspace admins can edit access levels for specific workbooks. This helps preve
 
 **These settings control edit access only, not visibility.** All workspace members can see every workbook once they are invited to the workspace — there is no way to hide specific workbooks from specific users. If your goal is to prevent certain users from seeing a workbook entirely, that is not currently supported in Clay.
 
+### Can I set edit access by folder or for a whole team at once?
+
+Clay doesn't support folder-level permissions. You can't give a team edit access to one folder but not another, and workbooks in a folder don't inherit access settings from the folder. There's also no bulk action to switch every workbook in a folder to `Admins and invited collaborators only` — `Edit access` is set one workbook at a time, by a workspace admin or the workbook's owner.
+
+To limit who can edit workbooks in a large Enterprise workspace, combine user groups, workbook `Edit access`, and the Viewer role:
+
+1.  Create a user group for each team (for example, "SDR team" or "Marketing Ops") in `Settings` → `Team` → `User groups` tab. See [User groups](https://university.clay.com/docs/user-groups).
+2.  In each workbook you want to protect, set `Edit access` to `Admins and invited collaborators only`.
+3.  Click `+ Add collaborators` and select the team's user group — users and groups appear in the same picker. Every member of the group can then edit that workbook, and adding or removing someone from the group changes their access immediately.
+4.  Move workspace members who don't need to build in every workbook from Editor to Viewer in `Settings` → `Team`. Viewers can't create workbooks, and they can't edit workbooks they don't own unless they're added as a collaborator directly or through a user group.
+5.  To have new members join as Viewers, go to `Settings` → `Workspace` and set `Default role for users who join via an allowed domain` to Viewer. This setting only applies to users who join automatically through an allowed email domain — members you invite directly get the role you select in the invite.
+
+User groups can be added as collaborators on workbooks, but not on individual tables.
+
 ## Related access controls
 
 Beyond roles, workspace admins have additional tools to control what users can do:
