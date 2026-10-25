@@ -968,6 +968,20 @@ How the Salesforce API usage card works:
 
 **To see what's using the rest of your Salesforce API quota,** ask your Salesforce admin to open **Setup → System Overview → API Usage** in Salesforce, or run Salesforce's API usage report. Both show which integrations and users are making calls.
 
+### I just connected Salesforce to Audiences and saw a big spike in API calls. Did Clay cause it?
+
+Probably not. Connecting a Salesforce account to Audiences doesn't import any records by itself. Until you set up an import, the Salesforce source page shows **No records added**, and Clay doesn't pull any Salesforce records. Before an import exists, the only Salesforce request Clay makes is a small one that reads your org's API limits to fill in the **API usage** card. Clay caches that result for up to 15 minutes.
+
+If the **API usage** card shows a large number right after you connect, remember that the card shows your whole Salesforce org's usage over the last 24 hours, across every app and integration, not just Clay. To find out which integration or user made the calls, ask your Salesforce admin to open **Setup → System Overview → API Usage** in Salesforce. See [What does the API usage percentage on my Salesforce settings page mean?](#what-does-the-api-usage-percentage-on-my-salesforce-settings-page-mean-is-that-all-clays-usage) above.
+
+**When Clay starts pulling records from Salesforce:** only after you click **Add records** on the Salesforce source page, choose the object and records to import, and click **Confirm**. After that, the Salesforce sync in Audiences runs as follows:
+
+1.  **First sync:** a full import of every record in the import you set up.
+2.  **Incremental syncs:** run every **15 minutes** on Enterprise plans, or once **daily** on Growth plans. Each one pulls only records whose `SystemModstamp` changed since the last sync.
+3.  **Full sync every 7 days:** re-reads every record in the import to catch anything the incremental syncs missed.
+
+The first import and the weekly full sync use Salesforce's **Bulk API 2.0**. Bulk API 2.0 processes records in large batches, so Clay makes far fewer API calls than the number of records it imports. For more on sync schedules and API methods, see [Importing from Salesforce](#importing-from-salesforce).
+
 ### Why is my Salesforce sync paused because of API limits? Is there a workaround?
 
 If your Salesforce source in Audiences shows **Paused** with the message "Your Salesforce account has reached 90% of its API request quota. Clay will automatically resume this sync once the quota refreshes," Clay has stopped importing Salesforce records to protect your org's remaining API capacity. This is a fixed safeguard, not an error:
