@@ -329,6 +329,23 @@ If Search and Display remain at 0 after 48 hours, check the audience status in y
 
 When you create your first ad audience, you'll be prompted to authenticate with LinkedIn Campaign Manager, Meta Business Manager, or your Google Ads account via OAuth. Make sure you have admin access to the ad account you want to use. Note that Google Ads syncing is currently in closed beta — contact [Clay support](https://www.clay.com/contact) to request access.
 
+### **Why do I see "Access blocked: Your institution's admin needs to review Clay" when connecting Google Ads?**
+
+If you see **"Access blocked: Your institution's admin needs to review Clay"** with **Error 400: access_not_configured** (or a similar "This app is blocked" page) when connecting your Google Ads account to Clay, the message comes from Google, not Clay. Your company's Google Workspace settings block third-party apps until a Google Workspace admin at your company approves them, and Clay hasn't been approved yet. This is why Google Ads can fail to connect even when your other ad platforms, such as Meta, connect without issues — the restriction only applies to apps that access your company's Google accounts.
+
+**Where the "Request Access" request goes:** Clicking **Request Access** on Google's error page sends the request to your own company's Google Workspace admin, not to Clay. Clay support can't approve it on your behalf.
+
+**To fix this, your Google Workspace admin needs to add Clay as a trusted app:**
+
+1.  In the [Google Workspace Admin Panel](https://admin.google.com/), go to `Security` → `API Controls` → `App Access Control`.
+2.  Click `Configure new app`.
+3.  Search for `Clay` and select it from the results.
+4.  Choose which org units should have access, then click `Continue`.
+5.  Select `Trusted` under **Access to Google Data** and click `Continue`. Choose `Trusted`, not `Limited` — Google Ads connections can stay blocked when Clay is configured with `Limited` access, even if the Google Ads scope (`https://www.googleapis.com/auth/adwords`) is allowed.
+6.  Review the summary and click `Finish`.
+
+**Note:** Changes in Google Admin can take up to 24 hours to apply. Once your admin has approved Clay, return to Clay and connect your Google Ads account again — the Google sign-in should complete and return you to Clay. If you still see an error after that, contact [Clay support](https://www.clay.com/contact) with a screenshot of the error.
+
 ### **Why did I receive an email saying my Meta account will disconnect soon?**
 
 This is expected behavior. Meta enforces a 60-day expiry on OAuth tokens — when you connect your Meta account to Clay using "Sign in with Facebook," the connection stays active for 60 days before it needs to be renewed. Clay sends a warning email 7 days before expiry and again 1 day before expiry so you can take action before any Ad Syncs are interrupted.
