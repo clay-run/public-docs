@@ -487,11 +487,26 @@ The Sequence field populates dynamically from your HubSpot account, but it requi
 
 1.  Go to **Settings → Connections**.
 2.  Find your HubSpot connection and click **Reconnect**.
-3.  On the scopes screen, check both **`automation.sequences.read`** and **`automation.sequences.enrollments.write`**.
+3.  Under **Optional scopes**, check both **View details about sequences** (`automation.sequences.read`) and **Enroll contacts in a sequence** (`automation.sequences.enrollments.write`).
 4.  Complete the reconnection flow.
 5.  Return to your "Enroll a contact in a sequence" column — the Sequence dropdown will now show your available HubSpot sequences.
 
 **Note:** If after enabling these scopes you see an "Authorization failed" error, check the wording. "Your account lacks access to the required scopes" means your HubSpot plan may not include the Sequences feature — see [Why do I get "Authorization failed because your account lacks access to the required scopes"?](#why-do-i-get-authorization-failed-because-your-account-lacks-access-to-the-required-scopes-automationsequencesenrollmentswrite-automationsequencesread) below. "This app hasn't been approved to access the required scopes" means HubSpot App Governance is blocking the scopes — see [Why do I get "Authorization failed because this app hasn't been approved to access the required scopes"?](#why-do-i-get-authorization-failed-because-this-app-hasnt-been-approved-to-access-the-required-scopes-for-example-crmexport-or-automationsequencesenrollmentswrite-crmlistswrite-automationsequencesread) below.
+
+### Why does "Enroll a contact in a sequence" still fail after I enabled the sequence permissions in HubSpot?
+
+Turning on the sequence permissions in HubSpot (for example, **Permission to enroll a contact in a sequence** and **Permission to fetch sequences** under **Data Permissions** in HubSpot's admin settings for the Clay app) doesn't add them to your Clay HubSpot connection. HubSpot can only grant the scopes Clay requests when you connect. Clay's HubSpot connection leaves both sequence scopes unchecked by default. If they weren't checked when your HubSpot account was connected in Clay, HubSpot never received a request for them, so changing permissions on the HubSpot side won't fix the "Enroll a contact in a sequence" column.
+
+When the connection is missing these scopes, the "Enroll a contact in a sequence" column shows HubSpot's raw error response, which starts with `Error: { "status": "error", ...`.
+
+**To fix:**
+
+1.  In Clay, go to **Settings → Connections**, find the HubSpot connection your column uses, and click **Reconnect**. Reconnecting keeps the same connection, so your existing columns keep working. See [Why does my HubSpot column still show "Missing authentication" after I reconnect my account?](#why-does-my-hubspot-column-still-show-missing-authentication-after-i-reconnect-my-account) for why this beats deleting the connection and adding a new one.
+2.  In the reconnect modal, open **Optional scopes** and check both **View details about sequences** (`automation.sequences.read`) and **Enroll contacts in a sequence** (`automation.sequences.enrollments.write`). Reconnect only pre-selects the scopes your connection already had, so these two boxes start unchecked if you skipped them the first time.
+3.  Complete the authorization in HubSpot.
+4.  Return to your "Enroll a contact in a sequence" column and rerun the failed rows.
+
+If HubSpot shows an "Authorization failed" error during the reconnect, see the two FAQs below.
 
 ### Why do I get "Authorization failed because your account lacks access to the required scopes [automation.sequences.enrollments.write, automation.sequences.read]"?
 
