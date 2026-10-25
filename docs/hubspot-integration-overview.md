@@ -406,6 +406,21 @@ No — Clay does not have a customer-facing "Create or Update" (upsert) action f
 
 For full details on writing run conditions, see [Conditional runs](conditional-runs.md).
 
+### How can I check in HubSpot whether a record was enriched by Clay?
+
+Clay doesn't add an "enriched by Clay" or enrichment status field to your HubSpot records. Clay only writes the HubSpot properties you map in a **Create object** or **Update object** column, and it can only write to properties that already exist in HubSpot. It doesn't create new HubSpot properties.
+
+To track which HubSpot records Clay has enriched, create your own property in HubSpot and have Clay fill it in:
+
+1.  In HubSpot, create a custom contact (or company) property to hold the enrichment status. For example, use a single checkbox property called "Clay Enriched".
+2.  In your Clay table, add a **HubSpot → Update object** column after your enrichment columns.
+3.  Map the **HubSpot Object ID** input to the record's numeric `hs_object_id`, not its email address. If your rows came from a CSV, add a **Lookup object** column filtered by **Email** first to get the `hs_object_id`. See [Why does my HubSpot Update Object show "Object not found"?](#why-does-my-hubspot-update-object-show-object-not-found)
+4.  Map your new "Clay Enriched" property. You can type `true` straight into the property field. HubSpot checkbox properties only accept `true` or `false`.
+5.  Under **Run settings**, check **Add run condition**. Then enter a formula that is true only when the enrichment worked, such as checking that your enriched email or job title column isn't empty. The Update object column only runs on rows where this formula resolves to true. This way the property shows that a record was actually enriched, not just that the table ran.
+6.  In HubSpot, build a list or view filtered on the property (for example, **Clay Enriched** is true). Use that list to hand off only enriched records.
+
+For full details on writing run conditions, see [Conditional runs](conditional-runs.md).
+
 ### Why does my Lookup Object return no results, but my Create Object still fails with "contact already exists"?
 
 This almost always means the **Lookup Object** and **Create Object** columns are searching and writing to **different email fields**. HubSpot has two separate email properties:
