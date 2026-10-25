@@ -1,6 +1,6 @@
 ---
 title: Email verification statuses
-description: Understand the different statuses an email address can have.
+description: Understand the different statuses an email address can have, how Clay verifies emails through built-in validation providers, and how to validate a list of existing emails.
 last_synced: 2026-04-26T01:39:55.232Z
 ---
 
@@ -19,3 +19,32 @@ Clay shows you the status of each email address through detailed verification ch
 -   **Role-based emails** are addresses tied to a job function (like `info@`, `sales@`, or `support@`) rather than a specific person. These are often monitored by teams, not individuals, and may lead to lower engagement.
 
 **Note:** Email verification statuses can change over time as domains update their settings or addresses become inactive. To maintain accuracy and deliverability, it's recommended to verify your email list regularly.
+
+## How does Clay verify an email address?
+
+Clay doesn't run its own DNS, MX record, or SMTP checks on email addresses. Email verification in Clay runs through email validation providers that are built into Clay as enrichments. Each provider sends the email address to its own verification service and returns the result to your table. The checks each provider runs vary — for example, Hunter returns MX record, SMTP server, and SMTP check results alongside the email's status, and LeadMagic returns the domain's MX record and mail provider.
+
+Email validation providers available in Clay include:
+
+-   **Findymail, ZeroBounce, Hunter, Debounce, LeadMagic, Enrow, Kitt, Listmint, and Enrichley** — run on Clay credits through Clay-managed accounts, or connect your own API key.
+-   **Instantly** — requires connecting your own Instantly API key.
+-   **NeverBounce** — see [NeverBounce integration](neverbounce-integration-overview.md) for how to connect it.
+
+Each provider labels its results in its own way. For example, ZeroBounce returns statuses such as `valid`, `invalid`, and `unknown` (by default, catch-all emails come back as `valid` with a `catch_all` sub-status); Debounce returns `Safe to Send`, `Invalid`, `Risky`, or `Unknown`; and Findymail returns a true/false `verified` value.
+
+## How do I validate a list of email addresses I already have?
+
+You can verify existing email addresses in Clay without finding new ones by running an email validation provider as a standalone enrichment:
+
+1.  Import your email list into a Clay table (for example, from a CSV — see [CSV import](csv-import-overview.md)).
+2.  Click `Add enrichment` in the top right corner and search for the validation provider you want to use (for example, `Verify email` from ZeroBounce).
+3.  Choose a Clay-managed account or your own API key, map your email column as the input, and click `Save`.
+4.  Run the column. Each row shows the provider's verification result for that email address.
+
+## How do I validate emails found by the Work Email waterfall?
+
+The Work Email waterfall can validate every email it finds and only keep emails that pass. In the waterfall's `Full configuration`, set a `Validation Provider` and choose a `Validation strategy` (`Conservative`, `Balanced`, `Aggressive`, or `Advanced`). `Conservative` is the default and excludes catch-all emails. Choose `Advanced` to decide per provider whether to `Include catch-all` and `Include unknown` results. See [Work Email waterfall](work-email-waterfall.md#validation) for details.
+
+## Can I use an email validation provider that isn't built into Clay?
+
+Yes. If your email validation tool offers an API — including one you already pay for — you can call it from Clay with the HTTP API enrichment. Clay sends each email address to the provider's API and writes the response to your table. See [HTTP API integration](http-api-integration-overview.md) for setup.
