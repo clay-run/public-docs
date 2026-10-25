@@ -90,6 +90,17 @@ For models from OpenAI, Anthropic, Google, and other third-party providers, you 
 
 The product displays the pricing type when you select a model. Fixed-price models show a flat credit cost (e.g., `3/row`). Variable-price models display `/ model` instead of a fixed number, with a tooltip indicating that credits vary per run. In the pre-run cost estimate and during active runs, a `~` prefix on the cost (e.g., `~2/row`) indicates an approximate amount — the actual charge is calculated after each row completes and may be higher or lower.
 
+**Do AI columns cost the same number of data credits on every plan (for example, legacy Pro vs. Growth)?**
+
+Whether an AI column costs the same number of data credits per row after a plan change depends on the model's pricing type, not on the plan itself:
+
+-   **Fixed-price models cost the same on every plan.** Fixed data credit prices are set per model and use case, with no difference between plans—legacy or modern. For example, Argon costs 3 data credits per row for web research on both a legacy Pro plan and a Growth plan. This applies to all of Clay's own models (Neon, Helium, Argon) and most other models.
+-   **Variable-price models can cost a different number of data credits on a different plan.** Variable-price models charge Actual LLM Cost ($) ÷ Workspace Cost Per Credit ($), and your cost per credit is set by your plan's price and data credit allotment. For example, a run with an actual LLM cost of $0.10 costs 2 data credits on a workspace whose cost per credit is $0.05, and 5 data credits on a workspace whose cost per credit is $0.02.
+
+To check which applies to an AI column, open the column's model selector: fixed-price models show a flat cost such as `3/row`, and variable-price models show `/ model`.
+
+On modern plans (Launch, Growth, Enterprise), each AI run also uses 1 Action, whether it runs on Clay's managed key or your own API key. Rows that run on your own API key use no Clay data credits.
+
 **Will I always know what a task will cost before I run it?**
 
 For fixed-price models, yes—the cost shown is exact. For variable-price models, you'll see an estimate upfront. The final cost may differ, but credits are withheld before the run starts so there are no surprises to your balance.
