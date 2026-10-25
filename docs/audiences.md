@@ -1459,6 +1459,34 @@ A CSV import is a one-time snapshot, not a live Salesforce list sync. To add or 
 
 **Use the full 18-character Salesforce ID.** Salesforce's 15-character IDs are case-sensitive, but `contains any of` in Audiences is a case-insensitive partial match. A 15-character ID can therefore match more than one record. If a `contains any of` filter on Salesforce IDs returns more records than you entered, switch to the 18-character IDs. The last 3 characters of an 18-character ID are a checksum calculated from the first 15.
 
+### Can I create a segment from a Salesforce Campaign ID (Salesforce campaign members)?
+
+Yes, with a Salesforce **Record subset** (SOQL) import. Record subset imports are available on Growth plans and above. Audiences doesn't import Salesforce Campaigns or Campaign Members as their own records, so a People segment has no built-in filter for a Salesforce Campaign ID or campaign membership. Instead, import the contacts (and leads) that belong to the campaign as a named record subset, then filter your segment on that import.
+
+**Query from Contact or Lead, not from CampaignMember.** A record subset query must select from the object type you chose for the import: Contact, Lead, Account, or Opportunity. A query such as `SELECT ContactId FROM CampaignMember WHERE CampaignId = '701...'` is rejected, and a Contact import shows **"The query must select from Contact."** Filter on campaign membership with a sub-select in the `WHERE` clause instead.
+
+**To build an Audiences segment of a Salesforce campaign's members:**
+
+1.  Open your Salesforce source settings in Audiences and click **Add records**.
+2.  Select **Contact** as the object type, choose **Record subset**, and enter a **Subset name**, for example `Q4 webinar contacts`.
+3.  Enter a SOQL query that filters contacts by the campaign's ID (the 15- or 18-character ID starting with `701`):
+    ```
+    SELECT Id, FirstName, LastName, Email, AccountId, SystemModstamp, IsDeleted
+    FROM Contact
+    WHERE Id IN (SELECT ContactId FROM CampaignMember WHERE CampaignId = '701XXXXXXXXXXXXXXX')
+    ```
+    Don't add a top-level `OR` condition to a query that uses a sub-select.
+4.  Click **Preview** to check the matching contacts, map the fields you need, and confirm the import.
+5.  If the campaign also has Lead members, repeat steps 1–4 with **Lead** as the object type and this `WHERE` clause: `WHERE Id IN (SELECT LeadId FROM CampaignMember WHERE CampaignId = '701XXXXXXXXXXXXXXX')`. Include `ConvertedContactId` in the Lead query's `SELECT` clause.
+6.  In **People**, click **+ Filter** and select the filter named after your record subset (for example, `Q4 webinar contacts`). Set the value to **Synced**. Add the Lead subset's filter in an OR filter group if you imported leads too.
+7.  Click **Create segment** to save the segment.
+
+**Filter on the subset's sync status, not on Sources or Origin source.** A **Sources** filter keeps matching a person after they are removed from the campaign, and **Origin source** only shows the source that first created each record. The record subset's own filter shows **Deleted in source** for people the query no longer returns.
+
+**When campaign changes reach the segment:** Adding someone to a Salesforce campaign creates a Campaign Member record but doesn't change the Contact or Lead record itself. The incremental sync (every 15 minutes on Enterprise plans, once daily on Growth plans) only picks up Contacts and Leads that changed, so new campaign members are added on the next weekly full sync, every 7 days. People removed from the campaign are marked **Deleted in source** on that same full sync. To bring in a specific new member sooner, make a small edit to their Contact or Lead record in Salesforce.
+
+**Creating the segment with the Clay CLI:** The Clay CLI can create a saved segment with `clay audiences create --entity-type people --name "Q4 webinar" --filter ./filter.json`. The `--filter` value is a filter definition as inline JSON, a file path, or `-` for standard input. The Clay CLI can't set up Salesforce imports, so create the record subset in the Audiences UI first.
+
 ### Why does filtering my People audience by deal attributes return fewer contacts than expected?
 
 When you filter a People audience by opportunity or deal attributes (for example, Stage, Amount, or a custom deal field), Clay only includes contacts that are **directly linked to the matching deal via OpportunityContactRole** in Salesforce — not all contacts at the account that owns the deal.
