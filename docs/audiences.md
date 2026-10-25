@@ -358,7 +358,7 @@ Records need a high-confidence identifier to match. Auto-enrichment adds `Linked
 
 **Import record matching (beta)**
 
-When importing from Salesforce or Snowflake, you can configure **Import record matching** to deduplicate records at ingestion time. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
+When importing from Salesforce or Snowflake, you can configure **Import record matching** to deduplicate records at ingestion time. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace. For Salesforce, Import record matching is available for Contact and Account imports only — Salesforce Lead imports don't appear in the Import record matching settings. See [Why do I see duplicate person records in Audiences — one from a Clay table and one from Salesforce?](#why-do-i-see-duplicate-person-records-in-audiences--one-from-a-clay-table-and-one-from-salesforce)
 
 **Example:** If you're importing from both Snowflake and Salesforce, setting `domain` as your alias field ensures that a single company row in your Audiences reflects data from both sources — rather than creating two separate records for the same company.
 
@@ -491,7 +491,7 @@ Values written back to Audience fields are available when filtering other segmen
 Four Clay actions let you move data between a Clay table and your Audience directly.
 
 -   In any Clay table, click `Add enrichment` and search for:
-    -   `Upsert Audiences Record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. The **Lookup fields** dropdown controls how Clay finds the matching record: for **Companies**, the available options are **Domain** and **LinkedIn URL**; for **People**, the options are **Email**, **LinkedIn URL**, and **Phone**. Use it to commit data from integrations not yet natively supported in Audiences, qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table.
+    -   `Upsert Audiences Record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. The **Lookup fields** dropdown controls how Clay finds the matching record: for **Companies**, the available options are **Audiences Company ID**, **Domain**, the company's professional network URL, **Clay Company ID**, and **External record ID**; for **People**, the options are **Audiences Person ID**, **Email**, the person's professional network URL, **Phone**, and **External record ID**. The Audiences ID is checked first — if Audiences Person ID (or Audiences Company ID) is your only lookup field, the action only updates existing records and does not create new ones. Use it to commit data from integrations not yet natively supported in Audiences, qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table.
     -   `Update Audiences Record` writes data from a table row to one or more fields on an existing Audience record. Unlike `Upsert Audiences Record`, it does not create a new record if no match is found. Both actions write only to fields that already exist in your Audience — to create a new custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
     -   `Lookup in Audiences` pulls data from your Audience into a table row. Use it to reference enriched or signal data in a table workflow without making Salesforce API calls. By default, signal data is returned for the past **90 days** and the action returns **5 signal results** per record by default — adjust the **Signal data to include (days)** setting in the column settings to retrieve older signals, or increase the result limit (up to 50) when you need more results per record. Use `Get Audiences Activity` when you need a larger set of results.
     -   `Get Audiences Activity` retrieves signal and activity data for an Audiences record — including signal events and, if Gong is connected to your workspace, Gong call records. Use it when you need more results or want to query a longer time window than `Lookup in Audiences` provides by default. Set **Object type** (People or Companies) and map the Audiences **Record ID**; optionally filter by **Activity types** — for example, select `Job posting` to retrieve only job posting events, or leave it empty to return all types. Configure **Max activities per type** (default 5, max 200) and **Days lookback** (default 90, max 365). For job posting signals, each event includes the job title, URL, location, posted date, seniority, description, company name, and company domain — data you can parse in downstream columns to qualify and route companies based on the specific roles they are hiring for. Every signal event returned by `Get Audiences Activity` includes an `eventId` that uniquely identifies that event — use `eventId` as your deduplication key to determine whether a workflow has already processed a specific event. For **New Hire** signal events, each event also includes an `isInitialCheck` boolean: `isInitialCheck: true` means the event was generated the first time the signal monitor evaluated that record (no prior snapshot existed for that record); `isInitialCheck: false` means the event came from a later scheduled check after a snapshot existed. This value is set once at event-creation time and does not change afterward — it is scoped to the signal monitor and record, not to any individual workflow or consumer. Do not use `isInitialCheck` as a dedup key: every record's first-evaluation events share the value `true`, so it cannot identify whether a specific event has already been processed by your workflow.
@@ -1052,6 +1052,36 @@ Each record in Audiences has a **Source** column that shows the display name of 
 The Source column is plain text — there is no direct link from the Source column to open the originating table. To open the table, use its name to find it in your workspace's tables list.
 
 **Note:** To filter your audience to show only records that came from a specific table, use the **Person source** filter — see [Why doesn't my Clay table appear in the Person source filter?](#why-doesnt-my-clay-table-appear-in-the-person-source-filter) above.
+
+### Why do I see duplicate person records in Audiences — one from a Clay table and one from Salesforce?
+
+This applies to People audiences that receive records from both a Salesforce Lead import (available on Growth and Enterprise plans) and a Clay table — for example, a table with an `Upsert Audiences Record` column. Writing to Audiences from a Clay table requires workspace **Admin** access.
+
+Duplicate person records in Audiences usually mean the same person entered Audiences through two different sources — once from a Clay table and once from the Salesforce Lead sync — and Audiences kept them as two separate person records.
+
+**To check whether a duplicate person came from two sources:**
+
+1.  Open **All People** and select the **Records** tab.
+2.  Search for the person's name.
+3.  Compare the **Origin source** column on each duplicate row. A record created by the Salesforce sync shows **Salesforce**. A record created from a Clay table shows the table instead — this can appear as a table ID beginning with `t_` rather than a table name.
+
+**Why Import record matching doesn't combine these duplicates:** For Salesforce, Import record matching is available for Contact and Account imports only. Salesforce Lead imports don't appear in the Import record matching settings, so Import record matching can't combine a person synced from a Salesforce Lead with a person created from a Clay table. Import record matching also doesn't retroactively merge records already in Audiences, and Audiences has no option to manually merge two existing person records.
+
+**To keep the Salesforce-synced person as the only record going forward:**
+
+1.  Let the Salesforce Lead sync create the person in Audiences first. Avoid creating the same person from a Clay table before their Salesforce Lead has synced.
+2.  In your Clay table, add a `Lookup in Audiences` column to find the existing Salesforce-synced person. The matched record's Audiences ID is returned in the column output at `records[0].fields.id`.
+3.  Write your enrichment data to that existing person by its Audiences ID, using one of these actions:
+    -   `Update Audiences Record` — map the Audiences ID to the **Record Id** input. This action only updates an existing record and never creates a new one.
+    -   `Upsert Audiences Record` with **Audiences Person ID** as the only lookup field. Matching only on Audiences Person ID updates existing records and does not create new ones.
+
+**To clean up duplicate person records that already exist:**
+
+1.  Confirm which duplicates are Salesforce-backed (**Origin source** shows **Salesforce**) and whether the table-created copies hold any data you want to keep. If they do, write that data onto the Salesforce-synced record first using the steps above.
+2.  Filter **All People** to only the table-created copies — for example, add a **Person source** filter set to the table's name (see [Why doesn't my Clay table appear in the Person source filter?](#why-doesnt-my-clay-table-appear-in-the-person-source-filter)) — and click **Create segment** to save it as a named segment. Check that no Salesforce-synced records are in the segment.
+3.  Open the segment's **⋮** menu, select **Archive records in segment**, and confirm.
+
+The archived copies move to the **Archived** section in the left sidebar and can be restored from there. For more on archiving, see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience).
 
 ### My CRM is messy. Should I clean it up before setting up Audiences?
 
