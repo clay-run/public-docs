@@ -104,11 +104,12 @@ For more details on Meta system user setup, see [Meta's system user documentatio
 
 Google Ads audience syncing is currently in **closed beta** — contact [Clay support](https://www.clay.com/contact) to request access.
 
-When you connect your Google Ads account, Clay requests the following OAuth permission:
+When you connect your Google Ads account, Clay requests the following two OAuth permissions:
 
 -   **`https://www.googleapis.com/auth/adwords`** — the standard Google Ads API scope
+-   **`https://www.googleapis.com/auth/datamanager`** — Google's Data Manager API scope
 
-**For security teams:** This scope grants read/write access to the connected Google Ads account. It is the only scope Google's Ads API offers — Google does not provide narrower alternatives for the Ads API, even though Clay only uses the access to manage audience lists. Clay sends contact identity data (personal email or SHA-256 hashed email, phone number, first name, last name, country code, and postal code) to create, update, or remove Customer Match audience lists. The integration does not access campaign performance data, modify bids or budgets, or create or change any ads.
+**For security teams:** The `adwords` scope grants read/write access to the connected Google Ads account. It is the only scope Google's Ads API offers — Google does not provide narrower alternatives for the Ads API, even though Clay only uses the access to manage audience lists. Clay sends contact identity data (personal email or SHA-256 hashed email, phone number, first name, last name, country code, and postal code) to create, update, or remove Customer Match audience lists. The integration does not access campaign performance data, modify bids or budgets, or create or change any ads.
 
 Access control is enforced at the Google Ads account level — the person connecting must have appropriate permissions on the ad account they link.
 
