@@ -906,11 +906,35 @@ When you change the SOQL query on a record subset import that's already set up w
 2.  Creates a new import with the updated SOQL query. The new import starts with no field mappings — you map your fields again in the next step.
 3.  Matches records returned by the new query to existing Audience records by their Salesforce record ID. Matching records are merged into the existing Audience records instead of being created as new records.
 
-**Before you confirm:** note down your current field mappings so you can re-add them to the new import. Make sure the new `SELECT` clause includes every field you want to map — both fields you want to use in Clay and fields you want to write back to Salesforce through Export sync.
+**Before you confirm:** note down your current field mappings so you can re-add them to the new import. Make sure the new `SELECT` clause includes every field you want to map — both fields you want to use in Clay and fields you want to write back to Salesforce through Export sync. To add a field without resetting your existing mappings, add a separate record subset instead — see [How do I add a field to a Salesforce record subset import without resetting my field mappings?](#how-do-i-add-a-field-to-a-salesforce-record-subset-import-without-resetting-my-field-mappings) below.
 
 **Will editing the SOQL query re-trigger workflows that run when a record is added to an audience?** No. Records that the new query still returns are matched to their existing Audience records by Salesforce record ID and stay in your audience throughout the change, so workflows triggered when a record is added to an audience don't fire again for them. Only records that weren't already in your audience fire the trigger.
 
 **What if the new query returns fewer records?** If you change the `WHERE` clause so the new query returns fewer records, records the new query no longer returns are disconnected from the Salesforce SOQL import and stop receiving updates from Salesforce. If you only add fields to the `SELECT` clause and leave the `WHERE` clause unchanged, the new query returns the same records, and they all merge back into their existing Audience records.
+
+### How do I add a field to a Salesforce record subset import without resetting my field mappings?
+
+This applies to Salesforce **Record subset** (SOQL) imports in Audiences, available on Growth and Enterprise plans.
+
+You can't add a field to the SOQL query of an existing record subset import without resetting it. **Edit SOQL** replaces the import and deletes its field mappings. To bring in one more Salesforce field and keep your current record subset import, its field mappings, and the segments built on it unchanged, add a second record subset for the same object that selects only the new field. Audiences supports multiple record subsets per Salesforce object. One example is the Account owner's role, `Owner.UserRole.Name`.
+
+**To add a field through a separate record subset:**
+
+1.  Open your Salesforce source settings and click **Add records**.
+2.  Select the same object type as your existing import (for example, **Account**) and choose **Record subset**.
+3.  Enter a **Subset name** that describes the field, for example "Account owner role".
+4.  Write a query that selects the required sync fields plus the new field. Leave out the `WHERE` clause so the subset covers every record of that object. For example:
+    ```
+    SELECT Id, SystemModstamp, IsDeleted, Owner.UserRole.Name FROM Account
+    ```
+    For Contact and Lead queries, also include that object's other required fields. See **SOQL requirements for record subset imports** under [Importing from Salesforce](#importing-from-salesforce).
+5.  Click **Test** and confirm that the new field appears in the results.
+6.  Map only the new field.
+7.  Turn on **Import sync**. Leave **Export sync** off unless you also want this subset to write data back to Salesforce.
+
+Records returned by both subsets are matched by their Salesforce record ID. This second subset adds the new field to your existing Audience records instead of creating duplicates. Each record subset keeps its own field mappings and its own **Import sync** and **Export sync** settings, so your original import is not affected.
+
+**Relationship fields in record subset queries:** Record subset queries accept fields from related objects written in dot notation, such as `Owner.UserRole.Name`. Every relationship in the path must point to a single object type. Polymorphic relationships, which are lookups that can point to more than one object type, aren't supported.
 
 ### I added a new Salesforce field to my mapping but some records are missing data for it
 
