@@ -344,6 +344,20 @@ With **Auto-run** enabled, Clay re-evaluates an action column's \"Only run if\" 
 
 **When upstream enrichments have their own run conditions**: If an upstream enrichment was skipped because its own \"Only run if\" condition wasn't met, `Clay.getCellStatus()` returns `\"ERROR_RUN_CONDITION_NOT_MET\"` for that cell — not `\"SUCCESS\"` or `\"SUCCESS_NO_DATA\"`. To gate a downstream action on \"enrichment finished, whether it ran or was skipped,\" check for each possible final state explicitly. See [Formulas](formula-generator.md) for the full list of `getCellStatus()` return values.
 
+**Waiting for a waterfall step that may find nothing (for example, "No phone found")**: A waterfall step that finishes without finding anything returns `"SUCCESS_NO_DATA"`, and a later waterfall step that was skipped because an earlier step already found a value returns `"ERROR_RUN_CONDITION_NOT_MET"`. The step's output is empty in both cases — and also before the step has run — so checking the output for a value can't tell "not run yet" apart from "finished with nothing found." Check the step's status with `Clay.getCellStatus()` instead. Every final status starts with `SUCCESS` or `ERROR`; `"UNKNOWN"` (never run) and the in-progress statuses `"QUEUED"`, `"RUNNING"`, `"RATE_LIMITED"`, `"RETRY"`, and `"AWAITING_CALLBACK"` don't.
+
+For example, to let an HTTP API column run only after the "Find mobile phone number" step has finished in any way (found a number, found nothing, was skipped, or failed), add this to the HTTP API column's **Run settings → Only run if** condition, inserting the column with `/` rather than typing its name in quotes:
+
+```javascript
+(Clay.getCellStatus({{Find mobile phone number}}) || "").startsWith("SUCCESS") || (Clay.getCellStatus({{Find mobile phone number}}) || "").startsWith("ERROR")
+```
+
+Referencing the step column with `{{ }}` also makes the HTTP API column wait for that step. If a failed step should block the HTTP API column instead, allow only statuses that start with `SUCCESS` plus `"ERROR_RUN_CONDITION_NOT_MET"`:
+
+```javascript
+(Clay.getCellStatus({{Find mobile phone number}}) || "").startsWith("SUCCESS") || Clay.getCellStatus({{Find mobile phone number}}) === "ERROR_RUN_CONDITION_NOT_MET"
+```
+
 ### Gating a run on data from another table
 
 Run conditions can only reference columns in the **current row** — there is no formula syntax that directly queries another table from inside a run condition.
