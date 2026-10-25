@@ -556,6 +556,18 @@ When you open an **Update Object** column and select an **Object type**, the ava
 
 **The connection may be broken or expired.** If Clay cannot reach HubSpot with a valid access token, the field picker silently returns no properties. Open the column settings and verify the selected account shows **Success** in Settings. If it shows an error, see the FAQ above ("Why does my HubSpot column still show 'Missing authentication' after I reconnect my account?") for how to restore the credential without losing your column configurations.
 
+### Why doesn't a HubSpot property like Full Name appear in "Add field" when I create or update a contact?
+
+The **Map fields** section of the HubSpot **Create object** and **Update object** actions only lists HubSpot properties that HubSpot allows you to write to. Clay leaves out any property that HubSpot marks as read-only — so read-only properties, such as HubSpot's **Full Name** contact property or HubSpot calculated properties, never appear in the **CRM field** list or in the **+ Add field** menu. This applies to every object type: Contact, Company, Deal, Lead, and custom objects.
+
+**To send a contact's name to HubSpot**, use one of these options:
+
+-   **Map First Name and Last Name separately.** In **Map fields**, map your first name column to **First Name** and your last name column to **Last Name**.
+-   **Write a combined name to a custom property.** If you need the full name stored as one value:
+    1.  In HubSpot, create a writable **Single-line text** contact property (for example, "Clay Full Name").
+    2.  In Clay, add a Formula column that joins the two names, such as `({{First Name}} || "") + " " + ({{Last Name}} || "")`. Type `/` to insert your first name and last name columns.
+    3.  In your HubSpot **Create object** or **Update object** column, click **Refresh** in **Map fields**, then click **+ Add field**, select your new property, and map it to the Formula column.
+
 ### How can I create HubSpot notes from Clay?
 
 Clay's HubSpot integration does not include a native action for creating Notes. To create notes from Clay, use the **HTTP API** integration with a HubSpot Private App token to call HubSpot's CRM objects endpoint directly.
