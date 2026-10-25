@@ -896,6 +896,23 @@ The filter option for the field becomes available after the next incremental syn
 
 **If a field doesn't appear in the Settings mapping dropdown** (not just in the filter options): Clay fetches the available field list live from Salesforce each time you open the mapping settings — no reconnect or reauth is required for newly created Salesforce fields to appear. If a field you recently created in Salesforce still does not show up in the dropdown, the most likely cause is that the connected Salesforce OAuth user's profile lacks Field-Level Security (FLS) Read access to that field. Salesforce's describe API only returns fields the connected user can read, so any field blocked by FLS will be absent from Clay's dropdown regardless of when it was created. To fix it, ask your Salesforce admin to grant **Read** access to the field via **Setup** → **Profiles** (or **Permission Sets**) → the user's profile → **Object Settings** → **Field Permissions**. After permissions are updated, reopen the mapping settings and the field will appear.
 
+### Can I import Salesforce User fields (like the account owner's region) into Audiences?
+
+Not directly. Audiences imports Salesforce Accounts, Contacts, Leads, Opportunities, and custom objects — it does not import the Salesforce User object. The field mapping for a Salesforce import in Audiences only lists fields that live on the imported object itself, so fields stored on the Salesforce User record that owns an account — for example, the account owner's user region or user subregion — can't be mapped to an Audiences field. Granting your Salesforce integration user Read access to those User fields doesn't change this.
+
+**Workaround: copy the User field onto the Account with a formula field.** To filter a Companies audience by the account owner's Salesforce User fields:
+
+1.  Ask your Salesforce admin to create a cross-object formula field on the **Account** object that pulls in the User field — for example, a formula field that returns `Owner.Region__c`.
+2.  Make sure the Salesforce user connected to Audiences has **Read** access to the new Account formula field.
+3.  In Audiences, open **All Companies** and click the **Sources** tab.
+4.  Click the **⋮** menu next to your Salesforce Accounts import and select **Settings**.
+5.  In the field mapping section, add the new formula field and name the corresponding Clay field.
+6.  Click **Save and review** → **Confirm**.
+
+The formula field then becomes available as a filter in your Companies audiences after the next sync. In the field mapping, Clay marks it with the tooltip **"This field comes from a related object and will only sync once a week."**
+
+**Sync timing for User fields copied with a formula field:** When the User field changes in Salesforce (for example, the account owner's region is updated), the formula field on the Account recalculates, but the Account's `SystemModstamp` does not update. The incremental sync (every 15 minutes on Enterprise plans, once daily on Growth plans) therefore doesn't pick up the change. The new value appears in Audiences after the next full sync, which runs every 7 days — or sooner if the Account record itself is edited in Salesforce, which updates `SystemModstamp`.
+
 ### What happens when I edit the SOQL query on an existing Salesforce record subset import?
 
 This applies to Salesforce **Record subset** (SOQL) imports in Audiences, available on Growth and Enterprise plans.
