@@ -86,6 +86,22 @@ Clay fulfills orders through Smartlead, which in turn uses Zapmail to provision 
 
 Use the **Get rep data** enrichment in a Clay table. Provide the SmartSender account email address as the input — the action returns the rep's email address and full name (when available). This is useful for personalizing campaign messages with the sender's name.
 
+### **How do I see or download attachments from replies to my purchased email accounts?**
+
+Files that leads attach to their replies (for example, photos or PDFs) can't be opened or downloaded in Clay. The campaign's `Replies` tab and the `Global inbox` show the reply message, but not its attached files. To view and download attachments on replies sent to an email account purchased through Clay, sign in to that mailbox directly.
+
+**Get authentication info** is available only for email accounts purchased through Clay, and only workspace admins and owners can see it.
+
+1.  Go to `Sequencer → Email Accounts`.
+2.  Click the **⋯** menu next to the purchased email account and select **Get authentication info**.
+3.  A window titled with the account's email address shows the account's **Password** and a **Security code**. The security code is one-time and expires at the time shown below it (**Expires** followed by a date and time), so use it right away.
+4.  Sign in to the mailbox with the account's email address, the password, and the security code. Purchased email accounts are Google Workspace or Microsoft 365 mailboxes, so sign in through Gmail or Outlook on the web, depending on the account's provider.
+5.  Open the lead's reply in the mailbox to view, download, or forward its attachments.
+
+If you're signed out of the mailbox later, select **Get authentication info** again to get a new security code.
+
+For email accounts you connected yourself through Google OAuth, Microsoft Outlook OAuth, or SMTP, open the lead's reply in that mailbox as usual to access its attachments.
+
 ### **Why does my sender's name appear with extra characters in Outlook?**
 
 If a persona's first name is fewer than 4 characters (for example, "Sam"), Outlook recipients may see the name padded to 4 characters (for example, "Sama"). Zapmail, the email provisioning provider behind purchased Clay email accounts, requires all account sender names to be at least 4 characters long. Because Outlook does not allow the sender display name on a provisioned account to be updated after creation, the padded name persists for Outlook recipients.
