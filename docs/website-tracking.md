@@ -302,6 +302,23 @@ Charges begin after you install the tracking snippet and Clay starts receiving e
 
 You can view your credit spend for signals underneath the `Signals` tab of the [credit usage dashboard](https://www.clay.com/university/guide/credit-usage). To access, click on your account name → `Settings` → `Usage`.
 
+### Why does my web intent workflow show 0 credits used?
+
+When a web intent signal triggers a workflow, the credits and actions used to de-anonymize each website visitor (match the visitor's IP address to a company) are charged to the web intent signal itself, before the workflow run starts. The workflow's **Cost** card only counts what the workflow's own steps spend, so de-anonymization spend never appears there.
+
+Many web intent workflows only use steps that cost no credits:
+
+-   A filter step (for example, one that only lets enterprise visitors continue) uses no credits and no actions. Runs that stop at a filter cost nothing in the workflow.
+-   A message alert step, such as sending a Microsoft Teams or Slack message, uses 1 action and 0 credits.
+
+A web intent workflow made up only of filter and alert steps shows **0 credits** on its Cost card, even though the web intent signal is using credits for every visitor it identifies.
+
+To see how many credits and actions web intent de-anonymization is using:
+
+1.  Click your account name → `Settings` → `Usage`.
+2.  Open the `Signals` tab.
+3.  Find your web intent signal in the per-signal breakdown, which shows `Credits used` and `Actions used` for each signal.
+
 ### Can I track person-level information?
 
 Clay's visitor tracking identifies unique accounts visiting your website, not individuals. Once an account is identified, you can use enrichments (like **Find People** and the Work Email Waterfall) to find specific people at those companies and get their email addresses. To send emails to those contacts, see [Sending emails to identified website visitors](#sending-emails-to-identified-website-visitors) above.
