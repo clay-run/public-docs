@@ -139,6 +139,31 @@ While you don't need your own GPT, Claude, or Gemini API key to use the AI featu
 
 **Note:** Connecting your own OpenAI API key does not enable OpenAI's Batch API. Clay sends all AI column requests in real-time using the standard API — regardless of which account is connected. You will not get OpenAI's batch pricing (50% discount) or the extended processing window (up to 24 hours). If you need to process a large volume of data at batch pricing, the workaround is to export your data from Clay, run it through the OpenAI Batch API externally, then re-import the results.
 
+### What permissions does my OpenAI API key need to work with Clay?
+
+A standard OpenAI API key (one with **All** permissions) works with Clay without any extra configuration. If your team prefers a **restricted** OpenAI API key, give it these permissions in the OpenAI dashboard:
+
+-   **Model capabilities: Write (required).** This lets Clay send prompts to OpenAI and get responses back. Without it, Use AI columns and Claygent can't run with your OpenAI key, and the key fails Clay's connection test.
+-   **Models: Read (recommended).** This lets Clay see which OpenAI models your key can use, so Clay tests the key with a model you have access to. Without it, Clay tests the key with **GPT-4o** by default, and the test can fail if your OpenAI account doesn't have access to GPT-4o.
+
+Clay doesn't need any other settings on the key. On your OpenAI account, also check the following:
+
+1.  **Billing is set up** on the OpenAI project the key belongs to. If the project has no billing or has run out of credits, OpenAI rejects Clay's requests.
+2.  **Your tokens-per-minute (TPM) rate limits are high enough** for the Clay feature you plan to use:
+    -   **Use AI columns:** at least **30,000 TPM**. Below **150,000 TPM**, Clay warns that the column may run slowly.
+    -   **Claygent (web research):** at least **390,000 TPM** — in practice, OpenAI usage Tier 2 or higher.
+
+    To raise your TPM limits, move up an OpenAI usage tier at [platform.openai.com/account/limits](https://platform.openai.com/account/limits). See [AI tokens](ai-tokens.md) for more on TPM.
+
+### How Clay tests your OpenAI API key when you connect it
+
+When you add your OpenAI API key in Clay (click the **Account** dropdown in an AI column → **+ Add account**, or go to **Settings → Connections**), the save button for the **OpenAI API Key** connection offers two options:
+
+-   **Test account & save** — Clay sends a 1-token test request to OpenAI with your key, reads the TPM rate limit OpenAI reports for the selected model, and saves the key only if the test passes. If the test finds a problem — for example, the key's rate limits are too low for the selected model, or the key may run slowly — Clay shows the message in the connection window and doesn't save the key.
+-   **Save without testing** — Clay saves the OpenAI API key without running the test.
+
+To re-test an OpenAI API key you've already connected, go to **Settings → Connections** and click **Verify** next to the connection.
+
 ## Using additional or custom LLMs
 
 Use AI supports a fixed set of built-in AI providers (such as GPT, Claude, Gemini, and DeepSeek). Custom or additional LLMs — including open-source models like LLaMA, or models accessed through a proxy such as LiteLLM — cannot be added directly to the Use AI enrichment interface.

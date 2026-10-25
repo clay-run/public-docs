@@ -35,7 +35,7 @@ When working with AI models, you'll encounter two types:
 
 ### ClayGent Web Research
 
--   **OpenAI**: Requires **Tier 2 or higher** (≥450,000 TPM)
+-   **OpenAI**: Requires at least **390,000 TPM** — in practice, **Tier 2 or higher**
 -   **Anthropic**: Requires **Tier 4 or higher** (≥450,000 TPM)
 -   **Gemini**:
     -   Requires **Tier 2**, but only works with the **Gemini 2.0 Flash model**
