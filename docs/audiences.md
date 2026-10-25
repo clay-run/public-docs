@@ -1152,6 +1152,20 @@ Connect a [workflow to your segment](#connecting-a-workflow-to-a-segment) and ad
 
 See [Workflows](https://university.clay.com/docs/workflows) for supported triggers, enrichment actions, and run controls.
 
+### Can I export an audience segment to CSV?
+
+No. Clay Audiences doesn't have a download or export-to-CSV option for People or Companies segments. A segment's **Send** menu offers **Send to workflow**, **Sync to ad platforms**, and, for People segments, **Export to email sequence** — none of these downloads a CSV file. **Sync to ad platforms** and **Export to email sequence** depend on your plan.
+
+**If your workspace still has legacy bulk enrichment,** you can copy a segment into a Clay table and download the table as a CSV:
+
+1.  Open the segment in Audiences and click `Enrich`.
+2.  Click **Add enrichment table**. (In some workspaces, the enrichment panel shows a `+` button instead — click it and select **Create enrichment table**, labeled "Legacy bulk enrichment".) You don't need to add enrichment columns.
+3.  Open the new table, make sure no rows are selected, then click **Tools**, open the **Export** tab, and click **Download CSV**.
+
+Workspace Admins and Editors can create the enrichment table; Workspace Viewers can't.
+
+If the `Enrich` panel only offers **Create enrichment workflow** and has no enrichment table option, your workspace can't download an Audiences segment as a CSV. To get the segment's records into another tool, connect a workflow to the segment (**Send** → **Send to workflow**) — see [How do I send audience records to another tool?](#how-do-i-send-audience-records-to-another-tool).
+
 ### What happens to a contact's ad targeting when they become a customer?
 
 If your segment has an exclusion condition (e.g., Account Type ≠ "Customer"), the contact is automatically **removed** from the synced ad audience as soon as that condition is met. See [Clay Ads](https://university.clay.com/docs/clay-ads) for platform-specific guidance.
