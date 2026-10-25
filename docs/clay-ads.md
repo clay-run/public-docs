@@ -245,7 +245,12 @@ To see exactly what each provider requires: open the waterfall setup panel, clic
 
 Yes. Once synced, your audiences automatically update as data changes in your Clay table. New rows that match your criteria are added, and rows that no longer match are removed. This keeps your ad targeting aligned with your latest data without manual updates.
 
-For recurring syncs, the update interval depends on your destinations: every 3 days by default, or every 7 days when Bing Ads is one of your destinations.
+For recurring syncs, Clay sets the update interval automatically based on the segment type and your destinations — you can't choose a custom interval:
+
+-   **Companies segment syncs** (account-level syncs, supported by the professional network only) update every 7 days.
+-   **People segment syncs** update every 3 days by default, or every 7 days when Bing Ads is one of your destinations.
+
+The **Recurring** option in the Ad Sync's **Schedule** section shows the interval that applies — for example, `re-sync your segment every 7 days` for a Companies segment sync.
 
 ### **Can I see which contacts matched?**
 
