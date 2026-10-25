@@ -738,9 +738,44 @@ The queries you see from Clay come from two sources: **Lookup Record columns** r
 
 5.  **Narrow your import.** If you import records via a Salesforce list view, filter that list view so Clay scans fewer records each sync.
 
-**Note:** The **Run in batches** setting is not available on the standard **Lookup Record** or **Lookup records via SOQL** columns, so it cannot be used to throttle these read queries. The adjustments above are the levers for reducing read-query load.
+**Note:** The **Run in batches** setting is not available on the standard **Lookup Record** or **Lookup records via SOQL** columns, so it cannot be used to throttle these read queries. The adjustments above are the levers for reducing read-query load. If you're looking up records by their Salesforce record ID or an External ID field, the **Look up record by ID (batch-enabled)** action does support **Run in batches**. See [How does Clay handle Salesforce API limits, and what happens if a run hits them?](#how-does-clay-handle-salesforce-api-limits-and-what-happens-if-a-run-hits-them)
 
 On the Salesforce side, asking your admin to add custom indexes on the fields Clay filters against will also help those queries run more efficiently.
+
+## How does Clay handle Salesforce API limits, and what happens if a run hits them?
+
+Your Salesforce org's API limits, including the daily API request limit and the concurrent request limit, are set by Salesforce based on your Salesforce edition and licenses. Clay doesn't set or change them. This section covers how Clay's Salesforce table actions use your org's Salesforce API limits, how many Salesforce API calls each action makes, and what happens when a run hits a Salesforce limit.
+
+**How to see your Salesforce API usage:** If you use Clay Audiences, the **API usage** card on your Salesforce source settings page in Audiences shows **Calls used** against your org's daily API request limit for the **Last 24 hours**. The card shows API usage for your whole Salesforce org, not just Clay. See [What does the API usage percentage on my Salesforce settings page mean?](audiences.md#what-does-the-api-usage-percentage-on-my-salesforce-settings-page-mean-is-that-all-clays-usage) Your Salesforce admin can also see your org's API limits and usage in Salesforce under **Setup → System Overview → API Usage**.
+
+**Concurrent Salesforce requests:** Clay sends at most **20** Salesforce requests at a time per connected Salesforce account. Every Salesforce column and action that uses the same connected Salesforce account shares this limit of 20, so a large table run can't send more than 20 requests to Salesforce at once. Clay keeps this limit below Salesforce's own concurrent request limit so your other Salesforce integrations still have room to run.
+
+**Daily Salesforce API limit:** Salesforce actions in Clay tables don't slow down as your org gets close to its daily API request limit. They keep running until Salesforce returns a rate-limit error (see below). Salesforce syncs in Audiences work differently: they pause automatically once your org has used 90% of its daily API request limit, then resume on their own. See [Why is my Salesforce sync paused because of API limits?](audiences.md#why-is-my-salesforce-sync-paused-because-of-api-limits-is-there-a-workaround)
+
+**How many Salesforce API calls each action makes:** The following table shows how many Salesforce API calls each Clay Salesforce action makes, and which actions support **Run in batches**.
+
+| Action | Salesforce API calls | Run in batches |
+| --- | --- | --- |
+| **Look up records with SOQL** (Lookup records via SOQL) | One SOQL query per row (1 row = 1 API call). Returns only the first page of results from Salesforce. Works the same way in a table, in an Audiences segment enrichment, and in a workflow. | Not available |
+| **Look up record by ID (batch-enabled)** | One call per row, or one call for up to 200 rows when **Run in batches** is on. Matches on the Salesforce record ID or an External ID field and returns one record per row. Works with any Salesforce object, including CampaignMember. | Available |
+| **Create record**, **Update record**, **Create or update record** | One call per row, or one call for up to 200 rows when **Run in batches** is on. | Available |
+
+**Batch size for Run in batches:** **Run in batches** is off by default on the Salesforce actions that support it. To turn it on:
+
+1.  Open the Salesforce action column and go to **Run settings**.
+2.  Turn on **Run in batches**.
+3.  Optionally, set **Number of rows per batch** to any number from 1 to 200. The default is 200.
+
+**What happens when a run hits a Salesforce rate limit or the daily API limit:**
+
+-   **Create record, Update record, Create or update record, and Look up records with SOQL:** Each affected cell fails with **"Rate Limited, Please try again"**. These cells don't retry automatically.
+-   **Create record, Update record, and Create or update record with Run in batches on:** The whole batch fails together, and the cells show the error message returned by Salesforce. Batches don't retry automatically.
+-   **Look up record by ID (batch-enabled):** When Salesforce returns a rate-limit error, Clay retries the cell automatically after about 5 seconds, up to 5 times, before the cell fails.
+-   **Import records from a Salesforce SOQL query source:** The import stops with **"Rate limited by Salesforce API. Please wait and try again later."** Records imported before the error stay in your table.
+
+To re-run failed cells once your Salesforce API quota frees up, right-click the column header → **Run column** → **Run N empty or out-of-date rows**. This re-runs only the rows that returned empty or errored results.
+
+**SOQL import limit:** The **Import records from a Salesforce SOQL query** source imports up to 50,000 records per import. This limit is the same on every Clay plan, including Enterprise. To work with more Salesforce records than that, import them into Audiences. See [Why did my scheduled "Import records from a Salesforce list" stop running?](#why-did-my-scheduled-import-records-from-a-salesforce-list-stop-running)
 
 ## Why does enriching a Salesforce timestamp field cause records to keep re-running?
 
