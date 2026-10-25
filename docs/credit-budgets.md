@@ -118,4 +118,6 @@ Clay has two distinct credit governance features for Enterprise workspaces:
 
 These features are complementary. You can use spend limits to cap individual workbooks while also assigning them to a budget for team-level cost attribution.
 
+**Credit budgets and MCP credit limits:** Credits that users spend through AI tools like Claude or ChatGPT are also capped by each user's monthly MCP credit limit. You set that limit on the `MCP` page under **Orchestration**, not in `Settings` → `Budgets`. Raising a budget, or creating a new one, doesn't raise a user's MCP credit limit. If a user has used up their MCP credit limit, raise it on the `MCP` page as well. See [MCP settings](https://university.clay.com/docs/mcp-settings).
+
 **Note:** Neither credit budgets nor credit spend limits can be applied directly to a Function. Credit limits apply to a workbook as a whole — including all Function calls that workbook makes. There is no per-Function credit cap. To limit how much a specific workbook spends (including its Function calls), assign it to a budget with a credit limit or set a per-workbook credit spend limit on it.
