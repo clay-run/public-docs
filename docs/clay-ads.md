@@ -2,7 +2,7 @@
 title: Clay Ads
 description: Build and sync contact and account lists to LinkedIn, Meta, Google Ads, Bing
   Ads, Reddit Ads, and Vibe.co for precise ad targeting.
-last_synced: 2026-09-29T18:57:11.306Z
+last_synced: 2026-10-19T16:51:40.185Z
 ---
 
 # Clay Ads
@@ -267,6 +267,10 @@ Workspace Admins and Editors can create the enrichment table; Workspace Viewers 
 This is expected on platforms that match on multiple identifiers per contact. Clay sends up to 3 hashed personal email addresses per contact (via Enhanced Matching) rather than a single email, giving the ad platform more identifiers to match against. The platform counts each matched identifier separately in its reporting — not each unique contact. A single contact with 3 matching hashed emails contributes 3 to the matched count, which is why the matched count can exceed your total contact count.
 
 Your actual ad reach is based on the audience size (unique contacts), not the matched count. When this behavior is active, the Sync panel shows an info note explaining that matched count can exceed contacts sent.
+
+### **Why does my match rate show 95%+ instead of an exact number?**
+
+On the professional network, Meta Ads, Reddit Ads, Bing Ads, and Vibe.co Ads, Clay displays any match rate of 95% or higher as `95%+` rather than an exact figure. This applies to the destination cards and to Sync history. Clay caps the display because it sends several identifiers per contact — up to three hashed personal emails from Enhanced Matching alongside the work email — and a platform can match more than one of them, so the calculated match rate can exceed 100%. Google Ads match rates are always shown as the exact percentage.
 
 ### **Why does my ad audience show "too small for use in campaigns"?**
 
