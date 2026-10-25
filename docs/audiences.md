@@ -993,6 +993,19 @@ A semi-join passes Clay's **Preview** step (which uses Salesforce's standard RES
 
 **Fix:** Remove the nested sub-select and use only direct field filters on the object you are importing. Open the import settings, update the SOQL query to eliminate the semi-join, and re-run the sync. For example, instead of filtering contacts by `WHERE Id IN (SELECT ContactId FROM OpportunityContactRole WHERE ...)`, import all contacts and apply the opportunity contact-role condition as an **audience segment filter** after importing — segment filters evaluate cross-object lookups using a separate query path that supports them.
 
+### Why does my Salesforce SOQL query show "Field aliases are not supported"?
+
+This applies to Salesforce **Record subset** (SOQL) imports in Audiences. Clay checks your SOQL query before sending it to Salesforce. If two fields in the `SELECT` list aren't separated by a comma, Clay reads the second field name as an alias for the first, and the query stops with **"Field aliases are not supported."**
+
+For example, the comma after `Enterprise_Opportunities__c` is missing in this query, so Clay treats `BO_Link__c` as an alias:
+
+```sql
+SELECT Id, Name, Enterprise_Opportunities__c BO_Link__c, SystemModstamp, IsDeleted
+FROM Account
+```
+
+**Fix:** Put a comma between every field in the `SELECT` list (`Enterprise_Opportunities__c, BO_Link__c`), then preview the query again. Audiences SOQL queries don't support field aliases, so list each field by its Salesforce API name only. In a long field list, check the end of each line for a missing comma.
+
 ### Why do some of my Salesforce Lead records not appear as separate person records in Clay?
 
 When Salesforce data syncs into Audiences, Leads and Contacts are not always separate Clay person records. Clay applies a built-in record-matching rule using the `ConvertedContactId` field on Lead records.
