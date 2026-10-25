@@ -106,7 +106,16 @@ Clay connects to 150+ data and AI providers. When you purchase data from these p
 
 If you already subscribe to data providers (ZoomInfo, Apollo, Clearbit, etc.) or AI providers (Anthropic, Claude, ChatGPT), connecting your API keys to Clay will eliminate the **Data Credit** cost. Note that an Action will still be consumed.
 
-When you use your own external API key in Clay, the AI usage and costs are billed directly by that external provider — not through Clay credits. Clay does not track the dollar amounts charged by the provider — to see how much you've spent with Anthropic, OpenAI, or another provider, go directly to your console or dashboard in that provider's platform. What Clay does show is how many **Actions** and Data Credits your keys consumed: go to **Settings → Usage → Integrations tab** and expand any integration to see a breakdown by individual API key (Clay-managed or personal).
+When you use your own external API key in Clay, the AI usage and costs are billed directly by that external provider — not through Clay credits. Clay does not track the dollar amounts charged by the provider — to see how much you've spent with Anthropic, OpenAI, or another provider, go directly to your console or dashboard in that provider's platform. AI runs that use your own AI provider key don't consume Data Credits. The Integrations tab (`Settings` → `Usage` → `Integrations`) only lists usage that consumed Data Credits or Actions. If a run on your own key consumed neither on your plan, it doesn't appear there at all. If it consumed Actions, it appears under the **Artificial Intelligence** integration. Either way, the Integrations tab doesn't show how many requests Clay sent to your provider or what the provider charged.
+
+#### Tracing an unexpected bill from your own OpenAI or Anthropic key
+
+If your AI provider (such as OpenAI or Anthropic) bills you more than you expected for usage from Clay, use these steps to find where the requests on your key came from:
+
+1.  **Find every table that uses the key.** Go to `Settings` → `Connections` and find the connection for your key. The **Resources** column shows how many resources use each connection. Click the `…` menu next to the account and select **View resources** to see the full list of workbooks, tables, functions, and Claygents that use it. The **View resources** option only appears when at least one resource uses the connection.
+2.  **Compare the same scope.** A connection is shared across the workspace, so your provider's usage dashboard for that key includes requests from every table, workflow, and Claygent in the workspace that uses the connection — not just one table. Make sure you're comparing the same date range on both sides.
+3.  **Expect more requests than rows.** A single row can send more than one request to your provider: a Claygent run can make up to 20 model calls per row (one per step), and requests rejected for rate limits are retried automatically. Each attempt counts as a separate request on your provider's dashboard.
+4.  **Check the dollar amount with your provider.** Clay doesn't show the amount your provider billed. Open your provider's usage page, filter it to the same date, and break it down by model to see which model drove the charge.
 
 #### Clay-managed providers vs. accounts you must bring
 
