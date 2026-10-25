@@ -1370,13 +1370,37 @@ The 24-hour export schedule is fixed and cannot be triggered manually. Two optio
 -   **Export a single record on demand (admin-only):** Open any record in Audiences and click **Export** in the top right of the record panel. This sends that record to Salesforce immediately, without waiting for the next scheduled sync. The button appears only when the record has a Salesforce export configured.
 -   **Export many records immediately:** Add a **Salesforce Update Record** action to a workflow — see [How do I write enriched fields back to existing Salesforce records from a workflow?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-workflow) above.
 
+### Does Clay have its own persistent IDs for companies and people that I can sync to Salesforce?
+
+Yes. Every company record and every person record in Audiences has its own Clay record ID. This entity-level ID is separate from data provider IDs, Salesforce record IDs, and Clay table row IDs. It's a good durable key for reconciling Audiences records with your CRM.
+
+**Where to find the Clay record ID:** Open a company or person record in Audiences. The record ID is the number at the end of the page URL. For example, in `.../companies/1744148267` the company's record ID is `1744148267`, and in `.../people/audience/<segment ID>/1793401248` the person's record ID is `1793401248`.
+
+**How the Clay record ID behaves:**
+
+-   Clay assigns the record ID once, when the record is created in Audiences.
+-   Enrichment runs, field updates, and sending the record to different Clay tables don't change the record ID.
+-   When two duplicate records are merged, the surviving record keeps its own record ID.
+
+**How to get the Clay record ID into a table and send it to Salesforce:**
+
+1.  In Audiences, open your segment, click **Send**, and select **Add to workbook** to send the segment to a Clay table.
+2.  In the table, click a cell in the record column (the column that shows the company or person, for example `visa.com`).
+3.  In the cell details panel, expand **Fields** and find the **Id** field.
+4.  Click **Add to column** to add the record ID as its own column.
+5.  Add a Salesforce action, such as **Update Record**, and map the record ID column to a custom field on the Salesforce record.
+
+**Clay record ID vs. Clay Company ID:** Company records can also show a **Clay Company ID** field under **Fields → Default fields**. The Clay Company ID is a different number from the record ID in the URL. It comes from Clay's company data and identifies the same company across company search, enrichment, tables, and Audiences, including through renames, domain changes, and professional network URL changes. Unlike the record ID, the Clay Company ID can be blank, and it can change when two company profiles in Clay's company data are merged. If you need an ID that never changes for a given Audiences record, use the record ID. The **Clay Company ID** field in Audiences is currently rolling out and may not be visible in every workspace yet. If you don't see it on your company records, contact Clay support.
+
+**People records:** People records in Audiences have no equivalent of the Clay Company ID field. For a persistent, person-level ID, use the person's Clay record ID described above.
+
 ### How do I access Account-level fields (like Company Name or Company Domain) from a People audience?
 
 When you import Salesforce Contacts into a People audience, only fields from the **Contact object** are available as columns — Account-level fields (Company Name, Company Domain, and any custom Account object fields) are not included automatically, even if the Contact has a linked Salesforce Account.
 
 To pull Account-level data into a Clay table:
 
-1. In your table, open the **Audiences Record** cell for a Contact row and navigate to **Records → Related IDs → Account IDs**. This value is the **Clay Company ID** for the linked account — Clay's internal identifier for the Company record in your Audiences. It is **not** the Salesforce Account ID.
+1. In your table, open the **Audiences Record** cell for a Contact row and navigate to **Records → Related IDs → Account IDs**. This value is the Clay record ID of the linked company — the same number shown at the end of the company record's URL in Audiences. It is **not** the Clay Company ID, and it is **not** the Salesforce Account ID.
 2. Add a `Lookup in Audiences` action column.
 3. Set **Object type** to **Companies**.
 4. Set the filter field to **Company ID** and map it to the Account IDs value from step 1.
