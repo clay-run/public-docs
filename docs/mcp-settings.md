@@ -63,6 +63,24 @@ Use the search bar at the top of the table to find a specific rep by name or ema
 
 MCP credit usage also appears at `Settings` → `Usage`, on the `MCP` tab. Spend there is grouped by rep — expand a rep's row to see their spend per Function, plus an `Other` row for usage outside your Functions. That `Other` row is where Clay's built-in tools, like company and contact search, land.
 
+## Hiding default functions from MCP
+
+Workspace admins can stop reps from using Clay's default functions and preset enrichments through ChatGPT, Claude, Codex, or Glean with the **Hide default functions from MCP** toggle on the `MCP` page. Use it when you want reps to enrich only through the custom Functions your workspace has built and enabled for MCP.
+
+When **Hide default functions from MCP** is on:
+
+-   **Clay-managed functions are hidden from MCP clients.** This includes Clay-managed functions that were already connected to MCP before you turned the toggle on, and Clay-managed functions whose `MCP for reps` option was turned back on individually on the `Functions` page.
+-   **Preset enrichment data points are removed.** The AI tool can no longer request these data points through the contact and company data point tools: Email, Summarize Work History, and Find Thought Leadership for contacts; Website Traffic, Tech Stack, Open Jobs, Latest Funding, Investors, Company Competitors, Company Customers, Revenue Model, Recent News, Annual Revenue, and Headcount Growth for companies.
+-   **Requests for hidden items are refused.** If an AI tool tries to run a hidden Clay-managed function or request a hidden data point — for example, from a tool list it loaded before the change — Clay refuses the request.
+
+The toggle doesn't affect:
+
+-   **Custom Functions** built in your workspace and enabled with `MCP for reps` — they stay available.
+-   **Search tools** — reps can still search for contacts and companies.
+-   **Your Functions page** — Clay-managed functions stay in your workspace and on the `Functions` page. Only MCP access is turned off.
+
+The change applies to the next request an AI tool makes, so you don't need to disconnect each function from MCP. Turn the toggle off to make Clay-managed functions and preset data points available through MCP again.
+
 ## Audiences controls
 
 If your workspace uses Clay Audiences, two additional workspace-level toggles appear on the `MCP` page:
@@ -161,7 +179,7 @@ To apply the same ICP check every time a rep uses Clay from Claude, put your ICP
 4.  Have reps run the ICP Function first, and only go on to enrichment or outreach when `is_icp` is true.
 5.  For reps who only use Clay through AI tools, assign the **Sales Rep** role (currently in beta — contact support to request access for your workspace). This role gives them MCP access without access to tables, workbooks, or other workspace resources (see [What role should I assign to team members who will only use Clay through MCP?](#what-role-should-i-assign-to-team-members-who-will-only-use-clay-through-mcp)).
 
-**Limitation:** Turning on `MCP for reps` adds the Function alongside Clay's built-in MCP tools. It doesn't replace them. Reps can still search for people and add contact or company data points straight from Claude, without going through your ICP Function. Clay has no setting that turns off the built-in tools or limits a rep to specific Functions. To cap what a rep can spend, set their credit limit in the `MCP users` table. A credit limit of `0` blocks enrichments and Functions through AI tools. Searches that don't add paid data points still run.
+**Limitation:** Turning on `MCP for reps` adds the Function alongside Clay's built-in MCP tools. It doesn't replace them. Reps can still search for people and add contact or company data points straight from Claude, without going through your ICP Function. To remove Clay-managed functions and preset enrichment data points from MCP, a workspace admin can turn on **Hide default functions from MCP** (see [Hiding default functions from MCP](#hiding-default-functions-from-mcp)). Search tools stay available either way, and Clay has no setting that limits a rep to specific Functions. To cap what a rep can spend, set their credit limit in the `MCP users` table. A credit limit of `0` blocks enrichments and Functions through AI tools. Searches that don't add paid data points still run.
 
 ### When do credits reset?
 
