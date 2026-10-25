@@ -55,7 +55,7 @@ If you need programmatic access to Clay from an external tool or CLI, Clay offer
 
 ### Search usage on the API and CLI page
 
-The **Search usage** section on the API and CLI page shows how many search results your workspace has returned through the Public API, CLI, and MCP server in the current quota period. The label below the progress bar tells you which window applies to your workspace:
+The **Search usage** section on the API and CLI page shows how many search results your workspace has returned through the Public API and the Clay CLI (plus some MCP server searches) in the current quota period. Searches you run inside the Clay app don't count toward this quota. The label below the progress bar tells you which window applies to your workspace:
 
 -   **Counts the last 30 days** — your workspace is on a rolling 30-day window. The quota does **not** reset annually; there is no single hard reset date. Instead, usage ages out daily — results older than 30 days drop off each day, freeing up that portion of your quota.
 -   **Resets on [date]** — your workspace is on a fixed window (monthly, 14-day, or annual) that resets on that specific date.
