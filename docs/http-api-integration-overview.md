@@ -938,6 +938,26 @@ Yes. Use the **HTTP API enrichment** with a **POST** method to send enriched rec
 
 **Note:** HTTP API enrichment processes one row at a time — each cell sends a separate POST request to your endpoint. There is no native batch mode.
 
+### Can I send SMS text messages from Clay?
+
+Yes, but Clay doesn't have a native action for sending SMS text messages. To send outbound SMS from a Clay table, connect your own SMS provider using the **HTTP API enrichment column**.
+
+**What you need from your SMS provider:**
+
+-   An account with the SMS provider (including any subscription or usage fees the provider charges — these are billed by the provider, not Clay).
+-   API credentials for that provider.
+-   A sending phone number from that provider.
+
+**How to send SMS with the HTTP API enrichment column:**
+
+1.  Open your Clay table and click **Add enrichment**, then select **HTTP API**.
+2.  Set the method to **POST** and enter your SMS provider's send-message endpoint URL (from the provider's API documentation).
+3.  Add your provider's API credentials in the **Headers** field, or save them once in an **HTTP API (Headers) account** so you can reuse them across columns (see [Storing authentication credentials at the workspace level](#storing-authentication-credentials-at-the-workspace-level)).
+4.  In the JSON body, reference your phone-number and message columns using the `/` column picker, following the field names your provider's API expects.
+5.  Test on a single row to confirm the message sends before running the full table.
+
+**Note:** The HTTP API enrichment column runs once per row, so each row sends one request — one SMS message — to your provider.
+
 ### Can I paste a cURL request directly into Clay?
 
 There is no "paste cURL" button, but you can replicate any cURL request by manually mapping its components to the HTTP API configuration fields.
