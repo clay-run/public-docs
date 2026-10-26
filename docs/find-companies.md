@@ -39,7 +39,7 @@ For advanced query syntax, use [Find with query](finding-companies-and-people-in
     -   **Description keywords to include** and **Description keywords to exclude** — Filter companies by keywords that appear in their description.
         -   **Exact phrase matching:** Wrap multi-word terms in double quotes to match that exact phrase. For example, `"Google Cloud"` finds companies with that phrase in their description — not just companies that mention Google and cloud separately. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are stripped out even with quoted phrases.
     -   **Semantic company description** — Enter a free-text description to help rank results based on how closely they match your ideal company profile (e.g., "B2B fintech company selling to mid-market banks").
-    -   **Location** — Filter by company office location. Sub-filters: **Country**, **City**, **State or province**, **Region** (EMEA, NAM, APAC, or LATAM), and **Postal code**. Use **Is Headquarters** to restrict results to companies whose primary office is in the specified location. All sub-filters support include and exclude.
+    -   **Location** — Filter by company office location. Sub-filters: **Country**, **City**, **State or province**, **Region** (EMEA, NAM, APAC, or LATAM), and **Postal code**. The Location filter matches companies with at least one office in the specified location, not only companies headquartered there. In **Find with filters** (currently in beta), turn on **Is headquarters?** in the **Company location** filter to restrict results to companies whose headquarters is in the specified location. All sub-filters support include and exclude. See [Why does my location filter return companies from other countries?](#why-does-my-location-filter-return-companies-from-other-countries)
     -   **Estimated employee count** — Filter by a numeric count of estimated employees (enter a minimum and/or maximum). This is a separate field from **Company size** — see the [FAQ below](#why-do-company-sizes-and-estimated-employee-count-return-different-results-for-the-same-range) for why the same numeric range can surface different companies.
     -   **AI filters** — Clay-generated attributes applied to company profiles:
         -   **Industries** and **Subindustries** (include or exclude) — see [the FAQ below](#what-are-the-available-ai-subindustry-filter-values) for the full list of AI Subindustry values
@@ -113,7 +113,7 @@ However, `Find Companies` automatically includes a **Founded** column in your ta
 Clay returns location data at two levels of detail — choose based on what you need:
 
 **For city/state/country-level headquarters identification (most reliable):**
-Use **Structured Locations** in the cell details. A company may have multiple Structured Location entries — one per known office. The **Is Headquarters** field is `true` for the company's primary office, so looking at entries where `Is Headquarters = true` pinpoints the HQ. These fields are geocoded and normalized (they handle informal names like "Greater Chicago Area") but do not include a full street address. The **Is Headquarters** filter in the Location section of Find Companies uses this same flag — enabling it restricts search results to companies whose HQ matches your location criteria.
+Use **Structured Locations** in the cell details. A company may have multiple Structured Location entries — one per known office. The **Is Headquarters** field is `true` for the company's primary office, so looking at entries where `Is Headquarters = true` pinpoints the HQ. These fields are geocoded and normalized (they handle informal names like "Greater Chicago Area") but do not include a full street address. The **Is headquarters?** option in the **Company location** filter of Find with filters (currently in beta) uses this same flag — enabling it restricts search results to companies whose HQ matches your location criteria.
 
 **For a raw street-level address:**
 Each company record also includes a **Locations** section in the cell details with a raw **Address** string per office (for example, "Brooklyn, NY 11222, US") and an **Is Primary** flag. When **Is Primary** is `true`, that entry is the designated primary office — the closest native field to a full street address. Two caveats:
@@ -122,6 +122,17 @@ Each company record also includes a **Locations** section in the cell details wi
 
 **For confirmed street-level HQ address (highest accuracy):**
 None of Clay's native location fields return a verified street-level headquarters address on their own. For that level of precision, run a Claygent or AI research column that looks up the company's HQ from public sources. To reduce research cost, use **Structured Location where Is Headquarters = true** as a seed — it narrows the research to the right city and country without requiring a full web search from scratch.
+
+### Why does my location filter return companies from other countries?
+
+The **Location** filter in Find Companies matches companies that have at least one office in the location you select, not only companies headquartered there. For example, a search filtered to Ireland and United Kingdom can return companies headquartered in Australia, Spain, or Canada that have an office in the UK or Ireland.
+
+The **Country** column in your Find Companies table shows the country of each company's primary location. A company matched through a UK or Ireland office can therefore show a different country in the **Country** column, even though your location filter was applied correctly.
+
+To keep only companies headquartered in the countries you selected, use one of these options:
+
+-   **In Find with filters (currently in beta, not yet available in every workspace):** In the **Company location** filter, select your countries and turn on **Is headquarters?** in that same filter. Results are then limited to companies whose headquarters is in the selected location.
+-   **In a Find Companies table you've already imported:** Add a table filter where **Country** is one of your target countries, or delete the rows with other countries.
 
 ### What if the industry I'm looking for isn't in the dropdown?
 
