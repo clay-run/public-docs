@@ -96,9 +96,19 @@ Use the same workspace-scoped API key in the `clay-api-key` request header. Read
 | Paid | 1,000,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
 | Enterprise | 10,000,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
 
-When you exceed the period limit, Clay returns `400` with a message naming the limit, the number of results already used, and the next daily midnight UTC reset timestamp. To monitor your usage before hitting the limit, open the **API and CLI** page from the left sidebar (under **Orchestration**). The **Search API usage** section shows your current period's results used out of your limit, the next reset date, and a progress bar that turns orange at 70% usage and red at 90%. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
+When a request would exceed the period limit, Clay returns `402` (Payment Required) with a message naming the limit, the number of results your workspace has already requested in the current period, and when the period resets. To monitor your usage before hitting the limit, open the **API and CLI** page from the left sidebar (under **Orchestration**). The **Search usage** section shows your current period's results used out of your limit, the next reset date, and a progress bar that turns orange at 70% usage and red at 90%. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
 
 **Note:** Workspaces on legacy (pre-2026) non-Enterprise plans retain the annual quota window (resets January 1 UTC) rather than the rolling 30-day window.
+
+**Note: Why the CLI says you've hit an annual results limit when you still have Data Credits.** On legacy Pro, Starter, and Explorer plans, searches run through the Clay CLI or Public API can return up to **1,000,000 results per calendar year**. This search results quota is separate from your Data Credit balance, so you can hit it with plenty of credits left, and adding credits won't clear it. The CLI shows a `quota_exceeded` error that starts with: `This request would exceed your workspace's annual limit of 1,000,000 results.` The rest of the message shows how many results your workspace has already requested this year. The annual quota resets on **January 1 (UTC)**, not on your subscription renewal date. Here's how results are counted:
+
+-   The quota is shared across your whole workspace. Every user, API key, and CLI login counts toward the same total.
+-   Every result a search returns counts, and results aren't deduplicated. If a new search returns the same people or companies as an earlier search, those results count again. Coding agents that create many searches in a short time can use up the quota quickly.
+-   Searches that return 0 results don't count.
+-   Searches you run in the Clay web app, such as Find People and Find Companies sources in a table, don't count. Only searches run through the API or CLI count.
+-   A brand-new search can still fail when you're near the limit. Each request for a page of results is rejected if the page size (`limit`) is larger than the number of results you have left this year.
+
+To check your annual search usage, open **API and CLI** in the left sidebar (under **Orchestration**) and look at the **Search usage** section. You can't reset the quota early yourself. To keep searching before January 1, [contact Clay support](https://www.clay.com/contact-form) and ask for a higher limit. Include the full error message and roughly how many more results you expect to need.
 
 **Note:** Credits consumed by Routines API runs appear in the **Workbooks** tab of the credit usage dashboard — not the **API** tab. Each run processes records in the function's table, and those credits are attributed to that table, the same as any other table enrichment. To see this credit spend, go to `Settings → Usage → Workbooks` and find the table associated with your routine. The **API** tab in the credit usage dashboard covers only direct People & Company Search API and Exportly calls — not Routines API enrichments.
 
