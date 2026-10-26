@@ -1146,6 +1146,20 @@ The **Last import sync** column shows when the live search last ran.
 
 Yes — you can add multiple ad platforms to a single audience sync. After your initial sync is active, an **Expand your reach** section appears on the Sync tab. Click **Add** next to any available platform to configure field mappings for that provider. The new platform will sync on the same schedule as your existing provider.
 
+### How do I export an Audiences segment to Google Sheets or a spreadsheet?
+
+To get the people or companies in an Audiences segment into a spreadsheet, connect a workflow to the segment and add an **Export to Google Sheets** step. Audiences segment pages don't have the **Tools → Export** tab that Clay tables have. The **Tools** menu (wrench icon) at the top right of a segment page only contains settings such as **Theme**.
+
+**To export an Audiences segment to Google Sheets:**
+
+1.  Open the segment and click **Send** → **Export action** → **Send to workflow**, then choose **New workflow**.
+2.  Open the workflow in the workflow editor. See [Connecting a workflow to a segment](#connecting-a-workflow-to-a-segment).
+3.  Add a step from the **Send and export** category and choose **Export to Google Sheets**. Set it up to write the Audience fields you want to your spreadsheet.
+4.  Test the workflow on a few records and check the spreadsheet.
+5.  Click **Publish**. To export the people or companies already in the segment, turn on **Run workflow after publishing** and select **Entire segment**.
+
+**Send to workflow** only appears if Clay Workflows is enabled for your workspace. Workflows is currently in beta, with general availability planned for December 2, 2026. If you don't see **Send to workflow** on your segment, contact Clay support.
+
 ### How do I send audience records to another tool?
 
 Connect a [workflow to your segment](#connecting-a-workflow-to-a-segment) and add an action for your destination. Map the Audience fields and enrichment outputs to that action's inputs, test the workflow on a small set of records, and check the destination before running the whole segment.
