@@ -76,9 +76,9 @@ When you add a **Use AI** or **Claygent** column, the model you select directly 
 
 **How do you implement this?**
 
-When configuring an AI column, open the **Model** dropdown in the column settings and select a more cost-effective option. For example, **GPT 4.1 Nano** costs 0.1 credits/row for content generation (Use AI) and 0.5 credits/row for web research (Claygent) — compared to **Neon** at 2 credits/row and **Argon** at 3 credits/row for Claygent tasks.
+When configuring an AI column, open the **Model** dropdown in the column settings and select a more cost-effective option. For example, **GPT 5.6 Luna** costs 0.1 credits/row for content generation (Use AI) — compared to **Neon** at 2 credits/row and **Argon** at 3 credits/row for Claygent tasks. GPT 4.1 Nano, a previous low-cost option, is deprecated and can no longer be selected for new Use AI or Claygent columns.
 
-As a general rule: match the model to the task complexity. Reserve higher-credit models like Argon for multi-step research tasks where quality matters most; use lower-cost models like GPT 4.1 Nano for high-volume, simpler tasks where efficiency is the priority.
+As a general rule: match the model to the task complexity. Reserve higher-credit models like Argon for multi-step research tasks where quality matters most; use lower-cost models like GPT 5.6 Luna for high-volume, simpler tasks where efficiency is the priority.
 
 See [How AI is priced](ai-pricing.md) for the full model pricing comparison.
 
