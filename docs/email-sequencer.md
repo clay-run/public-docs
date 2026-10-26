@@ -692,6 +692,23 @@ For per-step analysis, use the campaign events table. Each event includes a `seq
 
 To extract `sequence_number` as a standalone column, click any Campaign event cell, find `sequence_number` in the Cell details panel, and click **Add as column**.
 
+### Why is the Bounce rate in my campaigns list different from the Sender and Recipient bounce rates in the Analytics tab?
+
+The **Bounce rate** column in the Sequencer campaigns list and the bounce cards in the **Deliverability** section of a campaign's `Analytics` tab count bounces differently, so the numbers often won't match. The campaigns list combines every bounce into one rate, while the Deliverability section splits bounces into sender-side and recipient-side rates.
+
+The Sequencer bounce metrics are calculated as follows:
+
+-   **Bounce rate** (campaigns list): all bounces for the campaign — sender bounces plus recipient bounces — divided by emails sent. It's shown as a percentage with the total bounce count in parentheses, for example `2.2% (4)`. This column always uses the campaign's lifetime totals and isn't affected by any date range.
+-   **Sender bounce rate** (Deliverability section): emails that bounced for sender-side reasons, such as mailbox authentication or reputation problems, divided by emails sent — shown as, for example, "2 of 180 sent". The email provider flags which bounces are sender-originated.
+-   **Recipient bounce rate** (Deliverability section): emails that bounced on the recipient side, such as bad or unreachable addresses, divided by emails sent. This is every bounce that isn't a sender bounce.
+-   **Delivery rate** (Deliverability section): emails sent minus all bounces, divided by emails sent. The number under it is the total bounce count.
+
+The Deliverability section reflects the date range selected in the campaign's `Analytics` tab; the campaigns list Bounce rate does not.
+
+**Example:** A campaign has sent 180 emails, with 2 sender bounces and 2 recipient bounces. The Deliverability section shows a Sender bounce rate of 1.1% (2 of 180 sent) and a Recipient bounce rate of 1.1% (2 of 180 sent). The campaigns list shows a Bounce rate of `2.2% (4)`, because 4 total bounces ÷ 180 sent = 2.2%. If the numbers still don't line up, check the date range in the `Analytics` tab — the campaigns list always counts the campaign's full history.
+
+The separate Sender bounce rate and Recipient bounce rate cards appear in the Analytics tab of people-based (V2) campaigns; table-based (V1) campaigns don't show this sender/recipient split.
+
 ### How are replies categorized in the Campaign Events table?
 
 Each time a reply is categorized, a `LEAD_CATEGORY_UPDATED` event is written to the campaign events table. Categorization happens two ways: a user or teammate selects a category from the dropdown in the campaign's **Replies** tab or global inbox, or AI auto-categorization assigns a label automatically (enabled for all campaigns by default). Sends and sequence steps do not trigger this event — it only fires when a reply's category is set or changed.
