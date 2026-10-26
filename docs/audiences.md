@@ -1554,6 +1554,21 @@ To remove records deleted in Salesforce from your Audience, archive them in bulk
 
 Clay does not archive **Deleted in source** records automatically, so repeat these steps whenever you want to clean up newly deleted Salesforce records. To keep records deleted in Salesforce out of a specific segment without archiving them, add a filter to that segment that excludes the **Deleted in source** sync status for your Salesforce import.
 
+### I merged two Accounts in Salesforce, but both companies are still in my Audience — how do I fix the duplicate?
+
+When you merge two Salesforce Accounts, Clay Audiences does not merge the two matching company records automatically. Salesforce deletes the Account that lost the merge, so Clay marks that company record **Deleted in source** on the next sync, just like any other deleted Salesforce Account. The company record itself stays in your Companies audience next to the Account that survived the merge. See [Records I deleted in Salesforce are still in my Audience — how do I remove them?](#records-i-deleted-in-salesforce-are-still-in-my-audience--how-do-i-remove-them) for when the status is set.
+
+If a workflow or signal is connected to a segment that includes the stale company record, it keeps acting on that record. For example, a step that writes a record (such as a custom object) to the Salesforce Account can fail, because that Account no longer exists in Salesforce.
+
+To fix duplicate company records left behind by a Salesforce merge:
+
+1.  **To stop workflows from acting on stale records:** add a filter to the segment connected to your workflow that excludes the **Deleted in source** sync status for your Salesforce Accounts import.
+2.  **To combine the two company records into one:** merging Audiences records isn't self-serve. Contact Clay support with links to both company records and tell them which one matches the Account that's still live in Salesforce. Support can merge the stale record into that one, which moves the people associated with the stale record onto the surviving company record.
+3.  **Don't archive either record before the merge.** Archived records can't be merged. If you plan to ask support for a merge, wait until it's done before you archive anything.
+4.  **To clean up stale records you don't need to merge:** archive them in bulk with a **Deleted in source** segment. See [Records I deleted in Salesforce are still in my Audience — how do I remove them?](#records-i-deleted-in-salesforce-are-still-in-my-audience--how-do-i-remove-them).
+
+Turning off **Export sync** or setting field write rules to **Never write** doesn't stop this from happening. Those settings only control whether Clay writes data to Salesforce, not how Clay imports records from Salesforce. Clay doesn't detect future Salesforce merges automatically, so check your **Deleted in source** segment from time to time to find new stale records.
+
 ### How do I add columns to or update records from a CSV import?
 
 Audiences CSV imports are one-time, and you can't re-upload, edit, rename, or delete an existing CSV source from the **Sources** tab. To add new columns (fields) to records you already imported from a CSV, or to correct their values, run a new CSV import that uses the same unique identifier. You don't need to archive the old records first.
