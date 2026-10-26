@@ -106,6 +106,7 @@ Each Clay table enforces two independent column limits — one for the total num
 -   Clay tables have a default enrichment column limit of **40**. This is a separate, independent cap — your table's enrichment column count is tracked on its own, regardless of how high the total column limit is.
 -   Tables using phone or email waterfalls can have this limit raised to a maximum of **60** (for that table only).
 -   Note: Enterprise Plans may have custom column limits. Each limit (total and enrichment) is set independently — a custom total column limit does not automatically raise the enrichment column limit.
+-   Columns that [Send table data](send-table-data.md) creates through **Auto-extract new columns** count toward the total column limit. The limit is checked against all the new columns one Send table data column needs to create at once: if they would put the table over its column limit, none of them are created. See [Send table data troubleshooting](send-table-data.md#best-practices--troubleshooting).
 
 ### "Cannot create new computable field due to table size limit"
 
