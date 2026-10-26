@@ -654,6 +654,17 @@ The per-source limit for Find People and Find Companies sources varies by plan a
 
 **Note:** this limit is separate from the 50,000-row table limit. A source can hit its plan-based record limit even when the table shows fewer visible rows — the source tracks every record it has ever introduced, including rows you've since deleted from the table.
 
+### "Too many concurrent requests in your workspace" error on Find People or Find Companies
+
+If a Find People or Find Companies source shows the error **"Too many concurrent requests in your workspace. Please try again shortly."**, your workspace is running more Find People and Find Companies imports at the same time than Clay allows. The limit is per workspace and shared by every search source in it: 1 import at a time on Free and trial plans, and 2 at a time on any paid plan. For example, if eight Find People sources in the same workbook start at once, only two can import at the same time on a paid plan.
+
+When a source hits this limit, Clay retries the import automatically up to 2 more times, waiting about 10 seconds and then about 20 seconds. If the workspace is still at the limit after those retries, the source shows this error and doesn't import any people, so tables that depend on that source don't get new rows until you run the source again.
+
+**To fix the "Too many concurrent requests" error:**
+
+1.  Stagger your runs: start one or two Find People or Find Companies sources at a time rather than all at once.
+2.  After the other searches finish, open the source that errored and click **Run now**.
+
 ## FAQs
 
 ### Why is this person showing up despite having moved companies?
