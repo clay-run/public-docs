@@ -283,7 +283,7 @@ You can import a CSV file of people or companies directly into Audiences as a on
 1.  Open **All People** or **All Companies** → **Sources** → **Add source**, then select **CSV file**. If your workspace uses the **Add data** menu, choose **Add data** → **Add Source** → **CSV** instead.
 2.  Name your import, select whether you're importing **People** or **Companies**, and upload your CSV file.
 3.  On the mapping screen, set the **Unique identifier** — the CSV column that uniquely identifies each record (such as email for People or domain for Companies). This determines whether an incoming row updates an existing record or creates a new one.
-    -   On a people import, a **Company association** field appears as an optional setting. Point it at the column holding each person's company ID to link them to their company records in Audiences.
+    -   On a people import, a **Company association** field appears as an optional setting. Point it at the column holding each person's company ID to link them to their company records in Audiences. The values in this column must exactly match the **Unique identifier** values your companies were imported with (for example, a Salesforce Account ID column on people only links to companies whose unique identifier is the Salesforce Account ID). Company association is the only way to link CSV-imported people to companies. See [Why aren't my CSV-imported people linked to their companies?](#why-arent-my-csv-imported-people-linked-to-their-companies).
 4.  Map your remaining CSV columns to Audience fields. Click **Auto-map** to automatically suggest mappings based on column names, or **Add mapping** to add a row and configure it manually.
 5.  Click **Import** to complete the import.
 
@@ -1583,6 +1583,27 @@ Audiences CSV imports are one-time, and you can't re-upload, edit, rename, or de
 3.  Run the new CSV import with the same unique identifier, following the steps above. The restored records are updated with the new columns.
 
 **To remove the records from a CSV import entirely** (for example, if you imported a file you don't want in Audiences), archive them in bulk with a saved segment filtered on that CSV source. See [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience).
+
+### Why aren't my CSV-imported people linked to their companies?
+
+In Audiences, the only way to link people imported from a CSV to their companies is the optional **Company association** setting, which you configure on the mapping screen when you import people. The links are created in the background after the import finishes, so they don't appear immediately. For each person, Audiences takes the value in the column you chose for **Company association** and looks for a company whose **Unique identifier** value is exactly the same. Leading and trailing spaces are ignored. Nothing else is normalized: capitalization, `www.`, and other formatting differences all count as a mismatch.
+
+If the people and companies were imported with different keys, no links are created. For example, if your people CSV uses an **Account Domain** column for **Company association** but your companies CSV used **Salesforce Account ID** as its **Unique identifier**, a domain never matches a Salesforce Account ID, so none of the people are linked.
+
+**You can't link people to companies manually after import.** Audiences has no button, API, or table action that connects an existing person to an existing company. Sending company fields (such as company name or domain) to people records from a Clay table adds those fields to the people records, but it doesn't create the person-to-company link.
+
+**To link people that were already imported, re-import the people CSV.** You don't need to delete or archive the existing people first.
+
+1.  Add a column to your people CSV that holds each person's company identifier, using exactly the same values as the **Unique identifier** on your company records (for example, each person's Salesforce Account ID).
+2.  Open **All People** → **Sources** → **Add source**, then select **CSV file**. If your workspace uses the **Add data** menu, choose **Add data** → **Add Source** → **CSV** instead.
+3.  Name the import, select **People**, and upload the file.
+4.  On the mapping screen, set **Unique identifier** to the same column you used in the original people import. Matching rows then update the existing people instead of creating duplicates.
+5.  Under **Company association**, select the new company identifier column.
+6.  Map any other fields and click **Import**.
+
+We recommend testing with a small file of 5 to 10 people first. Check that those people are linked to their companies and aren't duplicated before you import the full file.
+
+When you import companies with a CSV, Audiences recommends using a company ID as the **Unique identifier**, because people link to companies through that value.
 
 ### How does the Audiences record limit work? What counts toward it?
 
