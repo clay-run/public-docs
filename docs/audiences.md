@@ -1152,6 +1152,20 @@ Connect a [workflow to your segment](#connecting-a-workflow-to-a-segment) and ad
 
 See [Workflows](https://university.clay.com/docs/workflows) for supported triggers, enrichment actions, and run controls.
 
+### How do I export an audience segment to a CSV?
+
+You can't download a CSV straight from an Audiences segment page. The buttons at the top of a segment page (such as **Send**, **Signals**, and **Enrich**) don't include an **Export to CSV** or **Download CSV** option. To export the records in an Audiences segment to a CSV file, send the segment to a workflow and write the records to a Google Sheet:
+
+1.  Open the saved segment and click `Send` → **Send to workflow**. **Send to workflow** isn't available on draft segments, so save the segment first.
+2.  Choose **New workflow** (or **Existing workflow**), then open the workflow in the editor.
+3.  Add the **Export to Google Sheets** step and map the Audience fields and enrichment results you want as columns in the sheet.
+4.  Publish the workflow and run it on the **Entire segment** so existing segment members are written to the sheet. See [Connecting a workflow to a segment](#connecting-a-workflow-to-a-segment) for the publish and run options.
+5.  Open the Google Sheet and download it as a CSV file.
+
+Workflows is in open beta. If **Send to workflow** isn't available in your workspace, contact Clay support.
+
+**Don't see "Create enrichment table" in the Enrich panel?** That's expected in workspaces that use enrichment workflows instead of legacy enrichment tables — the **+** menu in the **Enrich** panel only offers **Create enrichment workflow**. Use the **Send to workflow** steps above to export the segment instead.
+
 ### What happens to a contact's ad targeting when they become a customer?
 
 If your segment has an exclusion condition (e.g., Account Type ≠ "Customer"), the contact is automatically **removed** from the synced ad audience as soon as that condition is met. See [Clay Ads](https://university.clay.com/docs/clay-ads) for platform-specific guidance.
