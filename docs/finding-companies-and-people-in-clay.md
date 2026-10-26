@@ -773,9 +773,9 @@ If your people table has a **Company Table Data** column (created automatically 
 
 **Note:** Column deduplication removes entire rows from your table based on matching values. There is no built-in undo — export your table to CSV before running a dedupe if you want a backup you can re-import. For full rules and recovery options, see [Dedupe columns](table-columns-overview.md).
 
-### Why do "Picture URL Copy" and "Picture URL Orig" return null in Enrich Person?
+### Why do "Picture URL Copy" and "Picture URL Orig" (Picture Org URL) return null in Enrich Person?
 
-This is expected behavior. Clay stopped returning professional profile picture URLs through the Enrich Person enrichment for privacy and compliance reasons. Both the **Picture URL Copy** and **Picture URL Orig** output fields are present but always return null for all customer workspaces — this is not a bug and is not plan-specific (Growth, Pro, and Enterprise plans are all affected equally).
+This is expected behavior. Clay stopped returning professional profile picture URLs through the Enrich Person enrichment for privacy and compliance reasons. Both the **Picture URL Copy** and **Picture URL Orig** output fields (sometimes read as "Picture Org URL") are present but always return null for all customer workspaces — this is not a bug and is not plan-specific (Growth, Pro, and Enterprise plans are all affected equally). If these picture fields are empty on every row of your Enrich Person column, even across thousands of rows, nothing is wrong with your table or inputs. These are the only picture fields in the Enrich Person output.
 
 If you need professional profile photos in your workflow, the alternative is to use a third-party scraping tool integrated with Clay via HTTP API or webhooks:
 
