@@ -161,6 +161,8 @@ This setting controls row-level behavior only. It is separate from the column-le
 
 Automatically creates new columns in the destination table for any that don't already exist.
 
+Auto-extract new columns checks the destination table's [column limit](table-columns-overview.md#column-limits) against every new column a Send table data column needs to create at once, not one column at a time. If the new columns would put the destination table over its column limit, none of them are created. See "A mapped column never appears in the destination table" under [Best practices & troubleshooting](#best-practices--troubleshooting).
+
 **Include column colors**
 
 When on (default), copies the source column's [view-level color](table-columns-overview.md#color-column-headers) to each new destination column created by **Auto-extract new columns**. Turn this off if you prefer auto-created destination columns to start without any color.
@@ -343,6 +345,16 @@ Scheduled column re-runs force-run every row in the selected columns regardless 
     5. **Pass a reference instead of the full content.** If the large field already lives in an external system (Salesforce, Airtable, etc.), send only the record ID or a URL — the destination can look it up when needed.
 
 -   **"✅ Sent" means Clay dispatched the data — not that individual columns in the destination table have been populated.** The `Sent At` timestamp and `Number Of Rows Sent` confirm that Clay placed those rows into the **"rows from: [source table]"** column in the destination table. For fields that don't yet have a matching column, `Auto-extract new columns` (on by default) creates them automatically. However, if the destination table already has columns with plain-text data — for example, rows filled in manually or imported from a CSV — those existing columns won't be updated automatically. In that case, open the destination table, click the source cell, and use **Add to column** to map each field. See [Mapping table data in the destination table](#mapping-table-data-in-the-destination-table) above.
+-   **A mapped column never appears in the destination table even though `Auto-extract new columns` is on, while other mapped columns work:** The destination table has most likely hit its column limit. `Auto-extract new columns` checks the column limit against the total number of new columns a Send table data column needs to create, not one column at a time. If the destination table's current column count plus those new columns is more than the table's column limit (**100** by default, or a higher custom limit if Clay support raised it for your workspace), **none** of the new columns are created, and no error message appears. Mapped fields that already have a matching column in the destination table still receive data, which is why some columns keep working while the new ones are missing.
+
+    **Example:** A destination table has 111 columns and a custom column limit of 120. A Send table data column maps 63 fields, and 51 of them don't have a matching destination column yet. 111 + 51 = 162, which is over 120, so none of the 51 new columns are created. A Send table data column that needs only 1 new column gives 111 + 1 = 112, which is within 120, so that column is created.
+
+    **To get the missing column into the destination table:**
+
+    1.  Count the destination table's columns (including hidden ones) and compare the count with the table's column limit. See [Column limits](table-columns-overview.md#column-limits).
+    2.  In the source table, select **Tools → Export → Send table data**, choose the same destination table, and select only the field (or fields) that are missing.
+    3.  Keep the number of new columns small enough that the destination table's current column count plus the new columns stays at or under the column limit, then run the new Send table data column.
+    4.  If the destination table has no room left, delete unused columns in the destination table first.
 -   **The column shows "✅ Sent" after re-running, but rows you deleted from the destination table do not reappear:** When destination rows are deleted, Clay removes the internal tracking records associated with those rows. However, each Send Table Data cell in the source table retains a cached record of the last inputs it sent. On a re-run, if the source data being sent has not changed since the previous send, the cell detects no difference and skips execution entirely — keeping its old "✅ Sent" display without actually sending anything. No new rows are created in the destination.
 
     Using the column-level **Run column** or **Force run** option from the column header does not resolve this — those options only target cells that are empty or out of date, not cells that already have a result. To bypass the input-hash check, you must right-click an **individual cell** and select **Force run this cell**. This re-sends that row's data and creates a new row in the destination table.
