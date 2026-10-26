@@ -280,11 +280,12 @@ Clay provides access to a wide range of AI models from multiple providers. Below
 
 ### Model deprecation policy
 
-Clay periodically retires older models from the same class to keep the model selection dropdown manageable — as newer versions are released, their predecessors are deprecated. When a model is deprecated:
+Clay periodically retires older models from the same class to keep the model selection dropdown manageable — as newer versions are released, their predecessors are deprecated. Clay also deprecates and removes models when a provider such as OpenAI retires them. When a model is deprecated:
 
 -   **It is removed from the model dropdown.** Deprecated models cannot be selected for new columns or configurations.
--   **Existing configurations keep running unchanged.** Any column or configuration already using the deprecated model continues to work as-is — no action is needed on your end.
--   **Migration is not automatic.** Clay does not automatically switch your existing configurations to a newer model. If you want to use a newer model, open the column settings and select the replacement from the dropdown.
+-   **Existing configurations keep running while the model is deprecated.** Any column already using a deprecated model keeps that model selected and continues to run on it. The model still appears in that column's model dropdown, so you can switch to a newer model whenever you're ready.
+-   **Before a model is fully removed, Clay migrates existing columns to a replacement.** When a deprecated model is about to be removed from Clay entirely — for example, because the provider is retiring it — Clay updates standalone Use AI columns and Claygent agents that still use it to a supported replacement model, so you don't need to update those tables and columns one by one. Waterfall columns that contain Use AI steps are not included in this migration — check those manually and select a new model in each Use AI step.
+-   **Updating your API key doesn't change the model.** Editing or reconnecting a connection with a new API key only replaces the credentials. Each column keeps the model it already has selected. To rotate a key without touching your tables, see [Rotating or updating credentials](https://university.clay.com/docs/connections-and-integration-accounts#rotating-or-updating-credentials).
 -   **Proactive notification applies only to pricing changes.** Clay notifies customers when a model change affects credit pricing. For other deprecations, no advance notification is sent.
 
 ## Questions?
