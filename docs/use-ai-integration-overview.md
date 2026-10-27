@@ -50,7 +50,7 @@ After generating a setup, you can easily edit your original description and rege
 
     **Note:** If you want to analyze website content using a **Create or modify content** column, first add a **Scrape Website** column (click **Add column**, search for "Scrape Website", and select it) to pull the page text into a table column, then reference that column in your AI prompt. The scraped content lives in that column only — it is not globally available to other AI columns unless you explicitly reference it. For more complex web research — visiting multiple pages, following links, or multi-step browsing — a **Claygent** agent column (accessible via **Add column → [AI section]**) is the most reliable option; it has web browsing built in and supports a range of models including Clay's parallel models, Claude, GPT, Gemini, Grok, Mistral, and others.
 4.  Select a `Model` from the dropdown.
-    1.  For `Web research (Claygent)`, the `Auto` toggle at the top of the dropdown is on by default, and Clay picks the model for each row. Turn it off to choose a model yourself.
+    1.  For `Web research (Claygent)`, the `Auto` toggle at the top of the dropdown is on by default, and Clay picks the model for each row. Turn it off to choose a model yourself. `Auto` is currently in beta — if you don't see the toggle, contact support to enable it.
     2.  Click `Compare models` to get more detailed information about each model.
     3.  _(Optional)_ Set the **Temperature** to control how creative or consistent the model's output is. Options are **Very Low**, **Low**, **Medium** (default), **High**, and **Very High** — lower values produce more predictable, repeatable results; higher values produce more varied responses. The underlying numeric value sent to the model's API varies by provider:
 
@@ -129,7 +129,9 @@ Some of the providers behind these models publish their own prompting guides:
 
 ### Using Auto
 
-For `Web research (Claygent)`, new columns use `Auto` by default. Clay classifies each row's task and runs it on a model that fits:
+**`Auto` is currently in beta and rolling out to workspaces gradually.** If you don't see the `Auto` toggle at the top of the `Model` dropdown, contact support to enable it.
+
+For `Web research (Claygent)`, new columns use `Auto` by default when it's available in your workspace. Clay classifies each row's task and runs it on a model that fits:
 
 -   A fast, inexpensive one for a quick lookup
 -   Stronger ones for hard research
