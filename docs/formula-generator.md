@@ -238,7 +238,7 @@ To fix it: in the description field, delete any plain-text column mention, type 
 
 ### **Why does my Base64 formula using `Buffer` error on every row?**
 
-Clay formulas run JavaScript in a sandbox that does not include Node.js APIs, so the Node.js `Buffer` object isn't available in formula columns. A formula like `Buffer.from({{LinkedIn URL}} || "").toString("base64")` fails on every row, and the cells show *"This formula could not be calculated"*. This applies whether you wrote the formula yourself or the formula generator produced it.
+Clay formulas run JavaScript in a sandbox that does not include Node.js APIs, so the Node.js `Buffer` object isn't available in formula columns. A formula like `Buffer.from({{Profile URL}} || "").toString("base64")` fails on every row, and the cells show *"This formula could not be calculated"*. This applies whether you wrote the formula yourself or the formula generator produced it.
 
 To Base64-encode a value in a formula column, use `btoa()` instead:
 
@@ -246,7 +246,7 @@ To Base64-encode a value in a formula column, use `btoa()` instead:
 2.  Expand the **Formula** section and replace the `Buffer` expression with `btoa()`. For example:
 
     ```javascript
-    btoa({{LinkedIn URL}} || "")
+    btoa({{Profile URL}} || "")
     ```
 
 3.  Click **Save column** and re-run the column. Each cell now shows the Base64-encoded value.
@@ -254,7 +254,7 @@ To Base64-encode a value in a formula column, use `btoa()` instead:
 **Values with non-English characters:** `btoa()` only accepts characters in the Latin-1 range. If the value can contain characters outside Latin-1, such as emoji or non-Latin scripts, encode it as UTF-8 first:
 
 ```javascript
-btoa(unescape(encodeURIComponent({{LinkedIn URL}} || "")))
+btoa(unescape(encodeURIComponent({{Profile URL}} || "")))
 ```
 
 **Decoding isn't available:** `atob()`, the matching Base64-decode function, is not available in Clay formulas.
