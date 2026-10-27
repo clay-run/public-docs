@@ -46,6 +46,15 @@ Compliance also supports better customer experience: respecting communication pr
 
 Clay enables outbound outreach workflows — including call lists and integrations with sales and engagement tools — so it's critical that the following best practices are adopted by all teams using Clay data.
 
+### **Does Clay check phone numbers against DNC registries before returning them?**
+
+No. Clay does not check phone numbers against any national Do Not Contact (DNC) registry — such as the U.S. National Do Not Call Registry or Singapore's Do Not Call Registry — before a data provider returns them. Phone numbers from Clay's phone-finding enrichments and phone waterfalls are returned unscreened, so you need to screen every returned number against the DNC registries that apply to your contacts before you call them.
+
+How to screen phone numbers returned by Clay depends on the contact's country:
+
+-   **Countries Meer covers:** Add Meer's **Screen phone number against DNC registries** action downstream of your phone column. Meer covers the US (federal and state registries), UK, Ireland, Belgium, Germany, Spain, New Zealand, and Australia. See "Scrub Against Regulatory DNC Lists" below and the [Meer integration guide](https://university.clay.com/docs/meer-integration) for setup steps.
+-   **Countries Meer doesn't cover (for example, Singapore):** Meer can't screen phone numbers from countries outside its coverage. If the national registry for that country offers an API and you have an account with the registry operator, you can call that API from an [HTTP API](https://university.clay.com/docs/http-api-integration-overview) column in your Clay table. Otherwise, screen those numbers outside Clay before calling.
+
 ### **a. Scrub Against Regulatory DNC Lists**
 
 Before initiating outbound calls:
