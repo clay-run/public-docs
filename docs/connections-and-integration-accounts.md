@@ -1,6 +1,6 @@
 ---
 title: Connections and integration accounts
-description: Add, edit, test, and delete integration accounts in Clay's Connections settings, view where each connection is used, and set default accounts for your workspace.
+description: Add, edit, test, and delete integration accounts in Clay's Connections settings, verify connection status (including why it resets to Verify after a refresh), view where each connection is used, and set default accounts for your workspace.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -130,6 +130,20 @@ Clay tests the connection and shows a status badge:
 If the status shows **Warning** or **Error**, click the badge and select **Reconnect** to re-authenticate the account.
 
 > **Note:** Clay-managed accounts (integrations where Clay provides the API key) always show a static **Connected** badge — these are maintained by Clay and do not need manual verification.
+
+### Why a connection shows Verify again after you refresh the page
+
+On the `Settings` > `Connections` page, the **Status** column for an account you added with your own API key (for example, your own Anthropic API key) shows a **Verify** button every time the page loads. This is expected. A **Connected** result from clicking **Verify** only lasts until you refresh or leave the page — Clay does not save the verification result, so after a browser refresh the account goes back to showing **Verify**.
+
+Seeing **Verify** after a refresh does not mean your API key was lost, wasn't saved, or is disconnected. The key is still saved on the connection, and any columns that use that account keep using it. You do not need to reconnect or re-enter the key.
+
+To confirm the key still works at any time:
+
+1.  Navigate to `Settings` > `Connections` and select the service (for example, Anthropic).
+2.  Click **Verify** next to the account. The status shows **Checking** while Clay tests the key.
+3.  You'll see **Connected** if the key is valid. If you see **Error**, click the `…` menu next to the account and choose **Reconnect** to enter a new key (see [Rotating or updating credentials](#rotating-or-updating-credentials)).
+
+Clay-managed accounts (for example, the Clay-managed Anthropic account) always show **Connected** and never show a **Verify** button, so it's normal for a Clay-managed account and your own key to show different statuses side by side after a refresh.
 
 ### Testing credentials
 
