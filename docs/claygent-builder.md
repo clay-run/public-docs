@@ -1,7 +1,7 @@
 ---
 title: Claygent builder
 description: Build smarter agents faster
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-10-27T17:00:17.792Z
 ---
 
 # Claygent builder
@@ -125,9 +125,18 @@ You can also add MCP server connections workspace-wide from `Settings` → `Conn
 
 ### Model selection
 
-Swap between different AI models in the configuration panel to test output quality without touching your prompt.
+New Claygents you build in Claygent builder start on `Auto`, which routes each task to the model that fits it:
 
-**Auto model (currently in beta — contact support to enable):** If the Auto toggle is available in your workspace, it appears at the top of the model selector. Switching **Auto** on lets Clay automatically select the right model for your task — balanced quality and speed, recommended for most tasks. When Auto is on, the model list is hidden; toggle it off to choose a specific model manually. New Claygent columns default to Auto when it is available in your workspace.
+-   A fast, inexpensive one for a straightforward lookup
+-   Stronger ones for hard research
+
+Each run gets an appropriate model without you picking one.
+
+Claygents you built earlier keep the model they already use, as do duplicates of them.
+
+In the model selector, `Auto` sits at the top as a toggle. Switch it off to see the full model list, where you can choose a specific model at any time. This lets you test output quality without touching the prompt.
+
+**Note: per-row cost varies under `Auto`.** Each row is billed at the rate of whichever model ran it. For how model rates work, see [How AI is priced](ai-pricing.md).
 
 Clay's parallel models differ in power and cost:
 
@@ -328,7 +337,7 @@ To prevent cells that already have results from being re-run automatically when 
 
 Credit cost depends on the AI model you select. Claygent defaults to **Argon** for web research — Clay's model for open-ended web lookups — which costs **3 credits per row**. Switching to **Helium** (1 credit per row) is a cost-effective alternative for simpler web research tasks. For a full model pricing reference, see [How AI is priced](ai-pricing.md).
 
-**Note:** If your workspace has the **Auto model** beta enabled, new Claygent columns default to Auto instead of Argon. Auto runs on a third-party model and is priced differently from Clay's fixed parallel models — see [How AI is priced](ai-pricing.md) for details once Auto is generally available, or contact support to confirm current pricing.
+**Note:** New Claygents you build in Claygent builder start on **Auto** instead of Argon. Under Auto, per-row cost varies — each row is billed at the rate of whichever model ran it. See [How AI is priced](ai-pricing.md) for model rates.
 
 If your goal is to find people associated with companies at scale — rather than open-ended web research — **Find People** is significantly more cost-effective: the **Find Contacts at Company** action costs 0.5 credits per row on current pricing plans (1 credit per row on legacy plans), versus 3 credits per row for Argon-based Claygent. Use Claygent when you need judgment-based research (summarizing company news, scoring leads, writing personalized outreach). Use Find People when you need structured contact lookups at scale.
 
