@@ -150,6 +150,8 @@ Each record exported or synced consumes 1 action. Data credits apply for any enr
 
 The 50,000 row limit applies to ad audiences exported from tables. For larger audiences, create multiple tables and attach multiple audiences to your campaigns in the ad platform.
 
+Audiences ad syncs send at most 300,000 records per sync to LinkedIn Ads and at most 1,000,000 records per sync to Meta Ads, Google Ads, Bing Ads, Reddit Ads, and Vibe.co. See [Why does my ad sync fail with "The segment is too large to upload"?](#why-does-my-ad-sync-fail-with-the-segment-is-too-large-to-upload).
+
 Each audience segment supports only one ad sync. If a segment already has an active or previously-exported ad sync, the option to create a new ad sync from that segment will not appear. To sync the same audience to a different ad platform, duplicate the segment (select **Duplicate** from the segment's menu) and create a new ad sync from the duplicated segment.
 
 Company (account-level) segments are supported by the professional network only. Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co support People (contact-level) segments only. To run campaigns on those platforms targeting contacts at your company accounts, use **Find people from this list** on your Companies segment to build a People segment, then create an ad sync from that People segment.
@@ -283,6 +285,21 @@ A **Timed out** status (yellow indicator) means Clay successfully sent your audi
 When you see this status, Clay shows the message: **"Audience synced. No matches came back in time."** Check your campaign manager on the ad platform directly for the latest match rate and audience size — the platform may have processed the data without returning results to Clay in the expected window.
 
 The **Timed out** status applies only to professional network syncs. Other platforms use shorter polling windows and show a **Failed** status if they do not respond in time.
+
+### **Why does my ad sync fail with "The segment is too large to upload"?**
+
+An Audiences ad sync destination shows **Failed** with the message **"The segment is too large to upload. Narrow the segment before your next sync."** when the ad platform rejects Clay's upload file as too large. Other destinations on the same ad sync can still succeed. For example, a segment can sync to Meta Ads and fail on LinkedIn Ads.
+
+-   **Records sent per sync:** Clay sends at most **300,000** records per sync to LinkedIn Ads. Meta Ads, Google Ads, Bing Ads, Reddit Ads, and Vibe.co are capped at **1,000,000** records per sync.
+-   **Why LinkedIn Ads can fail with fewer than 300,000 contacts:** Clay sends more than one identifier for each contact (such as email addresses and first and last name), so the upload file can hold more identifiers than you have contacts. LinkedIn can reject that file even when the segment has fewer than 300,000 contacts. For example, a segment of about 237,000 contacts can sync to Meta Ads and still fail on LinkedIn Ads.
+-   **This failure isn't retried automatically.** Narrow or split the segment before the next sync.
+
+**To fix the error, split the segment and sync each part separately:**
+
+1.  Open the segment in Audiences and add a filter that keeps roughly half of the contacts (for example, by country or by company size). Save it as a new segment.
+2.  Create a second segment with the opposite filter so it covers the remaining contacts.
+3.  Create an ad sync from each segment to the same LinkedIn Ads account. Each audience segment supports only one ad sync.
+4.  In LinkedIn Campaign Manager, add both matched audiences to your campaign.
 
 ### **Why am I getting a 403 error when I click Continue on an ad sync?**
 
