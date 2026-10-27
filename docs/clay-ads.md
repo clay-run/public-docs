@@ -253,7 +253,9 @@ No, LinkedIn and Meta don't provide contact-level match visibility for privacy r
 
 ### **How do I export the contacts in my ad sync to CSV?**
 
-The ad sync page does not have a CSV download button. The **People** (or **Companies**) list shown next to the Setup, Match, and Sync steps is a read-only preview of the segment you're syncing. To download the contacts in an ad sync as a CSV, open the ad sync's source segment in Audiences and export it from there:
+To download the contacts in an ad sync of a People segment as a CSV, open the ad sync from the **Ads** page, go to the **Sync** step, and click **Download as CSV** at the top of the **Sync destinations** section. The button appears once the ad sync has at least one destination. The CSV is named after the ad sync and contains the fields mapped for the ad sync's destinations, including hashed emails when Enhanced Matching is set up — not every field in your Audience.
+
+The **People** (or **Companies**) list shown next to the Setup, Match, and Sync steps is a read-only preview of the segment you're syncing. To download the source segment's records with other fields, or if you don't see **Download as CSV**, open the ad sync's source segment in Audiences and export it from there:
 
 1. Open the ad sync from the **Ads** page and click **Setup** at the top of the page. This works for active syncs too — the Setup step opens in read-only mode.
 2. In the **Segment** card, click the **⋮** (three-dot) menu and select **Open segment in new tab**. The segment opens in Audiences.
