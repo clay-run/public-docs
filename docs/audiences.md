@@ -341,6 +341,8 @@ To turn sync on or off for a source, open its settings by clicking the **⋮** m
 
 **Live search runs on a daily cadence, independently of any signal cadence.** If your audience has a signal that runs on a monthly schedule, the Find People or Find Companies search still re-runs once per day. To get a point-in-time result instead of continuously growing results, turn live search off: click the **⋮** menu next to the search source in the audience sidebar, or go to **Settings → Sources / Destinations**, click **⋮** next to the source row, and select **Turn live search off**. Contacts already imported remain in your audience — only new daily additions stop.
 
+**Live search record limit:** Each Find People or Find Companies search you save to Audiences can add up to 1,000,000 records in total, counting its initial import plus every daily live search run. If the next live search run would take that search past 1,000,000 records, Clay fails that run, adds no records from it, and turns live search off for that search. Records the search already imported stay in your audience. If a new search's estimated results exceed 1,000,000 records, Clay rejects the import before it starts and asks you to add a limit of 1,000,000 or fewer to your search.
+
 ### Entity resolution and deduplication
 
 Audiences uses two systems to prevent duplicate records:
