@@ -95,9 +95,33 @@ When a function contains a waterfall, the estimated cost shown (marked with a `~
 
 No. As of General Availability, functions support unlimited rows via passthrough. Functions also include a 10x speedup and fair sharding for parallel execution, so large workloads are distributed efficiently instead of queuing. Prior to GA, Functions had a 50,000-row limit.
 
-**Note:** The function's live view displays only the most recent **1,000 rows** at a time. This limit is intentional: functions are passthrough tables, and keeping the active row count low ensures there is enough space for new incoming records to be processed. All rows are fully processed and their results returned to the calling table regardless of this limit. When the function is called from multiple tables, the live view allocates up to **50 rows per calling table** (prioritizing the most recently active tables first), with any remaining capacity filled by the globally newest rows.
+**Note:** The function's live view keeps only the most recent **1,000 completed rows** at a time. This limit is intentional: functions are passthrough tables, and keeping the active row count low ensures there is enough space for new incoming records to be processed. All rows are fully processed and their results returned to the calling table regardless of this limit. When the function is called from multiple tables, the live view allocates up to **50 rows per calling table** (prioritizing the most recently active tables first), with any remaining capacity filled by the globally newest rows. Rows that haven't completed — rows showing **Run stopped**, errored rows, and queued or in-progress rows — aren't removed, so the live view can show more than 1,000 rows in total.
 
-To review rows beyond the 1,000 shown in the live view, click the **Archive** button in the function table's toolbar. The Archive section shows historically processed rows organized by timeline, and you can export the full set as a CSV. If you need to retain more active rows in the live view (for example, for easier auditing of recent runs), open the auto-delete settings for the function table and update the **Number of rows to keep** field — though increasing this limit on high-volume functions can slow processing.
+To review completed rows that are no longer in the live view, click **View archive** in the function's footer, then click **Export full archive** in the archive table's toolbar to download them as a CSV. The function's row-retention setting isn't editable from the function itself; contact support if you need the function to keep more rows. See [Why does my function show fewer rows than the run count in "View run stats"?](#why-does-my-function-show-fewer-rows-than-the-run-count-in-view-run-stats) for details.
+
+### Why does my function show fewer rows than the run count in "View run stats"?
+
+A function's **View run stats** chart and the function's row list measure different things, so their numbers don't match:
+
+-   **View run stats** counts every run (execution) of the function in each time period.
+-   **The function's row list** shows only the rows the function is currently keeping.
+
+For example, a function that ran about 6,000 times in a period can show only about 1,900 rows in its list. This is expected: the row list isn't a log of every run, and completed rows that leave the list have already sent their results back to the calling table.
+
+Functions are passthrough tables, so Clay cleans up the function's row list automatically:
+
+-   **Completed rows are removed.** Once a row finishes and sends its data back to the calling table (or its run condition isn't met), it becomes eligible for removal. The function keeps the **1,000 most recent completed rows** and removes older ones.
+-   **Rows that haven't completed stay.** Rows showing **Run stopped**, errored rows, and queued or in-progress rows aren't removed, and they're listed on top of the 1,000 completed rows.
+
+For example, a function list showing 1,930 rows can be 1,000 recent completed rows plus 930 rows where **Send data back** was stopped.
+
+**To view or download completed rows that were removed from a function:**
+
+1.  Open the function from **Functions** on your Clay homepage.
+2.  Click **View archive** in the function's footer, at the bottom of the screen. This opens the function's archive table.
+3.  In the archive table's toolbar, click **Export full archive** to download the archived rows as a CSV.
+
+Archived function rows are kept for **30 days** after they're removed from the function's row list. Archiving is turned on by default for new functions. If you don't see **View archive** in a function's footer, archiving isn't enabled for that function — contact support.
 
 ### Why does "Go to row in function" say the function row has been archived?
 
@@ -105,9 +129,9 @@ When you click a cell in your table that was processed by a function and see **"
 
 **Your results are not lost, and you do not need to re-run anything.** The function already ran successfully, wrote the output back to your calling table, and charged credits at the time of execution. The "archived" message means only that the drill-through record inside the function's own view is no longer accessible — not that the enrichment failed or that data is missing from your table.
 
-This happens because the function's Live view retains at most 1,000 rows total, with up to 50 rows allocated per calling table. On high-volume runs — or when the same function is called from many tables — earlier rows age out of that window as newer ones arrive.
+This happens because the function's Live view retains at most 1,000 completed rows, with up to 50 rows allocated per calling table. On high-volume runs — or when the same function is called from many tables — earlier rows age out of that window as newer ones arrive.
 
-To view historical rows that have aged out, click **Archive** in the function table's toolbar. The Archive section shows processed rows organized by timeline and can be exported as a CSV.
+To view historical rows that have aged out, click **View archive** in the function's footer. Archived rows are kept for 30 days, and you can download them as a CSV with **Export full archive** in the archive table's toolbar.
 
 ### What's the difference between an input and a column in a function?
 
