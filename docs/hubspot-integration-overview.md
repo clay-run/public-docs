@@ -189,7 +189,7 @@ These permissions are requested by default but can be disabled:
 
 These permissions are available but not requested by default:
 
--   [`automation.sequences.read`](http://automation.sequences.read) — View sequence details.
+-   [`automation.sequences.read`](http://automation.sequences.read) — View details about sequences.
 -   `automation.sequences.enrollments.write` — Enroll contacts in a sequence.
 
 ### Run settings
@@ -481,15 +481,17 @@ Each HubSpot column stores a reference to the specific connection it was configu
 
 ### Why is the Sequence dropdown empty when I set up "Enroll a contact in a sequence"?
 
-The Sequence field populates dynamically from your HubSpot account, but it requires the `automation.sequences.read` OAuth scope — which is **disabled by default** in Clay's HubSpot connection. If no sequences appear in the dropdown, this scope was not enabled when you first connected.
+The Sequence field in the "Enroll a contact in a sequence" action populates dynamically from your HubSpot account, but it requires the `automation.sequences.read` OAuth scope — which is **disabled by default** in Clay's HubSpot connection. If no sequences appear in the dropdown, or searching for a sequence by name shows "No options found," this scope was most likely not enabled when you connected HubSpot. Changing a sequence's sharing settings in HubSpot (for example, sharing it with "Everyone") doesn't fix this — the HubSpot connection in Clay needs the sequence permissions.
 
 **To fix:**
 
 1.  Go to **Settings → Connections**.
-2.  Find your HubSpot connection and click **Reconnect**.
-3.  On the scopes screen, check both **`automation.sequences.read`** and **`automation.sequences.enrollments.write`**.
-4.  Complete the reconnection flow.
+2.  Find your HubSpot connection, open its `···` menu, and click **Reconnect**.
+3.  In the permissions list, check both **View details about sequences** (`automation.sequences.read`) and **Enroll contacts in a sequence** (`automation.sequences.enrollments.write`).
+4.  Complete the HubSpot sign-in to finish reconnecting.
 5.  Return to your "Enroll a contact in a sequence" column — the Sequence dropdown will now show your available HubSpot sequences.
+
+**Only sequences owned by the connected HubSpot user appear.** Clay loads the Sequence dropdown for the HubSpot user who authorized the connection, so the list shows that user's own sequences — even when other users' sequences are shared with "Everyone" in HubSpot. If a sequence you expect is missing after reconnecting, check which HubSpot user owns it, and connect HubSpot in Clay as that user.
 
 **Note:** If after enabling these scopes you see an "Authorization failed" error, check the wording. "Your account lacks access to the required scopes" means your HubSpot plan may not include the Sequences feature — see [Why do I get "Authorization failed because your account lacks access to the required scopes"?](#why-do-i-get-authorization-failed-because-your-account-lacks-access-to-the-required-scopes-automationsequencesenrollmentswrite-automationsequencesread) below. "This app hasn't been approved to access the required scopes" means HubSpot App Governance is blocking the scopes — see [Why do I get "Authorization failed because this app hasn't been approved to access the required scopes"?](#why-do-i-get-authorization-failed-because-this-app-hasnt-been-approved-to-access-the-required-scopes-for-example-crmexport-or-automationsequencesenrollmentswrite-crmlistswrite-automationsequencesread) below.
 
