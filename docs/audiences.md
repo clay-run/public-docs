@@ -358,7 +358,7 @@ Records need a high-confidence identifier to match. Auto-enrichment adds `Linked
 
 **Import record matching (beta)**
 
-When importing from Salesforce or Snowflake, you can configure **Import record matching** to deduplicate records at ingestion time. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
+When importing from a CRM, data warehouse, or CSV (Salesforce, HubSpot, Microsoft Dynamics 365, Snowflake, BigQuery, Databricks, or CSV), you can configure **Import record matching** to deduplicate records at ingestion time. Import record matching does not apply to Find People or Find Companies search imports. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
 
 **Example:** If you're importing from both Snowflake and Salesforce, setting `domain` as your alias field ensures that a single company row in your Audiences reflects data from both sources — rather than creating two separate records for the same company.
 
@@ -1257,6 +1257,23 @@ To check the setting:
 3.  Before you can turn the toggle on, select a Clay ID field (a Salesforce field marked as **External ID**) in the **Record matching** section. If no Clay ID field is selected, the settings show "Create new records mapping is required when enabled" and won't save. See [How do I create new Salesforce Accounts or Contacts from an Audience?](#how-do-i-create-new-salesforce-accounts-or-contacts-from-an-audience) for setup steps.
 
 Turning on `Create new Salesforce records` applies to every person in your Audience without a Salesforce match, not only the people from one search. See **What happens when you first enable this toggle** in [Writing back to your CRM](#writing-back-to-your-crm) before you enable it.
+
+### Why are there duplicate people records in my Audience when Salesforce has only one record?
+
+The same person can appear as several person records in your Clay People audience when they came into Audiences from more than one source and Clay didn't match the copies to each other. People can enter your Audience from:
+
+-   **Find People searches** — each search is its own import source. Results land in a draft that you commit to **All People**, and a live search re-runs daily and adds new results to that draft.
+-   **Your CRM import** — for example, Salesforce Contacts or Leads.
+
+Clay merges copies of a person only when it can match them on a strong identifier, such as a professional network URL or email, at the time the record is imported or upserted. If an incoming copy isn't matched to the person already in your Audience, Clay creates a separate person record. Running several Find People searches that target overlapping job titles makes this more likely, because the same person can come in through more than one search. See [Entity resolution and deduplication](#entity-resolution-and-deduplication) for how matching works.
+
+**Why Salesforce still shows one record:** Duplicate person records in Audiences exist in Clay only — Audiences deduplication never merges or alters records in your Salesforce org. Clay creates new Salesforce Contacts only when the **`Create new Salesforce records`** export toggle is on, and that toggle is off by default. With the toggle off, extra copies of a person created in Clay are not added to Salesforce. See [Do people I save from Find People to All People sync to Salesforce automatically?](#do-people-i-save-from-find-people-to-all-people-sync-to-salesforce-automatically)
+
+**To prevent duplicate people from future imports:** Set up **Import record matching** for People and choose **Email** or the person's professional network URL as the alias field, so new records from your CRM, data warehouse, and CSV imports (Salesforce, HubSpot, Microsoft Dynamics 365, Snowflake, BigQuery, Databricks, and CSV) are matched to people already in your Audience. Import record matching does not apply to Find People search imports, so it won't deduplicate people that come in from more than one Find People search. Import record matching is currently in beta — contact your Growth Strategist to enable it for your workspace. See **Import record matching (beta)** in [Entity resolution and deduplication](#entity-resolution-and-deduplication) for setup steps. Merged people records cannot be unmerged, and the setting applies only to records imported after you turn it on.
+
+**To clean up duplicate people that already exist:** Audiences has no action to merge two existing person records into one, and turning on Import record matching does not merge copies already in your Audience. Archive the extra copies instead — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience).
+
+If you're not sure which import created a duplicate person, contact Clay support with the person's name or a link to the record. Leave the duplicate copies in place until support has looked, so they can trace which source created each copy.
 
 ### How do I write enriched fields back to existing Salesforce records from a workflow?
 
