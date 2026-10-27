@@ -353,9 +353,9 @@ When a company comes into Audiences — for example from Salesforce, HubSpot, Sn
 2.  CRM record ID (for example, the Salesforce Account ID).
 3.  Clay company ID.
 
-When you push records with `Upsert Audiences Record`, Clay uses the **Lookup fields** you select in the action (**Domain** or **LinkedIn URL** for Companies) to find the matching account.
+When you push records with `Upsert Audiences Record`, Clay uses the **Lookup fields** you select in the action (**Domain** or the company's professional network URL for Companies) to find the matching account.
 
-If an identifier matches, the incoming data is added to that existing account. If none match, Clay creates a new account. This step only compares against data already in your Audience — it doesn't look anything up outside Clay. Company domain and LinkedIn URL are saved on every account, but CRM and data warehouse imports don't use them to match existing accounts unless you choose them in Import record matching.
+If an identifier matches, the incoming data is added to that existing account. If none match, Clay creates a new account. This step only compares against data already in your Audience — it doesn't look anything up outside Clay. Company domain and professional network URL are saved on every account, but CRM and data warehouse imports don't use them to match existing accounts unless you choose them in Import record matching.
 
 **How Audiences links records to Clay's company and people database (entity resolution)**
 
@@ -364,7 +364,7 @@ Separately, entity resolution runs in the background and tries to match each rec
 -   **For People:** LinkedIn URL → Email → Probabilistic matching (name + company + location + role)
 -   **For Companies:** LinkedIn URL → Domain → Probabilistic matching (name + location + industry)
 
-When entity resolution finds a match for a company, Clay attaches a Clay company ID (also called a CPJ ID) to the account. Clay also writes the country code, company LinkedIn URL, and company logo from its database, even if those fields already have values from your CRM. Entity resolution doesn't write or overwrite any other fields — such as company name, domain, industry, or employee count — and it never merges two records into one. For people, entity resolution can also update the person's country code, LinkedIn URL, and job title.
+When entity resolution finds a match for a company, Clay attaches a Clay company ID (also called a CPJ ID) to the account. Clay also writes the country code, company professional network URL, and company logo from its database, even if those fields already have values from your CRM. Entity resolution doesn't write or overwrite any other fields — such as company name, domain, industry, or employee count — and it never merges two records into one. For people, entity resolution can also update the person's country code, professional network URL, and job title.
 
 Records need a high-confidence identifier to match. Auto-enrichment adds `LinkedIn URL` and `CPJ ID` at no cost to improve matching.
 
@@ -427,7 +427,7 @@ There is an optional **CSV-first override** that, when enabled for a workspace, 
 
 **When merging happens**
 
-Clay automatically merges two Audience records into one only when both records have the same CRM record ID — meaning they are the same record in your CRM. This applies to both companies and people. A match on domain, email, LinkedIn URL, or Clay company ID never merges two records; it only adds the incoming data to the matching record or records.
+Clay automatically merges two Audience records into one only when both records have the same CRM record ID — meaning they are the same record in your CRM. This applies to both companies and people. A match on domain, email, professional network URL, or Clay company ID never merges two records; it only adds the incoming data to the matching record or records.
 
 Merging happens only at the time of a record upsert or import — not when an existing field is later updated with a matching value. For example, if one company record has a null domain and another has `mpsworks.com`, those two records are not merged when a later enrichment fills the first record's domain with `mpsworks.com`. The two records stay separate. To remove a duplicate record you don't need, archive it — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience).
 
@@ -1027,7 +1027,7 @@ When Salesforce data syncs into Audiences, Leads and Contacts are not always sep
 
 - **Multiple Leads → same Contact** — If two Lead records both have a `ConvertedContactId` pointing to the same Contact, both Leads collapse into that one Clay person record. Only the Lead with the direct conversion pointer is surfaced in Clay; the other Lead is absorbed because both share the same `003…` external ID alias.
 
-- **A Lead without `ConvertedContactId` does not merge this way** — Without a conversion pointer, no shared alias is created, and that Lead appears as its own Clay person record. If Import record matching is set up for Leads with a shared field such as email or LinkedIn URL, the Lead's data is also written to the person record that matches on that field, but the two records are not merged.
+- **A Lead without `ConvertedContactId` does not merge this way** — Without a conversion pointer, no shared alias is created, and that Lead appears as its own Clay person record. If Import record matching is set up for Leads with a shared field such as email or professional network URL, the Lead's data is also written to the person record that matches on that field, but the two records are not merged.
 
 - **Email address is not part of this initial import matching** — Different email addresses on two Lead records that point to the same Contact are irrelevant to the `ConvertedContactId` matching step. The `003…` alias is the sole key — not email, phone, or profile URL.
 
