@@ -343,18 +343,38 @@ To turn sync on or off for a source, open its settings by clicking the **⋮** m
 
 ### Entity resolution and deduplication
 
-Audiences uses two systems to prevent duplicate records:
+When a record comes into Audiences, Clay attaches an identity to it in two automatic steps, before any enrichment runs. Neither step is an enrichment, and neither step uses credits. **Deduplication happens in Clay only** — Audiences does not merge or alter records in your connected Salesforce org.
 
-**Entity Resolution (automatic)**
+**How Audiences matches an incoming company to an existing account**
 
-Entity Resolution runs continuously in the background. It matches records by identifier strength:
+When a company comes into Audiences — for example from Salesforce, HubSpot, Snowflake, a CSV, a search, or a Clay table — Clay first checks whether that company already exists in your Audience. It looks for an exact match on identifiers already stored on your Audience accounts, in this order:
+
+1.  The field you chose in **Import record matching** (beta — see below), if you set it up for the source.
+2.  CRM record ID (for example, the Salesforce Account ID).
+3.  Clay company ID.
+
+When you push records with `Upsert Audiences Record`, Clay uses the **Lookup fields** you select in the action (**Domain** or **LinkedIn URL** for Companies) to find the matching account.
+
+If an identifier matches, the incoming data is added to that existing account. If none match, Clay creates a new account. This step only compares against data already in your Audience — it doesn't look anything up outside Clay. Company domain and LinkedIn URL are saved on every account, but CRM and data warehouse imports don't use them to match existing accounts unless you choose them in Import record matching.
+
+**How Audiences links records to Clay's company and people database (entity resolution)**
+
+Separately, entity resolution runs in the background and tries to match each record to Clay's own database:
 
 -   **For People:** LinkedIn URL → Email → Probabilistic matching (name + company + location + role)
 -   **For Companies:** LinkedIn URL → Domain → Probabilistic matching (name + location + industry)
 
-When a match is found, records merge into a single unified record in Audiences. **Deduplication happens in Clay only** — Audiences does not merge or alter records in your connected Salesforce org.
+When entity resolution finds a match for a company, Clay attaches a Clay company ID (also called a CPJ ID) to the account. Clay also writes the country code, company LinkedIn URL, and company logo from its database, even if those fields already have values from your CRM. Entity resolution doesn't write or overwrite any other fields — such as company name, domain, industry, or employee count — and it never merges two records into one. For people, entity resolution can also update the person's country code, LinkedIn URL, and job title.
 
 Records need a high-confidence identifier to match. Auto-enrichment adds `LinkedIn URL` and `CPJ ID` at no cost to improve matching.
+
+**What happens if Clay doesn't find a match in its company database**
+
+An account that entity resolution can't match to Clay's company database still exists in your Audience with your own data, and it works normally in segments, filters, and workflows. The account just won't have a Clay company ID or the fields Clay writes from its database.
+
+**What happens when an incoming record matches more than one account**
+
+Clay doesn't pick one account at random, and it doesn't combine the accounts. Clay uses the highest-priority identifier that matched (in the order listed above) and updates every account that matches on that identifier, up to 100 accounts. Each account stays its own record. For example, if your Salesforce org has four Accounts for the same parent company, each with a different Salesforce Account ID and domain, Audiences keeps them as four separate accounts — even if all four link to the same company in Clay's database.
 
 **Import record matching (beta)**
 
@@ -382,7 +402,7 @@ When setting up a Snowflake or BigQuery import, you also define a `Unique Identi
 -   **Country-code domain variants** — Clay's entity matching normalizes domains by stripping subdomains and `www` prefixes, but does not automatically merge country-code TLD variants. A company at `swarovski.co.uk` and a company at `swarovski.com` are treated as separate entities by default — this reflects how many enterprises maintain distinct regional accounts. If a regional variant appears as net new in your search results and you want to exclude it, use the **Exclude companies** filter in your Find Companies source. See [Find Companies](find-companies.md) for how to set up exclusions.
 -   **Secondary domains from your CRM** — Clay entity matching uses only the primary domain field mapped from your CRM source. If your CRM stores additional domains for a company (for example, HubSpot's secondary domain fields), those alternate domains are not imported into the Audiences company record and are not used for entity matching. A Find Companies search result for a secondary domain may appear as net new even if the same company exists in your audience under a different primary domain. To exclude known secondary domains from appearing as net new, add them to the **Exclude companies** filter in your Find Companies source.
 
-Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs — org duplicates are imported as separate records. However, because entity resolution matches companies by domain, Salesforce Accounts that share the same domain can be merged into a single company record in Audiences — see [Why does a company in my Companies audience show the wrong Salesforce Account name, type, or owner?](#why-does-a-company-in-my-companies-audience-show-the-wrong-salesforce-account-name-type-or-owner).
+Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs — org duplicates are imported as separate records, and Salesforce Accounts that share the same domain stay separate company records in Audiences. If those accounts show each other's field values, see [Why does a company in my Companies audience show the wrong Salesforce Account name, type, or owner?](#why-does-a-company-in-my-companies-audience-show-the-wrong-salesforce-account-name-type-or-owner).
 
 **Record persistence when a source is removed**
 
@@ -407,7 +427,9 @@ There is an optional **CSV-first override** that, when enabled for a workspace, 
 
 **When merging happens**
 
-Merging two Audience records into one happens only at the time of a record upsert or import — not when an existing field is later updated with a matching value. For example, if one company record has a null domain and another has `mpsworks.com`, those two records are not automatically merged when a later enrichment fills the first record's domain with `mpsworks.com`. The two records stay separate. To merge them, re-import or re-upsert the record so that the matching identifier is present at ingestion time.
+Clay automatically merges two Audience records into one only when both records have the same CRM record ID — meaning they are the same record in your CRM. This applies to both companies and people. A match on domain, email, LinkedIn URL, or Clay company ID never merges two records; it only adds the incoming data to the matching record or records.
+
+Merging happens only at the time of a record upsert or import — not when an existing field is later updated with a matching value. For example, if one company record has a null domain and another has `mpsworks.com`, those two records are not merged when a later enrichment fills the first record's domain with `mpsworks.com`. The two records stay separate. To remove a duplicate record you don't need, archive it — see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience).
 
 ## Creating an audience
 
@@ -850,7 +872,7 @@ You can still add multiple imports from the same connected Salesforce account �
 
 If you need data from a second Salesforce org in Audiences without removing the existing connection, the available workaround is: connect the second org under **Settings → Connections**, bring its records into a Clay table using Salesforce actions, then push those records into Audiences using `Upsert Audiences Record`. Note that Clay table row limits apply in this path.
 
-**If you need to keep each Salesforce org's audiences completely separate — with no cross-org record merging — use a separate Clay workspace for each Salesforce org.** Records in a shared workspace go through the same entity resolution pool, so contacts or companies from one org may be merged with records from the other if they share a matching identifier (professional network URL, email, or domain). Separate workspaces keep each org's Audience data fully independent.
+**If you need to keep each Salesforce org's audiences completely separate — with no cross-org record merging — use a separate Clay workspace for each Salesforce org.** Records in a shared workspace are matched against each other, so incoming contacts or companies from one org can update records from the other org when they share an identifier used for matching — for example, a domain or email chosen in Import record matching. Separate workspaces keep each org's Audience data fully independent.
 
 ### How do I switch the Salesforce account connected to Audiences (for example, from a sandbox to production)?
 
@@ -1005,7 +1027,7 @@ When Salesforce data syncs into Audiences, Leads and Contacts are not always sep
 
 - **Multiple Leads → same Contact** — If two Lead records both have a `ConvertedContactId` pointing to the same Contact, both Leads collapse into that one Clay person record. Only the Lead with the direct conversion pointer is surfaced in Clay; the other Lead is absorbed because both share the same `003…` external ID alias.
 
-- **A Lead without `ConvertedContactId` does not merge this way** — Without a conversion pointer, no shared alias is created. That Lead appears as its own Clay person record unless a separate matching condition applies (for example, a shared profile URL resolved via entity resolution).
+- **A Lead without `ConvertedContactId` does not merge this way** — Without a conversion pointer, no shared alias is created, and that Lead appears as its own Clay person record. If Import record matching is set up for Leads with a shared field such as email or LinkedIn URL, the Lead's data is also written to the person record that matches on that field, but the two records are not merged.
 
 - **Email address is not part of this initial import matching** — Different email addresses on two Lead records that point to the same Contact are irrelevant to the `ConvertedContactId` matching step. The `003…` alias is the sole key — not email, phone, or profile URL.
 
@@ -1166,14 +1188,14 @@ The professional network requires at least **300 matchable records** before it a
 
 ### Will my Salesforce Account ID appear on web visitor records?
 
-Yes — this is expected behavior. When a web intent visitor's company domain matches the domain of a Salesforce Account you have synced into Audiences, Clay merges the two into a single entity using normalized domain matching. Salesforce Account data — including the Account ID — becomes available on that unified company record automatically.
+Yes — this is expected behavior. When a web intent visit arrives, Clay checks whether a company in your Audience matches the visitor's company by domain or Clay company ID. If one matches — for example, a Salesforce Account you have synced into Audiences — the visit is linked to that existing company record, so the Salesforce Account data, including the Account ID, is on the same record as the visit. No new company record is created. If no company matches, Clay creates a new company record for the visitor.
 
 For this to work, you need both:
 
 -   Salesforce Accounts synced into Audiences with website domain fields mapped.
 -   Web intent configured as a signal in your Audiences workspace.
 
-**If visitors arrived before your Salesforce sync was connected:** Web intent records added to Audiences before you connected Salesforce may not automatically merge with existing SFDC records. To resolve this, use the **Import record matching** option in your Salesforce import settings and select domain as the match key (this feature is currently in beta — contact your Growth Strategist to enable it). This matching applies to records coming in after the setting is enabled — it does not retroactively merge records already in Audiences.
+**If visitors arrived before your Salesforce sync was connected:** Web intent company records added to Audiences before you connected Salesforce can stay separate from the company records for your Salesforce Accounts — Clay doesn't merge them later. Turning on **Import record matching** in your Salesforce import settings with domain as the match key (this feature is currently in beta — contact your Growth Strategist to enable it) makes future Salesforce syncs update the company record that matches on domain. It applies only to records coming in after the setting is enabled and does not merge records already in Audiences.
 
 ### I've mapped fields to Salesforce but the data isn't syncing — why?
 
@@ -1337,7 +1359,7 @@ This means: if you clear or change a field in Salesforce that was previously pop
 
 If a company in your Companies audience shows a stale or unexpected Salesforce Account Name, Type, or Account Owner — even though you sync those fields — the usual cause is duplicate Accounts in Salesforce that share the same website (domain). For example, a duplicate Account, or a partner or subsidiary Account that uses the same domain as the Account you expect.
 
-Audiences imports each Salesforce Account as its own record, keyed by its Salesforce Account ID, so duplicate Accounts in your org are imported as separate records. However, entity resolution matches companies by domain, so Salesforce Accounts that share the same domain can be merged into a single company record in Audiences. When that happens, the company record shows field values (such as Account Name, Type, and Account Owner) from whichever of those Accounts was synced most recently — which may be the duplicate rather than the Account you expect.
+Audiences imports each Salesforce Account as its own record, keyed by its Salesforce Account ID, so duplicate Accounts in your org are imported as separate records — Accounts that only share a domain are never merged. However, if Domain is used to match incoming records — as the field in **Import record matching**, or as a **Lookup field** in the `Upsert Audiences Record` action — an incoming record updates every company in your Audience that has the same domain. When that happens, each of those company records can show field values (such as Account Name, Type, and Account Owner) from whichever Account was synced most recently — which may be the duplicate rather than the Account you expect.
 
 To fix wrong Account Name, Type, or Owner values caused by duplicate Salesforce Accounts:
 
@@ -1346,7 +1368,7 @@ To fix wrong Account Name, Type, or Owner values caused by duplicate Salesforce 
 3.  Wait for the next sync. The merged-away Account is marked **Deleted in source** in Audiences — soft-deleted records on the next incremental sync (every 15 minutes on Enterprise, once daily on Growth), hard-deleted records on the next weekly full sync — and the remaining Account keeps syncing normally.
 4.  If the company still shows the duplicate's values after the next incremental sync, make a small edit to the remaining Account in Salesforce (for example, add and remove a space in any text field). This updates `SystemModstamp`, so Clay re-syncs that Account and writes its values to the company record.
 
-**Note:** Duplicate Salesforce Accounts are merged only inside Clay — Audiences never merges or changes Accounts in your Salesforce org. To stop this from recurring, clean up duplicate Accounts in Salesforce.
+**Note:** Audiences never merges or changes Accounts in your Salesforce org. To stop this from recurring, clean up duplicate Accounts in Salesforce.
 
 ### I enriched data in my Audience. Why hasn't it appeared in Salesforce yet?
 
