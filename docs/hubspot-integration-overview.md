@@ -142,7 +142,7 @@ A row can succeed with `Added to list` set to `false`, which means HubSpot took 
 
 Use this action to enroll a HubSpot contact in an automated follow-up sequence.
 
-**Note:** This action requires the `automation.sequences.read` and `automation.sequences.enrollments.write` OAuth scopes, which are **disabled by default** in Clay's HubSpot connection. If the Sequence dropdown shows no options, see [Why is the Sequence dropdown empty?](#why-is-the-sequence-dropdown-empty-when-i-set-up-enroll-a-contact-in-a-sequence) for how to enable them.
+**Note:** This action requires the `automation.sequences.read` and `automation.sequences.enrollments.write` OAuth scopes (shown in Clay's permissions list as **View details about sequences** and **Enroll contacts in a sequence**), which are **disabled by default** in Clay's HubSpot connection. If the Sequence dropdown shows "No options found", see [Why is the Sequence dropdown empty?](#why-is-the-sequence-dropdown-empty-when-i-set-up-enroll-a-contact-in-a-sequence) for how to enable them.
 
 **Inputs**
 
@@ -189,8 +189,8 @@ These permissions are requested by default but can be disabled:
 
 These permissions are available but not requested by default:
 
--   [`automation.sequences.read`](http://automation.sequences.read) — View sequence details.
--   `automation.sequences.enrollments.write` — Enroll contacts in a sequence.
+-   [`automation.sequences.read`](http://automation.sequences.read) — shown in Clay's permissions list as **View details about sequences**.
+-   `automation.sequences.enrollments.write` — shown in Clay's permissions list as **Enroll contacts in a sequence**.
 
 ### Run settings
 
@@ -481,14 +481,14 @@ Each HubSpot column stores a reference to the specific connection it was configu
 
 ### Why is the Sequence dropdown empty when I set up "Enroll a contact in a sequence"?
 
-The Sequence field populates dynamically from your HubSpot account, but it requires the `automation.sequences.read` OAuth scope — which is **disabled by default** in Clay's HubSpot connection. If no sequences appear in the dropdown, this scope was not enabled when you first connected.
+The Sequence field in the "Enroll a contact in a sequence" action populates dynamically from your HubSpot account, but it requires the `automation.sequences.read` OAuth scope — labeled **View details about sequences** in Clay's permissions list — which is **disabled by default** in Clay's HubSpot connection. If the Sequence dropdown shows "No options found" even though your sequences exist in HubSpot, this permission wasn't enabled on your HubSpot connection. Sharing settings on the sequences in HubSpot don't fix this — Clay can't list any sequences until the permission is granted.
 
 **To fix:**
 
 1.  Go to **Settings → Connections**.
 2.  Find your HubSpot connection and click **Reconnect**.
-3.  On the scopes screen, check both **`automation.sequences.read`** and **`automation.sequences.enrollments.write`**.
-4.  Complete the reconnection flow.
+3.  In the permissions list, check both **View details about sequences** (`automation.sequences.read`) and **Enroll contacts in a sequence** (`automation.sequences.enrollments.write`). Both are unchecked by default, including on reconnect — **View details about sequences** is the one that loads your list of sequences, so the dropdown stays empty if only **Enroll contacts in a sequence** is checked.
+4.  Complete the reconnection flow, including approving the requested permissions on HubSpot's authorization screen.
 5.  Return to your "Enroll a contact in a sequence" column — the Sequence dropdown will now show your available HubSpot sequences.
 
 **Note:** If after enabling these scopes you see an "Authorization failed" error, check the wording. "Your account lacks access to the required scopes" means your HubSpot plan may not include the Sequences feature — see [Why do I get "Authorization failed because your account lacks access to the required scopes"?](#why-do-i-get-authorization-failed-because-your-account-lacks-access-to-the-required-scopes-automationsequencesenrollmentswrite-automationsequencesread) below. "This app hasn't been approved to access the required scopes" means HubSpot App Governance is blocking the scopes — see [Why do I get "Authorization failed because this app hasn't been approved to access the required scopes"?](#why-do-i-get-authorization-failed-because-this-app-hasnt-been-approved-to-access-the-required-scopes-for-example-crmexport-or-automationsequencesenrollmentswrite-crmlistswrite-automationsequencesread) below.
