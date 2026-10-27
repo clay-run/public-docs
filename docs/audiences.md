@@ -339,7 +339,7 @@ To turn sync on or off for a source, open its settings by clicking the **⋮** m
 | **Error** | The last live search run failed. |
 | **Off** | The live search is paused. No new results are added until you turn it back on. Contacts already imported remain in Audiences. |
 
-**Live search runs on a daily cadence, independently of any signal cadence.** If your audience has a signal that runs on a monthly schedule, the Find People or Find Companies search still re-runs once per day. To get a point-in-time result instead of continuously growing results, turn live search off: click the **⋮** menu next to the search source in the audience sidebar, or go to **Settings → Sources / Destinations**, click **⋮** next to the source row, and select **Turn live search off**. Contacts already imported remain in your audience — only new daily additions stop.
+**Live search runs on a daily cadence, independently of any signal cadence.** If your audience has a signal that runs on a monthly schedule, the Find People or Find Companies search still re-runs once per day. To get a point-in-time result instead of continuously growing results, turn live search off: click the **⋮** menu next to the search source in the audience sidebar, or go to **Settings → Sources / Destinations** (or, if your workspace shows Records, Sources, and Exports tabs, the **Sources** tab on **All People** or **All Companies**), click **⋮** next to the source row, and select **Turn live search off**. Contacts already imported remain in your audience — only new daily additions stop.
 
 ### Entity resolution and deduplication
 
@@ -751,6 +751,23 @@ To estimate API calls for initial export, divide record count by 10,000 and comp
 
 ## FAQs
 
+### Why don't I see Audiences in Workspace settings?
+
+If **Audiences** is missing from your **Workspace settings** sidebar, your workspace is on the updated Audiences layout, which Clay is rolling out gradually. In the updated layout, Audiences no longer has a page in Workspace settings. Audiences sources and exports are managed directly inside Audiences instead.
+
+You're on the updated layout if the **All People** and **All Companies** pages show **Records**, **Sources**, and **Exports** tabs. To manage Audiences sources there:
+
+1.  Click `People` (or `Companies`) in the left sidebar and open **All People** (or **All Companies**).
+2.  Click the **Sources** tab to see every connected source, its record type, its **Last import sync** time, and its status. A source that hasn't finished setup shows **Setup incomplete**, and one that hasn't run yet shows **Not synced yet** under **Last import sync**.
+3.  To connect a new source, click **Add source**. To change an existing source, click the **⋮** menu next to its row and select **Settings**.
+4.  To see where Audiences data is being sent, such as Salesforce exports and workflow exports, click the **Exports** tab.
+
+**Who can do this:** Every workspace member with Audiences access can open the **Sources** tab. Only workspace **Admins** see the **Add source** button and the **⋮** menu actions for managing a source.
+
+If your workspace still shows **Add data** in the top right of Audiences instead of these tabs, you're on the earlier layout and Audiences settings are still available in Workspace settings.
+
+**Setting up Audiences for MCP:** The Audiences controls for Clay's MCP integrations — `Sync user IDs from audiences` and `Restrict account querying by Salesforce owner` — are not in Audiences or Workspace settings. They're on the `MCP` page in the left sidebar, which only workspace admins can see. See [MCP settings](mcp-settings.md#audiences-controls).
+
 ### When should I use Audiences vs. a table?
 
 Use Audiences by default for anything you want to reuse, segment on, or build automations on top of. Use tables for one-off workflows, integrations Audiences doesn't yet support natively, or cases where data doesn't need to persist beyond a single run.
@@ -858,7 +875,7 @@ If you open Salesforce under **Add source** in Audiences and see your sandbox (o
 
 **Who can do this:** Disconnecting and adding Audiences sources requires the **Admin** workspace role. Editors and Viewers don't see these controls.
 
-**Audiences settings have moved.** Audiences no longer has a separate Settings page. Audiences sources are managed from the **Sources** tab on the **All People** and **All Companies** pages.
+**Audiences settings have moved.** On the updated Audiences layout (Records, Sources, and Exports tabs), Audiences no longer has a separate Settings page. Audiences sources are managed from the **Sources** tab on the **All People** and **All Companies** pages. See [Why don't I see Audiences in Workspace settings?](#why-dont-i-see-audiences-in-workspace-settings).
 
 **To switch the Salesforce account connected to Audiences:**
 
@@ -1105,7 +1122,7 @@ To work with only the narrower set, open the search, tighten your filters, click
 
 If you saved a Find People or Find Companies search to Audiences and the count continues to grow — even though you haven't changed the search criteria — live search is likely enabled. Live search re-runs the search **once per day** and adds any new matching contacts or companies. This runs independently of any signal cadence you have set on the audience: a monthly signal and a daily live search are entirely separate schedules. Turning off or modifying the signal does not stop the live search from running.
 
-To stop the audience from growing, turn live search off: click the **⋮** menu next to the search source in the audience sidebar, or go to **Settings → Sources / Destinations**, click **⋮** next to the source row, and select **Turn live search off**. Contacts already imported remain in your audience — only new daily additions stop. You can always turn live search back on later if you want to resume continuous sourcing.
+To stop the audience from growing, turn live search off: click the **⋮** menu next to the search source in the audience sidebar, or go to **Settings → Sources / Destinations** (or, if your workspace shows Records, Sources, and Exports tabs, the **Sources** tab on **All People** or **All Companies**), click **⋮** next to the source row, and select **Turn live search off**. Contacts already imported remain in your audience — only new daily additions stop. You can always turn live search back on later if you want to resume continuous sourcing.
 
 ### Does a live search keep adding new people after I save it to Audiences?
 
