@@ -93,6 +93,7 @@ Connect and enable warmup on your sender account as early as possible so it's re
 7.  Explore `Advanced settings` if needed:
     -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled)
     -   `Pause leads at the same company on reply`: When a lead replies, automatically pause other leads with the same email domain. Off by default.
+    -   `Webhooks` (table-based Sequencer v1 campaigns only): Send campaign events to your own webhook endpoint instead of the campaign events table — for example, to route Smartlead campaign events to a downstream tool. Click `Add webhook`, enter a `Webhook name` and `Webhook URL`, choose the `Event types` to send (Email sent, Email reply received, Email bounced, Lead unsubscribed, Lead category updated, Campaign status changed, Manual step reached, Email opened, Email link clicked), and click `Add webhook`. Events sent to a custom webhook won't appear in your campaign events table. Each event type can go to only one custom webhook, so event types another custom webhook already uses are greyed out. Deleting a custom webhook (`Delete webhook?` → `Delete`) can't be undone and returns its event types to the campaign events table. Workspace Admins and Members with edit access to the campaign's table can add or delete webhooks at any campaign status, including while the campaign is live. People-based (Sequencer v2) campaigns don't have a Webhooks setting.
 8.  Go to `Leads` to preview the messages for all people in your campaign
     -   `Send test email` to verify your template looks right
     -   Click the `Pencil` icon to spot-edit a message for a specific lead
@@ -107,8 +108,8 @@ Once all your settings are saved, you can launch your campaign. Launching a camp
 -   Actions are consumed for each email sent (1 Action per lead, plus standard Action and Data Credit rates for any AI snippets used).
 -   Your campaign becomes live, which means:
     -   Any new leads routed into the campaign will automatically be sequenced, enabling "always-on" campaigns for inbound routing.
-    -   All campaign settings become locked.
--   Campaign events are captured in the global campaign events table shared across your workspace (see [Campaign events table](#campaign-events-table)).
+    -   All campaign settings become locked, except custom `Webhooks` in Sequencer v1 campaigns, which you can still add or delete.
+-   Campaign events are captured in the global campaign events table shared across your workspace (see [Campaign events table](#campaign-events-table)). In Sequencer v1 campaigns, event types you've sent to a custom webhook in `Advanced settings` go to that webhook instead and don't appear in the campaign events table.
 
 At any point, you can pause or complete a campaign:
 
