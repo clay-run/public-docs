@@ -1505,7 +1505,17 @@ Two behaviors to keep in mind:
 -   **All fields must have an exact match.** If you filter by both `Email` and a secondary identifier field (such as a profile URL), a record must match both to be returned — a partial match on only one field returns nothing.
 -   **Empty fields count as non-matches.** If a field value in your Audience record is empty (null), it will not match any filter condition on that field — including equality checks. For example, filtering by `Profile URL = <value>` will not return records that have an empty Profile URL field, even if the Email matches.
 
+**Example: a company name that doesn't match exactly.** If your `Lookup in Audiences` column (shown as `Look up in Audiences` in the enrichment list) filters Companies by both `Company Name` and `Company Domain`, a table row with Company Name `Dell Technologies` and Company Domain `dell.com` does not find an Audience record stored as Company Name `Dell` and Company Domain `dell.com`. The domain matches, but the name does not, so the AND filter returns no records.
+
 If you need to look up a record that may be missing one of your identifier fields, filter by the field most likely to be populated (typically `Email` or `Profile URL`), and use a single-field filter rather than combining multiple conditions.
+
+**To fall back to a second field when the first `Lookup in Audiences` finds nothing:**
+
+1.  Add a `Lookup in Audiences` column that filters by your most reliable identifier only — for example, `Company Domain` for Companies or `Email` for People.
+2.  Add a second `Lookup in Audiences` column that filters by your backup field only — for example, `Company Name`.
+3.  On the second column, open **Run settings → Only run if** and add a run condition so it runs only when the first lookup found no records. When `Lookup in Audiences` finds no match, its `totalMatched` result is `0` and the cell shows **No records found**. See [Conditional runs](conditional-runs.md) for how to write run conditions.
+
+Each row is looked up by the primary field first, and the backup lookup runs only for rows the first lookup couldn't match.
 
 ### How do I remove records from an audience?
 
