@@ -50,7 +50,7 @@ Clay formulas are powered by **Clayscript**, a JavaScript-based language that ev
 
 **What's available in formulas:**
 
--   **Standard JavaScript**: All standard JavaScript objects and methods including `Math`, `String`, `Array`, `Date`, `RegExp`, `Number`, `Object`, and more.
+-   **Standard JavaScript**: All standard JavaScript objects and methods including `Math`, `String`, `Array`, `Date`, `RegExp`, `Number`, `Object`, and more. Node.js-only APIs such as `Buffer` are not available; to Base64-encode text, use `btoa()` (see the FAQ below).
 -   **Lodash**: Access the full [Lodash](https://lodash.com) library using `_` for advanced data manipulation.
 -   **Moment.js**: Use [Moment.js](https://momentjs.com) with `moment` for powerful date and time operations.
 -   **Excel and Google Sheets functions**: Clay supports hundreds of familiar spreadsheet functions like `VLOOKUP`, `IF`, `SUM`, `CONCATENATE`, and many more through the [FormulaJS](https://formulajs.info) library.
@@ -235,6 +235,29 @@ To fix it: expand the **Formula** section below the prompt, find any `/Column Na
 **A related cause** is describing the formula with a column's name as plain text — for example, writing *"clean the company name field"* — instead of inserting the column via the `/` picker. When the AI generates a formula from a description that references a column only by plain text rather than a column chip, it may produce code with incorrect column references, causing every row to error.
 
 To fix it: in the description field, delete any plain-text column mention, type `/`, select the column from the picker to insert it as a chip, then click **Regenerate**. This gives the AI the exact column reference it needs and is more reliable than editing the formula code directly.
+
+### **Why does my Base64 formula using `Buffer` error on every row?**
+
+Clay formulas run JavaScript in a sandbox that does not include Node.js APIs, so the Node.js `Buffer` object isn't available in formula columns. A formula like `Buffer.from({{LinkedIn URL}} || "").toString("base64")` fails on every row, and the cells show *"This formula could not be calculated"*. This applies whether you wrote the formula yourself or the formula generator produced it.
+
+To Base64-encode a value in a formula column, use `btoa()` instead:
+
+1.  Open the formula column to open the **Formula generator** sidebar.
+2.  Expand the **Formula** section and replace the `Buffer` expression with `btoa()`. For example:
+
+    ```javascript
+    btoa({{LinkedIn URL}} || "")
+    ```
+
+3.  Click **Save column** and re-run the column. Each cell now shows the Base64-encoded value.
+
+**Values with non-English characters:** `btoa()` only accepts characters in the Latin-1 range. If the value can contain characters outside Latin-1, such as emoji or non-Latin scripts, encode it as UTF-8 first:
+
+```javascript
+btoa(unescape(encodeURIComponent({{LinkedIn URL}} || "")))
+```
+
+**Decoding isn't available:** `atob()`, the matching Base64-decode function, is not available in Clay formulas.
 
 ### **Why does my formula return 0 when combining values from other formula columns?**
 
