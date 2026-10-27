@@ -52,7 +52,7 @@ A common TAM sourcing mistake is pulling a large list and then running enrichmen
 
 The **Location** filter in company search supports structured sub-filters — **Country**, **City**, **State or province**, **Region**, and **Postal code** — each with include and exclude modes. These fields match against geocoded, normalized location data, so you get accurate results rather than relying on free-text string matching.
 
-Enable **Headquarters only** to restrict results to companies whose *primary* office is in the specified location. Without it, any matching office — branch, satellite, or headquarters — qualifies a company for inclusion.
+By default, the company search **Location** filter matches only a company's headquarters. To change this, use the dropdown in the Location filter group header: **HQ** (default) matches companies whose headquarters is in the specified location, **Office** matches any office — branch, satellite, or headquarters — in the location, and **Non-HQ** matches companies with a non-headquarters office in the location.
 
 For the full filter spec and a list of the structured location fields returned in each result's cell details, see [Find Companies](find-companies.md).
 
