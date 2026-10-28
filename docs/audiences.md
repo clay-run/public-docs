@@ -1202,6 +1202,22 @@ The updated value will be pushed to Salesforce on the next export cycle (within 
 
 **"Bi-directional" doesn't mean every field is exported.** On your Salesforce source settings page, the **Overview** card shows **Sync direction: Bi-directional** when both **Import status** and **Export status** are **Sync on**. Even with a Bi-directional sync, the Audiences export only sends fields that are mapped to a Salesforce field and set to **Always write** or **Write if empty**. Audience fields that aren't mapped to a Salesforce field — for example, fields a workflow fills in on your Audience records — stay in Clay. To send one of those fields to Salesforce, create a matching field on the Salesforce object, map it in your Salesforce source settings, and set its write rule to **Always write** or **Write if empty**.
 
+### When I map a Clay field to a Salesforce field, does the value show up in Salesforce automatically, and does it use credits?
+
+Connecting Salesforce to Clay Audiences requires a **Growth** or **Enterprise** plan.
+
+**Mapping a field doesn't push its value by itself.** A Clay field mapped to a Salesforce field is written to Salesforce only when all of the following are true:
+
+-   **Export sync** is turned on for that Salesforce object (for example, **Accounts** or **Contacts**).
+-   The field's write rule is **Always write** or **Write if empty**. New field mappings default to **Never write**, which never exports the field.
+-   The next scheduled Audiences export has run. Exports run once every 24 hours.
+
+See [I've mapped fields to Salesforce but the data isn't syncing — why?](#ive-mapped-fields-to-salesforce-but-the-data-isnt-syncing--why) if a mapped value isn't appearing in Salesforce.
+
+**Mapping a field and the Audiences export to Salesforce don't use data credits.** Credits are used when you create the value you're exporting, for example by running an enrichment or signal on your Audience records. Enrichments and signals follow standard Clay pricing.
+
+**Writing to Salesforce from a table or workflow is billed differently.** If you write the value with a Salesforce **Create record**, **Update record**, or **Create or update record** action in a Clay table or workflow instead of the Audiences export, each action run uses 1 Action and 0 data credits. See [Actions and data credits](https://university.clay.com/docs/actions-data-credits) for how Actions are billed.
+
 ### Will a blank Audience field overwrite my Salesforce value with NULL when the write rule is "Always write"?
 
 No. The Audiences export to Salesforce never sends blank values. Before each export, Clay drops any field whose Audiences value is blank, for both **Always write** and **Write if empty** fields, so a populated Salesforce field is left unchanged. This applies to every field type (text, number, date, and so on) and also applies when you first enable a field mapping and Clay sends all records for it.
