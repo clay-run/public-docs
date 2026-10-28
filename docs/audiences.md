@@ -1348,6 +1348,20 @@ To fix wrong Account Name, Type, or Owner values caused by duplicate Salesforce 
 
 **Note:** Duplicate Salesforce Accounts are merged only inside Clay — Audiences never merges or changes Accounts in your Salesforce org. To stop this from recurring, clean up duplicate Accounts in Salesforce.
 
+### Why does a contact in my audience show a professional network URL for a different person?
+
+Audiences matches each person record to a person in Clay's people data. That match fills in fields that your own sources leave empty, such as the person's professional network URL. If the match lands on a different person, for example someone with the same name, that person's professional network URL can appear on your contact.
+
+Values from your own sources take precedence over values from Clay's people data. When your Salesforce import sends a professional network URL for a contact, Audiences shows the Salesforce value. Audiences shows the value from Clay's people data when Salesforce sends no value, either because the professional network URL field isn't mapped in your Salesforce Contacts import or because the Salesforce field is blank for that contact. Fields that Salesforce does send, such as title and email, keep their Salesforce values.
+
+To see which sources contributed to a contact, open the contact and check the **Sources** section of the record's summary pane.
+
+To show the professional network URL from Salesforce instead:
+
+1.  Open your Salesforce source settings and select your Contacts import.
+2.  In the field mapping, map Clay's default professional network URL field to the Salesforce field that holds the correct URL, for example a custom profile URL field on your Contact object.
+3.  Click **Save and review** → **Confirm**. For when existing contacts pick up the newly mapped value, see [I added a new Salesforce field to my mapping but some records are missing data for it](#i-added-a-new-salesforce-field-to-my-mapping-but-some-records-are-missing-data-for-it).
+
 ### I enriched data in my Audience. Why hasn't it appeared in Salesforce yet?
 
 Clay Audiences syncs in two separate directions on different schedules:
