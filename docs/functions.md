@@ -123,6 +123,13 @@ For example, a function list showing 1,930 rows can be 1,000 recent completed ro
 
 Archived function rows are kept for **30 days** after they're removed from the function's row list. Archiving is turned on by default for new functions. If you don't see **View archive** in a function's footer, archiving isn't enabled for that function — contact support.
 
+### Why does my function's archive only show 1,000 rows when the function processed thousands?
+
+A function's archive table shows at most **1,000 archived rows** at a time. This display limit protects performance and doesn't mean older runs were lost. Rows beyond the first 1,000 are still stored in the archive, and the archive table's toolbar shows the total number of archived rows.
+
+-   **To see every archived row:** Open the function, click **View archive** in the function's footer, then click **Export full archive** in the archive table's toolbar. This downloads all archived rows as a CSV, not just the 1,000 displayed.
+-   **To find runs that are still in progress:** Queued and in-progress rows aren't archived. They stay in the function's main (live) view until they finish, so look for them there, not in the archive.
+
 ### Why does "Go to row in function" say the function row has been archived?
 
 When you click a cell in your table that was processed by a function and see **"The corresponding function row has been archived and is no longer available to view"** on the **Go to row in function** button, the intermediate processing record for that row has aged out of the function's Live view.
