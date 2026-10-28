@@ -97,7 +97,7 @@ No. As of General Availability, functions support unlimited rows via passthrough
 
 **Note:** The function's live view keeps only the most recent **1,000 completed rows** at a time. This limit is intentional: functions are passthrough tables, and keeping the active row count low ensures there is enough space for new incoming records to be processed. All rows are fully processed and their results returned to the calling table regardless of this limit. When the function is called from multiple tables, the live view allocates up to **50 rows per calling table** (prioritizing the most recently active tables first), with any remaining capacity filled by the globally newest rows. Rows that haven't completed — rows showing **Run stopped**, errored rows, and queued or in-progress rows — aren't removed, so the live view can show more than 1,000 rows in total.
 
-To review completed rows that are no longer in the live view, click **View archive** in the function's footer, then click **Export full archive** in the archive table's toolbar to download them as a CSV. The function's row-retention setting isn't editable from the function itself; contact support if you need the function to keep more rows. See [Why does my function show fewer rows than the run count in "View run stats"?](#why-does-my-function-show-fewer-rows-than-the-run-count-in-view-run-stats) for details.
+To review completed rows that are no longer in the live view, click **View archive** in the function's footer, then click **Export full archive** in the archive table's toolbar to download them as a CSV. The function's archive table shows only the **1,000 most recently archived rows**, so a function that has processed thousands of rows still shows at most 1,000 rows in **View archive**. Use **Export full archive** to get every archived row. The function's row-retention setting isn't editable from the function itself; contact support if you need the function to keep more rows. See [Why does my function show fewer rows than the run count in "View run stats"?](#why-does-my-function-show-fewer-rows-than-the-run-count-in-view-run-stats) for details.
 
 ### Why does my function show fewer rows than the run count in "View run stats"?
 
@@ -121,7 +121,7 @@ For example, a function list showing 1,930 rows can be 1,000 recent completed ro
 2.  Click **View archive** in the function's footer, at the bottom of the screen. This opens the function's archive table.
 3.  In the archive table's toolbar, click **Export full archive** to download the archived rows as a CSV.
 
-Archived function rows are kept for **30 days** after they're removed from the function's row list. Archiving is turned on by default for new functions. If you don't see **View archive** in a function's footer, archiving isn't enabled for that function — contact support.
+Archived function rows are kept for **30 days** after they're removed from the function's row list. The function's archive table displays the **1,000 most recently archived rows**, newest first. This is a display limit that keeps the archive view fast, and it doesn't mean older rows were deleted. To see archived rows beyond the 1,000 shown, use **Export full archive**, which downloads the complete archive as a CSV. Archiving is turned on by default for new functions. If you don't see **View archive** in a function's footer, archiving isn't enabled for that function — contact support.
 
 ### Why does "Go to row in function" say the function row has been archived?
 
