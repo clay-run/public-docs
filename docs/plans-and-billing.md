@@ -39,10 +39,10 @@ Your new plan will activate immediately, and any applicable charges will be appl
 
 **How upgrade billing works:**
 
--   Plan upgrades are **not prorated** — you pay the full price of the new tier immediately, not a partial amount for remaining days in your current cycle.
--   You receive the **full** Actions and Data Credits for your new plan right away.
--   Unused Actions from your previous plan are not carried over (Actions reset each billing cycle and do not roll over).
--   Your existing unused Data Credits are preserved when you upgrade.
+-   Plan upgrades on self-serve paid plans are **prorated with an unused plan credit**. When you upgrade to a higher-priced plan, Clay credits the value of your unused Data Credits and Actions from the current billing period against the upgrade invoice. Before you pay, the checkout summary shows this discount as an **Unused plan credit** line.
+-   After you pay, your Data Credit and Actions balances are set to the amounts included with your new plan. Your previous plan's unused Data Credits and Actions are credited on the invoice instead of being carried over.
+-   Upgrading resets your billing cycle to the date of the upgrade.
+-   Some upgrades don't qualify for the unused plan credit — for example, upgrading from the Free plan or a trial, or switching from an annual plan to a monthly plan. See [Is upgrading my plan prorated?](#is-upgrading-my-plan-prorated) for how the credit is calculated and every exception.
 
 ### Free plan
 
@@ -181,9 +181,27 @@ For more details, see our guide on [actions and data credits](https://www.notion
 
 ### Is upgrading my plan prorated?
 
-No. Plan upgrades are not prorated. When you upgrade to a higher tier, you are charged the full price for the new plan immediately — not a partial amount for remaining days in your current billing cycle. In return, you receive the **full** Actions and Data Credits for your new tier right away, not just the incremental difference over your current plan.
+Yes. Upgrading a self-serve paid Clay plan is prorated with an **unused plan credit**. When you upgrade to a higher-priced plan, you're charged the new plan's price minus a credit for the unused Data Credits and Actions left in your current billing period, so you don't pay twice for the same period.
 
-Unused Actions from your previous plan are not refunded or carried over (Actions reset each billing cycle and do not roll over). Your existing unused Data Credits are preserved when you upgrade.
+**How the unused plan credit is calculated:**
+
+-   Clay counts your unused Data Credits and unused Actions from the current billing period, up to the amount of each included with your current plan.
+-   Each unused Data Credit and Action is valued at your current plan's price per Data Credit and price per Action.
+-   The credit can't reduce the upgrade invoice below $1. On annual plans, the credit is also capped at the value of the time left on your current annual term.
+
+**What you'll see at checkout:** When you select a new plan under `Settings` → `Plans & billing` → `Switch plan`, the pricing summary shows an **Unused plan credit** line with the discount amount. On the payment page, **Unused plan credit details** lists how many unused data credits and actions are being credited and how many data credits and actions your new plan includes.
+
+**What happens to your Data Credits and Actions:** After the upgrade invoice is paid, your Data Credit and Actions balances are set to the amounts included with your new plan. Unused Data Credits and Actions from your previous plan are credited on the invoice rather than carried over. If your Data Credit balance was larger than your current plan's allowance — for example, from rollover or one-time top-ups — the amount above that allowance isn't credited and doesn't carry over. If you spend some of the credited Data Credits or Actions between opening checkout and completing payment, that amount is deducted from your new plan's grant.
+
+**When the unused plan credit doesn't apply:** No unused plan credit is applied, and you pay the full price of the new plan, when:
+
+-   You're upgrading from the Free plan or a trial.
+-   Your current plan or your new plan is Enterprise.
+-   You're switching from an annual plan to a monthly plan.
+-   The new plan isn't higher-priced than your current plan. Downgrades are deferred to the end of your billing cycle instead — see [Downgrade your plan](#downgrade-your-plan).
+-   Your current subscription has lapsed, isn't paid by automatic card charge, or has an unpaid balance.
+
+When you switch from an annual plan to a monthly plan, your existing Data Credit balance carries over up to 2× the new monthly plan's credit limit. For example, if you have 50,000 credits left and switch to a monthly plan with 3,000 credits per month, your balance becomes 6,000 credits; the remaining 47,000 are forfeited.
 
 Upgrading also resets your billing cycle to the date of the upgrade — for example, if you upgrade on the 15th, your plan will renew on the 15th of the following month.
 
