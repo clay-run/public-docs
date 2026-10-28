@@ -751,6 +751,10 @@ This is expected. When a lead replies using an HTML-capable email client like Mi
 
 To work with the reply as clean text — for example, when mapping it to a CRM note or passing it to an AI action — use the `Text` sub-field instead. If you prefer to use `Html` and strip the tags, add a formula column to do so.
 
+**To read an HTML reply the way the lead's email looked:** click the cell to open the Cell details panel, then click **View HTML** next to the `Html` value. The **HTML preview** window shows the email rendered as it would appear in an inbox. Scripts in the email don't run, and links open in a new tab. To see the raw HTML source, turn off the **HTML viewer** switch (it's on by default); a **Copy** button appears so you can copy the source.
+
+The **View HTML** button appears in the Cell details panel for any field whose name contains "html" (for example, `Html` or `body_html`) and whose value starts with `<` and ends with `>`. This includes HTML in bounce notifications and other campaign event data, not only replies.
+
 ### Useful links
 
 -   [Smartlead documentation](https://helpcenter.smartlead.ai/)
