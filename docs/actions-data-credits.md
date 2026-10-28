@@ -483,7 +483,7 @@ In some situations, Clay's support team can manually restore Data Credits that w
 
 -   **Accidental usage**: If credits were consumed unintentionally (for example, by a run you did not mean to trigger), support may grant a one-time exception.
 -   **Reactivating a paid plan after a lapse**: If you let a subscription lapse and then reactivate a paid plan, credits forfeited during the lapse may be eligible for restoration. Contact support after reactivating to request a review.
--   **Missing rollover credits after a plan upgrade**: If credits you expected to carry over are missing after upgrading your plan, contact support — this can be verified and manually corrected.
+-   **Missing rollover credits after a plan upgrade**: When an upgrade includes an **Unused plan credit** on the invoice, your previous plan's unused Data Credits are credited on that invoice and your balance is set to your new plan's Data Credits — those credits are not expected to carry over (see [Is upgrading my plan prorated?](plans-and-billing.md#is-upgrading-my-plan-prorated)). If your upgrade didn't include an unused plan credit and credits you expected to carry over are missing, contact support — this can be verified and manually corrected.
 
 **What support cannot restore:**
 
