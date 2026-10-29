@@ -259,6 +259,23 @@ No. Changes to a function don't backfill — they won't reapply to rows that hav
 
 To apply the updated logic to a row that already ran, re-run that row's function column in the calling table. This dispatches a fresh invocation against the current function configuration.
 
+### Why is a new function column filled in while editing, but empty after I exit edit mode?
+
+When you add a new column to a function (for example, a second AI column like **Industry**), it can look populated in edit mode but empty in the live function after you click **Exit edit mode**. Nothing is broken. You're looking at two different sets of rows:
+
+-   **In edit mode**, the rows are sandbox test rows. Rows copied from your live function show as **Row (copy)** in the **Function inputs** column. They run on your draft configuration, so the new column fills in. Results on these test rows stay in the sandbox and are never sent back to your calling table.
+-   **In the live function**, the rows are the real runs your function already processed. Publishing a new column adds it to the live function but doesn't run it on rows that already exist there. On those rows, the new column stays empty and nothing new is sent back to the calling table.
+
+If **Review changes** shows "This function has no unpublished changes," your new column is already published. Rows the function receives from now on run every column, including the new one.
+
+**To fill in the new column for rows that already ran:**
+
+1.  Open the calling table, which is the table where the function column lives.
+2.  Select the affected rows and re-run the function column for them.
+3.  Each re-run sends a fresh row to the function. The new row runs on the published configuration, including the new column, and **Send data back** returns the new value to your calling table.
+
+You can't re-run past rows from inside the live function itself. See [Why can't I run/edit a function in "Live" mode directly?](#why-cant-i-runedit-a-function-in-live-mode-directly).
+
 ### What columns should I include when building a function?
 
 Include action columns (enrichments, Claygents, waterfalls) — not static input columns like company name or domain. Action columns contain the reusable logic you want to apply across tables.
