@@ -114,6 +114,24 @@ Not currently. Clay's SOQL source only supports standard SELECT queries that ret
 
 Clay will import the first 50,000 records and stop. Split your query using date ranges or filters to work with larger datasets.
 
+On a scheduled Salesforce SOQL source, reaching the record limit also locks the source so its inputs can't be edited. See [Why is "Edit inputs" greyed out on my Salesforce SOQL source?](#why-is-edit-inputs-greyed-out-on-my-salesforce-soql-source) below.
+
+### Why is "Edit inputs" greyed out on my Salesforce SOQL source?
+
+If the **Edit inputs** button on a scheduled **Import records from Salesforce SOQL query** source is greyed out, and hovering over it shows "Editing sources is disabled for Import records from Salesforce SOQL query", Clay has locked the source. A locked source is read-only for everyone in the workspace, including workspace Admins, the person who built the table, and the person who connected the Salesforce account. Salesforce connection access settings and workspace permissions do not cause this.
+
+Clay locks a scheduled Salesforce SOQL source for one of two reasons:
+
+1.  **The source reached its 50,000-record limit.** Clay locks the source once it has imported 49,999 records. The limit counts every record the source has ever imported, not the rows currently in your table. Rows you've deleted from the table still count, so a table showing 18,000 rows can still be fed by a source that has reached the limit.
+2.  **The source failed 5 scheduled runs in a row.** After 5 consecutive failed runs, Clay turns off the source's schedule and locks it. Common causes are a Salesforce connection that needs to be reconnected, or a SOQL query that no longer works — for example, because a field in the query was renamed or removed in Salesforce. Because the schedule stops after the fifth failure, those failures may have happened a while ago and won't show up as recent errors.
+
+To see which one applies, open the source panel: it shows the latest run status, and **View Run History** under **Run settings** lists past runs and their errors.
+
+**How to fix a locked Salesforce SOQL source:** A locked source can't be unlocked or edited. Add a new Salesforce SOQL source to the same table instead — a new source starts with its own record count at 0.
+
+-   **If the source hit the record limit:** Add a new Salesforce SOQL source with a narrower query (for example, a date filter on `CreatedDate`) so each source stays under 50,000 records.
+-   **If the runs were failing:** Reconnect your Salesforce account if needed and test the query in Salesforce's Developer Console (Setup → Developer Console → Query Editor). Then add a new Salesforce SOQL source with the working query.
+
 ### How do I query custom objects?
 
 Use the API name with the `__c` suffix:
