@@ -284,20 +284,14 @@ Clay periodically retires older models from the same class to keep the model sel
 
 -   **It is removed from the model dropdown.** Deprecated models cannot be selected for new columns or configurations.
 -   **Existing configurations keep running unchanged.** Any column or configuration already using the deprecated model continues to work as-is — no action is needed on your end.
--   **Deprecation alone doesn't switch your columns.** Marking a model as deprecated doesn't change the model on any existing column, and it doesn't send an email. In your column settings, a deprecated model shows an orange **Deprecated** badge and a warning next to the **Model** field: "This model is deprecated. Please switch to a newer model."
+-   **Clay may email your billing contacts when columns are switched to a replacement model.** Marking a model as deprecated doesn't send an email on its own. When Clay moves existing columns from a retired model to a replacement model, Clay may email your workspace's billing contacts. The email names the old and new model, shows any change in credit cost, and links to the affected tables. It is usually sent after the switch has already been made.
 
-### What happens when OpenAI, Anthropic, or another provider discontinues a model?
+### Will my results change when a column moves to a new model?
 
-When a model is fully retired — for example, because the provider (such as OpenAI or Anthropic) is shutting it down — Clay moves your existing Use AI and Claygent columns that use that model to a replacement model chosen by Clay. You don't need to take any action for the switch to happen, and your columns keep running on the replacement model afterward.
+Results can differ when a column runs on a different AI model, even with the same prompt. If consistent outputs matter for a table that uses a deprecated model, switch the model yourself and test it before Clay moves the column to a replacement:
 
--   **Before the model is retired**, existing columns keep running on the deprecated model, but it can't be selected for new columns.
--   **When the model is retired**, Clay switches the affected columns to the replacement model. The replacement is typically a newer model from the same provider.
--   **Email notification:** when Clay switches your columns to a replacement model, Clay may email your workspace's billing contacts. The email names the old and new model, shows any change in credit cost, and links to the affected tables. This email is usually sent after the switch has already been made.
-
-**Results can differ on a new model.** If consistent outputs matter for a table, switch the model yourself instead of waiting for Clay to do it:
-
-1.  Open the column settings for the AI or Claygent column.
-2.  Click the **Model** dropdown and select a currently supported model.
+1.  Open the column settings for the Use AI or Claygent column.
+2.  Click the **Model** dropdown and select a currently supported model. A deprecated model shows an orange **Deprecated** badge in the dropdown.
 3.  Run the column on a few rows and compare the outputs with your previous results.
 4.  Once you're happy with the results, run the rest of the table.
 
