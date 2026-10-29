@@ -346,7 +346,7 @@ To avoid losing leads this way, deduplicate your source table before launching. 
 
 ### My sender account got disconnected. What happened?
 
-Email providers like Google and Microsoft occasionally revoke access due to inactivity, security checks, or suspicious activity detection. To fix this, delete the disconnected account from your sequencer settings and re-authenticate it.
+Email providers like Google and Microsoft occasionally revoke access due to inactivity, security checks, or suspicious activity detection. To fix this, delete the disconnected account from your sequencer settings and re-authenticate it. Leads already assigned to a sender account that is deleted stop receiving their remaining campaign steps — see [What happens to my campaign if a sender leaves the company or their email account is removed?](#what-happens-to-my-campaign-if-a-sender-leaves-the-company-or-their-email-account-is-removed).
 
 ### Why aren't replies being detected for my SMTP email account? The sequence keeps sending follow-ups even after leads reply.
 
@@ -370,7 +370,23 @@ If you've moved to a new email provider (for example, switching from a third-par
     -   Microsoft Outlook: select `Microsoft Outlook OAuth`.
     -   Other providers (including third-party email hosting): select `SMTP` and enter your SMTP and IMAP credentials.
 2.  **Enable warmup on the new account.** The new account starts warmup from scratch — the initial phase typically takes 3 weeks before the account shows as **Ready**. Enable warmup right after connecting to start building sender reputation.
-3.  **Update your campaigns.** Open each active campaign that used the old sending account. In the `Sender accounts` tab, add the new account, then use the ⋯ menu next to the old account to remove it.
+3.  **Update your campaigns.** Open each active campaign that used the old sending account and click **Pause** in the campaign header — sender accounts can't be edited while a campaign is live. In the `Sender accounts` tab, add the new account, then use the ⋯ menu next to the old account to remove it. Save, then click **Resume**. Leads already assigned to the old account are not moved to the new account — see [What happens to my campaign if a sender leaves the company or their email account is removed?](#what-happens-to-my-campaign-if-a-sender-leaves-the-company-or-their-email-account-is-removed)
+
+### What happens to my campaign if a sender leaves the company or their email account is removed?
+
+Clay's email sequencer has no automatic fallback sender for leads that are already in a campaign. When a lead is enrolled in a campaign, Clay assigns that lead to one sender account from the campaign's `Sender accounts`, and that lead's later steps are sent from that same account.
+
+If that sender account is later removed from the campaign, deleted from `Email accounts`, or disconnected, leads already assigned to it stop receiving their remaining steps. Those leads are not automatically moved to the other sender accounts on the campaign, and Clay doesn't have a reassign-sender action for leads that are already in a launched campaign. Leads also can't be removed and re-added once a campaign has launched — only paused (see [Pausing a lead in a launched campaign](#pausing-a-lead-in-a-launched-campaign)).
+
+**How to spot an affected sender account:** A disconnected account shows a red **Auth error** badge in the campaign's `Sender accounts` list, and the campaign header shows a red **1 sender auth error** (or **[n] sender auth errors**) badge.
+
+**What still works:** Leads enrolled after the account stops working are distributed only across the campaign's remaining active sender accounts when **Sender account assignment** is set to **No per-lead assignment** (the default).
+
+**To give new leads a replacement sender:**
+
+1.  Click **Pause** in the campaign header. Sender accounts can't be edited while a campaign is live.
+2.  In the campaign's `Sender accounts`, add the replacement account.
+3.  Save your settings, then click **Resume** in the campaign header.
 
 ### What is email account warmup?
 
