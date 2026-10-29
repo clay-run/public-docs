@@ -98,6 +98,15 @@ No. New features (Ads, new integrations, advanced orchestration) are only availa
 
 After April 10, 2026 11:59pm PDT, any plan change forces migration to modern plans. Legacy customers cannot switch between legacy plans or return to legacy plans once they leave.
 
+**What happens to my remaining legacy credits and the unused part of my legacy subscription when I move to a modern plan?**
+
+Your remaining legacy credits don't transfer to the modern plan as credits. What you get for them depends on the billing interval you move to:
+
+-   **Annual legacy plan to annual modern plan** (for example, Explorer (Legacy) annual to Growth yearly), **or monthly to monthly:** If the modern plan costs more and you switch immediately, Clay applies the value of your unused credits as an **Unused plan credit** — a discount on your new invoice, applied automatically. Your credit balance then resets to the modern plan's allocation.
+-   **Annual legacy plan to monthly modern plan:** No Unused plan credit is applied, and the unused part of your annual subscription isn't refunded. When the change takes effect, your credit balance is reduced to the monthly plan's rollover cap (2× its monthly credit limit), and credits above that cap are forfeited. To use all the credits you've already paid for, stay on your legacy annual plan until it renews, then switch to monthly.
+
+To see the exact Unused plan credit and amount due before you confirm, click `View plan options` in the credits popover, select the modern plan, and click `Review changes`. Remember that leaving a legacy plan is permanent. For how the Unused plan credit is calculated, see [Is upgrading my plan prorated?](./plans-and-billing.md#is-upgrading-my-plan-prorated).
+
 **What specifically changes if I move from Explorer (Legacy) to the Launch plan?**
 
 Here is a breakdown of what you gain, lose, and what changes when migrating from Explorer (Legacy) to the modern Launch plan.
