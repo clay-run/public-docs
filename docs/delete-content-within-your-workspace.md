@@ -103,7 +103,7 @@ To permanently delete a person's records from Clay Audiences yourself (for examp
 
 **To delete people from Audiences:**
 
-1. Send a `POST` request to `/audiences/privacy-delete` with a `person_identifiers` array. Each identifier has a `type` and a `value`. Use `email` with an email address, or `linkedin` with a LinkedIn profile slug (for example, `alice-smith`, not the full profile URL). You can send between 1 and 100 identifiers per request and mix both types in the same request.
+1. Send a `POST` request to `/audiences/privacy-delete` with a `person_identifiers` array. Each identifier has a `type` and a `value`. Identify each person by email address or by professional network profile slug — the last part of the profile URL (for example, `alice-smith`), not the full URL. You can send between 1 and 100 identifiers per request and mix both identifier types in the same request. See the API reference linked below for the exact `type` values.
 2. Optionally, set `dry_run` to `true` to see how many records match (`matched_count`) without deleting anything.
 3. If matching records are found, the response returns `status: "in_progress"` and a `job_id`. If no records match, the response returns `status: "no_matches"` and nothing is deleted.
 4. To check progress, send a `GET` request to `/audiences/privacy-delete/{job_id}`. The `status` field is `in_progress` while the job runs, then `complete` when the deletion has finished or `failed` if it couldn't complete.
