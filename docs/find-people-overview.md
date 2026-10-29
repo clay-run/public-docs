@@ -137,6 +137,26 @@ The most common cause of slip-throughs is a **profile slug change**: if a person
 
 **To troubleshoot:** Check whether the URL in your exclusion table matches the person's current profile URL on the professional network. Update the row with their current URL and re-run the source.
 
+### Why does Find People show "Unknown field 'country_name' in experience expression"?
+
+Find People shows the error **Enter a valid query: Unknown field 'country_name' in experience expression** when a company location **Country** filter is placed directly inside an experience block (for example, "≥ 1 current experience is all of:"). While the error is showing, the search preview doesn't load.
+
+Inside a Find People experience block, there are two different country filters, and each answers a different question:
+
+-   **Experience country:** Where the role itself is based. For example, **Experience country is France** matches someone working at Google in Paris.
+-   **Country inside a company location block:** Whether the person's company has an office in that country. For example, **Country is France** inside a **company location** block also matches someone working at Google in New York, because Google has an office in France.
+
+The company location **Country** filter can't sit on its own in the experience block — it must be nested inside a **company location** block. A **Country** filter outside any experience block filters on the person's own profile location instead.
+
+**To fix the "Unknown field 'country_name'" error in Find People:**
+
+1.  **To find people whose job is based in a country** (for example, people working in France), keep **Experience country is France**. Delete the loose **Country is France** row and any empty **company location** block.
+2.  **To find people whose company has an office in a country**, add a **company location** block inside the experience block and move the **Country** filter into it.
+
+Once the filter is in a valid position, the error banner disappears and the preview loads.
+
+**Plan note:** Company filters inside a Find People experience block — including **company location** blocks and **Company:** fields such as Company size or Industry — are available on paid plans and trials. **Experience country** and the person-level **Country** filter are available on all plans.
+
 ### How do I adjust or refine my search criteria on an existing Find People table?
 
 Your search filters are saved on the source, not on the table rows. To update them after initial setup:
