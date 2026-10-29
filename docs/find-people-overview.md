@@ -137,6 +137,22 @@ The most common cause of slip-throughs is a **profile slug change**: if a person
 
 **To troubleshoot:** Check whether the URL in your exclusion table matches the person's current profile URL on the professional network. Update the row with their current URL and re-run the source.
 
+### Why isn't my Find People search finding certain people I know exist?
+
+If your Find People search doesn't return people you expected (for example, leads from your CRM who fit your target persona), the search is usually working as configured: its filters are stricter than your example list. Find People returns only people who match **every** filter in the search at the same time, so failing a single filter is enough to leave a person out.
+
+Compare each missing person against your Find People search settings and check these causes:
+
+1.  **They're already in your table.** Find People doesn't add the same person twice. Re-runs and edited searches skip anyone the search has already imported, so search your results table for the person first.
+2.  **They're on your Exclude people list.** Anyone in a table, CSV, or list under **Exclude people** is never returned. Exclude people is available on the Launch plan and above.
+3.  **The Seniority filter is set to "is exactly".** The **Seniority** filter has two modes: **is exactly** (the default) returns only people whose seniority is one of the levels you selected, and **at or above** returns the selected level and every level above it. For example, if only C-suite, VP, Director, and Head are selected with **is exactly**, people with titles like "Underwriter" or "Product Manager" aren't returned. Add the levels you need, or switch to **at or above**.
+4.  **A word in their title is on your excluded job titles list.** An excluded job title keyword removes every title that contains that word. For example, excluding "Assistant" also removes everyone titled "Assistant Vice President", and excluding "Regional" removes "Regional Director". If the same word is on both your included and excluded job title lists, the exclusion wins and those people are filtered out — remove the word from one of the two lists.
+5.  **Their title doesn't match any of your included job titles.** For example, a "President" or "CFO" isn't returned if no matching title is in your job title list. Add the missing titles.
+6.  **Their current professional profile title is different from your CRM.** Find People matches job title filters against the person's current role on their professional profile — not the title stored in your CRM or spreadsheet, and not past roles. To also match past roles, turn on **Include past experiences**.
+7.  **Another filter excludes them.** **Location**, connection count (for example, a minimum number of connections), and your **Companies** list also apply. A person outside your selected locations, below your connection minimum, or at a company that isn't in your Companies list isn't returned.
+
+To change the filters, follow the steps in [How do I adjust or refine my search criteria on an existing Find People table?](#how-do-i-adjust-or-refine-my-search-criteria-on-an-existing-find-people-table), then re-run the source. People the search already imported won't be added again. For job title phrasing tips, see the people search FAQs in [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md#faqs).
+
 ### How do I adjust or refine my search criteria on an existing Find People table?
 
 Your search filters are saved on the source, not on the table rows. To update them after initial setup:
