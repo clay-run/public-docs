@@ -151,7 +151,7 @@ Compare each missing person against your Find People search settings and check t
 6.  **Their current professional profile title is different from your CRM.** Find People matches job title filters against the person's current role on their professional profile — not the title stored in your CRM or spreadsheet, and not past roles. To also match past roles, turn on **Include past experiences**.
 7.  **Another filter excludes them.** **Location**, connection count (for example, a minimum number of connections), and your **Companies** list also apply. A person outside your selected locations, below your connection minimum, or at a company that isn't in your Companies list isn't returned.
 
-To change the filters, follow the steps in [How do I adjust or refine my search criteria on an existing Find People table?](#how-do-i-adjust-or-refine-my-search-criteria-on-an-existing-find-people-table), then re-run the source. People the search already imported won't be added again. For job title phrasing tips, see [Why isn't someone I found on LinkedIn showing in Clay?](finding-companies-and-people-in-clay.md#why-isnt-someone-i-found-on-linkedin-showing-in-clay)
+To change the filters, follow the steps in [How do I adjust or refine my search criteria on an existing Find People table?](#how-do-i-adjust-or-refine-my-search-criteria-on-an-existing-find-people-table), then re-run the source. People the search already imported won't be added again. For job title phrasing tips, see the people search FAQs in [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md#faqs).
 
 ### How do I adjust or refine my search criteria on an existing Find People table?
 
