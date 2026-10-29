@@ -128,6 +128,12 @@ ClearoutPhone is available for every optimization option and runs on your own Cl
 **What's the difference between the two validation options?**
 `Only validate mobile phone types?` filters by *line type* — enable it so only mobile/cellular numbers count as valid (by default, all line types, including landline, are considered valid). `Require validation success?` gates by *validation outcome* — keep only numbers the validator confirms valid. You can use them independently or together.
 
+**What happens if the phone validator (Trestle or ClearoutPhone) is down or returns an error?**
+If the Mobile Phone waterfall's validator — Trestle or ClearoutPhone — is unavailable or returns an error, the validation cell for that provider step ends in an error state instead of a "valid" or "invalid" result. What the Mobile Phone waterfall does next depends on the `Require validation success?` setting:
+
+- **`Require validation success?` on:** A validation error counts as a failed validation. The number from that provider step is not written to the Mobile Phone output column, and the waterfall moves on to the next provider. If validation errors for every provider step, the Mobile Phone output column stays empty.
+- **`Require validation success?` off:** A validation error does not block the result. The number from that provider step is written to the Mobile Phone output column without being validated, and the waterfall stops — later providers don't run for that row.
+
 **Will stricter validation cost more credits?**
 It can. Rejecting more numbers means the waterfall calls more providers per contact before it finds an acceptable result, which can increase spend and reduce fill rate — in exchange for higher-quality output.
 
