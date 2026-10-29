@@ -284,8 +284,22 @@ Clay periodically retires older models from the same class to keep the model sel
 
 -   **It is removed from the model dropdown.** Deprecated models cannot be selected for new columns or configurations.
 -   **Existing configurations keep running unchanged.** Any column or configuration already using the deprecated model continues to work as-is — no action is needed on your end.
--   **Migration is not automatic.** Clay does not automatically switch your existing configurations to a newer model. If you want to use a newer model, open the column settings and select the replacement from the dropdown.
--   **Proactive notification applies only to pricing changes.** Clay notifies customers when a model change affects credit pricing. For other deprecations, no advance notification is sent.
+-   **Deprecation alone doesn't switch your columns.** Marking a model as deprecated doesn't change the model on any existing column, and it doesn't send an email. In your column settings, a deprecated model shows an orange **Deprecated** badge and a warning next to the **Model** field: "This model is deprecated. Please switch to a newer model."
+
+### What happens when OpenAI, Anthropic, or another provider discontinues a model?
+
+When a model is fully retired — for example, because the provider (such as OpenAI or Anthropic) is shutting it down — Clay moves your existing Use AI and Claygent columns that use that model to a replacement model chosen by Clay. You don't need to take any action for the switch to happen, and your columns keep running on the replacement model afterward.
+
+-   **Before the model is retired**, existing columns keep running on the deprecated model, but it can't be selected for new columns.
+-   **When the model is retired**, Clay switches the affected columns to the replacement model. The replacement is typically a newer model from the same provider.
+-   **Email notification:** when Clay switches your columns to a replacement model, Clay may email your workspace's billing contacts. The email names the old and new model, shows any change in credit cost, and links to the affected tables. This email is usually sent after the switch has already been made.
+
+**Results can differ on a new model.** If consistent outputs matter for a table, switch the model yourself instead of waiting for Clay to do it:
+
+1.  Open the column settings for the AI or Claygent column.
+2.  Click the **Model** dropdown and select a currently supported model.
+3.  Run the column on a few rows and compare the outputs with your previous results.
+4.  Once you're happy with the results, run the rest of the table.
 
 ## Questions?
 
