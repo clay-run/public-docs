@@ -112,10 +112,10 @@ For the full run-condition pattern, see [Building a provider cascade with run co
 
 The inputs these direct-dial providers accept:
 
--   **Bytemine Find contact info**: any one of **Professional profile URL** (LinkedIn URL), **Person's name**, **Email address**, or **Facebook profile URL**.
--   **SMARTe Enrich contact**: **Person's professional URL** (LinkedIn URL) on its own, or **Person's full name** plus **Company name** or **Company URL**.
+-   **Bytemine Find contact info**: any one of **Professional profile URL**, **Person's name**, **Email address**, or **Facebook profile URL**.
+-   **SMARTe Enrich contact**: **Person's professional URL** on its own, or **Person's full name** plus **Company name** or **Company URL**.
 
-Map the person's name, company, and LinkedIn URL when you have them, so each provider has an identifier it can match on.
+Map the person's name, company, and professional profile URL when you have them, so each provider has an identifier it can match on.
 
 ## FAQs
 
