@@ -1243,6 +1243,27 @@ Once the toggle is on, Clay will create new Accounts or Contacts in Salesforce f
 
 To track which contacts in Salesforce came from a specific Audience enrichment, create a custom Audience text field (for example, an "Audience Source" field set to a label like `"Q2-enrichment"`), and map it to a Salesforce field (a custom field, campaign tag, or lead status) in your export settings. You can then filter on that value directly in Salesforce.
 
+### What field type should I create in Salesforce for a field Clay writes to (for example, a "Clay Sourced" field)?
+
+When you create a custom Salesforce field for the Audiences export to write to — for example, a "Clay Sourced" field on Contacts for reporting on records that came from Clay — match the Salesforce field type to the type of the Audience field you map to it. If the value is stored in a **Text** field on your Audience record, create a **Text** field in Salesforce.
+
+**Clay doesn't check field types when you map fields.** The Audiences field mapping doesn't block or warn about a mismatch between an Audience field type and a Salesforce field type. The Audiences export sends every value to Salesforce as text, and Salesforce validates each value against the Salesforce field type. If a value doesn't fit the field — for example, a text value sent to a Salesforce Checkbox field, or a value that isn't one of the allowed values of a restricted picklist — Salesforce rejects that record and it shows up as a failed record for that export.
+
+The following table shows the Audience field type Clay assigns when you create an Audience field from each Salesforce field type. Use the same pairings when you create a Salesforce field for an existing Audience field:
+
+| Audience field type | Salesforce field type |
+| --- | --- |
+| Text | Text, Text Area, Picklist, Phone, Lookup/ID |
+| Number | Number, Currency, Percent |
+| Date | Date, Date/Time |
+| Checkbox | Checkbox |
+| Email | Email |
+| URL | URL |
+
+**Choosing between Text and Checkbox for a "Clay Sourced" field:** An Audience **Checkbox** field treats null and empty values as false. To keep blank values in addition to true and false — or to store a label such as `"Clay"` or `"Q2-enrichment"` — use a **Text** field in Audiences and a **Text** field in Salesforce.
+
+**Leads:** The Audiences export sync writes to Salesforce Contacts and Accounts only. To write a "Clay Sourced" value to Salesforce Leads, use a Salesforce **Update Record** action in a workflow — see [How do I write enriched fields back to existing Salesforce records from a workflow?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-workflow).
+
 ### Do people I save from Find People to All People sync to Salesforce automatically?
 
 Saving a Find People search to **All People** adds those people to your Clay Audience only. Whether they also reach Salesforce depends on the **`Create new Salesforce records`** toggle in your Audiences Salesforce export settings — you don't need to add a separate enrichment or Salesforce column to the search for the Audiences export sync to pick these people up. Salesforce export from Audiences is available on Growth and Enterprise plans and requires the workspace **Admin** role to configure.
