@@ -664,6 +664,19 @@ Clay's company and people search relies on snapshot data that may lag behind rea
 
 First, check that you're filtering on **Job title keywords** (not just function or seniority). If you're using **Is similar to** mode, you may get some fuzzy matches — filter those out with a formula or AI after the fact.
 
+### Can I prioritize certain job titles over others in a people search?
+
+No. A single Find People search (in **Find with filters** or **Find with query**) can't rank one job title above another. For example, you can't tell it to return Head of People or Head of HR first and CEO or COO only after that. Find with query doesn't support `order by` either.
+
+**Why CEOs and founders fill the slots first:** When you set **Limit per company** (or `limit N by clay_company_id` in a query), the search ranks every matching person at each company by their estimated audience size, largest first. How closely their job title matches your list doesn't change the order. CEOs and founders often have large audiences, so with a low limit such as 3 per company they tend to take every slot.
+
+**Workarounds for getting the titles you want first:**
+
+-   **Run one search per title tier.** Create one search that includes only your top-priority titles (for example, HR and People titles) with **Limit per company** set to 3. Then create a second search for the next tier (for example, CEO and COO). Use a formula or **Use AI** column to keep the first-tier results and fill any remaining slots from the second tier.
+-   **Exclude the titles you never want.** Add titles such as CEO, Founder, and Co-founder to **Job title keywords to exclude**. People whose current title contains those keywords are filtered out before the per-company limit is applied, so they can't take the slots.
+-   **Return more people, then rank them yourself.** Raise **Limit per company** (for example, to 10; the maximum is 100), then use a formula or **Use AI** column to rank the results by title and keep the top 3. This uses more credits on any enrichments you run, because more people are returned.
+-   **Search title by title with a fallback.** Add **Find Contacts at Company** columns to your company table and use run conditions so each lower-priority title search only runs when the higher-priority one found nobody. See [Target ICP contacts first with a senior fallback](#target-icp-contacts-first-with-a-senior-fallback).
+
 ### Why do I still see people with excluded job titles when they hold multiple current roles?
 
 When using the experience filter with a "job title doesn't contain" exclusion — for example, `>= 1 current experience where job title doesn't contain "Project Manager"` — Clay evaluates the condition against **each current experience individually**. A person who holds more than one current role simultaneously passes the filter as long as *at least one* of their active roles satisfies the condition.
