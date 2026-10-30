@@ -492,19 +492,13 @@ The Salesforce `Create record`, `Update record`, and `Upsert object` (shown in C
 
 ### What batch size does Clay use to insert or update records in Salesforce?
 
-When **Run in batches** is enabled, Clay sends **up to 200 records per Salesforce API call**, using Salesforce's Composite API (`composite/sobjects`). With batch mode off, Clay sends one record per API call.
-
-You can lower the batch size with the **Number of rows per batch** setting, which appears in **Run settings** once **Run in batches** is turned on. It accepts any whole number from 1 to 200, and the default is 200.
+When **Run in batches** is enabled, Clay sends **up to 200 records per Salesforce API call**, using Salesforce's Composite API (`composite/sobjects`). With batch mode off, Clay sends one record per API call. Batches aren't sent one at a time: Clay can send up to 20 Salesforce requests at once per Salesforce connection, whether or not batching is on.
 
 ### Why do some Salesforce batches contain fewer than 200 records?
 
 The 200-record batch size is a maximum, not a fixed size. Clay doesn't wait for 200 rows to be ready before sending a batch. Each time it's ready to make a call, Clay takes up to 200 of the rows queued at that moment. Depending on how quickly rows become ready, you may see batches smaller than 200 and more Salesforce API calls than your row count divided by 200.
 
 For example, 10,000 rows sent in full batches of 200 take 50 API calls. The same 10,000 rows can take more than 50 calls if some batches go out with fewer than 200 records.
-
-### How many Salesforce batches run at the same time?
-
-Batches aren't sent one at a time. Clay runs up to 20 Salesforce requests at once per Salesforce connection, whether or not **Run in batches** is enabled. With batching on, each of those requests can carry up to 200 records. With batching off, each carries one record.
 
 ### How are errors handled in a Salesforce batch?
 
