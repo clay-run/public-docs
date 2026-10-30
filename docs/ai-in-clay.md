@@ -266,8 +266,8 @@ Clay provides access to a wide range of AI models from multiple providers. Below
 | --- | --- |
 | Clay | HeliumNeonArgonXenonRadonClay ConductorClay Navigator |
 | OpenAI | GPT 4o, 4.1, 4o MiniGPT 4.1 Mini, 4.1 NanoGPT 5.1, 5.4, 5.4 Mini, 5.4 Nano, 5.5, 5 Mini, 5 NanoGPT 6.1 Sol, 6 Sol, 6 Lunao1, o1 Pro, o1 Minio3, o3 Mini, o3 Deep Researcho4 MiniDALL·E 3 (Standard, HD)GPT Image 1 (Low, Medium, High) |
-| Anthropic | Claude 4.5 HaikuClaude 4.6 SonnetClaude 4.7 OpusClaude 4.8 OpusClaude Opus 5Claude Opus 5.5Claude Sonnet 5.5 *(Claude 4 Sonnet, Claude 4 Opus, Claude 4.5 Opus, Claude 4.5 Sonnet, and Claude 4.6 Opus are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them.)* |
-| Gemini | 2.0 Flash, Flash Lite2.5 Flash2.5 Pro, 3.7 Flash, 3.8 Flash, 3 Pro, 3.5 Flash LiteGemini 3.1 Flash Image, Gemini 3.1 Flash-Lite Image *(Gemini 2.5 Flash Lite, 3 Flash, and 3.5 Flash are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them. Imagen 3.0 and 3.0 Fast have been removed and are no longer available.)* |
+| Anthropic | Claude 4.5 HaikuClaude 4.6 SonnetClaude 4.7 OpusClaude 4.8 OpusClaude Opus 5Claude Opus 5.5Claude Sonnet 5.5 *(Claude 4 Sonnet, Claude 4 Opus, Claude 4.5 Opus, Claude 4.5 Sonnet, and Claude 4.6 Opus are deprecated and no longer available for new configurations; existing configurations that already use them keep running unchanged.)* |
+| Gemini | 2.0 Flash, Flash Lite2.5 Flash2.5 Pro, 3.7 Flash, 3.8 Flash, 3 Pro, 3.5 Flash LiteGemini 3.1 Flash Image, Gemini 3.1 Flash-Lite Image *(Gemini 2.5 Flash Lite, 3 Flash, and 3.5 Flash are deprecated and no longer available for new configurations; existing configurations that already use them keep running unchanged. Imagen 3.0 and 3.0 Fast have been removed and are no longer available.)* |
 | xAI | Grok 4Grok 4.1 Fast Reasoning |
 | DeepSeek | *(DeepSeek V4 Pro is deprecated and no longer available for new configurations; existing configurations that use this model remain unaffected.)* |
 | Mistral | Mistral Medium 3Mistral Large 2.1Mistral Large 3Magistral MediumDevstral 2 |
@@ -282,7 +282,8 @@ Clay provides access to a wide range of AI models from multiple providers. Below
 
 Clay periodically retires older models from the same class to keep the model selection dropdown manageable — as newer versions are released, their predecessors are deprecated. When a model is deprecated:
 
--   **It is removed from the model dropdown.** Deprecated models cannot be selected for new columns or configurations.
+-   **It stays visible in the model picker but can't be selected.** In the AI column model dropdown, the full model browser (**See all models**), and the agent playground model selector, deprecated models are listed after supported models, greyed out, and marked with an orange **Deprecated** badge. Hovering the badge shows "This model is being retired. Choose another model." Deprecated models cannot be selected for new columns or configurations.
+-   **A column already set to a deprecated model shows it greyed out.** If a column's current model is deprecated, the model picker still shows that model with the **Deprecated** badge, but it is not highlighted as selected and can't be re-selected. To move off it, pick a currently supported model.
 -   **Existing configurations keep running unchanged.** Any column or configuration already using the deprecated model continues to work as-is — no action is needed on your end.
 -   **Migration is not automatic.** Clay does not automatically switch your existing configurations to a newer model. If you want to use a newer model, open the column settings and select the replacement from the dropdown.
 -   **Proactive notification applies only to pricing changes.** Clay notifies customers when a model change affects credit pricing. For other deprecations, no advance notification is sent.
