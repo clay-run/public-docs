@@ -48,6 +48,19 @@ The exported CSV includes only the columns and rows visible in your current view
 
 Downloading a table as CSV does not consume any Actions or Data Credits.
 
+### Downloading a company or people list from Audiences as CSV
+
+To download the companies or people in an Audiences segment (for example, a Companies segment) as a CSV, first send them to a Clay table with **Add to workbook**, then download that table:
+
+1.  In Audiences, open the segment you want to download. You can also use **All Companies** or **All People**.
+2.  Click **Send** in the top right, click **Export action**, and select **Add to workbook**.
+3.  In the **Send to workbook** dialog, name the new table and confirm. Clay creates a Clay table with the records and opens it.
+4.  In the new table, click **Tools**, open the **Export** tab, and click **Download CSV**.
+
+**Add to workbook** sends up to **50,000** records to the table. Workspace Admins and Editors can use it; Workspace Viewers don't see the **Export action** menu. **Add to workbook** is rolling out progressively and isn't available on free plans — if you don't see it under **Export action**, contact [Clay support](https://www.clay.com/contact).
+
+The table stays connected to the segment: new records that join the segment are added to the table automatically within 15 minutes. To download an updated list later, download the table again.
+
 ## Next steps after importing
 
 Once your data is in Clay, you can enrich rows to pull in additional information.
