@@ -143,6 +143,20 @@ Credit pricing matches standard Clay plans. ChatGPT serves as an alternative int
 
 In ChatGPT, type `@Clay` (browser) or `/Clay` (desktop app) at the start of your prompt to invoke Clay. Once connected, Clay activates and pulls the relevant data immediately.
 
+**Can I use Clay inside an agent I'm building in ChatGPT's agent builder?**
+
+Not as a built-in option. Clay in ChatGPT connects through Clay's MCP (Model Context Protocol) server, which you use by typing `@Clay` in a regular ChatGPT conversation. Clay doesn't appear as a ready-made Clay node in ChatGPT's agent builder, even if your Clay account is already connected to ChatGPT.
+
+To use Clay from a custom agent, add a step to your agent that calls Clay's Public HTTP API:
+
+1.  In Clay, build the Clay function you want the agent to run.
+2.  Open `API and CLI` in the left sidebar (under `Orchestration`), select the `API keys` tab, and click `Add API key`. Workspace Admins, Members, and Viewers can create API keys; users with the Sales Rep role can't.
+3.  Configure your agent's step to call the Routines endpoint, `POST /routines/{routine_id}/run`, with that API key. The run starts right away, and you fetch the output from `GET /routines/run/{routine_run_id}/results` once it completes.
+
+For endpoint and authentication details, see [Does Clay have an API?](https://university.clay.com/docs/using-clay-as-an-api) and [developers.clay.com](https://developers.clay.com).
+
+If you're working in a coding agent (ChatGPT Codex, Claude Code, or Cursor), you can use the Clay agent plugin instead. It connects the Clay CLI and Public API. On the `API and CLI` page, copy the prompt from the **Set up the Clay agent plugin** card and paste it into your coding agent: `Set up the Clay plugin by following the steps in https://github.com/clay-run/agent-plugins`.
+
 **Can I ask which functions are available to me?**
 
 Yes. Type `@Clay What functions do you have?` and Clay will list any functions your ops team has enabled for your account.
