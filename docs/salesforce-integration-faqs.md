@@ -939,7 +939,7 @@ Manual retries succeed because running one cell at a time eliminates the simulta
 
 **Workarounds**
 
--   **Enable "Run in batches":** In the action column's **Run settings**, enable **Run in batches**. This sends rows through Salesforce's Composite API in sequential groups rather than all at once, reducing concurrent writes and lowering the chance of lock collisions.
+-   **Enable "Run in batches":** In the action column's **Run settings**, enable **Run in batches**. This sends up to 200 records per Salesforce Composite API call instead of one call per row. Each record in a batch is processed independently, so a row-lock failure on one record doesn't fail the others in the same batch. Batching doesn't lower the number of simultaneous requests: Clay runs up to 20 Salesforce requests at once per connection in both modes.
 -   **Add a run delay:** In the action column's **Run settings**, set **Delay run** to **Run after delay** and enter a delay in seconds. This staggers when each row fires, giving Salesforce time for in-flight automations (such as DLRS rollups) to finish before the next write arrives.
 -   **Map records to real parent objects:** If many rows share the same placeholder Account (or other shared parent), map them to their actual parent records instead. Each write then locks a different record, eliminating the collision.
 -   **Ask your Salesforce admin to review automations:** If your org uses DLRS or other triggers on shared parent records, your admin can investigate switching those rollups to scheduled mode — this decouples the rollup write from the original save and eliminates the lock contention entirely.
