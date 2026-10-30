@@ -641,6 +641,20 @@ To remove a trigger permanently (without deleting the workflow or its other step
 
 To stop a workflow completely, pause or remove all of its triggers. The workflow and its steps are preserved and can be reactivated at any time.
 
+**Pausing and resuming individual triggers**
+
+You can pause individual triggers in the workflow editor without stopping other triggers or deleting any configuration. To pause a trigger, open the workflow in the editor, click the trigger card to open its detail panel, and click **Pause** at the bottom of the panel. The trigger immediately stops accepting new runs. To resume, click the same trigger card again and click **Resume** — the trigger returns to live and begins processing new events.
+
+Per-trigger pause is available for these trigger types:
+
+-   **Audience triggers** (segment, scheduled, and signal)
+-   **Webhook triggers**
+-   **Scheduled triggers**
+
+Manual triggers and CSV Upload triggers do not have a per-trigger Pause option. Manual triggers are on-demand and are not live between runs.
+
+There is no single button to make an entire workflow "not live." To stop a workflow from processing new runs, pause each active trigger individually using the steps above.
+
 ### **Syncing audiences to ad platforms**
 
 When you have a segment ready, you can sync it to an ad platform to run account-based advertising across your highest-fit contacts and companies.
