@@ -370,7 +370,32 @@ If you've moved to a new email provider (for example, switching from a third-par
     -   Microsoft Outlook: select `Microsoft Outlook OAuth`.
     -   Other providers (including third-party email hosting): select `SMTP` and enter your SMTP and IMAP credentials.
 2.  **Enable warmup on the new account.** The new account starts warmup from scratch — the initial phase typically takes 3 weeks before the account shows as **Ready**. Enable warmup right after connecting to start building sender reputation.
-3.  **Update your campaigns.** Open each active campaign that used the old sending account. In the `Sender accounts` tab, add the new account, then use the ⋯ menu next to the old account to remove it.
+3.  **Update your campaigns.** Open each active campaign that used the old sending account. In the `Sender accounts` tab, add the new account, then use the ⋯ menu next to the old account to remove it. New leads are distributed across the accounts still in the campaign, but leads already assigned to the old account aren't moved to it — see [What happens to in-progress leads when I remove a sender account from a campaign?](#what-happens-to-in-progress-leads-when-i-remove-a-sender-account-from-a-campaign)
+
+### What happens to in-progress leads when I remove a sender account from a campaign?
+
+Removing a sender account from a campaign does not hand its leads over to the campaign's other sender accounts. This matters most when a coworker leaves and you want to take their address out of running campaigns without breaking their email chains.
+
+In Clay's email sequencer, each lead is assigned to one sender account when it's enrolled in a campaign, and every step of that lead's sequence — the first email and all follow-ups — is sent from that same account so the email thread stays together.
+
+When you remove a sender account from a campaign (in the campaign's `Sender accounts` tab, click the ⋯ menu next to the account and select **Remove from sequence**):
+
+-   **Leads already assigned to that account stay assigned to it**, including leads that are mid-send. Their remaining follow-up steps do not move to your other sender accounts automatically.
+-   **New leads** added to the campaign afterward are distributed only across the sender accounts still in the campaign.
+-   **You can't move an existing lead or email thread to a different sender account.** Follow-ups to leads already sequenced from the removed address can't be sent from another address.
+
+Removing a sender account from a campaign is not the same as deleting it. Deleting the mailbox in `Sequencer` → `Email accounts` fully disconnects it:
+
+-   Leads assigned to the deleted mailbox, including in-progress ones, stop receiving further emails from the campaign.
+-   Re-adding the same mailbox later does not reconnect it to those leads. SmartSender accounts purchased through Clay can't be re-added at all once deleted.
+-   Until you delete it, a connected mailbox stays active in the sequencer, including warmup.
+
+If a coworker has left and you don't have a replacement mailbox, the safest order is:
+
+1.  Open each campaign that uses their address, go to the `Sender accounts` tab, and select **Remove from sequence** from the ⋯ menu next to the account.
+2.  Then go to `Sequencer` → `Email accounts` and delete the mailbox.
+
+Neither step gets that mailbox's existing leads picked up by your remaining sender accounts. If you do have a replacement address, see [How do I switch my campaign's sending email to a new provider or address?](#how-do-i-switch-my-campaigns-sending-email-to-a-new-provider-or-address)
 
 ### What is email account warmup?
 
