@@ -281,9 +281,20 @@ To get one Clay row per sheet row, set **"Fields to deduplicate by"** to a field
 
 When adding a new source to an existing table, you must have the appropriate columns set up. For example, to add a `Find company` source, you need professional social URLs or Company Domains columns.
 
-**If you see "You must be able to update a table to create a source within it."** — the destination table is in Sandbox mode, which makes it read-only. Sources cannot be created or edited while a table is in Sandbox mode. To fix this:
+**If you see "You must be able to update a table to create a source within it."**: you don't have edit access to the table you picked as the destination. Clay checks edit access on each table separately, so adding a Find People or Find Companies search to one table can work while the same action on another table shows this error. Common reasons:
 
-1. Click **Exit Sandbox** in the top right corner of the table to return to your normal, editable table.
+-   You're a Viewer in the workspace and someone else owns the table.
+-   The table is restricted to `Admins and invited collaborators only`, and you aren't a workspace admin or an invited collaborator.
+
+To fix the "You must be able to update a table" error, do one of the following:
+
+1.  Ask a workspace admin or the table's owner to give you edit access, either by changing `Edit access` to `Admins and editors in this workspace` or by adding you as a collaborator. See [Roles and permissions](roles-and-permissions.md).
+2.  In the `Select table` dialog, pick a different table you can edit.
+3.  If you're a workspace Editor or Admin, save the results to a new table instead of an existing one. Creating a new table doesn't require edit access to any existing table. Viewers can't create tables.
+
+**If you see "Cannot save changes to this table while it has an active sandbox."**: the destination table has an active sandbox, and Clay doesn't let you change the live table while the sandbox is open. To fix it:
+
+1. Click **Exit Sandbox** in the table toolbar at the top of the table to return to your normal, editable table.
 2. Retry adding the source.
 
 **Note:** If Sculptor put the table into Sandbox mode, use the **Review changes** button instead of **Exit Sandbox** — clicking Exit Sandbox discards all of Sculptor's proposed changes without saving them. See [Sandbox mode](sandbox-mode.md) for the full publishing step-by-step.
