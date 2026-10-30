@@ -1073,9 +1073,22 @@ The 15-minute (or daily) cadence applies to the **import direction only** — it
 
 Enrichments configured with `Continuous Enrichment` enabled automatically process new records entering a segment, typically within 15 minutes. No manual runs are required after initial setup.
 
+### Why don't I see Add to workbook on my Audience segment?
+
+**Add to workbook** is the Audiences option that sends a segment's records into a Clay table in a workbook — it opens the **Send to workbook** dialog. **Add to workbook** is currently in beta and isn't turned on by default for every workspace, so many newer workspaces don't have it. If it's missing from your segment's **Send** menu, that's expected even when you're a workspace Admin and Audiences is enabled — it isn't caused by your role or settings. Some Clay University lessons and guides still show sending a segment to a workbook; those steps only work in workspaces where **Add to workbook** is turned on.
+
+**To get Add to workbook turned on:** contact Clay support and ask to enable sending Audiences segments to a workbook for your workspace. Support can turn it on for individual workspaces.
+
+When **Add to workbook** is turned on, only the first 50,000 records from a segment are imported into the table, because of table size limits.
+
+**Without Add to workbook, you can still work with your segment's records:**
+
+-   **Enrich the segment with a workflow.** Open the segment and click **Send** → **Send to workflow** to create a new Clay workflow, or connect an existing one, that runs on the segment's members. See [Connecting a workflow to a segment](#connecting-a-workflow-to-a-segment) and [Adding enrichments](#adding-enrichments).
+-   **Get companies into a Clay table with Find leads.** On the home page, click **Find leads** → **Companies**, set your filters, then choose **Save to table** (shown as **Save to new table** if a table already exists) to send the results to a Clay table. Find leads searches Clay's database, so the table contains companies that match your search filters, not the exact records in your segment.
+
 ### Why is a table connected to my audience segment updating Salesforce on its own?
 
-Sending an Audiences segment to a Clay table with **Add to workbook** isn't a one-time push. The table stays connected to the segment, and new records that join the segment later are added to the table automatically. The **Send to workbook** dialog has no option to make the send one-time.
+Sending an Audiences segment to a Clay table with **Add to workbook** isn't a one-time push. The table stays connected to the segment, and new records that join the segment later are added to the table automatically. The **Send to workbook** dialog has no option to make the send one-time. **Add to workbook** isn't turned on in every workspace — see [Why don't I see Add to workbook on my Audience segment?](#why-dont-i-see-add-to-workbook-on-my-audience-segment).
 
 New rows that arrive from a connected segment behave like any other new rows in the table: every column with auto-run turned on runs for them. If the table has a Salesforce **Update Record** column with auto-run on, Clay writes to Salesforce each time new records join the segment, even if nobody has opened the table recently. In Salesforce field history, those changes show your Clay integration user as the user who made them.
 
