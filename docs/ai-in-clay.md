@@ -282,7 +282,8 @@ Clay provides access to a wide range of AI models from multiple providers. Below
 
 Clay periodically retires older models from the same class to keep the model selection dropdown manageable — as newer versions are released, their predecessors are deprecated. When a model is deprecated:
 
--   **It is removed from the model dropdown.** Deprecated models cannot be selected for new columns or configurations.
+-   **It stays visible in the model picker but can't be selected.** In the AI column model dropdown, the full model browser (**See all models**), and the agent playground model selector, deprecated models are listed after supported models, greyed out, and marked with an orange **Deprecated** badge. Hovering the badge shows "This model is being retired. Choose another model." Deprecated models cannot be selected for new columns or configurations.
+-   **A column already set to a deprecated model shows it greyed out.** If a column's current model is deprecated, the model picker still shows that model with the **Deprecated** badge, but it is not highlighted as selected and can't be re-selected. To move off it, pick a currently supported model.
 -   **Existing configurations keep running unchanged.** Any column or configuration already using the deprecated model continues to work as-is — no action is needed on your end.
 -   **Migration is not automatic.** Clay does not automatically switch your existing configurations to a newer model. If you want to use a newer model, open the column settings and select the replacement from the dropdown.
 -   **Proactive notification applies only to pricing changes.** Clay notifies customers when a model change affects credit pricing. For other deprecations, no advance notification is sent.
