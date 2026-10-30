@@ -614,3 +614,15 @@ Clay's HubSpot integration does not include a native action for creating Tasks �
 5.  Save the column and test it on 1 row before running it on the whole table.
 
 To create HubSpot notes instead, see [How can I create HubSpot notes from Clay?](#how-can-i-create-hubspot-notes-from-clay)
+
+### How do I find which Clay tables are creating contacts in HubSpot?
+
+If contacts, companies, or other records are arriving in your HubSpot CRM from Clay and you want to know which tables or workflows are sending them, check which resources use your HubSpot connection in **Settings → Connections**.
+
+1.  Go to `Settings` > `Connections` and type "hubspot" into the search bar.
+2.  If your workspace has more than one HubSpot connection (for example, one per teammate), repeat the next steps for each one — the **Added by** column shows who connected each account.
+3.  Click the count in the **Resources** column for a HubSpot connection (or click `…` > **View resources**). A panel opens with the message "This connection is used in the resources below."
+4.  Expand each workbook and table in the panel. Under each table you'll see the columns and sources that use this connection, listed by column or source name — for example, `Create object`, `Look up object`, or `Import objects from HubSpot`.
+5.  Tables with a column that uses the HubSpot **Create object** action are the ones creating new records in HubSpot. Click the external-link icon next to a table to open it in a new tab and review that column.
+
+The panel also lists Audiences, Claygents, Signals, Ads, workflows, and functions that use the connection. Use the **Resource type** filter to narrow the list. For more detail, see [Viewing resources that use a connection](connections-and-integration-accounts.md#viewing-resources-that-use-a-connection).
