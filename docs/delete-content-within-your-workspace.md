@@ -1,6 +1,6 @@
 ---
 title: Delete content within your workspace
-description: Learn how to delete and recover tables, workbooks, and rows within your workspace.
+description: Learn how to delete and recover tables, workbooks, and rows within your workspace, and how to delete people from Audiences for data privacy requests.
 last_synced: 2026-04-26T01:39:53.278Z
 ---
 
@@ -75,7 +75,10 @@ Recovery only applies to deleted rows — **individual cell data cannot be recov
 
 ## Request deletion of records for data privacy compliance
 
-If your end-customers request that their data be deleted — for example, under GDPR or CCPA — and that data has been processed in Clay (imported from a source, enriched, or stored in a table or audience), you need to submit a formal deletion request to Clay's Privacy team.
+If your end-customers request that their data be deleted — for example, under GDPR or CCPA — and that data has been processed in Clay (imported from a source, enriched, or stored in a table or audience), you have two options:
+
+-   **People stored in Audiences:** Delete them yourself with the Clay public API. See [Delete people from Audiences with the Clay public API](#delete-people-from-audiences-with-the-clay-public-api).
+-   **Any other data in Clay** (tables, source imports, or a full workspace): Submit a formal deletion request to Clay's Privacy team, as described below.
 
 **Important:** Disabling a source sync prevents future records from being imported but does not remove data that has already been imported into Clay. To have existing records removed, you must submit a deletion request.
 
@@ -92,3 +95,25 @@ If your end-customers request that their data be deleted — for example, under 
 Email **privacy@clay.com** or contact your Clay Growth Strategist. Clay's Privacy team will review the request, determine the appropriate deletion scope, and coordinate any required deletion actions in Clay or with relevant third-party providers.
 
 Requests are generally processed within 30 days. If additional information is needed, the Privacy team will follow up.
+
+### Delete people from Audiences with the Clay public API
+
+Audiences privacy deletion lets you hard delete people from Audiences yourself through the Clay public API, so you don't have to email the Privacy team. A privacy deletion permanently removes every record of each matching person from all Audiences databases in one workspace: the workspace your API key belongs to. Deleted records can't be recovered.
+
+**Requirements for Audiences privacy deletion:**
+
+-   Audiences enabled on your workspace
+-   A workspace-scoped Clay public API key. See [How to find your Clay API key](guide-find-clay-api-key.md).
+-   Workspace admin permissions
+
+**To delete people from Audiences:**
+
+1.  Send a `POST` request to `/audiences/privacy-delete` with the people you want to delete. You can include up to **100** people per request and identify each one by **email address** or **LinkedIn slug**. A LinkedIn slug is the handle at the end of the profile URL, not the full URL.
+2.  If any people match, Clay queues the deletion and returns a `job_id` with the status `in_progress`. If no people in the workspace match your identifiers, the status is `no_matches` and nothing is deleted.
+3.  To track the deletion, send a `GET` request to `/audiences/privacy-delete/{job_id}`. The status stays `in_progress` while the job is queued, running, or retrying. It changes to `complete` when the deletion finishes, or `failed` if it couldn't finish.
+
+Clay automatically retries Audiences privacy deletion jobs that hit an error, so a job showing `in_progress` for a while is still being worked on.
+
+For the full request and response reference, see [Privacy delete people from Audiences](https://developers.clay.com/api-reference/audiences/privacy-delete-people-from-audiences) and [Get Audiences privacy deletion status](https://developers.clay.com/api-reference/audiences/get-audiences-privacy-deletion-status).
+
+**Note:** Audiences privacy deletion only removes data from Audiences. To delete the same people from Clay tables or other data, submit a deletion request to the Privacy team as described above. Also delete or suppress the records in your original source system (for example, your CRM) so a future sync doesn't import them again.
