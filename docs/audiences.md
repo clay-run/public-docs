@@ -826,6 +826,21 @@ The field is permanently removed and cannot be recovered.
 
 **Note:** Only custom fields — fields you created yourself — can be deleted. Built-in fields from Salesforce, HubSpot, or other connected sources have the Delete field button disabled. To stop a field from appearing in your column view without deleting it, use **Hide field** instead (available from the same sidebar, or by clicking the column header and selecting **Hide**).
 
+### Is there a limit on how many fields I can add in Audiences? Can the field limit be raised?
+
+Yes. Audiences limits how many fields each workspace can have. The Audiences field limit is counted separately for Companies and People, and within each record type it's counted separately for each field data type:
+
+-   Text, email, and URL fields
+-   Number fields
+-   Date fields
+-   Checkbox (Boolean) fields
+
+The default Audiences field limit is **70 fields per data type** for each record type on non-Enterprise plans, and **135 fields per data type** on Enterprise plans. For example, on a non-Enterprise plan, Companies can have up to 70 text, email, and URL fields, plus up to 70 number fields, 70 date fields, and 70 checkbox fields. People has its own separate limits of the same size. Fields you map from a Salesforce, HubSpot, or data warehouse import count toward the same limits as custom fields you create in **Data Hub**.
+
+Reaching the field limit for one data type doesn't stop you from adding fields of other types. When you hit a limit, Clay shows a message like: "You've reached the 70-field limit for text, email, and URL fields on companies in Audiences. You can still add fields of other types."
+
+**To raise the Audiences field limit:** field limits can be raised per workspace, but you can't change them yourself. Contact Clay support with your workspace ID, the record type (Companies or People), and the field data types you need more room for.
+
 ### Why does my People audience have both Title and Job Title (or State and State/Region)?
 
 In a People audience, **Title**, **City**, **State**, and **Country** are Clay's default fields. Fields such as **Job Title**, **State/Region**, and **Country/Region** usually come from your HubSpot import. When you add a HubSpot contact property to the import field mapping, Clay tries to match it to an existing Clay field. If no match is found, Clay creates a new custom field using the HubSpot property's name. That's how you end up with two fields for the same information.
