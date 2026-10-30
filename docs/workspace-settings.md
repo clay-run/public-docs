@@ -1,6 +1,6 @@
 ---
 title: Workspace settings
-description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, agency setups, AI Context, deletion, and recovering a previous workspace.
+description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, agency setups, AI Context and Knowledge Hub, deletion, and recovering a previous workspace.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -56,7 +56,7 @@ If you're managing Clay for multiple clients, the recommended approach is to use
 
 **Why separate workspaces work well for agencies:**
 
--   Each workspace has its own **AI Context** domain (accessible via **AI context** in the left sidebar of your workspace), so you can set the right company domain and business context per client rather than sharing a single workspace setup.
+-   Each workspace has its own **AI Context** domain (accessible via **AI context** in the left sidebar of your workspace, or via **Knowledge Hub** in workspaces where Knowledge Hub has replaced AI Context), so you can set the right company domain and business context per client rather than sharing a single workspace setup.
 -   Credits and billing are tracked separately per workspace, making it easy to see exactly what each client is consuming.
 -   When a project ends, you can hand the workspace over to the client by ensuring they have admin access and removing yourself — all tables, workbooks, and settings remain in place.
 
@@ -125,6 +125,30 @@ Once enrolled, beta feature announcements and discussions are shared in the [**#
 -   Click **AI context** — it appears as its own item below Settings, not as a sub-item inside the Settings menu.
 
 If you do not see **AI context** in the sidebar, first confirm you have an admin or owner role in the workspace (go to Settings → Team and check your role). If your role is correct, make sure you are on the main workspace view (the page showing your tables and folders). If you have navigated into a Settings sub-page (such as Settings → Team), click the back arrow or your workspace name in the breadcrumb to return to the main workspace view first, then look at the bottom-left corner for **AI context**.
+
+If you are an admin or owner and see **Knowledge Hub** near the top of the sidebar instead of **AI context**, your workspace uses Knowledge Hub, which replaces AI Context — see the next section.
+
+## Can't find AI context? Look for Knowledge Hub
+
+In some workspaces, **AI Context** has been replaced by **Knowledge Hub**. Knowledge Hub is currently in **alpha** — it shows an **Alpha** badge in the sidebar and is being enabled workspace by workspace, so not every workspace has it yet. When your workspace has Knowledge Hub, the **AI context** item no longer appears in the sidebar, even for workspace admins and owners. Your company context lives in Knowledge Hub instead.
+
+**To open Knowledge Hub:**
+
+1.  From your Clay workspace homepage, look at the **top of the left sidebar**.
+2.  Click **Knowledge Hub** — it appears just below **Home** and **Agent**, marked with an **Alpha** badge.
+
+Knowledge Hub organizes your workspace's business context into the following sections:
+
+-   **Company Description**
+-   **Ideal Customer Profile**
+-   **Buyer Personas**
+-   **Interest Signals**
+-   **End Market**
+-   **Plays Playbook**
+
+Clay's AI features, including the Clay Agent, read Knowledge Hub as your workspace's business context — the same role AI Context played before.
+
+**Only workspace admins can edit Knowledge Hub.** Other workspace members can view Knowledge Hub but cannot change it. Ask your workspace admin to update your Knowledge Hub content.
 
 ## Delete your workspace
 
