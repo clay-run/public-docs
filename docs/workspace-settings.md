@@ -1,6 +1,6 @@
 ---
 title: Workspace settings
-description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, agency setups, AI Context, deletion, and recovering a previous workspace.
+description: Create, switch between, and manage Clay workspaces — including turning a teammate's workspace into your company workspace, workspace name, picture, billing email, SSO setup, agency setups, AI Context, deletion, and recovering a previous workspace.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -18,6 +18,18 @@ Each Clay account can create one workspace. If your email is already associated 
 -   **Have a colleague create the workspace and invite you as admin.** Ask them to sign up at [app.clay.com/signup](https://app.clay.com/signup), create the workspace, then invite you from **Settings → Members**. Once you accept, the workspace appears in your workspace switcher alongside your others.
 
 If you want a completely separate Clay account with a distinct login, sign up at [app.clay.com](https://app.clay.com) with a **different email address** — this creates an independent account and workspace.
+
+## Turn a teammate's workspace into your company workspace
+
+If one person on your team signed up for Clay first and the rest of the team was later invited to their workspace, that workspace is already your company's shared team workspace. You don't need to create a new "company workspace" or move your tables anywhere. Clay has no separate personal or company workspace types: every workspace works the same way, and the tables, data, and credits in a workspace belong to the workspace, not to the person who created it.
+
+**To set up your existing workspace as your company workspace (requires the Admin role):**
+
+1.  **Rename the workspace** to your company name. See [Workspace name](#workspace-name) below.
+2.  **Give more than one teammate the Admin role** so access to the workspace doesn't depend on one person. Go to `Settings` > `Team` and change a member's role to **Admin** — see [Managing team members](./managing-team-members.md). The person who created the workspace has no special permissions beyond their current role, so another admin can change their role or remove them later (for example, if they leave the company). A workspace must always keep at least one admin.
+3.  **Switch billing to a company card.** Go to `Settings` > `Plan & billing`, click `Edit`, and select `Edit payment method...`. Only admins can see the billing page. See [Plans and billing](./plans-and-billing.md) for details.
+
+Once you've done this, your tables, data, and credits stay exactly where they are. Moving to a brand-new workspace is usually unnecessary — and if you're already a member of a workspace, you can't create another one from your account unless multi-workspace creation is enabled (see [Creating a new workspace](#creating-a-new-workspace) above).
 
 ## Switching between workspaces
 
