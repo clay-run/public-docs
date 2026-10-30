@@ -245,7 +245,7 @@ To see exactly what each provider requires: open the waterfall setup panel, clic
 
 Yes. Once synced, your audiences automatically update as data changes in your Clay table. New rows that match your criteria are added, and rows that no longer match are removed. This keeps your ad targeting aligned with your latest data without manual updates.
 
-For recurring syncs, the update interval depends on your destinations: every 3 days by default, or every 7 days when Bing Ads is one of your destinations.
+For recurring syncs, the update interval depends on your segment type and destinations: every 3 days by default, or every 7 days when the Ad Sync is built from a Companies (account-level) segment or when Bing Ads is one of your destinations. This interval is fixed — for example, a recurring Ad Sync from a People segment sent to the professional network and Meta re-syncs every 3 days, even if you add data to the segment more often.
 
 ### **Can I see which contacts matched?**
 
@@ -278,11 +278,31 @@ A second factor: if Enhanced Matching is enabled, it uses a professional profile
 
 ### **Why does my professional network ad sync show a "Timed out" status?**
 
-A **Timed out** status (yellow indicator) means Clay successfully sent your audience data to the professional network, but the platform did not return match rate data within Clay's 5-day polling window. The audience data was synced — the timeout reflects Clay stopping its wait on the platform's response, not a failure to send your contacts.
+A **Timed out** status (yellow indicator on the destination's status card) means Clay successfully sent your audience data to the ad platform, but the platform did not finish processing it within Clay's polling window. The audience data was synced — the timeout reflects Clay stopping its wait on the platform's response, not a failure to send your contacts.
 
-When you see this status, Clay shows the message: **"Audience synced. No matches came back in time."** Check your campaign manager on the ad platform directly for the latest match rate and audience size — the platform may have processed the data without returning results to Clay in the expected window.
+After each sync, Clay checks the ad platform every 30 minutes until the platform finishes processing or the polling window below ends:
 
-The **Timed out** status applies only to professional network syncs. Other platforms use shorter polling windows and show a **Failed** status if they do not respond in time.
+-   **Professional network, People (contact-level) syncs:** 5 days (120 hours)
+-   **Professional network, Companies (account-level) syncs:** 7 days (168 hours)
+-   **Bing Ads:** 7 days (168 hours)
+-   **Meta, Google Ads, Reddit Ads, and Vibe.co:** 3 days (72 hours)
+
+For professional network syncs, if the platform reported a matched count above zero before the polling window ended, Clay marks the run as completed instead of Timed out.
+
+When you see the Timed out status, Clay shows the message: **"Audience synced. No matches came back in time."** Check your campaign manager on the ad platform directly for the latest match rate and audience size — the platform may have processed the data without returning results to Clay in the expected window.
+
+The **Timed out** status can appear on any ad platform, although professional network audiences are the most likely to time out because they can take several days to build. A **Failed** status (red indicator) is different: it means the ad platform returned an error or Clay hit an internal error during the sync.
+
+### **What does a 0.0% match rate or "—" mean in my ad sync's Sync history?**
+
+In an Ad Sync's **Sync history** panel, each run shows a colored status dot plus **Match rate** and **Audience size** values. A 0.0% match rate does not always mean your contacts failed to match — check the run's status dot to tell an in-progress or timed-out sync apart from a real match result:
+
+-   **Blue dot, "—" for match rate and audience size:** the run is still building. The ad platform hasn't finished processing your audience yet, so Clay doesn't show a match rate. Professional network audiences can stay in this state for several days.
+-   **Orange dot (Timed out):** the platform didn't finish processing within Clay's polling window, so the match rate and audience size shown (including 0.0% and 0, or "—" if no data came back) may not be final. Check your campaign manager on the ad platform for the current numbers. See [Why does my professional network ad sync show a "Timed out" status?](#why-does-my-professional-network-ad-sync-show-a-timed-out-status) for the polling window on each platform.
+-   **Green dot (Ready):** the sync completed and the match rate and audience size are the values the platform reported. A completed run can still be below the platform's minimum audience size for serving ads — see [Why does my ad audience show "too small for use in campaigns"?](#why-does-my-ad-audience-show-too-small-for-use-in-campaigns)
+-   **Red dot (Failed):** the platform returned an error or the sync hit an internal error.
+
+"—" means no value is available for that run — either the run is still building or the platform never returned a value. A 0 or 0.0% value means the platform reported zero.
 
 ### **Why am I getting a 403 error when I click Continue on an ad sync?**
 
