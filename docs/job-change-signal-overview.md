@@ -70,7 +70,7 @@ To filter out job changes your CRM has already captured, add a filter on your re
 
 ### Why aren't job change columns from my audience available in my workflow?
 
-When the Job Change signal runs on an audience in Clay Audiences, its results show up as job change columns on the audience. Examples include **Previous employment title(s)**, **Previous companies**, **Current employment title(s)**, and **Current companies**. These job change columns aren't passed into a workflow that is triggered by the segment. A segment trigger's inputs contain only the record's own Audiences fields (such as Name, Email, Title, and LinkedIn URL) and its `id`. Signal results are stored separately from those fields. So job change values, like other signal results, don't appear in the segment trigger's inputs or in the workflow's test data.
+When the Job Change signal runs on an audience in Clay Audiences, its results show up as job change columns on the audience. Examples include **Previous employment title(s)**, **Previous companies**, **Current employment title(s)**, and **Current companies**. These job change columns aren't passed into a workflow that is triggered by the segment. A segment trigger's inputs contain only the record's own Audiences fields (such as Name, Email, Title, and professional profile URL) and its `id`. Signal results are stored separately from those fields. So job change values, like other signal results, don't appear in the segment trigger's inputs or in the workflow's test data.
 
 To use job change results in a segment-triggered workflow, look the person up in Audiences:
 
