@@ -488,17 +488,21 @@ To fix this, add a formula column after the enrichment that converts the text ra
 
 ## Batch processing
 
-The `Create record`, `Update record`, and `Upsert object` actions support a **Run in batches** mode. Batch mode is **off by default** — enable it in the action column's **Run settings** to reduce the number of simultaneous Salesforce calls Clay makes.
+The Salesforce `Create record`, `Update record`, and `Upsert object` (shown in Clay as **Create or update record**) actions support a **Run in batches** mode. Batch mode is **off by default** — enable it in the action column's **Run settings** to send many rows to Salesforce in a single API call instead of one call per row.
 
-### How batch mode works
+### What batch size does Clay use to insert or update records in Salesforce?
 
-When **Run in batches** is enabled, Clay groups rows and sends them through Salesforce's Composite API in sequential batches (up to 200 records per batch) rather than firing calls for all rows concurrently. This reduces write concurrency, which can help avoid `UNABLE_TO_LOCK_ROW` errors when many rows write to Salesforce records that share a common parent (for example, contacts all belonging to the same Account). For troubleshooting row-lock errors, see [Salesforce integration FAQs](salesforce-integration-faqs.md).
+When **Run in batches** is enabled, Clay sends **up to 200 records per Salesforce API call**, using Salesforce's Composite API (`composite/sobjects`). With batch mode off, Clay sends one record per API call. Batches aren't sent one at a time: Clay can send up to 20 Salesforce requests at once per Salesforce connection, whether or not batching is on.
 
-**Benefits:**
+### Why do some Salesforce batches contain fewer than 200 records?
 
--   **Fewer concurrent calls:** Rows are sent in sequential groups rather than all at once
--   **Reduced lock contention:** Useful when bulk-writing to records that share a parent object, such as contacts in the same Account
--   **Individual error handling:** Each record in a batch is processed independently — if one fails, others in the same batch can still succeed
+The 200-record batch size is a maximum, not a fixed size. Clay doesn't wait for 200 rows to be ready before sending a batch. Each time it's ready to make a call, Clay takes up to 200 of the rows queued at that moment. Depending on how quickly rows become ready, you may see batches smaller than 200 and more Salesforce API calls than your row count divided by 200.
+
+For example, 10,000 rows sent in full batches of 200 take 50 API calls. The same 10,000 rows can take more than 50 calls if some batches go out with fewer than 200 records.
+
+### How are errors handled in a Salesforce batch?
+
+Each record in a Salesforce batch is processed independently. If one record fails, for example with a validation error or an `UNABLE_TO_LOCK_ROW` row-lock error, the other records in the same batch can still succeed. Clay retries row-lock failures automatically. For troubleshooting row-lock errors, see [Salesforce integration FAQs](salesforce-integration-faqs.md).
 
 ## Best practices
 
