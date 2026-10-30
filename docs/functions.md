@@ -457,19 +457,24 @@ To find your data:
 
 Other useful column status filters you can apply to any function or enrichment column: **has no results** (ran but returned nothing), **has not run** (not yet processed), **is queued** (waiting to be processed), **is retrying** (a retry is in progress), and **is awaiting callback** (waiting for the function to finish and return results).
 
-### Can I share a function with someone outside my workspace?
+### Can I share a function with someone outside my workspace, or copy a function to another workspace?
 
-Yes. Use the **Share as template** toggle to generate a shareable link. Anyone with the link can create a copy of the function in their own workspace.
+Yes. To share a function with another workspace, or to duplicate a function from one workspace to another, use the **Share as template** toggle in the function's settings panel to generate a shareable link. Anyone with the link can create a copy of the function in their own workspace.
 
-**To generate and share the link:**
+You need edit access to the function to see the **Share as template** option. The destination workspace must be on a plan that includes Functions (Functions aren't available on the Free plan).
+
+**To generate and share the function link:**
 
 1.  Open the function from your Clay homepage. Make sure you are **not** in edit mode — the Share as template section is only visible when viewing a function live, not while editing it. If you see an edit-mode banner, click **Exit edit mode** first.
-2.  In the settings panel on the right, scroll down to the **Share as template** section (a collapsible panel near the bottom of the settings panel).
-3.  Toggle on **Share as template**. A shareable link is generated automatically — copy it from the section that appears.
-4.  Send the link to whoever needs the function, or open it yourself while signed into the destination workspace.
-5.  When the link opens, Clay shows a workspace picker listing the workspaces you have access to. Select the destination workspace and confirm to create the copy.
+2.  Open the function's settings panel by clicking **Details** in the function toolbar. **Details** is available both on the function table and on the function's run stats page (the page with the **View runs** button).
+3.  In the settings panel on the right, scroll down to the **Share as template** section (a collapsible panel near the bottom of the settings panel).
+4.  Toggle on **Share as template**. A shareable link is generated automatically — copy it from the **Template link** field. To restrict who can open the link, add addresses under **Share with specific email(s)**; leave it blank to let anyone with the link open it.
+5.  Send the link to whoever needs the function, or open it yourself while signed into the destination workspace.
+6.  When the link opens, Clay shows a preview of the function. Click **Create function using template**, choose the destination in the **Workspace** dropdown, and confirm to create the copy.
 
 The copy is fully independent of the original. Any changes you make to the original function after sharing do not sync to the copy — each workspace's version is maintained separately.
+
+If the function contains a **Run workflow** column, it can't be copied to another workspace. Clay shows: *This table has a "Run workflow" column, and workflows can't be copied to another workspace yet. Remove the "Run workflow" column from the original table and try again.*
 
 ### How do I duplicate a function within my workspace?
 
