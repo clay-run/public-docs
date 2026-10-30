@@ -986,6 +986,24 @@ If you need to change the default connection, ask a workspace admin to:
 
 To change your own role to admin, ask an existing workspace admin to update it in `Settings` → `Team`.
 
+## Can I add a button in Salesforce to enrich a single Account, Contact, or Lead with Clay?
+
+Yes. The Clay Salesforce package adds a **Launch Enrichment** button to Account, Contact, and Lead records in Salesforce. A Salesforce user clicks **Launch Enrichment** on a record, picks the enrichment they want from the menu (for example, "Find decision makers"), and Clay enriches that record and writes the results back to Salesforce. Reps never have to open Clay.
+
+**Plan availability:** The Clay Salesforce package is available on Enterprise plans. To get the package install link and the setup guide, contact your Clay account team or Clay Support. Install links are available for both production and sandbox Salesforce orgs.
+
+**To set up a Clay Enrich button in Salesforce:**
+
+1.  Install the Clay Salesforce package in your Salesforce org.
+2.  In Clay, create a table that uses **Import data from Webhook** as its source, and copy the webhook URL. Add the enrichment columns you want to run. Then add a Salesforce **Update record** (or **Create or update record**) column so the results are written back to the Salesforce record.
+3.  In Salesforce, open the **App Launcher**, search for **Enrichment Menus**, and create a new record. Paste the webhook URL, enter the label users will see in the menu (for example, "Find decision makers"), and choose the objects it supports: Account, Contact, or Lead. To offer more than one enrichment in the menu, create a separate Enrichment Menu record for each Clay table.
+4.  In Salesforce **Object Manager**, add the **Launch Enrichment** button to the page layout for each object, such as Account.
+5.  Make sure every Salesforce user who will click the button has the **Flow User** permission (or **Run Flows** on their profile).
+
+When setup is complete, the **Launch Enrichment** button appears on the record page. When a user clicks it and picks an enrichment, the record is sent to the Clay table, and the results are written back to the Salesforce record by your Salesforce action column.
+
+**If the Launch Enrichment button doesn't appear for a user**, check that the button is on the page layout that user sees and that the user has the **Flow User** permission or **Run Flows** on their profile.
+
 ## Why aren't enrichment notifications being sent after I use the Launch Enrichment button in Salesforce?
 
 When using the Clay Salesforce package, the **Launch Enrichment** button on a Lead, Contact, or Account record sends that record to Clay for enrichment and writes the results back to Salesforce. For Salesforce users to receive a notification ("Your record has been enriched by Clay") after the enrichment completes, the **Get Enrichment Notifications** toggle must be enabled on the corresponding workflow.
