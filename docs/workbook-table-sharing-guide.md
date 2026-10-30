@@ -1,6 +1,6 @@
 ---
 title: Share workbooks and tables as templates
-description: Share Clay workbooks and tables as templates, keep reusable table structures, and move workbooks between workspaces.
+description: Share Clay workbooks and tables as templates, keep reusable table structures, and move workbooks or folders of workbooks between workspaces.
 last_synced: 2026-04-26T01:40:56.186Z
 ---
 
@@ -46,7 +46,15 @@ Tables, columns, formulas, and enrichment column configurations all copy over. A
 
 **Row data does not transfer.** The template link copies only the table structure and one row of sample data — your existing rows are not included. To bring your row data to the new workspace, export each table as a CSV from the source workspace, then import those CSVs into the corresponding new tables. When prompted during import, choose **Save and don't run** to avoid re-triggering enrichments on the imported rows.
 
-**Clay Lookup Rows columns:** After the workbook is created in the new workspace, any Lookup Rows columns in those tables will have no valid target table — the column's internal table reference points to a table ID in the original workspace that does not exist in the new workspace. Open each Lookup Rows column and repoint it to the correct table in the new workspace. One reconnection is required per lookup target table.
+**Lookup Rows and Send Table Data columns:** When you copy a whole workbook with a template link, Lookup Rows and Send Table Data columns that point to another table *in the same workbook* are reconnected automatically to the new copy of that table in the destination workspace. Columns that point to a table *outside* the workbook arrive in the new workspace with no target table configured — open each of those columns and point it at the correct table in the new workspace. If you share a single table as a template instead of the whole workbook, every Lookup Rows column in the copied table arrives with no target table and must be reconfigured.
+
+### Move multiple workbooks or a whole folder to another workspace
+
+Clay has no bulk, folder-level, or backend transfer for moving workbooks between workspaces, and Clay support can't move them for you. Folders can't be shared as templates, so to move a folder of workbooks, repeat the Share as Template steps above for each workbook in the folder, then export and import the row data for each table as a CSV.
+
+To keep the number of template links low, share each workbook as a whole rather than sharing its tables one at a time — copying the whole workbook also keeps Lookup Rows and Send Table Data connections between its tables.
+
+**Workbooks with more than 10 tables:** By default, a workbook with more than 10 tables can't be shared as a template. A workbook with exactly 10 tables can be shared. If you try to share a larger workbook, Clay shows an error like "Shared workbooks can have a maximum of 10 tables. This workbook has 14 tables." To move a workbook like this, either split its tables into smaller workbooks of 10 tables or fewer before sharing, or contact Clay support to have the limit raised for your workspace.
 
 ### Separate Clay accounts (different logins)
 
@@ -57,7 +65,7 @@ There is no native one-click migration between two unrelated Clay accounts. The 
 3. Import those CSVs into the corresponding new tables in the destination account. When prompted, choose **Save and don't run** to import the rows without triggering enrichments — this prevents enrichment columns from re-running on every imported row and consuming credits. If you want to permanently prevent auto-run on future additions as well, turn off **Auto-run** in the table settings before importing. See [Auto-run](auto-run.md) for details.
 4. Reconnect any integrations and reconfigure enrichment columns that reference connections from the source workspace.
 
-**Clay Lookup Rows columns:** Lookup Rows columns store a reference to a specific table ID within a workspace. That reference does not carry over to the new account — in the new workspace, each Lookup Rows column has no target table configured. After rebuilding all tables in the destination account, open each Lookup Rows column and repoint it at the correct migrated table. One reconnection is required per lookup target table.
+**Lookup Rows and Send Table Data columns:** As with moving between workspaces under the same login, Lookup Rows and Send Table Data columns that point to another table in the same workbook are reconnected automatically when you copy the whole workbook. Columns that point to a table outside the workbook arrive in the new account with no target table configured. After rebuilding all tables in the destination account, open each of those columns and point it at the correct migrated table.
 
 ### Billing when consolidating two workspaces
 
