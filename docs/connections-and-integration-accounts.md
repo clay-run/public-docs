@@ -66,7 +66,7 @@ You can also add an account from inside a table: open an action for that integra
 
 -   **Set as Default** is a **workspace admin–only** action — only admins see this option in the `…` menu.
 -   **Reconnect** is available to the member who added the connection and to workspace admins. If you don't see a Reconnect option for a connection, it was likely added by another team member — ask a workspace admin to update the credentials.
--   **Delete** is available to the member who added the connection and to workspace admins. If you need to delete a connection that was added by someone else, ask a workspace admin.
+-   **Revoke** (deletes the connection) is available to the member who added the connection and to workspace admins. If you need to delete a connection that was added by someone else, ask a workspace admin.
 
 ### View your integration accounts
 
@@ -170,12 +170,16 @@ A **default account** is automatically selected for workflows or integrations wh
 ### Deleting accounts
 
 -   Navigate to the service in the `Connections` section.
--   Click the `…` menu next to the account and select `Delete`.
+-   Click the `…` menu next to the account and select `Revoke`.
 -   Confirm the deletion.
+
+Revoke is how you delete or disconnect a connection in Clay. It isn't available on Clay-managed accounts.
 
 > **Important:** If the connection you delete is referenced by existing columns, sources, or workflows, those items will stop working — they still point to the deleted connection's ID and will fail on their next run. **There is no bulk way to reassign existing columns to a new connection.** You would need to open each affected column individually and select the new connection from the **Account** dropdown.
 >
-> To avoid this, **use Reconnect instead of deleting and recreating the connection when rotating an API key.** Reconnecting updates the credentials in place, so every column and workflow that references that connection automatically uses the updated key — no column-by-column work needed. See [Rotating or updating credentials](#rotating-or-updating-credentials) above.
+> **Revoking a connection also removes its Audiences imports.** If an Audience imports records from a CRM such as Salesforce through this connection, revoking the connection permanently deletes those Audience imports and their field mappings. They don't come back if you add a new connection later — you would have to set up each import and field mapping again by hand.
+>
+> To avoid this, **use Reconnect instead of deleting and recreating the connection when rotating an API key or changing which user the connection signs in as.** Reconnecting updates the credentials in place, so every column and workflow that references that connection automatically uses the updated key — no column-by-column work needed. See [Rotating or updating credentials](#rotating-or-updating-credentials) above.
 
 ### Clay-managed accounts
 
@@ -193,4 +197,17 @@ Before the member's account is deactivated, a workspace admin should:
 2.  Click `…` > **View resources** for each of their connections to see which tables, workbooks, functions, Claygents, Audiences, Signals, and Ads depend on it.
 3.  Click `…` > **Reconnect** to re-authenticate using a service account or another team member's credentials. All tables and workflows that reference that connection will automatically use the new credentials on their next run — you do not need to update each table individually.
 
+Don't revoke the departing member's connection and create a new one in its place. Clay has no bulk way to move resources from one connection to another, so you would have to re-point every table column to the new connection one at a time. Revoking also permanently deletes any Audiences imports and field mappings that use the connection (see [Deleting accounts](#deleting-accounts)).
+
 Once the member's account is deactivated, their personal credentials are disabled. Any connections that were not reconnected to new credentials will stop working.
+
+**How do I switch a Salesforce connection from a departing user to an integration user without breaking my Audiences syncs?**
+
+Use **Reconnect** on the existing Salesforce connection and sign in as the new user. The connection stays the same in Clay; only the Salesforce user behind it changes. Your Audience imports, field mappings, tables and workflows that use the connection keep working and use the new user's credentials on their next run.
+
+1.  Open an incognito or private browser window, so the departing user's Salesforce login isn't picked up by mistake.
+2.  Log into Clay in that window and go to `Settings` > `Connections`. Search for `Salesforce` to find the departing user's connection.
+3.  Click `…` > **Reconnect** and, in the Salesforce sign-in popup, log in as the new user (for example, your integration user).
+4.  Optionally, click `…` > `Edit` to rename the connection so the name matches the new user.
+
+Do this before the departing user's Salesforce account is deactivated. The new user should have API access and the same object and field permissions as the original user. Otherwise, imports or updates that relied on those permissions may fail. For more on signing in as a specific Salesforce user, see [How do I connect to Salesforce as a specific user](./salesforce-integration-faqs.md#how-do-i-connect-to-salesforce-as-a-specific-user-such-as-an-integration-user-using-user-sign-in).
