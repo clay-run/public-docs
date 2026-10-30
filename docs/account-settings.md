@@ -162,6 +162,15 @@ If you also tried **Forgot password?** and did not receive a reset email, this c
 
 To switch to email and password login instead, see [Switch from Google login to email and password](#switch-from-google-login-to-email-and-password) above for the steps in `Settings` > `Account` > `Security` > `Change sign-in`.
 
+## Google asks you to create a passkey when you sign in to Clay
+
+If you click **Sign in with Google** on the Clay login page and Google shows a **"Create a passkey to continue"** screen, or says your existing passkey isn't recognized, the prompt comes from your Google account, not from Clay. Clay doesn't use passkeys. Clay accounts sign in with Google or with email and password, and Clay doesn't ask Google for a passkey or any extra verification step. Google decides when to show its passkey prompt, so Clay support can't turn it off or reset your Google passkey.
+
+To get past the Google passkey prompt, you have two options:
+
+1.  **Resolve the prompt with Google.** Follow the steps on Google's screen. Google's prompt notes that a new passkey may take up to 7 days to become usable. If your Google account is managed by your company, contact your company's Google admin about the passkey requirement.
+2.  **Stop using Google to sign in to Clay.** If you're already signed in to Clay, switch to email and password yourself. See [Switch from Google login to email and password](#switch-from-google-login-to-email-and-password). If you can't sign in to Clay at all, contact Clay support and ask them to switch your Clay account from Google sign-in to email and password. After support makes the switch, use **Forgot password?** on the Clay login page to set your password. Then sign in with your email and password instead of **Sign in with Google**.
+
 ## Clay API key (legacy)
 
 Your Clay API key (legacy) is a personal single-token key that enables Clay-native integrations and some older third-party connections such as Zapier. To manage this key, go to `Settings` > `Account` > `API key (legacy)`.
