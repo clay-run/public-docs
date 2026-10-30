@@ -85,13 +85,13 @@ You can also add an account from inside a table: open an action for that integra
 
 ### Viewing resources that use a connection
 
-The **Resources** column on the Connections table shows how many resources — workbooks, tables, functions, Claygents, Audiences, Signals, and Ads — reference each connection. To see the full list for a specific connection:
+The **Resources** column on the Connections table shows how many resources — workbooks, tables, functions, Claygents, Audiences, Signals, Ads, and workflows — reference each connection. A connection that no resource uses shows `—` in the Resources column. To see the full list for a specific connection:
 
 1.  Navigate to `Settings` > `Connections`.
-2.  Find the connection you want to inspect.
-3.  Click the `…` menu next to the account and select **View resources**.
+2.  Find the connection you want to inspect. You can type the provider name (for example, "hubspot") into the search bar to narrow the list.
+3.  Click the count in the **Resources** column, or click the `…` menu next to the account and select **View resources**. The **View resources** option only appears when the connection is used by at least one resource.
 
-A panel opens listing every workbook, table, function, Claygent, Audience, Signal, and Ad that uses that connection. You can filter the list by resource type to narrow the results. Each resource row shows an external-link icon — click it to open that resource in a new tab while keeping the panel open.
+A panel opens with the connection's name at the top and the message "This connection is used in the resources below." It lists every workbook, table, function, Claygent, Audience, Signal, Ad, and workflow that uses that connection. Expand a workbook to see its tables, and expand a table to see the specific columns and sources in it that use the connection — for example, a HubSpot `Create object` column or an `Import objects from HubSpot` source. Use the **Resource type** filter (default: **All resources**) to narrow the list to Workbooks, Tables, Functions, Ads, Audiences, Claygents, Signals, or Workflows. Each resource row shows an external-link icon — click it to open that resource in a new tab while keeping the panel open.
 
 Use this before rotating credentials, reconnecting with new credentials, or removing a connection — it shows exactly which parts of your workspace will be affected. It is also the recommended first step when a team member who owns connections is leaving and you need to identify which connections to update before their account is deactivated (see the FAQ below).
 
@@ -194,7 +194,7 @@ For some integrations, only Clay-managed accounts are supported. For others, you
 Before the member's account is deactivated, a workspace admin should:
 
 1.  Navigate to `Settings` > `Connections` and search or filter by the departing member's name (use the **Added by** column to identify connections they own).
-2.  Click `…` > **View resources** for each of their connections to see which tables, workbooks, functions, Claygents, Audiences, Signals, and Ads depend on it.
+2.  Click `…` > **View resources** for each of their connections to see which tables, workbooks, functions, Claygents, Audiences, Signals, Ads, and workflows depend on it.
 3.  Click `…` > **Reconnect** to re-authenticate using a service account or another team member's credentials. All tables and workflows that reference that connection will automatically use the new credentials on their next run — you do not need to update each table individually.
 
 Don't revoke the departing member's connection and create a new one in its place. Clay has no bulk way to move resources from one connection to another, so you would have to re-point every table column to the new connection one at a time. Revoking also permanently deletes any Audiences imports and field mappings that use the connection (see [Deleting accounts](#deleting-accounts)).
