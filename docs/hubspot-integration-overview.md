@@ -512,10 +512,13 @@ You only need to enable these scopes if you're specifically using Clay to enroll
 
 This error comes from HubSpot when your organization has **App Governance** (also called App Permissions) enabled and the Clay app has not been approved to use one or more of the scopes listed in the error. App Governance is a HubSpot feature that lets super admins control which OAuth scopes third-party apps are permitted to access — even when your HubSpot plan supports those scopes. Until the scopes are approved for the Clay app in App Governance, the HubSpot OAuth connection fails with this error. Being a HubSpot super admin doesn't bypass App Governance: the scopes still have to be approved for the Clay app in HubSpot's App Governance settings before the connection succeeds.
 
+The same App Governance block can also appear when a HubSpot write action runs, rather than when you connect. For example, an **Update object** column fails with "This app hasn't been granted all required scopes" while **Lookup object** columns keep working. Clay shows this error message exactly as HubSpot returns it. Lookups only need read scopes, but **Create object** and **Update object** need the matching write scopes, so this error usually means App Governance hasn't approved those write scopes for Clay. Follow the same fix below: approve the write scopes for Clay in HubSpot, then reconnect HubSpot in Clay with those write scopes checked under **Optional scopes**.
+
 The scopes in the error message are the ones Clay requested during that connection attempt. Common examples:
 
 -   `crm.export` — used to export CRM records in bulk (for example, when importing records via the HubSpot source or the Audiences HubSpot import). Enabled by default in Clay's HubSpot connection.
 -   `crm.lists.write` — used by the **Add record to list** action. Enabled by default in Clay's HubSpot connection.
+-   `crm.objects.contacts.write`, `crm.objects.companies.write`, and `crm.objects.deals.write` — used by the **Create object** and **Update object** actions to write contacts, companies, and deals. Enabled by default in Clay's HubSpot connection.
 -   `automation.sequences.read` and `automation.sequences.enrollments.write` — used by the **Enroll a contact in a sequence** action. Disabled by default; they're only requested if you check them under **Optional scopes** when connecting or reconnecting HubSpot.
 
 **To fix:**
