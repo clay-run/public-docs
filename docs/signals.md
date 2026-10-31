@@ -247,6 +247,36 @@ To stop a signal from consuming credits, you must pause or disable it directly f
 
 You can review all active signals and their individual credit spend in the `Signals` tab of the [credit usage dashboard](/docs/credit-usage) (`Settings` → `Usage`).
 
+### How many credits does a Topic intent signal (Bombora intent) cost?
+
+The **Topic intent** signal is currently in beta. It monitors companies for buying intent on the topics you select, using intent providers such as Bombora. A Topic intent signal is charged **per company checked, per topic, on every run**. You pay for every company × topic check whether or not that company shows intent on that topic, so the number of results returned has no effect on the cost. Topic intent signal charges use Data credits.
+
+The table below lists the Topic intent signal rate per company, per topic, for each provider and plan type:
+
+| Provider | Modern plans (introduced March 2026) | Legacy plans |
+| --- | --- | --- |
+| Bombora | 0.3 credits | 0.6 credits |
+| Delivr | 0.2 credits | 0.5 credits |
+| Intentsify | 0.2 credits | 0.5 credits |
+
+**Formula:** credits per run = companies monitored × topics selected × provider rate.
+
+**Worked example (Bombora, weekly):** You monitor 19,000 companies for 10 Bombora topics.
+
+-   On a modern plan: 19,000 × 10 × 0.3 = **57,000 credits per weekly run**.
+-   On a legacy plan: 19,000 × 10 × 0.6 = **114,000 credits per weekly run**.
+
+The cost is the same whether you set this up as one signal with 10 topics or as 10 signals with one topic each. See [Legacy plans](legacy-plans.md) if you're not sure which plan type you're on.
+
+**What isn't included in the Topic intent signal cost:** Enrichment columns in the results table that are set to auto-run are charged separately, on top of the signal cost. Running Bombora as an enrichment column in a table, rather than as a signal, uses separate per-result pricing.
+
+**To lower Topic intent signal costs:**
+
+-   Monitor a narrower list of target accounts. Filter the view the signal uses to only the companies you care about.
+-   Select fewer topics.
+
+The cost goes down in direct proportion to both. For example, halving the companies or halving the topics halves the cost per run.
+
 ### Why does my signal keep writing results to a new table instead of my existing one?
 
 Signals always write their matching events to a **new dedicated results table** — one row per event. Whether you start signal setup from the workbook's **Create** panel (select **Signals**, then the signal type) or from the global **Signals** sidebar, the existing table you select is used as the **input source** that supplies the companies or contacts to monitor; it is not the destination for the events. Clay creates a fresh output table to capture matching events.
