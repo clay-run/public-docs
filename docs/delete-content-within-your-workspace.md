@@ -1,6 +1,6 @@
 ---
 title: Delete content within your workspace
-description: Learn how to delete and recover tables, workbooks, and rows within your workspace.
+description: Learn how to delete and recover tables, workbooks, and rows within your workspace, request privacy deletions, and hard delete people from Audiences with the Clay public API.
 last_synced: 2026-04-26T01:39:53.278Z
 ---
 
@@ -75,7 +75,7 @@ Recovery only applies to deleted rows — **individual cell data cannot be recov
 
 ## Request deletion of records for data privacy compliance
 
-If your end-customers request that their data be deleted — for example, under GDPR or CCPA — and that data has been processed in Clay (imported from a source, enriched, or stored in a table or audience), you need to submit a formal deletion request to Clay's Privacy team.
+If your end-customers request that their data be deleted — for example, under GDPR or CCPA — and that data has been processed in Clay (imported from a source, enriched, or stored in a table or audience), you need to submit a formal deletion request to Clay's Privacy team. For people stored in Audiences, workspace Admins can also hard delete the records themselves with the Clay public API — see [Hard delete people from Audiences with the Clay public API](#hard-delete-people-from-audiences-with-the-clay-public-api).
 
 **Important:** Disabling a source sync prevents future records from being imported but does not remove data that has already been imported into Clay. To have existing records removed, you must submit a deletion request.
 
@@ -92,3 +92,43 @@ If your end-customers request that their data be deleted — for example, under 
 Email **privacy@clay.com** or contact your Clay Growth Strategist. Clay's Privacy team will review the request, determine the appropriate deletion scope, and coordinate any required deletion actions in Clay or with relevant third-party providers.
 
 Requests are generally processed within 30 days. If additional information is needed, the Privacy team will follow up.
+
+## Hard delete people from Audiences with the Clay public API
+
+Audiences privacy deletion lets workspace Admins permanently (hard) delete a person's records from Audiences without emailing the Privacy team — for example, to handle a GDPR "right to be forgotten" request. You submit people by email address, LinkedIn profile slug, or phone number, and Clay runs a deletion job you can track.
+
+**Who can use Audiences privacy deletion:**
+
+-   Audiences must be enabled for your workspace.
+-   You need a workspace-scoped Clay public API key (see [Find your Clay API key](guide-find-clay-api-key.md)) that was **created by a workspace Admin**. Keys created by Members or Viewers receive a `403` error.
+-   Audiences privacy deletion is rolling out. If the request returns `404` with the message "Audience privacy deletion is not enabled for this workspace.", contact Clay support to enable it.
+
+**To hard delete people from Audiences:**
+
+1.  Send a `POST` request to `/audiences/privacy-delete` ([API reference](https://developers.clay.com/api-reference/audiences/privacy-delete-people-from-audiences)). The `person_identifiers` field takes a list of **1–100** people. Each item has a `type` of `email`, `linkedin` (the profile slug after `/in/`, such as `jane-doe` — not the full LinkedIn URL), or `phone` (7–15 digits), plus a `value`:
+
+    ```json
+    {
+      "person_identifiers": [
+        { "type": "email", "value": "jane@example.com" },
+        { "type": "linkedin", "value": "jane-doe" }
+      ]
+    }
+    ```
+
+2.  Optional: add `"dry_run": true` to get the number of matching people (`matched_count`) without deleting anything.
+3.  A successful request returns HTTP `202` with `"status": "in_progress"` and a `job_id`. If no one matches, it returns `"status": "no_matches"` with `"matched_count": 0`, and nothing is deleted.
+4.  Check the job with a `GET` request to `/audiences/privacy-delete/{job_id}` ([API reference](https://developers.clay.com/api-reference/audiences/get-audiences-privacy-deletion-status)). The response includes:
+    -   `status` — `in_progress`, `complete`, or `failed`
+    -   `total` — the number of people selected for deletion
+    -   `finished` — stays `0` while the job runs, then equals `total` once the job completes (it is not a partial progress counter)
+
+Clay automatically retries an Audiences privacy deletion job, making up to **6 attempts** with increasing delays between them. The status stays `in_progress` during retries and changes to `failed` only after all 6 attempts fail.
+
+**What Audiences privacy deletion removes:**
+
+-   The person's Audiences record, its field values, and its change history
+-   The person's signal and activity associations, merge history, and links to companies
+-   Audiences' stored copies of the person's records from CRM or data warehouse imports
+
+Linked company records are **not** deleted. Deletion only affects the workspace your API key belongs to. Audiences privacy deletion does not delete rows in Clay tables or data in your source CRM or warehouse — to remove a person's data from Clay tables, submit a request to **privacy@clay.com** as described in [Request deletion of records for data privacy compliance](#request-deletion-of-records-for-data-privacy-compliance).
