@@ -203,6 +203,22 @@ For costs related to the export itself, see [How much does it cost to sync audie
 
 After sending your audience to LinkedIn or Meta, it will be created within **48 hours** (typically 1-2 days). Plan accordingly when launching time-sensitive campaigns.
 
+### **Does my professional network ad sync re-upload the full list on every run?**
+
+By default, yes. Each run of a professional network ad sync re-uploads the full company or contact list to the professional network, and the platform reprocesses the whole audience from that upload.
+
+**Incremental professional network syncs (beta):** Clay can instead send the professional network only the additions and removals since the last run, so the audience doesn't have to be rebuilt from the full list each time. Incremental syncs work for both Companies and People professional network ad syncs. This feature is currently in beta and is enabled per workspace — contact [Clay support](https://www.clay.com/contact) to request access.
+
+Incremental syncing only applies to professional network ad syncs created after the feature is enabled for your workspace **and** your professional network ads connection has been reconnected. Existing professional network ad syncs keep running as before and re-upload the full list on each run.
+
+To move an existing professional network audience to incremental syncs once the feature is enabled for your workspace:
+
+1.  Go to **Settings → Connections**, find your professional network ads connection, click the **⋯** menu next to it, and select **Reconnect**. Approve the new permissions the platform requests.
+2.  Because each audience segment supports only one ad sync, select **Duplicate** from the source segment's menu.
+3.  Create a new professional network ad sync from the duplicated segment. Under **Sync type**, select **Recurring** so the audience keeps updating.
+4.  Allow up to **48 hours** for the new audience to be created on the professional network. After that, each recurring run sends only the companies or contacts that were added to or removed from the segment.
+5.  Once the new audience is ready in the professional network's campaign manager, switch your campaigns to it, then retire the old audience. Keep the old audience attached to your campaigns until the new one is ready.
+
 ### **Why should I use personal emails instead of work emails?**
 
 Personal emails give much higher match rates because most people sign up for Meta and Google using personal email addresses (Gmail, Yahoo, Outlook) rather than their work address. When building your audience, pass all available signals — ad platforms try to match on each signal independently, so more data typically improves your overall match rate. The general priority order is:
